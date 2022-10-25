@@ -48,7 +48,7 @@ public class CustomFacetPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return CustomFacetTermDisplayContext.class.getName();
+		return CustomFacetDisplayContext.class.getName();
 	}
 
 	@Override

@@ -25,7 +25,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferencesImpl" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
@@ -64,7 +63,7 @@ CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPor
 			>
 				<div class="display-template">
 					<liferay-template:template-selector
-						className="<%= CustomFacetTermDisplayContext.class.getName() %>"
+						className="<%= CustomFacetDisplayContext.class.getName() %>"
 						displayStyle="<%= customFacetPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= customFacetDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"

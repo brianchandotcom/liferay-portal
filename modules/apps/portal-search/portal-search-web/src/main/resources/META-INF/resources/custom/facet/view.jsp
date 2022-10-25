@@ -49,7 +49,7 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= customFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= CustomFacetTermDisplayContext.class.getName() %>"
+				className="<%= CustomFacetDisplayContext.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"customFacetDisplayContext", customFacetDisplayContext

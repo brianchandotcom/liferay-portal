@@ -63,7 +63,7 @@ const ItemList = ({
 					return false;
 				}
 
-				return <Item item={item} key={index} />;
+				return <Item item={item} key={index} onClick={onItemClick} />;
 			})}
 
 			{secondaryItems?.map((secondaryItemsGroup, index) => (

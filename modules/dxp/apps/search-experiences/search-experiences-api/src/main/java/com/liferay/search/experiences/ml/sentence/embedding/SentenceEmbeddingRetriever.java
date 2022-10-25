@@ -14,10 +14,15 @@
 
 package com.liferay.search.experiences.ml.sentence.embedding;
 
+import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+
 /**
  * @author Petteri Karttunen
  */
 public interface SentenceEmbeddingRetriever {
+
+	public Double[] getSentenceEmbedding(
+		SemanticSearchConfiguration semanticSearchConfiguration, String text);
 
 	public Double[] getSentenceEmbedding(String text);
 

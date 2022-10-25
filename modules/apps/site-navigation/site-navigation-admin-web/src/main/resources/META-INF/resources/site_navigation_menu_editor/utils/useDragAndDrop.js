@@ -61,6 +61,8 @@ export function useDragItem(item, onDragEnd) {
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 
+	const {portletNamespace: namespace} = useConstants();
+
 	const {
 		parentId,
 		setHorizontalOffset,
@@ -87,6 +89,7 @@ export function useDragItem(item, onDragEnd) {
 		},
 		item: {
 			id: siteNavigationMenuItemId,
+			namespace,
 			type: ACCEPTING_ITEM_TYPE,
 		},
 	});

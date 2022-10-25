@@ -27,6 +27,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 import {
 	useCollectionItemIndex,
 	useParentToControlsId,
@@ -179,6 +180,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 			icon: sourceItem.icon,
 			id: sourceItem.itemId,
 			name: sourceItem.name,
+			namespace: config.portletNamespace,
 			type: sourceItem.type,
 			...(sourceItem.origin && {origin: sourceItem.origin}),
 		},

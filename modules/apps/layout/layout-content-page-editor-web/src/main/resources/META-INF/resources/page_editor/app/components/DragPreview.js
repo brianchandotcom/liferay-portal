@@ -64,7 +64,6 @@ const getItemStyles = (currentOffset, ref, rtl) => {
 	const transform = `translate(${x}px, ${y}px)`;
 
 	return {
-		WebkitTransform: transform,
 		transform,
 	};
 };

@@ -36,6 +36,7 @@ ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDef
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+			propsTransformer="js/MultiselectPicklistFDSPropsTransformer"
 			style="fluid"
 		/>
 	</c:when>

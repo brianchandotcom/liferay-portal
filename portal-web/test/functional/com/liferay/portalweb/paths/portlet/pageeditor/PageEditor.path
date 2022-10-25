@@ -322,12 +322,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_DROP_TARGET</td>
-	<td>//div[contains(@class,'page-editor__root page-editor__topper')]</td>
+	<td>//div[contains(@class,'page-editor__root')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_WITH_DROP_TARGET</td>
-	<td>xpath=(//div[contains(@class,'page-editor__root page-editor__topper')])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'page-editor__root')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -24,7 +24,7 @@ import {
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-import {useDebounceCallback} from './useDebounceCallback.es';
+import {useDebounceCallback} from './useDebounceCallback';
 
 const MAX_ITEMS_TO_SHOW = 10;
 

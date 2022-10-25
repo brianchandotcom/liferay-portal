@@ -129,11 +129,23 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160541. Verify if as an Administrator I should not be able to add a duplicate Project"
-	@ignore = "Test Stub"
-	@priority = "3"
+	@priority = "5"
 	test AdminCanNotAddDuplicateProject {
+		task ("Go to Testray, Create Project duplicate") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-160541 AdminCanNotAddDuplicateProject pending implementation
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+		}
+
+		task ("Then an error message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "The Project name already exists");
+		}
 
 	}
 

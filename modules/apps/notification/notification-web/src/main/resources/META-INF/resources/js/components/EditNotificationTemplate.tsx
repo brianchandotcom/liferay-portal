@@ -68,18 +68,29 @@ interface User {
 
 export type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
 	body: LocalizedValue<string>;
-	cc: string;
 	description: string;
-	from: string;
-	fromName: LocalizedValue<string>;
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: string;
+	recipients:
+		| Partial<TEmailRecipients>[]
+		| Partial<TUserNotificationRecipients>[]
+		| [];
 	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
 	type: string;
+};
+
+type TUserNotificationRecipients = {
+	[key in 'term' | 'userScreenName' | 'roleName']?: string;
+};
+
+type TEmailRecipients = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
 };
 
 const RECIPIENT_OPTIONS = [
@@ -100,41 +111,26 @@ const RECIPIENT_OPTIONS = [
 export default function EditNotificationTemplate({
 	baseResourceURL,
 	editorConfig,
-	notificationTemplateId,
+	notificationTemplateId = 0,
 	notificationTemplateType,
 }: IProps) {
 	notificationTemplateId = Number(notificationTemplateId);
 
-	const initialValues = {
-		...(Liferay.FeatureFlags['LPS-162133'] && {
-			recipientType:
-				notificationTemplateType === 'userNotification' ? 'term' : '',
-		}),
-		...(Liferay.FeatureFlags['LPS-162133'] && {
-			type: notificationTemplateType,
-		}),
-		bcc: '',
-		body: {
-			[defaultLanguageId]: '',
-		},
-		cc: '',
-		description: '',
-		from: '',
-		fromName: {
-			[defaultLanguageId]: '',
-		},
-		name: '',
-		subject: {
-			[defaultLanguageId]: '',
-		},
-		to: {
-			[defaultLanguageId]: '',
-		},
-	};
-
 	const [selectedLocale, setSelectedLocale] = useState(
 		Liferay.ThemeDisplay.getDefaultLanguageId
 	);
+
+	const [templateTitle, setTemplateTitle] = useState<string>();
+
+	const [rolesList, setRolesList] = useState<Role[]>([]);
+
+	const [userList, setUserList] = useState<User[]>([]);
+
+	const [multiSelectItems, setMultiSelectItems] = useState<Item[]>([]);
+
+	const [searchTerm, setSearchTerm] = useState('');
+
+	const [toTerms, setToTerms] = useState<string>('');
 
 	const validate = (values: any) => {
 		const errors: {
@@ -154,13 +150,16 @@ export default function EditNotificationTemplate({
 			errors.name = Liferay.Language.get('required');
 		}
 
-		if (notificationTemplateType === 'email' && !values.from) {
+		if (
+			notificationTemplateType === 'email' &&
+			!values.recipients[0].from
+		) {
 			errors.from = Liferay.Language.get('required');
 		}
 
 		if (
 			notificationTemplateType === 'email' &&
-			!values.fromName[defaultLanguageId]
+			!values.recipients[0].fromName[defaultLanguageId]
 		) {
 			errors.fromName = Liferay.Language.get('required');
 		}
@@ -204,21 +203,70 @@ export default function EditNotificationTemplate({
 		}
 	};
 
+	let recipientInitialValue: any;
+
+	if (
+		notificationTemplateType === '' ||
+		notificationTemplateType === 'email'
+	) {
+		recipientInitialValue = [
+			{
+				bcc: '',
+				cc: '',
+				from: '',
+				fromName: {
+					[defaultLanguageId]: '',
+				},
+				to: {
+					[defaultLanguageId]: '',
+				},
+			} as TEmailRecipients,
+		];
+	}
+	else {
+		recipientInitialValue = [];
+	}
+
+	const initialValues = {
+		...(Liferay.FeatureFlags['LPS-162133'] && {
+			recipientType:
+				notificationTemplateType === 'userNotification'
+					? 'term'
+					: 'email',
+		}),
+		...(Liferay.FeatureFlags['LPS-162133'] && {
+			type: notificationTemplateType,
+		}),
+		body: {
+			[defaultLanguageId]: '',
+		},
+		description: '',
+		name: '',
+		objectDefinitionId: 0,
+		recipients: recipientInitialValue,
+
+		...(!Liferay.FeatureFlags['LPS-162133'] && {
+			bcc: '',
+			cc: '',
+			from: '',
+			fromName: {
+				[defaultLanguageId]: '',
+			},
+			to: {
+				[defaultLanguageId]: '',
+			},
+		}),
+		subject: {
+			[defaultLanguageId]: '',
+		},
+		type: notificationTemplateType,
+	};
+
 	const {errors, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
 	});
-
-	const [templateTitle, setTemplateTitle] = useState<string>();
-
-	const [rolesList, setRolesList] = useState<Role[]>([]);
-
-	const [userList, setUserList] = useState<User[]>([]);
-
-	const [multiSelectItems, setMultiSelectItems] = useState<Item[]>([]);
-
-	const [searchTerm, setSearchTerm] = useState('');
 
 	const getAccountRoles = async (searchTerm: string) => {
 		const apiURL = '/o/headless-admin-user/v1.0/accounts/0/account-roles';
@@ -266,22 +314,16 @@ export default function EditNotificationTemplate({
 		setUserList(users);
 	};
 
-	useEffect(() => {
-		const delayDebounceFn = setTimeout(() => {
-			values.recipientType === 'role'
-				? getAccountRoles(searchTerm)
-				: getUserAccounts(searchTerm);
-		}, 1000);
-
-		return () => clearTimeout(delayDebounceFn);
-	}, [searchTerm, values.recipientType]);
-
 	const handleMultiSelectItemsChange = (items: Item[]) => {
+		const key =
+			values.recipientType === 'role' ? 'roleName' : 'userScreenName';
+		const newRecipients = [] as TUserNotificationRecipients[];
+		items.forEach((item) => {
+			newRecipients.push({[key]: item.value});
+		});
 		setValues({
 			...values,
-			to: {
-				[defaultLanguageId]: items.map((item) => item.value).toString(),
-			},
+			recipients: newRecipients,
 		});
 		setMultiSelectItems(items);
 	};
@@ -291,45 +333,35 @@ export default function EditNotificationTemplate({
 			API.getNotificationTemplate(notificationTemplateId).then(
 				({
 					attachmentObjectFieldIds,
-					bcc,
 					body,
-					cc,
 					description,
-					from,
-					fromName,
 					name,
 					objectDefinitionId,
 					recipientType,
+					recipients,
 					subject,
-					to,
 					type,
 				}) => {
 					setValues({
 						...values,
 						attachmentObjectFieldIds,
-						bcc,
 						body,
-						cc,
 						description,
-						from,
-						fromName,
 						name,
 						objectDefinitionId,
 						recipientType,
+						recipients,
 						subject,
-						to,
 						type,
 					});
 
 					setTemplateTitle(name);
 
-					if (recipientType === 'role' || recipientType === 'user') {
-						setMultiSelectItems(
-							(to[defaultLanguageId] as string)
-								.split(',')
-								.map((item: string) => {
-									return {label: item, value: item};
-								})
+					if (recipientType === 'term') {
+						setToTerms(
+							(recipients as TUserNotificationRecipients[])
+								.map(({term}) => term)
+								.join()
 						);
 					}
 				}
@@ -343,15 +375,78 @@ export default function EditNotificationTemplate({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [notificationTemplateId]);
 
+	useEffect(() => {
+		const delayDebounceFn = setTimeout(() => {
+			values.recipientType === 'role'
+				? getAccountRoles(searchTerm)
+				: getUserAccounts(searchTerm);
+		}, 500);
+
+		return () => clearTimeout(delayDebounceFn);
+	}, [searchTerm, values.recipientType]);
+
+	useEffect(() => {
+		if (
+			values.recipientType === 'role' ||
+			values.recipientType === 'user'
+		) {
+			const recipientList = values.recipients as TUserNotificationRecipients[];
+			let multiSelectItems = [];
+
+			if (values.recipientType === 'user') {
+				multiSelectItems = recipientList.map((item) => {
+					return {
+						label: item.userScreenName,
+						value: item.userScreenName,
+					};
+				});
+			}
+			else {
+				multiSelectItems = recipientList.map((item) => {
+					return {
+						label: item.roleName,
+						value: item.roleName,
+					};
+				});
+			}
+
+			setMultiSelectItems(multiSelectItems);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.recipientType]);
+
+	useEffect(() => {
+		const regex = /,/g;
+		const toItems = toTerms
+			.replace(regex, ' ')
+			.split(' ')
+			.filter((item) => {
+				if (item !== '') {
+					return item;
+				}
+			});
+		if (toItems.length) {
+			const toRecipients = toItems.map((item) => {
+				return {term: item};
+			});
+
+			setValues({
+				...values,
+				recipients: toRecipients,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toTerms]);
+
 	return (
 		<ClayForm onSubmit={handleSubmit}>
-			<ClayManagementToolbar className="lfr__notification-template-management-tollbar">
+			<ClayManagementToolbar className="lfr__notification-template-management-toolbar">
 				<ClayManagementToolbar.ItemList>
 					<h2>{templateTitle}</h2>
 
 					{Liferay.FeatureFlags['LPS-162133'] && (
 						<div className="lfr__notification-template-label">
-							{notificationTemplateType === 'email' ? (
+							{values.type === 'email' ? (
 								<ClayLabel displayType="success">
 									{Liferay.Language.get('email')}
 								</ClayLabel>
@@ -424,9 +519,7 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								{(Liferay.FeatureFlags['LPS-162133'] &&
-									notificationTemplateType ===
-										'userNotification') ||
+								{Liferay.FeatureFlags['LPS-162133'] &&
 								values.type === 'userNotification' ? (
 									<>
 										<SingleSelect
@@ -437,6 +530,7 @@ export default function EditNotificationTemplate({
 												setValues({
 													...values,
 													recipientType: item.value,
+													recipients: [],
 												});
 
 												if (item.value === 'role') {
@@ -454,33 +548,28 @@ export default function EditNotificationTemplate({
 										/>
 
 										{values.recipientType === 'term' && (
-											<Input
-												component="textarea"
-												label={Liferay.Language.get(
-													'to'
-												)}
-												name="to"
-												onChange={({target}) =>
-													setValues({
-														...values,
-														to: {
-															[defaultLanguageId]:
-																target.value,
-														},
-													})
-												}
-												placeholder={Liferay.Util.sub(
-													Liferay.Language.get(
-														'use-terms-to-configure-recipients-for-this-notification-x'
-													),
-													'[%ENTRY_CREATOR%], [%BUYER_NAME%]',
-													'.'
-												)}
-												type="text"
-												value={
-													values.to[defaultLanguageId]
-												}
-											/>
+											<>
+												<Input
+													component="textarea"
+													label={Liferay.Language.get(
+														'to'
+													)}
+													onChange={({target}) => {
+														setToTerms(
+															target.value
+														);
+													}}
+													placeholder={Liferay.Util.sub(
+														Liferay.Language.get(
+															'use-terms-to-configure-recipients-for-this-notifications-x'
+														),
+														'[%ENTRY_CREATOR%], [%BUYER_NAME%]',
+														'.'
+													)}
+													type="text"
+													value={toTerms}
+												/>
+											</>
 										)}
 
 										{values.recipientType === 'role' && (
@@ -553,12 +642,22 @@ export default function EditNotificationTemplate({
 											onChange={(translation) => {
 												setValues({
 													...values,
-													to: translation,
+													recipients: [
+														{
+															...values
+																.recipients[0],
+															to: translation,
+														},
+													],
 												});
 											}}
 											placeholder=""
 											selectedLocale={selectedLocale}
-											translations={values.to}
+											translations={
+												(values
+													.recipients[0] as TEmailRecipients)
+													.to
+											}
 										/>
 
 										<div className="row">
@@ -571,10 +670,25 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															cc: target.value,
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	cc:
+																		target.value,
+																},
+															],
 														})
 													}
-													value={values.cc}
+													value={
+														Liferay.FeatureFlags[
+															'LPS-162133'
+														]
+															? (values
+																	.recipients[0] as TEmailRecipients)
+																	.cc
+															: values.cc
+													}
 												/>
 											</div>
 
@@ -587,10 +701,25 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															bcc: target.value,
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	bcc:
+																		target.value,
+																},
+															],
 														})
 													}
-													value={values.bcc}
+													value={
+														Liferay.FeatureFlags[
+															'LPS-162133'
+														]
+															? (values
+																	.recipients[0] as TEmailRecipients)
+																	.bcc
+															: values.bcc
+													}
 												/>
 											</div>
 										</div>
@@ -606,11 +735,26 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															from: target.value,
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	from:
+																		target.value,
+																},
+															],
 														})
 													}
 													required
-													value={values.from}
+													value={
+														Liferay.FeatureFlags[
+															'LPS-162133'
+														]
+															? (values
+																	.recipients[0] as TEmailRecipients)
+																	.from
+															: values.from
+													}
 												/>
 											</div>
 
@@ -624,7 +768,13 @@ export default function EditNotificationTemplate({
 													onChange={(translation) => {
 														setValues({
 															...values,
-															fromName: translation,
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	fromName: translation,
+																},
+															],
 														});
 													}}
 													placeholder=""
@@ -633,7 +783,13 @@ export default function EditNotificationTemplate({
 														selectedLocale
 													}
 													translations={
-														values.fromName
+														Liferay.FeatureFlags[
+															'LPS-162133'
+														]
+															? (values
+																	.recipients[0] as TEmailRecipients)
+																	.fromName
+															: values.fromName!
 													}
 												/>
 											</div>
@@ -646,6 +802,9 @@ export default function EditNotificationTemplate({
 
 					<Card title={Liferay.Language.get('content')}>
 						<InputLocalized
+							{...(values.type === 'userNotification' && {
+								component: 'textarea',
+							})}
 							label={Liferay.Language.get('subject')}
 							name="subject"
 							onChange={(translation) => {
@@ -659,26 +818,35 @@ export default function EditNotificationTemplate({
 							translations={values.subject}
 						/>
 
-						<RichTextLocalized
-							editorConfig={editorConfig}
-							label={Liferay.Language.get('body')}
-							name="body"
-							onSelectedLocaleChange={({label}) =>
-								setSelectedLocale(label)
-							}
-							onTranslationsChange={(translation) => {
-								setValues({
-									...values,
-									body: translation,
-								});
-							}}
-							selectedLocale={selectedLocale}
-							translations={values.body}
-						/>
+						{Liferay.FeatureFlags['LPS-162133'] &&
+							values.type === 'email' && (
+								<RichTextLocalized
+									editorConfig={editorConfig}
+									label={Liferay.Language.get('body')}
+									name="body"
+									onSelectedLocaleChange={({label}) =>
+										setSelectedLocale(label)
+									}
+									onTranslationsChange={(translation) => {
+										setValues({
+											...values,
+											body: translation,
+										});
+									}}
+									selectedLocale={selectedLocale}
+									translations={values.body}
+								/>
+							)}
 
 						<DefinitionOfTerms baseResourceURL={baseResourceURL} />
 
-						<Attachments setValues={setValues} values={values} />
+						{Liferay.FeatureFlags['LPS-162133'] &&
+							values.type === 'email' && (
+								<Attachments
+									setValues={setValues}
+									values={values}
+								/>
+							)}
 					</Card>
 				</div>
 			</div>

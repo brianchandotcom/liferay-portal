@@ -26,4 +26,7 @@ public class ProductNavigationProductMenuWebKeys {
 
 	public static final String PUBLIC_LAYOUT = "PUBLIC_LAYOUT";
 
+	public static final String RETURN_LAYOUTS_AS_ARRAY =
+		"RETURN_LAYOUTS_AS_ARRAY";
+
 }

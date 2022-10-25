@@ -320,8 +320,8 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			objectEntry = objectEntryPersistence.fetchByERC_G_C(
-				externalReferenceCode, groupId, user.getCompanyId());
+			objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
+				externalReferenceCode, user.getCompanyId(), objectDefinitionId);
 
 			if (objectEntry != null) {
 				return updateObjectEntry(

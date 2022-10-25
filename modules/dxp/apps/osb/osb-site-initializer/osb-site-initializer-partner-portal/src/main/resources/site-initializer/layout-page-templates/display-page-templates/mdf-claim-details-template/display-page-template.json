@@ -2,5 +2,6 @@
 	"contentType": {
 		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]"
 	},
+	"defaultTemplate": true,
 	"name": "MDF Claim Detail"
 }

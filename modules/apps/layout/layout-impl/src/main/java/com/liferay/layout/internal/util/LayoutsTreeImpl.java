@@ -809,6 +809,14 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		JSONArray jsonArray = _toJSONArray(
 			httpServletRequest, groupId, layoutTreeNodes, layoutSetBranch);
 
+		if (GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(
+					ProductNavigationProductMenuWebKeys.
+						RETURN_LAYOUTS_AS_ARRAY))) {
+
+			return jsonArray;
+		}
+
 		return JSONUtil.put(
 			"layouts", jsonArray
 		).put(

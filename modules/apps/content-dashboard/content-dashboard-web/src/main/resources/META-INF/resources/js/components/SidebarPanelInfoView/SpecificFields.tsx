@@ -12,6 +12,8 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 const {default: FileUrlCopyButton} = require('./FileUrlCopyButton');
@@ -41,20 +43,26 @@ const SpecificFields = ({fields, languageTag}: IProps) => {
 	}
 
 	return fields.map(
-		({
-			title,
-			type,
-			value,
-		}: {
-			title: string;
-			type: SpecificItemTypes;
-			value: string;
-		}): JSX.Element | string =>
+		({help, title, type, value}: SpecificField): JSX.Element | string =>
 			title &&
 			value &&
 			type && (
 				<div className="c-mb-4 sidebar-section" key={title}>
-					<h5 className="c-mb-1 font-weight-semi-bold">{title}</h5>
+					<h5 className="c-mb-1 font-weight-semi-bold">
+						{title}
+
+						{help && (
+							<ClayTooltipProvider>
+								<span
+									className="ml-1 text-secondary"
+									data-tooltip-align="top"
+									title={help}
+								>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
+							</ClayTooltipProvider>
+						)}
+					</h5>
 
 					<SpecificItem
 						languageTag={languageTag}
@@ -69,6 +77,7 @@ const SpecificFields = ({fields, languageTag}: IProps) => {
 type SpecificItemTypes = 'Date' | 'String' | 'URL';
 
 interface SpecificField {
+	help?: string;
 	title: string;
 	type: SpecificItemTypes;
 	value: string;

@@ -71,6 +71,17 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return _jsonObject.getString("name");
 	}
 
+	public String getPortalBranch() {
+		Matcher matcher = _portalBranchPattern.matcher(
+			_jsonObject.optString("description"));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group("portalBranch");
+	}
+
 	public String getPortalSHA() {
 		Matcher matcher = _portalSHAPattern.matcher(
 			_jsonObject.optString("description"));
@@ -394,6 +405,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	private static final int _PAGE_DELTA = 200;
 
+	private static final Pattern _portalBranchPattern = Pattern.compile(
+		"Portal Branch: (?<portalBranch>[^;]+);");
 	private static final Pattern _portalSHAPattern = Pattern.compile(
 		"Portal SHA: (?<portalSHA>[^;]+);");
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(

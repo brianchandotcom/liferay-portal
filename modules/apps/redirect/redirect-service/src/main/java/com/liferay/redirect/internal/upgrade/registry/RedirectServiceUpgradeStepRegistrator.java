@@ -25,7 +25,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component(
+	immediate = true,
+	service = {
+		RedirectServiceUpgradeStepRegistrator.class,
+		UpgradeStepRegistrator.class
+	}
+)
 public class RedirectServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

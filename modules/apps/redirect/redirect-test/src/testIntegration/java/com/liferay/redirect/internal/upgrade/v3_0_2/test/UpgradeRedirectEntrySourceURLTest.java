@@ -94,23 +94,23 @@ public class UpgradeRedirectEntrySourceURLTest {
 		long redirectEntryId5 = _counterLocalService.increment();
 		long redirectEntryId6 = _counterLocalService.increment();
 
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId1, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination1", "Page1");
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId2, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination2", "Page2");
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId3, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination3", "Page3");
 
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId4, _group2.getGroupId(), _group2.getCompanyId(),
 			"destination1", "Page1");
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId5, _group2.getGroupId(), _group2.getCompanyId(),
 			"destination2", "Page2");
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId6, _group2.getGroupId(), _group2.getCompanyId(),
 			"destination3", "Page3");
 
@@ -143,13 +143,13 @@ public class UpgradeRedirectEntrySourceURLTest {
 		long redirectEntryId2 = _counterLocalService.increment();
 		long redirectEntryId3 = _counterLocalService.increment();
 
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId1, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination1", "PageA");
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId2, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination2", "PageB");
-		addRedirectEntry(
+		_addRedirectEntry(
 			redirectEntryId3, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination3", "PageC");
 
@@ -169,38 +169,33 @@ public class UpgradeRedirectEntrySourceURLTest {
 
 	@Test
 	public void testUpgradeWithSourceURLCollision() throws Exception {
-		if (_db.getDBType() == DBType.MYSQL) {
-			Assume.assumeTrue(
-				"MYSQL is case-insensitive so it is not possible to create " +
-					"this scenario, skip test.",
-				_db.getDBType() == DBType.MYSQL);
-		}
-		else {
-			long redirectEntryId1 = _counterLocalService.increment();
-			long redirectEntryId2 = _counterLocalService.increment();
+		Assume.assumeFalse(
+			"MYSQL is case-insensitive so it is not possible to create this " +
+				"scenario, skip test.",
+			_db.getDBType() == DBType.MYSQL);
 
-			addRedirectEntry(
-				redirectEntryId1, _group1.getGroupId(), _group1.getCompanyId(),
-				"destination1", "testpage");
-			addRedirectEntry(
-				redirectEntryId2, _group1.getGroupId(), _group1.getCompanyId(),
-				"destination2", "TestPage");
+		long redirectEntryId1 = _counterLocalService.increment();
+		long redirectEntryId2 = _counterLocalService.increment();
 
-			_redirectEntrySourceURLUpgradeProcess.upgrade();
+		_addRedirectEntry(
+			redirectEntryId1, _group1.getGroupId(), _group1.getCompanyId(),
+			"destination1", "testpage");
+		_addRedirectEntry(
+			redirectEntryId2, _group1.getGroupId(), _group1.getCompanyId(),
+			"destination2", "TestPage");
 
-			RedirectEntry redirectEntry1 =
-				RedirectEntryLocalServiceUtil.getRedirectEntry(
-					redirectEntryId1);
-			RedirectEntry redirectEntry2 =
-				RedirectEntryLocalServiceUtil.getRedirectEntry(
-					redirectEntryId2);
+		_redirectEntrySourceURLUpgradeProcess.upgrade();
 
-			Assert.assertEquals("testpage", redirectEntry1.getSourceURL());
-			Assert.assertEquals("TestPage", redirectEntry2.getSourceURL());
-		}
+		RedirectEntry redirectEntry1 =
+			RedirectEntryLocalServiceUtil.getRedirectEntry(redirectEntryId1);
+		RedirectEntry redirectEntry2 =
+			RedirectEntryLocalServiceUtil.getRedirectEntry(redirectEntryId2);
+
+		Assert.assertEquals("testpage", redirectEntry1.getSourceURL());
+		Assert.assertEquals("TestPage", redirectEntry2.getSourceURL());
 	}
 
-	protected void addRedirectEntry(
+	private void _addRedirectEntry(
 			long redirectEntryId, long groupId, long companyId,
 			String destinationURL, String sourceURL)
 		throws Exception {

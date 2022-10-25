@@ -14,20 +14,26 @@
 
 interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
 	body: LocalizedValue<string>;
-	cc: string;
 	description: string;
-	from: string;
-	fromName: LocalizedValue<string>;
 	id: number;
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: RecipientType;
+	recipients: Partial<TEmailRecipients>[] | Partial<TTermRecipients>[] | [];
 	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
 }
+
+type TTermRecipients = {[key in 'term' | 'userScreenName' | 'roleName']: string};
+
+type TEmailRecipients = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
 declare type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
 declare type RecipientType = 'role' | 'term' | 'user';
 declare type NotificationTemplateType = 'email' | 'userNotification';

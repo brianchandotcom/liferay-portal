@@ -86,11 +86,6 @@ public class ExportTemplatesConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isUseDialog() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

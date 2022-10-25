@@ -119,11 +119,6 @@ public class PublishTemplatesConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isUseDialog() {
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublishTemplatesConfigurationIcon.class);
 

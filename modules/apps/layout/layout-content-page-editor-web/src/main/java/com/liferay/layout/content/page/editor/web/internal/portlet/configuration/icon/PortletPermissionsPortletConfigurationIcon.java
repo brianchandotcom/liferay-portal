@@ -164,11 +164,6 @@ public class PortletPermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isUseDialog() {
-		return false;
-	}
-
 	private String _generatePermissionURL(PortletRequest portletRequest)
 		throws PortalException, WindowStateException {
 

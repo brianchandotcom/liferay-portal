@@ -1,0 +1,60 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
+	@priority = "3"
+	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the Fragments and Widgets panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator sees the aria-selected of Widgets tab is false") {
+			AssertElementNotPresent(
+				key_tab = "Widgets",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			AssertAttributeValue(
+				attribute1 = "aria-selected",
+				key_tab = "Widgets",
+				locator1 = "NavTab#TAB_LINK",
+				value1 = "false");
+		}
+	}
+
+}

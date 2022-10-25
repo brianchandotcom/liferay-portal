@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ContentDashboardDocumentLibraryImplUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

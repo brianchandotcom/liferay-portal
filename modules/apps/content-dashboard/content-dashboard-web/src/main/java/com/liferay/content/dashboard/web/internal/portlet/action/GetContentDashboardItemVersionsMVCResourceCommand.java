@@ -51,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefan Tanasie
  */
 @Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentDashboardPortletKeys.CONTENT_DASHBOARD_ADMIN,
 		"mvc.command.name=/content_dashboard/get_content_dashboard_item_versions"

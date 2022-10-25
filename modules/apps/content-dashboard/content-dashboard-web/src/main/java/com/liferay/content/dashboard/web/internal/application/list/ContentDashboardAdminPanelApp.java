@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
+	immediate = true,
 	property = {
 		"panel.app.order:Integer=200",
 		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_CONTENT

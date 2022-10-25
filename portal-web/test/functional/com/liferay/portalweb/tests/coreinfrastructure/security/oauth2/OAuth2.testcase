@@ -1612,6 +1612,46 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-165963. TC-1: Assert public key is present in JWKS format in URI where DXP makes."
+	@priority = "3"
+	test ObtainPublicKeyInJWKSFormatInURI {
+		property test.name.skip.portal.instance = "OAuth2#ObtainPublicKeyInJWKSFormatInURI";
+
+		task ("Given: Provide a signing key in JSON Web Key format") {
+			var jwk = FileUtil.read("test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/jwk.txt");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "OAuth 2",
+				configurationName = "Authorization Server Configuration",
+				configurationScope = "System Scope");
+
+			PortletEntry.inputTextArea(
+				fieldId = "JsonWebKey",
+				text = "${jwk}");
+
+			PortletEntry.save();
+		}
+
+		task ("When: Visit URI where can obtain a JWKS") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/o/oauth2/jwks");
+		}
+
+		task ("Then: Assert public key in JWKS format is present") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "//body/pre",
+				value1 = "keys");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "//body/pre",
+				value1 = "lOwi0XbSFqBSushw_6JqePPSkGZJuFTVQdw");
+		}
+	}
+
 	@description = "This is a use case for LPS-110393. Verify that panels under global scopes can be expanded."
 	@priority = "4"
 	test PanelsShouldBeExpandableOnGlobalScopes {

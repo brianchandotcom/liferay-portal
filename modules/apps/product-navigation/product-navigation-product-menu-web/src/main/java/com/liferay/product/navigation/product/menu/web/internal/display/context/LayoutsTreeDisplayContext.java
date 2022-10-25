@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -73,7 +75,10 @@ import java.util.Objects;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.WindowStateException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pavel Savinov
@@ -81,7 +86,9 @@ import javax.portlet.WindowStateException;
 public class LayoutsTreeDisplayContext {
 
 	public LayoutsTreeDisplayContext(
-		GroupProvider groupProvider, RenderRequest renderRequest,
+		HttpServletRequest httpServletRequest, Language language,
+		LayoutService layoutService, RenderRequest renderRequest,
+		RenderResponse renderResponse,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
@@ -89,7 +96,11 @@ public class LayoutsTreeDisplayContext {
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			renderRequest);
 
+		_httpServletRequest = httpServletRequest;
+		_language = language;
+		_layoutService = layoutService;
 		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
 		_siteNavigationMenuItemTypeRegistry =
@@ -918,6 +929,9 @@ public class LayoutsTreeDisplayContext {
 	private String _backURL;
 	private Long _groupId;
 	private final GroupProvider _groupProvider;
+	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final LayoutService _layoutService;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final String _namespace;
 	private Boolean _pageHierarchySelectedOption;
@@ -925,6 +939,7 @@ public class LayoutsTreeDisplayContext {
 	private Boolean _privateLayoutsEnabled;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private Long _selectedSiteNavigationMenuItemId;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemLocalService

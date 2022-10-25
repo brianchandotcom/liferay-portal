@@ -15,16 +15,28 @@
 package com.liferay.portal.vulcan.internal.batch.engine.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,11 +47,17 @@ import java.util.Set;
 
 import javax.ws.rs.core.Response;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Javier de Arcos
@@ -51,6 +69,13 @@ public class VulcanBatchEngineTaskItemDelegateRegistryTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
 
 	@Test
 	public void testGetEntityClassNames() {
@@ -80,6 +105,62 @@ public class VulcanBatchEngineTaskItemDelegateRegistryTest {
 			"com.liferay.headless.delivery.internal.resource.v1_0." +
 				"StructuredContentResourceImpl",
 			resourceClass.getName());
+	}
+
+	@Test
+	public void testIsBatchPlannerExportEnabled() {
+		_registerVulcanBatchEngineTaskItemDelegate(true, false);
+
+		Assert.assertTrue(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerExportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+		Assert.assertFalse(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerImportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+	}
+
+	@Test
+	public void testIsBatchPlannerExportImportDisabled() {
+		_registerVulcanBatchEngineTaskItemDelegate(false, false);
+
+		Assert.assertFalse(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerExportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+		Assert.assertFalse(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerImportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+	}
+
+	@Test
+	public void testIsBatchPlannerExportImportEnabled() {
+		_registerVulcanBatchEngineTaskItemDelegate(true, true);
+
+		Assert.assertTrue(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerExportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+		Assert.assertTrue(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerImportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+	}
+
+	@Test
+	public void testIsBatchPlannerImportEnabled() {
+		_registerVulcanBatchEngineTaskItemDelegate(false, true);
+
+		Assert.assertFalse(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerExportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
+		Assert.assertTrue(
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerImportEnabled(
+					TestVulcanBatchEngineTaskItemDelegate.class.getName()));
 	}
 
 	@Test
@@ -157,11 +238,96 @@ public class VulcanBatchEngineTaskItemDelegateRegistryTest {
 		}
 	}
 
+	private void _registerVulcanBatchEngineTaskItemDelegate(
+		boolean exportEnabled, boolean importEnabled) {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			VulcanBatchEngineTaskItemDelegateRegistryTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			VulcanBatchEngineTaskItemDelegate.class,
+			new TestVulcanBatchEngineTaskItemDelegate(),
+			HashMapDictionaryBuilder.put(
+				"batch.engine.task.item.delegate", "true"
+			).put(
+				"batch.planner.export.enabled", String.valueOf(exportEnabled)
+			).put(
+				"batch.planner.import.enabled", String.valueOf(importEnabled)
+			).put(
+				"entity.class.name",
+				TestVulcanBatchEngineTaskItemDelegate.class.getName()
+			).build());
+	}
+
 	@Inject
 	private OpenAPIResource _openAPIResource;
+
+	private ServiceRegistration<VulcanBatchEngineTaskItemDelegate>
+		_serviceRegistration;
 
 	@Inject
 	private VulcanBatchEngineTaskItemDelegateRegistry
 		_vulcanBatchEngineTaskItemDelegateRegistry;
+
+	private static class TestVulcanBatchEngineTaskItemDelegate
+		implements VulcanBatchEngineTaskItemDelegate<Object> {
+
+		@Override
+		public void create(
+				Collection<Object> items, Map<String, Serializable> parameters)
+			throws Exception {
+		}
+
+		@Override
+		public void delete(
+				Collection<Object> items, Map<String, Serializable> parameters)
+			throws Exception {
+		}
+
+		@Override
+		public EntityModel getEntityModel(
+				Map<String, List<String>> multivaluedMap)
+			throws Exception {
+
+			return null;
+		}
+
+		@Override
+		public Page<Object> read(
+				Filter filter, Pagination pagination, Sort[] sorts,
+				Map<String, Serializable> parameters, String search)
+			throws Exception {
+
+			return null;
+		}
+
+		@Override
+		public void setContextBatchUnsafeConsumer(
+			UnsafeBiConsumer
+				<Collection<Object>, UnsafeConsumer<Object, Exception>,
+				 Exception> contextBatchUnsafeConsumer) {
+		}
+
+		@Override
+		public void setContextCompany(Company contextCompany) {
+		}
+
+		@Override
+		public void setContextUser(User contextUser) {
+		}
+
+		@Override
+		public void setLanguageId(String languageId) {
+		}
+
+		@Override
+		public void update(
+				Collection<Object> items, Map<String, Serializable> parameters)
+			throws Exception {
+		}
+
+	}
 
 }

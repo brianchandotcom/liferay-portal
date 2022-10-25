@@ -80,7 +80,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createExecuteDispatchTrigger(
+	public Response createDispatchTriggerRun(
 			@GraphQLName("dispatchTriggerId") Long dispatchTriggerId)
 		throws Exception {
 
@@ -88,7 +88,7 @@ public class Mutation {
 			_dispatchTriggerResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dispatchTriggerResource ->
-				dispatchTriggerResource.postExecuteDispatchTrigger(
+				dispatchTriggerResource.postDispatchTriggerRun(
 					dispatchTriggerId));
 	}
 

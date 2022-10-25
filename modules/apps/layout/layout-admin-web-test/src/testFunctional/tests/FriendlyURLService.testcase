@@ -618,7 +618,7 @@ definition {
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
 
-		AssertLocation.assertPartialLocation(value1 = "${portalURL}/d/dm-document-title");
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest/d/dm-document-title");
 	}
 
 	@description = "This ensures that the permanent redirection can be performed when accessing the old friendly URL of a blog entry displayed with a display page template."

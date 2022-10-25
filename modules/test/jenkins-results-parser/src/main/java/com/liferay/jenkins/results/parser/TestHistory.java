@@ -29,6 +29,10 @@ public class TestHistory {
 		return _averageOverheadDuration;
 	}
 
+	public BatchHistory getBatchHistory() {
+		return _batchHistory;
+	}
+
 	public int getFailureCount() {
 		return _failureCount;
 	}
@@ -45,7 +49,9 @@ public class TestHistory {
 		return _testrayCaseResultID;
 	}
 
-	protected TestHistory(JSONObject jsonObject) {
+	protected TestHistory(BatchHistory batchHistory, JSONObject jsonObject) {
+		_batchHistory = batchHistory;
+
 		_averageDuration = jsonObject.optLong("averageDuration");
 		_averageOverheadDuration = jsonObject.optLong(
 			"averageOverheadDuration");
@@ -57,6 +63,7 @@ public class TestHistory {
 
 	private final long _averageDuration;
 	private final long _averageOverheadDuration;
+	private final BatchHistory _batchHistory;
 	private final int _failureCount;
 	private final int _statusChanges;
 	private final String _testName;

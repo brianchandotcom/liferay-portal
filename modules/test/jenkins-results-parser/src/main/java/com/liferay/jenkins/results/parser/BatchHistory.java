@@ -33,11 +33,17 @@ public class BatchHistory {
 		return _batchName;
 	}
 
-	public TestHistory getTestHistory(String testName) {
-		return _testHistories.get(testName);
+	public JobHistory getJobHistory() {
+		return _jobHistory;
 	}
 
-	protected BatchHistory(JSONObject jsonObject) {
+	public TestHistory getTestHistory(String key) {
+		return _testHistories.get(key);
+	}
+
+	protected BatchHistory(JobHistory jobHistory, JSONObject jsonObject) {
+		_jobHistory = jobHistory;
+
 		_averageDuration = jsonObject.optLong("averageDuration");
 		_batchName = jsonObject.getString("batchName");
 
@@ -49,7 +55,7 @@ public class BatchHistory {
 
 		for (int i = 0; i < testsJSONArray.length(); i++) {
 			TestHistory testHistory = new TestHistory(
-				testsJSONArray.getJSONObject(i));
+				this, testsJSONArray.getJSONObject(i));
 
 			_testHistories.put(testHistory.getTestName(), testHistory);
 		}
@@ -57,6 +63,7 @@ public class BatchHistory {
 
 	private final long _averageDuration;
 	private final String _batchName;
+	private final JobHistory _jobHistory;
 	private final Map<String, TestHistory> _testHistories = new HashMap<>();
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
@@ -22,38 +21,32 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public class HistoryUtil {
 
 	public static BatchHistory getBatchHistory(String batchName, Job job) {
-		String ciHistoryJSONURL = _getCIHistoryJSONURL(job);
+		JobHistory jobHistory = getJobHistory(job);
 
-		Map<String, BatchHistory> batchHistories = _batchHistoriesMap.get(
-			ciHistoryJSONURL);
-
-		if (batchHistories == null) {
-			_initializeHistory(job);
-
-			batchHistories = _batchHistoriesMap.get(ciHistoryJSONURL);
-		}
-
-		if (batchHistories == null) {
-			return null;
-		}
-
-		if (batchName.endsWith("_stable")) {
-			batchName = batchName.replaceAll("(.+)_stable", "$1");
-		}
-
-		return batchHistories.get(batchName);
+		return jobHistory.getBatchHistory(batchName);
 	}
 
-	private static String _getCIHistoryJSONURL(Job job) {
+	public static JobHistory getJobHistory(Job job) {
+		URL ciHistoryURL = _getCIHistoryURL(job);
+
+		JobHistory jobHistory = _jobHistories.get(ciHistoryURL);
+
+		if (jobHistory == null) {
+			jobHistory = new JobHistory(ciHistoryURL);
+
+			_jobHistories.put(ciHistoryURL, jobHistory);
+		}
+
+		return jobHistory;
+	}
+
+	private static URL _getCIHistoryURL(Job job) {
 		String jobName = job.getJobName();
 
 		String testSuiteName = null;
@@ -79,10 +72,11 @@ public class HistoryUtil {
 		}
 
 		try {
-			return JenkinsResultsParserUtil.getProperty(
-				JenkinsResultsParserUtil.getBuildProperties(),
-				"ci.history.json.url", jobName, testSuiteName,
-				upstreamBranchName);
+			return new URL(
+				JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getBuildProperties(),
+					"ci.history.json.url", jobName, testSuiteName,
+					upstreamBranchName));
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
@@ -91,65 +85,6 @@ public class HistoryUtil {
 		return null;
 	}
 
-	private static void _initializeHistory(Job job) {
-		String ciHistoryURLString = _getCIHistoryJSONURL(job);
-
-		if (!JenkinsResultsParserUtil.isURL(ciHistoryURLString) ||
-			_batchHistoriesMap.containsKey(ciHistoryURLString)) {
-
-			return;
-		}
-
-		File tempGzipFile = new File(
-			System.getenv("WORKSPACE"),
-			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
-
-		Map<String, BatchHistory> batchHistories = new HashMap<>();
-
-		try {
-			JenkinsResultsParserUtil.toFile(
-				new URL(ciHistoryURLString), tempGzipFile);
-
-			String content = JenkinsResultsParserUtil.read(tempGzipFile);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
-				return;
-			}
-
-			_batchHistoriesMap.put(
-				ciHistoryURLString, new HashMap<String, BatchHistory>());
-
-			JSONObject historyJSONObject = new JSONObject(content);
-
-			JSONArray batchesJSONArray = historyJSONObject.optJSONArray(
-				"batches");
-
-			if ((batchesJSONArray == JSONObject.NULL) ||
-				batchesJSONArray.isEmpty()) {
-
-				return;
-			}
-
-			for (int i = 0; i < batchesJSONArray.length(); i++) {
-				BatchHistory batchHistory = new BatchHistory(
-					batchesJSONArray.getJSONObject(i));
-
-				batchHistories.put(batchHistory.getBatchName(), batchHistory);
-			}
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
-		finally {
-			if (tempGzipFile.exists()) {
-				JenkinsResultsParserUtil.delete(tempGzipFile);
-			}
-
-			_batchHistoriesMap.put(ciHistoryURLString, batchHistories);
-		}
-	}
-
-	private static final Map<String, Map<String, BatchHistory>>
-		_batchHistoriesMap = new HashMap<>();
+	private static final Map<URL, JobHistory> _jobHistories = new HashMap<>();
 
 }

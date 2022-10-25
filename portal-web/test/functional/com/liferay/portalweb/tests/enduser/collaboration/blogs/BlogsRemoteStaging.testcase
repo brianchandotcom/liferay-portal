@@ -161,6 +161,65 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-57484. It ensures that a scheduled blog entry can be published when remote staging is enabled."
+	@priority = "3"
+	test CanPublishScheduledEntry {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}company.default.time.zone=America/Los_Angeles";
+		property databases.size = "1";
+		property minimum.slave.ram = "24";
+		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishScheduledEntry";
+
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
+
+		JSONBlog.addEntry(
+			displayDate = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name",
+			increaseMinutes = "2");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Blogs",
+			checkPageName = "Staging Blogs Page");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Blogs Page",
+			siteName = "Remote Site");
+
+		Blogs.viewNoEntryCP();
+
+		// We need to wait for the system time to pass by 2 minutes in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
+
+		Pause(locator1 = "120000");
+
+		Refresh();
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This test covers LPS-154403. It asserts that an image with a custom friendlyURL added in the Blog small image field can be published on a site"
 	@priority = "3"
 	test CanPublishSmallImage {

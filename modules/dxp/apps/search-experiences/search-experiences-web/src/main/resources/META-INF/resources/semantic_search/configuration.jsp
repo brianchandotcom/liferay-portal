@@ -68,14 +68,14 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			<aui:validator name="range">[0,60]</aui:validator>
 		</aui:input>
 
-		<aui:input name="enableGPU" type="checkbox" value="<%= semanticSearchCompanyConfigurationDisplayContext.isEnableGPU() %>" />
+		<aui:input helpMessage="sentence-transformer-enable-gpu-help" name="enableGPU" type="checkbox" value="<%= semanticSearchCompanyConfigurationDisplayContext.isEnableGPU() %>" />
 	</div>
 
 	<div class="options-container <%= !sentenceTransformProvider.equals("txtai") ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />txtAiOptionsContainer">
 		<aui:input helpMessage="sentence-transformer-txtai-host-address-help" label="txtai-host-address" name="txtaiHostAddress" value="<%= semanticSearchCompanyConfigurationDisplayContext.getTxtaiHostAddress() %>" />
 	</div>
 
-	<aui:select name="embeddingVectorDimensions" value="<%= semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions() %>">
+	<aui:select helpMessage="sentence-transformer-embedding-vector-dimensions-help" name="embeddingVectorDimensions" value="<%= semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions() %>">
 
 		<%
 		for (String availableEmbeddingVectorDimensions : semanticSearchCompanyConfigurationDisplayContext.getAvailableEmbeddingVectorDimensions()) {
@@ -148,7 +148,7 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 	</aui:select>
 </aui:fieldset>
 
-<aui:input name="cacheTimeout" value="<%= semanticSearchCompanyConfigurationDisplayContext.getCacheTimeout() %>">
+<aui:input helpMessage="sentence-transformer-cache-timeout-help" name="cacheTimeout" value="<%= semanticSearchCompanyConfigurationDisplayContext.getCacheTimeout() %>">
 	<aui:validator name="required" />
 	<aui:validator name="number" />
 	<aui:validator name="min">0</aui:validator>

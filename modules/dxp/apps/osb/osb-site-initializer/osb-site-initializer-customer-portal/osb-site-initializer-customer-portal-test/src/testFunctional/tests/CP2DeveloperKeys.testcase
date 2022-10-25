@@ -1,85 +1,85 @@
 @component-name = "portal-solutions"
 definition {
 
-    property osgi.modules.includes = "osb-site-initializer-customer-portal";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-    property testray.main.component.name = "OSB Site Initializer Customer Portal";
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-    var testSiteName = "Customer Portal Site";
-    var testSiteURL = "customer-portal-site";
-    var testAccount = "Test Account LXC - SM";
-    var testProduct = "LXC - SM";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account LXC - SM";
+	var testProduct = "LXC - SM";
 
-    setUp {
-        task ("Set up instance and sign in") {
-            TestCase.setUpPortalInstance();
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-            User.firstLoginPG();
-        }
+			User.firstLoginPG();
+		}
 
-        task ("Create a new Customer Portal Site") {
-            CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-        }
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
 
-        task ("Add test user access to all Accounts") {
-            CustomerPortal.assignUserToOrganization();
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
 
-            CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
-        }
-    }
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        CustomerPortal.customerPortalTearDown();
+		CustomerPortal.customerPortalTearDown();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
 
-    @description = "Automation ID: LPS-146189 | Test Summary: Verify that clicking the 'Download Key' button downloads an xml file."
-    @ignore = "true"
-    @priority = "5"
-    test CanViewDownloadsXmlFile {
+	@description = "Automation ID: LPS-146189 | Test Summary: Verify that clicking the 'Download Key' button downloads an xml file."
+	@ignore = "true"
+	@priority = "5"
+	test CanViewDownloadsXmlFile {
 
-        // Needs refactor since it depends on example FIFA account
+		// Needs refactor since it depends on example FIFA account
 
-        task ("Signs in OKTA to update and go to Customer Portal") {
-            CustomerPortal.loginOktaToUpdateCP();
+		task ("Signs in OKTA to update and go to Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
 
-            Navigator.openURL();
+			Navigator.openURL();
 
-            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-        }
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
 
-        task ("Select a project and go to activation page") {
-            CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+		task ("Select a project and go to activation page") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
 
-            CP2NavigationMenu.goToProductActivation();
+			CP2NavigationMenu.goToProductActivation();
 
-            CP2NavigationMenu.clickOnProductButton(product = "DXP");
-        }
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
 
-        task ("View keys details and click in Download key") {
-            CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Test2");
+		task ("View keys details and click in Download key") {
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Test2");
 
-            CustomerPortal.clickAtButton(text = "Download Key");
-        }
+			CustomerPortal.clickAtButton(text = "Download Key");
+		}
 
-        task ("Assest the success message and the file as downloaded") {
-            Alert.viewSuccessMessage();
+		task ("Assest the success message and the file as downloaded") {
+			Alert.viewSuccessMessage();
 
-            CP2Utils.closeModal();
+			CP2Utils.closeModal();
 
-            CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.3-2022fifaworldcupqatar-fanid.xml");
-        }
-    }
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.3-2022fifaworldcupqatar-fanid.xml");
+		}
+	}
 
 	@description = "Automation ID: LPS-146187 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
 	@priority = "4"
@@ -96,7 +96,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task ("Open the dropdown and verify that there are 5 DXP versions") {
+		task ("Open the dropdown and assert if have 5 versions") {
 			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
 		}
 	}
@@ -123,27 +123,33 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-151407 | Test Summary: Verify if the text 'Select the Liferay Portal version for which you want to download a developer key.' above the drop-down menu is present."
-    @priority = "3"
-    test CanViewTheProductSubtitle {
-        task ("Go to CP2.0 and join a project") {
-            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+	@description = "Automation ID: LPS-151407 | Test Summary: Verify if the text 'Select the Liferay Portal version for which you want to download a developer key.' above the drop-down menu is present."
+	@priority = "3"
+	test CanViewTheProductSubtitle {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-            CustomerPortal.enterOnProject(
-                status = "Future",
-                title = "Test Account Portal");
-        }
+			CustomerPortal.enterOnProject(
+				status = "Future",
+				title = "Test Account Portal");
+		}
 
-        task ("Go to the product activation page and Portal product") {
-            CP2NavigationMenu.goToProductActivation();
+		task ("Go to the product activation page and Portal product") {
+			CP2NavigationMenu.goToProductActivation();
 
-            CP2NavigationMenu.clickOnProductButton(product = "Portal");
-        }
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+		}
 
-        task ("Assert if the text above the 'Download key' drop-down menu is present") {
-            AssertElementPresent(locator1 = "CP2Utils#DESCRIPTION_DEVELOPER_KEYS");
-        }
-    }
+		task ("Assert if the text above the 'Download key' drop-down menu is present") {
+			AssertElementPresent(locator1 = "CP2Utils#DESCRIPTION_DEVELOPER_KEYS");
+		}
+	}
+
+	@description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
+	@priority = "3"
+	test ConfirmRedirectionToAnotherPage {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
@@ -164,6 +170,42 @@ definition {
 			AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
 
 			Navigator.closeWindow();
+		}
+	}
+
+	@description = "Automation ID: LPS-151406 | Test Summary: Verify that if the user clicks the Download Key button an xml file is downloaded."
+	@ignore = "true"
+	@priority = "4"
+	test ConfirmTheDownloadKeyFromPortal {
+
+		// Needs refactor since it depends on real projects Portals account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("Selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(
+				status = "Future",
+				title = "Test Account Portal");
+		}
+
+		task ("Go to the product activation page and Download Key") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			Button.click(button = "Download Key");
+		}
+
+		task ("Assert the alert message 'Activation Key Was Downloaded Successfully' is visible") {
+			CustomerPortal.viewAlert(alertText = "Activation Key was downloaded successfully");
+
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "Document_1.xml");
 		}
 	}
 

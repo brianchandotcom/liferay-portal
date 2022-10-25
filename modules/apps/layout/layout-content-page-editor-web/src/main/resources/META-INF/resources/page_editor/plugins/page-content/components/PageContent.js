@@ -51,6 +51,7 @@ export default function PageContent({
 	subtype,
 	title,
 }) {
+	const [activeActions, setActiveActions] = useState(false);
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
@@ -198,9 +199,13 @@ export default function PageContent({
 
 	return (
 		<li
-			className={classNames('page-editor__page-contents__page-content', {
-				'page-editor__page-contents__page-content--mapped-item-hovered': isHovered,
-			})}
+			className={classNames(
+				'page-editor__page-contents__page-content mb-1 py-2',
+				{
+					'page-editor__page-contents__page-content--mapped-item-hovered':
+						isHovered || activeActions || isBeingEdited,
+				}
+			)}
 			onMouseLeave={handleMouseLeave}
 			onMouseOver={handleMouseOver}
 		>
@@ -231,15 +236,18 @@ export default function PageContent({
 
 				{dropdownItems?.length ? (
 					<ClayDropDownWithItems
+						active={activeActions}
+						className="align-self-center"
 						items={dropdownItems}
 						menuElementAttrs={{
 							containerProps: {
 								className: 'cadmin',
 							},
 						}}
+						onActiveChange={setActiveActions}
 						trigger={
 							<ClayButton
-								className="btn-monospaced btn-sm text-secondary"
+								className="btn-sm mr-2 page-editor__page-contents__button"
 								displayType="unstyled"
 							>
 								<span className="sr-only">
@@ -252,9 +260,13 @@ export default function PageContent({
 					/>
 				) : (
 					<ClayButton
-						className={classNames('btn-sm mr-2 text-secondary', {
-							'not-allowed': isBeingEdited || !canUpdateEditables,
-						})}
+						className={classNames(
+							'btn-sm mr-2 page-editor__page-contents__button',
+							{
+								'not-allowed':
+									isBeingEdited || !canUpdateEditables,
+							}
+						)}
 						disabled={isBeingEdited || !canUpdateEditables}
 						displayType="unstyled"
 						onClick={onClickEditInlineText}

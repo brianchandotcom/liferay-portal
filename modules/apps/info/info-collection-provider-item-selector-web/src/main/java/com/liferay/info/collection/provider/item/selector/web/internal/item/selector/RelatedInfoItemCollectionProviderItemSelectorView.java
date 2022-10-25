@@ -22,6 +22,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 
@@ -98,10 +99,12 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 
 		for (String itemType : itemTypes) {
 			itemRelatedItemsProviders.addAll(
-				_infoItemServiceTracker.getAllInfoItemServices(
-					(Class<RelatedInfoItemCollectionProvider<?, ?>>)
-						(Class<?>)RelatedInfoItemCollectionProvider.class,
-					itemType));
+				ListUtil.filter(
+					_infoItemServiceTracker.getAllInfoItemServices(
+						(Class<RelatedInfoItemCollectionProvider<?, ?>>)
+							(Class<?>)RelatedInfoItemCollectionProvider.class,
+						itemType),
+					RelatedInfoItemCollectionProvider::isAvailable));
 		}
 
 		return Collections.unmodifiableList(itemRelatedItemsProviders);

@@ -76,11 +76,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE_FIELD_HELPER</td>
-	<td>//div[contains(@class,'required') and contains(.,'This field is required')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBTITLE</td>
 	<td>//div[contains(@class,'autofit-row')]//h4[contains(.,'${key_entrySubtitle}')] | //div[contains(@class,'entry-subtitle')]//p[contains(.,'${key_entrySubtitle}')]</td>
 	<td></td>

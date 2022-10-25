@@ -123,11 +123,27 @@ definition {
 		}
 	}
 
-	@description = "Automation ID:LPS-146192 | Test Summary: Verify that clicking on the link 'Deploying Activation Keys article.' redirects you to another page (Deploying Activation Keys)"
-	@priority = "3"
-	test ConfirmRedirectionToAnotherPage {
-		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+    @description = "Automation ID: LPS-151407 | Test Summary: Verify if the text 'Select the Liferay Portal version for which you want to download a developer key.' above the drop-down menu is present."
+    @priority = "3"
+    test CanViewTheProductSubtitle {
+        task ("Go to CP2.0 and join a project") {
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+            CustomerPortal.enterOnProject(
+                status = "Future",
+                title = "Test Account Portal");
+        }
+
+        task ("Go to the product activation page and Portal product") {
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "Portal");
+        }
+
+        task ("Assert if the text above the 'Download key' drop-down menu is present") {
+            AssertElementPresent(locator1 = "CP2Utils#DESCRIPTION_DEVELOPER_KEYS");
+        }
+    }
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}

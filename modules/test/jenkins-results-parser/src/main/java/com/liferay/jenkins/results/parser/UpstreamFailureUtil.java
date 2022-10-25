@@ -34,32 +34,6 @@ import org.json.JSONObject;
  */
 public class UpstreamFailureUtil {
 
-	public static int getUpstreamJobFailuresBuildNumber(
-		TopLevelBuild topLevelBuild) {
-
-		TopLevelBuildReport topLevelBuildReport =
-			getUpstreamTopLevelBuildReport(topLevelBuild);
-
-		if (topLevelBuildReport == null) {
-			return 0;
-		}
-
-		return topLevelBuildReport.getBuildNumber();
-	}
-
-	public static int getUpstreamJobFailuresBuildNumber(
-		TopLevelBuild topLevelBuild, String upstreamBranchSHA) {
-
-		TopLevelBuildReport topLevelBuildReport =
-			getUpstreamTopLevelBuildReport(topLevelBuild, upstreamBranchSHA);
-
-		if (topLevelBuildReport == null) {
-			return 0;
-		}
-
-		return topLevelBuildReport.getBuildNumber();
-	}
-
 	public static String getUpstreamJobFailuresSHA(
 		TopLevelBuild topLevelBuild) {
 

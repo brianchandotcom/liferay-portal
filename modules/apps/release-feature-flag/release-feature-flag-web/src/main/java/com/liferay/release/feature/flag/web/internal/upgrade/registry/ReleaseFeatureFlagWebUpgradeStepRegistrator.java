@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ReleaseFeatureFlagWebUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

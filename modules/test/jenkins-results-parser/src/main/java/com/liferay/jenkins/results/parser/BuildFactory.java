@@ -60,10 +60,6 @@ public class BuildFactory {
 					url, "JOB_VARIANT", parentBuild);
 			}
 
-			if ((jobVariant != null) && jobVariant.contains("cucumber")) {
-				return new CucumberAxisBuild(url, (BatchBuild)parentBuild);
-			}
-
 			if ((jobVariant != null) &&
 				(jobVariant.contains("functional") ||
 				 jobVariant.contains("test-portal-environment") ||

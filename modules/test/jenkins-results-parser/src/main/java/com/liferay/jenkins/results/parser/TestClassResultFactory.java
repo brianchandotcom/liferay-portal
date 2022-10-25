@@ -21,12 +21,6 @@ import org.json.JSONObject;
  */
 public class TestClassResultFactory {
 
-	public static CucumberTestClassResult newCucumberTestClassResultTestResult(
-		Build build, CucumberScenarioResult cucumberScenarioResult) {
-
-		return new CucumberTestClassResult(build, cucumberScenarioResult);
-	}
-
 	public static TestClassResult newTestClassResult(
 		Build build, JSONObject suiteJSONObject) {
 

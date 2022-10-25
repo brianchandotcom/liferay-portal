@@ -32,6 +32,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
@@ -60,6 +61,9 @@ import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.object.util.ObjectRelationshipUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
@@ -574,6 +578,9 @@ public class ObjectEntryLocalServiceImpl
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
+		_addObjectRelationshipERCFieldValue(
+			objectDefinition.getObjectDefinitionId(), values);
+
 		return values;
 	}
 
@@ -850,9 +857,14 @@ public class ObjectEntryLocalServiceImpl
 			),
 			selectExpressions);
 
+		Map<String, Serializable> values = _getValues(
+			rows.get(0), selectExpressions);
+
+		_addObjectRelationshipERCFieldValue(
+			objectEntry.getObjectDefinitionId(), values);
+
 		return _putFormulaObjectFieldValues(
-			objectEntry.getObjectDefinitionId(),
-			_getValues(rows.get(0), selectExpressions));
+			objectEntry.getObjectDefinitionId(), values);
 	}
 
 	@Override
@@ -1289,6 +1301,65 @@ public class ObjectEntryLocalServiceImpl
 				TempFileEntryUtil.deleteTempFileEntry(
 					dlFileEntry.getFileEntryId());
 			}
+		}
+	}
+
+	private void _addObjectRelationshipERCFieldValue(
+			long objectDefinitionId, Map<String, Serializable> values)
+		throws PortalException {
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinitionId, false)) {
+
+			if (!Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				continue;
+			}
+
+			long primaryKey = GetterUtil.getLong(
+				values.get(objectField.getName()));
+
+			if (primaryKey == 0) {
+				continue;
+			}
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipPersistence.fetchByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+
+			String objectRelationshipERCFieldName =
+				ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
+					objectField,
+					ObjectFieldSettingConstants.
+						OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+
+			if (objectDefinition.isSystem()) {
+				SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+					_systemObjectDefinitionMetadataTracker.
+						getSystemObjectDefinitionMetadata(
+							objectDefinition.getName());
+
+				values.put(
+					objectRelationshipERCFieldName,
+					systemObjectDefinitionMetadata.getExternalReferenceCode(
+						primaryKey));
+
+				continue;
+			}
+
+			ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
+				primaryKey);
+
+			values.put(
+				objectRelationshipERCFieldName,
+				objectEntry.getExternalReferenceCode());
 		}
 	}
 
@@ -3271,6 +3342,10 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private Sorts _sorts;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

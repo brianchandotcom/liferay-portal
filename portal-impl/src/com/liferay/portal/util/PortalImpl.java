@@ -8315,29 +8315,16 @@ public class PortalImpl implements Portal {
 			String i18NPath = _buildI18NPath(
 				languageId, locale, themeDisplay.getSiteGroup());
 
-			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-				alternateURL = canonicalURLPrefix + alternateURLSuffix;
+			if (!alternateURLSuffix.startsWith(i18NPath) &&
+				((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) ||
+				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+				  !siteDefaultLocale.equals(locale)))) {
 
-				if (!alternateURLSuffix.startsWith(i18NPath)) {
-					alternateURL =
-						canonicalURLPrefix + i18NPath + alternateURLSuffix;
-				}
-
-				alternateURLs.put(locale, alternateURL);
+				alternateURL =
+					canonicalURLPrefix + i18NPath + alternateURLSuffix;
 			}
-			else if (siteDefaultLocale.equals(locale)) {
-				alternateURLs.put(locale, alternateURL);
-			}
-			else {
-				if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-					!alternateURLSuffix.startsWith(i18NPath)) {
 
-					alternateURL =
-						canonicalURLPrefix + i18NPath + alternateURLSuffix;
-				}
-
-				alternateURLs.put(locale, alternateURL);
-			}
+			alternateURLs.put(locale, alternateURL);
 		}
 
 		return alternateURLs;

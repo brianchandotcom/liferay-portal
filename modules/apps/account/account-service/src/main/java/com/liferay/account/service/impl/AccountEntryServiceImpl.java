@@ -177,6 +177,24 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry fetchAccountEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		AccountEntry accountEntry =
+			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+
+		if (accountEntry != null) {
+			_accountEntryModelResourcePermission.check(
+				getPermissionChecker(), accountEntry.getAccountEntryId(),
+				ActionKeys.VIEW);
+		}
+
+		return accountEntry;
+	}
+
+	@Override
 	public List<AccountEntry> getAccountEntries(
 			long companyId, int status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)

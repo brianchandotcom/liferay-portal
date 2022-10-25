@@ -18,6 +18,7 @@ import React from 'react';
 export default function NoPageContents() {
 	return (
 		<ClayAlert
+			aria-live="polite"
 			className="m-3"
 			displayType="info"
 			title={Liferay.Language.get('info')}

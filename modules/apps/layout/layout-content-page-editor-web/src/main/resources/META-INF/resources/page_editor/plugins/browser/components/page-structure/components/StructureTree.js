@@ -159,6 +159,7 @@ export default function PageStructureSidebar() {
 		>
 			{!nodes.length && (
 				<ClayAlert
+					aria-live="polite"
 					displayType="info"
 					title={Liferay.Language.get('info')}
 				>

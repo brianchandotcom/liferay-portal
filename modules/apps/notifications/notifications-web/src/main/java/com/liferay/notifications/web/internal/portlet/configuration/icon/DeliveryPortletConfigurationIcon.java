@@ -15,24 +15,13 @@
 package com.liferay.notifications.web.internal.portlet.configuration.icon;
 
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,52 +35,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class DeliveryPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/delivery.jsp";
+	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "configuration");
-	}
-
-	@Override
-	public String getMethod() {
-		return "get";
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("Liferay.Portlet.openModal({namespace: '");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		sb.append(portletDisplay.getNamespace());
-
-		sb.append("', portletSelector: '#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', portletId: '");
-		sb.append(portletDisplay.getId());
-		sb.append("', title: '");
-		sb.append(_language.get(themeDisplay.getLocale(), "configuration"));
-		sb.append("', url: '");
-		sb.append(
-			HtmlUtil.escapeJS(String.valueOf(_getDeliveryURL(portletRequest))));
-		sb.append("'}); return false;");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return String.valueOf(_getDeliveryURL(portletRequest));
 	}
 
 	@Override
@@ -104,31 +57,15 @@ public class DeliveryPortletConfigurationIcon
 		return true;
 	}
 
-	private PortletURL _getDeliveryURL(PortletRequest portletRequest) {
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/notifications/configuration.jsp"
-		).buildPortletURL();
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(windowStateException);
-			}
-		}
-
-		return portletURL;
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeliveryPortletConfigurationIcon.class);
 
 	@Reference
 	private Language _language;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.notifications.web)")
+	private ServletContext _servletContext;
 
 }

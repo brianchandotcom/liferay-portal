@@ -14,27 +14,21 @@
 
 package com.liferay.users.admin.web.internal.portlet.configuration.icon;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.OrganizationPermission;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.portlet.action.ActionUtil;
-import com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,65 +45,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class DeleteOrganizationPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/delete_organization.jsp";
+	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "delete");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		StringBundler sb = new StringBundler(6);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			sb.append(portletDisplay.getNamespace());
-
-			sb.append("deleteOrganization('");
-
-			Organization organization = ActionUtil.getOrganization(
-				portletRequest);
-
-			sb.append(organization.getOrganizationId());
-
-			sb.append("', '");
-
-			String backURL = String.valueOf(
-				portletRequest.getAttribute("view.jsp-backURL"));
-
-			if (Validator.isNull(backURL)) {
-				backURL =
-					UsersAdminPortletURLUtil.
-						createParentOrganizationViewTreeURL(
-							organization.getOrganizationId(),
-							(RenderResponse)portletResponse);
-			}
-
-			sb.append(HtmlUtil.escapeJS(backURL));
-
-			sb.append("');");
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return "javascript:void(0);";
 	}
 
 	@Override
@@ -140,6 +85,11 @@ public class DeleteOrganizationPortletConfigurationIcon
 		return false;
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteOrganizationPortletConfigurationIcon.class);
 
@@ -148,5 +98,8 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 	@Reference
 	private OrganizationPermission _organizationPermission;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.users.admin.web)")
+	private ServletContext _servletContext;
 
 }

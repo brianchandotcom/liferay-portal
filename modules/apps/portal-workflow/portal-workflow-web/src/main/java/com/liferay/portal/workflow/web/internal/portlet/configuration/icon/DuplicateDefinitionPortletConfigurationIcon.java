@@ -16,11 +16,10 @@ package com.liferay.portal.workflow.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
@@ -29,7 +28,8 @@ import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -52,28 +52,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class DuplicateDefinitionPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/duplicate_definition.jsp";
+	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "duplicate");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		String portletNamespace = _portal.getPortletNamespace(
-			_portal.getPortletId(portletRequest));
-
-		return "Liferay.fire('" + portletNamespace + "duplicateDefinition');";
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return "javascript:void(0);";
 	}
 
 	@Override
@@ -104,6 +92,11 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	private boolean _checkPermissions() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -123,7 +116,9 @@ public class DuplicateDefinitionPortletConfigurationIcon
 	@Reference
 	private Language _language;
 
-	@Reference
-	private Portal _portal;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
+	)
+	private ServletContext _servletContext;
 
 }

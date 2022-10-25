@@ -15,22 +15,13 @@
 package com.liferay.knowledge.base.web.internal.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,58 +38,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class PrintKBTemplatePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/print_kb_template.jsp";
+	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "print");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		try {
-			return StringBundler.concat(
-				"window.open('",
-				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/admin/print_kb_template.jsp"
-				).setParameter(
-					"kbTemplateId",
-					() -> {
-						KBTemplate kbTemplate =
-							(KBTemplate)portletRequest.getAttribute(
-								KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
-
-						return kbTemplate.getKbTemplateId();
-					}
-				).setParameter(
-					"viewMode", Constants.PRINT
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"', '', 'directories=no,height=640,location=no,",
-				"menubar=no,resizable=yes,scrollbars=yes,status=0,",
-				"toolbar=0,width=680');");
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return "javascript:void(0);";
 	}
 
 	@Override
@@ -111,13 +60,17 @@ public class PrintKBTemplatePortletConfigurationIcon
 		return true;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PrintKBTemplatePortletConfigurationIcon.class);
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
 
 	@Reference
 	private Language _language;
 
-	@Reference
-	private Portal _portal;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.web)"
+	)
+	private ServletContext _servletContext;
 
 }

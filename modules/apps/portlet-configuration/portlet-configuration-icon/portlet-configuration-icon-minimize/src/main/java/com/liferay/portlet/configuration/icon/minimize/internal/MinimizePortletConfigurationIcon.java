@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.configuration.icon.minimize.internal;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -35,8 +34,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.WindowState;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,11 +46,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = PortletConfigurationIcon.class)
 public class MinimizePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
-	public String getCssClass() {
-		return "portlet-minimize portlet-minimize-icon";
+	public String getJspPath() {
+		return "/configuration/icon/minimize.jsp";
 	}
 
 	@Override
@@ -67,32 +67,6 @@ public class MinimizePortletConfigurationIcon
 		}
 
 		return _language.get(getLocale(portletRequest), key);
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return StringBundler.concat(
-			"Liferay.Portlet.minimize('#p_p_id_", portletDisplay.getId(),
-			"_', this); return false;");
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getURLMin();
 	}
 
 	@Override
@@ -151,6 +125,11 @@ public class MinimizePortletConfigurationIcon
 		return true;
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	private boolean _hasUpdateLayoutPermission(ThemeDisplay themeDisplay) {
 		try {
 			return LayoutPermissionUtil.contains(
@@ -169,5 +148,10 @@ public class MinimizePortletConfigurationIcon
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portlet.configuration.icon.minimize)"
+	)
+	private ServletContext _servletContext;
 
 }

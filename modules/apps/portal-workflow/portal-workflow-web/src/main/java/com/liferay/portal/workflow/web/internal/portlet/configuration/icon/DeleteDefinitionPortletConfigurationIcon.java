@@ -14,18 +14,16 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.configuration.icon;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,50 +41,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class DeleteDefinitionPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/delete_definition.jsp";
+	}
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "delete");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		String portletNamespace = _portal.getPortletNamespace(
-			_portal.getPortletId(portletRequest));
-
-		String deleteURL = getURL(portletRequest, portletResponse);
-
-		return StringBundler.concat(
-			portletNamespace, "confirmDeleteDefinition('", deleteURL,
-			"'); return false;");
-	}
-
-	/**
-	 * Creates and returns an action URL, setting the workflow definition name
-	 * and version as URL parameters.
-	 *
-	 * @param portletRequest the portlet request from which to get the workflow
-	 *        definition name and version
-	 * @param portletResponse the portlet response
-	 */
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				portletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-				PortletRequest.ACTION_PHASE)
-		).setActionName(
-			"/portal_workflow/delete_workflow_definition"
-		).setParameter(
-			"name", portletRequest.getParameter("name")
-		).setParameter(
-			"version", portletRequest.getParameter("version")
-		).buildString();
 	}
 
 	@Override
@@ -102,10 +66,17 @@ public class DeleteDefinitionPortletConfigurationIcon
 		return false;
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	@Reference
 	private Language _language;
 
-	@Reference
-	private Portal _portal;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
+	)
+	private ServletContext _servletContext;
 
 }

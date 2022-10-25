@@ -169,14 +169,14 @@ export default function propsTransformer({
 						Liferay.Language.get('invite-users-to-x'),
 						accountEntryName
 					),
-					url: data?.modalURL,
+					url: data?.requestInvitationsURL,
 				});
 			}
 			else if (action === 'selectAccountUsers') {
 				openSelectAccountUsersModal(
 					accountEntryName,
 					data?.assignAccountUsersURL,
-					data?.modalURL,
+					data?.selectAccountUsersURL,
 					portletNamespace
 				);
 			}

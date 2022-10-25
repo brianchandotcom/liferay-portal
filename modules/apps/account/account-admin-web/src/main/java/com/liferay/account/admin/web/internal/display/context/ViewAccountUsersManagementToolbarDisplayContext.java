@@ -115,7 +115,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 						"/account_admin/invite_account_users"
 					).buildString());
 				dropdownItem.putData(
-					"modalURL",
+					"requestInvitationsURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
@@ -141,7 +141,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 						"/account_admin/assign_account_users"
 					).buildString());
 				dropdownItem.putData(
-					"modalURL",
+					"selectAccountUsersURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(

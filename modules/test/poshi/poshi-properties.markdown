@@ -4,11 +4,11 @@ Below are the list of properties that are available in the
 [poshi-runner.properties](poshi-runner/src/main/resources/poshi-runner.properties)
 file that can be overridden in a `poshi-runner-ext.properties` file.
 
-### accessibility.standards.json
+### accessibility.standards.tags
 
-Sets a JSON string that determines accessibility rule evaluation while using
-the `assertAccessible` Selenium method. See more information for rule formation
-at [https://axe-core.org/docs/](https://axe-core.org/docs/).
+Sets a comma delimited list that determines accessibility rules for the
+the `assertAccessible` Selenium method. See more information for available tags
+at [Axe-core Tags](https://www.deque.com/axe/core-documentation/api-documentation/).
 
 ### browser.chrome.bin.args
 

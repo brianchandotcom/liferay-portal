@@ -19,8 +19,8 @@ package com.liferay.poshi.core.util;
  */
 public class PropsValues {
 
-	public static final String ACCESSIBILITY_STANDARDS_JSON = PropsUtil.get(
-		"accessibility.standards.json");
+	public static final String ACCESSIBILITY_STANDARDS_TAGS = PropsUtil.get(
+		"accessibility.standards.tags");
 
 	public static final String BROWSER_CHROME_BIN_ARGS = PropsUtil.get(
 		"browser.chrome.bin.args");

@@ -17,7 +17,12 @@ package com.liferay.site.initializer.extender.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderUpdatePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,6 +50,17 @@ public class SiteInitializerExtenderUpdatePanelApp extends BasePanelApp {
 	public String getPortletId() {
 		return SiteInitializerExtenderUpdatePortletKeys.
 			SITE_INITIALIZER_EXTENDER_UPDATE;
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165482"))) {
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
 	}
 
 	@Reference(

@@ -105,12 +105,8 @@ public class FreeMarkerTool {
 		ConfigYAML configYAML, String javaDataType,
 		List<JavaMethodSignature> javaMethodSignatures, String schemaName) {
 
-		List<String> disabledBatchSchemaNames =
-			configYAML.getDisabledBatchSchemaNames();
-
-		if (!configYAML.isGenerateBatch() ||
-			disabledBatchSchemaNames.contains(schemaName) ||
-			(javaDataType == null) || javaDataType.isEmpty()) {
+		if (!configYAML.isGenerateBatch() || (javaDataType == null) ||
+			javaDataType.isEmpty()) {
 
 			return false;
 		}

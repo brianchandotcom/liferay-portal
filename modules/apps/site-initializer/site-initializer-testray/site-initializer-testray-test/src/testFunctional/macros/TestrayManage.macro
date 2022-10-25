@@ -88,7 +88,7 @@ definition {
 
 	macro deleteAllCasesTypes {
 		Refresh();
-		
+
 		TestrayLayout.clickManageOnSidebar();
 
 		TestrayManage.selectOptionsManage(itemValue = "Case Types");

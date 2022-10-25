@@ -15,6 +15,7 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectFieldDTOConverter;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -156,7 +158,7 @@ public class ObjectFieldResourceImpl
 
 		ObjectFieldUtil.addListTypeDefinition(
 			contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-			objectField, contextUser.getUserId());
+			_listTypeEntryLocalService, objectField, contextUser.getUserId());
 
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
@@ -207,7 +209,8 @@ public class ObjectFieldResourceImpl
 		if (!serviceBuilderObjectDefinition.isApproved()) {
 			ObjectFieldUtil.addListTypeDefinition(
 				contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-				objectField, contextUser.getUserId());
+				_listTypeEntryLocalService, objectField,
+				contextUser.getUserId());
 		}
 
 		return _toObjectField(
@@ -307,6 +310,9 @@ public class ObjectFieldResourceImpl
 
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

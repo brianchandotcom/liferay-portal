@@ -15,6 +15,7 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
@@ -457,7 +458,8 @@ public class ObjectDefinitionResourceImpl
 
 				ObjectFieldUtil.addListTypeDefinition(
 					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-					objectField, contextUser.getUserId());
+					_listTypeEntryLocalService, objectField,
+					contextUser.getUserId());
 			}
 		}
 	}
@@ -728,6 +730,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

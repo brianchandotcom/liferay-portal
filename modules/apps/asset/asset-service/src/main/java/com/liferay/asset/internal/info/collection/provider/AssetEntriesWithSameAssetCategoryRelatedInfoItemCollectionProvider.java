@@ -34,12 +34,18 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -90,11 +96,13 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
 
+		AssetEntry assetEntry = (AssetEntry)relatedItem;
+
 		AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-			(AssetEntry)relatedItem, collectionQuery);
+			assetEntry, collectionQuery);
 
 		try {
-			SearchContext searchContext = _getSearchContext();
+			SearchContext searchContext = _getSearchContext(assetEntry);
 
 			Hits hits = _assetHelper.search(
 				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
@@ -145,6 +153,30 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		}
 
 		return true;
+	}
+
+	private BooleanClause[] _getAssetEntryIdBooleanClause(
+		AssetEntry assetEntry) {
+
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+		BooleanFilter assetEntryIdBooleanFilter = new BooleanFilter();
+
+		TermsFilter assetEntryIdTermsFilter = new TermsFilter(
+			Field.ASSET_ENTRY_ID);
+
+		assetEntryIdTermsFilter.addValue(
+			String.valueOf(assetEntry.getEntryId()));
+
+		assetEntryIdBooleanFilter.add(
+			assetEntryIdTermsFilter, BooleanClauseOccur.MUST_NOT);
+
+		booleanQueryImpl.setPreBooleanFilter(assetEntryIdBooleanFilter);
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+		};
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
@@ -280,13 +312,13 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		return finalStep.build();
 	}
 
-	private SearchContext _getSearchContext() {
+	private SearchContext _getSearchContext(AssetEntry assetEntry) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		return SearchContextFactory.getInstance(
+		SearchContext searchContext = SearchContextFactory.getInstance(
 			new long[0], new String[0],
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
@@ -297,6 +329,11 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			).build(),
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
+
+		searchContext.setBooleanClauses(
+			_getAssetEntryIdBooleanClause(assetEntry));
+
+		return searchContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

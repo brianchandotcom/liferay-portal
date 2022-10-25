@@ -1115,8 +1115,6 @@ definition {
 	@description = "This is a test for LRQA-66639. This test validates the creation, edition, deletion and persistence of fields into Web Contents in different instance language."
 	@priority = "5"
 	test LocalizedWebContentWithDifferentInstanceLanguage {
-		property portal.acceptance = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

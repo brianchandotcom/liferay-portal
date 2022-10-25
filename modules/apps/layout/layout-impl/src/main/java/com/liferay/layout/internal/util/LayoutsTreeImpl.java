@@ -690,6 +690,19 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				"name", layoutName
 			);
 
+			List<LayoutTreeNode> layoutTreeNodesList =
+				childLayoutTreeNodes.getLayoutTreeNodesList();
+
+			if (GetterUtil.getBoolean(
+					httpServletRequest.getAttribute(
+						ProductNavigationProductMenuWebKeys.
+							RETURN_LAYOUTS_AS_ARRAY)) &&
+				(childLayoutTreeNodes.getTotal() !=
+					layoutTreeNodesList.size())) {
+
+				jsonObject.put("paginated", true);
+			}
+
 			jsonObject.put(
 				"parentable",
 				LayoutPermissionUtil.contains(

@@ -17,12 +17,12 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -42,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -230,13 +230,14 @@ public class SelectLayoutCollectionDisplayContext {
 	}
 
 	private List<String> _getInfoItemFormProviderClassNames() {
-		List<String> infoItemClassNames =
-			_infoItemServiceTracker.getInfoItemClassNames(
-				InfoItemFormProvider.class);
+		List<String> infoItemClassNames = new ArrayList<>();
 
-		if (infoItemClassNames.contains(FileEntry.class.getName())) {
-			infoItemClassNames.add(DLFileEntryConstants.getClassName());
-			infoItemClassNames.remove(FileEntry.class.getName());
+		for (String className :
+				_infoItemServiceTracker.getInfoItemClassNames(
+					InfoItemFormProvider.class)) {
+
+			infoItemClassNames.add(
+				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
 		}
 
 		return infoItemClassNames;

@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.internal.util;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.exception.NoSuchInfoItemException;
@@ -28,6 +27,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
@@ -217,13 +217,8 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoItemReference infoItemReference = infoItemReferenceOptional.get();
 
-		// LPS-111037
-
-		String className = infoItemReference.getClassName();
-
-		if (Objects.equals(className, DLFileEntry.class.getName())) {
-			className = FileEntry.class.getName();
-		}
+		String className = _infoSearchClassMapperTracker.getClassName(
+			infoItemReference.getClassName());
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -502,6 +497,9 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 	@Reference
 	private JSONFactory _jsonFactory;

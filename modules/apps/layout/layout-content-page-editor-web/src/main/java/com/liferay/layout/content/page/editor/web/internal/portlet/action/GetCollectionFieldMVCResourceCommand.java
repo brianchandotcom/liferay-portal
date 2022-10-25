@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryModel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
@@ -45,6 +44,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
@@ -526,13 +526,14 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private List<String> _getInfoItemFormProviderClassNames() {
-		List<String> infoItemClassNames =
-			_infoItemServiceTracker.getInfoItemClassNames(
-				InfoItemFormProvider.class);
+		List<String> infoItemClassNames = new ArrayList<>();
 
-		if (infoItemClassNames.contains(FileEntry.class.getName())) {
-			infoItemClassNames.add(DLFileEntryConstants.getClassName());
-			infoItemClassNames.remove(FileEntry.class.getName());
+		for (String className :
+				_infoItemServiceTracker.getInfoItemClassNames(
+					InfoItemFormProvider.class)) {
+
+			infoItemClassNames.add(
+				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
 		}
 
 		return infoItemClassNames;

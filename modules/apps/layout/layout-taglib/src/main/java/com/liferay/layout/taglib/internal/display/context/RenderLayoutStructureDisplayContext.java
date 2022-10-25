@@ -14,7 +14,6 @@
 
 package com.liferay.layout.taglib.internal.display.context;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -39,6 +38,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.taglib.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -994,13 +993,8 @@ public class RenderLayoutStructureDisplayContext {
 	private String _getMappedCollectionValue(
 		String collectionFieldId, InfoItemReference infoItemReference) {
 
-		// LPS-111037
-
-		String className = infoItemReference.getClassName();
-
-		if (Objects.equals(className, DLFileEntry.class.getName())) {
-			className = FileEntry.class.getName();
-		}
+		String className = InfoSearchClassMapperTrackerUtil.getClassName(
+			infoItemReference.getClassName());
 
 		InfoItemServiceTracker infoItemServiceTracker =
 			ServletContextUtil.getInfoItemServiceTracker();

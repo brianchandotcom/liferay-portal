@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.search.experiences.blueprint.exception.InvalidWebCacheItemException;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-import com.liferay.search.experiences.internal.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
 
 import java.beans.ExceptionListener;
 

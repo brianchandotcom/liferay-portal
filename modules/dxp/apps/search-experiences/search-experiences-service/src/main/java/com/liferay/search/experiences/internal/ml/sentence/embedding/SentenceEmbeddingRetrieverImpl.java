@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
+import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
 
 import java.util.Map;
 

@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.search.experiences.configuration,\
 	com.liferay.search.experiences.constants,\
 	com.liferay.search.experiences.exception,\
+	com.liferay.search.experiences.ml.sentence.embedding,\
 	com.liferay.search.experiences.model,\
 	com.liferay.search.experiences.service,\
 	com.liferay.search.experiences.service.persistence,\

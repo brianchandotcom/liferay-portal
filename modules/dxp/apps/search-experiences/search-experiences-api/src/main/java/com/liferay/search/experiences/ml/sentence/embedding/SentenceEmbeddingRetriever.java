@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.ml.sentence.embedding;
+package com.liferay.search.experiences.ml.sentence.embedding;
 
 /**
  * @author Petteri Karttunen

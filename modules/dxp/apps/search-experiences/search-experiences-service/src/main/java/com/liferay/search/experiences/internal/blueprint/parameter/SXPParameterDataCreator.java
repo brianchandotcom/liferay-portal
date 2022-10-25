@@ -45,7 +45,7 @@ import com.liferay.search.experiences.internal.blueprint.parameter.contributor.O
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
-import com.liferay.search.experiences.internal.ml.sentence.embedding.SentenceEmbeddingRetriever;
+import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.ParameterConfiguration;

@@ -34,6 +34,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerChoice;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -140,7 +141,16 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "documents", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						NAMESPACE, "previews-and-thumbnails")
+						NAMESPACE, "previews-and-thumbnails"),
+					new PortletDataHandlerBoolean(
+						getNamespace(), "referenced-content", true, false,
+						new PortletDataHandlerControl[] {
+							new PortletDataHandlerChoice(
+								getNamespace(), "referenced-content-behavior", 0,
+								new String[] {
+									"include-always", "include-if-modified"
+								})
+						})
 				},
 				DLFileEntryConstants.getClassName()),
 			new PortletDataHandlerBoolean(

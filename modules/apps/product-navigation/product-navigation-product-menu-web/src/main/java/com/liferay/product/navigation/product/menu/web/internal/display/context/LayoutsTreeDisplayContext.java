@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -56,10 +57,14 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.SessionTreeJSClicks;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
-import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -307,6 +312,43 @@ public class LayoutsTreeDisplayContext {
 
 	public String getNamespace() {
 		return _namespace;
+	}
+
+	public Map<String, Object> getPagesTreeData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"config",
+			HashMapBuilder.<String, Object>put(
+				"loadMoreItemsURL",
+				() -> ResourceURLBuilder.createResourceURL(
+					_renderResponse
+				).setResourceID(
+					"/product_navigation_product_menu/get_layouts"
+				).buildString()
+			).put(
+				"maxPageSize",
+				GetterUtil.getInteger(
+					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
+			).put(
+				"moveItemURL",
+				() -> {
+					StringBundler sb = new StringBundler(3);
+
+					sb.append(PortalUtil.getPortalURL(_httpServletRequest));
+					sb.append(_themeDisplay.getPathMain());
+					sb.append("/portal/edit_layout?cmd=parent_layout_id");
+
+					return sb.toString();
+				}
+			).put(
+				"namespace", getNamespace()
+			).build()
+		).put(
+			"isPrivateLayoutsTree", isPrivateLayout()
+		).put(
+			"items", _getLayoutsJSONArray()
+		).put(
+			"selectedLayoutId", getSelPlid()
+		).build();
 	}
 
 	public String getPagesTreeURL() throws WindowStateException {
@@ -577,6 +619,55 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		return childSiteNavigationMenuItemsJSONArray;
+	}
+
+	private JSONArray _getLayoutsJSONArray() throws Exception {
+		JSONArray layoutsJSONArray = null;
+
+		long[] openNodes = StringUtil.split(
+			SessionTreeJSClicks.getOpenNodes(
+				_httpServletRequest, "productMenuPagesTree"),
+			0L);
+
+		_httpServletRequest.setAttribute(
+			ProductNavigationProductMenuWebKeys.RETURN_LAYOUTS_AS_ARRAY,
+			Boolean.TRUE);
+
+		String layoutsJSON = LayoutsTreeUtil.getLayoutsJSON(
+			_httpServletRequest, _groupId, isPrivateLayout(),
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true,
+			"productMenuPagesTree", null);
+
+		if (layoutsJSON.startsWith(StringPool.OPEN_BRACKET)) {
+			layoutsJSONArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
+		}
+		else {
+			layoutsJSONArray = JSONFactoryUtil.createJSONArray();
+		}
+
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"children", layoutsJSONArray
+			).put(
+				"id", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID
+			).put(
+				"name", _language.get(_themeDisplay.getLocale(), "pages")
+			).put(
+				"paginated",
+				() -> {
+					int layoutsCount = _layoutService.getLayoutsCount(
+						_groupId, isPrivateLayout(),
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					if (layoutsCount >
+							PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
+
+						return true;
+					}
+
+					return false;
+				}
+			));
 	}
 
 	private JSONObject _getOptionGroupJSONObject(

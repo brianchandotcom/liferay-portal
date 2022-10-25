@@ -802,7 +802,7 @@ public class ContentPageEditorDisplayContext {
 		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListItemSelectorReturnType());
 		infoListItemSelectorCriterion.setItemTypes(
-			_getInfoItemFormProviderClassNames());
+			_getInfoItemFormProviderSearchClassNames());
 
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
@@ -812,7 +812,7 @@ public class ContentPageEditorDisplayContext {
 			setDesiredItemSelectorReturnTypes(
 				new InfoListProviderItemSelectorReturnType());
 		infoCollectionProviderItemSelectorCriterion.setItemTypes(
-			_getInfoItemFormProviderClassNames());
+			_getInfoItemFormProviderSearchClassNames());
 
 		return Arrays.asList(
 			infoListItemSelectorCriterion,
@@ -1299,7 +1299,7 @@ public class ContentPageEditorDisplayContext {
 		return _imageItemSelectorCriterion;
 	}
 
-	private List<String> _getInfoItemFormProviderClassNames() {
+	private List<String> _getInfoItemFormProviderSearchClassNames() {
 		List<String> infoItemClassNames = new ArrayList<>();
 
 		for (String className :

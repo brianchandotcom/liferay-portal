@@ -110,7 +110,7 @@ public class SelectLayoutCollectionDisplayContext {
 		else {
 			long[] groupIds = {_themeDisplay.getScopeGroupId()};
 
-			List<String> types = _getInfoItemFormProviderClassNames();
+			List<String> types = _getInfoItemFormProviderSearchClassNames();
 
 			searchContainer.setResultsAndTotal(
 				() -> AssetListEntryServiceUtil.getAssetListEntries(
@@ -229,7 +229,7 @@ public class SelectLayoutCollectionDisplayContext {
 			});
 	}
 
-	private List<String> _getInfoItemFormProviderClassNames() {
+	private List<String> _getInfoItemFormProviderSearchClassNames() {
 		List<String> infoItemClassNames = new ArrayList<>();
 
 		for (String className :

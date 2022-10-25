@@ -356,7 +356,7 @@ public class GetCollectionFieldMVCResourceCommand
 		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListItemSelectorReturnType());
 		infoListItemSelectorCriterion.setItemTypes(
-			_getInfoItemFormProviderClassNames());
+			_getInfoItemFormProviderSearchClassNames());
 
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
@@ -366,7 +366,7 @@ public class GetCollectionFieldMVCResourceCommand
 			setDesiredItemSelectorReturnTypes(
 				new InfoListProviderItemSelectorReturnType());
 		infoCollectionProviderItemSelectorCriterion.setItemTypes(
-			_getInfoItemFormProviderClassNames());
+			_getInfoItemFormProviderSearchClassNames());
 
 		RelatedInfoItemCollectionProviderItemSelectorCriterion
 			relatedInfoItemCollectionProviderItemSelectorCriterion =
@@ -525,7 +525,7 @@ public class GetCollectionFieldMVCResourceCommand
 		return null;
 	}
 
-	private List<String> _getInfoItemFormProviderClassNames() {
+	private List<String> _getInfoItemFormProviderSearchClassNames() {
 		List<String> infoItemClassNames = new ArrayList<>();
 
 		for (String className :

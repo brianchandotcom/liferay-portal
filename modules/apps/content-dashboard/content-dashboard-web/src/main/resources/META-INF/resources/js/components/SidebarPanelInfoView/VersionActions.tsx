@@ -15,11 +15,36 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-const VersionActions = ({actions}: IProps) => {
-	const handleActionClick = ({url}: {url: string}): void => {
+const availableActionMethods: IAvailableActionMethods = {
+	NAVIGATE: (url: string) => {
+		navigate(url);
+	},
+	SUBMIT_FORM: (url: string): void => {
 		window.submitForm((document as IDocument).hrefFm, url);
+	},
+};
+
+const VersionActions = ({actions}: IProps) => {
+	const handleActionClick = ({
+		type,
+		url,
+	}: {
+		type: string;
+		url: string;
+	}): void => {
+		if (type in availableActionMethods) {
+			availableActionMethods[type as keyof IAvailableActionMethods](url);
+		}
+		else {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(
+					`No action type method called ${type} is available in availableActionMethods object definition`
+				);
+			}
+		}
 	};
 
 	return (
@@ -37,10 +62,10 @@ const VersionActions = ({actions}: IProps) => {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{actions.map(({icon, label, name, url}) => (
+				{actions.map(({icon, label, name, type, url}) => (
 					<ClayDropDown.Item
 						key={name}
-						onClick={() => handleActionClick({url})}
+						onClick={() => handleActionClick({type, url})}
 					>
 						<ClayIcon symbol={icon || ''} />
 
@@ -60,6 +85,7 @@ export interface IAction {
 	icon?: string;
 	label: string;
 	name: string;
+	type: string;
 	url: string;
 }
 
@@ -71,6 +97,11 @@ declare global {
 	interface IDocument extends Document {
 		hrefFm: HTMLElement;
 	}
+}
+
+interface IAvailableActionMethods {
+	NAVIGATE: (url: string) => void;
+	SUBMIT_FORM: (url: string) => void;
 }
 
 export default VersionActions;

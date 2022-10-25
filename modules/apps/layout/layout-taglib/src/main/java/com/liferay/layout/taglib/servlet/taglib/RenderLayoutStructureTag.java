@@ -335,17 +335,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 				containerTag.doStartTag();
 
-				String className =
-					InfoSearchClassMapperTrackerUtil.getClassName(
-						renderCollectionLayoutStructureItemDisplayContext.
-							getCollectionItemType());
-
 				InfoItemServiceTracker infoItemServiceTracker =
 					ServletContextUtil.getInfoItemServiceTracker();
 
 				InfoItemDetailsProvider infoItemDetailsProvider =
 					infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemDetailsProvider.class, className);
+						InfoItemDetailsProvider.class,
+						InfoSearchClassMapperTrackerUtil.getClassName(
+							renderCollectionLayoutStructureItemDisplayContext.
+								getCollectionItemType()));
 
 				for (int i = 0; i < numberOfRows; i++) {
 					RowTag rowTag = new RowTag();

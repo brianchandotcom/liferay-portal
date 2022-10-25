@@ -21,6 +21,7 @@ import {
 	useStateSafe,
 } from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useRef} from 'react';
 
 import {useId} from '../../core/hooks/useId';
@@ -433,6 +434,10 @@ export default function Sidebar() {
 				</div>
 
 				<div
+					aria-label={sub(
+						Liferay.Language.get('x-panel'),
+						panel.label
+					)}
 					className={classNames({
 						'page-editor__sidebar__content': true,
 						'page-editor__sidebar__content--open': sidebarOpen,
@@ -444,6 +449,7 @@ export default function Sidebar() {
 					id={sidebarContentId}
 					onClick={deselectItem}
 					ref={sidebarContentRef}
+					role="region"
 					tabIndex="-1"
 				>
 					{hasError ? (

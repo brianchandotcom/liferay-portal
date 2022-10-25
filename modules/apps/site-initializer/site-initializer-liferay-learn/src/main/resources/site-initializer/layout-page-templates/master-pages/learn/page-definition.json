@@ -144,7 +144,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#ed8f9f",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": "https://www.liferay.com/customers"
+										"menuItemUrl": "https://customer.liferay.com/"
 									},
 									"fragmentFields": [
 										{
@@ -256,7 +256,7 @@
 									"fragmentConfig": {
 										"iconBackgroundColor": "#5fbdef",
 										"iconColor": "var(--color-neutral-0)",
-										"menuItemUrl": "https://www.liferay.com/web/marketplace"
+										"menuItemUrl": "https://marketplace.liferay.com/"
 									},
 									"fragmentFields": [
 										{

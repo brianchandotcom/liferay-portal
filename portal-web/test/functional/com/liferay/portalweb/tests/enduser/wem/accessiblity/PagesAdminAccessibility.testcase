@@ -1,0 +1,54 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-165106. The role of page template cards should be button when create a new page."
+	@priority = "1"
+	test ViewRoleOfPageTemplateCards {
+		task ("Given a page creator accesses to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the page creator creates a new page") {
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Page");
+		}
+
+		task ("Then the page creator sees the role of page template cards is button") {
+			for (var pageTemplateName : list "Full Page Application,Link to a Page of This Site,Link to URL,Page Set,Widget Page,Panel,Embedded") {
+				AssertAttributeValue(
+					attribute1 = "role",
+					locator1 = "//div[contains(@class,'template-card-horizontal')][normalize-space()='${pageTemplateName}']",
+					value1 = "button");
+			}
+		}
+	}
+
+}

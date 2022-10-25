@@ -5,15 +5,6 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fluid"
 					},
 					"name": "Submit Container"
@@ -27,17 +18,9 @@
 							"indexed": true,
 							"layout": {
 								"align": "Center",
-								"borderWidth": 0,
 								"contentDisplay": "FlexRow",
 								"justify": "Center",
 								"marginBottom": 4,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Message Container"
@@ -77,17 +60,8 @@
 						"definition": {
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"contentDisplay": "FlexRow",
 								"justify": "Center",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Button Container"
@@ -99,7 +73,6 @@
 										"key": "DIALECT-dialect-button"
 									},
 									"fragmentConfig": {
-										"buttonSize": "",
 										"inverted": false,
 										"style": "primary",
 										"type": "solid",
@@ -156,7 +129,6 @@
 										"key": "DIALECT-dialect-button"
 									},
 									"fragmentConfig": {
-										"buttonSize": "",
 										"inverted": false,
 										"style": "primary",
 										"type": "solid",

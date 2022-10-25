@@ -3,21 +3,8 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"borderWidth": "0",
-						"textAlign": ""
-					},
 					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fluid"
 					},
 					"name": "Home Container"
@@ -33,8 +20,7 @@
 							"fragmentFields": [
 							],
 							"fragmentStyle": {
-								"marginBottom": "5",
-								"textAlign": ""
+								"marginBottom": "5"
 							},
 							"indexed": true
 						},
@@ -43,21 +29,11 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"marginBottom": "5",
-								"textAlign": ""
+								"marginBottom": "5"
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"marginBottom": 4,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "News Section"
@@ -139,7 +115,6 @@
 													"fragmentStyle": {
 														"fontWeight": "fontWeightBold",
 														"marginBottom": "3",
-														"textAlign": "",
 														"textColor": "colorNeutral10"
 													},
 													"indexed": true,
@@ -150,23 +125,12 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"height": "320px",
-														"textAlign": ""
+														"height": "320px"
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
 														"contentDisplay": "FlexColumn",
 														"justify": "SpaceBetween",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "News Container"
@@ -340,24 +304,13 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
 														"marginTop": "4",
-														"paddingBottom": "2",
-														"textAlign": ""
+														"paddingBottom": "2"
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
 														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 2,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "Button Container"
@@ -448,7 +401,6 @@
 													"fragmentStyle": {
 														"fontWeight": "fontWeightBold",
 														"marginBottom": "3",
-														"textAlign": "",
 														"textColor": "colorNeutral10"
 													},
 													"indexed": true,
@@ -459,24 +411,13 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"height": "345px",
-														"textAlign": ""
+														"height": "345px"
 													},
 													"indexed": true,
 													"layout": {
 														"align": "Start",
-														"borderWidth": 0,
 														"contentDisplay": "FlexColumn",
 														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "Slider Container"
@@ -566,21 +507,11 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"marginBottom": "5",
-								"textAlign": ""
+								"marginBottom": "5"
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"marginBottom": 4,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Data on EVP Section"
@@ -611,7 +542,6 @@
 									"fragmentStyle": {
 										"fontWeight": "fontWeightBold",
 										"marginBottom": "3",
-										"textAlign": "",
 										"textColor": "colorNeutral10"
 									},
 									"indexed": true,
@@ -622,23 +552,12 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"borderWidth": "0",
-										"textAlign": ""
 									},
 									"indexed": true,
 									"layout": {
 										"align": "Center",
-										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
 										"justify": "SpaceBetween",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fluid"
 									},
 									"name": "Data Container"
@@ -649,25 +568,16 @@
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
 												"maxWidth": "208px",
 												"paddingTop": "4",
-												"textAlign": "",
 												"width": "208px"
 											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
 												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
 												"paddingTop": 2,
 												"widthType": "Fluid"
 											},
@@ -715,8 +625,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "3",
-														"textAlign": ""
+														"marginBottom": "3"
 													},
 													"indexed": true
 												},
@@ -725,20 +634,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fixed"
 													}
 												},
@@ -766,7 +664,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "2",
 																"textAlign": "center",
@@ -816,25 +713,16 @@
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
 												"maxWidth": "208px",
 												"paddingTop": "4",
-												"textAlign": "",
 												"width": "208px"
 											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
 												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
 												"paddingTop": 2,
 												"widthType": "Fluid"
 											},
@@ -882,8 +770,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "3",
-														"textAlign": ""
+														"marginBottom": "3"
 													},
 													"indexed": true
 												},
@@ -892,20 +779,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fixed"
 													}
 												},
@@ -933,7 +809,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "2",
 																"textAlign": "center",
@@ -983,25 +858,16 @@
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
 												"maxWidth": "208px",
 												"paddingTop": "4",
-												"textAlign": "",
 												"width": "208px"
 											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
 												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
 												"paddingTop": 2,
 												"widthType": "Fluid"
 											},
@@ -1049,8 +915,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "3",
-														"textAlign": ""
+														"marginBottom": "3"
 													},
 													"indexed": true
 												},
@@ -1059,20 +924,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fixed"
 													}
 												},
@@ -1100,7 +954,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "2",
 																"textAlign": "center",
@@ -1150,25 +1003,16 @@
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
 												"maxWidth": "208px",
 												"paddingTop": "4",
-												"textAlign": "",
 												"width": "208px"
 											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
 												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
 												"paddingTop": 2,
 												"widthType": "Fluid"
 											},
@@ -1216,8 +1060,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "3",
-														"textAlign": ""
+														"marginBottom": "3"
 													},
 													"indexed": true
 												},
@@ -1226,20 +1069,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fixed"
 													}
 												},
@@ -1267,7 +1099,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "2",
 																"textAlign": "center",
@@ -1317,25 +1148,16 @@
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
 												"maxWidth": "208px",
 												"paddingTop": "4",
-												"textAlign": "",
 												"width": "208px"
 											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
 												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
 												"paddingTop": 2,
 												"widthType": "Fluid"
 											},
@@ -1383,8 +1205,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "3",
-														"textAlign": ""
+														"marginBottom": "3"
 													},
 													"indexed": true
 												},
@@ -1393,20 +1214,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fixed"
 													}
 												},
@@ -1434,7 +1244,6 @@
 																}
 															],
 															"fragmentStyle": {
-																"borderWidth": "0",
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "2",
 																"textAlign": "center",
@@ -1493,15 +1302,6 @@
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Process Section"
@@ -1562,16 +1362,7 @@
 												"definition": {
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
 														"contentDisplay": "FlexColumn",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "Process Left Container"
@@ -1582,16 +1373,7 @@
 															"indexed": true,
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															},
 															"name": "Process Title Container"
@@ -1665,7 +1447,6 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
-																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
 																	"indexed": true,
@@ -1680,15 +1461,6 @@
 														"definition": {
 															"indexed": true,
 															"layout": {
-																"borderWidth": 0,
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															},
 															"name": "Process Description Container"
@@ -1789,16 +1561,7 @@
 															"indexed": true,
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															},
 															"name": "Process Image Container"
@@ -1884,17 +1647,8 @@
 													"indexed": true,
 													"layout": {
 														"align": "Center",
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
 														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "Process Slider Container"

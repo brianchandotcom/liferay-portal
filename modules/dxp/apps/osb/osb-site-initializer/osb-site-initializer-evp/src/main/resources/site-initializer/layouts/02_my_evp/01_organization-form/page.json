@@ -3,6 +3,26 @@
 	"name_i18n": {
 		"en_US": "Organization Form"
 	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "User",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	],
 	"private": false,
 	"system": false,
 	"type": "content"

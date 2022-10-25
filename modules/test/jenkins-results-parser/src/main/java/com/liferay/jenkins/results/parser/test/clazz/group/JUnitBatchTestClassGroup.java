@@ -473,33 +473,53 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					0, TestClassGroupFactory.newAxisTestClassGroup(this));
 			}
 			else {
-				AxisTestClassGroup axisTestClassGroup =
-					TestClassGroupFactory.newAxisTestClassGroup(this);
+				List<TestClass> batchTestClasses = new ArrayList<>(testClasses);
 
-				axisTestClassGroups.add(axisTestClassGroup);
+				Collections.sort(
+					batchTestClasses, new TestClassDurationComparator());
 
-				for (TestClass testClass : testClasses) {
-					if (!axisTestClassGroup.hasTestClasses()) {
-						axisTestClassGroup.addTestClass(testClass);
+				while (!batchTestClasses.isEmpty()) {
+					List<TestClass> axisTestClasses = new ArrayList<>();
 
-						continue;
+					for (TestClass batchTestClass : batchTestClasses) {
+						if (axisTestClasses.isEmpty()) {
+							axisTestClasses.add(batchTestClass);
+
+							continue;
+						}
+
+						long duration = 0L;
+						long totalOverheadDuration = 0L;
+
+						for (TestClass axisTestClass : axisTestClasses) {
+							duration += axisTestClass.getAverageDuration();
+							totalOverheadDuration +=
+								axisTestClass.getAverageOverheadDuration();
+						}
+
+						duration += batchTestClass.getAverageDuration();
+						totalOverheadDuration +=
+							batchTestClass.getAverageOverheadDuration();
+
+						duration +=
+							totalOverheadDuration /
+								(axisTestClasses.size() + 1);
+
+						if (duration >= targetAxisDuration) {
+							continue;
+						}
+
+						axisTestClasses.add(batchTestClass);
 					}
 
-					long estimatedAxisDuration =
-						axisTestClassGroup.getAverageDuration() +
-							testClass.getAverageDuration() +
-								testClass.getAverageOverheadDuration();
+					batchTestClasses.removeAll(axisTestClasses);
 
-					if (estimatedAxisDuration < targetAxisDuration) {
-						axisTestClassGroup.addTestClass(testClass);
-
-						continue;
-					}
-
-					axisTestClassGroup =
+					AxisTestClassGroup axisTestClassGroup =
 						TestClassGroupFactory.newAxisTestClassGroup(this);
 
-					axisTestClassGroup.addTestClass(testClass);
+					for (TestClass axisTestClass : axisTestClasses) {
+						axisTestClassGroup.addTestClass(axisTestClass);
+					}
 
 					axisTestClassGroups.add(axisTestClassGroup);
 				}

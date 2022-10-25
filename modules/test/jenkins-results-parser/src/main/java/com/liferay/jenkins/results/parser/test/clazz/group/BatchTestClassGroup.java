@@ -37,6 +37,7 @@ import java.nio.file.PathMatcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -843,6 +844,23 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		private List<Row> _csvReportRows = new ArrayList<>();
+
+	}
+
+	protected static class TestClassDurationComparator
+		implements Comparator<TestClass> {
+
+		@Override
+		public int compare(TestClass testClass1, TestClass testClass2) {
+			Long duration1 =
+				testClass1.getAverageDuration() +
+					testClass1.getAverageOverheadDuration();
+			Long duration2 =
+				testClass2.getAverageDuration() +
+					testClass2.getAverageOverheadDuration();
+
+			return duration2.compareTo(duration1);
+		}
 
 	}
 

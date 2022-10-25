@@ -52,8 +52,7 @@ public class DDMStructuresPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"manage-data-definitions");
+			getLocale(portletRequest), "manage-data-definitions");
 	}
 
 	@Override

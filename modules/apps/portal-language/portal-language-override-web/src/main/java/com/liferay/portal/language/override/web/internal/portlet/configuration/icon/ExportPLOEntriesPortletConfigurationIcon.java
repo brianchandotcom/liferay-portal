@@ -51,8 +51,7 @@ public class ExportPLOEntriesPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"export-overridden-translations");
+			getLocale(portletRequest), "export-overridden-translations");
 	}
 
 	@Override

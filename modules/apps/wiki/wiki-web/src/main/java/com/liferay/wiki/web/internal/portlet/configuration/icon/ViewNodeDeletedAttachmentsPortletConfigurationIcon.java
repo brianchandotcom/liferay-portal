@@ -53,8 +53,7 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"view-removed-attachments");
+			getLocale(portletRequest), "view-removed-attachments");
 	}
 
 	@Override

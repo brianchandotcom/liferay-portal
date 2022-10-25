@@ -56,8 +56,7 @@ public class MaximizePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "maximize");
+		return _language.get(getLocale(portletRequest), "maximize");
 	}
 
 	@Override

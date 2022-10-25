@@ -55,8 +55,7 @@ public class ManagePagesPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "manage-pages");
+		return _language.get(getLocale(portletRequest), "manage-pages");
 	}
 
 	@Override

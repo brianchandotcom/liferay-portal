@@ -52,8 +52,7 @@ public class ImportPagesPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "import-pages");
+		return _language.get(getLocale(portletRequest), "import-pages");
 	}
 
 	@Override

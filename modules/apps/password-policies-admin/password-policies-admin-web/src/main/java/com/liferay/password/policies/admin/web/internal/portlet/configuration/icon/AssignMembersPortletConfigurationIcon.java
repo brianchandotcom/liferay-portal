@@ -49,8 +49,7 @@ public class AssignMembersPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "assign-members");
+		return _language.get(getLocale(portletRequest), "assign-members");
 	}
 
 	@Override

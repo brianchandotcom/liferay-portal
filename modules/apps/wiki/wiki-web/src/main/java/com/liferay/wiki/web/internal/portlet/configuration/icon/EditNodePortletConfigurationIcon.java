@@ -52,8 +52,7 @@ public class EditNodePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "edit");
+		return _language.get(getLocale(portletRequest), "edit");
 	}
 
 	@Override

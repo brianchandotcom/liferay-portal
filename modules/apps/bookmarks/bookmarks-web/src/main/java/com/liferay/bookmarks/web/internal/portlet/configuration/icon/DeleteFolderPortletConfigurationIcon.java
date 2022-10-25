@@ -55,11 +55,7 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _language.get(
-			getResourceBundle(themeDisplay.getLocale()), "delete");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override

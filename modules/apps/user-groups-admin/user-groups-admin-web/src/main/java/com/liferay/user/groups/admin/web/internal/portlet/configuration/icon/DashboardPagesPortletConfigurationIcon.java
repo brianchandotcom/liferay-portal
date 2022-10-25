@@ -52,8 +52,7 @@ public class DashboardPagesPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"go-to-dashboard-pages");
+			getLocale(portletRequest), "go-to-dashboard-pages");
 	}
 
 	@Override

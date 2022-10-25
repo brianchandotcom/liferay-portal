@@ -53,8 +53,7 @@ public class MoveCategoryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "move");
+		return _language.get(getLocale(portletRequest), "move");
 	}
 
 	@Override

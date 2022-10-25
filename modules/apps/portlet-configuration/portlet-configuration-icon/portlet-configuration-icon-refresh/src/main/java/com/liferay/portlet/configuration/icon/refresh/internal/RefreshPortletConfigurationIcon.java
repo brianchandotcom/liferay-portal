@@ -42,8 +42,7 @@ public class RefreshPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "refresh");
+		return _language.get(getLocale(portletRequest), "refresh");
 	}
 
 	@Override

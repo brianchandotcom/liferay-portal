@@ -42,8 +42,7 @@ public class PrintPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "print");
+		return _language.get(getLocale(portletRequest), "print");
 	}
 
 	@Override

@@ -53,8 +53,7 @@ public class AddChildPagePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "add-child-page");
+		return _language.get(getLocale(portletRequest), "add-child-page");
 	}
 
 	@Override

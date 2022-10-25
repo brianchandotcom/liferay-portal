@@ -51,8 +51,7 @@ public class DeleteUserGroupPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override

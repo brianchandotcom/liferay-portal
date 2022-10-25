@@ -42,8 +42,7 @@ public class ClosePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "remove");
+		return _language.get(getLocale(portletRequest), "remove");
 	}
 
 	@Override

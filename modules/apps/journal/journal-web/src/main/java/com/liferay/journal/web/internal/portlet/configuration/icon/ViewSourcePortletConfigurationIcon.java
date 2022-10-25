@@ -57,8 +57,7 @@ public class ViewSourcePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "view-source");
+		return _language.get(getLocale(portletRequest), "view-source");
 	}
 
 	@Override

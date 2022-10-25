@@ -51,9 +51,7 @@ public class ProfilePagesPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"go-to-profile-pages");
+		return _language.get(getLocale(portletRequest), "go-to-profile-pages");
 	}
 
 	@Override

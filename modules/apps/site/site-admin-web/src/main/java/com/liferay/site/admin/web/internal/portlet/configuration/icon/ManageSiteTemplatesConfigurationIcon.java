@@ -50,9 +50,7 @@ public class ManageSiteTemplatesConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"manage-site-template");
+		return _language.get(getLocale(portletRequest), "manage-site-template");
 	}
 
 	@Override

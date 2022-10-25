@@ -47,8 +47,7 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "upload");
+		return _language.get(getLocale(portletRequest), "upload");
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 			}
 		}
 
-		return _language.get(getResourceBundle(getLocale(portletRequest)), key);
+		return _language.get(getLocale(portletRequest), key);
 	}
 
 	@Override

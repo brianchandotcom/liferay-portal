@@ -50,8 +50,7 @@ public class DeliveryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "configuration");
+		return _language.get(getLocale(portletRequest), "configuration");
 	}
 
 	@Override

@@ -66,7 +66,7 @@ public class MinimizePortletConfigurationIcon
 			key = "restore";
 		}
 
-		return _language.get(getResourceBundle(getLocale(portletRequest)), key);
+		return _language.get(getLocale(portletRequest), key);
 	}
 
 	@Override

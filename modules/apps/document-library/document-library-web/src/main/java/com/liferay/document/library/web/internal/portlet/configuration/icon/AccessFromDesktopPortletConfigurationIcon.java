@@ -57,9 +57,7 @@ public class AccessFromDesktopPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"access-from-desktop");
+		return _language.get(getLocale(portletRequest), "access-from-desktop");
 	}
 
 	@Override

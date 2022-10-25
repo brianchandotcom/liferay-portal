@@ -129,11 +129,7 @@ definition {
 	}
 
 	macro deleteCasesTypes {
-		MouseOver(
-			key_projectName = "${valueName}",
-			locator1 = "Testray#ITEM_NAME");
-
-		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+		TestrayContextMenu.clickContextMenuProjects(name = "${valueName}");
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
@@ -201,7 +197,9 @@ definition {
 	}
 
 	macro editNewName {
-		TestrayManage.goToEditPage(valueName = "${valueName}");
+		TestrayContextMenu.clickContextMenuProjects(name = "${valueName}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",

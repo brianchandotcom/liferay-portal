@@ -71,7 +71,18 @@ definition {
 
 			SelectFrameTop();
 
-			CommerceItemSelector.uploadSingleFile(uploadFileName = "${fileName}");
+			if (isSet(alreadyUploaded)) {
+				WaitForElementPresent(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+				Click(
+					key_mgDocumentTitle = "${fileName}",
+					locator1 = "MediaGallery#IMAGE_TITLE");
+			}
+			else {
+				CommerceItemSelector.uploadSingleFile(uploadFileName = "${fileName}");
+			}
 
 			SelectFrameTop();
 

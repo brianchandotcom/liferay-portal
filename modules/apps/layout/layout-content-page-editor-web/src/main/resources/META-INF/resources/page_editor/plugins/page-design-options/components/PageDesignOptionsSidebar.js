@@ -176,9 +176,12 @@ export default function PageDesignOptionsSidebar() {
 				className="overflow-auto px-3"
 				fade
 			>
-				{tabs.map(({icon, options, type}, index) => (
+				{tabs.map(({icon, label, options, type}, index) => (
 					<ClayTabs.TabPane
-						aria-labelledby={getTabId(index)}
+						aria-label={sub(
+							Liferay.Language.get('select-x'),
+							label
+						)}
 						id={getTabPanelId(index)}
 						key={index}
 					>

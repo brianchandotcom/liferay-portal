@@ -147,11 +147,6 @@ public class ExportImportPortletConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportPortletConfigurationIcon.class);
 

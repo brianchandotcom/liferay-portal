@@ -92,11 +92,6 @@ public class MarkAllNotificationsAsReadPortletConfigurationIcon
 		return false;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

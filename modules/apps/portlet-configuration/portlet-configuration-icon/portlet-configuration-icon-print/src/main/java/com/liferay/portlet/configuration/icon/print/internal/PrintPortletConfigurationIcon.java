@@ -91,11 +91,6 @@ public class PrintPortletConfigurationIcon
 		return portletDisplay.isShowPrintIcon();
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

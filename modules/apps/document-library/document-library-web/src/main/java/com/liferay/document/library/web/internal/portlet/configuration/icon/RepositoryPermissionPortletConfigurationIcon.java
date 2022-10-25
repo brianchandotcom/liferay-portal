@@ -98,11 +98,6 @@ public class RepositoryPermissionPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
-	@Override
 	public boolean isUseDialog() {
 		return true;
 	}

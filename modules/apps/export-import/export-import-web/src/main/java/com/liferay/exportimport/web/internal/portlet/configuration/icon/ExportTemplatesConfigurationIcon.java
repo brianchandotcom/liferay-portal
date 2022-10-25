@@ -87,11 +87,6 @@ public class ExportTemplatesConfigurationIcon
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
-	@Override
 	public boolean isUseDialog() {
 		return false;
 	}

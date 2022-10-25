@@ -70,11 +70,6 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 		return portletDisplay.isShowHelpIcon();
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

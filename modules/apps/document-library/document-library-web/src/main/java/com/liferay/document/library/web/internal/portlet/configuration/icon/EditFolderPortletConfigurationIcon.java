@@ -165,11 +165,6 @@ public class EditFolderPortletConfigurationIcon
 			});
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private boolean _isDLWorkflowEnabled() {
 		if (!WorkflowEngineManagerUtil.isDeployed()) {
 			return false;

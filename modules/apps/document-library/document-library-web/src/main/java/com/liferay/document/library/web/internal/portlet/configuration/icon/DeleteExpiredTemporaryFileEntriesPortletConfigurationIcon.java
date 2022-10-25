@@ -123,11 +123,6 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 			});
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

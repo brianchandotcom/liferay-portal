@@ -102,11 +102,6 @@ public class ConfigurationPortletConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

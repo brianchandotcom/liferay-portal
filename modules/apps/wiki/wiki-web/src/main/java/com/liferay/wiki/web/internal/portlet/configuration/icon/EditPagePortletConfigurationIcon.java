@@ -111,11 +111,6 @@ public class EditPagePortletConfigurationIcon
 		return false;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditPagePortletConfigurationIcon.class);
 

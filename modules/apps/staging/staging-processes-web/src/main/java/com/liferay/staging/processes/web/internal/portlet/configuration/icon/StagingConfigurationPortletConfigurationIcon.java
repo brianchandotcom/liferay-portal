@@ -126,11 +126,6 @@ public class StagingConfigurationPortletConfigurationIcon
 		}
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingConfigurationPortletConfigurationIcon.class);
 

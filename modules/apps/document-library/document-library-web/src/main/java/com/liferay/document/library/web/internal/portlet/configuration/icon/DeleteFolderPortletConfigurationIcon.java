@@ -164,11 +164,6 @@ public class DeleteFolderPortletConfigurationIcon
 			});
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
 

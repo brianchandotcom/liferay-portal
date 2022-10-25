@@ -66,11 +66,6 @@ public class EditGuestPortletConfigurationIcon
 		return portletDisplay.isShowEditGuestIcon();
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

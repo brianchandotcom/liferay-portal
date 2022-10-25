@@ -86,11 +86,6 @@ public class RefreshPortletConfigurationIcon
 		return portletDisplay.isShowRefreshIcon();
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

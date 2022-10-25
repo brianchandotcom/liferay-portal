@@ -123,11 +123,6 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
-	@Override
 	public boolean isUseDialog() {
 		return true;
 	}

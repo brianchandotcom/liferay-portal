@@ -146,11 +146,6 @@ public class MaximizePortletConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private boolean _hasUpdateLayoutPermission(ThemeDisplay themeDisplay) {
 		try {
 			return LayoutPermissionUtil.contains(

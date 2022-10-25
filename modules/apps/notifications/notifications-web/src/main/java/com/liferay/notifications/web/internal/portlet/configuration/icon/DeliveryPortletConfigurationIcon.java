@@ -104,11 +104,6 @@ public class DeliveryPortletConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private PortletURL _getDeliveryURL(PortletRequest portletRequest) {
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

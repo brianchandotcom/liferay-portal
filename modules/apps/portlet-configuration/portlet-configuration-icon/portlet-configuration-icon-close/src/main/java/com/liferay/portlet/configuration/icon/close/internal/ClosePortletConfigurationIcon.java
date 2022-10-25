@@ -86,11 +86,6 @@ public class ClosePortletConfigurationIcon
 		return portletDisplay.isShowCloseIcon();
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

@@ -65,11 +65,6 @@ public class EditPortletConfigurationIcon extends BasePortletConfigurationIcon {
 		return portletDisplay.isShowEditIcon();
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

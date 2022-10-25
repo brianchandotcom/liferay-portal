@@ -116,11 +116,6 @@ public class PrintPagePortletConfigurationIcon
 		return true;
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrintPagePortletConfigurationIcon.class);
 

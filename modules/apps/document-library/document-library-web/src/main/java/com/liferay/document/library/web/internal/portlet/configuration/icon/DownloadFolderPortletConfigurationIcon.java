@@ -120,11 +120,6 @@ public class DownloadFolderPortletConfigurationIcon
 			});
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)

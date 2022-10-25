@@ -77,11 +77,6 @@ public class UploadConfigurationIcon extends BaseJSPPortletConfigurationIcon {
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
-	@Override
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}

@@ -113,11 +113,6 @@ public class DDMStructuresPortletConfigurationIcon
 			DDLActionKeys.ADD_RECORD_SET);
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
-	}
-
 	@Reference
 	private Language _language;
 

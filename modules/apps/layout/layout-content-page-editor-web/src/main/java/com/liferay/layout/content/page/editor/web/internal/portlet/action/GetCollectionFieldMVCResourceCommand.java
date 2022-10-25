@@ -254,8 +254,6 @@ public class GetCollectionFieldMVCResourceCommand
 				_portal.getUserId(httpServletRequest),
 				_requestContextMapper.map(httpServletRequest)));
 
-		// LPS-111037
-
 		Optional<AssetListEntry> assetListEntryOptional =
 			_getAssetListEntryOptional(listObjectReference);
 

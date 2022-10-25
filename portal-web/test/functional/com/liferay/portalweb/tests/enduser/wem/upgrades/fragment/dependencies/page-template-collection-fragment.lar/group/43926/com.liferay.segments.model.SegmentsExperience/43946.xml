@@ -1,0 +1,24 @@
+<SegmentsExperience>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>748e8672-3416-68f8-f8fa-ec3a690486d4</__uuid>
+  <__segmentsExperienceId>43946</__segmentsExperienceId>
+  <__groupId>43926</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2022-10-24 06:03:32.455 UTC</__createDate>
+  <__modifiedDate>2022-10-24 06:03:32.455 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__segmentsEntryId>0</__segmentsEntryId>
+  <__segmentsExperienceKey>DEFAULT</__segmentsExperienceKey>
+  <__classNameId>20032</__classNameId>
+  <__classPK>10</__classPK>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Default&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__priority>0</__priority>
+  <__active>true</__active>
+  <__typeSettings></__typeSettings>
+  <__columnBitmask>0</__columnBitmask>
+</SegmentsExperience>

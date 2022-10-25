@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<JournalPortletDataHandler self-path="/group/43926/portlet/com_liferay_journal_web_portlet_JournalPortlet/43926/portlet-data.xml" group-id="43926">
+	<JournalArticle>
+		<staged-model group-id="43926" uuid="ee1ace1f-1d13-f904-078e-d1c2c6fa46b6" article-resource-uuid="f8c1c3c1-5d91-f960-8bad-c6aba4adb295" cached="false" path="/group/43926/com.liferay.journal.model.JournalArticle/43933.xml" attached-class-name="" user-uuid="f35dd872-c701-a460-cfa6-3b2822ccabd2" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="43400" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="20123" group-key="20097" live-group-id="20123" type="dependency" uuid="71cbc578-43af-b70e-d1d4-3bcbaeb96761" company-id="20097" preloaded="true" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="BASIC-WEB-CONTENT" missing="true"/>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="43404" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" group-id="20123" group-key="20097" live-group-id="20123" type="dependency" uuid="27e0230e-8cd5-e1aa-dd96-363e24163226" company-id="20097" preloaded="true" referenced-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" template-key="BASIC-WEB-CONTENT" missing="true"/>
+				<reference class-name="com.liferay.friendly.url.model.FriendlyURLEntry" class-pk="43936" attached-class-name="com.liferay.journal.model.JournalArticle" type="dependency" uuid="92cc2f5c-6e9a-ef53-5927-603b8e6b2ed2" company-id="20097" missing="false"/>
+			</references>
+		</staged-model>
+	</JournalArticle>
+	<FriendlyURLEntry>
+		<staged-model uuid="92cc2f5c-6e9a-ef53-5927-603b8e6b2ed2" resource-class-name="com.liferay.journal.model.JournalArticle" mainEntry="true" path="/company/20097/com.liferay.friendly.url.model.FriendlyURLEntry/43936.xml" attached-class-name="com.liferay.journal.model.JournalArticle" asset-entry-priority="0.0"/>
+	</FriendlyURLEntry>
+</JournalPortletDataHandler>

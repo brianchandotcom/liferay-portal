@@ -1,0 +1,33 @@
+<FragmentEntryLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>2</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>3d573bbe-c9bd-d774-e977-fe16e0b402d8</__uuid>
+  <__fragmentEntryLinkId>43972</__fragmentEntryLinkId>
+  <__groupId>43926</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2022-10-24 06:04:30.648</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 06:04:30.648</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__originalFragmentEntryLinkId>43968</__originalFragmentEntryLinkId>
+  <__fragmentEntryId>0</__fragmentEntryId>
+  <__segmentsExperienceId>43946</__segmentsExperienceId>
+  <__classNameId>20032</__classNameId>
+  <__classPK>10</__classPK>
+  <__plid>10</__plid>
+  <__css></__css>
+  <__html></__html>
+  <__js></__js>
+  <__configuration>{&quot;fieldSets&quot;:[{&quot;fields&quot;:[{&quot;name&quot;:&quot;itemSelector&quot;,&quot;typeOptions&quot;:{&quot;enableSelectTemplate&quot;:true},&quot;label&quot;:&quot;item&quot;,&quot;type&quot;:&quot;itemSelector&quot;}]}]}</__configuration>
+  <__deleted>false</__deleted>
+  <__editableValues>{&quot;com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor&quot;:{&quot;itemSelector&quot;:{&quot;classPK&quot;:&quot;43934&quot;,&quot;itemType&quot;:&quot;Web Content Article&quot;,&quot;className&quot;:&quot;com.liferay.journal.model.JournalArticle&quot;,&quot;itemSubtype&quot;:&quot;Basic Web Content&quot;,&quot;classNameId&quot;:&quot;41755&quot;,&quot;title&quot;:&quot;basic web content&quot;,&quot;classTypeId&quot;:&quot;43400&quot;}}}</__editableValues>
+  <__namespace>nrml</__namespace>
+  <__position>0</__position>
+  <__rendererKey>com.liferay.fragment.internal.renderer.ContentObjectFragmentRenderer</__rendererKey>
+  <__type>1</__type>
+  <__lastPropagationDate class="sql-timestamp">2022-10-24 06:04:30.648</__lastPropagationDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntryLink>

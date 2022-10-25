@@ -66,7 +66,13 @@ public class OnDemandAdminTicketGeneratorImpl
 			User.class.getName(), requestorUserId, null);
 
 		auditMessage.setAdditionalInfo(
-			JSONUtil.put("justification", justification));
+			JSONUtil.put(
+				"justification", justification
+			).put(
+				"requestedCompanyId", company.getCompanyId()
+			).put(
+				"requestedCompanyWebId", company.getWebId()
+			));
 
 		_auditRouter.route(auditMessage);
 

@@ -155,6 +155,20 @@ definition {
 		}
 
 		task ("Select the Thumbnail-300x300 image resolution") {
+			PageEditor.clickManagementBar();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.clickEditableField(
+				fragmentName = "Image",
+				id = "image-square");
+
+			SelectFrameTop();
+
+			WaitForElementPresent(
+				key_resolutionLabel = "File Size",
+				locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
+
 			Select(
 				key_fieldLabel = "Resolution",
 				locator1 = "Select#GENERIC_SELECT_FIELD",

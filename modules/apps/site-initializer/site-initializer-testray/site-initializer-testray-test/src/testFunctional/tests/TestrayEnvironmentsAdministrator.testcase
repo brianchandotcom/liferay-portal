@@ -43,8 +43,6 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_2 Factor Category");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar, Add Factor Option, change pagination and assert the Factor option has been created") {
@@ -66,7 +64,11 @@ definition {
 		}
 
 		task ("Delete Factor Option and assert it deleted") {
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			
 			TestrayManage.deleteOption(nameOptions = "Environments_2 Factor Option");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 			Testray.assertItemNotPresent(key_name = "Environments_2 Factor Option");
 		}
@@ -86,8 +88,6 @@ definition {
 		task ("Add a category and check if the category was created") {
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-
 			Testray.assertItemName(key_name = "Environments_1 Category");
 		}
 	}
@@ -103,8 +103,6 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_2 Category");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar, Add Options") {
@@ -140,11 +138,7 @@ definition {
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category A");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-
 			TestrayManage.addNewCategory(category = "Environments_1 Category B");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar and Add New Option") {
@@ -204,8 +198,6 @@ definition {
 				listCategory1 = "Environments_1 Category B",
 				listOption = "Option 2",
 				listOption1 = "Option 3");
-
-			TestrayManage.closeModalInOptions();
 		}
 	}
 
@@ -251,8 +243,6 @@ definition {
 
 			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-
 			Testray.assertItemName(key_name = "Environments_6 Category Edited");
 		}
 	}
@@ -269,11 +259,7 @@ definition {
 
 			TestrayManage.addNewCategory(category = "Environments_8 Category A");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-
 			TestrayManage.addNewCategory(category = "Environments_8 Category B");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar and Add New Option") {
@@ -284,6 +270,8 @@ definition {
 			TestrayManage.createNewOption(
 				category = "Environments_8 Category A",
 				option = "Environments_8 Option");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Change pagination and edit new Option by changing the Category") {
@@ -318,8 +306,6 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_7 Category");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Categories on Manage Sidebar and Create the new Options") {
@@ -330,6 +316,8 @@ definition {
 			TestrayManage.createNewOption(
 				category = "Environments_7 Category",
 				option = "Environments_7 Option");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Change the pagination and then edit and state if the name has Edited") {
@@ -348,16 +336,28 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157328 - Verify if As an Administrator I should not be able to add a duplicate Factor Category"
-	@ignore = "Test Stub"
 	@priority = "5"
-	test AdminCanNotAddCuplicateFactorCategory {
+	test AdminCanNotAddDuplicateFactorCategory {
+		task ("Go to Categories on Manage Sidebar and Add Category duplicate") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157328 AdminCanNotAddCuplicateFactorCategory pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category");
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category");
+		}
+
+		task ("Then an error message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "The Category name already exists");
+		}
 
 	}
 
 	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
-	@priority = "4"
+	@priority = "3"
 	test AdminCanViewWarningMessage {
 		task ("Go to Categories on Manage Sidebar and Add Category") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
@@ -374,6 +374,68 @@ definition {
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");
 		}
+	}
+
+	@description = "This is a test for LPS-166557 - Verify if As an Administrator I should not be able to add a duplicate Factor Options"
+	@priority = "5"
+	test AdminCanNotAddDuplicateFactorOptions {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Go to Categories on Manage Sidebar and Create the new Options duplicate") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category",
+				option = "Environments_1 Option");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category",
+				option = "Environments_1 Option");
+		}
+
+		task ("Then an error message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "The Option name already exists");
+		}
+
+	}
+
+	@description = "This is a test for LPS-164136 - Verify that the user can not create a options if all the required fields are not filled in"
+	@priority = "3"
+	test AdminCanViewRequiredField {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				category = "",
+				option = "");
+		}
+
+		task ("Assert a required field message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "This field is Required.");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Type",
+				warningMessage = "This field is Required.");
+		}
+
 	}
 
 }

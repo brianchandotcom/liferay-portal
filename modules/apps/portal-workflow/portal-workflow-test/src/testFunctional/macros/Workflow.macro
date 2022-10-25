@@ -375,7 +375,11 @@ definition {
 	macro configureDMWorkflowViaFolderInfo {
 		Click(locator1 = "Icon#INFO");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click.waitForMenuToggleJSClick(locator1 = "DocumentsAndMedia#DROPDOWN_INFO_PANEL");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		MenuItem.click(menuItem = "Edit");
 
 		Select(
 			locator1 = "AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT",

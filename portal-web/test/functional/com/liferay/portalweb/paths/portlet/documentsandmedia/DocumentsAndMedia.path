@@ -326,6 +326,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_INFO_PANEL</td>
+	<td>//div[@class= 'info-panel-content']//button[@class= 'dropdown-toggle component-action btn btn-monospaced btn-unstyled']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -25,6 +25,7 @@ import {
 	getNotExpiredPolicies,
 } from '../../../../common/services';
 import formatDate from '../../../../common/utils/dateFormatter';
+import {redirectTo} from '../../../../common/utils/liferay';
 
 const daysToExpirePolicyAlert = 15;
 
@@ -100,6 +101,16 @@ const PoliciesTable = () => {
 	};
 
 	type TableContent = {[keys: string]: string};
+
+	type TableItemType = {
+		bold: boolean;
+		clickable: boolean;
+		key: string;
+		type: string;
+		value: string;
+	};
+
+	type TableRowContentType = {[keys: string]: string};
 
 	PARAMETERS.pageSize = pageSize.toString();
 	PARAMETERS.page = page.toString();
@@ -215,6 +226,36 @@ const PoliciesTable = () => {
 
 	const title = `Policies (${totalCount})`;
 
+	const handleRedirectToGmail = (email: string) => {
+		window.location.href = `mailto:${email}`;
+	};
+
+	const handleRedirectToDetailsPages = (
+		externalReferenceCode: string,
+		entity: string
+	) => {
+		redirectTo(`${entity}?externalReferenceCode=${externalReferenceCode}`);
+	};
+
+	const onClickRules = (
+		item: TableItemType,
+		rowContent: TableRowContentType
+	) => {
+		if (item.clickable && item.key === 'email') {
+			handleRedirectToGmail(rowContent[item.key]);
+		}
+
+		if (
+			rowContent['productName'] === 'Auto' &&
+			item.key === 'externalReferenceCode'
+		) {
+			handleRedirectToDetailsPages(
+				rowContent['externalReferenceCode'],
+				'policy-details'
+			);
+		}
+	};
+
 	return (
 		<div className="ray-dashboard-recent-policies">
 			<Header className="mb-5 pt-3 px-4" title={title} />
@@ -232,6 +273,7 @@ const PoliciesTable = () => {
 				]}
 				data={policies}
 				headers={HEADERS}
+				onClickRules={onClickRules}
 			/>
 
 			<div className="d-flex justify-content-between mt-3">

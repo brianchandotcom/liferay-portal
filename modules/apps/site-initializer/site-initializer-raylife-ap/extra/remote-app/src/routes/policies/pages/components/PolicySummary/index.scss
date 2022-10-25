@@ -1,0 +1,19 @@
+.summary-policy-container {
+	.policy-summary-title::after {
+		background-color: var(--primary);
+		content: '';
+		display: block;
+		height: 1px;
+		margin-top: 6px;
+		position: absolute;
+		width: 25px;
+	}
+	.cursor-pointer {
+		cursor: pointer;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}

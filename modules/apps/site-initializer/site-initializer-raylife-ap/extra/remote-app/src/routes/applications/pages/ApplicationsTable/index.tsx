@@ -27,6 +27,7 @@ import {
 } from '../../../../common/services';
 import {Parameters} from '../../../../common/services/index';
 import formatDate from '../../../../common/utils/dateFormatter';
+import {redirectTo} from '../../../../common/utils/liferay';
 
 const HEADERS = [
 	{
@@ -80,6 +81,16 @@ type Application = {
 };
 
 type TableContent = {[keys: string]: string};
+
+type TableItemType = {
+	bold: boolean;
+	clickable: boolean;
+	key: string;
+	type: string;
+	value: string;
+};
+
+type TableRowContentType = {[keys: string]: string};
 
 const ApplicationsTable = () => {
 	const [applications, setApplications] = useState<TableContent[]>([]);
@@ -202,6 +213,38 @@ const ApplicationsTable = () => {
 
 	const title = `Applications (${totalCount})`;
 
+	const handleRedirectToGmail = (email: string) => {
+		window.location.href = `mailto:${email}`;
+	};
+
+	const handleRedirectToDetailsPages = (
+		externalReferenceCode: string,
+		entity: string
+	) => {
+		redirectTo(`${entity}?externalReferenceCode=${externalReferenceCode}`);
+	};
+
+	const onClickRules = (
+		item: TableItemType,
+		rowContent: TableRowContentType
+	) => {
+		if (item.clickable && item.key === 'email') {
+			handleRedirectToGmail(rowContent[item.key]);
+		}
+
+		if (
+			((item.clickable && rowContent['name'] === 'Incomplete') ||
+				rowContent['name'] === 'Bound') &&
+			(item.key === 'externalReferenceCode' ||
+				item.key === 'applicationCreateDate')
+		) {
+			handleRedirectToDetailsPages(
+				rowContent['externalReferenceCode'],
+				'app-details'
+			);
+		}
+	};
+
 	return (
 		<div className="px-3 ray-dashboard-recent-applications">
 			<div className="d-flex justify-content-between">
@@ -244,6 +287,7 @@ const ApplicationsTable = () => {
 				]}
 				data={applications}
 				headers={HEADERS}
+				onClickRules={onClickRules}
 			/>
 
 			<div className="d-flex justify-content-between mt-3">

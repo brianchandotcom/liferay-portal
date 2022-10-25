@@ -1,0 +1,150 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "layout"
+							},
+							"fragmentConfig": {
+								"layoutName": "Details"
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "DIALECT-dialect-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "btn-lg",
+												"inverted": false,
+												"style": "neutral",
+												"type": "borderless",
+												"uppercase": false
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "Policies"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "&lt; Policies"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "label-by-query-string"
+											},
+											"fragmentConfig": {
+												"parameterName": "externalReferenceCode"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"type": "FragmentDropZone"
+							},
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"properties": "route=policy-details"
+														},
+														"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public"
+		}
+	}
+}

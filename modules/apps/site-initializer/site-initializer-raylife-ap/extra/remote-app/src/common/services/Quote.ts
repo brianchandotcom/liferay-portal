@@ -28,3 +28,7 @@ export function getQuotes(parameters: Parameters = {}) {
 
 	return axios.get(`${DeliveryAPI}/`);
 }
+
+export function getQuotesById(id: number) {
+	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
+}

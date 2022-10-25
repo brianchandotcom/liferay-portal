@@ -29,6 +29,7 @@ import RecentApplications from './routes/dashboard/pages/RecentApplications';
 import WhatsNewModal from './routes/dashboard/pages/SettingsModals';
 import Policies from './routes/policies/pages/Policies';
 import PoliciesTable from './routes/policies/pages/PoliciesTable';
+import PolicyDetails from './routes/policies/pages/PolicyDetails';
 import Reports from './routes/reports/pages/Reports';
 
 type Props = {
@@ -86,6 +87,10 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 
 	if (routeEntry === 'application-details') {
 		return <ApplicationDetails />;
+	}
+
+	if (routeEntry === 'policy-details') {
+		return <PolicyDetails />;
 	}
 
 	return <></>;

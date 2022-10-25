@@ -77,6 +77,16 @@ enum ModalType {
 	insuranceProducts = 2,
 }
 
+type TableItemType = {
+	bold: boolean;
+	clickable: boolean;
+	key: string;
+	type: string;
+	value: string;
+};
+
+type TableRowContentType = {[keys: string]: string};
+
 const RecentApplications = () => {
 	const [applications, setApplications] = useState<TableContent[]>([]);
 	const [visible, setVisible] = useState(false);
@@ -199,6 +209,38 @@ const RecentApplications = () => {
 		</>
 	);
 
+	const handleRedirectToGmail = (email: string) => {
+		window.location.href = `mailto:${email}`;
+	};
+
+	const handleRedirectToDetailsPages = (
+		externalReferenceCode: string,
+		entity: string
+	) => {
+		redirectTo(`${entity}?externalReferenceCode=${externalReferenceCode}`);
+	};
+
+	const onClickRules = (
+		item: TableItemType,
+		rowContent: TableRowContentType
+	) => {
+		if (item.clickable && item.key === 'email') {
+			handleRedirectToGmail(rowContent[item.key]);
+		}
+
+		if (
+			((item.clickable && rowContent['name'] === 'Incomplete') ||
+				rowContent['name'] === 'Bound') &&
+			(item.key === 'externalReferenceCode' ||
+				item.key === 'applicationCreateDate')
+		) {
+			handleRedirectToDetailsPages(
+				rowContent['externalReferenceCode'],
+				'app-details'
+			);
+		}
+	};
+
 	return (
 		<div className="px-3 ray-dashboard-recent-applications">
 			<Modal
@@ -256,6 +298,7 @@ const RecentApplications = () => {
 				]}
 				data={applications.slice(0, 6)}
 				headers={HEADERS}
+				onClickRules={onClickRules}
 			/>
 
 			<div className="align-items-center bottom-container d-flex justify-content-end mt-4 pb-3 px-3">

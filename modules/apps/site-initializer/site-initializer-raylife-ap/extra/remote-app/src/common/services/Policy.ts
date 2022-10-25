@@ -81,3 +81,11 @@ export function getPoliciesForSalesGoal(
 		`${DeliveryAPI}/?fields=boundDate,termPremium,productExternalReferenceCode,productName&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentYear}-${currentMonth}-31 and boundDate ge ${periodYear}-${periodMonth}-01`
 	);
 }
+
+export function getPolicyByExternalReferenceCode<T = unknown>(
+	externalReferenceCode: string
+) {
+	return axios.get<T>(
+		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
+	);
+}

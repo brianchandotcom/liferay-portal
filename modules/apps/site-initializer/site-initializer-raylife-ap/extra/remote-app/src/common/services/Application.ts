@@ -94,3 +94,7 @@ export function getApplicationByExternalReferenceCode(
 		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
 	);
 }
+
+export function getApplicationsById(id: number) {
+	return axios.get(`${DeliveryAPI}/?filter=id eq '${id}'`);
+}

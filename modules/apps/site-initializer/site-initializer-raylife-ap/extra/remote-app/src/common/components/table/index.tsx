@@ -15,15 +15,15 @@
 import ClayTable from '@clayui/table';
 import classnames from 'classnames';
 
-import {redirectTo} from '../../utils/liferay';
 import SettingsButton, {ActionObject} from '../settings-button';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
 type TableProps = {
-	actions?: ActionObject[];
+	actions: ActionObject[];
 	data: {[keys: string]: string}[];
 	headers: TableHeaders[];
+	onClickRules?: (item: any, rowContent: any) => void;
 };
 
 type TableHeaders = {
@@ -36,15 +36,12 @@ type TableHeaders = {
 	value: string;
 };
 
-const handleRedirectToGmail = (email: string) => {
-	window.location.href = `mailto:${email}`;
-};
-
-const handleRedirectToDetails = (externalReferenceCode: string) => {
-	redirectTo(`app-details?externalReferenceCode=${externalReferenceCode}`);
-};
-
-const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
+const Table: React.FC<TableProps> = ({
+	data,
+	headers,
+	actions,
+	onClickRules = () => null,
+}) => {
 	return (
 		<table className="border-0 ray-table show-quick-actions-on-hover table table-autofit table-list table-responsive">
 			<Head>
@@ -102,31 +99,7 @@ const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 											'text-neutral-7': !!item.greyColor,
 										})}
 										onClick={() => {
-											if (
-												item.clickable &&
-												item.key === 'email'
-											) {
-												handleRedirectToGmail(
-													rowContent[item.key]
-												);
-											}
-											if (
-												((item.clickable &&
-													rowContent['name'] ===
-														'Incomplete') ||
-													rowContent['name'] ===
-														'Bound') &&
-												(item.key ===
-													'externalReferenceCode' ||
-													item.key ===
-														'applicationCreateDate')
-											) {
-												handleRedirectToDetails(
-													rowContent[
-														'externalReferenceCode'
-													]
-												);
-											}
+											onClickRules(item, rowContent);
 										}}
 									>
 										{rowContent[item.key]}

@@ -700,6 +700,19 @@ public class UpgradeClient {
 	}
 
 	private void _verifyPortalUpgradeExtProperties() throws IOException {
+		String userHome = System.getProperty("user.home");
+
+		File userHomePropsFile = new File(userHome + "/portal-ext.properties");
+
+		if (userHomePropsFile.exists()) {
+			System.err.println(
+				"portal-ext.properties file detected in user home directory. " +
+					"Please remove prior to running the upgrade process to " +
+						"prevent conflicts.");
+
+			System.exit(0);
+		}
+
 		String value = _portalUpgradeExtProperties.getProperty("liferay.home");
 
 		File baseDir = new File(".");

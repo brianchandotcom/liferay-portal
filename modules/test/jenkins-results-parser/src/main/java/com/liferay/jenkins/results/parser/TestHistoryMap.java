@@ -148,6 +148,8 @@ public class TestHistoryMap {
 				testJSONObject.put(
 					"statusChanges", testClassHistory.getStatusChanges());
 				testJSONObject.put(
+					"testCount", testClassHistory.getTestCount());
+				testJSONObject.put(
 					"testName", testClassHistory.getTestClassName());
 
 				TestrayCaseResult testrayCaseResult =
@@ -174,6 +176,14 @@ public class TestHistoryMap {
 		JSONObject ciHistoryJSONObject = new JSONObject();
 
 		ciHistoryJSONObject.put("batches", batchesJSONArray);
+
+		TestrayServer testrayServer = _latestTestrayBuild.getTestrayServer();
+
+		ciHistoryJSONObject.put(
+			"testray_url", String.valueOf(testrayServer.getURL()));
+
+		ciHistoryJSONObject.put(
+			"upstream_branch_name", _latestTestrayBuild.getPortalBranch());
 
 		File file = new File(filePath);
 
@@ -654,6 +664,10 @@ public class TestHistoryMap {
 
 		public String getTestClassName() {
 			return _testClassName;
+		}
+
+		public int getTestCount() {
+			return _testClassReports.size();
 		}
 
 		public List<TestHistory> getTestHistories() {

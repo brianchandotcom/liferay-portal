@@ -182,9 +182,4 @@ public interface BaseModel<T>
 
 	public T toUnescapedModel();
 
-	/**
-	 * Returns the XML representation of this model instance.
-	 *
-	 * @return the XML representation of this model instance
-	 */
 }

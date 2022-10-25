@@ -11,6 +11,19 @@
 
 <tbody>
 
+<!--CREATE_ACCOUNT-->
+
+<tr>
+	<td>CREATE_ACCOUNT_EMAIL_ADDRESS</td>
+	<td>//label[contains(.,'Email Address')]//following-sibling::div[contains(.,'${key_userEmailAddress}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <!--DETAILS-->
 
 <tr>

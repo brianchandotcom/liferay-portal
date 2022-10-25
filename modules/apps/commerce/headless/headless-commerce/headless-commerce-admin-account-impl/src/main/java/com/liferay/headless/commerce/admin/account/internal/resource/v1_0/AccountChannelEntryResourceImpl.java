@@ -25,6 +25,8 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelEntry;
 import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountChannelEntryDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelEntryResource;
@@ -60,6 +62,18 @@ public class AccountChannelEntryResourceImpl
 			_fetchCommerceChannelAccountEntryRel(
 				id,
 				CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+
+		_commerceChannelAccountEntryRelService.
+			deleteCommerceChannelAccountEntryRel(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
+	public void deleteAccountChannelDeliveryTermId(Long id) throws Exception {
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
 
 		_commerceChannelAccountEntryRelService.
 			deleteCommerceChannelAccountEntryRel(
@@ -104,6 +118,26 @@ public class AccountChannelEntryResourceImpl
 
 	@Override
 	public Page<AccountChannelEntry>
+			getAccountByExternalReferenceCodeAccountChannelDeliveryTermsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _getAccountChannelEntryPage(
+			accountEntry.getAccountEntryId(),
+			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM,
+			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry>
 			getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
@@ -137,6 +171,19 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public AccountChannelEntry getAccountChannelDeliveryTermId(Long id)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+
+		return _toAccountChannelEntry(
+			commerceChannelAccountEntryRel.
+				getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
 	public AccountChannelEntry getAccountChannelShippingAddressId(Long id)
 		throws Exception {
 
@@ -158,6 +205,17 @@ public class AccountChannelEntryResourceImpl
 
 		return _getAccountChannelEntryPage(
 			id, CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS,
+			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry>
+			getAccountIdAccountChannelDeliveryTermsPage(
+				Long id, Pagination pagination)
+		throws Exception {
+
+		return _getAccountChannelEntryPage(
+			id, CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM,
 			pagination);
 	}
 
@@ -185,6 +243,20 @@ public class AccountChannelEntryResourceImpl
 		return _patchAccountChannelEntry(
 			accountChannelEntry, commerceChannelAccountEntryRel,
 			CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry patchAccountChannelDeliveryTermId(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+
+		return _patchAccountChannelEntry(
+			accountChannelEntry, commerceChannelAccountEntryRel,
+			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
 	}
 
 	@Override
@@ -225,6 +297,27 @@ public class AccountChannelEntryResourceImpl
 
 	@Override
 	public AccountChannelEntry
+			postAccountByExternalReferenceCodeAccountChannelDeliveryTerm(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceTermEntry.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+	}
+
+	@Override
+	public AccountChannelEntry
 			postAccountByExternalReferenceCodeAccountChannelShippingAddress(
 				String externalReferenceCode,
 				AccountChannelEntry accountChannelEntry)
@@ -255,6 +348,19 @@ public class AccountChannelEntryResourceImpl
 			accountChannelEntry, accountEntry.getAccountEntryId(),
 			Address.class.getName(),
 			CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry postAccountIdAccountChannelDeliveryTerm(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(id);
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceTermEntry.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
 	}
 
 	@Override
@@ -328,9 +434,19 @@ public class AccountChannelEntryResourceImpl
 				return address.getAddressId();
 			}
 		}
+		else if (type ==
+					CommerceChannelAccountEntryRelConstants.
+						TYPE_DELIVERY_TERM) {
 
-		if (type ==
-				CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS) {
+			CommerceTermEntry commerceTermEntry =
+				_commerceTermEntryService.getCommerceTermEntry(
+					GetterUtil.getLong(accountChannelEntry.getEntryId()));
+
+			return commerceTermEntry.getCommerceTermEntryId();
+		}
+		else if (type ==
+					CommerceChannelAccountEntryRelConstants.
+						TYPE_SHIPPING_ADDRESS) {
 
 			Address address = _addressService.getAddress(
 				GetterUtil.getLong(accountChannelEntry.getEntryId()));
@@ -466,6 +582,9 @@ public class AccountChannelEntryResourceImpl
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommerceTermEntryService _commerceTermEntryService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

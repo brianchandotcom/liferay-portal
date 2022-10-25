@@ -26,12 +26,6 @@ import java.util.Map;
  */
 public class HistoryUtil {
 
-	public static BatchHistory getBatchHistory(String batchName, Job job) {
-		JobHistory jobHistory = getJobHistory(job);
-
-		return jobHistory.getBatchHistory(batchName);
-	}
-
 	public static JobHistory getJobHistory(Job job) {
 		URL ciHistoryURL = _getCIHistoryURL(job);
 

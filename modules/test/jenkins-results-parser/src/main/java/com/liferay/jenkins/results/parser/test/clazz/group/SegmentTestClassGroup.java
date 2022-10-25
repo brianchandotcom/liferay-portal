@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.BatchHistory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -47,6 +48,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 
 	public List<AxisTestClassGroup> getAxisTestClassGroups() {
 		return new ArrayList<>(_axisTestClassGroups);
+	}
+
+	public BatchHistory getBatchHistory() {
+		return _batchTestClassGroup.getBatchHistory();
 	}
 
 	public int getBatchIndex() {

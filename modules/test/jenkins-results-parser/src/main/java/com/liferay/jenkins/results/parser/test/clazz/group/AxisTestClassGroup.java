@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.BatchHistory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -38,6 +39,12 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		_averageDuration =
 			getAverageOverheadDuration() + getAverageTotalTestDuration();
+
+		if (_averageDuration <= 0L) {
+			BatchHistory batchHistory = getBatchHistory();
+
+			_averageDuration = batchHistory.getAverageDuration();
+		}
 
 		return _averageDuration;
 	}
@@ -96,6 +103,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return JenkinsResultsParserUtil.combine(
 			_batchTestClassGroup.getBatchName(), "/",
 			String.valueOf(axisTestClassGroups.indexOf(this)));
+	}
+
+	public BatchHistory getBatchHistory() {
+		return _batchTestClassGroup.getBatchHistory();
 	}
 
 	public String getBatchJobName() {

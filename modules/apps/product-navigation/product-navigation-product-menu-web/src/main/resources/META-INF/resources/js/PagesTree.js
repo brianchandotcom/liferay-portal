@@ -17,6 +17,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useSessionState} from '@liferay/layout-content-page-editor-web';
+import classNames from 'classnames';
 import {fetch, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useMemo} from 'react';
@@ -104,6 +105,10 @@ export default function PagesTree({
 							active={
 								selectedLayoutId === item.id ? 'true' : null
 							}
+							className={classNames({
+								'treeview-link--with-children':
+									item.hasChildren || item.children?.length,
+							})}
 						>
 							{item.icon && <ClayIcon symbol={item.icon} />}
 
@@ -138,6 +143,11 @@ export default function PagesTree({
 											? 'true'
 											: null
 									}
+									className={classNames({
+										'treeview-link--with-children':
+											item.hasChildren ||
+											item.children?.length,
+									})}
 								>
 									{item.icon && (
 										<ClayIcon symbol={item.icon} />

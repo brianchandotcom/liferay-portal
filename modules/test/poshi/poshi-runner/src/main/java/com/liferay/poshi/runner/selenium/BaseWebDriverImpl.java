@@ -215,22 +215,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertAccessible() throws Exception {
-		WebDriver webDriver = WebDriverUtil.getWebDriver();
-
-		AxeBuilder axeBuilder = new AxeBuilder();
-
-		axeBuilder.withTags(
-			Arrays.asList(PropsValues.ACCESSIBILITY_STANDARDS_TAGS.split(",")));
-
-		Results results = axeBuilder.analyze(webDriver);
-
-		List<Rule> rules = results.getViolations();
-
-		if (!rules.isEmpty()) {
-			AxeReporter.getReadableAxeResults("analyze", webDriver, rules);
-
-			throw new Exception(AxeReporter.getAxeResultString());
-		}
+		assertElementAccessible(null);
 	}
 
 	@Override
@@ -361,26 +346,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void assertElementAccessible(String locator) throws Exception {
 		WebDriver webDriver = WebDriverUtil.getWebDriver();
 
-		String sourceDirFilePath = LiferaySeleniumUtil.getSourceDirFilePath(
-			getTestDependenciesDirName());
+		AxeBuilder axeBuilder = new AxeBuilder();
 
-		File file = new File(sourceDirFilePath + "/axe.min.js");
+		axeBuilder.withTags(
+			Arrays.asList(PropsValues.ACCESSIBILITY_STANDARDS_TAGS.split(",")));
 
-		URI uri = file.toURI();
+		Results results = null;
 
-		URL url = uri.toURL();
+		if (Validator.isNotNull(locator)) {
+			results = axeBuilder.analyze(webDriver, getWebElement(locator));
+		}
+		else {
+			results = axeBuilder.analyze(webDriver);
+		}
 
-		AXE.Builder axeBuilder = new AXE.Builder(webDriver, url);
+		List<Rule> rules = new ArrayList<>();
 
-		axeBuilder = axeBuilder.options(
-			PropsValues.ACCESSIBILITY_STANDARDS_JSON);
+		if (results != null) {
+			rules.addAll(results.getViolations());
+		}
 
-		JSONObject jsonObject = axeBuilder.analyze(getWebElement(locator));
+		if (!rules.isEmpty()) {
+			AxeReporter.getReadableAxeResults("analyze", webDriver, rules);
 
-		JSONArray jsonArray = jsonObject.getJSONArray("violations");
-
-		if (jsonArray.length() != 0) {
-			throw new Exception(AXE.report(jsonArray));
+			throw new Exception(AxeReporter.getAxeResultString());
 		}
 	}
 

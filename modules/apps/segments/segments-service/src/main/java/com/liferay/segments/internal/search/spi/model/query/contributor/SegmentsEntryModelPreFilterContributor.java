@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
+	immediate = true,
 	property = "indexer.class.name=com.liferay.segments.model.SegmentsEntry",
 	service = ModelPreFilterContributor.class
 )

@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	property = "rule.converter.key=LanguageRule", service = RuleConverter.class
+	immediate = true, property = "rule.converter.key=LanguageRule",
+	service = RuleConverter.class
 )
 public class LanguageRuleConverter implements RuleConverter {
 

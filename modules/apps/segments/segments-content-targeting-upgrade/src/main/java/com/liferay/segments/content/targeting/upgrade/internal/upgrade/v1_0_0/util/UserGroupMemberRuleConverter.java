@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	property = "rule.converter.key=UserGroupMemberRule",
+	immediate = true, property = "rule.converter.key=UserGroupMemberRule",
 	service = RuleConverter.class
 )
 public class UserGroupMemberRuleConverter implements RuleConverter {

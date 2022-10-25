@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
+	immediate = true,
 	property = "destination.name=" + SegmentsDestinationNames.SEGMENTS_ENTRY_REINDEX,
 	service = MessageListener.class
 )

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	property = "rule.converter.key=LastLoginDateRule",
+	immediate = true, property = "rule.converter.key=LastLoginDateRule",
 	service = RuleConverter.class
 )
 public class LastLoginDateRuleConverter implements RuleConverter {

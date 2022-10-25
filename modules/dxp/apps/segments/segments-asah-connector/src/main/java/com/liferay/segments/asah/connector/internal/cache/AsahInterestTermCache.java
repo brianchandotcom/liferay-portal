@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  */
 @Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = AsahInterestTermCache.class
 )
 public class AsahInterestTermCache {

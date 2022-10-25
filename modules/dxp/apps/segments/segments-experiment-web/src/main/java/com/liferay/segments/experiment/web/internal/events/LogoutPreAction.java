@@ -29,7 +29,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Yurena Cabrera
  */
-@Component(property = "key=logout.events.pre", service = LifecycleAction.class)
+@Component(
+	immediate = true, property = "key=logout.events.pre",
+	service = LifecycleAction.class
+)
 public class LogoutPreAction extends Action {
 
 	@Override

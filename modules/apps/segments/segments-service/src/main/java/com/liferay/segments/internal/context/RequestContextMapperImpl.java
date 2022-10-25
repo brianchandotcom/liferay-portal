@@ -75,7 +75,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Eduardo García
  * @author Raymond Augé
  */
-@Component(service = RequestContextMapper.class)
+@Component(immediate = true, service = RequestContextMapper.class)
 public class RequestContextMapperImpl implements RequestContextMapper {
 
 	@Override

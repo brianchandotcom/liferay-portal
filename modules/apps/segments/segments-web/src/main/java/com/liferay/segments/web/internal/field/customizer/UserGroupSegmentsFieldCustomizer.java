@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
+	immediate = true,
 	property = {
 		"segments.field.customizer.entity.name=User",
 		"segments.field.customizer.key=" + UserGroupSegmentsFieldCustomizer.KEY,

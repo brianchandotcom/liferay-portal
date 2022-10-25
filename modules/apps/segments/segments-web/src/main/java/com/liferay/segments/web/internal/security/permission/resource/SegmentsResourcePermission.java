@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(service = {})
+@Component(immediate = true, service = {})
 public class SegmentsResourcePermission {
 
 	public static void check(

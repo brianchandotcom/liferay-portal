@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = CheckIndividualSegmentsMessageListener.class
 )
 public class CheckIndividualSegmentsMessageListener

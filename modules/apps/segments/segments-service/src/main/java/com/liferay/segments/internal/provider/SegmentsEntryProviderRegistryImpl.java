@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(service = SegmentsEntryProviderRegistry.class)
+@Component(immediate = true, service = SegmentsEntryProviderRegistry.class)
 public class SegmentsEntryProviderRegistryImpl
 	implements SegmentsEntryProviderRegistry {
 

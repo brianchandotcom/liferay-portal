@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
+	immediate = true,
 	property = "indexer.class.name=com.liferay.segments.model.SegmentsEntry",
 	service = ModelIndexerWriterContributor.class
 )

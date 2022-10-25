@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Eduardo García
  */
 @Component(
+	immediate = true,
 	property = "target.class.name=com.liferay.segments.model.SegmentsEntry",
 	service = ODataMatcher.class
 )

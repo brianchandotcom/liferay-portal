@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo García
  */
 @Component(
+	immediate = true,
 	property = {
 		"request.context.contributor.key=" + SampleRequestContextContributor.KEY,
 		"request.context.contributor.type=boolean"

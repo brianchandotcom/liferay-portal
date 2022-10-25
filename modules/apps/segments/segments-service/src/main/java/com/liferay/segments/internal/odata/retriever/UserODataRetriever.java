@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author David Arques
  */
 @Component(
+	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.model.User",
 	service = ODataRetriever.class
 )

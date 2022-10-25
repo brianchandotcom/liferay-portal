@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
+	immediate = true,
 	property = {
 		"segments.field.customizer.entity.name=Organization",
 		"segments.field.customizer.key=" + CountrySegmentsFieldCustomizer.KEY,

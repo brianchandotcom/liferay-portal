@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eduardo García
  */
-@Component(service = SegmentsFieldCustomizerRegistry.class)
+@Component(immediate = true, service = SegmentsFieldCustomizerRegistry.class)
 public class SegmentsFieldCustomizerRegistryImpl
 	implements SegmentsFieldCustomizerRegistry {
 

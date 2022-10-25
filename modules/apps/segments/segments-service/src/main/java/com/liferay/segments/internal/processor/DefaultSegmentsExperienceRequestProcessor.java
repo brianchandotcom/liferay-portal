@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
+	immediate = true,
 	property = "segments.experience.request.processor.priority:Integer=0",
 	service = SegmentsExperienceRequestProcessor.class
 )

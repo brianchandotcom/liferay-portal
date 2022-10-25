@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Component;
  * @review
  */
 @Component(
+	immediate = true,
 	property = "entity.model.name=" + SegmentsEntryEntityModel.NAME,
 	service = EntityModel.class
 )

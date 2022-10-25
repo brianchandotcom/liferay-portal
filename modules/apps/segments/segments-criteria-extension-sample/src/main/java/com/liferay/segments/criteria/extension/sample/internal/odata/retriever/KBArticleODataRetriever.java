@@ -39,6 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
+	immediate = true,
 	property = "model.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = ODataRetriever.class
 )

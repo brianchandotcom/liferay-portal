@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(service = UpgradeStepRegistrator.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class SegmentsServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

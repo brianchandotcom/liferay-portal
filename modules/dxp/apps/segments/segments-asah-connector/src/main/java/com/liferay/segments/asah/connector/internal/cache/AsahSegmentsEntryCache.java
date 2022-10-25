@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Arques
  */
 @Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = AsahSegmentsEntryCache.class
 )
 public class AsahSegmentsEntryCache {

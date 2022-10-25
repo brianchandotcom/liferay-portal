@@ -55,7 +55,10 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -73,6 +76,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.sql.Connection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -756,6 +761,20 @@ public class ObjectFieldLocalServiceImpl
 				newObjectField.getObjectFieldId()));
 	}
 
+	private void _alterTableDropColumn(String tableName, String columnName) {
+		try {
+			Connection connection = _currentConnection.getConnection(
+				objectFieldPersistence.getDataSource());
+
+			DB db = objectFieldPersistence.getDB();
+
+			db.alterTableDropColumn(connection, tableName, columnName);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
 	private ObjectField _deleteObjectField(ObjectField objectField)
 		throws PortalException {
 
@@ -843,10 +862,8 @@ public class ObjectFieldLocalServiceImpl
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
-			runSQL(
-				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(
-					objectField.getDBTableName(),
-					objectField.getDBColumnName()));
+			_alterTableDropColumn(
+				objectField.getDBTableName(), objectField.getDBColumnName());
 		}
 
 		return objectField;
@@ -1099,6 +1116,9 @@ public class ObjectFieldLocalServiceImpl
 	).put(
 		"String", "Text"
 	).build();
+
+	@Reference
+	private CurrentConnection _currentConnection;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

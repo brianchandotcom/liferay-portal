@@ -383,7 +383,11 @@ function StructureTreeNodeContent({
 						setEditingName(true);
 					}
 				}}
-				ref={handlerRef}
+				ref={
+					selectedViewportSize === VIEWPORT_SIZES.desktop
+						? handlerRef
+						: null
+				}
 				role="button"
 			/>
 

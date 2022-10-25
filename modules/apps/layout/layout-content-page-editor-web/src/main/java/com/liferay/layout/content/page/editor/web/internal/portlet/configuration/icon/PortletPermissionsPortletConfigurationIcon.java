@@ -14,8 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.configuration.icon;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -29,13 +27,11 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -48,7 +44,6 @@ import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,14 +63,11 @@ public class PortletPermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getOnClick(
+	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			return StringBundler.concat(
-				"Liferay.Util.openModal({title: '",
-				HtmlUtil.escapeJS(getMessage(portletRequest)), "', url: '",
-				_generatePermissionURL(portletRequest), "'});");
+			return _generatePermissionURL(portletRequest);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -83,14 +75,7 @@ public class PortletPermissionsPortletConfigurationIcon
 			}
 		}
 
-		return StringPool.BLANK;
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return "javascript:void(0);";
+		return null;
 	}
 
 	@Override
@@ -164,8 +149,13 @@ public class PortletPermissionsPortletConfigurationIcon
 		return true;
 	}
 
+	@Override
+	public boolean isUseDialog() {
+		return true;
+	}
+
 	private String _generatePermissionURL(PortletRequest portletRequest)
-		throws PortalException, WindowStateException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -208,8 +198,5 @@ public class PortletPermissionsPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 }

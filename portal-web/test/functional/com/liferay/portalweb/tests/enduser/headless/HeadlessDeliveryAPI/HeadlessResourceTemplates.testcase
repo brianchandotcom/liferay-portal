@@ -25,6 +25,10 @@ definition {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 			ApplicationDisplayTemplates.deleteCP(widgetTemplateName = "Blogs Test ADT");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
 		}
 	}
 

@@ -20,6 +20,7 @@ export default function addWidget({
 	portletId,
 	portletItemId,
 	position,
+	selectItem = () => {},
 }) {
 	return (dispatch, getState) => {
 		WidgetService.addPortlet({
@@ -37,6 +38,10 @@ export default function addWidget({
 					layoutData,
 				})
 			);
+
+			if (addedItemId) {
+				selectItem(addedItemId);
+			}
 		});
 	};
 }

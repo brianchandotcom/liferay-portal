@@ -15488,6 +15488,79 @@ url=${short.hostname}:8080</echo>
 		</if>
 	</target>
 
+	<target name="start-docker-database-oracle">
+		<var name="database.version" value="19.3.0.0.0" />
+
+		<var name="database.oracle.docker.image" value="liferay/liferay-ci-environment:oracle-19.3.0.0.0_1.0.1" />
+
+		<get-database-property property.name="database.host" />
+
+		<antcall target="stop-docker-database">
+			<param name="database.oracle.host" value="${database.host}_oracle" />
+			<param name="database.type" value="oracle" />
+		</antcall>
+
+		<antcall inheritAll="false" target="start-docker-database">
+			<param name="database.oracle.docker.image" value="${database.oracle.docker.image}" />
+			<param name="database.oracle.docker.run.options" value="-p 1522:1521" />
+			<param name="database.oracle.host" value="${database.host}_oracle" />
+			<param name="database.oracle.name" value="Oracle" />
+			<param name="database.oracle.version" value="${database.version}" />
+			<param name="database.type" value="oracle" />
+			<param name="oracle.admin.password" value="liferay123" />
+			<param name="oracle.admin.username" value="oracl" />
+		</antcall>
+
+		<if>
+			<not>
+				<isset property="skip.prepare.portal.ext.properties" />
+			</not>
+			<then>
+				<antcall inheritAll="false" target="prepare-portal-ext-properties">
+					<param name="database.oracle.password" value="lportal" />
+					<param name="database.oracle.schema" value="lportal" />
+					<param name="database.oracle.url" value="jdbc:oracle:thin:@${database.host}:1522:oracl?oracle.net.disableOob=true" />
+					<param name="database.oracle.username" value="lportal" />
+					<param name="database.type" value="oracle" />
+				</antcall>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="skip.rebuild.database" />
+			</not>
+			<then>
+				<antcall target="rebuild-database">
+					<param name="database.oracle.docker.image" value="${database.oracle.docker.image}" />
+					<param name="database.oracle.host" value="${database.host}_oracle" />
+					<param name="database.oracle.version" value="${database.version}" />
+					<param name="database.type" value="oracle" />
+					<param name="oracle.admin.password" value="liferay123" />
+					<param name="oracle.admin.username" value="oracl" />
+					<param name="sql.dir" value="sql/create-bare/" />
+					<param name="sql.file" value="create-bare-oracle.sql" />
+				</antcall>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="skip.copy.optional.jars" />
+			</not>
+			<then>
+				<get-test-app-server-lib-portal-dir />
+
+				<antcall target="copy-optional-jars">
+					<param name="database.oracle.version" value="${database.version}" />
+					<param name="database.type" value="oracle" />
+					<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
+					<param name="todir" value="${test.app.server.lib.portal.dir}" />
+				</antcall>
+			</then>
+		</if>
+	</target>
+
 	<target name="start-docker-database-postgresql">
 		<if>
 			<not>

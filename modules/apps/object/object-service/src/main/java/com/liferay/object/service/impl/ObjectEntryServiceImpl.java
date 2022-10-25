@@ -21,9 +21,9 @@ import com.liferay.object.entry.permission.util.ObjectEntryPermissionUtil;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -140,6 +141,36 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<ObjectEntry> getManyToManyObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, boolean reverse, int start, int end)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries =
+			objectEntryLocalService.getManyToManyObjectEntries(
+				groupId, objectRelationshipId, primaryKey, related, reverse,
+				start, end);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			_checkModelResourcePermission(
+				objectEntry.getObjectDefinitionId(),
+				objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+		}
+
+		return objectEntries;
+	}
+
+	@Override
+	public int getManyToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, boolean reverse)
+		throws PortalException {
+
+		return objectEntryLocalService.getManyToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related, reverse);
+	}
+
+	@Override
 	public ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -165,13 +196,41 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<ObjectEntry> getOneToManyObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, int start, int end)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries =
+			objectEntryLocalService.getOneToManyObjectEntries(
+				groupId, objectRelationshipId, primaryKey, related, start, end);
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			_checkModelResourcePermission(
+				objectEntry.getObjectDefinitionId(),
+				objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+		}
+
+		return objectEntries;
+	}
+
+	@Override
+	public int getOneToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related)
+		throws PortalException {
+
+		return objectEntryLocalService.getOneToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related);
+	}
+
+	@Override
 	public boolean hasModelResourcePermission(
 			long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			_modelResourcePermissionsServiceTrackerMap.getService(
@@ -187,7 +246,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
+			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
@@ -249,8 +308,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			_modelResourcePermissionsServiceTrackerMap.getService(
@@ -268,7 +326,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			actionId);
 
 		ObjectEntryPermissionUtil.checkAccountEntryPermission(
-			_accountEntryLocalService, actionId, _objectDefinitionLocalService,
+			_accountEntryLocalService, actionId,
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId()),
 			objectEntry, _objectFieldLocalService, getUserId());
 	}
 
@@ -277,8 +337,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		PortletResourcePermission portletResourcePermission =
 			_portletResourcePermissionsServiceTrackerMap.getService(
@@ -320,7 +379,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	private volatile ObjectConfiguration _objectConfiguration;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionPersistence _objectDefinitionPersistence;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -32,7 +32,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -118,23 +117,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testClasses;
-	}
-
-	public static class TestClassDurationComparator
-		implements Comparator<TestClass> {
-
-		@Override
-		public int compare(TestClass testClass1, TestClass testClass2) {
-			Long duration1 =
-				testClass1.getAverageDuration() +
-					testClass1.getAverageOverheadDuration();
-			Long duration2 =
-				testClass2.getAverageDuration() +
-					testClass2.getAverageOverheadDuration();
-
-			return duration2.compareTo(duration1);
-		}
-
 	}
 
 	protected FunctionalBatchTestClassGroup(

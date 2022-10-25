@@ -176,11 +176,8 @@ export function FilterScreen() {
 												'Picklist' ||
 											objectField.businessType ===
 												'MultiselectPicklist' ||
-											(Liferay.FeatureFlags[
-												'LPS-152650'
-											] &&
-												objectField.businessType ===
-													'Relationship') ||
+											objectField.businessType ===
+												'Relationship' ||
 											objectField.name === 'createDate' ||
 											objectField.name ===
 												'modifiedDate' ||

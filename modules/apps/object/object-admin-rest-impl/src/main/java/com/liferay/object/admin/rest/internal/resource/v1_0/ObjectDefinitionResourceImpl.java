@@ -681,11 +681,7 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-152650"))) {
-
-					restContextPath = finalRESTContextPath;
-				}
+				restContextPath = finalRESTContextPath;
 
 				scope = objectDefinition.getScope();
 				status = new Status() {

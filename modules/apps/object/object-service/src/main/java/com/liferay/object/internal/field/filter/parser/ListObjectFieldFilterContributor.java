@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -119,24 +117,20 @@ public class ListObjectFieldFilterContributor
 				objectField, objectViewFilterColumn);
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152650"))) {
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectFieldId2(
-						objectField.getObjectFieldId());
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
 
-			return new OneToManyObjectFieldFilterStrategy(
-				locale,
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId1()),
-				_objectDefinitionLocalService, _objectEntryLocalService,
-				objectField, _objectFieldLocalService,
-				_objectRelationshipLocalService, objectViewFilterColumn,
-				_persistedModelLocalServiceRegistry,
-				_systemObjectDefinitionMetadataTracker);
-		}
-
-		throw new UnsupportedOperationException();
+		return new OneToManyObjectFieldFilterStrategy(
+			locale,
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1()),
+			_objectDefinitionLocalService, _objectEntryLocalService,
+			objectField, _objectFieldLocalService,
+			_objectRelationshipLocalService, objectViewFilterColumn,
+			_persistedModelLocalServiceRegistry,
+			_systemObjectDefinitionMetadataTracker);
 	}
 
 	@Reference

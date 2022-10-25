@@ -160,8 +160,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-152650", "true"
-			).setProperty(
 				"feature.flag.LPS-164801", "true"
 			).build());
 	}
@@ -174,8 +172,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-152650", "false"
-			).setProperty(
 				"feature.flag.LPS-164801", "false"
 			).build());
 	}

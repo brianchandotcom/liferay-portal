@@ -30,10 +30,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -130,19 +127,6 @@ public class ObjectViewFilterColumnLocalServiceImpl
 					objectField.getBusinessType()) ||
 				  _filterableObjectFieldNames.contains(
 					  objectField.getName()))) {
-
-				throw new ObjectViewFilterColumnException(
-					StringBundler.concat(
-						"Object field name \"",
-						objectViewFilterColumn.getObjectFieldName(),
-						"\" is not filterable"));
-			}
-
-			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-152650")) &&
-				StringUtil.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 				throw new ObjectViewFilterColumnException(
 					StringBundler.concat(

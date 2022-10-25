@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -199,6 +200,23 @@ public class KBDropdownItemsProvider {
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
 						"history"));
+			}
+		).add(
+			() -> _hasRSSPermission(kbArticle),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					ResourceURLBuilder.createResourceURL(
+						_liferayPortletResponse
+					).setParameter(
+						"resourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).setResourceID(
+						"kbArticleRSS"
+					).buildString());
+				dropdownItem.setIcon("shortcut");
+				dropdownItem.setLabel("RSS");
+				dropdownItem.setTarget("_blank");
 			}
 		).add(
 			this::_hasPrintPermission,
@@ -881,6 +899,20 @@ public class KBDropdownItemsProvider {
 
 	private Boolean _hasPrintPermission() {
 		return true;
+	}
+
+	private Boolean _hasRSSPermission(KBArticle kbArticle) {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
+			!Objects.equals(
+				portletDisplay.getRootPortletId(),
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _hasSubscription() {

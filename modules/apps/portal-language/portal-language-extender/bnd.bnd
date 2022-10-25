@@ -2,6 +2,6 @@ Bundle-Name: Liferay Portal Language Extender
 Bundle-SymbolicName: com.liferay.portal.language.extender
 Bundle-Version: 6.0.13
 Import-Package:\
-	com.liferay.portal.kernel.util;version="[7.38.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[7.38.0,99.0.0)",\
 	\
 	*

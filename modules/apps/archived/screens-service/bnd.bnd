@@ -2,8 +2,8 @@ Bundle-Name: Liferay Screens Service
 Bundle-SymbolicName: com.liferay.screens.service
 Bundle-Version: 5.0.19
 Import-Package:\
-	com.liferay.dynamic.data.lists.util.comparator;version="[1.0,9999.0.0)",\
-	com.liferay.journal.*;version="[1.0,9999.0.0)",\
+	com.liferay.dynamic.data.lists.util.comparator;version="[1.0,99.0.0)",\
+	com.liferay.journal.*;version="[1.0,99.0.0)",\
 	\
 	*
 Liferay-Require-SchemaVersion: 1.0.8

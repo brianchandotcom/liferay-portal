@@ -6,6 +6,6 @@ Export-Package:\
 	com.liferay.headless.commerce.punchout.helper,\
 	com.liferay.headless.commerce.punchout.resource.v1_0
 Import-Package:\
-	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.service;version="[4.0.0,99.0.0)",\
 	\
 	*

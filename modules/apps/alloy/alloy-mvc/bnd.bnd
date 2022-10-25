@@ -5,6 +5,6 @@ Export-Package:\
 	com.liferay.alloy.mvc,\
 	com.liferay.alloy.mvc.json.web.service
 Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[11.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.portlet;version="[11.0.0,99.0.0)",\
 	\
 	*

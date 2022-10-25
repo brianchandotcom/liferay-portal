@@ -13,7 +13,9 @@ dependencies {
 	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.3"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:asset:asset-api")
+	compileOnly project(":apps:asset:asset-list-api")
 	compileOnly project(":apps:client-extension:client-extension-api")
 	compileOnly project(":apps:client-extension:client-extension-type-api")
 	compileOnly project(":apps:export-import:export-import-api")
@@ -33,8 +35,10 @@ dependencies {
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
+	compileOnly project(":apps:product-navigation:product-navigation-product-menu-api")
 	compileOnly project(":apps:release-feature-flag:release-feature-flag-api")
 	compileOnly project(":apps:segments:segments-api")
+	compileOnly project(":apps:site-navigation:site-navigation-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

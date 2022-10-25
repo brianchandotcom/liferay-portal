@@ -1,0 +1,22 @@
+[
+	{
+		"externalReferenceCode": "RAYACCOUNT-001",
+		"name": "Test Account Raylife 1",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "RAYACCOUNT-002",
+		"name": "Test Account Raylife 2",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "RAYACCOUNT-003",
+		"name": "Test Account Raylife 3",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "RAYACCOUNT-004",
+		"name": "Test Account Raylife 4",
+		"type": "business"
+	}
+]

@@ -643,6 +643,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			jsonObject.put(
 				"hasChildren", layout.hasChildren()
 			).put(
+				"id", layout.getPlid()
+			).put(
 				"layoutId", layout.getLayoutId()
 			);
 

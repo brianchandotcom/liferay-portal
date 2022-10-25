@@ -130,6 +130,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				%>
 
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= ddmStructureActionDropdownItemsProvider.getActionDropdownItems() %>"
 					propsTransformer="js/DDMStructrureElementsDefaultPropsTransformer"
 				/>

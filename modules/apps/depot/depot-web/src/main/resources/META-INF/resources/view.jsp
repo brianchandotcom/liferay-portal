@@ -88,6 +88,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= depotAdminDisplayContext.getActionDropdownItems(depotEntry) %>"
 									propsTransformer="js/DepotEntryDropdownPropsTransformer"
 								/>
@@ -117,6 +118,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= depotAdminDisplayContext.getActionDropdownItems(depotEntry) %>"
 									propsTransformer="js/DepotEntryDropdownPropsTransformer"
 								/>

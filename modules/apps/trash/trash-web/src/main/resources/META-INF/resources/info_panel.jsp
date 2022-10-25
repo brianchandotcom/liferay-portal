@@ -58,6 +58,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 														"portletNamespace", liferayPortletResponse.getNamespace()
 													).build()
 												%>'
+												aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 												dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
 												propsTransformer="js/EntriesPropsTransformer"
 											/>
@@ -69,6 +70,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 														"portletNamespace", liferayPortletResponse.getNamespace()
 													).build()
 												%>'
+												aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 												dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
 												propsTransformer="js/EntriesPropsTransformer"
 											/>

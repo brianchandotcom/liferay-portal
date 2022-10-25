@@ -93,6 +93,7 @@ SiteAdminDisplayContext siteAdminDisplayContext = (SiteAdminDisplayContext)reque
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
 						propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 					/>
@@ -227,6 +228,7 @@ SiteAdminDisplayContext siteAdminDisplayContext = (SiteAdminDisplayContext)reque
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
 						propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 					/>

@@ -102,6 +102,7 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoCollectionProvide
 				<c:if test="<%= infoCollectionProviderItemsDisplayContext.isShowActions() %>">
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoCollectionProviderItemsDisplayContext.getInfoCollectionProviderClassName(), result) %>"
 							propsTransformer="js/ListItemsDropdownPropsTransformer"
 						/>

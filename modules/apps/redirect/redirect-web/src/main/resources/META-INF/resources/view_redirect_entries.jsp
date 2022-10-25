@@ -132,6 +132,7 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 					<liferay-ui:search-container-column-text>
 						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dropdownItems %>"
 							/>
 						</c:if>

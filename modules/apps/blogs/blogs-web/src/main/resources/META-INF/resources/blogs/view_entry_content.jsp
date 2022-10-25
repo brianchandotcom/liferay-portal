@@ -72,6 +72,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 								"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
 							).build()
 						%>'
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems(entry) %>"
 						propsTransformer="blogs_admin/js/ElementsPropsTransformer"
 					/>

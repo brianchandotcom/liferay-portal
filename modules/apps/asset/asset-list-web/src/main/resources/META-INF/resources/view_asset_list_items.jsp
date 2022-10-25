@@ -87,6 +87,7 @@ ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDrop
 			<c:if test="<%= assetListItemsDisplayContext.isShowActions() %>">
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(AssetEntry.class.getName(), assetEntry) %>"
 						propsTransformer="js/ListItemsDropdownPropsTransformer"
 					/>

@@ -84,6 +84,7 @@
 															"viewVocabulariesURL", viewVocabulariesURL.toString()
 														).build()
 													%>'
+													aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 													dropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesDropdownItems() %>"
 													propsTransformer="js/ActionsComponentPropsTransformer"
 												/>
@@ -241,6 +242,7 @@
 								%>
 
 								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									cssClass="component-action"
 									dropdownItems="<%= assetVocabularyActionDropdownItemsProvider.getActionDropdownItems(vocabulary) %>"
 									propsTransformer="js/VocabularyActionDropdownPropsTransformer"

@@ -22,7 +22,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymsDisplayContext" %>
 
@@ -73,6 +74,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= synonymSetDisplayContext.getDropdownItems() %>"
 					propsTransformer="js/SynonymSetsDropdownDefaultPropsTransformer"
 				/>

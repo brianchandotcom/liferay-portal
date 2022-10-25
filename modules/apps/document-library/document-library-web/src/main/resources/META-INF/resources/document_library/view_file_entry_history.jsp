@@ -80,6 +80,7 @@ renderResponse.setTitle(fileEntry.getTitle());
 				%>
 
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= dlViewFileEntryHistoryDisplayContext.getActionDropdownItems() %>"
 					propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
 				/>

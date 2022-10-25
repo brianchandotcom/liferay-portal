@@ -96,6 +96,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 								<liferay-ui:search-container-column-text>
 									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
 										propsTransformer="js/EntriesPropsTransformer"
 									/>
@@ -138,6 +139,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 								<liferay-ui:search-container-column-text>
 									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
 										propsTransformer="js/EntriesPropsTransformer"
 									/>

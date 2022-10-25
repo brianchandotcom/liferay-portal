@@ -49,6 +49,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 									"portletNamespace", liferayPortletResponse.getNamespace()
 								).build()
 							%>'
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>"
 							propsTransformer="js/EntriesPropsTransformer"
 						/>

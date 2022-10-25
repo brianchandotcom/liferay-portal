@@ -75,6 +75,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 								<liferay-ui:search-container-column-text>
 									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= ddmFormAdminDisplayContext.getActionDropdownItems(formInstance) %>"
 										propsTransformer="admin/js/DDMFormAdminActionDropdownPropsTransformer"
 									/>
@@ -175,6 +176,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 								<liferay-ui:search-container-column-text>
 									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= ddmFormAdminDisplayContext.getActionDropdownItems(formInstance) %>"
 										propsTransformer="admin/js/DDMFormAdminActionDropdownPropsTransformer"
 									/>

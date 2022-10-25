@@ -92,6 +92,7 @@ WidgetTemplatesManagementToolbarDisplayContext widgetTemplatesManagementToolbarD
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= widgetTemplatesTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
 						propsTransformer="js/WidgetTemplatesDropdownPropsTransformer"
 					/>

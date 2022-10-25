@@ -174,12 +174,14 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 								<c:choose>
 									<c:when test="<%= trashEntry.getRootEntry() == null %>">
 										<clay:dropdown-actions
+											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 											dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
 											propsTransformer="js/EntriesPropsTransformer"
 										/>
 									</c:when>
 									<c:otherwise>
 										<clay:dropdown-actions
+											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
 											propsTransformer="js/EntriesPropsTransformer"
 										/>
@@ -263,12 +265,14 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 								<c:choose>
 									<c:when test="<%= trashEntry.getRootEntry() == null %>">
 										<clay:dropdown-actions
+											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 											dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
 											propsTransformer="js/EntriesPropsTransformer"
 										/>
 									</c:when>
 									<c:otherwise>
 										<clay:dropdown-actions
+											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
 											propsTransformer="js/EntriesPropsTransformer"
 										/>

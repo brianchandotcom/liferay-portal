@@ -99,6 +99,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						%>
 
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= siteNavigationMenuActionDropdownItemsProvider.getActionDropdownItems() %>"
 							propsTransformer="js/SiteNavigationMenuDropdownDefaultPropsTransformer"
 						/>
@@ -149,6 +150,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						%>
 
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= siteNavigationMenuActionDropdownItemsProvider.getActionDropdownItems() %>"
 							propsTransformer="js/SiteNavigationMenuDropdownDefaultPropsTransformer"
 						/>

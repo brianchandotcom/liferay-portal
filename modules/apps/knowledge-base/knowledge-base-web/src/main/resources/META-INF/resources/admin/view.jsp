@@ -220,6 +220,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 										%>
 
 										<clay:dropdown-actions
+											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 											dropdownItems="<%= kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder) %>"
 											propsTransformer="admin/js/KBDropdownPropsTransformer"
 										/>
@@ -306,6 +307,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 										%>
 
 										<clay:dropdown-actions
+											aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 											dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
 											propsTransformer="admin/js/KBDropdownPropsTransformer"
 										/>

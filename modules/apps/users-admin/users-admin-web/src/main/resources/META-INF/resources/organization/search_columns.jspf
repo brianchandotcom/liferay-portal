@@ -45,6 +45,7 @@
 
 		<liferay-ui:search-container-column-text>
 			<clay:dropdown-actions
+				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
 				propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
 			/>
@@ -106,6 +107,7 @@
 
 		<liferay-ui:search-container-column-text>
 			<clay:dropdown-actions
+				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
 				propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
 			/>

@@ -67,6 +67,7 @@
 			%>
 
 			<clay:dropdown-actions
+				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= layoutActionDropdownItemsProvider.getActionDropdownItems(layout, true) %>"
 				propsTransformer="js/LayoutActionDropdownPropsTransformer"
 			/>

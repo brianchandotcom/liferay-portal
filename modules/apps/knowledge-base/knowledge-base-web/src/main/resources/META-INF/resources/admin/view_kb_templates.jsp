@@ -127,6 +127,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 							%>
 
 							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate) %>"
 								propsTransformer="admin/js/KBDropdownPropsTransformer"
 							/>

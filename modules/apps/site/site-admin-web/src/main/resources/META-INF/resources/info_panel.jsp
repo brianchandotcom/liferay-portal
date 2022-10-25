@@ -103,6 +103,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							<ul class="autofit-padded-no-gutters autofit-row">
 								<li class="autofit-col">
 									<clay:dropdown-actions
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 										dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>"
 										propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 									/>

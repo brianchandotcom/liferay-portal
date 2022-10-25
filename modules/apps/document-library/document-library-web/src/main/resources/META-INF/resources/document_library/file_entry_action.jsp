@@ -72,6 +72,7 @@ else {
 %>
 
 <clay:dropdown-actions
+	aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 	dropdownItems="<%= dlViewFileVersionDisplayContext.getActionDropdownItems() %>"
 	propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
 />

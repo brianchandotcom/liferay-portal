@@ -94,6 +94,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 															"viewLayoutPageTemplateCollectionURL", viewLayoutPageTemplateCollectionURL.toString()
 														).build()
 													%>'
+													aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 													dropdownItems="<%= layoutPageTemplateDisplayContext.getCollectionsDropdownItems() %>"
 													propsTransformer="js/ActionsComponentPropsTransformer"
 												/>
@@ -181,6 +182,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 								%>
 
 								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= layoutPageTemplateCollectionActionDropdownItem.getActionDropdownItems(layoutPageTemplateCollection) %>"
 									propsTransformer="js/propsTransformers/LayoutPageTemplateCollectionPropsTransformer"
 								/>

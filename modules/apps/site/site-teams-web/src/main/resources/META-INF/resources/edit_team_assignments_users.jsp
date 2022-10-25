@@ -81,6 +81,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 						%>
 
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
 							propsTransformer="js/UserDropdownDefaultPropsTransformer"
 						/>
@@ -106,6 +107,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 						%>
 
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
 							propsTransformer="js/UserDropdownDefaultPropsTransformer"
 						/>

@@ -305,6 +305,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 									"singlePageApplicationEnabled", contentDashboardAdminDisplayContext.getSinglePageApplicationEnabled()
 								).build()
 							%>'
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"
 							propsTransformer="js/transformers/ActionsComponentPropsTransformer"
 						/>

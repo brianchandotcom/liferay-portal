@@ -22,6 +22,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 
 <c:if test="<%= folderActionDisplayContext.isShowActions() %>">
 	<clay:dropdown-actions
+		aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 		dropdownItems="<%= folderActionDisplayContext.getActionDropdownItems() %>"
 		propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
 	/>

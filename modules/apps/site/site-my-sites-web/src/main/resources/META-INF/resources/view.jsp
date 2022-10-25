@@ -146,6 +146,7 @@
 					<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dropdownItems %>"
 								propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 							/>
@@ -246,6 +247,7 @@
 					<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dropdownItems %>"
 								propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 							/>

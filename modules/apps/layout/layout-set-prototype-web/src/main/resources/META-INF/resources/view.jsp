@@ -100,6 +100,7 @@
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= layoutSetPrototypeDisplayContext.getLayoutSetPrototypeActionDropdownItems(layoutSetPrototype) %>"
 							propsTransformer="js/LayoutSetPrototypeDropdownDefaultPropsTransformer"
 						/>
@@ -149,6 +150,7 @@
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= layoutSetPrototypeDisplayContext.getLayoutSetPrototypeActionDropdownItems(layoutSetPrototype) %>"
 							propsTransformer="js/LayoutSetPrototypeDropdownDefaultPropsTransformer"
 						/>

@@ -178,6 +178,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 
 							<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= dropdownItems %>"
 								/>
 							</c:if>

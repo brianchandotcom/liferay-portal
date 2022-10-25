@@ -65,6 +65,7 @@
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= assetTagsDisplayContext.getAssetTagActionDropdownItems(tag) %>"
 							propsTransformer="js/AssetTagActionDropdownPropsTransformer"
 						/>
@@ -85,6 +86,7 @@
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= assetTagsDisplayContext.getAssetTagActionDropdownItems(tag) %>"
 							propsTransformer="js/AssetTagActionDropdownPropsTransformer"
 						/>

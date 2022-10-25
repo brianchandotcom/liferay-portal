@@ -66,6 +66,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
 					propsTransformer="js/UserDropdownDefaultPropsTransformer"
 				/>
@@ -99,6 +100,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
 					propsTransformer="js/UserDropdownDefaultPropsTransformer"
 				/>

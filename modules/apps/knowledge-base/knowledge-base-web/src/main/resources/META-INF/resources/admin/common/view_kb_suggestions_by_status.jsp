@@ -110,6 +110,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 				%>
 
 				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= kbDropdownItemsProvider.getKBCommentDropdownItems(kbArticle, kbComment) %>"
 					propsTransformer="admin/js/KBDropdownPropsTransformer"
 				/>

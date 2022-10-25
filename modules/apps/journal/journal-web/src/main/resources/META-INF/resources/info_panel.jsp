@@ -76,6 +76,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										"trashEnabled", componentContext.get("trashEnabled")
 									).build()
 								%>'
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>"
 								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
@@ -151,6 +152,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										"trashEnabled", componentContext.get("trashEnabled")
 									).build()
 								%>'
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>"
 								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>

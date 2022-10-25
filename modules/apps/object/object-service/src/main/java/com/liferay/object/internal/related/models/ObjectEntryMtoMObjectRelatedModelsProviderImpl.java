@@ -20,7 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -38,10 +38,10 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 	public ObjectEntryMtoMObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryService objectEntryService,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
-		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryService = objectEntryService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 
 		_className = objectDefinition.getClassName();
@@ -87,7 +87,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
-				_objectEntryLocalService.deleteObjectEntry(
+				_objectEntryService.deleteObjectEntry(
 					objectEntry.getObjectEntryId());
 			}
 		}
@@ -123,7 +123,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		return _objectEntryLocalService.getManyToManyObjectEntries(
+		return _objectEntryService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
 			true, objectRelationship.isReverse(), start, end);
 	}
@@ -137,7 +137,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
+		return _objectEntryService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
 			true, objectRelationship.isReverse());
 	}
@@ -152,14 +152,14 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		return _objectEntryLocalService.getManyToManyObjectEntries(
+		return _objectEntryService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(),
 			objectEntryId, false, objectRelationship.isReverse(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private final String _className;
-	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryService _objectEntryService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 

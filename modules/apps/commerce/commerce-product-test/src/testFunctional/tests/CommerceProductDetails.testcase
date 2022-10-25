@@ -740,6 +740,141 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-10197. Users cannot view and download owner limited products' attachments"
+	@priority = "3"
+	test CanAssertOwnerLimitedFileAttacchmentNotVisibleForBuyer {
+		property portal.acceptance = "false";
+
+		var fileName1 = "commerce.pdf";
+		var fileName2 = "Minium_InstallationGuide.pdf";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Business Account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an admin user") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Administrator",
+				userEmailAddress = "administrator@liferay.com",
+				userFirstName = "Admin",
+				userLastName = "User",
+				userScreenName = "administrator");
+		}
+
+		task ("And the administrator user is set as a buyer for the account") {
+			Refresh();
+
+			Accounts.assignUsers(
+				accountName = "Commerce Account",
+				assigneeName = "Admin User");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Buyer",
+				accountUserName = "administrator@liferay.com");
+		}
+
+		task ("And the administrator user logs in") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "administrator@liferay.com");
+		}
+
+		task ("And in the global site, in Documents and Media, a file visible to Owner only is uploaded(e.g. a pdf file)") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
+
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "File Upload");
+
+			UploadDependencyFile.uploadFile(fileName = "${fileName1}");
+
+			PortletEntry.inputTitle(title = "${fileName1}");
+
+			Panel.expandPanel(panel = "Permissions");
+
+			Select(
+				locator1 = "Select#PERMISSIONS",
+				value1 = "Owner");
+
+			PortletEntry.publish();
+		}
+
+		task ("And on a product (e.g. Brake Pads), add the previously uploaded file as a product's attachment") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addAttachments(
+				alreadyUploaded = "true",
+				fileNames = "${fileName1}");
+		}
+
+		task ("When the admin user navigates into Brake Pad product details") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Brake Pads");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Brake Pads");
+		}
+
+		task ("Then the admin user can see the attachment in the 'attachments' tab") {
+			AssertElementPresent(
+				key_text = "Attachments",
+				locator1 = "Button#ANY");
+
+			for (var fileName : list "${fileName1},${fileName2}") {
+				FrontStore.viewProductAttachment(attachmentName = "${fileName}");
+			}
+		}
+
+		task ("When the buyer user logs in -> Minium -> Brake Pads") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.searchCatalog(productName = "Brake Pads");
+
+			CommerceNavigator.gotoProductDetails(productName = "Brake Pads");
+		}
+
+		task ("Then the buyer user cannot see the attachment") {
+			Click(
+				key_text = "Attachments",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_entryName = "${fileName2}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_NAME");
+
+			AssertElementNotPresent(
+				key_entryName = "${fileName1}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_NAME");
+		}
+	}
+
 	@description = "COMMERCE-9675. Users can view and download a product's attachments"
 	@priority = "3"
 	test CanDownloadProductAttachments {

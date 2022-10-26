@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.inventory.internal.messaging;
 
-import com.liferay.commerce.inventory.internal.configuration.CommerceInventorySystemConfiguration;
+import com.liferay.commerce.inventory.configuration.CommerceInventorySystemConfiguration;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

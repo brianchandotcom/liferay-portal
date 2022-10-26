@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.inventory.internal.configuration;
+package com.liferay.commerce.inventory.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "inventory", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.inventory.internal.configuration.CommerceInventorySystemConfiguration",
+	id = "com.liferay.commerce.inventory.configuration.CommerceInventorySystemConfiguration",
 	localization = "content/Language",
 	name = "commerce-inventory-system-configuration-name"
 )

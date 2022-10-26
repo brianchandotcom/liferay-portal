@@ -56,15 +56,18 @@ export default function propsTransformer({items, ...props}) {
 		items: items.map((item) => {
 			return {
 				...item,
-				onClick(event) {
-					const action = item.data?.action;
+				items: item.items?.map((child) => ({
+					...child,
+					onClick(event) {
+						const action = child.data?.action;
 
-					if (action) {
-						event.preventDefault();
+						if (action) {
+							event.preventDefault();
 
-						ACTIONS[action](item.data);
-					}
-				},
+							ACTIONS[action](child.data);
+						}
+					},
+				})),
 			};
 		}),
 	};

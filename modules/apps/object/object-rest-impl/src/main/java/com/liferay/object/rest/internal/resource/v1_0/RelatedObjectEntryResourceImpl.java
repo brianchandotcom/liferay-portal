@@ -27,6 +27,8 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -78,6 +80,8 @@ public class RelatedObjectEntryResourceImpl
 
 		_getRelatedObjectEntry(
 			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
+
+		_checkSystemObjectEntry(objectEntryId, systemObjectDefinition);
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -166,6 +170,18 @@ public class RelatedObjectEntryResourceImpl
 
 		return _getRelatedObjectEntry(
 			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
+	}
+
+	private void _checkSystemObjectEntry(
+			long objectEntryId, ObjectDefinition systemObjectDefinition)
+		throws Exception {
+
+		PersistedModelLocalService persistedModelLocalService =
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(
+					systemObjectDefinition.getClassName());
+
+		persistedModelLocalService.getPersistedModel(objectEntryId);
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(

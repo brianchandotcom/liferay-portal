@@ -1,0 +1,21 @@
+.policies-expiring-container {
+	min-height: 257px;
+}
+
+.policies-expiring-container
+	.policies-expiring-header
+	.policies-expiring-title::after {
+	background-color: #4d85ff;
+	content: '';
+	height: 1px;
+	left: 28px;
+	min-width: 20px;
+	position: absolute;
+	top: 50px;
+}
+
+.policies-expiring-container .policies-expiring-select {
+	border-color: var(--white);
+	padding: 5px;
+	width: 105px;
+}

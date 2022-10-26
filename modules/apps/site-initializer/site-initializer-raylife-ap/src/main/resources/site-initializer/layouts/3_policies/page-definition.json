@@ -4,417 +4,148 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderRadius": "",
 						"borderWidth": "0",
+						"paddingBottom": "4",
+						"paddingTop": "4",
+						"shadow": "",
 						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
+						"align": "Center",
 						"borderWidth": 0,
+						"contentDisplay": "FlexColumn",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 0,
+						"opacity": 100,
+						"paddingBottom": 2,
 						"paddingLeft": 0,
 						"paddingRight": 0,
-						"paddingTop": 0,
+						"paddingTop": 2,
 						"widthType": "Fluid"
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "layout"
+							"fragmentStyle": {
+								"borderRadius": "",
+								"maxWidth": "1500px",
+								"shadow": "",
+								"textAlign": "",
+								"width": "100%"
 							},
-							"fragmentConfig": {
-								"layoutName": "Policies"
-							},
-							"fragmentFields": [
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								}
 							],
-							"indexed": true
+							"verticalAlignment": "top"
 						},
 						"pageElements": [
 							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 8
+								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-heading"
-											},
-											"fragmentConfig": {
-												"headingLevel": "h3"
-											},
-											"fragmentFields": [
+											"fragmentViewports": [
 												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Policies"
-															}
-														}
+													"fragmentViewportStyle": {
+														"marginBottom": "4"
+													},
+													"id": "tablet"
+												}
+											],
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {
+													}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {
 													}
 												}
 											],
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "FragmentDropZone"
-							},
-							{
-								"type": "FragmentDropZone"
-							},
-							{
-								"pageElements": [
-									{
-										"definition": {
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"paddingBottom": "4",
-												"paddingTop": "4",
-												"textAlign": ""
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"paddingBottom": 2,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 2,
-												"widthType": "Fluid"
-											}
+											"verticalAlignment": "top"
 										},
 										"pageElements": [
 											{
 												"definition": {
-													"fragmentStyle": {
-														"maxWidth": "1500px",
-														"textAlign": "",
-														"width": "100%"
-													},
-													"gutters": true,
-													"indexed": true,
-													"modulesPerRow": 2,
-													"numberOfColumns": 2,
-													"reverseOrder": false,
-													"rowViewports": [
+													"columnViewports": [
 														{
-															"id": "landscapeMobile",
-															"rowViewportDefinition": {
-																"modulesPerRow": 1
-															}
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
 														},
 														{
-															"id": "portraitMobile",
-															"rowViewportDefinition": {
-															}
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
 														},
 														{
-															"id": "tablet",
-															"rowViewportDefinition": {
-																"modulesPerRow": 1
-															}
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
 														}
 													],
-													"verticalAlignment": "top"
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"columnViewports": [
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "tablet"
-																}
-															],
-															"size": 8
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragmentViewports": [
-																		{
-																			"fragmentViewportStyle": {
-																				"marginBottom": "4"
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"gutters": true,
-																	"indexed": true,
-																	"modulesPerRow": 2,
-																	"numberOfColumns": 2,
-																	"reverseOrder": false,
-																	"rowViewports": [
-																		{
-																			"id": "landscapeMobile",
-																			"rowViewportDefinition": {
-																				"modulesPerRow": 1
-																			}
-																		},
-																		{
-																			"id": "portraitMobile",
-																			"rowViewportDefinition": {
-																			}
-																		},
-																		{
-																			"id": "tablet",
-																			"rowViewportDefinition": {
-																			}
-																		}
-																	],
-																	"verticalAlignment": "top"
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"columnViewports": [
-																				{
-																					"columnViewportDefinition": {
-																						"size": 12
-																					},
-																					"id": "landscapeMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "portraitMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"size": 6
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "section"
-																					},
-																					"fragmentConfig": {
-																						"sectionId": "primary"
-																					},
-																					"fragmentFields": [
-																					],
-																					"indexed": true
-																				},
-																				"pageElements": [
-																					{
-																						"pageElements": [
-																							{
-																								"definition": {
-																									"fragment": {
-																										"key": "policies-total-active"
-																									},
-																									"fragmentConfig": {
-																										"textColor": ""
-																									},
-																									"fragmentFields": [
-																									],
-																									"fragmentViewports": [
-																										{
-																											"fragmentViewportStyle": {
-																												"marginBottom": "4"
-																											},
-																											"id": "landscapeMobile"
-																										}
-																									],
-																									"indexed": true
-																								},
-																								"type": "Fragment"
-																							}
-																						],
-																						"type": "FragmentDropZone"
-																					}
-																				],
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Column"
-																	},
-																	{
-																		"definition": {
-																			"columnViewports": [
-																				{
-																					"columnViewportDefinition": {
-																						"size": 12
-																					},
-																					"id": "landscapeMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "portraitMobile"
-																				},
-																				{
-																					"columnViewportDefinition": {
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"size": 6
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "section"
-																					},
-																					"fragmentConfig": {
-																						"sectionId": "primary"
-																					},
-																					"fragmentFields": [
-																					],
-																					"indexed": true
-																				},
-																				"pageElements": [
-																					{
-																						"pageElements": [
-																							{
-																								"definition": {
-																									"fragment": {
-																										"key": "fake-content"
-																									},
-																									"fragmentConfig": {
-																										"fakeContentId": "fake content",
-																										"height": "257px"
-																									},
-																									"fragmentFields": [
-																									],
-																									"indexed": true
-																								},
-																								"type": "Fragment"
-																							}
-																						],
-																						"type": "FragmentDropZone"
-																					}
-																				],
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Column"
-																	}
-																],
-																"type": "Row"
-															}
-														],
-														"type": "Column"
-													},
-													{
-														"definition": {
-															"columnViewports": [
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "landscapeMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																	},
-																	"id": "portraitMobile"
-																},
-																{
-																	"columnViewportDefinition": {
-																		"size": 12
-																	},
-																	"id": "tablet"
-																}
-															],
-															"size": 4
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "section"
-																	},
-																	"fragmentConfig": {
-																		"sectionId": "primary"
-																	},
-																	"fragmentFields": [
-																	],
-																	"indexed": true
-																},
-																"pageElements": [
-																	{
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "fake-content"
-																					},
-																					"fragmentConfig": {
-																						"fakeContentId": "fake content",
-																						"height": "257px"
-																					},
-																					"fragmentFields": [
-																					],
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "FragmentDropZone"
-																	}
-																],
-																"type": "Fragment"
-															}
-														],
-														"type": "Column"
-													}
-												],
-												"type": "Row"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"marginTop": "4",
-														"maxWidth": "1500px",
-														"textAlign": "",
-														"width": "100%"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 2,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
+													"size": 6
 												},
 												"pageElements": [
 													{
@@ -434,14 +165,25 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"widgetInstance": {
-																				"widgetConfig": {
-																					"properties": "route=policies-table"
-																				},
-																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
-																			}
+																			"fragment": {
+																				"key": "policies-total-active"
+																			},
+																			"fragmentConfig": {
+																				"textColor": ""
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "landscapeMobile"
+																				}
+																			],
+																			"indexed": true
 																		},
-																		"type": "Widget"
+																		"type": "Fragment"
 																	}
 																],
 																"type": "FragmentDropZone"
@@ -450,16 +192,202 @@
 														"type": "Fragment"
 													}
 												],
-												"type": "Section"
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "section"
+															},
+															"fragmentConfig": {
+																"sectionId": "primary"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"pageElements": [
+															{
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "policies-expiring"
+																			},
+																			"fragmentConfig": {
+																				"textColor": ""
+																			},
+																			"fragmentFields": [
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "FragmentDropZone"
+															}
+														],
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
 											}
 										],
-										"type": "Section"
+										"type": "Row"
 									}
 								],
-								"type": "FragmentDropZone"
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "section"
+											},
+											"fragmentConfig": {
+												"sectionId": "primary"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "fake-content"
+															},
+															"fragmentConfig": {
+																"fakeContentId": "fake content",
+																"height": "257px"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
 							}
 						],
-						"type": "Fragment"
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderRadius": "",
+								"borderWidth": "0",
+								"marginTop": "4",
+								"maxWidth": "1500px",
+								"shadow": "",
+								"textAlign": "",
+								"width": "100%"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 2,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "section"
+									},
+									"fragmentConfig": {
+										"sectionId": "primary"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"pageElements": [
+									{
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"properties": "route=policies-table"
+														},
+														"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
 					}
 				],
 				"type": "Section"

@@ -45,6 +45,9 @@ export default function ContentFilter({
 				role="listbox"
 				trigger={
 					<ClayButton
+						aria-label={Liferay.Language.get(
+							'filter-by-content-type'
+						)}
 						className="form-control form-control-select form-control-sm text-left"
 						displayType="unstyled"
 						small
@@ -73,7 +76,11 @@ export default function ContentFilter({
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
-			<SearchForm className="mb-3" onChange={onChangeInput} />
+			<SearchForm
+				className="mb-3"
+				label={Liferay.Language.get('search-content')}
+				onChange={onChangeInput}
+			/>
 		</div>
 	);
 }

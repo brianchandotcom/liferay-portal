@@ -150,11 +150,21 @@ const NotificationsInfo = ({
 
 	const [items, setItems] = useState(notificationTypesOptions);
 
-	const [recipientType, setRecipientType] = useState(
-		getRecipientType(
+	let recipientTypeHolder;
+
+	if (
+		selectedItem.data.notifications?.recipients?.[notificationIndex]
+			.length !== 0
+	) {
+		recipientTypeHolder = getRecipientType(
 			selectedItem.data.notifications?.recipients?.[notificationIndex]
-		) || 'assetCreator'
-	);
+		);
+	}
+	else {
+		recipientTypeHolder = 'assetCreator';
+	}
+
+	const [recipientType, setRecipientType] = useState(recipientTypeHolder);
 
 	const RecipientTypeComponent = recipientTypeComponents[recipientType];
 

@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = OnDemandAdminTicketGenerator.class)
+@Component(service = OnDemandAdminTicketGenerator.class)
 public class OnDemandAdminTicketGeneratorImpl
 	implements OnDemandAdminTicketGenerator {
 

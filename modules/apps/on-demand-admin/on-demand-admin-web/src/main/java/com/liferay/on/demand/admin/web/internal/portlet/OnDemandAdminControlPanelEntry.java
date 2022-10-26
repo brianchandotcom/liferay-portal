@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
 	service = ControlPanelEntry.class
 )

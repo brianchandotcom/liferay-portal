@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.instances.on.demand.admin.internal.configuration.OnDemandAdminConfiguration",
-	immediate = true, service = MessageListener.class
+	service = MessageListener.class
 )
 public class OnDemandAdminCleanerMessageListener extends BaseMessageListener {
 

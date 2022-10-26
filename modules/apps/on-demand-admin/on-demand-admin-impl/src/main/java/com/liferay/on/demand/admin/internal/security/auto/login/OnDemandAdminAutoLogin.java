@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = AutoLogin.class)
+@Component(service = AutoLogin.class)
 public class OnDemandAdminAutoLogin extends BaseAutoLogin {
 
 	@Override

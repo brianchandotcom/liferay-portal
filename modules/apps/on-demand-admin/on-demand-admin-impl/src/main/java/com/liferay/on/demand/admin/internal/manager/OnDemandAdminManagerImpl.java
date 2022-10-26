@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = OnDemandAdminManager.class)
+@Component(service = OnDemandAdminManager.class)
 public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 
 	@Override

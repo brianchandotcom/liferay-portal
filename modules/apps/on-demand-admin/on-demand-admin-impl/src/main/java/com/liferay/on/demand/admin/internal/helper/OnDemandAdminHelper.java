@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = OnDemandAdminHelper.class)
+@Component(service = OnDemandAdminHelper.class)
 public class OnDemandAdminHelper {
 
 	public void checkRequestAdministratorAccessPermission(

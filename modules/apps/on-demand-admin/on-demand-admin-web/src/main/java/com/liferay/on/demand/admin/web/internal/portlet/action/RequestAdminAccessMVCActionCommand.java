@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
 		"mvc.command.name=/on_demand_admin/request_admin_access"

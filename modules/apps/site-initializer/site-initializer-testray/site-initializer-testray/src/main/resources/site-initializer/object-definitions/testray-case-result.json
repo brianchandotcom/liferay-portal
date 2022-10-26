@@ -49,15 +49,17 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "Integer",
+			"DBType": "String",
+			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
-				"en_US": "Status"
+				"en_US": "Due Status"
 			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Case Result Statuses$]",
 			"name": "dueStatus",
-			"required": true,
-			"type": "Integer"
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",

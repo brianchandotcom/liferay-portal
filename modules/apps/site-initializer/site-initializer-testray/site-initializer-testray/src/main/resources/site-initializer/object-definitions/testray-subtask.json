@@ -60,15 +60,17 @@
 			"type": "Integer"
 		},
 		{
-			"DBType": "Integer",
+			"DBType": "String",
+			"businessType": "Picklist",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"label": {
-				"en_US": "Status"
+				"en_US": "Due Status"
 			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:SubTask Statuses$]",
 			"name": "dueStatus",
-			"required": true,
-			"type": "Integer"
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Date",

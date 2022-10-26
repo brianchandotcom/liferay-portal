@@ -63,7 +63,7 @@ type ObjectFieldBusinessType =
 	| 'Integer'
 	| 'LongInteger'
 	| 'LongText'
-	| 'MultiSelectPicklist'
+	| 'MultiselectPicklist'
 	| 'Picklist'
 	| 'PrecisionDecimal'
 	| 'Relationship'
@@ -77,7 +77,7 @@ interface ObjectFieldType {
 }
 interface ObjectField {
 	DBType: string;
-	businessType: ObjectFieldBusinessType | string;
+	businessType: ObjectFieldBusinessType;
 	defaultValue?: string;
 	externalReferenceCode?: string;
 	id: number;

@@ -118,13 +118,15 @@ export default function ObjectFieldFormBase({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.defaultValue]);
 
-	const picklistBusinessType = values.businessType === 'Picklist';
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
 		values.listTypeDefinitionId !== 0;
 
 	useEffect(() => {
-		if (values.businessType === 'Picklist') {
+		if (
+			values.businessType === 'Picklist' ||
+			values.businessType === 'MultiselectPicklist'
+		) {
 			API.getPickLists().then(setPickLists);
 
 			if (values.state && values.listTypeDefinitionId) {
@@ -164,7 +166,10 @@ export default function ObjectFieldFormBase({
 	}, [pickLists, values.listTypeDefinitionId]);
 
 	const handleTypeChange = async (option: ObjectFieldType) => {
-		if (option.businessType === 'Picklist') {
+		if (
+			option.businessType === 'Picklist' ||
+			values.businessType === 'MultiselectPicklist'
+		) {
 			setPickLists(await API.getPickLists());
 		}
 
@@ -325,7 +330,8 @@ export default function ObjectFieldFormBase({
 				/>
 			)}
 
-			{picklistBusinessType && (
+			{(values.businessType === 'Picklist' ||
+				values.businessType === 'MultiselectPicklist') && (
 				<Select
 					disabled={disabled}
 					error={errors.listTypeDefinitionId}
@@ -364,31 +370,32 @@ export default function ObjectFieldFormBase({
 						/>
 					)}
 
-				{picklistBusinessType && validListTypeDefinitionId && (
-					<ClayToggle
-						disabled={disabled}
-						label={Liferay.Language.get('mark-as-state')}
-						name="state"
-						onToggle={async (state) => {
-							if (state) {
-								setValues({required: state, state});
-								setPickListItems(
-									await API.getPickListItems(
-										values.listTypeDefinitionId!
-									)
-								);
-							}
-							else {
-								setValues({
-									defaultValue: '',
-									required: state,
-									state,
-								});
-							}
-						}}
-						toggled={values.state}
-					/>
-				)}
+				{values.businessType === 'Picklist' &&
+					validListTypeDefinitionId && (
+						<ClayToggle
+							disabled={disabled}
+							label={Liferay.Language.get('mark-as-state')}
+							name="state"
+							onToggle={async (state) => {
+								if (state) {
+									setValues({required: state, state});
+									setPickListItems(
+										await API.getPickListItems(
+											values.listTypeDefinitionId!
+										)
+									);
+								}
+								else {
+									setValues({
+										defaultValue: '',
+										required: state,
+										state,
+									});
+								}
+							}}
+							toggled={values.state}
+						/>
+					)}
 			</ClayForm.Group>
 
 			{values.state && (

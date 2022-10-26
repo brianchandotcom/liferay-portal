@@ -175,7 +175,7 @@ export function FilterScreen() {
 											objectField.businessType ===
 												'Picklist' ||
 											objectField.businessType ===
-												'MultiSelectPicklist' ||
+												'MultiselectPicklist' ||
 											(Liferay.FeatureFlags[
 												'LPS-152650'
 											] &&

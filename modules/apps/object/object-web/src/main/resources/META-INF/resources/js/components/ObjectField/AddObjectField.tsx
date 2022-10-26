@@ -171,7 +171,7 @@ export default function AddObjectField({
 			) {
 				return (
 					objectFieldType.businessType !== 'Formula' &&
-					objectFieldType.businessType !== 'MultiSelectPicklist'
+					objectFieldType.businessType !== 'MultiselectPicklist'
 				);
 			}
 
@@ -180,7 +180,7 @@ export default function AddObjectField({
 			}
 
 			if (!Liferay.FeatureFlags['LPS-158776']) {
-				return objectFieldType.businessType !== 'MultiSelectPicklist';
+				return objectFieldType.businessType !== 'MultiselectPicklist';
 			}
 		});
 	};

@@ -40,47 +40,47 @@ if (rootResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 %>
 
-	<liferay-portlet:actionURL name="/knowledge_base/update_root_kb_folder_id" var="updateRootKBFolderIdURL">
-		<c:if test="<%= kbArticle != null %>">
-			<portlet:param name="urlTitle" value="<%= kbArticle.getUrlTitle() %>" />
-		</c:if>
-	</liferay-portlet:actionURL>
+<liferay-portlet:actionURL name="/knowledge_base/update_root_kb_folder_id" var="updateRootKBFolderIdURL">
+	<c:if test="<%= kbArticle != null %>">
+		<portlet:param name="urlTitle" value="<%= kbArticle.getUrlTitle() %>" />
+	</c:if>
+</liferay-portlet:actionURL>
 
-	<div class="kbarticle-root-selector">
-		<aui:form action="<%= updateRootKBFolderIdURL %>" name="updateRootKBFolderIdFm">
-			<aui:select label="" name="rootKBFolderId">
-				<c:if test="<%= KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, rootKBFolderId, WorkflowConstants.STATUS_APPROVED) > 0 %>">
-					<aui:option selected="<%= currentKBFolderURLTitle.equals(rootKBFolderURLTitle) %>" value="<%= rootKBFolderId %>">
-						<%= HtmlUtil.escape(kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + rootKBFolderName) %>
-					</aui:option>
-				</c:if>
+<div class="kbarticle-root-selector">
+	<aui:form action="<%= updateRootKBFolderIdURL %>" name="updateRootKBFolderIdFm">
+		<aui:select label="" name="rootKBFolderId">
+			<c:if test="<%= KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, rootKBFolderId, WorkflowConstants.STATUS_APPROVED) > 0 %>">
+				<aui:option selected="<%= currentKBFolderURLTitle.equals(rootKBFolderURLTitle) %>" value="<%= rootKBFolderId %>">
+					<%= HtmlUtil.escape(kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + rootKBFolderName) %>
+				</aui:option>
+			</c:if>
 
-				<%
-				for (KBFolder kbFolder : kbFolders) {
-				%>
+			<%
+			for (KBFolder kbFolder : kbFolders) {
+			%>
 
-					<aui:option selected="<%= currentKBFolderURLTitle.equals(kbFolder.getUrlTitle()) %>" value="<%= kbFolder.getKbFolderId() %>">
-						<%= HtmlUtil.escape(kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + kbFolder.getName()) %>
-					</aui:option>
+				<aui:option selected="<%= currentKBFolderURLTitle.equals(kbFolder.getUrlTitle()) %>" value="<%= kbFolder.getKbFolderId() %>">
+					<%= HtmlUtil.escape(kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + kbFolder.getName()) %>
+				</aui:option>
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</aui:select>
-		</aui:form>
-	</div>
+		</aui:select>
+	</aui:form>
+</div>
 
-	<script>
-		var <portlet:namespace />form = document.getElementById(
-			'<portlet:namespace />updateRootKBFolderIdFm'
-		);
+<script>
+	var <portlet:namespace />form = document.getElementById(
+		'<portlet:namespace />updateRootKBFolderIdFm'
+	);
 
-		if (<portlet:namespace />form) {
-			document
-				.getElementById('<portlet:namespace />rootKBFolderId')
-				.addEventListener('change', () => {
-					<portlet:namespace />form.submit();
-				});
-		}
-	</script>
+	if (<portlet:namespace />form) {
+		document
+			.getElementById('<portlet:namespace />rootKBFolderId')
+			.addEventListener('change', () => {
+				<portlet:namespace />form.submit();
+			});
+	}
+</script>

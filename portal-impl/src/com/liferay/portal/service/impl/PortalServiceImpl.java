@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortalService;
@@ -36,7 +33,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.service.base.PortalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -73,35 +69,6 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 	@Override
 	public void testAddClassName_Success(String classNameValue) {
 		addClassName(classNameValue);
-	}
-
-	@Override
-	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		String transactionPortletBarText) {
-
-		addClassName(PortalService.class.getName());
-
-		addTransactionPortletBar(transactionPortletBarText, false);
-
-		throw new SystemException();
-	}
-
-	@Override
-	public void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		String transactionPortletBarText) {
-
-		addClassName(PortalService.class.getName());
-
-		addTransactionPortletBar(transactionPortletBarText, true);
-	}
-
-	@Override
-	public void testAddClassNameAndTestTransactionPortletBar_Success(
-		String transactionPortletBarText) {
-
-		addClassName(PortalService.class.getName());
-
-		addTransactionPortletBar(transactionPortletBarText, false);
 	}
 
 	@Override
@@ -236,31 +203,9 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		_classNamePersistence.update(className);
 	}
 
-	protected void addTransactionPortletBar(
-		String transactionPortletBarText, boolean rollback) {
-
-		try {
-			Message message = new Message();
-
-			message.put("rollback", rollback);
-			message.put("text", transactionPortletBarText);
-
-			_directSynchronousMessageSender.send(
-				DestinationNames.TEST_TRANSACTION, message);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalServiceImpl.class);
 
-	private static volatile SynchronousMessageSender
-		_directSynchronousMessageSender =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				SynchronousMessageSender.class, PortalServiceImpl.class,
-				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[0]);

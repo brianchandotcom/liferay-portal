@@ -9,6 +9,6 @@
  * distribution rights of the Software.
  */
 
-export default function getFilteredRoleBriefByName(roleBriefs, name) {
-	return roleBriefs.filter((roleBrief) => roleBrief.name !== name)[0];
+export default function getFilteredRoleBriefsByName(roleBriefs, name) {
+	return roleBriefs.filter((roleBrief) => roleBrief.name !== name);
 }

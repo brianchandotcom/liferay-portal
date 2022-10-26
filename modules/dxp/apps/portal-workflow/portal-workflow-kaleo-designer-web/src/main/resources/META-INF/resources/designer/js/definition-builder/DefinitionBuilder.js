@@ -52,6 +52,7 @@ export default function DefinitionBuilder(props) {
 		alertMessage,
 		alertType,
 		blockingErrors,
+		clientExtensions: props.clientExtensions,
 		currentEditor,
 		definitionDescription,
 		definitionId,

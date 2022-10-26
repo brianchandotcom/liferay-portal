@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+
 import java.io.IOException;
 
 import java.util.List;
@@ -29,6 +31,17 @@ public abstract class BaseTestResult implements TestResult {
 	@Override
 	public Build getBuild() {
 		return _build;
+	}
+
+	@Override
+	public TestClass getTestClass() {
+		TestClassResult testClassResult = getTestClassResult();
+
+		if (testClassResult == null) {
+			return null;
+		}
+
+		return testClassResult.getTestClass();
 	}
 
 	@Override
@@ -52,6 +65,17 @@ public abstract class BaseTestResult implements TestResult {
 		}
 
 		return _testClassResult;
+	}
+
+	@Override
+	public TestHistory getTestHistory() {
+		TestClass testClass = getTestClass();
+
+		if (testClass == null) {
+			return null;
+		}
+
+		return testClass.getTestHistory();
 	}
 
 	@Override

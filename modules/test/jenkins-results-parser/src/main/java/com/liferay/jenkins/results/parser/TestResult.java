@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+
 import org.dom4j.Element;
 
 /**
@@ -41,7 +43,11 @@ public interface TestResult {
 
 	public String getStatus();
 
+	public TestClass getTestClass();
+
 	public TestClassResult getTestClassResult();
+
+	public TestHistory getTestHistory();
 
 	public String getTestName();
 

@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
+import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -293,7 +294,9 @@ public class ConfigurationPersistenceManager
 		lock.lock();
 
 		try {
-			_storeInDatabase(pid, newDictionary);
+			if (!InMemoryOnlyConfigurationThreadLocal.isInMemoryOnly()) {
+				_storeInDatabase(pid, newDictionary);
+			}
 
 			if (fileName != null) {
 				newDictionary.put(

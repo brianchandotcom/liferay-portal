@@ -157,6 +157,34 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
+    "/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}":
+        put:
+            parameters:
+                - in: path
+                  name: currentExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: objectRelationshipName
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: relatedExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+            tags: ["ObjectEntry"]
     "/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteByExternalReferenceCode

@@ -1,5 +1,19 @@
 definition {
 
+	macro linkCasesRequirement {
+		TestrayRequirements.addRequirementCase(
+			caseName = "${requirementName}",
+			linkText = "${linkText}",
+			buttonText = "${buttonText}");
+	}
+
+	macro verifyCaseRequirement {
+		TestrayRequirements.verifyRequirementCase(
+			requirementCaseName = "ATF_Requirements Case",
+			requirementComponent = "Components_1 Project 1",
+			requirementPriority = "5");
+	}		
+
 	macro editCases {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -74,30 +88,12 @@ definition {
 			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
-	macro viewCaseDetails {
+	macro verifyLinkCaseRequirement {
 		AssertElementPresent(
-			locator1 = "TestrayCases#CASE_DETAILS_CASE_NAME",
-			value1 = "${caseName}");
-
-		AssertElementPresent(
-			locator1 = "TestrayCases#CASE_DETAILS_PRIORITY",
-			value1 = "${priority}");
-
-		AssertElementPresent(
-			locator1 = "TestrayCases#CASE_DETAILS_COMPONENT",
-			value1 = "${mainComponent}");
-
-		AssertElementPresent(
-			locator1 = "TestrayCases#CASE_DETAILS_DURATION",
-			value1 = "${duration}");
-
-		AssertElementPresent(
-			locator1 = "TestrayCases#CASE_DETAILS_DESCRIPTION",
-			value1 = "${description}");
-
-		AssertElementPresent(
-			locator1 = "TestrayCases#CASE_DETAILS_STEPS",
-			value1 = "${steps}");
+			key_teamName = "${teamName}",
+			key_component = "${component}",
+			key_summary = "${summary}",
+			locator1 = "TestrayCases#CASE_REQUIREMENT_DETAIL");
 	}
 
 }

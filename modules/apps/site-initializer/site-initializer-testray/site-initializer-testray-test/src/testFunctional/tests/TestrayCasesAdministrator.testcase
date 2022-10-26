@@ -218,21 +218,69 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-156919 - Verify if as an Administrator, I should be able to link Requirements to a Case"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-156919 - Verify if As an Administrator, I should be able to link and unlink Requirements to a Case"
 	@priority = "3"
-	test AdminCanLinkRequirements {
+	test AdminCanLinkAndUnlinkRequirements {
+		task ("Given that the user add a new Case") {
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
 
-		// TODO LPS-156919 AdminCanLinkRequirements pending implementation
+		task ("And Add a new Requirement") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
 
+			TestrayRequirements.addRequirement(
+				componentId = "Components_1 Project 1",
+				linkTitle = "ATF_Requirements Link Title",
+				linkURL = "https://www.google.com",
+				requirementDescription = "ATF_Requirements Description",
+				requirementName = "ATF_Requirements Summary");
+		}
+
+		task ("When the user goes to cases and link a requirements") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			Testray.goToProjectPage(projectName = "Cases_1 Case");
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayCases.linkCasesRequirement(
+				requirementName = "ATF_Requirements Summary",
+				linkText = "Link Requirements",
+				buttonText = "Select Requirements");
+		}
+
+		task ("Then the requirements should be displayed on Case page") {
+			TestrayCases.verifyLinkCaseRequirement(
+				summary = "ATF_Requirements Summary",
+				component = "Components_1 Project 1",
+				teamName = "Components_1 Team");
+		}
+
+		task ("When the user goes to cases and unlink a requirement") {
+			TestrayCases.linkCasesRequirement(
+				requirementName = "ATF_Requirements Summary",
+				linkText = "Link Requirements",
+				buttonText = "Select Requirements");
+		}
+
+		task ("Then the requirement should not be displayed on Case page") {
+			Testray.assertItemNotPresent(itemName = "ATF_Requirements Summary");
+		}
 	}
 
 	@description = "This is a test for LPS-156950 - Verify if as an Administrator I should be able to Sort by Errors"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test AdminCanSortErros {
+	test AdminCanSortErrors {
 
-		// TODO LPS-156950 AdminCanSortErros pending implementation
+		// TODO LPS-156950 AdminCanSortErrors pending implementation
 
 	}
 
@@ -251,15 +299,6 @@ definition {
 	test AdminCanSortStatus {
 
 		// TODO LPS-156949 AdminCanSortStatus pending implementation
-
-	}
-
-	@description = "This is a test for LPS-156923 - Verify if as an Administrator, I should be able to unlink Requirements to a Case"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test AdminCanUnlinkRequirements {
-
-		// TODO LPS-156923 AdminCanUnlinkRequirements pending implementation
 
 	}
 

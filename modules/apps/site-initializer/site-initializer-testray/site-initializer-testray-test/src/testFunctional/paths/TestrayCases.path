@@ -46,33 +46,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CASE_DETAILS_CASE_NAME</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Type')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CASE_DETAILS_PRIORITY</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Priority')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CASE_DETAILS_COMPONENT</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Main Component')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CASE_DETAILS_DURATION</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Estimated Duration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CASE_DETAILS_DESCRIPTION</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CASE_DETAILS_STEPS</td>
-	<td>//div[contains(@class, 'panel-collapse')]//th[contains(text(),'Steps')]</td>
+	<td>CASE_REQUIREMENT_DETAIL</td>
+	<td>//tbody//tr[contains(@class,'table-row')]//parent::tr//td[text()='${key_teamName}']//parent::tr//td[text()='${key_component}']//parent::tr//td[text()='${key_summary}']</td>
 	<td></td>
 </tr>
 </tbody>

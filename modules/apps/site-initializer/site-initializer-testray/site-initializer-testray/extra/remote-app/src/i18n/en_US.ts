@@ -340,7 +340,7 @@ export default {
 		'This build is currently in analysis.',
 	'this-builds-task-has-been-abandoned':
 		"This build's task has been abandoned.",
-	'this-field-is-required': 'This field is Required.',
+	'this-field-is-required': 'This field is required.',
 	'this-role-is-for-general-liferay-employees-and-enables-authenticated-users-to-view-test-results':
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
 	'time-x-total-issues': 'Time {0} Total Issues',

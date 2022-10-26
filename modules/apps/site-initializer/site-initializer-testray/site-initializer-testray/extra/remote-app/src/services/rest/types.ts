@@ -223,7 +223,7 @@ export type TestraySubTask = {
 	user: UserAccount;
 };
 
-export type TestraySubTaskCasesResult = {
+export type TestraySubTaskCaseResult = {
 	caseResult?: TestrayCaseResult;
 	id?: number;
 	name?: string;

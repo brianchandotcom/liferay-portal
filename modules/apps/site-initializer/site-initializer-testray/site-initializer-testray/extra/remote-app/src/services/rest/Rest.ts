@@ -117,6 +117,15 @@ class Rest<YupModel = any, ObjectModel = any> {
 		return fetcher.patch(`/${this.uri}/${id}`, this.adapter(data));
 	}
 
+	public async updateBatch(
+		ids: number[],
+		data: Partial<YupModel>[]
+	): Promise<PromiseSettledResult<ObjectModel>[]> {
+		return Promise.allSettled(
+			data.map((item, index) => this.update(ids[index], item))
+		);
+	}
+
 	public transformDataFromList(
 		response: APIResponse<ObjectModel>
 	): APIResponse<ObjectModel> {

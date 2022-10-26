@@ -28,7 +28,7 @@ import i18n from '../../../i18n';
 import {
 	APIResponse,
 	TestraySubTask,
-	TestraySubTaskCasesResult,
+	TestraySubTaskCaseResult,
 	TestrayTask,
 } from '../../../services/rest';
 import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
@@ -54,9 +54,10 @@ const Subtasks = () => {
 		testraySubtaskImpl.transformData(response)
 	);
 
-	const {data: testrayCaseResultData, mutate: mutateCaseResult} = useFetch<
-		APIResponse<TestraySubTaskCasesResult>
-	>(
+	const {
+		data: testraySubTaskCaseResultData,
+		mutate: mutateCaseResult,
+	} = useFetch<APIResponse<TestraySubTaskCaseResult>>(
 		`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
 			'subtaskId',
 			subtaskId as string
@@ -65,29 +66,25 @@ const Subtasks = () => {
 			testraySubtaskCaseResultImpl.transformDataFromList(response)
 	);
 
-	const testrayCaseResults = testrayCaseResultData?.items || [];
+	const testraySubTaskCaseResults = testraySubTaskCaseResultData?.items || [];
 
 	useEffect(() => {
-		setTimeout(() => {
-			setHeading([
-				{
-					category: i18n.translate('task'),
-					path: `/testflow/${testrayTask.id}`,
-					title: `${testrayTask?.name}`,
-				},
-				{
-					category: i18n.translate('subtask'),
-					title: `${testraySubtask?.name}`,
-				},
-			]);
-		});
-	}, [
-		setHeading,
-		testraySubtask?.name,
-		subtaskId,
-		testrayTask.id,
-		testrayTask?.name,
-	]);
+		if (testraySubtask) {
+			setTimeout(() => {
+				setHeading([
+					{
+						category: i18n.translate('task'),
+						path: `/testflow/${testrayTask.id}`,
+						title: testrayTask.name,
+					},
+					{
+						category: i18n.translate('subtask'),
+						title: testraySubtask.name,
+					},
+				]);
+			});
+		}
+	}, [setHeading, testraySubtask, testrayTask]);
 
 	if (!testraySubtask) {
 		return <Loading />;
@@ -96,10 +93,12 @@ const Subtasks = () => {
 	return (
 		<>
 			<SubtaskHeaderActions
-				caseResult={testrayCaseResults.map((caseResult) =>
+				caseResultIds={testraySubTaskCaseResults.map((caseResult) =>
 					Number(caseResult.caseResult?.id)
 				)}
-				dueStatus={Number(testrayCaseResults[0]?.caseResult?.dueStatus)}
+				dueStatus={Number(
+					testraySubTaskCaseResults[0]?.caseResult?.dueStatus
+				)}
 				mutateCaseResult={mutateCaseResult}
 				mutateSubtask={mutateSubtask}
 				subtask={testraySubtask}
@@ -174,8 +173,8 @@ const Subtasks = () => {
 									title: i18n.translate('error'),
 									value: (
 										<Code>
-											{testrayCaseResults.length
-												? testrayCaseResults[0]
+											{testraySubTaskCaseResults.length
+												? testraySubTaskCaseResults[0]
 														.caseResult?.errors
 												: null}
 										</Code>

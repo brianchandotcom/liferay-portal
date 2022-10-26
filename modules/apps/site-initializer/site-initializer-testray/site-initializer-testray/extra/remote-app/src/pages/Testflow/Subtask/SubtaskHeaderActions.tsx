@@ -24,12 +24,12 @@ import {SUB_TASK_STATUS} from '../../../util/constants';
 import SubtaskCompleteModal from './SubtaskCompleteModal';
 
 const SubtaskHeaderActions: React.FC<{
-	caseResult: number[];
+	caseResultIds: number[];
 	dueStatus: number;
 	mutateCaseResult: KeyedMutator<any>;
 	mutateSubtask: KeyedMutator<any>;
 	subtask: TestraySubTask;
-}> = ({caseResult, dueStatus, mutateCaseResult, mutateSubtask, subtask}) => {
+}> = ({caseResultIds, dueStatus, mutateCaseResult, mutateSubtask, subtask}) => {
 	const {modal: assignUserModal} = useFormModal({
 		onSave: (user: UserAccount) =>
 			testraySubtaskImpl.assignTo(subtask, user.id).then(mutateSubtask),
@@ -38,7 +38,7 @@ const SubtaskHeaderActions: React.FC<{
 	const {modal: completeModal} = useFormModal({
 		onSave: (dueStatus) => {
 			testraySubtaskImpl
-				.complete(subtask.id, caseResult, dueStatus)
+				.complete(subtask.id, caseResultIds, dueStatus)
 				.then(mutateSubtask)
 				.then(mutateCaseResult);
 		},

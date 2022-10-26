@@ -170,8 +170,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			extensionsMap);
 
 		for (Map.Entry<String, Set<String>> entry : extensionsMap.entrySet()) {
-			for (String mimeType : entry.getValue()) {
-				_contentTypes.put(mimeType, entry.getKey());
+			for (String extension : entry.getValue()) {
+				_contentTypes.put(extension, entry.getKey());
 			}
 		}
 	}

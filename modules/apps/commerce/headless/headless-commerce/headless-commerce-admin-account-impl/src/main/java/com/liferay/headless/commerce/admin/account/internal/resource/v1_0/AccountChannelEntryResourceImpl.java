@@ -18,6 +18,7 @@ import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -38,7 +39,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.ListType;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -48,6 +53,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -129,6 +136,18 @@ public class AccountChannelEntryResourceImpl
 			_fetchCommerceChannelAccountEntryRel(
 				id,
 				CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS);
+
+		_commerceChannelAccountEntryRelService.
+			deleteCommerceChannelAccountEntryRel(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
+	public void deleteAccountChannelUserId(Long id) throws Exception {
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_USER);
 
 		_commerceChannelAccountEntryRelService.
 			deleteCommerceChannelAccountEntryRel(
@@ -256,6 +275,25 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public Page<AccountChannelEntry>
+			getAccountByExternalReferenceCodeAccountChannelUsersPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _getAccountChannelEntryPage(
+			accountEntry.getAccountEntryId(),
+			CommerceChannelAccountEntryRelConstants.TYPE_USER, pagination);
+	}
+
+	@Override
 	public AccountChannelEntry getAccountChannelBillingAddressId(Long id)
 		throws Exception {
 
@@ -336,6 +374,19 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public AccountChannelEntry getAccountChannelUserId(Long id)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_USER);
+
+		return _toAccountChannelEntry(
+			commerceChannelAccountEntryRel.
+				getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
 	public Page<AccountChannelEntry>
 			getAccountIdAccountChannelBillingAddressesPage(
 				Long id, Pagination pagination)
@@ -396,6 +447,15 @@ public class AccountChannelEntryResourceImpl
 		return _getAccountChannelEntryPage(
 			id, CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS,
 			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry> getAccountIdAccountChannelUsersPage(
+			Long id, Pagination pagination)
+		throws Exception {
+
+		return _getAccountChannelEntryPage(
+			id, CommerceChannelAccountEntryRelConstants.TYPE_USER, pagination);
 	}
 
 	@Override
@@ -482,6 +542,25 @@ public class AccountChannelEntryResourceImpl
 		return _patchAccountChannelEntry(
 			accountChannelEntry, commerceChannelAccountEntryRel,
 			CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry patchAccountChannelUserId(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_USER);
+
+		_checkUser(
+			_getClassPK(
+				accountChannelEntry,
+				CommerceChannelAccountEntryRelConstants.TYPE_USER));
+
+		return _patchAccountChannelEntry(
+			accountChannelEntry, commerceChannelAccountEntryRel,
+			CommerceChannelAccountEntryRelConstants.TYPE_USER);
 	}
 
 	@Override
@@ -611,6 +690,32 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public AccountChannelEntry
+			postAccountByExternalReferenceCodeAccountChannelUser(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		_checkUser(
+			_getClassPK(
+				accountChannelEntry,
+				CommerceChannelAccountEntryRelConstants.TYPE_USER));
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			User.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_USER);
+	}
+
+	@Override
 	public AccountChannelEntry postAccountIdAccountChannelBillingAddress(
 			Long id, AccountChannelEntry accountChannelEntry)
 		throws Exception {
@@ -686,6 +791,33 @@ public class AccountChannelEntryResourceImpl
 			accountChannelEntry, accountEntry.getAccountEntryId(),
 			Address.class.getName(),
 			CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry postAccountIdAccountChannelUser(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(id);
+
+		_checkUser(
+			_getClassPK(
+				accountChannelEntry,
+				CommerceChannelAccountEntryRelConstants.TYPE_USER));
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			User.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_USER);
+	}
+
+	private void _checkUser(long userId) throws Exception {
+		User user = _userService.getUserById(userId);
+
+		_accountEntryModelResourcePermission.contains(
+			PermissionCheckerFactoryUtil.create(user), 0,
+			CommerceAccountActionKeys.
+				MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL);
 	}
 
 	private CommerceChannelAccountEntryRel _fetchCommerceChannelAccountEntryRel(
@@ -801,6 +933,12 @@ public class AccountChannelEntryResourceImpl
 				return address.getAddressId();
 			}
 		}
+		else if (type == CommerceChannelAccountEntryRelConstants.TYPE_USER) {
+			User user = _userService.getUserById(
+				GetterUtil.getLong(accountChannelEntry.getEntryId()));
+
+			return user.getUserId();
+		}
 
 		throw new CommerceChannelAccountEntryRelTypeException();
 	}
@@ -815,8 +953,12 @@ public class AccountChannelEntryResourceImpl
 				contextCompany.getCompanyId());
 
 		if (commerceChannel == null) {
-			commerceChannel = _commerceChannelService.getCommerceChannel(
+			commerceChannel = _commerceChannelService.fetchCommerceChannel(
 				GetterUtil.getLong(accountChannelEntry.getChannelId()));
+		}
+
+		if (commerceChannel == null) {
+			return 0;
 		}
 
 		return commerceChannel.getCommerceChannelId();
@@ -909,6 +1051,14 @@ public class AccountChannelEntryResourceImpl
 	@Reference
 	private AccountChannelEntryDTOConverter _accountChannelEntryDTOConverter;
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 	@Reference
 	private AccountEntryService _accountEntryService;
 
@@ -933,5 +1083,8 @@ public class AccountChannelEntryResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private UserService _userService;
 
 }

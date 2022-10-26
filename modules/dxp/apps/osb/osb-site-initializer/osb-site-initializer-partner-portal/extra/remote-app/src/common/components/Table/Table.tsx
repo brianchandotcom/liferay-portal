@@ -11,7 +11,7 @@
 
 import ClayTable from '@clayui/table';
 
-import TableItem from '../../../routes/MDFRequestForm/steps/Review/interfaces/tableItem';
+import TableItem from '../../interfaces/tableItem';
 
 interface IProps {
 	items: TableItem[];

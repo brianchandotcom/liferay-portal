@@ -18,11 +18,11 @@ import {RequestStatus} from '../../common/enums/requestStatus';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import DealRegistration from '../../common/interfaces/dealRegistration';
 import {Liferay} from '../../common/services/liferay';
+import isObjectEmpty from '../../common/utils/isObjectEmpty';
 import {StepType} from './enums/stepType';
 import General from './steps/General';
 import generalSchema from './steps/General/schema/yup';
 import Review from './steps/Review';
-import isObjectEmpty from './utils/isObjectEmpty';
 import submitForm from './utils/submitForm';
 
 const initialFormValues: DealRegistration = {

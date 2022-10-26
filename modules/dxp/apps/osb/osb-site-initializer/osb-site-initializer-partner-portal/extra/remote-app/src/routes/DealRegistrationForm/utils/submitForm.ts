@@ -24,11 +24,6 @@ export default async function submitForm(
 	siteURL: string,
 	currentRequestStatus?: RequestStatus
 ) {
-	// eslint-disable-next-line no-console
-	console.log(
-		'🚀 ~ file: submitForm.ts ~ line 27 ~ currentRequestStatus',
-		currentRequestStatus
-	);
 	formikHelpers.setSubmitting(true);
 
 	if (currentRequestStatus) {

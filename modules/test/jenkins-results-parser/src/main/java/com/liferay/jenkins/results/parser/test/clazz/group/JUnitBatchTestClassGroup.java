@@ -23,6 +23,7 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
@@ -475,51 +476,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			else {
 				List<TestClass> batchTestClasses = new ArrayList<>(testClasses);
 
-				Collections.sort(
-					batchTestClasses, new TestClassDurationComparator());
+				TestClassBalancedListSplitter testClassBalancedListSplitter =
+					new TestClassBalancedListSplitter(targetAxisDuration);
 
-				while (!batchTestClasses.isEmpty()) {
-					List<TestClass> axisTestClasses = new ArrayList<>();
+				List<List<TestClass>> testClassLists =
+					testClassBalancedListSplitter.split(batchTestClasses);
 
-					for (TestClass batchTestClass : batchTestClasses) {
-						if (axisTestClasses.isEmpty()) {
-							axisTestClasses.add(batchTestClass);
-
-							continue;
-						}
-
-						long duration = 0L;
-						long totalOverheadDuration = 0L;
-
-						for (TestClass axisTestClass : axisTestClasses) {
-							duration += axisTestClass.getAverageDuration();
-							totalOverheadDuration +=
-								axisTestClass.getAverageOverheadDuration();
-						}
-
-						duration += batchTestClass.getAverageDuration();
-						totalOverheadDuration +=
-							batchTestClass.getAverageOverheadDuration();
-
-						duration +=
-							totalOverheadDuration /
-								(axisTestClasses.size() + 1);
-
-						if (duration >= targetAxisDuration) {
-							continue;
-						}
-
-						axisTestClasses.add(batchTestClass);
-					}
-
-					batchTestClasses.removeAll(axisTestClasses);
-
+				for (List<TestClass> testClassList : testClassLists) {
 					AxisTestClassGroup axisTestClassGroup =
 						TestClassGroupFactory.newAxisTestClassGroup(this);
 
-					for (TestClass axisTestClass : axisTestClasses) {
-						axisTestClassGroup.addTestClass(axisTestClass);
-					}
+					axisTestClassGroup.addTestClasses(testClassList);
 
 					axisTestClassGroups.add(axisTestClassGroup);
 				}

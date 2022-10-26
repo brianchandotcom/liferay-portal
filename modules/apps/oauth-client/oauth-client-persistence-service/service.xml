@@ -54,8 +54,8 @@
 		<column name="authServerWellKnownURI" type="String" />
 		<column name="clientId" type="String" />
 		<column name="infoJSON" type="String" />
-		<column method-name="OIDCUserInfoMapperJSON" name="oidcUserInfoMapperJSON" type="String" />
 		<column name="tokenRequestParametersJSON" type="String" />
+		<column name="userInfoMapperJSON" type="String" />
 
 		<!-- Finder methods -->
 
@@ -83,7 +83,7 @@
 		<exception>OAuthClientEntryAuthRequestParametersJSON</exception>
 		<exception>OAuthClientEntryAuthServerWellKnownURI</exception>
 		<exception>OAuthClientEntryInfoJSON</exception>
-		<exception>OAuthClientEntryOIDCUserInfoMapperJSON</exception>
 		<exception>OAuthClientEntryTokenRequestParametersJSON</exception>
+		<exception>OAuthClientEntryUserInfoMapperJSON</exception>
 	</exceptions>
 </service-builder>

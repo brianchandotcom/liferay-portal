@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.action.executor;
 
+import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
@@ -63,9 +64,7 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 		options.setMethod(Http.Method.POST);
 		options.setTimeout(_timeout);
 
-		// TODO
-
-		//_authorize(companyId, options, userId);
+		_authorize(options, userId);
 
 		_http.URLtoByteArray(options);
 	}
@@ -87,15 +86,27 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 					FunctionObjectActionExecutorImplConfiguration.class,
 					properties);
 
-		_location = _getLocation(
-			functionObjectActionExecutorImplConfiguration,
+		_oAuth2Application =
 			_oAuth2ApplicationLocalService.
 				getOAuth2ApplicationByExternalReferenceCode(
 					ConfigurableUtil.getCompanyId(
 						_companyLocalService, properties),
 					functionObjectActionExecutorImplConfiguration.
-						oAuth2ApplicationExternalReferenceCode()));
+						oAuth2ApplicationExternalReferenceCode());
+
+		_location = _getLocation(
+			functionObjectActionExecutorImplConfiguration, _oAuth2Application);
+
 		_timeout = functionObjectActionExecutorImplConfiguration.timeout();
+	}
+
+	private void _authorize(Http.Options options, long userId)
+		throws Exception {
+
+		_localOAuthClient.consumeAccessToken(
+			accessToken -> options.addHeader(
+				"Authorization", "Bearer ".concat(accessToken)),
+			_oAuth2Application, userId);
 	}
 
 	private String _getLocation(
@@ -133,7 +144,12 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	private Http _http;
 
 	private String _key;
+
+	@Reference
+	private LocalOAuthClient _localOAuthClient;
+
 	private String _location;
+	private OAuth2Application _oAuth2Application;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

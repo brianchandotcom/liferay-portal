@@ -27,6 +27,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:list-type:list-type-api")
 	compileOnly project(":apps:notification:notification-api")
+	compileOnly project(":apps:oauth-client:oauth-client-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-dynamic-data-mapping-form-field-type-api")

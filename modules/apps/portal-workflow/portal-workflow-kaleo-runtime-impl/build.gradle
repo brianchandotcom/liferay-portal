@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.22.RELEASE"
 	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:depot:depot-api")
+	compileOnly project(":apps:oauth-client:oauth-client-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:portal-rules-engine:portal-rules-engine-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")

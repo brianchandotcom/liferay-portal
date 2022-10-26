@@ -96,11 +96,7 @@ const ExperienceItem = ({
 	});
 
 	return (
-		<ClayList.Item
-			aria-checked={active}
-			className={itemClassName}
-			role="listitem"
-		>
+		<ClayList.Item aria-current={active} className={itemClassName}>
 			<ClayList.ItemField expand>
 				<ClayButton displayType="unstyled" onClick={handleSelect}>
 					<div className="c-inner" tabIndex="-1">

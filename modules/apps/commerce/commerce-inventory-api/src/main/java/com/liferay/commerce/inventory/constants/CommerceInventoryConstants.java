@@ -39,7 +39,7 @@ public class CommerceInventoryConstants {
 	public static final String AUDIT_TYPE_UPDATE_WAREHOUSE_ITEM =
 		"update-warehouse-item";
 
-	public static final String DEFAULT_METHOD_NAME = "default";
+	public static final String DEFAULT_METHOD_KEY = "default";
 
 	public static final String DEFAULT_WAREHOUSE_NAME = "default";
 

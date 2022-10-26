@@ -357,7 +357,9 @@ export default function DiagramBuilder() {
 							totalModifications: version,
 						});
 
-						deserializeUtil.updateXMLDefinition(content);
+						deserializeUtil.updateXMLDefinition(
+							encodeURIComponent(content)
+						);
 
 						const metadata = deserializeUtil.getMetadata();
 

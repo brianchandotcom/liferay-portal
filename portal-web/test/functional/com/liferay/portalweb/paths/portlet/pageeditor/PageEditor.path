@@ -579,7 +579,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME</td>
-	<td>//header[contains(@class,'page-editor__sidebar__panel-header')]//h1[contains(.,'${key_fragmentName}')]</td>
+	<td>//header[contains(@class,'page-editor__sidebar__panel-header')]//h2[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

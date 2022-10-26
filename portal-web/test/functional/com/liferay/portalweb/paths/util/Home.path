@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>SITE_NAME</td>
-	<td>//a[contains(@class,'logo')]//h2</td>
+	<td>//a[contains(@class,'logo')]//h1</td>
 	<td></td>
 </tr>
 <tr>

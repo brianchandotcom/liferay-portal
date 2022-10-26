@@ -55,24 +55,26 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 
 	protected Boolean defaultTemplate;
 
-	public String getKey() {
-		return key;
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
 	}
 
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
 		try {
-			key = keyUnsafeSupplier.get();
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String key;
+	protected String externalReferenceCode;
 
 	public String getName() {
 		return name;

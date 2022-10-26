@@ -64,31 +64,6 @@ public class PortalServiceUtil {
 		getService().testAddClassName_Success(classNameValue);
 	}
 
-	public static void
-		testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-			String transactionPortletBarText) {
-
-		getService().
-			testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-				transactionPortletBarText);
-	}
-
-	public static void
-		testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-			String transactionPortletBarText) {
-
-		getService().
-			testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-				transactionPortletBarText);
-	}
-
-	public static void testAddClassNameAndTestTransactionPortletBar_Success(
-		String transactionPortletBarText) {
-
-		getService().testAddClassNameAndTestTransactionPortletBar_Success(
-			transactionPortletBarText);
-	}
-
 	public static void testAutoSyncHibernateSessionStateOnTxCreation() {
 		getService().testAutoSyncHibernateSessionStateOnTxCreation();
 	}

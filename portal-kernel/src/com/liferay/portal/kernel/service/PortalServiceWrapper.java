@@ -68,32 +68,6 @@ public class PortalServiceWrapper
 	}
 
 	@Override
-	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		java.lang.String transactionPortletBarText) {
-
-		_portalService.
-			testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-				transactionPortletBarText);
-	}
-
-	@Override
-	public void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		java.lang.String transactionPortletBarText) {
-
-		_portalService.
-			testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-				transactionPortletBarText);
-	}
-
-	@Override
-	public void testAddClassNameAndTestTransactionPortletBar_Success(
-		java.lang.String transactionPortletBarText) {
-
-		_portalService.testAddClassNameAndTestTransactionPortletBar_Success(
-			transactionPortletBarText);
-	}
-
-	@Override
 	public void testAutoSyncHibernateSessionStateOnTxCreation() {
 		_portalService.testAutoSyncHibernateSessionStateOnTxCreation();
 	}

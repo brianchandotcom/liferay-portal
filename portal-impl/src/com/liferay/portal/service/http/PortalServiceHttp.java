@@ -193,95 +193,6 @@ public class PortalServiceHttp {
 		}
 	}
 
-	public static void
-		testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-			HttpPrincipal httpPrincipal, String transactionPortletBarText) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				PortalServiceUtil.class,
-				"testAddClassNameAndTestTransactionPortletBar_PortalRollback",
-				_testAddClassNameAndTestTransactionPortletBar_PortalRollbackParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, transactionPortletBarText);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void
-		testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-			HttpPrincipal httpPrincipal, String transactionPortletBarText) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				PortalServiceUtil.class,
-				"testAddClassNameAndTestTransactionPortletBar_PortletRollback",
-				_testAddClassNameAndTestTransactionPortletBar_PortletRollbackParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, transactionPortletBarText);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void testAddClassNameAndTestTransactionPortletBar_Success(
-		HttpPrincipal httpPrincipal, String transactionPortletBarText) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				PortalServiceUtil.class,
-				"testAddClassNameAndTestTransactionPortletBar_Success",
-				_testAddClassNameAndTestTransactionPortletBar_SuccessParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, transactionPortletBarText);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static void testAutoSyncHibernateSessionStateOnTxCreation(
 		HttpPrincipal httpPrincipal) {
 
@@ -289,7 +200,7 @@ public class PortalServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				PortalServiceUtil.class,
 				"testAutoSyncHibernateSessionStateOnTxCreation",
-				_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes8);
+				_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -316,7 +227,7 @@ public class PortalServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PortalServiceUtil.class, "testDeleteClassName",
-				_testDeleteClassNameParameterTypes9);
+				_testDeleteClassNameParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -348,7 +259,7 @@ public class PortalServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PortalServiceUtil.class, "testGetBuildNumber",
-				_testGetBuildNumberParameterTypes10);
+				_testGetBuildNumberParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -377,7 +288,7 @@ public class PortalServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PortalServiceUtil.class, "testGetUserId",
-				_testGetUserIdParameterTypes11);
+				_testGetUserIdParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -402,7 +313,7 @@ public class PortalServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PortalServiceUtil.class, "testHasClassName",
-				_testHasClassNameParameterTypes12);
+				_testHasClassNameParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -439,24 +350,15 @@ public class PortalServiceHttp {
 	private static final Class<?>[] _testAddClassName_SuccessParameterTypes4 =
 		new Class[] {String.class};
 	private static final Class<?>[]
-		_testAddClassNameAndTestTransactionPortletBar_PortalRollbackParameterTypes5 =
-			new Class[] {String.class};
-	private static final Class<?>[]
-		_testAddClassNameAndTestTransactionPortletBar_PortletRollbackParameterTypes6 =
-			new Class[] {String.class};
-	private static final Class<?>[]
-		_testAddClassNameAndTestTransactionPortletBar_SuccessParameterTypes7 =
-			new Class[] {String.class};
-	private static final Class<?>[]
-		_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes8 =
+		_testAutoSyncHibernateSessionStateOnTxCreationParameterTypes5 =
 			new Class[] {};
-	private static final Class<?>[] _testDeleteClassNameParameterTypes9 =
+	private static final Class<?>[] _testDeleteClassNameParameterTypes6 =
 		new Class[] {};
-	private static final Class<?>[] _testGetBuildNumberParameterTypes10 =
+	private static final Class<?>[] _testGetBuildNumberParameterTypes7 =
 		new Class[] {};
-	private static final Class<?>[] _testGetUserIdParameterTypes11 =
+	private static final Class<?>[] _testGetUserIdParameterTypes8 =
 		new Class[] {};
-	private static final Class<?>[] _testHasClassNameParameterTypes12 =
+	private static final Class<?>[] _testHasClassNameParameterTypes9 =
 		new Class[] {};
 
 }

@@ -69,15 +69,6 @@ public interface PortalService extends BaseService {
 
 	public void testAddClassName_Success(String classNameValue);
 
-	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
-		String transactionPortletBarText);
-
-	public void testAddClassNameAndTestTransactionPortletBar_PortletRollback(
-		String transactionPortletBarText);
-
-	public void testAddClassNameAndTestTransactionPortletBar_Success(
-		String transactionPortletBarText);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void testAutoSyncHibernateSessionStateOnTxCreation();
 

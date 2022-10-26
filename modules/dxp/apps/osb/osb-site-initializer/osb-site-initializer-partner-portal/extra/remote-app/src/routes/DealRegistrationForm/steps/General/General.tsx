@@ -98,7 +98,7 @@ const General = ({
 						name="partnerAccount"
 						onChange={onCompanySelected}
 						options={companyOptions}
-						required		
+						required
 					/>
 
 					<PRMFormik.Field

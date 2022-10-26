@@ -22,9 +22,11 @@ import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProp
 const Review = ({
 	onCancel,
 	onPrevious,
-	onSaveAsDraft
+	onSaveAsDraft,
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {isSubmitting, values, ...formikHelpers} = useFormikContext<DealRegistration>();
+	const {isSubmitting, values, ...formikHelpers} = useFormikContext<
+		DealRegistration
+	>();
 
 	return (
 		<>
@@ -164,41 +166,42 @@ const Review = ({
 					]}
 					title="Business Objectives"
 				/>
-			
 
-			<PRMForm.Footer>
-				<div className="d-flex mr-auto">
-				<Button
-						disabled={isSubmitting}
-						displayType={null}
-						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
-					>
-						Save as Draft
-					</Button>
+				<PRMForm.Footer>
+					<div className="d-flex mr-auto">
+						<Button
+							disabled={isSubmitting}
+							displayType={null}
+							onClick={() =>
+								onSaveAsDraft?.(values, formikHelpers)
+							}
+						>
+							Save as Draft
+						</Button>
 
-					<Button
-						className="mr-4"
-						displayType="secondary"
-						onClick={onCancel}
-					>
-						Cancel
-					</Button>
-				</div>
+						<Button
+							className="mr-4"
+							displayType="secondary"
+							onClick={onCancel}
+						>
+							Cancel
+						</Button>
+					</div>
 
-				<div className="d-flex">
-					<Button
-						className="mr-4"
-						displayType="secondary"
-						onClick={() => onPrevious?.(StepType.GENERAL)}
-					>
-						Back
-					</Button>
+					<div className="d-flex">
+						<Button
+							className="mr-4"
+							displayType="secondary"
+							onClick={() => onPrevious?.(StepType.GENERAL)}
+						>
+							Back
+						</Button>
 
-					<Button disabled={isSubmitting} type="submit">
-						Proceed
-					</Button>
-				</div>
-			</PRMForm.Footer>
+						<Button disabled={isSubmitting} type="submit">
+							Proceed
+						</Button>
+					</div>
+				</PRMForm.Footer>
 			</PRMForm>
 		</>
 	);

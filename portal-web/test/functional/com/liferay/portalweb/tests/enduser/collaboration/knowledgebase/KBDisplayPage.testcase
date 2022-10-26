@@ -82,6 +82,96 @@ definition {
 			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
 	}
 
+	@description = "This test ensures that when viewing a KB article in the navigation fragment, the corresponding KB article content is displayed in another fragment that selects to display KB content."
+	@priority = "5"
+	test CanViewArticlesViaKBNavigation {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "KB Parent Article Content",
+			kbArticleTitle = "KB Parent Article");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "KB Parent Article",
+			kbChildArticleContent = "KB Child Article1 Content",
+			kbChildArticleTitle = "KB Child Article1");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "KB Parent Article",
+			kbChildArticleContent = "KB Child Article2 Content",
+			kbChildArticleTitle = "KB Child Article2");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Knowledge Base Article",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Guest");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Menu Display",
+			fragmentName = "Knowledge Base Navigation");
+
+		PageEditor.editContentDisplay(
+			entryTitle = "KB Parent Article",
+			fragmentName = "Knowledge Base Navigation",
+			knowledgeBase = "true");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "HTML",
+			targetFragmentName = "Knowledge Base Navigation");
+
+		PageEditorMapping.mapEditableTextToField(
+			field = "Content",
+			fragmentName = "HTML",
+			id = "element-html");
+
+		PageEditor.publish();
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Knowledge Base",
+			entryTitle = "KB Parent Article",
+			groupName = "Guest",
+			pageName = "Display Page Template Name",
+			siteURLKey = "guest");
+
+		for (var kbChildArticleTitle : list "KB Child Article1,KB Child Article2") {
+			DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+				assetType = "Knowledge Base",
+				entryTitle = "KB Parent Article",
+				groupName = "Guest",
+				kbChildArticleTitle = "${kbChildArticleTitle}",
+				pageName = "Display Page Template Name",
+				siteURLKey = "guest");
+		}
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/k/kb-parent-article");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Parent Article",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_TEXT");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "html",
+			id = "element-html",
+			text = "KB Parent Article Content");
+
+		Click(
+			key_kbArticleTitle = "KB Child Article2",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SECOND_LEVEL_HIERARCHY");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "html",
+			id = "element-html",
+			text = "KB Child Article2 Content");
+	}
+
 	@description = "This test ensures that a KB article is displayed with the default template when accessing the KB display page URL."
 	@priority = "4"
 	test CanViewArticleWithDefaultTemplate {

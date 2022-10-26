@@ -26,7 +26,7 @@ definition {
 	}
 
 	function waitForSelectPopUp {
-		selenium.waitForPopUp(${locator1}, ${value1});
+		selenium.waitForPopUp("", "");
 
 		selenium.selectPopUp();
 	}

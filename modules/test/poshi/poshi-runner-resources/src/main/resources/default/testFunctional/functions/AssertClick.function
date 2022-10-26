@@ -3,7 +3,7 @@
 definition {
 
 	function assertClick {
-		if (contains("${locator1}", "/input")) {
+	if (contains(${locator1}, "/input")) {
 			AssertClick.assertValueClickAt();
 		}
 		else {

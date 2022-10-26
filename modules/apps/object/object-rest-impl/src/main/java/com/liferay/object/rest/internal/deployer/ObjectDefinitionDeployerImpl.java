@@ -274,6 +274,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			Arrays.asList(
 				_objectEntryApplicationComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
+						"companyId",
+						String.valueOf(objectDefinition.getCompanyId())
+					).put(
 						"liferay.jackson", false
 					).put(
 						"osgi.jaxrs.application.base",

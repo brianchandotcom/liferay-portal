@@ -455,7 +455,7 @@ definition {
 			Click(locator1 = "ObjectPortlet#VIEW_ENTRY_BUTTON");
 		}
 		else {
-			Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
+			Click(locator1 = "Icon#EYE_PREVIEW");
 		}
 
 		WaitForPageLoad();

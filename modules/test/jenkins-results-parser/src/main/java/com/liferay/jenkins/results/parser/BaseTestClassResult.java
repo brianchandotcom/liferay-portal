@@ -18,6 +18,9 @@ import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +58,48 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	@Override
 	public long getDuration() {
 		return _duration;
+	}
+
+	@Override
+	public Element getGitHubElement() {
+		return getGitHubElement(null);
+	}
+
+	@Override
+	public Element getGitHubElement(Boolean uniqueFailures) {
+		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
+			"div", null);
+
+		downstreamBuildListItemElement.add(
+			Dom4JUtil.getNewAnchorElement(
+				getTestClassReportURL(), getClassName()));
+
+		List<Element> failureElements = new ArrayList<>();
+
+		for (TestResult testResult : getTestResults()) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
+			if ((uniqueFailures == null) ||
+				(uniqueFailures && testResult.isUniqueFailure()) ||
+				(!uniqueFailures && !testResult.isUniqueFailure())) {
+
+				failureElements.add(
+					Dom4JUtil.getNewAnchorElement(
+						testResult.getTestReportURL(),
+						testResult.getTestName()));
+			}
+		}
+
+		if (failureElements.isEmpty()) {
+			return null;
+		}
+
+		Dom4JUtil.getOrderedListElement(
+			failureElements, downstreamBuildListItemElement, 5);
+
+		return downstreamBuildListItemElement;
 	}
 
 	@Override
@@ -138,6 +183,34 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getTestClassReportURL() {
+		StringBuilder sb = new StringBuilder();
+
+		Build build = getBuild();
+
+		sb.append(build.getBuildURL());
+
+		sb.append("testReport/");
+		sb.append(getPackageName());
+		sb.append("/");
+		sb.append(getSimpleClassName());
+
+		String testClassReportURL = sb.toString();
+
+		if (testClassReportURL.startsWith("http")) {
+			try {
+				return JenkinsResultsParserUtil.encode(testClassReportURL);
+			}
+			catch (MalformedURLException | URISyntaxException exception) {
+				System.out.println(
+					"Unable to encode the test report " + testClassReportURL);
+			}
+		}
+
+		return testClassReportURL;
 	}
 
 	@Override

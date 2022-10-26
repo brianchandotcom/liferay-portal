@@ -199,10 +199,11 @@ public class DownstreamBuild extends BaseBuild {
 
 		if (result.equals("UNSTABLE")) {
 			List<Element> failureElements = getTestResultGitHubElements(
-				getUniqueFailureTestResults());
+				getUniqueFailureTestResults(), true);
 
 			List<Element> upstreamJobFailureElements =
-				getTestResultGitHubElements(getUpstreamJobFailureTestResults());
+				getTestResultGitHubElements(
+					getUpstreamJobFailureTestResults(), false);
 
 			if (!upstreamJobFailureElements.isEmpty()) {
 				upstreamJobFailureMessageElement = messageElement.createCopy();
@@ -696,12 +697,41 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected List<Element> getTestResultGitHubElements(
-		List<TestResult> testResults) {
+		List<TestResult> testResults, boolean uniqueFailures) {
 
 		List<Element> testResultGitHubElements = new ArrayList<>();
 
+		List<TestClassResult> testClassResults = new ArrayList<>();
+
 		for (TestResult testResult : testResults) {
-			testResultGitHubElements.add(testResult.getGitHubElement());
+			if (testResult instanceof PoshiJUnitTestResult) {
+				testResultGitHubElements.add(testResult.getGitHubElement());
+
+				continue;
+			}
+
+			TestClassResult testClassResult = testResult.getTestClassResult();
+
+			if (testClassResult == null) {
+				testResultGitHubElements.add(testResult.getGitHubElement());
+
+				continue;
+			}
+
+			if (testClassResults.contains(testClassResult)) {
+				continue;
+			}
+
+			Element gitHubElement = testClassResult.getGitHubElement(
+				uniqueFailures);
+
+			if (gitHubElement == null) {
+				continue;
+			}
+
+			testResultGitHubElements.add(gitHubElement);
+
+			testClassResults.add(testClassResult);
 		}
 
 		return testResultGitHubElements;

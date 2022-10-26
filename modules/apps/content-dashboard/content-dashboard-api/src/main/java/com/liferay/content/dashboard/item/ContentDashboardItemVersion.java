@@ -121,6 +121,8 @@ public class ContentDashboardItemVersion {
 				).put(
 					"name", contentDashboardItemVersionAction.getName()
 				).put(
+					"type", contentDashboardItemVersionAction.getType()
+				).put(
 					"url", contentDashboardItemVersionAction.getURL()
 				));
 		}

@@ -20,7 +20,6 @@ import {useNavigate} from 'react-router-dom';
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
 import useCaseResultGroupBy from '../../../../data/useCaseResultGroupBy';
-import useTotalTestCases from '../../../../data/useTotalTestCases';
 import i18n from '../../../../i18n';
 import {TestrayBuild, TestrayTask} from '../../../../services/rest';
 import dayjs from '../../../../util/date';
@@ -40,7 +39,6 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({
 	const ref = useRef<any>();
 
 	const totalTestCasesGroup = useCaseResultGroupBy(testrayBuild.id);
-	const totalTestCases = useTotalTestCases();
 
 	return (
 		<>
@@ -178,9 +176,9 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({
 								},
 							}}
 							data={{
-								colors: totalTestCases.colors,
-								columns: totalTestCases.barChart.columns,
-								groups: [totalTestCases.statuses],
+								colors: totalTestCasesGroup.colors,
+								columns: totalTestCasesGroup.donut.columns,
+								groups: [totalTestCasesGroup.statuses],
 								type: 'bar',
 							}}
 							legend={{

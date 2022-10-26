@@ -71,7 +71,6 @@ const TestflowForm = () => {
 		defaultValues: {
 			buildId: Number(buildId ?? 0),
 			caseTypes: [],
-			dueStatus: 1,
 			users: [],
 		},
 		resolver: yupResolver(yupSchema.task),

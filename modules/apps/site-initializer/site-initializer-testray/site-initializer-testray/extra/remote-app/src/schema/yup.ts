@@ -108,7 +108,7 @@ const yupSchema = {
 		dueStatus: yup.string().required(),
 		issues: yup.string(),
 		runId: yup.number(),
-		startDate: yup.string(),
+		startDate: yup.string().nullable(),
 		userId: yup.number(),
 	}),
 	caseType: yup.object({
@@ -206,7 +206,7 @@ const yupSchema = {
 	task: yup.object({
 		buildId: yup.number().required(),
 		caseTypes: yup.array(yup.number()).required(),
-		dueStatus: yup.number(),
+		dueStatus: yup.string(),
 		name: yup.string().required(i18n.sub('x-is-a-required-field', 'name')),
 		users: yup.array().of(yup.number()),
 	}),

@@ -20,13 +20,26 @@ import {useHeader} from '../../../../../hooks';
 import i18n from '../../../../../i18n';
 import {filters} from '../../../../../schema/filter';
 import dayjs from '../../../../../util/date';
-import {searchUtil} from '../../../../../util/search';
+import {SearchBuilder} from '../../../../../util/search';
+import {BuildStatuses} from '../../../../../util/statuses';
 import useBuildTemplateActions from './useBuildTemplateActions';
+
+const searchBuilder = new SearchBuilder();
 
 const BuildTemplates = () => {
 	const navigate = useNavigate();
 	const {projectId, routineId} = useParams();
 	const {actions} = useBuildTemplateActions();
+
+	const buildFilter = searchBuilder
+		.eq('projectId', projectId as string)
+		.and()
+		.eq('routineId', routineId as string)
+		.and()
+		.eq('template', true)
+		.and()
+		.eq('dueStatus', BuildStatuses.ACTIVE)
+		.build();
 
 	useHeader({
 		timeout: 110,
@@ -38,7 +51,7 @@ const BuildTemplates = () => {
 		<Container>
 			<ListViewRest
 				managementToolbarProps={{
-					addButton: () => navigate(`../create/template/${true}`),
+					addButton: () => navigate('../create/template/true'),
 					filterFields: filters.template as any,
 					title: i18n.translate('templates'),
 				}}
@@ -49,10 +62,7 @@ const BuildTemplates = () => {
 						{
 							key: 'active',
 							render: (active) =>
-								active
-									? i18n.translate('active')
-									: i18n.translate('deactive'),
-
+								i18n.translate(active ? 'active' : 'deactive'),
 							sorteable: true,
 							value: i18n.translate('status'),
 						},
@@ -75,19 +85,10 @@ const BuildTemplates = () => {
 							value: i18n.translate('last-used-date'),
 						},
 					],
-					navigateTo: ({id}) => id?.toString(),
+					navigateTo: ({id}) => id,
 				}}
 				variables={{
-					filter: `${searchUtil.eq(
-						'projectId',
-						projectId as string
-					)} and ${searchUtil.eq(
-						'routineId',
-						routineId as string
-					)} and ${searchUtil.eq(
-						'template',
-						true
-					)} and ${searchUtil.eq('active', true)}`,
+					filter: buildFilter,
 				}}
 			/>
 		</Container>

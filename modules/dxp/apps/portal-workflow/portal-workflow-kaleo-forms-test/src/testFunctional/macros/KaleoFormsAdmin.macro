@@ -1070,7 +1070,8 @@ definition {
 
 	macro viewPublishedWorkflowDefinitions {
 		AssertClick(
-			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_PUBLISHED_TAB",
+			key_assetTitle = "Published",
+			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Published");
 	}
 
@@ -1137,7 +1138,8 @@ definition {
 
 	macro viewUnpublishedWorkflowDefinitions {
 		AssertClick(
-			locator1 = "KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB",
+			key_assetTitle = "Unpublished",
+			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Unpublished");
 	}
 

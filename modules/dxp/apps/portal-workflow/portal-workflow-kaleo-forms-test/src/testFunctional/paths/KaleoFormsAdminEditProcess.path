@@ -108,24 +108,6 @@
 	<td></td>
 </tr>
 
-<!--WORKFLOW_NAVIGATION-->
-
-<tr>
-	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
-	<td>//a[@title='Published']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_NAVIGATION_UNPUBLISHED_TAB</td>
-	<td>//a[@title='Unpublished']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-
 <!--WORKFLOW_TABLE-->
 
 <tr>

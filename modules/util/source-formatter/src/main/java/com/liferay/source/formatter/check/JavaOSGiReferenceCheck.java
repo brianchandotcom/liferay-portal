@@ -196,11 +196,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 					serviceBaseJavaTerm, JavaTerm.ACCESS_MODIFIER_PROTECTED,
 					serviceBaseJavaClass);
 
-				if (Validator.isNull(serviceBaseFieldTypeClassName)) {
-					continue;
-				}
+				if (Validator.isNotNull(serviceBaseFieldTypeClassName) &&
+					fieldTypeClassName.equals(serviceBaseFieldTypeClassName)) {
 
-				if (fieldTypeClassName.equals(serviceBaseFieldTypeClassName)) {
 					addMessage(
 						fileName,
 						"Use super class variable '" +

@@ -276,6 +276,14 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 			LayoutUtilityPageEntryId);
 	}
 
+	@Override
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long groupId, String externalReferenceCode) {
+
+		return _layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+			groupId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns the layout utility page entry with the matching external reference code and group.
 	 *

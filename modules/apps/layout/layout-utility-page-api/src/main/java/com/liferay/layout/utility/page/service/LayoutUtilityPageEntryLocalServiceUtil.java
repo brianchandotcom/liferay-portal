@@ -247,6 +247,13 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 			LayoutUtilityPageEntryId);
 	}
 
+	public static LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchLayoutUtilityPageEntry(
+			groupId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns the layout utility page entry with the matching external reference code and group.
 	 *

@@ -91,11 +91,28 @@ public class KBDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
-		return getKBArticleDropdownItems(kbArticle, null);
+		return getKBArticleDropdownItems(kbArticle, null, true, true, true);
+	}
+
+	public List<DropdownItem> getKBArticleDropdownItems(
+		KBArticle kbArticle, boolean historyEnabled, boolean printEnabled,
+		boolean subscriptionEnabled) {
+
+		return getKBArticleDropdownItems(
+			kbArticle, null, historyEnabled, printEnabled, subscriptionEnabled);
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(
 		KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
+
+		return getKBArticleDropdownItems(
+			kbArticle, selectedItemAncestorIds, true, true, true);
+	}
+
+	public List<DropdownItem> getKBArticleDropdownItems(
+		KBArticle kbArticle, List<Long> selectedItemAncestorIds,
+		boolean historyEnabled, boolean printEnabled,
+		boolean subscriptionEnabled) {
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
@@ -106,16 +123,18 @@ public class KBDropdownItemsProvider {
 					this::_hasAddPermission, _getAddChildDropdownItem(kbArticle)
 				).add(
 					() ->
+						subscriptionEnabled &&
 						_hasSubscriptionPermission(kbArticle) &&
 						_hasSubscription(kbArticle),
 					_getUnsubscribeDropdownItem(kbArticle)
 				).add(
 					() ->
+						subscriptionEnabled &&
 						_hasSubscriptionPermission(kbArticle) &&
 						!_hasSubscription(kbArticle),
 					_getSubscribeDropdownItem(kbArticle)
 				).add(
-					() -> _hasHistoryPermission(kbArticle),
+					() -> historyEnabled && _hasHistoryPermission(kbArticle),
 					_getHistoryDropdownItem(kbArticle)
 				).build())
 		).addGroup(
@@ -125,7 +144,7 @@ public class KBDropdownItemsProvider {
 						() -> _hasRSSPermission(kbArticle),
 						_getRSSDropdownItem(kbArticle)
 					).add(
-						this::_hasPrintPermission,
+						() -> printEnabled && _hasPrintPermission(),
 						_getPrintDropdownItem(kbArticle)
 					).add(
 						() -> _hasMovePermission(kbArticle),

@@ -1794,7 +1794,7 @@
 																					"fields": [
 																						{
 																							"fieldName": "friendlyURL",
-																							"fieldValue": "/sales/deal-registration"
+																							"fieldValue": "/sales/deal-registrations"
 																						},
 																						{
 																							"fieldName": "privatePage",
@@ -1802,7 +1802,7 @@
 																						},
 																						{
 																							"fieldName": "siteKey",
-																							"fieldValue": "PRM"
+																							"fieldValue": "[$GROUP_KEY$]"
 																						}
 																					]
 																				}
@@ -4295,7 +4295,7 @@
 																					"fields": [
 																						{
 																							"fieldName": "friendlyURL",
-																							"fieldValue": "/sales/deal-registration"
+																							"fieldValue": "/sales/deal-registrations"
 																						},
 																						{
 																							"fieldName": "privatePage",
@@ -4352,7 +4352,7 @@
 																											"fields": [
 																												{
 																													"fieldName": "friendlyURL",
-																													"fieldValue": "/sales/deal-registration"
+																													"fieldValue": "/sales/deal-registrations"
 																												},
 																												{
 																													"fieldName": "privatePage",

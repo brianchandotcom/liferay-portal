@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = EPNManager.class)
+@Component(service = EPNManager.class)
 public class EPNManager {
 
 	public void confirm(long userId) {

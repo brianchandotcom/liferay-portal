@@ -58,9 +58,7 @@ definition {
 			language = "Groovy",
 			script = "${script}");
 
-		var scriptValue = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
-
-		return "${scriptValue}";
+		static var scriptValue = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 	}
 
 	macro getSearchKeywords {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
@@ -35,16 +36,43 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Arthur Chan
+ * @author Raymond Augé
  */
 @Component(immediate = true, service = LocalOAuthClient.class)
 public class LocalOAuthClientImpl implements LocalOAuthClient {
+
+	@Override
+	public void consumeAccessToken(
+		Consumer<String> accessTokenConsumer,
+		OAuth2Application oAuth2Application, long userId) {
+
+		ServerAccessToken serverAccessToken = _requestTokens(
+			oAuth2Application, userId);
+
+		accessTokenConsumer.accept(serverAccessToken.getTokenKey());
+	}
 
 	@Override
 	public String requestTokens(
 		OAuth2Application oAuth2Application, long userId) {
 
 		try {
-			return _requestTokens(oAuth2Application, userId);
+			ServerAccessToken serverAccessToken = _requestTokens(
+				oAuth2Application, userId);
+
+			return JSONUtil.put(
+				"access_token", serverAccessToken.getTokenKey()
+			).put(
+				"expires_in", serverAccessToken.getExpiresIn()
+			).put(
+				"refresh_token", serverAccessToken.getRefreshToken()
+			).put(
+				"scope",
+				OAuthUtils.convertPermissionsToScope(
+					serverAccessToken.getScopes())
+			).put(
+				"token_type", serverAccessToken.getTokenType()
+			).toString();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -55,7 +83,7 @@ public class LocalOAuthClientImpl implements LocalOAuthClient {
 		}
 	}
 
-	private String _requestTokens(
+	private ServerAccessToken _requestTokens(
 		OAuth2Application oAuth2Application, long userId) {
 
 		AccessTokenRegistration accessTokenRegistration =
@@ -79,22 +107,8 @@ public class LocalOAuthClientImpl implements LocalOAuthClient {
 		accessTokenRegistration.setSubject(
 			_liferayOAuthDataProvider.getUserSubject(userId));
 
-		ServerAccessToken serverAccessToken =
-			_liferayOAuthDataProvider.createAccessToken(
-				accessTokenRegistration);
-
-		return JSONUtil.put(
-			"access_token", serverAccessToken.getTokenKey()
-		).put(
-			"expires_in", serverAccessToken.getExpiresIn()
-		).put(
-			"refresh_token", serverAccessToken.getRefreshToken()
-		).put(
-			"scope",
-			OAuthUtils.convertPermissionsToScope(serverAccessToken.getScopes())
-		).put(
-			"token_type", serverAccessToken.getTokenType()
-		).toString();
+		return _liferayOAuthDataProvider.createAccessToken(
+			accessTokenRegistration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -241,7 +241,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		%>
 
 		<clay:dropdown-actions
-			dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
+			dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle, enableKBArticleHistory, enableKBArticlePrint, enableKBArticleSubscriptions) %>"
 			propsTransformer="admin/js/KBDropdownPropsTransformer"
 		/>
 	</c:if>

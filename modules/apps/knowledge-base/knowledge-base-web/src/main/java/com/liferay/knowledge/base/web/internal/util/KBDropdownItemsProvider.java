@@ -522,6 +522,14 @@ public class KBDropdownItemsProvider {
 		).buildString();
 	}
 
+	private String _createKbHomeRenderURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/knowledge_base/view"
+		).buildString();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception> _getAddChildDropdownItem(
 		KBArticle kbArticle) {
 
@@ -562,6 +570,16 @@ public class KBDropdownItemsProvider {
 					"/knowledge_base/delete_kb_article"
 				).setRedirect(
 					() -> {
+						PortletDisplay portletDisplay =
+							_themeDisplay.getPortletDisplay();
+
+						if (!Objects.equals(
+								portletDisplay.getRootPortletId(),
+								KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+
+							return _createKbHomeRenderURL();
+						}
+
 						if (((selectedItemAncestorIds == null) &&
 							 _isKBArticleSelected(kbArticle)) ||
 							((selectedItemAncestorIds != null) &&

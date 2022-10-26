@@ -64,6 +64,12 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 		}
+
+		task ("Go to project and go to tab cases") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+		}
 	}
 
 	tearDown {
@@ -81,13 +87,7 @@ definition {
 	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
 	@priority = "5"
 	test AdminCanAddCase {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-		}
-
-		task ("And given that the user adds a new Case") {
-			Testray.projectTabNavigator(navTabName = "Cases");
-
+		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
 				caseTypeId = "Automated Functional Test",
@@ -98,7 +98,7 @@ definition {
 				steps = "Auto Test Steps");
 		}
 
-		task ("Then the case is displayed with the new infos") {
+		task ("Then the case is created with the new infos") {
 			TestrayCases.verifyCase(
 				caseName = "Cases_1 Case",
 				casePriority = "5",
@@ -118,13 +118,7 @@ definition {
 	@description = "This is a test for LPS-156791 - Verify if as an Administrator I am able to delete Cases without Subcomponents"
 	@priority = "5"
 	test AdminCanDeleteCase {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-		}
-
-		task ("When given that the user adds a new Case") {
-			Testray.projectTabNavigator(navTabName = "Cases");
-
+		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
 				caseTypeId = "Automated Functional Test",
@@ -135,7 +129,7 @@ definition {
 				steps = "Auto Test Steps");
 		}
 
-		task ("When the user goes to delete a case") {
+		task ("When the user delete a case") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -143,7 +137,7 @@ definition {
 			AssertConfirm(value1 = "Are you sure you want to delete this item?");
 		}
 
-		task ("then the Case should not be displayed anymore") {
+		task ("Then the case should no longer be found") {
 			Testray.assertItemNotPresent(itemName = "Cases_1 Case");
 		}
 	}
@@ -151,13 +145,7 @@ definition {
 	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"
 	@priority = "5"
 	test AdminCanEditCase {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-		}
-
-		task ("When given that the user adds a new Case") {
-			Testray.projectTabNavigator(navTabName = "Cases");
-
+		task ("Given that the user add a new Case") {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
 				caseTypeId = "Automated Functional Test",
@@ -188,7 +176,7 @@ definition {
 				steps = "http://test.edit.com");
 		}
 
-		task ("Then the case is displayed with the new infos") {
+		task ("Then the case is edited with the new infos") {
 			TestrayCases.verifyCase(
 				caseName = "Cases_1 Case Edited",
 				casePriority = "4",

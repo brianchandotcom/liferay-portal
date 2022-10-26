@@ -18,15 +18,9 @@ export default interface DealRegistrationDTO
 	extends Omit<
 		DealRegistration,
 		| 'projectCategories'
-		| 'department'
-		| 'jobRole'
-		| 'country'
-		| 'industry'
-		| 'state'
 		| 'mdfActivityAssociated'
 		| 'partnerAccount'
 		| 'projectNeed'
-		| 'projectSolutionCategories'
 		| 'prospect'
 		| 'primaryProspect'
 	> {

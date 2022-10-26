@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_CONTENT_LAST_CHANGE</td>
+	<td>//input[contains(@id,'rangeLast')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_ABSTRACT</td>
 	<td>//label[contains(.,'Custom Abstract')]/input[contains(@id,'customAbstract')]</td>
 	<td></td>

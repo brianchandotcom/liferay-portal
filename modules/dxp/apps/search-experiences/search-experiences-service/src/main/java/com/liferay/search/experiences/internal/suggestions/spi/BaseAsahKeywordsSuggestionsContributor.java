@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.suggestions.Suggestion;
 import com.liferay.portal.search.suggestions.SuggestionBuilderFactory;
@@ -105,7 +106,14 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 	private boolean _exceedsCharacterThreshold(
 		Map<String, Object> attributes, String keywords) {
 
-		if (keywords.length() >= _getCharacterThreshold(attributes)) {
+		int characterThreshold = _getCharacterThreshold(attributes);
+
+		if (Validator.isBlank(keywords)) {
+			if (characterThreshold == 0) {
+				return true;
+			}
+		}
+		else if (keywords.length() >= characterThreshold) {
 			return true;
 		}
 

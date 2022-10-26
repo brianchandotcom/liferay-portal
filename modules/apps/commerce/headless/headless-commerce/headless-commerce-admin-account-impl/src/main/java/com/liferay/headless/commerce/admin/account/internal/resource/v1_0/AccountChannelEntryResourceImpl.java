@@ -18,6 +18,8 @@ import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
@@ -76,6 +78,18 @@ public class AccountChannelEntryResourceImpl
 		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 			_fetchCommerceChannelAccountEntryRel(
 				id, CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+
+		_commerceChannelAccountEntryRelService.
+			deleteCommerceChannelAccountEntryRel(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
+	public void deleteAccountChannelDiscountId(Long id) throws Exception {
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT);
 
 		_commerceChannelAccountEntryRelService.
 			deleteCommerceChannelAccountEntryRel(
@@ -160,6 +174,25 @@ public class AccountChannelEntryResourceImpl
 			accountEntry.getAccountEntryId(),
 			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM,
 			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry>
+			getAccountByExternalReferenceCodeAccountChannelDiscountsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _getAccountChannelEntryPage(
+			accountEntry.getAccountEntryId(),
+			CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT, pagination);
 	}
 
 	@Override
@@ -250,6 +283,19 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public AccountChannelEntry getAccountChannelDiscountId(Long id)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT);
+
+		return _toAccountChannelEntry(
+			commerceChannelAccountEntryRel.
+				getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
 	public AccountChannelEntry getAccountChannelPaymentTermId(Long id)
 		throws Exception {
 
@@ -312,6 +358,16 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public Page<AccountChannelEntry> getAccountIdAccountChannelDiscountsPage(
+			Long id, Pagination pagination)
+		throws Exception {
+
+		return _getAccountChannelEntryPage(
+			id, CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT,
+			pagination);
+	}
+
+	@Override
 	public Page<AccountChannelEntry> getAccountIdAccountChannelPaymentTermsPage(
 			Long id, Pagination pagination)
 		throws Exception {
@@ -369,6 +425,20 @@ public class AccountChannelEntryResourceImpl
 		return _patchAccountChannelEntry(
 			accountChannelEntry, commerceChannelAccountEntryRel,
 			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+	}
+
+	@Override
+	public AccountChannelEntry patchAccountChannelDiscountId(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT);
+
+		return _patchAccountChannelEntry(
+			accountChannelEntry, commerceChannelAccountEntryRel,
+			CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT);
 	}
 
 	@Override
@@ -458,6 +528,27 @@ public class AccountChannelEntryResourceImpl
 
 	@Override
 	public AccountChannelEntry
+			postAccountByExternalReferenceCodeAccountChannelDiscount(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceDiscount.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT);
+	}
+
+	@Override
+	public AccountChannelEntry
 			postAccountByExternalReferenceCodeAccountChannelPaymentTerm(
 				String externalReferenceCode,
 				AccountChannelEntry accountChannelEntry)
@@ -543,6 +634,19 @@ public class AccountChannelEntryResourceImpl
 			accountChannelEntry, accountEntry.getAccountEntryId(),
 			CommerceTermEntry.class.getName(),
 			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+	}
+
+	@Override
+	public AccountChannelEntry postAccountIdAccountChannelDiscount(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(id);
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceDiscount.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT);
 	}
 
 	@Override
@@ -653,8 +757,16 @@ public class AccountChannelEntryResourceImpl
 			return commerceTermEntry.getCommerceTermEntryId();
 		}
 		else if (type ==
-				 CommerceChannelAccountEntryRelConstants.
-					 TYPE_PAYMENT_TERM) {
+					CommerceChannelAccountEntryRelConstants.TYPE_DISCOUNT) {
+
+			CommerceDiscount commerceDiscount =
+				_commerceDiscountService.getCommerceDiscount(
+					GetterUtil.getLong(accountChannelEntry.getEntryId()));
+
+			return commerceDiscount.getCommerceDiscountId();
+		}
+		else if (type ==
+					CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM) {
 
 			CommerceTermEntry commerceTermEntry =
 				_commerceTermEntryService.getCommerceTermEntry(
@@ -663,8 +775,7 @@ public class AccountChannelEntryResourceImpl
 			return commerceTermEntry.getCommerceTermEntryId();
 		}
 		else if (type ==
-				 CommerceChannelAccountEntryRelConstants.
-					 TYPE_PRICE_LIST) {
+					CommerceChannelAccountEntryRelConstants.TYPE_PRICE_LIST) {
 
 			CommercePriceList commercePriceList =
 				_commercePriceListService.getCommercePriceList(
@@ -812,10 +923,13 @@ public class AccountChannelEntryResourceImpl
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceTermEntryService _commerceTermEntryService;
+	private CommerceDiscountService _commerceDiscountService;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private CommerceTermEntryService _commerceTermEntryService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

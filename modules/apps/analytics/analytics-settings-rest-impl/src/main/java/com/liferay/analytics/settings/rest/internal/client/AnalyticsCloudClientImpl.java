@@ -346,8 +346,9 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	}
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
-			long companyId, boolean commerceChannelsSelected,
-			boolean sitesSelected)
+			Boolean accountsSelected, long companyId,
+			Boolean commerceChannelsSelected, Boolean contactsSelected,
+			Boolean sitesSelected)
 		throws Exception {
 
 		try {
@@ -360,7 +361,11 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 			options.setBody(
 				JSONUtil.put(
+					"accountsSelected", accountsSelected
+				).put(
 					"commerceChannelsSelected", commerceChannelsSelected
+				).put(
+					"contactsSelected", contactsSelected
 				).put(
 					"sitesSelected", sitesSelected
 				).toString(),

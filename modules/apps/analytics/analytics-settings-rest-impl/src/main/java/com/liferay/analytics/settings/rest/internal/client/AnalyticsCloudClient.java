@@ -46,8 +46,9 @@ public interface AnalyticsCloudClient {
 		throws Exception;
 
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
-			long companyId, boolean commerceChannelsSelected,
-			boolean sitesSelected)
+			Boolean accountsSelected, long companyId,
+			Boolean commerceChannelsSelected, Boolean contactsSelected,
+			Boolean sitesSelected)
 		throws Exception;
 
 }

@@ -98,9 +98,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			analyticsChannel.getAnalyticsDataSources());
 
 		_analyticsCloudClient.updateAnalyticsDataSourceDetails(
-			contextCompany.getCompanyId(),
+			null, contextCompany.getCompanyId(),
 			ArrayUtil.isNotEmpty(analyticsDataSource.getCommerceChannelIds()),
-			ArrayUtil.isNotEmpty(analyticsDataSource.getSiteIds()));
+			null, ArrayUtil.isNotEmpty(analyticsDataSource.getSiteIds()));
 
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(

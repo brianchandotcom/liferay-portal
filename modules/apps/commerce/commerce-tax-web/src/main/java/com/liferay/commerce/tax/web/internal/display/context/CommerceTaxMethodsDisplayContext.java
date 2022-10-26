@@ -19,24 +19,16 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
-import com.liferay.commerce.tax.util.comparator.CommerceTaxMethodNameComparator;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -149,59 +141,6 @@ public class CommerceTaxMethodsDisplayContext {
 		return ParamUtil.getString(_renderRequest, "screenNavigationEntryKey");
 	}
 
-	public SearchContainer<CommerceTaxMethod> getSearchContainer()
-		throws PortalException {
-
-		if (_searchContainer != null) {
-			return _searchContainer;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Boolean active = null;
-		String emptyResultsMessage = "there-are-no-tax-methods";
-
-		String navigation = _getNavigation();
-
-		if (navigation.equals("active")) {
-			active = Boolean.TRUE;
-			emptyResultsMessage = "there-are-no-active-tax-methods";
-		}
-		else if (navigation.equals("inactive")) {
-			active = Boolean.FALSE;
-			emptyResultsMessage = "there-are-no-inactive-tax-methods";
-		}
-
-		_searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, emptyResultsMessage);
-
-		List<CommerceTaxMethod> results;
-
-		if (active != null) {
-			results = _commerceTaxMethodService.getCommerceTaxMethods(
-				themeDisplay.getScopeGroupId(), active);
-		}
-		else {
-			results = _commerceTaxMethodService.getCommerceTaxMethods(
-				themeDisplay.getScopeGroupId());
-		}
-
-		if ((active == null) || !active) {
-			results = _addDefaultCommerceTaxMethods(results);
-		}
-
-		List<CommerceTaxMethod> sortedRresults = results;
-
-		sortedRresults.sort(
-			new CommerceTaxMethodNameComparator(themeDisplay.getLocale()));
-
-		_searchContainer.setResultsAndTotal(
-			() -> sortedRresults, sortedRresults.size());
-
-		return _searchContainer;
-	}
-
 	public boolean hasUpdateCommerceChannelPermission() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -211,56 +150,6 @@ public class CommerceTaxMethodsDisplayContext {
 			_commerceChannelLocalService.getCommerceChannel(
 				getCommerceChannelId()),
 			ActionKeys.UPDATE);
-	}
-
-	private List<CommerceTaxMethod> _addDefaultCommerceTaxMethods(
-			List<CommerceTaxMethod> commerceTaxMethods)
-		throws PortalException {
-
-		commerceTaxMethods = ListUtil.copy(commerceTaxMethods);
-
-		Map<String, CommerceTaxEngine> commerceTaxEngines =
-			_commerceTaxEngineRegistry.getCommerceTaxEngines();
-
-		Set<String> commerceEngineKeys = new TreeSet<>(
-			commerceTaxEngines.keySet());
-
-		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
-			commerceEngineKeys.remove(commerceTaxMethod.getEngineKey());
-		}
-
-		for (String name : commerceEngineKeys) {
-			CommerceTaxMethod commerceTaxMethod = _getDefaultCommerceTaxMethod(
-				name);
-
-			commerceTaxMethods.add(commerceTaxMethod);
-		}
-
-		return commerceTaxMethods;
-	}
-
-	private CommerceTaxMethod _getDefaultCommerceTaxMethod(String engineKey)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		CommerceTaxEngine commerceTaxEngine =
-			_commerceTaxEngineRegistry.getCommerceTaxEngine(engineKey);
-
-		CommerceTaxMethod commerceTaxMethod =
-			_commerceTaxMethodService.createCommerceTaxMethod(
-				themeDisplay.getScopeGroupId(), 0);
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		commerceTaxMethod.setName(commerceTaxEngine.getName(locale), locale);
-		commerceTaxMethod.setDescription(
-			commerceTaxEngine.getDescription(locale), locale);
-
-		commerceTaxMethod.setEngineKey(engineKey);
-
-		return commerceTaxMethod;
 	}
 
 	private String _getNavigation() {
@@ -275,6 +164,5 @@ public class CommerceTaxMethodsDisplayContext {
 	private final CommerceTaxMethodService _commerceTaxMethodService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private SearchContainer<CommerceTaxMethod> _searchContainer;
 
 }

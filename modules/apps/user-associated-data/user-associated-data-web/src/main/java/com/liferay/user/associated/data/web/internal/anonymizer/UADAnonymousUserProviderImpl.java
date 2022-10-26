@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  * @author Erick Monteiro
  */
-@Component(immediate = true, service = UADAnonymousUserProvider.class)
+@Component(service = UADAnonymousUserProvider.class)
 public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 
 	@Override

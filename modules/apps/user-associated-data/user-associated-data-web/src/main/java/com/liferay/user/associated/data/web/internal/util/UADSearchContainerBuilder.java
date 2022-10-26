@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = UADSearchContainerBuilder.class)
+@Component(service = UADSearchContainerBuilder.class)
 public class UADSearchContainerBuilder {
 
 	public SearchContainer<UADEntity<?>>

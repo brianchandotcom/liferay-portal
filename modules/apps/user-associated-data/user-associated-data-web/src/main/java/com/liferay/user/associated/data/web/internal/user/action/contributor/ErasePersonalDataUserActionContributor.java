@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = UserActionContributor.class)
+@Component(service = UserActionContributor.class)
 public class ErasePersonalDataUserActionContributor
 	extends BaseUADUserActionContributor {
 

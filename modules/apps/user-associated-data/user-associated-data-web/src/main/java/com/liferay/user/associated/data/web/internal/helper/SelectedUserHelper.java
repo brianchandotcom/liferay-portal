@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = SelectedUserHelper.class)
+@Component(service = SelectedUserHelper.class)
 public class SelectedUserHelper {
 
 	public User getSelectedUser(PortletRequest portletRequest)

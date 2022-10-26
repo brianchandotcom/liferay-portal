@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author William Newbury
  */
-@Component(immediate = true, service = UADRegistry.class)
+@Component(service = UADRegistry.class)
 public class UADRegistry {
 
 	public List<UADAnonymizer<?>> getApplicationUADAnonymizers(

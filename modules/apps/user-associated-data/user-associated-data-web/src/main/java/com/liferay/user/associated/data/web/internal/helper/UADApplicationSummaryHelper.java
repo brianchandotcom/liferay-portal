@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = UADApplicationSummaryHelper.class)
+@Component(service = UADApplicationSummaryHelper.class)
 public class UADApplicationSummaryHelper {
 
 	public List<UADAnonymizer<?>> getApplicationUADAnonymizers(

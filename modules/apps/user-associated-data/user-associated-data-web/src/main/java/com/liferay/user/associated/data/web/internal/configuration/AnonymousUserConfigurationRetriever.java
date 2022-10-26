@@ -27,9 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(
-	immediate = true, service = AnonymousUserConfigurationRetriever.class
-)
+@Component(service = AnonymousUserConfigurationRetriever.class)
 public class AnonymousUserConfigurationRetriever {
 
 	public Optional<Configuration> getOptional(long companyId)

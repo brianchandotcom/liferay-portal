@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	immediate = true, service = UADExportBackgroundTaskStatusMessageSender.class
-)
+@Component(service = UADExportBackgroundTaskStatusMessageSender.class)
 public class UADExportBackgroundTaskStatusMessageSender {
 
 	public void sendStatusMessage(String messageType, String entityName) {

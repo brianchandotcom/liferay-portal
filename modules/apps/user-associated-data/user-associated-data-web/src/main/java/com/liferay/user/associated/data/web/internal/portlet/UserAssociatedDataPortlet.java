@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author William Newbury
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",

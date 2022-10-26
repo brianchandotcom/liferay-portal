@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Samuel Trong Tran
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 		"mvc.command.name=/user_associated_data/delete_uad_applications"

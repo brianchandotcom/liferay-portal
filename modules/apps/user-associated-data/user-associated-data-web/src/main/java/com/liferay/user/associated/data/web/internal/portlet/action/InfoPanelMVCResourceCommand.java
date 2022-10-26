@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 		"mvc.command.name=/user_associated_data/info_panel"

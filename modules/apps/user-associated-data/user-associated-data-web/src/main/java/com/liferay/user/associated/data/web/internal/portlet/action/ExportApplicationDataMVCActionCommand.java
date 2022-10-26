@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 		"mvc.command.name=/user_associated_data/export_application_data"

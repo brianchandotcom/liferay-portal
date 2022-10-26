@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = UADApplicationExportHelper.class)
+@Component(service = UADApplicationExportHelper.class)
 public class UADApplicationExportHelper {
 
 	public Date getApplicationLastExportDate(

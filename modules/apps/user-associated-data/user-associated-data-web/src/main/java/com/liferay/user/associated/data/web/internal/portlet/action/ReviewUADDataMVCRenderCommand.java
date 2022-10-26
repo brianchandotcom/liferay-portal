@@ -58,7 +58,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 		"mvc.command.name=/user_associated_data/review_uad_data"

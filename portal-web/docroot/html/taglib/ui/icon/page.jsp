@@ -67,6 +67,7 @@ if (useDialog || (urlIsNotNull && url.startsWith("javascript:"))) {
 			<c:if test="<%= !label && Validator.isNotNull(message) %>">
 				title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(resourceBundle, HtmlUtil.stripHtml(message))) %>"
 			</c:if>
+
 			<c:if test="<%= toolTip %>">
 				tabindex="0"
 			</c:if>

@@ -18,7 +18,7 @@ import i18n from '../i18n';
 import {
 	APIResponse,
 	TestrayCaseResult,
-	testrayCaseResultRest,
+	testrayCaseResultImpl,
 } from '../services/rest';
 import {searchUtil} from '../util/search';
 import useDebounce from './useDebounce';
@@ -158,7 +158,7 @@ const defaultEntities: Entity[] = [
 			)}&nestedFields=case,r_runToCaseResult_c_runId&pageSize=1000`,
 		name: i18n.translate('case-result'),
 		transformer: (response: APIResponse<TestrayCaseResult>) => {
-			const transformedResponse = testrayCaseResultRest.transformDataFromList(
+			const transformedResponse = testrayCaseResultImpl.transformDataFromList(
 				response
 			);
 

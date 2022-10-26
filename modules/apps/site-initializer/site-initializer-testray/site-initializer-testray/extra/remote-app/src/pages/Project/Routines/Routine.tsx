@@ -112,7 +112,7 @@ const Routine = () => {
 							key: 'product_version',
 							render: (_, {productVersion}) =>
 								productVersion?.name,
-							value: 'Product Version',
+							value: i18n.translate('product-version'),
 						},
 						{
 							clickable: true,

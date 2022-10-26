@@ -22,7 +22,7 @@ import {Liferay} from '../../../../services/liferay';
 import {
 	TestrayCaseResult,
 	deleteResource,
-	testrayCaseResultRest,
+	testrayCaseResultImpl,
 } from '../../../../services/rest';
 import {Action} from '../../../../types';
 import {UserListView} from '../../../Manage/User';
@@ -46,7 +46,7 @@ const useBuildTestActions = () => {
 							}}
 							tableProps={{
 								onClickRow: (user) => {
-									testrayCaseResultRest
+									testrayCaseResultImpl
 										.assignTo(caseResult, user.id)
 										.then(() =>
 											updateItemFromList(
@@ -74,8 +74,8 @@ const useBuildTestActions = () => {
 				(caseResult.user &&
 				caseResult.user.id.toString() ===
 					Liferay.ThemeDisplay.getUserId()
-					? testrayCaseResultRest.removeAssign(caseResult)
-					: testrayCaseResultRest.assignToMe(caseResult)
+					? testrayCaseResultImpl.removeAssign(caseResult)
+					: testrayCaseResultImpl.assignToMe(caseResult)
 				).then((user) =>
 					updateItemFromList(
 						mutate,

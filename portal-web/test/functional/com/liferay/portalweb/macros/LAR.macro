@@ -154,6 +154,10 @@ definition {
 			ContentConfiguration.checkContentNameList(checkContentNameList = "${checkContentNameList}");
 		}
 
+		if (isSet(uncheckContentNameList)) {
+			ContentConfiguration.uncheckContentNameList(uncheckContentNameList = "${uncheckContentNameList}");
+		}
+
 		if ("${contentDeletion}" == "true") {
 			Check.checkToggleSwitch(locator1 = "ToggleSwitch#DELETE_PORTLET_DATA");
 		}
@@ -631,7 +635,8 @@ definition {
 				copyAsNew = "${copyAsNew}",
 				importPermissions = "${importPermissions}",
 				larFileName = "${larFileName}",
-				privateLayout = "${privateLayout}");
+				privateLayout = "${privateLayout}",
+				uncheckContentNameList = "${uncheckContentNameList}");
 		}
 	}
 

@@ -13,9 +13,10 @@
  */
 
 import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Avatar from '../../../components/Avatar';
+import AssignToMe from '../../../components/Avatar/AssigneToMe';
 import Code from '../../../components/Code';
 import Container from '../../../components/Layout/Container';
 import Loading from '../../../components/Loading';
@@ -25,56 +26,86 @@ import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {
+	APIResponse,
 	TestraySubTask,
+	TestraySubTaskCasesResult,
 	TestrayTask,
-	testrayTaskImpl,
 } from '../../../services/rest';
 import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
+import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {SUBTASK_STATUS} from '../../../util/constants';
+import {getTimeFromNow} from '../../../util/date';
+import {searchUtil} from '../../../util/search';
 import SubtasksCaseResults from './SubtaskCaseResults';
+import SubtaskHeaderActions from './SubtaskHeaderActions';
+
+type OutletContext = {
+	testrayTask: TestrayTask;
+};
 
 const Subtasks = () => {
 	const {setHeading} = useHeader();
-	const {subtaskId, taskId} = useParams();
+	const {subtaskId} = useParams();
+	const {testrayTask} = useOutletContext<OutletContext>();
 
-	const {data: testraySubtaskData} = useFetch<TestraySubTask>(
-		testraySubtaskImpl.getResource(subtaskId as string),
-		(response) => testraySubtaskImpl.transformData(response)
+	const {data: testraySubtask, mutate: mutateSubtask} = useFetch<
+		TestraySubTask
+	>(testraySubtaskImpl.getResource(subtaskId as string), (response) =>
+		testraySubtaskImpl.transformData(response)
 	);
-	const {data: testrayTaskData, loading} = useFetch<TestrayTask>(
-		testrayTaskImpl.getResource(taskId as string),
-		(response) => testrayTaskImpl.transformData(response)
+
+	const {data: testrayCaseResultData, mutate: mutateCaseResult} = useFetch<
+		APIResponse<TestraySubTaskCasesResult>
+	>(
+		`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
+			'subtaskId',
+			subtaskId as string
+		)}&pageSize=100`,
+		(response) =>
+			testraySubtaskCaseResultImpl.transformDataFromList(response)
 	);
+
+	const testrayCaseResults = testrayCaseResultData?.items || [];
 
 	useEffect(() => {
 		setTimeout(() => {
 			setHeading([
 				{
 					category: i18n.translate('task'),
-					path: `/testflow/${taskId}`,
-					title: `${testrayTaskData?.name}`,
+					path: `/testflow/${testrayTask.id}`,
+					title: `${testrayTask?.name}`,
 				},
 				{
 					category: i18n.translate('subtask'),
-					title: `${testraySubtaskData?.name}`,
+					title: `${testraySubtask?.name}`,
 				},
 			]);
 		});
 	}, [
 		setHeading,
-		testraySubtaskData?.name,
+		testraySubtask?.name,
 		subtaskId,
-		testrayTaskData?.name,
-		taskId,
+		testrayTask.id,
+		testrayTask?.name,
 	]);
 
-	if (loading || !testraySubtaskData) {
+	if (!testraySubtask) {
 		return <Loading />;
 	}
 
 	return (
 		<>
-			<Container className="pb-6" title="Subtasks">
+			<SubtaskHeaderActions
+				caseResult={testrayCaseResults.map((caseResult) =>
+					Number(caseResult.caseResult?.id)
+				)}
+				dueStatus={Number(testrayCaseResults[0]?.caseResult?.dueStatus)}
+				mutateCaseResult={mutateCaseResult}
+				mutateSubtask={mutateSubtask}
+				subtask={testraySubtask}
+			/>
+
+			<Container className="pb-6" title={i18n.translate('subtasks')}>
 				<div className="d-flex flex-wrap">
 					<div className="col-4 col-lg-4 col-md-12">
 						<QATable
@@ -85,13 +116,13 @@ const Subtasks = () => {
 										<StatusBadge
 											type={
 												(SUBTASK_STATUS as any)[
-													testraySubtaskData?.dueStatus as number
-												]?.color
+													testraySubtask?.dueStatus as number
+												]?.label
 											}
 										>
 											{
 												(SUBTASK_STATUS as any)[
-													testraySubtaskData?.dueStatus as number
+													testraySubtask?.dueStatus as number
 												]?.label
 											}
 										</StatusBadge>
@@ -99,16 +130,26 @@ const Subtasks = () => {
 								},
 								{
 									title: i18n.translate('assignee'),
-									value: (
+									value: testraySubtask.user ? (
 										<Avatar
 											displayName
-											name={`${testraySubtaskData?.r_userToSubtasks_user.givenName} ${testraySubtaskData?.r_userToSubtasks_user.additionalName}`}
+											name={`${testraySubtask.user?.givenName} ${testraySubtask?.user?.additionalName}`}
+										/>
+									) : (
+										<AssignToMe
+											onClick={() =>
+												testraySubtaskImpl
+													.assignToMe(testraySubtask)
+													.then(mutateSubtask)
+											}
 										/>
 									),
 								},
 								{
 									title: i18n.translate('updated'),
-									value: '6 Hours ago',
+									value: getTimeFromNow(
+										testraySubtask?.statusUpdateDate
+									),
 								},
 								{
 									title: i18n.translate('issue'),
@@ -127,25 +168,18 @@ const Subtasks = () => {
 							items={[
 								{
 									title: i18n.translate('score'),
-									value: `${testraySubtaskData?.score}`,
+									value: `${testraySubtask?.score}`,
 								},
 								{
 									title: i18n.translate('error'),
 									value: (
 										<Code>
-											{`java.lang.Exception: Cookie
-											expiration date is not 6 months
-											ahead. The expected expiration date
-											is:'2022-10-08T09' while the actual
-											cookie has 'ERROR: Cookie not found,
-											or script not executed as
-											expected.'.`}
+											{testrayCaseResults.length
+												? testrayCaseResults[0]
+														.caseResult?.errors
+												: null}
 										</Code>
 									),
-								},
-								{
-									title: i18n.translate('merged-with'),
-									value: 'ST-5, ST-6',
 								},
 							]}
 						/>

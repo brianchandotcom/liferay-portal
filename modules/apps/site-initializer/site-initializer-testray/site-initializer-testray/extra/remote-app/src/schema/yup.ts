@@ -201,7 +201,12 @@ const yupSchema = {
 		name: yup.string(),
 		score: yup.number(),
 		taskId: yup.number(),
-		users: yup.number(),
+		userId: yup.number(),
+	}),
+	subtaskToCaseResult: yup.object({
+		caseResultId: yup.number(),
+		name: yup.string(),
+		subtaskId: yup.number(),
 	}),
 	suite: yup.object({
 		autoanalyze: yup.boolean(),

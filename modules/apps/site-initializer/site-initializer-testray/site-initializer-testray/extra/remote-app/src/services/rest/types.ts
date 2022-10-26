@@ -207,6 +207,7 @@ export type TestrayRun = {
 	jenkinsJobKey: string;
 	name: string;
 	number: string;
+	r_buildToRuns_c_build: TestrayBuild;
 	status: string;
 };
 
@@ -218,6 +219,17 @@ export type TestraySubTask = {
 	r_userToSubtasks_user: UserAccount;
 	score: number;
 	statusUpdateDate: string;
+	task: TestrayTask;
+	user: UserAccount;
+};
+
+export type TestraySubTaskCasesResult = {
+	caseResult?: TestrayCaseResult;
+	id?: number;
+	name?: string;
+	r_caseResultToSubtasksCasesResults_c_caseResult?: TestrayCaseResult;
+	r_subtaskToSubtasksCasesResults_c_subtask?: TestraySubTask;
+	subTask?: TestraySubTask;
 };
 
 export type TestraySuite = {

@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
 	service = ExportImportPortletPreferencesProcessor.class
 )

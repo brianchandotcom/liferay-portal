@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.kernel.model.UserGroup",
 	service = ModelIndexerWriterContributor.class
 )

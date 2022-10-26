@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Rafael Cardoso
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.kernel.model.UserGroup",
 	service = ModelPreFilterContributor.class
 )

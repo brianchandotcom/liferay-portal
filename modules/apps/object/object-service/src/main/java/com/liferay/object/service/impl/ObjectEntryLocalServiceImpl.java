@@ -463,6 +463,22 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntry fetchObjectEntry(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		return objectEntryPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, objectDefinition.getCompanyId(),
+			objectDefinitionId);
+	}
+
+	@Override
 	public Map<Object, Long> getAggregationCounts(
 			long objectDefinitionId, String aggregationTerm,
 			Predicate predicate, int start, int end)
@@ -622,19 +638,6 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public int getObjectEntriesCount(long groupId, long objectDefinitionId) {
 		return objectEntryPersistence.countByG_ODI(groupId, objectDefinitionId);
-	}
-
-	@Override
-	public ObjectEntry getObjectEntry(
-			String externalReferenceCode, long objectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		return objectEntryPersistence.fetchByERC_C_ODI(
-			externalReferenceCode, objectDefinition.getCompanyId(),
-			objectDefinitionId);
 	}
 
 	@Override

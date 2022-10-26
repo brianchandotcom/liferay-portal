@@ -1280,6 +1280,19 @@ public class DDMFormAdminDisplayContext {
 		return true;
 	}
 
+	public boolean isDisplayChartAsTable() throws PortalException {
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
+
+		if (ddmFormInstance == null) {
+			return false;
+		}
+
+		DDMFormInstanceSettings settingsModel =
+			ddmFormInstance.getSettingsModel();
+
+		return settingsModel.displayChartAsTable();
+	}
+
 	public boolean isFormPublished() throws PortalException {
 		return isFormPublished(getDDMFormInstance());
 	}

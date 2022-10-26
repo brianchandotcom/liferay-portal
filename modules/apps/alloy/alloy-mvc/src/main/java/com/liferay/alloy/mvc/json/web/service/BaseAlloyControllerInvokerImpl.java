@@ -243,7 +243,7 @@ public abstract class BaseAlloyControllerInvokerImpl
 
 			@Override
 			public void setContentType(String contentType) {
-				contentType = contentType;
+				this.contentType = contentType;
 			}
 
 			protected String contentType;

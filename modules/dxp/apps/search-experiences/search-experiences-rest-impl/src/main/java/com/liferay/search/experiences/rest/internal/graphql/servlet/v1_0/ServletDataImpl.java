@@ -28,6 +28,7 @@ import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributor
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameDisplayResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SentenceTransformerValidationResultResource;
 
 import javax.annotation.Generated;
 
@@ -54,6 +55,9 @@ public class ServletDataImpl implements ServletData {
 			_sxpElementResourceComponentServiceObjects);
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
+		Mutation.
+			setSentenceTransformerValidationResultResourceComponentServiceObjects(
+				_sentenceTransformerValidationResultResourceComponentServiceObjects);
 
 		Query.setFieldMappingInfoResourceComponentServiceObjects(
 			_fieldMappingInfoResourceComponentServiceObjects);
@@ -104,6 +108,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SentenceTransformerValidationResultResource>
+		_sentenceTransformerValidationResultResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FieldMappingInfoResource>

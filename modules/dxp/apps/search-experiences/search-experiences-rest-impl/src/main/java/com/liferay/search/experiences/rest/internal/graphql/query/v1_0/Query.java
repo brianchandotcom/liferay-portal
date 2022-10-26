@@ -190,10 +190,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {mLModels(limit: ___, pipelineTag: ___, query: ___, tag: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sentenceTransformerMLModels(limit: ___, pipelineTag: ___, query: ___, tag: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public MLModelPage mLModels(
+	public MLModelPage sentenceTransformerMLModels(
 			@GraphQLName("limit") Integer limit,
 			@GraphQLName("pipelineTag") String pipelineTag,
 			@GraphQLName("query") String query, @GraphQLName("tag") String tag)
@@ -203,7 +203,7 @@ public class Query {
 			_mlModelResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			mlModelResource -> new MLModelPage(
-				mlModelResource.getMLModelsPage(
+				mlModelResource.getSentenceTransformerMLModelsPage(
 					limit, pipelineTag, query, tag)));
 	}
 

@@ -14,11 +14,10 @@
 
 package com.liferay.search.experiences.rest.client.resource.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.MLModel;
+import com.liferay.search.experiences.rest.client.dto.v1_0.SentenceTransformerValidationResult;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
-import com.liferay.search.experiences.rest.client.pagination.Page;
 import com.liferay.search.experiences.rest.client.problem.Problem;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.MLModelSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.SentenceTransformerValidationResultSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -33,19 +32,19 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface MLModelResource {
+public interface SentenceTransformerValidationResultResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<MLModel> getSentenceTransformerMLModelsPage(
-			Integer limit, String pipelineTag, String query, String tag)
+	public SentenceTransformerValidationResult
+			postSentenceTransformerValidateConfiguration(String string)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getSentenceTransformerMLModelsPageHttpResponse(
-				Integer limit, String pipelineTag, String query, String tag)
+			postSentenceTransformerValidateConfigurationHttpResponse(
+				String string)
 		throws Exception;
 
 	public static class Builder {
@@ -57,8 +56,8 @@ public interface MLModelResource {
 			return this;
 		}
 
-		public MLModelResource build() {
-			return new MLModelResourceImpl(this);
+		public SentenceTransformerValidationResultResource build() {
+			return new SentenceTransformerValidationResultResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -124,15 +123,16 @@ public interface MLModelResource {
 
 	}
 
-	public static class MLModelResourceImpl implements MLModelResource {
+	public static class SentenceTransformerValidationResultResourceImpl
+		implements SentenceTransformerValidationResultResource {
 
-		public Page<MLModel> getSentenceTransformerMLModelsPage(
-				Integer limit, String pipelineTag, String query, String tag)
+		public SentenceTransformerValidationResult
+				postSentenceTransformerValidateConfiguration(String string)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSentenceTransformerMLModelsPageHttpResponse(
-					limit, pipelineTag, query, tag);
+				postSentenceTransformerValidateConfigurationHttpResponse(
+					string);
 
 			String content = httpResponse.getContent();
 
@@ -160,7 +160,7 @@ public interface MLModelResource {
 			}
 
 			try {
-				return Page.of(content, MLModelSerDes::toDTO);
+				return SentenceTransformerValidationResultSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -172,11 +172,13 @@ public interface MLModelResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSentenceTransformerMLModelsPageHttpResponse(
-					Integer limit, String pipelineTag, String query, String tag)
+				postSentenceTransformerValidateConfigurationHttpResponse(
+					String string)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(string.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -195,29 +197,12 @@ public interface MLModelResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (limit != null) {
-				httpInvoker.parameter("limit", String.valueOf(limit));
-			}
-
-			if (pipelineTag != null) {
-				httpInvoker.parameter(
-					"pipelineTag", String.valueOf(pipelineTag));
-			}
-
-			if (query != null) {
-				httpInvoker.parameter("query", String.valueOf(query));
-			}
-
-			if (tag != null) {
-				httpInvoker.parameter("tag", String.valueOf(tag));
-			}
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/search-experiences-rest/v1.0/sentence-transformer/ml-models");
+						"/o/search-experiences-rest/v1.0/sentence-transformer/validate-configuration");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -225,12 +210,14 @@ public interface MLModelResource {
 			return httpInvoker.invoke();
 		}
 
-		private MLModelResourceImpl(Builder builder) {
+		private SentenceTransformerValidationResultResourceImpl(
+			Builder builder) {
+
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			MLModelResource.class.getName());
+			SentenceTransformerValidationResultResource.class.getName());
 
 		private Builder _builder;
 

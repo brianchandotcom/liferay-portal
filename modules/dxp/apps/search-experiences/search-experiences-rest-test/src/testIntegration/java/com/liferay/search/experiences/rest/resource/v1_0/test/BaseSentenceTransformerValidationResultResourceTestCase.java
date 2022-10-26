@@ -43,11 +43,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Field;
-import com.liferay.search.experiences.rest.client.dto.v1_0.MLModel;
+import com.liferay.search.experiences.rest.client.dto.v1_0.SentenceTransformerValidationResult;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
-import com.liferay.search.experiences.rest.client.resource.v1_0.MLModelResource;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.MLModelSerDes;
+import com.liferay.search.experiences.rest.client.resource.v1_0.SentenceTransformerValidationResultResource;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.SentenceTransformerValidationResultSerDes;
 
 import java.lang.reflect.Method;
 
@@ -82,7 +82,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseMLModelResourceTestCase {
+public abstract class BaseSentenceTransformerValidationResultResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -103,11 +103,13 @@ public abstract class BaseMLModelResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_mlModelResource.setContextCompany(testCompany);
+		_sentenceTransformerValidationResultResource.setContextCompany(
+			testCompany);
 
-		MLModelResource.Builder builder = MLModelResource.builder();
+		SentenceTransformerValidationResultResource.Builder builder =
+			SentenceTransformerValidationResultResource.builder();
 
-		mlModelResource = builder.authentication(
+		sentenceTransformerValidationResultResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -138,13 +140,21 @@ public abstract class BaseMLModelResourceTestCase {
 			}
 		};
 
-		MLModel mlModel1 = randomMLModel();
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult1 =
+				randomSentenceTransformerValidationResult();
 
-		String json = objectMapper.writeValueAsString(mlModel1);
+		String json = objectMapper.writeValueAsString(
+			sentenceTransformerValidationResult1);
 
-		MLModel mlModel2 = MLModelSerDes.toDTO(json);
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult2 =
+				SentenceTransformerValidationResultSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(mlModel1, mlModel2));
+		Assert.assertTrue(
+			equals(
+				sentenceTransformerValidationResult1,
+				sentenceTransformerValidationResult2));
 	}
 
 	@Test
@@ -164,10 +174,14 @@ public abstract class BaseMLModelResourceTestCase {
 			}
 		};
 
-		MLModel mlModel = randomMLModel();
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult =
+				randomSentenceTransformerValidationResult();
 
-		String json1 = objectMapper.writeValueAsString(mlModel);
-		String json2 = MLModelSerDes.toJSON(mlModel);
+		String json1 = objectMapper.writeValueAsString(
+			sentenceTransformerValidationResult);
+		String json2 = SentenceTransformerValidationResultSerDes.toJSON(
+			sentenceTransformerValidationResult);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -177,63 +191,74 @@ public abstract class BaseMLModelResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		MLModel mlModel = randomMLModel();
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult =
+				randomSentenceTransformerValidationResult();
 
-		mlModel.setModelId(regex);
+		sentenceTransformerValidationResult.setErrorMessage(regex);
 
-		String json = MLModelSerDes.toJSON(mlModel);
+		String json = SentenceTransformerValidationResultSerDes.toJSON(
+			sentenceTransformerValidationResult);
 
 		Assert.assertFalse(json.contains(regex));
 
-		mlModel = MLModelSerDes.toDTO(json);
+		sentenceTransformerValidationResult =
+			SentenceTransformerValidationResultSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, mlModel.getModelId());
+		Assert.assertEquals(
+			regex, sentenceTransformerValidationResult.getErrorMessage());
 	}
 
 	@Test
-	public void testGetSentenceTransformerMLModelsPage() throws Exception {
-		Page<MLModel> page = mlModelResource.getSentenceTransformerMLModelsPage(
-			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+	public void testPostSentenceTransformerValidateConfiguration()
+		throws Exception {
 
-		long totalCount = page.getTotalCount();
+		SentenceTransformerValidationResult
+			randomSentenceTransformerValidationResult =
+				randomSentenceTransformerValidationResult();
 
-		MLModel mlModel1 = testGetSentenceTransformerMLModelsPage_addMLModel(
-			randomMLModel());
+		SentenceTransformerValidationResult
+			postSentenceTransformerValidationResult =
+				testPostSentenceTransformerValidateConfiguration_addSentenceTransformerValidationResult(
+					randomSentenceTransformerValidationResult);
 
-		MLModel mlModel2 = testGetSentenceTransformerMLModelsPage_addMLModel(
-			randomMLModel());
-
-		page = mlModelResource.getSentenceTransformerMLModelsPage(
-			null, null, null, null);
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(mlModel1, (List<MLModel>)page.getItems());
-		assertContains(mlModel2, (List<MLModel>)page.getItems());
-		assertValid(page);
+		assertEquals(
+			randomSentenceTransformerValidationResult,
+			postSentenceTransformerValidationResult);
+		assertValid(postSentenceTransformerValidationResult);
 	}
 
-	protected MLModel testGetSentenceTransformerMLModelsPage_addMLModel(
-			MLModel mlModel)
+	protected SentenceTransformerValidationResult
+			testPostSentenceTransformerValidateConfiguration_addSentenceTransformerValidationResult(
+				SentenceTransformerValidationResult
+					sentenceTransformerValidationResult)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertContains(MLModel mlModel, List<MLModel> mlModels) {
+	protected void assertContains(
+		SentenceTransformerValidationResult sentenceTransformerValidationResult,
+		List<SentenceTransformerValidationResult>
+			sentenceTransformerValidationResults) {
+
 		boolean contains = false;
 
-		for (MLModel item : mlModels) {
-			if (equals(mlModel, item)) {
+		for (SentenceTransformerValidationResult item :
+				sentenceTransformerValidationResults) {
+
+			if (equals(sentenceTransformerValidationResult, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(mlModels + " does not contain " + mlModel, contains);
+		Assert.assertTrue(
+			sentenceTransformerValidationResults + " does not contain " +
+				sentenceTransformerValidationResult,
+			contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -244,35 +269,68 @@ public abstract class BaseMLModelResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(MLModel mlModel1, MLModel mlModel2) {
+	protected void assertEquals(
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult1,
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult2) {
+
 		Assert.assertTrue(
-			mlModel1 + " does not equal " + mlModel2,
-			equals(mlModel1, mlModel2));
+			sentenceTransformerValidationResult1 + " does not equal " +
+				sentenceTransformerValidationResult2,
+			equals(
+				sentenceTransformerValidationResult1,
+				sentenceTransformerValidationResult2));
 	}
 
 	protected void assertEquals(
-		List<MLModel> mlModels1, List<MLModel> mlModels2) {
+		List<SentenceTransformerValidationResult>
+			sentenceTransformerValidationResults1,
+		List<SentenceTransformerValidationResult>
+			sentenceTransformerValidationResults2) {
 
-		Assert.assertEquals(mlModels1.size(), mlModels2.size());
+		Assert.assertEquals(
+			sentenceTransformerValidationResults1.size(),
+			sentenceTransformerValidationResults2.size());
 
-		for (int i = 0; i < mlModels1.size(); i++) {
-			MLModel mlModel1 = mlModels1.get(i);
-			MLModel mlModel2 = mlModels2.get(i);
+		for (int i = 0; i < sentenceTransformerValidationResults1.size(); i++) {
+			SentenceTransformerValidationResult
+				sentenceTransformerValidationResult1 =
+					sentenceTransformerValidationResults1.get(i);
+			SentenceTransformerValidationResult
+				sentenceTransformerValidationResult2 =
+					sentenceTransformerValidationResults2.get(i);
 
-			assertEquals(mlModel1, mlModel2);
+			assertEquals(
+				sentenceTransformerValidationResult1,
+				sentenceTransformerValidationResult2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<MLModel> mlModels1, List<MLModel> mlModels2) {
+		List<SentenceTransformerValidationResult>
+			sentenceTransformerValidationResults1,
+		List<SentenceTransformerValidationResult>
+			sentenceTransformerValidationResults2) {
 
-		Assert.assertEquals(mlModels1.size(), mlModels2.size());
+		Assert.assertEquals(
+			sentenceTransformerValidationResults1.size(),
+			sentenceTransformerValidationResults2.size());
 
-		for (MLModel mlModel1 : mlModels1) {
+		for (SentenceTransformerValidationResult
+				sentenceTransformerValidationResult1 :
+					sentenceTransformerValidationResults1) {
+
 			boolean contains = false;
 
-			for (MLModel mlModel2 : mlModels2) {
-				if (equals(mlModel1, mlModel2)) {
+			for (SentenceTransformerValidationResult
+					sentenceTransformerValidationResult2 :
+						sentenceTransformerValidationResults2) {
+
+				if (equals(
+						sentenceTransformerValidationResult1,
+						sentenceTransformerValidationResult2)) {
+
 					contains = true;
 
 					break;
@@ -280,18 +338,38 @@ public abstract class BaseMLModelResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				mlModels2 + " does not contain " + mlModel1, contains);
+				sentenceTransformerValidationResults2 + " does not contain " +
+					sentenceTransformerValidationResult1,
+				contains);
 		}
 	}
 
-	protected void assertValid(MLModel mlModel) throws Exception {
+	protected void assertValid(
+			SentenceTransformerValidationResult
+				sentenceTransformerValidationResult)
+		throws Exception {
+
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("modelId", additionalAssertFieldName)) {
-				if (mlModel.getModelId() == null) {
+			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
+				if (sentenceTransformerValidationResult.getErrorMessage() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"expectedDimensions", additionalAssertFieldName)) {
+
+				if (sentenceTransformerValidationResult.
+						getExpectedDimensions() == null) {
+
 					valid = false;
 				}
 
@@ -306,12 +384,13 @@ public abstract class BaseMLModelResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<MLModel> page) {
+	protected void assertValid(Page<SentenceTransformerValidationResult> page) {
 		boolean valid = false;
 
-		java.util.Collection<MLModel> mlModels = page.getItems();
+		java.util.Collection<SentenceTransformerValidationResult>
+			sentenceTransformerValidationResults = page.getItems();
 
-		int size = mlModels.size();
+		int size = sentenceTransformerValidationResults.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -332,8 +411,8 @@ public abstract class BaseMLModelResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.search.experiences.rest.dto.v1_0.MLModel.
-						class)) {
+					com.liferay.search.experiences.rest.dto.v1_0.
+						SentenceTransformerValidationResult.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -381,17 +460,41 @@ public abstract class BaseMLModelResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(MLModel mlModel1, MLModel mlModel2) {
-		if (mlModel1 == mlModel2) {
+	protected boolean equals(
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult1,
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult2) {
+
+		if (sentenceTransformerValidationResult1 ==
+				sentenceTransformerValidationResult2) {
+
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("modelId", additionalAssertFieldName)) {
+			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						mlModel1.getModelId(), mlModel2.getModelId())) {
+						sentenceTransformerValidationResult1.getErrorMessage(),
+						sentenceTransformerValidationResult2.
+							getErrorMessage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"expectedDimensions", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sentenceTransformerValidationResult1.
+							getExpectedDimensions(),
+						sentenceTransformerValidationResult2.
+							getExpectedDimensions())) {
 
 					return false;
 				}
@@ -449,13 +552,15 @@ public abstract class BaseMLModelResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_mlModelResource instanceof EntityModelResource)) {
+		if (!(_sentenceTransformerValidationResultResource instanceof
+				EntityModelResource)) {
+
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_mlModelResource;
+			(EntityModelResource)_sentenceTransformerValidationResultResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -484,7 +589,9 @@ public abstract class BaseMLModelResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, MLModel mlModel) {
+		EntityField entityField, String operator,
+		SentenceTransformerValidationResult
+			sentenceTransformerValidationResult) {
 
 		StringBundler sb = new StringBundler();
 
@@ -496,10 +603,21 @@ public abstract class BaseMLModelResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("modelId")) {
+		if (entityFieldName.equals("errorMessage")) {
 			sb.append("'");
-			sb.append(String.valueOf(mlModel.getModelId()));
+			sb.append(
+				String.valueOf(
+					sentenceTransformerValidationResult.getErrorMessage()));
 			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("expectedDimensions")) {
+			sb.append(
+				String.valueOf(
+					sentenceTransformerValidationResult.
+						getExpectedDimensions()));
 
 			return sb.toString();
 		}
@@ -545,25 +663,39 @@ public abstract class BaseMLModelResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected MLModel randomMLModel() throws Exception {
-		return new MLModel() {
+	protected SentenceTransformerValidationResult
+			randomSentenceTransformerValidationResult()
+		throws Exception {
+
+		return new SentenceTransformerValidationResult() {
 			{
-				modelId = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				errorMessage = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				expectedDimensions = RandomTestUtil.randomInt();
 			}
 		};
 	}
 
-	protected MLModel randomIrrelevantMLModel() throws Exception {
-		MLModel randomIrrelevantMLModel = randomMLModel();
+	protected SentenceTransformerValidationResult
+			randomIrrelevantSentenceTransformerValidationResult()
+		throws Exception {
 
-		return randomIrrelevantMLModel;
+		SentenceTransformerValidationResult
+			randomIrrelevantSentenceTransformerValidationResult =
+				randomSentenceTransformerValidationResult();
+
+		return randomIrrelevantSentenceTransformerValidationResult;
 	}
 
-	protected MLModel randomPatchMLModel() throws Exception {
-		return randomMLModel();
+	protected SentenceTransformerValidationResult
+			randomPatchSentenceTransformerValidationResult()
+		throws Exception {
+
+		return randomSentenceTransformerValidationResult();
 	}
 
-	protected MLModelResource mlModelResource;
+	protected SentenceTransformerValidationResultResource
+		sentenceTransformerValidationResultResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -749,12 +881,14 @@ public abstract class BaseMLModelResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseMLModelResourceTestCase.class);
+		LogFactoryUtil.getLog(
+			BaseSentenceTransformerValidationResultResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.search.experiences.rest.resource.v1_0.MLModelResource
-		_mlModelResource;
+	private com.liferay.search.experiences.rest.resource.v1_0.
+		SentenceTransformerValidationResultResource
+			_sentenceTransformerValidationResultResource;
 
 }

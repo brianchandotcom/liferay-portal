@@ -27,9 +27,11 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
+import com.liferay.search.experiences.rest.dto.v1_0.SentenceTransformerValidationResult;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SentenceTransformerValidationResultResource;
 
 import java.util.function.BiFunction;
 
@@ -72,6 +74,15 @@ public class Mutation {
 
 		_searchResponseResourceComponentServiceObjects =
 			searchResponseResourceComponentServiceObjects;
+	}
+
+	public static void
+		setSentenceTransformerValidationResultResourceComponentServiceObjects(
+			ComponentServiceObjects<SentenceTransformerValidationResultResource>
+				sentenceTransformerValidationResultResourceComponentServiceObjects) {
+
+		_sentenceTransformerValidationResultResourceComponentServiceObjects =
+			sentenceTransformerValidationResultResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -272,6 +283,20 @@ public class Mutation {
 				query, Pagination.of(page, pageSize), sxpBlueprint));
 	}
 
+	@GraphQLField
+	public SentenceTransformerValidationResult
+			createSentenceTransformerValidateConfiguration(
+				@GraphQLName("string") String string)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sentenceTransformerValidationResultResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sentenceTransformerValidationResultResource ->
+				sentenceTransformerValidationResultResource.
+					postSentenceTransformerValidateConfiguration(string));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -360,12 +385,35 @@ public class Mutation {
 		searchResponseResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			SentenceTransformerValidationResultResource
+				sentenceTransformerValidationResultResource)
+		throws Exception {
+
+		sentenceTransformerValidationResultResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		sentenceTransformerValidationResultResource.setContextCompany(_company);
+		sentenceTransformerValidationResultResource.
+			setContextHttpServletRequest(_httpServletRequest);
+		sentenceTransformerValidationResultResource.
+			setContextHttpServletResponse(_httpServletResponse);
+		sentenceTransformerValidationResultResource.setContextUriInfo(_uriInfo);
+		sentenceTransformerValidationResultResource.setContextUser(_user);
+		sentenceTransformerValidationResultResource.setGroupLocalService(
+			_groupLocalService);
+		sentenceTransformerValidationResultResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<SXPBlueprintResource>
 		_sxpBlueprintResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SXPElementResource>
 		_sxpElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
+	private static ComponentServiceObjects
+		<SentenceTransformerValidationResultResource>
+			_sentenceTransformerValidationResultResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

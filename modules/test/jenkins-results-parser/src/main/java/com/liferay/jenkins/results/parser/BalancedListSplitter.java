@@ -54,8 +54,9 @@ public abstract class BalancedListSplitter<T> {
 			ListItemTreeSet emptiestListItemSortedSet =
 				listItemSortedSetList.get(0);
 
-			if (emptiestListItemSortedSet.getAvailableWeight() >=
-					listItem.weight) {
+			if (emptiestListItemSortedSet.isEmpty() ||
+				(emptiestListItemSortedSet.getAvailableWeight() >=
+					listItem.weight)) {
 
 				emptiestListItemSortedSet.add(listItem);
 

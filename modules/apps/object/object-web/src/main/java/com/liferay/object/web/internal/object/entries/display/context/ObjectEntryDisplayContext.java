@@ -678,6 +678,9 @@ public class ObjectEntryDisplayContext {
 		properties.forEach(
 			(key, value) -> ddmFormField.setProperty(key, value));
 
+		ddmFormField.setProperty(
+			"objectFieldId", String.valueOf(objectField.getObjectFieldId()));
+
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
@@ -822,23 +825,8 @@ public class ObjectEntryDisplayContext {
 							ddmFormField.getType(),
 							DDMFormFieldTypeConstants.FIELDSET)) {
 
-						long value = GetterUtil.getLong(
-							values.get(ddmFormField.getName()));
-
-						if (StringUtil.equals(
-								ddmFormField.getType(),
-								"object-relationship") &&
-							(value == 0)) {
-
-							_setDDMFormFieldValueValue(
-								ddmFormField.getName(), ddmFormFieldValue,
-								Collections.emptyMap());
-						}
-						else {
-							_setDDMFormFieldValueValue(
-								ddmFormField.getName(), ddmFormFieldValue,
-								values);
-						}
+						_setDDMFormFieldValueValue(
+							ddmFormField, ddmFormFieldValue, values);
 					}
 
 					return ddmFormFieldValue;
@@ -967,7 +955,7 @@ public class ObjectEntryDisplayContext {
 				ddmFormFieldValue.setName(ddmFormField.getName());
 
 				_setDDMFormFieldValueValue(
-					ddmFormField.getName(), ddmFormFieldValue, values);
+					ddmFormField, ddmFormFieldValue, values);
 
 				return ddmFormFieldValue;
 			});
@@ -999,6 +987,28 @@ public class ObjectEntryDisplayContext {
 		}
 
 		return rowsJSONArray.toString();
+	}
+
+	private Object _getValue(
+		DDMFormField ddmFormField, Map<String, Object> values) {
+
+		try {
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
+
+			ObjectFieldBusinessType objectFieldBusinessType =
+				_objectFieldBusinessTypeTracker.getObjectFieldBusinessType(
+					objectField.getBusinessType());
+
+			return objectFieldBusinessType.getValue(objectField, values);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private boolean _isActive(ObjectField objectField) throws PortalException {
@@ -1050,10 +1060,10 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private void _setDDMFormFieldValueValue(
-		String ddmFormFieldName, DDMFormFieldValue ddmFormFieldValue,
+		DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue,
 		Map<String, Object> values) {
 
-		Object value = values.get(ddmFormFieldName);
+		Object value = _getValue(ddmFormField, values);
 
 		if (value == null) {
 			ddmFormFieldValue.setValue(

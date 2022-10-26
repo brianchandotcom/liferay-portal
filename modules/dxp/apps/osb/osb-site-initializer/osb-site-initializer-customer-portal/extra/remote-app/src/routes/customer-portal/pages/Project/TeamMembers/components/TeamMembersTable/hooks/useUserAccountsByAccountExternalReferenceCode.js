@@ -47,7 +47,11 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		}
 	);
 
-	const {deleteContactRoles, loading: removing} = useDeleteUserAccount();
+	const {
+		deleteContactRoles,
+		deleteUserAccount,
+		loading: removing,
+	} = useDeleteUserAccount();
 
 	const {
 		loading: updating,
@@ -80,6 +84,13 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		);
 
 		deleteContactRoles({
+			onCompleted: (_, {variables}) =>
+				deleteUserAccount({
+					variables: {
+						emailAddress: variables.contactEmail,
+						externalReferenceCode: variables.externalReferenceCode,
+					},
+				}),
 			variables: {
 				contactEmail: userAccount.emailAddress,
 				contactRoleNames: contactRoleNames.join('&'),
@@ -88,24 +99,36 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		});
 	};
 
-	const update = (userAccount, currentAccountRole, newAccountRoleItem) => {
+	const update = (userAccount, currentAccountRoles, newAccountRoleItem) => {
 		const newContactRoleName = getRaysourceContactRoleName(
 			newAccountRoleItem.label
 		);
 
-		updateContactRoles({
+		const currentContactRolesName = currentAccountRoles.map((roleBrief) =>
+			getRaysourceContactRoleName(roleBrief.name)
+		);
+
+		deleteContactRoles({
 			onCompleted: () =>
-				replaceAccountRole({
+				updateContactRoles({
+					onCompleted: () =>
+						replaceAccountRole({
+							variables: {
+								currentAccountRoleId: currentAccountRoles[0].id,
+								emailAddress: userAccount.emailAddress,
+								externalReferenceCode,
+								newAccountRoleId: newAccountRoleItem.value,
+							},
+						}),
 					variables: {
-						currentAccountRoleId: currentAccountRole.id,
-						emailAddress: userAccount.emailAddress,
+						contactEmail: userAccount.emailAddress,
+						contactRoleName: newContactRoleName,
 						externalReferenceCode,
-						newAccountRoleId: newAccountRoleItem.value,
 					},
 				}),
 			variables: {
 				contactEmail: userAccount.emailAddress,
-				contactRoleName: newContactRoleName,
+				contactRoleNames: currentContactRolesName.join('&'),
 				externalReferenceCode,
 			},
 		});

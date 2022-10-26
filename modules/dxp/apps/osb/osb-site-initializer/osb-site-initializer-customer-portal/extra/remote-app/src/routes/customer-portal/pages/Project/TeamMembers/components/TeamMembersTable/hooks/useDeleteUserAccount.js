@@ -21,20 +21,13 @@ export default function useDeleteUserAccount() {
 	const [
 		deleteContactRoles,
 		{loading: deleteContactRolesLoading},
-	] = useDeleteRolesByContactEmailAddress({
-		onCompleted: (_, {variables}) =>
-			deleteUserAccount({
-				variables: {
-					emailAddress: variables.contactEmail,
-					externalReferenceCode: variables.externalReferenceCode,
-				},
-			}),
-	});
+	] = useDeleteRolesByContactEmailAddress();
 
 	const loading = deleteUserAccountLoading || deleteContactRolesLoading;
 
 	return {
 		deleteContactRoles,
+		deleteUserAccount,
 		loading,
 	};
 }

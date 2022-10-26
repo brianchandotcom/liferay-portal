@@ -32,12 +32,11 @@ const DELETE_ROLES_BY_CONTACT_EMAIL_ADDRESS = gql`
 	}
 `;
 
-export function useDeleteRolesByContactEmailAddress(options) {
+export function useDeleteRolesByContactEmailAddress() {
 	return useMutation(DELETE_ROLES_BY_CONTACT_EMAIL_ADDRESS, {
 		context: {
 			displaySuccess: false,
 			type: 'raysource-rest',
 		},
-		onCompleted: options.onCompleted,
 	});
 }

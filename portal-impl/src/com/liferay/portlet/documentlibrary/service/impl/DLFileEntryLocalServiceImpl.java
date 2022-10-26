@@ -127,6 +127,7 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -456,6 +457,8 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getName(),
 			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
 
+		_registerPWCDeletionCallback(dlFileEntry);
+
 		unlockFileEntry(fileEntryId);
 	}
 
@@ -507,17 +510,6 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!oldVersion.equals(
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-			if (DLStoreUtil.hasFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
-
-				DLStoreUtil.deleteFile(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-			}
 
 			DLStoreUtil.copyFileVersion(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
@@ -3473,6 +3465,18 @@ public class DLFileEntryLocalServiceImpl
 		// Latest file version
 
 		removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
+
+	private void _registerPWCDeletionCallback(DLFileEntry dlFileEntry) {
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				DLStoreUtil.deleteFile(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
+
+				return null;
+			});
 	}
 
 	private void _validateExternalReferenceCode(

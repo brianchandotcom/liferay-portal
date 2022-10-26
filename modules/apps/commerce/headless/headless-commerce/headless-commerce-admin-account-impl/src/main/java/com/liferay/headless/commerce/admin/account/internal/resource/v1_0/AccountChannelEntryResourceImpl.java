@@ -82,6 +82,18 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public void deleteAccountChannelPaymentTermId(Long id) throws Exception {
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
+
+		_commerceChannelAccountEntryRelService.
+			deleteCommerceChannelAccountEntryRel(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
 	public void deleteAccountChannelShippingAddressId(Long id)
 		throws Exception {
 
@@ -138,6 +150,26 @@ public class AccountChannelEntryResourceImpl
 
 	@Override
 	public Page<AccountChannelEntry>
+			getAccountByExternalReferenceCodeAccountChannelPaymentTermsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _getAccountChannelEntryPage(
+			accountEntry.getAccountEntryId(),
+			CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM,
+			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry>
 			getAccountByExternalReferenceCodeAccountChannelShippingAddressesPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception {
@@ -184,6 +216,19 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public AccountChannelEntry getAccountChannelPaymentTermId(Long id)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
+
+		return _toAccountChannelEntry(
+			commerceChannelAccountEntryRel.
+				getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
 	public AccountChannelEntry getAccountChannelShippingAddressId(Long id)
 		throws Exception {
 
@@ -216,6 +261,16 @@ public class AccountChannelEntryResourceImpl
 
 		return _getAccountChannelEntryPage(
 			id, CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM,
+			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry> getAccountIdAccountChannelPaymentTermsPage(
+			Long id, Pagination pagination)
+		throws Exception {
+
+		return _getAccountChannelEntryPage(
+			id, CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM,
 			pagination);
 	}
 
@@ -257,6 +312,20 @@ public class AccountChannelEntryResourceImpl
 		return _patchAccountChannelEntry(
 			accountChannelEntry, commerceChannelAccountEntryRel,
 			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+	}
+
+	@Override
+	public AccountChannelEntry patchAccountChannelPaymentTermId(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
+
+		return _patchAccountChannelEntry(
+			accountChannelEntry, commerceChannelAccountEntryRel,
+			CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
 	}
 
 	@Override
@@ -318,6 +387,27 @@ public class AccountChannelEntryResourceImpl
 
 	@Override
 	public AccountChannelEntry
+			postAccountByExternalReferenceCodeAccountChannelPaymentTerm(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceTermEntry.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
+	}
+
+	@Override
+	public AccountChannelEntry
 			postAccountByExternalReferenceCodeAccountChannelShippingAddress(
 				String externalReferenceCode,
 				AccountChannelEntry accountChannelEntry)
@@ -361,6 +451,19 @@ public class AccountChannelEntryResourceImpl
 			accountChannelEntry, accountEntry.getAccountEntryId(),
 			CommerceTermEntry.class.getName(),
 			CommerceChannelAccountEntryRelConstants.TYPE_DELIVERY_TERM);
+	}
+
+	@Override
+	public AccountChannelEntry postAccountIdAccountChannelPaymentTerm(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(id);
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceTermEntry.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_PAYMENT_TERM);
 	}
 
 	@Override
@@ -437,6 +540,16 @@ public class AccountChannelEntryResourceImpl
 		else if (type ==
 					CommerceChannelAccountEntryRelConstants.
 						TYPE_DELIVERY_TERM) {
+
+			CommerceTermEntry commerceTermEntry =
+				_commerceTermEntryService.getCommerceTermEntry(
+					GetterUtil.getLong(accountChannelEntry.getEntryId()));
+
+			return commerceTermEntry.getCommerceTermEntryId();
+		}
+		else if (type ==
+				 CommerceChannelAccountEntryRelConstants.
+					 TYPE_PAYMENT_TERM) {
 
 			CommerceTermEntry commerceTermEntry =
 				_commerceTermEntryService.getCommerceTermEntry(

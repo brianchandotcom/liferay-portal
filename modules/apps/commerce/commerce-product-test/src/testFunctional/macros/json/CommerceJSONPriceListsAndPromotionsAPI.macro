@@ -9,6 +9,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(priority))) {
+			var priority = "0";
+		}
+
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists \
 			-u test@liferay.com:test \
@@ -22,7 +26,7 @@ definition {
 				  "name": "${priceListName}",
 				  "netPrice": true,
 				  "neverExpire": true,
-				  "priority": 0,
+				  "priority": ${priority},
 				  "type": "price-list"
 				}'
 			''';

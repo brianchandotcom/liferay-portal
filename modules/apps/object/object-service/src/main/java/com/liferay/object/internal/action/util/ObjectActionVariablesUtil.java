@@ -15,14 +15,18 @@
 package com.liferay.object.internal.action.util;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,6 +39,59 @@ public class ObjectActionVariablesUtil {
 		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
 		SystemObjectDefinitionMetadataRegistry
 			systemObjectDefinitionMetadataRegistry) {
+
+		if (PropsValues.OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION == 2) {
+			Map<String, Object> allowedVariables =
+				HashMapBuilder.<String, Object>put(
+					"creator", payloadJSONObject.get("userId")
+				).build();
+
+			Map<String, Object> allVariables = new HashMap<>();
+
+			if (objectDefinition.isSystem()) {
+				String contentType = _getContentType(
+					dtoConverterRegistry, objectDefinition,
+					systemObjectDefinitionMetadataTracker);
+
+				allVariables.putAll(
+					(Map<String, Object>)payloadJSONObject.get(
+						"model" + objectDefinition.getName()));
+				allVariables.putAll(
+					(Map<String, Object>)payloadJSONObject.get(
+						"modelDTO" + contentType));
+			}
+			else {
+				allVariables.putAll(
+					(Map<String, Object>)payloadJSONObject.get("objectEntry"));
+
+				allVariables.putAll(
+					(Map<String, Object>)allVariables.get("values"));
+
+				allVariables.remove("values");
+
+				Object objectEntryId = allVariables.get("objectEntryId");
+
+				if (objectEntryId != null) {
+					allowedVariables.put("id", objectEntryId);
+				}
+			}
+
+			allVariables.remove("creator");
+
+			List<ObjectField> objectFields =
+				ObjectFieldLocalServiceUtil.getObjectFields(
+					objectDefinition.getObjectDefinitionId());
+
+			for (ObjectField objectField : objectFields) {
+				if (!allowedVariables.containsKey(objectField.getName())) {
+					allowedVariables.put(
+						objectField.getName(),
+						allVariables.get(objectField.getName()));
+				}
+			}
+
+			return allowedVariables;
+		}
 
 		if (objectDefinition.isSystem()) {
 			String contentType = _getContentType(

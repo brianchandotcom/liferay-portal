@@ -1469,6 +1469,8 @@ definition {
 	@description = "LPS-158821 - Verify that the user is able to use the ERC field in Expression Builder, on the Validations tab"
 	@priority = "4"
 	test CanUseERCFieldWithExpressionBuilder {
+		property portal.upstream = "quarantine";
+
 		task ("Create Custom Object and Custom Field (via API)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 162179",

@@ -15,9 +15,14 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.RolePermission;
+
+import java.util.Objects;
 
 /**
  * @author Charles May
@@ -39,6 +44,17 @@ public class RolePermissionImpl implements RolePermission {
 	public boolean contains(
 		PermissionChecker permissionChecker, long groupId, long roleId,
 		String actionId) {
+
+		if (Objects.equals(ActionKeys.ASSIGN_MEMBERS, actionId)) {
+			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+
+			if ((role != null) &&
+				Objects.equals(RoleConstants.ADMINISTRATOR, role.getName()) &&
+				!permissionChecker.isCompanyAdmin()) {
+
+				return false;
+			}
+		}
 
 		return permissionChecker.hasPermission(
 			groupId, Role.class.getName(), roleId, actionId);

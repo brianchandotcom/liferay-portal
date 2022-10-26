@@ -3,7 +3,7 @@
 		"@types/ckeditor4": "4.16.2",
 		"ckeditor4-react": "1.4.2",
 		"frontend-js-web": "*",
-		"liferay-ckeditor": "4.18.0-liferay.3"
+		"liferay-ckeditor": "4.18.0-liferay.4"
 	},
 	"main": "index.js",
 	"name": "frontend-editor-ckeditor-web",

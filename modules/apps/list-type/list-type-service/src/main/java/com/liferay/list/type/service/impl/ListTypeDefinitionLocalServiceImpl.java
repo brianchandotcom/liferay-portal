@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -76,13 +78,15 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinitionPersistence.create(
 				counterLocalService.increment());
 
-		int count = listTypeDefinitionPersistence.countByC_ERC(
-			listTypeDefinition.getCompanyId(), externalReferenceCode);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278"))) {
+			int count = listTypeDefinitionPersistence.countByC_ERC(
+				listTypeDefinition.getCompanyId(), externalReferenceCode);
 
-		if (count != 0) {
-			throw new DuplicateListTypeExternalReferenceCodeException(
-				"Duplicated External Reference Code: " +
-					listTypeDefinition.getExternalReferenceCode());
+			if (count != 0) {
+				throw new DuplicateListTypeExternalReferenceCodeException(
+					"Duplicated External Reference Code: " +
+						listTypeDefinition.getExternalReferenceCode());
+			}
 		}
 
 		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);

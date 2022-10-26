@@ -27,7 +27,14 @@ public class UtilityPageTemplateDTOConverter {
 
 		return new UtilityPageTemplate() {
 			{
+				defaultTemplate =
+					layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry();
+				externalReferenceCode =
+					layoutUtilityPageEntry.getExternalReferenceCode();
 				name = layoutUtilityPageEntry.getName();
+				type = Type.create(
+					UtilityPageTemplateTypeConverter.convertToExternalValue(
+						layoutUtilityPageEntry.getType()));
 			}
 		};
 	}

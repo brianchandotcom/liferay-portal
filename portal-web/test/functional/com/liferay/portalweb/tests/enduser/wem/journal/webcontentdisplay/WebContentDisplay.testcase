@@ -291,11 +291,11 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("View the displayed content in Web Content Display") {
 			AssertTextEquals(
-				locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')]",
+				locator1 = "//div[contains(@class,'journal-content-article')]//h1[contains(@class,'text')]",
 				value1 = "WC WebContent Text");
 
 			AssertTextEquals(
-				locator1 = "//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')]",
+				locator1 = "//div[contains(@class,'journal-content-article')]//h2[contains(@class,'text-box')]",
 				value1 = "Hello World Welcome to Liferay Community Edition Portal 7.4.0 CE GA1");
 		}
 

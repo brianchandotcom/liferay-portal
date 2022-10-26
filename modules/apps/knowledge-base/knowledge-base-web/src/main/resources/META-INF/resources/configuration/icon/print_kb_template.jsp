@@ -26,14 +26,18 @@ KBTemplate kbTemplate = (KBTemplate)liferayPortletRequest.getAttribute(KBWebKeys
 	<portlet:param name="viewMode" value="<%= Constants.PRINT %>" />
 </portlet:renderURL>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	window.open('<%= printURL %>', '', 'directories=no,height=640,location=no, menubar=no,resizable=yes,scrollbars=yes,status=0, toolbar=0,width=680');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="print"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />printKBTemplate'
+	] = function () {
+		window.open(
+			'<%= printURL %>',
+			'',
+			'directories=no,height=640,location=no, menubar=no,resizable=yes,scrollbars=yes,status=0, toolbar=0,width=680'
+		);
+	};
+</aui:script>

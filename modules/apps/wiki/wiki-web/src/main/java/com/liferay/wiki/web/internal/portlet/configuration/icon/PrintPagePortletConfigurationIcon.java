@@ -17,7 +17,10 @@ package com.liferay.wiki.web.internal.portlet.configuration.icon;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.wiki.constants.WikiPortletKeys;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -38,6 +41,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PrintPagePortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "print"
+		).put(
+			"globalAction", true
+		).build();
+	}
 
 	@Override
 	public String getJspPath() {

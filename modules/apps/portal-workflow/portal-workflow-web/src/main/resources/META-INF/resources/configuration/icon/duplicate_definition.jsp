@@ -16,14 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.fire('<portlet:namespace />duplicateDefinition');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="duplicate"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />duplicateDefinition'
+	] = function () {
+		Liferay.fire('<portlet:namespace />duplicateDefinition');
+	};
+</aui:script>

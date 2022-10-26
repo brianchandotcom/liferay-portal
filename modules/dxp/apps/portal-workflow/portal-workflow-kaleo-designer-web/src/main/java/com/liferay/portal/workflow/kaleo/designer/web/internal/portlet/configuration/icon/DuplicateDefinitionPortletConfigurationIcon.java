@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
@@ -27,6 +28,8 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDe
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -49,6 +52,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DuplicateDefinitionPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "duplicateDefinition"
+		).put(
+			"globalAction", true
+		).build();
+	}
 
 	@Override
 	public String getJspPath() {

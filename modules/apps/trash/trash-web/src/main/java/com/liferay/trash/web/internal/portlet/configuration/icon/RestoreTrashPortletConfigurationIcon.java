@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -44,6 +47,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RestoreTrashPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "restoreTrash"
+		).put(
+			"globalAction", true
+		).build();
+	}
 
 	@Override
 	public String getIconCssClass() {

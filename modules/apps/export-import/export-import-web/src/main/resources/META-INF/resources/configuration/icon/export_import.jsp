@@ -16,26 +16,24 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Portlet.openModal({
-		iframeBodyCssClass: '',
-		namespace: '<portlet:namespace />',
-		onClose: function() {
-			Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_')
-		},
-		portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
-		portletId: '<%= portletDisplay.getId() %>',
-		title: '<liferay-ui:message key="export-import" />',
-		url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLExportImport()) %>'
-	});
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	cssClass="portlet-export-import portlet-export-import-icon"
-	iconCssClass="order-arrow"
-	message="export-import"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />exportImport'
+	] = function () {
+		Liferay.Portlet.openModal({
+			iframeBodyCssClass: '',
+			namespace: '<portlet:namespace />',
+			onClose: function () {
+				Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+			},
+			portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
+			portletId: '<%= portletDisplay.getId() %>',
+			title: '<liferay-ui:message key="export-import" />',
+			url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLExportImport()) %>',
+		});
+	};
+</aui:script>

@@ -20,14 +20,17 @@
 UserGroup userGroup = ActionUtil.getUserGroup(renderRequest);
 %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	<portlet:namespace />doDeleteUserGroup('<%= UserGroup.class.getName() %>', '<%= userGroup.getUserGroupId() %>');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="delete"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />deleteUserGroup'
+	] = function () {
+		<portlet:namespace />doDeleteUserGroup(
+			'<%= UserGroup.class.getName() %>',
+			'<%= userGroup.getUserGroupId() %>'
+		);
+	};
+</aui:script>

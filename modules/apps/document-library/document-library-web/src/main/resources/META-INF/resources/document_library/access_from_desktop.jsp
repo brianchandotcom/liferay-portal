@@ -20,12 +20,6 @@
 DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAccessFromDesktopDisplayContext(request);
 %>
 
-<liferay-ui:icon
-	cssClass='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "-webdav-action" %>'
-	message="access-from-desktop"
-	url="javascript:void(0);"
-/>
-
 <div id="<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav" style="display: none;">
 	<div class="portlet-document-library">
 		<liferay-ui:message key="<%= dlAccessFromDesktopDisplayContext.getWebDAVHelpMessage() %>" />
@@ -42,7 +36,13 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 </div>
 
 <aui:script>
-	(function () {
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />accessFromDesktop'
+	] = function () {
 		var webdavContentContainer = document.getElementById(
 			'<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav'
 		);
@@ -53,33 +53,21 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 			html = webdavContentContainer.innerHTML;
 
 			webdavContentContainer.remove();
-		}
 
-		var webdavActionLink = document.querySelector(
-			'.<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>-webdav-action'
-		);
+			Liferay.Util.openModal({
+				bodyHTML: html,
+				onOpen: function (event) {
+					var webdavURLInput = document.getElementById(
+						'<portlet:namespace /><%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDavURL'
+					);
 
-		if (webdavActionLink) {
-			webdavActionLink.addEventListener('click', (event) => {
-				event.preventDefault();
-
-				if (webdavContentContainer) {
-					Liferay.Util.openModal({
-						bodyHTML: html,
-						onOpen: function (event) {
-							var webdavURLInput = document.getElementById(
-								'<portlet:namespace /><%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDavURL'
-							);
-
-							if (webdavURLInput) {
-								webdavURLInput.focus();
-							}
-						},
-						title:
-							'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
-					});
-				}
+					if (webdavURLInput) {
+						webdavURLInput.focus();
+					}
+				},
+				title:
+					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
 			});
 		}
-	})();
+	};
 </aui:script>

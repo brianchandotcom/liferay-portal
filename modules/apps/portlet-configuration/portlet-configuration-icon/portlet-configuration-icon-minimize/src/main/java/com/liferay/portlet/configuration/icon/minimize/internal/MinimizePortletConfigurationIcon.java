@@ -30,8 +30,11 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
@@ -47,6 +50,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = PortletConfigurationIcon.class)
 public class MinimizePortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "minimize"
+		).put(
+			"globalAction", true
+		).build();
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return "portlet-minimize portlet-minimize-icon";
+	}
 
 	@Override
 	public String getJspPath() {

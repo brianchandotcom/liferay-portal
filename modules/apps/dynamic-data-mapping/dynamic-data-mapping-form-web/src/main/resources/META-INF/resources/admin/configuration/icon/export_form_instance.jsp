@@ -16,8 +16,17 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<liferay-ui:icon
-	message="export"
-	onClick='<%= "Liferay.fire('openExportFormModal', { exportFormURL:'" + ddmFormAdminDisplayContext.getExportFormURL(ParamUtil.getLong(request, liferayPortletResponse.getNamespace() + "formInstanceId")) + "'});" %>'
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />exportFormInstance'
+	] = function () {
+		Liferay.fire('openExportFormModal', {
+			exportFormURL:
+				'<%= ddmFormAdminDisplayContext.getExportFormURL(ParamUtil.getLong(request, liferayPortletResponse.getNamespace() + "formInstanceId")) %>',
+		});
+	};
+</aui:script>

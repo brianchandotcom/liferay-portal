@@ -16,29 +16,30 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Portlet.openModal({
-		namespace: '<portlet:namespace />',
-		portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
-		portletId: '<%= portletDisplay.getId() %>',
-		title: '<liferay-ui:message key="configuration" />',
-		url: '<%=
-			HtmlUtil.escapeJS(
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(renderRequest, NotificationsPortletKeys.NOTIFICATIONS, PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/notifications/configuration.jsp"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString())
-		%>'
-	});
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="configuration"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />delivery'
+	] = function () {
+		Liferay.Portlet.openModal({
+			namespace: '<portlet:namespace />',
+			portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
+			portletId: '<%= portletDisplay.getId() %>',
+			title: '<liferay-ui:message key="configuration" />',
+			url:
+				'<%=
+					HtmlUtil.escapeJS(
+						PortletURLBuilder.create(
+							PortletURLFactoryUtil.create(renderRequest, NotificationsPortletKeys.NOTIFICATIONS, PortletRequest.RENDER_PHASE)
+						).setMVCPath(
+							"/notifications/configuration.jsp"
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString())
+			%>',
+		});
+	};
+</aui:script>

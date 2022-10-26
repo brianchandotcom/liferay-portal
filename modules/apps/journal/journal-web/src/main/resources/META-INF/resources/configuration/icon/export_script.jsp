@@ -16,16 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:icon
-	cssClass="journal-ddm-template-editor-portlet-icon"
-	icon="download"
-	id="exportScript"
-	markupView="lexicon"
-	message="export-script"
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-frontend:component
-	componentId="exportScript"
-	module="js/configuration/icon/ExportScript"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />journalDDMTemplateExportScript'
+	] = function () {
+		Liferay.fire('<portlet:namespace />exportScript');
+	};
+</aui:script>

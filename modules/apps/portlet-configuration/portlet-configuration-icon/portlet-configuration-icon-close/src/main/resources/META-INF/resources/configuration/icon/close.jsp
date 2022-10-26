@@ -16,15 +16,14 @@
 
 <%@ include file="/configuration/icon/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Portlet.close('#p_p_id_<%= portletDisplay.getId() %>_');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	iconCssClass="item-remove portlet-close portlet-close-icon"
-	message="remove"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />close'
+	] = function () {
+		Liferay.Portlet.close('#p_p_id_<%= portletDisplay.getId() %>_');
+	};
+</aui:script>

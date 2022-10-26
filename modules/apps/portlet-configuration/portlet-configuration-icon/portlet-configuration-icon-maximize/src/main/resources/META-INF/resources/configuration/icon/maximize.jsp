@@ -17,14 +17,21 @@
 <%@ include file="/configuration/icon/init.jsp" %>
 
 <liferay-util:buffer
-	var="onClickBuffer"
+	var="onClickFn"
 >
-	submitForm(document.hrefFm, '<%= HtmlUtil.escapeJS(portletDisplay.getURLMax()) %>');
 </liferay-util:buffer>
 
-<liferay-ui:icon
-	cssClass="portlet-maximize portlet-maximize-icon"
-	message="maximize"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />maximize'
+	] = function () {
+		submitForm(
+			document.hrefFm,
+			'<%= HtmlUtil.escapeJS(portletDisplay.getURLMax()) %>'
+		);
+	};
+</aui:script>

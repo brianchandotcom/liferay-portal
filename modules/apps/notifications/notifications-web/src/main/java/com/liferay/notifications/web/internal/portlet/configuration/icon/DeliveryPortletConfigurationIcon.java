@@ -18,6 +18,9 @@ import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -36,6 +39,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DeliveryPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "delivery"
+		).put(
+			"globalAction", true
+		).build();
+	}
 
 	@Override
 	public String getJspPath() {

@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -34,6 +37,25 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ConfigurationPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "configuration"
+		).put(
+			"globalAction", true
+		).build();
+	}
+
+	@Override
+	public String getCssClass() {
+		return "portlet-configuration portlet-configuration-icon";
+	}
+
+	@Override
+	public String getIconCssClass() {
+		return "cog";
+	}
 
 	@Override
 	public String getJspPath() {

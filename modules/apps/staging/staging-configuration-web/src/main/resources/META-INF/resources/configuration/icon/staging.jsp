@@ -16,21 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Portlet.openModal({
-		namespace: '<portlet:namespace />',
-		portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
-		portletId: '<%= portletDisplay.getId() %>',
-		title: '<liferay-ui:message key="staging" />',
-		url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLStaging()) %>'
-	});
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	iconCssClass="portlet-export-import portlet-export-import-icon"
-	message="staging"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />staging'
+	] = function () {
+		Liferay.Portlet.openModal({
+			namespace: '<portlet:namespace />',
+			portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
+			portletId: '<%= portletDisplay.getId() %>',
+			title: '<liferay-ui:message key="staging" />',
+			url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLStaging()) %>',
+		});
+	};
+</aui:script>

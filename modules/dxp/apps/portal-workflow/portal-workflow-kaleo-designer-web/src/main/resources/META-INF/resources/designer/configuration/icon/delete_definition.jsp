@@ -16,24 +16,26 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	<portlet:namespace />confirmDeleteDefinition('<%=
-		PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.ACTION_PHASE)
-		).setActionName(
-			"/portal_workflow/delete_workflow_definition"
-		).setParameter(
-			"name", renderRequest.getParameter("name")
-		).setParameter(
-			"version", renderRequest.getParameter("draftVersion")
-		).buildString()
-	%>');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="delete"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />deleteDefinition'
+	] = function () {
+		<portlet:namespace />confirmDeleteDefinition(
+			'<%=
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/portal_workflow/delete_workflow_definition"
+				).setParameter(
+					"name", renderRequest.getParameter("name")
+				).setParameter(
+					"version", renderRequest.getParameter("draftVersion")
+				).buildString()
+		%>'
+		);
+	};
+</aui:script>

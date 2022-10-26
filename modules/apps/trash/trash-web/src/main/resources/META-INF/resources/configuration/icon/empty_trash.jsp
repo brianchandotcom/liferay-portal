@@ -20,22 +20,22 @@
 	<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
 </portlet:actionURL>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Util.openConfirmModal({
-		message: '<liferay-ui:message key="are-you-sure-you-want-to-empty-the-recycle-bin" />',
-		onConfirm: (isConfirmed) => {
-			if (isConfirmed) {
-				submitForm(document.hrefFm, '<%= emptyTrashURL.toString() %>');
-			}
-		}
-	});
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	id="emptyRecycleBinButton"
-	message="empty-the-recycle-bin"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />emptyTrash'
+	] = function () {
+		Liferay.Util.openConfirmModal({
+			message:
+				'<liferay-ui:message key="are-you-sure-you-want-to-empty-the-recycle-bin" />',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(document.hrefFm, '<%= emptyTrashURL.toString() %>');
+				}
+			},
+		});
+	};
+</aui:script>

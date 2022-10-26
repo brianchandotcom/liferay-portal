@@ -17,28 +17,34 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:buffer
-	var="onClickBuffer"
+	var="onClickFn"
 >
-	Liferay.Util.openModal({
-		onClose: function(event) {
-			window.location.reload();
-		},
-		title: '<liferay-ui:message key="import" />',
-		url: '<%=
-			PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(liferayPortletRequest, StyleBookPortletKeys.STYLE_BOOK, PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/style_book/view_import"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
-		%>'
-	});
+
 </liferay-util:buffer>
 
-<liferay-ui:icon
-	iconCssClass="download"
-	message="import"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />import'
+	] = function () {
+		Liferay.Util.openModal({
+			onClose: function (event) {
+				window.location.reload();
+			},
+			title: '<liferay-ui:message key="import" />',
+			url:
+				'<%=
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(liferayPortletRequest, StyleBookPortletKeys.STYLE_BOOK, PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/style_book/view_import"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+			%>',
+		});
+	};
+</aui:script>

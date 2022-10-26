@@ -16,15 +16,14 @@
 
 <%@ include file="/configuration/icon/init.jsp" %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Portlet.minimize('#p_p_id_<%= portletDisplay.getId() %>_', this);
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	iconCssClass="portlet-minimize portlet-minimize-icon"
-	message='<%= portletDisplay.isStateMin() ? "restore" : "minimize" %>'
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />minimize'
+	] = function () {
+		Liferay.Portlet.minimize('#p_p_id_<%= portletDisplay.getId() %>_', this);
+	};
+</aui:script>

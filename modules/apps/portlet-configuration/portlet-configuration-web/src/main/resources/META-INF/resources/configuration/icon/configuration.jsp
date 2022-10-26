@@ -16,10 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:icon
-	cssClass="portlet-configuration portlet-configuration-icon"
-	iconCssClass="cog"
-	message="configuration"
-	onClick="<%= portletDisplay.getURLConfigurationJS() %>"
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />configuration'
+	] = function () {
+		<%= portletDisplay.getURLConfigurationJS() %>;
+	};
+</aui:script>

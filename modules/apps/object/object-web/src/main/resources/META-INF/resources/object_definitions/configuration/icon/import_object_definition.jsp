@@ -16,13 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:icon
-	id="importObjectDefinitionIcon"
-	message="import-object"
-	onClick='<%= liferayPortletResponse.getNamespace() + "openImportObjectDefinitionModal();" %>'
-	url="javascript:void(0);"
-/>
-
 <div>
 	<react:component
 		module="js/components/ModalImportObjectDefinition"
@@ -44,11 +37,19 @@
 </div>
 
 <aui:script>
-	function <portlet:namespace />openImportObjectDefinitionModal() {
+	function <portlet:namespace />openImportObjectDefinitionModal() {}
+
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />importObjectDefinition'
+	] = function () {
 		Liferay.componentReady(
 			'<portlet:namespace />importObjectDefinitionModal'
 		).then((importObjectDefinitionModal) => {
 			importObjectDefinitionModal.open();
 		});
-	}
+	};
 </aui:script>

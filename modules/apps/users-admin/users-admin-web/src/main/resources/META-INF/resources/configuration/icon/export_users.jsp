@@ -24,22 +24,25 @@ int status = GetterUtil.getInteger(request.getAttribute(UsersAdminWebKeys.STATUS
 	<liferay-portlet:param name="status" value="<%= String.valueOf(status) %>" />
 </liferay-portlet:resourceURL>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	Liferay.Util.openConfirmModal({
-		message: '<liferay-ui:message key="warning-this-csv-file-contains-user-supplied-inputs" unicode="<%= true %>" />',
-		onConfirm: (isConfirmed) => {
-			if (isConfirmed) {
-				submitForm(document.hrefFm, '<%= exportURL + "&compress=0&etag=0&strip=0" %>');
-			}
-		}
-	});
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="export-users"
-	method="get"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />exportUsers'
+	] = function () {
+		Liferay.Util.openConfirmModal({
+			message:
+				'<liferay-ui:message key="warning-this-csv-file-contains-user-supplied-inputs" unicode="<%= true %>" />',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(
+						document.hrefFm,
+						'<%= exportURL + "&compress=0&etag=0&strip=0" %>'
+					);
+				}
+			},
+		});
+	};
+</aui:script>

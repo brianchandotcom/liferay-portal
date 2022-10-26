@@ -29,14 +29,18 @@ WikiPage wikiPage = ActionUtil.getPage(liferayPortletRequest);
 	<portlet:param name="viewMode" value="<%= Constants.PRINT %>" />
 </portlet:renderURL>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	window.open('<%= printURL %>', '', 'directories=0,height=480,left=80,location=1, menubar=1,resizable=1,scrollbars=yes,status=0, toolbar=0,top=180,width=640');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="print"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />print'
+	] = function () {
+		window.open(
+			'<%= printURL %>',
+			'',
+			'directories=0,height=480,left=80,location=1, menubar=1,resizable=1,scrollbars=yes,status=0, toolbar=0,top=180,width=640'
+		);
+	};
+</aui:script>

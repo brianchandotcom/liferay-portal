@@ -28,15 +28,14 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 	<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandler.getContainerModelClassName(trashDisplayContext.getClassPK()))) %>" />
 </portlet:renderURL>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	<portlet:namespace />restoreDialog('<%= restoreTrashURL %>');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	iconCssClass="restore"
-	message="restore"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />restoreTrash'
+	] = function () {
+		<portlet:namespace />restoreDialog('<%= restoreTrashURL %>');
+	};
+</aui:script>

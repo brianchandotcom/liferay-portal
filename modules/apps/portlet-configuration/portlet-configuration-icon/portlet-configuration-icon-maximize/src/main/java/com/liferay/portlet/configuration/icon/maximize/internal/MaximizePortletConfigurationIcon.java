@@ -29,8 +29,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
@@ -46,6 +49,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = PortletConfigurationIcon.class)
 public class MaximizePortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "maximize"
+		).put(
+			"globalAction", true
+		).build();
+	}
+
+	@Override
+	public String getCssClass() {
+		return "portlet-maximize portlet-maximize-icon";
+	}
 
 	@Override
 	public String getJspPath() {

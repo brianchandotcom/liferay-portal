@@ -26,14 +26,17 @@ if (Validator.isNull(backURL)) {
 }
 %>
 
-<liferay-util:buffer
-	var="onClickBuffer"
->
-	<portlet:namespace />deleteOrganization('<%= organization.getOrganizationId() %>', '<%= HtmlUtil.escapeJS(backURL) %>');
-</liferay-util:buffer>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
 
-<liferay-ui:icon
-	message="delete"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />deleteOrganization'
+	] = function () {
+		<portlet:namespace />deleteOrganization(
+			'<%= organization.getOrganizationId() %>',
+			'<%= HtmlUtil.escapeJS(backURL) %>'
+		);
+	};
+</aui:script>

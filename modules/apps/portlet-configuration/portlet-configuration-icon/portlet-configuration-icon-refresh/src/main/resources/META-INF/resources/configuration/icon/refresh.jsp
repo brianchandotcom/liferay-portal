@@ -17,14 +17,18 @@
 <%@ include file="/configuration/icon/init.jsp" %>
 
 <liferay-util:buffer
-	var="onClickBuffer"
+	var="onClickFn"
 >
-	Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
 </liferay-util:buffer>
 
-<liferay-ui:icon
-	iconCssClass="portlet-refresh portlet-refresh-icon"
-	message="refresh"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />refresh'
+	] = function () {
+		Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+	};
+</aui:script>

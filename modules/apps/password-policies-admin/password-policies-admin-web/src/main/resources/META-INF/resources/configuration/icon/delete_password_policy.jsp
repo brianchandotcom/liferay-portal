@@ -17,13 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:buffer
-	var="onClickBuffer"
+	var="onClickFn"
 >
-	<portlet:namespace />deletePasswordPolicy('<%= ParamUtil.getLong(request, "passwordPolicyId") %>');
+
 </liferay-util:buffer>
 
-<liferay-ui:icon
-	message="delete"
-	onClick="<%= onClickBuffer %>"
-	url="javascript:void(0);"
-/>
+<aui:script>
+	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
+		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
+	}
+
+	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
+		'<portlet:namespace />deletePasswordPolicy'
+	] = function () {
+		<portlet:namespace />deletePasswordPolicy(
+			'<%= ParamUtil.getLong(request, "passwordPolicyId") %>'
+		);
+	};
+</aui:script>

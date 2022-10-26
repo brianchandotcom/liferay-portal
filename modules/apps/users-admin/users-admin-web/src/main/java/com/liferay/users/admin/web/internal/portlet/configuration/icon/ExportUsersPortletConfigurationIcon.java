@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -47,6 +49,15 @@ public class ExportUsersPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "exportUsers"
+		).put(
+			"globalAction", true
+		).build();
+	}
+
+	@Override
 	public String getJspPath() {
 		return "/configuration/icon/export_users.jsp";
 	}
@@ -54,13 +65,6 @@ public class ExportUsersPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "export-users");
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return "javascript:void(0);";
 	}
 
 	@Override

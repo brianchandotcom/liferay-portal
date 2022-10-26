@@ -50,7 +50,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 		<ul class="property-list">
 			<li>
-				<h4><liferay-ui:message key="<%= ListTypeServiceUtil.getListType(orgLabor.getTypeId()).getName() %>" /></h4>
+				<h4><liferay-ui:message key="<%= ListTypeServiceUtil.getListType(orgLabor.getListTypeId()).getName() %>" /></h4>
 
 				<table border="1" class="org-labor-table">
 					<tr>

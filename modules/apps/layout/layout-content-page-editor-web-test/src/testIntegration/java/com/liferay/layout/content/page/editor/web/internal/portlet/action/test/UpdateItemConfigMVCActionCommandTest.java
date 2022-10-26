@@ -21,6 +21,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -28,18 +29,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -57,8 +55,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Pavel Savinov
@@ -134,28 +130,10 @@ public class UpdateItemConfigMVCActionCommandTest {
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 	}
 
-	private MockActionRequest _getMockActionrequest() {
-		MockLiferayPortletActionRequest mockActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockActionRequest.setAttribute(
-			PortletServlet.PORTLET_SERVLET_REQUEST,
-			new MockHttpServletRequest());
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPlid(_layout.getPlid());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
-		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockActionRequest.setParameter(
-			"segmentsExperienceId",
-			String.valueOf(
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
-
-		return mockActionRequest;
+	private MockActionRequest _getMockActionrequest() throws Exception {
+		return ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
+			_companyLocalService.getCompany(_group.getCompanyId()), _group,
+			_layout);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -252,6 +230,9 @@ public class UpdateItemConfigMVCActionCommandTest {
 			_objectMapper.readTree(_read("row_item_config_responsive.json")),
 			_objectMapper.readTree(jsonObject.toString()));
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

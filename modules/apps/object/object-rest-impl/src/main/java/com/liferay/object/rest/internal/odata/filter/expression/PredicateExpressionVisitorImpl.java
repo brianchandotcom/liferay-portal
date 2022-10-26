@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -342,6 +343,10 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Object _getValue(Object left, Object right) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
+			return right;
+		}
+
 		EntityField entityField = _getEntityField(left);
 
 		String entityFieldFilterableName = entityField.getFilterableName(null);

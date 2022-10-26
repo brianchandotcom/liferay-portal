@@ -67,7 +67,9 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId(), false)) {
 
-				if (Objects.equals(
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-164801")) &&
+					Objects.equals(
 						objectField.getRelationshipType(),
 						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 

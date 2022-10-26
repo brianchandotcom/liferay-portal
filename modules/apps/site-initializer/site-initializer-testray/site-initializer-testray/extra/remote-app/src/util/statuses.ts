@@ -30,15 +30,15 @@ export enum CaseResultStatuses {
 }
 
 export enum TaskStatuses {
+	ABANDONED = 'ABANDONED',
 	COMPLETE = 'COMPLETE',
 	IN_ANALYSIS = 'INANALYSIS',
-	MERGED = 'MERGED',
 	OPEN = 'OPEN',
 }
 
 export enum SubTaskStatuses {
-	ABANDONED = 'ABANDONED',
 	COMPLETE = 'COMPLETE',
 	IN_ANALYSIS = 'INANALYSIS',
+	MERGED = 'MERGED',
 	OPEN = 'OPEN',
 }

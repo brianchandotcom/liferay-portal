@@ -100,7 +100,9 @@ const TestFlow = () => {
 								}: TestrayTask
 							) => (
 								<span>
-									{`${subtaskScoreCompleted} / ${subtaskScore}`}
+									{`${subtaskScoreCompleted ?? 0} / ${
+										subtaskScore ?? 0
+									}`}
 
 									<span className="text-gray">
 										{` (${getPercentLabel(

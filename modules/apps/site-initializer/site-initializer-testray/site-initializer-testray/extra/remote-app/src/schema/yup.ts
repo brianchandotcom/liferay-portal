@@ -196,7 +196,7 @@ const yupSchema = {
 		number: yup.number().required(),
 	}),
 	subtask: yup.object({
-		dueStatus: yup.number(),
+		dueStatus: yup.string(),
 		id: yup.number().required(),
 		issue: yup.string(),
 		name: yup.string(),

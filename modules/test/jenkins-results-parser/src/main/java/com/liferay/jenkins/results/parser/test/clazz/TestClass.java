@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import com.liferay.jenkins.results.parser.TestHistory;
+
 import java.io.File;
 
 import java.util.List;
@@ -36,6 +38,8 @@ public interface TestClass extends Comparable<TestClass> {
 	public File getTestClassFile();
 
 	public List<TestClassMethod> getTestClassMethods();
+
+	public TestHistory getTestHistory();
 
 	public boolean hasTestClassMethods();
 

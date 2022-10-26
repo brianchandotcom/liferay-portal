@@ -50,22 +50,6 @@ public class FunctionalTestClass extends BaseTestClass {
 	}
 
 	@Override
-	public long getAverageDuration() {
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
-
-		return batchTestClassGroup.getAverageTestDuration(
-			getTestClassMethodName());
-	}
-
-	@Override
-	public long getAverageOverheadDuration() {
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
-
-		return batchTestClassGroup.getAverageTestOverheadDuration(
-			getTestClassMethodName());
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -126,6 +110,10 @@ public class FunctionalTestClass extends BaseTestClass {
 
 		_poshiProperties = PoshiContext.getNamespacedClassCommandNameProperties(
 			getTestClassMethodName());
+	}
+
+	protected String getTestName() {
+		return getTestClassMethodName();
 	}
 
 	private static File _getTestClassFile(String testClassMethodName) {

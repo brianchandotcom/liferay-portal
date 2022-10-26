@@ -23,6 +23,12 @@ import {addMappingFields} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
+import {
+	ARROW_DOWN_KEYCODE,
+	ARROW_LEFT_KEYCODE,
+	ARROW_RIGHT_KEYCODE,
+	ARROW_UP_KEYCODE,
+} from '../../../../../app/config/constants/keycodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {
 	useActivationOrigin,
@@ -257,6 +263,23 @@ function StructureTreeNodeContent({
 		setEditingName(false);
 	};
 
+	const handleButtonsKeyDown = (event) => {
+		event.stopPropagation();
+
+		if (
+			[
+				ARROW_DOWN_KEYCODE,
+				ARROW_LEFT_KEYCODE,
+				ARROW_RIGHT_KEYCODE,
+				ARROW_UP_KEYCODE,
+			].includes(event.keyCode)
+		) {
+			document.activeElement
+				.closest('.lfr-treeview-node-list-item')
+				?.focus();
+		}
+	};
+
 	useEffect(() => {
 		if (
 			isActive &&
@@ -376,7 +399,7 @@ function StructureTreeNodeContent({
 							node.hidden || node.hiddenAncestor,
 					})}
 					onFocus={(event) => event.stopPropagation()}
-					onKeyDown={(event) => event.stopPropagation()}
+					onKeyDown={handleButtonsKeyDown}
 				>
 					{(node.hidable || node.hidden) && (
 						<VisibilityButton

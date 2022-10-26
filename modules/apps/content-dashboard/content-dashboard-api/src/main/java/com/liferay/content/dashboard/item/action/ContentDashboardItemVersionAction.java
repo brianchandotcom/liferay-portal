@@ -27,6 +27,16 @@ public interface ContentDashboardItemVersionAction {
 
 	public String getName();
 
+	public default Type getType() {
+		return Type.SUBMIT_FORM;
+	}
+
 	public String getURL();
+
+	public enum Type {
+
+		BLANK, NAVIGATE, SUBMIT_FORM
+
+	}
 
 }

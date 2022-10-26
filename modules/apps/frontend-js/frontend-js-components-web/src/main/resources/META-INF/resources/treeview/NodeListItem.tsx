@@ -61,6 +61,9 @@ export default function NodeListItem({NodeComponent, node}: IProps) {
 				}}
 				onClick={toggleSelected}
 				onDoubleClick={toggleExpanded}
+				onFocusCapture={() =>
+					dispatch({nodeId: node.id, type: 'FOCUS'})
+				}
 				onKeyDown={handleKeyDown}
 				ref={focusable}
 				role="treeitem"

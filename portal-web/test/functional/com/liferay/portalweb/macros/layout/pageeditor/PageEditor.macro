@@ -482,7 +482,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "${collectionName}",
-				key_element = "//div[contains(@class,'page-editor__root page-editor__topper')]",
+				key_element = "//div[contains(@class,'page-editor__root')]",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
 				locator2 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
@@ -493,7 +493,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "${collectionName}",
-				key_element = "//div[contains(@class,'page-editor__root page-editor__topper')]",
+				key_element = "//div[contains(@class,'page-editor__root')]",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
@@ -505,7 +505,7 @@ definition {
 				value1 = "${portletName}");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_element = "//div[contains(@class,'page-editor__root page-editor__topper')]",
+				key_element = "//div[contains(@class,'page-editor__root')]",
 				key_indexItem = "${indexItem}",
 				key_portletName = "${portletName}",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",

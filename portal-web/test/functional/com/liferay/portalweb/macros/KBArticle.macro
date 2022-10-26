@@ -1077,10 +1077,19 @@ definition {
 		}
 
 		var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${baseURL}");
-		var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
-			groupName = "${groupName}",
-			kbArticleTitle = "${kbArticleTitle}",
-			site = "${site}");
+
+		if (isSet(kbChildArticleTitle)) {
+			var resourcePrimKey = JSONKnowledgeBase._getChildKBResourcePrimKey(
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}",
+				kbChildArticleTitle = "${kbChildArticleTitle}");
+		}
+		else {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}",
+				site = "${site}");
+		}
 
 		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=http%3A%2F%2F${portalInstanceName}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DkhoaN4dO&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}");
 	}

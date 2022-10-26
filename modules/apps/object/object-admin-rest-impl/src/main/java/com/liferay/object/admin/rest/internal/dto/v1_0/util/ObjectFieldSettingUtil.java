@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ public class ObjectFieldSettingUtil {
 
 		serviceBuilderObjectFieldSetting.setName(objectFieldSetting.getName());
 
-		if (Objects.equals(
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) &&
+			Objects.equals(
 				ObjectFieldSettingConstants.NAME_STATE_FLOW,
 				objectFieldSetting.getName())) {
 

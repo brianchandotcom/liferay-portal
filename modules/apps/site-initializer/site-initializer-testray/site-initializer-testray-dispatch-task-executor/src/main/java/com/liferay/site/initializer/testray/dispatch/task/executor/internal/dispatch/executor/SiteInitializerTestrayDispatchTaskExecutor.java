@@ -713,6 +713,8 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 			).put(
 				"dueDate", propertiesMap.get("testray.build.time")
 			).put(
+				"dueStatus", _TESTRAY_BUILD_STATUS_ACTIVE
+			).put(
 				"gitHash", propertiesMap.get("git.id")
 			).put(
 				"githubCompareURLs", propertiesMap.get("liferay.compare.urls")
@@ -1581,19 +1583,21 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 		}
 	}
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_BLOCKED = 4;
+	private static final String _TESTRAY_BUILD_STATUS_ACTIVE = "ACTIVE";
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN = 6;
+	private static final String _TESTRAY_CASE_RESULT_STATUS_BLOCKED = "BLOCKED";
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_FAILED = 3;
+	private static final String _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN = "DIDNOTRUN";
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS = 1;
+	private static final String _TESTRAY_CASE_RESULT_STATUS_FAILED = "FAILED";
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_PASSED = 2;
+	private static final String _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS = "INPROGRESS";
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_TEST_FIX = 7;
+	private static final String _TESTRAY_CASE_RESULT_STATUS_PASSED = "PASSED";
 
-	private static final int _TESTRAY_CASE_RESULT_STATUS_UNTESTED = 0;
+	private static final String _TESTRAY_CASE_RESULT_STATUS_TEST_FIX = "TESTFIX";
+
+	private static final String _TESTRAY_CASE_RESULT_STATUS_UNTESTED = "UNTESTED";
 
 	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 

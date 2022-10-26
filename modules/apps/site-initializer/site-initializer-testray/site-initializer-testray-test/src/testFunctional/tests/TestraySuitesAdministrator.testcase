@@ -251,4 +251,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166559 - Verify if as an Administrator I should not be able to add a duplicate Suites"
+	@priority = "5"
+	test AdminCanNotAddDuplicateSuites {
+		task ("Given that the user goes to add a new suite duplicate") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
+
+			TestraySuites.addSuite(
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
+		}
+
+		task ("Then the error message should appear") {
+			Alert.viewErrorMessage(errorMessage = "The Suite name already exists");
+		}
+	}
+
 }

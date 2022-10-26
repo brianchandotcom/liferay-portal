@@ -343,7 +343,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 			const visitor = new RowsVisitor(
 				newState.objectLayout.objectLayoutTabs[
 					tabIndex
-				].objectLayoutBoxes[tabIndex]
+				].objectLayoutBoxes[boxIndex]
 			);
 
 			visitor.mapFields((field) => {

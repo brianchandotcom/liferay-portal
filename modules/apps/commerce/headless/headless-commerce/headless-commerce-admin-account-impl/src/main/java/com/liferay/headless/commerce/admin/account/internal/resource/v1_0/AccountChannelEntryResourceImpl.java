@@ -19,6 +19,8 @@ import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -73,6 +75,18 @@ public class AccountChannelEntryResourceImpl
 			_fetchCommerceChannelAccountEntryRel(
 				id,
 				CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+
+		_commerceChannelAccountEntryRelService.
+			deleteCommerceChannelAccountEntryRel(
+				commerceChannelAccountEntryRel.
+					getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
+	public void deleteAccountChannelCurrencyId(Long id) throws Exception {
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
 
 		_commerceChannelAccountEntryRelService.
 			deleteCommerceChannelAccountEntryRel(
@@ -173,6 +187,25 @@ public class AccountChannelEntryResourceImpl
 			accountEntry.getAccountEntryId(),
 			CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS,
 			pagination);
+	}
+
+	@Override
+	public Page<AccountChannelEntry>
+			getAccountByExternalReferenceCodeAccountChannelCurrenciesPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _getAccountChannelEntryPage(
+			accountEntry.getAccountEntryId(),
+			CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY, pagination);
 	}
 
 	@Override
@@ -308,6 +341,19 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public AccountChannelEntry getAccountChannelCurrencyId(Long id)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
+
+		return _toAccountChannelEntry(
+			commerceChannelAccountEntryRel.
+				getCommerceChannelAccountEntryRelId());
+	}
+
+	@Override
 	public AccountChannelEntry getAccountChannelDeliveryTermId(Long id)
 		throws Exception {
 
@@ -398,6 +444,16 @@ public class AccountChannelEntryResourceImpl
 	}
 
 	@Override
+	public Page<AccountChannelEntry> getAccountIdAccountChannelCurrenciesPage(
+			Long id, Pagination pagination)
+		throws Exception {
+
+		return _getAccountChannelEntryPage(
+			id, CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY,
+			pagination);
+	}
+
+	@Override
 	public Page<AccountChannelEntry>
 			getAccountIdAccountChannelDeliveryTermsPage(
 				Long id, Pagination pagination)
@@ -471,6 +527,20 @@ public class AccountChannelEntryResourceImpl
 		return _patchAccountChannelEntry(
 			accountChannelEntry, commerceChannelAccountEntryRel,
 			CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry patchAccountChannelCurrencyId(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			_fetchCommerceChannelAccountEntryRel(
+				id, CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
+
+		return _patchAccountChannelEntry(
+			accountChannelEntry, commerceChannelAccountEntryRel,
+			CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
 	}
 
 	@Override
@@ -582,6 +652,27 @@ public class AccountChannelEntryResourceImpl
 			accountChannelEntry, accountEntry.getAccountEntryId(),
 			Address.class.getName(),
 			CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry
+			postAccountByExternalReferenceCodeAccountChannelCurrency(
+				String externalReferenceCode,
+				AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceCurrency.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
 	}
 
 	@Override
@@ -726,6 +817,19 @@ public class AccountChannelEntryResourceImpl
 			accountChannelEntry, accountEntry.getAccountEntryId(),
 			Address.class.getName(),
 			CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS);
+	}
+
+	@Override
+	public AccountChannelEntry postAccountIdAccountChannelCurrency(
+			Long id, AccountChannelEntry accountChannelEntry)
+		throws Exception {
+
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(id);
+
+		return _postAccountChannelEntry(
+			accountChannelEntry, accountEntry.getAccountEntryId(),
+			CommerceCurrency.class.getName(),
+			CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
 	}
 
 	@Override
@@ -877,6 +981,15 @@ public class AccountChannelEntryResourceImpl
 
 				return address.getAddressId();
 			}
+		}
+		else if (type ==
+					CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY) {
+
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyService.getCommerceCurrency(
+					GetterUtil.getLong(accountChannelEntry.getEntryId()));
+
+			return commerceCurrency.getCommerceCurrencyId();
 		}
 		else if (type ==
 					CommerceChannelAccountEntryRelConstants.
@@ -1071,6 +1184,9 @@ public class AccountChannelEntryResourceImpl
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CommerceDiscountService _commerceDiscountService;

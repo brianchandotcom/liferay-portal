@@ -105,9 +105,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			term, assetTagsSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
-			0, assetTagsSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			term, assetTagsSearchFacetTermDisplayContext.getFilterValue());
+		Assert.assertEquals(
+			0, assetTagsSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(assetTagsSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			assetTagsSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -147,9 +147,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			term, assetTagsSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
-			frequency, assetTagsSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			term, assetTagsSearchFacetTermDisplayContext.getFilterValue());
+		Assert.assertEquals(
+			frequency, assetTagsSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertFalse(assetTagsSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			assetTagsSearchFacetTermDisplayContext.isFrequencyVisible());
@@ -189,9 +189,9 @@ public class AssetTagsSearchFacetDisplayContextTest {
 		Assert.assertEquals(
 			term, assetTagsSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
-			frequency, assetTagsSearchFacetTermDisplayContext.getFrequency());
-		Assert.assertEquals(
 			term, assetTagsSearchFacetTermDisplayContext.getFilterValue());
+		Assert.assertEquals(
+			frequency, assetTagsSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertTrue(assetTagsSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
 			assetTagsSearchFacetTermDisplayContext.isFrequencyVisible());

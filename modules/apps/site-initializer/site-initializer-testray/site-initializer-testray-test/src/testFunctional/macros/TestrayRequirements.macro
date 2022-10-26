@@ -32,7 +32,7 @@ definition {
 
 	macro addRequirementCase {
 		Click(
-			key_text = "Link Cases",
+			key_text = "${linkText}",
 			locator1 = "Button#ANY");
 
 		Click.clickAtNotVisible(
@@ -40,7 +40,7 @@ definition {
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
 		Click(
-			key_text = "Select Cases",
+			key_text = "${buttonText}",
 			locator1 = "Button#ANY");
 	}
 

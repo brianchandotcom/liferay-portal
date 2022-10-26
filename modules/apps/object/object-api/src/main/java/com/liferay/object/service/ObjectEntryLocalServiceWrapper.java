@@ -66,6 +66,16 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry addObjectEntry(
+			String externalReferenceCode, long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.addObjectEntry(
+			externalReferenceCode, userId, objectDefinition);
+	}
+
+	@Override
 	public void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
 			long userId,
 			com.liferay.object.model.ObjectDefinition objectDefinition,
@@ -302,6 +312,14 @@ public class ObjectEntryLocalServiceWrapper
 		return _objectEntryLocalService.fetchObjectEntry(objectEntryId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntry fetchObjectEntry(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		return _objectEntryLocalService.fetchObjectEntry(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
@@ -490,15 +508,6 @@ public class ObjectEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getObjectEntry(objectEntryId);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectEntry getObjectEntry(
-			String externalReferenceCode, long objectDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectEntryLocalService.getObjectEntry(
-			externalReferenceCode, objectDefinitionId);
 	}
 
 	@Override

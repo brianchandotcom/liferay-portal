@@ -2362,6 +2362,25 @@ definition {
 					text = "${assetTitle}");
 			}
 
+			if (isSet(knowledgeBase)) {
+				Click(
+					key_kbArticleTitle = "${entryTitle}",
+					locator1 = "KnowledgeBaseSelectParent#SELECTOR_FIELD");
+
+				SelectFrameTop();
+
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Item",
+					text = "${entryTitle}");
+
+				if (isSet(entryContent)) {
+					ContentPages.viewFragmentText(
+						assetType = "widget-content",
+						fragmentName = "Content Display",
+						text = "${entryContent}");
+				}
+			}
+
 			if (isSet(webcontent)) {
 				NavItem.click(navItem = "Web Content");
 

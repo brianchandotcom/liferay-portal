@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Erick Monteiro
  */
-@Component(immediate = true, service = ConfigurationScreen.class)
+@Component(service = ConfigurationScreen.class)
 public class MailSettingsConfigurationScreen implements ConfigurationScreen {
 
 	@Override

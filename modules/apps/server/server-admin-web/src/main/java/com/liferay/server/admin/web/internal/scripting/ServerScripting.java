@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Carolina Barbosa
  */
-@Component(immediate = true, service = ServerScripting.class)
+@Component(service = ServerScripting.class)
 public class ServerScripting {
 
 	public void execute(

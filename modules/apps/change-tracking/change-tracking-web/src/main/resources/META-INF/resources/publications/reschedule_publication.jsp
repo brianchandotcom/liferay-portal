@@ -29,7 +29,7 @@ renderResponse.setTitle(reschedulePublicationDisplayContext.getTitle());
 	cssClass="container-form-lg"
 >
 	<react:component
-		module="publications/js/ChangeTrackingRescheduleView"
+		module="publications/js/views/ChangeTrackingRescheduleView"
 		props="<%= reschedulePublicationDisplayContext.getReactData() %>"
 	/>
 </clay:container-fluid>

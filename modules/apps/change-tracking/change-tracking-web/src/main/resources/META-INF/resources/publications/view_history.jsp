@@ -49,7 +49,7 @@ SearchContainer<CTProcess> searchContainer = viewHistoryDisplayContext.getSearch
 					<span aria-hidden="true" class="loading-animation"></span>
 
 					<react:component
-						module="publications/js/PublicationsHistoryView"
+						module="publications/js/views/PublicationsHistoryView"
 						props="<%= viewHistoryDisplayContext.getReactProps() %>"
 					/>
 				</div>

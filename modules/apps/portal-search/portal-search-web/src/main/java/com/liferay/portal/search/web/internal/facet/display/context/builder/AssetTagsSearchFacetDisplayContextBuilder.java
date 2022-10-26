@@ -153,6 +153,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			assetTagsSearchFacetTermDisplayContext =
 				new AssetTagsSearchFacetTermDisplayContext();
 
+		assetTagsSearchFacetTermDisplayContext.setFilterValue(value);
 		assetTagsSearchFacetTermDisplayContext.setFrequency(frequency);
 		assetTagsSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
@@ -255,6 +256,8 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			assetTagsSearchFacetTermDisplayContext =
 				new AssetTagsSearchFacetTermDisplayContext();
 
+		assetTagsSearchFacetTermDisplayContext.setFilterValue(
+			_selectedTags.get(0));
 		assetTagsSearchFacetTermDisplayContext.setFrequency(0);
 		assetTagsSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);

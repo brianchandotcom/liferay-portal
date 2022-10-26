@@ -5018,10 +5018,10 @@ components:
                     description:
                         Specifies if the utility page template should be the default for the given type.
                     type: boolean
-                key:
+                externalReferenceCode:
                     # @review
                     description:
-                        The utility page template key.
+                        The utility page template external reference code.
                     type: string
                 name:
                     # @review

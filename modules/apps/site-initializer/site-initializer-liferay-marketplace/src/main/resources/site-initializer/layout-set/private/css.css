@@ -3,21 +3,21 @@
 	font-family: 'Source Sans Pro';
 	font-style: normal;
 	font-weight: 400;
-	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/sourceSansPro-regular.ttf$]) format('truetype');
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/SourceSansPro-Regular.ttf$]) format('truetype');
 }
 /* source-sans-pro-italic - vietnamese_latin_cyrillic */
 @font-face {
 	font-family: 'Source Sans Pro';
 	font-style: italic;
 	font-weight: 400;
-	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/sourceSansPro-Italic.ttf$]) format('truetype');
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/SourceSansPro-Italic.ttf$]) format('truetype');
 }
 /* source-sans-pro-600 - vietnamese_latin_cyrillic */
 @font-face {
 	font-family: 'Source Sans Pro';
 	font-style: normal;
 	font-weight: 600;
-	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/sourceSansPro-semibold.ttf$]) format('truetype'); /* Safari, Android, iOS */
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSansPro/SourceSansPro-SemiBold.ttf$]) format('truetype'); /* Safari, Android, iOS */
 }
 
 #footer.f-navigation-footer {

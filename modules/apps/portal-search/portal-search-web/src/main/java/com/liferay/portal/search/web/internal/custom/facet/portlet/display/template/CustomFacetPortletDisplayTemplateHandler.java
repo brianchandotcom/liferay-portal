@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
-import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -92,7 +92,7 @@ public class CustomFacetPortletDisplayTemplateHandler
 			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"term", CustomFacetTermDisplayContext.class,
+			"term", BucketDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getFieldName()");
 
 		TemplateVariableGroup customFacetServicesTemplateVariableGroup =

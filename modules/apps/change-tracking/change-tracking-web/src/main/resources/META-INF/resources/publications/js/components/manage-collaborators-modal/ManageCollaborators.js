@@ -44,8 +44,8 @@ import {
 } from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
-import CollaboratorRow from './components/manage-collaborators-modal/CollaboratorRow';
-import SharingAutocomplete from './components/manage-collaborators-modal/SharingAutocomplete';
+import CollaboratorRow from './CollaboratorRow';
+import SharingAutocomplete from './SharingAutocomplete';
 
 const ManageCollaborators = ({
 	autocompleteUserURL,

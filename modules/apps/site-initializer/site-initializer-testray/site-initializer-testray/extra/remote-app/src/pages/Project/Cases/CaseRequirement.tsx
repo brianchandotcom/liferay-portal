@@ -22,8 +22,7 @@ import i18n from '../../../i18n';
 import {
 	TestrayCase,
 	TestrayRequirementCase,
-	caseRequirementsResource,
-	getCasesRequerimentsTransformData,
+	testrayCaseRequirementsRest,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import CaseRequirementLinkModal from './CaseRequirementLinkModal';
@@ -54,7 +53,7 @@ const CaseRequirement = () => {
 					),
 					title: i18n.translate('requirements'),
 				}}
-				resource={caseRequirementsResource}
+				resource={testrayCaseRequirementsRest.resource}
 				tableProps={{
 					columns: [
 						{
@@ -63,7 +62,7 @@ const CaseRequirement = () => {
 							render: (
 								_,
 								requirementCase: TestrayRequirementCase
-							) => requirementCase.requirement.key,
+							) => requirementCase.requirement?.key,
 							value: i18n.translate('key'),
 						},
 						{
@@ -73,11 +72,11 @@ const CaseRequirement = () => {
 								requirementCase: TestrayRequirementCase
 							) => (
 								<a
-									href={requirementCase.requirement.linkURL}
+									href={requirementCase.requirement?.linkURL}
 									rel="noopener noreferrer"
 									target="_blank"
 								>
-									{requirementCase.requirement.linkTitle}
+									{requirementCase.requirement?.linkTitle}
 
 									<ClayIcon
 										className="ml-2"
@@ -93,7 +92,7 @@ const CaseRequirement = () => {
 								_,
 								requirementCase: TestrayRequirementCase
 							) =>
-								requirementCase.requirement.component?.team
+								requirementCase.requirement?.component?.team
 									?.name,
 							value: i18n.translate('team'),
 						},
@@ -102,7 +101,7 @@ const CaseRequirement = () => {
 							render: (
 								_,
 								requirementCase: TestrayRequirementCase
-							) => requirementCase.requirement.component?.name,
+							) => requirementCase.requirement?.component?.name,
 							value: i18n.translate('component'),
 						},
 						{
@@ -110,7 +109,7 @@ const CaseRequirement = () => {
 							render: (
 								_,
 								requirementCase: TestrayRequirementCase
-							) => requirementCase.requirement.components,
+							) => requirementCase.requirement?.components,
 							value: i18n.translate('jira-components'),
 						},
 						{
@@ -118,7 +117,7 @@ const CaseRequirement = () => {
 							render: (
 								_,
 								requirementCase: TestrayRequirementCase
-							) => requirementCase.requirement.summary,
+							) => requirementCase.requirement?.summary,
 							value: i18n.translate('summary'),
 						},
 						{
@@ -126,14 +125,16 @@ const CaseRequirement = () => {
 							render: (
 								_,
 								requirementCase: TestrayRequirementCase
-							) => requirementCase.requirement.description,
+							) => requirementCase.requirement?.description,
 							value: i18n.translate('description'),
 						},
 					],
 					navigateTo: ({requirement}: TestrayRequirementCase) =>
-						`/project/${projectId}/requirements/${requirement.id}`,
+						`/project/${projectId}/requirements/${requirement?.id}`,
 				}}
-				transformData={getCasesRequerimentsTransformData}
+				transformData={(response) =>
+					testrayCaseRequirementsRest.transformDataFromList(response)
+				}
 				variables={{
 					filter: searchUtil.eq('caseId', testrayCase.id),
 				}}

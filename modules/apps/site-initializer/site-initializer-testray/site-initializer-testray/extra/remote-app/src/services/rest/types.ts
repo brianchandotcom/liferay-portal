@@ -105,8 +105,10 @@ export type TestrayCase = {
 	name: string;
 	originationKey: string;
 	priority: number;
+	project?: TestrayProject;
 	r_caseTypeToCases_c_caseType?: TestrayCaseType;
 	r_componentToCases_c_component?: TestrayComponent;
+	r_projectToCases_c_project: TestrayProject;
 	steps: string;
 	stepsType: string;
 };
@@ -185,12 +187,15 @@ export type TestrayRequirement = {
 	linkURL: string;
 	r_componentToRequirements_c_component?: TestrayComponent;
 	summary: string;
+	url: string;
 };
 
 export type TestrayRequirementCase = {
-	case: TestrayCase;
-	id: number;
-	requirement: TestrayRequirement;
+	case?: TestrayCase;
+	id?: number;
+	r_caseToRequirementsCases_c_case?: TestrayCase;
+	r_requiremenToRequirementsCases_c_requirement?: TestrayRequirement;
+	requirement?: TestrayRequirement;
 };
 
 export type TestrayRun = {

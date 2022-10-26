@@ -12,69 +12,71 @@
  * details.
  */
 
-import {APIResponse, TestrayRequirementCase} from './types';
+import yupSchema from '../../schema/yup';
+import Rest from './Rest';
+import {TestrayRequirementCase} from './types';
 
-const nestedFields =
-	'nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3';
-
-const caseRequirementsResource = `/requirementscaseses?${nestedFields}`;
-
-const getCaseRequerimentsTransformData = (
-	caseRequirements: any
-): TestrayRequirementCase => {
-	return {
-		...caseRequirements,
-		case: caseRequirements?.r_caseToRequirementsCases_c_case
-			? {
-					...caseRequirements?.r_caseToRequirementsCases_c_case,
-					component: caseRequirements
-						?.r_caseToRequirementsCases_c_case
-						?.r_componentToCases_c_component
-						? {
-								...caseRequirements
-									?.r_caseToRequirementsCases_c_case
-									?.r_componentToCases_c_component,
-						  }
-						: null,
-			  }
-			: null,
-		requirement: caseRequirements?.r_requiremenToRequirementsCases_c_requirement
-			? {
-					...caseRequirements?.r_requiremenToRequirementsCases_c_requirement,
-					component: caseRequirements
-						?.r_requiremenToRequirementsCases_c_requirement
-						?.r_componentToRequirements_c_component
-						? {
-								...caseRequirements
-									?.r_requiremenToRequirementsCases_c_requirement
-									?.r_componentToRequirements_c_component,
-								team: caseRequirements
-									?.r_requiremenToRequirementsCases_c_requirement
-									?.r_componentToRequirements_c_component
-									?.r_teamToComponents_c_team
-									? {
-											...caseRequirements
-												?.r_requiremenToRequirementsCases_c_requirement
-												?.r_componentToRequirements_c_component
-												?.r_teamToComponents_c_team,
-									  }
-									: null,
-						  }
-						: null,
-			  }
-			: {},
-	};
+type CaseRequirements = typeof yupSchema.requirement.__outputType & {
+	projectId: number;
 };
 
-const getCasesRequerimentsTransformData = (
-	response: APIResponse<TestrayRequirementCase>
-) => ({
-	...response,
-	items: response?.items?.map(getCaseRequerimentsTransformData),
-});
+class TestrayCaseRequirementsRest extends Rest<
+	CaseRequirements,
+	TestrayRequirementCase
+> {
+	constructor() {
+		super({
+			nestedFields:
+				'nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3',
+			transformData: (caseRequirements) => ({
+				...caseRequirements,
+				case: caseRequirements?.r_caseToRequirementsCases_c_case
+					? {
+							...caseRequirements?.r_caseToRequirementsCases_c_case,
+							component: caseRequirements
+								?.r_caseToRequirementsCases_c_case
+								?.r_componentToCases_c_component
+								? {
+										...caseRequirements
+											?.r_caseToRequirementsCases_c_case
+											?.r_componentToCases_c_component,
+								  }
+								: undefined,
+					  }
+					: undefined,
+				requirement: caseRequirements?.r_requiremenToRequirementsCases_c_requirement
+					? {
+							...caseRequirements?.r_requiremenToRequirementsCases_c_requirement,
+							component: caseRequirements
+								?.r_requiremenToRequirementsCases_c_requirement
+								?.r_componentToRequirements_c_component
+								? {
+										...caseRequirements
+											?.r_requiremenToRequirementsCases_c_requirement
+											?.r_componentToRequirements_c_component,
+										team: caseRequirements
+											?.r_requiremenToRequirementsCases_c_requirement
+											?.r_componentToRequirements_c_component
+											?.r_teamToComponents_c_team
+											? {
+													...caseRequirements
+														?.r_requiremenToRequirementsCases_c_requirement
+														?.r_componentToRequirements_c_component
+														?.r_teamToComponents_c_team,
+											  }
+											: undefined,
+								  }
+								: undefined,
+							linkURL:
+								caseRequirements
+									?.r_requiremenToRequirementsCases_c_requirement
+									.linkURL,
+					  }
+					: undefined,
+			}),
+			uri: 'requirementscaseses',
+		});
+	}
+}
 
-export {
-	caseRequirementsResource,
-	getCaseRequerimentsTransformData,
-	getCasesRequerimentsTransformData,
-};
+export const testrayCaseRequirementsRest = new TestrayCaseRequirementsRest();

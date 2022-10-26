@@ -450,7 +450,7 @@ definition {
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Home");
+			value1 = "test");
 
 		AssertTextEquals.assertPartialText(
 			key_suggestionContributorDisplayGroupName = "Top Search Keywords",

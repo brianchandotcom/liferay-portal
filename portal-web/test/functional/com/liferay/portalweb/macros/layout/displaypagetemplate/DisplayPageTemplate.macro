@@ -51,7 +51,7 @@ definition {
 				webContentTitle = "${entryTitle}");
 		}
 
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+		WebContent.editDisplayPage(pageName = "${pageName}");
 
 		PortletEntry.publish();
 	}

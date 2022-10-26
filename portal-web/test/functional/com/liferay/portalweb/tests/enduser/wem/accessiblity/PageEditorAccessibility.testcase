@@ -28,6 +28,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165356. The Skip to Product Menu link only be focusable when the Product Menu is open."
+	@priority = "3"
+	test FocusOnSkipToProductMenuWhenProductMenuOpen {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Page Name");
+		}
+
+		task ("When the page creator opens the Product Menu") {
+			ProductMenuHelper.openProductMenu();
+		}
+
+		task ("Then the page creator can focus on the Skip to Product Menu link") {
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//a[contains(.,'Skip to Product Menu')]");
+		}
+
+		task ("When the page creator closes the Product Menu") {
+			ProductMenuHelper.closeProductMenu();
+		}
+
+		task ("Then the page creator cannot focus on the Skip to Product Menu link") {
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "ProductMenu#TOGGLE",
+				value1 = "\TAB");
+
+			TestUtils.assertElementNotFocused(element = "//a[contains(.,'Skip to Product Menu')]");
+
+			TestUtils.assertElementFocused(element = "//a[span//*[name()='svg'][contains(@class,'icon-angle-left')]]");
+		}
+	}
+
 	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
 	@priority = "3"
 	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {

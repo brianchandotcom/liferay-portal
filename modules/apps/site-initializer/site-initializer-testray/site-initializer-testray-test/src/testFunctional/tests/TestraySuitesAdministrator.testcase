@@ -187,7 +187,7 @@ definition {
 				requirementName = "ATF_Requirements Summary");
 		}
 
-		task ("And given that the user add a Smart Suite") {
+		task ("And given that the user adds a Smart Suite") {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
@@ -231,26 +231,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164152 - Verify that the user can not create a suite if all the required fields are not filled in"
-	@priority = "3"
-	test AdminCanViewRequiredField {
-		task ("Given that the user goes to add a new suite without name") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-
-			Testray.projectTabNavigator(navTabName = "Suites");
-
-			TestraySuites.addSuite(
-				suiteDescription = "",
-				suiteName = "");
-		}
-
-		task ("Then a warning message is displayed") {
-			Testray.viewErrorMessage(
-				fieldLabel = "Name",
-				warningMessage = "name is a required field");
-		}
-	}
-
 	@description = "This is a test for LPS-166559 - Verify if as an Administrator I should not be able to add a duplicate Suites"
 	@priority = "5"
 	test AdminCanNotAddDuplicateSuites {
@@ -270,6 +250,26 @@ definition {
 
 		task ("Then the error message should appear") {
 			Alert.viewErrorMessage(errorMessage = "The Suite name already exists");
+		}
+	}
+
+	@description = "This is a test for LPS-164152 - Verify that the user can not create a suite if all the required fields are not filled in"
+	@priority = "3"
+	test AdminCanViewRequiredField {
+		task ("Given that the user goes to add a new suite without name") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				suiteDescription = "",
+				suiteName = "");
+		}
+
+		task ("Then a warning message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "name is a required field");
 		}
 	}
 

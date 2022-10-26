@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
+import com.liferay.oauth.client.LocalOAuthClient;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -75,14 +76,17 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 				ConfigurableUtil.createConfigurable(
 					FunctionActionExecutorImplConfiguration.class, properties);
 
-		_location = _getLocation(
-			funcioActionExecutorFactoryConfiguration,
+		_oAuth2Application =
 			_oAuth2ApplicationLocalService.
-				fetchOAuth2ApplicationByExternalReferenceCode(
+				getOAuth2ApplicationByExternalReferenceCode(
 					ConfigurableUtil.getCompanyId(
 						_companyLocalService, properties),
 					funcioActionExecutorFactoryConfiguration.
-						oAuth2ApplicationExternalReferenceCode()));
+						oAuth2ApplicationExternalReferenceCode());
+
+		_location = _getLocation(
+			funcioActionExecutorFactoryConfiguration, _oAuth2Application);
+
 		_timeout = funcioActionExecutorFactoryConfiguration.timeout();
 	}
 
@@ -194,11 +198,18 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 		options.setMethod(Http.Method.POST);
 		options.setTimeout(_timeout);
 
-		// TODO
-
-		//_authorize(companyId, options, userId);
+		_authorize(options, workflowTaskAssignee.getAssigneeClassPK());
 
 		_http.URLtoByteArray(options);
+	}
+
+	private void _authorize(Http.Options options, long userId)
+		throws Exception {
+
+		_localOAuthClient.consumeAccessToken(
+			accessToken -> options.addHeader(
+				"Authorization", "Bearer ".concat(accessToken)),
+			_oAuth2Application, userId);
 	}
 
 	private String _getLocation(
@@ -241,7 +252,11 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	@Reference
+	private LocalOAuthClient _localOAuthClient;
+
 	private String _location;
+	private OAuth2Application _oAuth2Application;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

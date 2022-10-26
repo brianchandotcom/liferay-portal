@@ -40,7 +40,6 @@ if (rootResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 %>
 
-<c:if test="<%= !kbFolders.isEmpty() %>">
 	<liferay-portlet:actionURL name="/knowledge_base/update_root_kb_folder_id" var="updateRootKBFolderIdURL">
 		<c:if test="<%= kbArticle != null %>">
 			<portlet:param name="urlTitle" value="<%= kbArticle.getUrlTitle() %>" />
@@ -85,4 +84,3 @@ List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisp
 				});
 		}
 	</script>
-</c:if>

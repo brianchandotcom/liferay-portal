@@ -217,7 +217,7 @@ public class KBNavigationDisplayContext {
 
 	public boolean isLeftNavigationVisible() throws PortalException {
 		if (_leftNavigationVisible == null) {
-			_leftNavigationVisible = _hasMultipleDescendantKBArticles();
+			_leftNavigationVisible = isFolderResource();
 		}
 
 		return _leftNavigationVisible;

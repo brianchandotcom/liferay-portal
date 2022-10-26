@@ -48,7 +48,7 @@ List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisp
 
 <div class="kbarticle-root-selector">
 	<aui:form action="<%= updateRootKBFolderIdURL %>" name="updateRootKBFolderIdFm">
-		<aui:select label="" name="rootKBFolderId">
+		<aui:select disabled="<%= kbFolders.isEmpty() %>" label="" name="rootKBFolderId">
 			<c:if test="<%= KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, rootKBFolderId, WorkflowConstants.STATUS_APPROVED) > 0 %>">
 				<aui:option selected="<%= currentKBFolderURLTitle.equals(rootKBFolderURLTitle) %>" value="<%= rootKBFolderId %>">
 					<%= HtmlUtil.escape(kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + rootKBFolderName) %>

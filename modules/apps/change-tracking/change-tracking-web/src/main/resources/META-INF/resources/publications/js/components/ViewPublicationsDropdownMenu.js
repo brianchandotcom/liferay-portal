@@ -16,7 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
-import ManageCollaborators from './ManageCollaborators';
+import ManageCollaborators from './manage-collaborators-modal/ManageCollaborators';
 
 export default function ViewPublicationsDropdownMenu({
 	checkoutURL,

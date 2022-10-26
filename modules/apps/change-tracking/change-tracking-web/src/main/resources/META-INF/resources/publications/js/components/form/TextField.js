@@ -24,7 +24,6 @@ const TextField = ({
 	placeholderValue,
 	required,
 }) => {
-
 	const [nameErrorMessage, setNameErrorMessage] = useState('');
 
 	const isFieldEmpty = (fieldValue) => {

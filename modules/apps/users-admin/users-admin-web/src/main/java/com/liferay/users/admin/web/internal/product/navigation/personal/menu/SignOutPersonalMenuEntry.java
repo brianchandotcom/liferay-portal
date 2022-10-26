@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"product.navigation.personal.menu.entry.order:Integer=100",
 		"product.navigation.personal.menu.group:Integer=400"

@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,

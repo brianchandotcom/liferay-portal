@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,

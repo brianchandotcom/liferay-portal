@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=" + PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,

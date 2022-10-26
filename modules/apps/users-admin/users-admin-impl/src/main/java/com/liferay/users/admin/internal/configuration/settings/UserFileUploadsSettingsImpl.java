@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
-	immediate = true, service = UserFileUploadsSettings.class
+	service = UserFileUploadsSettings.class
 )
 public class UserFileUploadsSettingsImpl implements UserFileUploadsSettings {
 

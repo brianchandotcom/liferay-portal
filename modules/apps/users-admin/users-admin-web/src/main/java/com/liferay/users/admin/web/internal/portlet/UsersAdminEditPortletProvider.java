@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.model.User",
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = FieldQueryBuilderFactory.class)
+@Component(service = FieldQueryBuilderFactory.class)
 public class UserNameFieldQueryBuilderFactory
 	implements FieldQueryBuilderFactory {
 

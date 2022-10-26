@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = UserInitialsGenerator.class)
+@Component(service = UserInitialsGenerator.class)
 public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 
 	@Override

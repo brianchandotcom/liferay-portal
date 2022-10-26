@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=1000",
 		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT

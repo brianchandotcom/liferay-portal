@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luan Maoski
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class UserSearchRegistrar {
 
 	@Activate

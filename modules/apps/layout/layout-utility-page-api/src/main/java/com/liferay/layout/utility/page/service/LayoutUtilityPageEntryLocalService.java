@@ -228,6 +228,10 @@ public interface LayoutUtilityPageEntryLocalService
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long LayoutUtilityPageEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long groupId, String externalReferenceCode);
+
 	/**
 	 * Returns the layout utility page entry with the matching external reference code and group.
 	 *

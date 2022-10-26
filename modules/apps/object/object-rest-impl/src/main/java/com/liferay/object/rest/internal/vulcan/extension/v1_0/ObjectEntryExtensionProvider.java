@@ -20,8 +20,11 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -119,10 +122,31 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 		Map<String, Serializable> extendedProperties) {
 
 		try {
+			ObjectDefinition objectDefinition = getObjectDefinition(
+				companyId, className);
+
+			for (ObjectField objectField :
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId(), false)) {
+
+				Object value = ObjectEntryValuesUtil.getObjectFieldValue(
+					objectDefinitionLocalService, _objectEntryLocalService,
+					objectField, _objectRelationshipLocalService,
+					_systemObjectDefinitionMetadataTracker, userId,
+					extendedProperties);
+
+				if (value == null) {
+					continue;
+				}
+
+				extendedProperties.put(
+					objectField.getName(), (Serializable)value);
+			}
+
 			_objectEntryLocalService.
 				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
-					userId, getObjectDefinition(companyId, className),
-					getPrimaryKey(entity), extendedProperties,
+					userId, objectDefinition, getPrimaryKey(entity),
+					extendedProperties,
 					new ServiceContext() {
 						{
 							setCompanyId(companyId);
@@ -148,5 +172,12 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 }

@@ -33,6 +33,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
@@ -135,7 +136,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.addObjectEntry(
 				groupId, objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					groupId, objectDefinition, 0L, objectEntry.getProperties(),
+					groupId, dtoConverterContext.getUserId(), objectDefinition,
+					0L, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				_createServiceContext(
 					objectEntry.getProperties(),
@@ -185,7 +187,8 @@ public class DefaultObjectEntryManagerImpl
 				externalReferenceCode, groupId,
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					groupId, objectDefinition, 0L, objectEntry.getProperties(),
+					groupId, dtoConverterContext.getUserId(), objectDefinition,
+					0L, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				serviceContext));
 	}
@@ -594,7 +597,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.updateObjectEntry(
 				objectEntryId,
 				_toObjectValues(
-					serviceBuilderObjectEntry.getGroupId(), objectDefinition,
+					serviceBuilderObjectEntry.getGroupId(),
+					dtoConverterContext.getUserId(), objectDefinition,
 					serviceBuilderObjectEntry.getObjectEntryId(),
 					objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
@@ -946,22 +950,22 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, Serializable> _toObjectValues(
-			long groupId, ObjectDefinition objectDefinition, long objectEntryId,
-			Map<String, Object> properties, Locale locale)
+			long groupId, long userId, ObjectDefinition objectDefinition,
+			long objectEntryId, Map<String, Object> properties, Locale locale)
 		throws Exception {
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
 
 		Map<String, Serializable> values = new HashMap<>();
 
-		for (ObjectField objectField : objectFields) {
-			String name = objectField.getName();
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
 
-			Object object = properties.get(name);
+			Object value = ObjectEntryValuesUtil.getObjectFieldValue(
+				_objectDefinitionLocalService, _objectEntryLocalService,
+				objectField, _objectRelationshipLocalService,
+				_systemObjectDefinitionMetadataTracker, userId, properties);
 
-			if ((object == null) && !objectField.isRequired()) {
+			if ((value == null) && !objectField.isRequired()) {
 				continue;
 			}
 
@@ -970,37 +974,32 @@ public class DefaultObjectEntryManagerImpl
 					objectField.getBusinessType())) {
 
 				values.put(
-					name,
+					objectField.getName(),
 					SanitizerUtil.sanitize(
 						objectField.getCompanyId(), groupId,
 						objectField.getUserId(),
 						objectDefinition.getClassName(), objectEntryId,
 						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						String.valueOf(object), null));
-
-				continue;
+						String.valueOf(value), null));
 			}
+			else if (Objects.equals(
+						objectField.getDBType(),
+						ObjectFieldConstants.DB_TYPE_DATE)) {
 
-			if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_DATE)) {
-
-				values.put(name, _toDate(locale, String.valueOf(object)));
-
-				continue;
+				values.put(
+					objectField.getName(),
+					_toDate(locale, String.valueOf(value)));
 			}
+			else if ((objectField.getListTypeDefinitionId() != 0) &&
+					 (value instanceof Map)) {
 
-			if ((objectField.getListTypeDefinitionId() != 0) &&
-				(object instanceof Map)) {
+				Map<String, String> map = (HashMap<String, String>)value;
 
-				Map<String, String> map = (HashMap<String, String>)object;
-
-				values.put(name, map.get("key"));
-
-				continue;
+				values.put(objectField.getName(), map.get("key"));
 			}
-
-			values.put(name, (Serializable)object);
+			else {
+				values.put(objectField.getName(), (Serializable)value);
+			}
 		}
 
 		return values;

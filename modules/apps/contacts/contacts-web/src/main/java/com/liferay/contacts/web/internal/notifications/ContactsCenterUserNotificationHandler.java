@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jonathan Lee
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER,
 	service = UserNotificationHandler.class
 )

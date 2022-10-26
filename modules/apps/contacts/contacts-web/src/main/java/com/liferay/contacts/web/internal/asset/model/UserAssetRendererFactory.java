@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ContactsPortletKeys.CONCTACTS_CENTER,
 	service = AssetRendererFactory.class
 )

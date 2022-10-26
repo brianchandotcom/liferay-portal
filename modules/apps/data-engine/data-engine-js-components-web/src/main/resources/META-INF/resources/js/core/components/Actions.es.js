@@ -16,6 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import classNames from 'classnames';
 import domAlign from 'dom-align';
+import {sub} from 'frontend-js-web';
 import React, {
 	createContext,
 	forwardRef,
@@ -29,8 +30,10 @@ import React, {
 
 import {useConfig} from '../../core/hooks/useConfig.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {useForm} from '../hooks/useForm.es';
+import {useSetSourceItem as useSetKeyboardDNDSourceItem} from '../components/KeyboardDNDContext';
+import {useForm, useFormState} from '../hooks/useForm.es';
 import {useResizeObserver} from '../hooks/useResizeObserver.es';
+import {getFieldChildren} from '../utils/getFieldChildren';
 
 const ActionsContext = createContext({});
 
@@ -200,7 +203,9 @@ export const Actions = forwardRef(
 		actionsRef
 	) => {
 		const {fieldTypes} = useConfig();
+		const formState = useFormState();
 		const {actions} = useActions();
+		const setKeyboardDNDSourceItem = useSetKeyboardDNDSourceItem();
 
 		const label = useMemo(() => {
 			if (isFieldSet) {
@@ -210,6 +215,53 @@ export const Actions = forwardRef(
 			return fieldTypes.find(({name}) => name === fieldType).label;
 		}, [fieldType, isFieldSet, fieldTypes]);
 
+		const handleDragButtonClick = () => {
+			let parentField;
+			let pageIndex;
+
+			const hasFieldId = (itemWithRows) =>
+				itemWithRows.rows?.some((row) =>
+					row.columns?.some((column) =>
+						column.fields?.some(
+							(field) =>
+								field.fieldName === fieldId ||
+								hasFieldId({
+									...field,
+									rows: getFieldChildren(field),
+								})
+						)
+					)
+				);
+
+			formState.pages.forEach((page, index) => {
+				if (typeof pageIndex === 'number') {
+					return;
+				}
+
+				if (hasFieldId(page)) {
+					pageIndex = index;
+					parentField = {};
+
+					page.rows.forEach((row) => {
+						row.columns.forEach((column) => {
+							column.fields.forEach((field) => {
+								if (hasFieldId(field)) {
+									parentField = field;
+								}
+							});
+						});
+					});
+				}
+			});
+
+			setKeyboardDNDSourceItem({
+				dragType: 'move',
+				fieldName: fieldId,
+				pageIndex,
+				parentField,
+			});
+		};
+
 		return (
 			<div
 				className={classNames('ddm-field-actions-container', {
@@ -218,6 +270,14 @@ export const Actions = forwardRef(
 				})}
 				ref={actionsRef}
 			>
+				<ClayButtonWithIcon
+					aria-label={sub(Liferay.Language.get('move-x'), [label])}
+					className="mr-2 sr-only sr-only-focusable"
+					displayType="primary"
+					onClick={handleDragButtonClick}
+					symbol="drag"
+				/>
+
 				<span className="actions-label">{label}</span>
 
 				<ClayDropDownWithItems

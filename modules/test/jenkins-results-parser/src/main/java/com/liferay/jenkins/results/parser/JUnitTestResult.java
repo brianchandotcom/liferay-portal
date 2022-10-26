@@ -69,6 +69,21 @@ public class JUnitTestResult extends BaseTestResult {
 			Dom4JUtil.getNewAnchorElement(
 				getTestReportURL(), getDisplayName()));
 
+		TestHistory testHistory = getTestHistory();
+
+		if (testHistory != null) {
+			downstreamBuildListItemElement.addText(" - ");
+
+			downstreamBuildListItemElement.add(
+				Dom4JUtil.getNewAnchorElement(
+					testHistory.getTestrayCaseResultURL(),
+					JenkinsResultsParserUtil.combine(
+						"Failed ",
+						String.valueOf(testHistory.getFailureCount()),
+						" of last ",
+						String.valueOf(testHistory.getTestCount()))));
+		}
+
 		String errorStackTrace = getErrorStackTrace();
 
 		if ((errorStackTrace != null) && !errorStackTrace.isEmpty()) {

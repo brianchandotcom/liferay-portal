@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
+import AssignModal from '../../../../../../components/AssignModal';
 import useFormModal from '../../../../../../hooks/useFormModal';
 import i18n from '../../../../../../i18n';
 import {Liferay} from '../../../../../../services/liferay';
@@ -25,7 +26,6 @@ import {
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {CaseResultStatuses} from '../../../../../../util/statuses';
-import CaseResultAssignModal from './CaseResultAssignModal';
 
 const userId = Number(Liferay.ThemeDisplay.getUserId());
 
@@ -67,7 +67,7 @@ const CaseResultHeaderActions: React.FC<{
 
 	return (
 		<>
-			<CaseResultAssignModal modal={modal} />
+			<AssignModal modal={modal} />
 
 			<ClayButton.Group className="mb-3 ml-3" spaced>
 				<ClayButton
@@ -110,7 +110,7 @@ const CaseResultHeaderActions: React.FC<{
 					displayType={
 						buttonValidations.completeTest ? 'unstyled' : undefined
 					}
-					onClick={() => navigate(`edit/${caseResult.dueStatus}`)}
+					onClick={() => navigate(`edit/${caseResult.dueStatus.key}`)}
 				>
 					{i18n.translate('complete-test')}
 				</ClayButton>
@@ -136,7 +136,7 @@ const CaseResultHeaderActions: React.FC<{
 							? 'unstyled'
 							: 'secondary'
 					}
-					onClick={() => navigate(`edit/${caseResult.dueStatus}`)}
+					onClick={() => navigate(`edit/${caseResult.dueStatus.key}`)}
 				>
 					{i18n.translate('edit')}
 				</ClayButton>

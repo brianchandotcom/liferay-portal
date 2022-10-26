@@ -12,21 +12,21 @@
  * details.
  */
 
-import Modal from '../../../../../../components/Modal';
-import {FormModalOptions} from '../../../../../../hooks/useFormModal';
-import i18n from '../../../../../../i18n';
-import {UserListView} from '../../../../../Manage/User';
+import {FormModalOptions} from '../../hooks/useFormModal';
+import i18n from '../../i18n';
+import {UserListView} from '../../pages/Manage/User';
+import Modal from '../Modal';
 
-type CaseResultAssignModalProps = {
+type AssignModalProps = {
 	modal: FormModalOptions;
 };
 
-const CaseResultAssignModal: React.FC<CaseResultAssignModalProps> = ({
+const CaseResultAssignModal: React.FC<AssignModalProps> = ({
 	modal: {observer, onSave, visible},
 }) => (
 	<Modal
 		observer={observer}
-		size="full-screen"
+		size="lg"
 		title={i18n.translate('users')}
 		visible={visible}
 	>

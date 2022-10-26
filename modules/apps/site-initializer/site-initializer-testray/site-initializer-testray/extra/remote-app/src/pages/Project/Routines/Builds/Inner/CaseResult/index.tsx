@@ -52,7 +52,8 @@ const CaseResult = () => {
 	const getAttachments = (): TestrayAttachment[] => {
 		try {
 			return JSON.parse(caseResult.attachments);
-		} catch (error) {
+		}
+		catch (error) {
 			return [];
 		}
 	};

@@ -1587,17 +1587,21 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 
 	private static final String _TESTRAY_CASE_RESULT_STATUS_BLOCKED = "BLOCKED";
 
-	private static final String _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN = "DIDNOTRUN";
+	private static final String _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN =
+		"DIDNOTRUN";
 
 	private static final String _TESTRAY_CASE_RESULT_STATUS_FAILED = "FAILED";
 
-	private static final String _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS = "INPROGRESS";
+	private static final String _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS =
+		"INPROGRESS";
 
 	private static final String _TESTRAY_CASE_RESULT_STATUS_PASSED = "PASSED";
 
-	private static final String _TESTRAY_CASE_RESULT_STATUS_TEST_FIX = "TESTFIX";
+	private static final String _TESTRAY_CASE_RESULT_STATUS_TEST_FIX =
+		"TESTFIX";
 
-	private static final String _TESTRAY_CASE_RESULT_STATUS_UNTESTED = "UNTESTED";
+	private static final String _TESTRAY_CASE_RESULT_STATUS_UNTESTED =
+		"UNTESTED";
 
 	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 

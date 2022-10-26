@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Fabiano Nazar
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.kernel.model.Organization",
 	service = ModelDocumentContributor.class
 )

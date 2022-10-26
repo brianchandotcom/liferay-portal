@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Fabiano Nazar
  */
 @Component(
-	immediate = true,
 	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.portal.kernel.model.Organization",
 	service = SortFieldNameTranslator.class
 )

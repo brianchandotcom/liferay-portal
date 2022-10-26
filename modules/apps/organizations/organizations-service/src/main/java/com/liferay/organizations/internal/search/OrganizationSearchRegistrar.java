@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Fabiano Nazar
  * @author Luan Maoski
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class OrganizationSearchRegistrar {
 
 	@Activate

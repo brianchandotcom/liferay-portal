@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = OrganizationTypesSettings.class)
+@Component(service = OrganizationTypesSettings.class)
 public class OrganizationTypesSettingsImpl
 	implements OrganizationTypesSettings {
 

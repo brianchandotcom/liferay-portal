@@ -68,8 +68,12 @@ interface User {
 
 export type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
+	bcc: string;
 	body: LocalizedValue<string>;
+	cc: string;
 	description: string;
+	from: string;
+	fromName: LocalizedValue<string>;
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: string;
@@ -78,6 +82,7 @@ export type TNotificationTemplate = {
 		| Partial<TUserNotificationRecipients>[]
 		| [];
 	subject: LocalizedValue<string>;
+	to: LocalizedValue<string>;
 	type: string;
 };
 
@@ -151,15 +156,18 @@ export default function EditNotificationTemplate({
 		}
 
 		if (
-			notificationTemplateType === 'email' &&
-			!values.recipients[0].from
+			(notificationTemplateType === 'email' &&
+				!values.recipients[0].from) ||
+			(!Liferay.FeatureFlags['LPS-162133'] && !values.from)
 		) {
 			errors.from = Liferay.Language.get('required');
 		}
 
 		if (
-			notificationTemplateType === 'email' &&
-			!values.recipients[0].fromName[defaultLanguageId]
+			(notificationTemplateType === 'email' &&
+				!values.recipients[0].fromName[defaultLanguageId]) ||
+			(!Liferay.FeatureFlags['LPS-162133'] &&
+				!values.fromName[defaultLanguageId])
 		) {
 			errors.fromName = Liferay.Language.get('required');
 		}
@@ -642,13 +650,19 @@ export default function EditNotificationTemplate({
 											onChange={(translation) => {
 												setValues({
 													...values,
-													recipients: [
-														{
-															...values
-																.recipients[0],
-															to: translation,
-														},
-													],
+													...(Liferay.FeatureFlags[
+														'LPS-162133'
+													]
+														? {
+																recipients: [
+																	{
+																		...values
+																			.recipients[0],
+																		to: translation,
+																	},
+																],
+														  }
+														: {to: translation}),
 												});
 											}}
 											placeholder=""
@@ -670,14 +684,24 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															recipients: [
-																{
-																	...values
-																		.recipients[0],
-																	cc:
-																		target.value,
-																},
-															],
+															...(Liferay
+																.FeatureFlags[
+																'LPS-162133'
+															]
+																? {
+																		recipients: [
+																			{
+																				...values
+																					.recipients[0],
+																				cc:
+																					target.value,
+																			},
+																		],
+																  }
+																: {
+																		cc:
+																			target.value,
+																  }),
 														})
 													}
 													value={
@@ -701,14 +725,24 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															recipients: [
-																{
-																	...values
-																		.recipients[0],
-																	bcc:
-																		target.value,
-																},
-															],
+															...(Liferay
+																.FeatureFlags[
+																'LPS-162133'
+															]
+																? {
+																		recipients: [
+																			{
+																				...values
+																					.recipients[0],
+																				bcc:
+																					target.value,
+																			},
+																		],
+																  }
+																: {
+																		bcc:
+																			target.value,
+																  }),
 														})
 													}
 													value={
@@ -735,14 +769,24 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															recipients: [
-																{
-																	...values
-																		.recipients[0],
-																	from:
-																		target.value,
-																},
-															],
+															...(Liferay
+																.FeatureFlags[
+																'LPS-162133'
+															]
+																? {
+																		recipients: [
+																			{
+																				...values
+																					.recipients[0],
+																				from:
+																					target.value,
+																			},
+																		],
+																  }
+																: {
+																		from:
+																			target.value,
+																  }),
 														})
 													}
 													required
@@ -768,13 +812,22 @@ export default function EditNotificationTemplate({
 													onChange={(translation) => {
 														setValues({
 															...values,
-															recipients: [
-																{
-																	...values
-																		.recipients[0],
-																	fromName: translation,
-																},
-															],
+															...(Liferay
+																.FeatureFlags[
+																'LPS-162133'
+															]
+																? {
+																		recipients: [
+																			{
+																				...values
+																					.recipients[0],
+																				fromName: translation,
+																			},
+																		],
+																  }
+																: {
+																		fromName: translation,
+																  }),
 														});
 													}}
 													placeholder=""

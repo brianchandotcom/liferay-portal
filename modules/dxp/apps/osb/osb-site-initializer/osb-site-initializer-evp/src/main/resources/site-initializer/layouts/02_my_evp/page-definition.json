@@ -5,6 +5,7 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
+						"opacity": 100,
 						"widthType": "Fluid"
 					},
 					"name": "MyEVP Container"
@@ -140,6 +141,7 @@
 						"definition": {
 							"indexed": true,
 							"layout": {
+								"opacity": 100,
 								"widthType": "Fluid"
 							},
 							"name": "Table Container"
@@ -160,6 +162,7 @@
 										"align": "Center",
 										"borderColor": "colorNeutral4",
 										"contentDisplay": "FlexRow",
+										"opacity": 100,
 										"widthType": "Fluid"
 									},
 									"name": "Header Container"
@@ -179,6 +182,7 @@
 												"align": "Center",
 												"borderColor": "colorNeutral4",
 												"contentDisplay": "FlexRow",
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -228,6 +232,7 @@
 												"align": "Center",
 												"borderColor": "colorNeutral4",
 												"contentDisplay": "FlexRow",
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -277,6 +282,7 @@
 												"align": "Center",
 												"borderColor": "colorNeutral4",
 												"contentDisplay": "FlexRow",
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -319,13 +325,14 @@
 												"borderColor": "colorNeutral4",
 												"height": "65px",
 												"maxWidth": "12%",
-												"width": "12%"
+												"width": "13%"
 											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
 												"borderColor": "colorNeutral4",
 												"contentDisplay": "FlexRow",
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -375,6 +382,7 @@
 												"align": "Center",
 												"borderColor": "colorNeutral4",
 												"contentDisplay": "FlexRow",
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -424,6 +432,7 @@
 												"align": "Center",
 												"borderColor": "colorNeutral4",
 												"contentDisplay": "FlexRow",
+												"opacity": 100,
 												"widthType": "Fluid"
 											}
 										},
@@ -520,6 +529,7 @@
 														"align": "Center",
 														"borderColor": "colorNeutral4",
 														"contentDisplay": "FlexRow",
+														"opacity": 100,
 														"widthType": "Fluid"
 													},
 													"name": "Row Container"
@@ -537,6 +547,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -584,6 +595,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -631,6 +643,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -678,6 +691,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -725,6 +739,7 @@
 															"layout": {
 																"align": "Center",
 																"contentDisplay": "FlexRow",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -774,6 +789,7 @@
 																"align": "Center",
 																"contentDisplay": "FlexRow",
 																"flexWrap": "Wrap",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -812,8 +828,6 @@
 													},
 													{
 														"definition": {
-															"fragmentLink": {
-															},
 															"fragmentStyle": {
 																"height": "65px",
 																"maxWidth": "8%",
@@ -824,6 +838,7 @@
 																"align": "Center",
 																"contentDisplay": "FlexRow",
 																"justify": "Center",
+																"opacity": 100,
 																"widthType": "Fluid"
 															}
 														},
@@ -831,13 +846,38 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "clay-icon-link"
+																		"key": "DIALECT-dialect-button"
 																	},
 																	"fragmentConfig": {
-																		"iconLink": "request-page",
-																		"iconName": "search-experiences"
+																		"buttonSize": "btn-sm",
+																		"inverted": false,
+																		"style": "primary",
+																		"type": "ghost",
+																		"uppercase": false
 																	},
 																	"fragmentFields": [
+																		{
+																			"id": "link",
+																			"value": {
+																				"fragmentLink": {
+																					"value": {
+																						"href": {
+																							"mapping": {
+																								"fieldKey": "ObjectEntry_displayPageURL",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Details"
+																					}
+																				}
+																			}
+																		}
 																	],
 																	"indexed": true
 																},

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	immediate = true, property = "path=/view_factory_instances",
+	property = "path=/view_factory_instances",
 	service = PortletConfigurationIcon.class
 )
 public class ExportFactoryInstancesIcon extends BasePortletConfigurationIcon {

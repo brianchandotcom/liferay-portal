@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ConfigurationFieldOptionsProviderUtil {
 
 	public static ConfigurationFieldOptionsProvider

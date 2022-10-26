@@ -39,7 +39,6 @@ import org.osgi.util.tracker.BundleTracker;
  * @author Tina Tian
  */
 @Component(
-	immediate = true,
 	service = {
 		ClusterConfigurationModelIndexer.class, IdentifiableOSGiService.class
 	}

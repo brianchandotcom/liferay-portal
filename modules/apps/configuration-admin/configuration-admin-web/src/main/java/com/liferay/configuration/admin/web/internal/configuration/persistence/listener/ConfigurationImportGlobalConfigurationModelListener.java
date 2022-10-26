@@ -27,8 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true, property = "model.class.name=*",
-	service = ConfigurationModelListener.class
+	property = "model.class.name=*", service = ConfigurationModelListener.class
 )
 public class ConfigurationImportGlobalConfigurationModelListener
 	implements ConfigurationModelListener {

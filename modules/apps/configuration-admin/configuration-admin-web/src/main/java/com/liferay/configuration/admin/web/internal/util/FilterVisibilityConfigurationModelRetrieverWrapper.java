@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true, property = "filter.visibility=true",
+	property = "filter.visibility=true",
 	service = ConfigurationModelRetriever.class
 )
 public class FilterVisibilityConfigurationModelRetrieverWrapper

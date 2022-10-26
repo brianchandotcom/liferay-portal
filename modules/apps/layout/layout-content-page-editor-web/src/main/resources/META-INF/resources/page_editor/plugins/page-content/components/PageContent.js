@@ -252,7 +252,7 @@ export default function PageContent({
 									Liferay.Language.get('actions-for-x'),
 									title
 								)}
-								className="btn-sm mr-2 page-editor__page-contents__button"
+								className="btn-sm flex-shrink-0 mr-2 page-editor__page-contents__button"
 								displayType="unstyled"
 							>
 								<span className="sr-only">
@@ -270,7 +270,7 @@ export default function PageContent({
 							title
 						)}
 						className={classNames(
-							'btn-sm mr-2 page-editor__page-contents__button',
+							'flex-shrink-0 btn-sm mr-2 page-editor__page-contents__button',
 							{
 								'not-allowed':
 									isBeingEdited || !canUpdateEditables,

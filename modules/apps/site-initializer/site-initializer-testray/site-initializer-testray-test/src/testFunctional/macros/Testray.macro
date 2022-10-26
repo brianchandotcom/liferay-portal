@@ -103,6 +103,14 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
+	macro checkSuccessAlertAppearsAndDisappears {
+		WaitForElementPresent(locator1 = "Message#SUCCESS");
+
+		Alert.closeMessage(messageType = "SUCCESS");
+
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+	}
+
 	macro clickOnPageNumber {
 		Click(
 			key_pageNumber = "${pageNumber}",

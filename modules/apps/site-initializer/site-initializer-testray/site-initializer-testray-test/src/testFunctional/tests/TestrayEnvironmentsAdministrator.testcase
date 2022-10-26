@@ -64,11 +64,11 @@ definition {
 		}
 
 		task ("Delete Factor Option and assert it deleted") {
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-			
+			Testray.checkSuccessAlertAppearsAndDisappears();
+
 			TestrayManage.deleteOption(nameOptions = "Environments_2 Factor Option");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			Testray.assertItemNotPresent(key_name = "Environments_2 Factor Option");
 		}
@@ -215,7 +215,7 @@ definition {
 		task ("Add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			TestrayManage.deleteCategory(
 				nameCategory = "Environments_4 Category",
@@ -239,7 +239,7 @@ definition {
 		task ("Create the new category and then edit and state if the name has changed") {
 			TestrayManage.addNewCategory(category = "Environments_6 Category");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
 
@@ -271,7 +271,7 @@ definition {
 				category = "Environments_8 Category A",
 				option = "Environments_8 Option");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Change pagination and edit new Option by changing the Category") {
@@ -317,7 +317,7 @@ definition {
 				category = "Environments_7 Category",
 				option = "Environments_7 Option");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Change the pagination and then edit and state if the name has Edited") {
@@ -353,27 +353,6 @@ definition {
 		task ("Then an error message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "The Category name already exists");
 		}
-
-	}
-
-	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
-	@priority = "3"
-	test AdminCanViewWarningMessage {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
-
-			TestrayManage.addNewCategory(category = "");
-		}
-
-		task ("Assert a warning message is displayed") {
-			Testray.viewErrorMessage(
-				fieldLabel = "Name",
-				warningMessage = "name is a required field");
-		}
 	}
 
 	@description = "This is a test for LPS-166557 - Verify if As an Administrator I should not be able to add a duplicate Factor Options"
@@ -388,7 +367,7 @@ definition {
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Categories on Manage Sidebar and Create the new Options duplicate") {
@@ -408,7 +387,6 @@ definition {
 		task ("Then an error message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "The Option name already exists");
 		}
-
 	}
 
 	@description = "This is a test for LPS-164136 - Verify that the user can not create a options if all the required fields are not filled in"
@@ -435,7 +413,26 @@ definition {
 				fieldLabel = "Type",
 				warningMessage = "This field is Required.");
 		}
+	}
 
+	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
+	@priority = "3"
+	test AdminCanViewWarningMessage {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "");
+		}
+
+		task ("Assert a warning message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "name is a required field");
+		}
 	}
 
 }

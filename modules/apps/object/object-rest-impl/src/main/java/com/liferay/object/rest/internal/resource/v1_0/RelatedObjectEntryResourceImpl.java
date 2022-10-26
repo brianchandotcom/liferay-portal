@@ -27,6 +27,8 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -76,8 +78,10 @@ public class RelatedObjectEntryResourceImpl
 					systemObjectDefinition.getObjectDefinitionId(),
 					objectRelationshipName);
 
-		_getRelatedObjectEntry(
+		_checkRelatedObjectEntry(
 			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
+
+		_checkSystemObjectEntry(objectEntryId, systemObjectDefinition);
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -164,8 +168,37 @@ public class RelatedObjectEntryResourceImpl
 				relatedObjectEntryId, systemObjectDefinition),
 			new ServiceContext());
 
-		return _getRelatedObjectEntry(
+		return _checkRelatedObjectEntry(
 			objectRelationship, relatedObjectEntryId, systemObjectDefinition);
+	}
+
+	private ObjectEntry _checkRelatedObjectEntry(
+			ObjectRelationship objectRelationship, long relatedObjectEntryId,
+			ObjectDefinition systemObjectDefinition)
+		throws Exception {
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerTracker.getObjectEntryManager(
+				systemObjectDefinition.getStorageType());
+
+		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
+			systemObjectDefinition, objectRelationship);
+
+		return objectEntryManager.getObjectEntry(
+			_getDefaultDTOConverterContext(
+				relatedObjectDefinition, relatedObjectEntryId, _uriInfo),
+			relatedObjectDefinition, relatedObjectEntryId);
+	}
+
+	private void _checkSystemObjectEntry(
+			long objectEntryId, ObjectDefinition systemObjectDefinition)
+		throws Exception {
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				systemObjectDefinition.getClassName());
+
+		persistedModelLocalService.getPersistedModel(objectEntryId);
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
@@ -224,24 +257,6 @@ public class RelatedObjectEntryResourceImpl
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			objectRelationship.getObjectDefinitionId2());
-	}
-
-	private ObjectEntry _getRelatedObjectEntry(
-			ObjectRelationship objectRelationship, long relatedObjectEntryId,
-			ObjectDefinition systemObjectDefinition)
-		throws Exception {
-
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerTracker.getObjectEntryManager(
-				systemObjectDefinition.getStorageType());
-
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			systemObjectDefinition, objectRelationship);
-
-		return objectEntryManager.getObjectEntry(
-			_getDefaultDTOConverterContext(
-				relatedObjectDefinition, relatedObjectEntryId, _uriInfo),
-			relatedObjectDefinition, relatedObjectEntryId);
 	}
 
 	private ObjectDefinition _getSystemObjectDefinition(String previousPath) {
@@ -309,6 +324,10 @@ public class RelatedObjectEntryResourceImpl
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private SystemObjectDefinitionMetadataTracker

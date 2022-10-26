@@ -67,7 +67,6 @@ definition {
 
 		task ("Create 2 more users") {
 			JSONUser.addUser(
-				jobTitle = "Test Engineer2",
 				userEmailAddress = "userea2@liferay.com",
 				userFirstName = "userfn2",
 				userLastName = "userln2",
@@ -79,7 +78,6 @@ definition {
 				userEmailAddress = "userea2@liferay.com");
 
 			JSONUser.addUser(
-				jobTitle = "Test Engineer3",
 				userEmailAddress = "userea3@liferay.com",
 				userFirstName = "userfn3",
 				userLastName = "userln3",
@@ -343,7 +341,6 @@ definition {
 
 		task ("Add user via JSONWS") {
 			JSONUser.addUser(
-				jobTitle = "Test Engineer2",
 				userEmailAddress = "userea2@liferay.com",
 				userFirstName = "userfn2",
 				userLastName = "userln2",
@@ -4553,20 +4550,6 @@ definition {
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions and segments are available and interact with the New Segment by New Experience"
 	@priority = "3"
 	test ExperienceDropdownAddNewSegment {
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
 				roleKey = "Experiences Test Role Test",
@@ -4574,7 +4557,7 @@ definition {
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Experiences Test Role Test",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Set permissions for this role") {
@@ -4600,8 +4583,8 @@ definition {
 
 		task ("Login with user created") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
 		}
 
 		task ("Go to Content Page") {
@@ -4655,20 +4638,6 @@ definition {
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions but no segments are available and interact with the New Segment by New Experience"
 	@priority = "3"
 	test ExperienceDropdownAddNewSegmentButton {
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
 				roleKey = "Experiences Test Role Test",
@@ -4676,7 +4645,7 @@ definition {
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Experiences Test Role Test",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Set permissions for this role") {
@@ -4702,8 +4671,8 @@ definition {
 
 		task ("Login with user created") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
 		}
 
 		task ("Go to Content Page") {
@@ -4828,20 +4797,6 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test ExperienceDropdownWithNoSegmentsUserWithNoPermisisons {
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
 				roleKey = "Experiences Test Role Test",
@@ -4849,7 +4804,7 @@ definition {
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Experiences Test Role Test",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Set permissions for this role") {
@@ -4870,7 +4825,7 @@ definition {
 
 		task ("Login with user created") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
+				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
 
@@ -4905,20 +4860,6 @@ definition {
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions but no segments are available and interact with the New Experience button"
 	@priority = "3"
 	test ExperienceDropdownWithNoSegmentsUserWithPermisisons {
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
 				roleKey = "Experiences Test Role Test",
@@ -4926,7 +4867,7 @@ definition {
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Experiences Test Role Test",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Set permissions for this role") {
@@ -4943,7 +4884,7 @@ definition {
 
 		task ("Login with user created") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
+				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
 
@@ -4980,20 +4921,6 @@ definition {
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when segments available but the user has no permissions"
 	@priority = "3"
 	test ExperienceDropdownWithSegmentsUserWithNoPermisisons {
-		task ("Create an User") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				newPassword = "test",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
 				roleKey = "Experiences Test Role Test",
@@ -5001,7 +4928,7 @@ definition {
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Experiences Test Role Test",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Set permissions for this role") {
@@ -5022,7 +4949,7 @@ definition {
 
 		task ("Login with user created") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
+				userLoginEmailAddress = "userea1@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
 

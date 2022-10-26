@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=initializeCompanyCountries",
 		"osgi.command.function=populateCompanyCountries",

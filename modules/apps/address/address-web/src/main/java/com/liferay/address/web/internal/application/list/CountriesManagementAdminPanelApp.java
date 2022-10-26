@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=1100",
 		"panel.category.key=" + PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION

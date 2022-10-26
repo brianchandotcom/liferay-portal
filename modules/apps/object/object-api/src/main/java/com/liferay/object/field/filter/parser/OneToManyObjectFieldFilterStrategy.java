@@ -143,9 +143,13 @@ public class OneToManyObjectFieldFilterStrategy
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 				(String)jsonArray.get(i),
 				_objectDefinition1.getObjectDefinitionId());
+
+			if (objectEntry == null) {
+				continue;
+			}
 
 			itemsValues.add(
 				HashMapBuilder.<String, Object>put(
@@ -192,7 +196,7 @@ public class OneToManyObjectFieldFilterStrategy
 		else {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				if (Validator.isNull(
-						_objectEntryLocalService.getObjectEntry(
+						_objectEntryLocalService.fetchObjectEntry(
 							(String)jsonArray.get(i),
 							_objectDefinition1.getObjectDefinitionId()))) {
 

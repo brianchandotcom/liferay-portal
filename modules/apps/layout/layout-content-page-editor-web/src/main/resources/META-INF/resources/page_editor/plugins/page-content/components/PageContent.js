@@ -17,6 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -215,7 +216,7 @@ export default function PageContent({
 				})}
 			>
 				<ClayIcon
-					className={classNames('mr-3', {
+					className={classNames('mr-3 flex-shrink-0', {
 						'mt-1': subtype,
 					})}
 					focusable="false"
@@ -247,6 +248,10 @@ export default function PageContent({
 						onActiveChange={setActiveActions}
 						trigger={
 							<ClayButton
+								aria-label={sub(
+									Liferay.Language.get('actions-for-x'),
+									title
+								)}
 								className="btn-sm mr-2 page-editor__page-contents__button"
 								displayType="unstyled"
 							>
@@ -260,6 +265,10 @@ export default function PageContent({
 					/>
 				) : (
 					<ClayButton
+						aria-label={sub(
+							Liferay.Language.get('edit-inline-text-x'),
+							title
+						)}
 						className={classNames(
 							'btn-sm mr-2 page-editor__page-contents__button',
 							{
@@ -271,10 +280,6 @@ export default function PageContent({
 						displayType="unstyled"
 						onClick={onClickEditInlineText}
 					>
-						<span className="sr-only">
-							{Liferay.Language.get('edit-inline-text')}
-						</span>
-
 						<ClayIcon symbol="pencil" />
 					</ClayButton>
 				)}

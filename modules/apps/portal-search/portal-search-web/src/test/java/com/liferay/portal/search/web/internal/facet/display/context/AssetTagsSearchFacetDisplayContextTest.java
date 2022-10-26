@@ -103,7 +103,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 				assetTagsSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			term, assetTagsSearchFacetTermDisplayContext.getDisplayName());
+			term, assetTagsSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			0, assetTagsSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
@@ -145,7 +145,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 				assetTagsSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			term, assetTagsSearchFacetTermDisplayContext.getDisplayName());
+			term, assetTagsSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			frequency, assetTagsSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(
@@ -187,7 +187,7 @@ public class AssetTagsSearchFacetDisplayContextTest {
 				assetTagsSearchFacetTermDisplayContexts.get(0);
 
 		Assert.assertEquals(
-			term, assetTagsSearchFacetTermDisplayContext.getDisplayName());
+			term, assetTagsSearchFacetTermDisplayContext.getBucketText());
 		Assert.assertEquals(
 			frequency, assetTagsSearchFacetTermDisplayContext.getFrequency());
 		Assert.assertEquals(

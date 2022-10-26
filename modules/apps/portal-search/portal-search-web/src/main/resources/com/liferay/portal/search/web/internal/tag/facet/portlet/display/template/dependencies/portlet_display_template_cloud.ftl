@@ -22,7 +22,7 @@
 							disabled
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
 						>
-							${htmlUtil.escape(entry.getDisplayName())}
+							${htmlUtil.escape(entry.getBucketText())}
 						</button>
 					</span>
 				</#list>

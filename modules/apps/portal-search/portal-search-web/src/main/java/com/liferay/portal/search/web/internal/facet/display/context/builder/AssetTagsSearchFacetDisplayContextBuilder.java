@@ -153,13 +153,13 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			assetTagsSearchFacetTermDisplayContext =
 				new AssetTagsSearchFacetTermDisplayContext();
 
+		assetTagsSearchFacetTermDisplayContext.setBucketText(value);
 		assetTagsSearchFacetTermDisplayContext.setFilterValue(value);
 		assetTagsSearchFacetTermDisplayContext.setFrequency(frequency);
 		assetTagsSearchFacetTermDisplayContext.setFrequencyVisible(
 			_frequenciesVisible);
 		assetTagsSearchFacetTermDisplayContext.setPopularity(popularity);
 		assetTagsSearchFacetTermDisplayContext.setSelected(isSelected(value));
-		assetTagsSearchFacetTermDisplayContext.setValue(value);
 
 		return assetTagsSearchFacetTermDisplayContext;
 	}
@@ -256,6 +256,8 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			assetTagsSearchFacetTermDisplayContext =
 				new AssetTagsSearchFacetTermDisplayContext();
 
+		assetTagsSearchFacetTermDisplayContext.setBucketText(
+			_selectedTags.get(0));
 		assetTagsSearchFacetTermDisplayContext.setFilterValue(
 			_selectedTags.get(0));
 		assetTagsSearchFacetTermDisplayContext.setFrequency(0);
@@ -263,7 +265,6 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			_frequenciesVisible);
 		assetTagsSearchFacetTermDisplayContext.setPopularity(0);
 		assetTagsSearchFacetTermDisplayContext.setSelected(true);
-		assetTagsSearchFacetTermDisplayContext.setValue(_selectedTags.get(0));
 
 		return Collections.singletonList(
 			assetTagsSearchFacetTermDisplayContext);

@@ -14,7 +14,6 @@ import {useCallback, useMemo, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
 
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
-import useGetAccountUserAccount from '../../../../pages/Project/TeamMembers/components/TeamMembersTable/hooks/useGetAccountUserAccounts';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
@@ -24,6 +23,7 @@ import BadgeFilter from '../BadgeFilter';
 import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
 import Filter from '../Filter';
+import useGetAccountUserAccount from './hooks/useGetAccountUserAccount';
 
 const ActivationKeysTableHeader = ({
 	activationKeysByStatusPaginatedChecked,

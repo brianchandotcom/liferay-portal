@@ -302,6 +302,15 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-163753 - Verify as an administrator I can add another Cases in the Add Another button"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanAddAnotherCase {
+
+		// TODO LPS-163753 AdminCanAddAnotherCase pending implementation
+
+	}
+
 	@description = "This is a test for LPS-164133 - Verify that the user can not create a case if all the required fields are not filled in"
 	@priority = "3"
 	test AdminCanViewRequiredField {

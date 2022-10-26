@@ -14,10 +14,10 @@
 
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
+import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import i18n from '../../../i18n';
 import {TestraySubTaskCaseResult} from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
-import {getStatusLabel} from '../../../util/constants';
 
 const SubtasksCaseResults = () => {
 	return (
@@ -93,15 +93,15 @@ const SubtasksCaseResults = () => {
 							testraySubTaskCaseResult: TestraySubTaskCaseResult
 						) => (
 							<StatusBadge
-								type={getStatusLabel(
+								type={
 									testraySubTaskCaseResult.caseResult
-										?.dueStatus as number
-								)}
+										?.dueStatus.key as StatusBadgeType
+								}
 							>
-								{getStatusLabel(
+								{
 									testraySubTaskCaseResult.caseResult
-										?.dueStatus as number
-								)}
+										?.dueStatus.name
+								}
 							</StatusBadge>
 						),
 

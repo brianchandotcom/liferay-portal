@@ -21,16 +21,17 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {TEST_STATUS} from '../../../util/constants';
+import {PickList} from '../../../services/rest';
+import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
 
-type CaseTypeProps = {
+type SubTaskCompleteModalProps = {
 	modal: FormModalOptions;
-	status: number;
+	status?: PickList;
 };
 
-const SubtaskCompleteModal: React.FC<CaseTypeProps> = ({
+const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	modal: {modalState, observer, onClose, onSave},
 	status,
 }) => {
@@ -39,12 +40,10 @@ const SubtaskCompleteModal: React.FC<CaseTypeProps> = ({
 		register,
 		watch,
 	} = useForm<SubtaskForm>({
-		defaultValues: modalState?.dueStatus
-			? ({
-					dueStatus: modalState?.dueStatus,
-					issue: modalState?.issue,
-			  } as any)
-			: {dueStatus: status, issue: modalState?.issue},
+		defaultValues: {
+			dueStatus: modalState?.dueStatus ?? status?.key,
+			issue: modalState?.issue,
+		},
 		resolver: yupResolver(yupSchema.subtask),
 	});
 
@@ -76,21 +75,21 @@ const SubtaskCompleteModal: React.FC<CaseTypeProps> = ({
 					label={i18n.translate('case-results-status')}
 					name="dueStatus"
 					options={[
-						{label: 'Passed', value: TEST_STATUS.Passed},
-						{label: 'Failed', value: TEST_STATUS.Failed},
-						{label: 'Blocked', value: TEST_STATUS.Blocked},
-						{label: 'Test Fix', value: TEST_STATUS['Test Fix']},
+						{label: 'Passed', value: CaseResultStatuses.PASSED},
+						{label: 'Failed', value: CaseResultStatuses.FAILED},
+						{label: 'Blocked', value: CaseResultStatuses.BLOCKED},
+						{label: 'Test Fix', value: CaseResultStatuses.TEST_FIX},
 					]}
-					{...inputProps}
 					value={dueStatus}
+					{...inputProps}
 				/>
 
 				<Form.Input
 					className="container-fluid-max-md"
 					label={i18n.translate('issues')}
 					name="issue"
-					{...inputProps}
 					value={issue}
+					{...inputProps}
 				/>
 
 				<Form.Input

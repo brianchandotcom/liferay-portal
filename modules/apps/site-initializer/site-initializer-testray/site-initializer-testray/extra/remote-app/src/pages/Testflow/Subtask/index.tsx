@@ -21,6 +21,7 @@ import Code from '../../../components/Code';
 import Container from '../../../components/Layout/Container';
 import Loading from '../../../components/Loading';
 import StatusBadge from '../../../components/StatusBadge';
+import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import QATable from '../../../components/Table/QATable';
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
@@ -31,9 +32,8 @@ import {
 	TestraySubTaskCaseResult,
 	TestrayTask,
 } from '../../../services/rest';
-import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
+import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
-import {SUBTASK_STATUS} from '../../../util/constants';
 import {getTimeFromNow} from '../../../util/date';
 import {searchUtil} from '../../../util/search';
 import SubtasksCaseResults from './SubtaskCaseResults';
@@ -50,8 +50,8 @@ const Subtasks = () => {
 
 	const {data: testraySubtask, mutate: mutateSubtask} = useFetch<
 		TestraySubTask
-	>(testraySubtaskImpl.getResource(subtaskId as string), (response) =>
-		testraySubtaskImpl.transformData(response)
+	>(testraySubTaskImpl.getResource(subtaskId as string), (response) =>
+		testraySubTaskImpl.transformData(response)
 	);
 
 	const {
@@ -96,9 +96,7 @@ const Subtasks = () => {
 				caseResultIds={testraySubTaskCaseResults.map((caseResult) =>
 					Number(caseResult.caseResult?.id)
 				)}
-				dueStatus={Number(
-					testraySubTaskCaseResults[0]?.caseResult?.dueStatus
-				)}
+				dueStatus={testraySubTaskCaseResults[0]?.caseResult?.dueStatus}
 				mutateCaseResult={mutateCaseResult}
 				mutateSubtask={mutateSubtask}
 				subtask={testraySubtask}
@@ -114,16 +112,11 @@ const Subtasks = () => {
 									value: (
 										<StatusBadge
 											type={
-												(SUBTASK_STATUS as any)[
-													testraySubtask?.dueStatus as number
-												]?.label
+												testraySubtask.dueStatus
+													.key as StatusBadgeType
 											}
 										>
-											{
-												(SUBTASK_STATUS as any)[
-													testraySubtask?.dueStatus as number
-												]?.label
-											}
+											{testraySubtask.dueStatus.name}
 										</StatusBadge>
 									),
 								},
@@ -137,7 +130,7 @@ const Subtasks = () => {
 									) : (
 										<AssignToMe
 											onClick={() =>
-												testraySubtaskImpl
+												testraySubTaskImpl
 													.assignToMe(testraySubtask)
 													.then(mutateSubtask)
 											}

@@ -18,45 +18,52 @@ import {KeyedMutator} from 'swr';
 import AssignModal from '../../../components/AssignModal';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {TestraySubTask, UserAccount} from '../../../services/rest';
-import {testraySubtaskImpl} from '../../../services/rest/TestraySubtask';
-import {SUB_TASK_STATUS} from '../../../util/constants';
+import {PickList, TestraySubTask, UserAccount} from '../../../services/rest';
+import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
+import {SubTaskStatuses} from '../../../util/statuses';
 import SubtaskCompleteModal from './SubtaskCompleteModal';
 
-const SubtaskHeaderActions: React.FC<{
+type SubTaskHeaderActionsProps = {
 	caseResultIds: number[];
-	dueStatus: number;
+	dueStatus?: PickList;
 	mutateCaseResult: KeyedMutator<any>;
 	mutateSubtask: KeyedMutator<any>;
 	subtask: TestraySubTask;
-}> = ({caseResultIds, dueStatus, mutateCaseResult, mutateSubtask, subtask}) => {
+};
+
+const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
+	caseResultIds,
+	dueStatus,
+	mutateCaseResult,
+	mutateSubtask,
+	subtask,
+}) => {
 	const {modal: assignUserModal} = useFormModal({
 		onSave: (user: UserAccount) =>
-			testraySubtaskImpl.assignTo(subtask, user.id).then(mutateSubtask),
+			testraySubTaskImpl.assignTo(subtask, user.id).then(mutateSubtask),
 	});
 
 	const {modal: completeModal} = useFormModal({
 		onSave: (dueStatus) => {
-			testraySubtaskImpl
+			testraySubTaskImpl
 				.complete(subtask.id, caseResultIds, dueStatus)
 				.then(mutateSubtask)
 				.then(mutateCaseResult);
 		},
 	});
 
-	const ButtonDisabled =
-		subtask.dueStatus === SUB_TASK_STATUS.OPEN ||
-		subtask.dueStatus === SUB_TASK_STATUS.COMPLETE;
+	const buttonDisabled = [
+		SubTaskStatuses.OPEN,
+		SubTaskStatuses.COMPLETE,
+	].includes(subtask.dueStatus.key as SubTaskStatuses);
 
 	return (
 		<>
 			<AssignModal modal={assignUserModal} />
-			<SubtaskCompleteModal
-				modal={completeModal}
-				status={Number(dueStatus)}
-			/>
 
-			{ButtonDisabled && (
+			<SubtaskCompleteModal modal={completeModal} status={dueStatus} />
+
+			{buttonDisabled && (
 				<>
 					<ClayButton
 						className="mb-3 ml-3"
@@ -64,7 +71,7 @@ const SubtaskHeaderActions: React.FC<{
 						onClick={() => assignUserModal.open()}
 					>
 						{i18n.translate(
-							subtask.dueStatus === SUB_TASK_STATUS.OPEN
+							subtask.dueStatus.key === SubTaskStatuses.OPEN
 								? 'assign-and-begin-analysis'
 								: 'assign-and-reanalyze'
 						)}
@@ -72,7 +79,7 @@ const SubtaskHeaderActions: React.FC<{
 				</>
 			)}
 
-			{!ButtonDisabled && (
+			{!buttonDisabled && (
 				<>
 					<ClayButton.Group className="mb-3 ml-3" spaced>
 						<ClayButton
@@ -89,7 +96,7 @@ const SubtaskHeaderActions: React.FC<{
 						<ClayButton
 							displayType="secondary"
 							onClick={() =>
-								testraySubtaskImpl
+								testraySubTaskImpl
 									.returnToOpen(subtask)
 									.then(mutateSubtask)
 							}

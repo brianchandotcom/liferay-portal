@@ -332,4 +332,26 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-166791 - Verify that cannot add cases with an estimated duration less than zero"
+	@priority = "4"
+	test AdminCanNotAddCasesWithEstimatedDurationLessThanZero {
+		task ("Given that the user add a new Case") {
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "",
+				duration = "-1",
+				priority = "5",
+				steps = "");
+		}
+
+		task ("Then a warning message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Estimated Duration",
+				warningMessage = "estimatedDuration must be greater than or equal to 0");
+		}
+
+	}
+
 }

@@ -302,4 +302,34 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-164133 - Verify that the user can not create a case if all the required fields are not filled in"
+	@priority = "3"
+	test AdminCanViewRequiredField {
+		task ("Given that the user add a new Case") {
+			TestrayCases.typeCasesField(
+				caseName = "",
+				caseTypeId = "",
+				componentId = "",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Then a warning message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "name is a required field");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Type",
+				warningMessage = "caseTypeId is a required field");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Main Component",
+				warningMessage = "componentId is a required field");
+		}
+
+	}
+
 }

@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>GO_TO_HOME_PAGE_LINK</td>
-	<td>//div[contains(@class,'navbar')]//a[contains(@class,'logo')]//*[contains(@role,'heading')][normalize-space(text())='${key_siteName}']</td>
+	<td>//div[contains(@class,'navbar')]//a[contains(@class,'logo')]//h1[normalize-space(text())='${key_siteName}']</td>
 	<td></td>
 </tr>
 <tr>

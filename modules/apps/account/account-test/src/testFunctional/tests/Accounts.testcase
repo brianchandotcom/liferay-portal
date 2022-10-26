@@ -503,6 +503,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			SelectFrame(
 				key_title = "Assign Users to New Instance Account",
 				locator1 = "IFrame#MODAL_ANY");
@@ -982,6 +984,8 @@ definition {
 		task ("Open and click into the Assign Users Modal") {
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			WaitForElementPresent(
 				key_title = "Assign Users to Business Account",
 				locator1 = "IFrame#MODAL_ANY");
@@ -1394,6 +1398,8 @@ definition {
 				rowEntry = "Business Account");
 
 			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Assign Users");
 
 			WaitForElementPresent(
 				key_title = "Assign Users to Business Account",
@@ -2263,6 +2269,8 @@ definition {
 				rowEntry = "Business Account");
 
 			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Assign Users");
 
 			WaitForElementPresent(
 				key_title = "Assign Users to Business Account",
@@ -3230,6 +3238,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			SelectFrame(
 				key_title = "Assign Users to Account Name",
 				locator1 = "IFrame#MODAL_ANY");
@@ -3665,6 +3675,8 @@ definition {
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Assign Users");
 
 		SelectFrame(
 			key_title = "Assign Users to Business Account",
@@ -4200,6 +4212,8 @@ definition {
 			rowEntry = "Account with Domain");
 
 		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Assign Users");
 
 		SelectFrame(
 			key_title = "Assign Users to Account with Domain",

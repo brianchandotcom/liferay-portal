@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
 
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		_selectedTags = Arrays.asList(parameterValues);
 	}
 
-	protected AssetTagsSearchFacetTermDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildTermDisplayContext(
 		TermCollector termCollector, int maxCount, int minCount,
 		double multiplier) {
 
@@ -149,22 +149,19 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 
 		String value = termCollector.getTerm();
 
-		AssetTagsSearchFacetTermDisplayContext
-			assetTagsSearchFacetTermDisplayContext =
-				new AssetTagsSearchFacetTermDisplayContext();
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		assetTagsSearchFacetTermDisplayContext.setBucketText(value);
-		assetTagsSearchFacetTermDisplayContext.setFilterValue(value);
-		assetTagsSearchFacetTermDisplayContext.setFrequency(frequency);
-		assetTagsSearchFacetTermDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
-		assetTagsSearchFacetTermDisplayContext.setPopularity(popularity);
-		assetTagsSearchFacetTermDisplayContext.setSelected(isSelected(value));
+		bucketDisplayContext.setBucketText(value);
+		bucketDisplayContext.setFilterValue(value);
+		bucketDisplayContext.setFrequency(frequency);
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setPopularity(popularity);
+		bucketDisplayContext.setSelected(isSelected(value));
 
-		return assetTagsSearchFacetTermDisplayContext;
+		return bucketDisplayContext;
 	}
 
-	protected List<AssetTagsSearchFacetTermDisplayContext>
+	protected List<BucketDisplayContext>
 		buildTermDisplayContexts() {
 
 		List<TermCollector> termCollectors = getTermCollectors();
@@ -173,8 +170,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			return getEmptySearchResultTermDisplayContexts();
 		}
 
-		List<AssetTagsSearchFacetTermDisplayContext>
-			assetTagsSearchFacetTermDisplayContexts = new ArrayList<>(
+		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
 				termCollectors.size());
 
 		int maxCount = 1;
@@ -231,43 +227,35 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 				continue;
 			}
 
-			AssetTagsSearchFacetTermDisplayContext
-				assetTagsSearchFacetTermDisplayContext =
+			BucketDisplayContext bucketDisplayContext =
 					buildTermDisplayContext(
 						termCollector, maxCount, minCount, multiplier);
 
-			if (assetTagsSearchFacetTermDisplayContext != null) {
-				assetTagsSearchFacetTermDisplayContexts.add(
-					assetTagsSearchFacetTermDisplayContext);
+			if (bucketDisplayContext != null) {
+				bucketDisplayContexts.add(bucketDisplayContext);
 			}
 		}
 
-		return assetTagsSearchFacetTermDisplayContexts;
+		return bucketDisplayContexts;
 	}
 
-	protected List<AssetTagsSearchFacetTermDisplayContext>
+	protected List<BucketDisplayContext>
 		getEmptySearchResultTermDisplayContexts() {
 
 		if (_selectedTags.isEmpty()) {
 			return Collections.emptyList();
 		}
 
-		AssetTagsSearchFacetTermDisplayContext
-			assetTagsSearchFacetTermDisplayContext =
-				new AssetTagsSearchFacetTermDisplayContext();
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		assetTagsSearchFacetTermDisplayContext.setBucketText(
-			_selectedTags.get(0));
-		assetTagsSearchFacetTermDisplayContext.setFilterValue(
-			_selectedTags.get(0));
-		assetTagsSearchFacetTermDisplayContext.setFrequency(0);
-		assetTagsSearchFacetTermDisplayContext.setFrequencyVisible(
-			_frequenciesVisible);
-		assetTagsSearchFacetTermDisplayContext.setPopularity(0);
-		assetTagsSearchFacetTermDisplayContext.setSelected(true);
+		bucketDisplayContext.setBucketText(_selectedTags.get(0));
+		bucketDisplayContext.setFilterValue(_selectedTags.get(0));
+		bucketDisplayContext.setFrequency(0);
+		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
+		bucketDisplayContext.setPopularity(0);
+		bucketDisplayContext.setSelected(true);
 
-		return Collections.singletonList(
-			assetTagsSearchFacetTermDisplayContext);
+		return Collections.singletonList(bucketDisplayContext);
 	}
 
 	protected String getFirstParameterValue() {

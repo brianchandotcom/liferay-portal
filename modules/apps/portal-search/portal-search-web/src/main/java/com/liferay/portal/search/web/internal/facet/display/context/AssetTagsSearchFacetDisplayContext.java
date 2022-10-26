@@ -53,10 +53,9 @@ public class AssetTagsSearchFacetDisplayContext {
 		return _tagFacetPortletInstanceConfiguration;
 	}
 
-	public List<AssetTagsSearchFacetTermDisplayContext>
-		getTermDisplayContexts() {
+	public List<BucketDisplayContext> getTermDisplayContexts() {
 
-		return _assetTagsSearchFacetTermDisplayContexts;
+		return _bucketDisplayContexts;
 	}
 
 	public boolean isCloudWithCount() {
@@ -118,15 +117,11 @@ public class AssetTagsSearchFacetDisplayContext {
 	}
 
 	public void setTermDisplayContexts(
-		List<AssetTagsSearchFacetTermDisplayContext>
-			assetTagsSearchFacetTermDisplayContexts) {
-
-		_assetTagsSearchFacetTermDisplayContexts =
-			assetTagsSearchFacetTermDisplayContexts;
+		List<BucketDisplayContext> bucketDisplayContexts) {
+		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
-	private List<AssetTagsSearchFacetTermDisplayContext>
-		_assetTagsSearchFacetTermDisplayContexts;
+	private List<BucketDisplayContext> _bucketDisplayContexts;
 	private boolean _cloudWithCount;
 	private long _displayStyleGroupId;
 	private String _facetLabel;

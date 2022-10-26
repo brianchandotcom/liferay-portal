@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
@@ -93,7 +93,7 @@ public class TagFacetPortletDisplayTemplateHandler
 			"getDisplayName()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"term", AssetTagsSearchFacetTermDisplayContext.class,
+			"term", BucketDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getDisplayName()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =

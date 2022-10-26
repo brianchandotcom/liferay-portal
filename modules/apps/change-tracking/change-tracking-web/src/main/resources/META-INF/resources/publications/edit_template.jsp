@@ -52,7 +52,7 @@ portletDisplay.setShowBackIcon(true);
 	</liferay-portlet:actionURL>
 
 	<react:component
-		module="publications/js/PublicationTemplateEditView"
+		module="publications/js/views/PublicationTemplateEditView"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"actionUrl", actionURL
@@ -78,43 +78,3 @@ portletDisplay.setShowBackIcon(true);
 		%>'
 	/>
 </clay:container-fluid>
-
-<%-- --%>
-
-<%--<clay:container-fluid--%>
-<%-- cssClass="container-form-lg"--%>
-<%-->--%>
-<%-- <clay:sheet>--%>
-<%-- <aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="editPublicationTemplateFm">--%>
-<%-- <aui:input name="ctCollectionTemplateId" type="hidden" value="<%= ctCollectionTemplateId %>" />--%>
-
-<%-- <aui:input label="name" name="name" placeholder="publication-template-name-placeholder" value="<%= name %>">--%>
-<%-- <aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollectionTemplate.class.getName(), "name") %></aui:validator>--%>
-<%-- <aui:validator name="required" />--%>
-<%-- </aui:input>--%>
-
-<%-- <aui:input label="description" name="description" placeholder="publication-template-description-placeholder" type="textarea" value="<%= description %>">--%>
-<%-- <aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollectionTemplate.class.getName(), "description") %></aui:validator>--%>
-<%-- </aui:input>--%>
-
-<%-- <aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="publication-information">--%>
-<%-- <aui:input label="publication-name" name="publicationName" placeholder="publication-name-placeholder" value="<%= name %>">--%>
-<%-- <aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "name") %></aui:validator>--%>
-<%-- </aui:input>--%>
-
-<%-- <aui:input label="publication-description" name="publicationDescription" placeholder="publication-description-placeholder" type="textarea" value="<%= description %>">--%>
-<%-- <aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTCollection.class.getName(), "description") %></aui:validator>--%>
-<%-- </aui:input>--%>
-<%-- </aui:fieldset>--%>
-
-<%-- <aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" helpMessage="publication-collaborators-help" label="publication-collaborators">--%>
-<%-- </aui:fieldset>--%>
-
-<%-- <aui:button-row>--%>
-<%-- <aui:button id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />--%>
-
-<%-- <aui:button href="<%= redirect %>" type="cancel" />--%>
-<%-- </aui:button-row>--%>
-<%-- </aui:form>--%>
-<%-- </clay:sheet>--%>
-<%--</clay:container-fluid>--%>

@@ -31,10 +31,10 @@ import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
-import ChangeTrackingComments from './ChangeTrackingComments';
+import ChangeTrackingComments from '../components/ChangeTrackingComments';
+import WorkflowStatusLabel from '../components/WorkflowStatusLabel';
+import ManageCollaborators from '../components/manage-collaborators-modal/ManageCollaborators';
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
-import ManageCollaborators from './ManageCollaborators';
-import WorkflowStatusLabel from './components/WorkflowStatusLabel';
 
 const DIRECTION_NEXT = 'next';
 const DIRECTION_PREV = 'prev';

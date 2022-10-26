@@ -174,9 +174,9 @@ definition {
 			TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
 
 			TestrayRequirements.addRequirementCase(
+				buttonText = "Select Cases",
 				caseName = "ATF_Requirements Case",
-				linkText = "Link Cases",
-				buttonText = "Select Cases");
+				linkText = "Link Cases");
 		}
 
 		task ("Then the case should be displayed on Requirement page") {
@@ -188,9 +188,9 @@ definition {
 
 		task ("When the user goes to requirements and unlink a case") {
 			TestrayRequirements.addRequirementCase(
+				buttonText = "Select Cases",
 				caseName = "ATF_Requirements Case",
-				linkText = "Link Cases",
-				buttonText = "Select Cases");
+				linkText = "Link Cases");
 		}
 
 		task ("Then the case should not be displayed on Requirement page") {

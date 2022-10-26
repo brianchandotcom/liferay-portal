@@ -1,19 +1,5 @@
 definition {
 
-	macro linkCasesRequirement {
-		TestrayRequirements.addRequirementCase(
-			caseName = "${requirementName}",
-			linkText = "${linkText}",
-			buttonText = "${buttonText}");
-	}
-
-	macro verifyCaseRequirement {
-		TestrayRequirements.verifyRequirementCase(
-			requirementCaseName = "ATF_Requirements Case",
-			requirementComponent = "Components_1 Project 1",
-			requirementPriority = "5");
-	}		
-
 	macro editCases {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -44,6 +30,13 @@ definition {
 			value1 = "${steps}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro linkCasesRequirement {
+		TestrayRequirements.addRequirementCase(
+			buttonText = "${buttonText}",
+			caseName = "${requirementName}",
+			linkText = "${linkText}");
 	}
 
 	macro typeCasesField {
@@ -88,11 +81,18 @@ definition {
 			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
+	macro verifyCaseRequirement {
+		TestrayRequirements.verifyRequirementCase(
+			requirementCaseName = "ATF_Requirements Case",
+			requirementComponent = "Components_1 Project 1",
+			requirementPriority = "5");
+	}
+
 	macro verifyLinkCaseRequirement {
 		AssertElementPresent(
-			key_teamName = "${teamName}",
 			key_component = "${component}",
 			key_summary = "${summary}",
+			key_teamName = "${teamName}",
 			locator1 = "TestrayCases#CASE_REQUIREMENT_DETAIL");
 	}
 

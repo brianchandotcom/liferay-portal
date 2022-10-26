@@ -97,6 +97,22 @@ definition {
 			expected = "${expected}");
 	}
 
+	macro getAnalyticsConfiguration {
+		ServerAdministration.openServerAdmin();
+
+		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
+
+		static var faroBackendURL = "${scriptValue}";
+
+		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
+
+		static var osbAsahFaroBackendSS = "${scriptValue}";
+
+		ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+
+		static var osbAsahProjectId = "${scriptValue}";
+	}
+
 	macro getTokenValue {
 		if (IsElementNotPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON")) {
 			ACUtils.clickAnyButton(button = "Generate Token");

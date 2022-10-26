@@ -69,9 +69,20 @@ public class PoshiScriptParserUtil {
 				sb.setLength(0);
 			}
 			else {
-				sb.append(c1);
+				if ((c1 == ',') && stack.isEmpty() &&
+					_patternIsNullOrMatches(pattern, methodParameterValue)) {
 
-				methodParameterValue = sb.toString();
+					expectedComma = true;
+
+					methodParameterValues.add(methodParameterValue);
+
+					sb.setLength(0);
+				}
+				else {
+					sb.append(c1);
+
+					methodParameterValue = sb.toString();
+				}
 			}
 
 			if (c1 == '`') {

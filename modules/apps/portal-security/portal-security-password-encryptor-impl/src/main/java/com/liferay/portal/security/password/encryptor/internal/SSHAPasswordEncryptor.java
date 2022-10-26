@@ -44,8 +44,12 @@ public class SSHAPasswordEncryptor
 	@Override
 	public String encrypt(
 			String algorithm, String plainTextPassword,
-			String encryptedPassword)
+			String encryptedPassword, Boolean upgradeHashSecurity)
 		throws PwdEncryptorException {
+
+		if (upgradeHashSecurity) {
+			encryptedPassword = null;
+		}
 
 		byte[] saltBytes = getSaltBytes(encryptedPassword);
 

@@ -16,9 +16,12 @@ package com.liferay.portal.kernel.security.pwd;
 
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Tomas Polesovsky
  */
+@ProviderType
 public interface PasswordEncryptor {
 
 	public static final String TYPE_BCRYPT = "BCRYPT";
@@ -51,8 +54,11 @@ public interface PasswordEncryptor {
 			String encryptedPassword)
 		throws PwdEncryptorException;
 
-	public String getDefaultPasswordAlgorithmType();
+	public String encrypt(
+			String algorithm, String plainTextPassword,
+			String encryptedPassword, Boolean upgradeHashSecurity)
+		throws PwdEncryptorException;
 
-	public String getPasswordAlgorithmType(String encryptedPassword);
+	public String getDefaultPasswordAlgorithmType();
 
 }

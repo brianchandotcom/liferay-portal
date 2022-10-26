@@ -49,10 +49,14 @@ public class PBKDF2PasswordEncryptor
 	@Override
 	public String encrypt(
 			String algorithm, String plainTextPassword,
-			String encryptedPassword)
+			String encryptedPassword, Boolean upgradeHashSecurity)
 		throws PwdEncryptorException {
 
 		try {
+			if (upgradeHashSecurity) {
+				encryptedPassword = null;
+			}
+
 			PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
 				new PBKDF2EncryptionConfiguration();
 

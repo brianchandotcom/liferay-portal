@@ -38,9 +38,14 @@ public class BCryptPasswordEncryptor
 
 	@Override
 	public String encrypt(
-		String algorithm, String plainTextPassword, String encryptedPassword) {
+		String algorithm, String plainTextPassword, String encryptedPassword,
+		Boolean upgradeHashSecurity) {
 
 		String salt = null;
+
+		if (upgradeHashSecurity) {
+			encryptedPassword = null;
+		}
 
 		if (Validator.isNull(encryptedPassword)) {
 			int rounds = _ROUNDS;

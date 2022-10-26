@@ -32,7 +32,8 @@ public class DefaultPasswordEncryptor
 
 	@Override
 	public String encrypt(
-		String algorithm, String plainTextPassword, String encryptedPassword) {
+		String algorithm, String plainTextPassword, String encryptedPassword,
+		Boolean upgradeHashSecurity) {
 
 		return DigesterUtil.digest(algorithm, plainTextPassword);
 	}

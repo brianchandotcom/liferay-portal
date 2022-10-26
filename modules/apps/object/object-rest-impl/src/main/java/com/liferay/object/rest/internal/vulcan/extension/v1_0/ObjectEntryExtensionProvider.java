@@ -57,10 +57,27 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 		long companyId, String className, Object entity) {
 
 		try {
-			return _objectEntryLocalService.
-				getExtensionDynamicObjectDefinitionTableValues(
-					getObjectDefinition(companyId, className),
-					getPrimaryKey(entity));
+			ObjectDefinition objectDefinition = getObjectDefinition(
+				companyId, className);
+
+			Map<String, Serializable> values =
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						objectDefinition, getPrimaryKey(entity));
+
+			for (ObjectField objectField :
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId(), false)) {
+
+				if (Objects.equals(
+						objectField.getRelationshipType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+					values.remove(objectField.getName());
+				}
+			}
+
+			return values;
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

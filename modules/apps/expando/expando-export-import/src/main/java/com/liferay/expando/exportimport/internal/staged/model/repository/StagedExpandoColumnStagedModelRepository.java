@@ -53,7 +53,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoColumn",
 	service = StagedModelRepository.class
 )

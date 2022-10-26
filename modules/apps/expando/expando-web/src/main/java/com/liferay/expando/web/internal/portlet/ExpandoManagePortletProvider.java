@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Albert Lee
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.expando.kernel.model.ExpandoColumn",
 	service = ManagePortletProvider.class
 )

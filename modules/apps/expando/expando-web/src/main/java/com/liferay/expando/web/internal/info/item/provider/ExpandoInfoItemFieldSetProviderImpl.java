@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = ExpandoInfoItemFieldSetProvider.class)
+@Component(service = ExpandoInfoItemFieldSetProvider.class)
 public class ExpandoInfoItemFieldSetProviderImpl
 	implements ExpandoInfoItemFieldSetProvider {
 

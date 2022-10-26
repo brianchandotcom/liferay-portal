@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ExpandoPortletKeys.EXPANDO,
 	service = PortletDataHandler.class
 )

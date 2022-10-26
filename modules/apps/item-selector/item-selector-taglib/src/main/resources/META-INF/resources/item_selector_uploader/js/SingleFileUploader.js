@@ -74,7 +74,7 @@ function SingleFileUploader({
 	);
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
-		accept: validExtensions,
+		accept: validExtensions === '*' ? undefined : validExtensions,
 		maxSize: maxFileSize,
 		multiple: false,
 		onDropAccepted: (acceptedFiles) => {

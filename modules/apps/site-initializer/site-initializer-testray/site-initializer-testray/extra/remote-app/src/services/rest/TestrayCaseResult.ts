@@ -13,7 +13,7 @@
  */
 
 import yupSchema from '../../schema/yup';
-import {TEST_STATUS} from '../../util/constants';
+import {CaseResultStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import Rest from './Rest';
 import {TestrayCaseResult} from './types';
@@ -21,6 +21,8 @@ import {TestrayCaseResult} from './types';
 type CaseResultForm = typeof yupSchema.caseResult.__outputType;
 
 class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
+	public UNASSIGNED_USER_ID = 0;
+
 	constructor() {
 		super({
 			adapter: ({
@@ -43,125 +45,78 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				startDate,
 			}),
 			nestedFields:
-				'/nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3',
-			transformData: (caseResult) =>
-				({
-					...caseResult,
-					assignedUserId: caseResult?.assignedUserId,
-					attachments: caseResult?.attachments,
-					build: caseResult?.r_buildToCaseResult_c_build
-						? {
-								...caseResult?.r_buildToCaseResult_c_build,
-								gitHash:
-									caseResult.r_buildToCaseResult_c_build
-										.gitHash,
-								id: caseResult.r_buildToCaseResult_c_build.id,
-								productVersion:
-									caseResult.r_buildToCaseResult_c_build
-										?.r_productVersionToBuilds_c_productVersion,
-								routine:
-									caseResult.r_buildToCaseResult_c_build
-										?.r_routineToBuilds_c_routine,
-						  }
-						: null,
-					case: caseResult?.r_caseToCaseResult_c_case
-						? {
-								...caseResult?.r_caseToCaseResult_c_case,
-								caseNumber:
-									caseResult?.r_caseToCaseResult_c_case
-										?.caseNumber,
-								caseType: caseResult?.r_caseToCaseResult_c_case
-									?.caseType
-									? {
-											name:
-												caseResult
-													.r_caseToCaseResult_c_case
-													.caseType?.name,
-									  }
-									: null,
-								component:
-									caseResult?.r_caseToCaseResult_c_case
-										?.r_componentToCases_c_component,
-								id: caseResult?.r_caseToCaseResult_c_case?.id,
-								name:
-									caseResult?.r_caseToCaseResult_c_case.name,
-								priority:
-									caseResult.r_caseToCaseResult_c_case
-										.priority,
-						  }
-						: null,
-					commentMBMessageId: caseResult?.commentMBMessageId,
-					component: caseResult?.r_componentToCaseResult_c_component
-						? {
-								...caseResult.r_componentToCaseResult_c_component,
-								team:
-									caseResult
-										.r_componentToCaseResult_c_component
-										.r_teamToComponents_c_team,
-						  }
-						: null,
-					dateCreated: caseResult?.dateCreated,
-					dateModified: caseResult?.dateModified,
-					dueStatus: caseResult?.dueStatus,
-					errors: caseResult?.errors,
-					id: caseResult?.id,
-					run: caseResult?.r_runToCaseResult_c_run
-						? {
-								...caseResult?.r_runToCaseResult_c_run,
-								build:
-									caseResult?.r_runToCaseResult_c_run?.build,
-						  }
-						: null,
-					startDate: caseResult?.startDate,
-					user: caseResult?.r_userToCaseResults_user
-						? {
-								...caseResult?.r_userToCaseResults_user,
-								additionalName:
-									caseResult?.r_userToCaseResults_user
-										?.additionalName,
-								emailAddress:
-									caseResult?.r_userToCaseResults_user
-										?.emailAddress,
-								givenName:
-									caseResult?.r_userToCaseResults_user
-										?.givenName,
-								id: caseResult?.r_userToCaseResults_user?.uuid,
-						  }
-						: null,
-					warnings: caseResult?.warnings,
-				} as any),
+				'case,component.team,build.productVersion,build.routine,run,user',
+			transformData: (caseResult) => ({
+				...caseResult,
+				build: caseResult?.r_buildToCaseResult_c_build
+					? {
+							...caseResult?.r_buildToCaseResult_c_build,
+							productVersion:
+								caseResult.r_buildToCaseResult_c_build
+									?.r_productVersionToBuilds_c_productVersion,
+							routine:
+								caseResult.r_buildToCaseResult_c_build
+									?.r_routineToBuilds_c_routine,
+					  }
+					: undefined,
+				case: caseResult?.r_caseToCaseResult_c_case
+					? {
+							...caseResult?.r_caseToCaseResult_c_case,
+							caseType:
+								caseResult?.r_caseToCaseResult_c_case
+									?.r_caseTypeToCases_c_caseType,
+							component:
+								caseResult?.r_caseToCaseResult_c_case
+									?.r_componentToCases_c_component,
+					  }
+					: undefined,
+				component: caseResult?.r_componentToCaseResult_c_component
+					? {
+							...caseResult.r_componentToCaseResult_c_component,
+							team:
+								caseResult.r_componentToCaseResult_c_component
+									.r_teamToComponents_c_team,
+					  }
+					: undefined,
+				run: caseResult?.r_runToCaseResult_c_run
+					? {
+							...caseResult?.r_runToCaseResult_c_run,
+							build: caseResult?.r_runToCaseResult_c_run?.build,
+					  }
+					: undefined,
+				user: caseResult?.r_userToCaseResults_user
+					? {
+							...caseResult?.r_userToCaseResults_user,
+							id: caseResult?.r_userToCaseResults_user?.uuid,
+					  }
+					: undefined,
+			}),
 			uri: 'caseresults',
 		});
 	}
 
 	public assignTo(caseResult: TestrayCaseResult, userId: number) {
-		const data = {
-			dueStatus: caseResult.dueStatus,
-			r_userToCaseResults_userId: userId,
+		return this.update(caseResult.id, {
+			dueStatus: caseResult.dueStatus.key,
 			startDate: caseResult.startDate,
-		};
-
-		return this.fetcher.put(`/caseresults/${caseResult.id}`, data);
+			userId,
+		});
 	}
 
 	public assignToMe(caseResult: TestrayCaseResult) {
-		const data = {
-			dueStatus: TEST_STATUS['In Progress'],
-			r_userToCaseResults_userId: Liferay.ThemeDisplay.getUserId(),
+		return this.update(caseResult.id, {
+			dueStatus: CaseResultStatuses.IN_PROGRESS,
 			startDate: caseResult.startDate,
-		};
-
-		return this.fetcher.put(`/caseresults/${caseResult.id}`, data);
+			userId: Number(Liferay.ThemeDisplay.getUserId()),
+		});
 	}
 
 	public removeAssign(caseResult: TestrayCaseResult) {
-		const data = {
-			dueStatus: TEST_STATUS.Untested,
-			r_userToCaseResults_userId: 0,
+		return this.update(caseResult.id, {
+			dueStatus: CaseResultStatuses.UNTESTED,
 			startDate: null,
-		};
-
-		return this.fetcher.put(`/caseresults/${caseResult.id}`, data);
+			userId: this.UNASSIGNED_USER_ID,
+		});
 	}
 }
 
@@ -170,6 +125,6 @@ const nestedFieldsParam =
 
 const caseResultsResource = `/caseresults?${nestedFieldsParam}`;
 
-export const testrayCaseResultRest = new TestrayCaseResultRest();
+export const testrayCaseResultImpl = new TestrayCaseResultRest();
 
 export {caseResultsResource};

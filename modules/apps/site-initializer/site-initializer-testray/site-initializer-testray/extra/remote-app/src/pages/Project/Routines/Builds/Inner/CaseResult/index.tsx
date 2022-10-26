@@ -22,13 +22,13 @@ import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../../../components/Code';
 import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
+import {StatusBadgeType} from '../../../../../../components/StatusBadge/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
 import i18n from '../../../../../../i18n';
 import {
 	TestrayCaseResult,
-	testrayCaseResultRest,
+	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
-import {getStatusLabel} from '../../../../../../util/constants';
 import {getTimeFromNow} from '../../../../../../util/date';
 import CaseResultHeaderActions from './CaseResultHeaderActions';
 
@@ -52,8 +52,7 @@ const CaseResult = () => {
 	const getAttachments = (): TestrayAttachment[] => {
 		try {
 			return JSON.parse(caseResult.attachments);
-		}
-		catch (error) {
+		} catch (error) {
 			return [];
 		}
 	};
@@ -79,13 +78,12 @@ const CaseResult = () => {
 									title: i18n.translate('status'),
 									value: (
 										<StatusBadge
-											type={getStatusLabel(
+											type={
 												caseResult.dueStatus
-											)}
+													.key as StatusBadgeType
+											}
 										>
-											{getStatusLabel(
-												caseResult.dueStatus
-											)}
+											{caseResult.dueStatus.name}
 										</StatusBadge>
 									),
 								},
@@ -228,7 +226,7 @@ const CaseResult = () => {
 									) : (
 										<AssignToMe
 											onClick={() =>
-												testrayCaseResultRest
+												testrayCaseResultImpl
 													.assignToMe(caseResult)
 													.then(mutateCaseResult)
 											}

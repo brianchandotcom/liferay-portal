@@ -27,7 +27,7 @@ import {
 	TestrayBuild,
 	TestrayProject,
 	TestrayRoutine,
-	testrayCaseResultRest,
+	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import useCaseResultActions from './useCaseResultActions';
 
@@ -51,8 +51,8 @@ const CaseResultOutlet = () => {
 		data: testrayCaseResult,
 		mutate: mutateCaseResult,
 	} = useFetch(
-		testrayCaseResultRest.getResource(caseResultId as string),
-		(response) => testrayCaseResultRest.transformData(response)
+		testrayCaseResultImpl.getResource(caseResultId as string),
+		(response) => testrayCaseResultImpl.transformData(response)
 	);
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;

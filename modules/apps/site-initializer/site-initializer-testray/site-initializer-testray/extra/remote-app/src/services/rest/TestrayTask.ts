@@ -15,6 +15,7 @@
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder, searchUtil} from '../../util/search';
+import {TaskStatuses} from '../../util/statuses';
 import Rest from './Rest';
 import {APIResponse, TestrayTask} from './types';
 
@@ -26,7 +27,7 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask> {
 			adapter: ({
 				buildId: r_buildToTasks_c_buildId,
 				caseTypes: taskToTasksCaseTypes,
-				dueStatus,
+				dueStatus = TaskStatuses.IN_ANALYSIS,
 				name,
 			}) => ({
 				dueStatus,

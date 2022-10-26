@@ -12,34 +12,44 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
+import ClayAlert, {DisplayType as AlertDisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import {DisplayType as ButtonDisplayType} from '@clayui/button/lib/Button';
 import ClayLabel from '@clayui/label';
 import {useNavigate} from 'react-router-dom';
 
 import i18n from '../../../../i18n';
 import {TestrayTask} from '../../../../services/rest';
-import {SUBTASK_STATUS, SUB_TASK_STATUS} from '../../../../util/constants';
+import {SubTaskStatuses} from '../../../../util/statuses';
 
 type BuildAlertBarProps = {
 	testrayTask: TestrayTask;
 };
 
-const alertProperties = {
-	[SUB_TASK_STATUS.IN_ANALYSIS]: {
-		...SUBTASK_STATUS[SUB_TASK_STATUS.IN_ANALYSIS],
+type AlertProperties = {
+	[key: string]: {
+		color: string;
+		displayType: string;
+		label: string;
+		text: string;
+	};
+};
+
+const alertProperties: AlertProperties = {
+	[SubTaskStatuses.IN_ANALYSIS]: {
+		color: 'label-chart-in-analysis',
 		displayType: 'warning',
 		label: i18n.translate('in-analysis'),
 		text: i18n.translate('this-build-is-currently-in-analysis'),
 	},
-	[SUB_TASK_STATUS.ABANDONED]: {
-		...SUBTASK_STATUS[SUB_TASK_STATUS.ABANDONED],
+	[SubTaskStatuses.ABANDONED]: {
+		color: 'label-secondary',
 		displayType: 'secondary',
 		label: i18n.translate('abandoned'),
 		text: i18n.translate('this-builds-task-has-been-abandoned'),
 	},
-	[SUB_TASK_STATUS.COMPLETE]: {
-		...SUBTASK_STATUS[SUB_TASK_STATUS.COMPLETE],
+	[SubTaskStatuses.COMPLETE]: {
+		color: 'label-primary',
 		displayType: 'primary',
 		label: i18n.translate('complete'),
 		text: i18n.translate('this-build-has-been-analyzed'),
@@ -49,7 +59,7 @@ const alertProperties = {
 const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 	const navigate = useNavigate();
 
-	const alertProperty = (alertProperties as any)[testrayTask.dueStatus];
+	const alertProperty = alertProperties[testrayTask.dueStatus.key];
 
 	if (!alertProperty) {
 		return null;
@@ -59,7 +69,7 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 		<ClayAlert
 			actions={
 				<ClayButton
-					displayType={alertProperty.displayType}
+					displayType={alertProperty.displayType as ButtonDisplayType}
 					onClick={() => navigate(`/testflow/${testrayTask.id}`)}
 					outline
 					small
@@ -68,11 +78,15 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 				</ClayButton>
 			}
 			className="build-alert-bar w-100"
-			displayType={alertProperty.displayType}
+			displayType={alertProperty.displayType as AlertDisplayType}
 			title={
 				((
 					<>
-						<ClayLabel displayType={alertProperty.displayType}>
+						<ClayLabel
+							displayType={
+								alertProperty.displayType as AlertDisplayType
+							}
+						>
 							{alertProperty.label}
 						</ClayLabel>
 

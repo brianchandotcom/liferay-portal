@@ -17,10 +17,14 @@ import {useOutletContext, useParams} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
+import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import QATable from '../../../components/Table/QATable';
 import i18n from '../../../i18n';
-import {TestrayCase, testrayCaseResultRest} from '../../../services/rest';
-import {getStatusLabel} from '../../../util/constants';
+import {
+	PickList,
+	TestrayCase,
+	testrayCaseResultImpl,
+} from '../../../services/rest';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
 import useCaseActions from './useCaseActions';
@@ -92,7 +96,7 @@ const Case = () => {
 						title: i18n.translate('test-history'),
 						visible: true,
 					}}
-					resource={testrayCaseResultRest.resource}
+					resource={testrayCaseResultImpl.resource}
 					tableProps={{
 						actions,
 						columns: [
@@ -133,12 +137,14 @@ const Case = () => {
 							},
 							{
 								key: 'dueStatus',
-								render: (dueStatus) => {
+								render: (dueStatus: PickList) => {
 									return (
 										<StatusBadge
-											type={getStatusLabel(dueStatus)}
+											type={
+												dueStatus.key as StatusBadgeType
+											}
 										>
-											{getStatusLabel(dueStatus)}
+											{dueStatus.name}
 										</StatusBadge>
 									);
 								},
@@ -155,7 +161,7 @@ const Case = () => {
 							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
 					transformData={(response) =>
-						testrayCaseResultRest.transformDataFromList(response)
+						testrayCaseResultImpl.transformDataFromList(response)
 					}
 					variables={{
 						filter: searchUtil.eq('caseId', caseId as string),

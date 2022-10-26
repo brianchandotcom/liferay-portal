@@ -19,11 +19,15 @@ import Code from '../../components/Code';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView';
 import StatusBadge from '../../components/StatusBadge';
+import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {caseResultsResource, testrayCaseResultRest} from '../../services/rest';
-import {getStatusLabel} from '../../util/constants';
+import {
+	PickList,
+	caseResultsResource,
+	testrayCaseResultImpl,
+} from '../../services/rest';
 import {subtask} from '../../util/mock';
 
 const Subtasks = () => {
@@ -161,12 +165,14 @@ const Subtasks = () => {
 
 							{
 								key: 'dueStatus',
-								render: (dueStatus) => {
+								render: (dueStatus: PickList) => {
 									return (
 										<StatusBadge
-											type={getStatusLabel(dueStatus)}
+											type={
+												dueStatus.key as StatusBadgeType
+											}
 										>
-											{getStatusLabel(dueStatus)}
+											{dueStatus.name}
 										</StatusBadge>
 									);
 								},
@@ -177,7 +183,7 @@ const Subtasks = () => {
 							`/project/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
 					transformData={(response) =>
-						testrayCaseResultRest.transformDataFromList(response)
+						testrayCaseResultImpl.transformDataFromList(response)
 					}
 				/>
 			</Container>

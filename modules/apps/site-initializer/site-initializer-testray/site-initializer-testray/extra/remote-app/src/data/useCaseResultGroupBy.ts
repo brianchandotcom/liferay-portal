@@ -16,8 +16,9 @@ import {useCallback, useMemo} from 'react';
 
 import {useFetch} from '../hooks/useFetch';
 import {APIResponse, FacetAggregation, TestrayBuild} from '../services/rest';
-import {Statuses, TEST_STATUS, chartColors} from '../util/constants';
+import {chartColors} from '../util/constants';
 import {searchUtil} from '../util/search';
+import {CaseResultStatuses} from '../util/statuses';
 
 function getStatusesMap(
 	facetAggregation: FacetAggregation | undefined
@@ -54,22 +55,22 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 		[statuses]
 	);
 
-	const status = {
-		blocked: getStatusValue(TEST_STATUS.Blocked),
-		failed: getStatusValue(TEST_STATUS.Failed),
-		incomplete:
-			getStatusValue(TEST_STATUS.Untested) +
-			getStatusValue(TEST_STATUS['In Progress']),
-		passed: getStatusValue(TEST_STATUS.Passed),
-		test_fix: getStatusValue(TEST_STATUS['Test Fix']),
-	};
-
 	const donutColumns = [
-		[Statuses.PASSED, status.passed],
-		[Statuses.FAILED, status.failed],
-		[Statuses.BLOCKED, status.blocked],
-		[Statuses.TEST_FIX, status.test_fix],
-		[Statuses.INCOMPLETE, status.incomplete],
+		[CaseResultStatuses.PASSED, getStatusValue(CaseResultStatuses.PASSED)],
+		[CaseResultStatuses.FAILED, getStatusValue(CaseResultStatuses.FAILED)],
+		[
+			CaseResultStatuses.BLOCKED,
+			getStatusValue(CaseResultStatuses.BLOCKED),
+		],
+		[
+			CaseResultStatuses.TEST_FIX,
+			getStatusValue(CaseResultStatuses.TEST_FIX),
+		],
+		[
+			CaseResultStatuses.INCOMPLETE,
+			getStatusValue(CaseResultStatuses.UNTESTED) +
+				getStatusValue(CaseResultStatuses.IN_PROGRESS),
+		],
 	];
 
 	return {
@@ -84,8 +85,7 @@ const useCaseResultGroupBy = (buildId: number = 0) => {
 				),
 		},
 		ready: !loading && statuses.size,
-		status,
-		statuses: Object.values(Statuses),
+		statuses: Object.values(CaseResultStatuses),
 	};
 };
 

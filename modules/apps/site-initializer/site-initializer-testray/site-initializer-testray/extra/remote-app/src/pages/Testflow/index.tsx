@@ -18,14 +18,11 @@ import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView';
 import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';
+import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
-import {TestrayTask, testrayTaskImpl} from '../../services/rest';
-import {
-	SUBTASK_STATUS,
-	StatusesProgressScore,
-	chartClassNames,
-} from '../../util/constants';
+import {PickList, TestrayTask, testrayTaskImpl} from '../../services/rest';
+import {StatusesProgressScore, chartClassNames} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {getPercentLabel} from '../../util/graph.util';
 import {routines} from '../../util/mock';
@@ -51,13 +48,11 @@ const TestFlow = () => {
 						{
 							clickable: true,
 							key: 'dueStatus',
-							render: (status: number) => (
+							render: (dueStatus: PickList) => (
 								<StatusBadge
-									type={
-										(SUBTASK_STATUS as any)[status]?.color
-									}
+									type={dueStatus.key as StatusBadgeType}
 								>
-									{(SUBTASK_STATUS as any)[status]?.label}
+									{dueStatus.name}
 								</StatusBadge>
 							),
 							value: i18n.translate('status'),

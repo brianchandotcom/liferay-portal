@@ -27,9 +27,9 @@ import yupSchema from '../../../../../../schema/yup';
 import {Liferay} from '../../../../../../services/liferay';
 import {
 	TestrayCaseResult,
-	testrayCaseResultRest,
+	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
-import {TEST_STATUS} from '../../../../../../util/constants';
+import {CaseResultStatuses} from '../../../../../../util/statuses';
 
 type CaseResultForm = {
 	commentMBMessage: string;
@@ -60,7 +60,7 @@ const CaseResultEditTest = () => {
 		defaultValues: caseResult?.dueStatus
 			? ({
 					commentMBMessage: caseResult?.commentMBMessage,
-					dueStatus: caseResult?.dueStatus,
+					dueStatus: caseResult?.dueStatus.key,
 					issue: caseResult?.issue,
 			  } as any)
 			: {},
@@ -86,8 +86,8 @@ const CaseResultEditTest = () => {
 				userId: Liferay.ThemeDisplay.getUserId(),
 			},
 			{
-				create: (...params) => testrayCaseResultRest.create(...params),
-				update: (...params) => testrayCaseResultRest.update(...params),
+				create: (data) => testrayCaseResultImpl.create(data),
+				update: (id, data) => testrayCaseResultImpl.update(id, data),
 			}
 		)
 			.then(mutateCaseResult)
@@ -113,10 +113,10 @@ const CaseResultEditTest = () => {
 				label={i18n.translate('status')}
 				name="dueStatus"
 				options={[
-					{label: 'Passed', value: TEST_STATUS.Passed},
-					{label: 'Failed', value: TEST_STATUS.Failed},
-					{label: 'Blocked', value: TEST_STATUS.Blocked},
-					{label: 'Test Fix', value: TEST_STATUS['Test Fix']},
+					{label: 'Passed', value: CaseResultStatuses.PASSED},
+					{label: 'Failed', value: CaseResultStatuses.FAILED},
+					{label: 'Blocked', value: CaseResultStatuses.BLOCKED},
+					{label: 'Test Fix', value: CaseResultStatuses.TEST_FIX},
 				]}
 				{...inputProps}
 				value={dueStatus}

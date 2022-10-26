@@ -20,14 +20,15 @@ import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
 import ListViewRest from '../../../../components/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
+import {StatusBadgeType} from '../../../../components/StatusBadge/StatusBadge';
 import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
 import {
+	PickList,
 	TestrayCaseResult,
-	testrayCaseResultRest,
+	testrayCaseResultImpl,
 } from '../../../../services/rest';
-import {getStatusLabel} from '../../../../util/constants';
 import {searchUtil} from '../../../../util/search';
 import useBuildTestActions from './useBuildTestActions';
 
@@ -43,7 +44,7 @@ const Build = () => {
 					filterFields: filters.build.results as any,
 					title: i18n.translate('tests'),
 				}}
-				resource={testrayCaseResultRest.resource}
+				resource={testrayCaseResultImpl.resource}
 				tableProps={{
 					actions,
 					columns: [
@@ -104,7 +105,7 @@ const Build = () => {
 								return (
 									<AssignToMe
 										onClick={() =>
-											testrayCaseResultRest
+											testrayCaseResultImpl
 												.assignToMe(caseResult)
 												.then(() => {
 													updateItemFromList(
@@ -126,9 +127,11 @@ const Build = () => {
 						},
 						{
 							key: 'dueStatus',
-							render: (dueStatus: number) => (
-								<StatusBadge type={getStatusLabel(dueStatus)}>
-									{getStatusLabel(dueStatus)}
+							render: (dueStatus: PickList) => (
+								<StatusBadge
+									type={dueStatus.key as StatusBadgeType}
+								>
+									{dueStatus.name}
 								</StatusBadge>
 							),
 							value: i18n.translate('status'),
@@ -141,15 +144,16 @@ const Build = () => {
 							key: 'errors',
 							render: (errors: string) =>
 								errors && (
-									<Code>{errors.substring(0, 250)}</Code>
+									<Code>{errors.substring(0, 100)}...</Code>
 								),
+							size: 'xl',
 							value: i18n.translate('errors'),
 						},
 					],
 					navigateTo: ({id}) => `case-result/${id}`,
 				}}
 				transformData={(response) =>
-					testrayCaseResultRest.transformDataFromList(response)
+					testrayCaseResultImpl.transformDataFromList(response)
 				}
 				variables={{
 					filter: searchUtil.eq('buildId', buildId as string),

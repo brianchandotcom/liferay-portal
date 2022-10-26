@@ -15,10 +15,10 @@
 import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
-import {TEST_STATUS} from '../../util/constants';
 import {SearchBuilder, searchUtil} from '../../util/search';
+import {BuildStatuses, CaseResultStatuses} from '../../util/statuses';
 import Rest from './Rest';
-import {testrayCaseResultRest} from './TestrayCaseResult';
+import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testrayFactorRest} from './TestrayFactor';
 import {testrayRunImpl} from './TestrayRun';
 
@@ -48,6 +48,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			}) => ({
 				active,
 				description,
+				dueStatus: BuildStatuses.ACTIVE,
 				gitHash,
 				name,
 				promoted,
@@ -114,16 +115,16 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				}
 			}
 
-			await testrayCaseResultRest.createBatch(
+			await testrayCaseResultImpl.createBatch(
 				caseIds.map((caseId) => ({
 					buildId: build.id,
 					caseId,
 					commentMBMessage: undefined,
-					dueStatus: TEST_STATUS.Untested.toString(),
+					dueStatus: CaseResultStatuses.UNTESTED,
 					issues: undefined,
 					runId: testrayRun.id,
 					startDate: undefined,
-					userId: 0,
+					userId: testrayCaseResultImpl.UNASSIGNED_USER_ID,
 				}))
 			);
 

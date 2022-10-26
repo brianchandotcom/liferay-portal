@@ -23,14 +23,19 @@ interface ErrorDetails extends Error {
 
 interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
+	bcc: string;
 	body: LocalizedValue<string>;
+	cc: string;
 	description: string;
+	from: string;
+	fromName: LocalizedValue<string>;
 	id: number;
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: RecipientType;
 	recipients: Recipients[];
 	subject: LocalizedValue<string>;
+	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
 }
 

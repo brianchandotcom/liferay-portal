@@ -1,0 +1,99 @@
+[
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Description",
+		"properties": {
+			"displayType": "text-box",
+			"height": "150",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Image Url",
+		"properties": {
+			"displayType": "text-box",
+			"height": "150",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Preheader",
+		"properties": {
+			"displayType": "text-box",
+			"height": "150",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Type",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Background",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Child Columns",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Column Span",
+		"properties": {
+			"displayType": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	}
+]

@@ -38,7 +38,9 @@ const ActionsInfo = ({
 	sectionsLength,
 	setSections,
 }) => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+	const {clientExtensions, selectedItem, setSelectedItem} = useContext(
+		DiagramBuilderContext
+	);
 	const {actions} = selectedItem.data;
 
 	const [script, setScript] = useState(actions?.script?.[index] || '');
@@ -131,6 +133,7 @@ const ActionsInfo = ({
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 			<BaseActionsInfo
+				clientExtensions={clientExtensions}
 				description={description}
 				executionType={executionType}
 				executionTypeInput={executionTypeInput}

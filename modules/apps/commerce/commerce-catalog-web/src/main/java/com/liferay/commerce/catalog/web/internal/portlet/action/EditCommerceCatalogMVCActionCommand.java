@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
@@ -46,7 +47,9 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
@@ -202,7 +205,12 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 				catalogDefaultLanguageId);
 		}
 
-		// Catalog default image
+		return commerceCatalog;
+	}
+
+	private void _updateDefaultImage(
+			ActionRequest actionRequest, CommerceCatalog commerceCatalog)
+		throws Exception {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
@@ -218,12 +226,28 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 			"defaultFileEntryId", String.valueOf(fileEntryId));
 
 		modifiableSettings.store();
+	}
 
-		// Base price list and promotion
+	private void _updateInventoryMethodKey(
+			ActionRequest actionRequest, CommerceCatalog commerceCatalog)
+		throws Exception {
 
-		_updateBasePriceListAndPromotion(actionRequest, commerceCatalog);
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceCatalog.getGroupId(),
+				CommerceInventoryConstants.SERVICE_NAME));
 
-		return commerceCatalog;
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		Map<String, String> parameterMap = PropertiesParamUtil.getProperties(
+			actionRequest, "inventorySettings--");
+
+		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
+			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		}
+
+		modifiableSettings.store();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -252,7 +276,12 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public Object call() throws Exception {
-			_updateCommerceCatalog(_actionRequest);
+			CommerceCatalog commerceCatalog = _updateCommerceCatalog(
+				_actionRequest);
+
+			_updateBasePriceListAndPromotion(_actionRequest, commerceCatalog);
+			_updateDefaultImage(_actionRequest, commerceCatalog);
+			_updateInventoryMethodKey(_actionRequest, commerceCatalog);
 
 			return null;
 		}

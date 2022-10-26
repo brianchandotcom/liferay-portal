@@ -89,6 +89,20 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 
 					</aui:select>
 
+					<aui:select label="inventory-method-key" name="inventorySettings--inventoryMethodKey--" required="<%= true %>">
+
+						<%
+						for (CommerceInventoryMethod commerceInventoryMethod : commerceCatalogDisplayContext.getCommerceInventoryMethods()) {
+						%>
+
+							<aui:option label="<%= commerceInventoryMethod.getLabel(locale) %>" selected="<%= commerceCatalogDisplayContext.isCommerceInventoryMethodSelected(commerceCatalog.getGroupId(), commerceInventoryMethod.getKey()) %>" value="<%= commerceInventoryMethod.getKey() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
 					<c:if test="<%= commerceCatalogDisplayContext.showBasePriceListInputs() %>">
 						<label class="control-label" for="baseCommercePriceListId"><liferay-ui:message key="base-price-list" /></label>
 

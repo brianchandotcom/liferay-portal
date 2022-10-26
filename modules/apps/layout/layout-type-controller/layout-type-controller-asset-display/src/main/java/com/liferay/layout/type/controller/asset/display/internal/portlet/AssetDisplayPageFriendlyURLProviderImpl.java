@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.util.PropsValues;
 
@@ -165,10 +167,15 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 		Set<String> languageIds = I18nFilter.getLanguageIds();
 
+		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
+			themeDisplay.getCompanyId(),
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+
 		if ((languageIds.contains(locale.toString()) &&
-			 (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+			 (localePrependFriendlyURLStyle == 1) &&
 			 !locale.equals(LocaleUtil.getDefault())) ||
-			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
+			(localePrependFriendlyURLStyle == 2)) {
 
 			i18nPath = _getI18nPath(locale);
 		}

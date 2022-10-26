@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -116,7 +118,12 @@ public class I18nFilter extends BasePortalFilter {
 	protected String getRedirect(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
+		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
+			PortalUtil.getCompanyId(httpServletRequest),
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+
+		if (localePrependFriendlyURLStyle == 0) {
 			return null;
 		}
 
@@ -137,7 +144,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		String i18nLanguageId = prependI18nLanguageId(
-			httpServletRequest, PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			httpServletRequest, localePrependFriendlyURLStyle);
 
 		if (i18nLanguageId == null) {
 			return null;

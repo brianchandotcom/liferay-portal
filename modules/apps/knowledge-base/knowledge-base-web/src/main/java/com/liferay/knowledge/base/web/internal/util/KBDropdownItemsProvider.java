@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.internal.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.rss.util.RSSUtil;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -68,8 +70,17 @@ public class KBDropdownItemsProvider {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		this(liferayPortletRequest, liferayPortletResponse, null);
+	}
+
+	public KBDropdownItemsProvider(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
 
 		_currentURL = String.valueOf(
 			PortletURLUtil.getCurrent(
@@ -723,15 +734,19 @@ public class KBDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				ResourceURLBuilder.createResourceURL(
-					_liferayPortletResponse
-				).setParameter(
-					"resourceClassNameId", kbArticle.getClassNameId()
-				).setParameter(
-					"resourcePrimKey", kbArticle.getResourcePrimKey()
-				).setResourceID(
-					"kbArticleRSS"
-				).buildString());
+				RSSUtil.getURL(
+					ResourceURLBuilder.createResourceURL(
+						_liferayPortletResponse
+					).setParameter(
+						"resourceClassNameId", kbArticle.getClassNameId()
+					).setParameter(
+						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).setResourceID(
+						"kbArticleRSS"
+					).buildString(),
+					_kbGroupServiceConfiguration.rssDelta(),
+					_kbGroupServiceConfiguration.rssDisplayStyle(),
+					_kbGroupServiceConfiguration.rssFeedType(), null));
 			dropdownItem.setIcon("shortcut");
 			dropdownItem.setLabel("RSS");
 			dropdownItem.setTarget("_blank");
@@ -977,7 +992,9 @@ public class KBDropdownItemsProvider {
 	private Boolean _hasRSSPermission(KBArticle kbArticle) {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
+		if ((_kbGroupServiceConfiguration != null) &&
+			_kbGroupServiceConfiguration.enableRSS() &&
+			(kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
 			!Objects.equals(
 				portletDisplay.getRootPortletId(),
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
@@ -1125,6 +1142,7 @@ public class KBDropdownItemsProvider {
 	}
 
 	private final String _currentURL;
+	private final KBGroupServiceConfiguration _kbGroupServiceConfiguration;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

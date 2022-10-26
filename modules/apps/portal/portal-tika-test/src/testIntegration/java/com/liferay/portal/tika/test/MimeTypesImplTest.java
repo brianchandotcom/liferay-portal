@@ -23,6 +23,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -40,6 +42,20 @@ public class MimeTypesImplTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testApplicationOctetStream() {
+		Set<String> validExtensions = _mimeTypes.getExtensions(
+			ContentTypes.APPLICATION_OCTET_STREAM);
+
+		for (String validExtension : validExtensions) {
+			Assert.assertEquals(
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				_getContentType("test" + validExtension, false));
+		}
+
+		Assert.assertNull(_getContentType("test.invalid", false));
+	}
 
 	@Test
 	public void testDoc() {

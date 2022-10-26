@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration",
 	service = ConfigurationModelListener.class
 )

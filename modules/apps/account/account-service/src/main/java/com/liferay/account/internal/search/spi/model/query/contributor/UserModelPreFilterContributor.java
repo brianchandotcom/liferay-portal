@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.portal.kernel.model.User",
 	service = ModelPreFilterContributor.class
 )

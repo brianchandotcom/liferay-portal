@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class AccountPermission {
 
 	public static boolean contains(

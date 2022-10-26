@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.account.model.AccountGroup",
 	service = ModelDocumentContributor.class
 )

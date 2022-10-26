@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.account.model.AccountGroup",
 	service = ModelSummaryContributor.class
 )

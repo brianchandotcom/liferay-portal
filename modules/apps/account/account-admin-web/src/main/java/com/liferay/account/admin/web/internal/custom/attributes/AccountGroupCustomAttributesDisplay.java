@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
 	service = CustomAttributesDisplay.class
 )

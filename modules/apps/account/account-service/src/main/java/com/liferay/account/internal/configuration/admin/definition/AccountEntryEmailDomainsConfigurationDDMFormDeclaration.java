@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = "configurationPid=com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration",
 	service = ConfigurationDDMFormDeclaration.class
 )

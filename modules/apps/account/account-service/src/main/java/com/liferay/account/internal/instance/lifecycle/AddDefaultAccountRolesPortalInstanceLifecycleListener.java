@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=200",
+	property = "service.ranking:Integer=200",
 	service = PortalInstanceLifecycleListener.class
 )
 public class AddDefaultAccountRolesPortalInstanceLifecycleListener

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Pei-Jung Lan
  * @author Drew Brokke
  */
-@Component(immediate = true, service = CurrentAccountEntryManager.class)
+@Component(service = CurrentAccountEntryManager.class)
 public class CurrentAccountEntryManagerImpl
 	implements CurrentAccountEntryManager {
 

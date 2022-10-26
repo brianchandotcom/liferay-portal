@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.account.internal.configuration.AccountEntryGroupConfiguration",
 	service = ConfigurationModelListener.class
 )

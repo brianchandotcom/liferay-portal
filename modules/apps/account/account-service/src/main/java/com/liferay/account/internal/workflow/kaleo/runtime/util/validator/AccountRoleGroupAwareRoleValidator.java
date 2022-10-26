@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = GroupAwareRoleValidator.class)
+@Component(service = GroupAwareRoleValidator.class)
 public class AccountRoleGroupAwareRoleValidator
 	implements GroupAwareRoleValidator {
 

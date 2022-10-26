@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = AccountEntryGroupSettings.class)
+@Component(service = AccountEntryGroupSettings.class)
 public class AccountEntryGroupSettingsImpl
 	implements AccountEntryGroupSettings, ConfigurationModelListener {
 

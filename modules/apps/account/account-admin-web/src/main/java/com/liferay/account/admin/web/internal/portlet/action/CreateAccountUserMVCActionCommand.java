@@ -56,7 +56,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_REGISTRATION,
 		"mvc.command.name=/account_admin/create_account_user"

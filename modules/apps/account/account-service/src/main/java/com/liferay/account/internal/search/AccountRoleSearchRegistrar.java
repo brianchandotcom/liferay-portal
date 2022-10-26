@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class AccountRoleSearchRegistrar {
 
 	@Activate

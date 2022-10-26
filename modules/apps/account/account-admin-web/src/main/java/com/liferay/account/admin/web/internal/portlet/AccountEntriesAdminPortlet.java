@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Albert Lee
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

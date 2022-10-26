@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Albert Lee
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,
 		"mvc.command.name=/account_admin/remove_account_group_account_entries"

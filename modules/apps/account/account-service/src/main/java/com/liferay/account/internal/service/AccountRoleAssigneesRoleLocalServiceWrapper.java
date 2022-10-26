@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Queiroz
  * @author Erick Monteiro
  */
-@Component(immediate = true, service = ServiceWrapper.class)
+@Component(service = ServiceWrapper.class)
 public class AccountRoleAssigneesRoleLocalServiceWrapper
 	extends RoleLocalServiceWrapper {
 

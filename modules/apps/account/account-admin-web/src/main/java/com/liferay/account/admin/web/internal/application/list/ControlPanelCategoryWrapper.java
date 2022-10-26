@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = {
 		"account.control.panel.category.wrapper=true",
 		"panel.category.key=" + PanelCategoryKeys.ROOT,

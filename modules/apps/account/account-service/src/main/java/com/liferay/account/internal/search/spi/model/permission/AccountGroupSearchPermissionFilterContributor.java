@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = SearchPermissionFilterContributor.class)
+@Component(service = SearchPermissionFilterContributor.class)
 public class AccountGroupSearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 

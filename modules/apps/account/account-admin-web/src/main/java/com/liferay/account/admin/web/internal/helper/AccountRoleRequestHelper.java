@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = AccountRoleRequestHelper.class)
+@Component(service = AccountRoleRequestHelper.class)
 public class AccountRoleRequestHelper {
 
 	public void setRequestAttributes(HttpServletRequest httpServletRequest) {

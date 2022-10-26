@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.account.model.AccountGroup",
 	service = ModelResourcePermission.class
 )

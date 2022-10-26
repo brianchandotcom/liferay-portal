@@ -1,0 +1,67 @@
+{
+	"configuration": {
+		"callbackURL": "http://localserver:8080/callback",
+		"className": "com.liferay.batch.engine.model.BatchEngineImportTask",
+		"companyId": 2410,
+		"fieldNameMappingMap": {
+			"field1": "other1",
+			"field2": "other2",
+			"field3": "other3"
+		},
+		"parameters": {
+			"importStrategy": "UPSERT",
+			"siteId": "246789",
+			"updateStrategy": "REPLACE"
+		},
+		"taskItemDelegateName": "child node data5",
+		"userId": 245647,
+		"version": "v10.0"
+	},
+	"items": [
+		{
+			"innerArray1": [
+				"11",
+				"21",
+				"31"
+			],
+			"name": "Array Element 1",
+			"position": 1,
+			"value": 21
+		},
+		{
+			"name": "Array Element 2",
+			"position": 2,
+			"value": 22
+		},
+		{
+			"innerArray1": [
+				"12",
+				"22",
+				"32"
+			],
+			"name": "Array Element 3",
+			"position": 3,
+			"value": 23
+		},
+		{
+			"name": "Array Element 4",
+			"position": 4,
+			"value": 24
+		},
+		{
+			"innerArray1": [
+				"13",
+				"23",
+				"33"
+			],
+			"name": "Array Element 5",
+			"position": 5,
+			"value": 25
+		},
+		{
+			"name": "Array Element 6",
+			"position": 6,
+			"value": 26
+		}
+	]
+}

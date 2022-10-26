@@ -72,7 +72,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_KEBAB_MENU</td>
-		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/following-sibling::div//button</td>
+		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class, 'dnd-td') and contains(., '${key_entry}')]/following-sibling::div//button</td>
 		<td></td>
 	</tr>
 	<tr>

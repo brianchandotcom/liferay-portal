@@ -216,8 +216,6 @@ definition {
 	@description = "LPS-143065 - Verify that when the user uploads another item when there's already a attachment, the new file replaces the current one"
 	@priority = "4"
 	test CanReplaceFile {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151578",
 			objectName = "CustomObject151578",

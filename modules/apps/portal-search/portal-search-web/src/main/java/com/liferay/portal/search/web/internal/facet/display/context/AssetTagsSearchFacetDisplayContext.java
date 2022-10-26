@@ -23,6 +23,10 @@ import java.util.List;
  */
 public class AssetTagsSearchFacetDisplayContext {
 
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
+		return _bucketDisplayContexts;
+	}
+
 	public long getDisplayStyleGroupId() {
 		return _displayStyleGroupId;
 	}
@@ -53,11 +57,6 @@ public class AssetTagsSearchFacetDisplayContext {
 		return _tagFacetPortletInstanceConfiguration;
 	}
 
-	public List<BucketDisplayContext> getBucketDisplayContexts() {
-
-		return _bucketDisplayContexts;
-	}
-
 	public boolean isCloudWithCount() {
 		return _cloudWithCount;
 	}
@@ -68,6 +67,12 @@ public class AssetTagsSearchFacetDisplayContext {
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setBucketDisplayContexts(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
 	public void setCloudWithCount(boolean cloudWithCount) {
@@ -114,11 +119,6 @@ public class AssetTagsSearchFacetDisplayContext {
 
 		_tagFacetPortletInstanceConfiguration =
 			tagFacetPortletInstanceConfiguration;
-	}
-
-	public void setBucketDisplayContexts(
-		List<BucketDisplayContext> bucketDisplayContexts) {
-		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
 	private List<BucketDisplayContext> _bucketDisplayContexts;

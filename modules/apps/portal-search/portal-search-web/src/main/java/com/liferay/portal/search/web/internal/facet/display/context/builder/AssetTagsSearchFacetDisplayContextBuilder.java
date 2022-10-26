@@ -161,9 +161,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		return bucketDisplayContext;
 	}
 
-	protected List<BucketDisplayContext>
-		buildBucketDisplayContexts() {
-
+	protected List<BucketDisplayContext> buildBucketDisplayContexts() {
 		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {
@@ -171,7 +169,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		}
 
 		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
-				termCollectors.size());
+			termCollectors.size());
 
 		int maxCount = 1;
 		int minCount = 1;
@@ -228,8 +226,8 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			}
 
 			BucketDisplayContext bucketDisplayContext =
-					buildBucketDisplayContext(
-						termCollector, maxCount, minCount, multiplier);
+				buildBucketDisplayContext(
+					termCollector, maxCount, minCount, multiplier);
 
 			if (bucketDisplayContext != null) {
 				bucketDisplayContexts.add(bucketDisplayContext);

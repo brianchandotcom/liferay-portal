@@ -152,6 +152,15 @@ public class NotificationTemplateResourceTest
 
 	@Override
 	protected NotificationTemplate
+			testPostNotificationTemplateCopy_addNotificationTemplate(
+				NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		return _addNotificationTemplate(notificationTemplate);
+	}
+
+	@Override
+	protected NotificationTemplate
 			testPutNotificationTemplate_addNotificationTemplate()
 		throws Exception {
 

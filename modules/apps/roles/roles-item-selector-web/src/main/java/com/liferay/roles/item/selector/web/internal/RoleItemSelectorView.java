@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @deprecated As of Mueller (7.2.x), , with no direct replacement
  */
-@Component(immediate = true, service = ItemSelectorView.class)
+@Component(service = ItemSelectorView.class)
 @Deprecated
 public class RoleItemSelectorView
 	implements ItemSelectorView<RoleItemSelectorCriterion> {

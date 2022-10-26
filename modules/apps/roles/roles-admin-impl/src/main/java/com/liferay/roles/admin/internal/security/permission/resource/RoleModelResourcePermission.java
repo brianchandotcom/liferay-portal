@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Queiroz
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.model.Role",
 	service = ModelResourcePermission.class
 )

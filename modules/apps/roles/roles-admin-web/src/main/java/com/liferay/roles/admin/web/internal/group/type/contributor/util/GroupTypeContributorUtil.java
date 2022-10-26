@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class GroupTypeContributorUtil {
 
 	public static long[] getClassNameIds() {

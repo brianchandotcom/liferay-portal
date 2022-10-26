@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN,
 		"path=/edit_role.jsp", "path=/edit_role_assignments.jsp",

@@ -1,5 +1,37 @@
 definition {
 
+	macro assertElementFocused {
+		var javascript = '''
+var e = document.evaluate("${element}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+var aE = document.activeElement;
+
+return	aE.isEqualNode(e).toString();
+		''';
+
+		var focused = selenium.getEval("${javascript}");
+
+		if ("${focused}" != "true") {
+			TestUtils.fail(message = "FAILED: Element is not focused");
+		}
+	}
+
+	macro assertElementNotFocused {
+		var javascript = '''
+var e = document.evaluate("${element}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+var aE = document.activeElement;
+
+return	aE.isEqualNode(e).toString();
+		''';
+
+		var focused = selenium.getEval("${javascript}");
+
+		if ("${focused}" != "false") {
+			TestUtils.fail(message = "FAILED: Element is focused");
+		}
+	}
+
 	macro assertEquals {
 		echo("${expected}");
 

@@ -204,7 +204,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_filterPredicateFactory, _objectDefinitionLocalService,
 			_objectEntryLocalService, _objectEntryManagerTracker,
 			_objectFieldLocalService, _objectRelationshipService,
-			_objectScopeProviderRegistry);
+			_objectScopeProviderRegistry,
+			_systemObjectDefinitionMetadataTracker);
 	}
 
 	private void _excludeScopedMethods(

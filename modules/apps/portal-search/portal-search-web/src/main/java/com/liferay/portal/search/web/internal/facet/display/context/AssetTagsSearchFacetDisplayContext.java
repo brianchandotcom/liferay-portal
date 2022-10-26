@@ -53,7 +53,7 @@ public class AssetTagsSearchFacetDisplayContext {
 		return _tagFacetPortletInstanceConfiguration;
 	}
 
-	public List<BucketDisplayContext> getTermDisplayContexts() {
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
 
 		return _bucketDisplayContexts;
 	}
@@ -116,7 +116,7 @@ public class AssetTagsSearchFacetDisplayContext {
 			tagFacetPortletInstanceConfiguration;
 	}
 
-	public void setTermDisplayContexts(
+	public void setBucketDisplayContexts(
 		List<BucketDisplayContext> bucketDisplayContexts) {
 		_bucketDisplayContexts = bucketDisplayContexts;
 	}

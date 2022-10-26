@@ -76,8 +76,8 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		assetTagsSearchFacetDisplayContext.
 			setTagFacetPortletInstanceConfiguration(
 				_tagFacetPortletInstanceConfiguration);
-		assetTagsSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts());
+		assetTagsSearchFacetDisplayContext.setBucketDisplayContexts(
+			buildBucketDisplayContexts());
 
 		return assetTagsSearchFacetDisplayContext;
 	}
@@ -138,7 +138,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		_selectedTags = Arrays.asList(parameterValues);
 	}
 
-	protected BucketDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildBucketDisplayContext(
 		TermCollector termCollector, int maxCount, int minCount,
 		double multiplier) {
 
@@ -162,12 +162,12 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	}
 
 	protected List<BucketDisplayContext>
-		buildTermDisplayContexts() {
+		buildBucketDisplayContexts() {
 
 		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {
-			return getEmptySearchResultTermDisplayContexts();
+			return getEmptySearchResultBucketDisplayContexts();
 		}
 
 		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
@@ -228,7 +228,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			}
 
 			BucketDisplayContext bucketDisplayContext =
-					buildTermDisplayContext(
+					buildBucketDisplayContext(
 						termCollector, maxCount, minCount, multiplier);
 
 			if (bucketDisplayContext != null) {
@@ -240,7 +240,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	}
 
 	protected List<BucketDisplayContext>
-		getEmptySearchResultTermDisplayContexts() {
+		getEmptySearchResultBucketDisplayContexts() {
 
 		if (_selectedTags.isEmpty()) {
 			return Collections.emptyList();

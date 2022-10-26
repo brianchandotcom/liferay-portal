@@ -52,7 +52,7 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = assetTag
 						</li>
 
 						<%
-						java.util.List<BucketDisplayContext> bucketDisplayContexts = assetTagsSearchFacetDisplayContext.getTermDisplayContexts();
+						java.util.List<BucketDisplayContext> bucketDisplayContexts = assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
 
 						for (BucketDisplayContext bucketDisplayContext : bucketDisplayContexts) {
 						%>

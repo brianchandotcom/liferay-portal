@@ -63,7 +63,7 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 				%>'
 				displayStyle="<%= tagFacetPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= assetTagsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-				entries="<%= assetTagsSearchFacetDisplayContext.getTermDisplayContexts() %>"
+				entries="<%= assetTagsSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
 				<liferay-ui:panel-container
 					extended="<%= true %>"
@@ -85,7 +85,7 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext bucketDisplayContext : assetTagsSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : assetTagsSearchFacetDisplayContext.getBucketDisplayContexts()) {
 									i++;
 								%>
 

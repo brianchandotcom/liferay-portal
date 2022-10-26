@@ -63,6 +63,12 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		}
 	}
 
+	protected void addTestClasses(List<TestClass> testClasses) {
+		for (TestClass testClass : testClasses) {
+			addTestClass(testClass);
+		}
+	}
+
 	protected String getBuildStartProperty(String propertyName) {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 

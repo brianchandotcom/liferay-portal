@@ -15,10 +15,11 @@
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 function mapItemsOnClick(items) {
 	return items.map((item) => {
@@ -50,6 +51,16 @@ function mapItemsOnClick(items) {
 	});
 }
 
+const defaultItems = [
+	{
+		'aria-label': Liferay.Language.get('loading'),
+		'aria-valuemax': 100,
+		'aria-valuemin': 0,
+		'label': <ClayLoadingIndicator />,
+		'roleItem': 'progressbar',
+	},
+];
+
 function PersonalMenu({
 	color,
 	isImpersonated,
@@ -58,7 +69,7 @@ function PersonalMenu({
 	size,
 	userPortraitURL,
 }) {
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useState(defaultItems);
 	const preloadPromiseRef = useRef();
 
 	function preloadItems() {
@@ -70,6 +81,15 @@ function PersonalMenu({
 				);
 		}
 	}
+
+	useEffect(() => {
+		if (preloadPromiseRef.current) {
+			const firstMenuItem = document.querySelector(
+				'.dropdown-menu-personal-menu [role=menuitem]'
+			);
+			firstMenuItem?.focus();
+		}
+	}, [items]);
 
 	return (
 		<ClayDropDownWithItems

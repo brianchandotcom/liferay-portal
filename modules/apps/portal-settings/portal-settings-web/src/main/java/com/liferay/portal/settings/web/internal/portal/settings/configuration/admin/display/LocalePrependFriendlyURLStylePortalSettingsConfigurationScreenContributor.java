@@ -19,8 +19,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-
-import javax.portlet.PortletPreferences;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,13 +59,12 @@ public class
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
-
 		httpServletRequest.setAttribute(
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			companyPortletPreferences.getValue(
-				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, null));
+			PrefsPropsUtil.getInteger(
+				themeDisplay.getCompanyId(),
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+				PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE));
 	}
 
 }

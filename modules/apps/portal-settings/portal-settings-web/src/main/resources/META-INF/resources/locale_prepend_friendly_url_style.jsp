@@ -22,7 +22,7 @@
 	<div class="col-md-12">
 		<br />
 
-		<aui:select label="locale-prepend-friendly-url-style" name='<%= "settings--" + PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE + "--" %>' type="text" value="<%= (String)request.getAttribute(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE) %>">
+		<aui:select label="locale-prepend-friendly-url-style" name='<%= "settings--" + PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE + "--" %>' type="text" value="<%= (int)request.getAttribute(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE) %>">
 			<aui:option label="locale-is-not-automatically-prepended-to-a-url" value="0" />
 			<aui:option label="locale-is-automatically-prepended-to-a-url-when-the-requested-locale-is-not-the-default-locale" value="1" />
 			<aui:option label="locale-is-automatically-prepended-to-every-url" value="2" />

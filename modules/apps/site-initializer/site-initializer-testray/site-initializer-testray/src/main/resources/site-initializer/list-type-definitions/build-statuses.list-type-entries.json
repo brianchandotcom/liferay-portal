@@ -1,0 +1,26 @@
+[
+	{
+		"key": "ACTIVE",
+		"name": "Active",
+		"name_i18n": {
+			"en-US": "Active"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ARCHIVED",
+		"name": "Archived",
+		"name_i18n": {
+			"en-US": "Archived"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DEACTIVATED",
+		"name": "Deactivated",
+		"name_i18n": {
+			"en-US": "deactivated"
+		},
+		"type": "string"
+	}
+]

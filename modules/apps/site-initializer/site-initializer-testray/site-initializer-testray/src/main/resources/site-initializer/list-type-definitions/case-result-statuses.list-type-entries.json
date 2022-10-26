@@ -1,0 +1,58 @@
+[
+	{
+		"key": "UNTESTED",
+		"name": "Untested",
+		"name_i18n": {
+			"en-US": "Untested"
+		},
+		"type": "string"
+	},
+	{
+		"key": "INPROGRESS",
+		"name": "In Progress",
+		"name_i18n": {
+			"en-US": "In Progress"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PASSED",
+		"name": "Passed",
+		"name_i18n": {
+			"en-US": "Passed"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FAILED",
+		"name": "Failed",
+		"name_i18n": {
+			"en-US": "Failed"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BLOCKED",
+		"name": "Blocked",
+		"name_i18n": {
+			"en-US": "Blocked"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DIDNOTRUN",
+		"name": "Did Not Run",
+		"name_i18n": {
+			"en-US": "Did Not Run"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TESTFIX",
+		"name": "Test Fix",
+		"name_i18n": {
+			"en-US": "Test Fix"
+		},
+		"type": "string"
+	}
+]

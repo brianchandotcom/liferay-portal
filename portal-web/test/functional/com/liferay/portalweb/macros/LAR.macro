@@ -71,6 +71,10 @@ definition {
 	macro _export {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
+		if (isSet(contentLastRange)) {
+			Click(locator1 = "Radio#CHOOSE_CONTENT_LAST_CHANGE");
+		}
+
 		if (isSet(portletName)) {
 			if (IsNotChecked(locator1 = "ExportImport#CONTENT")) {
 				Check(locator1 = "ExportImport#CONTENT");
@@ -497,6 +501,7 @@ definition {
 		AssertElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		LAR._export(
+			contentLastRange = "${contentLastRange}",
 			exportIndividualDeletions = "${exportIndividualDeletions}",
 			exportPermissions = "${exportPermissions}",
 			larFileName = "${larFileName}",

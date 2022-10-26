@@ -13,12 +13,17 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {SUB_TASK_STATUS} from '../../util/constants';
+import {Liferay} from '../liferay';
 import Rest from './Rest';
+import {testrayCaseResultRest} from './TestrayCaseResult';
 import {TestraySubTask} from './types';
 
-type subtaskForm = typeof yupSchema.subtask.__outputType & {projectId: number};
+type SubtaskForm = typeof yupSchema.subtask.__outputType & {
+	projectId: number;
+};
 
-class TestraySubtaskImpl extends Rest<subtaskForm, TestraySubTask> {
+class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 	constructor() {
 		super({
 			adapter: ({
@@ -26,7 +31,7 @@ class TestraySubtaskImpl extends Rest<subtaskForm, TestraySubTask> {
 				name,
 				score,
 				taskId: r_taskToSubtasks_c_taskId,
-				users: r_userToSubtasks_userId,
+				userId: r_userToSubtasks_userId,
 			}) => ({
 				dueStatus,
 				name,
@@ -37,11 +42,57 @@ class TestraySubtaskImpl extends Rest<subtaskForm, TestraySubTask> {
 			nestedFields: 'tasks,users',
 			transformData: (subtask) => ({
 				...subtask,
-				taskId: subtask.r_taskToSubtasks_c_task,
-				userId: subtask.r_userToSubtasks_user,
+				task: subtask.r_taskToSubtasks_c_task,
+				user: subtask.r_userToSubtasks_user,
 			}),
 			uri: 'subtasks',
 		});
 	}
+
+	public assignTo(subtask: TestraySubTask, userId: number) {
+		const data = {
+			dueStatus: SUB_TASK_STATUS['IN_ANALYSIS'],
+			r_userToSubtasks_userId: userId,
+		};
+
+		return this.fetcher.put(`/subtasks/${subtask.id}`, data);
+	}
+
+	public assignToMe(subtask: TestraySubTask) {
+		const data = {
+			dueStatus: SUB_TASK_STATUS['IN_ANALYSIS'],
+			r_userToSubtasks_userId: Liferay.ThemeDisplay.getUserId(),
+		};
+
+		return this.fetcher.put(`/subtasks/${subtask.id}`, data);
+	}
+
+	public async complete(
+		subtaskId: number,
+		caseResultIds: number[],
+		dueStatus: string
+	) {
+		await this.update(subtaskId, {
+			dueStatus: SUB_TASK_STATUS['COMPLETE'],
+			userId: Number(Liferay.ThemeDisplay.getUserId()),
+		});
+
+		await testrayCaseResultRest.updateBatch(
+			caseResultIds,
+			caseResultIds.map(() => ({
+				dueStatus: (dueStatus as unknown) as string,
+			}))
+		);
+	}
+
+	public returnToOpen(subtask: TestraySubTask) {
+		const data = {
+			dueStatus: SUB_TASK_STATUS['OPEN'],
+			r_userToSubtasks_userId: 0,
+		};
+
+		return this.fetcher.put(`/subtasks/${subtask.id}`, data);
+	}
 }
+
 export const testraySubtaskImpl = new TestraySubtaskImpl();

@@ -14,21 +14,21 @@
 
 import {useState} from 'react';
 
-type UseLocalStorage<T> = [T, (value: T) => void];
+type UseStorage<T> = [T, (value: T) => void];
 
-const useLocalStorage = <T = string>(
+const useStorage = <T = string>(
 	key: string,
-	initialValue?: T
-): UseLocalStorage<T> => {
+	initialValue?: T,
+	storage: Storage = localStorage
+): UseStorage<T> => {
 	const [storedValue, setStoredValue] = useState(() => {
 		let storageValue;
 
 		try {
-			storageValue = window.localStorage.getItem(key);
+			storageValue = storage.getItem(key);
 
 			return storageValue ? JSON.parse(storageValue) : initialValue;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 
 			return storageValue || initialValue;
@@ -39,9 +39,8 @@ const useLocalStorage = <T = string>(
 		try {
 			setStoredValue(value);
 
-			window.localStorage.setItem(key, JSON.stringify(value));
-		}
-		catch (error) {
+			storage.setItem(key, JSON.stringify(value));
+		} catch (error) {
 			console.error(error);
 		}
 	};
@@ -49,4 +48,4 @@ const useLocalStorage = <T = string>(
 	return [storedValue, setStorageValue];
 };
 
-export default useLocalStorage;
+export default useStorage;

@@ -32,6 +32,8 @@ import Case from './pages/Project/Cases/Case';
 import CaseForm from './pages/Project/Cases/CaseForm';
 import CaseOutlet from './pages/Project/Cases/CaseOutlet';
 import CaseRequirement from './pages/Project/Cases/CaseRequirement';
+import ExportCase from './pages/Project/Cases/ExportCase';
+import ExportedCases from './pages/Project/Cases/ExportedCasesList';
 import Overview from './pages/Project/Overview';
 import ProjectForm from './pages/Project/ProjectForm';
 import ProjectOutlet from './pages/Project/ProjectOutlet';
@@ -71,6 +73,8 @@ const TestrayRoute = () => (
 	<HashRouter>
 		<ClayModalProvider>
 			<Routes>
+				<Route element={<ExportedCases />} path="/export/:exportId" />
+
 				<Route element={<Layout />} path="/">
 					<Route element={<Projects />} index />
 
@@ -120,6 +124,11 @@ const TestrayRoute = () => (
 										path="requirements"
 									/>
 								</Route>
+
+								<Route
+									element={<ExportCase />}
+									path="exportCase"
+								/>
 							</Route>
 
 							<Route path="requirements">

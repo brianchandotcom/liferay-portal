@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import {Fragment, useRef} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 
-import useLocalStorage from '../../hooks/useLocalStorage';
+import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
 import TestrayIcons from '../Icons/TestrayIcon';
@@ -29,7 +29,7 @@ import SidebarItem from './SidebarItem';
 
 const Sidebar = () => {
 	const {pathname} = useLocation();
-	const [expanded, setExpanded] = useLocalStorage('sidebar', true);
+	const [expanded, setExpanded] = useStorage('sidebar', true);
 	const tooltipRef = useRef(null);
 
 	const TooltipProviderWrapper = expanded ? Fragment : ClayTooltipProvider;

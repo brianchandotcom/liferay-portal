@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'text-truncate-inline')]</td>
+	<td>//div[contains(@class,'sidebar-header')]//h2[contains(@class,'text-truncate-inline')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -415,7 +415,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(@class,'page-content') and contains(.,'${key_rowEntry}')]//button[contains(@class,'btn-monospaced')]</td>
+	<td>//li[contains(@class,'page-content') and contains(.,'${key_rowEntry}')]//button[contains(@class,'page-contents')]</td>
 	<td></td>
 </tr>
 <tr>

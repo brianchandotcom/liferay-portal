@@ -113,7 +113,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -3580,9 +3579,6 @@ public class DLFileEntryLocalServiceImpl
 
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
-
-	@BeanReference(type = ImageLocalService.class)
-	private ImageLocalService _imageLocalService;
 
 	@BeanReference(type = OrganizationLocalService.class)
 	private OrganizationLocalService _organizationLocalService;

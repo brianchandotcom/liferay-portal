@@ -40,7 +40,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 			<div>
 				<react:component
 					data="<%= viewDiscardDisplayContext.getReactData() %>"
-					module="publications/js/ChangeTrackingDiscardView"
+					module="publications/js/views/ChangeTrackingDiscardView"
 				/>
 			</div>
 		</clay:sheet-section>

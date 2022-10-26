@@ -27,7 +27,7 @@ portletDisplay.setShowBackIcon(true);
 
 <div class="publications-view-changes-wrapper">
 	<react:component
-		module="publications/js/ChangeTrackingChangesView"
+		module="publications/js/views/ChangeTrackingChangesView"
 		props="<%= viewChangesDisplayContext.getReactData() %>"
 	/>
 </div>

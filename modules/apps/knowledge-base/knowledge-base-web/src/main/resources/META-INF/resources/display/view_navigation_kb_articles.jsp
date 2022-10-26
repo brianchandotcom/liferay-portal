@@ -16,36 +16,39 @@
 
 <%@ include file="/display/init.jsp" %>
 
-<%
-KBNavigationDisplayContext kbNavigationDisplayContext = (KBNavigationDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_NAVIGATION_DISPLAY_CONTEXT);
+<ul>
 
-KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+	<%
+	KBNavigationDisplayContext kbNavigationDisplayContext = (KBNavigationDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_NAVIGATION_DISPLAY_CONTEXT);
 
-long parentResourcePrimKey = (long)request.getAttribute("view_navigation_kb_articles.jsp-parentResourcePrimKey");
-int level = GetterUtil.getInteger(request.getAttribute("view_navigation_kb_articles.jsp-level"));
+	KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("view_navigation_kb_articles.jsp-kbArticleURLHelper");
+	long parentResourcePrimKey = (long)request.getAttribute("view_navigation_kb_articles.jsp-parentResourcePrimKey");
+	int level = GetterUtil.getInteger(request.getAttribute("view_navigation_kb_articles.jsp-level"));
 
-for (KBArticle childKBArticle : kbNavigationDisplayContext.getChildKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, level)) {
-%>
+	KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("view_navigation_kb_articles.jsp-kbArticleURLHelper");
 
-	<ul>
-		<li>
+	for (KBArticle childKBArticle : kbNavigationDisplayContext.getChildKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, level)) {
+		boolean childKBArticleExpanded = kbNavigationDisplayContext.isChildKBArticleExpanded(childKBArticle, level);
 
-			<%
-			boolean childKBArticleExpanded = kbNavigationDisplayContext.isChildKBArticleExpanded(childKBArticle, level);
+		String cssClass = StringPool.BLANK;
 
-			String childKBArticleClass = StringPool.BLANK;
+		if (childKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey()) {
+			cssClass = "kbarticle-selected";
+		}
+		else if (childKBArticleExpanded && !kbNavigationDisplayContext.isMaxNestingLevelReached(level)) {
+			cssClass = "kbarticle-expanded";
+		}
+	%>
 
-			if (childKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey()) {
-				childKBArticleClass = "kbarticle-selected";
-			}
-			else if (childKBArticleExpanded && !kbNavigationDisplayContext.isMaxNestingLevelReached(level)) {
-				childKBArticleClass = "kbarticle-expanded";
-			}
-			%>
-
-			<a class="<%= childKBArticleClass %>" href="<%= kbArticleURLHelper.createViewURL(childKBArticle) %>"><%= HtmlUtil.escape(childKBArticle.getTitle()) %></a>
+		<li class="<%= cssClass %>">
+			<a aria-label="<%= HtmlUtil.escape(childKBArticle.getTitle()) %>" href="<%= kbArticleURLHelper.createViewURL(childKBArticle) %>">
+				<clay:icon
+					cssClass="mr-1"
+					symbol="document-text"
+				/>
+				<%= HtmlUtil.escape(childKBArticle.getTitle()) %>
+			</a>
 
 			<c:if test="<%= kbNavigationDisplayContext.isFurtherExpansionRequired(parentResourcePrimKey, childKBArticle, level) %>">
 
@@ -57,8 +60,9 @@ for (KBArticle childKBArticle : kbNavigationDisplayContext.getChildKBArticles(th
 				<liferay-util:include page="/display/view_navigation_kb_articles.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</li>
-	</ul>
 
-<%
-}
-%>
+	<%
+	}
+	%>
+
+</ul>

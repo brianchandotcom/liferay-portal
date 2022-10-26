@@ -76,6 +76,7 @@ public class BasicSuggestionsContributorTest {
 		_setUpBasicSuggestionsContributor();
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
+		_setUpSearchContext();
 		_setUpSearchRequestBuilderFactory();
 		_setUpSuggestionsContributorConfiguration();
 	}
@@ -309,6 +310,14 @@ public class BasicSuggestionsContributorTest {
 		).getAttribute(
 			Mockito.anyString()
 		);
+	}
+
+	private void _setUpSearchContext() {
+		Mockito.doReturn(
+			"title"
+		).when(
+			_searchContext
+		).getKeywords();
 	}
 
 	private void _setUpSearcher(int totalHits) {

@@ -234,14 +234,6 @@ public class KBNavigationDisplayContext {
 		return false;
 	}
 
-	public boolean isTopNavigationVisible() throws PortalException {
-		if (isFolderResource() && !isLeftNavigationVisible()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected long getResourcePrimKey() {
 		if (_resourcePrimKey == null) {
 			_resourcePrimKey = GetterUtil.getLong(

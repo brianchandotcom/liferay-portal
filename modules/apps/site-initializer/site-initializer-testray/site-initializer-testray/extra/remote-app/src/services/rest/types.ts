@@ -35,6 +35,11 @@ export type APIResponse<Query = any> = {
 
 // Objects Types
 
+export type PickList = {
+	key: string;
+	name: string;
+};
+
 export type Role = {
 	id: number;
 	name: string;
@@ -72,7 +77,7 @@ export type TestrayBuild = {
 	};
 	dateCreated: string;
 	description: string;
-	dueStatus: number;
+	dueStatus: PickList;
 	gitHash: string;
 	id: number;
 	name: string;
@@ -114,10 +119,10 @@ export type TestrayCaseResult = {
 	closedDate: string;
 	commentMBMessage: string;
 	commentMBMessageId: string;
-	component: TestrayComponent;
+	component?: TestrayComponent;
 	dateCreated: string;
 	dateModified: string;
-	dueStatus: number;
+	dueStatus: PickList;
 	errors: string;
 	id: number;
 	issue: string;
@@ -206,7 +211,7 @@ export type TestrayRun = {
 };
 
 export type TestraySubTask = {
-	dueStatus: number;
+	dueStatus: PickList;
 	name: string;
 	score: number;
 };
@@ -236,7 +241,7 @@ export type TestraySuiteCase = {
 export type TestrayTask = {
 	build?: TestrayBuild;
 	dateCreated: string;
-	dueStatus: number;
+	dueStatus: PickList;
 	id: number;
 	name: string;
 	r_buildToTasks_c_build?: TestrayBuild;

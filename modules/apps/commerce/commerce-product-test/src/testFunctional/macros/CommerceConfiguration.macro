@@ -253,4 +253,45 @@ definition {
 		}
 	}
 
+	macro editCommercePricingConfiguration {
+		if (isSet(pricingCalculationKeyValue)) {
+			Type(
+				key_label = "Pricing Calculation Key",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${pricingCalculationKeyValue}");
+		}
+
+		if (isSet(priceListDiscoveryMethodValue)) {
+			Type(
+				key_label = "Price List Discovery Method",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${priceListDiscoveryMethodValue}");
+		}
+
+		if (isSet(promotionDiscoveryMethodValue)) {
+			Type(
+				key_label = "Promotion List Discovery Method",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${promotionDiscoveryMethodValue}");
+		}
+
+		if (isSet(taxDisplayValue)) {
+			Type(
+				key_text = "Tax Display",
+				locator1 = "TextInput#ANY",
+				value1 = "${taxDisplayValue}");
+		}
+
+		if (isSet(discountApplicationStrategyValue)) {
+			Type(
+				key_label = "Discount Application Strategy",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${discountApplicationStrategyValue}");
+		}
+
+		Button.clickSave();
+
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+	}
+
 }

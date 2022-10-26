@@ -22,7 +22,8 @@ import PageContent from './PageContent';
 
 export default function ContentList({contents, selectedType}) {
 	const filteredContentTypes = Object.keys(contents);
-	const hasSelectedType = selectedType !== CONTENT_TYPE_LABELS.allContent;
+	const hasSelectedType =
+		selectedType && selectedType !== CONTENT_TYPE_LABELS.allContent;
 
 	return (
 		<div className="overflow-auto page-editor__page-contents__content-list pt-4 px-3">
@@ -65,12 +66,14 @@ ContentList.propTypes = {
 
 const PageContentList = ({pageContents, type}) => (
 	<ul className="list-unstyled mb-1">
-		{pageContents[type]?.map((pageContent, index) => (
-			<PageContent
-				key={`${pageContent.classPK}${index}`}
-				{...pageContent}
-			/>
-		))}
+		{pageContents[type || CONTENT_TYPE_LABELS.allContent]?.map(
+			(pageContent, index) => (
+				<PageContent
+					key={`${pageContent.classPK}${index}`}
+					{...pageContent}
+				/>
+			)
+		)}
 	</ul>
 );
 

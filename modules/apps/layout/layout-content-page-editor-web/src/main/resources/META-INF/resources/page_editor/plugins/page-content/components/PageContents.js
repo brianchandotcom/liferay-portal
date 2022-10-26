@@ -21,9 +21,7 @@ import ContentList from './ContentList';
 
 export default function PageContents({pageContents}) {
 	const [searchValue, setSearchValue] = useState('');
-	const [selectedType, setSelectedType] = useState(
-		CONTENT_TYPE_LABELS.allContent
-	);
+	const [selectedType, setSelectedType] = useState(null);
 
 	const contentTypes = Object.keys(pageContents);
 
@@ -68,7 +66,7 @@ export default function PageContents({pageContents}) {
 				contentTypes={sortedTypes}
 				onChangeInput={setSearchValue}
 				onChangeSelect={setSelectedType}
-				selectedType={selectedType}
+				selectedType={selectedType || CONTENT_TYPE_LABELS.allContent}
 			/>
 			<ContentList
 				contents={filteredContents}

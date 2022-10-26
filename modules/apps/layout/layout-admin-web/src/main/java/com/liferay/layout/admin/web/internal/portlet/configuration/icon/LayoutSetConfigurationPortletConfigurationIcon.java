@@ -60,11 +60,6 @@ public class LayoutSetConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMethod() {
-		return "get";
-	}
-
-	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

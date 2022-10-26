@@ -58,11 +58,6 @@ public class MaximizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getMethod() {
-		return "get";
-	}
-
-	@Override
 	public double getWeight() {
 		return 7.0;
 	}

@@ -65,16 +65,16 @@ public class UtilityPageTemplateSerDes {
 			sb.append(utilityPageTemplate.getDefaultTemplate());
 		}
 
-		if (utilityPageTemplate.getKey() != null) {
+		if (utilityPageTemplate.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"key\": ");
+			sb.append("\"externalReferenceCode\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(utilityPageTemplate.getKey()));
+			sb.append(_escape(utilityPageTemplate.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -137,11 +137,13 @@ public class UtilityPageTemplateSerDes {
 				String.valueOf(utilityPageTemplate.getDefaultTemplate()));
 		}
 
-		if (utilityPageTemplate.getKey() == null) {
-			map.put("key", null);
+		if (utilityPageTemplate.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
 		}
 		else {
-			map.put("key", String.valueOf(utilityPageTemplate.getKey()));
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(utilityPageTemplate.getExternalReferenceCode()));
 		}
 
 		if (utilityPageTemplate.getName() == null) {
@@ -185,9 +187,12 @@ public class UtilityPageTemplateSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "key")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
-					utilityPageTemplate.setKey((String)jsonParserFieldValue);
+					utilityPageTemplate.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

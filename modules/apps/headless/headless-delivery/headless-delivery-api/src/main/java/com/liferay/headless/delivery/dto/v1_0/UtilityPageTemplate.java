@@ -96,19 +96,21 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean defaultTemplate;
 
-	@Schema(description = "The utility page template key.")
-	public String getKey() {
-		return key;
+	@Schema(description = "The utility page template external reference code.")
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
 	}
 
 	@JsonIgnore
-	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
 		try {
-			key = keyUnsafeSupplier.get();
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -118,9 +120,11 @@ public class UtilityPageTemplate implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The utility page template key.")
+	@GraphQLField(
+		description = "The utility page template external reference code."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String key;
+	protected String externalReferenceCode;
 
 	@Schema(description = "The utility page template name.")
 	public String getName() {
@@ -221,16 +225,16 @@ public class UtilityPageTemplate implements Serializable {
 			sb.append(defaultTemplate);
 		}
 
-		if (key != null) {
+		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"key\": ");
+			sb.append("\"externalReferenceCode\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(key));
+			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
 		}

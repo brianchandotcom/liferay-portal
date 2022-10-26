@@ -24,6 +24,7 @@ import i18n from '../../../../../i18n';
 import {APIResponse, TestrayCase} from '../../../../../services/rest';
 import {searchUtil} from '../../../../../util/search';
 import {CaseListView} from '../../../Cases';
+import SuiteFormSelectModal from '../../../Suites/modal';
 import BuildSelectSuitesModal from '../BuildSelectSuitesModal';
 
 type BuildFormCasesProps = {
@@ -54,6 +55,10 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 		type: 'select-cases',
 	});
 
+	const {modal} = useFormModal({
+		onSave: setCaseIds,
+	});
+
 	const {modal: buildSelectSuitesModal} = useFormModal({
 		onSave: setCaseIds,
 	});
@@ -70,7 +75,7 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 
 	return (
 		<>
-			<h3>{i18n.translate(title)}</h3>
+			<h3>{title}</h3>
 
 			{title && <Form.Divider />}
 
@@ -78,8 +83,7 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 				<ClayButton
 					displayType="secondary"
 					onClick={() => {
-						setModalType({type: 'select-cases'});
-						buildSelectSuitesModal.open(caseIds);
+						modal.open(caseIds);
 					}}
 				>
 					{i18n.translate('add-cases')}
@@ -147,8 +151,12 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 
 			<BuildSelectSuitesModal
 				modal={buildSelectSuitesModal}
-				setModalType={setModalType}
 				type={modalType?.type}
+			/>
+			<SuiteFormSelectModal
+				modal={modal}
+				selectedCaseIds={caseIds}
+				type="select-cases"
 			/>
 		</>
 	);

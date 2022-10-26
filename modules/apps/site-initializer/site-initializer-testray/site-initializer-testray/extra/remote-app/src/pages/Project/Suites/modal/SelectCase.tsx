@@ -21,12 +21,14 @@ import {searchUtil} from '../../../../util/search';
 import {CaseListView} from '../../Cases';
 
 type SelectCaseParametersProps = {
+	displayTitle?: boolean;
 	selectedCaseIds?: number[];
 	setState: any;
 };
 
 const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	selectedCaseIds = [],
+	displayTitle = true,
 	setState,
 }) => {
 	const {projectId} = useParams();
@@ -38,8 +40,9 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 				managementToolbarProps: {
 					addButton: undefined,
 					filterFields: filters.case as any,
-					title: i18n.translate('cases'),
+					title: displayTitle ? i18n.translate('cases') : '',
 				},
+
 				onContextChange: ({selectedRows}) => setState(selectedRows),
 			}}
 			tableProps={{

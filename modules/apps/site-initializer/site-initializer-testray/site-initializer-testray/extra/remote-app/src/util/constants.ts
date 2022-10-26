@@ -19,6 +19,10 @@ export enum RoleTypes {
 	ASSET_LIBRARY = 5,
 }
 
+export enum STORAGE_KEYS {
+	EXPORT_CASE_IDS = '@testray/export-case-ids',
+}
+
 export const DATA_COLORS = {
 	'metrics.blocked': '#F8D72E',
 	'metrics.failed': '#E73A45',

@@ -20,14 +20,13 @@ type CaseRequirements = typeof yupSchema.requirement.__outputType & {
 	projectId: number;
 };
 
-class TestrayCaseRequirementsRest extends Rest<
+class TestrayCaseRequirementsImpl extends Rest<
 	CaseRequirements,
 	TestrayRequirementCase
 > {
 	constructor() {
 		super({
-			nestedFields:
-				'nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3',
+			nestedFields: 'case.component,requirement.component.team',
 			transformData: (caseRequirements) => ({
 				...caseRequirements,
 				case: caseRequirements?.r_caseToRequirementsCases_c_case
@@ -79,4 +78,4 @@ class TestrayCaseRequirementsRest extends Rest<
 	}
 }
 
-export const testrayCaseRequirementsRest = new TestrayCaseRequirementsRest();
+export const testrayCaseRequirementsImpl = new TestrayCaseRequirementsImpl();

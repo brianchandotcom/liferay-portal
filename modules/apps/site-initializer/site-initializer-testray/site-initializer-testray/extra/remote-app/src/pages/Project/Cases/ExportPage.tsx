@@ -22,16 +22,17 @@ import useFormActions from '../../../hooks/useFormActions';
 import useStorage from '../../../hooks/useStorage';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay';
+import {STORAGE_KEYS} from '../../../util/constants';
 import BuildFormCases from '../Routines/Builds/BuildForm/BuildFormCases';
 
-const ExportCase: React.FC = () => {
-	const {setTabs} = useHeader();
+const id = new Date().getTime();
 
-	const timeStamp = new Date().getTime();
+const ExportPage = () => {
+	const {setTabs} = useHeader();
 
 	const [caseIds, setCaseIds] = useState<number[]>([]);
 	const [, setExportCaseIds] = useStorage<number[]>(
-		`caseIds-${timeStamp}`,
+		`${STORAGE_KEYS}.EXPORT_CASE_IDS-${id}`,
 		[],
 		sessionStorage
 	);
@@ -39,7 +40,7 @@ const ExportCase: React.FC = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			setTabs([]);
-		}, 1);
+		}, 10);
 	}, [setTabs]);
 
 	const {
@@ -50,7 +51,7 @@ const ExportCase: React.FC = () => {
 		if (caseIds.length) {
 			setExportCaseIds(caseIds);
 
-			return window.open(`/group/testray#/export/${timeStamp}`, '_blank');
+			return window.open(`/group/testray#/export/${id}`, '_blank');
 		}
 
 		return Liferay.Util.openToast({
@@ -82,4 +83,4 @@ const ExportCase: React.FC = () => {
 	);
 };
 
-export default ExportCase;
+export default ExportPage;

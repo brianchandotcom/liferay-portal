@@ -39,8 +39,8 @@
 		},
 		{
 			"DBType": "Clob",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Errors"
 			},

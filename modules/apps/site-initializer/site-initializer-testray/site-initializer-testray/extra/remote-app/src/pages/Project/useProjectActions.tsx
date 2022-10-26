@@ -83,7 +83,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'DELETE',
 		},
 		{
-			action: ({id}) => navigate(`/project/${id}/cases/exportCase`),
+			action: ({id}) => navigate(`/project/${id}/cases/export`),
 			icon: 'print',
 			name: i18n.translate('export-cases'),
 		},

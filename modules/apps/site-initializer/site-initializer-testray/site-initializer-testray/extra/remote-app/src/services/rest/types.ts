@@ -108,7 +108,7 @@ export type TestrayCase = {
 	project?: TestrayProject;
 	r_caseTypeToCases_c_caseType?: TestrayCaseType;
 	r_componentToCases_c_component?: TestrayComponent;
-	r_projectToCases_c_project: TestrayProject;
+	r_projectToCases_c_project?: TestrayProject;
 	steps: string;
 	stepsType: string;
 };

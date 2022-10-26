@@ -22,7 +22,7 @@ import i18n from '../../../i18n';
 import {
 	TestrayCase,
 	TestrayRequirementCase,
-	testrayCaseRequirementsRest,
+	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import CaseRequirementLinkModal from './CaseRequirementLinkModal';
@@ -53,7 +53,7 @@ const CaseRequirement = () => {
 					),
 					title: i18n.translate('requirements'),
 				}}
-				resource={testrayCaseRequirementsRest.resource}
+				resource={testrayCaseRequirementsImpl.resource}
 				tableProps={{
 					columns: [
 						{
@@ -133,7 +133,7 @@ const CaseRequirement = () => {
 						`/project/${projectId}/requirements/${requirement?.id}`,
 				}}
 				transformData={(response) =>
-					testrayCaseRequirementsRest.transformDataFromList(response)
+					testrayCaseRequirementsImpl.transformDataFromList(response)
 				}
 				variables={{
 					filter: searchUtil.eq('caseId', testrayCase.id),

@@ -29,7 +29,7 @@ import {
 	TestrayRequirement,
 	TestrayRequirementCase,
 	requirementsCasesResource,
-	testrayCaseRequirementsRest,
+	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 import {searchUtil} from '../../../util/search';
@@ -176,7 +176,7 @@ const Requirement = () => {
 							`/project/${projectId}/cases/${Case?.id}`,
 					}}
 					transformData={(response) =>
-						testrayCaseRequirementsRest.transformDataFromList(
+						testrayCaseRequirementsImpl.transformDataFromList(
 							response
 						)
 					}

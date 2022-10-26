@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import Form from '../../../../components/Form';
@@ -35,32 +35,34 @@ type ModalType = {
 type BuildSelectSuitesModalProps = {
 	displayTitle?: boolean;
 	modal: FormModalOptions;
-	setModalType: Dispatch<SetStateAction<ModalType>>;
 	type: 'select-cases' | 'select-suites';
 };
 
 const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 	displayTitle = false,
 	modal: {modalState, observer, onClose, onSave, visible},
-	setModalType,
-	type,
 }) => {
-	const [state, setState] = useState<any>([]);
-
-	const [suiteId, setSuiteId] = useState<any>();
+	const [caseIdList, setCaseIdList] = useState<number[]>([]);
+	const [suiteId, setSuiteId] = useState<number[]>([]);
 	const {projectId} = useParams();
+	const [modalType, setModalType] = useState<ModalType>({
+		type: 'select-suites',
+	});
 
-	const update = (item: number[]) => {
-		const test = getUniqueList([...state, ...item]);
-		setState(test);
-	};
+	const getCaseIds = useCallback(
+		(caseIds: number[]) => {
+			const newCaseList = getUniqueList([...caseIdList, ...caseIds]);
+			setCaseIdList(newCaseList);
+		},
+		[caseIdList]
+	);
 
 	function _onSubmit(_caseIds: number[]) {
-		if (type === 'select-cases') {
+		if (modalType.type === 'select-cases') {
 			return onSave(_caseIds);
 		}
 
-		if (type === 'select-suites') {
+		if (modalType.type === 'select-suites') {
 			fetcher<APIResponse<TestraySuiteCase>>(
 				`/suitescaseses?fields=r_caseToSuitesCases_c_caseId&filter=${searchUtil.in(
 					'suiteId',
@@ -68,7 +70,7 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 				)}&pageSize=1000`
 			).then((response) => {
 				if (response?.totalCount) {
-					setState((prevCases: any) => {
+					setCaseIdList((prevCases: any) => {
 						const caseIdsList = getUniqueList([
 							...prevCases,
 							...response.items.map(
@@ -91,26 +93,26 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 			last={
 				<Form.Footer
 					onClose={onClose}
-					onSubmit={() => _onSubmit(state)}
+					onSubmit={() => _onSubmit(caseIdList)}
 					primaryButtonProps={{
-						title: i18n.translate(type),
+						title: i18n.translate(modalType.type),
 					}}
 				/>
 			}
 			observer={observer}
 			size="full-screen"
-			title={i18n.translate(type)}
+			title={i18n.translate(modalType.type)}
 			visible={visible}
 		>
-			{type === 'select-cases' && (
+			{modalType.type === 'select-cases' && (
 				<SelectCase
 					displayTitle={displayTitle}
 					selectedCaseIds={modalState}
-					setState={update}
+					setState={getCaseIds}
 				/>
 			)}
 
-			{type === 'select-suites' && (
+			{modalType.type === 'select-suites' && (
 				<ListView
 					managementToolbarProps={{
 						filterFields: filters.suites as any,

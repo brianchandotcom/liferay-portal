@@ -259,7 +259,11 @@ const BuildForm = () => {
 
 				<BuildFormRun control={control} register={register} />
 
-				<BuildFormCases caseIds={caseIds} setCaseIds={setCaseIds} />
+				<BuildFormCases
+					caseIds={caseIds}
+					setCaseIds={setCaseIds}
+					title={i18n.translate('cases')}
+				/>
 
 				<div className="mt-4">
 					<Form.Footer

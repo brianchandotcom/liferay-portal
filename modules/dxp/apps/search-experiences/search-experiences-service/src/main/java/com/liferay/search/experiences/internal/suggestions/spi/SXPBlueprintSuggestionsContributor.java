@@ -106,6 +106,12 @@ public class SXPBlueprintSuggestionsContributor
 			return null;
 		}
 
+		if (!_exceedsCharacterThreshold(
+				(Map<String, Object>)attributes, searchContext.getKeywords())) {
+
+			return null;
+		}
+
 		SearchResponse searchResponse = _searcher.search(
 			_getSearchRequest(
 				searchContext,
@@ -127,6 +133,23 @@ public class SXPBlueprintSuggestionsContributor
 				attributes, liferayPortletRequest, liferayPortletResponse,
 				searchContext, searchHits.getSearchHits())
 		).build();
+	}
+
+	private boolean _exceedsCharacterThreshold(
+		Map<String, Object> attributes, String keywords) {
+
+		int characterThreshold = _getCharacterThreshold(attributes);
+
+		if (Validator.isBlank(keywords)) {
+			if (characterThreshold == 0) {
+				return true;
+			}
+		}
+		else if (keywords.length() >= characterThreshold) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Layout _fetchLayoutByFriendlyURL(long groupId, String friendlyURL) {
@@ -219,6 +242,15 @@ public class SXPBlueprintSuggestionsContributor
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private int _getCharacterThreshold(Map<String, Object> attributes) {
+		if (attributes == null) {
+			return _CHARACTER_THRESHOLD;
+		}
+
+		return MapUtil.getInteger(
+			attributes, "characterThreshold", _CHARACTER_THRESHOLD);
 	}
 
 	private Map<String, Object> _getFieldValues(
@@ -441,6 +473,8 @@ public class SXPBlueprintSuggestionsContributor
 		return StringUtil.replace(
 			fieldName, "${language_id}", LocaleUtil.toLanguageId(locale));
 	}
+
+	private static final int _CHARACTER_THRESHOLD = 2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintSuggestionsContributor.class);

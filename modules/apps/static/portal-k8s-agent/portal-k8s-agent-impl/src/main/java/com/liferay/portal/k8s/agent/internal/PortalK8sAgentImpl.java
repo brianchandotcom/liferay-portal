@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
@@ -506,7 +507,14 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 			_log.debug("Processed configuration " + properties);
 		}
 
-		configuration.updateIfDifferent(properties);
+		try {
+			InMemoryOnlyConfigurationThreadLocal.setInMemoryOnly(true);
+
+			configuration.updateIfDifferent(properties);
+		}
+		finally {
+			InMemoryOnlyConfigurationThreadLocal.setInMemoryOnly(false);
+		}
 
 		configuration.addAttributes(
 			Configuration.ConfigurationAttribute.READ_ONLY);

@@ -131,6 +131,14 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long groupId, String externalReferenceCode) {
+
+		return layoutUtilityPageEntryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
 			long groupId, int type)
 		throws PortalException {

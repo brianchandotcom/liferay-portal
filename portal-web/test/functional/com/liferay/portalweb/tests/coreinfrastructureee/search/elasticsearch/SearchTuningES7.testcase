@@ -169,7 +169,9 @@ definition {
 
 		Button.click(button = "Customize Results");
 
-		Alert.viewRequiredField();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "The Search Query field is required.");
 
 		Navigator.gotoBack();
 

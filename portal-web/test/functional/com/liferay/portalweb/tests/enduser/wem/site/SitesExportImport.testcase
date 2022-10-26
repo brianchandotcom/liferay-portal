@@ -32,6 +32,80 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-143743. Assert that can import global scoped WC that comment on another site with no error."
+	@priority = "3"
+	test CanImportGlobalScopedWCThatCommentOnAnotherSite {
+		task ("Given: Add a WC on Global site and an assert publisher widget to a page on "Test Site Name" site") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Global",
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("And: Configure the "SCOPE" to Global and enable "Comments" in Assert Publisher Configuration Settings") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Comments");
+
+			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+			AssetPublisherPortlet.configureScope(globalSite = "Global");
+
+			IFrame.closeFrame();
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title");
+		}
+
+		task ("When: Add a comment to the WC") {
+			Comments.addPG(entryComment = "Comment message 1");
+		}
+
+		task ("And: Export all checkboxes under CONTENT on Global site") {
+			LAR.configureExportSiteCP(
+				checkContentNameList = "Templates,Calendar",
+				siteScopeName = "Global");
+
+			LAR.exportWithAssertionOnSuccess();
+
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("And: Add and login a virtual instance") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+		}
+
+		task ("Then: Assert that the import of the LAR process is successful by unchecking DM under CONTENT") {
+			LAR.importSiteCP(
+				baseURL = "http://www.able.com:8080",
+				larFileName = "${larFileName}",
+				siteName = "Global",
+				uncheckContentNameList = "Documents and Media");
+		}
+	}
+
 	@description = "This is a use case for LPS-96391, export and import site with web content display in fragment."
 	@priority = "5"
 	test ExportImportSiteWithEmbeddedWCDInFragment {

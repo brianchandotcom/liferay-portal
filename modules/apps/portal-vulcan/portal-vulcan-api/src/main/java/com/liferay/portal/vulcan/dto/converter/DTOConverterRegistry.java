@@ -29,4 +29,7 @@ public interface DTOConverterRegistry {
 
 	public DTOConverter<?, ?> getDTOConverter(String dtoClassName);
 
+	public DTOConverter<?, ?> getDTOConverter(
+		String applicationName, String dtoClassName, String version);
+
 }

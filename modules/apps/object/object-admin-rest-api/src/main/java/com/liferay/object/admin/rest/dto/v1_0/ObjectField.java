@@ -921,9 +921,9 @@ public class ObjectField implements Serializable {
 		AGGREGATION("Aggregation"), ATTACHMENT("Attachment"),
 		BOOLEAN("Boolean"), DATE("Date"), DECIMAL("Decimal"),
 		FORMULA("Formula"), INTEGER("Integer"), LONG_INTEGER("LongInteger"),
-		LONG_TEXT("LongText"), PICKLIST("Picklist"),
-		PRECISION_DECIMAL("PrecisionDecimal"), RELATIONSHIP("Relationship"),
-		RICH_TEXT("RichText"), TEXT("Text");
+		LONG_TEXT("LongText"), MULTISELECT_PICKLIST("MultiselectPicklist"),
+		PICKLIST("Picklist"), PRECISION_DECIMAL("PrecisionDecimal"),
+		RELATIONSHIP("Relationship"), RICH_TEXT("RichText"), TEXT("Text");
 
 		@JsonCreator
 		public static BusinessType create(String value) {

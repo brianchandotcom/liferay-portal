@@ -57,16 +57,16 @@ public class UpdateOAuthClientEntryMVCActionCommand
 			String authServerWellKnownURI = ParamUtil.getString(
 				actionRequest, "authServerWellKnownURI");
 			String infoJSON = ParamUtil.getString(actionRequest, "infoJSON");
-			String oidcUserInfoMapperJSON = ParamUtil.getString(
-				actionRequest, "OIDCUserInfoMapperJSON");
 			String tokenRequestParametersJSON = ParamUtil.getString(
 				actionRequest, "tokenRequestParametersJSON");
+			String userInfoMapperJSON = ParamUtil.getString(
+				actionRequest, "userInfoMapperJSON");
 
 			if (oAuthClientEntryId > 0) {
 				_oAuthClientEntryService.updateOAuthClientEntry(
 					oAuthClientEntryId, authRequestParametersJSON,
-					authServerWellKnownURI, infoJSON, oidcUserInfoMapperJSON,
-					tokenRequestParametersJSON);
+					authServerWellKnownURI, infoJSON,
+					tokenRequestParametersJSON, userInfoMapperJSON);
 			}
 			else {
 				ThemeDisplay themeDisplay =
@@ -75,8 +75,8 @@ public class UpdateOAuthClientEntryMVCActionCommand
 
 				_oAuthClientEntryService.addOAuthClientEntry(
 					themeDisplay.getUserId(), authRequestParametersJSON,
-					authServerWellKnownURI, infoJSON, oidcUserInfoMapperJSON,
-					tokenRequestParametersJSON);
+					authServerWellKnownURI, infoJSON,
+					tokenRequestParametersJSON, userInfoMapperJSON);
 			}
 
 			return true;

@@ -490,8 +490,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 						defaultUserId,
 						_generateAuthRequestParametersJSON(properties),
 						authServerWellKnownURI, _generateInfoJSON(properties),
-						OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-						_generateTokenRequestParametersJSON(properties));
+						_generateTokenRequestParametersJSON(properties),
+						OAuthClientEntryConstants.USER_INFO_MAPPER_JSON);
 			}
 			else {
 				oAuthClientEntry =
@@ -499,8 +499,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 						oAuthClientEntry.getOAuthClientEntryId(),
 						_generateAuthRequestParametersJSON(properties),
 						authServerWellKnownURI, _generateInfoJSON(properties),
-						oAuthClientEntry.getOIDCUserInfoMapperJSON(),
-						_generateTokenRequestParametersJSON(properties));
+						_generateTokenRequestParametersJSON(properties),
+						oAuthClientEntry.getUserInfoMapperJSON());
 			}
 
 			Map<String, Long> oAuthClientEntryIds = _oAuthClientEntryIds.get(

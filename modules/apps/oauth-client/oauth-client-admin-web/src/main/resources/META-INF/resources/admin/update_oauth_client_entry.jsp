@@ -54,8 +54,8 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryInfoJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-info-json-x" />
 				</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= OAuthClientEntryOIDCUserInfoMapperJSONException.class %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryOIDCUserInfoMapperJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-oidc-user-info-mapper-json-x" />
+				<liferay-ui:error exception="<%= OAuthClientEntryUserInfoMapperJSONException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryUserInfoMapperJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-user-info-mapper-json-x" />
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= OAuthClientEntryTokenRequestParametersJSONException.class %>">
@@ -127,7 +127,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
 
-				<aui:input helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" style="min-height: 400px;" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
+				<aui:input helpMessage="oauth-client-user-info-mapper-json-help" label="oauth-client-user-info-mapper-json" name="userInfoMapperJSON" style="min-height: 400px;" type="textarea" value="<%= OAuthClientEntryConstants.USER_INFO_MAPPER_JSON %>" />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
@@ -197,25 +197,25 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			'<portlet:namespace />tokenRequestParametersJSON'
 		).value = tokenRequestParametersJSON;
 
-		var oidcUserInfoMapperJSON = document.getElementById(
-			'<portlet:namespace />OIDCUserInfoMapperJSON'
+		var userInfoMapperJSON = document.getElementById(
+			'<portlet:namespace />userInfoMapperJSON'
 		).value;
 
 		try {
-			oidcUserInfoMapperJSON = JSON.stringify(
-				JSON.parse(oidcUserInfoMapperJSON),
+			userInfoMapperJSON = JSON.stringify(
+				JSON.parse(userInfoMapperJSON),
 				null,
 				0
 			);
 		}
 		catch (e) {
-			alert('Ill-formatted OIDC User Info Mapper JSON');
+			alert('Ill-formatted User Info Mapper JSON');
 			return;
 		}
 
 		document.getElementById(
-			'<portlet:namespace />OIDCUserInfoMapperJSON'
-		).value = oidcUserInfoMapperJSON;
+			'<portlet:namespace />userInfoMapperJSON'
+		).value = userInfoMapperJSON;
 
 		submitForm(
 			document.getElementById('<portlet:namespace />oauth-client-entry-fm')
@@ -247,12 +247,12 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			4
 		);
 
-		var oidcUserInfoMapperJSON = document.getElementById(
-			'<portlet:namespace />OIDCUserInfoMapperJSON'
+		var userInfoMapperJSON = document.getElementById(
+			'<portlet:namespace />userInfoMapperJSON'
 		);
 
-		oidcUserInfoMapperJSON.value = JSON.stringify(
-			JSON.parse(oidcUserInfoMapperJSON.value),
+		userInfoMapperJSON.value = JSON.stringify(
+			JSON.parse(userInfoMapperJSON.value),
 			null,
 			4
 		);

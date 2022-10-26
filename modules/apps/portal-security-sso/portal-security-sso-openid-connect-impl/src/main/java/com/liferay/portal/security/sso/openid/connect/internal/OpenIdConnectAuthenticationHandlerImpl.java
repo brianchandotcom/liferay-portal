@@ -149,7 +149,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			_portal.getCompanyId(httpServletRequest),
 			String.valueOf(oidcProviderMetadata.getIssuer()),
 			ServiceContextFactory.getInstance(httpServletRequest), userInfoJSON,
-			oAuthClientEntry.getOIDCUserInfoMapperJSON());
+			oAuthClientEntry.getUserInfoMapperJSON());
 
 		userIdUnsafeConsumer.accept(userId);
 

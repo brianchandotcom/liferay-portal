@@ -42,8 +42,7 @@ public class OAuthClientEntryOIDCUserInfoMapperJSONUpgradeProcess
 									"oAuthClientEntryId = ?")) {
 
 					preparedStatement2.setString(
-						1,
-						OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+						1, OAuthClientEntryConstants.USER_INFO_MAPPER_JSON);
 					preparedStatement2.setLong(
 						2, resultSet.getLong("oAuthClientEntryId"));
 

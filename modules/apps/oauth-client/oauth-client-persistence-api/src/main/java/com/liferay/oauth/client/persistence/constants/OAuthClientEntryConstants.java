@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
  */
 public class OAuthClientEntryConstants {
 
-	public static final String OIDC_USER_INFO_MAPPER_JSON = JSONUtil.put(
+	public static final String USER_INFO_MAPPER_JSON = JSONUtil.put(
 		"address",
 		JSONUtil.put(
 			"addressType", ""

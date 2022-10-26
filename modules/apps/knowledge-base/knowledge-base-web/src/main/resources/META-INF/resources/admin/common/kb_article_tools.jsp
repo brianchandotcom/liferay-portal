@@ -235,5 +235,14 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 				url="<%= deleteURL %>"
 			/>
 		</c:if>
+
+		<%
+		KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, kbGroupServiceConfiguration);
+		%>
+
+		<clay:dropdown-actions
+			dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
+			propsTransformer="admin/js/KBDropdownPropsTransformer"
+		/>
 	</c:if>
 </div>

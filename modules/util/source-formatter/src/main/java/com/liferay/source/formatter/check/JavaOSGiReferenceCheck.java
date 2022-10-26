@@ -163,6 +163,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			return;
 		}
 
+		JavaClass serviceBaseJavaClass = JavaClassParser.parseJavaClass(
+			serviceBaseClassPath, FileUtil.read(file));
+
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
@@ -178,9 +181,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			if (Validator.isNull(fieldTypeClassName)) {
 				continue;
 			}
-
-			JavaClass serviceBaseJavaClass = JavaClassParser.parseJavaClass(
-				serviceBaseClassPath, FileUtil.read(file));
 
 			for (JavaTerm serviceBaseJavaTerm :
 					serviceBaseJavaClass.getChildJavaTerms()) {

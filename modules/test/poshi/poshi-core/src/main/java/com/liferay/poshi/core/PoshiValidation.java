@@ -20,6 +20,7 @@ import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
+import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
@@ -37,6 +38,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,42 +75,65 @@ public class PoshiValidation {
 
 		long start = System.currentTimeMillis();
 
-		for (String filePath : PoshiContext.getFilePaths()) {
-			if (OSDetector.isWindows()) {
-				filePath = StringUtil.replace(filePath, "/", "\\");
-			}
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			PropsValues.POSHI_FILE_READ_THREAD_POOL);
 
-			String className = PoshiGetterUtil.getClassNameFromFilePath(
-				filePath);
-			String classType = PoshiGetterUtil.getClassTypeFromFilePath(
-				filePath);
-			String namespace = PoshiContext.getNamespaceFromFilePath(filePath);
+		List<Callable<Void>> callables = new ArrayList<>();
 
-			if (classType.equals("function")) {
-				Element element = PoshiContext.getFunctionRootElement(
-					className, namespace);
+		for (final String finalFilePath : PoshiContext.getFilePaths()) {
+			Callable<Void> callable = new Callable<Void>() {
 
-				validateFunctionFile((PoshiElement)element);
-			}
-			else if (classType.equals("macro")) {
-				Element element = PoshiContext.getMacroRootElement(
-					className, namespace);
+				@Override
+				public Void call() {
+					String filePath = finalFilePath;
 
-				validateMacroFile((PoshiElement)element);
-			}
-			else if (classType.equals("path")) {
-				Element element = PoshiContext.getPathRootElement(
-					className, namespace);
+					if (OSDetector.isWindows()) {
+						filePath = StringUtil.replace(filePath, "/", "\\");
+					}
 
-				validatePathFile(element, filePath);
-			}
-			else if (classType.equals("test-case")) {
-				Element element = PoshiContext.getTestCaseRootElement(
-					className, namespace);
+					String className = PoshiGetterUtil.getClassNameFromFilePath(
+						filePath);
+					String classType = PoshiGetterUtil.getClassTypeFromFilePath(
+						filePath);
+					String namespace = PoshiContext.getNamespaceFromFilePath(
+						filePath);
 
-				validateTestCaseFile((PoshiElement)element);
-			}
+					if (classType.equals("function")) {
+						Element element = PoshiContext.getFunctionRootElement(
+							className, namespace);
+
+						validateFunctionFile((PoshiElement)element);
+					}
+					else if (classType.equals("macro")) {
+						Element element = PoshiContext.getMacroRootElement(
+							className, namespace);
+
+						validateMacroFile((PoshiElement)element);
+					}
+					else if (classType.equals("path")) {
+						Element element = PoshiContext.getPathRootElement(
+							className, namespace);
+
+						validatePathFile(element, filePath);
+					}
+					else if (classType.equals("test-case")) {
+						Element element = PoshiContext.getTestCaseRootElement(
+							className, namespace);
+
+						validateTestCaseFile((PoshiElement)element);
+					}
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
 		}
+
+		executorService.invokeAll(callables);
+
+		executorService.shutdown();
 
 		if (!_exceptions.isEmpty()) {
 			_throwExceptions();

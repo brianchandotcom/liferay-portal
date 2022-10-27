@@ -14,9 +14,13 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.ButtonTag;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -76,15 +80,15 @@ public class EditFormButtonsTag extends IncludeTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		ButtonTag cancelButtonTag = new ButtonTag();
+		HttpServletRequest httpServletRequest = getRequest();
 
-		cancelButtonTag.setType("cancel");
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNotNull(getRedirect())) {
-			cancelButtonTag.setHref(getRedirect());
+		if (themeDisplay.isStatePopUp()) {
+			_addCancelButton();
 		}
-
-		cancelButtonTag.doTag(pageContext);
 
 		ButtonTag submitButtonTag = new ButtonTag();
 
@@ -96,7 +100,23 @@ public class EditFormButtonsTag extends IncludeTag {
 
 		submitButtonTag.doTag(pageContext);
 
+		if (!themeDisplay.isStatePopUp()) {
+			_addCancelButton();
+		}
+
 		return EVAL_PAGE;
+	}
+
+	private void _addCancelButton() throws Exception {
+		ButtonTag cancelButtonTag = new ButtonTag();
+
+		cancelButtonTag.setType("cancel");
+
+		if (Validator.isNotNull(getRedirect())) {
+			cancelButtonTag.setHref(getRedirect());
+		}
+
+		cancelButtonTag.doTag(pageContext);
 	}
 
 	private String _getSubmitLabel() {

@@ -115,40 +115,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156933 - Verify if as an Administrator I should not be able to add a duplicate case"
-	@priority = "5"
-	test AdminCanAddDuplicateCase {
-		task ("Given that the user goes to project page") {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
-		}
-
-		task ("And given that the user adds a new Case") {
-			Testray.projectTabNavigator(navTabName = "Cases");
-
-			TestrayCases.typeCasesField(
-				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
-				componentId = "Components_1 Project 1",
-				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
-				steps = "Auto Test Steps");
-
-			TestrayCases.typeCasesField(
-				caseName = "Cases_1 Case",
-				caseTypeId = "Automated Functional Test",
-				componentId = "Components_1 Project 1",
-				description = "Cases_1 Case Description",
-				duration = "60",
-				priority = "5",
-				steps = "Auto Test Steps");
-		}
-
-		task ("Then the error message should appear") {
-			Alert.viewErrorMessage(errorMessage = "The Case name already exists");
-		}
-	}
-
 	@description = "This is a test for LPS-156791 - Verify if as an Administrator I am able to delete Cases without Subcomponents"
 	@priority = "5"
 	test AdminCanDeleteCase {
@@ -302,6 +268,34 @@ definition {
 			Testray.viewErrorMessage(
 				fieldLabel = "Estimated Duration",
 				warningMessage = "estimatedDuration must be greater than or equal to 0");
+		}
+	}
+
+	@description = "This is a test for LPS-156933 - Verify if as an Administrator I should not be able to add a duplicate case"
+	@priority = "5"
+	test AdminCannotAddDuplicatedCase {
+		task ("Given that the user add a new Case duplicate") {
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Then the error message should appear") {
+			Alert.viewErrorMessage(errorMessage = "The Case name already exists");
 		}
 	}
 

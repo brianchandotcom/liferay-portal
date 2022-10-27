@@ -81,13 +81,6 @@ definition {
 			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
-	macro verifyCaseRequirement {
-		TestrayRequirements.verifyRequirementCase(
-			requirementCaseName = "ATF_Requirements Case",
-			requirementComponent = "Components_1 Project 1",
-			requirementPriority = "5");
-	}
-
 	macro verifyLinkCaseRequirement {
 		AssertElementPresent(
 			key_component = "${component}",

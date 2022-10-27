@@ -32,4 +32,16 @@ ${configList}''';
 		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", "${configList}");
 	}
 
+	macro editOSGiConfigFileFromTempFolder {
+		var tempDir = PropsUtil.get("output.dir.name");
+
+		Variables.assertDefined(parameterList = "${tempDir},${osgiConfigFileName}");
+
+		var filePath = FileUtil.getCanonicalPath(${tempDir});
+
+		var filePath = "${filePath}/${osgiConfigFileName}";
+
+		FileUtil.replaceStringInFile("${filePath}", "${oldValue}", "${newValue}");
+	}
+
 }

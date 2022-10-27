@@ -20,9 +20,6 @@
 Group group = themeDisplay.getScopeGroup();
 
 UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
-
-String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
-
 %>
 
 <clay:container-fluid
@@ -31,9 +28,9 @@ String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
 	<clay:sheet
 		cssClass="custom-sheet"
 	>
-		<portlet:actionURL name="/site_initializer_extender/synchronize" var="synchronizeActionURL" />
+		<portlet:actionURL name="/site_initializer_extender/synchronize_site_initializer_extender" var="synchronizeSiteInitializerExtenderActionURL" />
 
-		<aui:form action="<%= synchronizeActionURL %>" method="post" name="fm">
+		<aui:form action="<%= synchronizeSiteInitializerExtenderActionURL %>" method="post" name="fm">
 			<clay:sheet-header>
 				<div class="sheet-title">
 					<liferay-ui:message key="javax.portlet.title.com_liferay_site_initializer_extender_web_SiteInitializerExtenderPortlet" />
@@ -42,7 +39,7 @@ String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
 
 			<div class="sheet-section">
 				<div class="alert alert-info">
-					<liferay-ui:message key="site-initializer-extender-synchronize-help-x" arguments="<%= siteInitializerKey %>" />
+					<liferay-ui:message arguments='<%= unicodeProperties.get("siteInitializerKey") %>' key="site-initializer-extender-synchronize-help-x" />
 				</div>
 			</div>
 

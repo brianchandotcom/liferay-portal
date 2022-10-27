@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -53,8 +52,7 @@ public class SiteInitializerExtenderPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SiteInitializerExtenderPortletKeys.
-			SITE_INITIALIZER_EXTENDER;
+		return SiteInitializerExtenderPortletKeys.SITE_INITIALIZER_EXTENDER;
 	}
 
 	@Override

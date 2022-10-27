@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteInitializerExtenderPortletKeys.SITE_INITIALIZER_EXTENDER,
-		"mvc.command.name=/site_initializer_extender/synchronize"
+		"mvc.command.name=/site_initializer_extender/synchronize_site_initializer_extender"
 	},
 	service = MVCActionCommand.class
 )

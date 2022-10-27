@@ -737,7 +737,7 @@ definition {
 			locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
 			value1 = "${siteFriendlyURLEdit}");
 
-		Button.clickSave();
+		Button.clickNoError(button = "Save");
 
 		if ("${friendlyURLInvalid}" == "true") {
 			Alert.viewRequestFailedToComplete();

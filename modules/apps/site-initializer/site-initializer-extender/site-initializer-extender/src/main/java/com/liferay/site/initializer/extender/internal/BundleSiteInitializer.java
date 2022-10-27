@@ -2935,13 +2935,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
+			long classNameId = _portal.getClassNameId(Layout.class);
+
 			Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
 				serviceContext.getScopeGroupId(), false,
 				jsonObject.getString("friendlyURL"));
 
 			Layout draftLayout = layout.fetchDraftLayout();
-
-			long classNameId = _portal.getClassNameId(Layout.class);
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(

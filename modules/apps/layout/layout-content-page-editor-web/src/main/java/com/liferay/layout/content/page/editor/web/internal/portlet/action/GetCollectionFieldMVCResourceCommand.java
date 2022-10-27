@@ -44,7 +44,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
@@ -534,7 +533,7 @@ public class GetCollectionFieldMVCResourceCommand
 					InfoItemFormProvider.class)) {
 
 			infoItemClassNames.add(
-				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
+				_infoSearchClassMapperTracker.getSearchClassName(className));
 		}
 
 		return infoItemClassNames;

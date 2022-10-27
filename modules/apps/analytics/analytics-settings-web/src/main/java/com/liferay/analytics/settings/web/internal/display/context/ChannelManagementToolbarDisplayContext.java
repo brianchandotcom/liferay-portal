@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -82,13 +80,6 @@ public class ChannelManagementToolbarDisplayContext
 					LanguageUtil.get(_resourceBundle, "new-property"));
 			}
 		).build();
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

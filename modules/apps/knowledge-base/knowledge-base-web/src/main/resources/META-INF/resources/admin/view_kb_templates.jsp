@@ -38,23 +38,14 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 </liferay-portlet:actionURL>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
 			"deleteKBTemplatesURL", deleteKBTemplatesURL.toString()
 		).build()
 	%>'
-	clearResultsURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
-	creationMenu="<%= kbTemplatesManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= kbTemplatesManagementToolbarDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
+	managementToolbarDisplayContext="<%= kbTemplatesManagementToolbarDisplayContext %>"
 	propsTransformer="admin/js/TemplatesManagementToolbarPropsTransformer"
-	searchActionURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbTemplates"
-	selectable="<%= true %>"
-	sortingOrder="<%= kbTemplatesManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSortingURL()) %>"
 />
 
 <clay:container-fluid>

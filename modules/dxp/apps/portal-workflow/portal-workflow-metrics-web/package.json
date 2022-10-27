@@ -4,7 +4,7 @@
 		"custom-event-polyfill": "1.0.6",
 		"dom4": "^2.1.5",
 		"frontend-js-web": "*",
-		"moment": "2.24.0",
+		"moment": "2.29.4",
 		"numeral": "2.0.6",
 		"path-to-regexp": "3.0.0",
 		"qs": "6.7.0",

@@ -95,7 +95,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -597,7 +596,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Account account = Account.toDTO(
@@ -623,7 +622,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return assetListEntryIdsStringUtilReplaceValues;
 		}
 
-		JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray assetListJSONArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < assetListJSONArray.length(); i++) {
 			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(
@@ -676,7 +675,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -805,7 +804,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			SiteInitializerUtil.read(
 				resourcePath + "page.json", _servletContext));
 
@@ -836,7 +835,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			taxonomyCategoryIdsStringUtilReplaceValues);
 
-		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -1150,7 +1149,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			JSONArray jsonArray = _jsonFactory.createJSONArray(
 				objectActionsJSON);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
@@ -1233,7 +1232,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			if (jsonObject.has("articleBody")) {
 				_addOrUpdateKnowledgeBaseArticle(
@@ -1364,7 +1363,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return clientExtensionEntryIdsStringUtilReplaceValues;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1484,7 +1483,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(url.openStream()));
 
 			long resourceClassNameId = _portal.getClassNameId(
@@ -1753,8 +1752,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"DOCUMENT_FILE_ENTRY_ID:" + key,
 				String.valueOf(fileEntry.getFileEntryId()));
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(fileEntry));
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_jsonFactory.looseSerialize(fileEntry));
 
 			jsonObject.put("alt", StringPool.BLANK);
 
@@ -1868,7 +1867,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				LocaleUtil.getSiteDefault(), jsonObject.getString("name"));
@@ -2092,7 +2091,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String json = SiteInitializerUtil.read(
 			parentResourcePath + "page.json", _servletContext);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 		Map<Locale, String> nameMap = new HashMap<>(
 			SiteInitializerUtil.toMap(jsonObject.getString("name_i18n")));
@@ -2369,7 +2368,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		JSONObject notificationTemplateJSONObject =
-			JSONFactoryUtil.createJSONObject(json);
+			_jsonFactory.createJSONObject(json);
 
 		notificationTemplateJSONObject.put("body", bodyJSONObject);
 
@@ -2418,7 +2417,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		json = _replace(
 			json, objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		Map<String, Long> parametersMap = HashMapBuilder.put(
 			"notificationTemplateId", notificationTemplate.getId()
@@ -2495,7 +2494,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			json = _replace(json, objectEntryIdsStringUtilReplaceValues);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			com.liferay.object.model.ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
@@ -2633,7 +2632,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 		Organization organization = Organization.toDTO(json);
 
@@ -2727,7 +2726,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			_replace(
 				json,
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues));
@@ -2812,7 +2811,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -2934,7 +2933,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			json = _replace(json, segmentsEntriesIdsStringUtilReplaceValues);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			long classNameId = _portal.getClassNameId(Layout.class);
 
@@ -3376,7 +3375,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Group group = _groupLocalService.getGroup(
 			serviceContext.getScopeGroupId());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 		group.setType(jsonObject.getInt("typeSite"));
 		group.setManualMembership(jsonObject.getBoolean("manualMembership"));
@@ -3521,7 +3520,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addSiteNavigationMenu(
@@ -3690,7 +3689,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getRequest()
 			).build();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -3821,7 +3820,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			JSONObject workflowDefinitionJSONObject =
-				JSONFactoryUtil.createJSONObject(
+				_jsonFactory.createJSONObject(
 					SiteInitializerUtil.read(
 						resourcePath + "workflow-definition.json",
 						_servletContext));
@@ -3844,7 +3843,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			JSONArray propertiesJSONArray = JSONFactoryUtil.createJSONArray(
+			JSONArray propertiesJSONArray = _jsonFactory.createJSONArray(
 				propertiesJSON);
 
 			for (int i = 0; i < propertiesJSONArray.length(); i++) {
@@ -4233,7 +4232,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String metadataJSON = SiteInitializerUtil.read(
 			resourcePath + "/metadata.json", _servletContext);
 
-		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
 			(metadataJSON == null) ? "{}" : metadataJSON);
 
 		String css = _replace(

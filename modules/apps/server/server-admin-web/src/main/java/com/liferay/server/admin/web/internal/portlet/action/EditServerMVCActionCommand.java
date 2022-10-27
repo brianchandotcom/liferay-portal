@@ -101,6 +101,7 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -754,7 +755,7 @@ public class EditServerMVCActionCommand
 			PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
 			advancedProperties);
 
-		if (!pop3Host.equals(StringPool.BLANK)) {
+		if (!Validator.isBlank(pop3Host)) {
 			portletPreferences.setValue(
 				PropsKeys.MAIL_SESSION_MAIL_POP3_HOST, pop3Host);
 		}
@@ -770,12 +771,12 @@ public class EditServerMVCActionCommand
 				String.valueOf(pop3Port));
 		}
 
-		if (!pop3User.equals(StringPool.BLANK)) {
+		if (!Validator.isBlank(pop3User)) {
 			portletPreferences.setValue(
 				PropsKeys.MAIL_SESSION_MAIL_POP3_USER, pop3User);
 		}
 
-		if (!smtpHost.equals(StringPool.BLANK)) {
+		if (!Validator.isBlank(smtpHost)) {
 			portletPreferences.setValue(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST, smtpHost);
 		}
@@ -795,7 +796,7 @@ public class EditServerMVCActionCommand
 			PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
 			String.valueOf(smtpStartTLSEnable));
 
-		if (!smtpUser.equals(StringPool.BLANK)) {
+		if (!Validator.isBlank(smtpUser)) {
 			portletPreferences.setValue(
 				PropsKeys.MAIL_SESSION_MAIL_SMTP_USER, smtpUser);
 		}

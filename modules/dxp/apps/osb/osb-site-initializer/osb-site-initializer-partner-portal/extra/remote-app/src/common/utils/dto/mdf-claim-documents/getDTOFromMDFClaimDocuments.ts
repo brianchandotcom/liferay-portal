@@ -13,6 +13,7 @@ import MDFClaimDocumensDTO from '../../../interfaces/dto/mdfClaimDocumentDTO';
 
 export function getDTOFromMDFClaimDocuments(
 	file: File,
+	contentUrl: string,
 	claimId?: number,
 	activityId?: number,
 	budgetId?: number
@@ -23,5 +24,6 @@ export function getDTOFromMDFClaimDocuments(
 		r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId: activityId,
 		r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId: budgetId,
 		r_mdfClaimToMdfClaimDocuments_c_mdfClaimId: claimId,
+		url: contentUrl,
 	};
 }

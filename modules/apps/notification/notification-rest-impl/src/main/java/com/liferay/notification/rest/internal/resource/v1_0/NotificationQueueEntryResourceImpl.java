@@ -21,7 +21,10 @@ import com.liferay.notification.handler.NotificationHandlerTracker;
 import com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.service.NotificationQueueEntryService;
+import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -32,6 +35,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,6 +108,14 @@ public class NotificationQueueEntryResourceImpl
 			notificationQueueEntryId);
 	}
 
+	private Locale _getLocale() {
+		if (contextUser != null) {
+			return contextUser.getLocale();
+		}
+
+		return contextAcceptLanguage.getPreferredLocale();
+	}
+
 	private NotificationQueueEntry _toNotificationQueueEntry(
 			com.liferay.notification.model.NotificationQueueEntry
 				serviceBuilderNotificationQueueEntry)
@@ -112,6 +125,10 @@ public class NotificationQueueEntryResourceImpl
 			_notificationHandlerServiceTracker.getNotificationHandler(
 				_portal.getClassName(
 					serviceBuilderNotificationQueueEntry.getClassNameId()));
+
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(
+				serviceBuilderNotificationQueueEntry.getType());
 
 		return new NotificationQueueEntry() {
 			{
@@ -150,25 +167,39 @@ public class NotificationQueueEntryResourceImpl
 					}
 				).build();
 				body = serviceBuilderNotificationQueueEntry.getBody();
+				fromName = notificationType.getFromName(
+					serviceBuilderNotificationQueueEntry);
 				id =
 					serviceBuilderNotificationQueueEntry.
 						getNotificationQueueEntryId();
 				priority = serviceBuilderNotificationQueueEntry.getPriority();
+				recipientsSummary = notificationType.getRecipientSummary(
+					serviceBuilderNotificationQueueEntry);
 				sentDate = serviceBuilderNotificationQueueEntry.getSentDate();
 				status = serviceBuilderNotificationQueueEntry.getStatus();
 				subject = serviceBuilderNotificationQueueEntry.getSubject();
 				triggerBy = notificationHandler.getTriggerBy(
 					contextAcceptLanguage.getPreferredLocale());
 				type = serviceBuilderNotificationQueueEntry.getType();
+				typeLabel = _language.get(
+					_getLocale(),
+					serviceBuilderNotificationQueueEntry.getType());
 			}
 		};
 	}
 
 	@Reference
-	private NotificationHandlerTracker _notificationHandlerServiceTracker;
+	private Language _language;
+
+	@Reference
+	private NotificationHandlerServiceTracker
+		_notificationHandlerServiceTracker;
 
 	@Reference
 	private NotificationQueueEntryService _notificationQueueEntryService;
+
+	@Reference
+	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
 
 	@Reference
 	private Portal _portal;

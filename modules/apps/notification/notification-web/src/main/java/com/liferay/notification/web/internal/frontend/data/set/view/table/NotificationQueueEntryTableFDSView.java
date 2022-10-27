@@ -43,13 +43,13 @@ public class NotificationQueueEntryTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"subject", "subject"
 		).add(
-			"notificationType", "type"
+			"typeLabel", "type"
 		).add(
 			"triggerBy", "trigger-by"
 		).add(
 			"fromName", "from"
 		).add(
-			"toName", "to",
+			"recipientsSummary", "to",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"notificationQueueEntryToDataRenderer")
 		).add(

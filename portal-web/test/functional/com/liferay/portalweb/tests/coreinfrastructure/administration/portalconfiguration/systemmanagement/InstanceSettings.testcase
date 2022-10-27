@@ -535,6 +535,85 @@ definition {
 			locator1 = "Panel#PANEL");
 	}
 
+	@description = "This test asserts that the use of Instance OSGi configurations does not affect other systems."
+	@priority = "3"
+	test CanNotAffectOtherSystemsDueToUseOfInstanceOSGiConfigurations {
+		property custom.properties = "feature.flag.LPS-155284=true";
+		property test.name.skip.portal.instance = "SystemSettings#CanNotAffectOtherSystemsDueToUseOfInstanceOSGiConfigurations";
+
+		task ("Given change the Instance OSGi configurations to export") {
+			PortalSettings.openInstanceSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.viewTextareaValue(
+				fieldName = "charactersblacklist",
+				fieldValue = "'",
+				repeatableFieldNumber = "2");
+
+			Click(locator1 = "Button#REMOVE_BUTTON");
+
+			Click(locator1 = "Button#SAVE");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+		}
+
+		task ("And two new Virtual Instance are created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			PortalInstances.addCP(
+				mailDomain = "www.baker.com",
+				virtualHost = "www.baker.com",
+				webId = "www.baker.com");
+		}
+
+		task ("When change companyWebId to www.baker.com and copy it to the configs folder") {
+			var exportConfigFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.journal.configuration.JournalServiceConfiguration.scoped_*.config");
+			var exportFileDirectory = selenium.getOutputDirName();
+
+			OSGiConfig.editOSGiConfigFileFromTempFolder(
+				newValue = "www.baker.com",
+				oldValue = "liferay.com",
+				osgiConfigFileName = "${exportConfigFileName}");
+
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "${exportFileDirectory}",
+				osgiConfigFileName = "${exportConfigFileName}");
+		}
+
+		task ("And login to www.able.com and go to Web Content in the instance settings") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Then the instance config is the default settings") {
+			SystemSettings.viewTextareaValue(
+				fieldName = "charactersblacklist",
+				fieldValue = "'",
+				repeatableFieldNumber = "2");
+		}
+	}
+
 	@description = "This test specify the Terms of Use content by web content posted in a new site and assert the Terms of Use content updated when a new user login."
 	@priority = "3"
 	test CanSpecifyTheTermsofUseWebContent {

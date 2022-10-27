@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.CommerceMediaResolver;
@@ -40,13 +39,9 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -806,12 +801,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
 	private CommerceMediaProvider _commerceMediaProvider;
 
 	@Reference
@@ -847,15 +836,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	@Reference
-	private DDMFormRenderer _ddmFormRenderer;
-
-	@Reference
-	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

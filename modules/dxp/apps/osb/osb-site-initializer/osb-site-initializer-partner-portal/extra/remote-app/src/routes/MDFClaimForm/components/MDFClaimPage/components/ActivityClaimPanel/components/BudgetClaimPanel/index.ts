@@ -9,11 +9,4 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-
-export default interface MDFClaimBudget extends Partial<LiferayObject> {
-	expenseName?: string;
-	invoice?: File;
-	invoiceAmount: number;
-	selected: boolean;
-}
+export {default} from './BudgetClaimPanel';

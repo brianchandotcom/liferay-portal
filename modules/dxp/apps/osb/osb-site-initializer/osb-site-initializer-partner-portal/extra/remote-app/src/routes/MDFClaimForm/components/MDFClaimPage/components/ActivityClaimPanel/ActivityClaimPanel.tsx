@@ -11,10 +11,9 @@
 
 import ClayIcon from '@clayui/icon';
 import Link from '@clayui/link';
-import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
@@ -22,8 +21,7 @@ import {useWebDAV} from '../../../../../../common/context/WebDAV';
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
-import BudgetCard from './components/BudgetCard/BudgetCard';
-import BudgetModal from './components/BudgetModal';
+import BudgetClaimPanel from './components/BudgetClaimPanel';
 import PanelBody from './components/PanelBody';
 import PanelHeader from './components/PanelHeader';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
@@ -40,8 +38,7 @@ const ActivityClaimPanel = ({
 	overallCampaignDescription,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
-	const [currentBudgetIndex, setCurrentBudgetIndex] = useState<number>();
-	const {observer, onOpenChange, open} = useModal();
+	const webDAV = useWebDAV();
 
 	useBudgetsAmount(
 		activity.budgets,
@@ -55,39 +52,8 @@ const ActivityClaimPanel = ({
 		)
 	);
 
-	const webDAV = useWebDAV();
-
-	const currentBudgetFieldName = `activities[${activityIndex}].budgets[${currentBudgetIndex}]`;
-
-	const getCurrentBudget = () => {
-		if (currentBudgetIndex !== undefined && activity.budgets) {
-			return activity.budgets[currentBudgetIndex];
-		}
-	};
-
 	return (
 		<>
-			{open && (
-				<BudgetModal
-					{...getCurrentBudget()}
-					name={currentBudgetFieldName}
-					observer={observer}
-					onCancel={() => onOpenChange(false)}
-					onConfirm={(claimAmount, invoice) => {
-						setFieldValue(
-							`${currentBudgetFieldName}.claimAmount`,
-							claimAmount
-						);
-						setFieldValue(
-							`${currentBudgetFieldName}.invoice`,
-							invoice
-						);
-
-						onOpenChange(false);
-					}}
-				/>
-			)}
-
 			<ClayPanel
 				className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 mb-4 text-neutral-7"
 				displayType="secondary"
@@ -119,71 +85,68 @@ const ActivityClaimPanel = ({
 				</PanelHeader>
 
 				<PanelBody expanded={activity.selected}>
-					<>
-						{activity.budgets?.map((budget, index) => (
-							<BudgetCard
-								budget={budget}
-								key={`${budget.id}-${index}`}
-								onClick={() => {
-									setCurrentBudgetIndex(index);
-									onOpenChange(true);
-								}}
-							/>
-						))}
-
-						<PRMFormik.Field
-							component={PRMForm.InputText}
-							label="Metrics"
-							name={`activities[${activityIndex}].metrics`}
-							textArea
+					{activity.budgets?.map((budget, index) => (
+						<BudgetClaimPanel
+							activityIndex={activityIndex}
+							budget={budget}
+							budgetIndex={index}
+							key={`${budget.id}-${index}`}
+							setFieldValue={setFieldValue}
 						/>
+					))}
 
-						<div className="align-items-center d-flex justify-content-between">
-							<PRMFormik.Field
-								component={PRMForm.InputFile}
-								description="You can downloaded the Excel Template, fill it out, and upload it back here"
-								displayType="secondary"
-								label="List of Qualified Leads"
-								name={`activities[${activityIndex}].listQualifiedLeads`}
-								onAccept={(value: File) =>
-									setFieldValue(
-										`activities[${activityIndex}].listQualifiedLeads`,
-										value
-									)
-								}
-								outline
-								small
-							/>
+					<PRMFormik.Field
+						component={PRMForm.InputText}
+						label="Metrics"
+						name={`activities[${activityIndex}].metrics`}
+						textArea
+					/>
 
-							<div className="mb-3">
-								<Link
-									button
-									displayType="secondary"
-									download
-									href={`${webDAV}/claim/qualified_leads_template.xlsx`}
-									small
-									target="_blank"
-								>
-									<span className="inline-item inline-item-before">
-										<ClayIcon symbol="download" />
-									</span>
-									Download template
-								</Link>
-							</div>
-						</div>
-
+					<div className="align-items-center d-flex justify-content-between">
 						<PRMFormik.Field
-							component={PRMForm.DragAndDrop}
-							description="Drag and drop your files here to upload."
-							label="All Contents"
-							onAccept={(value: File[]) =>
+							component={PRMForm.InputFile}
+							description="You can downloaded the Excel Template, fill it out, and upload it back here"
+							displayType="secondary"
+							label="List of Qualified Leads"
+							name={`activities[${activityIndex}].listQualifiedLeads`}
+							onAccept={(value: File) =>
 								setFieldValue(
-									`activities[${activityIndex}].documents`,
+									`activities[${activityIndex}].listQualifiedLeads`,
 									value
 								)
 							}
+							outline
+							small
 						/>
-					</>
+
+						<div className="mb-3">
+							<Link
+								button
+								displayType="secondary"
+								download
+								href={`${webDAV}/claim/qualified_leads_template.xlsx`}
+								small
+								target="_blank"
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol="download" />
+								</span>
+								Download template
+							</Link>
+						</div>
+					</div>
+
+					<PRMFormik.Field
+						component={PRMForm.DragAndDrop}
+						description="Drag and drop your files here to upload."
+						label="All Contents"
+						onAccept={(value: File[]) =>
+							setFieldValue(
+								`activities[${activityIndex}].documents`,
+								value
+							)
+						}
+					/>
 				</PanelBody>
 			</ClayPanel>
 		</>

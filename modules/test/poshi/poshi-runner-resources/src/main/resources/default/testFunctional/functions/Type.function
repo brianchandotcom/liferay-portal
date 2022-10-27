@@ -80,16 +80,6 @@ definition {
 		selenium.typeAceEditor();
 	}
 
-	function typeEditor {
-		selenium.waitForVisible();
-
-		selenium.waitForEditable();
-
-		selenium.mouseOver();
-
-		selenium.typeEditor();
-	}
-
 	function typeClickAt {
 		selenium.waitForVisible();
 
@@ -108,6 +98,16 @@ definition {
 		selenium.mouseOver();
 
 		selenium.typeCodeMirrorEditor();
+	}
+
+	function typeEditor {
+		selenium.waitForVisible();
+
+		selenium.waitForEditable();
+
+		selenium.mouseOver();
+
+		selenium.typeEditor();
 	}
 
 	function typeEditor {

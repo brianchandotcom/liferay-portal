@@ -679,6 +679,88 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that Instance OSGi configurations can be used across different systems."
+	@priority = "3"
+	test CanUseInstanceConfigurationAcrossDifferentSystems {
+		property custom.properties = "feature.flag.LPS-155284=true";
+		property test.name.skip.portal.instance = "SystemSettings#CanUseInstanceConfigurationAcrossDifferentSystems";
+
+		task ("Given change the Instance OSGi configurations to export") {
+			PortalSettings.openInstanceSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.viewTextareaValue(
+				fieldName = "charactersblacklist",
+				fieldValue = "'",
+				repeatableFieldNumber = "2");
+
+			Click(locator1 = "Button#REMOVE_BUTTON");
+
+			Click(locator1 = "Button#SAVE");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+		}
+
+		task ("And a new Virtual Instance is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+		}
+
+		task ("When change companyWebId to new instance and copy it to the configs folder") {
+			var exportConfigFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.journal.configuration.JournalServiceConfiguration.scoped_*.config");
+			var exportFileDirectory = selenium.getOutputDirName();
+
+			OSGiConfig.editOSGiConfigFileFromTempFolder(
+				newValue = "www.able.com",
+				oldValue = "liferay.com",
+				osgiConfigFileName = "${exportConfigFileName}");
+
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "${exportFileDirectory}",
+				osgiConfigFileName = "${exportConfigFileName}");
+		}
+
+		task ("And login to the new instance and go to Web Content in the instance settings") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Then new instance config is changed and companyWebId is changed to companyId in config file") {
+			SystemSettings.viewTextareaValue(
+				fieldName = "charactersblacklist",
+				fieldValue = "'",
+				repeatableFieldNumber = "2");
+
+			OSGiConfig.assertTextNotInOSGIConfig(
+				osgiConfigFileName = "${exportConfigFileName}",
+				text = "companyWebId");
+
+			OSGiConfig.assertTextInOSGIConfig(
+				osgiConfigFileName = "${exportConfigFileName}",
+				text = "companyId");
+		}
+	}
+
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
 		ApplicationsMenu.gotoPortlet(

@@ -267,6 +267,104 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-159626. Verify that can publish web content URL references to live."
+	@priority = "3"
+	test CanPublishWebContentURLReference {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property test.name.skip.portal.instance = "Staging#CanPublishWebContentURLReference";
+
+		task ("Given: Import the lar file and enable remote staging") {
+			LAR.importSiteCP(
+				larFileName = "Staging_Site_LPS_159626.lar",
+				siteName = "Site Name",
+				uploadFrom = "dependencies");
+
+			JSONGroup.addGroup(
+				groupName = "Site Name",
+				portalURL = "http://localhost:9080");
+
+			var remoteGroupId = JSONGroupSetter.setGroupId(
+				groupName = "Site Name",
+				portalURL = "http://localhost:9080");
+
+			JSONStaging.enableRemoteStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Site Name",
+				remoteGroupId = "${remoteGroupId}",
+				remotePort = "9080");
+		}
+
+		task ("When: Publish all this site to Remote Live") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.configurePublishToLive(
+				checkContentNameList = "Web Content",
+				contentDateRange = "All");
+
+			Staging.publishToLive(remoteStaging = "true");
+		}
+
+		task ("Then: Assert the links on the live site point to the correct pages, and can see the correct articles on the page") {
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.openSiteURL(
+				baseURL = "http://localhost:9080",
+				siteName = "Site Name");
+
+			MouseOver.javaScriptMouseOver(
+				key_pageName = "Page 1",
+				locator1 = "Home#PAGE");
+
+			Click(
+				key_itemName = "Page 1.1.1",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertLocation(value1 = "http://localhost:9080/web/site-name/page-1.1.1");
+
+			AssertVisible(
+				key_content = '''//h1[contains(.,'Content-1.1.1')]''',
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			MouseOver.javaScriptMouseOver(
+				key_pageName = "Page 2",
+				locator1 = "Home#PAGE");
+
+			Click(
+				key_itemName = "Page 2.1",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertLocation(value1 = "http://localhost:9080/web/site-name/page-2.1");
+
+			AssertVisible(
+				key_content = '''//h1[contains(.,'Content-2-1')]''',
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			MouseOver.javaScriptMouseOver(
+				key_pageName = "Page 3",
+				locator1 = "Home#PAGE");
+
+			Click(
+				key_itemName = "Page 3.2",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertLocation(value1 = "http://localhost:9080/web/site-name/page-3.2");
+
+			AssertVisible(
+				key_content = '''//h1[contains(.,'Content-3-2')]''',
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+	}
+
 	@description = "This is a use case for LPS-90127."
 	@priority = "3"
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {

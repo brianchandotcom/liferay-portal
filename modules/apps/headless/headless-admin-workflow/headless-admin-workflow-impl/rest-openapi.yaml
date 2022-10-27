@@ -672,6 +672,26 @@ paths:
                                     $ref: "#/components/schemas/WorkflowDefinition"
                                 type: array
             tags: ["WorkflowDefinition"]
+        post:
+            operationId: postWorkflowDefinition
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinition"
+            tags: ["WorkflowDefinition"]
     "/workflow-definitions/by-name/{name}":
         get:
             operationId: getWorkflowDefinitionByName
@@ -776,6 +796,68 @@ paths:
                   required: true
                   schema:
                       type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinition"
+            tags: ["WorkflowDefinition"]
+    "/workflow-definitions/{workflowDefinitionId}":
+        delete:
+            operationId: deleteWorkflowDefinition
+            parameters:
+                - in: path
+                  name: workflowDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["WorkflowDefinition"]
+        get:
+            operationId: getWorkflowDefinition
+            parameters:
+                - in: path
+                  name: workflowDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WorkflowDefinition"
+            tags: ["WorkflowDefinition"]
+        put:
+            operationId: putWorkflowDefinition
+            parameters:
+                - in: path
+                  name: workflowDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WorkflowDefinition"
             responses:
                 200:
                     content:

@@ -1033,6 +1033,60 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9857. All sites should display the product discount when the discount is set to All Channels."
+	@priority = "4"
+	test CanSelectAllOtherChannelsForDefaultDiscount {
+		task ("Given a second Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+		}
+
+		task ("and a discount that is applied to the U-joint product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "10",
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 10% off",
+				productName = "U-Joint");
+		}
+
+		task ("When the discount is set as the account default") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+
+			Accounts.setDefaultDiscount(
+				discountTitle = "Discount 1 10% off",
+				override = "true");
+		}
+
+		task ("Then both Minium sites should show U-joint with a 10% discount applied.") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "10",
+				productDiscountedPrice = "21.60",
+				productListPrice = "24.00");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "10",
+				productDiscountedPrice = "21.60",
+				productListPrice = "24.00");
+		}
+	}
+
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account billing address for each channel"
 	@priority = "3"
 	test CanSelectOnlyAllOtherChannelsForDefaultBillingAddress {
@@ -1531,6 +1585,83 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9858. The default discount can be updated."
+	@priority = "4"
+	test CanUpdateDefaultDiscountsEntry {
+		task ("Given two active discounts applied to the U-joint product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "10",
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 10% off",
+				productName = "U-Joint");
+
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 2 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 20% off",
+				productName = "U-Joint");
+		}
+
+		task ("and a default discount is set to the Commerce Account") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
+
+			Accounts.setDefaultDiscount(
+				channelEntry = "Minium Portal",
+				discountTitle = "Discount 2 20% off");
+		}
+
+		task ("and the U-Joint product displaying the 20% off discount") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "20",
+				productDiscountedPrice = "19.20",
+				productListPrice = "24.00");
+		}
+
+		task ("When the default discount is changed to 10%") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.editCommerceDefaultSetting(
+				channelEntry = "Minium Portal",
+				currentDefault = "Discount 2 20% off",
+				newDefault = "Discount 1 10% off",
+				settingHeader = "Discounts",
+				settingLabel = "Discount");
+		}
+
+		task ("Then the U-Joint product should display the new 10% discount.") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "10",
+				productDiscountedPrice = "21.60",
+				productListPrice = "24.00");
+		}
+	}
+
 	@description = "COMMERCE-9782. Default delivery set to override should be default regardless of other eligibility criteria."
 	@priority = "4"
 	test DefaultDeliveryTermCanOverrideOtherEligibilities {
@@ -1649,6 +1780,367 @@ definition {
 				productQuantity = "1",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
+		}
+	}
+
+	@description = "COMMERCE-9856. The default discount can override Account eligibility."
+	@priority = "4"
+	test DefaultDiscountCanOverrideAccountEligibility {
+		task ("Given a second Minium site and a second account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account 2",
+				accountEntryType = "Business");
+		}
+
+		task ("and two active order types") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type ${orderTypeNumber} Description",
+					orderTypeName = "Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("and an active 10% discount applied to the U-joint product for the first account") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "10",
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 10% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(accountsEligibility = "Commerce Account");
+		}
+
+		task ("and an active 20% discount applied to the U-joint product for the Minium channel") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 2 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 20% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 2 20% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+		}
+
+		task ("and an active 30% discount applied to the U-joint product for Order Type 1") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "30",
+				target = "products",
+				title = "Discount 3 30% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 3 30% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 3 30% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(orderTypesEligibility = "Order Type 1");
+		}
+
+		task ("When Discount 1 is set as the account default") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
+
+			Accounts.setDefaultDiscount(
+				discountTitle = "Discount 1 10% off",
+				override = "true");
+		}
+
+		task ("Then viewing the U-joint product for Account 2 shows the 10% discount") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "10",
+				productDiscountedPrice = "21.60",
+				productListPrice = "24.00");
+		}
+	}
+
+	@description = "COMMERCE-9856. The default discount can override Channel eligibility."
+	@priority = "4"
+	test DefaultDiscountCanOverrideChannelEligibility {
+		task ("Given a second Minium site and a second account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account 2",
+				accountEntryType = "Business");
+		}
+
+		task ("and two active order types") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type ${orderTypeNumber} Description",
+					orderTypeName = "Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("and an active 10% discount applied to the U-joint product for the first account") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "10",
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 10% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(accountsEligibility = "Commerce Account");
+		}
+
+		task ("and an active 20% discount applied to the U-joint product for the Minium channel") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 2 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 20% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 2 20% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+		}
+
+		task ("and an active 30% discount applied to the U-joint product for Order Type 1") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "30",
+				target = "products",
+				title = "Discount 3 30% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 3 30% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 3 30% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(orderTypesEligibility = "Order Type 1");
+		}
+
+		task ("When Discount 2 is set as the account default") {
+			ApplicationsMenu.gotoSite(site = "Minium 2");
+
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
+
+			Accounts.setDefaultDiscount(
+				channelEntry = "Minium 2 Portal",
+				discountTitle = "Discount 2 20% off",
+				override = "true");
+		}
+
+		task ("Then viewing the U-joint product on the Minium 2 site for Account 2 shows the 20% discount") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "20",
+				productDiscountedPrice = "19.20",
+				productListPrice = "24.00");
+		}
+	}
+
+	@description = "COMMERCE-9856. The default discount can override Order Type eligibility."
+	@ignore = "true"
+	@priority = "4"
+	test DefaultDiscountCanOverrideOrderTypeEligibility {
+
+		// Ignore until steps are verified. COMMERCE-9856.
+
+		task ("Given a second Minium site and a second account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account 2",
+				accountEntryType = "Business");
+		}
+
+		task ("and two active order types") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type ${orderTypeNumber} Description",
+					orderTypeName = "Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("and an active 10% discount applied to the U-joint product for the first account") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "10",
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 10% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(accountsEligibility = "Commerce Account");
+		}
+
+		task ("and an active 20% discount applied to the U-joint product for the Minium channel") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "20",
+				target = "products",
+				title = "Discount 2 20% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 2 20% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 2 20% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+		}
+
+		task ("and an active 30% discount applied to the U-joint product for Order Type 1") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = "30",
+				target = "products",
+				title = "Discount 3 30% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 3 30% off",
+				productName = "U-Joint");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 3 30% off");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(orderTypesEligibility = "Order Type 1");
+		}
+
+		task ("When Discount 3 is set as the account default") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
+
+			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account 2");
+
+			Accounts.setDefaultDiscount(
+				discountTitle = "Discount 3 30% off",
+				override = "true");
+		}
+
+		task ("Then viewing the U-joint product on the Minium 2 site for Account 2 shows the 20% discount") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2/catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = "30",
+				productDiscountedPrice = "16.80",
+				productListPrice = "24.00");
 		}
 	}
 

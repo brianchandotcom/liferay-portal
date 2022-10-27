@@ -652,6 +652,7 @@ const MoveButton = ({
 			onFocus={(event) => event.stopPropagation()}
 			onKeyDown={(event) => event.stopPropagation()}
 			ref={buttonRef}
+			title={sub(Liferay.Language.get('move-x'), [node.name])}
 		>
 			<ClayIcon symbol="drag" />
 		</ClayButton>

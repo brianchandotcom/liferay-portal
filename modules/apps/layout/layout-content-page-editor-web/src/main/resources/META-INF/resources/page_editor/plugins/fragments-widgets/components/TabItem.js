@@ -296,6 +296,7 @@ const AddButton = ({item}) => {
 			}
 			ref={buttonRef}
 			symbol="plus"
+			title={sub(Liferay.Language.get('add-x'), item.label)}
 		/>
 	);
 };

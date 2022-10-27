@@ -85,8 +85,7 @@ public class JIRAUtil {
 		for (String commitMessage : commitMessages) {
 			for (String keyword : keywords) {
 				Pattern pattern = Pattern.compile(
-					"\\W(" + keyword + "\\w*)(\\W|\\Z)",
-					Pattern.CASE_INSENSITIVE);
+					"\\b_*(" + keyword + ")_*\\b", Pattern.CASE_INSENSITIVE);
 
 				Matcher matcher = pattern.matcher(commitMessage);
 

@@ -5,7 +5,7 @@
 	"name_i18n": {
 		"en-US":"Test Segments Experience 2"
 	},
-	"priority": -2,
+	"priority": 2,
 	"privateLayout":false,
 	"segmentsEntryId":"[$SEGMENTS_ENTRY_ID:TEST-SEGMENTS-ENTRY-2$]",
 	"segmentsExperienceId":"[$SEGMENTS_EXPERIENCE_ID:TEST-SEGMENTS-EXPERIENCE-2$]",

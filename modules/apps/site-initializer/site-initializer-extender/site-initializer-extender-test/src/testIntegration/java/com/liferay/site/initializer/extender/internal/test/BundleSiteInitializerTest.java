@@ -240,6 +240,7 @@ public class BundleSiteInitializerTest {
 		try {
 			siteInitializer.initialize(group.getGroupId());
 
+
 			_assertAccounts(serviceContext);
 			_assertAssetListEntries(group);
 			_assertAssetVocabularies(group);

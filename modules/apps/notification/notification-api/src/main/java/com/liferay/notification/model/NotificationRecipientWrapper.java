@@ -53,8 +53,8 @@ public class NotificationRecipientWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classPK", getClassPK());
 		attributes.put("className", getClassName());
+		attributes.put("classPK", getClassPK());
 
 		return attributes;
 	}
@@ -110,16 +110,16 @@ public class NotificationRecipientWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
 		String className = (String)attributes.get("className");
 
 		if (className != null) {
 			setClassName(className);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 	}
 

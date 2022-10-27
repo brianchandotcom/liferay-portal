@@ -42,8 +42,8 @@ create table NotificationRecipient (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	classPK LONG,
-	className VARCHAR(75) null
+	className VARCHAR(75) null,
+	classPK LONG
 );
 
 create table NotificationRecipientSetting (

@@ -205,20 +205,6 @@ public interface NotificationRecipientModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the class pk of this notification recipient.
-	 *
-	 * @return the class pk of this notification recipient
-	 */
-	public long getClassPK();
-
-	/**
-	 * Sets the class pk of this notification recipient.
-	 *
-	 * @param classPK the class pk of this notification recipient
-	 */
-	public void setClassPK(long classPK);
-
-	/**
 	 * Returns the class name of this notification recipient.
 	 *
 	 * @return the class name of this notification recipient
@@ -232,6 +218,20 @@ public interface NotificationRecipientModel
 	 * @param className the class name of this notification recipient
 	 */
 	public void setClassName(String className);
+
+	/**
+	 * Returns the class pk of this notification recipient.
+	 *
+	 * @return the class pk of this notification recipient
+	 */
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this notification recipient.
+	 *
+	 * @param classPK the class pk of this notification recipient
+	 */
+	public void setClassPK(long classPK);
 
 	@Override
 	public NotificationRecipient cloneWithOriginalValues();

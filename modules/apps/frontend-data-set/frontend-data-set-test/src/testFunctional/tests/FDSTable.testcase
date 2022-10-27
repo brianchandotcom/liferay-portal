@@ -28,8 +28,6 @@ definition {
 				groupName = "Guest",
 				layoutName = "Frontend Data Set Test Page",
 				layoutTemplate = "1 Column");
-
-			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 		}
 	}
 
@@ -52,7 +50,7 @@ definition {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/*") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/es/home");
+			Navigator.openURL(baseURL = "${portalURL}/es/home");
 
 			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 		}

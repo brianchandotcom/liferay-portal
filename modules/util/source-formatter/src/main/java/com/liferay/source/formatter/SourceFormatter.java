@@ -1291,8 +1291,8 @@ public class SourceFormatter {
 				if (matcher.find()) {
 					throw new Exception(
 						StringBundler.concat(
-							"The commit '", commitMessage,
-							"' contains the word '", keyword,
+							"Found formatting issues:\n", "The commit '",
+							commitMessage, "' contains the word '", keyword,
 							"', which could reveal potential security ",
 							"vulnerablities."));
 				}

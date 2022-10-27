@@ -26,16 +26,16 @@ export default function useBudgetsAmount(
 	useEffect(() => {
 		const amountValue = debouncedBudgets?.reduce<number>(
 			(previousValue, currentValue) => {
-				if (!currentValue.invoice) {
+				if (!currentValue.selected) {
 					return previousValue;
 				}
 
-				return previousValue + +currentValue.claimAmount;
+				return previousValue + Number(currentValue.invoiceAmount);
 			},
 			0
 		);
 
-		if (amountValue) {
+		if (amountValue || amountValue === 0) {
 			onAmountUpdate(amountValue);
 		}
 	}, [debouncedBudgets, onAmountUpdate]);

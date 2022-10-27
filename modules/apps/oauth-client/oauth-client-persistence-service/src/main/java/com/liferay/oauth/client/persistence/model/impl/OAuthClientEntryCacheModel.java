@@ -102,10 +102,10 @@ public class OAuthClientEntryCacheModel
 		sb.append(clientId);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
-		sb.append(", oidcUserInfoMapperJSON=");
-		sb.append(oidcUserInfoMapperJSON);
 		sb.append(", tokenRequestParametersJSON=");
 		sb.append(tokenRequestParametersJSON);
+		sb.append(", userInfoMapperJSON=");
+		sb.append(userInfoMapperJSON);
 		sb.append("}");
 
 		return sb.toString();
@@ -171,20 +171,19 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setInfoJSON(infoJSON);
 		}
 
-		if (oidcUserInfoMapperJSON == null) {
-			oAuthClientEntryImpl.setOIDCUserInfoMapperJSON("");
-		}
-		else {
-			oAuthClientEntryImpl.setOIDCUserInfoMapperJSON(
-				oidcUserInfoMapperJSON);
-		}
-
 		if (tokenRequestParametersJSON == null) {
 			oAuthClientEntryImpl.setTokenRequestParametersJSON("");
 		}
 		else {
 			oAuthClientEntryImpl.setTokenRequestParametersJSON(
 				tokenRequestParametersJSON);
+		}
+
+		if (userInfoMapperJSON == null) {
+			oAuthClientEntryImpl.setUserInfoMapperJSON("");
+		}
+		else {
+			oAuthClientEntryImpl.setUserInfoMapperJSON(userInfoMapperJSON);
 		}
 
 		oAuthClientEntryImpl.resetOriginalValues();
@@ -210,8 +209,8 @@ public class OAuthClientEntryCacheModel
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
-		oidcUserInfoMapperJSON = objectInput.readUTF();
 		tokenRequestParametersJSON = objectInput.readUTF();
+		userInfoMapperJSON = objectInput.readUTF();
 	}
 
 	@Override
@@ -262,18 +261,18 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeObject(infoJSON);
 		}
 
-		if (oidcUserInfoMapperJSON == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(oidcUserInfoMapperJSON);
-		}
-
 		if (tokenRequestParametersJSON == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(tokenRequestParametersJSON);
+		}
+
+		if (userInfoMapperJSON == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userInfoMapperJSON);
 		}
 	}
 
@@ -288,7 +287,7 @@ public class OAuthClientEntryCacheModel
 	public String authServerWellKnownURI;
 	public String clientId;
 	public String infoJSON;
-	public String oidcUserInfoMapperJSON;
 	public String tokenRequestParametersJSON;
+	public String userInfoMapperJSON;
 
 }

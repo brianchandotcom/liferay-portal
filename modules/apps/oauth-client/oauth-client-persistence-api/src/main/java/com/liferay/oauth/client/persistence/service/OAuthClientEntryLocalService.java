@@ -64,7 +64,7 @@ public interface OAuthClientEntryLocalService
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String infoJSON,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String tokenRequestParametersJSON, String userInfoMapperJSON)
 		throws PortalException;
 
 	/**
@@ -290,7 +290,7 @@ public interface OAuthClientEntryLocalService
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String infoJSON,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String tokenRequestParametersJSON, String userInfoMapperJSON)
 		throws PortalException;
 
 	/**

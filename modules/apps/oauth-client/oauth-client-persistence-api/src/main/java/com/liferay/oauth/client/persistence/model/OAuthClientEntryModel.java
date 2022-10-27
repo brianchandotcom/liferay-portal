@@ -247,21 +247,6 @@ public interface OAuthClientEntryModel
 	public void setInfoJSON(String infoJSON);
 
 	/**
-	 * Returns the oidc user info mapper json of this o auth client entry.
-	 *
-	 * @return the oidc user info mapper json of this o auth client entry
-	 */
-	@AutoEscape
-	public String getOIDCUserInfoMapperJSON();
-
-	/**
-	 * Sets the oidc user info mapper json of this o auth client entry.
-	 *
-	 * @param oidcUserInfoMapperJSON the oidc user info mapper json of this o auth client entry
-	 */
-	public void setOIDCUserInfoMapperJSON(String oidcUserInfoMapperJSON);
-
-	/**
 	 * Returns the token request parameters json of this o auth client entry.
 	 *
 	 * @return the token request parameters json of this o auth client entry
@@ -276,6 +261,21 @@ public interface OAuthClientEntryModel
 	 */
 	public void setTokenRequestParametersJSON(
 		String tokenRequestParametersJSON);
+
+	/**
+	 * Returns the user info mapper json of this o auth client entry.
+	 *
+	 * @return the user info mapper json of this o auth client entry
+	 */
+	@AutoEscape
+	public String getUserInfoMapperJSON();
+
+	/**
+	 * Sets the user info mapper json of this o auth client entry.
+	 *
+	 * @param userInfoMapperJSON the user info mapper json of this o auth client entry
+	 */
+	public void setUserInfoMapperJSON(String userInfoMapperJSON);
 
 	@Override
 	public OAuthClientEntry cloneWithOriginalValues();

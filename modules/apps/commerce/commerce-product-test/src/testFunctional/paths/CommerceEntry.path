@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANNEL_ACCOUNT_DEFAULTS_MODAL_DROPDOWN</td>
+	<td>//div[contains(@class,'form-group input-select-wrapper')]//option[contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_MENU_ITEM</td>
 	<td>//div[contains(@class,'show')]//button[contains(.,'${key_menuItem}')] | //div[contains(@class,'show')]//a[contains(.,'${key_menuItem}')]</td>
 	<td></td>

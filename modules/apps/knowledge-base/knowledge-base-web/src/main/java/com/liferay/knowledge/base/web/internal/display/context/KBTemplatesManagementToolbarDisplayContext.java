@@ -21,9 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
-import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
-import com.liferay.knowledge.base.web.internal.search.KBTemplateSearch;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -59,19 +56,18 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	public KBTemplatesManagementToolbarDisplayContext(
 			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse,
+			SearchContainer<KBTemplate> searchContainer)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
-		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_searchContainer = searchContainer;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_createSearchContainer();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -197,40 +193,6 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		return !_searchContainer.hasResults();
 	}
 
-	private void _createSearchContainer() throws PortalException {
-		_searchContainer = new KBTemplateSearch(
-			_liferayPortletRequest,
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCRenderCommandName(
-				"/knowledge_base/view_kb_templates"
-			).buildPortletURL());
-
-		String keywords = _getKeywords();
-
-		if (Validator.isNull(keywords)) {
-			_searchContainer.setResultsAndTotal(
-				() -> KBTemplateServiceUtil.getGroupKBTemplates(
-					_themeDisplay.getScopeGroupId(),
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					_searchContainer.getOrderByComparator()),
-				KBTemplateServiceUtil.getGroupKBTemplatesCount(
-					_themeDisplay.getScopeGroupId()));
-		}
-		else {
-			KBTemplateSearchDisplay kbTemplateSearchDisplay =
-				KBTemplateServiceUtil.getKBTemplateSearchDisplay(
-					_themeDisplay.getScopeGroupId(), keywords, keywords, null,
-					null, false, new int[0], _searchContainer.getCur(),
-					_searchContainer.getDelta(),
-					_searchContainer.getOrderByComparator());
-
-			_searchContainer.setResultsAndTotal(
-				kbTemplateSearchDisplay::getResults,
-				kbTemplateSearchDisplay.getTotal());
-		}
-	}
-
 	private PortletURL _getCurrentSortingURL() throws PortletException {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
@@ -284,9 +246,8 @@ public class KBTemplatesManagementToolbarDisplayContext {
 
 	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private SearchContainer<KBTemplate> _searchContainer;
+	private final SearchContainer<KBTemplate> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -66,16 +66,11 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 		<liferay-portlet:renderURLParams varImpl="searchURL" />
 		<aui:input name="kbTemplateIds" type="hidden" />
 
-		<%
-		SearchContainer<KBTemplate> kbTemplatesManagementToolbarDisplayContextSearchContainer = kbTemplatesManagementToolbarDisplayContext.getSearchContainer();
-		%>
-
 		<c:choose>
-			<c:when test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) || kbTemplatesManagementToolbarDisplayContextSearchContainer.hasResults() || kbTemplatesManagementToolbarDisplayContextSearchContainer.isSearch() %>'>
+			<c:when test="<%= viewKBTemplatesDisplayContext.hasKBTemplates() %>">
 				<liferay-ui:search-container
 					id="kbTemplates"
-					rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
-					searchContainer="<%= kbTemplatesManagementToolbarDisplayContextSearchContainer %>"
+					searchContainer="<%= viewKBTemplatesDisplayContext.getSearchContainer() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.knowledge.base.model.KBTemplate"

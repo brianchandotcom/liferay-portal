@@ -14,9 +14,24 @@
 
 package com.liferay.knowledge.base.web.internal.display.context;
 
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
+import com.liferay.knowledge.base.service.KBTemplateServiceUtil;
+import com.liferay.knowledge.base.web.internal.search.KBTemplateSearch;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
+import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +48,9 @@ public class ViewKBTemplatesDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public KBTemplatesManagementToolbarDisplayContext
@@ -41,11 +59,83 @@ public class ViewKBTemplatesDisplayContext {
 
 		return new KBTemplatesManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse);
+			_liferayPortletResponse, getSearchContainer());
+	}
+
+	public SearchContainer<KBTemplate> getSearchContainer()
+		throws PortalException {
+
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		SearchContainer<KBTemplate> searchContainer = new KBTemplateSearch(
+			_liferayPortletRequest,
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/knowledge_base/view_kb_templates"
+			).buildPortletURL());
+
+		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		if (Validator.isNull(keywords)) {
+			searchContainer.setResultsAndTotal(
+				() -> KBTemplateServiceUtil.getGroupKBTemplates(
+					_themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				KBTemplateServiceUtil.getGroupKBTemplatesCount(
+					_themeDisplay.getScopeGroupId()));
+		}
+		else {
+			KBTemplateSearchDisplay kbTemplateSearchDisplay =
+				KBTemplateServiceUtil.getKBTemplateSearchDisplay(
+					_themeDisplay.getScopeGroupId(), keywords, keywords, null,
+					null, false, new int[0], searchContainer.getCur(),
+					searchContainer.getDelta(),
+					searchContainer.getOrderByComparator());
+
+			searchContainer.setResultsAndTotal(
+				kbTemplateSearchDisplay::getResults,
+				kbTemplateSearchDisplay.getTotal());
+		}
+
+		searchContainer.setRowChecker(_getRowChecker());
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	public boolean hasKBTemplates() throws PortalException {
+		SearchContainer<KBTemplate> searchContainer = getSearchContainer();
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) ||
+			searchContainer.hasResults() || searchContainer.isSearch()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private RowChecker _getRowChecker() {
+		if (AdminPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				KBActionKeys.DELETE_KB_TEMPLATES)) {
+
+			return new RowChecker(_liferayPortletResponse);
+		}
+
+		return null;
 	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private SearchContainer<KBTemplate> _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

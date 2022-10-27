@@ -24,7 +24,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	action="javascript:void(0);"
 	onSubmit='<%= liferayPortletResponse.getNamespace() + "addDomains();" %>'
 >
-	<div class="modal-body">
+	<liferay-frontend:edit-form-body>
 		<div class="hide" id="<portlet:namespace />domainAlert">
 			<clay:alert
 				displayType="danger"
@@ -39,13 +39,13 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				<liferay-ui:message key="for-multiple-domains,-separate-each-domain-by-a-comma" />
 			</div>
 		</aui:field-wrapper>
+	</liferay-frontend:edit-form-body>
 
-		<aui:button-row>
-			<aui:button type="submit" value="save" />
-
-			<aui:button type="cancel" />
-		</aui:button-row>
-	</div>
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			submitLabel="save"
+		/>
+	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <aui:script>

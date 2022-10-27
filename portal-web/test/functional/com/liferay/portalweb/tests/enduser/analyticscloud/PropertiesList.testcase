@@ -273,8 +273,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8300 | Test Summary: Search for a property when assigning sites to a property"
 	@priority = "5"
 	test SearchPropertyToAssignSite {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Connect AC and DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Navigate to AC Settings") {

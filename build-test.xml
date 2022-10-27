@@ -14178,7 +14178,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<antcall target="run-poshi-runner" />
+		<poshi-execute task="runPoshi" />
 
 		<property name="test.class" value="${test.simple.class.name}#${test.method.name}" />
 

@@ -1,5 +1,31 @@
 definition {
 
+	macro assertTextInOSGIConfig {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
+
+		if (contains("${fileContent}", "${text}")) {
+			echo("File ${osgiConfigFileName} contains text ${text}");
+		}
+		else {
+			fail("File ${osgiConfigFileName} does not contain text ${text}");
+		}
+	}
+
+	macro assertTextNotInOSGIConfig {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
+
+		if (contains("${fileContent}", "${text}")) {
+			fail("File ${osgiConfigFileName} contains text ${text}");
+		}
+		else {
+			echo("File ${osgiConfigFileName} does not contain text ${text}");
+		}
+	}
+
 	macro copyOSGiConfigFile {
 		Variables.assertDefined(parameterList = "${osgiConfigFileBaseDir},${osgiConfigFileName}");
 

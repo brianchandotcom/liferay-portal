@@ -593,23 +593,44 @@ public class PoshiContext {
 	}
 
 	public static void readFiles() throws Exception {
-		readFiles(null);
+		readFiles(true, null);
 	}
 
-	public static void readFiles(String[] includes, String... baseDirNames)
+	public static void readFiles(boolean readAll) throws Exception {
+		readFiles(readAll, null);
+	}
+
+	public static void readFiles(
+			boolean readAll, String[] includes, String... baseDirNames)
 		throws Exception {
 
 		System.out.println("Start reading Poshi files.");
 
 		long start = System.currentTimeMillis();
 
-		if (includes == null) {
-			includes = POSHI_TEST_FILE_INCLUDES;
-		}
-
 		Set<String> poshiFileIncludes = new HashSet<>();
 
-		Collections.addAll(poshiFileIncludes, includes);
+		if (readAll) {
+			if (includes == null) {
+				includes = POSHI_TEST_FILE_INCLUDES;
+			}
+
+			Collections.addAll(poshiFileIncludes, includes);
+		}
+		else {
+			List<String> testNames = Arrays.asList(
+				PropsValues.TEST_NAME.split("\\s*,\\s*"));
+
+			for (String testName : testNames) {
+				String className =
+					PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
+						testName);
+
+				Collections.addAll(
+					poshiFileIncludes, "**/" + className + ".testcase");
+			}
+		}
+
 		Collections.addAll(poshiFileIncludes, POSHI_SUPPORT_FILE_INCLUDES);
 
 		_readPoshiFilesFromClassPath(

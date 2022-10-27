@@ -4,9 +4,26 @@
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-oracle">
-		<echo file="test.${user.name}.properties">database.type=oracle</echo>
+		<get-database-property property.name="database.host" />
+
+		<antcall inheritAll="false" target="start-docker-database-oracle">
+			<param name="skip.copy.optional.jars" value="true" />
+			<param name="skip.prepare.portal.ext.properties" value="true" />
+			<param name="skip.rebuild.database" value="true" />
+		</antcall>
 
 		<antcall inheritAll="false" target="run-selenium-tomcat">
+			<param name="database.oracle.docker.image" value="liferay/liferay-ci-environment:oracle-19.3.0.0.0_1.0.1" />
+			<param name="database.oracle.host" value="${database.host}_oracle" />
+			<param name="database.oracle.password" value="lportal" />
+			<param name="database.oracle.schema" value="lportal" />
+			<param name="database.oracle.url" value="jdbc:oracle:thin:@${database.host}:1522:oracl?oracle.net.disableOob=true" />
+			<param name="database.oracle.username" value="lportal" />
+			<param name="database.oracle.version" value="19.3.0.0.0" />
+			<param name="database.type" value="oracle" />
+			<param name="oracle.admin.password" value="liferay123" />
+			<param name="oracle.admin.username" value="oracl" />
+			<param name="test.jdbc.drivers.url" value="http://mirrors.lax.liferay.com/files.liferay.com/private/jdbc" />
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

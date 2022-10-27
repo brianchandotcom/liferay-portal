@@ -87,7 +87,8 @@ const VisibleSelectInput = forwardRef(
 			<div
 				className={classNames(
 					className,
-					'form-builder-select-field input-group-container'
+					'form-builder-select-field input-group-container',
+					'lfr__ddm-select-input-trigger'
 				)}
 				onClick={onClick}
 				onKeyDown={onKeyDown}

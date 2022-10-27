@@ -350,6 +350,16 @@ const Select = ({
 		}
 	};
 
+	const inputTrigger = document.querySelector(
+		'.lfr__ddm-select-input-trigger'
+	);
+	let leftRect;
+
+	if (inputTrigger) {
+		const rect = inputTrigger.getBoundingClientRect();
+		leftRect = rect.left;
+	}
+
 	return (
 		<>
 			<Trigger
@@ -420,6 +430,7 @@ const Select = ({
 				active={expand}
 				alignElementRef={triggerElementRef}
 				alignmentPosition={0}
+				autoBestAlign={false}
 				className="ddm-btn-full ddm-select-dropdown"
 				onKeyDown={(event) => {
 					switch (event.keyCode) {
@@ -438,6 +449,11 @@ const Select = ({
 				}}
 				onSetActive={setExpand}
 				ref={menuElementRef}
+				style={{
+					left: leftRect,
+					maxWidth: inputTrigger ? inputTrigger.offsetWidth : '500px',
+					width: '100%',
+				}}
 			>
 				{options.length > MAX_ITEMS || defaultSearch ? (
 					<DropdownListWithSearch

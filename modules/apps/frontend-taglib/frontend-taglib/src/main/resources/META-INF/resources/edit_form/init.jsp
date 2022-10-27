@@ -20,6 +20,8 @@
 page import="com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %>
 
+<%@ page import="java.util.Objects" %>
+
 <%
 String action = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:action"));
 List<String> checkboxNames = (List<String>)request.getAttribute("LIFERAY_SHARED_aui:form:checkboxNames");

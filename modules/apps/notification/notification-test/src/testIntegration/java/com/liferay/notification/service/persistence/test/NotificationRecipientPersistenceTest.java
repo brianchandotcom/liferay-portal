@@ -142,9 +142,9 @@ public class NotificationRecipientPersistenceTest {
 
 		newNotificationRecipient.setModifiedDate(RandomTestUtil.nextDate());
 
-		newNotificationRecipient.setClassPK(RandomTestUtil.nextLong());
-
 		newNotificationRecipient.setClassName(RandomTestUtil.randomString());
+
+		newNotificationRecipient.setClassPK(RandomTestUtil.nextLong());
 
 		_notificationRecipients.add(
 			_persistence.update(newNotificationRecipient));
@@ -180,11 +180,11 @@ public class NotificationRecipientPersistenceTest {
 				existingNotificationRecipient.getModifiedDate()),
 			Time.getShortTimestamp(newNotificationRecipient.getModifiedDate()));
 		Assert.assertEquals(
-			existingNotificationRecipient.getClassPK(),
-			newNotificationRecipient.getClassPK());
-		Assert.assertEquals(
 			existingNotificationRecipient.getClassName(),
 			newNotificationRecipient.getClassName());
+		Assert.assertEquals(
+			existingNotificationRecipient.getClassPK(),
+			newNotificationRecipient.getClassPK());
 	}
 
 	@Test
@@ -243,7 +243,7 @@ public class NotificationRecipientPersistenceTest {
 			"NotificationRecipient", "mvccVersion", true, "uuid", true,
 			"notificationRecipientId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"classPK", true, "className", true);
+			"className", true, "classPK", true);
 	}
 
 	@Test
@@ -567,9 +567,9 @@ public class NotificationRecipientPersistenceTest {
 
 		notificationRecipient.setModifiedDate(RandomTestUtil.nextDate());
 
-		notificationRecipient.setClassPK(RandomTestUtil.nextLong());
-
 		notificationRecipient.setClassName(RandomTestUtil.randomString());
+
+		notificationRecipient.setClassPK(RandomTestUtil.nextLong());
 
 		_notificationRecipients.add(_persistence.update(notificationRecipient));
 

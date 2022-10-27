@@ -37,8 +37,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="classPK" type="long" />
 		<field name="className" type="String" />
+		<field name="classPK" type="long" />
 	</model>
 	<model name="com.liferay.notification.model.NotificationRecipientSetting">
 		<field name="mvccVersion" type="long" />

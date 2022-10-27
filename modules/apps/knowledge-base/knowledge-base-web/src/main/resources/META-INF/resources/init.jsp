@@ -103,7 +103,6 @@ page import="com.liferay.knowledge.base.web.internal.display.context.KBSearchDis
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSelectParentDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSuggestionListDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSuggestionListManagementToolbarDisplayContext" %><%@
-page import="com.liferay.knowledge.base.web.internal.display.context.KBTemplatesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.ViewPrpKBArticlesDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.helper.KBArticleURLHelper" %><%@
 page import="com.liferay.knowledge.base.web.internal.frontend.taglib.clay.servlet.taglib.KBArticleAttachmentHorizontalCard" %><%@

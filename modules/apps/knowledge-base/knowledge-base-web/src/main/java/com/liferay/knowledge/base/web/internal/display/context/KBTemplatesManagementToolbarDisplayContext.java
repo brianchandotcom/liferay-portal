@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
-import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,7 +38,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -86,19 +83,6 @@ public class KBTemplatesManagementToolbarDisplayContext
 		).build();
 	}
 
-	public List<String> getAvailableActions(KBTemplate kbTemplate)
-		throws PortalException {
-
-		if (KBTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), kbTemplate,
-				ActionKeys.DELETE)) {
-
-			return Collections.singletonList("deleteKBTemplates");
-		}
-
-		return Collections.emptyList();
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		return PortletURLBuilder.createRenderURL(
@@ -131,29 +115,6 @@ public class KBTemplatesManagementToolbarDisplayContext
 					).buildPortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-template"));
-			}
-		).build();
-	}
-
-	public List<DropdownItem> getEmptyStateActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			() ->
-				Validator.isNull(_getKeywords()) &&
-				AdminPermission.contains(
-					_themeDisplay.getPermissionChecker(),
-					_themeDisplay.getScopeGroupId(),
-					KBActionKeys.ADD_KB_TEMPLATE),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/edit_kb_template.jsp"
-					).setRedirect(
-						PortalUtil.getCurrentURL(httpServletRequest)
-					).buildPortletURL());
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "new"));
 			}
 		).build();
 	}

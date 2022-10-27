@@ -18,8 +18,6 @@
 
 <%
 ViewKBTemplatesDisplayContext viewKBTemplatesDisplayContext = (ViewKBTemplatesDisplayContext)request.getAttribute(ViewKBTemplatesDisplayContext.class.getName());
-
-KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = viewKBTemplatesDisplayContext.getManagementToolbarDisplayContext();
 %>
 
 <c:choose>
@@ -43,7 +41,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 			"deleteKBTemplatesURL", deleteKBTemplatesURL.toString()
 		).build()
 	%>'
-	managementToolbarDisplayContext="<%= kbTemplatesManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= viewKBTemplatesDisplayContext.getManagementToolbarDisplayContext() %>"
 	propsTransformer="admin/js/TemplatesManagementToolbarPropsTransformer"
 	searchContainerId="kbTemplates"
 />
@@ -72,7 +70,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 						<%
 						row.setData(
 							HashMapBuilder.<String, Object>put(
-								"actions", StringUtil.merge(kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate))
+								"actions", StringUtil.merge(viewKBTemplatesDisplayContext.getAvailableActions(kbTemplate))
 							).build());
 						%>
 
@@ -130,7 +128,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 			</c:when>
 			<c:otherwise>
 				<liferay-frontend:empty-result-message
-					actionDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getEmptyStateActionDropdownItems() %>"
+					actionDropdownItems="<%= viewKBTemplatesDisplayContext.getEmptyStateActionDropdownItems() %>"
 					animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
 					buttonCssClass="secondary"
 					title='<%= LanguageUtil.get(request, "there-are-no-article-templates") %>'

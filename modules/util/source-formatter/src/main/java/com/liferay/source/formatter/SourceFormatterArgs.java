@@ -64,7 +64,7 @@ public class SourceFormatterArgs {
 
 	public static final boolean SHOW_DEBUG_INFORMATION = false;
 
-	public static final boolean VALIDATE_COMMIT_MESSAGES = false;
+	public static final boolean VALIDATE_COMMIT_MESSAGES = true;
 
 	public void addRecentChangesFileNames(
 		Collection<String> fileNames, String baseDirName) {

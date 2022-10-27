@@ -102,6 +102,14 @@ public class OpenAPIResourceImpl {
 
 			add(CommerceChannelResourceImpl.class);
 
+			add(ContactAccountGroupResourceImpl.class);
+
+			add(ContactConfigurationResourceImpl.class);
+
+			add(ContactOrganizationResourceImpl.class);
+
+			add(ContactUserGroupResourceImpl.class);
+
 			add(DataSourceResourceImpl.class);
 
 			add(SiteResourceImpl.class);

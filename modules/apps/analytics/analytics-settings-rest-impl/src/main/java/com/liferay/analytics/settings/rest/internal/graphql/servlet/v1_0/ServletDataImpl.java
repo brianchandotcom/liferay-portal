@@ -18,6 +18,10 @@ import com.liferay.analytics.settings.rest.internal.graphql.mutation.v1_0.Mutati
 import com.liferay.analytics.settings.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.ContactAccountGroupResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.ContactOrganizationResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.ContactUserGroupResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -43,6 +47,8 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
+		Mutation.setContactConfigurationResourceComponentServiceObjects(
+			_contactConfigurationResourceComponentServiceObjects);
 		Mutation.setDataSourceResourceComponentServiceObjects(
 			_dataSourceResourceComponentServiceObjects);
 
@@ -50,6 +56,14 @@ public class ServletDataImpl implements ServletData {
 			_channelResourceComponentServiceObjects);
 		Query.setCommerceChannelResourceComponentServiceObjects(
 			_commerceChannelResourceComponentServiceObjects);
+		Query.setContactAccountGroupResourceComponentServiceObjects(
+			_contactAccountGroupResourceComponentServiceObjects);
+		Query.setContactConfigurationResourceComponentServiceObjects(
+			_contactConfigurationResourceComponentServiceObjects);
+		Query.setContactOrganizationResourceComponentServiceObjects(
+			_contactOrganizationResourceComponentServiceObjects);
+		Query.setContactUserGroupResourceComponentServiceObjects(
+			_contactUserGroupResourceComponentServiceObjects);
 		Query.setSiteResourceComponentServiceObjects(
 			_siteResourceComponentServiceObjects);
 	}
@@ -74,12 +88,28 @@ public class ServletDataImpl implements ServletData {
 		_channelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContactConfigurationResource>
+		_contactConfigurationResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataSourceResource>
 		_dataSourceResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CommerceChannelResource>
 		_commerceChannelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContactAccountGroupResource>
+		_contactAccountGroupResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContactOrganizationResource>
+		_contactOrganizationResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContactUserGroupResource>
+		_contactUserGroupResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SiteResource>

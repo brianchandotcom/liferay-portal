@@ -2955,12 +2955,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"typeSettings");
 
 			if (propertiesJSONObject != null) {
-				Map<String, Object> map = propertiesJSONObject.toMap();
+				Map<String, String> map = JSONUtil.toStringMap(
+					propertiesJSONObject);
 
-				for (Map.Entry<String, Object> entry : map.entrySet()) {
-					unicodeProperties.setProperty(
-						entry.getKey(), String.valueOf(entry.getValue()));
-				}
+				unicodeProperties.putAll(map);
 			}
 
 			if (segmentsExperience == null) {

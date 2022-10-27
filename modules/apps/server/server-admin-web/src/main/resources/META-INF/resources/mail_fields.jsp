@@ -23,22 +23,25 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 PortletPreferences systemPortletPreferences = PrefsPropsUtil.getPreferences(0L);
 
-BiFunction<String, Boolean, String> biFunction = (key, usePropsUtil) -> companyPortletPreferences.getValue(key, systemPortletPreferences.getValue(key, usePropsUtil ? PropsUtil.get(key) : StringPool.BLANK));
+Function<Boolean, Function<String, String>> basePreferenceFunctionFunction = showPropsValues -> key -> companyPortletPreferences.getValue(key, systemPortletPreferences.getValue(key, showPropsValues ? PropsUtil.get(key) : StringPool.BLANK));
+
+Function<String, String> restrictedPreferenceFunction = basePreferenceFunctionFunction.apply(permissionChecker.isOmniadmin());
+Function<String, String> unrestrictedPreferenceFunction = basePreferenceFunctionFunction.apply(true);
 %>
 
 <aui:fieldset>
 	<aui:input name="preferencesCompanyId" type="hidden" value="<%= companyId %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="incoming-pop-server" name="pop3Host" type="text" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_HOST, permissionChecker.isOmniadmin()) %>" />
+	<aui:input cssClass="lfr-input-text-container" label="incoming-pop-server" name="pop3Host" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_HOST) %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="incoming-port" name="pop3Port" type="text" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_PORT, permissionChecker.isOmniadmin()) %>" />
+	<aui:input cssClass="lfr-input-text-container" label="incoming-port" name="pop3Port" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_PORT) %>" />
 
-	<aui:input label="use-a-secure-network-connection" name="pop3Secure" type="checkbox" value='<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL, true).equals("pop3s") %>' />
+	<aui:input label="use-a-secure-network-connection" name="pop3Secure" type="checkbox" value='<%= unrestrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL).equals("pop3s") %>' />
 
-	<aui:input autocomplete="new-password" cssClass="lfr-input-text-container" label="user-name" name="pop3User" type="text" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_USER, permissionChecker.isOmniadmin()) %>" />
+	<aui:input autocomplete="new-password" cssClass="lfr-input-text-container" label="user-name" name="pop3User" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_USER) %>" />
 
 	<%
-	String pop3Password = biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD, true);
+	String pop3Password = unrestrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD);
 
 	if (Validator.isNotNull(pop3Password)) {
 		pop3Password = Portal.TEMP_OBFUSCATION_VALUE;
@@ -47,18 +50,18 @@ BiFunction<String, Boolean, String> biFunction = (key, usePropsUtil) -> companyP
 
 	<aui:input autocomplete="new-password" cssClass="lfr-input-text-container" label="password" name="pop3Password" type="password" value="<%= pop3Password %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="outgoing-smtp-server" name="smtpHost" type="text" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST, permissionChecker.isOmniadmin()) %>" />
+	<aui:input cssClass="lfr-input-text-container" label="outgoing-smtp-server" name="smtpHost" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST) %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="outgoing-port" name="smtpPort" type="text" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT, permissionChecker.isOmniadmin()) %>" />
+	<aui:input cssClass="lfr-input-text-container" label="outgoing-port" name="smtpPort" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT) %>" />
 
-	<aui:input label="use-a-secure-network-connection" name="smtpSecure" type="checkbox" value='<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL, true).equals("smtps") %>' />
+	<aui:input label="use-a-secure-network-connection" name="smtpSecure" type="checkbox" value='<%= unrestrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL).equals("smtps") %>' />
 
-	<aui:input label="enable-starttls" name="smtpStartTLSEnable" type="checkbox" value="<%= GetterUtil.getBoolean(biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE, true)) %>" />
+	<aui:input label="enable-starttls" name="smtpStartTLSEnable" type="checkbox" value="<%= GetterUtil.getBoolean(unrestrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE)) %>" />
 
-	<aui:input autocomplete="new-password" cssClass="lfr-input-text-container" label="user-name" name="smtpUser" type="text" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER, permissionChecker.isOmniadmin()) %>" />
+	<aui:input autocomplete="new-password" cssClass="lfr-input-text-container" label="user-name" name="smtpUser" type="text" value="<%= restrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_USER) %>" />
 
 	<%
-	String smtpPassword = biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD, true);
+	String smtpPassword = unrestrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD);
 
 	if (Validator.isNotNull(smtpPassword)) {
 		smtpPassword = Portal.TEMP_OBFUSCATION_VALUE;
@@ -67,5 +70,5 @@ BiFunction<String, Boolean, String> biFunction = (key, usePropsUtil) -> companyP
 
 	<aui:input autocomplete="new-password" cssClass="lfr-input-text-container" label="password" name="smtpPassword" type="password" value="<%= smtpPassword %>" />
 
-	<aui:input cssClass="lfr-textarea-container" label="manually-specify-additional-javamail-properties-to-override-the-above-configuration" name="advancedProperties" type="textarea" value="<%= biFunction.apply(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES, true) %>" />
+	<aui:input cssClass="lfr-textarea-container" label="manually-specify-additional-javamail-properties-to-override-the-above-configuration" name="advancedProperties" type="textarea" value="<%= unrestrictedPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES) %>" />
 </aui:fieldset>

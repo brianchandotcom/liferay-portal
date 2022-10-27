@@ -85,7 +85,7 @@ page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
 page import="java.util.Properties" %><%@
 page import="java.util.TreeMap" %><%@
-page import="java.util.function.BiFunction" %>
+page import="java.util.function.Function" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
 page import="javax.portlet.PortletURL" %>

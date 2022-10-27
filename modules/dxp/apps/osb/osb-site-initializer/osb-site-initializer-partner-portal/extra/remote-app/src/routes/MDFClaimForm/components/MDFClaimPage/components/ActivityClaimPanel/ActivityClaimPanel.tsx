@@ -178,7 +178,7 @@ const ActivityClaimPanel = ({
 							label="All Contents"
 							onAccept={(value: File[]) =>
 								setFieldValue(
-									`activities[${activityIndex}].contents`,
+									`activities[${activityIndex}].documents`,
 									value
 								)
 							}

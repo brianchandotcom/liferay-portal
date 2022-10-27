@@ -225,7 +225,7 @@ definition {
 
 	macro avalaraConnection {
 		AssertTextEquals(
-			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
+			locator1 = "CommerceEntry#COMMERCE_OBJECT_NAME_ON_HEADER",
 			value1 = "Avalara Connector");
 
 		AssertElementPresent(

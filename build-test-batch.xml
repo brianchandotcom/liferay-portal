@@ -1715,6 +1715,8 @@ app.server.type=@{app.server.type}]]></echo>
 					</test-action>
 
 					<test-set-up>
+						<delete failonerror="false" file="${project.dir}/test.generated.properties" />
+
 						<antcall target="record-test-generated-properties" />
 
 						<if>

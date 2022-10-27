@@ -13831,91 +13831,101 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-generated-properties">
-		<setup-libs />
-
-		<delete failonerror="false" file="${test.ext.properties.file}" />
-
 		<if>
-			<isset property="test.base.dir.name" />
+			<and>
+				<isset property="env.JENKINS_HOME" />
+				<not>
+					<available file="test.generated.properties" />
+				</not>
+			</and>
 			<then>
-				<antcall inheritAll="false" target="prepare-poshi-runner-properties">
-					<param name="test.base.dir.name" value="${test.base.dir.name}" />
-					<param name="test.class" value="${test.class}" />
-				</antcall>
-			</then>
-			<else>
-				<antcall inheritAll="false" target="prepare-poshi-runner-properties" />
-			</else>
-		</if>
+				<setup-libs />
 
-		<poshi-execute task="writePoshiProperties" />
-
-		<move
-			file="portal-web/test.generated.properties"
-			tofile="test.generated.properties"
-		/>
-
-		<if>
-			<isset property="test.class" />
-			<then>
-				<loadfile
-					failonerror="false"
-					property="test.generated.properties.content"
-					srcfile="test.generated.properties"
-				/>
-
-				<get-poshi-class-name />
+				<delete failonerror="false" file="${test.ext.properties.file}" />
 
 				<if>
-					<contains string="${test.class}" substring="#" />
+					<isset property="test.base.dir.name" />
 					<then>
-						<get-poshi-method-name />
+						<antcall inheritAll="false" target="prepare-poshi-runner-properties">
+							<param name="test.base.dir.name" value="${test.base.dir.name}" />
+							<param name="test.class" value="${test.class}" />
+						</antcall>
 					</then>
+					<else>
+						<antcall inheritAll="false" target="prepare-poshi-runner-properties" />
+					</else>
 				</if>
 
-				<beanshell>
-					<![CDATA[
-						import java.util.regex.Matcher;
-						import java.util.regex.Pattern;
+				<poshi-execute task="writePoshiProperties" />
 
-						StringBuilder sb = new StringBuilder();
+				<move
+					file="portal-web/test.generated.properties"
+					tofile="test.generated.properties"
+				/>
 
-						sb.append("(");
-						sb.append(project.getProperty("poshi.class.name"));
-						sb.append("TestCase\\.(test");
+				<if>
+					<isset property="test.class" />
+					<then>
+						<loadfile
+							failonerror="false"
+							property="test.generated.properties.content"
+							srcfile="test.generated.properties"
+						/>
 
-						String poshiMethodName = project.getProperty("poshi.method.name");
+						<get-poshi-class-name />
 
-						if (poshiMethodName != null) {
-							sb.append(poshiMethodName);
-							sb.append("\\.|");
-						}
-						else {
-							sb.append("[^\\.]*\\.|");
-						}
+						<if>
+							<contains string="${test.class}" substring="#" />
+							<then>
+								<get-poshi-method-name />
+							</then>
+						</if>
 
-						sb.append("all\\.).*)\\\n");
+						<beanshell>
+							<![CDATA[
+								import java.util.regex.Matcher;
+								import java.util.regex.Pattern;
 
-						Pattern pattern = Pattern.compile(sb.toString());
+								StringBuilder sb = new StringBuilder();
 
-						Matcher matcher = pattern.matcher(project.getProperty("test.generated.properties.content"));
+								sb.append("(");
+								sb.append(project.getProperty("poshi.class.name"));
+								sb.append("TestCase\\.(test");
 
-						sb = new StringBuilder();
+								String poshiMethodName = project.getProperty("poshi.method.name");
 
-						while (matcher.find()) {
-							sb.append(matcher.group());
-						}
+								if (poshiMethodName != null) {
+									sb.append(poshiMethodName);
+									sb.append("\\.|");
+								}
+								else {
+									sb.append("[^\\.]*\\.|");
+								}
 
-						project.setProperty("test.generated.properties.content", sb.toString());
-					]]>
-				</beanshell>
+								sb.append("all\\.).*)\\\n");
 
-				<echo>##</echo>
-				<echo>## test.generated.properties</echo>
-				<echo>##</echo>
-				<echo></echo>
-				<echo>${test.generated.properties.content}</echo>
-				<echo></echo>
+								Pattern pattern = Pattern.compile(sb.toString());
+
+								Matcher matcher = pattern.matcher(project.getProperty("test.generated.properties.content"));
+
+								sb = new StringBuilder();
+
+								while (matcher.find()) {
+									sb.append(matcher.group());
+								}
+
+								project.setProperty("test.generated.properties.content", sb.toString());
+							]]>
+						</beanshell>
+
+						<echo>##</echo>
+						<echo>## test.generated.properties</echo>
+						<echo>##</echo>
+						<echo></echo>
+						<echo>${test.generated.properties.content}</echo>
+						<echo></echo>
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

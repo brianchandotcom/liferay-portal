@@ -17,6 +17,7 @@ import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFClaim from '../../common/interfaces/mdfClaim';
 import {Liferay} from '../../common/services/liferay';
+import useGetDocumentFolder from '../../common/services/liferay/headless-delivery/useGetDocumentFolders';
 import useGetMDFRequestById from '../../common/services/liferay/object/mdf-requests/useGetMDFRequestById';
 import MDFClaimPage from './components/MDFClaimPage';
 import claimSchema from './components/MDFClaimPage/schema/yup';
@@ -46,17 +47,32 @@ const getInitialFormValues = (
 });
 
 const MDFClaimForm = () => {
+	const {
+		data: claimParentFolder,
+		isValidating: isValidatingClaimFolder,
+	} = useGetDocumentFolder(
+		Liferay.ThemeDisplay.getScopeGroupId(),
+		`?filter=name eq 'claim'`
+	);
+
 	const mdfRequestId = useGetMDFRequestIdByHash();
 
-	const {data: mdfRequest, isValidating} = useGetMDFRequestById(
-		Number(mdfRequestId)
-	);
+	const {
+		data: mdfRequest,
+		isValidating: isValidatingMDFRequestById,
+	} = useGetMDFRequestById(Number(mdfRequestId));
+
 	const siteURL = useLiferayNavigate();
 
 	const onCancel = () =>
 		Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_CLAIM_LISTING}`);
 
-	if (!mdfRequest || isValidating) {
+	if (
+		!mdfRequest ||
+		isValidatingMDFRequestById ||
+		isValidatingClaimFolder ||
+		!claimParentFolder
+	) {
 		return <ClayLoadingIndicator />;
 	}
 
@@ -68,14 +84,18 @@ const MDFClaimForm = () => {
 				mdfRequest.totalMDFRequestAmount
 			)}
 			onSubmit={(values, formikHelpers) =>
-				submitForm(values, formikHelpers)
+				submitForm(values, formikHelpers, claimParentFolder.items[0].id)
 			}
 		>
 			<MDFClaimPage
 				mdfRequest={mdfRequest}
 				onCancel={onCancel}
 				onSaveAsDraft={(values, formikHelpers) =>
-					submitForm(values, formikHelpers)
+					submitForm(
+						values,
+						formikHelpers,
+						claimParentFolder.items[0].id
+					)
 				}
 				validationSchema={claimSchema}
 			/>

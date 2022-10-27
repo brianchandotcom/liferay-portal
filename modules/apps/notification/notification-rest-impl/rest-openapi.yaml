@@ -9,13 +9,7 @@ components:
                         type: object
                     readOnly: true
                     type: object
-                bcc:
-                    type: string
                 body:
-                    type: string
-                cc:
-                    type: string
-                from:
                     type: string
                 fromName:
                     type: string
@@ -27,6 +21,9 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                recipientsSummary:
+                    readOnly: true
+                    type: string
                 sentDate:
                     format: date
                     readOnly: true
@@ -36,13 +33,12 @@ components:
                     type: integer
                 subject:
                     type: string
-                to:
-                    type: string
-                toName:
-                    type: string
                 triggerBy:
                     type: string
                 type:
+                    readOnly: true
+                    type: string
+                typeLabel:
                     readOnly: true
                     type: string
             type: object

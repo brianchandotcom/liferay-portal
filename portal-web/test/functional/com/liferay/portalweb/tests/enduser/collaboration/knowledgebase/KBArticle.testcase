@@ -114,6 +114,29 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@description = "This test ensures that users can add an article with a custom friendly URL via the new configuration pane."
+	@priority = "5"
+	test CanAddArticleWithCustomFriendlyURL {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleFriendlyURL = "New Knowledge Base Article Title",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		KBArticle.viewFriendlyURLCP(
+			disabledFriendlyURLField = "true",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleFriendlyURL = "new-knowledge-base-article-title",
+			kbArticleTitle = "Knowledge Base Article Title",
+			skipNavigation = "true");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanAddArticleWithHTML {
@@ -497,6 +520,165 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewDefaultCP();
+	}
+
+	@description = "This test ensures that users can replace the attachment for an article via the new configuration pane."
+	@priority = "5"
+	test CanReplaceArticleAttachment {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.uploadAttachmentToArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			sourceFileName = "Document_1.jpg");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Attachments");
+
+		KBArticle.removeAttachment(attachmentName = "Document_1.jpg");
+
+		KBArticle.selectAttachmentCP(kbArticleAttachment = "Document_1.txt");
+
+		PortletEntry.publish();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewKBArticleWithAttachmentCP(
+			kbArticleAttachment = "Document_1.txt (259 B) Delete",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER",
+			value1 = "Document_1.jpg");
+	}
+
+	@description = "This test ensures that users can replace the category for an article via the new configuration pane."
+	@priority = "5"
+	test CanReplaceArticleCategory {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name1",
+			vocabularyName = "Vocabulary Name");
+
+		JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name2",
+			vocabularyName = "Vocabulary Name");
+
+		JSONKnowledgeBase.addkBArticle(
+			assetCategoryIds = "${categoryId}",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeCategories(categoryNameList = "Category Name1");
+
+		AssetCategorization.addCategory(
+			categoryName = "Category Name2",
+			vocabularyName = "Vocabulary Name");
+
+		PortletEntry.publish();
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		AssetCategorization.viewCategory(categoryName = "Category Name2");
+	}
+
+	@description = "This test ensures that users can replace the related asset for an article via the new configuration pane."
+	@priority = "5"
+	test CanReplaceArticleRelatedAsset {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			assetTitle = "DM Document Title",
+			assetType = "Basic Document",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Related Assets");
+
+		RelatedAssets.removeAsset(removeAssetTitle = "DM Document Title");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry");
+
+		PortletEntry.publish();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleRelatedAssetTitle = "Blogs Entry Title",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@description = "This test ensures that users can replace the tag for an article via the new configuration pane."
+	@priority = "5"
+	test CanReplaceArticleTag {
+		JSONKnowledgeBase.addkBArticle(
+			assetTagNames = "Tag1",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = "tag1");
+
+		AssetCategorization.addTag(tagName = "tag2");
+
+		PortletEntry.publish();
+
+		KBArticle.openToEditKBArticleInSite(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			siteURLKey = "guest");
+
+		AssetCategorization.viewTag(tagName = "Tag2");
 	}
 
 	@priority = "4"

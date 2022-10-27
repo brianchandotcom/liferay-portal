@@ -17,7 +17,9 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+ViewKBTemplatesDisplayContext viewKBTemplatesDisplayContext = (ViewKBTemplatesDisplayContext)request.getAttribute(ViewKBTemplatesDisplayContext.class.getName());
+
+KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = viewKBTemplatesDisplayContext.getManagementToolbarDisplayContext();
 %>
 
 <c:choose>

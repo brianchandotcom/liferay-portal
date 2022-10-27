@@ -513,6 +513,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>icon-options</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.IconOptionsTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>screen-navigation</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationTag</tag-class>
 		<body-content>JSP</body-content>

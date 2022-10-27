@@ -12,7 +12,8 @@
  * details.
  */
 
-import {fireEvent, render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -110,15 +111,15 @@ describe('PageContent', () => {
 	useSetEditableProcessorUniqueId.mockImplementation(() => jest.fn);
 
 	it('shows properly the title of the content', () => {
-		const {getByText} = renderPageContent();
+		renderPageContent();
 
-		expect(getByText('Test Web Content')).toBeInTheDocument();
+		expect(screen.getByText('Test Web Content')).toBeInTheDocument();
 	});
 
 	it('shows properly the content subtype', () => {
-		const {getByText} = renderPageContent();
+		renderPageContent();
 
-		expect(getByText('Test Web Content')).toBeInTheDocument();
+		expect(screen.getByText('Test Web Content')).toBeInTheDocument();
 	});
 
 	it('shows all expected editing actions in dropdown menu', () => {
@@ -129,32 +130,32 @@ describe('PageContent', () => {
 			'view-items',
 			'view-usages',
 		];
-		const {queryByText} = renderPageContent(contents[1]);
+		renderPageContent(contents[1]);
 
-		fireEvent.click(queryByText('open-actions-menu'));
+		userEvent.click(screen.queryByText('open-actions-menu'));
 
 		shownActions.forEach((action) => {
-			expect(queryByText(action)).toBeInTheDocument();
+			expect(screen.queryByText(action)).toBeInTheDocument();
 		});
-		expect(queryByText('other-action')).not.toBeInTheDocument();
+		expect(screen.queryByText('other-action')).not.toBeInTheDocument();
 	});
 
 	it('shows all items to be added when the Add Item action is clicked', () => {
-		const {queryByText} = renderPageContent(contents[1]);
+		renderPageContent(contents[1]);
 
-		fireEvent.click(queryByText('open-actions-menu'));
-		fireEvent.click(queryByText('add-items'));
+		userEvent.click(screen.queryByText('open-actions-menu'));
+		userEvent.click(screen.queryByText('add-items'));
 
 		expect(
-			queryByText('Basic Web Content to be added')
+			screen.queryByText('Basic Web Content to be added')
 		).toBeInTheDocument();
 	});
 
-	it('open image editor modal when the Edit Image action is clicked', async () => {
-		const {baseElement, queryByText} = renderPageContent(contents[2]);
+	it('open image editor modal when the Edit Image action is clicked', () => {
+		const {baseElement} = renderPageContent(contents[2]);
 
-		fireEvent.click(queryByText('open-actions-menu'));
-		fireEvent.click(queryByText('edit-image'));
+		userEvent.click(screen.queryByText('open-actions-menu'));
+		userEvent.click(screen.queryByText('edit-image'));
 
 		expect(
 			baseElement.querySelector('.image-editor-modal')
@@ -162,16 +163,16 @@ describe('PageContent', () => {
 	});
 
 	it('shows the edit button if the content is inline text', () => {
-		const {getByText} = renderPageContent(inlineText);
+		renderPageContent(inlineText);
 
-		expect(getByText('edit-inline-text')).toBeInTheDocument();
+		expect(screen.getByLabelText('edit-inline-text-x')).toBeInTheDocument();
 	});
 
-	it('selects the corresponding element on the page when edit button is clicked', async () => {
+	it('selects the corresponding element on the page when edit button is clicked', () => {
 		const selectItem = useSelectItem();
-		const {getByText} = renderPageContent(inlineText);
+		renderPageContent(inlineText);
 
-		fireEvent.click(getByText('edit-inline-text'));
+		userEvent.click(screen.getByLabelText('edit-inline-text-x'));
 
 		expect(selectItem).toHaveBeenCalledWith('11113-element-text', {
 			itemType: 'editable',
@@ -184,8 +185,8 @@ describe('PageContent', () => {
 			() => '11113-element-text'
 		);
 
-		const {getByText} = renderPageContent(inlineText);
+		renderPageContent(inlineText);
 
-		expect(getByText('edit-inline-text').parentElement).toBeDisabled();
+		expect(screen.getByLabelText('edit-inline-text-x')).toBeDisabled();
 	});
 });

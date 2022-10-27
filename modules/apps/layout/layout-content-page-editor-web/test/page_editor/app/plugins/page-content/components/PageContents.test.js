@@ -12,7 +12,7 @@
  * details.
  */
 
-import {act, fireEvent, render} from '@testing-library/react';
+import {act, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -66,7 +66,7 @@ const contents = {
 	],
 };
 
-const renderPageContents = ({pageContents = contents}) =>
+const renderPageContents = ({pageContents = contents} = {}) =>
 	render(
 		<StoreContextProvider
 			initialState={{
@@ -83,37 +83,37 @@ describe('PageContent', () => {
 	});
 
 	it('shows properly the list of page contents', () => {
-		const {getAllByText, getByText} = renderPageContents({});
+		renderPageContents();
 
 		Object.entries(contents).forEach(([key, values]) => {
 			values.forEach((value) => {
-				expect(getByText(value.title)).toBeInTheDocument();
+				expect(screen.getByText(value.title)).toBeInTheDocument();
 			});
-			expect(getAllByText(key)[0]).toBeInTheDocument();
+			expect(screen.getAllByText(key)[0]).toBeInTheDocument();
 		});
 	});
 
 	it('filters content according to a input value', () => {
-		const {getByLabelText, queryByText} = renderPageContents({});
-		const input = getByLabelText('search-form');
+		renderPageContents();
+		const input = screen.getByLabelText('search-content');
 
 		act(() => {
-			fireEvent.change(input, {
-				target: {value: 'WC'},
-			});
+			userEvent.type(input, 'WC');
 
 			jest.runAllTimers();
 		});
 
-		expect(queryByText('WC1')).toBeInTheDocument();
-		expect(queryByText('WC2')).toBeInTheDocument();
-		expect(queryByText('This is a inline text')).not.toBeInTheDocument();
-		expect(queryByText('mountain.png')).not.toBeInTheDocument();
+		expect(screen.queryByText('WC1')).toBeInTheDocument();
+		expect(screen.queryByText('WC2')).toBeInTheDocument();
+		expect(
+			screen.queryByText('This is a inline text')
+		).not.toBeInTheDocument();
+		expect(screen.queryByText('mountain.png')).not.toBeInTheDocument();
 	});
 
-	it('filters content according to a type value', async () => {
-		const {getByRole, queryByText} = renderPageContents({});
-		const dropdown = getByRole('listbox');
+	it('filters content according to a type value', () => {
+		renderPageContents();
+		const dropdown = screen.getByRole('listbox');
 
 		userEvent.click(dropdown);
 
@@ -121,9 +121,11 @@ describe('PageContent', () => {
 
 		userEvent.click(dropdownItems[2]);
 
-		expect(queryByText('mountain.png')).toBeInTheDocument();
-		expect(queryByText('Collection1')).not.toBeInTheDocument();
-		expect(queryByText('This is a inline text')).not.toBeInTheDocument();
-		expect(queryByText('WC1')).not.toBeInTheDocument();
+		expect(screen.queryByText('mountain.png')).toBeInTheDocument();
+		expect(screen.queryByText('Collection1')).not.toBeInTheDocument();
+		expect(
+			screen.queryByText('This is a inline text')
+		).not.toBeInTheDocument();
+		expect(screen.queryByText('WC1')).not.toBeInTheDocument();
 	});
 });

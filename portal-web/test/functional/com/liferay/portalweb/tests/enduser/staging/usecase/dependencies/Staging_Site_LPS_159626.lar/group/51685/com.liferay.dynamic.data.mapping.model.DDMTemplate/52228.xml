@@ -1,0 +1,42 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>06adfc36-0a75-07c4-c43c-3eb0c54ca8a1</__uuid>
+  <__templateId>52228</__templateId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20126</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2022-10-24 08:42:09.577</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 09:07:13.834</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>39827</__classNameId>
+  <__classPK>52219</__classPK>
+  <__resourceClassNameId>39507</__resourceClassNameId>
+  <__templateKey>52227</__templateKey>
+  <__version>1.1</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Template Name A&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__mode></__mode>
+  <__language>ftl</__language>
+  <__script>&lt;p&gt; &lt;a href=&quot;${OpenPage1.URL1.getData()}&quot;&gt;${OpenPage1.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage11.URL11.getData()}&quot;&gt;${OpenPage11.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage111.URL111.getData()}&quot;&gt;${OpenPage111.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage12.URL12.getData()}&quot;&gt;${OpenPage12.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage2.URL2.getData()}&quot;&gt;${OpenPage2.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage21.URL21.getData()}&quot;&gt;${OpenPage21.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage22.URL22.getData()}&quot;&gt;${OpenPage22.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage3.URL3.getData()}&quot;&gt;${OpenPage3.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage31.URL31.getData()}&quot;&gt;${OpenPage31.getData()}&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;${OpenPage32.URL32.getData()}&quot;&gt;${OpenPage32.getData()}&lt;/a&gt; &lt;/p&gt;</__script>
+  <__cacheable>true</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>52229</__smallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

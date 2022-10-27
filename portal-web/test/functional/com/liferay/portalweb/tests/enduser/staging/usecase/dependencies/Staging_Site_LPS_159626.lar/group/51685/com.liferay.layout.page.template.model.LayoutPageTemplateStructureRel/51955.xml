@@ -1,0 +1,23 @@
+<com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>6</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>3e3f52a1-ac76-ce66-afe6-47aca070495b</__uuid>
+  <__layoutPageTemplateStructureRelId>51955</__layoutPageTemplateStructureRelId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2022-10-24 07:37:09.601 UTC</__createDate>
+  <__modifiedDate>2022-10-24 09:29:55.518 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__layoutPageTemplateStructureId>51954</__layoutPageTemplateStructureId>
+  <__segmentsExperienceId>51947</__segmentsExperienceId>
+  <__data>{&quot;deletedItems&quot;:[],&quot;rootItems&quot;:{&quot;dropZone&quot;:&quot;&quot;,&quot;main&quot;:&quot;1c6cd1c7-ab2a-60ef-3487-7493ac6c25ec&quot;},&quot;items&quot;:{&quot;6ed918d3-1407-bc8b-77ff-12327e7e2c26&quot;:{&quot;itemId&quot;:&quot;6ed918d3-1407-bc8b-77ff-12327e7e2c26&quot;,&quot;children&quot;:[&quot;ce57d03a-d319-c452-2224-7b7e3ba4023c&quot;,&quot;1c14903b-d3f1-73fe-5dc3-d9f3fff535c3&quot;],&quot;type&quot;:&quot;row&quot;,&quot;config&quot;:{&quot;tablet&quot;:{&quot;styles&quot;:{}},&quot;numberOfColumns&quot;:2,&quot;indexed&quot;:true,&quot;modulesPerRow&quot;:2,&quot;cssClasses&quot;:[],&quot;reverseOrder&quot;:false,&quot;landscapeMobile&quot;:{&quot;modulesPerRow&quot;:1,&quot;styles&quot;:{}},&quot;portraitMobile&quot;:{&quot;styles&quot;:{}},&quot;gutters&quot;:true,&quot;styles&quot;:{},&quot;verticalAlignment&quot;:&quot;top&quot;},&quot;parentId&quot;:&quot;1c6cd1c7-ab2a-60ef-3487-7493ac6c25ec&quot;},&quot;b316dced-32f3-dff2-34ed-f8911056971a&quot;:{&quot;itemId&quot;:&quot;b316dced-32f3-dff2-34ed-f8911056971a&quot;,&quot;children&quot;:[],&quot;type&quot;:&quot;fragment&quot;,&quot;config&quot;:{&quot;tablet&quot;:{&quot;styles&quot;:{}},&quot;indexed&quot;:true,&quot;cssClasses&quot;:[],&quot;landscapeMobile&quot;:{&quot;styles&quot;:{}},&quot;portraitMobile&quot;:{&quot;styles&quot;:{}},&quot;styles&quot;:{},&quot;fragmentEntryLinkId&quot;:&quot;51966&quot;},&quot;parentId&quot;:&quot;ce57d03a-d319-c452-2224-7b7e3ba4023c&quot;},&quot;1c14903b-d3f1-73fe-5dc3-d9f3fff535c3&quot;:{&quot;itemId&quot;:&quot;1c14903b-d3f1-73fe-5dc3-d9f3fff535c3&quot;,&quot;children&quot;:[&quot;abd5d9e5-656d-1b61-62e0-f4df08e39273&quot;],&quot;type&quot;:&quot;column&quot;,&quot;config&quot;:{&quot;tablet&quot;:{},&quot;size&quot;:6,&quot;landscapeMobile&quot;:{&quot;size&quot;:12},&quot;portraitMobile&quot;:{}},&quot;parentId&quot;:&quot;6ed918d3-1407-bc8b-77ff-12327e7e2c26&quot;},&quot;ce57d03a-d319-c452-2224-7b7e3ba4023c&quot;:{&quot;itemId&quot;:&quot;ce57d03a-d319-c452-2224-7b7e3ba4023c&quot;,&quot;children&quot;:[&quot;b316dced-32f3-dff2-34ed-f8911056971a&quot;],&quot;type&quot;:&quot;column&quot;,&quot;config&quot;:{&quot;tablet&quot;:{},&quot;size&quot;:6,&quot;landscapeMobile&quot;:{&quot;size&quot;:12},&quot;portraitMobile&quot;:{}},&quot;parentId&quot;:&quot;6ed918d3-1407-bc8b-77ff-12327e7e2c26&quot;},&quot;1c6cd1c7-ab2a-60ef-3487-7493ac6c25ec&quot;:{&quot;itemId&quot;:&quot;1c6cd1c7-ab2a-60ef-3487-7493ac6c25ec&quot;,&quot;children&quot;:[&quot;6ed918d3-1407-bc8b-77ff-12327e7e2c26&quot;],&quot;type&quot;:&quot;root&quot;,&quot;config&quot;:{},&quot;parentId&quot;:&quot;&quot;},&quot;abd5d9e5-656d-1b61-62e0-f4df08e39273&quot;:{&quot;itemId&quot;:&quot;abd5d9e5-656d-1b61-62e0-f4df08e39273&quot;,&quot;children&quot;:[],&quot;type&quot;:&quot;fragment&quot;,&quot;config&quot;:{&quot;tablet&quot;:{&quot;styles&quot;:{}},&quot;indexed&quot;:true,&quot;cssClasses&quot;:[],&quot;landscapeMobile&quot;:{&quot;styles&quot;:{}},&quot;portraitMobile&quot;:{&quot;styles&quot;:{}},&quot;styles&quot;:{},&quot;fragmentEntryLinkId&quot;:&quot;51968&quot;},&quot;parentId&quot;:&quot;1c14903b-d3f1-73fe-5dc3-d9f3fff535c3&quot;}},&quot;version&quot;:1.1}</__data>
+  <__status>0</__status>
+  <__statusByUserId>20126</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate>2022-10-24 07:37:09.601 UTC</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelImpl>

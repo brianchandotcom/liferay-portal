@@ -1,0 +1,19 @@
+<com.liferay.layout.seo.model.impl.LayoutSEOSiteImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>a07638e8-0cf9-67c1-4778-9bc90d04c95d</__uuid>
+  <__layoutSEOSiteId>51687</__layoutSEOSiteId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName></__userName>
+  <__createDate class="sql-timestamp">2022-10-24 07:30:13.625</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 07:30:13.625</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__openGraphEnabled>true</__openGraphEnabled>
+  <__openGraphImageAlt></__openGraphImageAlt>
+  <__openGraphImageFileEntryId>0</__openGraphImageFileEntryId>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.layout.seo.model.impl.LayoutSEOSiteImpl>

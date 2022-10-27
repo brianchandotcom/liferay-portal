@@ -1,0 +1,18 @@
+<com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>3</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>e506b0cb-4b9f-0bd3-d86e-f7780a18ec20</__uuid>
+  <__layoutPageTemplateStructureId>51801</__layoutPageTemplateStructureId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2022-10-24 07:34:16.433 UTC</__createDate>
+  <__modifiedDate>2022-10-24 09:26:59.516 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>20032</__classNameId>
+  <__classPK>59</__classPK>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl>

@@ -1,0 +1,33 @@
+<FragmentEntryLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>1edd407a-ac0d-4e12-e650-9aed8db2d9cd</__uuid>
+  <__fragmentEntryLinkId>51920</__fragmentEntryLinkId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2022-10-24 07:36:50.741</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 07:36:50.741</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__originalFragmentEntryLinkId>0</__originalFragmentEntryLinkId>
+  <__fragmentEntryId>0</__fragmentEntryId>
+  <__segmentsExperienceId>51901</__segmentsExperienceId>
+  <__classNameId>20032</__classNameId>
+  <__classPK>64</__classPK>
+  <__plid>64</__plid>
+  <__css></__css>
+  <__html></__html>
+  <__js></__js>
+  <__configuration></__configuration>
+  <__deleted>false</__deleted>
+  <__editableValues>{&quot;instanceId&quot;:&quot;btnw&quot;,&quot;portletId&quot;:&quot;com_liferay_journal_content_web_portlet_JournalContentPortlet&quot;}</__editableValues>
+  <__namespace>btnw</__namespace>
+  <__position>0</__position>
+  <__rendererKey></__rendererKey>
+  <__type>4</__type>
+  <__lastPropagationDate class="sql-timestamp">2022-10-24 07:36:50.741</__lastPropagationDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntryLink>

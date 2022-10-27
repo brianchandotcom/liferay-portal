@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet" root-portlet-id="com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet" scope-group-id="51685" private-layout="false" self-path="/group/51685/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet/66/portlet.xml">
+	<portlet-preferences path="/group/51685/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet/preferences/layout/51685/0/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+	<portlet-preferences path="/group/51685/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet/preferences/layout/0/66/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+</portlet>

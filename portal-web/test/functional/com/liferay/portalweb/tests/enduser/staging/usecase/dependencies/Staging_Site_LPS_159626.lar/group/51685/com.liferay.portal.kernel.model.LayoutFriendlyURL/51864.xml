@@ -1,0 +1,20 @@
+<com.liferay.portal.model.impl.LayoutFriendlyURLImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>3c98fa52-a70e-3673-32c1-0650542ba45e</__uuid>
+  <__layoutFriendlyURLId>51864</__layoutFriendlyURLId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2022-10-24 07:35:12.943 UTC</__createDate>
+  <__modifiedDate>2022-10-24 07:35:12.880 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__plid>62</__plid>
+  <__privateLayout>false</__privateLayout>
+  <__friendlyURL>/fd979b26-37b9-c31a-fee9-9680b2547a73</__friendlyURL>
+  <__languageId>en_US</__languageId>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.portal.model.impl.LayoutFriendlyURLImpl>

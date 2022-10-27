@@ -1,0 +1,18 @@
+<DEDataDefinitionFieldLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>cdc1072b-8c16-8d66-d706-01298c6b544a</__uuid>
+  <__deDataDefinitionFieldLinkId>52269</__deDataDefinitionFieldLinkId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__createDate class="sql-timestamp">2022-10-24 09:05:17.943</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 09:05:17.943</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>40442</__classNameId>
+  <__classPK>52221</__classPK>
+  <__ddmStructureId>52219</__ddmStructureId>
+  <__fieldName>Field66974881</__fieldName>
+  <__columnBitmask>0</__columnBitmask>
+</DEDataDefinitionFieldLink>

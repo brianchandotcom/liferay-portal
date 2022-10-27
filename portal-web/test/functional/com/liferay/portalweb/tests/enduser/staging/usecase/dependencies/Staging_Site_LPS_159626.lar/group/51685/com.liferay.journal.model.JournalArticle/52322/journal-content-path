@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+  <dynamic-element field-reference="Title" index-type="keyword" instance-id="T0xtaz1v" name="Text79408435" type="text">
+    <dynamic-content language-id="en_US"><![CDATA[Content-1.1]]></dynamic-content>
+  </dynamic-element>
+  <dynamic-element field-reference="Content" index-type="keyword" instance-id="ccCc18La" name="Text28241911" type="text">
+    <dynamic-content language-id="en_US"><![CDATA[test Content-1.1]]></dynamic-content>
+  </dynamic-element>
+</root>

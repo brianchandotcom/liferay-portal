@@ -1,0 +1,34 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>29aa009d-88cf-32c6-4a0f-a537f3870673</__uuid>
+  <__templateId>52307</__templateId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20126</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2022-10-24 09:14:40.15</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 09:14:40.15</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>39827</__classNameId>
+  <__classPK>52298</__classPK>
+  <__resourceClassNameId>39507</__resourceClassNameId>
+  <__templateKey>52306</__templateKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Template Name B&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__mode></__mode>
+  <__language>ftl</__language>
+  <__script>&lt;h1&gt;${Title.getData()}&lt;/h1&gt;
+&lt;p&gt;${Content.getData()}&lt;/p&gt;</__script>
+  <__cacheable>true</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>52308</__smallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

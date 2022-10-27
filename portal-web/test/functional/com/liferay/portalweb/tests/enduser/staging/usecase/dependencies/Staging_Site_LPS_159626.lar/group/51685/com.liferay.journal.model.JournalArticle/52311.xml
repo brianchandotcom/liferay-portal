@@ -1,0 +1,51 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>d66d42e2-8ac4-41ba-1790-09712ac45371</__uuid>
+  <__id>52311</__id>
+  <__resourcePrimKey>52312</__resourcePrimKey>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__userId>20126</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2022-10-24 09:15:21.973</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 09:15:22.021</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__externalReferenceCode>d66d42e2-8ac4-41ba-1790-09712ac45371</__externalReferenceCode>
+  <__folderId>0</__folderId>
+  <__classNameId>0</__classNameId>
+  <__classPK>0</__classPK>
+  <__treePath>/</__treePath>
+  <__articleId>52310</__articleId>
+  <__version>1.0</__version>
+  <__urlTitle>content-1</__urlTitle>
+  <__DDMStructureKey>52297</__DDMStructureKey>
+  <__DDMTemplateKey>52306</__DDMTemplateKey>
+  <__defaultLanguageId>en_US</__defaultLanguageId>
+  <__layoutUuid></__layoutUuid>
+  <__displayDate class="sql-timestamp">2022-10-24 09:14:00</__displayDate>
+  <__indexable>true</__indexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__statusByUserId>20126</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2022-10-24 09:15:22.021</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__descriptionMap>
+    <entry>
+      <locale>en_US</locale>
+      <string></string>
+    </entry>
+  </__descriptionMap>
+  <__imagesFolderId>0</__imagesFolderId>
+  <__titleMap>
+    <entry>
+      <locale reference="../../../__descriptionMap/entry/locale"/>
+      <string>Content-1</string>
+    </entry>
+  </__titleMap>
+</JournalArticle>

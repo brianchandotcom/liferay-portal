@@ -1,0 +1,20 @@
+<LayoutClassedModelUsage>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>9c038923-5e30-626c-8e5c-b83ce324cf6c</__uuid>
+  <__layoutClassedModelUsageId>52426</__layoutClassedModelUsageId>
+  <__groupId>51685</__groupId>
+  <__companyId>20098</__companyId>
+  <__createDate class="sql-timestamp">2022-10-24 09:25:57.222</__createDate>
+  <__modifiedDate class="sql-timestamp">2022-10-24 09:25:57.222</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>39507</__classNameId>
+  <__classPK>52312</__classPK>
+  <__containerKey>com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_adqz</__containerKey>
+  <__containerType>20051</__containerType>
+  <__plid>55</__plid>
+  <__type>2</__type>
+  <__columnBitmask>0</__columnBitmask>
+</LayoutClassedModelUsage>

@@ -79,6 +79,29 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165625. The Language Selector shouldn't have aria-pressed attribute."
+	@priority = "2"
+	test ViewAccessibilityOfLanguageSelector {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the Language Selector should have correct accessibility") {
+			AssertElementNotPresent(locator1 = "//button[contains(@class,'dropdown-toggle')][@aria-pressed][*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]");
+
+			AssertElementPresent(locator1 = "//button[contains(@class,'dropdown-toggle')]//span[normalize-space()='Select a language, current language: en-US.']");
+		}
+	}
+
 	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
 	@priority = "3"
 	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {

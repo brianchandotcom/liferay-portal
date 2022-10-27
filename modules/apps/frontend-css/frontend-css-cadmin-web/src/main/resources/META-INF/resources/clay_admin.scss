@@ -813,6 +813,11 @@ html#{$cadmin-selector} {
 				margin-left: 16px;
 				margin-right: 0;
 			}
+
+			&.dialog-footer-not-reverse {
+				flex-direction: initial;
+				justify-content: flex-end;
+			}
 		}
 
 		.dialog-body,

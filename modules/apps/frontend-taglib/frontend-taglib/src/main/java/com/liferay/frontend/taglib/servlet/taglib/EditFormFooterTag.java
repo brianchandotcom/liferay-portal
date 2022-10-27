@@ -50,7 +50,7 @@ public class EditFormFooterTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isStatePopUp()) {
-			cssClass = cssClass + " dialog-footer";
+			cssClass = cssClass + " dialog-footer dialog-footer-not-reverse";
 		}
 
 		jspWriter.write(cssClass);

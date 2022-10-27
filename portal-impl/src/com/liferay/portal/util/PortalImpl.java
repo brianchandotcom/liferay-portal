@@ -8317,7 +8317,7 @@ public class PortalImpl implements Portal {
 
 			if (!alternateURLSuffix.startsWith(i18NPath) &&
 				((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) ||
-				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
+				 ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE != 0) &&
 				  !siteDefaultLocale.equals(locale)))) {
 
 				alternateURL =

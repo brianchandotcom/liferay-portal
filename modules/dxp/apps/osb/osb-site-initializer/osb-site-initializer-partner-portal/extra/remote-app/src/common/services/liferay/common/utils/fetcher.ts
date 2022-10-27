@@ -31,13 +31,19 @@ export default async function liferayFetcher<T>(
 	return response.json();
 }
 
-liferayFetcher.post = <T>(url: string, token: string, data: T) =>
+liferayFetcher.post = <T>(
+	url: string,
+	token: string,
+	data: T,
+	options?: RequestInit
+) =>
 	liferayFetcher<T>(url, token, {
 		body: JSON.stringify(data),
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		method: 'POST',
+		...options,
 	});
 
 liferayFetcher.put = <T>(url: string, token: string, data: Partial<T>) =>

@@ -16,12 +16,14 @@ import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimDocuments(
 	file: File,
+	contentUrl: string,
 	claimId?: number,
 	activityId?: number,
 	budgetId?: number
 ) {
 	const dtoMDFClaimDocuments = getDTOFromMDFClaimDocuments(
 		file,
+		contentUrl,
 		claimId,
 		activityId,
 		budgetId

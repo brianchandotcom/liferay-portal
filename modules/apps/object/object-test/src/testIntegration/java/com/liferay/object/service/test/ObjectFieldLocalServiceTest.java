@@ -1025,13 +1025,13 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldConstants.DB_TYPE_STRING
 			).indexedAsKeyword(
 				false
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
 			).build());
 
 		_testUpdateCustomObjectField(
 			objectFieldBuilder.defaultValue(
 				_listTypeEntryKey
-			).listTypeDefinitionId(
-				_listTypeDefinition.getListTypeDefinitionId()
 			).required(
 				true
 			).state(

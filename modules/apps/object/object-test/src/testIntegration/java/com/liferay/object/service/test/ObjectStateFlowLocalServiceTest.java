@@ -110,7 +110,8 @@ public class ObjectStateFlowLocalServiceTest {
 	public void testAddDefaultObjectStateFlow() throws Exception {
 		Assert.assertNull(
 			_objectStateFlowLocalService.addDefaultObjectStateFlow(
-				_addObjectField(0, false)));
+				_addObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(), false)));
 
 		ObjectField objectField = _addObjectField(
 			_listTypeDefinition.getListTypeDefinitionId(), true);

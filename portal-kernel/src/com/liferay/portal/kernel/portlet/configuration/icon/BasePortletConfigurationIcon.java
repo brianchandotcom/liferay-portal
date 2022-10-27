@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -225,6 +226,15 @@ public abstract class BasePortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getLocale();
+	}
+
+	protected String getNamespace(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getNamespace();
 	}
 
 	protected boolean isEmbeddedPersonalApplicationLayout(Layout layout) {

@@ -68,9 +68,6 @@ public class RESTClientTemplateContextContributor
 		}
 
 		public Object get(String path) throws Exception {
-
-			// TODO Add check to limit path to just REST calls
-
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 			ServletContext servletContext = _getServletContext();

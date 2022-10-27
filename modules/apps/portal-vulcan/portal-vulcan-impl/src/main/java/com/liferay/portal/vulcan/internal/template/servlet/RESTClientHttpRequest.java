@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.internal.template.servlet;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -51,6 +52,11 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 		}
 
 		return super.getHeaders(name);
+	}
+
+	@Override
+	public String getMethod() {
+		return HttpMethods.GET;
 	}
 
 }

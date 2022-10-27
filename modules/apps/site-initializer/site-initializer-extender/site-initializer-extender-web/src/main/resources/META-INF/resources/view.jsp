@@ -22,12 +22,12 @@
 	<clay:sheet
 		cssClass="custom-sheet"
 	>
-		<portlet:actionURL name="/site_initializer_extender/synchronize_site_initializer_extender" var="synchronizeSiteInitializerExtenderActionURL" />
+		<portlet:actionURL name="/site_initializer_extender/synchronize" var="synchronizeActionURL" />
 
-		<aui:form action="<%= synchronizeSiteInitializerExtenderActionURL %>" method="post" name="fm">
+		<aui:form action="<%= synchronizeActionURL %>" method="post" name="fm">
 			<clay:sheet-header>
 				<div class="sheet-title">
-					<liferay-ui:message key="javax.portlet.title.com_liferay_site_initializer_extender_web_SiteInitializerExtenderSynchronizePortlet" />
+					<liferay-ui:message key="javax.portlet.title.com_liferay_site_initializer_extender_web_SiteInitializerExtenderPortlet" />
 				</div>
 			</clay:sheet-header>
 

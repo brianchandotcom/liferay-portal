@@ -691,17 +691,14 @@ public class LayoutStructure {
 				LayoutStructureConstants.COLUMN_SIZES[numberOfColumns - 1][i]);
 		}
 
-		List<LayoutStructureItem> deletedLayoutStructureItems =
-			new ArrayList<>();
-
 		for (int i = numberOfColumns; i < oldNumberOfColumns; i++) {
 			String childrenItemId = childrenItemIds.get(i);
 
-			deletedLayoutStructureItems.addAll(
-				deleteLayoutStructureItem(childrenItemId));
+			markLayoutStructureItemForDeletion(
+				childrenItemId, Collections.emptyList());
 		}
 
-		return deletedLayoutStructureItems;
+		return Collections.emptyList();
 	}
 
 	private static void _updateLayoutStructureItemMaps(

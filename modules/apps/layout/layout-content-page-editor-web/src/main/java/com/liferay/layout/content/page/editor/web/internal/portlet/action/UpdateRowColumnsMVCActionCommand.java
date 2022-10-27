@@ -14,13 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -28,9 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -65,39 +60,14 @@ public class UpdateRowColumnsMVCActionCommand
 		int numberOfColumns = ParamUtil.getInteger(
 			actionRequest, "numberOfColumns");
 
-		List<LayoutStructureItem> deletedLayoutStructureItems =
-			new ArrayList<>();
-
 		LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> deletedLayoutStructureItems.addAll(
+			layoutStructure ->
 				layoutStructure.updateRowColumnsLayoutStructureItem(
-					itemId, numberOfColumns)));
-
-		List<Long> deletedFragmentEntryLinkIds = new ArrayList<>();
-
-		for (long fragmentEntryLinkId :
-				LayoutStructureUtil.getFragmentEntryLinkIds(
-					deletedLayoutStructureItems)) {
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentEntryLinkId);
-
-			if (fragmentEntryLink == null) {
-				continue;
-			}
-
-			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-				fragmentEntryLinkId);
-
-			deletedFragmentEntryLinkIds.add(fragmentEntryLinkId);
-		}
+					itemId, numberOfColumns));
 
 		return JSONUtil.put(
-			"deletedFragmentEntryLinkIds", deletedFragmentEntryLinkIds.toArray()
-		).put(
 			"layoutData",
 			() -> {
 				LayoutStructure layoutStructure =

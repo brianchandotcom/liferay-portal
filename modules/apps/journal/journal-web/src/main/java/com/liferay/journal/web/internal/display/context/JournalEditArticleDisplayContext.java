@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -279,6 +280,13 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"sitesCount",
 			() -> {
+				if (!GroupPermissionUtil.contains(
+						_themeDisplay.getPermissionChecker(),
+						ActionKeys.VIEW)) {
+
+					return 0;
+				}
+
 				int groupsCount = GroupServiceUtil.getGroupsCount(
 					_themeDisplay.getCompanyId(), 0, Boolean.TRUE);
 

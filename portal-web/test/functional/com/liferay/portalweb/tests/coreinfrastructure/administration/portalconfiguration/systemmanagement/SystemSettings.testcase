@@ -263,6 +263,101 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that Site OSGi configurations can be used across different systems."
+	@priority = "3"
+	test CanUseSiteConfigurationAcrossDifferentSystems {
+		property custom.properties = "feature.flag.LPS-155284=true";
+		property test.name.skip.portal.instance = "SystemSettings#CanUseSiteConfigurationAcrossDifferentSystems";
+
+		task ("Given change the Site OSGi configurations to export") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Accounts",
+				configurationName = "Accounts",
+				configurationScope = "Site Scope");
+
+			Click(locator1 = "Button#REMOVE_BUTTON");
+
+			Click(locator1 = "Button#SAVE");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
+		}
+
+		task ("And a new Virtual Instance is created and login to add the new site") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteType = "Blank");
+		}
+
+		task ("When change groupKey to new instance site and copy it to the configs folder") {
+			var exportConfigFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "com.liferay.account.internal.configuration.AccountEntryGroupConfiguration.scoped_*.config");
+			var exportFileDirectory = selenium.getOutputDirName();
+
+			OSGiConfig.editOSGiConfigFileFromTempFolder(
+				newValue = "www.able.com--site name",
+				oldValue = "liferay.com--Guest",
+				osgiConfigFileName = "${exportConfigFileName}");
+
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "${exportFileDirectory}",
+				osgiConfigFileName = "${exportConfigFileName}");
+		}
+
+		task ("And go to Accounts in the site settings") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/site-name/~/control_panel/manage/-/site/settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Accounts",
+				configurationName = "Accounts",
+				configurationScope = "Site Scope");
+		}
+
+		task ("Then new site config is changed and groupKey is changed to groupId in config file") {
+			Refresh.pauseRefresh();
+
+			AssertElementPresent(
+				key_fieldName = "Allowed Account Types",
+				key_fieldValue = "Business",
+				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
+
+			AssertElementNotPresent(
+				key_fieldName = "Allowed Account Types",
+				key_fieldValue = "Person",
+				locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
+
+			OSGiConfig.assertTextNotInOSGIConfig(
+				osgiConfigFileName = "${exportConfigFileName}",
+				text = "groupKey");
+
+			OSGiConfig.assertTextInOSGIConfig(
+				osgiConfigFileName = "${exportConfigFileName}",
+				text = "groupId");
+		}
+	}
+
 	@description = "This is a use case for LPS-79394. This test check that system settings scope is corrected."
 	@priority = "5"
 	test CheckSystemSettingsScopeIsCorrected {

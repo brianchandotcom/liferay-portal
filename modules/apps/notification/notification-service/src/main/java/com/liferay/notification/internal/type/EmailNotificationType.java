@@ -134,6 +134,30 @@ public class EmailNotificationType extends BaseNotificationType {
 	}
 
 	@Override
+	public String getFromName(NotificationQueueEntry notificationQueueEntry) {
+		NotificationRecipient notificationRecipient =
+			notificationQueueEntry.getNotificationRecipient();
+
+		Map<String, Object> notificationRecipientSettingsMap =
+			notificationRecipient.getNotificationRecipientSettingsMap();
+
+		return String.valueOf(notificationRecipientSettingsMap.get("fromName"));
+	}
+
+	@Override
+	public String getRecipientSummary(
+		NotificationQueueEntry notificationQueueEntry) {
+
+		NotificationRecipient notificationRecipient =
+			notificationQueueEntry.getNotificationRecipient();
+
+		Map<String, Object> notificationRecipientSettingsMap =
+			notificationRecipient.getNotificationRecipientSettingsMap();
+
+		return String.valueOf(notificationRecipientSettingsMap.get("to"));
+	}
+
+	@Override
 	public String getType() {
 		return NotificationConstants.TYPE_EMAIL;
 	}

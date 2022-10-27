@@ -101,6 +101,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -1277,9 +1279,26 @@ public class SourceFormatter {
 			commitMessages, _getPropertyValues("jira.project.keys"));
 		JIRAUtil.validateJIRATicketIds(commitMessages, 20);
 
-		JIRAUtil.validateJIRASecurityKeywords(
-			commitMessages,
-			_getPropertyValues("jira.security.vulnerability.keywords"));
+		for (String commitMessage : commitMessages) {
+			for (String keyword :
+					_getPropertyValues(
+						"jira.security.vulnerability.keywords")) {
+
+				Pattern pattern = Pattern.compile(
+					"\\b_*(" + keyword + ")_*\\b", Pattern.CASE_INSENSITIVE);
+
+				Matcher matcher = pattern.matcher(commitMessage);
+
+				if (matcher.find()) {
+					throw new Exception(
+						StringBundler.concat(
+							"The commit '", commitMessage,
+							"' contains the word '", keyword,
+							"', which could reveal potential security ",
+							"vulnerablities."));
+				}
+			}
+		}
 	}
 
 	private static final String _PROPERTIES_FILE_NAME =

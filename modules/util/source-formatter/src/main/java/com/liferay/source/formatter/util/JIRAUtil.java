@@ -73,29 +73,6 @@ public class JIRAUtil {
 		}
 	}
 
-	public static void validateJIRASecurityKeywords(
-			List<String> commitMessages, List<String> keywords)
-		throws Exception {
-
-		for (String commitMessage : commitMessages) {
-			for (String keyword : keywords) {
-				Pattern pattern = Pattern.compile(
-					"\\b_*(" + keyword + ")_*\\b", Pattern.CASE_INSENSITIVE);
-
-				Matcher matcher = pattern.matcher(commitMessage);
-
-				if (matcher.find()) {
-					throw new Exception(
-						StringBundler.concat(
-							"The commit '", commitMessage,
-							"' contains the word '", keyword,
-							"', which could reveal potential security ",
-							"vulnerablities."));
-				}
-			}
-		}
-	}
-
 	public static void validateJIRATicketIds(
 			List<String> commitMessages, int maxNumberOfTickets)
 		throws Exception {

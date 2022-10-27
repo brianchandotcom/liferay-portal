@@ -244,7 +244,10 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnName(
 				"OrgLabor", "typeId", "listTypeId LONG"));
 
-		upgradeVersionTreeMap.put(new Version(25, 0, 1), new UpgradeRole());
+		upgradeVersionTreeMap.put(
+			new Version(25, 0, 1),
+			UpgradeProcessFactory.alterColumnType(
+				"Role_", "description", "TEXT null"));
 	}
 
 }

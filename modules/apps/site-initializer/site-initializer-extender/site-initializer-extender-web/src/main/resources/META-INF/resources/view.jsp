@@ -16,6 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+Group group = themeDisplay.getScopeGroup();
+
+UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
+
+%>
+
 <clay:container-fluid
 	cssClass="main-content-body mt-4"
 >
@@ -33,7 +42,7 @@
 
 			<div class="sheet-section">
 				<div class="alert alert-info">
-					<liferay-ui:message key="site-initializer-extender-synchronize-help" />
+					<liferay-ui:message key="site-initializer-extender-synchronize-help-x" arguments="<%= siteInitializerKey %>" />
 				</div>
 			</div>
 

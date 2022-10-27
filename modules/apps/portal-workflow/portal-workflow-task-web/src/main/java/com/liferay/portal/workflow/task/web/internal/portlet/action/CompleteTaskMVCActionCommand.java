@@ -75,6 +75,24 @@ public class CompleteTaskMVCActionCommand
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
+		serviceContext.setRequest(
+			_getHttpServletRequest(actionRequest, actionResponse));
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_ID,
+			String.valueOf(themeDisplay.getUserId()));
+
+		workflowTaskManager.completeWorkflowTask(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			workflowTaskId, transitionName, comment, workflowContext);
+	}
+
+	@Reference
+	protected WorkflowTaskManager workflowTaskManager;
+
+	private HttpServletRequest _getHttpServletRequest(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
 
@@ -88,19 +106,8 @@ public class CompleteTaskMVCActionCommand
 				_portal.getLiferayPortletResponse(actionResponse));
 		}
 
-		serviceContext.setRequest(httpServletRequest);
-
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_USER_ID,
-			String.valueOf(themeDisplay.getUserId()));
-
-		workflowTaskManager.completeWorkflowTask(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			workflowTaskId, transitionName, comment, workflowContext);
+		return httpServletRequest;
 	}
-
-	@Reference
-	protected WorkflowTaskManager workflowTaskManager;
 
 	private Map<String, Serializable> _getWorkflowContext(
 			long companyId, long workflowTaskId)

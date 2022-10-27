@@ -805,9 +805,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, String> documentsStringUtilReplaceValues,
 		Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-		Layout layout, String resourcePath, ServiceContext serviceContext,
-		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues,
-		long segmentsExperienceID)
+		Layout layout, String resourcePath, long segmentsExperienceId, ServiceContext serviceContext,
+		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues
+		)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -876,11 +876,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layoutPageTemplateStructure.
 							getDefaultSegmentsExperienceData());
 
-					for (int i = 0; i < jsonArray.length(); i++) {
+					if (segmentsExperienceId == 0){
+						for (int i = 0; i < jsonArray.length(); i++) {
+							_layoutPageTemplatesImporter.importPageElement(
+								draftLayout, layoutStructure,
+								layoutStructure.getMainItemId(),
+								jsonArray.getString(i), i);
+						}
+					}
+					else {
+						for (int i = 0; i < jsonArray.length(); i++) {
 						_layoutPageTemplatesImporter.importPageElement(
 							draftLayout, layoutStructure,
 							layoutStructure.getMainItemId(),
-							jsonArray.getString(i), i, segmentsExperienceID);
+							jsonArray.getString(i), i, segmentsExperienceId);
+					}
 					}
 				}
 			}
@@ -1043,8 +1053,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ddmStructureEntryIdsStringUtilReplaceValues,
 				documentsStringUtilReplaceValues,
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-				entry.getValue(), entry.getKey(), serviceContext,
-				taxonomyCategoryIdsStringUtilReplaceValues, 0l);
+				entry.getValue(), entry.getKey(),0, serviceContext,
+				taxonomyCategoryIdsStringUtilReplaceValues);
 		}
 
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
@@ -1149,9 +1159,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectActionsJSON);
 
-			_invoke(
-				() -> _addOrUpdateObjectRelationships(
-					objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1172,6 +1179,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
+		_invoke(
+			() -> _addOrUpdateObjectRelationships(
+				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
 			() -> _addOrUpdateObjectEntries(
@@ -2939,6 +2949,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("friendlyURL"));
 
 				Layout draftLayout = layout.fetchDraftLayout();
+
 				long classNameId = _portal.getClassNameId(Layout.class);
 
 				SegmentsExperience segmentsExperience =
@@ -2947,6 +2958,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 						jsonObject.getString("segmentsExperienceKey"),
 						classNameId,
 						draftLayout.getClassPK());
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties(
+				true);
+
+			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+				"typeSettings");
+
+			if(propertiesJSONObject != null) {
+				Map<String, Object> map = propertiesJSONObject.toMap();
+
+				for (Map.Entry<String, Object> entry : map.entrySet()) {
+					unicodeProperties.setProperty(
+						entry.getKey(),
+						String.valueOf(entry.getValue()));
+				}
+			}
 
 				if (segmentsExperience == null) {
 					segmentsExperience =
@@ -2960,7 +2987,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								jsonObject.getString("name_i18n")),
 							jsonObject.getInt("priority"),
 							jsonObject.getBoolean("active", true),
-							new UnicodeProperties(true), serviceContext);
+							unicodeProperties, serviceContext);
 				}
 				else {
 					segmentsExperience =
@@ -2972,22 +2999,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 							jsonObject.getBoolean("active", true));
 				}
 
-				if (Validator.isNotNull(segmentsExperience)) {
-					StringUtil.replaceLast(resourcePath, "segments-experiences.json", "");
-
-						if (resourcePath.endsWith("/")) {
-							_addLayoutContent(assetListEntryIdsStringUtilReplaceValues,
-								clientExtensionEntryIdsStringUtilReplaceValues,
-								ddmStructureEntryIdsStringUtilReplaceValues,
-								documentsStringUtilReplaceValues,
-								objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-								layout, resourcePath, serviceContext,
-								taxonomyCategoryIdsStringUtilReplaceValues,
-								segmentsExperience.getSegmentsExperienceId());
-						}
-					}
-				}
-			}
+				_addLayoutContent(
+					assetListEntryIdsStringUtilReplaceValues,
+					clientExtensionEntryIdsStringUtilReplaceValues,
+					ddmStructureEntryIdsStringUtilReplaceValues,
+					documentsStringUtilReplaceValues,
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+					layout, resourcePath,
+					segmentsExperience.getSegmentsExperienceId(),
+					serviceContext,
+					taxonomyCategoryIdsStringUtilReplaceValues
+				);
+		}
+	}
 
 
 	private Long _addOrUpdateStructuredContentFolders(

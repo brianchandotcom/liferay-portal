@@ -15,7 +15,7 @@ definition {
 
 		selenium.mouseOver();
 
-		selenium.copyText();
+		selenium.getText();
 	}
 
 	function valueCopy {
@@ -23,7 +23,7 @@ definition {
 
 		selenium.mouseOver();
 
-		selenium.copyValue();
+		selenium.getElementValue();
 	}
 
 }

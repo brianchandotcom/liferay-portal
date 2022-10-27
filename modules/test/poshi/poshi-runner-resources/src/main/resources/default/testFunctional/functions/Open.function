@@ -15,7 +15,7 @@ definition {
 window.open("${locator1}","_blank");
 		''';
 
-		selenium.runScript("${javascript}");
+		selenium.executeJavaScript("${javascript}");
 	}
 
 	function openNoError {

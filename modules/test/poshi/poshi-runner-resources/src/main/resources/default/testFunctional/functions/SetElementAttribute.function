@@ -10,7 +10,7 @@ var element = document.evaluate("${locator1}", document, null, XPathResult.FIRST
 element.setAttribute("${attribute}", "${value1}");
 		''';
 
-		selenium.runScript("${javaScript}");
+		selenium.executeJavaScript("${javaScript}");
 	}
 
 }

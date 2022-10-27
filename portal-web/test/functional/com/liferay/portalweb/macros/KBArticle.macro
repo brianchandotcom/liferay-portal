@@ -1599,17 +1599,25 @@ definition {
 	}
 
 	macro viewFriendlyURLCP {
-		Click(
-			key_rowEntry = "${kbArticleTitle}",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_2");
+		if (!(isSet(skipNavigation))) {
+			Click(
+				key_rowEntry = "${kbArticleTitle}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_2");
 
-		MenuItem.click(menuItem = "Edit");
+			MenuItem.click(menuItem = "Edit");
+		}
 
 		Panel.expandPanel(panel = "Configuration");
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD",
 			value1 = "${kbArticleFriendlyURL}");
+
+		if (isSet(disabledFriendlyURLField)) {
+			AssertElementPresent(
+				key_fieldLabel = "Friendly URL",
+				locator1 = "FormFields#FIELD_DISABLED_TEXT");
+		}
 	}
 
 	macro viewImageViaContentCmd {

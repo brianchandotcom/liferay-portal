@@ -1539,13 +1539,6 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${accountDefaultShipping}");
 		}
-
-		if ("${isAccountActive}" == "true") {
-			AssertChecked.assertCheckedNotVisible(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-		}
-		else {
-			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
-		}
 	}
 
 	macro viewCatalogsEntry {

@@ -503,23 +503,29 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Guest Account 1",
+			rowStatus = "Active");
+
 		CommerceNavigator.gotoEntry(entryName = "Guest Account 1");
 
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Guest Account 1",
-			accountType = "Guest",
-			isAccountActive = "true");
+			accountType = "Guest");
 
 		Click(locator1 = "Icon#BACK");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Guest Account 2",
+			rowStatus = "Active");
 
 		CommerceNavigator.gotoEntry(entryName = "Guest Account 2");
 
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Guest Account 2",
-			accountType = "Guest",
-			isAccountActive = "true");
+			accountType = "Guest");
 	}
 
 	test AssertNewAccountIsCreatedAfterGuestCheckout {
@@ -740,23 +746,29 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Buyer User",
+			rowStatus = "Active");
+
 		CommerceNavigator.gotoEntry(entryName = "Buyer User");
 
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Buyer User",
-			accountType = "Person",
-			isAccountActive = "true");
+			accountType = "Person");
 
 		Click(locator1 = "Icon#BACK");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Guest Account",
+			rowStatus = "Active");
 
 		CommerceNavigator.gotoEntry(entryName = "Guest Account");
 
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Guest Account",
-			accountType = "Guest",
-			isAccountActive = "true");
+			accountType = "Guest");
 	}
 
 	test GuestCheckoutDisabled {
@@ -1176,23 +1188,29 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Guest Account",
+			rowStatus = "Active");
+
 		CommerceNavigator.gotoEntry(entryName = "Guest Account");
 
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Guest Account",
-			accountType = "Guest",
-			isAccountActive = "true");
+			accountType = "Guest");
 
 		Click(locator1 = "Icon#BACK");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Buyer User",
+			rowStatus = "Active");
 
 		CommerceNavigator.gotoEntry(entryName = "Buyer User");
 
 		CommerceEntry.viewAccountsEntry(
 			accountEmail = "buyer@liferay.com",
 			accountName = "Buyer User",
-			accountType = "Person",
-			isAccountActive = "true");
+			accountType = "Person");
 	}
 
 }

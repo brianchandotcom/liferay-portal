@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
@@ -348,8 +350,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	private void _updateLayoutContent(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Layout layout, Locale locale) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout,
+			Locale locale)
+		throws Exception {
 
 		LayoutLocalization layoutLocalization =
 			_layoutLocalizationLocalService.fetchLayoutLocalization(
@@ -360,13 +364,17 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			return;
 		}
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
 		for (Locale curLocale :
 				_language.getAvailableLocales(layout.getGroupId())) {
 
 			_layoutLocalizationLocalService.updateLayoutLocalization(
 				_layoutContentProvider.getLayoutContent(
 					httpServletRequest, httpServletResponse, layout, curLocale),
-				LocaleUtil.toLanguageId(curLocale), layout.getPlid());
+				LocaleUtil.toLanguageId(curLocale), layout.getPlid(),
+				serviceContext);
 		}
 	}
 

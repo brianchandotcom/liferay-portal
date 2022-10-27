@@ -154,7 +154,8 @@ public class PublishLayoutMVCActionCommand
 
 			layout = _layoutLocalService.getLayout(layout.getPlid());
 
-			_updateLayoutContent(actionRequest, actionResponse, layout);
+			_updateLayoutContent(
+				actionRequest, actionResponse, layout, serviceContext);
 
 			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
@@ -212,7 +213,7 @@ public class PublishLayoutMVCActionCommand
 
 	private void _updateLayoutContent(
 		ActionRequest actionRequest, ActionResponse actionResponse,
-		Layout layout) {
+		Layout layout, ServiceContext serviceContext) {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -225,7 +226,8 @@ public class PublishLayoutMVCActionCommand
 			_layoutLocalizationLocalService.updateLayoutLocalization(
 				_layoutContentProvider.getLayoutContent(
 					httpServletRequest, httpServletResponse, layout, locale),
-				LocaleUtil.toLanguageId(locale), layout.getPlid());
+				LocaleUtil.toLanguageId(locale), layout.getPlid(),
+				serviceContext);
 		}
 	}
 

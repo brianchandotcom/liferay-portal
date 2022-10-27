@@ -138,7 +138,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 			_updateLayoutContent(
 				serviceContext.getRequest(), serviceContext.getResponse(),
-				layout);
+				layout, serviceContext);
 		}
 
 		return _layoutLocalService.updateStatus(
@@ -154,7 +154,8 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	private void _updateLayoutContent(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Layout layout) {
+		HttpServletResponse httpServletResponse, Layout layout,
+		ServiceContext serviceContext) {
 
 		for (Locale locale :
 				_language.getAvailableLocales(layout.getGroupId())) {
@@ -162,7 +163,8 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			_layoutLocalizationLocalService.updateLayoutLocalization(
 				_layoutContentProvider.getLayoutContent(
 					httpServletRequest, httpServletResponse, layout, locale),
-				LocaleUtil.toLanguageId(locale), layout.getPlid());
+				LocaleUtil.toLanguageId(locale), layout.getPlid(),
+				serviceContext);
 		}
 	}
 

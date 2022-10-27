@@ -43,8 +43,11 @@ public class ServletFileUploadImpl implements ServletFileUpload {
 						new File(location), fileSizeThreshold,
 						httpServletRequest.getCharacterEncoding()));
 
+		// LPD-52625 Added Padding for Metadata Handling
+
 		long fileMaxSize =
-			UploadServletRequestConfigurationProviderUtil.getMaxSize();
+			UploadServletRequestConfigurationProviderUtil.getMaxSize() +
+				_UPLOAD_MAX_SIZE_PADDING;
 
 		servletFileUpload.setFileSizeMax(fileMaxSize);
 		servletFileUpload.setSizeMax(fileMaxSize);
@@ -76,5 +79,7 @@ public class ServletFileUploadImpl implements ServletFileUpload {
 			throw uploadException;
 		}
 	}
+
+	private static final long _UPLOAD_MAX_SIZE_PADDING = 10000;
 
 }

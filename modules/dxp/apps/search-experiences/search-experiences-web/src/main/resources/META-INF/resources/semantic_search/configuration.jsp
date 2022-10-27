@@ -29,9 +29,8 @@ page import="java.util.Map.Entry" %>
 SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurationDisplayContext = (SemanticSearchCompanyConfigurationDisplayContext)request.getAttribute(SemanticSearchCompanyConfigurationDisplayContext.class.getName());
 %>
 
-<aui:input name="enabled" type="checkbox" value="<%= semanticSearchCompanyConfigurationDisplayContext.isEnabled() %>" />
-
 <aui:fieldset label="transform-provider-settings">
+	<aui:input helpMessage="sentence-transformer-enabled-help" name="sentenceTransformerEnabled" type="checkbox" value="<%= semanticSearchCompanyConfigurationDisplayContext.isSentenceTransformerEnabled() %>" />
 
 	<%
 	String sentenceTransformProvider = semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider();

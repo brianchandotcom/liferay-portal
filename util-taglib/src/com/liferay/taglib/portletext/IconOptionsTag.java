@@ -37,7 +37,10 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.servlet.taglib.IconOptionsTag}
  */
+@Deprecated
 public class IconOptionsTag extends IconTag {
 
 	public String getDirection() {

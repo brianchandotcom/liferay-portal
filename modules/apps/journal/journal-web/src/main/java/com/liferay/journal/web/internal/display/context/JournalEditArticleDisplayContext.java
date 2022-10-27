@@ -595,22 +595,6 @@ public class JournalEditArticleDisplayContext {
 		return _defaultArticleLanguageId;
 	}
 
-	public String getEditArticleURL() {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCPath(
-			"/edit_article.jsp"
-		).setRedirect(
-			getRedirect()
-		).setParameter(
-			"articleId", getArticleId()
-		).setParameter(
-			"groupId", getGroupId()
-		).setParameter(
-			"version", getVersion()
-		).buildString();
-	}
-
 	public long getFolderId() {
 		if (_folderId != null) {
 			return _folderId;
@@ -911,14 +895,6 @@ public class JournalEditArticleDisplayContext {
 		return JournalFolderPermission.contains(
 			_themeDisplay.getPermissionChecker(), getGroupId(), getFolderId(),
 			ActionKeys.ADD_ARTICLE);
-	}
-
-	public boolean isApproved() {
-		if ((_article != null) && (getVersion() > 0)) {
-			return _article.isApproved();
-		}
-
-		return false;
 	}
 
 	public boolean isChangeStructure() {

@@ -25,6 +25,84 @@ definition {
 		}
 	}
 
+	@description = "This is the use case for LPS-161035."
+	@priority = "4"
+	test CanViewWebContentHistoryOverMultiplePublications {
+		property custom.properties = "feature.flag.LPS-161038=true";
+
+		task ("Add new web content on new added site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add and select a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name 1");
+		}
+
+		task ("View Publication timeline") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.viewPublicationTimelineEntry(
+				index = "1",
+				publicationName = "Publication Name 1");
+		}
+
+		task ("Edit the web content") {
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 1",
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit 1");
+		}
+
+		task ("Publish the publication") {
+			JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+			JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		}
+
+		task ("Add a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name 2");
+		}
+
+		task ("View Publication timeline in Production") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
+
+			WebContent.viewPublicationTimelineEntry(
+				index = "1",
+				publicationName = "Production");
+
+			WebContent.viewPublicationTimelineEntry(
+				index = "2",
+				publicationName = "Publication Name 1");
+		}
+
+		task ("View Publication timeline in Publication") {
+			JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+			Refresh();
+
+			WebContent.viewPublicationTimelineEntry(
+				index = "1",
+				publicationName = "Publication Name 2");
+
+			WebContent.viewPublicationTimelineEntry(
+				index = "2",
+				publicationName = "Publication Name 1");
+		}
+	}
+
 	@description = "This is use case for LPS-159561. Making the changes in the description doesn't yield a missing requirement conflict."
 	@priority = "3"
 	test MakingChangesInDescriptionCannotYieldConflict {

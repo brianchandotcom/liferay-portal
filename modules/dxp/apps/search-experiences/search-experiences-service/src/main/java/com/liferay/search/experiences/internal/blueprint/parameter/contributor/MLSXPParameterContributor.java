@@ -56,6 +56,10 @@ public class MLSXPParameterContributor implements SXPParameterContributor {
 		SemanticSearchConfiguration semanticSearchConfiguration =
 			_getSemanticSearchConfiguration(searchContext.getCompanyId());
 
+		if (!semanticSearchConfiguration.sentenceTransformerEnabled()) {
+			return;
+		}
+
 		sxpParameters.add(
 			new IntegerSXPParameter(
 				"ml.keyword_vector_dimensions", true,

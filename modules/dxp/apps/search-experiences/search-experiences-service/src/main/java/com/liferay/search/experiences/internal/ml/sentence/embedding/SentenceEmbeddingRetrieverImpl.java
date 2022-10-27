@@ -44,7 +44,9 @@ public class SentenceEmbeddingRetrieverImpl
 	public Double[] getSentenceEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
+			!semanticSearchConfiguration.sentenceTransformerEnabled()) {
+
 			return new Double[0];
 		}
 

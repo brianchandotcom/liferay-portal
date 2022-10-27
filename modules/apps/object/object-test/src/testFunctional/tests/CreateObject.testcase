@@ -3679,7 +3679,7 @@ definition {
 	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
 	@priority = "4"
 	test CanUpdateFieldSearchableSectionBeforePublished {
-		property portal.upstream = "quarantine";
+
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 91",
@@ -6341,7 +6341,7 @@ definition {
 	@description = "LPS-135549 - Verify that the field with String type has the option Language when the Text option is selected under the Searchable section"
 	@priority = "4"
 	test LanguageDisplayedForTextOption {
-		property portal.upstream = "quarantine";
+
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 138",

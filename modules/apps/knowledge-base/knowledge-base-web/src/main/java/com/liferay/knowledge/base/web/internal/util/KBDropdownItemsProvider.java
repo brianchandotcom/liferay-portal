@@ -357,6 +357,14 @@ public class KBDropdownItemsProvider {
 		).buildString();
 	}
 
+	private String _createKbTemplatesAdminHomeRenderURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/admin/view_kb_templates.jsp"
+		).buildString();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception> _getAddChildDropdownItem(
 		KBArticle kbArticle) {
 
@@ -475,7 +483,13 @@ public class KBDropdownItemsProvider {
 				).setActionName(
 					"/knowledge_base/delete_kb_template"
 				).setRedirect(
-					_currentURL
+					() -> {
+						if (_isKBTemplateSelected(kbTemplate)) {
+							return _createKbTemplatesAdminHomeRenderURL();
+						}
+
+						return _currentURL;
+					}
 				).setParameter(
 					"kbTemplateId", kbTemplate.getKbTemplateId()
 				).buildString());
@@ -1258,6 +1272,17 @@ public class KBDropdownItemsProvider {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		if (parentResourcePrimaryKey == kbFolder.getKbFolderId()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isKBTemplateSelected(KBTemplate kbTemplate) {
+		long kbTemplateId = ParamUtil.getLong(
+			_liferayPortletRequest, "kbTemplateId");
+
+		if (kbTemplateId == kbTemplate.getKbTemplateId()) {
 			return true;
 		}
 

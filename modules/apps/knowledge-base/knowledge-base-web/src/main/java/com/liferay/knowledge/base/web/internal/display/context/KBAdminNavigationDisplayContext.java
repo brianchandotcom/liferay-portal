@@ -107,6 +107,8 @@ public class KBAdminNavigationDisplayContext {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
+		String mvcRenderCommandName = ParamUtil.getString(
+			_httpServletRequest, "mvcRenderCommandName");
 
 		return NavigationItemListBuilder.add(
 			() -> PortletPermissionUtil.contains(
@@ -115,7 +117,8 @@ public class KBAdminNavigationDisplayContext {
 			NavigationItemBuilder.setActive(
 				() -> {
 					if (!mvcPath.equals("/admin/view_kb_suggestions.jsp") &&
-						!mvcPath.equals("/admin/view_kb_templates.jsp")) {
+						!mvcRenderCommandName.equals(
+							"/knowledge_base/view_kb_templates")) {
 
 						return true;
 					}
@@ -138,7 +141,9 @@ public class KBAdminNavigationDisplayContext {
 				KBActionKeys.VIEW_KB_TEMPLATES),
 			NavigationItemBuilder.setActive(
 				() -> {
-					if (mvcPath.equals("/admin/view_kb_templates.jsp")) {
+					if (mvcRenderCommandName.equals(
+							"/knowledge_base/view_kb_templates")) {
+
 						return true;
 					}
 
@@ -147,8 +152,8 @@ public class KBAdminNavigationDisplayContext {
 			).setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).setMVCPath(
-					"/admin/view_kb_templates.jsp"
+				).setMVCRenderCommandName(
+					"/knowledge_base/view_kb_templates"
 				).buildString()
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "templates")
@@ -185,6 +190,8 @@ public class KBAdminNavigationDisplayContext {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
+		String mvcRenderCommandName = ParamUtil.getString(
+			_httpServletRequest, "mvcRenderCommandName");
 
 		if (PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getPlid(),
@@ -195,7 +202,8 @@ public class KBAdminNavigationDisplayContext {
 
 			if (!mvcPath.equals("/admin/view_kb_suggestions.jsp") &&
 				!mvcPath.equals("/admin/view_kb_template.jsp") &&
-				!mvcPath.equals("/admin/view_kb_templates.jsp")) {
+				!mvcRenderCommandName.equals(
+					"/knowledge_base/view_kb_templates")) {
 
 				active = true;
 				navigationItemsJSONArray = _getChildrenJSONArray();
@@ -235,7 +243,8 @@ public class KBAdminNavigationDisplayContext {
 			JSONArray navigationItemsJSONArray = null;
 
 			if (mvcPath.equals("/admin/view_kb_template.jsp") ||
-				mvcPath.equals("/admin/view_kb_templates.jsp")) {
+				mvcRenderCommandName.equals(
+					"/knowledge_base/view_kb_templates")) {
 
 				active = true;
 				navigationItemsJSONArray =
@@ -249,8 +258,8 @@ public class KBAdminNavigationDisplayContext {
 					"href",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view_kb_templates.jsp"
+					).setMVCRenderCommandName(
+						"/knowledge_base/view_kb_templates"
 					).buildString()
 				).put(
 					"icon", "page-template"
@@ -499,8 +508,8 @@ public class KBAdminNavigationDisplayContext {
 				"href",
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
-				).setMVCPath(
-					"/admin/view_kb_templates.jsp"
+				).setMVCRenderCommandName(
+					"/knowledge_base/view_kb_templates"
 				).buildString()
 			).put(
 				"id", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID

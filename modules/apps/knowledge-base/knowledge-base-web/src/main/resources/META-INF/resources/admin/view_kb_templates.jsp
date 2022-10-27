@@ -57,7 +57,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 
 <clay:container-fluid>
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcPath" value="/admin/view_kb_templates.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view_kb_templates" />
 	</liferay-portlet:renderURL>
 
 	<aui:form action="<%= searchURL %>" method="get" name="fm">

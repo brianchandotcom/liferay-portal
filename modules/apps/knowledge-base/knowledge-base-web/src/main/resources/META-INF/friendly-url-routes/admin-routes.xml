@@ -19,7 +19,7 @@
 	</route>
 	<route>
 		<pattern>/templates</pattern>
-		<implicit-parameter name="mvcPath">/admin/view_kb_templates.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_kb_templates</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

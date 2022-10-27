@@ -169,8 +169,8 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	public PortletURL getSearchURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
-		).setMVCPath(
-			"/admin/view_kb_templates.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_kb_templates"
 		).buildPortletURL();
 	}
 
@@ -202,8 +202,8 @@ public class KBTemplatesManagementToolbarDisplayContext {
 			_liferayPortletRequest,
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
-			).setMVCPath(
-				"/admin/view_kb_templates.jsp"
+			).setMVCRenderCommandName(
+				"/knowledge_base/view_kb_templates"
 			).buildPortletURL());
 
 		String keywords = _getKeywords();
@@ -234,8 +234,8 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	private PortletURL _getCurrentSortingURL() throws PortletException {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
-		).setMVCPath(
-			"/admin/view_kb_templates.jsp"
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_kb_templates"
 		).buildPortletURL();
 	}
 

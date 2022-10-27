@@ -36,11 +36,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SEARCH,
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SECTION,
-		"mvc.command.name=/knowledge_base/view_article"
+		"mvc.command.name=/knowledge_base/view_kb_article"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewArticleMVCRenderCommand implements MVCRenderCommand {
+public class ViewKBArticleMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

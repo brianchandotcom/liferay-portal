@@ -12,12 +12,12 @@
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{resourcePrimKey:\d+}</pattern>
-		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_article</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_kb_article</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{resourcePrimKey:\d+}/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_article</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_kb_article</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{resourcePrimKey:\d+}/{status:-?\d+}/history</pattern>

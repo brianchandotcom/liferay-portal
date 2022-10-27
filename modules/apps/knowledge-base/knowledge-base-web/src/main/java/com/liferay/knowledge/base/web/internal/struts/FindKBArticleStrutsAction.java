@@ -368,7 +368,7 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 				httpServletRequest, portletId, plid,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/knowledge_base/view_article"
+			"/knowledge_base/view_kb_article"
 		).setParameter(
 			"resourcePrimKey",
 			_getResourcePrimKey(

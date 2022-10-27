@@ -39,7 +39,7 @@ ViewPrpKBArticlesDisplayContext viewPrpKBArticlesDisplayContext = new ViewPrpKBA
 		modelVar="assetEntry"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view_article" />
+			<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view_kb_article" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
 		</liferay-portlet:renderURL>

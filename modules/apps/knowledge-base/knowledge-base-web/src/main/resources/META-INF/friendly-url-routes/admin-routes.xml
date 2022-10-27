@@ -29,11 +29,12 @@
 	</route>
 	<route>
 		<pattern>/article/{resourcePrimKey:\d+}/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_article</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_kb_article</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/article/{resourcePrimKey:\d+}/{p_p_state}</pattern>
-		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_article</implicit-parameter>	</route>
+		<implicit-parameter name="mvcRenderCommand">/knowledge_base/view_kb_article</implicit-parameter>
+	</route>
 	<route>
 		<pattern>/template/{kbTemplateId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="mvcPath">/admin/view_template.jsp</implicit-parameter>

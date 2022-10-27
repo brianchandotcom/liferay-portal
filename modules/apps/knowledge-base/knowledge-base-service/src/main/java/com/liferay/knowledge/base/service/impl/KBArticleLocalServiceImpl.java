@@ -1654,7 +1654,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/knowledge_base/view_article"
+			"/knowledge_base/view_kb_article"
 		).setParameter(
 			"resourceClassNameId", kbArticle.getClassNameId()
 		).setParameter(

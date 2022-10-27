@@ -37,7 +37,7 @@ KBSearchDisplayContext kbSearchDisplayContext = new KBSearchDisplayContext(reque
 		modelVar="tuple"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view_article" />
+			<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view_kb_article" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="resourcePrimKey" value="<%= (String)tuple.getObject(0) %>" />
 		</liferay-portlet:renderURL>

@@ -146,7 +146,8 @@ public class DisplayPortlet extends BaseKBPortlet {
 				renderRequest, "mvcRenderCommandName");
 
 			if ((mvcPath.equals("") ||
-				 mvcRenderCommandName.equals("/knowledge_base/view_article")) &&
+				 mvcRenderCommandName.equals(
+					 "/knowledge_base/view_kb_article")) &&
 				!kbArticleSelection.isExactMatch()) {
 
 				HttpServletResponse httpServletResponse =

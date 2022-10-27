@@ -87,7 +87,7 @@ public class KBArticleURLHelper {
 		return PortletURLBuilder.create(
 			_renderResponse.createRenderURL()
 		).setMVCRenderCommandName(
-			"/knowledge_base/view_article"
+			"/knowledge_base/view_kb_article"
 		).setParameter(
 			"resourceClassNameId", kbArticle.getClassNameId()
 		).setParameter(
@@ -129,7 +129,7 @@ public class KBArticleURLHelper {
 		return PortletURLBuilder.create(
 			_renderResponse.createRenderURL()
 		).setMVCRenderCommandName(
-			"/knowledge_base/view_article"
+			"/knowledge_base/view_kb_article"
 		).setParameter(
 			"urlTitle", kbArticle.getUrlTitle()
 		).setParameter(

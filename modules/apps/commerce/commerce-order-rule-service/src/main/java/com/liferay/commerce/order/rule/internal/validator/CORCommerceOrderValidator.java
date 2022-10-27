@@ -24,7 +24,6 @@ import com.liferay.commerce.order.rule.entry.type.COREntryType;
 import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
-import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -311,9 +310,6 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 
 	@Reference
 	private COREntryLocalService _corEntryLocalService;
-
-	@Reference
-	private COREntryRelLocalService _corEntryRelLocalService;
 
 	@Reference
 	private COREntryTypeRegistry _corEntryTypeRegistry;

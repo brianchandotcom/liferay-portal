@@ -20,6 +20,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.background.task
 import com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
+import com.liferay.document.library.opener.onedrive.web.internal.exception.GraphServicePortalException;
 import com.liferay.document.library.opener.onedrive.web.internal.exception.mapper.GraphServiceExceptionPortalExceptionMapper;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
@@ -138,8 +139,20 @@ public class DLOpenerOneDriveManager {
 					fileEntry);
 		}
 		catch (GraphServiceException graphServiceException) {
-			throw GraphServiceExceptionPortalExceptionMapper.map(
-				graphServiceException);
+			GraphServicePortalException graphServicePortalException =
+				GraphServiceExceptionPortalExceptionMapper.map(
+					graphServiceException);
+
+			if (graphServicePortalException instanceof
+					GraphServicePortalException.ItemNotFound) {
+
+				_dlOpenerFileEntryReferenceLocalService.
+					deleteDLOpenerFileEntryReference(
+						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+						fileEntry);
+			}
+
+			throw graphServicePortalException;
 		}
 	}
 

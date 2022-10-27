@@ -215,6 +215,10 @@ components:
                 description:
                     readOnly: true
                     type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 name:
                     type: string
                 nodes:

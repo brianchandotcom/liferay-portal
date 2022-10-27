@@ -186,6 +186,7 @@ public class WorkflowDefinitionResourceImpl
 				dateCreated = workflowDefinition.getCreateDate();
 				dateModified = workflowDefinition.getModifiedDate();
 				description = workflowDefinition.getDescription();
+				id = workflowDefinition.getWorkflowDefinitionId();
 				name = workflowDefinition.getName();
 				nodes = transformToArray(
 					workflowDefinition.getWorkflowNodes(),

@@ -95,6 +95,45 @@ definition {
 		return "${futureDate}";
 	}
 
+	@description = "Create ${payload} from a list of fields passed for an API call and returns it"
+	macro getPayloadFromFieldsList {
+		Variables.assertDefined(parameterList = "${fieldsList}");
+
+		var count = "0";
+		var list = ListUtil.newListFromString("${fieldsList}");
+
+		var listSize = ListUtil.size("${list}");
+		var payload = "";
+		var isLessThanSize = MathUtil.isLessThan("${count}", "${listSize}");
+
+		while (("${isLessThanSize}" == "true")) {
+			var field = ListUtil.get("${list}", "${count}");
+
+			var isAllowedOrderQuantities = StringUtil.matches("${field}", "(.*)allowedOrderQuantities(.*)");
+
+			if ("${isAllowedOrderQuantities}" == "true") {
+				var field = StringUtil.replace("${field}", "-", ",");
+			}
+
+			if ("${count}" == "0") {
+				var comma = "";
+			}
+			else {
+				var comma = ",";
+			}
+
+			var payload = '''${payload}${comma}
+				${field}''';
+			var count = ${count} + 1;
+
+			var count = StringUtil.valueOf("${count}");
+
+			var isLessThanSize = MathUtil.isLessThan("${count}", "${listSize}");
+		}
+
+		return "${payload}";
+	}
+
 	macro uploadSingleFile {
 		Variables.assertDefined(parameterList = "${uploadFileName}");
 

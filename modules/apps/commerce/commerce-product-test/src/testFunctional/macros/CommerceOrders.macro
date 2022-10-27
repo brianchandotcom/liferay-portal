@@ -71,6 +71,71 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro assertOrderImportPreview {
+		Variables.assertDefined(parameterList = "${productNames}");
+
+		if (!(isSet(productImportStatuses))) {
+			var productImportStatuses = "";
+		}
+
+		if (!(isSet(productQuantities))) {
+			var productQuantities = "";
+		}
+
+		if (!(isSet(productRequestedDeliveryDates))) {
+			var productRequestedDeliveryDates = "";
+		}
+
+		if (!(isSet(productSkus))) {
+			var productSkus = "";
+		}
+
+		if (!(isSet(productTotalPrices))) {
+			var productTotalPrices = "";
+		}
+
+		if (!(isSet(productUnitPrices))) {
+			var productUnitPrices = "";
+		}
+
+		var productNamesList = ListUtil.newListFromString("${productNames}");
+		var productSkusList = ListUtil.newListFromString("${productSkus}");
+		var productUnitPricesList = ListUtil.newListFromString("${productUnitPrices}");
+		var productQuantitiesList = ListUtil.newListFromString("${productQuantities}");
+		var productTotalPricesList = ListUtil.newListFromString("${productTotalPrices}");
+		var productImportStatusesList = ListUtil.newListFromString("${productImportStatuses}");
+		var productRequestedDeliveryDatesList = ListUtil.newListFromString("${productRequestedDeliveryDates}");
+		var size = ListUtil.size("${productNamesList}");
+		var count = "0";
+
+		var isLessThanSize = MathUtil.isLessThan("${count}", "${size}");
+
+		while (("${isLessThanSize}" == "true")) {
+			var productName = ListUtil.get("${productNamesList}", "${count}");
+			var productSku = ListUtil.get("${productSkusList}", "${count}");
+			var productUnitPrice = ListUtil.get("${productUnitPricesList}", "${count}");
+			var productQuantity = ListUtil.get("${productQuantitiesList}", "${count}");
+			var productTotalPrice = ListUtil.get("${productTotalPricesList}", "${count}");
+			var productImportStatus = ListUtil.get("${productImportStatusesList}", "${count}");
+			var productRequestedDeliveryDate = ListUtil.get("${productRequestedDeliveryDatesList}", "${count}");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "${productImportStatus}",
+				productName = "${productName}",
+				productQuantity = "${productQuantity}",
+				productSku = "${productSku}",
+				requestedDeliveryDate = "${productRequestedDeliveryDate}",
+				totalPrice = "${productTotalPrice}",
+				unitPrice = "${productUnitPrice}");
+
+			var count = ${count} + 1;
+
+			var count = StringUtil.valueOf("${count}");
+
+			var isLessThanSize = MathUtil.isLessThan("${count}", "${size}");
+		}
+	}
+
 	macro assertOrderImportPreviewEntry {
 		if (isSet(productSku)) {
 			AssertTextEquals(

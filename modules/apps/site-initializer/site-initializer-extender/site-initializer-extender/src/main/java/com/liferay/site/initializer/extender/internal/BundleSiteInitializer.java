@@ -1361,15 +1361,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
+			new HashMap<>();
+
 		String json = SiteInitializerUtil.read(
 			"/site-initializer/client-extension-entries.json", _servletContext);
 
 		if (json == null) {
-			return Collections.emptyMap();
+			return clientExtensionEntryIdsStringUtilReplaceValues;
 		}
-
-		Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
-			new HashMap<>();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -2871,7 +2871,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/segments-entries.json", _servletContext);
 
 		if (json == null) {
-			Collections.emptyMap();
+			return segmentsEntriesIdsStringUtilReplaceValues;
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);

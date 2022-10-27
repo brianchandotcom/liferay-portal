@@ -313,7 +313,7 @@ public class JournalEditArticleDisplayContext {
 			() -> {
 				List<Map<String, Object>> languages = new ArrayList<>();
 
-				LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
+				Set<String> uniqueLanguageIds = new LinkedHashSet<>();
 
 				uniqueLanguageIds.add(getSelectedLanguageId());
 

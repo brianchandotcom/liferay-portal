@@ -2916,16 +2916,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
+		Set<String> parentResourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/segments-experiences");
 
-		if (SetUtil.isEmpty(resourcePaths)) {
+		if (SetUtil.isEmpty(parentResourcePaths)) {
 			return;
 		}
 
-		for (String path : resourcePaths) {
+		for (String parentResourcePath : parentResourcePaths) {
 			String json = SiteInitializerUtil.read(
-				path + "segments-experiences.json", _servletContext);
+				parentResourcePath + "segments-experiences.json",
+				_servletContext);
 
 			if (json == null) {
 				return;
@@ -2985,10 +2986,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 						jsonObject.getBoolean("active", true));
 			}
 
-			Set<String> interResourcePath = _servletContext.getResourcePaths(
-				path);
+			Set<String> resourcePaths = _servletContext.getResourcePaths(
+				parentResourcePath);
 
-			for (String resourcePath : interResourcePath) {
+			for (String resourcePath : resourcePaths) {
 				if (resourcePath.endsWith("/")) {
 					_addLayoutContent(
 						assetListEntryIdsStringUtilReplaceValues,

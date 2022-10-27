@@ -438,4 +438,25 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	macro uploadAttachmentToArticle {
+		var portalURL = JSONCompany.getPortalURL();
+		var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+			groupName = "${groupName}",
+			kbArticleTitle = "${kbArticleTitle}");
+		var baseDir = PropsUtil.get("test.base.dir.name");
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+
+		var filePath = "${baseDir}${dependenciesDir}/${sourceFileName}";
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/knowledge-base-articles/${resourcePrimKey}/knowledge-base-attachments \
+			-H accept: application/json \
+			-H Content-Type: multipart/form-data \
+			-u test@liferay.com:test \
+			-F file=@${filePath}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 }

@@ -135,7 +135,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 								placeholder="content"
 								required="<%= true %>"
 							>
-								<aui:validator name="required" />
+								<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "content", true) %>' name="required" />
 							</liferay-editor:editor>
 						</div>
 

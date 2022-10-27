@@ -23,7 +23,7 @@ export default function getMimeTypeRestrictionData(mimeTypeRestriction) {
 		return {
 			icon: 'document-image',
 			text: Liferay.Language.get(
-				'drag-and-drop-your-images-or-click-to-upload'
+				'drag-and-drop-your-images-or-browse-to-upload'
 			),
 		};
 	}
@@ -32,7 +32,7 @@ export default function getMimeTypeRestrictionData(mimeTypeRestriction) {
 		return {
 			icon: 'document-multimedia',
 			text: Liferay.Language.get(
-				'drag-and-drop-your-videos-or-click-to-upload'
+				'drag-and-drop-your-videos-or-browse-to-upload'
 			),
 		};
 	}
@@ -40,7 +40,7 @@ export default function getMimeTypeRestrictionData(mimeTypeRestriction) {
 	return {
 		icon: 'document-text',
 		text: Liferay.Language.get(
-			'drag-and-drop-your-files-or-click-to-upload'
+			'drag-and-drop-your-files-or-browse-to-upload'
 		),
 	};
 }

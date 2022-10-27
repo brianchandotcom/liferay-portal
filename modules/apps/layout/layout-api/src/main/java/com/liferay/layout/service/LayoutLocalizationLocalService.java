@@ -353,7 +353,8 @@ public interface LayoutLocalizationLocalService
 		LayoutLocalization layoutLocalization);
 
 	public LayoutLocalization updateLayoutLocalization(
-		String content, String languageId, long plid);
+		String content, String languageId, long plid,
+		ServiceContext serviceContext);
 
 	@Override
 	@Transactional(enabled = false)

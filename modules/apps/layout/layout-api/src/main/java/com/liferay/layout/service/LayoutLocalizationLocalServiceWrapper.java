@@ -457,10 +457,11 @@ public class LayoutLocalizationLocalServiceWrapper
 
 	@Override
 	public LayoutLocalization updateLayoutLocalization(
-		String content, String languageId, long plid) {
+		String content, String languageId, long plid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
 		return _layoutLocalizationLocalService.updateLayoutLocalization(
-			content, languageId, plid);
+			content, languageId, plid, serviceContext);
 	}
 
 	@Override

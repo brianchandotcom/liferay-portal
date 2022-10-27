@@ -402,9 +402,11 @@ public class LayoutLocalizationLocalServiceUtil {
 	}
 
 	public static LayoutLocalization updateLayoutLocalization(
-		String content, String languageId, long plid) {
+		String content, String languageId, long plid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 
-		return getService().updateLayoutLocalization(content, languageId, plid);
+		return getService().updateLayoutLocalization(
+			content, languageId, plid, serviceContext);
 	}
 
 	public static LayoutLocalizationLocalService getService() {

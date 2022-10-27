@@ -119,8 +119,6 @@ public class FieldConstants {
 				Number number = decimalFormat.parse(
 					GetterUtil.getString(value));
 
-				String formattedValue = String.valueOf(number);
-
 				if (number.doubleValue() > Integer.MAX_VALUE) {
 					return value;
 				}
@@ -140,6 +138,8 @@ public class FieldConstants {
 						return value;
 					}
 				}
+
+				String formattedValue = String.valueOf(number);
 
 				if (!NumberUtil.hasDecimalSeparator(formattedValue) &&
 					NumberUtil.hasDecimalSeparator(value)) {

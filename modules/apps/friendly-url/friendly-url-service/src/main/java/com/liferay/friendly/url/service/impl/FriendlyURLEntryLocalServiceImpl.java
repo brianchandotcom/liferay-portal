@@ -468,6 +468,10 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		String prefix = curUrlTitle;
 
+		if (Validator.isNull(languageId)) {
+			languageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		}
+
 		for (int i = 1;; i++) {
 			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 				friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
@@ -584,9 +588,10 @@ public class FriendlyURLEntryLocalServiceImpl
 			Map<String, String> urlTitleMap)
 		throws PortalException {
 
-		for (String urlKey : urlTitleMap.keySet()) {
+		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
 			validate(
-				groupId, classNameId, classPK, urlKey, urlTitleMap.get(urlKey));
+				groupId, classNameId, classPK, entry.getKey(),
+				entry.getValue());
 		}
 	}
 
@@ -751,12 +756,8 @@ public class FriendlyURLEntryLocalServiceImpl
 							entry.getKey(), normalizedUrlTitle);
 
 				if (existingFriendlyURLEntryLocalization != null) {
-					String existingLanguageId =
-						existingFriendlyURLEntryLocalization.getLanguageId();
-
-					if ((existingFriendlyURLEntryLocalization.getClassPK() ==
-							classPK) &&
-						existingLanguageId.equals(entry.getKey())) {
+					if (existingFriendlyURLEntryLocalization.getClassPK() ==
+							classPK) {
 
 						String existingUrlTitle =
 							existingFriendlyURLEntryLocalization.getUrlTitle();

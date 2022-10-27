@@ -107,6 +107,9 @@ public class ListObjectFieldFilterContributor
 			objectDefinitionId, objectViewFilterColumn.getObjectFieldName());
 
 		if (Objects.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+				objectField.getBusinessType()) ||
+			Objects.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 				objectField.getBusinessType())) {
 

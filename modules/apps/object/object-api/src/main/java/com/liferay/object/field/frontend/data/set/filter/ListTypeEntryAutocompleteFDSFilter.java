@@ -26,9 +26,10 @@ public class ListTypeEntryAutocompleteFDSFilter
 	extends BaseAutocompleteFDSFilter {
 
 	public ListTypeEntryAutocompleteFDSFilter(
-		String id, String label, long listTypeDefinitionId,
+		boolean collection, String id, String label, long listTypeDefinitionId,
 		Map<String, Object> preloadedData) {
 
+		_collection = collection;
 		_id = id;
 		_label = label;
 		_listTypeDefinitionId = listTypeDefinitionId;
@@ -43,6 +44,10 @@ public class ListTypeEntryAutocompleteFDSFilter
 
 	@Override
 	public String getEntityFieldType() {
+		if (_collection) {
+			return FDSEntityFieldTypes.COLLECTION;
+		}
+
 		return FDSEntityFieldTypes.STRING;
 	}
 
@@ -71,6 +76,7 @@ public class ListTypeEntryAutocompleteFDSFilter
 		return _preloadedData;
 	}
 
+	private final boolean _collection;
 	private final String _id;
 	private final String _label;
 	private final long _listTypeDefinitionId;

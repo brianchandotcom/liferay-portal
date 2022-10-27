@@ -19,6 +19,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.frontend.data.set.filter.ListTypeEntryAutocompleteFDSFilter;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectViewFilterColumn;
@@ -63,6 +64,9 @@ public class PicklistObjectFieldFilterStrategy
 				_objectField.getListTypeDefinitionId());
 
 		return new ListTypeEntryAutocompleteFDSFilter(
+			StringUtil.equals(
+				_objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST),
 			_objectField.getName(), listTypeDefinition.getName(locale),
 			_objectField.getListTypeDefinitionId(), parse());
 	}

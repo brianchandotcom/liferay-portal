@@ -183,6 +183,7 @@ public class ObjectViewFilterColumnLocalServiceImpl
 	private static final Set<String> _filterableObjectFieldBusinessTypes =
 		Collections.unmodifiableSet(
 			SetUtil.fromArray(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP));
 	private static final Set<String> _filterableObjectFieldNames =

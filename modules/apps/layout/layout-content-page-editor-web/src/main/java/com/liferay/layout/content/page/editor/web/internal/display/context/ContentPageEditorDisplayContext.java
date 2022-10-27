@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
 import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -47,7 +48,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -802,7 +803,7 @@ public class ContentPageEditorDisplayContext {
 		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListItemSelectorReturnType());
 
-		List<String> itemTypes = _getInfoItemFormProviderSearchClassNames();
+		List<String> itemTypes = _getInfoItemClassNames();
 
 		infoListItemSelectorCriterion.setItemTypes(itemTypes);
 
@@ -1300,15 +1301,16 @@ public class ContentPageEditorDisplayContext {
 		return _imageItemSelectorCriterion;
 	}
 
-	private List<String> _getInfoItemFormProviderSearchClassNames() {
-		List<String> infoItemClassNames = new ArrayList<>();
+	private List<String> _getInfoItemClassNames() {
 
-		for (String className :
-				infoItemServiceTracker.getInfoItemClassNames(
-					InfoItemFormProvider.class)) {
+		// LPS-166852
 
-			infoItemClassNames.add(
-				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
+		List<String> infoItemClassNames =
+			infoItemServiceTracker.getInfoItemClassNames(
+				InfoItemFormProvider.class);
+
+		if (infoItemClassNames.contains(FileEntry.class.getName())) {
+			infoItemClassNames.add(DLFileEntryConstants.getClassName());
 		}
 
 		return infoItemClassNames;

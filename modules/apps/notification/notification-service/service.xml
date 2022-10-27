@@ -80,8 +80,8 @@
 
 		<!-- Other fields -->
 
-		<column name="classPK" type="long" />
 		<column name="className" type="String" />
+		<column name="classPK" type="long" />
 		<finder name="ClassPK" return-type="NotificationRecipient">
 			<finder-column name="classPK" />
 		</finder>

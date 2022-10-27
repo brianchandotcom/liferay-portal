@@ -441,9 +441,9 @@ public class EmailNotificationType extends BaseNotificationType {
 		notificationRecipient.setUserId(user.getUserId());
 		notificationRecipient.setUserName(user.getFullName());
 
-		notificationRecipient.setClassPK(notificationQueueEntryId);
 		notificationRecipient.setClassName(
 			NotificationQueueEntry.class.getName());
+		notificationRecipient.setClassPK(notificationQueueEntryId);
 
 		return notificationRecipient;
 	}

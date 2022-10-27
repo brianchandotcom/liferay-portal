@@ -13,4 +13,21 @@ definition {
 			tagName = "${tagName}");
 	}
 
+	@summary = "Get a basic tag ID"
+	macro getTagId {
+		Variables.assertDefined(parameterList = "${groupName},${tagName}");
+
+		var groupId = JSONAssettagSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var tagId = JSONAssettagAPI._getTagId(
+			groupId = "${groupId}",
+			tagName = "${tagName}");
+
+		echo("## tagId: ${tagId}");
+
+		return "${tagId}";
+	}
+
 }

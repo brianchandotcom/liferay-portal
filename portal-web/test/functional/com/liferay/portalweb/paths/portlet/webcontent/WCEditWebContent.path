@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HISTORY_TAB</td>
+	<td>//li[@data-tab-name='history']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMAGE_DESCRIPTION</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div[contains(@class,'form-group')]//input[contains(@name,'description')]</td>
 	<td></td>
@@ -156,6 +161,11 @@
 <tr>
 	<td>TEXT_INPUT_2</td>
 	<td>//div[@class="ddm-field"][2]//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMELINE_ENTRY_SPECIFIC</td>
+	<td>//div[contains(@class,'sidebar-section')][.//strong[.='Timeline']]/following-sibling::div[${key_index}]//strong[contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

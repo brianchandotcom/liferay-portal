@@ -27,8 +27,40 @@ public class EditFormButtonsTag extends IncludeTag {
 		return _redirect;
 	}
 
+	public String getSubmitId() {
+		return _submitId;
+	}
+
+	public String getSubmitLabel() {
+		return _submitLabel;
+	}
+
+	public String getSubmitOnClick() {
+		return _submitOnClick;
+	}
+
+	public boolean isSubmitDisabled() {
+		return _submitDisabled;
+	}
+
 	public void setRedirect(String redirect) {
 		_redirect = redirect;
+	}
+
+	public void setSubmitDisabled(boolean submitDisabled) {
+		_submitDisabled = submitDisabled;
+	}
+
+	public void setSubmitId(String submitId) {
+		_submitId = submitId;
+	}
+
+	public void setSubmitLabel(String submitLabel) {
+		_submitLabel = submitLabel;
+	}
+
+	public void setSubmitOnClick(String submitOnClick) {
+		_submitOnClick = submitOnClick;
 	}
 
 	@Override
@@ -36,6 +68,10 @@ public class EditFormButtonsTag extends IncludeTag {
 		super.cleanUp();
 
 		_redirect = null;
+		_submitDisabled = false;
+		_submitId = null;
+		_submitLabel = null;
+		_submitOnClick = null;
 	}
 
 	@Override
@@ -52,13 +88,31 @@ public class EditFormButtonsTag extends IncludeTag {
 
 		ButtonTag submitButtonTag = new ButtonTag();
 
+		submitButtonTag.setDisabled(isSubmitDisabled());
+		submitButtonTag.setId(getSubmitId());
+		submitButtonTag.setOnClick(getSubmitOnClick());
 		submitButtonTag.setType("submit");
+		submitButtonTag.setValue(_getSubmitLabel());
 
 		submitButtonTag.doTag(pageContext);
 
 		return EVAL_PAGE;
 	}
 
+	private String _getSubmitLabel() {
+		String submitLabel = getSubmitLabel();
+
+		if (Validator.isNotNull(submitLabel)) {
+			return submitLabel;
+		}
+
+		return "save";
+	}
+
 	private String _redirect;
+	private boolean _submitDisabled;
+	private String _submitId;
+	private String _submitLabel;
+	private String _submitOnClick;
 
 }

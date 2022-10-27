@@ -99,9 +99,6 @@ public interface DestinationNames {
 	public static final String MESSAGE_BOARDS_MAILING_LIST =
 		"liferay/message_boards_mailing_list";
 
-	public static final String MESSAGE_BUS_DEFAULT_RESPONSE =
-		"liferay/message_bus/default_response";
-
 	public static final String MESSAGE_BUS_MESSAGE_STATUS =
 		"liferay/message_bus/message_status";
 

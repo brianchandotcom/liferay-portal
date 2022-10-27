@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -73,66 +72,6 @@ public class MessageBusUtil {
 		_messageBus.sendMessage(destinationName, message);
 	}
 
-	public static Object sendSynchronousMessage(
-			String destinationName, Message message)
-		throws MessageBusException {
-
-		SynchronousMessageSender synchronousMessageSender =
-			_getSynchronousMessageSender();
-
-		return synchronousMessageSender.send(destinationName, message);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Message message, long timeout)
-		throws MessageBusException {
-
-		SynchronousMessageSender synchronousMessageSender =
-			_getSynchronousMessageSender();
-
-		return synchronousMessageSender.send(destinationName, message, timeout);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload)
-		throws MessageBusException {
-
-		return sendSynchronousMessage(destinationName, payload, null);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload, long timeout)
-		throws MessageBusException {
-
-		return sendSynchronousMessage(destinationName, payload, null, timeout);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload,
-			String responseDestinationName)
-		throws MessageBusException {
-
-		Message message = new Message();
-
-		message.setResponseDestinationName(responseDestinationName);
-		message.setPayload(payload);
-
-		return sendSynchronousMessage(destinationName, message);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload,
-			String responseDestinationName, long timeout)
-		throws MessageBusException {
-
-		Message message = new Message();
-
-		message.setResponseDestinationName(responseDestinationName);
-		message.setPayload(payload);
-
-		return sendSynchronousMessage(destinationName, message, timeout);
-	}
-
 	public static void shutdown() {
 		_messageBus.shutdown();
 	}
@@ -148,35 +87,8 @@ public class MessageBusUtil {
 			destinationName, messageListener);
 	}
 
-	public void setSynchronousMessageSenderMode(
-		SynchronousMessageSender.Mode synchronousMessageSenderMode) {
-
-		_synchronousMessageSenderMode = synchronousMessageSenderMode;
-	}
-
-	private static SynchronousMessageSender _getSynchronousMessageSender() {
-		if (_synchronousMessageSenderMode ==
-				SynchronousMessageSender.Mode.DEFAULT) {
-
-			return _defaultSynchronousMessageSender;
-		}
-
-		return _directSynchronousMessageSender;
-	}
-
-	private static volatile SynchronousMessageSender
-		_defaultSynchronousMessageSender =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				SynchronousMessageSender.class, MessageBusUtil.class,
-				"_defaultSynchronousMessageSender", "(mode=DEFAULT)", true);
-	private static volatile SynchronousMessageSender
-		_directSynchronousMessageSender =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				SynchronousMessageSender.class, MessageBusUtil.class,
-				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
 	private static volatile MessageBus _messageBus =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			MessageBus.class, MessageBusUtil.class, "_messageBus", true);
-	private static SynchronousMessageSender.Mode _synchronousMessageSenderMode;
 
 }

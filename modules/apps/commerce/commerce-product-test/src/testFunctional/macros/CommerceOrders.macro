@@ -550,6 +550,17 @@ definition {
 
 		Button.click(button = "Select");
 
+		if (isSet(productNames)) {
+			CommerceOrders.assertOrderImportPreview(
+				productImportStatuses = "${productImportStatuses}",
+				productNames = "${productNames}",
+				productQuantities = "${productQuantities}",
+				productRequestedDeliveryDates = "${productRequestedDeliveryDates}",
+				productSkus = "${productSkus}",
+				productTotalPrices = "${productTotalPrices}",
+				productUnitPrices = "${productUnitPrices}");
+		}
+
 		Button.click(button = "Import");
 
 		IFrame.selectTopFrame();

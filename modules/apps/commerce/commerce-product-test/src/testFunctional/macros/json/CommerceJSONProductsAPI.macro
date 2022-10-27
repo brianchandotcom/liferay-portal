@@ -736,70 +736,86 @@ definition {
 	macro _patchCommerceProductConfiguration {
 		Variables.assertDefined(parameterList = "${productName}");
 
-		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
 		var baseURL = "${baseURL}";
-
-		if (!(isSet(allowBackOrder))) {
-			var allowBackOrder = "true";
-		}
-
-		if (!(isSet(allowedOrderQuantities))) {
-			var allowedOrderQuantities = "";
-		}
+		var fieldsList = ListUtil.newList();
+		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if (!(isSet(displayAvailability))) {
-			var displayAvailability = "false";
+		if (isSet(allowBackOrder)) {
+			var allowBackOrder = '''"allowBackOrder": ${allowBackOrder}''';
+
+			ListUtil.add("${fieldsList}", "${allowBackOrder}");
 		}
 
-		if (!(isSet(displayStockQuantity))) {
-			var displayStockQuantity = "false";
+		if (isSet(allowedOrderQuantities)) {
+			var allowedOrderQuantities = StringUtil.replace("${allowedOrderQuantities}", ",", "-");
+
+			var allowedOrderQuantities = '''"allowedOrderQuantities": [${allowedOrderQuantities}]''';
+
+			ListUtil.add("${fieldsList}", "${allowedOrderQuantities}");
 		}
 
-		if (!(isSet(inventoryEngine))) {
-			var inventoryEngine = "default";
+		if (isSet(displayAvailability)) {
+			var displayAvailability = '''"displayAvailability": ${displayAvailability}''';
+
+			ListUtil.add("${fieldsList}", "${displayAvailability}");
 		}
 
-		if (!(isSet(lowStockAction))) {
-			var lowStockAction = "";
+		if (isSet(displayStockQuantity)) {
+			var displayStockQuantity = '''"displayStockQuantity": ${displayStockQuantity}''';
+
+			ListUtil.add("${fieldsList}", "${displayStockQuantity}");
 		}
 
-		if (!(isSet(maxOrderQuantity))) {
-			var maxOrderQuantity = "10000";
+		if (isSet(inventoryEngine)) {
+			var inventoryEngine = '''"inventoryEngine": "${inventoryEngine}"''';
+
+			ListUtil.add("${fieldsList}", "${inventoryEngine}");
 		}
 
-		if (!(isSet(minOrderQuantity))) {
-			var minOrderQuantity = "1";
+		if (isSet(lowStockAction)) {
+			var lowStockAction = '''"lowStockAction": "${lowStockAction}"''';
+
+			ListUtil.add("${fieldsList}", "${lowStockAction}");
 		}
 
-		if (!(isSet(minStockQuantity))) {
-			var minStockQuantity = "0";
+		if (isSet(maxOrderQuantity)) {
+			var maxOrderQuantity = '''"maxOrderQuantity": ${maxOrderQuantity}''';
+
+			ListUtil.add("${fieldsList}", "${maxOrderQuantity}");
 		}
 
-		if (!(isSet(multipleOrderQuantity))) {
-			var multipleOrderQuantity = "1";
+		if (isSet(minOrderQuantity)) {
+			var minOrderQuantity = '''"minOrderQuantity": ${minOrderQuantity}''';
+
+			ListUtil.add("${fieldsList}", "${minOrderQuantity}");
 		}
+
+		if (isSet(minStockQuantity)) {
+			var minStockQuantity = '''"minStockQuantity": ${minStockQuantity}''';
+
+			ListUtil.add("${fieldsList}", "${minStockQuantity}");
+		}
+
+		if (isSet(multipleOrderQuantity)) {
+			var multipleOrderQuantity = '''"multipleOrderQuantity": ${multipleOrderQuantity}''';
+
+			ListUtil.add("${fieldsList}", "${multipleOrderQuantity}");
+		}
+
+		var fieldsList = ListUtil.toString("${fieldsList}");
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = "${fieldsList}");
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/configuration \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
   			-H 'Content-Type: application/json' \
-  			-d '{
-					"allowBackOrder": ${allowBackOrder},
-					"allowedOrderQuantities": [${allowedOrderQuantities}],
-					"displayAvailability": ${displayAvailability},
-					"displayStockQuantity": ${displayStockQuantity},
-					"inventoryEngine": "${inventoryEngine}",
-					"lowStockAction": "${lowStockAction}",
-					"maxOrderQuantity": ${maxOrderQuantity},
-					"minOrderQuantity": ${minOrderQuantity},
-					"minStockQuantity": ${minStockQuantity},
-					"multipleOrderQuantity": ${multipleOrderQuantity}
-				}'
+  			-d '{${payload}}'
 			''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");

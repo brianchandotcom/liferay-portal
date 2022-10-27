@@ -30,12 +30,12 @@ export default function useActivitiesAmount(
 					return previousValue;
 				}
 
-				return previousValue + +currentValue.totalCost;
+				return previousValue + Number(currentValue.totalCost);
 			},
 			0
 		);
 
-		if (amountValue) {
+		if (amountValue || amountValue === 0) {
 			onAmountUpdate(amountValue);
 		}
 	}, [debouncedActivities, onAmountUpdate]);

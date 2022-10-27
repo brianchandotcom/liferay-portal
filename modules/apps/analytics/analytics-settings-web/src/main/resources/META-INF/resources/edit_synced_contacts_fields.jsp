@@ -207,6 +207,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	);
 
 	submitButton.addEventListener('click', () => {
+		var selectUsersFields = document.querySelector(
+			'#<portlet:namespace />selectUsersFields'
+		);
+
+		if (selectUsersFields) {
+			form.appendChild(selectUsersFields);
+		}
+
 		form.submit();
 	});
 

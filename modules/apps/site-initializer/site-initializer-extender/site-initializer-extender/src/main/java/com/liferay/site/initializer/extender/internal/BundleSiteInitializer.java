@@ -871,16 +871,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layoutPageTemplateStructure.
 							getDefaultSegmentsExperienceData());
 
-					if (segmentsExperienceId == 0) {
-						for (int i = 0; i < jsonArray.length(); i++) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						if (segmentsExperienceId == 0) {
 							_layoutPageTemplatesImporter.importPageElement(
 								draftLayout, layoutStructure,
 								layoutStructure.getMainItemId(),
 								jsonArray.getString(i), i);
 						}
-					}
-					else {
-						for (int i = 0; i < jsonArray.length(); i++) {
+						else {
 							_layoutPageTemplatesImporter.importPageElement(
 								draftLayout, layoutStructure,
 								layoutStructure.getMainItemId(),

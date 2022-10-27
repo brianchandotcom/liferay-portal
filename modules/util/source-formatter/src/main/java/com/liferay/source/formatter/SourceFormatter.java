@@ -1281,7 +1281,7 @@ public class SourceFormatter {
 
 		for (String commitMessage : commitMessages) {
 			for (String keyword :
-					_getPropertyValues("vulnerability.keywords")) {
+					_getPropertyValues("git.commit.vulnerability.keywords")) {
 
 				Pattern pattern = Pattern.compile(
 					"\\b_*(" + keyword + ")_*\\b", Pattern.CASE_INSENSITIVE);

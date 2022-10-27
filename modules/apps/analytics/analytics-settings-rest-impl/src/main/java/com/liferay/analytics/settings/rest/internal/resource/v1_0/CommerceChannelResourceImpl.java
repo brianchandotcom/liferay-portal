@@ -19,7 +19,10 @@ import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverter;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.CommerceChannelDTOConverterContext;
+import com.liferay.analytics.settings.rest.internal.util.SortUtil;
 import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
+import com.liferay.portal.kernel.model.GroupTable;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,13 +51,14 @@ public class CommerceChannelResourceImpl
 	extends BaseCommerceChannelResourceImpl {
 
 	@Override
-	public Page<CommerceChannel> getCommerceChannelsPage(Pagination pagination)
+	public Page<CommerceChannel> getCommerceChannelsPage(
+			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
 			<AnalyticsChannel> analyticsChannelsPage =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
-					contextCompany.getCompanyId(), null, 0, 100);
+					contextCompany.getCompanyId(), null, 0, 100, null);
 
 		Collection<AnalyticsChannel> analyticsChannels =
 			analyticsChannelsPage.getItems();
@@ -68,9 +72,11 @@ public class CommerceChannelResourceImpl
 		return Page.of(
 			transform(
 				_groupService.search(
-					contextCompany.getCompanyId(), _classNameIds, null,
+					contextCompany.getCompanyId(), _classNameIds, keywords,
 					_getParams(), pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+					pagination.getEndPosition(),
+					SortUtil.getOrderByComparator(
+						GroupTable.INSTANCE.getTableName(), sorts)),
 				group -> _commerceChannelDTOConverter.toDTO(
 					new CommerceChannelDTOConverterContext(
 						group.getGroupId(),
@@ -79,7 +85,7 @@ public class CommerceChannelResourceImpl
 					group)),
 			pagination,
 			_groupService.searchCount(
-				contextCompany.getCompanyId(), _classNameIds, null,
+				contextCompany.getCompanyId(), _classNameIds, keywords,
 				_getParams()));
 	}
 

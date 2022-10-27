@@ -25,7 +25,7 @@ import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsMan
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,14 +56,14 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@Override
 	public Page<Channel> getChannelsPage(
-			String keywords, Filter filter, Pagination pagination)
+			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
 			<AnalyticsChannel> analyticsChannelsPage =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
 					contextCompany.getCompanyId(), keywords,
-					pagination.getPage() - 1, pagination.getPageSize());
+					pagination.getPage() - 1, pagination.getPageSize(), sorts);
 
 		return Page.of(
 			transform(

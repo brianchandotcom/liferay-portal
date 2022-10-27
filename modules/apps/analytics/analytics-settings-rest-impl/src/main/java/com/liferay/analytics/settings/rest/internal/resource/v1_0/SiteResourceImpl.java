@@ -19,9 +19,12 @@ import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.SiteDTOConverter;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.SiteDTOConverterContext;
+import com.liferay.analytics.settings.rest.internal.util.SortUtil;
 import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -49,11 +52,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
-	public Page<Site> getSitesPage(Pagination pagination) throws Exception {
+	public Page<Site> getSitesPage(
+			String keywords, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
 		com.liferay.analytics.settings.rest.internal.client.pagination.Page
 			<AnalyticsChannel> analyticsChannelsPage =
 				_analyticsCloudClient.getAnalyticsChannelsPage(
-					contextCompany.getCompanyId(), null, 0, 100);
+					contextCompany.getCompanyId(), null, 0, 100, null);
 
 		Collection<AnalyticsChannel> analyticsChannels =
 			analyticsChannelsPage.getItems();
@@ -67,9 +73,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		return Page.of(
 			transform(
 				_groupService.search(
-					contextCompany.getCompanyId(), _classNameIds, null,
+					contextCompany.getCompanyId(), _classNameIds, keywords,
 					_getParams(), pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+					pagination.getEndPosition(),
+					SortUtil.getOrderByComparator(
+						GroupTable.INSTANCE.getTableName(), sorts)),
 				group -> _siteDTOConverter.toDTO(
 					new SiteDTOConverterContext(
 						group.getGroupId(),
@@ -78,7 +86,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					group)),
 			pagination,
 			_groupService.searchCount(
-				contextCompany.getCompanyId(), _classNameIds, null,
+				contextCompany.getCompanyId(), _classNameIds, keywords,
 				_getParams()));
 	}
 

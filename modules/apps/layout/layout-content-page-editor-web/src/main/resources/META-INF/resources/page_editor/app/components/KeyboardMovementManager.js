@@ -13,6 +13,7 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {sub} from 'frontend-js-web';
 import {useEffect, useRef} from 'react';
 
 import {
@@ -30,6 +31,7 @@ import {
 	useMovementSource,
 	useMovementTarget,
 	useSetMovementTarget,
+	useSetMovementText,
 } from '../contexts/KeyboardMovementContext';
 import {useDispatch, useSelectorRef} from '../contexts/StoreContext';
 import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
@@ -65,12 +67,16 @@ export default function KeyboardMovementManager() {
 
 	const disableMovement = useDisableKeyboardMovement();
 	const setTarget = useSetMovementTarget();
+	const setText = useSetMovementText();
 	const selectItem = useSelectItem();
 	const dispatch = useDispatch();
 
 	keymapRef.current = {
 		disableMovement: {
-			action: () => disableMovement(),
+			action: () => {
+				setText(null);
+				disableMovement();
+			},
 			keyCode: ESCAPE_KEYCODE,
 		},
 		executeAction: {
@@ -126,6 +132,17 @@ export default function KeyboardMovementManager() {
 				}
 
 				dispatch(thunk);
+
+				setText(
+					sub(Liferay.Language.get('x-placed-on-x-of-x'), [
+						source.name,
+						target.position,
+						target.name,
+					])
+				);
+
+				setTimeout(() => setText(null), 1000);
+
 				disableMovement();
 
 				if (actionType === ACTION_TYPES.move) {
@@ -146,18 +163,32 @@ export default function KeyboardMovementManager() {
 
 				if (nextTarget) {
 					setTarget(nextTarget);
+
+					setText(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							nextTarget.position,
+							nextTarget.name,
+						])
+					);
 				}
 			},
 			keyCode: ARROW_DOWN_KEYCODE,
 		},
 		moveToEnd: {
 			action: () => {
-				setTarget(
-					getInitialTarget(
-						source,
-						layoutDataRef,
-						fragmentEntryLinksRef
-					)
+				const nextTarget = getInitialTarget(
+					source,
+					layoutDataRef,
+					fragmentEntryLinksRef
+				);
+
+				setTarget(nextTarget);
+
+				setText(
+					sub(Liferay.Language.get('targeting-x-of-x'), [
+						nextTarget.position,
+						nextTarget.name,
+					])
 				);
 			},
 			keyCode: END_KEYCODE,
@@ -182,6 +213,13 @@ export default function KeyboardMovementManager() {
 
 				if (nextTarget) {
 					setTarget(nextTarget);
+
+					setText(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							nextTarget.position,
+							nextTarget.name,
+						])
+					);
 				}
 			},
 			keyCode: HOME_KEYCODE,
@@ -198,6 +236,13 @@ export default function KeyboardMovementManager() {
 
 				if (nextTarget) {
 					setTarget(nextTarget);
+
+					setText(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							nextTarget.position,
+							nextTarget.name,
+						])
+					);
 				}
 			},
 			keyCode: ARROW_UP_KEYCODE,
@@ -233,6 +278,16 @@ export default function KeyboardMovementManager() {
 
 		if (initialTarget) {
 			setTarget(initialTarget);
+
+			setText(
+				sub(
+					Liferay.Language.get(
+						'use-up-and-down-arrows-to-move-the-fragment-and-press-enter-to-place-it-in-desired-position.-currently-targeting-x-of-x'
+					),
+					[initialTarget.position, initialTarget.name]
+				)
+			);
+
 			selectItem(null);
 		}
 		else {
@@ -244,6 +299,7 @@ export default function KeyboardMovementManager() {
 		layoutDataRef,
 		selectItem,
 		setTarget,
+		setText,
 		source,
 	]);
 

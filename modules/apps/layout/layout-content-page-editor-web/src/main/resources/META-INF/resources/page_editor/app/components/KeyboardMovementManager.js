@@ -32,6 +32,7 @@ import {
 	useSetMovementTarget,
 } from '../contexts/KeyboardMovementContext';
 import {useDispatch, useSelectorRef} from '../contexts/StoreContext';
+import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
 import addFragment from '../thunks/addFragment';
 import addItem from '../thunks/addItem';
 import addWidget from '../thunks/addWidget';
@@ -56,6 +57,9 @@ export default function KeyboardMovementManager() {
 	const source = useMovementSource();
 	const target = useMovementTarget();
 
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const keymapRef = useRef({});
 
@@ -135,6 +139,7 @@ export default function KeyboardMovementManager() {
 				const nextTarget = getNextTarget(
 					source,
 					target,
+					fragmentEntryLinksRef.current,
 					layoutDataRef,
 					DIRECTIONS.down
 				);
@@ -147,7 +152,13 @@ export default function KeyboardMovementManager() {
 		},
 		moveToEnd: {
 			action: () => {
-				setTarget(getInitialTarget(source, layoutDataRef));
+				setTarget(
+					getInitialTarget(
+						source,
+						layoutDataRef,
+						fragmentEntryLinksRef
+					)
+				);
 			},
 			keyCode: END_KEYCODE,
 		},
@@ -164,6 +175,7 @@ export default function KeyboardMovementManager() {
 						itemId: root.itemId,
 						position: TARGET_POSITIONS.TOP,
 					},
+					fragmentEntryLinksRef,
 					layoutDataRef,
 					DIRECTIONS.down
 				);
@@ -179,6 +191,7 @@ export default function KeyboardMovementManager() {
 				const nextTarget = getNextTarget(
 					source,
 					target,
+					fragmentEntryLinksRef,
 					layoutDataRef,
 					DIRECTIONS.up
 				);
@@ -212,7 +225,11 @@ export default function KeyboardMovementManager() {
 	);
 
 	useEffect(() => {
-		const initialTarget = getInitialTarget(source, layoutDataRef);
+		const initialTarget = getInitialTarget(
+			source,
+			layoutDataRef,
+			fragmentEntryLinksRef
+		);
 
 		if (initialTarget) {
 			setTarget(initialTarget);
@@ -221,13 +238,21 @@ export default function KeyboardMovementManager() {
 		else {
 			disableMovement();
 		}
-	}, [disableMovement, layoutDataRef, selectItem, setTarget, source]);
+	}, [
+		disableMovement,
+		fragmentEntryLinksRef,
+		layoutDataRef,
+		selectItem,
+		setTarget,
+		source,
+	]);
 
 	return null;
 }
 
-function getInitialTarget(source, layoutDataRef) {
+function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 	const layoutData = layoutDataRef.current;
+	const fragmentEntryLinks = fragmentEntryLinksRef.current;
 
 	const actionType = source.itemId ? ACTION_TYPES.move : ACTION_TYPES.add;
 
@@ -245,8 +270,14 @@ function getInitialTarget(source, layoutDataRef) {
 			const child = layoutData.items[childId];
 
 			if (!isHidden(child)) {
+				const childName = selectLayoutDataItemLabel(
+					{fragmentEntryLinks},
+					child
+				);
+
 				return {
 					itemId: child.itemId,
+					name: childName,
 					position: TARGET_POSITIONS.BOTTOM,
 				};
 			}
@@ -256,6 +287,7 @@ function getInitialTarget(source, layoutDataRef) {
 
 		return {
 			itemId: root.itemId,
+			name: root.type,
 			position: TARGET_POSITIONS.MIDDLE,
 		};
 	}
@@ -266,13 +298,31 @@ function getInitialTarget(source, layoutDataRef) {
 		};
 
 		return (
-			getNextTarget(source, target, layoutDataRef, DIRECTIONS.up) ||
-			getNextTarget(source, target, layoutDataRef, DIRECTIONS.down)
+			getNextTarget(
+				source,
+				target,
+				fragmentEntryLinks,
+				layoutDataRef,
+				DIRECTIONS.up
+			) ||
+			getNextTarget(
+				source,
+				target,
+				fragmentEntryLinks,
+				layoutDataRef,
+				DIRECTIONS.down
+			)
 		);
 	}
 }
 
-function getNextTarget(source, target, layoutDataRef, direction) {
+function getNextTarget(
+	source,
+	target,
+	fragmentEntryLinks,
+	layoutDataRef,
+	direction
+) {
 	const layoutData = layoutDataRef.current;
 
 	const checkValidTarget = (nextTarget) => {
@@ -284,7 +334,13 @@ function getNextTarget(source, target, layoutDataRef, direction) {
 			hasUnmappedCollectionAncestor(nextTargetItem, layoutData) ||
 			isHidden(nextTargetItem)
 		) {
-			return getNextTarget(source, nextTarget, layoutDataRef, direction);
+			return getNextTarget(
+				source,
+				nextTarget,
+				fragmentEntryLinks,
+				layoutDataRef,
+				direction
+			);
 		}
 
 		const nextTargetParent = layoutData.items[nextTargetItem.parentId];
@@ -298,12 +354,11 @@ function getNextTarget(source, target, layoutDataRef, direction) {
 				return getNextTarget(
 					source,
 					nextTarget,
+					fragmentEntryLinks,
 					layoutDataRef,
 					direction
 				);
 			}
-
-			return nextTarget;
 		}
 
 		if (nextTarget.position === TARGET_POSITIONS.TOP) {
@@ -314,12 +369,11 @@ function getNextTarget(source, target, layoutDataRef, direction) {
 				return getNextTarget(
 					source,
 					nextTarget,
+					fragmentEntryLinks,
 					layoutDataRef,
 					direction
 				);
 			}
-
-			return nextTarget;
 		}
 
 		if (nextTarget.position === TARGET_POSITIONS.MIDDLE) {
@@ -330,13 +384,19 @@ function getNextTarget(source, target, layoutDataRef, direction) {
 				return getNextTarget(
 					source,
 					nextTarget,
+					fragmentEntryLinks,
 					layoutDataRef,
 					direction
 				);
 			}
-
-			return nextTarget;
 		}
+
+		const name = selectLayoutDataItemLabel(
+			{fragmentEntryLinks},
+			nextTargetItem
+		);
+
+		return {...nextTarget, name};
 	};
 
 	const {itemId: targetId, position: targetPosition} = target;

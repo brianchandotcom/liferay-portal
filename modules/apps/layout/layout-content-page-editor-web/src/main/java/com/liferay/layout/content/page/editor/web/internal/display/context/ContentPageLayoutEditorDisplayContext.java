@@ -27,6 +27,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
@@ -103,6 +104,7 @@ public class ContentPageLayoutEditorDisplayContext
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
+		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse,
@@ -113,10 +115,10 @@ public class ContentPageLayoutEditorDisplayContext
 		super(
 			contentPageEditorSidebarPanels, fragmentCollectionManager,
 			fragmentEntryLinkManager, frontendTokenDefinitionRegistry,
-			httpServletRequest, infoItemServiceTracker, itemSelector,
-			pageEditorConfiguration, portletRequest, renderResponse,
-			segmentsConfigurationProvider, segmentsExperienceManager,
-			stagingGroupHelper);
+			httpServletRequest, infoItemServiceTracker,
+			infoSearchClassMapperTracker, itemSelector, pageEditorConfiguration,
+			portletRequest, renderResponse, segmentsConfigurationProvider,
+			segmentsExperienceManager, stagingGroupHelper);
 	}
 
 	@Override

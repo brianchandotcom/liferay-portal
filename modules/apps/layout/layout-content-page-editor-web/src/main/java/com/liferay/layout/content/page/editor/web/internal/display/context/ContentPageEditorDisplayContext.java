@@ -29,6 +29,7 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
@@ -47,7 +48,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
@@ -173,6 +173,7 @@ public class ContentPageEditorDisplayContext {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
+		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse,
@@ -192,6 +193,7 @@ public class ContentPageEditorDisplayContext {
 
 		this.httpServletRequest = httpServletRequest;
 		this.infoItemServiceTracker = infoItemServiceTracker;
+		this.infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 		this.portletRequest = portletRequest;
 		this.stagingGroupHelper = stagingGroupHelper;
 
@@ -940,6 +942,7 @@ public class ContentPageEditorDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoItemServiceTracker infoItemServiceTracker;
+	protected final InfoSearchClassMapperTracker infoSearchClassMapperTracker;
 	protected final PortletRequest portletRequest;
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
@@ -1314,7 +1317,7 @@ public class ContentPageEditorDisplayContext {
 
 			infoItemClassNames.add(infoItemClassName);
 			infoItemClassNames.add(
-				InfoSearchClassMapperTrackerUtil.getSearchClassName(
+				infoSearchClassMapperTracker.getSearchClassName(
 					infoItemClassName));
 		}
 

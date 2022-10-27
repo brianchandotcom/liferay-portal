@@ -28,13 +28,13 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
+import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
@@ -76,6 +76,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
+		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
 		boolean pageIsDisplayPage, PortletRequest portletRequest,
@@ -87,10 +88,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		super(
 			contentPageEditorSidebarPanels, fragmentCollectionManager,
 			fragmentEntryLinkManager, frontendTokenDefinitionRegistry,
-			httpServletRequest, infoItemServiceTracker, itemSelector,
-			pageEditorConfiguration, portletRequest, renderResponse,
-			segmentsConfigurationProvider, segmentsExperienceManager,
-			stagingGroupHelper);
+			httpServletRequest, infoItemServiceTracker,
+			infoSearchClassMapperTracker, itemSelector, pageEditorConfiguration,
+			portletRequest, renderResponse, segmentsConfigurationProvider,
+			segmentsExperienceManager, stagingGroupHelper);
 
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;
@@ -168,7 +169,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
+				infoSearchClassMapperTracker.getSearchClassName(className));
 
 		if (assetRendererFactory != null) {
 			sourceItemTypes.add(AssetEntry.class.getName());

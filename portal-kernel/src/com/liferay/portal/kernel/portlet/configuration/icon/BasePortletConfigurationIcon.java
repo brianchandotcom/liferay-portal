@@ -39,11 +39,19 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BasePortletConfigurationIcon
 	implements PortletConfigurationIcon {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getAlt() {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getAriaRole() {
 		return null;
@@ -54,6 +62,10 @@ public abstract class BasePortletConfigurationIcon
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Map<String, Object> getData() {
 		return null;
@@ -64,26 +76,46 @@ public abstract class BasePortletConfigurationIcon
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getId() {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getImage() {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getImageHover() {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getLang() {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getLinkCssClass() {
 		return null;
@@ -99,6 +131,10 @@ public abstract class BasePortletConfigurationIcon
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
@@ -106,15 +142,27 @@ public abstract class BasePortletConfigurationIcon
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return PortalUtil.getResourceBundle(locale);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getSrc() {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getSrcHover() {
 		return null;
@@ -149,11 +197,19 @@ public abstract class BasePortletConfigurationIcon
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isLabel() {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isToolTip() {
 		return false;

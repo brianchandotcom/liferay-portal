@@ -29,35 +29,79 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PortletConfigurationIcon {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getAlt();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getAriaRole();
 
 	public String getCssClass();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public Map<String, Object> getData();
 
 	public String getIconCssClass();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getId();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getImage();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getImageHover();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getLang();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getLinkCssClass();
 
 	public String getMessage(PortletRequest portletRequest);
 
 	public String getMethod();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getOnClick(
 		PortletRequest portletRequest, PortletResponse portletResponse);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getSrc();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public String getSrcHover();
 
 	public String getTarget();
@@ -72,6 +116,10 @@ public interface PortletConfigurationIcon {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isLabel();
 
 	public boolean isShow(PortletRequest portletRequest);
@@ -80,6 +128,10 @@ public interface PortletConfigurationIcon {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isToolTip();
 
 	public boolean isUseDialog();

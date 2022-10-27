@@ -8,6 +8,7 @@
 .project
 .sass-cache/
 .settings/
+.npmscripts/
 bin/
 build/
 classes/

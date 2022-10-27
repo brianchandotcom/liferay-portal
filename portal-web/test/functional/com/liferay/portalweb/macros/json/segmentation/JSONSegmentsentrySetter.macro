@@ -197,6 +197,11 @@ definition {
 		else if ("${fieldName}" == "customContext\/ipGeocoderCountry") {
 			var text = JSONCountry.getCountryAbbreviation(countryName = "${selectedOption}");
 		}
+		else if ("${fieldName}" == "assetTagIds") {
+			var text = JSONAssettag.getTagId(
+				groupName = "Global",
+				tagName = "${selectedOption}");
+		}
 
 		return "${text}";
 	}

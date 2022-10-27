@@ -3212,17 +3212,12 @@ definition {
 		}
 
 		task ("Create an user segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Tag");
-
-			Segmentation.fillProperty(selectLink = "tagname");
-
-			Segmentation.fillTitle(titleField = "UserTagSegment Name");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				fieldName = "Tag",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "UserTagSegment Name",
+				selectedOption = "tagname");
 		}
 
 		task ("Naviagte to edit page") {

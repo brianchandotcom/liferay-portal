@@ -624,11 +624,11 @@ public class LayoutStructure {
 		return layoutStructureItem;
 	}
 
-	public List<LayoutStructureItem> updateRowColumnsLayoutStructureItem(
+	public void updateRowColumnsLayoutStructureItem(
 		String itemId, int numberOfColumns) {
 
 		if (numberOfColumns > _MAX_COLUMNS) {
-			return Collections.emptyList();
+			return;
 		}
 
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
@@ -638,7 +638,7 @@ public class LayoutStructure {
 			rowStyledLayoutStructureItem.getNumberOfColumns();
 
 		if (oldNumberOfColumns == numberOfColumns) {
-			return Collections.emptyList();
+			return;
 		}
 
 		rowStyledLayoutStructureItem.setModulesPerRow(numberOfColumns);
@@ -677,7 +677,7 @@ public class LayoutStructure {
 						[i]);
 			}
 
-			return Collections.emptyList();
+			return;
 		}
 
 		for (int i = 0; i < numberOfColumns; i++) {
@@ -697,8 +697,6 @@ public class LayoutStructure {
 			markLayoutStructureItemForDeletion(
 				childrenItemId, Collections.emptyList());
 		}
-
-		return Collections.emptyList();
 	}
 
 	private static void _updateLayoutStructureItemMaps(

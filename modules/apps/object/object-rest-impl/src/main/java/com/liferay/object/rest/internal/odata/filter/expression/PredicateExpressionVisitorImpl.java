@@ -15,14 +15,20 @@
 package com.liferay.object.rest.internal.odata.filter.expression;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,11 +63,12 @@ public class PredicateExpressionVisitorImpl
 
 	public PredicateExpressionVisitorImpl(
 		EntityModel entityModel, long objectDefinitionId,
+		ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		this(
 			entityModel, new HashMap<>(), objectDefinitionId,
-			objectFieldLocalService);
+			objectFieldBusinessTypeTracker, objectFieldLocalService);
 	}
 
 	@Override
@@ -91,7 +98,8 @@ public class PredicateExpressionVisitorImpl
 				Collections.singletonMap(
 					lambdaFunctionExpression.getVariableName(),
 					collectionPropertyExpression.getName()),
-				_objectDefinitionId, _objectFieldLocalService));
+				_objectDefinitionId, _objectFieldBusinessTypeTracker,
+				_objectFieldLocalService));
 	}
 
 	@Override
@@ -113,15 +121,16 @@ public class PredicateExpressionVisitorImpl
 
 	@Override
 	public Predicate visitListExpressionOperation(
-			ListExpression.Operation operation, Object left, List<Object> right)
+			ListExpression.Operation operation, Object left,
+			List<Object> rights)
 		throws ExpressionVisitException {
 
 		if (Objects.equals(ListExpression.Operation.IN, operation)) {
-			Column<?, Object> column =
-				(Column<?, Object>)_objectFieldLocalService.getColumn(
-					_objectDefinitionId, GetterUtil.getString(left));
+			Column<?, Object> column = _getColumn(left);
 
-			return column.in(right.toArray());
+			return column.in(
+				TransformUtil.transformToArray(
+					rights, right -> _getValue(left, right), Object.class));
 		}
 
 		throw new UnsupportedOperationException(
@@ -242,21 +251,37 @@ public class PredicateExpressionVisitorImpl
 		EntityModel entityModel,
 		Map<String, String> lambdaVariableExpressionFieldNames,
 		long objectDefinitionId,
+		ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_entityModel = entityModel;
 		_lambdaVariableExpressionFieldNames =
 			lambdaVariableExpressionFieldNames;
 		_objectDefinitionId = objectDefinitionId;
+		_objectFieldBusinessTypeTracker = objectFieldBusinessTypeTracker;
 		_objectFieldLocalService = objectFieldLocalService;
 	}
 
 	private Predicate _contains(Object fieldName, Object fieldValue) {
-		Column<?, ?> column = _objectFieldLocalService.getColumn(
-			_objectDefinitionId, GetterUtil.getString(fieldName));
+		Column<?, Object> column = _getColumn(fieldName);
 
 		return column.like(
-			StringPool.PERCENT + fieldValue + StringPool.PERCENT);
+			StringPool.PERCENT + _getValue(fieldName, fieldValue) +
+				StringPool.PERCENT);
+	}
+
+	private Column<?, Object> _getColumn(Object fieldName) {
+		EntityField entityField = _getEntityField(fieldName);
+
+		return (Column<?, Object>)_objectFieldLocalService.getColumn(
+			_objectDefinitionId, entityField.getFilterableName(null));
+	}
+
+	private EntityField _getEntityField(Object fieldName) {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		return entityFieldsMap.get(GetterUtil.getString(fieldName));
 	}
 
 	private Optional<Predicate> _getPredicateOptional(
@@ -287,33 +312,27 @@ public class PredicateExpressionVisitorImpl
 			return Optional.of(predicate);
 		}
 
-		Map<String, EntityField> entityFieldsMap =
-			_entityModel.getEntityFieldsMap();
+		Column<?, Object> column = _getColumn(left);
 
-		EntityField entityField = entityFieldsMap.get(
-			GetterUtil.getString(left));
-
-		Column<?, Object> column =
-			(Column<?, Object>)_objectFieldLocalService.getColumn(
-				_objectDefinitionId, entityField.getFilterableName(null));
+		Object value = _getValue(left, right);
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			predicate = column.eq(right);
+			predicate = column.eq(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			predicate = column.gte(right);
+			predicate = column.gte(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
-			predicate = column.gt(right);
+			predicate = column.gt(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			predicate = column.lte(right);
+			predicate = column.lte(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
-			predicate = column.lt(right);
+			predicate = column.lt(value);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
-			predicate = column.neq(right);
+			predicate = column.neq(value);
 		}
 		else {
 			return Optional.empty();
@@ -322,16 +341,57 @@ public class PredicateExpressionVisitorImpl
 		return Optional.of(predicate);
 	}
 
-	private Predicate _startsWith(Object fieldName, Object fieldValue) {
-		Column<?, ?> column = _objectFieldLocalService.getColumn(
-			_objectDefinitionId, GetterUtil.getString(fieldName));
+	private Object _getValue(Object left, Object right) {
+		EntityField entityField = _getEntityField(left);
 
-		return column.like(fieldValue + StringPool.PERCENT);
+		String entityFieldFilterableName = entityField.getFilterableName(null);
+		String entityFieldName = entityField.getName();
+
+		if (Objects.equals(entityFieldFilterableName, entityFieldName)) {
+			return right;
+		}
+
+		try {
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				_objectDefinitionId, entityFieldFilterableName);
+
+			ObjectFieldBusinessType objectFieldBusinessType =
+				_objectFieldBusinessTypeTracker.getObjectFieldBusinessType(
+					objectField.getBusinessType());
+
+			Object value = objectFieldBusinessType.getValue(
+				objectField, Collections.singletonMap(entityFieldName, right));
+
+			if (value == null) {
+				return right;
+			}
+
+			return value;
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return right;
+		}
 	}
+
+	private Predicate _startsWith(Object fieldName, Object fieldValue) {
+		Column<?, Object> column = _getColumn(fieldName);
+
+		return column.like(
+			_getValue(fieldName, fieldValue) + StringPool.PERCENT);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PredicateExpressionVisitorImpl.class);
 
 	private final EntityModel _entityModel;
 	private Map<String, String> _lambdaVariableExpressionFieldNames;
 	private final long _objectDefinitionId;
+	private final ObjectFieldBusinessTypeTracker
+		_objectFieldBusinessTypeTracker;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

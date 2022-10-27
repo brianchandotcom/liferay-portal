@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -623,19 +624,23 @@ public class FriendlyURLEntryLocalServiceImpl
 				urlTitle + " is longer than " + maxLength);
 		}
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
-				groupId, classNameId, languageId, normalizedUrlTitle);
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizationList =
+			friendlyURLEntryLocalizationPersistence.findByG_C_U(
+				groupId, classNameId, normalizedUrlTitle);
 
-		if (friendlyURLEntryLocalization == null) {
+		if (ListUtil.isEmpty(friendlyURLEntryLocalizationList)) {
 			return;
 		}
 
-		if ((classPK <= 0) ||
-			(friendlyURLEntryLocalization.getClassPK() != classPK)) {
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizationList) {
 
-			throw new DuplicateFriendlyURLEntryException(
-				friendlyURLEntryLocalization.toString());
+			if ((classPK <= 0) ||
+				(friendlyURLEntryLocalization.getClassPK() != classPK)) {
+
+				throw new DuplicateFriendlyURLEntryException(
+					friendlyURLEntryLocalization.toString());
+			}
 		}
 	}
 

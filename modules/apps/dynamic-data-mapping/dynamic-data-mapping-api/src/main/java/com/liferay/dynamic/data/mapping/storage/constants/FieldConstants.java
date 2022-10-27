@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.storage.constants;
 
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -147,6 +148,12 @@ public class FieldConstants {
 						formattedValue, StringPool.PERIOD,
 						value.substring(
 							NumberUtil.getDecimalSeparatorIndex(value) + 1));
+				}
+
+				if ((formattedValue.charAt(0) != CharPool.MINUS) &&
+					(value.charAt(0) == CharPool.MINUS)) {
+
+					formattedValue = StringPool.MINUS + formattedValue;
 				}
 
 				serializable = getSerializable(type, formattedValue);

@@ -17,7 +17,6 @@ package com.liferay.commerce.product.internal.availability;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
-import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.availability.CPAvailabilityChecker;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -107,10 +106,6 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 		return true;
 	}
-
-	@Reference
-	private CommerceInventoryBookedQuantityLocalService
-		_commerceInventoryBookedQuantityLocalService;
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;

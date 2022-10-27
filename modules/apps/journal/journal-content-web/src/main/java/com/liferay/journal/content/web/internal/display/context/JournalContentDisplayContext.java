@@ -936,19 +936,15 @@ public class JournalContentDisplayContext {
 
 		JournalArticleDisplay articleDisplay = getArticleDisplay();
 
-		if ((articleDisplay == null) || !hasViewPermission() || isExpired()) {
+		if ((articleDisplay == null) || !hasViewPermission()) {
 			_showArticle = false;
 
 			return _showArticle;
 		}
 
-		if (article.isScheduled() && !isPreview()) {
-			_showArticle = false;
+		if ((article.isPending() || article.isScheduled() || isExpired()) &&
+			!isPreview()) {
 
-			return _showArticle;
-		}
-
-		if (article.isPending() && !isPreview()) {
 			_showArticle = false;
 
 			return _showArticle;

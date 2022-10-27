@@ -21,8 +21,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.initializer.extender.web.internal.constants.SiteInitializerExtenderPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,6 +65,21 @@ public class SiteInitializerExtenderPanelApp extends BasePanelApp {
 			return false;
 		}
 
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
+
+		if (Validator.isNull(siteInitializerKey)) {
+			return false;
+		}
+
+		SiteInitializer siteInitializer =
+			_siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
+
+		if (siteInitializer == null) {
+			return false;
+		}
+
 		return super.isShow(permissionChecker, group);
 	}
 
@@ -67,5 +87,8 @@ public class SiteInitializerExtenderPanelApp extends BasePanelApp {
 		target = "(javax.portlet.name=" + SiteInitializerExtenderPortletKeys.SITE_INITIALIZER_EXTENDER + ")"
 	)
 	private Portlet _portlet;
+
+	@Reference
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

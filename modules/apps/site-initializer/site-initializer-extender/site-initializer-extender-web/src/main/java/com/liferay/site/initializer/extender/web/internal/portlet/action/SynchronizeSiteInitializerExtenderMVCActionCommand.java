@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -69,9 +68,6 @@ public class SynchronizeSiteInitializerExtenderMVCActionCommand
 		String siteInitializerKey = unicodeProperties.get("siteInitializerKey");
 
 		if (Validator.isNull(siteInitializerKey)) {
-			SessionErrors.add(actionRequest, "siteInitializerKeyIsNull");
-			hideDefaultErrorMessage(actionRequest);
-
 			return;
 		}
 
@@ -79,11 +75,6 @@ public class SynchronizeSiteInitializerExtenderMVCActionCommand
 			_siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
 
 		if (siteInitializer == null) {
-			SessionErrors.add(
-				actionRequest, "siteInitializerIsNotDeployed",
-				siteInitializerKey);
-			hideDefaultErrorMessage(actionRequest);
-
 			return;
 		}
 

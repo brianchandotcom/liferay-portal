@@ -277,28 +277,12 @@ public class ConfigurationPersistenceManager
 
 		Dictionary<Object, Object> newDictionary = _copyDictionary(dictionary);
 
-		String fileName = (String)newDictionary.get(
-			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
-
-		if (fileName != null) {
-			File file = new File(URI.create(fileName));
-
-			newDictionary.put(
-				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
-				file.getName());
-		}
-
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
 
 		try {
 			_storeInDatabase(pid, newDictionary);
-
-			if (fileName != null) {
-				newDictionary.put(
-					FileInstallConstants.FELIX_FILE_INSTALL_FILENAME, fileName);
-			}
 
 			_dictionaries.put(pid, _overrideDictionary(pid, newDictionary));
 		}
@@ -404,25 +388,9 @@ public class ConfigurationPersistenceManager
 						return new HashMapDictionary<>();
 					}
 
-					Dictionary<Object, Object> dictionary =
-						ConfigurationHandler.read(
-							new UnsyncByteArrayInputStream(
-								dictionaryString.getBytes(StringPool.UTF8)));
-
-					String fileName = (String)dictionary.get(
-						FileInstallConstants.FELIX_FILE_INSTALL_FILENAME);
-
-					if (fileName != null) {
-						File file = _getCanonicalConfigFile(fileName);
-
-						URI uri = file.toURI();
-
-						dictionary.put(
-							FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
-							uri.toString());
-					}
-
-					return dictionary;
+					return ConfigurationHandler.read(
+						new UnsyncByteArrayInputStream(
+							dictionaryString.getBytes(StringPool.UTF8)));
 				}
 			}
 
@@ -604,20 +572,10 @@ public class ConfigurationPersistenceManager
 
 			_storeInDatabase(pid, dictionary);
 
-			dictionary.put(
-				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
-				felixFileInstallFileName);
-
 			needSave = false;
 		}
 		else {
 			configFile = _getCanonicalConfigFile(felixFileInstallFileName);
-
-			URI uri = configFile.toURI();
-
-			dictionary.put(
-				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
-				uri.toString());
 		}
 
 		if (needSave) {

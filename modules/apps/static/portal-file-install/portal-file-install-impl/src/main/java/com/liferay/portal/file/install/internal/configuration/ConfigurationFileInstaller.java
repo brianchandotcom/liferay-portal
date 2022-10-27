@@ -29,7 +29,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
-import java.net.URI;
 import java.net.URL;
 
 import java.util.Dictionary;
@@ -89,7 +88,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		String[] pid = _parsePid(file.getName());
 
 		Configuration configuration = _getConfiguration(
-			_toConfigKey(file), pid[0], pid[1]);
+			file.getName(), pid[0], pid[1]);
 
 		Set<Configuration.ConfigurationAttribute> configurationAttributes =
 			configuration.getAttributes();
@@ -136,7 +135,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			}
 		}
 
-		String currentFileName = _toConfigKey(file);
+		String currentFileName = file.getName();
 
 		if (!_equals(dictionary, old) ||
 			!Objects.equals(oldFileName, currentFileName) ||
@@ -205,7 +204,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		}
 
 		Configuration configuration = _getConfiguration(
-			_toConfigKey(file), pid[0], pid[1]);
+			file.getName(), pid[0], pid[1]);
 
 		configuration.delete();
 	}
@@ -305,14 +304,6 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		}
 
 		return new String[] {pid, null};
-	}
-
-	private String _toConfigKey(File file) {
-		file = file.getAbsoluteFile();
-
-		URI uri = file.toURI();
-
-		return uri.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

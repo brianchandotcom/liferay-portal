@@ -97,7 +97,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_PORTLET_HEADER</td>
-		<td>//span[@data-qa-id='headerTitle' and contains (text(),'${key_objectLabel}')]</td>
+		<td>//h1[@data-qa-id='headerTitle' and contains (text(),'${key_objectLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

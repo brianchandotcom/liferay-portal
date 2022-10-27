@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -863,8 +862,5 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private JsonHelper _jsonHelper;
-
-	@Reference
-	private Portal _portal;
 
 }

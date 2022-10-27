@@ -2930,9 +2930,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		for (String resourcePath : resourcePaths) {
+		for (String path : resourcePaths) {
 				String json = SiteInitializerUtil.read(
-					resourcePath + "segments-experiences.json", _servletContext);
+					path + "segments-experiences.json", _servletContext);
 
 				if (json == null) {
 					return;
@@ -2999,17 +2999,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 							jsonObject.getBoolean("active", true));
 				}
 
-				_addLayoutContent(
-					assetListEntryIdsStringUtilReplaceValues,
-					clientExtensionEntryIdsStringUtilReplaceValues,
-					ddmStructureEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					layout, resourcePath,
-					segmentsExperience.getSegmentsExperienceId(),
-					serviceContext,
-					taxonomyCategoryIdsStringUtilReplaceValues
-				);
+				Set<String> interResourcePath = _servletContext.getResourcePaths(path);
+
+				for (String resourcePath : interResourcePath) {
+					if (resourcePath.endsWith("/")) {
+
+						_addLayoutContent(
+							assetListEntryIdsStringUtilReplaceValues,
+							clientExtensionEntryIdsStringUtilReplaceValues,
+							ddmStructureEntryIdsStringUtilReplaceValues,
+							documentsStringUtilReplaceValues,
+							objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+							layout, resourcePath,
+							segmentsExperience.getSegmentsExperienceId(),
+							serviceContext,
+							taxonomyCategoryIdsStringUtilReplaceValues
+						);
+					}
+				}
 		}
 	}
 

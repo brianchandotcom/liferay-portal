@@ -763,6 +763,17 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro deleteDefaultSetting {
+		Click(
+			key_currentDefault = "${currentDefault}",
+			key_settingHeader = "${settingHeader}",
+			locator1 = "Account#DEFAULT_SETTINGS_TABLE_ACTION_BUTTON");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteOwnedAccountRole {
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
 
@@ -845,6 +856,38 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
+
+	@summary = "This macro edits the default Commerce settings. Variables required are currentDefault, newDefault, settingHeader, and settingLabel found in the modal."
+	macro editCommerceDefaultSetting {
+		Click(
+			key_currentDefault = "${currentDefault}",
+			key_settingHeader = "${settingHeader}",
+			locator1 = "Account#DEFAULT_SETTINGS_TABLE_ACTION_BUTTON");
+
+		MenuItem.click(menuItem = "Edit");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(channelEntry) && ("${channelEntry}" != "")) {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "${channelEntry}");
+		}
+
+		if (isSet(override) && ("${override}" == "true")) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Override Eligibility",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Select(
+			key_fieldLabel = "${settingLabel}",
+			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+			value1 = "${newDefault}");
+
+		Button.clickSave();
 	}
 
 	macro editCP {
@@ -1227,6 +1270,28 @@ definition {
 			value1 = "Save");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro setDefaultCurrency {
+		Click.javaScriptClick(
+			key_title = "Add Default Currency",
+			locator1 = "Button#ANY_TITLE");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(channelEntry) && ("${channelEntry}" != "")) {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "${channelEntry}");
+		}
+
+		Select(
+			key_fieldLabel = "Currency",
+			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+			value1 = "${currencyName}");
+
+		Button.clickSave();
 	}
 
 	macro setDefaultDiscount {

@@ -213,6 +213,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_SETTINGS_HEADER</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_SETTINGS_TABLE_ITEM</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//div[@class='dnd-tr']//div[contains(.,'${key_entryDetail}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_SETTINGS_TABLE_ACTION_BUTTON</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//div[@class='dnd-tr']//div[contains(.,'${key_currentDefault}')]//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

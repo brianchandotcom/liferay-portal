@@ -46,6 +46,10 @@ public class CustomFacetDisplayContext {
 				CustomFacetPortletInstanceConfiguration.class);
 	}
 
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
+		return _bucketDisplayContexts;
+	}
+
 	public CustomFacetPortletInstanceConfiguration
 		getCustomFacetPortletInstanceConfiguration() {
 
@@ -87,16 +91,18 @@ public class CustomFacetDisplayContext {
 		return _parameterValues;
 	}
 
-	public List<BucketDisplayContext> getTermDisplayContexts() {
-		return _bucketDisplayContexts;
-	}
-
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setBucketDisplayContexts(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
 	public void setDisplayCaption(String displayCaption) {
@@ -127,12 +133,6 @@ public class CustomFacetDisplayContext {
 
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
-	}
-
-	public void setTermDisplayContexts(
-		List<BucketDisplayContext> bucketDisplayContexts) {
-
-		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
 	private List<BucketDisplayContext> _bucketDisplayContexts;

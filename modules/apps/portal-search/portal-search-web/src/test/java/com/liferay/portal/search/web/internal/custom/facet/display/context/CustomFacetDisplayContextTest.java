@@ -69,7 +69,7 @@ public class CustomFacetDisplayContextTest {
 				customDisplayCaption, fieldToAggregate, parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getTermDisplayContexts();
+			customFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 0, bucketDisplayContexts.size());
@@ -91,7 +91,7 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getTermDisplayContexts();
+			customFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -125,7 +125,7 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getTermDisplayContexts();
+			customFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());
@@ -159,7 +159,7 @@ public class CustomFacetDisplayContextTest {
 				"customDisplayCaption", "fieldToAggregate", parameterValue);
 
 		List<BucketDisplayContext> bucketDisplayContexts =
-			customFacetDisplayContext.getTermDisplayContexts();
+			customFacetDisplayContext.getBucketDisplayContexts();
 
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 1, bucketDisplayContexts.size());

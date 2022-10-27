@@ -66,8 +66,8 @@ public class CustomFacetDisplayContextBuilder {
 		customFacetDisplayContext.setParameterValue(_getFirstParameterValue());
 		customFacetDisplayContext.setParameterValues(_parameterValues);
 		customFacetDisplayContext.setRenderNothing(renderNothing);
-		customFacetDisplayContext.setTermDisplayContexts(
-			_buildTermDisplayContexts(termCollectors));
+		customFacetDisplayContext.setBucketDisplayContexts(
+			_buildBucketDisplayContexts(termCollectors));
 
 		return customFacetDisplayContext;
 	}
@@ -194,7 +194,7 @@ public class CustomFacetDisplayContextBuilder {
 		return false;
 	}
 
-	private BucketDisplayContext _buildTermDisplayContext(
+	private BucketDisplayContext _buildBucketDisplayContext(
 		TermCollector termCollector) {
 
 		String term = GetterUtil.getString(termCollector.getTerm());
@@ -210,11 +210,11 @@ public class CustomFacetDisplayContextBuilder {
 		return bucketDisplayContext;
 	}
 
-	private List<BucketDisplayContext> _buildTermDisplayContexts(
+	private List<BucketDisplayContext> _buildBucketDisplayContexts(
 		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {
-			return _getEmptyTermDisplayContexts();
+			return _getEmptyBucketDisplayContexts();
 		}
 
 		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
@@ -230,13 +230,14 @@ public class CustomFacetDisplayContextBuilder {
 				break;
 			}
 
-			bucketDisplayContexts.add(_buildTermDisplayContext(termCollector));
+			bucketDisplayContexts.add(
+				_buildBucketDisplayContext(termCollector));
 		}
 
 		return bucketDisplayContexts;
 	}
 
-	private List<BucketDisplayContext> _getEmptyTermDisplayContexts() {
+	private List<BucketDisplayContext> _getEmptyBucketDisplayContexts() {
 		if (_parameterValues.isEmpty()) {
 			return Collections.emptyList();
 		}

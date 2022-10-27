@@ -59,7 +59,7 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 				%>'
 				displayStyle="<%= customFacetPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= customFacetDisplayContext.getDisplayStyleGroupId() %>"
-				entries="<%= customFacetDisplayContext.getTermDisplayContexts() %>"
+				entries="<%= customFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
 				<liferay-ui:panel-container
 					extended="<%= true %>"
@@ -81,7 +81,7 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext bucketDisplayContext : customFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : customFacetDisplayContext.getBucketDisplayContexts()) {
 									i++;
 								%>
 

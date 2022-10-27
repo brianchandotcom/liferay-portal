@@ -296,84 +296,26 @@ public class KBDropdownItemsProvider {
 	public List<DropdownItem> getKBTemplateDropdownItems(
 		KBTemplate kbTemplate) {
 
-		return DropdownItemListBuilder.add(
-			() -> _hasViewPermission(kbTemplate),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view_kb_template.jsp"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"kbTemplateId", kbTemplate.getKbTemplateId()
-					).setParameter(
-						"selectedItemId", kbTemplate.getPrimaryKey()
-					).buildRenderURL());
-				dropdownItem.setIcon("view");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"view"));
-			}
-		).add(
-			() -> _hasUpdatePermission(kbTemplate),
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/edit_kb_template.jsp"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"kbTemplateId", kbTemplate.getKbTemplateId()
-					).buildRenderURL());
-				dropdownItem.setIcon("pencil");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"edit"));
-			}
-		).add(
-			() -> _hasPermissionsPermission(kbTemplate),
-			dropdownItem -> {
-				dropdownItem.putData("action", "permissions");
-				dropdownItem.putData(
-					"permissionsURL",
-					PermissionsURLTag.doTag(
-						null, KBTemplate.class.getName(), kbTemplate.getTitle(),
-						String.valueOf(kbTemplate.getGroupId()),
-						String.valueOf(kbTemplate.getKbTemplateId()),
-						LiferayWindowState.POP_UP.toString(), null,
-						_liferayPortletRequest.getHttpServletRequest()));
-				dropdownItem.setIcon("password-policies");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"permissions"));
-			}
-		).add(
-			() -> _hasDeletePermission(kbTemplate),
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/delete_kb_template"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"kbTemplateId", kbTemplate.getKbTemplateId()
-					).buildString());
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"delete"));
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
+				DropdownItemListBuilder.add(
+					() -> _hasViewPermission(kbTemplate),
+					_getViewDropdownItem(kbTemplate)
+				).add(
+					() -> _hasUpdatePermission(kbTemplate),
+					_getEditDropdownItem(kbTemplate)
+				).build())
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _hasPermissionsPermission(kbTemplate),
+						_getPermissionsDropdownItem(kbTemplate)
+					).add(
+						() -> _hasDeletePermission(kbTemplate),
+						_getDeleteDropdownItem(kbTemplate)
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
 	}
@@ -521,6 +463,29 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
+		KBTemplate kbTemplate) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "delete");
+			dropdownItem.putData(
+				"deleteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/delete_kb_template"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"kbTemplateId", kbTemplate.getKbTemplateId()
+				).buildString());
+			dropdownItem.setIcon("trash");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "delete"));
+		};
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception> _getEditDropdownItem(
 		KBArticle kbArticle) {
 
@@ -558,6 +523,27 @@ public class KBDropdownItemsProvider {
 					_currentURL
 				).setParameter(
 					"kbFolderId", kbFolder.getKbFolderId()
+				).buildRenderURL());
+			dropdownItem.setIcon("pencil");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getEditDropdownItem(
+		KBTemplate kbTemplate) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/common/edit_kb_template.jsp"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"kbTemplateId", kbTemplate.getKbTemplateId()
 				).buildRenderURL());
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
@@ -777,6 +763,27 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception> _getPermissionsDropdownItem(
+		KBTemplate kbTemplate) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissions");
+			dropdownItem.putData(
+				"permissionsURL",
+				PermissionsURLTag.doTag(
+					null, KBTemplate.class.getName(), kbTemplate.getTitle(),
+					String.valueOf(kbTemplate.getGroupId()),
+					String.valueOf(kbTemplate.getKbTemplateId()),
+					LiferayWindowState.POP_UP.toString(), null,
+					_liferayPortletRequest.getHttpServletRequest()));
+			dropdownItem.setIcon("password-policies");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(),
+					"permissions"));
+		};
+	}
+
 	private String _getPermissionsURL(KBFolder kbFolder) throws Exception {
 		if (kbFolder == null) {
 			return PermissionsURLTag.doTag(
@@ -887,6 +894,29 @@ public class KBDropdownItemsProvider {
 				LanguageUtil.get(
 					_liferayPortletRequest.getHttpServletRequest(),
 					"unsubscribe"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getViewDropdownItem(
+		KBTemplate kbTemplate) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_kb_template.jsp"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"kbTemplateId", kbTemplate.getKbTemplateId()
+				).setParameter(
+					"selectedItemId", kbTemplate.getPrimaryKey()
+				).buildRenderURL());
+			dropdownItem.setIcon("view");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "view"));
 		};
 	}
 

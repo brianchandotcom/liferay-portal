@@ -427,7 +427,7 @@ public class LayoutFriendlyURLTest {
 		}
 	}
 
-	@Test(expected = LayoutFriendlyURLsException.class)
+	@Test
 	public void testSameFriendlyURLDifferentLocalePrivateLayout()
 		throws Exception {
 
@@ -440,7 +440,7 @@ public class LayoutFriendlyURLTest {
 			).build());
 	}
 
-	@Test(expected = LayoutFriendlyURLsException.class)
+	@Test
 	public void testSameFriendlyURLDifferentLocalePublicLayout()
 		throws Exception {
 

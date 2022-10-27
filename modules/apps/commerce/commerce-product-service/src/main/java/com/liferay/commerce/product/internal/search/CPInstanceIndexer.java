@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -344,9 +343,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

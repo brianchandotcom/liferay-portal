@@ -5,9 +5,12 @@
 
 	<target name="run-selenium-tomcat-db2">
 		<if>
-			<not>
-				<isset property="database.version" />
-			</not>
+			<or>
+				<not>
+					<isset property="database.version" />
+				</not>
+				<equals arg1="${database.version}" arg2="11.5" />
+			</or>
 			<then>
 				<var name="database.version" value="11.5.7.0" />
 			</then>
@@ -37,7 +40,7 @@
 		<antcall inheritAll="false" target="run-selenium-tomcat">
 			<param name="database.db2.docker.image" value="${database.db2.docker.image}" />
 			<param name="database.db2.host" value="${database.host}_db2" />
-			<param name="database.db2.password" value="password" />
+			<param name="database.db2.password" value="liferay123" />
 			<param name="database.db2.schema" value="lportal" />
 			<param name="database.db2.url" value="jdbc:db2://${database.host}:25010/${database.db2.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;" />
 			<param name="database.db2.username" value="db2inst1" />

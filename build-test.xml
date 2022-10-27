@@ -15273,9 +15273,12 @@ url=${short.hostname}:8080</echo>
 
 	<target name="start-docker-database-db2">
 		<if>
-			<not>
-				<isset property="database.version" />
-			</not>
+			<or>
+				<not>
+					<isset property="database.version" />
+				</not>
+				<equals arg1="${database.version}" arg2="11.5" />
+			</or>
 			<then>
 				<var name="database.version" value="11.5.7.0" />
 			</then>
@@ -15292,7 +15295,7 @@ url=${short.hostname}:8080</echo>
 			</then>
 			<else>
 				<var name="database.db2.docker.image" value="ibmcom/db2:${database.version}" />
-				<var name="database.db2.docker.run.options" value="-itd --privileged=true -p 25010:50000 --env=LICENSE=accept --env=DB2INST1_PASSWORD=password -v /tmp/database ibmcom/db2:${database.version}" />
+				<var name="database.db2.docker.run.options" value="-itd --privileged=true -p 25010:50000 --env=LICENSE=accept --env=DB2INST1_PASSWORD=liferay123 -v /tmp/database ibmcom/db2:${database.version}" />
 			</else>
 		</if>
 
@@ -15308,8 +15311,6 @@ url=${short.hostname}:8080</echo>
 			<param name="database.db2.docker.run.options" value="${database.db2.docker.run.options}" />
 			<param name="database.db2.host" value="${database.host}_db2" />
 			<param name="database.db2.name" value="DB2" />
-			<param name="database.db2.password" value="password" />
-			<param name="database.db2.username" value="db2inst1" />
 			<param name="database.db2.version" value="${database.version}" />
 			<param name="database.type" value="db2" />
 		</antcall>
@@ -15320,7 +15321,7 @@ url=${short.hostname}:8080</echo>
 			</not>
 			<then>
 				<antcall inheritAll="false" target="prepare-portal-ext-properties">
-					<param name="database.db2.password" value="password" />
+					<param name="database.db2.password" value="liferay123" />
 					<param name="database.db2.schema" value="lportal" />
 					<param name="database.db2.url" value="jdbc:db2://${database.host}:25010/${database.db2.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;" />
 					<param name="database.db2.username" value="db2inst1" />
@@ -15337,7 +15338,7 @@ url=${short.hostname}:8080</echo>
 				<antcall target="rebuild-database">
 					<param name="database.db2.docker.image" value="${database.db2.docker.image}" />
 					<param name="database.db2.host" value="${database.host}_db2" />
-					<param name="database.db2.password" value="password" />
+					<param name="database.db2.password" value="liferay123" />
 					<param name="database.db2.username" value="db2inst1" />
 					<param name="database.db2.version" value="${database.version}" />
 					<param name="database.type" value="db2" />

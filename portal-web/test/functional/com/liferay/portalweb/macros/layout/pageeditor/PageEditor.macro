@@ -2815,7 +2815,7 @@ definition {
 			locator1 = "PageEditor#PAGE_CONTENTS_ITEM_EDIT_PENCIL");
 
 		AssertElementPresent(
-			key_text = "Edit Inline Text",
+			key_text = "Edit Text",
 			locator1 = "Button#ANY_DISABLED");
 
 		if (isSet(text)) {

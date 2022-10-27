@@ -121,7 +121,7 @@ definition {
 	@description = "Verify if individual fields can be moved to different positions after being added via element set"
 	@priority = "5"
 	test FieldsAddedViaElementSetCanBeReordered {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

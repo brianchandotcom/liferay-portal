@@ -449,6 +449,8 @@ definition {
 
 	@priority = "4"
 	test ConfigureFolderWorkflow {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(

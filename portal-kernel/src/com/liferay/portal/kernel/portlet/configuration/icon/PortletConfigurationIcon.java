@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -40,6 +41,12 @@ public interface PortletConfigurationIcon {
 	 */
 	@Deprecated
 	public String getAriaRole();
+
+	public default Map<String, Object> getContenxt(
+		PortletRequest portletRequest) {
+
+		return Collections.emptyMap();
+	}
 
 	public String getCssClass();
 

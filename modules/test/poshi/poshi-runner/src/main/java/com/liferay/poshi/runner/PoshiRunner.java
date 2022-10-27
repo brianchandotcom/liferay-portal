@@ -104,7 +104,7 @@ public class PoshiRunner {
 		List<String> testNames = Arrays.asList(
 			PropsValues.TEST_NAME.split("\\s*,\\s*"));
 
-		PoshiContext.readFiles();
+		PoshiContext.readFiles(false);
 
 		PoshiValidation.validate();
 

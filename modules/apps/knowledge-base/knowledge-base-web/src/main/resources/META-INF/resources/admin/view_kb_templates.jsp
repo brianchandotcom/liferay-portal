@@ -31,28 +31,14 @@ ViewKBTemplatesDisplayContext viewKBTemplatesDisplayContext = (ViewKBTemplatesDi
 	</c:otherwise>
 </c:choose>
 
-<liferay-portlet:actionURL name="/knowledge_base/delete_kb_templates" var="deleteKBTemplatesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</liferay-portlet:actionURL>
-
 <clay:management-toolbar
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"deleteKBTemplatesURL", deleteKBTemplatesURL.toString()
-		).build()
-	%>'
 	managementToolbarDisplayContext="<%= viewKBTemplatesDisplayContext.getManagementToolbarDisplayContext() %>"
 	propsTransformer="admin/js/TemplatesManagementToolbarPropsTransformer"
 	searchContainerId="kbTemplates"
 />
 
 <clay:container-fluid>
-	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcRenderCommandName" value="/knowledge_base/view_kb_templates" />
-	</liferay-portlet:renderURL>
-
-	<aui:form action="<%= searchURL %>" method="get" name="fm">
-		<liferay-portlet:renderURLParams varImpl="searchURL" />
+	<aui:form action="<%= viewKBTemplatesDisplayContext.getSearchURL() %>" method="get" name="fm">
 		<aui:input name="kbTemplateIds" type="hidden" />
 
 		<c:choose>
@@ -82,39 +68,21 @@ ViewKBTemplatesDisplayContext viewKBTemplatesDisplayContext = (ViewKBTemplatesDi
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-
-							<%
-							Date modifiedDate = kbTemplate.getModifiedDate();
-
-							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
-							%>
-
-							<liferay-portlet:renderURL var="editURL">
-								<portlet:param name="mvcPath" value="/admin/common/edit_kb_template.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
-							</liferay-portlet:renderURL>
-
 							<h2 class="h5">
-								<aui:a href="<%= editURL.toString() %>">
+								<aui:a href="<%= viewKBTemplatesDisplayContext.getEditKBTemplateURL(kbTemplate) %>">
 									<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
 								</aui:a>
 							</h2>
 
 							<span class="text-default">
-								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbTemplate.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbTemplate.getUserName()), viewKBTemplatesDisplayContext.getKBTemplateModifiedDateDescription(kbTemplate)} %>" key="x-modified-x-ago" />
 							</span>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text>
-
-							<%
-							KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
-							%>
-
 							<clay:dropdown-actions
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-								dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate) %>"
+								dropdownItems="<%= viewKBTemplatesDisplayContext.getKBTemplateDropdownItems(kbTemplate) %>"
 								propsTransformer="admin/js/KBDropdownPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>

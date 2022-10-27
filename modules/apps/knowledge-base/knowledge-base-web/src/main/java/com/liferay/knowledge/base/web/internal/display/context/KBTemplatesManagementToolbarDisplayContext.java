@@ -54,7 +54,7 @@ public class KBTemplatesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public KBTemplatesManagementToolbarDisplayContext(
-			HttpServletRequest httpServletRequest,
+			String deleteKBTemplatesURL, HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			SearchContainer<KBTemplate> searchContainer)
@@ -63,6 +63,8 @@ public class KBTemplatesManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_deleteKBTemplatesURL = deleteKBTemplatesURL;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
@@ -80,6 +82,13 @@ public class KBTemplatesManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);
 			}
+		).build();
+	}
+
+	@Override
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteKBTemplatesURL", _deleteKBTemplatesURL
 		).build();
 	}
 
@@ -228,6 +237,7 @@ public class KBTemplatesManagementToolbarDisplayContext
 	}
 
 	private final PortletURL _currentURLObj;
+	private final String _deleteKBTemplatesURL;
 	private final ThemeDisplay _themeDisplay;
 
 }

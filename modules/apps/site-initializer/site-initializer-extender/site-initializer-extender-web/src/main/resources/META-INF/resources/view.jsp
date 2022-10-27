@@ -22,9 +22,7 @@ Group group = themeDisplay.getScopeGroup();
 UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 %>
 
-<clay:container-fluid
-	cssClass="main-content-body mt-4"
->
+<clay:container-fluid>
 	<clay:sheet
 		cssClass="custom-sheet"
 	>
@@ -44,15 +42,11 @@ UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 			</div>
 
 			<clay:sheet-footer>
-				<div class="btn-group-item">
-					<div class="btn-group-item">
-						<button class="btn btn-primary" type="submit">
-							<span class="lfr-btn-label">
-								<liferay-ui:message key="synchronize" />
-							</span>
-						</button>
-					</div>
-				</div>
+				<button class="btn btn-primary" type="submit">
+					<span class="lfr-btn-label">
+						<liferay-ui:message key="synchronize" />
+					</span>
+				</button>
 			</clay:sheet-footer>
 		</aui:form>
 	</clay:sheet>

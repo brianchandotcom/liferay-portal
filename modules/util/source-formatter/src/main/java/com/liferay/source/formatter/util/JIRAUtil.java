@@ -14,12 +14,10 @@
 
 package com.liferay.source.formatter.util;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -30,7 +28,6 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,10 +74,8 @@ public class JIRAUtil {
 	}
 
 	public static void validateJIRASecurityKeywords(
-		List<String> commitMessages, List<String> keywords) {
-
-		Set<String> violatingCommitMessages = new TreeSet<>();
-		Set<String> violatingWords = new TreeSet<>();
+			List<String> commitMessages, List<String> keywords)
+		throws Exception {
 
 		for (String commitMessage : commitMessages) {
 			for (String keyword : keywords) {
@@ -89,16 +84,16 @@ public class JIRAUtil {
 
 				Matcher matcher = pattern.matcher(commitMessage);
 
-				while (matcher.find()) {
-					violatingCommitMessages.add(commitMessage);
-					violatingWords.add(matcher.group(1));
+				if (matcher.find()) {
+					throw new Exception(
+						StringBundler.concat(
+							"The commit '", commitMessage,
+							"' contains the word '", keyword,
+							"' , which could reveal potential security ",
+							"vulnerablities."));
 				}
 			}
 		}
-
-		_printWarnings(
-			ListUtil.fromCollection(violatingCommitMessages),
-			ListUtil.fromCollection(violatingWords), 80);
 	}
 
 	public static void validateJIRATicketIds(
@@ -164,116 +159,6 @@ public class JIRAUtil {
 		httpURLConnection.setReadTimeout(10000);
 
 		return httpURLConnection.getResponseCode();
-	}
-
-	private static void _printBorder(String delimeter, int lineLength) {
-		System.out.print(delimeter);
-
-		for (int i = 0; i < (lineLength - 2); i++) {
-			System.out.print(StringPool.UNDERLINE);
-		}
-
-		System.out.println(delimeter);
-	}
-
-	private static void _printWarningLine(String line, int lineLength) {
-		String newLine = StringBundler.concat("|  ", line, "  |");
-
-		while (newLine.length() < lineLength) {
-			newLine = StringUtil.replaceLast(newLine, '|', " |");
-		}
-
-		System.out.println(newLine);
-	}
-
-	private static void _printWarningLine(
-		String line, int lineLength, boolean wrapLine) {
-
-		if (wrapLine) {
-			if (line.length() <= (lineLength - 6)) {
-				_printWarningLine(line, lineLength);
-
-				return;
-			}
-
-			int x = line.lastIndexOf(CharPool.SPACE, lineLength - 9);
-
-			_printWarningLine(line.substring(0, x) + "...", lineLength);
-
-			return;
-		}
-
-		while (true) {
-			if (line.length() <= (lineLength - 6)) {
-				_printWarningLine(line, lineLength);
-
-				return;
-			}
-
-			int x = line.lastIndexOf(CharPool.SPACE, lineLength - 6);
-
-			_printWarningLine(line.substring(0, x), lineLength);
-
-			line = StringUtil.trim(line.substring(x));
-		}
-	}
-
-	private static void _printWarnings(
-		List<String> violatingCommitMessages, List<String> violatingWords,
-		int lineLength) {
-
-		if (violatingCommitMessages.isEmpty()) {
-			return;
-		}
-
-		_printBorder(StringPool.SPACE, lineLength);
-
-		_printWarningLine(StringPool.BLANK, lineLength);
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("The following ");
-
-		if (violatingCommitMessages.size() == 1) {
-			sb.append("commit contains ");
-		}
-		else {
-			sb.append("commits contain ");
-		}
-
-		if (violatingWords.size() == 1) {
-			sb.append("the word ");
-		}
-		else {
-			sb.append("the words ");
-		}
-
-		for (int i = 0; i < violatingWords.size(); i++) {
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(violatingWords.get(i));
-			sb.append(StringPool.APOSTROPHE);
-
-			if (i < (violatingWords.size() - 2)) {
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-			else if (i < (violatingWords.size() - 1)) {
-				sb.append(" and ");
-			}
-		}
-
-		sb.append(", which could reveal potential security vulnerablities:");
-
-		_printWarningLine(sb.toString(), lineLength, false);
-
-		_printWarningLine(StringPool.BLANK, lineLength);
-
-		for (String violatingCommitMessage : violatingCommitMessages) {
-			_printWarningLine("* " + violatingCommitMessage, lineLength, true);
-		}
-
-		_printBorder(StringPool.PIPE, lineLength);
-
-		System.out.println();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JIRAUtil.class);

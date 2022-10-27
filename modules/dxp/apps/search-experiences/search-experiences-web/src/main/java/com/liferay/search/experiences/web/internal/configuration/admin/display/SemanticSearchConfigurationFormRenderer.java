@@ -85,8 +85,6 @@ public class SemanticSearchConfigurationFormRenderer
 			ParamUtil.getInteger(
 				httpServletRequest, "embeddingVectorDimensions")
 		).put(
-			"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
-		).put(
 			"enableGPU", ParamUtil.getBoolean(httpServletRequest, "enableGPU")
 		).put(
 			"huggingFaceAccessToken",
@@ -102,6 +100,10 @@ public class SemanticSearchConfigurationFormRenderer
 		).put(
 			"modelTimeout",
 			ParamUtil.getInteger(httpServletRequest, "modelTimeout")
+		).put(
+			"sentenceTransformerEnabled",
+			ParamUtil.getBoolean(
+				httpServletRequest, "sentenceTransformerEnabled")
 		).put(
 			"sentenceTransformProvider",
 			ParamUtil.getString(httpServletRequest, "sentenceTransformProvider")
@@ -158,8 +160,6 @@ public class SemanticSearchConfigurationFormRenderer
 		semanticSearchCompanyConfigurationDisplayContext.
 			setEmbeddingVectorDimensions(
 				_semanticSearchConfiguration.embeddingVectorDimensions());
-		semanticSearchCompanyConfigurationDisplayContext.setEnabled(
-			_semanticSearchConfiguration.enabled());
 		semanticSearchCompanyConfigurationDisplayContext.setEnableGPU(
 			_semanticSearchConfiguration.enableGPU());
 		semanticSearchCompanyConfigurationDisplayContext.
@@ -173,6 +173,9 @@ public class SemanticSearchConfigurationFormRenderer
 			_semanticSearchConfiguration.model());
 		semanticSearchCompanyConfigurationDisplayContext.setModelTimeout(
 			_semanticSearchConfiguration.modelTimeout());
+		semanticSearchCompanyConfigurationDisplayContext.
+			setSentenceTransformerEnabled(
+				_semanticSearchConfiguration.sentenceTransformerEnabled());
 		semanticSearchCompanyConfigurationDisplayContext.
 			setSentenceTransformProvider(
 				_semanticSearchConfiguration.sentenceTransformProvider());

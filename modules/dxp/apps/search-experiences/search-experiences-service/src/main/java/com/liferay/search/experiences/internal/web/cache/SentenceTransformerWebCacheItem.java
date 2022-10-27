@@ -39,7 +39,7 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
-			!semanticSearchConfiguration.enabled()) {
+			!semanticSearchConfiguration.sentenceTransformerEnabled()) {
 
 			return new Double[0];
 		}
@@ -86,7 +86,7 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		if (_semanticSearchConfiguration.enabled()) {
+		if (_semanticSearchConfiguration.sentenceTransformerEnabled()) {
 			return _semanticSearchConfiguration.cacheTimeout();
 		}
 

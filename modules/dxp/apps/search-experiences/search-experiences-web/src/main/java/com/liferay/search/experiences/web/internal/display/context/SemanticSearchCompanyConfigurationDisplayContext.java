@@ -86,12 +86,12 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _txtaiHostAddress;
 	}
 
-	public boolean isEnabled() {
-		return _enabled;
-	}
-
 	public boolean isEnableGPU() {
 		return _enableGPU;
+	}
+
+	public boolean isSentenceTransformerEnabled() {
+		return _sentenceTransformerEnabled;
 	}
 
 	public void setAssetEntryClassNames(List<String> assetEntryClassNames) {
@@ -138,10 +138,6 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_embeddingVectorDimensions = embeddingVectorDimensions;
 	}
 
-	public void setEnabled(boolean enabled) {
-		_enabled = enabled;
-	}
-
 	public void setEnableGPU(boolean useGPU) {
 		_enableGPU = useGPU;
 	}
@@ -166,6 +162,12 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_modelTimeout = modelTimeout;
 	}
 
+	public void setSentenceTransformerEnabled(
+		boolean sentenceTransformerEnabled) {
+
+		_sentenceTransformerEnabled = sentenceTransformerEnabled;
+	}
+
 	public void setSentenceTransformProvider(String sentenceTransformProvider) {
 		_sentenceTransformProvider = sentenceTransformProvider;
 	}
@@ -186,13 +188,13 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private Map<String, String> _availableTextTruncationStrategies;
 	private int _cacheTimeout;
 	private int _embeddingVectorDimensions;
-	private boolean _enabled;
 	private boolean _enableGPU;
 	private String _huggingFaceAccessToken;
 	private List<String> _languageIds;
 	private int _maxCharacterCount;
 	private String _model;
 	private int _modelTimeout;
+	private boolean _sentenceTransformerEnabled;
 	private String _sentenceTransformProvider;
 	private String _textTruncationStrategy;
 	private String _txtaiHostAddress;

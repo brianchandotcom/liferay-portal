@@ -85,7 +85,7 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 
 	protected boolean isAddSentenceEmbedding(Class<?> clazz) {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) &&
-			semanticSearchConfiguration.enabled() &&
+			semanticSearchConfiguration.sentenceTransformerEnabled() &&
 			ArrayUtil.contains(
 				semanticSearchConfiguration.assetEntryClassNames(),
 				clazz.getName(), true)) {

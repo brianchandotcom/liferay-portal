@@ -32,8 +32,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SemanticSearchConfiguration {
 
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
-	public boolean enabled();
+	@Meta.AD(
+		deflt = "false", description = "sentence-transformer-enabled-help",
+		name = "sentence-transformer-enabled", required = false
+	)
+	public boolean sentenceTransformerEnabled();
 
 	@Meta.AD(
 		deflt = "huggingFace", name = "sentence-transform-provider",

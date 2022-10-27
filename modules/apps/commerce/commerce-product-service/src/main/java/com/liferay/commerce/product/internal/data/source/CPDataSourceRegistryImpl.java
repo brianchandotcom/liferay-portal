@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -85,9 +83,6 @@ public class CPDataSourceRegistryImpl implements CPDataSourceRegistry {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDataSourceRegistryImpl.class);
-
-	@Reference
-	private Portal _portal;
 
 	private ServiceTrackerList<CPDataSource> _serviceTrackerList;
 

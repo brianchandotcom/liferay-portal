@@ -99,7 +99,7 @@ definition {
 	}
 
 	macro assertSearchableLanguage {
-		AssertSelectedLabel(
+		AssertTextEquals(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
 			value1 = "${selected}");
 	}
@@ -162,9 +162,9 @@ definition {
 	}
 
 	macro selectSearchableLanguage {
-		Select(
+		Click(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			value1 = "${language}");
+			value1 = "${selected}");
 	}
 
 	macro selectType {

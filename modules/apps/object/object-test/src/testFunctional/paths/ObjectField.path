@@ -99,7 +99,7 @@
 	</tr>
 	<tr>
 		<td>SEARCHABLE_LANGUAGE_SELECT</td>
-		<td>//select[@name="indexedLanguageId"]</td>
+		<td>//div[@class="lfr-objects__card"]//input[@value="${selected}"]</td>
 		<td></td>
 	</tr>
 	<tr>

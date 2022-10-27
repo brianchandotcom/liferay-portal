@@ -545,7 +545,8 @@ public class ObjectFieldLocalServiceImpl
 			newObjectField.getCompanyId(),
 			newObjectField.getObjectDefinitionId());
 
-		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
+		_validateListTypeDefinitionId(
+			listTypeDefinitionId, businessType, false);
 		_validateDefaultValue(
 			businessType, defaultValue, listTypeDefinitionId, state);
 		_validateIndexed(
@@ -670,7 +671,8 @@ public class ObjectFieldLocalServiceImpl
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
 
-		_validateListTypeDefinitionId(listTypeDefinitionId, businessType);
+		_validateListTypeDefinitionId(
+			listTypeDefinitionId, businessType, system);
 		_validateDefaultValue(
 			businessType, defaultValue, listTypeDefinitionId, state);
 		_validateIndexed(
@@ -1034,13 +1036,14 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateListTypeDefinitionId(
-			long listTypeDefinitionId, String businessType)
+			long listTypeDefinitionId, String businessType, boolean system)
 		throws PortalException {
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) &&
 			(listTypeDefinitionId == 0) &&
 			StringUtil.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+			!system) {
 
 			throw new ObjectFieldListTypeDefinitionIdException(
 				"List type definition ID is 0");

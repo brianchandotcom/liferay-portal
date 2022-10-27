@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
@@ -1408,6 +1409,24 @@ public class GraphQLServletExtender {
 				continue;
 			}
 
+			Object query = function.apply(servletData);
+
+			Class<?> clazz = query.getClass();
+
+			List<Method> methods = TransformUtil.transformToList(
+				clazz.getMethods(),
+				method -> {
+					if (_isMethodEnabled(method, servletData.getPath())) {
+						return method;
+					}
+
+					return null;
+				});
+
+			if (ListUtil.isEmpty(methods)) {
+				continue;
+			}
+
 			GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
 
 			String prefix = "";
@@ -1422,17 +1441,7 @@ public class GraphQLServletExtender {
 			GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 				processingElementsContainer.getCodeRegistryBuilder();
 
-			Object query = function.apply(servletData);
-
-			Class<?> clazz = query.getClass();
-
-			Method[] methods = clazz.getMethods();
-
 			for (Method method : methods) {
-				if (!_isMethodEnabled(method, servletData.getPath())) {
-					continue;
-				}
-
 				builder.field(
 					_graphQLFieldRetriever.getField(
 						clazz.getSimpleName(), method,

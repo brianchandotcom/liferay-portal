@@ -155,9 +155,10 @@ else {
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" value='<%= LanguageUtil.get(request, (redirectEntry == null) ? "create" : "save") %>' />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+			submitLabel='<%= LanguageUtil.get(request, (redirectEntry == null) ? "create" : "save") %>'
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

@@ -44,9 +44,9 @@
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button name="saveButton" type="submit" />
-
-		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect='<%= ParamUtil.getString(request, "redirect") %>'
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

@@ -85,8 +85,8 @@ ImportStyleBookDisplayContext importStyleBookDisplayContext = new ImportStyleBoo
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" value="import" />
-
-		<aui:button type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			submitLabel="import"
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

@@ -51,9 +51,12 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 
 			<c:if test="<%= !editAssetListDisplayContext.isLiveGroup() %>">
 				<liferay-frontend:edit-form-footer>
-					<aui:button disabled="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" id="saveButton" onClick='<%= liferayPortletResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
-
-					<aui:button href="<%= editAssetListDisplayContext.getBackURL() %>" type="cancel" />
+					<liferay-frontend:edit-form-buttons
+						redirect="<%= editAssetListDisplayContext.getBackURL() %>"
+						submitDisabled="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>"
+						submitId="saveButton"
+						submitOnClick='<%= liferayPortletResponse.getNamespace() + "saveSelectBoxes();" %>'
+					/>
 				</liferay-frontend:edit-form-footer>
 			</c:if>
 		</liferay-frontend:edit-form>

@@ -56,8 +56,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getN
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" value="copy" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+			submitLabel="copy"
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

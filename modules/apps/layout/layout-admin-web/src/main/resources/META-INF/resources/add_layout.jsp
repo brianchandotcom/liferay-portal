@@ -100,16 +100,9 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>
-			<clay:button
-				id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
-				label="add"
-				type="submit"
-			/>
-
-			<clay:button
-				cssClass="btn-cancel"
-				displayType="secondary"
-				label="cancel"
+			<liferay-frontend:edit-form-buttons
+				submitId="addButton"
+				submitLabel="add"
 			/>
 		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>

@@ -71,16 +71,8 @@
 				</c:if>
 
 				<liferay-frontend:edit-form-footer>
-					<clay:button
-						cssClass="d-flex"
-						label="add"
-						type="submit"
-					/>
-
-					<clay:button
-						cssClass="btn-cancel"
-						displayType="secondary"
-						label="cancel"
+					<liferay-frontend:edit-form-buttons
+						submitLabel="add"
 					/>
 				</liferay-frontend:edit-form-footer>
 			</div>

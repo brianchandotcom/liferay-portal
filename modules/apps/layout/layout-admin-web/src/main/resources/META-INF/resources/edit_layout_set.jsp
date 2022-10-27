@@ -70,11 +70,10 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 
 	<liferay-frontend:edit-form-footer>
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>">
-			<aui:button type="submit" value="save" />
-
-			<c:if test="<%= Validator.isNotNull(backURL) %>">
-				<aui:button href="<%= backURL %>" type="cancel" />
-			</c:if>
+			<liferay-frontend:edit-form-buttons
+				redirect="<%= backURL %>"
+				submitLabel="save"
+			/>
 		</c:if>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

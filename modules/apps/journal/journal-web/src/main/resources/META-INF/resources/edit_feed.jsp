@@ -337,11 +337,10 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		}
 		%>
 
-		<c:if test="<%= hasSavePermission %>">
-			<aui:button type="submit" />
-		</c:if>
-
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= redirect %>"
+			submitDisabled="<%= hasSavePermission %>"
+		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 

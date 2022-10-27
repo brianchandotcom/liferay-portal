@@ -76,16 +76,9 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
-		<clay:button
-			label='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, ClientExtensionEntry.class.getName()) ? "submit-for-publication" : "publish" %>'
-			type="submit"
-		/>
-
-		<clay:link
-			displayType="secondary"
-			href="<%= editClientExtensionEntryDisplayContext.getRedirect() %>"
-			label="cancel"
-			type="button"
+		<liferay-frontend:edit-form-buttons
+			redirect="<%= editClientExtensionEntryDisplayContext.getRedirect() %>"
+			submitLabel='<%= WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), 0L, ClientExtensionEntry.class.getName()) ? "submit-for-publication" : "publish" %>'
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

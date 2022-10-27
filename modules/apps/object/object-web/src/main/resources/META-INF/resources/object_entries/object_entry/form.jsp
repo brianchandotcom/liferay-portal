@@ -57,9 +57,10 @@ portletDisplay.setURLBack(backURL);
 
 	<c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">
 		<liferay-frontend:edit-form-footer>
-			<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectEntry();" %>' type="submit" value="save" />
-
-			<aui:button href="<%= backURL %>" type="cancel" />
+			<liferay-frontend:edit-form-buttons
+				redirect="<%= backURL %>"
+				submitOnClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectEntry();" %>'
+			/>
 		</liferay-frontend:edit-form-footer>
 	</c:if>
 </liferay-frontend:edit-form>

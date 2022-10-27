@@ -196,8 +196,9 @@ definition {
 	test ManagementBarCanBeLocalized {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/ and when on a customized tab view") {
 			var portalURL = PropsUtil.get("portal.url");
-			
+
 			Navigator.openSpecificURL(url = "${portalURL}/es/frontend-data-set-test-page/");
+
 			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 		}
 

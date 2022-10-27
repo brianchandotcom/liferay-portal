@@ -146,6 +146,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.authorInfoField,
+				objectEntry.getUserName()));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.createDateInfoField,
 				objectEntry.getCreateDate()));
 		objectEntryFieldValues.add(
@@ -168,10 +172,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.statusInfoField,
 				WorkflowConstants.getStatusLabel(objectEntry.getStatus())));
-		objectEntryFieldValues.add(
-			new InfoFieldValue<>(
-				ObjectEntryInfoItemFields.userNameInfoField,
-				objectEntry.getUserName()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.userProfileImageInfoField,

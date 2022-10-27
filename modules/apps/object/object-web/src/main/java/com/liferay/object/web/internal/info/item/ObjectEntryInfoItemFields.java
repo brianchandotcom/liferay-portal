@@ -27,6 +27,15 @@ import com.liferay.object.model.ObjectEntry;
  */
 public class ObjectEntryInfoItemFields {
 
+	public static final InfoField<TextInfoFieldType> authorInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"author"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "author")
+		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
 		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
@@ -88,15 +97,6 @@ public class ObjectEntryInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "status")
-		).build();
-	public static final InfoField<TextInfoFieldType> userNameInfoField =
-		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).name(
-			"author"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				ObjectEntryInfoItemFields.class, "author")
 		).build();
 	public static final InfoField userProfileImageInfoField =
 		BuilderHolder._builder.infoFieldType(

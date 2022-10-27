@@ -261,6 +261,8 @@ public class ObjectEntryInfoItemFormProvider
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
+			ObjectEntryInfoItemFields.authorInfoField
+		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.createDateInfoField
 		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.externalReferenceCodeInfoField
@@ -272,8 +274,6 @@ public class ObjectEntryInfoItemFormProvider
 			ObjectEntryInfoItemFields.publishDateInfoField
 		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.statusInfoField
-		).infoFieldSetEntry(
-			ObjectEntryInfoItemFields.userNameInfoField
 		).infoFieldSetEntry(
 			ObjectEntryInfoItemFields.userProfileImageInfoField
 		).labelInfoLocalizedValue(

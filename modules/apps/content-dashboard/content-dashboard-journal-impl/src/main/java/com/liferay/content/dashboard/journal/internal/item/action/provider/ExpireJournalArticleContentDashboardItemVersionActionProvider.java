@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -53,7 +54,7 @@ public class ExpireJournalArticleContentDashboardItemVersionActionProvider
 		}
 
 		return new ExpireJournalArticleContentDashboardItemVersionAction(
-			httpServletRequest, journalArticle, _language,
+			httpServletRequest, journalArticle, _language, _portal,
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 	}
 
@@ -99,5 +100,8 @@ public class ExpireJournalArticleContentDashboardItemVersionActionProvider
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private ModelResourcePermission<JournalArticle> _modelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

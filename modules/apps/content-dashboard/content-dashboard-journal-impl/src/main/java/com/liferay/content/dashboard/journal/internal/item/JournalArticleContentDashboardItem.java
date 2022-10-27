@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -430,7 +429,7 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public String getViewVersionsURL(HttpServletRequest httpServletRequest) {
 		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
+			_portal.getControlPanelPortletURL(
 				httpServletRequest,
 				GroupLocalServiceUtil.fetchGroup(_journalArticle.getGroupId()),
 				JournalPortletKeys.JOURNAL, 0, 0, PortletRequest.RENDER_PHASE)
@@ -439,7 +438,7 @@ public class JournalArticleContentDashboardItem
 		).setBackURL(
 			() -> {
 				LiferayPortletResponse liferayPortletResponse =
-					PortalUtil.getLiferayPortletResponse(
+					_portal.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE));
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +68,7 @@ public class
 
 		return new CompareVersionsJournalArticleContentDashboardItemVersionAction(
 			httpServletRequest, journalArticle, _language, latestJournalArticle,
+			_portal,
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 	}
 
@@ -110,5 +112,8 @@ public class
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	private ModelResourcePermission<JournalArticle> _modelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
@@ -39,12 +39,13 @@ public class ExpireJournalArticleContentDashboardItemVersionAction
 
 	public ExpireJournalArticleContentDashboardItemVersionAction(
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
-		Language language,
+		Language language, Portal portal,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
 		_language = language;
+		_portal = portal;
 		_requestBackedPortletURLFactory = requestBackedPortletURLFactory;
 	}
 
@@ -66,7 +67,7 @@ public class ExpireJournalArticleContentDashboardItemVersionAction
 	@Override
 	public String getURL() {
 		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(
+			_portal.getLiferayPortletResponse(
 				(PortletResponse)_httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE));
 
@@ -95,6 +96,7 @@ public class ExpireJournalArticleContentDashboardItemVersionAction
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
+	private final Portal _portal;
 	private final RequestBackedPortletURLFactory
 		_requestBackedPortletURLFactory;
 

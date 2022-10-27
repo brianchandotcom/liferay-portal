@@ -14,6 +14,7 @@
 
 package com.liferay.notification.context;
 
+import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
@@ -48,6 +49,14 @@ public class NotificationContext {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public List<Long> getFileEntryIds() {
+		return _fileEntryIds;
+	}
+
+	public NotificationQueueEntry getNotificationQueueEntry() {
+		return _notificationQueueEntry;
 	}
 
 	public NotificationRecipient getNotificationRecipient() {
@@ -113,6 +122,16 @@ public class NotificationContext {
 		_classPK = classPK;
 	}
 
+	public void setFileEntryIds(List<Long> fileEntryIds) {
+		_fileEntryIds = fileEntryIds;
+	}
+
+	public void setNotificationQueueEntry(
+		NotificationQueueEntry notificationQueueEntry) {
+
+		_notificationQueueEntry = notificationQueueEntry;
+	}
+
 	public void setNotificationRecipient(
 		NotificationRecipient notificationRecipient) {
 
@@ -147,6 +166,8 @@ public class NotificationContext {
 	private Map<String, Serializable> _attributes;
 	private String _className;
 	private long _classPK;
+	private List<Long> _fileEntryIds;
+	private NotificationQueueEntry _notificationQueueEntry;
 	private NotificationRecipient _notificationRecipient;
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;

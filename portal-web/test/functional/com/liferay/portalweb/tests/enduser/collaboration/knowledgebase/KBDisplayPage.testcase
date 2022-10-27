@@ -58,8 +58,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Knowledge Base Article Navigation");
+			collectionName = "Menu Display",
+			fragmentName = "Knowledge Base Navigation");
 
 		PageEditor.editKBArticleNavigationMaxNestingLevel(maxNestingLevel = "2");
 
@@ -102,8 +102,8 @@ definition {
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Knowledge Base Article Navigation");
+			collectionName = "Menu Display",
+			fragmentName = "Knowledge Base Navigation");
 
 		PageEditor.publish();
 

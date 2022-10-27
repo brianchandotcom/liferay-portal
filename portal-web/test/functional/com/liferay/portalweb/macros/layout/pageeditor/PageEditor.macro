@@ -2927,9 +2927,9 @@ definition {
 	}
 
 	macro editKBArticleNavigationMaxNestingLevel {
-		var key_fragmentName = "Knowledge Base Article Navigation";
+		var key_fragmentName = "Knowledge Base Navigation";
 
-		PageEditor.clickConfigurableField(fragmentName = "Knowledge Base Article Navigation");
+		PageEditor.clickConfigurableField(fragmentName = "Knowledge Base Navigation");
 
 		AssertVisible(
 			key_sidebarButton = "Browser",

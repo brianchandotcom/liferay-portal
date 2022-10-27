@@ -184,66 +184,18 @@ public class KBDropdownItemsProvider {
 		int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 		int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 
-		return DropdownItemListBuilder.add(
-			() -> previousStatus != KBCommentConstants.STATUS_NONE,
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/update_kb_comment_status"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"kbCommentId", kbComment.getKbCommentId()
-					).setParameter(
-						"kbCommentStatus", previousStatus
-					).buildActionURL());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						KBUtil.getStatusTransitionLabel(previousStatus)));
-			}
-		).add(
-			() -> nextStatus != KBCommentConstants.STATUS_NONE,
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/update_kb_comment_status"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"kbCommentId", kbComment.getKbCommentId()
-					).setParameter(
-						"kbCommentStatus", nextStatus
-					).buildActionURL());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						KBUtil.getStatusTransitionLabel(nextStatus)));
-			}
-		).add(
-			() -> _hasDeletePermission(kbComment),
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/delete_kb_comment"
-					).setRedirect(
-						_currentURL
-					).setParameter(
-						"kbCommentId", kbComment.getKbCommentId()
-					).buildString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_liferayPortletRequest.getHttpServletRequest(),
-						"delete"));
-			}
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
+				DropdownItemListBuilder.add(
+					() -> previousStatus != KBCommentConstants.STATUS_NONE,
+					_getUpdateStatusDropdownItem(kbComment, previousStatus)
+				).add(
+					() -> nextStatus != KBCommentConstants.STATUS_NONE,
+					_getUpdateStatusDropdownItem(kbComment, nextStatus)
+				).add(
+					() -> _hasDeletePermission(kbComment),
+					_getDeleteDropdownItem(kbComment)
+				).build())
 		).build();
 	}
 
@@ -430,6 +382,28 @@ public class KBDropdownItemsProvider {
 					"resourcePrimKey", kbArticle.getResourcePrimKey()
 				).buildString());
 			dropdownItem.setIcon("trash");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(), "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
+		KBComment kbComment) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "delete");
+			dropdownItem.putData(
+				"deleteURL",
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/delete_kb_comment"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"kbCommentId", kbComment.getKbCommentId()
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_liferayPortletRequest.getHttpServletRequest(), "delete"));
@@ -908,6 +882,29 @@ public class KBDropdownItemsProvider {
 				LanguageUtil.get(
 					_liferayPortletRequest.getHttpServletRequest(),
 					"unsubscribe"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getUpdateStatusDropdownItem(KBComment kbComment, int previousStatus) {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				PortletURLBuilder.createActionURL(
+					_liferayPortletResponse
+				).setActionName(
+					"/knowledge_base/update_kb_comment_status"
+				).setRedirect(
+					_currentURL
+				).setParameter(
+					"kbCommentId", kbComment.getKbCommentId()
+				).setParameter(
+					"kbCommentStatus", previousStatus
+				).buildActionURL());
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_liferayPortletRequest.getHttpServletRequest(),
+					KBUtil.getStatusTransitionLabel(previousStatus)));
 		};
 	}
 

@@ -96,7 +96,7 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task ("Open the dropdown and assert if have 5 versions") {
+		task ("Open the dropdown and verify that there are 5 DXP versions") {
 			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
 		}
 	}

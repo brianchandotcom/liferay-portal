@@ -40,7 +40,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			{objectLayout?.objectLayoutTabs?.map(
 				({name, objectLayoutBoxes, objectRelationshipId}, tabIndex) => {
 					const isRelationshipType =
-						objectRelationshipId && objectRelationshipId !== 0;
+						objectRelationshipId !== 0 && objectRelationshipId;
 					const labelDisplayType = isRelationshipType
 						? 'warning'
 						: 'info';

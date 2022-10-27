@@ -290,7 +290,7 @@ public class JournalEditArticleDisplayContext {
 				int groupsCount = GroupServiceUtil.getGroupsCount(
 					_themeDisplay.getCompanyId(), 0, Boolean.TRUE);
 
-				return groupsCount - 1;
+				return Math.max(groupsCount - 1, 0);
 			}
 		).build();
 	}

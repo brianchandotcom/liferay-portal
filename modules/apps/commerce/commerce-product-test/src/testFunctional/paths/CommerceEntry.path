@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMERCE_OBJECT_NAME_ON_HEADER</td>
+	<td>//h1[contains(@class,'control-menu-level-1-heading') and contains(.,'${value1}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_ERC_VALUE</td>
 	<td>//span[@title="External Reference Code"]//..//strong[contains(@class,'header-info-value') and normalize-space(text()='${key_erc}')]</td>
 	 <td></td>

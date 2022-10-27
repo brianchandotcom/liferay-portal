@@ -72,8 +72,7 @@ public class NotificationTemplateObjectActionExecutorImpl
 		notificationContext.setClassPK(
 			GetterUtil.getLong(termValues.get("id")));
 
-		notificationContext.setNotificationTemplateId(
-			notificationTemplate.getNotificationTemplateId());
+		notificationContext.setNotificationTemplate(notificationTemplate);
 		notificationContext.setTermValues(termValues);
 		notificationContext.setUserId(userId);
 

@@ -97,7 +97,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -438,14 +437,17 @@ public class DDMFormDisplayContext {
 			"formInstanceRecordId");
 	}
 
-	public HashMap<String, String> getLimitToOneSubmissionPerUserProperties()
+	public Map<String, String> getLimitToOneSubmissionPerUserMap()
 		throws PortalException {
 
 		DDMFormInstance formInstance = getFormInstance();
 
 		if (formInstance == null) {
-			return _createLimitToOneSubmissionPerUserPropertiesHashMap(
-				StringPool.BLANK, StringPool.BLANK);
+			return HashMapBuilder.put(
+				"limitToOneSubmissionPerUserBody", StringPool.BLANK
+			).put(
+				"limitToOneSubmissionPerUserHeader", StringPool.BLANK
+			).build();
 		}
 
 		DDMFormInstanceSettings settingsModel = formInstance.getSettingsModel();
@@ -469,18 +471,26 @@ public class DDMFormDisplayContext {
 		if (Validator.isNotNull(limitToOneSubmissionPerUserBody) &&
 			Validator.isNotNull(limitToOneSubmissionPerUserHeader)) {
 
-			return _createLimitToOneSubmissionPerUserPropertiesHashMap(
-				limitToOneSubmissionPerUserBody,
-				limitToOneSubmissionPerUserHeader);
+			return HashMapBuilder.put(
+				"limitToOneSubmissionPerUserBody",
+				limitToOneSubmissionPerUserBody
+			).put(
+				"limitToOneSubmissionPerUserHeader",
+				limitToOneSubmissionPerUserHeader
+			).build();
 		}
 
-		return _createLimitToOneSubmissionPerUserPropertiesHashMap(
+		return HashMapBuilder.put(
+			"limitToOneSubmissionPerUserBody",
 			LanguageUtil.get(
 				_getHttpServletRequest(),
 				"you-can-fill-out-this-form-only-once.-contact-the-owner-of-" +
-					"the-form-if-you-think-this-is-a-mistake"),
+					"the-form-if-you-think-this-is-a-mistake")
+		).put(
+			"limitToOneSubmissionPerUserHeader",
 			LanguageUtil.get(
-				_getHttpServletRequest(), "you-have-already-responded"));
+				_getHttpServletRequest(), "you-have-already-responded")
+		).build();
 	}
 
 	public String getRedirectURL() throws PortalException {
@@ -1066,19 +1076,6 @@ public class DDMFormDisplayContext {
 		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
 
 		return ddmFormLayoutRow;
-	}
-
-	private HashMap<String, String>
-		_createLimitToOneSubmissionPerUserPropertiesHashMap(
-			String limitToOneSubmissionPerUserBody,
-			String limitToOneSubmissionPerUserHeader) {
-
-		return HashMapBuilder.put(
-			"limitToOneSubmissionPerUserBody", limitToOneSubmissionPerUserBody
-		).put(
-			"limitToOneSubmissionPerUserHeader",
-			limitToOneSubmissionPerUserHeader
-		).build();
 	}
 
 	private long _getFormInstanceIdFromSession() {

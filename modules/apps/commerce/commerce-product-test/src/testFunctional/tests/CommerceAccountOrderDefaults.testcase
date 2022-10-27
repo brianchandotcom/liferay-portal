@@ -240,6 +240,80 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9937. A default currency can be deleted."
+	@priority = "4"
+	test CanDeleteDefaultCurrency {
+		task ("Given an account with a default Currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.setDefaultCurrency(currencyName = "Euro");
+		}
+
+		task ("When the admin deletes the default currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.deleteDefaultSetting(
+				currentDefault = "Euro",
+				settingHeader = "Currencies");
+		}
+
+		task ("Then the default currency should be deleted") {
+			AssertElementNotPresent(
+				key_entryDetail = "Euro",
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTINGS_TABLE_ITEM");
+		}
+	}
+
+	@description = "COMMERCE-9934. Default currency can be edited."
+	@priority = "5"
+	test CanEditDefaultCurrency {
+		task ("Given an account with a default Currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.setDefaultCurrency(currencyName = "Euro");
+		}
+
+		task ("When the admin edits the default currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.editCommerceDefaultSetting(
+				currentDefault = "Euro",
+				newDefault = "Brazilian Real",
+				settingHeader = "Currencies",
+				settingLabel = "Currency");
+		}
+
+		task ("Then the new default currency should persist") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			AssertElementPresent(
+				key_entryDetail = "Brazilian Real",
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTINGS_TABLE_ITEM");
+		}
+	}
+
 	@description = "COMMERCE-9729. As a sales manager, I want to set default account delivery terms per channel"
 	@priority = "3"
 	test CanHaveAllChannelsLinkedToADeliveryTerm {
@@ -1265,6 +1339,35 @@ definition {
 				productQuantity = "1",
 				productUnitPrice = "24",
 				shippingMethod = "Standard");
+		}
+	}
+
+	@description = "COMMERCE-9922. The default currency can be set for a channel."
+	@priority = "5"
+	test CanSetDefaultCurrencyPerChannel {
+		task ("Given an account with a default Currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.setDefaultCurrency(currencyName = "Euro");
+		}
+
+		task ("When the admin views the account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+		}
+
+		task ("Then the default currency should persist") {
+			AssertElementPresent(
+				key_entryDetail = "Euro",
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTINGS_TABLE_ITEM");
 		}
 	}
 

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -49,6 +50,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -100,6 +102,34 @@ public class Mutation {
 
 		_workflowTaskTransitionsResourceComponentServiceObjects =
 			workflowTaskTransitionsResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public WorkflowDefinition createWorkflowDefinition(
+			@GraphQLName("workflowDefinition") WorkflowDefinition
+				workflowDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.postWorkflowDefinition(
+					workflowDefinition));
+	}
+
+	@GraphQLField
+	public Response createWorkflowDefinitionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.postWorkflowDefinitionBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -162,6 +192,64 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteWorkflowDefinition(
+			@GraphQLName("workflowDefinitionId") Long workflowDefinitionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.deleteWorkflowDefinition(
+					workflowDefinitionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWorkflowDefinitionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.deleteWorkflowDefinitionBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public WorkflowDefinition updateWorkflowDefinition(
+			@GraphQLName("workflowDefinitionId") Long workflowDefinitionId,
+			@GraphQLName("workflowDefinition") WorkflowDefinition
+				workflowDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.putWorkflowDefinition(
+					workflowDefinitionId, workflowDefinition));
+	}
+
+	@GraphQLField
+	public Response updateWorkflowDefinitionBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowDefinitionResource ->
+				workflowDefinitionResource.putWorkflowDefinitionBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public WorkflowInstance createWorkflowInstanceSubmit(
 			@GraphQLName("workflowInstanceSubmit") WorkflowInstanceSubmit
 				workflowInstanceSubmit)
@@ -188,6 +276,20 @@ public class Mutation {
 					workflowInstanceId));
 
 		return true;
+	}
+
+	@GraphQLField
+	public Response deleteWorkflowInstanceBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowInstanceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowInstanceResource ->
+				workflowInstanceResource.deleteWorkflowInstanceBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -428,6 +530,9 @@ public class Mutation {
 		workflowDefinitionResource.setContextUser(_user);
 		workflowDefinitionResource.setGroupLocalService(_groupLocalService);
 		workflowDefinitionResource.setRoleLocalService(_roleLocalService);
+
+		workflowDefinitionResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -444,6 +549,9 @@ public class Mutation {
 		workflowInstanceResource.setContextUser(_user);
 		workflowInstanceResource.setGroupLocalService(_groupLocalService);
 		workflowInstanceResource.setRoleLocalService(_roleLocalService);
+
+		workflowInstanceResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -459,6 +567,9 @@ public class Mutation {
 		workflowTaskResource.setContextUser(_user);
 		workflowTaskResource.setGroupLocalService(_groupLocalService);
 		workflowTaskResource.setRoleLocalService(_roleLocalService);
+
+		workflowTaskResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -519,5 +630,7 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineImportTaskResource
+		_vulcanBatchEngineImportTaskResource;
 
 }

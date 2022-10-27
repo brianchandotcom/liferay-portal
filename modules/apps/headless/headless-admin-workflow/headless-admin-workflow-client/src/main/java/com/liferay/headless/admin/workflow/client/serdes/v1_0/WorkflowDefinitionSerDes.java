@@ -134,6 +134,16 @@ public class WorkflowDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (workflowDefinition.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(workflowDefinition.getId());
+		}
+
 		if (workflowDefinition.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -296,6 +306,13 @@ public class WorkflowDefinitionSerDes {
 				String.valueOf(workflowDefinition.getDescription()));
 		}
 
+		if (workflowDefinition.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(workflowDefinition.getId()));
+		}
+
 		if (workflowDefinition.getName() == null) {
 			map.put("name", null);
 		}
@@ -389,6 +406,12 @@ public class WorkflowDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					workflowDefinition.setDescription(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					workflowDefinition.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

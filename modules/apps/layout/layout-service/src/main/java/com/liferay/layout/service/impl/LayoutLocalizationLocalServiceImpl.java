@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.List;
 
@@ -93,7 +92,8 @@ public class LayoutLocalizationLocalServiceImpl
 
 	@Override
 	public LayoutLocalization updateLayoutLocalization(
-		String content, String languageId, long plid) {
+		String content, String languageId, long plid,
+		ServiceContext serviceContext) {
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
@@ -103,8 +103,7 @@ public class LayoutLocalizationLocalServiceImpl
 
 		if (layoutLocalization == null) {
 			return addLayoutLocalization(
-				layout.getGroupId(), content, languageId, plid,
-				ServiceContextThreadLocal.getServiceContext());
+				layout.getGroupId(), content, languageId, plid, serviceContext);
 		}
 
 		layoutLocalization.setContent(content);

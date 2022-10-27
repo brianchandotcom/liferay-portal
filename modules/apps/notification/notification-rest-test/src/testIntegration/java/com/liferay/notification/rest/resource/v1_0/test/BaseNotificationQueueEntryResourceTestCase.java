@@ -193,16 +193,13 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		NotificationQueueEntry notificationQueueEntry =
 			randomNotificationQueueEntry();
 
-		notificationQueueEntry.setBcc(regex);
 		notificationQueueEntry.setBody(regex);
-		notificationQueueEntry.setCc(regex);
-		notificationQueueEntry.setFrom(regex);
 		notificationQueueEntry.setFromName(regex);
+		notificationQueueEntry.setRecipientsSummary(regex);
 		notificationQueueEntry.setSubject(regex);
-		notificationQueueEntry.setTo(regex);
-		notificationQueueEntry.setToName(regex);
 		notificationQueueEntry.setTriggerBy(regex);
 		notificationQueueEntry.setType(regex);
+		notificationQueueEntry.setTypeLabel(regex);
 
 		String json = NotificationQueueEntrySerDes.toJSON(
 			notificationQueueEntry);
@@ -211,16 +208,14 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		notificationQueueEntry = NotificationQueueEntrySerDes.toDTO(json);
 
-		Assert.assertEquals(regex, notificationQueueEntry.getBcc());
 		Assert.assertEquals(regex, notificationQueueEntry.getBody());
-		Assert.assertEquals(regex, notificationQueueEntry.getCc());
-		Assert.assertEquals(regex, notificationQueueEntry.getFrom());
 		Assert.assertEquals(regex, notificationQueueEntry.getFromName());
+		Assert.assertEquals(
+			regex, notificationQueueEntry.getRecipientsSummary());
 		Assert.assertEquals(regex, notificationQueueEntry.getSubject());
-		Assert.assertEquals(regex, notificationQueueEntry.getTo());
-		Assert.assertEquals(regex, notificationQueueEntry.getToName());
 		Assert.assertEquals(regex, notificationQueueEntry.getTriggerBy());
 		Assert.assertEquals(regex, notificationQueueEntry.getType());
+		Assert.assertEquals(regex, notificationQueueEntry.getTypeLabel());
 	}
 
 	@Test
@@ -917,32 +912,8 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("bcc", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getBcc() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("body", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getBody() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("cc", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getCc() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("from", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getFrom() == null) {
 					valid = false;
 				}
 
@@ -959,6 +930,16 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 			if (Objects.equals("priority", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getPriority() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"recipientsSummary", additionalAssertFieldName)) {
+
+				if (notificationQueueEntry.getRecipientsSummary() == null) {
 					valid = false;
 				}
 
@@ -989,22 +970,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("to", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getTo() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("toName", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getToName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("triggerBy", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getTriggerBy() == null) {
 					valid = false;
@@ -1015,6 +980,14 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (notificationQueueEntry.getTypeLabel() == null) {
 					valid = false;
 				}
 
@@ -1127,43 +1100,10 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("bcc", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getBcc(),
-						notificationQueueEntry2.getBcc())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("body", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getBody(),
 						notificationQueueEntry2.getBody())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("cc", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getCc(),
-						notificationQueueEntry2.getCc())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("from", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getFrom(),
-						notificationQueueEntry2.getFrom())) {
 
 					return false;
 				}
@@ -1204,6 +1144,19 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"recipientsSummary", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						notificationQueueEntry1.getRecipientsSummary(),
+						notificationQueueEntry2.getRecipientsSummary())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("sentDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getSentDate(),
@@ -1237,28 +1190,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("to", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getTo(),
-						notificationQueueEntry2.getTo())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("toName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getToName(),
-						notificationQueueEntry2.getToName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("triggerBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getTriggerBy(),
@@ -1274,6 +1205,17 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getType(),
 						notificationQueueEntry2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationQueueEntry1.getTypeLabel(),
+						notificationQueueEntry2.getTypeLabel())) {
 
 					return false;
 				}
@@ -1384,33 +1326,9 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("bcc")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationQueueEntry.getBcc()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("body")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationQueueEntry.getBody()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("cc")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationQueueEntry.getCc()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("from")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationQueueEntry.getFrom()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1431,6 +1349,15 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		if (entityFieldName.equals("priority")) {
 			sb.append(String.valueOf(notificationQueueEntry.getPriority()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("recipientsSummary")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(notificationQueueEntry.getRecipientsSummary()));
+			sb.append("'");
 
 			return sb.toString();
 		}
@@ -1483,22 +1410,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("to")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationQueueEntry.getTo()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("toName")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationQueueEntry.getToName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("triggerBy")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationQueueEntry.getTriggerBy()));
@@ -1510,6 +1421,14 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		if (entityFieldName.equals("type")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationQueueEntry.getType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("typeLabel")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationQueueEntry.getTypeLabel()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1561,22 +1480,21 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		return new NotificationQueueEntry() {
 			{
-				bcc = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				body = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				cc = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				from = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				fromName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
+				recipientsSummary = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				sentDate = RandomTestUtil.nextDate();
 				status = RandomTestUtil.randomInt();
 				subject = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				to = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				toName = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				triggerBy = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				typeLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

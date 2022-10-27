@@ -95,32 +95,6 @@ public class NotificationQueueEntry implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
-	public String getBcc() {
-		return bcc;
-	}
-
-	public void setBcc(String bcc) {
-		this.bcc = bcc;
-	}
-
-	@JsonIgnore
-	public void setBcc(UnsafeSupplier<String, Exception> bccUnsafeSupplier) {
-		try {
-			bcc = bccUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String bcc;
-
-	@Schema
 	public String getBody() {
 		return body;
 	}
@@ -145,58 +119,6 @@ public class NotificationQueueEntry implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String body;
-
-	@Schema
-	public String getCc() {
-		return cc;
-	}
-
-	public void setCc(String cc) {
-		this.cc = cc;
-	}
-
-	@JsonIgnore
-	public void setCc(UnsafeSupplier<String, Exception> ccUnsafeSupplier) {
-		try {
-			cc = ccUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String cc;
-
-	@Schema
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	@JsonIgnore
-	public void setFrom(UnsafeSupplier<String, Exception> fromUnsafeSupplier) {
-		try {
-			from = fromUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String from;
 
 	@Schema
 	public String getFromName() {
@@ -280,6 +202,34 @@ public class NotificationQueueEntry implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
+
+	@Schema
+	public String getRecipientsSummary() {
+		return recipientsSummary;
+	}
+
+	public void setRecipientsSummary(String recipientsSummary) {
+		this.recipientsSummary = recipientsSummary;
+	}
+
+	@JsonIgnore
+	public void setRecipientsSummary(
+		UnsafeSupplier<String, Exception> recipientsSummaryUnsafeSupplier) {
+
+		try {
+			recipientsSummary = recipientsSummaryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String recipientsSummary;
 
 	@Schema
 	public Date getSentDate() {
@@ -366,60 +316,6 @@ public class NotificationQueueEntry implements Serializable {
 	protected String subject;
 
 	@Schema
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
-	@JsonIgnore
-	public void setTo(UnsafeSupplier<String, Exception> toUnsafeSupplier) {
-		try {
-			to = toUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String to;
-
-	@Schema
-	public String getToName() {
-		return toName;
-	}
-
-	public void setToName(String toName) {
-		this.toName = toName;
-	}
-
-	@JsonIgnore
-	public void setToName(
-		UnsafeSupplier<String, Exception> toNameUnsafeSupplier) {
-
-		try {
-			toName = toNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String toName;
-
-	@Schema
 	public String getTriggerBy() {
 		return triggerBy;
 	}
@@ -473,6 +369,34 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
+	@Schema
+	public String getTypeLabel() {
+		return typeLabel;
+	}
+
+	public void setTypeLabel(String typeLabel) {
+		this.typeLabel = typeLabel;
+	}
+
+	@JsonIgnore
+	public void setTypeLabel(
+		UnsafeSupplier<String, Exception> typeLabelUnsafeSupplier) {
+
+		try {
+			typeLabel = typeLabelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String typeLabel;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -514,20 +438,6 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
-		if (bcc != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"bcc\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(bcc));
-
-			sb.append("\"");
-		}
-
 		if (body != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -538,34 +448,6 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(body));
-
-			sb.append("\"");
-		}
-
-		if (cc != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"cc\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(cc));
-
-			sb.append("\"");
-		}
-
-		if (from != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"from\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(from));
 
 			sb.append("\"");
 		}
@@ -602,6 +484,20 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append("\"priority\": ");
 
 			sb.append(priority);
+		}
+
+		if (recipientsSummary != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"recipientsSummary\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(recipientsSummary));
+
+			sb.append("\"");
 		}
 
 		if (sentDate != null) {
@@ -642,34 +538,6 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append("\"");
 		}
 
-		if (to != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"to\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(to));
-
-			sb.append("\"");
-		}
-
-		if (toName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"toName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(toName));
-
-			sb.append("\"");
-		}
-
 		if (triggerBy != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -694,6 +562,20 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(type));
+
+			sb.append("\"");
+		}
+
+		if (typeLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(typeLabel));
 
 			sb.append("\"");
 		}

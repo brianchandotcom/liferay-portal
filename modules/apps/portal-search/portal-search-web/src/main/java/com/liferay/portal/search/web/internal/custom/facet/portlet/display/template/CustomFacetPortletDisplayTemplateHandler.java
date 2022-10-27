@@ -86,14 +86,14 @@ public class CustomFacetPortletDisplayTemplateHandler
 			"customFacetDisplayContext");
 		templateVariableGroup.addVariable(
 			"term-field-name", String.class,
-			PortletDisplayTemplateConstants.ENTRY, "getFieldName()");
+			PortletDisplayTemplateConstants.ENTRY, "getBucketText()");
 		templateVariableGroup.addVariable(
 			"term-frequency", Integer.class,
 			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"term", BucketDisplayContext.class,
-			PortletDisplayTemplateConstants.ENTRY, "getFieldName()");
+			PortletDisplayTemplateConstants.ENTRY, "getBucketText()");
 
 		TemplateVariableGroup customFacetServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

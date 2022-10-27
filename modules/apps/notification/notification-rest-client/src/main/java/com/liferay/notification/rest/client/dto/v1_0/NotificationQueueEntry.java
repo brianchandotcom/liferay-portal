@@ -58,25 +58,6 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
-	public String getBcc() {
-		return bcc;
-	}
-
-	public void setBcc(String bcc) {
-		this.bcc = bcc;
-	}
-
-	public void setBcc(UnsafeSupplier<String, Exception> bccUnsafeSupplier) {
-		try {
-			bcc = bccUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String bcc;
-
 	public String getBody() {
 		return body;
 	}
@@ -95,44 +76,6 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 	}
 
 	protected String body;
-
-	public String getCc() {
-		return cc;
-	}
-
-	public void setCc(String cc) {
-		this.cc = cc;
-	}
-
-	public void setCc(UnsafeSupplier<String, Exception> ccUnsafeSupplier) {
-		try {
-			cc = ccUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String cc;
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public void setFrom(UnsafeSupplier<String, Exception> fromUnsafeSupplier) {
-		try {
-			from = fromUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String from;
 
 	public String getFromName() {
 		return fromName;
@@ -194,6 +137,27 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 	}
 
 	protected Double priority;
+
+	public String getRecipientsSummary() {
+		return recipientsSummary;
+	}
+
+	public void setRecipientsSummary(String recipientsSummary) {
+		this.recipientsSummary = recipientsSummary;
+	}
+
+	public void setRecipientsSummary(
+		UnsafeSupplier<String, Exception> recipientsSummaryUnsafeSupplier) {
+
+		try {
+			recipientsSummary = recipientsSummaryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String recipientsSummary;
 
 	public Date getSentDate() {
 		return sentDate;
@@ -258,46 +222,6 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 
 	protected String subject;
 
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
-	public void setTo(UnsafeSupplier<String, Exception> toUnsafeSupplier) {
-		try {
-			to = toUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String to;
-
-	public String getToName() {
-		return toName;
-	}
-
-	public void setToName(String toName) {
-		this.toName = toName;
-	}
-
-	public void setToName(
-		UnsafeSupplier<String, Exception> toNameUnsafeSupplier) {
-
-		try {
-			toName = toNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String toName;
-
 	public String getTriggerBy() {
 		return triggerBy;
 	}
@@ -337,6 +261,27 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 	}
 
 	protected String type;
+
+	public String getTypeLabel() {
+		return typeLabel;
+	}
+
+	public void setTypeLabel(String typeLabel) {
+		this.typeLabel = typeLabel;
+	}
+
+	public void setTypeLabel(
+		UnsafeSupplier<String, Exception> typeLabelUnsafeSupplier) {
+
+		try {
+			typeLabel = typeLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String typeLabel;
 
 	@Override
 	public NotificationQueueEntry clone() throws CloneNotSupportedException {

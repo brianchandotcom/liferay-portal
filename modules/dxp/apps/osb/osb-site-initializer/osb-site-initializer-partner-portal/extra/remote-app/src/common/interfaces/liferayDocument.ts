@@ -9,13 +9,7 @@
  * distribution rights of the Software.
  */
 
-export default interface MDFClaimDocumentDTO {
-	fileName?: string;
-	fileSize?: number;
-	id?: number;
-	r_mdfClaimActivityToMdfClaimDocuments_c_mdfClaimActivityId?: number;
-	r_mdfClaimToMdfClaimDocuments_c_mdfClaimBudgetId?: number;
-	r_mdfClaimToMdfClaimDocuments_c_mdfClaimId?: number;
-	type?: string;
-	url?: string;
+export default interface LiferayDocument {
+	contentUrl: string;
+	id: number;
 }

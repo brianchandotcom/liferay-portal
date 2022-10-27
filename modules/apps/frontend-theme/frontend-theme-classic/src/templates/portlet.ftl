@@ -53,7 +53,10 @@
 									url="javascript:void(0);"
 								/>
 							<#else>
-								<@liferay_portlet["icon-options"] portletConfigurationIcons=portlet_configuration_icons />
+								<@liferay_portlet["icon-options"]
+									direction="right cadmin"
+									portletConfigurationIcons=portlet_configuration_icons
+								/>
 							</#if>
 						</menu>
 					</#if>

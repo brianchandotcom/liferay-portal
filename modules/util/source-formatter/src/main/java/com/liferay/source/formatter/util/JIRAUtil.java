@@ -89,7 +89,7 @@ public class JIRAUtil {
 						StringBundler.concat(
 							"The commit '", commitMessage,
 							"' contains the word '", keyword,
-							"' , which could reveal potential security ",
+							"', which could reveal potential security ",
 							"vulnerablities."));
 				}
 			}

@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>ANY_DISABLED</td>
-	<td>//button[@disabled][contains(@class,'btn')][normalize-space()='${key_text}'] | //button[@disabled][contains(@class,'btn')][@*='${key_text}']</td>
+	<td>//button[@disabled][contains(@class,'btn')][normalize-space()='${key_text}'] | //button[@disabled][contains(@class,'btn')][@*='${key_text}'] | //button[@disabled][contains(@class,'btn') and contains(@aria-label,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

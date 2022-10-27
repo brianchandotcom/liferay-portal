@@ -633,6 +633,8 @@ definition {
 
 	@priority = "4"
 	test AddWikiPageAsSiteUser {
+		property portal.upstream = "quarantine";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Navigator.openURL();

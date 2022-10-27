@@ -270,6 +270,45 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8300 | Test Summary: Search for a property when assigning sites to a property"
+	@priority = "5"
+	test SearchPropertyToAssignSite {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Navigate to AC Settings") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+		}
+
+		task ("Navigate to properties and add a new property") {
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "AC Properties");
+		}
+
+		task ("Launch DXP and navigate to Instance settings") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+		}
+
+		task ("Navigate and search the new property") {
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACDXPSettings.searchACItem(searchItem = "AC Properties");
+		}
+
+		task ("Assert property name") {
+			AssertTextEquals(
+				key_tooltipMessage = "AC Properties",
+				locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP_MESSAGE",
+				value1 = "AC Properties");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "3"
 	test ViewPropertyListDefault {

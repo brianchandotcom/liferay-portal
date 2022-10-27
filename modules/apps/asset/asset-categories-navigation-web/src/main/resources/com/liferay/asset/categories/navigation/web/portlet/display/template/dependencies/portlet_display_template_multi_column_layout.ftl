@@ -1,14 +1,14 @@
 <#assign hasCategories = false />
 
 <#if entries?has_content>
-	<@liferay_aui.row>
+	<@clay.row>
 		<#list entries as entry>
 			<#assign categories = entry.getCategories() />
 
 			<#if categories?has_content>
 				<#assign hasCategories = true />
 
-				<@liferay_aui.col width=25>
+				<@clay.col md="3">
 					<div class="results-header">
 						<h3>
 							${entry.getUnambiguousTitle(entries, themeDisplay.getSiteGroupId(), themeDisplay.getLocale())}
@@ -16,7 +16,7 @@
 					</div>
 
 					<@displayCategories categories=categories />
-				</@liferay_aui.col>
+				</@clay.col>
 			</#if>
 		</#list>
 
@@ -27,7 +27,7 @@
 				<@liferay_ui.message key="there-are-no-categories" />
 			</div>
 		</#if>
-	</@liferay_aui.row>
+	</@clay.row>
 </#if>
 
 <#macro displayCategories

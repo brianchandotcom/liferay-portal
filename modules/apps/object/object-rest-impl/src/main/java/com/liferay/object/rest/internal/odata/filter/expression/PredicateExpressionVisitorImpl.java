@@ -14,6 +14,8 @@
 
 package com.liferay.object.rest.internal.odata.filter.expression;
 
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -262,7 +264,17 @@ public class PredicateExpressionVisitorImpl
 
 		Predicate predicate = null;
 
-		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinitionId, String.valueOf(left));
+
+		if ((objectField != null) &&
+			StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			predicate = _contains(left, right);
+		}
+		else if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
 			predicate = Predicate.and((Predicate)left, (Predicate)right);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {

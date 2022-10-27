@@ -127,6 +127,16 @@ public class ObjectEntryEntityModel implements EntityModel {
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			return Optional.of(
+				new CollectionEntityField(
+					new StringEntityField(
+						objectField.getName(),
+						locale -> objectField.getName())));
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
 				 Objects.equals(
 					 objectField.getDBType(),

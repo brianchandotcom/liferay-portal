@@ -5,6 +5,15 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		cursor: grab;
 		transition: transform ease 0.3s;
 
+		&:focus-within {
+			transform: translateY(-4px);
+
+			.page-editor__fragments-widgets__tab__highlight-button,
+			.page-editor__fragments-widgets__tab__add-button {
+				opacity: 1;
+			}
+		}
+
 		&:hover:not(.disabled) {
 			box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
 			transform: translateY(-4px);
@@ -25,7 +34,7 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 					width: 100%;
 				}
 
-				.page-editor__fragments-widgets__tab-fragment-button {
+				.page-editor__fragments-widgets__tab__highlight-button {
 					opacity: 1;
 				}
 			}
@@ -96,12 +105,22 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		transition: transform ease 0.3s;
 		width: 100%;
 
+		&:focus-within {
+			background-color: $primary-l3;
+			transform: translateX(-4px);
+
+			.page-editor__fragments-widgets__tab__highlight-button,
+			.page-editor__fragments-widgets__tab__add-button {
+				opacity: 1;
+			}
+		}
+
 		&:hover:not(.disabled) {
 			box-shadow: 0 0 0 2px $cadmin-primary-l1,
 				0 4px 8px fade_out($cadmin-gray-900, 0.9);
 			transform: translateX(-4px);
 
-			.page-editor__fragments-widgets__tab-fragment-button {
+			.page-editor__fragments-widgets__tab__highlight-button {
 				opacity: 1;
 			}
 		}
@@ -130,7 +149,12 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		}
 	}
 
-	&-fragment-button {
+	&__add-button {
+		pointer-events: none;
+	}
+
+	&__add-button,
+	&__highlight-button {
 		height: 16px;
 		opacity: 0;
 		overflow: visible;

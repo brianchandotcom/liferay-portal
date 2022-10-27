@@ -27,10 +27,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -79,47 +77,12 @@ public class JIRAUtil {
 	}
 
 	public static void validateJIRASecurityKeywords(
-		List<String> commitMessages, List<String> keywords,
-		int maxNumberOfTickets) {
-
-		Map<String, Integer> responseCodeMap = new HashMap<>();
+		List<String> commitMessages, List<String> keywords) {
 
 		Set<String> violatingCommitMessages = new TreeSet<>();
 		Set<String> violatingWords = new TreeSet<>();
 
 		for (String commitMessage : commitMessages) {
-			if (responseCodeMap.size() == maxNumberOfTickets) {
-				return;
-			}
-
-			String jiraTicketId = _getJIRATicketId(commitMessage);
-
-			if (jiraTicketId == null) {
-				continue;
-			}
-
-			Integer jiraTicketResponseCode = responseCodeMap.get(jiraTicketId);
-
-			if (jiraTicketResponseCode == null) {
-				try {
-					jiraTicketResponseCode = _getJIRATicketResponseCode(
-						jiraTicketId);
-
-					responseCodeMap.put(jiraTicketId, jiraTicketResponseCode);
-				}
-				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException);
-					}
-
-					return;
-				}
-			}
-
-			if (jiraTicketResponseCode != HttpServletResponse.SC_UNAUTHORIZED) {
-				continue;
-			}
-
 			for (String keyword : keywords) {
 				Pattern pattern = Pattern.compile(
 					"\\W(" + keyword + "\\w*)(\\W|\\Z)",

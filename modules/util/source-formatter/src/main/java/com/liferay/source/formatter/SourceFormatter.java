@@ -1279,7 +1279,7 @@ public class SourceFormatter {
 
 		JIRAUtil.validateJIRASecurityKeywords(
 			commitMessages,
-			_getPropertyValues("jira.security.vulnerability.keywords"), 20);
+			_getPropertyValues("jira.security.vulnerability.keywords"));
 	}
 
 	private static final String _PROPERTIES_FILE_NAME =

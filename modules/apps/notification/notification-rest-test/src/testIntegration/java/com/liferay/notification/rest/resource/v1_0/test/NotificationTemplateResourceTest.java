@@ -81,17 +81,12 @@ public class NotificationTemplateResourceTest
 
 		return new NotificationTemplate() {
 			{
-				bcc = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				body = LocalizedMapUtil.getI18nMap(
 					RandomTestUtil.randomLocaleStringMap());
-				cc = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				from = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				fromName = LocalizedMapUtil.getI18nMap(
-					RandomTestUtil.randomLocaleStringMap());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				objectDefinitionId = 0L;

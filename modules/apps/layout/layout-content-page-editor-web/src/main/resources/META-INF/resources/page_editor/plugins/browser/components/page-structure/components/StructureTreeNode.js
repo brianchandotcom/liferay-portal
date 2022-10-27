@@ -391,16 +391,14 @@ function StructureTreeNodeContent({
 				role="button"
 			/>
 
-			{Liferay.FeatureFlags['LPS-165659'] && (
-				<MoveButton
-					canUpdate={canUpdatePageStructure}
-					fragmentEntryType={fragmentEntryType}
-					isWidget={isWidget}
-					node={node}
-					nodeRef={nodeRef}
-					selectedViewportSize={selectedViewportSize}
-				/>
-			)}
+			<MoveButton
+				canUpdate={canUpdatePageStructure}
+				fragmentEntryType={fragmentEntryType}
+				isWidget={isWidget}
+				node={node}
+				nodeRef={nodeRef}
+				selectedViewportSize={selectedViewportSize}
+			/>
 
 			<NameLabel
 				editingName={editingName}

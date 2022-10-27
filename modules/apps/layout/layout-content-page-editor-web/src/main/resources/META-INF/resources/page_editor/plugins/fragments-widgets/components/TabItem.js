@@ -144,9 +144,7 @@ const ListItem = React.forwardRef(
 					<div className="text-truncate title">{item.label}</div>
 				</div>
 
-				{Liferay.FeatureFlags['LPS-165659'] && (
-					<AddButton item={item} />
-				)}
+				<AddButton item={item} />
 
 				<HighlightButton
 					item={item}
@@ -212,11 +210,9 @@ const CardItem = React.forwardRef(
 								</section>
 							</div>
 
-							{Liferay.FeatureFlags['LPS-165659'] && (
-								<div className="autofit-col">
-									<AddButton item={item} />
-								</div>
-							)}
+							<div className="autofit-col">
+								<AddButton item={item} />
+							</div>
 
 							<div className="autofit-col">
 								<HighlightButton

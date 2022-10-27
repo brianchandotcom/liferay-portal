@@ -32,11 +32,11 @@
 			<aui:input autoFocus="<%= true %>" label="please-provide-the-reason-for-your-request" name="justification" required="<%= true %>" />
 		</liferay-frontend:edit-form-body>
 
-		<div class="dialog-footer position-fixed sheet-footer">
-			<aui:button type="submit" value="submit" />
-
-			<aui:button type="cancel" />
-		</div>
+		<liferay-frontend:edit-form-footer>
+			<liferay-frontend:edit-form-buttons
+				submitLabel="submit"
+			/>
+		</liferay-frontend:edit-form-footer>
 	</liferay-frontend:edit-form>
 </div>
 

@@ -17,11 +17,13 @@ import React, {useCallback, useContext, useState} from 'react';
 const INITIAL_STATE = {
 	setSource: () => {},
 	setTarget: () => {},
+	setText: () => {},
 	source: null,
 	target: {
 		itemId: null,
 		position: null,
 	},
+	text: null,
 };
 
 const KeyboardMovementContext = React.createContext(INITIAL_STATE);
@@ -32,14 +34,17 @@ function KeyboardMovementContextProvider({children}) {
 		itemId: null,
 		position: null,
 	});
+	const [text, setText] = useState(null);
 
 	return (
 		<KeyboardMovementContext.Provider
 			value={{
 				setSource,
 				setTarget,
+				setText,
 				source,
 				target,
+				text,
 			}}
 		>
 			{children}
@@ -59,10 +64,6 @@ function useDisableKeyboardMovement() {
 	}, [setSource, setTarget]);
 }
 
-function useSetMovementSource() {
-	return useContext(KeyboardMovementContext).setSource;
-}
-
 function useMovementSource() {
 	return useContext(KeyboardMovementContext).source;
 }
@@ -71,8 +72,20 @@ function useMovementTarget() {
 	return useContext(KeyboardMovementContext).target;
 }
 
+function useMovementText() {
+	return useContext(KeyboardMovementContext).text;
+}
+
+function useSetMovementSource() {
+	return useContext(KeyboardMovementContext).setSource;
+}
+
 function useSetMovementTarget() {
 	return useContext(KeyboardMovementContext).setTarget;
+}
+
+function useSetMovementText() {
+	return useContext(KeyboardMovementContext).setText;
 }
 
 export {
@@ -80,6 +93,8 @@ export {
 	useDisableKeyboardMovement,
 	useMovementSource,
 	useMovementTarget,
+	useMovementText,
 	useSetMovementSource,
 	useSetMovementTarget,
+	useSetMovementText,
 };

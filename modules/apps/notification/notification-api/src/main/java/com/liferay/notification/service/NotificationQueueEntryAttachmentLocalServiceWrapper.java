@@ -344,6 +344,17 @@ public class NotificationQueueEntryAttachmentLocalServiceWrapper
 			getNotificationQueueEntryAttachmentsCount();
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.notification.model.NotificationQueueEntryAttachment>
+			getNotificationQueueEntryNotificationQueueEntryAttachments(
+				long notificationQueueEntryId) {
+
+		return _notificationQueueEntryAttachmentLocalService.
+			getNotificationQueueEntryNotificationQueueEntryAttachments(
+				notificationQueueEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

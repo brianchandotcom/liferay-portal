@@ -65,6 +65,7 @@ public class NotificationQueueEntryWrapper
 		attributes.put("subject", getSubject());
 		attributes.put("to", getTo());
 		attributes.put("toName", getToName());
+		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -192,6 +193,12 @@ public class NotificationQueueEntryWrapper
 
 		if (toName != null) {
 			setToName(toName);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -414,6 +421,16 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public String getToName() {
 		return model.getToName();
+	}
+
+	/**
+	 * Returns the type of this notification queue entry.
+	 *
+	 * @return the type of this notification queue entry
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -654,6 +671,16 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public void setToName(String toName) {
 		model.setToName(toName);
+	}
+
+	/**
+	 * Sets the type of this notification queue entry.
+	 *
+	 * @param type the type of this notification queue entry
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

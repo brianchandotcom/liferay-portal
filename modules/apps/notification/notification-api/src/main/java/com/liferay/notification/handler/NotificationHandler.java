@@ -12,25 +12,15 @@
  * details.
  */
 
-package com.liferay.notification.type;
+package com.liferay.notification.handler;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import java.util.Locale;
 
 /**
  * @author Feliphe Marinho
  */
-public interface NotificationType {
+public interface NotificationHandler {
 
-	public String getType();
-
-	public void sendNotification(NotificationContext notificationContext)
-		throws PortalException;
-
-	public default void sendUnsentNotifications() {
-	}
-
-	public void validateNotificationTemplate(
-			NotificationContext notificationContext)
-		throws PortalException;
+	public String getTriggerBy(Locale locale);
 
 }

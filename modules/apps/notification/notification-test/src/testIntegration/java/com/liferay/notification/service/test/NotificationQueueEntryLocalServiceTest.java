@@ -114,7 +114,8 @@ public class NotificationQueueEntryLocalServiceTest {
 			notificationTemplate.getFromName(LocaleUtil.US), 0,
 			notificationTemplate.getSubject(LocaleUtil.US),
 			notificationTemplate.getTo(LocaleUtil.US),
-			RandomTestUtil.randomString(), Collections.emptyList());
+			RandomTestUtil.randomString(), NotificationConstants.TYPE_EMAIL,
+			Collections.emptyList());
 	}
 
 	@Inject

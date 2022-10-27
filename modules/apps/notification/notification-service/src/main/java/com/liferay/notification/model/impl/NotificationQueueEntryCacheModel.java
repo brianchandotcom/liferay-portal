@@ -78,7 +78,7 @@ public class NotificationQueueEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -120,6 +120,8 @@ public class NotificationQueueEntryCacheModel
 		sb.append(to);
 		sb.append(", toName=");
 		sb.append(toName);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -230,6 +232,13 @@ public class NotificationQueueEntryCacheModel
 			notificationQueueEntryImpl.setToName(toName);
 		}
 
+		if (type == null) {
+			notificationQueueEntryImpl.setType("");
+		}
+		else {
+			notificationQueueEntryImpl.setType(type);
+		}
+
 		notificationQueueEntryImpl.setStatus(status);
 
 		notificationQueueEntryImpl.resetOriginalValues();
@@ -268,6 +277,7 @@ public class NotificationQueueEntryCacheModel
 		subject = objectInput.readUTF();
 		to = objectInput.readUTF();
 		toName = objectInput.readUTF();
+		type = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -357,6 +367,13 @@ public class NotificationQueueEntryCacheModel
 			objectOutput.writeUTF(toName);
 		}
 
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
 		objectOutput.writeInt(status);
 	}
 
@@ -380,6 +397,7 @@ public class NotificationQueueEntryCacheModel
 	public String subject;
 	public String to;
 	public String toName;
+	public String type;
 	public int status;
 
 }

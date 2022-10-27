@@ -12,25 +12,30 @@
  * details.
  */
 
-package com.liferay.notification.type;
+package com.liferay.object.internal.notification.handler;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.notification.handler.NotificationHandler;
+import com.liferay.object.model.ObjectDefinition;
+
+import java.util.Locale;
 
 /**
  * @author Feliphe Marinho
  */
-public interface NotificationType {
+public class ObjectDefinitionNotificationHandler
+	implements NotificationHandler {
 
-	public String getType();
+	public ObjectDefinitionNotificationHandler(
+		ObjectDefinition objectDefinition) {
 
-	public void sendNotification(NotificationContext notificationContext)
-		throws PortalException;
-
-	public default void sendUnsentNotifications() {
+		_objectDefinition = objectDefinition;
 	}
 
-	public void validateNotificationTemplate(
-			NotificationContext notificationContext)
-		throws PortalException;
+	@Override
+	public String getTriggerBy(Locale locale) {
+		return _objectDefinition.getShortName();
+	}
+
+	private final ObjectDefinition _objectDefinition;
 
 }

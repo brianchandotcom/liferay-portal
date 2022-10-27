@@ -15,13 +15,9 @@
 package com.liferay.notification.internal.type;
 
 import com.liferay.notification.type.NotificationType;
-import com.liferay.notification.util.NotificationTypeRegistry;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
+import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -29,33 +25,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Gustavo Lima
+ * @author Feliphe Marinho
  */
-@Component(service = NotificationTypeRegistry.class)
-public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
+@Component(service = NotificationTypeServiceTracker.class)
+public class NotificationTypeServiceTrackerImpl
+	implements NotificationTypeServiceTracker {
 
 	@Override
 	public NotificationType getNotificationType(String key) {
-		ServiceWrapper<NotificationType> notificationTypeServiceWrapper =
-			_serviceTrackerMap.getService(key);
-
-		if (notificationTypeServiceWrapper == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("No notification type registered with key " + key);
-			}
-
-			return null;
-		}
-
-		return notificationTypeServiceWrapper.getService();
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, NotificationType.class, "notification.type.key",
-			ServiceTrackerCustomizerFactory.<NotificationType>serviceWrapper(
-				bundleContext));
+			bundleContext, NotificationType.class, "notification.type.key");
 	}
 
 	@Deactivate
@@ -63,10 +47,6 @@ public class NotificationTypeRegistryImpl implements NotificationTypeRegistry {
 		_serviceTrackerMap.close();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationTypeRegistryImpl.class);
-
-	private ServiceTrackerMap<String, ServiceWrapper<NotificationType>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, NotificationType> _serviceTrackerMap;
 
 }

@@ -14,23 +14,11 @@
 
 package com.liferay.notification.type;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Feliphe Marinho
  */
-public interface NotificationType {
+public interface NotificationTypeServiceTracker {
 
-	public String getType();
-
-	public void sendNotification(NotificationContext notificationContext)
-		throws PortalException;
-
-	public default void sendUnsentNotifications() {
-	}
-
-	public void validateNotificationTemplate(
-			NotificationContext notificationContext)
-		throws PortalException;
+	public NotificationType getNotificationType(String key);
 
 }

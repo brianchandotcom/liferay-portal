@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.notification.util;
-
-import com.liferay.notification.type.NotificationType;
+package com.liferay.notification.handler;
 
 /**
- * @author Gustavo Lima
+ * @author Feliphe Marinho
  */
-public interface NotificationTypeRegistry {
+public interface NotificationHandlerServiceTracker {
 
-	public NotificationType getNotificationType(String key);
+	public NotificationHandler getNotificationHandlerByClassName(
+		String className);
 
 }

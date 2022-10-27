@@ -28,7 +28,6 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/ratings" prefix="liferay-ratings" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/rss" prefix="liferay-rss" %><%@
-taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/social-bookmarks" prefix="liferay-social-bookmarks" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -109,7 +108,6 @@ page import="com.liferay.knowledge.base.web.internal.frontend.taglib.clay.servle
 page import="com.liferay.knowledge.base.web.internal.search.KBCommentsChecker" %><%@
 page import="com.liferay.knowledge.base.web.internal.search.KBObjectsSearch" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission" %><%@
-page import="com.liferay.knowledge.base.web.internal.security.permission.resource.DisplayPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.AdminUtil" %><%@
@@ -174,7 +172,6 @@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Objects" %><%@
 page import="java.util.TreeMap" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@

@@ -146,8 +146,8 @@ public class SiteInitializerExtender
 				_portal, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
 				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService,null,
-				_settingsFactory, _siteNavigationMenuItemLocalService,
+				_segmentsExperienceLocalService, null, _settingsFactory,
+				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
@@ -256,7 +256,8 @@ public class SiteInitializerExtender
 				_organizationLocalService, _organizationResourceFactory,
 				_portal, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
-				_sapEntryLocalService, _segmentsEntryLocalService, _segmentsExperienceLocalService,
+				_sapEntryLocalService, _segmentsEntryLocalService,
+				_segmentsExperienceLocalService,
 				ProxyUtil.newDelegateProxyInstance(
 					ServletContext.class.getClassLoader(), ServletContext.class,
 					new FileBackedServletContextDelegate(

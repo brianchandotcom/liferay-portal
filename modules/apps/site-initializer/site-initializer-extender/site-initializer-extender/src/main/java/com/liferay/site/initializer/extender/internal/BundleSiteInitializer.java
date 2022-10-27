@@ -201,8 +201,6 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 
-import static com.liferay.segments.constants.SegmentsEntryConstants.ID_DEFAULT;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -441,8 +439,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addOrUpdateSAPEntries(serviceContext));
 
 			Map<String, String> segmentsEntriesIdsStringUtilReplaceValues =
-				_invoke(
-					() -> _addOrUpdateSegmentsEntries(serviceContext));
+				_invoke(() -> _addOrUpdateSegmentsEntries(serviceContext));
 
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addSiteSettings(serviceContext));
@@ -519,8 +516,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					() -> _addOrUpdateClientExtensionEntries(
 						documentsStringUtilReplaceValues, serviceContext));
 
-
-
 			_invoke(
 				() -> _addLayoutsContent(
 					assetListEntryIdsStringUtilReplaceValues,
@@ -539,7 +534,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					ddmStructureEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-					serviceContext,segmentsEntriesIdsStringUtilReplaceValues,
+					serviceContext, segmentsEntriesIdsStringUtilReplaceValues,
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
 			_invoke(() -> _addWorkflowDefinitions(serviceContext));
@@ -799,15 +794,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayoutContent(
-		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-		Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
-		Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues,
-		Map<String, String> documentsStringUtilReplaceValues,
-		Map<String, String>
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
+			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-		Layout layout, String resourcePath, long segmentsExperienceId, ServiceContext serviceContext,
-		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues
-		)
+			Layout layout, String resourcePath, long segmentsExperienceId,
+			ServiceContext serviceContext,
+			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -876,7 +871,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						layoutPageTemplateStructure.
 							getDefaultSegmentsExperienceData());
 
-					if (segmentsExperienceId == 0){
+					if (segmentsExperienceId == 0) {
 						for (int i = 0; i < jsonArray.length(); i++) {
 							_layoutPageTemplatesImporter.importPageElement(
 								draftLayout, layoutStructure,
@@ -886,11 +881,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 					}
 					else {
 						for (int i = 0; i < jsonArray.length(); i++) {
-						_layoutPageTemplatesImporter.importPageElement(
-							draftLayout, layoutStructure,
-							layoutStructure.getMainItemId(),
-							jsonArray.getString(i), i, segmentsExperienceId);
-					}
+							_layoutPageTemplatesImporter.importPageElement(
+								draftLayout, layoutStructure,
+								layoutStructure.getMainItemId(),
+								jsonArray.getString(i), i,
+								segmentsExperienceId);
+						}
 					}
 				}
 			}
@@ -1033,17 +1029,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayoutsContent(
-		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-		Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
-		Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues,
-		Map<String, String> documentsStringUtilReplaceValues,
-		Map<String, Layout> layouts,
-		Map<String, String>
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
+			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, Layout> layouts,
+			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-		ServiceContext serviceContext,
-		Map<String, SiteNavigationMenuItemSetting>
+			ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings,
-		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
+			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
 
 		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
@@ -1053,7 +1049,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				ddmStructureEntryIdsStringUtilReplaceValues,
 				documentsStringUtilReplaceValues,
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-				entry.getValue(), entry.getKey(),0, serviceContext,
+				entry.getValue(), entry.getKey(), 0, serviceContext,
 				taxonomyCategoryIdsStringUtilReplaceValues);
 		}
 
@@ -1158,7 +1154,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectActionsJSON);
-
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -2861,7 +2856,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addOrUpdateSegmentsEntries(
-		ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Map<String, String> segmentsEntriesIdsStringUtilReplaceValues =
@@ -2912,16 +2907,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateSegmentsExperiences(
-		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-		Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
-		Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues,
-		Map<String, String> documentsStringUtilReplaceValues,
-		Map<String, String>
-			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-		ServiceContext serviceContext,
-		Map<String, String> segmentsEntriesIdsStringUtilReplaceValues,
-		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues) throws Exception {
-
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
+			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String>
+				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+			ServiceContext serviceContext,
+			Map<String, String> segmentsEntriesIdsStringUtilReplaceValues,
+			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
+		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/segments-experiences");
@@ -2931,95 +2926,88 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		for (String path : resourcePaths) {
-				String json = SiteInitializerUtil.read(
-					path + "segments-experiences.json", _servletContext);
+			String json = SiteInitializerUtil.read(
+				path + "segments-experiences.json", _servletContext);
 
-				if (json == null) {
-					return;
-				}
+			if (json == null) {
+				return;
+			}
 
-				json = _replace(
-					json, segmentsEntriesIdsStringUtilReplaceValues);
+			json = _replace(json, segmentsEntriesIdsStringUtilReplaceValues);
 
-				JSONObject jsonObject =
-					JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-				Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
-					serviceContext.getScopeGroupId(), false,
-					jsonObject.getString("friendlyURL"));
+			Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
+				serviceContext.getScopeGroupId(), false,
+				jsonObject.getString("friendlyURL"));
 
-				Layout draftLayout = layout.fetchDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
-				long classNameId = _portal.getClassNameId(Layout.class);
+			long classNameId = _portal.getClassNameId(Layout.class);
 
-				SegmentsExperience segmentsExperience =
-					_segmentsExperienceLocalService.fetchSegmentsExperience(
-						serviceContext.getScopeGroupId(),
-						jsonObject.getString("segmentsExperienceKey"),
-						classNameId,
-						draftLayout.getClassPK());
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					serviceContext.getScopeGroupId(),
+					jsonObject.getString("segmentsExperienceKey"), classNameId,
+					draftLayout.getClassPK());
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties(
-				true);
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 				"typeSettings");
 
-			if(propertiesJSONObject != null) {
+			if (propertiesJSONObject != null) {
 				Map<String, Object> map = propertiesJSONObject.toMap();
 
 				for (Map.Entry<String, Object> entry : map.entrySet()) {
 					unicodeProperties.setProperty(
-						entry.getKey(),
-						String.valueOf(entry.getValue()));
+						entry.getKey(), String.valueOf(entry.getValue()));
 				}
 			}
 
-				if (segmentsExperience == null) {
-					segmentsExperience =
-						_segmentsExperienceLocalService.addSegmentsExperience(
-							serviceContext.getUserId(),
-							serviceContext.getScopeGroupId(),
-							jsonObject.getLong("segmentsEntryId"),
-							jsonObject.getString("segmentsExperienceKey"),
-							classNameId, draftLayout.getClassPK(),
-							SiteInitializerUtil.toMap(
-								jsonObject.getString("name_i18n")),
-							jsonObject.getInt("priority"),
-							jsonObject.getBoolean("active", true),
-							unicodeProperties, serviceContext);
-				}
-				else {
-					segmentsExperience =
-						_segmentsExperienceLocalService.updateSegmentsExperience(
-							segmentsExperience.getSegmentsExperienceId(),
-							segmentsExperience.getSegmentsEntryId(),
-							SiteInitializerUtil.toMap(
-								jsonObject.getString("name_i18n")),
-							jsonObject.getBoolean("active", true));
-				}
+			if (segmentsExperience == null) {
+				segmentsExperience =
+					_segmentsExperienceLocalService.addSegmentsExperience(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(),
+						jsonObject.getLong("segmentsEntryId"),
+						jsonObject.getString("segmentsExperienceKey"),
+						classNameId, draftLayout.getClassPK(),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("name_i18n")),
+						jsonObject.getInt("priority"),
+						jsonObject.getBoolean("active", true),
+						unicodeProperties, serviceContext);
+			}
+			else {
+				segmentsExperience =
+					_segmentsExperienceLocalService.updateSegmentsExperience(
+						segmentsExperience.getSegmentsExperienceId(),
+						segmentsExperience.getSegmentsEntryId(),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("name_i18n")),
+						jsonObject.getBoolean("active", true));
+			}
 
-				Set<String> interResourcePath = _servletContext.getResourcePaths(path);
+			Set<String> interResourcePath = _servletContext.getResourcePaths(
+				path);
 
-				for (String resourcePath : interResourcePath) {
-					if (resourcePath.endsWith("/")) {
-
-						_addLayoutContent(
-							assetListEntryIdsStringUtilReplaceValues,
-							clientExtensionEntryIdsStringUtilReplaceValues,
-							ddmStructureEntryIdsStringUtilReplaceValues,
-							documentsStringUtilReplaceValues,
-							objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
-							layout, resourcePath,
-							segmentsExperience.getSegmentsExperienceId(),
-							serviceContext,
-							taxonomyCategoryIdsStringUtilReplaceValues
-						);
-					}
+			for (String resourcePath : interResourcePath) {
+				if (resourcePath.endsWith("/")) {
+					_addLayoutContent(
+						assetListEntryIdsStringUtilReplaceValues,
+						clientExtensionEntryIdsStringUtilReplaceValues,
+						ddmStructureEntryIdsStringUtilReplaceValues,
+						documentsStringUtilReplaceValues,
+						objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
+						layout, resourcePath,
+						segmentsExperience.getSegmentsExperienceId(),
+						serviceContext,
+						taxonomyCategoryIdsStringUtilReplaceValues);
 				}
+			}
 		}
 	}
-
 
 	private Long _addOrUpdateStructuredContentFolders(
 			Long documentFolderId, String parentResourcePath,
@@ -4372,7 +4360,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final RoleLocalService _roleLocalService;
 	private final SAPEntryLocalService _sapEntryLocalService;
 	private final SegmentsEntryLocalService _segmentsEntryLocalService;
-	private final SegmentsExperienceLocalService _segmentsExperienceLocalService;
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 	private ServletContext _servletContext;
 	private final SettingsFactory _settingsFactory;
 	private final SiteNavigationMenuItemLocalService

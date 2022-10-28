@@ -50,10 +50,7 @@ const MDFClaimForm = () => {
 	const {
 		data: claimParentFolder,
 		isValidating: isValidatingClaimFolder,
-	} = useGetDocumentFolder(
-		Liferay.ThemeDisplay.getScopeGroupId(),
-		`?filter=name eq 'claim'`
-	);
+	} = useGetDocumentFolder(Liferay.ThemeDisplay.getScopeGroupId(), 'claim');
 
 	const claimParentFolderId = claimParentFolder?.items[0].id;
 

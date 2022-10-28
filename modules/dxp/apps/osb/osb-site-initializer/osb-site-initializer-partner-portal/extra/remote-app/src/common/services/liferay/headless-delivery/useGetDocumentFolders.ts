@@ -17,10 +17,14 @@ import {LiferayAPIs} from '../common/enums/apis';
 import LiferayItems from '../common/interfaces/liferayItems';
 import liferayFetcher from '../common/utils/fetcher';
 
-export default function useGetDocumentFolder(siteId: number, filter: string) {
+export default function useGetDocumentFolder(siteId: number, name?: string) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/sites/${siteId}/document-folders/${filter}`,
+			`/o/${
+				LiferayAPIs.HEADERLESS_DELIVERY
+			}/sites/${siteId}/document-folders/${
+				name ? `?filter=name eq '${name}'` : ''
+			}`,
 			Liferay.authToken,
 		],
 		(url, token) =>

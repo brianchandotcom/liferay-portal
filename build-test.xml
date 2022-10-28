@@ -15490,16 +15490,15 @@ url=${short.hostname}:8080</echo>
 	</target>
 
 	<target name="start-docker-database-oracle">
-		<var name="database.version" value="19.3.0.0.0" />
-
-		<var name="database.oracle.docker.image" value="liferay/liferay-ci-environment:oracle-19.3.0.0.0_1.0.1" />
-
 		<get-database-property property.name="database.host" />
 
 		<antcall target="stop-docker-database">
 			<param name="database.oracle.host" value="${database.host}_oracle" />
 			<param name="database.type" value="oracle" />
 		</antcall>
+
+		<var name="database.oracle.docker.image" value="liferay/liferay-ci-environment:oracle-19.3.0.0.0_1.0.1" />
+		<var name="database.version" value="19.3.0.0.0" />
 
 		<antcall inheritAll="false" target="start-docker-database">
 			<param name="database.oracle.docker.image" value="${database.oracle.docker.image}" />

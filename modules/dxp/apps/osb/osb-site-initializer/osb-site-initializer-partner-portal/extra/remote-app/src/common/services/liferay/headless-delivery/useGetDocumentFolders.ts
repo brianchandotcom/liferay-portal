@@ -12,18 +12,18 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
-import DocumentFolder from '../../../interfaces/documentFolder';
+import LiferayDocumentFolder from '../../../interfaces/liferayDocumentFolder';
 import {LiferayAPIs} from '../common/enums/apis';
 import LiferayItems from '../common/interfaces/liferayItems';
 import liferayFetcher from '../common/utils/fetcher';
 
-export default function useGetDocumentFolder(siteId: number, filter?: string) {
+export default function useGetDocumentFolder(siteId: number, filter: string) {
 	return useSWR(
 		[
 			`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/sites/${siteId}/document-folders/${filter}`,
 			Liferay.authToken,
 		],
 		(url, token) =>
-			liferayFetcher<LiferayItems<DocumentFolder[]>>(url, token)
+			liferayFetcher<LiferayItems<LiferayDocumentFolder[]>>(url, token)
 	);
 }

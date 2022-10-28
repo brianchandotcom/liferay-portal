@@ -17,15 +17,15 @@ import liferayFetcher from '../common/utils/fetcher';
 
 export default async function createDocumentFolderDocument(
 	documentFolderId: number,
-	file?: File
+	file: Blob
 ) {
 	const formData = new FormData();
-	formData.append('file', file as Blob);
+	formData.append('file', file);
 
 	return liferayFetcher.post<LiferayDocument>(
 		`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/document-folders/${documentFolderId}/documents`,
 		Liferay.authToken,
-		{} as LiferayDocument,
+		{},
 		{body: formData, headers: {}}
 	);
 }

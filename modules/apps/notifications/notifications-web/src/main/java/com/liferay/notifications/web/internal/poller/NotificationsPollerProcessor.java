@@ -50,7 +50,7 @@ public class NotificationsPollerProcessor extends BasePollerProcessor {
 			PollerRequest pollerRequest)
 		throws Exception {
 
-		PollerResponse pollerResponse = pollerRequest.createPollerResponse();
+		PollerResponse pollerResponse = new PollerResponse();
 
 		pollerResponse.setParameter(
 			"timestamp", String.valueOf(System.currentTimeMillis()));

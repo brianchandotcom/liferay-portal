@@ -49,14 +49,14 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 					"Unable to receive poller request " + pollerRequest,
 					pollerException);
 
-				pollerResponse = pollerRequest.createPollerResponse();
+				pollerResponse = new PollerResponse();
 
 				pollerResponse.setParameter(
 					"pollerException", pollerException.getMessage());
 			}
 			finally {
 				if (pollerResponse == null) {
-					pollerResponse = pollerRequest.createPollerResponse();
+					pollerResponse = new PollerResponse();
 				}
 
 				pollerResponse.close(

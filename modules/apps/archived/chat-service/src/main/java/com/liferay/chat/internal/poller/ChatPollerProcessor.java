@@ -83,7 +83,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 	protected PollerResponse doReceive(PollerRequest pollerRequest)
 		throws Exception {
 
-		PollerResponse pollerResponse = pollerRequest.createPollerResponse();
+		PollerResponse pollerResponse = new PollerResponse();
 
 		_getBuddies(pollerRequest, pollerResponse);
 		_getEntries(pollerRequest, pollerResponse);

@@ -121,10 +121,9 @@ definition {
 	}
 
 	macro viewSpecificRequiredField {
-		AssertTextEquals.assertPartialText(
+		AssertElementPresent(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "Message#ERROR_FIELD_REQUIRED",
-			value1 = "This field is required.");
+			locator1 = "Message#ERROR_FIELD_REQUIRED");
 	}
 
 	macro viewSuccessMessage {

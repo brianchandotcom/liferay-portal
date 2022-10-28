@@ -27,6 +27,23 @@ public class TestClassBalancedListSplitter
 	}
 
 	@Override
+	public long getWeight(ListItemList listItemList) {
+		long averageDuration = 0L;
+		long averageOverheadDuration = 0L;
+
+		for (ListItem listItem : listItemList) {
+			TestClass testClass = listItem.getItem();
+
+			averageDuration += testClass.getAverageDuration();
+			averageOverheadDuration += testClass.getAverageOverheadDuration();
+		}
+
+		averageDuration += averageOverheadDuration / listItemList.size();
+
+		return averageDuration;
+	}
+
+	@Override
 	public long getWeight(TestClass item) {
 		return item.getAverageDuration() + item.getAverageOverheadDuration();
 	}

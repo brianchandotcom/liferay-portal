@@ -90,19 +90,7 @@ public abstract class BalancedListSplitter<T> {
 		return lists;
 	}
 
-	private List<ListItemList> _createListItemSortedSetList(int size) {
-		List<ListItemList> listItemSortedSetList = new ArrayList<>();
-
-		for (int i = 0; i < size; i++) {
-			listItemSortedSetList.add(new ListItemList(this, _maxListWeight));
-		}
-
-		return listItemSortedSetList;
-	}
-
-	private final long _maxListWeight;
-
-	private class ListItem implements Comparable<ListItem> {
+	protected class ListItem implements Comparable<ListItem> {
 
 		public ListItem(BalancedListSplitter<T> balancedListSplitter, T item) {
 			_balancedListSplitter = balancedListSplitter;
@@ -114,6 +102,10 @@ public abstract class BalancedListSplitter<T> {
 			Long weight = getWeight(null);
 
 			return -1 * weight.compareTo(otherListItem.getWeight(null));
+		}
+
+		public T getItem() {
+			return _item;
 		}
 
 		public long getWeight(ListItemList listItemList) {
@@ -142,7 +134,7 @@ public abstract class BalancedListSplitter<T> {
 
 	}
 
-	private class ListItemList
+	protected class ListItemList
 		extends ArrayList<ListItem> implements Comparable<ListItemList> {
 
 		public ListItemList(BalancedListSplitter<T> balancedListSplitter) {
@@ -210,5 +202,17 @@ public abstract class BalancedListSplitter<T> {
 		private Long _targetWeight;
 
 	}
+
+	private List<ListItemList> _createListItemSortedSetList(int size) {
+		List<ListItemList> listItemSortedSetList = new ArrayList<>();
+
+		for (int i = 0; i < size; i++) {
+			listItemSortedSetList.add(new ListItemList(this, _maxListWeight));
+		}
+
+		return listItemSortedSetList;
+	}
+
+	private final long _maxListWeight;
 
 }

@@ -848,6 +848,28 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPostNotificationTemplateCopy() throws Exception {
+		NotificationTemplate randomNotificationTemplate =
+			randomNotificationTemplate();
+
+		NotificationTemplate postNotificationTemplate =
+			testPostNotificationTemplateCopy_addNotificationTemplate(
+				randomNotificationTemplate);
+
+		assertEquals(randomNotificationTemplate, postNotificationTemplate);
+		assertValid(postNotificationTemplate);
+	}
+
+	protected NotificationTemplate
+			testPostNotificationTemplateCopy_addNotificationTemplate(
+				NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

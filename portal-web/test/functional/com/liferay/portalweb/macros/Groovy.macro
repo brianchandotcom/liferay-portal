@@ -1,6 +1,6 @@
 definition {
 
-	macro runScriptViaGosoShell {
+	macro runScriptViaGogoShell {
 		if (!(isSet(nodePort))) {
 			var nodePort = "8080";
 		}

@@ -28,29 +28,29 @@ definition {
 	test PersistentAndMemoryJobs {
 		property test.name.skip.portal.instance = "ClusteringScheduler#PersistentAndMemoryJobs";
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Persistent job 1 is added",
 			scriptFile = "groovy-script-portal-scheduler-persistent-1.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Persistent job 2 is added",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-scheduler-persistent-2.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Memory job 1 is added",
 			scriptFile = "groovy-script-portal-scheduler-memory-1.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Memory job 2 is added",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-scheduler-memory-2.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Memory clustered job 1 is added",
 			scriptFile = "groovy-script-portal-scheduler-memory-clustered-1.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Memory clustered job 2 is added",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-scheduler-memory-clustered-2.groovy");

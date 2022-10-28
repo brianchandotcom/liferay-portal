@@ -45,7 +45,7 @@ definition {
 			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
@@ -55,12 +55,12 @@ definition {
 			exceptionText = "Unable to deserialize object",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-remove.groovy");
 
@@ -72,7 +72,7 @@ definition {
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Unable to deserialize object",
@@ -88,14 +88,14 @@ definition {
 			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
@@ -112,11 +112,11 @@ definition {
 			categoryName = "com.liferay.portal.cluster.multiple.sample.web.internal",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			scriptFile = "groovy-script-master-slave.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is slave node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
@@ -155,7 +155,7 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
@@ -193,7 +193,7 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");

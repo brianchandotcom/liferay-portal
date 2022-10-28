@@ -192,7 +192,7 @@ definition {
 		}
 
 		task ("And: Manually trigger the LDAP import flow") {
-			Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-invoke-ldap-user-import-on-master.groovy");
+			Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-invoke-ldap-user-import-on-master.groovy");
 		}
 
 		task ("Then: The status of the new user remain unchanged after a new LDAP import") {

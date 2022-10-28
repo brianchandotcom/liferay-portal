@@ -149,31 +149,31 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-update.groovy");
 
@@ -181,22 +181,22 @@ definition {
 			expectedText = "Put test.key into test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value.update",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
@@ -204,7 +204,7 @@ definition {
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
@@ -217,22 +217,22 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
@@ -240,18 +240,18 @@ definition {
 			expectedText = "Put test.key into test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
@@ -259,7 +259,7 @@ definition {
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
@@ -272,22 +272,22 @@ definition {
 
 		Clustering.viewClusterStatusInConsole();
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-put.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.key=test.value",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
@@ -295,18 +295,18 @@ definition {
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-remove-all.groovy");
+		Groovy.runScriptViaGogoShell(scriptFile = "groovy-script-portal-cache-remove-all.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Cleared test.cache",
 			nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
@@ -314,7 +314,7 @@ definition {
 			expectedText = "Cleared test.cache",
 			nodePort = "9080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");

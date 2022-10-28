@@ -56,7 +56,7 @@ definition {
 			var nodePort = "8080";
 		}
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			nodePort = "${nodePort}",
 			scriptFile = "groovy-script-invoke-ldap-user-import-on-master.groovy");
 	}

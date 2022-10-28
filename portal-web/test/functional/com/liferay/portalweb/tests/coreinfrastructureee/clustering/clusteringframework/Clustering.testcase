@@ -189,17 +189,17 @@ definition {
 	test CanInvokeMethods {
 		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 9080",
 			scriptFile = "groovy-script-invoke-method.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 8080",
 			nodePort = "9080",
 			scriptFile = "groovy-script-invoke-method.groovy");
 
 		for (var serverPort : list "8080,9080") {
-			Groovy.runScriptViaGosoShell(
+			Groovy.runScriptViaGogoShell(
 				expectedOutput = "Result of invoke-method-portal-on-master: 8080",
 				nodePort = "${serverPort}",
 				scriptFile = "groovy-script-invoke-method-on-master.groovy");
@@ -385,18 +385,18 @@ definition {
 	test SlaveNodeCanBecomeMasterNode {
 		property test.name.skip.portal.instance = "Clustering#SlaveNodeCanBecomeMasterNode";
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			scriptFile = "groovy-script-master-slave.groovy");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is slave node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
@@ -415,7 +415,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Groovy.runScriptViaGosoShell(
+		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is slave node",
 			scriptFile = "groovy-script-master-slave.groovy");
 	}

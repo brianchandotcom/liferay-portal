@@ -28,6 +28,10 @@ public class ThemeBuilderArgs {
 		return _diffsDir;
 	}
 
+	public String getGeneratedThumbnailMaxSize() {
+		return _generatedThumbnailMaxSize;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -54,6 +58,10 @@ public class ThemeBuilderArgs {
 
 	public void setDiffsDir(File diffsDir) {
 		_diffsDir = diffsDir;
+	}
+
+	public void setGeneratedThumbnailMaxSize(String generatedThumbnailMaxSize) {
+		_generatedThumbnailMaxSize = generatedThumbnailMaxSize;
 	}
 
 	public void setName(String name) {
@@ -84,6 +92,9 @@ public class ThemeBuilderArgs {
 		return _help;
 	}
 
+	protected static final String DEFAULT_GENERATED_THUMBNAIL_MAX_SIZE =
+		"160x120";
+
 	protected static final String DEFAULT_NAME;
 
 	protected static final String DEFAULT_TEMPLATE_EXTENSION = "ftl";
@@ -100,6 +111,13 @@ public class ThemeBuilderArgs {
 		names = {"-d", "--diffs-dir"}
 	)
 	private File _diffsDir;
+
+	@Parameter(
+		description = "The maximum image dimensions (WxH) for the generated thumbnail.",
+		names = "--generated-thumbnail-max-size"
+	)
+	private String _generatedThumbnailMaxSize =
+		DEFAULT_GENERATED_THUMBNAIL_MAX_SIZE;
 
 	@Parameter(
 		description = "Print this message.", help = true,

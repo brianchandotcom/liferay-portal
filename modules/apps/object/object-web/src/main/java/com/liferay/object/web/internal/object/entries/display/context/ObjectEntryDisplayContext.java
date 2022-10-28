@@ -1059,6 +1059,17 @@ public class ObjectEntryDisplayContext {
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
 		}
+		else if (value instanceof ArrayList) {
+			ddmFormFieldValue.setValue(
+				new UnlocalizedValue(
+					StringBundler.concat(
+						StringPool.OPEN_BRACKET,
+						StringUtil.merge(
+							ListUtil.toList(
+								(List<ListEntry>)value, ListEntry::getKey),
+							StringPool.COMMA_AND_SPACE),
+						StringPool.CLOSE_BRACKET)));
+		}
 		else if (value instanceof FileEntry) {
 			FileEntry fileEntry = (FileEntry)value;
 
@@ -1070,20 +1081,6 @@ public class ObjectEntryDisplayContext {
 
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(listEntry.getKey()));
-		}
-		else if (value instanceof ArrayList) {
-			List<ListEntry> listEntries = (List<ListEntry>)value;
-
-			StringBuilder sb = new StringBuilder(StringPool.OPEN_BRACKET);
-
-			sb.append(
-				StringUtil.merge(
-					ListUtil.toList(listEntries, ListEntry::getKey),
-					StringPool.COMMA_AND_SPACE));
-
-			sb.append(StringPool.CLOSE_BRACKET);
-
-			ddmFormFieldValue.setValue(new UnlocalizedValue(sb.toString()));
 		}
 		else {
 			if (value instanceof Double) {

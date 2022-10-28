@@ -139,8 +139,8 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ListEntry _getListEntry(
-		long listTypeDefinitionId, DTOConverterContext dtoConverterContext,
-		String key) {
+		DTOConverterContext dtoConverterContext, String key,
+		long listTypeDefinitionId) {
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.fetchListTypeEntry(
@@ -347,8 +347,8 @@ public class ObjectEntryDTOConverter
 
 						listEntries.add(
 							_getListEntry(
-								listTypeDefinitionId, dtoConverterContext,
-								key));
+								dtoConverterContext, key,
+								listTypeDefinitionId));
 					}
 
 					map.put(objectFieldName, listEntries);
@@ -357,8 +357,8 @@ public class ObjectEntryDTOConverter
 				}
 
 				ListEntry listEntry = _getListEntry(
-					listTypeDefinitionId, dtoConverterContext,
-					(String)serializable);
+					dtoConverterContext, (String)serializable,
+					listTypeDefinitionId);
 
 				if (listEntry == null) {
 					continue;

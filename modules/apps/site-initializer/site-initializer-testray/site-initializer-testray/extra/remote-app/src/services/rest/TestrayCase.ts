@@ -46,8 +46,7 @@ class TestrayCaseRest extends Rest<Case, TestrayCase> {
 				steps,
 				stepsType,
 			}),
-			nestedFields:
-				'build.project,build.routine,caseType,component.team&nestedFieldsDepth=3',
+			nestedFields: 'build.project,build.routine,caseType,component.team',
 			transformData: (testrayCase) => ({
 				...testrayCase,
 				caseType: testrayCase?.r_caseTypeToCases_c_caseType,

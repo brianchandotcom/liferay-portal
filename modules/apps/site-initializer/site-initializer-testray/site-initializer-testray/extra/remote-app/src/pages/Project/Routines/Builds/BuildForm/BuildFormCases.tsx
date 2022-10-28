@@ -40,7 +40,7 @@ type ModalType = {
 const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 	caseIds,
 	setCaseIds,
-	title = '',
+	title,
 }) => {
 	const {projectId} = useParams();
 
@@ -75,16 +75,18 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 
 	return (
 		<>
-			<h3>{title}</h3>
+			{title && (
+				<>
+					<h3>{title}</h3>
 
-			{title && <Form.Divider />}
+					<Form.Divider />
+				</>
+			)}
 
 			<ClayButton.Group className="mb-4">
 				<ClayButton
 					displayType="secondary"
-					onClick={() => {
-						modal.open(caseIds);
-					}}
+					onClick={() => modal.open(caseIds)}
 				>
 					{i18n.translate('add-cases')}
 				</ClayButton>
@@ -102,7 +104,7 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 				</ClayButton>
 			</ClayButton.Group>
 
-			{caseIds?.length ? (
+			{caseIds.length ? (
 				<CaseListView
 					listViewProps={{
 						managementToolbarProps: {visible: false},
@@ -151,8 +153,9 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 
 			<BuildSelectSuitesModal
 				modal={buildSelectSuitesModal}
-				type={modalType?.type}
+				type={modalType.type}
 			/>
+
 			<SuiteFormSelectModal
 				modal={modal}
 				selectedCaseIds={caseIds}

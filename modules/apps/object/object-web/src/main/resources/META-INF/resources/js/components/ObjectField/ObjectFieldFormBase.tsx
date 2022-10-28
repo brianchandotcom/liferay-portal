@@ -314,12 +314,18 @@ export default function ObjectFieldFormBase({
 					error={errors.output}
 					label={Liferay.Language.get('output')}
 					onChange={({label, value}) => {
+						let newObjectFieldSettings: ObjectFieldSetting[] = [];
+
+						if (values.objectFieldSettings) {
+							newObjectFieldSettings = values.objectFieldSettings?.filter(
+								(objectFieldSetting) =>
+									objectFieldSetting.name !== 'output'
+							) as ObjectFieldSetting[];
+						}
+
 						setValues({
 							objectFieldSettings: [
-								...(values.objectFieldSettings?.filter(
-									(objectFieldSetting) =>
-										objectFieldSetting.name !== 'output'
-								) as ObjectFieldSetting[]),
+								...newObjectFieldSettings,
 								{
 									name: 'output',
 									value,

@@ -1,0 +1,66 @@
+{
+	"externalReferenceCode": "MDF_Claim__c",
+	"label": {
+		"en_US": "MDF Claim SF"
+	},
+	"name": "MDFClaimSF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "MDF_Request__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request External Reference Code SF"
+			},
+			"name": "mdfRequestExternalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "Total_Cost__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request Total Cost of Expense"
+			},
+			"name": "mdfRequestTotalCostOfExpense",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "Total_MDF_Requested_Amount__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Requested Amount"
+			},
+			"name": "mdfRequestedAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "Total_Claim_Amount__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Amount Claimed"
+			},
+			"name": "amountClaimed",
+			"required": false,
+			"type": "BigDecimal"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "MDF Claims SF"
+	},
+	"scope": "company",
+	"storageType": "salesforce"
+}

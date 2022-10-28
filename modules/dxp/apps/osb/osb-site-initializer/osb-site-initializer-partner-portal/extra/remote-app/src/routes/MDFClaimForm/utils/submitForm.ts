@@ -27,19 +27,19 @@ export default async function submitForm(
 	formikHelpers.setSubmitting(true);
 
 	const dtoMDFClaim = await createMDFClaim(values);
-	if (dtoMDFClaim.id && claimParentFolderId) {
+	if (dtoMDFClaim?.id) {
 		const claimFolder = await createDocumentFolder(
 			claimParentFolderId,
 			`claim#${dtoMDFClaim.id}`
 		);
 
-		if (values.reimbursementInvoice && claimFolder.id) {
+		if (values.reimbursementInvoice && claimFolder?.id) {
 			const claimDocument = await createDocumentFolderDocument(
 				claimFolder.id,
 				values.reimbursementInvoice
 			);
 
-			if (claimDocument.contentUrl) {
+			if (claimDocument?.contentUrl) {
 				await createMDFClaimDocuments(
 					values.reimbursementInvoice,
 					claimDocument.contentUrl,
@@ -51,29 +51,27 @@ export default async function submitForm(
 		if (values.activities?.length) {
 			const dtoMDFClaimActivities = await createMDFClaimActivities(
 				dtoMDFClaim.id,
-				values.activities?.filter((activity) => {
-					return activity.selected;
-				})
+				values.activities.filter((activity) => activity.selected)
 			);
 
-			if (dtoMDFClaimActivities.length) {
+			if (dtoMDFClaimActivities?.length) {
 				values.activities.map(async (activity, index) => {
 					const dtoActivity = dtoMDFClaimActivities[index];
 
-					if (dtoActivity.id) {
+					if (dtoActivity?.id && claimFolder.id) {
 						const activityFolder = await createDocumentFolder(
 							claimFolder.id,
 							`activity#${dtoActivity.id}`
 						);
 
-						if (activityFolder.id) {
+						if (activityFolder?.id) {
 							if (activity.listQualifiedLeads) {
 								const activityListQualifiedLeads = await createDocumentFolderDocument(
 									activityFolder.id,
 									activity.listQualifiedLeads
 								);
 
-								if (activityListQualifiedLeads.contentUrl) {
+								if (activityListQualifiedLeads?.contentUrl) {
 									createMDFClaimDocuments(
 										activity.listQualifiedLeads,
 										activityListQualifiedLeads.contentUrl,
@@ -82,19 +80,21 @@ export default async function submitForm(
 								}
 							}
 
-							if (activity.documents) {
+							if (activity.documents?.length) {
 								activity.documents.map(async (document) => {
-									const activityDocument = await createDocumentFolderDocument(
-										activityFolder.id,
-										document
-									);
-
-									if (activityDocument.contentUrl) {
-										createMDFClaimDocuments(
-											document,
-											activityDocument.contentUrl,
-											dtoActivity?.id
+									if (activityFolder?.id) {
+										const activityDocument = await createDocumentFolderDocument(
+											activityFolder.id,
+											document
 										);
+
+										if (activityDocument?.contentUrl) {
+											createMDFClaimDocuments(
+												document,
+												activityDocument.contentUrl,
+												dtoActivity?.id
+											);
+										}
 									}
 								});
 							}
@@ -107,32 +107,35 @@ export default async function submitForm(
 									})
 								);
 
-								if (dtoMDFClaimBudgets.length) {
+								if (dtoMDFClaimBudgets?.length) {
 									activity.budgets.map(
-										async (budgets, index) => {
+										async (budget, index) => {
 											const dtoBudget =
 												dtoMDFClaimBudgets[index];
 
-											if (dtoBudget?.id) {
+											if (
+												dtoBudget?.id &&
+												activityFolder?.id
+											) {
 												const budgetFolder = await createDocumentFolder(
 													activityFolder.id,
 													`budget#${dtoBudget.id}`
 												);
 
 												if (
-													budgets.invoice &&
-													budgetFolder.id
+													budget.invoice &&
+													budgetFolder?.id
 												) {
 													const budgetDocument = await createDocumentFolderDocument(
 														budgetFolder.id,
-														budgets.invoice
+														budget.invoice
 													);
 
 													if (
-														budgetDocument.contentUrl
+														budgetDocument?.contentUrl
 													) {
 														await createMDFClaimDocuments(
-															budgets.invoice,
+															budget.invoice,
 															budgetDocument.contentUrl,
 															dtoBudget?.id
 														);

@@ -48,10 +48,10 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		Callable<Void> callable = () -> {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
+		Callable<Void> callable = () -> {
 			Map<String, Serializable> expandoBridgeAttributes = null;
 
 			if (serviceContext != null) {

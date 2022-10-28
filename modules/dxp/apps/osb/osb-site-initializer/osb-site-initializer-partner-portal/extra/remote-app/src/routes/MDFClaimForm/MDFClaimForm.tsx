@@ -68,14 +68,14 @@ const MDFClaimForm = () => {
 				mdfRequest.totalMDFRequestAmount
 			)}
 			onSubmit={(values, formikHelpers) =>
-				submitForm(values, formikHelpers)
+				submitForm(values, formikHelpers, mdfRequest)
 			}
 		>
 			<MDFClaimPage
 				mdfRequest={mdfRequest}
 				onCancel={onCancel}
 				onSaveAsDraft={(values, formikHelpers) =>
-					submitForm(values, formikHelpers)
+					submitForm(values, formikHelpers, mdfRequest)
 				}
 				validationSchema={claimSchema}
 			/>

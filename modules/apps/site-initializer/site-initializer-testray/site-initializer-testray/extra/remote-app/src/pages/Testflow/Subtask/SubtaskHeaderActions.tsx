@@ -18,23 +18,17 @@ import {KeyedMutator} from 'swr';
 import AssignModal from '../../../components/AssignModal';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {PickList, TestraySubTask, UserAccount} from '../../../services/rest';
+import {TestraySubTask, UserAccount} from '../../../services/rest';
 import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
 import {SubTaskStatuses} from '../../../util/statuses';
 import SubtaskCompleteModal from './SubtaskCompleteModal';
 
 type SubTaskHeaderActionsProps = {
-	caseResultIds: number[];
-	dueStatus?: PickList;
-	mutateCaseResult: KeyedMutator<any>;
 	mutateSubtask: KeyedMutator<any>;
 	subtask: TestraySubTask;
 };
 
 const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
-	caseResultIds,
-	dueStatus,
-	mutateCaseResult,
 	mutateSubtask,
 	subtask,
 }) => {
@@ -43,14 +37,7 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 			testraySubTaskImpl.assignTo(subtask, user.id).then(mutateSubtask),
 	});
 
-	const {modal: completeModal} = useFormModal({
-		onSave: (dueStatus) => {
-			testraySubTaskImpl
-				.complete(subtask.id, caseResultIds, dueStatus)
-				.then(mutateSubtask)
-				.then(mutateCaseResult);
-		},
-	});
+	const {modal: complete} = useFormModal();
 
 	const buttonDisabled = [
 		SubTaskStatuses.OPEN,
@@ -61,7 +48,11 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 		<>
 			<AssignModal modal={assignUserModal} />
 
-			<SubtaskCompleteModal modal={completeModal} status={dueStatus} />
+			<SubtaskCompleteModal
+				modal={complete}
+				mutate={mutateSubtask}
+				subtask={subtask}
+			/>
 
 			{buttonDisabled && (
 				<>
@@ -89,7 +80,7 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 							{i18n.translate('assign')}
 						</ClayButton>
 
-						<ClayButton onClick={() => completeModal.open()}>
+						<ClayButton onClick={() => complete.open()}>
 							{i18n.translate('complete')}
 						</ClayButton>
 

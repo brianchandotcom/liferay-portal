@@ -12,14 +12,19 @@
  * details.
  */
 
+import {useParams} from 'react-router-dom';
+
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import i18n from '../../../i18n';
 import {TestraySubTaskCaseResult} from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
+import {searchUtil} from '../../../util/search';
 
 const SubtasksCaseResults = () => {
+	const {subtaskId} = useParams();
+
 	return (
 		<ListView
 			managementToolbarProps={{
@@ -116,6 +121,9 @@ const SubtasksCaseResults = () => {
 			transformData={(response) =>
 				testraySubtaskCaseResultImpl.transformDataFromList(response)
 			}
+			variables={{
+				filter: searchUtil.eq('subtaskId', subtaskId as string),
+			}}
 		/>
 	);
 };

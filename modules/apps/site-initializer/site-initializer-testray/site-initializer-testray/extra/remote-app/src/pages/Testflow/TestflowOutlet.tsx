@@ -27,7 +27,7 @@ const TestflowOutlet = () => {
 	const currentPathIsActive = pathname === '/testflow';
 	const archivedPathIsActive = pathname === '/testflow/archived';
 
-	const {data: testrayTask} = useFetch<TestrayTask>(
+	const {data: testrayTask, mutate: mutateTestFlow} = useFetch<TestrayTask>(
 		testrayTaskImpl.getResource(taskId as string),
 		(response) => testrayTaskImpl.transformData(response)
 	);
@@ -72,6 +72,7 @@ const TestflowOutlet = () => {
 	return (
 		<Outlet
 			context={{
+				mutateTestFlow,
 				setDropdownIcon,
 				setHeading,
 				setTabs,

@@ -12,57 +12,85 @@
  * details.
  */
 
+import {useCallback, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import Modal from '../../../components/Modal';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
+import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {PickList} from '../../../services/rest';
+import {
+	APIResponse,
+	TestraySubTask,
+	TestraySubTaskCaseResult,
+} from '../../../services/rest';
+import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
+import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
+import {searchUtil} from '../../../util/search';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
 
 type SubTaskCompleteModalProps = {
 	modal: FormModalOptions;
-	status?: PickList;
+	mutate?: KeyedMutator<any>;
+	subtask: TestraySubTask;
 };
 
 const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
-	modal: {modalState, observer, onClose, onSave},
-	status,
+	modal: {observer, onClose, onError, onSave},
+	mutate,
+	subtask,
 }) => {
 	const {
-		formState: {errors},
-		register,
-		watch,
-	} = useForm<SubtaskForm>({
-		defaultValues: {
-			dueStatus: modalState?.dueStatus ?? status?.key,
-			issue: modalState?.issue,
-		},
+		data: testraySubTaskCaseResultData,
+		mutate: mutateCaseResult,
+	} = useFetch<APIResponse<TestraySubTaskCaseResult>>(
+		`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
+			'subtaskId',
+			subtask.id
+		)}&pageSize=100`,
+		(response) =>
+			testraySubtaskCaseResultImpl.transformDataFromList(response)
+	);
+	const testraySubTaskCaseResults = testraySubTaskCaseResultData?.items || [];
+
+	const status = testraySubTaskCaseResults[0]?.caseResult?.dueStatus;
+
+	const caseResultIds = testraySubTaskCaseResults.map((caseResult) =>
+		Number(caseResult.caseResult?.id)
+	);
+	const {register, setValue, watch} = useForm<SubtaskForm>({
 		resolver: yupResolver(yupSchema.subtask),
 	});
-
-	const inputProps = {
-		errors,
-		register,
-	};
-
 	const dueStatus = watch('dueStatus');
 	const issue = watch('issue');
 
+	const setRolesUser = useCallback(() => {
+		setValue('dueStatus', status?.key);
+	}, [setValue, status]);
+
+	useEffect(() => {
+		setRolesUser();
+	}, [setRolesUser]);
+
+	const _onSubmit = () => {
+		testraySubTaskImpl
+			.complete(subtask.id, caseResultIds, dueStatus as string)
+			.then(mutate)
+			.then(mutateCaseResult)
+			.then(() => onSave())
+			.catch(() => onError);
+	};
+
 	return (
 		<Modal
-			last={
-				<Form.Footer
-					onClose={onClose}
-					onSubmit={() => onSave(dueStatus)}
-				/>
-			}
+			last={<Form.Footer onClose={onClose} onSubmit={_onSubmit} />}
 			observer={observer}
 			size="lg"
 			title={i18n.sub('edit-x', 'status')}
@@ -80,8 +108,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 						{label: 'Blocked', value: CaseResultStatuses.BLOCKED},
 						{label: 'Test Fix', value: CaseResultStatuses.TEST_FIX},
 					]}
-					value={dueStatus}
-					{...inputProps}
+					register={register}
 				/>
 
 				<Form.Input
@@ -89,7 +116,6 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 					label={i18n.translate('issues')}
 					name="issue"
 					value={issue}
-					{...inputProps}
 				/>
 
 				<Form.Input
@@ -97,7 +123,6 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 					label={i18n.translate('comment')}
 					name="commentMBMessage"
 					type="textarea"
-					{...inputProps}
 				/>
 			</Container>
 		</Modal>

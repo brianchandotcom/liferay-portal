@@ -54,10 +54,9 @@ const Subtasks = () => {
 		testraySubTaskImpl.transformData(response)
 	);
 
-	const {
-		data: testraySubTaskCaseResultData,
-		mutate: mutateCaseResult,
-	} = useFetch<APIResponse<TestraySubTaskCaseResult>>(
+	const {data: testraySubTaskCaseResultData} = useFetch<
+		APIResponse<TestraySubTaskCaseResult>
+	>(
 		`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
 			'subtaskId',
 			subtaskId as string
@@ -93,11 +92,6 @@ const Subtasks = () => {
 	return (
 		<>
 			<SubtaskHeaderActions
-				caseResultIds={testraySubTaskCaseResults.map((caseResult) =>
-					Number(caseResult.caseResult?.id)
-				)}
-				dueStatus={testraySubTaskCaseResults[0]?.caseResult?.dueStatus}
-				mutateCaseResult={mutateCaseResult}
 				mutateSubtask={mutateSubtask}
 				subtask={testraySubtask}
 			/>

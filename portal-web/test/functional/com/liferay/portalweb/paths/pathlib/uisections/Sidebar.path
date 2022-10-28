@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//div[contains(@class,'sidebar-header')]//h2[contains(@class,'text-truncate-inline')]</td>
+	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'text-truncate-inline')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,6 +130,7 @@
 	<td>//div[contains(@class,'sidebar')]</td>
 	<td></td>
 </tr>
+
 </tbody>
 </table>
 </body>

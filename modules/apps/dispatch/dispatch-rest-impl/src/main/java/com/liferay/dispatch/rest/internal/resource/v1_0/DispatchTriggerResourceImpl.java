@@ -19,6 +19,7 @@ import com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger;
 import com.liferay.dispatch.rest.internal.dto.v1_0.util.DispatchTriggerUtil;
 import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
 import com.liferay.dispatch.service.DispatchTriggerService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

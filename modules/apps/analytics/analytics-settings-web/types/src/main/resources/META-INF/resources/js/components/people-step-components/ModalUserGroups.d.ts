@@ -13,14 +13,9 @@
  */
 
 import React from 'react';
-interface IPanelProps {
-	accountsCount: number;
-	onSyncAllAccountsChange: () => void;
-	onSyncAllContactsChange: () => void;
-	organizationsCount: number;
-	syncAllAccounts: boolean;
-	syncAllContacts: boolean;
-	usersCount: number;
+interface IModalUserGroups {
+	observer: any;
+	onCloseModal: () => void;
 }
-declare const SelectPanels: React.FC<IPanelProps>;
-export default SelectPanels;
+declare const ModalUserGroups: React.FC<IModalUserGroups>;
+export default ModalUserGroups;

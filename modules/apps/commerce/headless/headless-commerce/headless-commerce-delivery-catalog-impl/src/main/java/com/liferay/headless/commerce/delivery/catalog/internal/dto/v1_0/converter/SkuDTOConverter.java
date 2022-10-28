@@ -80,6 +80,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		return new Sku() {
 			{
 				availability = _getAvailability(
+					cpInstance.getGroupId(),
 					commerceContext.getCommerceChannelGroupId(),
 					cpSkuDTOConverterConvertContext.getCompanyId(),
 					cpInstance.getSku(), cpInstance,
@@ -106,8 +107,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private Availability _getAvailability(
-			long commerceChannelGroupId, long companyId, String sku,
-			CPInstance cpInstance, Locale locale)
+			long commerceCatalogGroupId, long commerceChannelGroupId,
+			long companyId, String sku, CPInstance cpInstance, Locale locale)
 		throws Exception {
 
 		Availability availability = new Availability();
@@ -115,7 +116,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
 			if (Objects.equals(
 					_commerceInventoryEngine.getAvailabilityStatus(
-						cpInstance.getCompanyId(), commerceChannelGroupId,
+						cpInstance.getCompanyId(), commerceCatalogGroupId,
+						commerceChannelGroupId,
 						_cpDefinitionInventoryEngine.getMinStockQuantity(
 							cpInstance),
 						cpInstance.getSku()),
@@ -134,7 +136,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
 			availability.setStockQuantity(
 				_commerceInventoryEngine.getStockQuantity(
-					companyId, commerceChannelGroupId, sku));
+					companyId, commerceCatalogGroupId, commerceChannelGroupId,
+					sku));
 		}
 
 		return availability;

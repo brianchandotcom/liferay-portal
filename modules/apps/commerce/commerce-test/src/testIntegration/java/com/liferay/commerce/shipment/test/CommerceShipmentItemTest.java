@@ -224,7 +224,8 @@ public class CommerceShipmentItemTest {
 
 		int actualCPInstanceStockQuantity =
 			_commerceInventoryEngine.getStockQuantity(
-				_user.getCompanyId(), cpInstance.getSku());
+				_user.getCompanyId(), cpInstance.getGroupId(),
+				cpInstance.getSku());
 
 		Assert.assertNotEquals(1, actualCPInstanceStockQuantity);
 
@@ -273,8 +274,8 @@ public class CommerceShipmentItemTest {
 
 		int actualCPInstanceStockQuantity =
 			_commerceInventoryEngine.getStockQuantity(
-				_user.getCompanyId(), _commerceChannel.getGroupId(),
-				cpInstance.getSku());
+				_user.getCompanyId(), cpInstance.getGroupId(),
+				_commerceChannel.getGroupId(), cpInstance.getSku());
 
 		Assert.assertEquals(1, actualCPInstanceStockQuantity);
 

@@ -380,7 +380,8 @@ public class MappedProductDTOConverter
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
 			if (Objects.equals(
 					_commerceInventoryEngine.getAvailabilityStatus(
-						cpInstance.getCompanyId(), commerceChannelGroupId,
+						cpInstance.getCompanyId(), cpInstance.getGroupId(),
+						commerceChannelGroupId,
 						_cpDefinitionInventoryEngine.getMinStockQuantity(
 							cpInstance),
 						cpInstance.getSku()),
@@ -399,7 +400,8 @@ public class MappedProductDTOConverter
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
 			availability.setStockQuantity(
 				_commerceInventoryEngine.getStockQuantity(
-					companyId, commerceChannelGroupId, sku));
+					companyId, cpInstance.getGroupId(), commerceChannelGroupId,
+					sku));
 		}
 
 		return availability;

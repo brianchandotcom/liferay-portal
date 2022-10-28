@@ -29,6 +29,7 @@ import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
@@ -106,11 +107,20 @@ public class CommerceShippableOrderItemsFDSDataProvider
 					commerceShipmentId,
 					commerceOrderItem.getCommerceOrderItemId(), 0);
 
+			long commerceCatalogGroupId = 0;
+
+			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+			if (cpDefinition != null) {
+				commerceCatalogGroupId = cpDefinition.getGroupId();
+			}
+
 			if (commerceShipmentItem == null) {
 				orderItems.add(
 					new OrderItem(
 						_commerceInventoryEngine.getStockQuantity(
 							commerceOrderItem.getCompanyId(),
+							commerceCatalogGroupId,
 							commerceOrderItem.getGroupId(),
 							commerceOrderItem.getSku()),
 						icon, commerceOrderItem.getCommerceOrderId(),

@@ -709,7 +709,8 @@ public class CommerceCheckoutTest {
 		}
 
 		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_company.getCompanyId(), commerceOrderItem.getSku());
+			_company.getCompanyId(), cpDefinition.getGroupId(),
+			commerceOrderItem.getSku());
 
 		commerceOrderItem.setQuantity(stockQuantity);
 

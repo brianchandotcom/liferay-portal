@@ -75,12 +75,13 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 		if (commerceChannelGroupId > 0) {
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), commerceChannelGroupId,
-				cpInstance.getSku());
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				commerceChannelGroupId, cpInstance.getSku());
 		}
 		else {
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), cpInstance.getSku());
+				cpInstance.getCompanyId(), cpDefinition.getGroupId(),
+				cpInstance.getSku());
 		}
 
 		if (quantity > stockQuantity) {

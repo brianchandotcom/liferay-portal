@@ -103,7 +103,8 @@ public class CommerceProductInstanceFDSDataProvider
 				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 			int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), cpInstance.getSku());
+				cpInstance.getCompanyId(), cpDefinition.getGroupId(),
+				cpInstance.getSku());
 
 			String statusDisplayStyle = StringPool.BLANK;
 

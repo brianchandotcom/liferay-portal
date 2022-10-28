@@ -29,6 +29,7 @@ import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeC
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
@@ -443,8 +444,16 @@ public class CommerceShipmentItemLocalServiceImpl
 			CommerceShipmentItem commerceShipmentItem, int quantity)
 		throws PortalException {
 
+		long commerceCatalogGroupId = 0;
+
+		CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+		if (cpDefinition != null) {
+			commerceCatalogGroupId = cpDefinition.getGroupId();
+		}
+
 		_commerceInventoryEngine.increaseStockQuantity(
-			commerceShipmentItem.getUserId(),
+			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
 			commerceShipmentItem.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getSku(), quantity);
 
@@ -486,8 +495,16 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItemPersistence.findByPrimaryKey(
 				commerceShipmentItemId);
 
+		long commerceCatalogGroupId = 0;
+
+		CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+		if (cpDefinition != null) {
+			commerceCatalogGroupId = cpDefinition.getGroupId();
+		}
+
 		_commerceInventoryEngine.consumeQuantity(
-			commerceShipmentItem.getUserId(),
+			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
 			commerceShipmentItem.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getSku(), quantity,
 			commerceOrderItem.getBookedQuantityId(),

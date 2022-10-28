@@ -112,7 +112,8 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 		}
 
 		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			commerceOrderItem.getCompanyId(), commerceOrderItem.getSku());
+			commerceOrderItem.getCompanyId(), cpInstance.getGroupId(),
+			commerceOrderItem.getSku());
 
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(

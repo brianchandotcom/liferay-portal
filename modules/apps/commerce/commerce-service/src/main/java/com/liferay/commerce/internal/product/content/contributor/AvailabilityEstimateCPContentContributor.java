@@ -77,6 +77,12 @@ public class AvailabilityEstimateCPContentContributor
 			return jsonObject;
 		}
 
+		boolean available = false;
+
+		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+			cpInstance.getCompanyId(), cpInstance.getGroupId(),
+			commerceChannel.getGroupId(), cpInstance.getSku());
+
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
@@ -86,11 +92,6 @@ public class AvailabilityEstimateCPContentContributor
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		boolean available = false;
-
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			cpInstance.getCompanyId(), commerceChannel.getGroupId(),
-			cpInstance.getSku());
 		int minStockQuantity = cpDefinitionInventoryEngine.getMinStockQuantity(
 			cpInstance);
 

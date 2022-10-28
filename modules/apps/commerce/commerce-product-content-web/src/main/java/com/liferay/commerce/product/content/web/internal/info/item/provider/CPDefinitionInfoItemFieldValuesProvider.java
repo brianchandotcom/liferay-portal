@@ -132,7 +132,8 @@ public class CPDefinitionInfoItemFieldValuesProvider
 
 		if (displayAvailability) {
 			return _commerceInventoryEngine.getAvailabilityStatus(
-				cpInstance.getCompanyId(), commerceChannel.getGroupId(),
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				commerceChannel.getGroupId(),
 				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
 				cpInstance.getSku());
 		}
@@ -570,8 +571,8 @@ public class CPDefinitionInfoItemFieldValuesProvider
 						themeDisplay.getScopeGroupId());
 
 			return _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), commerceChannelGroupId,
-				cpInstance.getSku());
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				commerceChannelGroupId, cpInstance.getSku());
 		}
 
 		return null;

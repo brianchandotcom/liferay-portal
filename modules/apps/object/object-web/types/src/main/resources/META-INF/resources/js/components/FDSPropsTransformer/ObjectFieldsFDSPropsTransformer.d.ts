@@ -12,13 +12,21 @@
  * details.
  */
 
-import ObjectFieldSourceDataRenderer from './ObjectFieldSourceDataRenderer';
+/// <reference types="react" />
 
-export default function propsTransformer({...otherProps}) {
-	return {
-		...otherProps,
-		customDataRenderers: {
-			objectFieldSourceDataRenderer: ObjectFieldSourceDataRenderer,
-		},
-	};
+interface ObjectFieldSourceDataRenderer {
+	value: boolean;
 }
+declare function ObjectFieldSourceDataRenderer({
+	value,
+}: ObjectFieldSourceDataRenderer): JSX.Element;
+export default function ObjectFieldsFDSPropsTransformer({
+	...otherProps
+}: {
+	[x: string]: any;
+}): {
+	customDataRenderers: {
+		objectFieldSourceDataRenderer: typeof ObjectFieldSourceDataRenderer;
+	};
+};
+export {};

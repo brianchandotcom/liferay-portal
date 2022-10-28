@@ -15,7 +15,11 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default function ObjectFieldSourceDataRenderer({value}: IProps) {
+interface ObjectFieldSourceDataRenderer {
+	value: boolean;
+}
+
+function ObjectFieldSourceDataRenderer({value}: ObjectFieldSourceDataRenderer) {
 	return (
 		<strong
 			className={classNames(
@@ -30,6 +34,11 @@ export default function ObjectFieldSourceDataRenderer({value}: IProps) {
 	);
 }
 
-interface IProps {
-	value: boolean;
+export default function ObjectFieldsFDSPropsTransformer({...otherProps}) {
+	return {
+		...otherProps,
+		customDataRenderers: {
+			objectFieldSourceDataRenderer: ObjectFieldSourceDataRenderer,
+		},
+	};
 }

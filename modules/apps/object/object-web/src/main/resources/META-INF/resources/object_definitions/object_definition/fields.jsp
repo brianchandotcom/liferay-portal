@@ -35,7 +35,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 	fdsActionDropdownItems="<%= objectDefinitionsFieldsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= ObjectDefinitionsFDSNames.OBJECT_FIELDS %>"
-	propsTransformer="js/ObjectFieldsFDSPropsTransformer"
+	propsTransformer="js/components/FDSPropsTransformer/ObjectFieldsFDSPropsTransformer"
 	style="fluid"
 />
 

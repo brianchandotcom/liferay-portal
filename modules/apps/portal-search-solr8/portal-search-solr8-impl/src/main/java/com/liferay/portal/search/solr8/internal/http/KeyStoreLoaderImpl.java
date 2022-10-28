@@ -25,7 +25,6 @@ import java.io.InputStream;
 
 import java.security.KeyStore;
 import java.security.KeyStoreException;
-import java.security.cert.Certificate;
 
 import java.util.Enumeration;
 
@@ -84,10 +83,8 @@ public class KeyStoreLoaderImpl implements KeyStoreLoader {
 			sb.append(alias);
 
 			if (certificateEntry) {
-				Certificate certificate = keyStore.getCertificate(alias);
-
 				sb.append(",certificate=");
-				sb.append(certificate.toString());
+				sb.append(String.valueOf(keyStore.getCertificate(alias)));
 			}
 
 			sb.append(",certificateEntry=");

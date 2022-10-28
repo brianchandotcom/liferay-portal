@@ -25,7 +25,6 @@ import com.liferay.portal.search.solr8.internal.document.SolrInputDocumentAtomic
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.request.UpdateRequest;
-import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.CommonParams;
 import org.apache.solr.common.params.ModifiableSolrParams;
 
@@ -73,18 +72,14 @@ public class SolrBulkableDocumentRequestTranslator
 		UpdateRequest updateRequest = new UpdateRequest();
 
 		if (indexDocumentRequest.getDocument() != null) {
-			SolrInputDocument solrInputDocument =
+			updateRequest.add(
 				_solrDocumentFactory.getSolrInputDocument(
-					indexDocumentRequest.getDocument());
-
-			updateRequest.add(solrInputDocument);
+					indexDocumentRequest.getDocument()));
 		}
 		else {
-			SolrInputDocument solrInputDocument =
+			updateRequest.add(
 				_solrDocumentFactory.getSolrInputDocument(
-					indexDocumentRequest.getDocument71());
-
-			updateRequest.add(solrInputDocument);
+					indexDocumentRequest.getDocument71()));
 		}
 
 		if (indexDocumentRequest.isRefresh()) {
@@ -99,22 +94,16 @@ public class SolrBulkableDocumentRequestTranslator
 		UpdateRequest updateRequest = new UpdateRequest();
 
 		if (updateDocumentRequest.getDocument() != null) {
-			SolrInputDocument solrInputDocument =
-				_solrDocumentFactory.getSolrInputDocument(
-					updateDocumentRequest.getDocument());
-
 			updateRequest.add(
 				SolrInputDocumentAtomicUpdateTranslator.translate(
-					solrInputDocument));
+					_solrDocumentFactory.getSolrInputDocument(
+						updateDocumentRequest.getDocument())));
 		}
 		else {
-			SolrInputDocument solrInputDocument =
-				_solrDocumentFactory.getSolrInputDocument(
-					updateDocumentRequest.getDocument71());
-
 			updateRequest.add(
 				SolrInputDocumentAtomicUpdateTranslator.translate(
-					solrInputDocument));
+					_solrDocumentFactory.getSolrInputDocument(
+						updateDocumentRequest.getDocument71())));
 		}
 
 		if (updateDocumentRequest.isRefresh()) {

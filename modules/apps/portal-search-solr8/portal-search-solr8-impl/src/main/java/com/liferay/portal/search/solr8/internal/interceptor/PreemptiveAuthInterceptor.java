@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class PreemptiveAuthInterceptor implements HttpRequestInterceptor {
 
 	@Override
-	public void process(HttpRequest request, HttpContext httpContext) {
+	public void process(HttpRequest httpRequest, HttpContext httpContext) {
 		AuthState authState = (AuthState)httpContext.getAttribute(
 			HttpClientContext.TARGET_AUTH_STATE);
 

@@ -23,9 +23,6 @@ import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.document.DocumentFieldsTranslator;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
@@ -63,10 +60,8 @@ public class GetDocumentRequestExecutorImpl
 			GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
 				true);
 
-			Map<String, Collection<Object>> fieldValuesMap =
-				solrDocument.getFieldValuesMap();
-
-			getDocumentResponse.setSource(fieldValuesMap.toString());
+			getDocumentResponse.setSource(
+				String.valueOf(solrDocument.getFieldValuesMap()));
 
 			DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 

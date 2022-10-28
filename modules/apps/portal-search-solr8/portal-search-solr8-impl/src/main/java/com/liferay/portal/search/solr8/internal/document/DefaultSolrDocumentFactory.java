@@ -90,11 +90,10 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 						solrInputDocument.addField(name, value);
 					}
 
-					String localizedName =
+					addField(
+						solrInputDocument, field, value,
 						com.liferay.portal.kernel.search.Field.getLocalizedName(
-							locale, name);
-
-					addField(solrInputDocument, field, value, localizedName);
+							locale, name));
 				}
 			}
 		}

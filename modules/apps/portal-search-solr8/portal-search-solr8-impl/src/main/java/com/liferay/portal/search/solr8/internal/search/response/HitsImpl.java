@@ -36,9 +36,6 @@ import java.util.Map;
  */
 public class HitsImpl implements Hits {
 
-	public HitsImpl() {
-	}
-
 	@Override
 	public void addGroupedHits(String groupValue, Hits hits) {
 		_groupedHits.put(groupValue, hits);

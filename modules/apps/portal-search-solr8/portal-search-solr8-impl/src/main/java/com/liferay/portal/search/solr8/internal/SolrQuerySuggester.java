@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -247,8 +246,7 @@ public class SolrQuerySuggester implements QuerySuggester {
 			sb.append(StringPool.SPACE);
 
 			if (i < (values.length - 1)) {
-				sb.append("OR");
-				sb.append(StringPool.SPACE);
+				sb.append("OR ");
 			}
 		}
 
@@ -275,17 +273,6 @@ public class SolrQuerySuggester implements QuerySuggester {
 		}
 
 		return ArrayUtil.append(groupIds, _GLOBAL_GROUP_ID);
-	}
-
-	protected Localization getLocalization() {
-
-		// See LPS-72507 and LPS-76500
-
-		if (_localization != null) {
-			return _localization;
-		}
-
-		return LocalizationUtil.getLocalization();
 	}
 
 	protected String getWord(String term, List<String> options) {
@@ -441,7 +428,10 @@ public class SolrQuerySuggester implements QuerySuggester {
 	private final StringDistance _defaultStringDistance =
 		new LevenshteinDistance();
 	private volatile double _distanceThreshold;
+
+	@Reference
 	private Localization _localization;
+
 	private NGramQueryBuilder _nGramQueryBuilder;
 	private SolrClientManager _solrClientManager;
 	private volatile SolrConfiguration _solrConfiguration;

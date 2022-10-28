@@ -84,7 +84,6 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		try {
 			int start = searchContext.getStart();
-			int end = searchContext.getEnd();
 
 			if (start == QueryUtil.ALL_POS) {
 				start = 0;
@@ -92,6 +91,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			else if (start < 0) {
 				throw new IllegalArgumentException("Invalid start " + start);
 			}
+
+			int end = searchContext.getEnd();
 
 			if (end == QueryUtil.ALL_POS) {
 				end = GetterUtil.getInteger(
@@ -283,13 +284,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());
 		searchSearchRequest.setLocale(queryConfig.getLocale());
-
-		boolean luceneSyntax = GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX));
-
-		searchSearchRequest.setLuceneSyntax(luceneSyntax);
-
+		searchSearchRequest.setLuceneSyntax(
+			GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX)));
 		searchSearchRequest.setPostFilter(query.getPostFilter());
 		searchSearchRequest.setScoreEnabled(queryConfig.isScoreEnabled());
 		searchSearchRequest.setSelectedFieldNames(
@@ -308,13 +306,11 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		SearchContext searchContext, Query query) {
 
 		baseSearchRequest.putAllFacets(searchContext.getFacets());
-
-		boolean basicFacetSelection = GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION));
-
-		baseSearchRequest.setBasicFacetSelection(basicFacetSelection);
-
+		baseSearchRequest.setBasicFacetSelection(
+			GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.
+						ATTRIBUTE_KEY_BASIC_FACET_SELECTION)));
 		baseSearchRequest.setExplain(searchRequest.isExplain());
 		baseSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());

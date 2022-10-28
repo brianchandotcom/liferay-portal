@@ -104,6 +104,9 @@ public abstract class BasePoolingHttpClientFactory
 				Thread.sleep(500);
 			}
 			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException);
+				}
 			}
 
 			retry++;

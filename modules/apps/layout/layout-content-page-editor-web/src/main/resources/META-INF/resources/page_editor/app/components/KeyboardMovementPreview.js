@@ -33,11 +33,17 @@ const getItemStyle = (keyboardTargetId, keyboardPosition, previewRef) => {
 		return {};
 	}
 
-	const {x, y} = getKeyboardMovementPosition(
+	const movementPosition = getKeyboardMovementPosition(
 		keyboardTargetId,
 		keyboardPosition,
 		previewRef
 	);
+
+	if (!movementPosition) {
+		return null;
+	}
+
+	const {x, y} = movementPosition;
 
 	const transform = `translate(${x}px, ${y}px)`;
 
@@ -50,6 +56,11 @@ const getItemStyle = (keyboardTargetId, keyboardPosition, previewRef) => {
 const getKeyboardMovementPosition = (targetId, targetPosition, previewRef) => {
 	const topperCSSClass = getLayoutDataItemTopperUniqueClassName(targetId);
 	const topperElement = document.querySelector(`.${topperCSSClass}`);
+
+	if (!topperElement.offsetParent) {
+		return null;
+	}
+
 	const topperRect = topperElement.getBoundingClientRect();
 
 	const previewRect = previewRef.current.getBoundingClientRect();
@@ -90,7 +101,11 @@ export default function KeyboardMovementPreview() {
 
 	useEffect(() => {
 		if (itemId) {
-			setStyle(getItemStyle(itemId, position, previewRef));
+			const newStyle = getItemStyle(itemId, position, previewRef);
+
+			if (newStyle) {
+				setStyle(getItemStyle(itemId, position, previewRef));
+			}
 		}
 	}, [itemId, position]);
 
@@ -98,7 +113,11 @@ export default function KeyboardMovementPreview() {
 		'scroll',
 		debounce(() => {
 			if (itemId) {
-				setStyle(getItemStyle(itemId, position, previewRef));
+				const newStyle = getItemStyle(itemId, position, previewRef);
+
+				if (newStyle) {
+					setStyle(getItemStyle(itemId, position, previewRef));
+				}
 			}
 		}, 100),
 		true,

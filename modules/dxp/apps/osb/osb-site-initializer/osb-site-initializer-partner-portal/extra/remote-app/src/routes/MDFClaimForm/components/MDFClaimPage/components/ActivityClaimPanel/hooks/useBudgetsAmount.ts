@@ -35,7 +35,7 @@ export default function useBudgetsAmount(
 			0
 		);
 
-		if (amountValue || amountValue === 0) {
+		if (amountValue !== undefined) {
 			onAmountUpdate(amountValue);
 		}
 	}, [debouncedBudgets, onAmountUpdate]);

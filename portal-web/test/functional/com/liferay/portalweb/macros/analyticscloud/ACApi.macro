@@ -76,7 +76,7 @@ definition {
 				-H "OSB-Asah-Project-ID: ${osbAsahProjectId}"
 				''';
 		}
-		else if (!(isSet(parameters))) {
+		else {
 			var curl = '''
 				${faroBackendURL}/api/1.0/pages/search-keywords \
 				-H "OSB-Asah-Faro-Backend-Security-Signature: ${osbAsahFaroBackendSS}" \

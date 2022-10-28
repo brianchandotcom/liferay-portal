@@ -112,18 +112,6 @@ public interface S3StoreConfiguration {
 	public int maxPoolSize();
 
 	@Meta.AD(
-		deflt = "7", description = "cache-dir-clean-up-expunge-help",
-		name = "cache-dir-clean-up-expunge", required = false
-	)
-	public int cacheDirCleanUpExpunge();
-
-	@Meta.AD(
-		deflt = "100", description = "cache-dir-clean-up-frequency-help",
-		name = "cache-dir-clean-up-frequency", required = false
-	)
-	public int cacheDirCleanUpFrequency();
-
-	@Meta.AD(
 		deflt = "5242880", description = "minimum-uploads-part-size-help",
 		name = "minimum-uploads-part-size", required = false
 	)

@@ -5,6 +5,43 @@
 	"name": "MDFClaim",
 	"objectFields": [
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "MDF_Request__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request External Reference Code SF"
+			},
+			"name": "mdfRequestExternalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "External Reference Code SF"
+			},
+			"name": "externalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request Total Cost of Expense"
+			},
+			"name": "mdfRequestTotalCostOfExpense",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"indexed": true,

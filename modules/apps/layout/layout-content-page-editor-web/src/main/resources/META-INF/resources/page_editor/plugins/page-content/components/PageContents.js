@@ -12,16 +12,15 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {CONTENT_TYPE_LABELS} from '../../../app/config/constants/contentTypeLabels';
+import SearchResultsMessage from '../../../common/components/SearchResultsMessage';
 import ContentFilter from './ContentFilter';
 import ContentList from './ContentList';
 
 export default function PageContents({pageContents}) {
-	const messageRef = useRef(null);
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedType, setSelectedType] = useState(null);
 
@@ -62,31 +61,18 @@ export default function PageContents({pageContents}) {
 		[pageContents, searchValue]
 	);
 
-	useEffect(() => {
-		let timeout = null;
-
-		timeout = setTimeout(() => {
-			if (filteredContents !== pageContents || selectedType) {
-				const numberOfContents = (
-					filteredContents[selectedType] ||
-					Object.values(filteredContents).flatMap(
-						(content) => content
-					)
-				).length;
-
-				messageRef.current.textContent = numberOfContents
-					? sub(
-							Liferay.Language.get('showing-x-results'),
-							numberOfContents
-					  )
-					: Liferay.Language.get('no-results-found');
-			}
-		}, 100);
-
-		return () => {
-			clearTimeout(timeout);
-		};
-	}, [filteredContents, selectedType, pageContents]);
+	const numberOfResults = useMemo(
+		() =>
+			filteredContents !== pageContents || selectedType
+				? (
+						filteredContents[selectedType] ||
+						Object.values(filteredContents).flatMap(
+							(content) => content
+						)
+				  ).length
+				: null,
+		[filteredContents, selectedType, pageContents]
+	);
 
 	return (
 		<>
@@ -100,7 +86,7 @@ export default function PageContents({pageContents}) {
 				contents={filteredContents}
 				selectedType={selectedType}
 			/>
-			<span className="sr-only" ref={messageRef} role="status"></span>
+			<SearchResultsMessage numberOfResults={numberOfResults} />
 		</>
 	);
 }

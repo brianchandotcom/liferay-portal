@@ -14,5 +14,8 @@ import MDFClaim from '../mdfClaim';
 export default interface MDFClaimDTO
 	extends Omit<MDFClaim, 'activities' | 'reimbursementInvoice'> {
 	amountClaimed?: number;
+	externalReferenceCodeSF?: string;
+	mdfRequestExternalReferenceCodeSF?: string;
+	mdfRequestTotalCostOfExpense?: number;
 	mdfRequestedAmount?: number;
 }

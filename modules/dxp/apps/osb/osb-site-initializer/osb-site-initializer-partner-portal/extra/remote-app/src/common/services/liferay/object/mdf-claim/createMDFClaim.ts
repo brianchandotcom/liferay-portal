@@ -10,17 +10,22 @@
  */
 
 import {Liferay} from '../..';
+import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../../interfaces/mdfClaim';
 import {getDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getDTOFromMDFClaim';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
+import {ResourceName} from '../enum/resourceName';
 
-export default async function createMDFClaim(mdfClaim: MDFClaim) {
-	const dtoMDFClaim = getDTOFromMDFClaim(mdfClaim);
-
+export default async function createMDFClaim(
+	apiOption: ResourceName,
+	mdfClaim: MDFClaim,
+	mdfRequest: MDFRequestDTO,
+	externalReferenceCodeSF?: string
+) {
 	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/mdfclaims`,
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
-		dtoMDFClaim
+		getDTOFromMDFClaim(mdfClaim, mdfRequest, externalReferenceCodeSF)
 	);
 }

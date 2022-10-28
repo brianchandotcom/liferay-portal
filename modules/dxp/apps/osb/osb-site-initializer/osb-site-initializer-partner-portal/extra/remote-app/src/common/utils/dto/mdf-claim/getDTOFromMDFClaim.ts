@@ -10,11 +10,19 @@
  */
 
 import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
+import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../interfaces/mdfClaim';
 
-export function getDTOFromMDFClaim(mdfClaim: MDFClaim): MDFClaimDTO {
+export function getDTOFromMDFClaim(
+	mdfClaim: MDFClaim,
+	mdfRequest: MDFRequestDTO,
+	externalReferenceCodeSF?: string
+): MDFClaimDTO {
 	return {
 		amountClaimed: mdfClaim.totalClaimAmount,
+		externalReferenceCodeSF,
+		mdfRequestExternalReferenceCodeSF: mdfRequest?.externalReferenceCodeSF,
+		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
 		mdfRequestedAmount: mdfClaim.totalrequestedAmount,
 		r_mdfRequestToMdfClaims_c_mdfRequestId:
 			mdfClaim.r_mdfRequestToMdfClaims_c_mdfRequestId,

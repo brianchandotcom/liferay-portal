@@ -13,11 +13,15 @@
  */
 
 export default function withDispatch(Component) {
-	return class withDispatch extends Component {
+	class WithDispatch extends Component {
 		dispatch(...args) {
 			const {dispatch} = this.context;
 
 			(dispatch || this.emit).apply(this, args);
 		}
-	};
+	}
+
+	WithDispatch.DUMMY_PROPERTY = {};
+
+	return WithDispatch;
 }

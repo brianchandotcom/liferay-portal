@@ -95,8 +95,7 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 		).displayGroupName(
 			suggestionsContributorConfiguration.getDisplayGroupName()
 		).suggestions(
-			_getSuggestions(
-				attributes, jsonArray, searchContext, suggestionBuilderFactory)
+			_getSuggestions(jsonArray, searchContext, suggestionBuilderFactory)
 		).build();
 	}
 
@@ -160,8 +159,7 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 	}
 
 	private List<Suggestion> _getSuggestions(
-		Map<String, Object> attributes, JSONArray jsonArray,
-		SearchContext searchContext,
+		JSONArray jsonArray, SearchContext searchContext,
 		SuggestionBuilderFactory suggestionBuilderFactory) {
 
 		List<Suggestion> suggestions = new ArrayList<>();
@@ -171,7 +169,11 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 				searchContext.getAttribute(
 					"search.suggestions.destination.friendly.url"),
 				"/search"),
-			"?", MapUtil.getString(attributes, "keywordsParameterName", "q"),
+			"?",
+			GetterUtil.getString(
+				searchContext.getAttribute(
+					"search.suggestions.keywords.parameter.name"),
+				"q"),
 			"=");
 
 		for (int i = 0; i < jsonArray.length(); i++) {

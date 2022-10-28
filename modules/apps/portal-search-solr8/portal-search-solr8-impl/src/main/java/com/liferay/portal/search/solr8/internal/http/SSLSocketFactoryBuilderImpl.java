@@ -147,15 +147,15 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 		SSLSocketFactoryBuilderImpl.class);
 
 	private KeyStoreLoader _keyStoreLoader;
-	private char[] _keyStorePassword;
-	private String _keyStorePath;
-	private String _keyStoreType = KeyStore.getDefaultType();
+	private volatile char[] _keyStorePassword;
+	private volatile String _keyStorePath;
+	private volatile String _keyStoreType = KeyStore.getDefaultType();
 	private volatile SolrSSLSocketFactoryConfiguration
 		_solrSSLSocketFactoryConfiguration;
-	private char[] _trustStorePassword;
-	private String _trustStorePath;
-	private String _trustStoreType = KeyStore.getDefaultType();
-	private boolean _verifyServerCertificate = true;
-	private boolean _verifyServerHostname = true;
+	private volatile char[] _trustStorePassword;
+	private volatile String _trustStorePath;
+	private volatile String _trustStoreType = KeyStore.getDefaultType();
+	private volatile boolean _verifyServerCertificate = true;
+	private volatile boolean _verifyServerHostname = true;
 
 }

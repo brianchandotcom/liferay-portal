@@ -148,7 +148,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 		catch (Exception exception) {
 			if (_logExceptionsOnly) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 			else {
 				if (exception instanceof RuntimeException) {
@@ -199,7 +199,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 		catch (Exception exception) {
 			if (_logExceptionsOnly) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 			else {
 				if (exception instanceof RuntimeException) {
@@ -421,8 +421,8 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexSearcher.class);
 
-	private String _defaultCollection;
-	private boolean _logExceptionsOnly;
+	private volatile String _defaultCollection;
+	private volatile boolean _logExceptionsOnly;
 	private Props _props;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

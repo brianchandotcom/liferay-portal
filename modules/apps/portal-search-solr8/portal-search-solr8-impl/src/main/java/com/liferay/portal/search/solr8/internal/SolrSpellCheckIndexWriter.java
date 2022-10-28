@@ -110,7 +110,7 @@ public class SolrSpellCheckIndexWriter
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -156,7 +156,7 @@ public class SolrSpellCheckIndexWriter
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -211,7 +211,7 @@ public class SolrSpellCheckIndexWriter
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -229,8 +229,8 @@ public class SolrSpellCheckIndexWriter
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrSpellCheckIndexWriter.class);
 
-	private String _defaultCollection;
-	private boolean _logExceptionsOnly;
+	private volatile String _defaultCollection;
+	private volatile boolean _logExceptionsOnly;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private volatile SolrConfiguration _solrConfiguration;
 

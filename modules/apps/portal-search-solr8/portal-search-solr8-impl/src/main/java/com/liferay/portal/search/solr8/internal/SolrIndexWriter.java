@@ -75,7 +75,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -119,7 +119,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -137,7 +137,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -159,7 +159,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -203,7 +203,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -245,7 +245,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (Exception exception) {
 			if (_logExceptionsOnly) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 			else {
 				if (exception instanceof RuntimeException) {
@@ -276,7 +276,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -321,7 +321,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -385,7 +385,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		}
 		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(runtimeException, runtimeException);
+				_log.error(runtimeException);
 			}
 			else {
 				throw runtimeException;
@@ -413,8 +413,8 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexWriter.class);
 
-	private String _defaultCollection;
-	private boolean _logExceptionsOnly;
+	private volatile String _defaultCollection;
+	private volatile boolean _logExceptionsOnly;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private volatile SolrConfiguration _solrConfiguration;
 

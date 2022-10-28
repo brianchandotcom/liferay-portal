@@ -169,7 +169,7 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrSearchEngineInformation.class);
 
-	private String _defaultCollection;
+	private volatile String _defaultCollection;
 	private volatile SolrConfiguration _solrConfiguration;
 
 }

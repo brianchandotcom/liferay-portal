@@ -94,7 +94,7 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 		_solrClientManager = solrClientManager;
 	}
 
-	private String _defaultCollection;
+	private volatile String _defaultCollection;
 	private QueryTranslator<String> _queryTranslator;
 	private SolrClientManager _solrClientManager;
 	private volatile SolrConfiguration _solrConfiguration;

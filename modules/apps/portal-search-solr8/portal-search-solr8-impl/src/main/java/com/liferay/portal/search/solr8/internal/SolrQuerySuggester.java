@@ -437,10 +437,10 @@ public class SolrQuerySuggester implements QuerySuggester {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrQuerySuggester.class);
 
-	private String _defaultCollection;
+	private volatile String _defaultCollection;
 	private final StringDistance _defaultStringDistance =
 		new LevenshteinDistance();
-	private double _distanceThreshold;
+	private volatile double _distanceThreshold;
 	private Localization _localization;
 	private NGramQueryBuilder _nGramQueryBuilder;
 	private SolrClientManager _solrClientManager;

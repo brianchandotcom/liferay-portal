@@ -372,7 +372,7 @@ public class BulkDocumentRequestExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BulkDocumentRequestExecutorImpl.class);
 
-	private String _defaultCollection;
+	private volatile String _defaultCollection;
 	private SolrClientManager _solrClientManager;
 	private volatile SolrConfiguration _solrConfiguration;
 	private SolrDocumentFactory _solrDocumentFactory;

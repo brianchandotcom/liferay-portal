@@ -111,7 +111,7 @@ public class ReplicatedSolrClientFactory implements SolrClientFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReplicatedSolrClientFactory.class);
 
-	private String _defaultCollectionPath;
+	private volatile String _defaultCollectionPath;
 	private volatile SolrConfiguration _solrConfiguration;
 
 }

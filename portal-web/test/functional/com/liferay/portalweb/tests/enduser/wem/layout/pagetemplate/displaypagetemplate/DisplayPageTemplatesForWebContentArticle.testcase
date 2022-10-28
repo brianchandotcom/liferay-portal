@@ -646,6 +646,148 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-90999. Preview web content in Asset Libraries through sites' display page templates."
+	@priority = "4"
+	test PreviewWebContentThroughTheDisplayPageOfSpecificSiteInAssetLibrary {
+		task ("Given a site designer has display page templates for web content") {
+			var i = "1";
+
+			while ("${i}" != "7") {
+				JSONGroup.addGroup(groupName = "Test Site Name ${i}");
+
+				var i = ${i} + 1;
+			}
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Default Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Default Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Default Display Page Name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site designer creates a web content in an Asset Library") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Then the site designer can see the Display Page Preview section") {
+			Panel.expandPanel(panel = "Display Page Preview");
+
+			AssertTextEquals(
+				key_fieldLabel = "Site",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "- Not Selected -");
+
+			AssertNotEditable(
+				key_text = "Display Page",
+				locator1 = "TextInput#ANY");
+
+			AssertAttributeValue(
+				attribute1 = "disabled",
+				key_text = "Preview",
+				locator1 = "Button#ANY",
+				value1 = "true");
+		}
+
+		task ("When the site designer selects the default display page") {
+			WebContent.selectPreviewSite(siteName = "Test Site Name");
+
+			WebContent.selectPreviewDisplayPage(displayPageName = "Default Display Page Name");
+		}
+
+		task ("Then the site designer could preview the web content") {
+			AssertTextEquals(
+				key_fieldLabel = "Site",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "Test Site Name");
+
+			AssertTextEquals(
+				key_text = "Display Page",
+				locator1 = "TextInput#ANY",
+				value1 = "Default Display Page Name");
+
+			AssertAttributeValue(
+				attribute1 = "title",
+				key_text = "Preview",
+				locator1 = "Button#ANY_SECONDARY",
+				value1 = "A draft will be saved before displaying the preview.");
+
+			Click(
+				key_text = "Preview",
+				locator1 = "Button#ANY");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Web Content Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the site designer selects the non-default display page") {
+			WebContent.selectPreviewDisplayPage(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the site designer could preview the web content") {
+			AssertTextEquals(
+				key_text = "Display Page",
+				locator1 = "TextInput#ANY",
+				value1 = "Display Page Name");
+
+			Click(
+				key_text = "Preview",
+				locator1 = "Button#ANY");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Web Content Content");
+
+			IFrame.closeFrame();
+		}
+	}
+
 	@description = "This is a test for LPS-150919. Canonical URL should be valid for DPT."
 	@priority = "2"
 	test ViewCanonicalURL {

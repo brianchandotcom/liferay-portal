@@ -222,7 +222,7 @@ const yupSchema = {
 		caseTypes: yup.array(yup.number()).required(),
 		dueStatus: yup.string(),
 		name: yup.string().required(i18n.sub('x-is-a-required-field', 'name')),
-		users: yup.array().of(yup.number()),
+		userIds: yup.array().of(yup.number()),
 	}),
 	taskToUser: yup.object({
 		name: yup.string(),

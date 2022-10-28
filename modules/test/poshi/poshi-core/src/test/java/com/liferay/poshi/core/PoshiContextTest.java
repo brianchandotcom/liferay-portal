@@ -51,7 +51,7 @@ public class PoshiContextTest extends TestCase {
 
 		PropsUtil.set("test.base.dir.name", poshiFileDir);
 
-		PoshiContext.readFiles(poshiFileNames, poshiFileDir);
+		PoshiContext.readFiles(true, poshiFileNames, poshiFileDir);
 	}
 
 	@After

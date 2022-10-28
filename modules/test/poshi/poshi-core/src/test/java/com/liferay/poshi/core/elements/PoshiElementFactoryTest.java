@@ -47,7 +47,7 @@ public class PoshiElementFactoryTest {
 
 		PropsUtil.set("test.base.dir.name", poshiFileDir);
 
-		PoshiContext.readFiles(poshiFileNames, poshiFileDir);
+		PoshiContext.readFiles(true, poshiFileNames, poshiFileDir);
 
 		PoshiContext.setFunctionFileNames("WaitForSPARefresh");
 

@@ -62,7 +62,7 @@ public class PoshiProseDefinitionTest extends TestCase {
 
 		PropsUtil.set("test.base.dir.name", _testBaseDir.getCanonicalPath());
 
-		PoshiContext.readFiles(poshiFileNames, _TEST_BASE_DIR_NAME);
+		PoshiContext.readFiles(true, poshiFileNames, _TEST_BASE_DIR_NAME);
 
 		_poshiProseDefinition = new PoshiProseDefinition(
 			FileUtil.getURL(new File(_testBaseDir, _POSHI_PROSE_FILE_NAME)));

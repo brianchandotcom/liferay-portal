@@ -56,11 +56,9 @@ definition {
 			var nodePort = "8080";
 		}
 
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
 			nodePort = "${nodePort}",
 			scriptFile = "groovy-script-invoke-ldap-user-import-on-master.groovy");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	@description = "Install openldap util to be able to use ldap commands on command line"

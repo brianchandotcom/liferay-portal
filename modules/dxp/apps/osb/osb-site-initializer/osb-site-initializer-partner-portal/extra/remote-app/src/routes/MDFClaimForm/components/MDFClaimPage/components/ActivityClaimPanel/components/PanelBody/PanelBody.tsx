@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayPanel from '@clayui/panel';
-import {setElementFullHeight} from '@clayui/shared';
 import classNames from 'classnames';
 import {CSSTransition} from 'react-transition-group';
 
@@ -35,17 +33,15 @@ const PanelBody = ({children, expanded}: IProps) => (
 		onEnter={(element: HTMLElement) =>
 			element.setAttribute('style', `height: 0px`)
 		}
-		onEntering={(element: HTMLElement) => setElementFullHeight(element)}
-		onExit={(element) => setElementFullHeight(element)}
+		onEntering={(element: HTMLElement) =>
+			element.setAttribute('style', `height: 100%`)
+		}
+		onExit={(element) => element.setAttribute('style', `height: 100%`)}
 		onExiting={(element) => element.setAttribute('style', `height: 0px`)}
 		role="tabpanel"
-		timeout={250}
+		timeout={100}
 	>
-		<div>
-			<ClayPanel.Body className="mx-2 pb-0 pt-4 px-5">
-				{children}
-			</ClayPanel.Body>
-		</div>
+		<div>{children}</div>
 	</CSSTransition>
 );
 

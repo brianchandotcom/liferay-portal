@@ -15,18 +15,20 @@ import classNames from 'classnames';
 interface IProps {
 	children?: React.ReactNode;
 	expanded: boolean;
+	onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-const PanelHeader = ({children, expanded}: IProps) => (
+const PanelHeader = ({children, expanded, onClick}: IProps) => (
 	<ClayPanel.Title
 		aria-expanded={expanded}
 		className={classNames(
-			'panel-header panel-header-link align-items-center d-flex pl-4 pr-5 py-4',
+			'panel-header panel-header-link align-items-center d-flex pl-4 pr-5 py-4 card-interactive',
 			{
 				collapsed: !expanded,
 				show: expanded,
 			}
 		)}
+		onClick={onClick}
 		role="tab"
 	>
 		{children}

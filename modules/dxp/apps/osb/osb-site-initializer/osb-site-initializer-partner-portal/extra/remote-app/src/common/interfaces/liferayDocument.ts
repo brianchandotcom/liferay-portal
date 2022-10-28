@@ -10,6 +10,6 @@
  */
 
 export default interface LiferayDocument {
-	contentUrl: string;
-	id: number;
+	contentUrl?: string;
+	id?: number;
 }

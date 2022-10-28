@@ -24,11 +24,12 @@ const SearchHeader = ({count, loading, onSearchSubmit}) => {
 				: i18n.pluralize(count, 'project')
 		}`;
 	};
+	// eslint-disable-next-line no-console
+	console.log(loading);
 
 	return (
 		<div className="align-items-center d-flex justify-content-between mb-4 pb-2">
 			<SearchBar
-				disabled={loading}
 				onSearchSubmit={(term) => {
 					setHasTerm(!!term);
 					onSearchSubmit(term);

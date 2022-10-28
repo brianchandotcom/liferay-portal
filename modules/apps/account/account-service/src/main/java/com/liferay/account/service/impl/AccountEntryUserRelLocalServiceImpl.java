@@ -507,6 +507,14 @@ public class AccountEntryUserRelLocalServiceImpl
 			emailAddress);
 
 		try {
+			AccountEntryEmailConfiguration accountEntryEmailConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AccountEntryEmailConfiguration.class,
+					inviter.getCompanyId());
+
+			int invitationTokenExpirationTime =
+				accountEntryEmailConfiguration.invitationTokenExpirationTime();
+
 			Ticket ticket = _ticketLocalService.addTicket(
 				inviter.getCompanyId(), AccountEntry.class.getName(),
 				accountEntryId, AccountTicketConstants.TYPE_USER_INVITATION,
@@ -516,7 +524,8 @@ public class AccountEntryUserRelLocalServiceImpl
 					"emailAddress", emailAddress
 				).toString(),
 				new Date(
-					System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
+					System.currentTimeMillis() +
+						TimeUnit.HOURS.toMillis(invitationTokenExpirationTime)),
 				serviceContext);
 
 			Group guestGroup = _groupLocalService.getGroup(
@@ -555,11 +564,6 @@ public class AccountEntryUserRelLocalServiceImpl
 
 			MailTemplateContext mailTemplateContext =
 				mailTemplateContextBuilder.build();
-
-			AccountEntryEmailConfiguration accountEntryEmailConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AccountEntryEmailConfiguration.class,
-					inviter.getCompanyId());
 
 			LocalizedValuesMap subjectLocalizedValuesMap =
 				accountEntryEmailConfiguration.invitationEmailSubject();

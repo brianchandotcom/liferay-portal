@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.configuration.AccountEntryEmailConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountTicketConstants;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -553,21 +556,24 @@ public class AccountEntryUserRelLocalServiceImpl
 			MailTemplateContext mailTemplateContext =
 				mailTemplateContextBuilder.build();
 
-			String subject = StringUtil.read(
-				getClassLoader(),
-				"com/liferay/account/dependencies" +
-					"/account_entry_invite_user_subject.tmpl");
+			AccountEntryEmailConfiguration accountEntryEmailConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					AccountEntryEmailConfiguration.class,
+					inviter.getCompanyId());
+
+			LocalizedValuesMap subjectLocalizedValuesMap =
+				accountEntryEmailConfiguration.invitationEmailSubject();
 
 			MailTemplate subjectMailTemplate =
-				MailTemplateFactoryUtil.createMailTemplate(subject, false);
+				MailTemplateFactoryUtil.createMailTemplate(
+					subjectLocalizedValuesMap.get(inviter.getLocale()), false);
 
-			String body = StringUtil.read(
-				getClassLoader(),
-				"com/liferay/account/dependencies" +
-					"/account_entry_invite_user_body.tmpl");
+			LocalizedValuesMap bodyLocalizedValuesMap =
+				accountEntryEmailConfiguration.invitationEmailBody();
 
 			MailTemplate bodyMailTemplate =
-				MailTemplateFactoryUtil.createMailTemplate(body, true);
+				MailTemplateFactoryUtil.createMailTemplate(
+					bodyLocalizedValuesMap.get(inviter.getLocale()), true);
 
 			MailMessage mailMessage = new MailMessage(
 				new InternetAddress(
@@ -631,6 +637,9 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

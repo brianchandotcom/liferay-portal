@@ -53,7 +53,7 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 			<aui:input cssClass="start-parameter-name" name="start-parameter-name" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getPaginationStartParameterName() %>" />
 
 			<liferay-ddm:template-renderer
-				className="<%= AssetTagsSearchFacetTermDisplayContext.class.getName() %>"
+				className="<%= AssetTagsSearchFacetDisplayContext.class.getName() %>"
 				contextObjects='<%=
 					HashMapBuilder.<String, Object>put(
 						"assetTagsSearchFacetDisplayContext", assetTagsSearchFacetDisplayContext

@@ -24,7 +24,6 @@ taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferences" %><%@
 page import="com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferencesImpl" %><%@
@@ -60,7 +59,7 @@ TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPrefe
 			>
 				<div class="display-template">
 					<liferay-template:template-selector
-						className="<%= AssetTagsSearchFacetTermDisplayContext.class.getName() %>"
+						className="<%= AssetTagsSearchFacetDisplayContext.class.getName() %>"
 						displayStyle="<%= tagFacetPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= assetTagsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"

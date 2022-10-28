@@ -48,7 +48,7 @@ public class TagFacetPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return AssetTagsSearchFacetTermDisplayContext.class.getName();
+		return AssetTagsSearchFacetDisplayContext.class.getName();
 	}
 
 	@Override

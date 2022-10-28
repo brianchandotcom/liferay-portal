@@ -14,8 +14,30 @@
 
 /// <reference types="react" />
 
-export declare function HierarchyDataRenderer({value}: IProps): JSX.Element;
-interface IProps {
+interface HierarchyDataRendererProps {
 	value: boolean;
 }
+declare function HierarchyDataRenderer({
+	value,
+}: HierarchyDataRendererProps): JSX.Element;
+export default function ObjectRelationshipsFDSPropsTransformer({
+	...otherProps
+}: {
+	[x: string]: any;
+}): {
+	customDataRenderers: {
+		hierarchyDataRenderer: typeof HierarchyDataRenderer;
+	};
+	onActionDropdownItemClick({
+		action,
+		itemData,
+	}: {
+		action: {
+			data: {
+				id: string;
+			};
+		};
+		itemData: ObjectRelationship;
+	}): void;
+};
 export {};

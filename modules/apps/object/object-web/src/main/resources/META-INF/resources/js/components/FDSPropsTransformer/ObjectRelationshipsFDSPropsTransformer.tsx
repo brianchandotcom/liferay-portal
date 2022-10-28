@@ -15,7 +15,11 @@
 import ClayLabel from '@clayui/label';
 import React from 'react';
 
-export function HierarchyDataRenderer({value}: IProps) {
+interface HierarchyDataRendererProps {
+	value: boolean;
+}
+
+function HierarchyDataRenderer({value}: HierarchyDataRendererProps) {
 	return (
 		<ClayLabel displayType={value ? 'info' : 'success'}>
 			{value
@@ -25,6 +29,24 @@ export function HierarchyDataRenderer({value}: IProps) {
 	);
 }
 
-interface IProps {
-	value: boolean;
+export default function ObjectRelationshipsFDSPropsTransformer({
+	...otherProps
+}) {
+	return {
+		...otherProps,
+		customDataRenderers: {
+			hierarchyDataRenderer: HierarchyDataRenderer,
+		},
+		onActionDropdownItemClick({
+			action,
+			itemData,
+		}: {
+			action: {data: {id: string}};
+			itemData: ObjectRelationship;
+		}) {
+			if (action.data.id === 'deleteObjectRelationship') {
+				Liferay.fire('deleteObjectRelationship', {itemData});
+			}
+		},
+	};
 }

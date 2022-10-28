@@ -5596,6 +5596,65 @@ definition {
 		}
 	}
 
+	@description = "LPS-162824: Add the Revert Action to the Version History for Documents and Media"
+	@priority = "4"
+	test RevertDocumentVersion {
+		property custom.properties = "feature.flag.LPS-162924=true";
+
+		task ("Given a Document with more than one version") {
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Create a new version of the document") {
+				DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+				DMDocument.editCP(
+					dmDocumentTitle = "DM Document Title",
+					dmDocumentTitleEdit = "DM Document Title Edit");
+			}
+		}
+
+		task ("And its info panel is open") {
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar at versions tag") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "DM Document Title Edit");
+
+				ContentDashboard.openVersionsTab();
+			}
+		}
+
+		task ("When user select the revert option of an older version") {
+			ContentDashboard.clickMenuOfVersion(
+				item = "Revert",
+				versionName = "Version 1.0");
+		}
+
+		task ("Then a new major version is created") {
+			AssertTextPresent(
+				index = "1",
+				locator1 = "ContentDashboard#ASSET_VERSION_NUMBER_INDEX",
+				value1 = "Version 2.0");
+		}
+
+		task ("And the log should inform the corresponding version") {
+			AssertTextEquals(
+				locator1 = "ContentDashboard#ASSET_VERSION_LOGS",
+				value1 = "Reverted to 1.0",
+				versionNumber = "Version 2.0");
+		}
+	}
+
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
 	test SaveFiltersAfterEditing {

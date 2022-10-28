@@ -81,6 +81,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -105,6 +106,8 @@ public class ObjectFieldLocalServiceTest {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-164278", "true"
+			).setProperty(
+				"feature.flag.LPS-158776", "true"
 			).build());
 
 		_listTypeDefinition =
@@ -119,6 +122,16 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), _listTypeEntryKey,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164278", "false"
+			).setProperty(
+				"feature.flag.LPS-158776", "false"
+			).build());
 	}
 
 	@Test
@@ -212,11 +225,6 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"a" + RandomTestUtil.randomString()
-			).build());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164278", "false"
 			).build());
 	}
 

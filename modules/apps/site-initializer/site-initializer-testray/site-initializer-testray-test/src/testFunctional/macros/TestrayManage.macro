@@ -73,7 +73,15 @@ definition {
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
 
-		TestrayManage.createNewCaseTypes(caseName = "${version}");
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
+
+		if (isSet(version)) {
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "${version}");
+		}
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro createTeam {
@@ -257,20 +265,6 @@ definition {
 		Click(
 			key_itemvalue = "${itemValue}",
 			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
-	}
-
-	macro specificVersion {
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameOptions}");
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
-
-		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
-
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${caseName}");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 }

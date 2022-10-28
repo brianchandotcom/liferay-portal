@@ -9,13 +9,27 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+			Testray.createTestraySite(siteName = "Testray 2");
 
-		Refresh();
+			Refresh();
+		}
+
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
 	}
 
 	tearDown {
@@ -33,19 +47,7 @@ definition {
 	@description = "This is a test for LPS-160531 - Verify if As an Administrator I am able to add Product Versions"
 	@priority = "5"
 	test AdminCanAddProductVersion {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-		}
-
-		task ("Change pagination, create Product Version and Assert it was created") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
+		task ("Create Product Version and Assert it was created") {
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project",
@@ -58,26 +60,14 @@ definition {
 	@description = "This is a test for LPS-160533 - Verify if as an Administrator I am able to delete Product Versions"
 	@priority = "5"
 	test AdminCanDeleteProductVersion {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-		}
-
-		task ("Change pagination, create Product Version") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
+		task ("Create a Product Version") {
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project",
 				version = "1.x");
 		}
 
-		task ("Delete Product Version and Assert it was Deleted") {
+		task ("Delete a Product Version and Assert it was Deleted") {
 			TestrayManage.deleteProductVersion(
 				itemManage = "Delete",
 				versionName = "1.x");
@@ -89,26 +79,14 @@ definition {
 	@description = "This is a test for LPS-160532 - Verify if as an Administrator I am able to Edit Product Versions"
 	@priority = "5"
 	test AdminCanEditProductVersion {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-		}
-
-		task ("Change pagination, create Product Version") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
+		task ("Create a Product Version") {
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project",
 				version = "1.x");
 		}
 
-		task ("Edit Product Version and Assert it was Edited") {
+		task ("Edit a Product Version and Assert it was Edited") {
 			TestrayManage.editProductVersion(
 				caseName = "1.1.x",
 				itemManage = "Edit",
@@ -121,19 +99,7 @@ definition {
 	@description = "This is a test for LPS-160534 - Verify if as an Administrator I should not be able to add a duplicate Product Versions"
 	@priority = "5"
 	test AdminCanNotAddDuplicateProductVersion {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-		}
-
-		task ("Change pagination, create Product Version and Assert that no duplicate product version was created") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
+		task ("Create Product Version duplicate and Assert that error message appears") {
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project",
@@ -141,33 +107,20 @@ definition {
 
 			Click(locator1 = "TestrayManage#CLOSE_MODAL");
 
-			TestrayManage.specificVersion(
-				caseName = "1.x",
+			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
-				nameOptions = "Projects_1 Project");
+				nameOptions = "Projects_1 Project",
+				version = "1.x");
 
 			Alert.viewErrorMessage(errorMessage = "The Product Version name already exists");
 		}
 	}
 
 	@description = "This is a test for LPS-161334 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = "4"
+	@priority = "3"
 	test AdminCanViewWarningMessage {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Projects_1 Project Description",
-				key_name = "Projects_1 Project");
-		}
-
-		task ("Change pagination and Assert that field Name is required") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
-			TestrayManage.specificVersion(
-				caseName = "",
+		task ("Create product version and Assert that field Name is required") {
+			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project");
 

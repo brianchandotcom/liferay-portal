@@ -140,10 +140,10 @@ definition {
 
 			Click(locator1 = "TestrayManage#CLOSE_MODAL");
 
-			TestrayManage.specificVersion(
-				caseName = "Teams_2 Team",
+			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project");
+				nameOptions = "Projects_1 Project",
+				version = "Teams_2 Team");
 
 			Alert.viewErrorMessage(errorMessage = "The Team name already exists");
 		}
@@ -165,10 +165,10 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.specificVersion(
-				caseName = "",
+			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project");
+				nameOptions = "Projects_1 Project",
+				version = "");
 
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",

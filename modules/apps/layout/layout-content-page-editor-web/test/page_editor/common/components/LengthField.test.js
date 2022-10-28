@@ -44,6 +44,19 @@ const renderLengthField = ({
 	);
 
 describe('LengthField', () => {
+	function openUnitDropdown() {
+
+		// Hackily work around:
+		//
+		//      "TypeError: Cannot read property '_defaultView' of undefined"
+		//
+		// Caused by: https://github.com/jsdom/jsdom/issues/2499
+
+		userEvent.click(screen.getByLabelText('select-a-unit'));
+
+		document.activeElement.blur = () => {};
+	}
+
 	it('renders LengthField', () => {
 		renderLengthField();
 
@@ -91,6 +104,8 @@ describe('LengthField', () => {
 	it('changes the unit of the value', () => {
 		renderLengthField();
 
+		openUnitDropdown();
+
 		userEvent.click(screen.getByText('%'));
 
 		expect(screen.getByLabelText('select-a-unit').textContent).toBe('%');
@@ -118,6 +133,8 @@ describe('LengthField', () => {
 
 	it('focuses the input when custom option is selected', () => {
 		renderLengthField();
+
+		openUnitDropdown();
 
 		userEvent.click(screen.getByText('CUSTOM'));
 
@@ -182,6 +199,8 @@ describe('LengthField', () => {
 
 		it('focuses the input when the currently option is custom and a other unit is selected', () => {
 			renderLengthField({field, value: 'calc(12px - 3px)'});
+
+			openUnitDropdown();
 
 			userEvent.click(screen.getByText('%'));
 

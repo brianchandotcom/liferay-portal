@@ -143,6 +143,8 @@ export function LengthInput({
 		setActive(false);
 		setNextUnit(unit);
 
+		document.getElementById(triggerId)?.focus();
+
 		if (!nextValue || unit === nextUnit) {
 			return;
 		}
@@ -298,6 +300,7 @@ export function LengthInput({
 							},
 						}}
 						onActiveChange={setActive}
+						renderMenuOnClick
 						trigger={
 							<ClayButton
 								aria-expanded={active}

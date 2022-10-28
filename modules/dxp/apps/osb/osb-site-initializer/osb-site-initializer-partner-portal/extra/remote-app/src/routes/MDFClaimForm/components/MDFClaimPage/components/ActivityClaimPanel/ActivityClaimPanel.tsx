@@ -15,6 +15,7 @@ import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
 import {useCallback, useState} from 'react';
 
+import ListFiles from '../../../../../../common/components/ListFiles';
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
 import {useWebDAV} from '../../../../../../common/context/WebDAV';
@@ -157,6 +158,13 @@ const ActivityClaimPanel = ({
 									value
 								)
 							}
+						/>
+
+						<PRMFormik.Array
+							component={ListFiles}
+							files={activity.contents}
+							name={`activities[${activityIndex}].contents`}
+							setFieldValue={setFieldValue}
 						/>
 					</ClayPanel.Body>
 				</PanelBody>

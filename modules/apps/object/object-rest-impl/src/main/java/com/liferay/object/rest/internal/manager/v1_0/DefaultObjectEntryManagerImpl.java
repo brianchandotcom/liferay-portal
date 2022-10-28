@@ -84,6 +84,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -111,6 +113,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -143,8 +146,10 @@ public class DefaultObjectEntryManagerImpl
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
+		Map<String, ObjectRelationship> objectRelationshipMap =
+			_getObjectRelationships(objectDefinition, objectEntry);
+
+		com.liferay.object.model.ObjectEntry newObjectEntry =
 			_objectEntryService.addObjectEntry(
 				groupId, objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
@@ -152,7 +157,16 @@ public class DefaultObjectEntryManagerImpl
 					objectEntry, 0L, dtoConverterContext.getLocale()),
 				_createServiceContext(
 					objectEntry.getProperties(),
-					dtoConverterContext.getUserId())));
+					dtoConverterContext.getUserId()));
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153117"))) {
+			_addNestedObjectEntries(
+				dtoConverterContext, objectDefinition, newObjectEntry,
+				objectEntry, objectRelationshipMap);
+		}
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition, newObjectEntry);
 	}
 
 	@Override
@@ -672,6 +686,135 @@ public class DefaultObjectEntryManagerImpl
 			uriInfo);
 	}
 
+	private void _addNestedObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntryModel,
+			ObjectEntry objectEntry,
+			Map<String, ObjectRelationship> objectRelationshipMap)
+		throws Exception {
+
+		Map<String, Object> objectEntryProperties = objectEntry.getProperties();
+
+		for (Map.Entry<String, ObjectRelationship> property :
+				objectRelationshipMap.entrySet()) {
+
+			if (objectRelationshipMap.containsKey(property.getKey())) {
+				ObjectRelationship objectRelationship =
+					objectRelationshipMap.get(property.getKey());
+
+				Object propertyValue = objectEntryProperties.get(
+					property.getKey());
+
+				if ((propertyValue instanceof Map) &&
+					StringUtil.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+					(objectRelationship.getObjectDefinitionId2() ==
+						objectDefinition.getObjectDefinitionId())) {
+
+					Map<String, Object> nestedObjectEntry =
+						(Map<String, Object>)propertyValue;
+
+					ObjectDefinition relatedObjectDefinition =
+						_objectDefinitionLocalService.getObjectDefinition(
+							_getNestedEntityObjectDefinitionId(
+								objectDefinition, objectRelationship));
+
+					_createAndRelateNestedObjectEntry(
+						dtoConverterContext, nestedObjectEntry,
+						relatedObjectDefinition, true, objectEntryModel,
+						objectRelationship);
+				}
+				else if (propertyValue instanceof List) {
+					if ((StringUtil.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_ONE_TO_MANY) &&
+						 (objectRelationship.getObjectDefinitionId1() ==
+							 objectDefinition.getObjectDefinitionId())) ||
+						StringUtil.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+						List<LinkedHashMap<String, Object>>
+							nestedObjectEntries =
+								(List<LinkedHashMap<String, Object>>)
+									propertyValue;
+
+						ObjectDefinition relatedObjectDefinition =
+							_objectDefinitionLocalService.getObjectDefinition(
+								_getNestedEntityObjectDefinitionId(
+									objectDefinition, objectRelationship));
+
+						for (Map<String, Object> nestedObjectEntry :
+								nestedObjectEntries) {
+
+							_createAndRelateNestedObjectEntry(
+								dtoConverterContext, nestedObjectEntry,
+								relatedObjectDefinition, false,
+								objectEntryModel, objectRelationship);
+						}
+					}
+					else {
+						throw new BadRequestException(
+							"Object Entry with id " +
+								objectEntryModel.getObjectEntryId() +
+									" can not create nested entities");
+					}
+				}
+				else {
+					throw new BadRequestException(
+						"Object Entry with id " +
+							objectEntryModel.getObjectEntryId() +
+								" can not create nested entities");
+				}
+			}
+		}
+	}
+
+	private com.liferay.object.model.ObjectEntry _addNestedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			Map<String, Object> nestedObjectEntry,
+			ObjectDefinition relatedObjectDefinition)
+		throws Exception {
+
+		long groupId = getGroupId(
+			relatedObjectDefinition, relatedObjectDefinition.getScope());
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(nestedObjectEntry);
+
+		if (nestedObjectEntry.containsKey("externalReferenceCode")) {
+			com.liferay.object.model.ObjectEntry existingObjectEntry =
+				_objectEntryLocalService.fetchObjectEntry(
+					(String)nestedObjectEntry.get("externalReferenceCode"),
+					relatedObjectDefinition.getObjectDefinitionId());
+
+			if (existingObjectEntry == null) {
+				return _objectEntryService.addObjectEntry(
+					groupId, relatedObjectDefinition.getObjectDefinitionId(),
+					_toObjectValues(
+						groupId, dtoConverterContext.getUserId(),
+						relatedObjectDefinition, objectEntry, 0L,
+						dtoConverterContext.getLocale()),
+					_createServiceContext(
+						nestedObjectEntry, dtoConverterContext.getUserId()));
+			}
+
+			return existingObjectEntry;
+		}
+
+		return _objectEntryService.addObjectEntry(
+			groupId, relatedObjectDefinition.getObjectDefinitionId(),
+			_toObjectValues(
+				groupId, dtoConverterContext.getUserId(),
+				relatedObjectDefinition, objectEntry, 0L,
+				dtoConverterContext.getLocale()),
+			_createServiceContext(
+				nestedObjectEntry, dtoConverterContext.getUserId()));
+	}
+
 	private void _checkObjectEntryObjectDefinitionId(
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry)
@@ -681,6 +824,33 @@ public class DefaultObjectEntryManagerImpl
 				objectEntry.getObjectDefinitionId()) {
 
 			throw new NoSuchObjectEntryException();
+		}
+	}
+
+	private void _createAndRelateNestedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			Map<String, Object> nestedObjectEntry,
+			ObjectDefinition relatedObjectDefinition, boolean reverse,
+			com.liferay.object.model.ObjectEntry objectEntryModel,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry newNestedObjectEntry =
+			_addNestedObjectEntry(
+				dtoConverterContext, nestedObjectEntry,
+				relatedObjectDefinition);
+
+		if (reverse) {
+			_objectRelationshipService.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				newNestedObjectEntry.getPrimaryKey(),
+				objectEntryModel.getPrimaryKey(), new ServiceContext());
+		}
+		else {
+			_objectRelationshipService.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				objectEntryModel.getPrimaryKey(),
+				newNestedObjectEntry.getPrimaryKey(), new ServiceContext());
 		}
 	}
 
@@ -750,6 +920,19 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUserId());
 	}
 
+	private long _getNestedEntityObjectDefinitionId(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship) {
+
+		if (objectDefinition.getObjectDefinitionId() ==
+				objectRelationship.getObjectDefinitionId1()) {
+
+			return objectRelationship.getObjectDefinitionId2();
+		}
+
+		return objectRelationship.getObjectDefinitionId1();
+	}
+
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
@@ -772,6 +955,35 @@ public class DefaultObjectEntryManagerImpl
 
 	private String _getObjectEntryPermissionName(long objectDefinitionId) {
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
+	}
+
+	private Map<String, ObjectRelationship> _getObjectRelationships(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		Map<String, ObjectRelationship> objectRelationshipMap = new HashMap<>();
+
+		for (String property : properties.keySet()) {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), property);
+
+			if (objectField != null) {
+				continue;
+			}
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectDefinitionId(
+						objectDefinition.getObjectDefinitionId(), property);
+
+			if (objectRelationship != null) {
+				objectRelationshipMap.put(property, objectRelationship);
+			}
+		}
+
+		return objectRelationshipMap;
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(

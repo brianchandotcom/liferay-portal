@@ -21,6 +21,8 @@ import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.NodeUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.TransitionUtil;
 import com.liferay.headless.admin.workflow.internal.odata.entity.v1_0.WorkflowDefinitionEntityModel;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -58,6 +60,21 @@ public class WorkflowDefinitionResourceImpl
 	extends BaseWorkflowDefinitionResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteWorkflowDefinition(Long workflowDefinitionId)
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = getWorkflowDefinition(
+			workflowDefinitionId);
+
+		postWorkflowDefinitionUpdateActive(
+			false, workflowDefinition.getName(),
+			workflowDefinition.getVersion());
+
+		deleteWorkflowDefinitionUndeploy(
+			workflowDefinition.getName(), workflowDefinition.getVersion());
+	}
+
+	@Override
 	public void deleteWorkflowDefinitionUndeploy(String name, String version)
 		throws Exception {
 
@@ -74,19 +91,30 @@ public class WorkflowDefinitionResourceImpl
 	}
 
 	@Override
+	public WorkflowDefinition getWorkflowDefinition(Long workflowDefinitionId)
+		throws Exception {
+
+		return _toWorkflowDefinition(
+			() -> _workflowDefinitionManager.getWorkflowDefinition(
+				workflowDefinitionId));
+	}
+
+	@Override
 	public WorkflowDefinition getWorkflowDefinitionByName(
 			String name, Integer version)
 		throws Exception {
 
-		if (version == null) {
-			return _toWorkflowDefinition(
-				_workflowDefinitionManager.getLatestWorkflowDefinition(
-					contextCompany.getCompanyId(), name));
-		}
-
 		return _toWorkflowDefinition(
-			_workflowDefinitionManager.getWorkflowDefinition(
-				contextCompany.getCompanyId(), name, version));
+			() -> {
+				if (version == null) {
+					return _workflowDefinitionManager.
+						getLatestWorkflowDefinition(
+							contextCompany.getCompanyId(), name);
+				}
+
+				return _workflowDefinitionManager.getWorkflowDefinition(
+					contextCompany.getCompanyId(), name, version);
+			});
 	}
 
 	@Override
@@ -104,6 +132,14 @@ public class WorkflowDefinitionResourceImpl
 			pagination,
 			_workflowDefinitionManager.getLatestWorkflowDefinitionsCount(
 				active, contextCompany.getCompanyId()));
+	}
+
+	@Override
+	public WorkflowDefinition postWorkflowDefinition(
+			WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		return postWorkflowDefinitionDeploy(workflowDefinition);
 	}
 
 	@Override
@@ -145,6 +181,17 @@ public class WorkflowDefinitionResourceImpl
 				GetterUtil.getInteger(version), active));
 	}
 
+	@Override
+	public WorkflowDefinition putWorkflowDefinition(
+			Long workflowDefinitionId, WorkflowDefinition workflowDefinition)
+		throws Exception {
+
+		_workflowDefinitionManager.getLatestWorkflowDefinition(
+			contextCompany.getCompanyId(), workflowDefinition.getName());
+
+		return postWorkflowDefinitionDeploy(workflowDefinition);
+	}
+
 	private String _getTitle(WorkflowDefinition workflowDefinition)
 		throws Exception {
 
@@ -173,6 +220,27 @@ public class WorkflowDefinitionResourceImpl
 
 		return _workflowComparatorFactory.getDefinitionModifiedDateComparator(
 			!sort.isReverse());
+	}
+
+	private WorkflowDefinition _toWorkflowDefinition(
+			UnsafeSupplier
+				<com.liferay.portal.kernel.workflow.WorkflowDefinition,
+				 Exception> workflowDefinitionUnsafeSupplier)
+		throws Exception {
+
+		try {
+			return _toWorkflowDefinition(
+				workflowDefinitionUnsafeSupplier.get());
+		}
+		catch (Exception exception) {
+			Throwable throwable = exception.getCause();
+
+			if (throwable instanceof NoSuchModelException) {
+				throw (NoSuchModelException)throwable;
+			}
+
+			throw exception;
+		}
 	}
 
 	private WorkflowDefinition _toWorkflowDefinition(

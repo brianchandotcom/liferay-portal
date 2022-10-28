@@ -96,6 +96,13 @@ public interface WorkflowDefinitionManager {
 		return getLatestWorkflowDefinitionsCount(null, companyId);
 	}
 
+	public default WorkflowDefinition getWorkflowDefinition(
+			long workflowDefinitionId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public WorkflowDefinition getWorkflowDefinition(
 			long companyId, String name, int version)
 		throws WorkflowException;

@@ -259,6 +259,26 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Override
+	public WorkflowDefinition getWorkflowDefinition(long workflowDefinitionId)
+		throws WorkflowException {
+
+		try {
+			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					workflowDefinitionId));
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			throw new NoSuchWorkflowDefinitionException(noSuchModelException);
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	@Override
 	public WorkflowDefinition getWorkflowDefinition(
 			long companyId, String name, int version)
 		throws WorkflowException {

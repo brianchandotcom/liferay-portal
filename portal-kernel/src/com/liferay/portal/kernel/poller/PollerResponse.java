@@ -46,17 +46,12 @@ public class PollerResponse implements Serializable {
 		_portletId = portletId;
 		_chunkId = chunkId;
 
-		String responseDestinationName = message.getResponseDestinationName();
-
-		if (Validator.isNull(responseDestinationName)) {
-			return;
-		}
-
 		Message responseMessage = MessageBusUtil.createResponseMessage(message);
 
 		responseMessage.setPayload(this);
 
-		MessageBusUtil.sendMessage(responseDestinationName, responseMessage);
+		MessageBusUtil.sendMessage(
+			responseMessage.getDestinationName(), responseMessage);
 	}
 
 	public PollerHeader getPollerHeader() {

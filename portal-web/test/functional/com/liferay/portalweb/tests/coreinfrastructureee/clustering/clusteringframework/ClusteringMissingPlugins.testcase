@@ -41,9 +41,7 @@ definition {
 			exceptionText = "Could not resolve module: com.liferay.portal.cluster.multiple.sample.web",
 			nodePort = "8080");
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
+		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
@@ -53,15 +51,12 @@ definition {
 			exceptionText = "Unable to deserialize object",
 			nodePort = "9080");
 
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "test.cache is empty");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-remove.groovy");
 
@@ -73,9 +68,7 @@ definition {
 			expectedText = "Removed test.key from test.cache",
 			nodePort = "9080");
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
+		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Unable to deserialize object",
@@ -87,21 +80,14 @@ definition {
 			exceptionText = "Could not resolve module: com.liferay.portal.cluster.multiple.sample.web",
 			nodePort = "9080");
 
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "test.cache is empty",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-cache-get.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "test.cache is empty");
+		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-remove.groovy");
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-remove.groovy");
-
-		Clustering.runGroovyScript(
-			nodePort = "8080",
-			scriptFile = "groovy-script-portal-cache-put-modules.groovy");
+		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Put test.key into test.cache",
@@ -118,21 +104,14 @@ definition {
 			categoryName = "com.liferay.portal.cluster.multiple.sample.web.internal",
 			nodePort = "8080");
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is master node",
 			scriptFile = "groovy-script-master-slave.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is slave node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is slave node");
 
 		Clustering.deployClusteringModule(nodePort = "9080");
 
@@ -168,13 +147,10 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is master node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node");
 
 		// Pausing 10 seconds due to LRQA-75909
 
@@ -209,13 +185,10 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is master node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node");
 
 		// Pausing 10 seconds due to LRQA-75909
 

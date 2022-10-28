@@ -189,30 +189,20 @@ definition {
 	test CanInvokeMethods {
 		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Result of invoke-method-portal: 9080",
 			scriptFile = "groovy-script-invoke-method.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Result of invoke-method-portal: 9080");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Result of invoke-method-portal: 8080",
 			nodePort = "9080",
 			scriptFile = "groovy-script-invoke-method.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Result of invoke-method-portal: 8080");
-
 		for (var serverPort : list "8080,9080") {
-			Clustering.runGroovyScript(
+			Groovy.runScriptViaGosoShell(
+				expectedOutput = "Result of invoke-method-portal-on-master: 8080",
 				nodePort = "${serverPort}",
 				scriptFile = "groovy-script-invoke-method-on-master.groovy");
-
-			AssertTextEquals(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "Result of invoke-method-portal-on-master: 8080");
 		}
 
 		for (var serverPort : list "8080,9080") {
@@ -395,31 +385,21 @@ definition {
 	test SlaveNodeCanBecomeMasterNode {
 		property test.name.skip.portal.instance = "Clustering#SlaveNodeCanBecomeMasterNode";
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is master node",
 			scriptFile = "groovy-script-master-slave.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is slave node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is slave node");
 
 		Clustering.shutdownSpecificServer(nodePort = "8080");
 
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is master node",
 			nodePort = "9080",
 			scriptFile = "groovy-script-master-slave.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is master node");
 
 		Clustering.startSpecificServer(
 			deleteLiferayHome = "true",
@@ -435,13 +415,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "This node is slave node",
 			scriptFile = "groovy-script-master-slave.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "This node is slave node");
 	}
 
 	@priority = "4"

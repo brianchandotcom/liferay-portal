@@ -28,53 +28,32 @@ definition {
 	test PersistentAndMemoryJobs {
 		property test.name.skip.portal.instance = "ClusteringScheduler#PersistentAndMemoryJobs";
 
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Persistent job 1 is added",
 			scriptFile = "groovy-script-portal-scheduler-persistent-1.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Persistent job 1 is added");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Persistent job 2 is added",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-scheduler-persistent-2.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Persistent job 2 is added");
-
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Memory job 1 is added",
 			scriptFile = "groovy-script-portal-scheduler-memory-1.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Memory job 1 is added");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Memory job 2 is added",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-scheduler-memory-2.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Memory job 2 is added");
-
-		Clustering.runGroovyScript(
-			nodePort = "8080",
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Memory clustered job 1 is added",
 			scriptFile = "groovy-script-portal-scheduler-memory-clustered-1.groovy");
 
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Memory clustered job 1 is added");
-
-		Clustering.runGroovyScript(
+		Groovy.runScriptViaGosoShell(
+			expectedOutput = "Memory clustered job 2 is added",
 			nodePort = "9080",
 			scriptFile = "groovy-script-portal-scheduler-memory-clustered-2.groovy");
-
-		AssertTextEquals(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Memory clustered job 2 is added");
 	}
 
 }

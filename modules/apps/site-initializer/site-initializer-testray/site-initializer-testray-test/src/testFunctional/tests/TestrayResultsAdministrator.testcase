@@ -1,0 +1,160 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+		}
+
+        task ("Go to Case Types and add a new case type") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+
+			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
+
+            TestrayManage.closeModalInOptions();
+		}
+
+        task ("Change pagination and create Team") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createTeam(
+				manageOption = "Manage Teams",
+				nameOptions = "Projects_1 Project",
+				version = "Teams_1 Team");
+
+            TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to component and Add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Components_1 Project");
+
+            TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to project page and add a new routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+        task ("Go to tab cases and Add a new Case") {
+            Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Case_Type",
+				componentId = "Components_1 Project",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Go to Routine and Add Environments Factors") {
+            Testray.projectTabNavigator(navTabName = "Routines");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+        task ("Go to routine and add a new build") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				addVersion = "1.2",
+                caseName = "Cases_1 Case",
+				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.2",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Go to Testray 2 and change the pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+
+		Testray.deleteAllProjects();
+
+        TestrayManage.deleteAllCasesTypes();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-160690 - Verify if as an Administrator I am able to Delete Results"
+	@priority = "5"
+	test AdminCanDeleteResults {
+		task ("Given that the user add a new case results") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+		}
+
+        task ("When the user goes to delete a case results") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+            AssertConfirm(value1 = "Are you sure you want to delete this item?");
+		}
+
+		task ("Then the Case Results should not be displayed anymore") {
+			Testray.assertItemNotPresent(itemName = "Cases_1 Case");
+		}
+	}
+
+}

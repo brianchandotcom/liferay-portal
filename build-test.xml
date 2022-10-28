@@ -13178,6 +13178,13 @@ database.partition.enabled=true</echo>
 
 		<get-test-app-server-lib-portal-dir />
 
+		<if>
+			<contains string="${portal.version}" substring="6.2" />
+			<then>
+				<delete dir="${liferay.home}/data/license" />
+			</then>
+		</if>
+
 		<get-database-property property.name="database.docker.image" />
 
 		<if>

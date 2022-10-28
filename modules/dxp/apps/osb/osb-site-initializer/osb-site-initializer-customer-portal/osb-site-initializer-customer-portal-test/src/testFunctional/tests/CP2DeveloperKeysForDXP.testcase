@@ -102,3 +102,32 @@ definition {
 			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
 		}
 	}
+
+	@description = "Automation ID: LPS-146199 | Test Summary: Verify that when clicking on the Deploying Activation Keys article link, the user is redirected to another page."
+	@priority = "3"
+	test ConfirmRedirectionFromDxpToAnotherPage {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("Click in the link 'deploying activation keys article' and go to the page") {
+			Click(locator1 = "CustomerPortalSite#DEPLOY_ARTICLE_PAGE");
+
+			Navigator.selectSpecificWindow(windowTitle = "Deploying Activation Keys – Liferay Help Center");
+		}
+
+		task ("Assert that a new page is opened and go back to 'Product Activation page'") {
+			AssertElementPresent(locator1 = "CustomerPortalSite#DEPLOY_ACTIVATION_PAGE");
+
+			Navigator.closeWindow();
+		}
+	}
+}

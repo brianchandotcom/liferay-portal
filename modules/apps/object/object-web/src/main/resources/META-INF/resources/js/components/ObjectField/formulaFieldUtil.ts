@@ -22,28 +22,28 @@ export const FORMULA_OUTPUT_OPTIONS: FormulaOutput[] = [
 	{
 		description: Liferay.Language.get('select-between-two-possible-values'),
 		label: Liferay.Language.get('boolean'),
-		value: 'boolean',
+		value: 'Boolean',
 	},
 	{
 		description: Liferay.Language.get('calculate-date-values'),
 		label: Liferay.Language.get('date'),
-		value: 'date',
+		value: 'Date',
 	},
 	{
 		description: Liferay.Language.get('calculate-decimal-numeric-values'),
 		label: Liferay.Language.get('decimal'),
-		value: 'decimal',
+		value: 'Decimal',
 	},
 	{
 		description: Liferay.Language.get(
 			'calculate-integer-numeric-values-up-to-nine-digits'
 		),
 		label: Liferay.Language.get('integer'),
-		value: 'integer',
+		value: 'Integer',
 	},
 	{
 		description: Liferay.Language.get('add-text-fields'),
 		label: Liferay.Language.get('text'),
-		value: 'text',
+		value: 'Text',
 	},
 ];

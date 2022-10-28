@@ -1041,8 +1041,11 @@ public class ObjectFieldLocalServiceImpl
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) &&
 			(listTypeDefinitionId == 0) &&
-			StringUtil.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+			(StringUtil.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
+			 StringUtil.equals(
+				 businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) &&
 			!system) {
 
 			throw new ObjectFieldListTypeDefinitionIdException(

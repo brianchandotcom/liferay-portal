@@ -42,7 +42,7 @@ const alertProperties: AlertProperties = {
 		label: i18n.translate('in-analysis'),
 		text: i18n.translate('this-build-is-currently-in-analysis'),
 	},
-	[SubTaskStatuses.ABANDONED]: {
+	[SubTaskStatuses.MERGED]: {
 		color: 'label-secondary',
 		displayType: 'secondary',
 		label: i18n.translate('abandoned'),

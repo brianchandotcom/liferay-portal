@@ -97,7 +97,8 @@ public class ObjectDefinitionsActionsDisplayContext
 
 	public List<Map<String, Object>> getObjectActionCodeEditorElements() {
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			true, objectRequestHelper.getLocale(), getObjectDefinitionId());
+			false, true, true, objectRequestHelper.getLocale(),
+			getObjectDefinitionId());
 	}
 
 	public ObjectActionExecutor getObjectActionExecutor() {

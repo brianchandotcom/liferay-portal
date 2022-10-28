@@ -163,7 +163,7 @@ public class PredicateExpressionVisitorImpl
 					LiteralExpression.Type.INTEGER,
 					literalExpression.getType())) {
 
-			return GetterUtil.getInteger(literalExpression.getText());
+			return GetterUtil.getLong(literalExpression.getText());
 		}
 		else if (Objects.equals(
 					LiteralExpression.Type.NULL, literalExpression.getType())) {

@@ -119,15 +119,15 @@ const SelectPanels: React.FC<IPanelProps> = ({
 								</ClayList.ItemField>
 
 								<ClayList.ItemField expand>
-									<ClayList.ItemTitle>
+									<ClayList.ItemTitle className="hover-title">
 										{item.title}
 									</ClayList.ItemTitle>
 
-									<ClayList.ItemText>
+									<ClayList.ItemTitle className="font-weight-lighter mt-1 text-secondary">
 										{`${item.count} ${Liferay.Language.get(
 											'selected'
 										)}`}
-									</ClayList.ItemText>
+									</ClayList.ItemTitle>
 								</ClayList.ItemField>
 							</ClayList.Item>
 						</ClayList>
@@ -176,17 +176,17 @@ const SelectPanels: React.FC<IPanelProps> = ({
 							</ClayList.ItemField>
 
 							<ClayList.ItemField expand>
-								<ClayList.ItemTitle>
+								<ClayList.ItemTitle className="hover-title">
 									{Liferay.Language.get(
 										'sync-by-accounts-groups'
 									)}
 								</ClayList.ItemTitle>
 
-								<ClayList.ItemText>
+								<ClayList.ItemTitle className="font-weight-lighter mt-1 text-secondary">
 									{`${accountsCount} ${Liferay.Language.get(
 										'selected'
 									)}`}
-								</ClayList.ItemText>
+								</ClayList.ItemTitle>
 							</ClayList.ItemField>
 						</ClayList.Item>
 					</ClayList>

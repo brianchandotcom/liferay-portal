@@ -41,6 +41,10 @@ definition {
 			exceptionText = "Could not resolve module: com.liferay.portal.cluster.multiple.sample.web",
 			nodePort = "8080");
 
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
+			nodePort = "8080");
+
 		Groovy.runScriptViaGosoShell(scriptFile = "groovy-script-portal-cache-put-modules.groovy");
 
 		Clustering.viewTextPresentOnSpecificNode(
@@ -78,6 +82,10 @@ definition {
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Could not resolve module: com.liferay.portal.cluster.multiple.sample.web",
+			nodePort = "9080");
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "STARTED com.liferay.portal.cluster.multiple.sample.web",
 			nodePort = "9080");
 
 		Groovy.runScriptViaGosoShell(

@@ -273,10 +273,19 @@ definition {
 			WaitForConsoleTextPresent(value1 = "${expectedText}");
 		}
 		else {
+			var iterator = "1";
 			var nodeLog = Clustering.getLogFileSpecificServer(nodePort = "${nodePort}");
 
-			if (!(contains("${nodeLog}", "${expectedText}"))) {
-				fail("Failed to find expected text: ${expectedText} on cluser node at ${nodePort}");
+			while ((!(contains("${nodeLog}", "${expectedText}"))) && (maxIterations = "15")) {
+				Pause.pauseNoSPARefresh(locator1 = "2000");
+
+				var nodeLog = Clustering.getLogFileSpecificServer(nodePort = "${nodePort}");
+
+				if (("${iterator}" == "15") && !(contains("${nodeLog}", "${expectedText}"))) {
+					fail("Failed to find expected text: ${expectedText} on cluser node at ${nodePort}");
+				}
+
+				var iterator = ${iterator} + 1;
 			}
 		}
 	}

@@ -719,10 +719,6 @@ definition {
 				locator1 = "APConfigurationSites#SITES_TABLE_NAME",
 				value1 = "${siteName}");
 
-			AssertTextEquals(
-				locator1 = "APConfigurationSites#SITES_TABLE_TYPE",
-				value1 = "${siteScopeType}");
-
 			Click(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 
 			Alert.viewSuccessMessage();
@@ -1341,10 +1337,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "APConfigurationSites#SITES_TABLE_NAME",
 				value1 = "${liferaySiteName}");
-
-			AssertTextEquals(
-				locator1 = "APConfigurationSites#SITES_TABLE_TYPE",
-				value1 = "${liferaySiteType}");
 
 			AssertElementPresent(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 		}

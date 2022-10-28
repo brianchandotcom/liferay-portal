@@ -335,7 +335,8 @@ export default function ObjectFieldFormBase({
 				/>
 			)}
 
-			{values.businessType === 'Picklist' || values.businessType === 'MultiselectPicklist' && (
+			{(values.businessType === 'Picklist' ||
+				values.businessType === 'MultiselectPicklist') && (
 				<AutoComplete
 					disabled={disabled}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}

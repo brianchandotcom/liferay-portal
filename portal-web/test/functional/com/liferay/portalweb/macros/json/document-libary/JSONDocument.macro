@@ -276,6 +276,41 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro checkInFile {
+		Variables.assertDefined(parameterList = "${groupName},${dmDocumentTitle}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/check-in-file-entry \
+				-u test@liferay.com:test \
+				-d fileEntryId=${fileEntryId} \
+				-d lockUuid=''
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro checkOutFile {
+		Variables.assertDefined(parameterList = "${groupName},${dmDocumentTitle}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/check-out-file-entry \
+				-u test@liferay.com:test \
+				-d fileEntryId=${fileEntryId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to delete a Document entry"
 	macro deleteFile {
 		var portalURL = JSONCompany.getPortalURL();

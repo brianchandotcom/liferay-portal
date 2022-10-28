@@ -197,9 +197,7 @@ definition {
 		task ("And Given: site URL localized to Spanish //localhost:8080/es/ and when on a customized tab view") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openURL(baseURL = "${portalURL}/es/home");
-
-			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+			Navigator.openSpecificURL(url = "${portalURL}/es/web/guest/frontend-data-set-test-page");
 		}
 
 		task ("Then Filter button is localized ") {

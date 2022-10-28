@@ -78,25 +78,6 @@ public class CommerceChannelAccountEntryRelServiceImpl
 	}
 
 	@Override
-	public CommerceChannelAccountEntryRel getCommerceChannelAccountEntryRel(
-		long commerceChannelAccountEntryRelId)
-		throws PortalException{
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			commerceChannelAccountEntryRelLocalService.
-				getCommerceChannelAccountEntryRel(
-					commerceChannelAccountEntryRelId);
-
-		if (commerceChannelAccountEntryRel != null) {
-			_accountEntryModelResourcePermission.check(
-				getPermissionChecker(),
-				commerceChannelAccountEntryRel.getAccountEntryId(),
-				ActionKeys.VIEW);
-		}
-
-		return commerceChannelAccountEntryRel;
-	}
-
-	@Override
 	public CommerceChannelAccountEntryRel fetchCommerceChannelAccountEntryRel(
 			long commerceChannelAccountEntryRelId)
 		throws PortalException {
@@ -125,6 +106,26 @@ public class CommerceChannelAccountEntryRelServiceImpl
 			commerceChannelAccountEntryRelLocalService.
 				fetchCommerceChannelAccountEntryRel(
 					accountEntryId, commerceChannelId, type);
+
+		if (commerceChannelAccountEntryRel != null) {
+			_accountEntryModelResourcePermission.check(
+				getPermissionChecker(),
+				commerceChannelAccountEntryRel.getAccountEntryId(),
+				ActionKeys.VIEW);
+		}
+
+		return commerceChannelAccountEntryRel;
+	}
+
+	@Override
+	public CommerceChannelAccountEntryRel getCommerceChannelAccountEntryRel(
+			long commerceChannelAccountEntryRelId)
+		throws PortalException {
+
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+			commerceChannelAccountEntryRelLocalService.
+				getCommerceChannelAccountEntryRel(
+					commerceChannelAccountEntryRelId);
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(),

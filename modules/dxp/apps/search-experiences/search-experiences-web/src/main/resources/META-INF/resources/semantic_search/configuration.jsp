@@ -50,8 +50,6 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"embeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions()
 			).put(
-				"enabled", semanticSearchCompanyConfigurationDisplayContext.isEnabled()
-			).put(
 				"enableGPU", semanticSearchCompanyConfigurationDisplayContext.isEnableGPU()
 			).put(
 				"huggingFaceAccessToken", semanticSearchCompanyConfigurationDisplayContext.getHuggingFaceAccessToken()
@@ -67,6 +65,8 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
 				"sentenceTransformProvider", semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider()
+			).put(
+				"sentenceTransformerEnabled", semanticSearchCompanyConfigurationDisplayContext.isSentenceTransformerEnabled()
 			).put(
 				"textTruncationStrategy", semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy()
 			).put(

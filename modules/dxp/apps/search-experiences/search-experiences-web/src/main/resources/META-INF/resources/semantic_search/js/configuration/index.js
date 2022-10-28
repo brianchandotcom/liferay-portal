@@ -68,7 +68,6 @@ export default function ({
 	cacheTimeout = '',
 	embeddingVectorDimensions,
 	enableGPU,
-	enabled,
 	huggingFaceAccessToken,
 	languageIds,
 	maxCharacterCount = '',
@@ -76,6 +75,7 @@ export default function ({
 	modelTimeout = '',
 	namespace = '',
 	sentenceTransformProvider,
+	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
 }) {
@@ -175,13 +175,13 @@ export default function ({
 			cacheTimeout,
 			embeddingVectorDimensions,
 			enableGPU,
-			enabled,
 			huggingFaceAccessToken,
 			languageIds,
 			maxCharacterCount,
 			model,
 			modelTimeout,
 			sentenceTransformProvider,
+			sentenceTransformerEnabled,
 			textTruncationStrategy,
 			txtaiHostAddress,
 		},
@@ -197,21 +197,27 @@ export default function ({
 
 	return (
 		<div className="semantic-search-settings-root">
-			<ClayForm.Group>
-				<ClayCheckbox
-					aria-label={Liferay.Language.get('enabled')}
-					checked={!!formik.values.enabled}
-					label={Liferay.Language.get('enabled')}
-					name={`${namespace}enabled`}
-					onChange={_handleCheckboxChange('enabled')}
-					value={!!formik.values.enabled}
-				/>
-			</ClayForm.Group>
-
 			<div className="sheet-section">
 				<h3 className="sheet-subtitle">
 					{Liferay.Language.get('transform-provider-settings')}
 				</h3>
+
+				<ClayForm.Group>
+					<ClayCheckbox
+						aria-label={Liferay.Language.get(
+							'sentence-transformer-enabled'
+						)}
+						checked={!!formik.values.sentenceTransformerEnabled}
+						label={Liferay.Language.get(
+							'sentence-transformer-enabled'
+						)}
+						name={`${namespace}sentenceTransformerEnabled`}
+						onChange={_handleCheckboxChange(
+							'sentenceTransformerEnabled'
+						)}
+						value={!!formik.values.sentenceTransformerEnabled}
+					/>
+				</ClayForm.Group>
 
 				<Input
 					error={formik.errors.sentenceTransformProvider}

@@ -29,13 +29,13 @@ function TestConnectionButton({
 	cacheTimeout,
 	embeddingVectorDimensions,
 	enableGPU,
-	enabled,
 	huggingFaceAccessToken,
 	languageIds,
 	maxCharacterCount,
 	model,
 	modelTimeout,
 	sentenceTransformProvider,
+	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
 }) {
@@ -52,7 +52,7 @@ function TestConnectionButton({
 		cacheTimeout,
 		embeddingVectorDimensions,
 		enableGPU,
-		enabled,
+		sentenceTransformerEnabled,
 		huggingFaceAccessToken,
 		languageIds,
 		maxCharacterCount,
@@ -101,7 +101,7 @@ function TestConnectionButton({
 
 		const generalSettings = {
 			cacheTimeout,
-			enabled,
+			sentenceTransformerEnabled,
 		};
 
 		const generalTransformProviderSettings = {

@@ -40,7 +40,7 @@ public class PollerRequest implements Serializable {
 	}
 
 	public PollerResponse createPollerResponse() {
-		return new DefaultPollerResponse();
+		return new PollerResponse();
 	}
 
 	@Override

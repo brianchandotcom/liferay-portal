@@ -40,6 +40,18 @@
 	margin: 20px 0;
 }
 
+.list-group-item {
+	cursor: pointer;
+}
+
+.list-group-item-disabled {
+	.lexicon-icon,
+	.list-group-title,
+	.list-group-text {
+		color: #e7e7ed !important;
+	}
+}
+
 .modal-description {
 	line-height: 1.75rem;
 }

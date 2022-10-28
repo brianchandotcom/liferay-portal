@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -128,12 +129,17 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertNotNull(draftLayout);
 
-		_layoutLocalService.updateStatus(
-			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED,
+		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getCompanyId(), _group.getGroupId(),
-				TestPropsValues.getUserId()));
+				TestPropsValues.getUserId());
+
+		serviceContext.setRequest(
+			_getHttpServletRequest(TestPropsValues.getUser()));
+
+		_layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
@@ -172,9 +178,24 @@ public class ContentLayoutTypeControllerTest {
 	private HttpServletRequest _getHttpServletRequest(User user)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://www.liferay.com");
 
 		UserTestUtil.setUser(user);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(user, mockHttpServletRequest));
+
+		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+			User user, HttpServletRequest mockHttpServletRequest)
+		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -184,6 +205,7 @@ public class ContentLayoutTypeControllerTest {
 		themeDisplay.setCompany(company);
 
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group));
 		themeDisplay.setLayoutSet(
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
 		themeDisplay.setLocale(
@@ -192,16 +214,14 @@ public class ContentLayoutTypeControllerTest {
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setPortalDomain(company.getVirtualHostname());
 		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
-		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSignedIn(true);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(user);
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return httpServletRequest;
+		return themeDisplay;
 	}
 
 	@DeleteAfterTestRun

@@ -18,5 +18,6 @@ declare const PartialResults: React.FC<IProps>;
 export default PartialResults;
 interface IProps {
 	dataEngineModule: string;
+	displayChartAsTable: boolean;
 	reportDataURL: string;
 }

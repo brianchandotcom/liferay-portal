@@ -24,6 +24,7 @@ import './PartialResults.scss';
 
 const PartialResults: React.FC<IProps> = ({
 	dataEngineModule,
+	displayChartAsTable,
 	reportDataURL,
 }) => {
 	const [resourceState, setResourceState] = useState(() => 'loading');
@@ -98,6 +99,7 @@ const PartialResults: React.FC<IProps> = ({
 					<FormReport
 						data={data}
 						dataEngineModule={dataEngineModule}
+						displayChartAsTable={displayChartAsTable}
 						fields={fields}
 						formReportRecordsFieldValuesURL={
 							formReportRecordsFieldValuesURL
@@ -114,6 +116,7 @@ export default PartialResults;
 
 interface IProps {
 	dataEngineModule: string;
+	displayChartAsTable: boolean;
 	reportDataURL: string;
 }
 

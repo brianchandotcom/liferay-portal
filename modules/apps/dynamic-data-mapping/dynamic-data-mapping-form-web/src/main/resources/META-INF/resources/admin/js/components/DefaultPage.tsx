@@ -21,6 +21,7 @@ import DefaultPageHeader from './DefaultPageHeader';
 
 const DefaultPage: React.FC<IProps> = ({
 	dataEngineModule,
+	displayChartAsTable,
 	formDescription,
 	formReportDataURL,
 	formTitle,
@@ -54,6 +55,7 @@ const DefaultPage: React.FC<IProps> = ({
 				{showReport ? (
 					<PartialResults
 						dataEngineModule={dataEngineModule}
+						displayChartAsTable={displayChartAsTable}
 						reportDataURL={formReportDataURL as string}
 					/>
 				) : (
@@ -101,6 +103,7 @@ export default DefaultPage;
 
 interface IProps {
 	dataEngineModule: string;
+	displayChartAsTable: boolean;
 	formDescription?: string;
 	formReportDataURL?: string;
 	formTitle: string;

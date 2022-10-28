@@ -27,6 +27,7 @@ import './index.scss';
 export default function FormReport({
 	data,
 	dataEngineModule,
+	displayChartAsTable,
 	fields,
 	formReportRecordsFieldValuesURL,
 	portletNamespace,
@@ -58,7 +59,11 @@ export default function FormReport({
 				</div>
 
 				<div className="container-fluid container-fluid-max-xl lfr-de__form-report--cards-area">
-					<CardList data={newData} fields={newFields} />
+					<CardList
+						data={newData}
+						displayChartAsTable={displayChartAsTable}
+						fields={newFields}
+					/>
 				</div>
 
 				<Sidebar />

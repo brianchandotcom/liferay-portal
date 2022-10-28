@@ -44,6 +44,7 @@ export function makeFetch({
 
 export function useConfig(): {
 	dataEngineModule: string;
+	displayChartAsTable: boolean;
 	fieldTypes: FieldType[];
 	formReportDataURL: string;
 	portletNamespace: string;
@@ -62,6 +63,7 @@ export function useFormState<T extends {[key: string]: unknown}>(): T;
 export const FormReport: React.FC<{
 	data?: string;
 	dataEngineModule: string;
+	displayChartAsTable: boolean;
 	fields: unknown;
 	formReportRecordsFieldValuesURL: string;
 	portletNamespace: string;
@@ -71,5 +73,6 @@ export const FormView: React.FC;
 
 export const PartialResults: React.FC<{
 	dataEngineModule: string;
+	displayChartAsTable: boolean;
 	reportDataURL: string;
 }>;

@@ -55,6 +55,7 @@ export function Container({
 
 	const {
 		dataEngineModule,
+		displayChartAsTable,
 		formReportDataURL,
 		showPartialResultsToRespondents,
 		showSubmitButton,
@@ -112,6 +113,7 @@ export function Container({
 			{showReport ? (
 				<PartialResults
 					dataEngineModule={dataEngineModule}
+					displayChartAsTable={displayChartAsTable}
 					onShow={() => setShowReport(false)}
 					reportDataURL={formReportDataURL}
 				/>

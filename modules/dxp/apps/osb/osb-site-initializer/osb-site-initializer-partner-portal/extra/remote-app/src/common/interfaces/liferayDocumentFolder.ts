@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-export default interface DocumentFolder {
-	id: number;
-	name: string;
+export default interface LiferayDocumentFolder {
+	id?: number;
+	name?: string;
 }

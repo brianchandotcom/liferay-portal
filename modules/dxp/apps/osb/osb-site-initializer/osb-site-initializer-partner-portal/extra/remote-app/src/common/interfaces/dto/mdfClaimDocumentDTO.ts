@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
-export default interface MDFClaimDocumentDTO {
+import LiferayObject from '../liferayObject';
+
+export default interface MDFClaimDocumentDTO extends Partial<LiferayObject> {
 	fileName?: string;
 	fileSize?: number;
 	id?: number;

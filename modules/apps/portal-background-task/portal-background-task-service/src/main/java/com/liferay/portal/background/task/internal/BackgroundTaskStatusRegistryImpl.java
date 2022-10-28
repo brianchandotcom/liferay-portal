@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,50 +44,30 @@ public class BackgroundTaskStatusRegistryImpl
 			return _getMasterBackgroundTaskStatus(backgroundTaskId);
 		}
 
-		Lock lock = _readWriteLock.readLock();
+		Map.Entry<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+			backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
+				backgroundTaskId);
 
-		lock.lock();
-
-		try {
-			Map.Entry
-				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
-					backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
-						backgroundTaskId);
-
-			if (backgroundTaskStatusEntry == null) {
-				return null;
-			}
-
-			return backgroundTaskStatusEntry.getKey();
+		if (backgroundTaskStatusEntry == null) {
+			return null;
 		}
-		finally {
-			lock.unlock();
-		}
+
+		return backgroundTaskStatusEntry.getKey();
 	}
 
 	@Override
 	public BackgroundTaskStatusMessageTranslator
 		getBackgroundTaskStatusMessageTranslator(long backgroundTaskId) {
 
-		Lock lock = _readWriteLock.readLock();
+		Map.Entry<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+			backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
+				backgroundTaskId);
 
-		lock.lock();
-
-		try {
-			Map.Entry
-				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
-					backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
-						backgroundTaskId);
-
-			if (backgroundTaskStatusEntry == null) {
-				return null;
-			}
-
-			return backgroundTaskStatusEntry.getValue();
+		if (backgroundTaskStatusEntry == null) {
+			return null;
 		}
-		finally {
-			lock.unlock();
-		}
+
+		return backgroundTaskStatusEntry.getValue();
 	}
 
 	@Override
@@ -99,56 +76,29 @@ public class BackgroundTaskStatusRegistryImpl
 		BackgroundTaskStatusMessageTranslator
 			backgroundTaskStatusMessageTranslator) {
 
-		Lock lock = _readWriteLock.writeLock();
+		Map.Entry<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+			backgroundTaskStatusEntry = _backgroundTaskStatuses.computeIfAbsent(
+				backgroundTaskId,
+				key -> new AbstractMap.SimpleImmutableEntry<>(
+					new BackgroundTaskStatus(),
+					backgroundTaskStatusMessageTranslator));
 
-		lock.lock();
-
-		try {
-			Map.Entry
-				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
-					backgroundTaskStatusEntry = _backgroundTaskStatuses.get(
-						backgroundTaskId);
-
-			if (backgroundTaskStatusEntry == null) {
-				backgroundTaskStatusEntry =
-					new AbstractMap.SimpleImmutableEntry<>(
-						new BackgroundTaskStatus(),
-						backgroundTaskStatusMessageTranslator);
-
-				_backgroundTaskStatuses.put(
-					backgroundTaskId, backgroundTaskStatusEntry);
-			}
-
-			return backgroundTaskStatusEntry.getKey();
-		}
-		finally {
-			lock.unlock();
-		}
+		return backgroundTaskStatusEntry.getKey();
 	}
 
 	@Override
 	public BackgroundTaskStatus unregisterBackgroundTaskStatus(
 		long backgroundTaskId) {
 
-		Lock lock = _readWriteLock.writeLock();
+		Map.Entry<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
+			backgroundTaskStatusEntry = _backgroundTaskStatuses.remove(
+				backgroundTaskId);
 
-		lock.lock();
-
-		try {
-			Map.Entry
-				<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>
-					backgroundTaskStatusEntry = _backgroundTaskStatuses.remove(
-						backgroundTaskId);
-
-			if (backgroundTaskStatusEntry == null) {
-				return null;
-			}
-
-			return backgroundTaskStatusEntry.getKey();
+		if (backgroundTaskStatusEntry == null) {
+			return null;
 		}
-		finally {
-			lock.unlock();
-		}
+
+		return backgroundTaskStatusEntry.getKey();
 	}
 
 	private BackgroundTaskStatus _getMasterBackgroundTaskStatus(
@@ -178,11 +128,9 @@ public class BackgroundTaskStatusRegistryImpl
 	private final Map
 		<Long,
 		 Map.Entry<BackgroundTaskStatus, BackgroundTaskStatusMessageTranslator>>
-			_backgroundTaskStatuses = new HashMap<>();
+			_backgroundTaskStatuses = new ConcurrentHashMap<>();
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
 
 }

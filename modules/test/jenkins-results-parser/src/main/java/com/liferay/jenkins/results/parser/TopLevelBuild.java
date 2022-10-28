@@ -1186,7 +1186,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
-			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
+			getJenkinsReportCommitElement(), getJenkinsReportSummaryElement(),
+			getJenkinsReportTimelineElement(),
 			getJenkinsReportTopLevelTableElement(),
 			getJenkinsReportDownstreamElement());
 	}
@@ -1222,6 +1223,43 @@ public abstract class TopLevelBuild extends BaseBuild {
 		scriptElement.addText(resourceFileContent);
 
 		return scriptElement;
+	}
+
+	protected Element getJenkinsReportCommitElement() {
+		WorkspaceBuild workspaceBuild = (WorkspaceBuild)this;
+
+		Workspace workspace = workspaceBuild.getWorkspace();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		WorkspaceBranchInformation workspaceBranchInformation =
+			new WorkspaceBranchInformation(workspaceGitRepository);
+
+		String senderBranchSHA =
+			workspaceBranchInformation.getSenderBranchSHA();
+
+		GitHubRemoteGitCommit gitHubRemoteGitCommit =
+			GitCommitFactory.newGitHubRemoteGitCommit(
+				workspaceBranchInformation.getSenderUsername(),
+				workspaceBranchInformation.getRepositoryName(),
+				senderBranchSHA);
+
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"p", null, "Sender Branch Name: ",
+				workspaceBranchInformation.getSenderBranchName()),
+			Dom4JUtil.getNewElement(
+				"p", null, "Sender Branch SHA: ", senderBranchSHA),
+			Dom4JUtil.getNewElement(
+				"p", null, "Commit Message: ",
+				gitHubRemoteGitCommit.getMessage()),
+			Dom4JUtil.getNewElement(
+				"p", null, "Commit Date: ",
+				toJenkinsReportDateString(
+					gitHubRemoteGitCommit.getCommitDate(),
+					getJenkinsReportTimeZoneName())));
 	}
 
 	protected Element getJenkinsReportDownstreamElement() {

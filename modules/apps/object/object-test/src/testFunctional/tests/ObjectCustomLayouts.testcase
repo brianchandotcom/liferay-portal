@@ -79,25 +79,19 @@ definition {
 	@description = "LPS-161885 - Verify that it's possible to edit a categorization section"
 	@priority = "3"
 	test CanEditCategorizationSection {
+		property test.name.skip.portal.instance = "ObjectCustomLayouts#CanEditCategorizationSection";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 200",
 			objectName = "CustomObject200",
 			pluralLabelName = "Custom Objects 200");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Date",
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "Date",
+			fieldName = "customField",
+			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject200");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Decimal",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "Decimal",
-			isRequired = "true",
 			objectName = "CustomObject200");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
@@ -118,7 +112,7 @@ definition {
 
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
-			columnsNumber = "2",
+			columnsNumber = "1",
 			fieldLabelName = "Custom Field",
 			tabName = "Field Tab");
 

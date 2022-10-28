@@ -174,6 +174,22 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		String label = StringPool.BLANK;
 		String value = StringPool.BLANK;
 
+		if (infoFieldType instanceof SelectInfoFieldType) {
+			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
+				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
+
+			for (SelectInfoFieldType.Option option :
+					optionsOptional.orElse(Collections.emptyList())) {
+
+				if (option.isActive()) {
+					label = option.getLabel(locale);
+					value = option.getValue();
+
+					break;
+				}
+			}
+		}
+
 		Map<String, String> infoFormParameterMap =
 			(Map<String, String>)SessionMessages.get(
 				httpServletRequest, "infoFormParameterMap");

@@ -297,12 +297,23 @@ export default function ({
 								onChange={_handleCheckboxChange('enableGPU')}
 								value={!!formik.values.enableGPU}
 							/>
+
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'sentence-transformer-enable-gpu-help'
+									)}
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
 						</ClayForm.Group>
 					</>
 				)}
 
 				<Input
 					error={formik.errors.embeddingVectorDimensions}
+					helpText={Liferay.Language.get(
+						'sentence-transformer-embedding-vector-dimensions-help'
+					)}
 					items={getEntries(availableEmbeddingVectorDimensions)}
 					label={Liferay.Language.get('embedding-vector-dimensions')}
 					name={`${namespace}embeddingVectorDimensions`}
@@ -383,6 +394,9 @@ export default function ({
 
 			<Input
 				error={formik.errors.cacheTimeout}
+				helpText={Liferay.Language.get(
+					'sentence-transformer-cache-timeout-help'
+				)}
 				label={Liferay.Language.get('cache-timeout')}
 				name={`${namespace}cacheTimeout`}
 				onBlur={_handleBlur('cacheTimeout')}

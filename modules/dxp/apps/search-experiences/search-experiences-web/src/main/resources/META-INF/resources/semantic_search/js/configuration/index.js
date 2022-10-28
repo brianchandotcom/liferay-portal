@@ -24,15 +24,15 @@ import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
  * the items into label-value pairs.
  *
  * Examples:
- * getEntries({en_US: 'English', es_ES: 'Spanish'})
+ * transformToLabelValueArray({en_US: 'English', es_ES: 'Spanish'})
  * => [{label: 'English', value: 'en_US'}, {label: 'Spanish', value: 'es_ES'}]
- * getEntries(['one', 'two'])
+ * transformToLabelValueArray(['one', 'two'])
  * => [{label: 'one', value: 'one'}, {label: 'two', value: 'two'}]
  *
- * @param {Object} items
+ * @param {Array|object} items
  * @return {Array}
  */
-const getEntries = (items = {}) => {
+const transformToLabelValueArray = (items = {}) => {
 	if (Array.isArray(items)) {
 		return items.map((item) =>
 			item.value && item.label
@@ -218,7 +218,9 @@ export default function ({
 
 				<Input
 					error={formik.errors.sentenceTransformProvider}
-					items={getEntries(availableSentenceTransformProviders)}
+					items={transformToLabelValueArray(
+						availableSentenceTransformProviders
+					)}
 					label={Liferay.Language.get('sentence-transform-provider')}
 					name={`${namespace}sentenceTransformProvider`}
 					onBlur={_handleBlur('sentenceTransformProvider')}
@@ -315,7 +317,9 @@ export default function ({
 					helpText={Liferay.Language.get(
 						'sentence-transformer-embedding-vector-dimensions-help'
 					)}
-					items={getEntries(availableEmbeddingVectorDimensions)}
+					items={transformToLabelValueArray(
+						availableEmbeddingVectorDimensions
+					)}
 					label={Liferay.Language.get('embedding-vector-dimensions')}
 					name={`${namespace}embeddingVectorDimensions`}
 					onBlur={_handleBlur('embeddingVectorDimensions')}
@@ -377,7 +381,9 @@ export default function ({
 					helpText={Liferay.Language.get(
 						'sentence-transformer-text-truncation-strategy-help'
 					)}
-					items={getEntries(availableTextTruncationStrategies)}
+					items={transformToLabelValueArray(
+						availableTextTruncationStrategies
+					)}
 					label={Liferay.Language.get('text-truncation-strategy')}
 					name={`${namespace}textTruncationStrategy`}
 					onBlur={_handleBlur('textTruncationStrategy')}
@@ -391,7 +397,9 @@ export default function ({
 					helpText={Liferay.Language.get(
 						'sentence-transformer-asset-entry-class-names-help'
 					)}
-					items={getEntries(availableAssetEntryClassNames)}
+					items={transformToLabelValueArray(
+						availableAssetEntryClassNames
+					)}
 					label={Liferay.Language.get('asset-entry-class-names')}
 					name={`${namespace}assetEntryClassNames`}
 					onBlur={_handleBlur('assetEntryClassNames')}
@@ -407,7 +415,9 @@ export default function ({
 					helpText={Liferay.Language.get(
 						'sentence-transformer-language-ids-help'
 					)}
-					items={getEntries(availableLanguageDisplayNames)}
+					items={transformToLabelValueArray(
+						availableLanguageDisplayNames
+					)}
 					label={Liferay.Language.get('language-ids')}
 					name={`${namespace}languageIds`}
 					onBlur={_handleBlur('languageIds')}

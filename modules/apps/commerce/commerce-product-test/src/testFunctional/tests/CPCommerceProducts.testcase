@@ -2251,4 +2251,72 @@ definition {
 
 	}
 
+	@description = "This is a test for bug COMMERCE-9546. Verify a product image converted in base64 can be uploaded via headless API with the extension setted"
+	@priority = "4"
+	test CanUploadProductBase64ImageViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When a PATCH call is made for the product ABS Sensor") {
+			var attachment = CommerceUtilities.getConvertedBase64File(file = "Commerce_Black.jpg");
+
+			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
+				productERC = "MIN93015minium-initializer",
+				imageTitle = "Black T-Shirt",
+				contentType = "image/png",
+				attachment = "${attachment}");
+		}
+
+		task ("Then into the product ABS Sensor Media tab a new entry is present with the png extension") {
+			CommerceProducts.openProductsAdmin();
+
+			AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			AssertElementPresent(
+				key_entryName = "Black T-Shirt",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				key_productName = "Black T-Shirt",
+				key_columnNumber = "1",
+				key_value = "png");	
+		}
+
+		task ("But if the contentType is empty the extension will be automatically selected") { 
+			Click(
+				key_value = "Black T-Shirt",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+
+			AssertElementNotPresent(
+				key_entryName = "Black T-Shirt",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
+				productERC = "MIN93015minium-initializer",
+				imageTitle = "Black T-Shirt.test",
+				attachment = "${attachment}");
+
+			Refresh();
+
+			AssertElementPresent(
+				key_entryName = "Black T-Shirt.test",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			AssertElementPresent(
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				key_productName = "Black T-Shirt",
+				key_columnNumber = "1",
+				key_value = "jpg");		
+		}
+	}
 }

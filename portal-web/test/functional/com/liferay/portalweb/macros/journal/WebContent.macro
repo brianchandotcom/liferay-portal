@@ -1718,6 +1718,48 @@ definition {
 			value1 = "${folderName}");
 	}
 
+	macro selectPreviewDisplayPage {
+		if (IsTextEqual(key_text = "Display Page", locator1 = "TextInput#ANY", value1 = "")) {
+			Click(
+				key_fieldLabel = "Display Page",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Display Page",
+				key_text = "change",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconCard.clickCard(card = "${displayPageName}");
+
+		SelectFrameTop();
+	}
+
+	macro selectPreviewSite {
+		Click(
+			key_fieldLabel = "Site",
+			locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+		if ((IsElementNotPresent(key_menuItem = "${siteName}", locator1 = "MenuItem#ANY_MENU_ITEM")) && (IsElementPresent(key_text = "More", locator1 = "Button#ANY"))) {
+			Button.clickMore();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.gotoNavItem(navItem = "All Sites");
+
+			LexiconEntry.gotoEntry(rowEntry = "${siteName}");
+
+			SelectFrameTop();
+		}
+		else {
+			MenuItem.click(menuItem = "${siteName}");
+		}
+	}
+
 	macro selectRepositoryWC {
 		var key_contentName = "${contentName}";
 

@@ -15,6 +15,7 @@ import React from 'react';
 
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
 import Input from './Input';
+import TestConnectionButton from './TestConnectionButton';
 import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
 
 /**
@@ -321,6 +322,32 @@ export default function ({
 					onChange={_handleChange('embeddingVectorDimensions')}
 					type="select"
 					value={formik.values.embeddingVectorDimensions}
+				/>
+
+				<TestConnectionButton
+					assetEntryClassNames={formik.values.assetEntryClassNames}
+					cacheTimeout={formik.values.cacheTimeout}
+					embeddingVectorDimensions={
+						formik.values.embeddingVectorDimensions
+					}
+					enableGPU={formik.values.enableGPU}
+					huggingFaceAccessToken={
+						formik.values.huggingFaceAccessToken
+					}
+					languageIds={formik.values.languageIds}
+					maxCharacterCount={formik.values.maxCharacterCount}
+					model={formik.values.model}
+					modelTimeout={formik.values.modelTimeout}
+					sentenceTransformProvider={
+						formik.values.sentenceTransformProvider
+					}
+					sentenceTransformerEnabled={
+						formik.values.sentenceTransformerEnabled
+					}
+					textTruncationStrategy={
+						formik.values.textTruncationStrategy
+					}
+					txtaiHostAddress={formik.values.txtaiHostAddress}
 				/>
 			</div>
 

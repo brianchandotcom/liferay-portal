@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import {getColumnLabel, roundPercentage} from '../../utils/data';
+import {getColumnLabel, getPercentage, roundPercentage} from '../../utils/data';
 
 export default function TooltipContent({
 	active,
@@ -27,8 +27,6 @@ export default function TooltipContent({
 	totalEntries = 0,
 }) {
 	if (active) {
-		const getPercentage = (count) => count / totalEntries;
-
 		if (!totalEntries) {
 			totalEntries = payload.reduce((accumulator, payloadItem) => {
 				return accumulator + payloadItem.value;
@@ -85,7 +83,10 @@ export default function TooltipContent({
 										  ).toLowerCase()} `}
 
 									<b>
-										({roundPercentage(getPercentage(value))}
+										(
+										{roundPercentage(
+											getPercentage(value, totalEntries)
+										)}
 										)
 									</b>
 								</div>

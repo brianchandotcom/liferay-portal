@@ -16,6 +16,8 @@ const getColumnLabel = (column, field) => {
 	return field.columns[column] ? field.columns[column].value : undefined;
 };
 
+const getPercentage = (count, totalEntries) => count / totalEntries;
+
 const removeEmptyValues = (values) =>
 	Array.isArray(values) && values.filter((value) => value);
 
@@ -37,6 +39,7 @@ const toDataArray = (options, values) =>
 export default toDataArray;
 export {
 	getColumnLabel,
+	getPercentage,
 	removeEmptyValues,
 	roundPercentage,
 	sumTotalEntries,

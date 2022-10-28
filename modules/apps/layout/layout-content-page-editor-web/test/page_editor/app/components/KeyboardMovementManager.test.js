@@ -42,12 +42,14 @@ jest.mock(
 
 		const disableMovement = jest.fn();
 		const setTarget = jest.fn();
+		const setText = jest.fn();
 
 		return {
 			useDisableKeyboardMovement: () => disableMovement,
 			useMovementSource: () => source,
 			useMovementTarget: () => initialTarget,
 			useSetMovementTarget: () => setTarget,
+			useSetMovementText: () => setText,
 		};
 	}
 );
@@ -62,6 +64,7 @@ const renderComponent = ({dispatch = () => {}} = {}) =>
 		<StoreMother.Component
 			dispatch={dispatch}
 			getState={() => ({
+				fragmentEntryLinks: [],
 				layoutData: {
 					items: {
 						['item-1']: {
@@ -106,7 +109,7 @@ const renderComponent = ({dispatch = () => {}} = {}) =>
 		</StoreMother.Component>
 	);
 
-describe('ShortcutManager', () => {
+describe('KeyboardMovementManager', () => {
 	it('calculates previous drop position when pressing up arrow', () => {
 		renderComponent();
 
@@ -119,7 +122,11 @@ describe('ShortcutManager', () => {
 		);
 
 		expect(setTarget).toBeCalledWith(
-			expect.objectContaining({itemId: 'item-2', position: 'bottom'})
+			expect.objectContaining({
+				itemId: 'item-1',
+				name: 'fragment',
+				position: 'bottom',
+			})
 		);
 	});
 
@@ -135,7 +142,11 @@ describe('ShortcutManager', () => {
 		);
 
 		expect(setTarget).toBeCalledWith(
-			expect.objectContaining({itemId: 'item-4', position: 'bottom'})
+			expect.objectContaining({
+				itemId: 'item-3',
+				name: 'Item 3',
+				position: 'bottom',
+			})
 		);
 	});
 

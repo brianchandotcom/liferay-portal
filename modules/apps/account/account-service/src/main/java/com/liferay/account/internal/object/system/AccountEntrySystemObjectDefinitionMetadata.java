@@ -20,6 +20,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -69,8 +70,10 @@ public class AccountEntrySystemObjectDefinitionMetadata
 	}
 
 	@Override
-	public String getJaxRsApplicationName() {
-		return "Liferay.Headless.Admin.User";
+	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor() {
+		return new JaxRsApplicationDescriptor(
+			"Liferay.Headless.Admin.User", "headless-admin-user", "accounts",
+			"v1.0");
 	}
 
 	@Override
@@ -100,11 +103,6 @@ public class AccountEntrySystemObjectDefinitionMetadata
 	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return AccountEntryTable.INSTANCE.accountEntryId;
-	}
-
-	@Override
-	public String getRESTContextPath() {
-		return "headless-admin-user/v1.0/accounts";
 	}
 
 	@Override

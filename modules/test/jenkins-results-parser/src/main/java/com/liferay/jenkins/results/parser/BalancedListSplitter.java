@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * @author Peter Yoo
@@ -28,14 +27,26 @@ public abstract class BalancedListSplitter<T> {
 		_maxListWeight = maxListWeight;
 	}
 
+	public long getWeight(ListItemList listItemList) {
+		long weight = 0;
+
+		for (ListItem listItem : listItemList) {
+			weight += listItem.weight;
+		}
+
+		return weight;
+	}
+
 	public abstract long getWeight(T item);
 
 	public List<List<T>> split(List<T> list) {
-		ListItemTreeSet listItems = new ListItemTreeSet();
+		ListItemList listItems = new ListItemList(this);
 
 		for (T item : list) {
 			listItems.add(new ListItem(item));
 		}
+
+		Collections.sort(listItems);
 
 		long totalWeight = listItems.getWeight();
 
@@ -45,14 +56,14 @@ public abstract class BalancedListSplitter<T> {
 			minNumberOfLists++;
 		}
 
-		List<ListItemTreeSet> listItemSortedSetList =
-			_createListItemSortedSetList(minNumberOfLists);
+		List<ListItemList> listItemSortedSetList = _createListItemSortedSetList(
+			minNumberOfLists);
 
 		for (ListItem listItem : listItems) {
 			Collections.sort(listItemSortedSetList);
 
-			ListItemTreeSet emptiestListItemSortedSet =
-				listItemSortedSetList.get(0);
+			ListItemList emptiestListItemSortedSet = listItemSortedSetList.get(
+				0);
 
 			if (emptiestListItemSortedSet.isEmpty() ||
 				(emptiestListItemSortedSet.getAvailableWeight() >=
@@ -63,8 +74,8 @@ public abstract class BalancedListSplitter<T> {
 				continue;
 			}
 
-			ListItemTreeSet newListItemSortedSet = new ListItemTreeSet(
-				_maxListWeight);
+			ListItemList newListItemSortedSet = new ListItemList(
+				this, _maxListWeight);
 
 			newListItemSortedSet.add(listItem);
 
@@ -73,18 +84,18 @@ public abstract class BalancedListSplitter<T> {
 
 		List<List<T>> lists = new ArrayList<>(listItemSortedSetList.size());
 
-		for (ListItemTreeSet listItemSortedSet : listItemSortedSetList) {
+		for (ListItemList listItemSortedSet : listItemSortedSetList) {
 			lists.add(listItemSortedSet.toList());
 		}
 
 		return lists;
 	}
 
-	private List<ListItemTreeSet> _createListItemSortedSetList(int size) {
-		List<ListItemTreeSet> listItemSortedSetList = new ArrayList<>();
+	private List<ListItemList> _createListItemSortedSetList(int size) {
+		List<ListItemList> listItemSortedSetList = new ArrayList<>();
 
 		for (int i = 0; i < size; i++) {
-			listItemSortedSetList.add(new ListItemTreeSet(_maxListWeight));
+			listItemSortedSetList.add(new ListItemList(this, _maxListWeight));
 		}
 
 		return listItemSortedSetList;
@@ -109,18 +120,23 @@ public abstract class BalancedListSplitter<T> {
 
 	}
 
-	private class ListItemTreeSet
-		extends TreeSet<ListItem> implements Comparable<ListItemTreeSet> {
+	private class ListItemList
+		extends ArrayList<ListItem> implements Comparable<ListItemList> {
 
-		public ListItemTreeSet() {
+		public ListItemList(BalancedListSplitter<T> balancedListSplitter) {
+			_balancedListSplitter = balancedListSplitter;
 		}
 
-		public ListItemTreeSet(Long targetWeight) {
+		public ListItemList(
+			BalancedListSplitter<T> balancedListSplitter, Long targetWeight) {
+
+			this(balancedListSplitter);
+
 			_targetWeight = targetWeight;
 		}
 
 		@Override
-		public int compareTo(ListItemTreeSet otherListItemSortedSet) {
+		public int compareTo(ListItemList otherListItemSortedSet) {
 			Long availableWeight = getAvailableWeight();
 			Long otherAvailableWeight =
 				otherListItemSortedSet.getAvailableWeight();
@@ -155,13 +171,7 @@ public abstract class BalancedListSplitter<T> {
 		}
 
 		public long getWeight() {
-			long weight = 0;
-
-			for (ListItem listItem : this) {
-				weight += listItem.weight;
-			}
-
-			return weight;
+			return _balancedListSplitter.getWeight(this);
 		}
 
 		public List<T> toList() {
@@ -174,6 +184,7 @@ public abstract class BalancedListSplitter<T> {
 			return list;
 		}
 
+		private BalancedListSplitter<T> _balancedListSplitter;
 		private Long _targetWeight;
 
 	}

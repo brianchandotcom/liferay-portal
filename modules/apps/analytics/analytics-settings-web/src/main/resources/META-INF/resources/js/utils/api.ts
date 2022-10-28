@@ -23,6 +23,18 @@ export function fetchConnection(token: string) {
 	});
 }
 
+export function fetchContactsOrganization() {
+	return request('/contacts/organizations', {
+		method: 'GET',
+	});
+}
+
+export function fetchContactsUsersGroup() {
+	return request('/contacts/user-groups', {
+		method: 'GET',
+	});
+}
+
 export function deleteConnection() {
 	return request('/data-sources', {method: 'DELETE'});
 }
@@ -78,5 +90,24 @@ export function fetchChannels(queryString?: string) {
 export function fetchSites(queryString?: string) {
 	return request(`/sites?${queryString}`, {
 		method: 'GET',
+	});
+}
+
+export function updatePeopleData(
+	syncAllAccounts: boolean,
+	syncAllContacts: boolean,
+	syncedAccountGroupIds: string[],
+	syncedOrganizationIds: string[],
+	syncedUserGroupIds: string[]
+) {
+	return request('/contacts/configuration', {
+		body: JSON.stringify({
+			syncAllAccounts,
+			syncAllContacts,
+			syncedAccountGroupIds,
+			syncedOrganizationIds,
+			syncedUserGroupIds,
+		}),
+		method: 'PUT',
 	});
 }

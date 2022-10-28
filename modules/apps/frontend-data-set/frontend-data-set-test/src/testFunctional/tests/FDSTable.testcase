@@ -51,7 +51,6 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/es/web/guest/frontend-data-set-test-page");
-
 		}
 
 		task ("When: on classic tab view") {

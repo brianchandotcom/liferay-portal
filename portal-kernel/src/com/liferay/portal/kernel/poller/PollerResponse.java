@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -36,24 +34,6 @@ public class PollerResponse implements Serializable {
 	public static final String POLLER_HINT_HIGH_CONNECTIVITY =
 		"pollerHintHighConnectivity";
 
-	public void close(
-		Message message, PollerHeader pollerHeader, String portletId,
-		String chunkId) {
-
-		_closed = true;
-
-		_pollerHeader = pollerHeader;
-		_portletId = portletId;
-		_chunkId = chunkId;
-
-		Message responseMessage = MessageBusUtil.createResponseMessage(message);
-
-		responseMessage.setPayload(this);
-
-		MessageBusUtil.sendMessage(
-			responseMessage.getDestinationName(), responseMessage);
-	}
-
 	public PollerHeader getPollerHeader() {
 		return _pollerHeader;
 	}
@@ -62,8 +42,24 @@ public class PollerResponse implements Serializable {
 		return _portletId;
 	}
 
+	public String getResponseId() {
+		return _responseId;
+	}
+
 	public boolean isEmpty() {
 		return _parameterMap.isEmpty();
+	}
+
+	public void populate(
+		String responseId, PollerHeader pollerHeader, String portletId,
+		String chunkId) {
+
+		_closed = true;
+
+		_pollerHeader = pollerHeader;
+		_portletId = portletId;
+		_chunkId = chunkId;
+		_responseId = responseId;
 	}
 
 	public void setParameter(String name, JSONArray jsonArray)
@@ -131,5 +127,6 @@ public class PollerResponse implements Serializable {
 	private final Map<String, Object> _parameterMap = new ConcurrentHashMap<>();
 	private PollerHeader _pollerHeader;
 	private String _portletId;
+	private String _responseId;
 
 }

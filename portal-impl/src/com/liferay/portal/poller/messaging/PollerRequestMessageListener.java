@@ -22,13 +22,22 @@ import com.liferay.portal.kernel.poller.PollerException;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
+import com.liferay.portal.kernel.poller.PollerResponseHandler;
 import com.liferay.portal.poller.PollerProcessorUtil;
+
+import java.util.List;
 
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
 public class PollerRequestMessageListener extends BaseMessageListener {
+
+	public PollerRequestMessageListener(
+		List<PollerResponseHandler> pollerResponseHandlers) {
+
+		_pollerResponseHandlers = pollerResponseHandlers;
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -59,9 +68,15 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 					pollerResponse = new PollerResponse();
 				}
 
-				pollerResponse.close(
-					message, pollerRequest.getPollerHeader(),
+				pollerResponse.populate(
+					message.getResponseId(), pollerRequest.getPollerHeader(),
 					pollerRequest.getPortletId(), pollerRequest.getChunkId());
+
+				for (PollerResponseHandler pollerResponseHandler :
+						_pollerResponseHandlers) {
+
+					pollerResponseHandler.handle(pollerResponse);
+				}
 			}
 		}
 		else {
@@ -78,5 +93,7 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PollerRequestMessageListener.class);
+
+	private final List<PollerResponseHandler> _pollerResponseHandlers;
 
 }

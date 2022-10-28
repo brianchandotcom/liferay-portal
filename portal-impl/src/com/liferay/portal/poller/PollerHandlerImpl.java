@@ -25,13 +25,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.BrowserTracker;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.poller.PollerHeader;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
+import com.liferay.portal.kernel.poller.PollerResponseHandler;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,8 +54,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Edward Han
  */
-public class PollerRequestHandlerImpl
-	implements MessageListener, PollerRequestHandler {
+public class PollerHandlerImpl
+	implements PollerRequestHandler, PollerResponseHandler {
 
 	@Override
 	public PollerHeader getPollerHeader(String pollerRequestString) {
@@ -67,6 +67,24 @@ public class PollerRequestHandlerImpl
 			parsePollerRequestParameters(pollerRequestString);
 
 		return parsePollerRequestHeader(pollerRequestChunks);
+	}
+
+	@Override
+	public void handle(PollerResponse pollerResponse) {
+		String pollerSessionId = getPollerSessionId(
+			pollerResponse.getPollerHeader());
+
+		synchronized (_pollerSessions) {
+			PollerSession pollerSession = _pollerSessions.get(pollerSessionId);
+
+			if ((pollerSession != null) &&
+				pollerSession.completePortletProcessing(
+					pollerResponse.getPortletId(),
+					pollerResponse.getResponseId())) {
+
+				_pollerSessions.remove(pollerSessionId);
+			}
+		}
 	}
 
 	@Override
@@ -120,31 +138,6 @@ public class PollerRequestHandlerImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public void receive(Message message) {
-		Object messagePayload = message.getPayload();
-
-		if (!(messagePayload instanceof PollerResponse)) {
-			return;
-		}
-
-		PollerResponse pollerResponse = (PollerResponse)messagePayload;
-
-		String pollerSessionId = getPollerSessionId(
-			pollerResponse.getPollerHeader());
-
-		synchronized (_pollerSessions) {
-			PollerSession pollerSession = _pollerSessions.get(pollerSessionId);
-
-			if ((pollerSession != null) &&
-				pollerSession.completePortletProcessing(
-					pollerResponse.getPortletId(), message.getResponseId())) {
-
-				_pollerSessions.remove(pollerSessionId);
-			}
-		}
 	}
 
 	protected PollerRequest createPollerRequest(
@@ -297,9 +290,6 @@ public class PollerRequestHandlerImpl
 
 			if (pollerRequest.isReceiveRequest()) {
 				message.setResponseId(responseId);
-
-				message.setResponseDestinationName(
-					DestinationNames.POLLER_RESPONSE);
 			}
 
 			MessageBusUtil.sendMessage(DestinationNames.POLLER, message);
@@ -443,7 +433,7 @@ public class PollerRequestHandlerImpl
 	private static final String _PATH_RECEIVE = "/receive";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PollerRequestHandlerImpl.class);
+		PollerHandlerImpl.class);
 
 	private final Map<String, PollerSession> _pollerSessions = new HashMap<>();
 

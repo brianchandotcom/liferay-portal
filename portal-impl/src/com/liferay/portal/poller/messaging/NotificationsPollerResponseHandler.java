@@ -16,36 +16,23 @@ package com.liferay.portal.poller.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
 import com.liferay.portal.kernel.notifications.UnknownChannelException;
 import com.liferay.portal.kernel.poller.PollerHeader;
 import com.liferay.portal.kernel.poller.PollerResponse;
+import com.liferay.portal.kernel.poller.PollerResponseHandler;
 
 /**
  * @author Edward Han
  */
-public class PollerNotificationsBridgeMessageListener
-	extends BaseMessageListener {
+public class NotificationsPollerResponseHandler
+	implements PollerResponseHandler {
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		Object messagePayload = message.getPayload();
-
-		if (!(messagePayload instanceof PollerResponse)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Received message with payload not of type PollerResponse");
-			}
-
-			return;
-		}
-
-		PollerResponse pollerResponse = (PollerResponse)messagePayload;
-
+	public void handle(PollerResponse pollerResponse) {
 		if (pollerResponse.isEmpty()) {
 			return;
 		}
@@ -55,7 +42,7 @@ public class PollerNotificationsBridgeMessageListener
 		NotificationEvent notificationEvent =
 			NotificationEventFactoryUtil.createNotificationEvent(
 				System.currentTimeMillis(),
-				PollerNotificationsBridgeMessageListener.class.getName(),
+				NotificationsPollerResponseHandler.class.getName(),
 				pollerResponse.toJSONObject());
 
 		try {
@@ -70,9 +57,12 @@ public class PollerNotificationsBridgeMessageListener
 					unknownChannelException);
 			}
 		}
+		catch (ChannelException channelException) {
+			_log.error(channelException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PollerNotificationsBridgeMessageListener.class);
+		NotificationsPollerResponseHandler.class);
 
 }

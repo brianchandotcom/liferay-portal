@@ -106,8 +106,6 @@ public interface DestinationNames {
 	public static final String POLLER_COMET_RESPONSE =
 		"liferay/poller_comet_response";
 
-	public static final String POLLER_RESPONSE = "liferay/poller_response";
-
 	public static final String SCHEDULER_DISPATCH =
 		"liferay/scheduler_dispatch";
 

@@ -11,7 +11,7 @@
 
 import {Liferay} from '..';
 
-import documentFolder from '../../../interfaces/documentFolder';
+import LiferayDocumentFolder from '../../../interfaces/liferayDocumentFolder';
 import {LiferayAPIs} from '../common/enums/apis';
 import liferayFetcher from '../common/utils/fetcher';
 
@@ -19,11 +19,11 @@ export default async function createDocumentFolder(
 	parentDocumentFolderId: number,
 	folderName: string
 ) {
-	return liferayFetcher.post<documentFolder>(
+	return liferayFetcher.post<LiferayDocumentFolder>(
 		`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/document-folders/${parentDocumentFolderId}/document-folders`,
 		Liferay.authToken,
 		{
 			name: folderName,
-		} as documentFolder
+		}
 	);
 }

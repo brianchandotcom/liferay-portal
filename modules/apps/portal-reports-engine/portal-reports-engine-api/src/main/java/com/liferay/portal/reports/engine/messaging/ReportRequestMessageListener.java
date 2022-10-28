@@ -30,24 +30,11 @@ import com.liferay.portal.reports.engine.ReportResultContainer;
  */
 public class ReportRequestMessageListener extends BaseMessageListener {
 
-	public ReportRequestMessageListener() {
-	}
-
 	public ReportRequestMessageListener(
 		ReportEngine reportEngine,
 		ReportResultContainer reportResultContainer) {
 
 		_reportEngine = reportEngine;
-		_reportResultContainer = reportResultContainer;
-	}
-
-	public void setReportEngine(ReportEngine reportEngine) {
-		_reportEngine = reportEngine;
-	}
-
-	public void setReportResultContainer(
-		ReportResultContainer reportResultContainer) {
-
 		_reportResultContainer = reportResultContainer;
 	}
 
@@ -84,7 +71,7 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReportRequestMessageListener.class);
 
-	private ReportEngine _reportEngine;
-	private ReportResultContainer _reportResultContainer;
+	private final ReportEngine _reportEngine;
+	private final ReportResultContainer _reportResultContainer;
 
 }

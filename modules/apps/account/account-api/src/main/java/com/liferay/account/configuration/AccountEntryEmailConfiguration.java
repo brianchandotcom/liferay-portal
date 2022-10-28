@@ -47,4 +47,11 @@ public interface AccountEntryEmailConfiguration {
 	)
 	public LocalizedValuesMap invitationEmailBody();
 
+	@Meta.AD(
+		deflt = "48",
+		description = "invitation-token-expiration-time-description",
+		name = "invitation-token-expiration-time", required = false
+	)
+	public int invitationTokenExpirationTime();
+
 }

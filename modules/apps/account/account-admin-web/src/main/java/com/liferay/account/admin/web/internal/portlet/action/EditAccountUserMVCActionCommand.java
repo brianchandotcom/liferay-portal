@@ -104,11 +104,11 @@ public class EditAccountUserMVCActionCommand
 
 		accountUserContact.setPrefixListTypeId(
 			_getListTypeId(
-				actionRequest, "prefixListTypeValue",
+				actionRequest, "prefixValue",
 				ListTypeConstants.CONTACT_PREFIX));
 		accountUserContact.setSuffixListTypeId(
 			_getListTypeId(
-				actionRequest, "suffixListTypeValue",
+				actionRequest, "suffixValue",
 				ListTypeConstants.CONTACT_SUFFIX));
 
 		_contactLocalService.updateContact(accountUserContact);

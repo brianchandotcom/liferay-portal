@@ -15,11 +15,7 @@ import React from 'react';
 
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
 import Input from './Input';
-
-const SENTENCE_TRANSFORM_PROVIDER_TYPES = {
-	HUGGING_FACE: 'huggingFace',
-	TXTAI: 'txtai',
-};
+import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
 
 /**
  * Formats the object into an array of label and value, important for inputs

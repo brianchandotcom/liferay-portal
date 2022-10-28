@@ -15,10 +15,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-const SENTENCE_TRANSFORM_PROVIDER_TYPES = {
-	HUGGING_FACE: 'huggingFace',
-	TXTAI: 'txtai',
-};
+import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
 
 /**
  * A button to test the connection for the semantic search settings page.

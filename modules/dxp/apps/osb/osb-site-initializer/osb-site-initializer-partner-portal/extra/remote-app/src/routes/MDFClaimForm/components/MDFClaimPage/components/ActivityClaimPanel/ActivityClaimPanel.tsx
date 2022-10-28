@@ -13,7 +13,7 @@ import ClayIcon from '@clayui/icon';
 import Link from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
@@ -38,6 +38,7 @@ const ActivityClaimPanel = ({
 	overallCampaignDescription,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
+	const [expanded, setExpanded] = useState<boolean>(!activity.selected);
 	const webDAV = useWebDAV();
 
 	useBudgetsAmount(
@@ -57,9 +58,18 @@ const ActivityClaimPanel = ({
 			<ClayPanel
 				className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 mb-4 text-neutral-7"
 				displayType="secondary"
-				expanded={activity.selected}
+				expanded={activity.selected && expanded}
 			>
-				<PanelHeader expanded={activity.selected}>
+				<PanelHeader
+					expanded={activity.selected && expanded}
+					onClick={() => {
+						if (activity.selected) {
+							setExpanded(
+								(previousExpanded) => !previousExpanded
+							);
+						}
+					}}
+				>
 					<PRMFormik.Field
 						component={PRMForm.Checkbox}
 						name={`activities[${activityIndex}].selected`}
@@ -84,69 +94,71 @@ const ActivityClaimPanel = ({
 					</div>
 				</PanelHeader>
 
-				<PanelBody expanded={activity.selected}>
-					{activity.budgets?.map((budget, index) => (
-						<BudgetClaimPanel
-							activityIndex={activityIndex}
-							budget={budget}
-							budgetIndex={index}
-							key={`${budget.id}-${index}`}
-							setFieldValue={setFieldValue}
-						/>
-					))}
+				<PanelBody expanded={activity.selected && expanded}>
+					<ClayPanel.Body className="mx-2 pt-4 px-5">
+						{activity.budgets?.map((budget, index) => (
+							<BudgetClaimPanel
+								activityIndex={activityIndex}
+								budget={budget}
+								budgetIndex={index}
+								key={`${budget.id}-${index}`}
+								setFieldValue={setFieldValue}
+							/>
+						))}
 
-					<PRMFormik.Field
-						component={PRMForm.InputText}
-						label="Metrics"
-						name={`activities[${activityIndex}].metrics`}
-						textArea
-					/>
-
-					<div className="align-items-center d-flex justify-content-between">
 						<PRMFormik.Field
-							component={PRMForm.InputFile}
-							description="You can downloaded the Excel Template, fill it out, and upload it back here"
-							displayType="secondary"
-							label="List of Qualified Leads"
-							name={`activities[${activityIndex}].listQualifiedLeads`}
-							onAccept={(value: File) =>
+							component={PRMForm.InputText}
+							label="Metrics"
+							name={`activities[${activityIndex}].metrics`}
+							textArea
+						/>
+
+						<div className="align-items-center d-flex justify-content-between">
+							<PRMFormik.Field
+								component={PRMForm.InputFile}
+								description="You can downloaded the Excel Template, fill it out, and upload it back here"
+								displayType="secondary"
+								label="List of Qualified Leads"
+								name={`activities[${activityIndex}].listQualifiedLeads`}
+								onAccept={(value: File) =>
+									setFieldValue(
+										`activities[${activityIndex}].listQualifiedLeads`,
+										value
+									)
+								}
+								outline
+								small
+							/>
+
+							<div className="mb-3">
+								<Link
+									button
+									displayType="secondary"
+									download
+									href={`${webDAV}/claim/qualified_leads_template.xlsx`}
+									small
+									target="_blank"
+								>
+									<span className="inline-item inline-item-before">
+										<ClayIcon symbol="download" />
+									</span>
+									Download template
+								</Link>
+							</div>
+						</div>
+
+						<PRMFormik.Field
+							component={PRMForm.DragAndDrop}
+							description="Drag and drop your files here to upload."
+							label="All Contents"
+							onAccept={(value: File[]) =>
 								setFieldValue(
-									`activities[${activityIndex}].listQualifiedLeads`,
+									`activities[${activityIndex}].documents`,
 									value
 								)
 							}
-							outline
-							small
 						/>
-
-						<div className="mb-3">
-							<Link
-								button
-								displayType="secondary"
-								download
-								href={`${webDAV}/claim/qualified_leads_template.xlsx`}
-								small
-								target="_blank"
-							>
-								<span className="inline-item inline-item-before">
-									<ClayIcon symbol="download" />
-								</span>
-								Download template
-							</Link>
-						</div>
-					</div>
-
-					<PRMFormik.Field
-						component={PRMForm.DragAndDrop}
-						description="Drag and drop your files here to upload."
-						label="All Contents"
-						onAccept={(value: File[]) =>
-							setFieldValue(
-								`activities[${activityIndex}].documents`,
-								value
-							)
-						}
-					/>
+					</ClayPanel.Body>
 				</PanelBody>
 			</ClayPanel>
 		</>

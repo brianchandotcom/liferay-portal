@@ -214,6 +214,8 @@ definition {
 		task ("When Reverse Sort Direction button is clicked from the Account Management Widget it turns to upside down") {
 			Click(locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_REVERSE_SORT_DIRECTION_BUTTON");
 
+			Refresh();
+
 			AssertElementPresent(
 				key_icon = "order-list-down",
 				locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_REVERSE_SORT_DIRECTION_BUTTON_ICON");

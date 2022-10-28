@@ -12,9 +12,40 @@
  * details.
  */
 
-import ObjectActionStatusDataRenderer from './ObjectActionStatusDataRenderer';
+import React from 'react';
 
-export default function propsTransformer({...otherProps}) {
+interface ObjectActionStatusDataRendererProps {
+	value: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+}
+
+const getStatusCssClass = (label: string) => {
+	switch (label) {
+		case 'failed':
+			return 'label-danger';
+		case 'never-ran':
+			return 'label-info';
+		case 'success':
+			return 'label-success';
+		default:
+			return '';
+	}
+};
+
+function ObjectActionStatusDataRenderer({
+	value,
+}: ObjectActionStatusDataRendererProps) {
+	return value ? (
+		<strong className={`label ${getStatusCssClass(value.label)}`}>
+			{value.label_i18n}
+		</strong>
+	) : null;
+}
+
+export default function ObjectActionsFDSPropsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {

@@ -12,8 +12,19 @@
  * details.
  */
 
-import ObjectActionStatusDataRenderer from './ObjectActionStatusDataRenderer';
-export default function propsTransformer({
+/// <reference types="react" />
+
+interface ObjectActionStatusDataRendererProps {
+	value: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+}
+declare function ObjectActionStatusDataRenderer({
+	value,
+}: ObjectActionStatusDataRendererProps): JSX.Element | null;
+export default function ObjectActionsFDSPropsTransformer({
 	...otherProps
 }: {
 	[x: string]: any;
@@ -22,3 +33,4 @@ export default function propsTransformer({
 		objectActionStatusDataRenderer: typeof ObjectActionStatusDataRenderer;
 	};
 };
+export {};

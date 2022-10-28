@@ -275,6 +275,7 @@ definition {
 	@description = "Assert Shortcut can add within Publications and publish to production."
 	@priority = "4"
 	test PublishWithShortcut {
+		property app.server.types = "tomcat";
 		property test.name.skip.portal.instance = "PublicationsDM#PublishWithShortcut";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");

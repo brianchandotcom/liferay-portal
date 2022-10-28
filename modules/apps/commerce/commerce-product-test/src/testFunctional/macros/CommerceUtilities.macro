@@ -101,4 +101,18 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro getConvertedBase64File {
+		Variables.assertDefined(parameterList = "${file}");
+
+		var projectDir = PropsUtil.get("project.dir");
+
+		var fileDir = "modules/apps/commerce/commerce-product-test/src/testFunctional/tests/dependencies";
+
+		if ("${file}" == "Commerce_Black.jpg") {
+			var fileBase64 = FileUtil.read("${projectDir}/${fileDir}/commerce_black_t_shirt_encoded_base64.txt");
+		}
+
+		return "${fileBase64}";
+	}
+
 }

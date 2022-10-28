@@ -235,7 +235,7 @@ public class AccountEntryLocalServiceTest {
 	public void testActivateAccountEntries() throws Exception {
 		List<AccountEntry> accountEntries =
 			AccountEntryTestUtil.addAccountEntries(
-				5, AccountEntryArgs.STATUS_INACTIVE);
+				2, AccountEntryArgs.STATUS_INACTIVE);
 
 		for (AccountEntry accountEntry : accountEntries) {
 			_assertStatus(
@@ -388,7 +388,7 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testDeactivateAccountEntries() throws Exception {
 		List<AccountEntry> accountEntries =
-			AccountEntryTestUtil.addAccountEntries(5);
+			AccountEntryTestUtil.addAccountEntries(2);
 
 		for (AccountEntry accountEntry : accountEntries) {
 			_assertStatus(
@@ -441,7 +441,7 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testDeleteAccountEntries() throws Exception {
 		List<AccountEntry> accountEntries =
-			AccountEntryTestUtil.addAccountEntries(5);
+			AccountEntryTestUtil.addAccountEntries(2);
 
 		_accountEntryLocalService.deleteAccountEntries(
 			ListUtil.toLongArray(
@@ -502,7 +502,7 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> accountEntries =
 			AccountEntryTestUtil.addAccountEntries(
-				5, AccountEntryArgs.withOwner(accountEntryOwner),
+				2, AccountEntryArgs.withOwner(accountEntryOwner),
 				accountEntryInfo -> {
 					User user = UserTestUtil.addUser();
 
@@ -659,7 +659,7 @@ public class AccountEntryLocalServiceTest {
 
 		List<AccountEntry> accountEntries =
 			AccountEntryTestUtil.addAccountEntries(
-				3, AccountEntryArgs.withUsers(user));
+				2, AccountEntryArgs.withUsers(user));
 
 		accountEntries.sort(
 			Comparator.comparing(
@@ -722,7 +722,7 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchByAccountUserIds() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		User user1 = UserTestUtil.addUser();
 		User user2 = UserTestUtil.addUser();
@@ -768,7 +768,7 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchByDomains() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		String emailDomain1 = "foo.com";
 		String emailDomain2 = "bar.com";
@@ -792,7 +792,7 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchByOrganizations() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();
@@ -942,7 +942,7 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchKeywords() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		String keywords = RandomTestUtil.randomString();
 
@@ -961,7 +961,7 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchNoKeywords() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		List<AccountEntry> expectedAccountEntries =
 			_accountEntryLocalService.getAccountEntries(

@@ -115,8 +115,6 @@ const ActionButton = ({
 		provisioningServerAPI,
 		sessionId,
 		handleAlertStatus,
-		handleRedirectPage,
-		handleDeactivatePage,
 		productName
 	);
 
@@ -130,8 +128,7 @@ const ActionButton = ({
 				}}
 			/>
 		);
-	}
-	else {
+	} else {
 		return (
 			<ButtonDropDown
 				items={filteredKeysActionsItems}

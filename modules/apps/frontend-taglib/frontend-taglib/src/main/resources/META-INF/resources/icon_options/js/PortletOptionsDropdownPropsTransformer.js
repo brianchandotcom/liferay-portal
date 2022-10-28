@@ -27,7 +27,33 @@ const ACTIONS = {
 	},
 };
 
-export default function propsTransformer({items, ...otherProps}) {
+export default function propsTransformer({
+	items,
+	portletNamespace,
+	...otherProps
+}) {
+	const dropdownClass = `${portletNamespace}portlet-options portlet-options-dropdown`;
+
+	const handleDropdownMenuOpen = (event) => {
+		const portlet = event.target.closest('.portlet');
+
+		if (portlet) {
+			portlet.classList.add('focus');
+		}
+
+		const listener = (event) => {
+			if (!event.target.closest(`.${dropdownClass}`)) {
+				portlet.classList.remove('focus');
+
+				document.removeEventListener('mousedown', listener);
+				document.removeEventListener('touchstart', listener);
+			}
+		};
+
+		document.addEventListener('mousedown', listener);
+		document.addEventListener('touchstart', listener);
+	};
+
 	return {
 		...otherProps,
 		items: items.map((item) => {
@@ -55,5 +81,16 @@ export default function propsTransformer({items, ...otherProps}) {
 				},
 			};
 		}),
+		menuProps: {
+			className: dropdownClass,
+		},
+		onClick: (event) => {
+			handleDropdownMenuOpen(event);
+		},
+		onKeyDown: (event) => {
+			if (event.key === 'Enter' || event.key === 'ArrowDown') {
+				handleDropdownMenuOpen(event);
+			}
+		},
 	};
 }

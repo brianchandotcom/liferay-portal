@@ -1,4 +1,4 @@
-	@component-name = "portal-solutions"
+@component-name = "portal-solutions"
 definition {
 
 	property osgi.modules.includes = "osb-site-initializer-customer-portal";
@@ -23,11 +23,11 @@ definition {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 
-            task ("Add test user access to all Accounts") {
-                CustomerPortal.assignUserToOrganization();
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
 
-                CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
-            }
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+		}
 	}
 
 	tearDown {
@@ -42,6 +42,7 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 	}
+
 	@description = "Automation ID: LPS-146195 | Test Summary: Verify that when you click the Download Key button a file is downloaded."
 	@ignore = "true"
 	@priority = "5"
@@ -64,6 +65,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 		}
+
 		task ("Assert that text 'To activate a local Liferay DXP instance, download a development key for your Liferay DXP version' is present") {
 			AssertElementPresent(locator1 = "CP2Utils#CAPITION_ABOVE_MENU");
 		}
@@ -76,13 +78,13 @@ definition {
 
 		task ("Assest the success message") {
 			Alert.viewSuccessMessage();
-
 		}
 
 		task ("Assert that the Activation Key was downloaded") {
 			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.0-nasaice.xml");
 		}
 	}
+
 	@description = "Automation ID: LPS-146194 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
 	@priority = "4"
 	test CanViewDxpVersionsDropDownList {
@@ -130,4 +132,5 @@ definition {
 			Navigator.closeWindow();
 		}
 	}
+
 }

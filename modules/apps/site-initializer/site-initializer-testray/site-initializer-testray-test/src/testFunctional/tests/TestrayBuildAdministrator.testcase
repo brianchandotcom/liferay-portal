@@ -51,7 +51,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Go to project page and add a new routine") {
+		task ("Create a new Routine and a new Case") {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
@@ -59,6 +59,19 @@ definition {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+
+            Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Analytics Cloud",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			Testray.projectTabNavigator(navTabName = "Routine");
 		}
 
 		task ("Add Environments Factors") {
@@ -107,6 +120,7 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
@@ -148,6 +162,7 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
@@ -175,6 +190,7 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
@@ -220,6 +236,7 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
@@ -256,6 +273,7 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
@@ -267,6 +285,7 @@ definition {
 		task ("When add a build with duplicated name") {
 			TestrayBuild.createBuild(
 				addVersion = "1.4",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
@@ -308,6 +327,7 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",

@@ -195,7 +195,7 @@ definition {
 	@description = "This is a test for LPS-160897. Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
 	@priority = "5"
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
-		task ("Go to Testray, Create Project and create product version") {
+		task ("Go to Testray and create a Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
@@ -205,28 +205,28 @@ definition {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
-
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = "Projects_1 Project",
-				version = "1.0");
-
-			Refresh();
 		}
 
-		task ("Go to project page and add a new routine") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
+		task ("Create a new Routine and a new Case") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 
-			Testray.assertItemName(key_name = "Routines_1 Routine");
+            Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Analytics Cloud",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			Testray.projectTabNavigator(navTabName = "Routine");
 		}
 
-		task ("Go to routine page and add a new build with enviroments") {
+		task ("Add a new build with enviroments") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
@@ -242,11 +242,12 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 
 			Testray.assertItemName(key_name = "Builds_1 Project");

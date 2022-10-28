@@ -112,17 +112,23 @@ definition {
 	@description = "This is a test for LPS-160586 - Verify if as an Administrator I should be able to delete a routine that contains builds "
 	@priority = "5"
 	test AdminCanDeleteRoutineWithBuilds {
-		task ("Given that the user add a new Routine") {
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = "Projects_1 Project",
-				version = "1.x");
-
-			Click(locator1 = "TestrayManage#CLOSE_MODAL");
-
+		task ("Given that the user add a new Routine and a new Case") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+
+            Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Analytics Cloud",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			Testray.projectTabNavigator(navTabName = "Routine");
 		}
 
 		task ("When the user goes add a new build with enviroments") {
@@ -141,11 +147,12 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Routines_4 Build Description",
 				dropdownItem = "New Build",
 				fieldName = "Routines_4 Build",
 				gitHash = "12345",
-				productVersion = "1.x",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 
 			Testray.assertItemName(key_name = "Routines_4 Build");
@@ -153,7 +160,7 @@ definition {
 			TestrayLayout.clickResultsOnSidebar();
 		}
 
-		task ("And when a build is deleted") {
+		task ("And when a routine is deleted") {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");

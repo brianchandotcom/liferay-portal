@@ -55,7 +55,7 @@ definition {
 			TestrayManage.closeModalInOptions();
 		}
 
-		task ("Create project, create Product Version and create Routine") {
+		task ("Create a project and create a Routine") {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
@@ -68,23 +68,27 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = "Projects_1 Project",
-				version = "1.x");
-
-			Refresh();
-
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 		}
 
-		task ("Add Environmental Factors and create build") {
+		 task ("Go to tab cases and Add a new Case") {
+            Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Analytics Cloud",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Go to tab routine and add Environmental Factors and create a build") {
+			Testray.projectTabNavigator(navTabName = "Routine");
+
 			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
@@ -100,11 +104,12 @@ definition {
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.x",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 

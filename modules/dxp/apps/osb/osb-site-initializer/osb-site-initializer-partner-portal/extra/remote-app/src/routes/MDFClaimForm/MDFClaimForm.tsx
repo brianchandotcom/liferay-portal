@@ -55,6 +55,8 @@ const MDFClaimForm = () => {
 		`?filter=name eq 'claim'`
 	);
 
+	const claimParentFolderId = claimParentFolder?.items[0].id;
+
 	const mdfRequestId = useGetMDFRequestIdByHash();
 
 	const {
@@ -71,7 +73,7 @@ const MDFClaimForm = () => {
 		!mdfRequest ||
 		isValidatingMDFRequestById ||
 		isValidatingClaimFolder ||
-		!claimParentFolder
+		!claimParentFolderId
 	) {
 		return <ClayLoadingIndicator />;
 	}
@@ -84,18 +86,14 @@ const MDFClaimForm = () => {
 				mdfRequest.totalMDFRequestAmount
 			)}
 			onSubmit={(values, formikHelpers) =>
-				submitForm(values, formikHelpers, claimParentFolder.items[0].id)
+				submitForm(values, formikHelpers, claimParentFolderId)
 			}
 		>
 			<MDFClaimPage
 				mdfRequest={mdfRequest}
 				onCancel={onCancel}
 				onSaveAsDraft={(values, formikHelpers) =>
-					submitForm(
-						values,
-						formikHelpers,
-						claimParentFolder.items[0].id
-					)
+					submitForm(values, formikHelpers, claimParentFolderId)
 				}
 				validationSchema={claimSchema}
 			/>

@@ -19,9 +19,6 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -35,17 +32,8 @@ public class FragmentEntryLinkListenerTrackerImpl
 	implements FragmentEntryLinkListenerTracker {
 
 	@Override
-	public List<FragmentEntryLinkListener> getFragmentEntryLinkListeners() {
-		List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-			new ArrayList<>(_serviceTrackerList.size());
-
-		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				_serviceTrackerList) {
-
-			fragmentEntryLinkListeners.add(fragmentEntryLinkListener);
-		}
-
-		return fragmentEntryLinkListeners;
+	public Iterable<FragmentEntryLinkListener> getFragmentEntryLinkListeners() {
+		return _serviceTrackerList;
 	}
 
 	@Activate

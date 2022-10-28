@@ -32,7 +32,7 @@ const ExportPage = () => {
 
 	const [caseIds, setCaseIds] = useState<number[]>([]);
 	const [, setExportCaseIds] = useStorage<number[]>(
-		`${STORAGE_KEYS}.EXPORT_CASE_IDS-${id}`,
+		`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}`,
 		[],
 		sessionStorage
 	);
@@ -47,7 +47,7 @@ const ExportPage = () => {
 		form: {onClose, submitting},
 	} = useFormActions();
 
-	const _onSubmit = () => {
+	const onSubmit = () => {
 		if (caseIds.length) {
 			setExportCaseIds(caseIds);
 
@@ -71,7 +71,7 @@ const ExportPage = () => {
 				<div className="mt-4">
 					<Form.Footer
 						onClose={onClose}
-						onSubmit={_onSubmit}
+						onSubmit={onSubmit}
 						primaryButtonProps={{
 							loading: submitting,
 							title: 'Export',

@@ -34,16 +34,220 @@ import {
 import {STORAGE_KEYS} from '../../../util/constants';
 import {searchUtil} from '../../../util/search';
 
+type CaseWithRequirement = {
+	[key: number]: TestrayRequirement[];
+};
+
+type CaseItemsProps = {
+	caseWithRequirements: CaseWithRequirement;
+	cases: TestrayCase[];
+};
+
+const RequirementTable = ({
+	requirements,
+}: {
+	requirements: TestrayRequirement[];
+}) => (
+	<ClayTable>
+		<ClayTable.Head>
+			<ClayTable.Row>
+				<ClayTable.Cell expanded headingCell>
+					{i18n.translate('key')}
+				</ClayTable.Cell>
+
+				<ClayTable.Cell headingCell>
+					{i18n.translate('link')}
+				</ClayTable.Cell>
+
+				<ClayTable.Cell headingCell>
+					{i18n.translate('summary')}
+				</ClayTable.Cell>
+			</ClayTable.Row>
+		</ClayTable.Head>
+
+		<ClayTable.Body>
+			{requirements.map(
+				(requirement: TestrayRequirement, index: number) => (
+					<ClayTable.Row key={index}>
+						<ClayTable.Cell headingTitle>
+							{requirement?.key}
+						</ClayTable.Cell>
+
+						<ClayTable.Cell>
+							<a
+								className="cursor-pointer"
+								onClick={() =>
+									window.open(requirement?.linkURL, '_blank')
+								}
+							>
+								{requirement?.linkURL}
+							</a>
+						</ClayTable.Cell>
+
+						<ClayTable.Cell>{requirement?.summary}</ClayTable.Cell>
+					</ClayTable.Row>
+				)
+			)}
+		</ClayTable.Body>
+	</ClayTable>
+);
+
+const CaseItems: React.FC<CaseItemsProps> = ({caseWithRequirements, cases}) => {
+	return (
+		<div>
+			{cases?.map((Case, index) => {
+				const requirements = caseWithRequirements[Case?.id];
+
+				return (
+					<div className="mt-3" key={index}>
+						<Container>
+							<h5>{Case.name}</h5>
+
+							<QATable
+								items={[
+									{
+										title: i18n.translate('project-name'),
+										value: Case?.project?.name,
+									},
+
+									{
+										title: i18n.translate('type'),
+										value: Case?.caseType?.name,
+									},
+									{
+										title: i18n.translate('piority'),
+										value: Case?.priority,
+									},
+									{
+										title: i18n.translate('team'),
+										value: Case?.component?.team?.name,
+									},
+									{
+										title: i18n.translate('main-component'),
+										value: Case?.component?.name,
+									},
+									{
+										title: i18n.translate('description'),
+										value: (
+											<MarkdownPreview
+												markdown={Case.description}
+											/>
+										),
+									},
+									{
+										title: i18n.translate(
+											'estimated-duration'
+										),
+										value: Case?.estimatedDuration,
+									},
+									{
+										title: i18n.translate('steps'),
+										value: Case?.steps,
+									},
+									{
+										title: i18n.translate(
+											'data-last-modified'
+										),
+										value: Case?.dateModified,
+									},
+									{
+										title: i18n.translate(
+											'all-issue-found'
+										),
+										value: Case?.name,
+									},
+									{
+										title: i18n.translate('requirements'),
+										value: requirements?.length && (
+											<RequirementTable
+												requirements={requirements}
+											/>
+										),
+									},
+								]}
+							/>
+						</Container>
+					</div>
+				);
+			})}
+		</div>
+	);
+};
+
+const ExportCaseContainer: React.FC<CaseItemsProps> = ({
+	caseWithRequirements,
+	cases,
+}) => (
+	<div>
+		{cases.map((Case: TestrayCase) => {
+			const requirements = caseWithRequirements[Case?.id];
+
+			return requirements.map((requirement) => (
+				<div className="mt-3" key={requirement.key}>
+					<Container>
+						<h5>{requirement.key}</h5>
+
+						<QATable
+							items={[
+								{
+									title: i18n.translate('link'),
+									value: (
+										<a
+											className="cursor-pointer"
+											onClick={() =>
+												window.open(
+													requirement?.linkURL,
+													'_blank'
+												)
+											}
+										>
+											{requirement?.linkURL}
+										</a>
+									),
+								},
+								{
+									title: i18n.translate('team'),
+									value: requirement?.component?.team?.name,
+								},
+								{
+									title: i18n.translate('component'),
+									value: Case?.component?.name,
+								},
+								{
+									title: i18n.translate('jira-component'),
+									value: Case?.component?.team?.name,
+								},
+								{
+									title: i18n.translate('summary'),
+									value: requirement?.summary,
+								},
+								{
+									title: i18n.translate('description'),
+									value: (
+										<MarkdownPreview
+											markdown={requirement?.description}
+										/>
+									),
+								},
+							]}
+						/>
+					</Container>
+				</div>
+			));
+		})}
+	</div>
+);
+
 const Export = () => {
 	const {id} = useParams();
 
 	const [caseIds] = useStorage(
-		`${STORAGE_KEYS}.EXPORT_CASE_IDS-${id}`,
+		`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}`,
 		[],
 		sessionStorage
 	);
 
-	const {data: cases, loading} = useFetch<APIResponse<TestrayCase>>(
+	const {data: casesData, loading} = useFetch<APIResponse<TestrayCase>>(
 		`/cases?filter=${searchUtil.in(
 			'id',
 			caseIds
@@ -64,13 +268,11 @@ const Export = () => {
 			testrayCaseRequirementsImpl.transformDataFromList(response)
 	);
 
-	const caseItems = cases?.items || [];
+	const cases = casesData?.items || [];
 
-	const requirementItems = useMemo(() => {
+	const casesWithRequirements = useMemo(() => {
 		const requirementCases = requirementCasesData?.items || [];
-		const casesWithRequirement: {
-			[key: number]: TestrayRequirement[];
-		} = {};
+		const casesWithRequirement: CaseWithRequirement = {};
 
 		requirementCases.forEach((requirementCase) => {
 			const caseId = requirementCase.case?.id;
@@ -94,278 +296,27 @@ const Export = () => {
 		return <EmptyState />;
 	}
 
-	const ExportCaseContainer: React.FC<TestrayCase[]> = (caseItems) => {
-		return (
-			<>
-				<div>
-					<h5>{i18n.translate('case')}</h5>
-
-					<div>
-						{caseItems?.map((Case: TestrayCase, index: number) => {
-							const requirements = requirementItems[Case?.id];
-
-							return (
-								<div className="mt-3" key={index}>
-									<Container>
-										<h5>{Case.name}</h5>
-
-										<QATable
-											items={[
-												{
-													title: i18n.translate(
-														'project-name'
-													),
-													value: Case?.project?.name,
-												},
-
-												{
-													title: i18n.translate(
-														'type'
-													),
-													value: Case?.caseType?.name,
-												},
-												{
-													title: i18n.translate(
-														'piority'
-													),
-													value: Case?.priority,
-												},
-												{
-													title: i18n.translate(
-														'team'
-													),
-													value:
-														Case?.component?.team
-															?.name,
-												},
-												{
-													title: i18n.translate(
-														'main-component'
-													),
-													value:
-														Case?.component?.name,
-												},
-												{
-													title: i18n.translate(
-														'description'
-													),
-													value: (
-														<MarkdownPreview
-															markdown={
-																Case.description
-															}
-														/>
-													),
-												},
-												{
-													title: i18n.translate(
-														'estimated-duration'
-													),
-													value:
-														Case?.estimatedDuration,
-												},
-												{
-													title: i18n.translate(
-														'steps'
-													),
-													value: Case?.steps,
-												},
-												{
-													title: i18n.translate(
-														'data-last-modified'
-													),
-													value: Case?.dateModified,
-												},
-												{
-													title: i18n.translate(
-														'all-issue-found'
-													),
-													value: Case?.name,
-												},
-												{
-													title: i18n.translate(
-														'requirements'
-													),
-													value: requirements?.length && (
-														<>
-															<ClayTable>
-																<ClayTable.Head>
-																	<ClayTable.Row>
-																		<ClayTable.Cell
-																			expanded
-																			headingCell
-																		>
-																			{i18n.translate(
-																				'key'
-																			)}
-																		</ClayTable.Cell>
-
-																		<ClayTable.Cell
-																			headingCell
-																		>
-																			{i18n.translate(
-																				'link'
-																			)}
-																		</ClayTable.Cell>
-
-																		<ClayTable.Cell
-																			headingCell
-																		>
-																			{i18n.translate(
-																				'summary'
-																			)}
-																		</ClayTable.Cell>
-																	</ClayTable.Row>
-																</ClayTable.Head>
-
-																<ClayTable.Body>
-																	{requirements.map(
-																		(
-																			items: TestrayRequirement,
-																			index: number
-																		) => {
-																			return (
-																				<ClayTable.Row
-																					key={
-																						index
-																					}
-																				>
-																					<ClayTable.Cell
-																						headingTitle
-																					>
-																						{
-																							items?.key
-																						}
-																					</ClayTable.Cell>
-
-																					<ClayTable.Cell>
-																						<a
-																							className="cursor-pointer"
-																							onClick={() =>
-																								window.open(
-																									items?.linkURL,
-																									'_blank'
-																								)
-																							}
-																						>
-																							{
-																								items?.linkURL
-																							}
-																						</a>
-																					</ClayTable.Cell>
-
-																					<ClayTable.Cell>
-																						{
-																							items?.summary
-																						}
-																					</ClayTable.Cell>
-																				</ClayTable.Row>
-																			);
-																		}
-																	)}
-																</ClayTable.Body>
-															</ClayTable>
-														</>
-													),
-												},
-											]}
-										/>
-									</Container>
-								</div>
-							);
-						})}
-					</div>
-
-					<h5 className="mt-5">
-						{i18n.translate('Associated Requirements')}
-					</h5>
-
-					<div>
-						{caseItems?.map((Case: TestrayCase) => {
-							const requirements = requirementItems[Case?.id];
-
-							return requirements?.map((requirement) => (
-								<div className="mt-3" key={requirement.key}>
-									<Container>
-										<h5>{requirement.key}</h5>
-
-										<QATable
-											items={[
-												{
-													title: i18n.translate(
-														'link'
-													),
-													value: (
-														<a
-															className="cursor-pointer"
-															onClick={() =>
-																window.open(
-																	requirement?.linkURL,
-																	'_blank'
-																)
-															}
-														>
-															{
-																requirement?.linkURL
-															}
-														</a>
-													),
-												},
-												{
-													title: i18n.translate(
-														'team'
-													),
-													value:
-														requirement?.component
-															?.team?.name,
-												},
-												{
-													title: i18n.translate(
-														'component'
-													),
-													value: '',
-												},
-												{
-													title: i18n.translate(
-														'jira-component'
-													),
-													value:
-														Case?.component?.team
-															?.name,
-												},
-												{
-													title: i18n.translate(
-														'summary'
-													),
-													value: requirement?.summary,
-												},
-												{
-													title: i18n.translate(
-														'description'
-													),
-													value: (
-														<MarkdownPreview
-															markdown={
-																requirement?.description
-															}
-														/>
-													),
-												},
-											]}
-										/>
-									</Container>
-								</div>
-							));
-						})}
-					</div>
-				</div>
-			</>
-		);
-	};
-
 	return (
 		<div className="export-case-container p-3">
-			{caseItems?.length && ExportCaseContainer(caseItems)}
+			<div>
+				<h5>{i18n.translate('case')}</h5>
+
+				<h5 className="mt-5">
+					{i18n.translate('associated-requirements')}
+				</h5>
+
+				<CaseItems
+					caseWithRequirements={casesWithRequirements}
+					cases={cases}
+				/>
+
+				{!!cases.length && (
+					<ExportCaseContainer
+						caseWithRequirements={casesWithRequirements}
+						cases={cases}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };

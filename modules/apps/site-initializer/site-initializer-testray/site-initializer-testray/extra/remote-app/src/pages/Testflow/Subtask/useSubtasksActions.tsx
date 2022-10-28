@@ -28,7 +28,7 @@ const useSubtasksActions = () => {
 	const {form} = useFormActions();
 	const {updateItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
-	const {modal: complete} = useFormModal();
+	const {modal: completeModal} = useFormModal();
 
 	const actionsRef = useRef([
 		{
@@ -61,14 +61,14 @@ const useSubtasksActions = () => {
 							}}
 						/>
 					),
-					size: 'full-screen',
+					size: 'lg',
 					title: i18n.translate('users'),
 				}),
 			icon: 'user',
 			name: i18n.translate('assign'),
 		},
 		{
-			action: (subtask) => complete.open(subtask),
+			action: (subtask) => completeModal.open(subtask),
 			icon: 'polls',
 			name: i18n.sub('complete-x', ''),
 		},
@@ -76,7 +76,7 @@ const useSubtasksActions = () => {
 
 	return {
 		actions: actionsRef.current,
-		complete,
+		completeModal,
 		form,
 	};
 };

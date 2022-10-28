@@ -50,7 +50,7 @@ import SubtaskCompleteModal from './Subtask/SubtaskCompleteModal';
 import useSubtasksActions from './Subtask/useSubtasksActions';
 
 type OutletContext = {
-	mutateTestFlow?: KeyedMutator<any>;
+	mutateTask?: KeyedMutator<TestrayTask>;
 	testrayTask: TestrayTask;
 };
 
@@ -59,9 +59,9 @@ const ShortcutIcon = () => (
 );
 
 const TestFlowTasks = () => {
-	const {mutateTestFlow, testrayTask} = useOutletContext<OutletContext>();
+	const {mutateTask, testrayTask} = useOutletContext<OutletContext>();
 	const {updateItemFromList} = useMutate();
-	const {actions, complete, form} = useSubtasksActions();
+	const {actions, completeModal} = useSubtasksActions();
 
 	const {data: taskUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
 		testrayTask?.id
@@ -262,7 +262,7 @@ const TestFlowTasks = () => {
 							},
 							{
 								key: 'error',
-								render: (_, value) => <Code>{value?.id}</Code>,
+								render: (value) => <Code>{value}</Code>,
 								size: 'xl',
 								value: i18n.translate('errors'),
 							},
@@ -301,8 +301,6 @@ const TestFlowTasks = () => {
 															}
 														);
 													})
-													.then(form.onSave)
-													.catch(form.onError)
 											}
 										/>
 									);
@@ -324,9 +322,9 @@ const TestFlowTasks = () => {
 			</Container>
 
 			<SubtaskCompleteModal
-				modal={complete}
-				mutate={mutateTestFlow}
-				subtask={complete.modalState}
+				modal={completeModal}
+				mutate={mutateTask}
+				subtask={completeModal.modalState}
 			/>
 		</>
 	);

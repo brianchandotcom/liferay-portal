@@ -28,9 +28,9 @@ import {
 	APIResponse,
 	TestraySubTask,
 	TestraySubTaskCaseResult,
+	testraySubTaskImpl,
+	testraySubtaskCaseResultImpl,
 } from '../../../services/rest';
-import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
-import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {searchUtil} from '../../../util/search';
 import {CaseResultStatuses} from '../../../util/statuses';
 

@@ -256,6 +256,31 @@ const filters = {
 		},
 	],
 	routines: [baseFilters.priority, baseFilters.caseType, baseFilters.team],
+	subtasks: [
+		{
+			label: i18n.translate('subtask-name'),
+			name: 'subtaskName',
+			type: 'text',
+		},
+		{
+			label: i18n.translate('errors'),
+			name: 'errors',
+			type: 'text',
+		},
+		baseFilters.assignee,
+		{
+			label: i18n.translate('status'),
+			name: 'status',
+			options: ['Complete', 'In Analysis', 'Open'],
+			type: 'checkbox',
+		},
+		baseFilters.team,
+		{
+			label: i18n.translate('component'),
+			name: 'commponent',
+			type: 'text',
+		},
+	],
 	suites: [
 		{
 			label: i18n.translate('suite-name'),

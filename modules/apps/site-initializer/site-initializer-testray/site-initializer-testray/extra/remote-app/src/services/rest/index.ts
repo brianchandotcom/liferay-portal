@@ -41,6 +41,8 @@ export * from './TestrayRoutine';
 export * from './TestrayRun';
 export * from './TestraySuite';
 export * from './TestraySuiteCases';
+export * from './TestraySubtask';
+export * from './TestraySubtaskCaseResults';
 export * from './TestrayTask';
 export * from './TestrayTaskUsers';
 export * from './TestrayTeam';

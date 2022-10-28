@@ -37,7 +37,7 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 			testraySubTaskImpl.assignTo(subtask, user.id).then(mutateSubtask),
 	});
 
-	const {modal: complete} = useFormModal();
+	const {modal: completeModal} = useFormModal();
 
 	const buttonDisabled = [
 		SubTaskStatuses.OPEN,
@@ -49,7 +49,7 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 			<AssignModal modal={assignUserModal} />
 
 			<SubtaskCompleteModal
-				modal={complete}
+				modal={completeModal}
 				mutate={mutateSubtask}
 				subtask={subtask}
 			/>
@@ -80,7 +80,7 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 							{i18n.translate('assign')}
 						</ClayButton>
 
-						<ClayButton onClick={() => complete.open()}>
+						<ClayButton onClick={() => completeModal.open()}>
 							{i18n.translate('complete')}
 						</ClayButton>
 

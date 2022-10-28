@@ -23,8 +23,21 @@ import {ESteps, TGenericComponent} from './WizardPage';
 
 interface IStepProps extends TGenericComponent {}
 
+const updateSyncAll = (
+	syncAllAccounts: boolean,
+	syncAllContacts: boolean
+): boolean => {
+	if (!syncAllAccounts || !syncAllContacts) {
+		return false;
+	}
+
+	return true;
+};
+
 const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 	const [syncAll, setSyncAll] = useState(false);
+	const [syncAllAccounts, setSyncAllAccounts] = useState(false);
+	const [syncAllContacts, setSyncAllContacts] = useState(false);
 
 	return (
 		<BasePage
@@ -36,7 +49,11 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					label={Liferay.Language.get(
 						'sync-all-contacts-and-accounts'
 					)}
-					onToggle={() => setSyncAll(!syncAll)}
+					onToggle={() => {
+						setSyncAll(!syncAll);
+						setSyncAllAccounts(!syncAll);
+						setSyncAllContacts(!syncAll);
+					}}
 					toggled={syncAll}
 				/>
 
@@ -47,7 +64,21 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 
 			<SelectPanels
 				accountsCount={0}
+				onSyncAllAccountsChange={() => {
+					setSyncAll(
+						updateSyncAll(!syncAllAccounts, syncAllContacts)
+					);
+					setSyncAllAccounts(!syncAllAccounts);
+				}}
+				onSyncAllContactsChange={() => {
+					setSyncAll(
+						updateSyncAll(syncAllAccounts, !syncAllContacts)
+					);
+					setSyncAllContacts(!syncAllContacts);
+				}}
 				organizationsCount={0}
+				syncAllAccounts={syncAllAccounts}
+				syncAllContacts={syncAllContacts}
 				usersCount={0}
 			/>
 

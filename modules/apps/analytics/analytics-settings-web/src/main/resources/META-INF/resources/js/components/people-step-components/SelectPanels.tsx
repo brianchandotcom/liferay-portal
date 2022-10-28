@@ -16,22 +16,27 @@ import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
-import React, {useState} from 'react';
+import React from 'react';
 
 interface IPanelProps {
 	accountsCount: number;
+	onSyncAllAccountsChange: () => void;
+	onSyncAllContactsChange: () => void;
 	organizationsCount: number;
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
 	usersCount: number;
 }
 
 const SelectPanels: React.FC<IPanelProps> = ({
 	accountsCount,
+	onSyncAllAccountsChange,
+	onSyncAllContactsChange,
 	organizationsCount,
+	syncAllAccounts,
+	syncAllContacts,
 	usersCount,
 }) => {
-	const [syncAllContacts, setSyncAllContacts] = useState(false);
-	const [syncAllAccounts, setSyncAllAccounts] = useState(false);
-
 	const userOrganizationList = [
 		{
 			count: usersCount,
@@ -58,9 +63,9 @@ const SelectPanels: React.FC<IPanelProps> = ({
 					<div className="panel-toggle">
 						<ClayToggle
 							label={Liferay.Language.get('sync-all-contacts')}
-							onToggle={() =>
-								setSyncAllContacts(!syncAllContacts)
-							}
+							onToggle={() => {
+								onSyncAllContactsChange();
+							}}
 							toggled={syncAllContacts}
 						/>
 					</div>
@@ -77,7 +82,11 @@ const SelectPanels: React.FC<IPanelProps> = ({
 							key={item.title}
 							showQuickActionsOnHover
 						>
-							<ClayList.Item className="align-items-center" flex>
+							<ClayList.Item
+								className="align-items-center"
+								disabled={syncAllContacts}
+								flex
+							>
 								<ClayList.ItemField>
 									<ClayIcon symbol={item.icon} />
 								</ClayList.ItemField>
@@ -110,9 +119,9 @@ const SelectPanels: React.FC<IPanelProps> = ({
 					<div className="panel-toggle">
 						<ClayToggle
 							label={Liferay.Language.get('sync-all-accounts')}
-							onToggle={() =>
-								setSyncAllAccounts(!syncAllAccounts)
-							}
+							onToggle={() => {
+								onSyncAllAccountsChange();
+							}}
 							toggled={syncAllAccounts}
 						/>
 					</div>
@@ -124,7 +133,11 @@ const SelectPanels: React.FC<IPanelProps> = ({
 					</p>
 
 					<ClayList showQuickActionsOnHover>
-						<ClayList.Item className="align-items-center" flex>
+						<ClayList.Item
+							className="align-items-center"
+							disabled={syncAllAccounts}
+							flex
+						>
 							<ClayList.ItemField>
 								<ClayIcon symbol="users" />
 							</ClayList.ItemField>

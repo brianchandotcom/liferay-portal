@@ -25,12 +25,20 @@ import StatusBadge from '../../components/StatusBadge';
 import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
+import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {PickList, TestrayTask} from '../../services/rest';
+import {
+	APIResponse,
+	PickList,
+	TestrayTask,
+	TestrayTaskUser,
+	UserAccount,
+	testrayTaskImpl,
+	testrayTaskUsersImpl,
+} from '../../services/rest';
 import {StatusesProgressScore, chartClassNames} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
-import {assigned} from '../../util/mock';
 import {searchUtil} from '../../util/search';
 
 type OutletContext = {
@@ -43,6 +51,22 @@ const ShortcutIcon = () => (
 
 const TestFlowTasks = () => {
 	const {testrayTask} = useOutletContext<OutletContext>();
+
+	const {data: taskUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
+		testrayTask?.id
+			? `${testrayTaskImpl.getNestedObject(
+					'taskToTasksUsers',
+					testrayTask.id
+			  )}?nestedFields=task,user`
+			: null,
+		(response) => testrayTaskUsersImpl.transformDataFromList(response)
+	);
+
+	const taskUsers: TestrayTaskUser[] = taskUserResponse?.items || [];
+
+	const users = taskUsers
+		.filter(({user}) => user)
+		.map(({user}) => user as UserAccount);
 
 	useHeader({useTabs: []});
 
@@ -78,7 +102,13 @@ const TestFlowTasks = () => {
 									title: i18n.translate('assigned-users'),
 									value: (
 										<Avatar.Group
-											assignedUsers={assigned}
+											assignedUsers={users.map(
+												({givenName}) => ({
+													name: givenName,
+													url:
+														'https://picsum.photos/200',
+												})
+											)}
 											groupSize={3}
 										/>
 									),

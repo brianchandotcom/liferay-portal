@@ -266,6 +266,15 @@ export type TestrayTask = {
 	subtaskScoreIncomplete: string;
 };
 
+export type TestrayTaskUser = {
+	id: number;
+	name: string;
+	r_taskToTasksUsers_c_task?: TestrayTask;
+	r_userToTasksUsers_user?: UserAccount;
+	task?: TestrayTask;
+	user?: UserAccount;
+};
+
 export type TestrayTeam = {
 	dateCreated: string;
 	dateModified: string;

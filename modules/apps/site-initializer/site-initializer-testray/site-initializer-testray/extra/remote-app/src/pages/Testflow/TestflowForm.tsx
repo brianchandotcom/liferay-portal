@@ -28,12 +28,7 @@ import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import yupSchema, {yupResolver} from '../../schema/yup';
 import {Liferay} from '../../services/liferay';
-import {
-	TestrayBuild,
-	TestrayCaseType,
-	testrayBuildImpl,
-	testrayTaskImpl,
-} from '../../services/rest';
+import {TestrayCaseType, testrayTaskImpl} from '../../services/rest';
 import {searchUtil} from '../../util/search';
 import {UserListView} from '../Manage/User';
 import useTestFlowAssign from './TestflowFormAssignUserActions';
@@ -49,17 +44,12 @@ const TestflowForm = () => {
 	const [modalType, setModalType] = useState('assign-users');
 	const [users, setUsers] = useState<number[]>([]);
 	const {modal} = useFormModal({
-		onSave: (selectedUsers) => {
-			setUsers(selectedUsers);
-		},
+		onSave: setUsers,
 	});
 	const {buildId} = useParams();
 	const {actions} = useTestFlowAssign({setUsers});
 
-	const {data} = useFetch('/casetypes');
-	const {data: testrayBuild} = useFetch<TestrayBuild>(
-		testrayBuildImpl.getResource(buildId as string)
-	);
+	const {data} = useFetch('/casetypes?pageSize=100&fields=id,name');
 
 	const {
 		formState: {errors},
@@ -71,7 +61,7 @@ const TestflowForm = () => {
 		defaultValues: {
 			buildId: Number(buildId ?? 0),
 			caseTypes: [],
-			users: [],
+			userIds: [],
 		},
 		resolver: yupResolver(yupSchema.task),
 	});
@@ -107,7 +97,7 @@ const TestflowForm = () => {
 			});
 		}
 
-		if (!form.users?.length) {
+		if (!form.userIds?.length) {
 			hasError = true;
 
 			Liferay.Util.openToast({
@@ -148,13 +138,7 @@ const TestflowForm = () => {
 	};
 
 	useEffect(() => {
-		if (testrayBuild?.name) {
-			setValue('name', testrayBuild?.name);
-		}
-	}, [testrayBuild, setValue]);
-
-	useEffect(() => {
-		setValue('users', users);
+		setValue('userIds', users);
 	}, [setValue, users]);
 
 	return (

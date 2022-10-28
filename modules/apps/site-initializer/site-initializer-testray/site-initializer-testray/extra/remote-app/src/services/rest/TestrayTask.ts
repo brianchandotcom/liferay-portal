@@ -17,11 +17,17 @@ import yupSchema from '../../schema/yup';
 import {SearchBuilder, searchUtil} from '../../util/search';
 import {TaskStatuses} from '../../util/statuses';
 import Rest from './Rest';
+import {testrayTaskUsersImpl} from './TestrayTaskUsers';
 import {APIResponse, TestrayTask} from './types';
 
 type TaskForm = typeof yupSchema.task.__outputType & {projectId: number};
 
-class TestrayTaskImpl extends Rest<TaskForm, TestrayTask> {
+type NestedObjectOptions =
+	| 'taskToSubtasks'
+	| 'taskToTasksCaseTypes'
+	| 'taskToTasksUsers';
+
+class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	constructor() {
 		super({
 			adapter: ({
@@ -79,6 +85,24 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask> {
 		if (response?.totalCount) {
 			throw new Error(i18n.sub('the-x-name-already-exists', 'tasks'));
 		}
+	}
+
+	public async create(data: TaskForm): Promise<TestrayTask> {
+		const task = await super.create(data);
+
+		const userIds = data.userIds || [];
+
+		if (userIds.length) {
+			await testrayTaskUsersImpl.createBatch(
+				userIds.map((userId) => ({
+					name: '...',
+					taskId: task.id,
+					userId,
+				}))
+			);
+		}
+
+		return task;
 	}
 
 	protected async beforeCreate(task: TaskForm): Promise<void> {

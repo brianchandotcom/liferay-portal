@@ -21,6 +21,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_VERSION_LOGS</td>
+	<td>//*[contains(@class,'list-group-item') and contains(.,'${versionNumber}')] //*[@class='list-group-subtext']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_VERSION_NUMBER</td>
+	<td>//*[contains(@class,'list-group-item')] //*[@class='list-group-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_VERSION_NUMBER_INDEX</td>
+	<td>xpath=(//*[contains(@class,'list-group-item')] //*[@class='list-group-title'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUDIT_GRAPH_CATEGORY_CHECKBOX</td>
 	<td>//label/descendant-or-self::*[contains(text(),'${auditGraphCheckboxName}']</td>
 	<td></td>

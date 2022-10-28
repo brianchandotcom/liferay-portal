@@ -525,15 +525,13 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		long prefixListTypeId = _getListTypeId(
-			actionRequest, "prefixListTypeValue",
-			ListTypeConstants.CONTACT_PREFIX);
+			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
 
 		dynamicActionRequest.setParameter(
 			"prefixListTypeId", String.valueOf(prefixListTypeId));
 
 		long suffixListTypeId = _getListTypeId(
-			actionRequest, "suffixListTypeValue",
-			ListTypeConstants.CONTACT_SUFFIX);
+			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
 
 		dynamicActionRequest.setParameter(
 			"suffixListTypeId", String.valueOf(suffixListTypeId));

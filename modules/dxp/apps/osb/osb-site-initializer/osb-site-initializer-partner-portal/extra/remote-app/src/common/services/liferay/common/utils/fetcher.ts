@@ -38,27 +38,42 @@ liferayFetcher.post = <T>(
 	options?: RequestInit
 ) =>
 	liferayFetcher<T>(url, token, {
+		...options,
 		body: JSON.stringify(data),
 		headers: {
+			...options?.headers,
 			'Content-Type': 'application/json',
 		},
 		method: 'POST',
-		...options,
 	});
 
-liferayFetcher.put = <T>(url: string, token: string, data: Partial<T>) =>
+liferayFetcher.put = <T>(
+	url: string,
+	token: string,
+	data: Partial<T>,
+	options?: RequestInit
+) =>
 	liferayFetcher<T>(url, token, {
+		...options,
 		body: JSON.stringify(data),
 		headers: {
+			...options?.headers,
 			'Content-Type': 'application/json',
 		},
 		method: 'PUT',
 	});
 
-liferayFetcher.patch = <T>(url: string, token: string, data: Partial<T>) =>
+liferayFetcher.patch = <T>(
+	url: string,
+	token: string,
+	data: Partial<T>,
+	options?: RequestInit
+) =>
 	liferayFetcher<T>(url, token, {
+		...options,
 		body: JSON.stringify(data),
 		headers: {
+			...options?.headers,
 			'Content-Type': 'application/json',
 		},
 		method: 'PATCH',

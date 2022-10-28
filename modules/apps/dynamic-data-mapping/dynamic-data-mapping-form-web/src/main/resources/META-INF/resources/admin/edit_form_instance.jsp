@@ -165,7 +165,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"defaultLanguageId", ddmFormAdminDisplayContext.getDefaultLanguageId()
 					).put(
-						"displayChartsAsTables", ddmFormAdminDisplayContext.isDisplayChartAsTable()
+						"displayChartAsTable", ddmFormAdminDisplayContext.isDisplayChartAsTable()
 					).put(
 						"elementSets", ddmFormAdminDisplayContext.getFieldSetsJSONArray()
 					).put(

@@ -1287,10 +1287,10 @@ public class DDMFormAdminDisplayContext {
 			return false;
 		}
 
-		DDMFormInstanceSettings settingsModel =
+		DDMFormInstanceSettings ddmFormInstanceSettings =
 			ddmFormInstance.getSettingsModel();
 
-		return settingsModel.displayChartAsTable();
+		return ddmFormInstanceSettings.displayChartAsTable();
 	}
 
 	public boolean isFormPublished() throws PortalException {

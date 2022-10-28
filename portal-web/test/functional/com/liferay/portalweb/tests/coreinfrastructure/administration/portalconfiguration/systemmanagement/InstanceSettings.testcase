@@ -1244,8 +1244,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			childSite = "true",
 			contentSharingAcrossSitesEnabled = "false",
-			liferaySiteName = "${siteName}",
-			liferaySiteType = "Site");
+			liferaySiteName = "${siteName}");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1275,8 +1274,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			childSite = "true",
 			contentSharingAcrossSitesEnabled = "false",
-			liferaySiteName = "${siteName}",
-			liferaySiteType = "Site");
+			liferaySiteName = "${siteName}");
 
 		Navigator.openSiteURL(siteName = "Child SiteName");
 
@@ -1321,8 +1319,7 @@ definition {
 
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			contentSharingAcrossSitesEnabled = "true",
-			liferaySiteName = "${siteName}",
-			liferaySiteType = "Site");
+			liferaySiteName = "${siteName}");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -1347,8 +1344,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			contentSharingAcrossSitesEnabled = "true",
 			currentSite = "true",
-			liferaySiteName = "${siteName}",
-			liferaySiteType = "Current Site");
+			liferaySiteName = "${siteName}");
 
 		Navigator.gotoPage(pageName = "AP Test Page");
 

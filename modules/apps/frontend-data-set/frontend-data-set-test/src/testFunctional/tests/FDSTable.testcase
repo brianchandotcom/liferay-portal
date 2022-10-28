@@ -63,8 +63,7 @@ definition {
 
 		task ("Then: There is no hyphen in any header text") {
 			AssertTextNotPresent(
-				key_itemName = "Nombre",
-				locator1 = "FrontendDataSet#TABLE_ITEM_ROW",
+				locator1 = "FrontendDataSet#HEADER_ROW",
 				value1 = "-");
 		}
 

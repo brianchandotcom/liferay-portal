@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.internal.buffer;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -138,21 +137,18 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 					getPersistedModelLocalService(className);
 
 			try {
-				Object obj = persistedModelLocalService.getPersistedModel(
+				Object object = persistedModelLocalService.getPersistedModel(
 					classPK);
 
-				if (obj instanceof ResourcedModel) {
-					ResourcedModel resourcedModel = (ResourcedModel)obj;
+				if (object instanceof ResourcedModel) {
+					ResourcedModel resourcedModel = (ResourcedModel)object;
 
 					classPK = resourcedModel.getResourcePrimKey();
 				}
 			}
 			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Unable to get resource primary key for class ",
-							className, " with primary key ", classPK));
+				if (_log.isTraceEnabled()) {
+					_log.trace(exception);
 				}
 			}
 

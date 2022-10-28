@@ -238,6 +238,9 @@ export default function FragmentsSidebar() {
 				<div className="align-items-center d-flex flex-shrink-0 justify-content-between mb-3 px-3">
 					<SearchForm
 						className="flex-grow-1 mb-0"
+						label={Liferay.Language.get(
+							'search-fragments-and-widgets'
+						)}
 						onChange={setSearchValue}
 					/>
 

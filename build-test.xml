@@ -9984,12 +9984,10 @@ virtualHostname="localhost"
 			result="osgi.console.port"
 		/>
 
-		<loadfile
-			property="groovy.script"
-			srcfile="${script.file.path}"
+		<copy
+			file="${script.file.path}"
+			tofile="${test.app.server.liferay.home}/portal-script.groovy"
 		/>
-
-		<echo file="${test.app.server.liferay.home}/portal-script.groovy">${groovy.script}</echo>
 
 		<replaceregexp
 			file="${test.app.server.liferay.home}/portal-script.groovy"

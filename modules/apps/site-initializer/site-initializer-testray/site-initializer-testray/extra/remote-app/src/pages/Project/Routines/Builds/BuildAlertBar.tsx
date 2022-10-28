@@ -20,7 +20,7 @@ import {useNavigate} from 'react-router-dom';
 
 import i18n from '../../../../i18n';
 import {TestrayTask} from '../../../../services/rest';
-import {SubTaskStatuses} from '../../../../util/statuses';
+import {TaskStatuses} from '../../../../util/statuses';
 
 type BuildAlertBarProps = {
 	testrayTask: TestrayTask;
@@ -36,19 +36,19 @@ type AlertProperties = {
 };
 
 const alertProperties: AlertProperties = {
-	[SubTaskStatuses.IN_ANALYSIS]: {
+	[TaskStatuses.IN_ANALYSIS]: {
 		color: 'label-chart-in-analysis',
 		displayType: 'warning',
 		label: i18n.translate('in-analysis'),
 		text: i18n.translate('this-build-is-currently-in-analysis'),
 	},
-	[SubTaskStatuses.ABANDONED]: {
+	[TaskStatuses.ABANDONED]: {
 		color: 'label-secondary',
 		displayType: 'secondary',
 		label: i18n.translate('abandoned'),
 		text: i18n.translate('this-builds-task-has-been-abandoned'),
 	},
-	[SubTaskStatuses.COMPLETE]: {
+	[TaskStatuses.COMPLETE]: {
 		color: 'label-primary',
 		displayType: 'primary',
 		label: i18n.translate('complete'),

@@ -56,7 +56,8 @@ public interface SuggestionResource {
 
 	public Page<SuggestionsContributorResults> postSuggestionsPage(
 			String currentURL, String destinationFriendlyURL, Long groupId,
-			Long plid, String scope, String search,
+			String keywordsParameterName, Long plid, String scope,
+			String search,
 			SuggestionsContributorConfiguration[]
 				suggestionsContributorConfigurations)
 		throws Exception;

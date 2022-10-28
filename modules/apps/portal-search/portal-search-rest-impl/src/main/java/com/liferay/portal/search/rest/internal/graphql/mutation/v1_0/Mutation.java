@@ -60,6 +60,8 @@ public class Mutation {
 				@GraphQLName("destinationFriendlyURL") String
 					destinationFriendlyURL,
 				@GraphQLName("groupId") Long groupId,
+				@GraphQLName("keywordsParameterName") String
+					keywordsParameterName,
 				@GraphQLName("plid") Long plid,
 				@GraphQLName("scope") String scope,
 				@GraphQLName("search") String search,
@@ -73,8 +75,9 @@ public class Mutation {
 			this::_populateResourceContext,
 			suggestionResource -> {
 				Page paginationPage = suggestionResource.postSuggestionsPage(
-					currentURL, destinationFriendlyURL, groupId, plid, scope,
-					search, suggestionsContributorConfigurations);
+					currentURL, destinationFriendlyURL, groupId,
+					keywordsParameterName, plid, scope, search,
+					suggestionsContributorConfigurations);
 
 				return paginationPage.getItems();
 			});

@@ -44,14 +44,16 @@ public interface SuggestionResource {
 
 	public Page<SuggestionsContributorResults> postSuggestionsPage(
 			String currentURL, String destinationFriendlyURL, Long groupId,
-			Long plid, String scope, String search,
+			String keywordsParameterName, Long plid, String scope,
+			String search,
 			SuggestionsContributorConfiguration[]
 				suggestionsContributorConfigurations)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSuggestionsPageHttpResponse(
 			String currentURL, String destinationFriendlyURL, Long groupId,
-			Long plid, String scope, String search,
+			String keywordsParameterName, Long plid, String scope,
+			String search,
 			SuggestionsContributorConfiguration[]
 				suggestionsContributorConfigurations)
 		throws Exception;
@@ -136,15 +138,17 @@ public interface SuggestionResource {
 
 		public Page<SuggestionsContributorResults> postSuggestionsPage(
 				String currentURL, String destinationFriendlyURL, Long groupId,
-				Long plid, String scope, String search,
+				String keywordsParameterName, Long plid, String scope,
+				String search,
 				SuggestionsContributorConfiguration[]
 					suggestionsContributorConfigurations)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSuggestionsPageHttpResponse(
-					currentURL, destinationFriendlyURL, groupId, plid, scope,
-					search, suggestionsContributorConfigurations);
+					currentURL, destinationFriendlyURL, groupId,
+					keywordsParameterName, plid, scope, search,
+					suggestionsContributorConfigurations);
 
 			String content = httpResponse.getContent();
 
@@ -186,7 +190,8 @@ public interface SuggestionResource {
 
 		public HttpInvoker.HttpResponse postSuggestionsPageHttpResponse(
 				String currentURL, String destinationFriendlyURL, Long groupId,
-				Long plid, String scope, String search,
+				String keywordsParameterName, Long plid, String scope,
+				String search,
 				SuggestionsContributorConfiguration[]
 					suggestionsContributorConfigurations)
 			throws Exception {
@@ -234,6 +239,12 @@ public interface SuggestionResource {
 
 			if (groupId != null) {
 				httpInvoker.parameter("groupId", String.valueOf(groupId));
+			}
+
+			if (keywordsParameterName != null) {
+				httpInvoker.parameter(
+					"keywordsParameterName",
+					String.valueOf(keywordsParameterName));
 			}
 
 			if (plid != null) {

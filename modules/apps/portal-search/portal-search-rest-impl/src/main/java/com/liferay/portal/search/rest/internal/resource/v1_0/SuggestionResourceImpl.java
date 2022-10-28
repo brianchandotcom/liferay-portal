@@ -68,7 +68,8 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 	@Override
 	public Page<SuggestionsContributorResults> postSuggestionsPage(
 			String currentURL, String destinationFriendlyURL, Long groupId,
-			Long plid, String scope, String search,
+			String keywordsParameterName, Long plid, String scope,
+			String search,
 			SuggestionsContributorConfiguration[]
 				suggestionsContributorConfigurations)
 		throws Exception {
@@ -90,8 +91,9 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 					RenderResponseFactory.create(
 						contextHttpServletResponse, liferayRenderRequest),
 					_createSearchContext(
-						destinationFriendlyURL, _getGroupId(groupId), scope,
-						search, suggestionsContributorConfigurations)),
+						destinationFriendlyURL, _getGroupId(groupId),
+						keywordsParameterName, scope, search,
+						suggestionsContributorConfigurations)),
 				suggestionsContributorResult ->
 					new SuggestionsContributorResults() {
 						{
@@ -157,8 +159,8 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 	}
 
 	private SearchContext _createSearchContext(
-			String destinationFriendlyURL, long groupId, String scope,
-			String search,
+			String destinationFriendlyURL, long groupId,
+			String keywordsParameterName, String scope, String search,
 			SuggestionsContributorConfiguration[]
 				suggestionsContributorConfigurations)
 		throws Exception {
@@ -181,6 +183,10 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 		if (!StringUtil.equals(scope, "everything")) {
 			searchContext.setGroupIds(new long[] {groupId});
 		}
+
+		searchContext.setAttribute(
+			"search.suggestions.keywords.parameter.name",
+			keywordsParameterName);
 
 		searchContext.setKeywords(search);
 		searchContext.setLocale(contextAcceptLanguage.getPreferredLocale());

@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>ERROR_FIELD_REQUIRED</td>
-	<td>//label[contains(.,'${key_fieldFieldLabel}')]/..//div[@role='alert' and contains(.,'This field is required')]</td>
+	<td>//label[contains(.,'${key_fieldFieldLabel}')]/..//div[@role='alert' and contains(.,'The ${key_fieldFieldLabel} field is required')]</td>
 	<td></td>
 </tr>
 <tr>

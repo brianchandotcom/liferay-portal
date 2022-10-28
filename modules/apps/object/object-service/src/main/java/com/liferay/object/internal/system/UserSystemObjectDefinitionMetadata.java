@@ -50,6 +50,24 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public BaseModel<?> getBaseModelByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return _userLocalService.getUserByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public String getExternalReferenceCode(long primaryKey)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(primaryKey);
+
+		return user.getExternalReferenceCode();
+	}
+
+	@Override
 	public String getJaxRsApplicationName() {
 		return "Liferay.Headless.Admin.User";
 	}

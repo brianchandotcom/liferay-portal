@@ -82,8 +82,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
-		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_G_C(
-			externalReferenceCode, groupId, serviceContext.getCompanyId());
+		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, serviceContext.getCompanyId(),
+			objectDefinitionId);
 
 		if (objectEntry == null) {
 			_checkPortletResourcePermission(

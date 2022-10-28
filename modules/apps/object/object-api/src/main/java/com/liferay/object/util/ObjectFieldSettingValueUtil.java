@@ -12,21 +12,32 @@
  * details.
  */
 
-package com.liferay.object.constants;
+package com.liferay.object.util;
+
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
+
+import java.util.Objects;
 
 /**
- * @author Feliphe Marinho
+ * @author Carolina Barbosa
  */
-public class ObjectFieldSettingConstants {
+public class ObjectFieldSettingValueUtil {
 
-	public static final String NAME_FILTERS = "filters";
+	public static String getObjectFieldSettingValue(
+		ObjectField objectField, String objectFieldSettingName) {
 
-	public static final String NAME_STATE_FLOW = "stateFlow";
+		for (ObjectFieldSetting objectFieldSetting :
+				objectField.getObjectFieldSettings()) {
 
-	public static final String OBJECT_DEFINITION_1_SHORT_NAME =
-		"objectDefinition1ShortName";
+			if (Objects.equals(
+					objectFieldSetting.getName(), objectFieldSettingName)) {
 
-	public static final String OBJECT_RELATIONSHIP_ERC_FIELD_NAME =
-		"objectRelationshipERCFieldName";
+				return objectFieldSetting.getValue();
+			}
+		}
+
+		return null;
+	}
 
 }

@@ -14,16 +14,24 @@
 
 package com.liferay.object.rest.internal.vulcan.extension.v1_0;
 
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -32,6 +40,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,11 +83,7 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
-
-			if (objectField.isSystem()) {
-				continue;
-			}
+					objectDefinition.getObjectDefinitionId(), false)) {
 
 			ObjectFieldBusinessType objectFieldBusinessType =
 				_objectFieldBusinessTypeTracker.getObjectFieldBusinessType(
@@ -90,6 +95,26 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 					null, objectField.getName(),
 					objectFieldBusinessType.getPropertyType(),
 					objectField.isRequired()));
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-164801")) &&
+				Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				String objectRelationshipERCFieldName =
+					ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
+						objectField,
+						ObjectFieldSettingConstants.
+							OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+
+				extendedPropertyDefinitions.put(
+					objectRelationshipERCFieldName,
+					new PropertyDefinition(
+						null, objectRelationshipERCFieldName,
+						PropertyDefinition.PropertyType.TEXT,
+						objectField.isRequired()));
+			}
 		}
 
 		return extendedPropertyDefinitions;
@@ -101,10 +126,31 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 		Map<String, Serializable> extendedProperties) {
 
 		try {
+			ObjectDefinition objectDefinition = getObjectDefinition(
+				companyId, className);
+
+			for (ObjectField objectField :
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId(), false)) {
+
+				Object value = ObjectEntryValuesUtil.getObjectFieldValue(
+					objectDefinitionLocalService, _objectEntryLocalService,
+					objectField, _objectRelationshipLocalService,
+					_systemObjectDefinitionMetadataTracker, userId,
+					extendedProperties);
+
+				if (value == null) {
+					continue;
+				}
+
+				extendedProperties.put(
+					objectField.getName(), (Serializable)value);
+			}
+
 			_objectEntryLocalService.
 				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
-					userId, getObjectDefinition(companyId, className),
-					getPrimaryKey(entity), extendedProperties,
+					userId, objectDefinition, getPrimaryKey(entity),
+					extendedProperties,
 					new ServiceContext() {
 						{
 							setCompanyId(companyId);
@@ -130,5 +176,12 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 }

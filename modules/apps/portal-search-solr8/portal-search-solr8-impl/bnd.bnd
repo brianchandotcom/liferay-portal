@@ -1,0 +1,28 @@
+Bundle-Name: Liferay Portal Search Solr 8 Implementation
+Bundle-SymbolicName: com.liferay.portal.search.solr8.impl
+Bundle-Version: 4.0.23
+Import-Package:\
+	!com.sun.management.*,\
+	!com.sun.msv.*,\
+	\
+	!jline.*,\
+	\
+	!org.apache.commons.math3.*,\
+	!org.apache.log4j.jmx,\
+	!org.apache.lucene.sandbox.*,\
+	!org.apache.yetus.*,\
+	\
+	!org.eclipse.jetty.client.*,\
+	!org.eclipse.jetty.http.*,\
+	!org.eclipse.jetty.http2.client.*,\
+	!org.eclipse.jetty.util.*,\
+	\
+	!org.jboss.netty.*,\
+	\
+	!org.relaxng.datatype.*,\
+	\
+	com.liferay.portal.search.analysis,\
+	\
+	*
+-dsannotations-options: inherit
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

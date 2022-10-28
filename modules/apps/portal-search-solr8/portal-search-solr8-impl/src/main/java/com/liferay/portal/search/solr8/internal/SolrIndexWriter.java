@@ -330,14 +330,6 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	}
 
 	@Override
-	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
-	public void setSpellCheckIndexWriter(
-		SpellCheckIndexWriter spellCheckIndexWriter) {
-
-		super.setSpellCheckIndexWriter(spellCheckIndexWriter);
-	}
-
-	@Override
 	public void updateDocument(SearchContext searchContext, Document document) {
 		updateDocuments(searchContext, Collections.singleton(document));
 	}
@@ -403,6 +395,11 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		_logExceptionsOnly = _solrConfiguration.logExceptionsOnly();
 	}
 
+	@Override
+	protected SpellCheckIndexWriter getSpellCheckIndexWriter() {
+		return _spellCheckIndexWriter;
+	}
+
 	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
 	protected void setSearchEngineAdapter(
 		SearchEngineAdapter searchEngineAdapter) {
@@ -417,5 +414,8 @@ public class SolrIndexWriter extends BaseIndexWriter {
 	private volatile boolean _logExceptionsOnly;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private volatile SolrConfiguration _solrConfiguration;
+
+	@Reference(target = "(search.engine.impl=Solr)")
+	private SpellCheckIndexWriter _spellCheckIndexWriter;
 
 }

@@ -84,8 +84,19 @@ public class ThemeBuilder {
 	}
 
 	public ThemeBuilder(
-		File diffsDir, String name, File outputDir, File parentDir,
-		String parentName, String templateExtension, File unstyledDir) {
+		File diffsDir, String generatedThumbnailMaxSize, String name,
+		File outputDir, File parentDir, String parentName,
+		String templateExtension, File unstyledDir) {
+
+		if (Validator.isNull(generatedThumbnailMaxSize)) {
+			generatedThumbnailMaxSize =
+				ThemeBuilderArgs.DEFAULT_GENERATED_THUMBNAIL_MAX_SIZE;
+		}
+		else if (!generatedThumbnailMaxSize.matches("^\\d+x\\d+$")) {
+			throw new IllegalArgumentException(
+				"The provided generated thumbnail max size does not match " +
+					"the format: WxH");
+		}
 
 		if (Validator.isNull(name)) {
 			name = ThemeBuilderArgs.DEFAULT_NAME;
@@ -128,6 +139,7 @@ public class ThemeBuilder {
 		}
 
 		_diffsDir = diffsDir;
+		_generatedThumbnailMaxSize = generatedThumbnailMaxSize;
 		_name = name;
 		_outputDir = outputDir;
 		_parentDir = parentDir;
@@ -140,9 +152,10 @@ public class ThemeBuilder {
 
 	public ThemeBuilder(ThemeBuilderArgs themeBuilderArgs) {
 		this(
-			themeBuilderArgs.getDiffsDir(), themeBuilderArgs.getName(),
-			themeBuilderArgs.getOutputDir(), themeBuilderArgs.getParentDir(),
-			themeBuilderArgs.getParentName(),
+			themeBuilderArgs.getDiffsDir(),
+			themeBuilderArgs.getGeneratedThumbnailMaxSize(),
+			themeBuilderArgs.getName(), themeBuilderArgs.getOutputDir(),
+			themeBuilderArgs.getParentDir(), themeBuilderArgs.getParentName(),
 			themeBuilderArgs.getTemplateExtension(),
 			themeBuilderArgs.getUnstyledDir());
 	}
@@ -285,15 +298,21 @@ public class ThemeBuilder {
 			return;
 		}
 
+		String[] dimensions = _generatedThumbnailMaxSize.split("x");
+
+		int height = Integer.parseInt(dimensions[1]);
+		int width = Integer.parseInt(dimensions[0]);
+
 		Thumbnails.Builder<File> thumbnailBuilder = Thumbnails.of(file);
 
 		thumbnailBuilder.outputFormat("png");
-		thumbnailBuilder.size(160, 120);
+		thumbnailBuilder.size(width, height);
 
 		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));
 	}
 
 	private final File _diffsDir;
+	private final String _generatedThumbnailMaxSize;
 	private final String _name;
 	private final File _outputDir;
 	private final File _parentDir;

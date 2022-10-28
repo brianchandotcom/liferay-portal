@@ -165,18 +165,18 @@ definition {
 			additionalInformation = "Relationship",
 			clientIp = "127.0.0.1",
 			key_resourceAction = "ADD",
-			key_resourceName = "ObjectField",
+			key_resourceName = "ObjectRelationship",
 			resourceAction = "ADD",
-			resourceName = "ObjectField",
+			resourceName = "ObjectRelationship",
 			userName = "Test Test");
 
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 153592");
 
-		ObjectAdmin.goToFieldsTab();
+		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Relationship");
+		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
 
 		CreateObject.editLabel(labelName = "Update Relationship");
 
@@ -188,9 +188,9 @@ definition {
 			additionalInformation = "Update Relationship",
 			clientIp = "127.0.0.1",
 			key_resourceAction = "UPDATE",
-			key_resourceName = "ObjectField",
+			key_resourceName = "ObjectRelationship",
 			resourceAction = "UPDATE",
-			resourceName = "ObjectField",
+			resourceName = "ObjectRelationship",
 			userName = "Test Test");
 
 		ObjectAdmin.openObjectAdmin();
@@ -207,9 +207,9 @@ definition {
 			additionalInformation = "Update Relationship",
 			clientIp = "127.0.0.1",
 			key_resourceAction = "DELETE",
-			key_resourceName = "ObjectField",
+			key_resourceName = "ObjectRelationship",
 			resourceAction = "DELETE",
-			resourceName = "ObjectField",
+			resourceName = "ObjectRelationship",
 			userName = "Test Test");
 	}
 
@@ -942,6 +942,8 @@ definition {
 			Audit.openAuditAdmin();
 
 			for (var resourceNames : list "ObjectField,ObjectFieldSetting") {
+				Refresh();
+
 				Audit.viewAuditEntries(
 					clientIP = "127.0.0.1",
 					createDate = "Seconds Ago",

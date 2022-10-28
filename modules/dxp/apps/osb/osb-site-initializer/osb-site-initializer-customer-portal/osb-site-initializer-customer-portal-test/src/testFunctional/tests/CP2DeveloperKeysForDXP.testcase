@@ -83,3 +83,22 @@ definition {
 			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "activation-key-dxpdevelopment-7.0-nasaice.xml");
 		}
 	}
+	@description = "Automation ID: LPS-146194 | Test Summary: Check that the dropdown list contains 5 DXP versions for the user to choose from."
+	@priority = "4"
+	test CanViewDxpVersionsDropDownList {
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("Open the dropdown and verify that there are 5 DXP versions") {
+			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
+		}
+	}

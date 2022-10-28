@@ -2279,6 +2279,8 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Media");
 
+			takeScreenshot();
+
 			AssertElementPresent(
 				key_entryName = "Black T-Shirt",
 				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
@@ -2307,6 +2309,8 @@ definition {
 				attachment = "${attachment}");
 
 			Refresh();
+
+			takeScreenshot();
 
 			AssertElementPresent(
 				key_entryName = "Black T-Shirt.test",

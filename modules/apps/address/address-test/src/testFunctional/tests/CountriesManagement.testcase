@@ -458,13 +458,9 @@ definition {
 		}
 
 		task ("Then error validation displays for required fields, Key and Region Code") {
-			AssertElementPresent(
-				key_fieldFieldLabel = "Key",
-				locator1 = "Message#ERROR_FIELD_REQUIRED");
-
-			AssertElementPresent(
-				key_fieldFieldLabel = "Region Code",
-				locator1 = "Message#ERROR_FIELD_REQUIRED");
+			for (var fieldFieldLabel : list "Key,Region Code") {
+				Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
+			}
 		}
 	}
 

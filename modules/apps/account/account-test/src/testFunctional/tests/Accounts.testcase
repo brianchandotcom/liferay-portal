@@ -3813,9 +3813,7 @@ definition {
 
 			Button.clickSave();
 
-			AssertElementPresent(
-				key_fieldFieldLabel = "Account Name",
-				locator1 = "Message#ERROR_FIELD_REQUIRED");
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "Account Name");
 		}
 	}
 

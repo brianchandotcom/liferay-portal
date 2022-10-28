@@ -36,7 +36,7 @@ definition {
 			Alert.viewDuplicateErrorMessage();
 		}
 		else if ("${userGroupNameVariation}" == "Null") {
-			Alert.viewRequiredField();
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "Name");
 		}
 		else {
 			Alert.viewSuccessMessage();

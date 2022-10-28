@@ -1138,7 +1138,7 @@ definition {
 
 			Button.clickSave();
 
-			Alert.viewRequiredField();
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "Current Password");
 
 			User.logoutPG();
 

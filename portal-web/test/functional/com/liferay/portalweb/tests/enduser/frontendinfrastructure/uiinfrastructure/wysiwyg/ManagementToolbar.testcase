@@ -177,7 +177,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
-				value1 = "Reverse Sort Direction");
+				value1 = "Reverse Order Direction");
 		}
 	}
 

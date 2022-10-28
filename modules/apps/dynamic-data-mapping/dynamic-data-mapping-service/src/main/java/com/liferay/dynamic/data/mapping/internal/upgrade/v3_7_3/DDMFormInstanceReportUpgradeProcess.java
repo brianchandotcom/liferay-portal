@@ -73,63 +73,58 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select formInstanceId, groupId, companyId, createDate from " +
-					"DDMFormInstance")) {
-
-			ResultSet resultSet1 = preparedStatement1.executeQuery();
+					"DDMFormInstance");
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				StringBundler.concat(
+					"select DDMContent.data_, DDMFormInstanceRecord.",
+					"formInstanceRecordId, DDMStructureVersion.definition ",
+					"from DDMContent inner join DDMFormInstanceRecordVersion ",
+					"on DDMContent.contentId = DDMFormInstanceRecordVersion.",
+					"storageId inner join DDMFormInstanceRecord on ",
+					"DDMFormInstanceRecord.formInstanceRecordId = ",
+					"DDMFormInstanceRecordVersion.formInstanceRecordId inner ",
+					"join DDMFormInstanceVersion on DDMFormInstanceVersion.",
+					"formInstanceId = DDMFormInstanceRecordVersion.",
+					"formInstanceId and DDMFormInstanceVersion.version = ",
+					"DDMFormInstanceRecordVersion.formInstanceVersion inner ",
+					"join DDMStructureVersion on DDMStructureVersion.",
+					"structureVersionId = DDMFormInstanceVersion.",
+					"structureVersionId where DDMFormInstanceRecord.version = ",
+					"DDMFormInstanceRecordVersion.version and ",
+					"DDMFormInstanceRecord.formInstanceId = ? and ",
+					"DDMFormInstanceRecordVersion.status = ?"));
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"insert into DDMFormInstanceReport ",
+						"(formInstanceReportId, groupId, companyId, ",
+						"createDate, modifiedDate, formInstanceId, data_) ",
+						"values (?, ?, ?, ?, ?, ?, ?)"));
+			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {
 				long formInstanceId = resultSet1.getLong("formInstanceId");
 
 				JSONObject dataJSONObject = _jsonFactory.createJSONObject();
 
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"select DDMContent.data_, ",
-								"DDMFormInstanceRecord.formInstanceRecordId, ",
-								"DDMStructureVersion.definition from ",
-								"DDMContent inner join ",
-								"DDMFormInstanceRecordVersion on ",
-								"DDMContent.contentId = ",
-								"DDMFormInstanceRecordVersion.storageId inner ",
-								"join DDMFormInstanceRecord on ",
-								"DDMFormInstanceRecord.formInstanceRecordId = ",
-								"DDMFormInstanceRecordVersion.",
-								"formInstanceRecordId inner join ",
-								"DDMFormInstanceVersion on ",
-								"DDMFormInstanceVersion.formInstanceId = ",
-								"DDMFormInstanceRecordVersion.formInstanceId ",
-								"and DDMFormInstanceVersion.version = ",
-								"DDMFormInstanceRecordVersion.",
-								"formInstanceVersion inner join ",
-								"DDMStructureVersion on ",
-								"DDMStructureVersion.structureVersionId = ",
-								"DDMFormInstanceVersion.structureVersionId ",
-								"where DDMFormInstanceRecord.version = ",
-								"DDMFormInstanceRecordVersion.version and ",
-								"DDMFormInstanceRecord.formInstanceId = ? and ",
-								"DDMFormInstanceRecordVersion.status = ?"))) {
+				preparedStatement2.setLong(1, formInstanceId);
+				preparedStatement2.setInt(2, WorkflowConstants.STATUS_APPROVED);
 
-					preparedStatement2.setLong(1, formInstanceId);
-					preparedStatement2.setInt(
-						2, WorkflowConstants.STATUS_APPROVED);
+				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-					ResultSet resultSet2 = preparedStatement2.executeQuery();
+				while (resultSet2.next()) {
+					dataJSONObject = _processDDMFormValues(
+						dataJSONObject,
+						_getDDMFormValues(
+							resultSet2.getString("data_"),
+							DDMFormDeserializeUtil.deserialize(
+								_ddmFormDeserializer,
+								resultSet2.getString("definition"))),
+						resultSet2.getLong("formInstanceRecordId"));
 
-					while (resultSet2.next()) {
-						dataJSONObject = _processDDMFormValues(
-							dataJSONObject,
-							_getDDMFormValues(
-								resultSet2.getString("data_"),
-								DDMFormDeserializeUtil.deserialize(
-									_ddmFormDeserializer,
-									resultSet2.getString("definition"))),
-							resultSet2.getLong("formInstanceRecordId"));
-
-						dataJSONObject.put(
-							"totalItems",
-							dataJSONObject.getInt("totalItems") + 1);
-					}
+					dataJSONObject.put(
+						"totalItems", dataJSONObject.getInt("totalItems") + 1);
 				}
 
 				long groupId = resultSet1.getLong("groupId");
@@ -138,25 +133,15 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 
 				Timestamp createDate = resultSet1.getTimestamp("createDate");
 
-				try (PreparedStatement preparedStatement3 =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection,
-							StringBundler.concat(
-								"insert into DDMFormInstanceReport ",
-								"(formInstanceReportId, groupId, companyId, ",
-								"createDate, modifiedDate, formInstanceId, ",
-								"data_) values (?, ?, ?, ?, ?, ?, ?)"))) {
+				preparedStatement3.setLong(1, increment());
+				preparedStatement3.setLong(2, groupId);
+				preparedStatement3.setLong(3, companyId);
+				preparedStatement3.setTimestamp(4, createDate);
+				preparedStatement3.setTimestamp(5, createDate);
+				preparedStatement3.setLong(6, formInstanceId);
+				preparedStatement3.setString(7, dataJSONObject.toString());
 
-					preparedStatement3.setLong(1, increment());
-					preparedStatement3.setLong(2, groupId);
-					preparedStatement3.setLong(3, companyId);
-					preparedStatement3.setTimestamp(4, createDate);
-					preparedStatement3.setTimestamp(5, createDate);
-					preparedStatement3.setLong(6, formInstanceId);
-					preparedStatement3.setString(7, dataJSONObject.toString());
-
-					preparedStatement3.execute();
-				}
+				preparedStatement3.execute();
 			}
 		}
 	}

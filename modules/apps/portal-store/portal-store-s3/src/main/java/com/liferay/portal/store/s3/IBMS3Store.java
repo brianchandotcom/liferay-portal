@@ -45,6 +45,7 @@ import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.io.unsync.UnsyncFilterInputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -157,17 +158,26 @@ public class IBMS3Store implements Store {
 			String versionLabel)
 		throws PortalException {
 
-		_s3FileCache.cleanUpCacheFiles();
-
 		try {
 			S3Object s3Object = getS3Object(
 				companyId, repositoryId, fileName, versionLabel);
 
-			ObjectMetadata objectMetadata = s3Object.getObjectMetadata();
+			InputStream s3InputStream = s3Object.getObjectContent();
 
-			return _s3FileCache.getCacheFileInputStream(
-				s3Object, fileName, s3Object::getObjectContent,
-				objectMetadata.getLastModified());
+			if (s3InputStream == null) {
+				throw new IOException("S3 object input stream is null");
+			}
+
+			return new UnsyncFilterInputStream(s3InputStream) {
+
+				@Override
+				public void close() throws IOException {
+					super.close();
+
+					s3Object.close();
+				}
+
+			};
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -723,9 +733,6 @@ public class IBMS3Store implements Store {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
-
-	@Reference
-	private S3FileCache _s3FileCache;
 
 	@Reference
 	private S3KeyTransformer _s3KeyTransformer;

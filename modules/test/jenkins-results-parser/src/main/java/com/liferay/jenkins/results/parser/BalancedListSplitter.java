@@ -56,36 +56,35 @@ public abstract class BalancedListSplitter<T> {
 			minNumberOfLists++;
 		}
 
-		List<ListItemList> listItemSortedSetList = _createListItemSortedSetList(
+		List<ListItemList> listItemLists = _createListItemSortedSetList(
 			minNumberOfLists);
 
 		for (ListItem listItem : listItems) {
-			Collections.sort(listItemSortedSetList);
+			Collections.sort(listItemLists);
 
-			ListItemList emptiestListItemSortedSet = listItemSortedSetList.get(
-				0);
+			ListItemList emptiestListItemList = listItemLists.get(0);
 
-			if (emptiestListItemSortedSet.isEmpty() ||
-				(emptiestListItemSortedSet.getAvailableWeight() >=
-					listItem.getWeight(emptiestListItemSortedSet))) {
+			if (emptiestListItemList.isEmpty() ||
+				(emptiestListItemList.getAvailableWeight() >=
+					listItem.getWeight(emptiestListItemList))) {
 
-				emptiestListItemSortedSet.add(listItem);
+				emptiestListItemList.add(listItem);
 
 				continue;
 			}
 
-			ListItemList newListItemSortedSet = new ListItemList(
+			ListItemList newListItemList = new ListItemList(
 				this, _maxListWeight);
 
-			newListItemSortedSet.add(listItem);
+			newListItemList.add(listItem);
 
-			listItemSortedSetList.add(newListItemSortedSet);
+			listItemLists.add(newListItemList);
 		}
 
-		List<List<T>> lists = new ArrayList<>(listItemSortedSetList.size());
+		List<List<T>> lists = new ArrayList<>(listItemLists.size());
 
-		for (ListItemList listItemSortedSet : listItemSortedSetList) {
-			lists.add(listItemSortedSet.toList());
+		for (ListItemList listItemList : listItemLists) {
+			lists.add(listItemList.toList());
 		}
 
 		return lists;

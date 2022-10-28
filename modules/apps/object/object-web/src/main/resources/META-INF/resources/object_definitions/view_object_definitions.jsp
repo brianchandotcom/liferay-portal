@@ -26,7 +26,7 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 	fdsActionDropdownItems="<%= viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS %>"
-	propsTransformer="js/ObjectDefinitionsFDSPropsTransformer"
+	propsTransformer="js/components/FDSPropsTransformer/ObjectDefinitionFDSPropsTransformer"
 	style="fluid"
 />
 

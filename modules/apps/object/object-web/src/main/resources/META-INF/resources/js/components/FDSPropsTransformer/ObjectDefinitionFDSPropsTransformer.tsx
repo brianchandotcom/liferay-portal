@@ -12,22 +12,19 @@
  * details.
  */
 
-export default function propsTransformer({
-	...otherProps
-}: {
-	[x: string]: any;
-}): {
-	onActionDropdownItemClick({
-		action,
-		itemData,
-	}: {
-		action: {
-			data: {
-				id: string;
-			};
-		};
-		itemData: {
-			id: string;
-		};
-	}): void;
-};
+export default function ObjectDefinitionFDSPropsTransformer({...otherProps}) {
+	return {
+		...otherProps,
+		onActionDropdownItemClick({
+			action,
+			itemData,
+		}: {
+			action: {data: {id: string}};
+			itemData: {id: string};
+		}) {
+			if (action.data.id === 'deleteObjectDefinition') {
+				Liferay.fire('deleteObjectDefinition', {itemData});
+			}
+		},
+	};
+}

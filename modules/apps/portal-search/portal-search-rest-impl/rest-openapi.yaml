@@ -61,6 +61,10 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: keywordsParameterName
+                  schema:
+                      type: string
+                - in: query
                   name: plid
                   schema:
                       format: int64

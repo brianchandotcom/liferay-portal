@@ -12,6 +12,7 @@ dependencies {
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
+	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:blogs:blogs-test-util")

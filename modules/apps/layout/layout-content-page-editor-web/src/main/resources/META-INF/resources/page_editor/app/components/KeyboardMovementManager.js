@@ -13,9 +13,10 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import {sub} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import {useEffect, useRef} from 'react';
 
+import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
 import {
 	ARROW_DOWN_KEYCODE,
 	ARROW_UP_KEYCODE,
@@ -292,6 +293,8 @@ export default function KeyboardMovementManager() {
 		}
 		else {
 			disableMovement();
+
+			showErrorToast(source);
 		}
 	}, [
 		disableMovement,
@@ -575,4 +578,24 @@ function hasUnmappedCollectionAncestor(item, layoutData) {
 	}
 
 	return hasUnmappedCollectionAncestor(parent, layoutData);
+}
+
+function showErrorToast(source) {
+	let error = sub(
+		Liferay.Language.get(
+			'x-fragment-cannot-be-added-to-the-page-because-it-does-not-have-any-possible-drop-position'
+		),
+		source.name
+	);
+
+	if (source.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+		error = Liferay.Language.get(
+			'form-components-can-only-be-placed-inside-a-mapped-form-container'
+		);
+	}
+
+	openToast({
+		message: error,
+		type: 'danger',
+	});
 }

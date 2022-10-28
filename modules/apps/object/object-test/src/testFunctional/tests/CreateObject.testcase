@@ -6669,15 +6669,6 @@ definition {
 			key_workflowProcessName = "Single Approver");
 	}
 
-	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ObjectEntriesDisappearsWorkflowMetricsWhenInactivated {
-
-		// TODO LPS-140866 ObjectEntriesDisappearsWorkflowMetricsWhenInactivated pending implementation
-
-	}
-
 	@description = "LPS-135649 - Verify that pending and completed Object entries disappears from Workflow pages (My Workflow Tasks, Submissions, and My Submissions) when they are deleted"
 	@priority = "4"
 	test ObjectEntriesDisappearsWorkflowPagesWhenDeleted {

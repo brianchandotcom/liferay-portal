@@ -35,6 +35,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -476,9 +477,11 @@ public class BlogsEntryContentDashboardItemTest {
 			contentDashboardItem.isViewable(mockHttpServletRequest));
 	}
 
-	private ThemeDisplay _getThemeDisplay(Locale locale) {
+	private ThemeDisplay _getThemeDisplay(Locale locale) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLocale(locale);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
@@ -497,6 +500,9 @@ public class BlogsEntryContentDashboardItemTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.blogs.internal.item.BlogsEntryContentDashboardItemFactory"

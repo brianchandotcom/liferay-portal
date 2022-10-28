@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -194,6 +195,8 @@ public class UpdateLanguageActionTest {
 				_VIRTUAL_HOSTNAME, StringPool.BLANK
 			).build());
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setI18nLanguageId(_sourceUKLocale.getLanguage());
 		themeDisplay.setI18nPath("/" + _sourceUKLocale.getLanguage());
 		themeDisplay.setLayout(_layout);
@@ -370,6 +373,8 @@ public class UpdateLanguageActionTest {
 			themeDisplay.setLocale(_sourceLocale);
 		}
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
@@ -420,6 +425,8 @@ public class UpdateLanguageActionTest {
 			themeDisplay.setLocale(_sourceLocale);
 		}
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
@@ -457,6 +464,9 @@ public class UpdateLanguageActionTest {
 
 	@Inject
 	private static Portal _portal;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
 	private JournalArticle _journalArticle;

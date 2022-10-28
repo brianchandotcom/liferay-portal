@@ -17,6 +17,9 @@ import {openModal} from 'frontend-js-web';
 const ACTIONS = {
 	openDialog(itemData) {
 		openModal({
+			onClose: () => {
+				Liferay.Portlet.refresh(`#p_p_id_${itemData.portletId}_`);
+			},
 			title: itemData.title,
 			url: itemData.url,
 		});

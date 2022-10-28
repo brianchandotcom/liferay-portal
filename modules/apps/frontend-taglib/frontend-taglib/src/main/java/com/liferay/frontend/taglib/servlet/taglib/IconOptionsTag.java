@@ -102,6 +102,8 @@ public class IconOptionsTag extends IncludeTag {
 									HashMapBuilder.<String, Object>put(
 										"action", "openDialog"
 									).put(
+										"portletId", _getId()
+									).put(
 										"senna-off", "true"
 									).put(
 										"title",
@@ -145,6 +147,18 @@ public class IconOptionsTag extends IncludeTag {
 				}
 			}
 		};
+	}
+
+	private String _getId() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getId();
 	}
 
 	private List<PortletConfigurationIcon> _getPortletConfigurationIcons() {

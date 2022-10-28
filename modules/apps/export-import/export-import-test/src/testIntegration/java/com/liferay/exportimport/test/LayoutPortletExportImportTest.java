@@ -64,23 +64,23 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testExportImportLayoutWithGloballyScopedPortletDoesNotOverrideGlobalSitePermissions()
+	public void testExportImportLayoutWithGloballyScopedPortletDoesNotOverrideCompanySitePermissions()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(companyId);
+		Group companyGroup = _groupLocalService.getCompanyGroup(companyId);
 		Role ownerRole = _roleLocalService.getRole(
 			companyId, RoleConstants.OWNER);
 
 		_initModelResource(
-			companyId, globalGroup.getGroupId(), DLConstants.RESOURCE_NAME);
+			companyId, companyGroup.getGroupId(), DLConstants.RESOURCE_NAME);
 		_initModelResource(
 			companyId, group.getGroupId(), DLConstants.RESOURCE_NAME);
 
-		ResourcePermission originalGlobalGroupDLModelResourcePermission =
+		ResourcePermission originalCompanyGroupDLModelResourcePermission =
 			_getModelResourcePermission(
-				companyId, globalGroup.getGroupId(), DLConstants.RESOURCE_NAME,
+				companyId, companyGroup.getGroupId(), DLConstants.RESOURCE_NAME,
 				ownerRole.getRoleId());
 
 		try {
@@ -114,25 +114,25 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 					new String[] {Boolean.TRUE.toString()}
 				).build());
 
-			ResourcePermission globalGroupDLModelResourcePermission =
+			ResourcePermission companyGroupDLModelResourcePermission =
 				_getModelResourcePermission(
-					companyId, globalGroup.getGroupId(),
+					companyId, companyGroup.getGroupId(),
 					DLConstants.RESOURCE_NAME, ownerRole.getRoleId());
 
 			Assert.assertEquals(
-				"Permissions on the Global Site should not be changed by an " +
+				"Permissions on the Company Site should not be changed by an " +
 					"import of another site.",
-				originalGlobalGroupDLModelResourcePermission.getActionIds(),
-				globalGroupDLModelResourcePermission.getActionIds());
+				originalCompanyGroupDLModelResourcePermission.getActionIds(),
+				companyGroupDLModelResourcePermission.getActionIds());
 			Assert.assertEquals(
-				"Permissions on the Global Site should not be changed by an " +
+				"Permissions on the Company Site should not be changed by an " +
 					"import of another site.",
-				originalGlobalGroupDLModelResourcePermission.isViewActionId(),
-				globalGroupDLModelResourcePermission.isViewActionId());
+				originalCompanyGroupDLModelResourcePermission.isViewActionId(),
+				companyGroupDLModelResourcePermission.isViewActionId());
 		}
 		finally {
 			_restoreModelResourcePermission(
-				originalGlobalGroupDLModelResourcePermission);
+				originalCompanyGroupDLModelResourcePermission);
 		}
 	}
 

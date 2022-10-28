@@ -20,6 +20,7 @@ import fieldTypes from '../../utils/fieldTypes';
 import EmptyState from '../empty-state/EmptyState';
 import List from '../list/List';
 import {SidebarContext} from '../sidebar/SidebarContext';
+import Table from '../table/Table';
 import Card from './Card';
 
 const lazyLoader = ({dataEngineModule, path}) => {
@@ -36,7 +37,15 @@ const lazyLoader = ({dataEngineModule, path}) => {
 };
 
 const chartFactory = (
-	{field, structure, sumTotalValues, summary, totalEntries, values},
+	{
+		displayChartAsTable,
+		field,
+		structure,
+		sumTotalValues,
+		summary,
+		totalEntries,
+		values,
+	},
 	dataEngineModule
 ) => {
 	const {options, type} = field;
@@ -91,7 +100,12 @@ const chartFactory = (
 				newValues[newKey] = value;
 			}
 
-			return (
+			return displayChartAsTable ? (
+				<Table
+					data={toDataArray(options, newValues)}
+					totalEntries={sumTotalValues}
+				/>
+			) : (
 				<Suspense fallback={<ClayLoadingIndicator />}>
 					<PieChart
 						data={toDataArray(options, newValues)}
@@ -101,7 +115,12 @@ const chartFactory = (
 			);
 		}
 		case 'checkbox_multiple': {
-			return (
+			return displayChartAsTable ? (
+				<Table
+					data={toDataArray(options, values)}
+					totalEntries={totalEntries}
+				/>
+			) : (
 				<Suspense fallback={<ClayLoadingIndicator />}>
 					<SimpleBarChart
 						data={toDataArray(options, values)}
@@ -137,10 +156,24 @@ const chartFactory = (
 				return '';
 			}
 		}
-		case 'object-relationship':
+		case 'object-relationship': {
+			return (
+				<Suspense fallback={<ClayLoadingIndicator />}>
+					<PieChart
+						data={toDataArray(options, values)}
+						totalEntries={sumTotalValues}
+					/>
+				</Suspense>
+			);
+		}
 		case 'radio':
 		case 'select': {
-			return (
+			return displayChartAsTable ? (
+				<Table
+					data={toDataArray(options, values)}
+					totalEntries={sumTotalValues}
+				/>
+			) : (
 				<Suspense fallback={<ClayLoadingIndicator />}>
 					<PieChart
 						data={toDataArray(options, values)}
@@ -154,7 +187,7 @@ const chartFactory = (
 	}
 };
 
-export default function CardList({data, fields}) {
+export default function CardList({data, displayChartAsTable, fields}) {
 	let hasCards = false;
 
 	const {dataEngineModule} = useContext(SidebarContext);
@@ -176,6 +209,7 @@ export default function CardList({data, fields}) {
 		};
 
 		const chartContent = {
+			displayChartAsTable,
 			field,
 			structure,
 			sumTotalValues,

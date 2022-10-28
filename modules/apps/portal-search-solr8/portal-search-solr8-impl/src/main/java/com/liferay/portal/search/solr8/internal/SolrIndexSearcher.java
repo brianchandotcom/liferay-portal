@@ -223,12 +223,6 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	@Override
-	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
-	public void setQuerySuggester(QuerySuggester querySuggester) {
-		super.setQuerySuggester(querySuggester);
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -299,6 +293,11 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setStats(searchContext.getStats());
 
 		return searchSearchRequest;
+	}
+
+	@Override
+	protected QuerySuggester getQuerySuggester() {
+		return _querySuggester;
 	}
 
 	protected void populateBaseSearchRequest(
@@ -420,6 +419,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	private volatile String _defaultCollection;
 	private volatile boolean _logExceptionsOnly;
 	private Props _props;
+
+	@Reference(target = "(search.engine.impl=Solr)")
+	private QuerySuggester _querySuggester;
+
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private SearchResponseBuilderFactory _searchResponseBuilderFactory;

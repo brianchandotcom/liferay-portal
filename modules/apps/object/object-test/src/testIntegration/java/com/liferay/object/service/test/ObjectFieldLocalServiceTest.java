@@ -66,8 +66,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -100,6 +102,11 @@ public class ObjectFieldLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164278", "true"
+			).build());
+
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				TestPropsValues.getUserId(),
@@ -194,6 +201,23 @@ public class ObjectFieldLocalServiceTest {
 			objectFieldBuilder.state(
 				true
 			).build());
+
+		objectFieldBuilder = new ObjectFieldBuilder();
+
+		_testAddCustomObjectField(
+			"List type definition ID is 0",
+			objectFieldBuilder.businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).build());
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164278", "false"
+			).build());
 	}
 
 	@Test
@@ -226,7 +250,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_LARGE_FILE,
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
 			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP,
 			ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,

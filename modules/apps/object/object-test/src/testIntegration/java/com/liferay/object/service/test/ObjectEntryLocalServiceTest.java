@@ -240,6 +240,12 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 					"Middle Name", "middleName", false),
 				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
+					null, "Multiple List Type Entries Key",
+					"multipleListTypeEntriesKey", false, false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
 					"Number of Books Written", "numberOfBooksWritten", false),
@@ -584,6 +590,45 @@ public class ObjectEntryLocalServiceTest {
 					"\"listTypeEntryKeyRequired\"",
 				objectEntryValuesException.getMessage());
 		}
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"multipleListTypeEntriesKey",
+				(Serializable)Collections.singletonList("listTypeEntryKey1")
+			).build());
+
+		Assert.assertNotNull(objectEntry);
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			"listTypeEntryKey1", values.get("multipleListTypeEntriesKey"));
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"multipleListTypeEntriesKey",
+				(Serializable)Arrays.asList(
+					"listTypeEntryKey1", "listTypeEntryKey2")
+			).build());
+
+		values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			"listTypeEntryKey1, listTypeEntryKey2",
+			values.get("multipleListTypeEntriesKey"));
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry.getObjectEntryId());
 	}
 
 	@Test
@@ -1516,7 +1561,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		int expectedValuesSize = 18;
+		int expectedValuesSize = 19;
 
 		Map<String, Serializable> values = _getValuesFromDatabase(
 			objectEntries.get(0));
@@ -1653,7 +1698,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 18, values.size());
+		Assert.assertEquals(values.toString(), 19, values.size());
 
 		try {
 			_objectEntryLocalService.getValues(0);
@@ -1703,7 +1748,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			"listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 
-		int expectedValuesSize = 24;
+		int expectedValuesSize = 25;
 
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
@@ -1868,7 +1913,7 @@ public class ObjectEntryLocalServiceTest {
 
 		List<ObjectEntry> objectEntries = baseModelSearchResult.getBaseModels();
 
-		int expectedValuesSize = 18;
+		int expectedValuesSize = 19;
 
 		Map<String, Serializable> values = _getValuesFromDatabase(
 			objectEntries.get(0));
@@ -2055,6 +2100,10 @@ public class ObjectEntryLocalServiceTest {
 				"lastName", "o Discípulo Amado"
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey2"
+			).put(
+				"multipleListTypeEntriesKey",
+				(Serializable)Arrays.asList(
+					"listTypeEntryKey1", "listTypeEntryKey2")
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -2081,6 +2130,9 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			"listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(
+			"listTypeEntryKey1, listTypeEntryKey2",
+			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(StringPool.BLANK, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
@@ -2089,7 +2141,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 18, values.size());
+		Assert.assertEquals(values.toString(), 19, values.size());
 
 		Calendar calendar = new GregorianCalendar();
 
@@ -2115,6 +2167,10 @@ public class ObjectEntryLocalServiceTest {
 				"listTypeEntryKey", "listTypeEntryKey1"
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey3"
+			).put(
+				"multipleListTypeEntriesKey",
+				(Serializable)Arrays.asList(
+					"listTypeEntryKey2", "listTypeEntryKey3")
 			).put(
 				"numberOfBooksWritten", 5
 			).put(
@@ -2146,6 +2202,9 @@ public class ObjectEntryLocalServiceTest {
 			"listTypeEntryKey1", values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
+		Assert.assertEquals(
+			"listTypeEntryKey2, listTypeEntryKey3",
+			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
@@ -2155,7 +2214,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 18, values.size());
+		Assert.assertEquals(values.toString(), 19, values.size());
 
 		long persistedFileEntryId = GetterUtil.getLong(values.get("upload"));
 
@@ -2210,7 +2269,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 18, values.size());
+		Assert.assertEquals(values.toString(), 19, values.size());
 
 		try {
 			_dlAppLocalService.getFileEntry(fileEntry.getFileEntryId());

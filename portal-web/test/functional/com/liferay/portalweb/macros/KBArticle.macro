@@ -934,7 +934,7 @@ definition {
 				Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 			}
 			else {
-				Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+				Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 			}
 
 			MenuItem.click(menuItem = "Move");
@@ -1835,7 +1835,7 @@ definition {
 
 	macro viewSourceURLCP {
 		if (isSet(kbChildArticleTitle)) {
-			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 		}
 		else {
 			Click(

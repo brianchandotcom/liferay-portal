@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Iterator;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -154,11 +153,9 @@ public class UpdateConfigurationValuesMVCActionCommand
 		fragmentEntryLink = _fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLinkId, newEditableValuesJSONObject.toString());
 
-		List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-			_fragmentEntryLinkListenerTracker.getFragmentEntryLinkListeners();
-
 		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				fragmentEntryLinkListeners) {
+				_fragmentEntryLinkListenerTracker.
+					getFragmentEntryLinkListeners()) {
 
 			fragmentEntryLinkListener.
 				onUpdateFragmentEntryLinkConfigurationValues(fragmentEntryLink);

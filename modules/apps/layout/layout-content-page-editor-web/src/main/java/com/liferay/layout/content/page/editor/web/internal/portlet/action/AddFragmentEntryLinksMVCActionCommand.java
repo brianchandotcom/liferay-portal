@@ -131,12 +131,9 @@ public class AddFragmentEntryLinksMVCActionCommand
 				fragmentComposition.getData(), position, segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-				_fragmentEntryLinkListenerTracker.
-					getFragmentEntryLinkListeners();
-
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					fragmentEntryLinkListeners) {
+					_fragmentEntryLinkListenerTracker.
+						getFragmentEntryLinkListeners()) {
 
 				fragmentEntryLinkListener.onAddFragmentEntryLink(
 					fragmentEntryLink);

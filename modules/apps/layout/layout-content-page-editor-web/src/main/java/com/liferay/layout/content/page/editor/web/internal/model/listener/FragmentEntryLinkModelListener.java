@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -81,12 +80,9 @@ public class FragmentEntryLinkModelListener
 				FragmentEntryLink.class.getName(),
 				fragmentEntryLink.getFragmentEntryLinkId());
 
-			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-				_fragmentEntryLinkListenerTracker.
-					getFragmentEntryLinkListeners();
-
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					fragmentEntryLinkListeners) {
+					_fragmentEntryLinkListenerTracker.
+						getFragmentEntryLinkListeners()) {
 
 				fragmentEntryLinkListener.onDeleteFragmentEntryLink(
 					fragmentEntryLink);

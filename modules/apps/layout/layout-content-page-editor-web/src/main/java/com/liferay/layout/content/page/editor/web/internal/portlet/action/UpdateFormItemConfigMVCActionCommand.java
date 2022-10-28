@@ -490,15 +490,12 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 						segmentsExperienceId, layoutStructure.toString());
 
-			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-				_fragmentEntryLinkListenerTracker.
-					getFragmentEntryLinkListeners();
-
 			for (FragmentEntryLink addedFragmentEntryLink :
 					addedFragmentEntryLinks) {
 
 				for (FragmentEntryLinkListener fragmentEntryLinkListener :
-						fragmentEntryLinkListeners) {
+						_fragmentEntryLinkListenerTracker.
+							getFragmentEntryLinkListeners()) {
 
 					fragmentEntryLinkListener.onAddFragmentEntryLink(
 						addedFragmentEntryLink);

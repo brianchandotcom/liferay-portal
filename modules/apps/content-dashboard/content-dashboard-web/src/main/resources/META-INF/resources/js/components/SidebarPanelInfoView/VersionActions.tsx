@@ -19,6 +19,9 @@ import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 const availableActionMethods: IAvailableActionMethods = {
+	BLANK: (url: string) => {
+		window.open(url, '_blank', 'noopener');
+	},
 	NAVIGATE: (url: string) => {
 		navigate(url);
 	},
@@ -100,6 +103,7 @@ declare global {
 }
 
 interface IAvailableActionMethods {
+	BLANK: (url: string) => void;
 	NAVIGATE: (url: string) => void;
 	SUBMIT_FORM: (url: string) => void;
 }

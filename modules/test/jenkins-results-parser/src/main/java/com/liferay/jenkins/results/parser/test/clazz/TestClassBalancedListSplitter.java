@@ -28,6 +28,10 @@ public class TestClassBalancedListSplitter
 
 	@Override
 	public long getWeight(ListItemList listItemList) {
+		if ((listItemList == null) || listItemList.isEmpty()) {
+			return 0L;
+		}
+
 		long averageDuration = 0L;
 		long averageOverheadDuration = 0L;
 

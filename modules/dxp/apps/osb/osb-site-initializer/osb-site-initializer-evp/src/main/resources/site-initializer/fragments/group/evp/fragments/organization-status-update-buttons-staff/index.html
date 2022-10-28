@@ -1,0 +1,13 @@
+[#assign userRoles = permissionChecker.getUserBag().getRoles()/] [#assign
+approvedRoles =["EVP Manager", "Administrator"] /] [#list userRoles as
+userRoles] [#if approvedRoles?seq_contains(userRoles.name)]
+<div class="d-flex manager-buttons">
+	<div class="mr-2 status-approved">
+		<button class="border-success btn btn-secondary">Approve</button>
+	</div>
+
+	<div class="status-reject">
+		<button class="border-danger btn btn-secondary">Reject</button>
+	</div>
+</div>
+[#break] [/#if] [/#list]

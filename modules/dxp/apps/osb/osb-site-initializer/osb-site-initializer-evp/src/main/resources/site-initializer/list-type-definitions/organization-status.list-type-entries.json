@@ -16,10 +16,10 @@
 		"type": "string"
 	},
 	{
-		"key": "awaitingFinanceReview",
-		"name": "Awaiting Finance Review",
+		"key": "awaitingFinanceApproval",
+		"name": "Awaiting Finance Approval",
 		"name_i18n": {
-			"en-US": "Awaiting Finance Review"
+			"en-US": "Awaiting Finance Approval"
 		},
 		"type": "string"
 	},

@@ -21,7 +21,6 @@ import com.liferay.commerce.exception.CommerceOrderItemRequestedDeliveryDateExce
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -256,9 +255,6 @@ public class EditCommerceOrderItemMVCActionCommand
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
-
-	@Reference
-	private CPInstanceService _cpInstanceService;
 
 	private class CommerceOrderItemCallable implements Callable<Object> {
 

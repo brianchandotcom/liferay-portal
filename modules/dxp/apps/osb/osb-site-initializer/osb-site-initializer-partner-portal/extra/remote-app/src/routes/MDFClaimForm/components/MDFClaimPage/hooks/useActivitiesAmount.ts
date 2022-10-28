@@ -35,7 +35,7 @@ export default function useActivitiesAmount(
 			0
 		);
 
-		if (amountValue || amountValue === 0) {
+		if (amountValue !== undefined) {
 			onAmountUpdate(amountValue);
 		}
 	}, [debouncedActivities, onAmountUpdate]);

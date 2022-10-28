@@ -93,7 +93,6 @@ export function FormulaContainer({
 					),
 					['"${"']
 				)}`}
-				required
 				value={(currentScript?.value as string) ?? ''}
 			/>
 		</Card>

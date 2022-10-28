@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
@@ -115,11 +114,6 @@ public class LayoutsLocalPublisherMessageListener
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-
-	@Reference(
-		target = "(destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER + ")"
-	)
-	private Destination _layoutsDestination;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.2))"

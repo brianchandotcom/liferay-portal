@@ -650,6 +650,7 @@ const MoveButton = ({
 				})
 			}
 			onFocus={(event) => event.stopPropagation()}
+			onKeyDown={(event) => event.stopPropagation()}
 			ref={buttonRef}
 		>
 			<ClayIcon symbol="drag" />

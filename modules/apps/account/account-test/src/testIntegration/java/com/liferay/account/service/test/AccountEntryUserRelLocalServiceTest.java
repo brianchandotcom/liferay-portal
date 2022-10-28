@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.configuration.AccountEntryEmailConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
@@ -30,6 +31,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -590,6 +593,43 @@ public class AccountEntryUserRelLocalServiceTest {
 		Assert.assertTrue(
 			mailMessageBody.contains(
 				"Follow the link below to set up your account"));
+	}
+
+	@Test
+	public void testInviteUserWithCustomEmailTemplates() throws Exception {
+		String emailBody = "Custom email body";
+		String emailSubject = "Custom email subject";
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryEmailConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"invitationEmailBody", emailBody
+						).put(
+							"invitationEmailSubject", emailSubject
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setRequest(new MockHttpServletRequest());
+
+			_accountEntryUserRelLocalService.inviteUser(
+				_accountEntry.getAccountEntryId(), null, "user@test.com",
+				TestPropsValues.getUser(), serviceContext);
+
+			MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+			Assert.assertEquals(
+				emailSubject, mailMessage.getFirstHeaderValue("Subject"));
+
+			String mailMessageBody = mailMessage.getBody();
+
+			Assert.assertTrue(mailMessageBody.contains(emailBody));
+		}
 	}
 
 	@Test

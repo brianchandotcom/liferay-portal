@@ -19,7 +19,7 @@ interface MultiselectPicklistDataRendererProps {
 		name_i18n: string;
 	}[];
 }
-export default function propsTransformer({
+export default function MultiselectPicklistFDSPropsTransformer({
 	...otherProps
 }: {
 	[x: string]: any;

@@ -36,6 +36,7 @@ import DragPreview from './DragPreview';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import KeyboardMovementManager from './KeyboardMovementManager';
 import KeyboardMovementPreview from './KeyboardMovementPreview';
+import KeyboardMovementText from './KeyboardMovementText';
 import {LayoutBreadcrumbs} from './LayoutBreadcrumbs';
 import LayoutViewport from './LayoutViewport';
 import ShortcutManager from './ShortcutManager';
@@ -69,6 +70,8 @@ export default function App({state}) {
 										<KeyboardManager />
 
 										<KeyboardMovementPreview />
+
+										<KeyboardMovementText />
 
 										<GlobalContextProvider>
 											<CommonStylesManager />

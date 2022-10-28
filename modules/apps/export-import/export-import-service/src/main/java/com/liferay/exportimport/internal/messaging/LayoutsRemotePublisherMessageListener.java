@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -53,22 +53,8 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutsRemotePublisherMessageListener
 	extends BasePublisherMessageListener {
 
-	@Activate
-	protected void activate(ComponentContext componentContext) {
-		initialize(componentContext);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	@Override
-	protected void doReceive(Message message, MessageStatus messageStatus)
-		throws PortalException {
-
+	public void receive(Message message) throws MessageListenerException {
 		long exportImportConfigurationId = GetterUtil.getLong(
 			message.getPayload());
 
@@ -85,8 +71,6 @@ public class LayoutsRemotePublisherMessageListener
 
 			return;
 		}
-
-		messageStatus.setPayload(exportImportConfiguration);
 
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
@@ -109,36 +93,41 @@ public class LayoutsRemotePublisherMessageListener
 		boolean remotePrivateLayout = MapUtil.getBoolean(
 			settingsMap, "remotePrivateLayout");
 
-		initThreadLocals(userId, parameterMap);
-
-		User user = _userLocalService.getUserById(userId);
-
-		CompanyThreadLocal.setCompanyId(user.getCompanyId());
-
 		try {
+			initThreadLocals(userId, parameterMap);
+
+			User user = _userLocalService.getUserById(userId);
+
+			CompanyThreadLocal.setCompanyId(user.getCompanyId());
+
 			_staging.copyRemoteLayouts(
 				sourceGroupId, privateLayout, layoutIdMap,
 				exportImportConfiguration.getName(), parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
 				targetGroupId, remotePrivateLayout);
 		}
+		catch (PortalException portalException) {
+			throw new MessageListenerException(portalException);
+		}
 		finally {
 			resetThreadLocals();
 		}
 	}
 
-	@Override
-	protected Destination getDestination() {
-		return _destination;
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		initialize(componentContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsRemotePublisherMessageListener.class);
-
-	@Reference(
-		target = "(destination.name=" + DestinationNames.MESSAGE_BUS_MESSAGE_STATUS + ")"
-	)
-	private Destination _destination;
 
 	@Reference
 	private ExportImportConfigurationLocalService

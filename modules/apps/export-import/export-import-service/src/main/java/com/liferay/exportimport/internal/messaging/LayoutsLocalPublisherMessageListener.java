@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -51,22 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {
 
-	@Activate
-	protected void activate(ComponentContext componentContext) {
-		initialize(componentContext);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	@Override
-	protected void doReceive(Message message, MessageStatus messageStatus)
-		throws PortalException {
-
+	public void receive(Message message) throws MessageListenerException {
 		long exportImportConfigurationId = GetterUtil.getLong(
 			message.getPayload());
 
@@ -84,8 +70,6 @@ public class LayoutsLocalPublisherMessageListener
 			return;
 		}
 
-		messageStatus.setPayload(exportImportConfiguration);
-
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
@@ -99,30 +83,34 @@ public class LayoutsLocalPublisherMessageListener
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
-		initThreadLocals(userId, parameterMap);
-
 		try {
+			initThreadLocals(userId, parameterMap);
 			_staging.publishLayouts(
 				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
 				exportImportConfiguration.getName(), parameterMap);
+		}
+		catch (PortalException portalException) {
+			throw new MessageListenerException(portalException);
 		}
 		finally {
 			resetThreadLocals();
 		}
 	}
 
-	@Override
-	protected Destination getDestination() {
-		return _destination;
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		initialize(componentContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsLocalPublisherMessageListener.class);
-
-	@Reference(
-		target = "(destination.name=" + DestinationNames.MESSAGE_BUS_MESSAGE_STATUS + ")"
-	)
-	private Destination _destination;
 
 	@Reference
 	private ExportImportConfigurationLocalService

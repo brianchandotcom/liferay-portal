@@ -682,11 +682,16 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntryLocalization.toString());
 		}
 		else if (!friendlyURLEntryLocalizationList.isEmpty()) {
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationList.get(0);
+			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+					friendlyURLEntryLocalizationList) {
 
-			throw new DuplicateFriendlyURLEntryException(
-				friendlyURLEntryLocalization.toString());
+				if ((classPK <= 0) ||
+					(friendlyURLEntryLocalization.getClassPK() != classPK)) {
+
+					throw new DuplicateFriendlyURLEntryException(
+						friendlyURLEntryLocalization.toString());
+				}
+			}
 		}
 	}
 

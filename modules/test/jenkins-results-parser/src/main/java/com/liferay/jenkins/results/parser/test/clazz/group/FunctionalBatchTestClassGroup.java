@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassBalancedListSplitter;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.util.PropsUtil;
@@ -31,7 +32,6 @@ import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -306,52 +306,21 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				}
 
 				if (targetAxisDuration > 0) {
-					Collections.sort(
-						poshiTestClassGroup, new TestClassDurationComparator());
+					TestClassBalancedListSplitter
+						testClassBalancedListSplitter =
+							new TestClassBalancedListSplitter(
+								targetAxisDuration);
 
-					while (!poshiTestClassGroup.isEmpty()) {
-						List<TestClass> axisTestClasses = new ArrayList<>();
+					List<List<TestClass>> testClassLists =
+						testClassBalancedListSplitter.split(
+							poshiTestClassGroup);
 
-						for (TestClass poshiTestClass : poshiTestClassGroup) {
-							if (axisTestClasses.isEmpty()) {
-								axisTestClasses.add(poshiTestClass);
-
-								continue;
-							}
-
-							long duration = 0L;
-							long totalOverheadDuration = 0L;
-
-							for (TestClass axisTestClass : axisTestClasses) {
-								duration += axisTestClass.getAverageDuration();
-								totalOverheadDuration +=
-									axisTestClass.getAverageOverheadDuration();
-							}
-
-							duration += poshiTestClass.getAverageDuration();
-							totalOverheadDuration +=
-								poshiTestClass.getAverageOverheadDuration();
-
-							duration +=
-								totalOverheadDuration /
-									(axisTestClasses.size() + 1);
-
-							if (duration >= targetAxisDuration) {
-								continue;
-							}
-
-							axisTestClasses.add(poshiTestClass);
-						}
-
-						poshiTestClassGroup.removeAll(axisTestClasses);
-
+					for (List<TestClass> testClassList : testClassLists) {
 						AxisTestClassGroup axisTestClassGroup =
 							TestClassGroupFactory.newAxisTestClassGroup(
 								this, testBaseDir);
 
-						for (TestClass axisTestClass : axisTestClasses) {
-							axisTestClassGroup.addTestClass(axisTestClass);
-						}
+						axisTestClassGroup.addTestClasses(testClassList);
 
 						axisTestClassGroups.add(axisTestClassGroup);
 					}

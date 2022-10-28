@@ -31,7 +31,7 @@ public abstract class BalancedListSplitter<T> {
 		long weight = 0;
 
 		for (ListItem listItem : listItemList) {
-			weight += listItem.weight;
+			weight += listItem.getWeight(null);
 		}
 
 		return weight;
@@ -43,7 +43,7 @@ public abstract class BalancedListSplitter<T> {
 		ListItemList listItems = new ListItemList(this);
 
 		for (T item : list) {
-			listItems.add(new ListItem(item));
+			listItems.add(new ListItem(this, item));
 		}
 
 		Collections.sort(listItems);
@@ -67,7 +67,7 @@ public abstract class BalancedListSplitter<T> {
 
 			if (emptiestListItemSortedSet.isEmpty() ||
 				(emptiestListItemSortedSet.getAvailableWeight() >=
-					listItem.weight)) {
+					listItem.getWeight(emptiestListItemSortedSet))) {
 
 				emptiestListItemSortedSet.add(listItem);
 
@@ -105,18 +105,41 @@ public abstract class BalancedListSplitter<T> {
 
 	private class ListItem implements Comparable<ListItem> {
 
-		public ListItem(T item) {
-			this.item = item;
-			weight = getWeight(item);
+		public ListItem(BalancedListSplitter<T> balancedListSplitter, T item) {
+			_balancedListSplitter = balancedListSplitter;
+			_item = item;
 		}
 
 		@Override
 		public int compareTo(ListItem otherListItem) {
-			return -1 * weight.compareTo(otherListItem.weight);
+			Long weight = getWeight(null);
+
+			return -1 * weight.compareTo(otherListItem.getWeight(null));
 		}
 
-		public T item;
-		public Long weight;
+		public long getWeight(ListItemList listItemList) {
+			if (listItemList == null) {
+				return _getWeight();
+			}
+
+			ListItemList tempListItemList = new ListItemList(
+				_balancedListSplitter);
+
+			tempListItemList.addAll(listItemList);
+
+			long originalWeight = tempListItemList.getWeight();
+
+			tempListItemList.add(this);
+
+			return tempListItemList.getWeight() - originalWeight;
+		}
+
+		private long _getWeight() {
+			return _balancedListSplitter.getWeight(_item);
+		}
+
+		private BalancedListSplitter<T> _balancedListSplitter;
+		private final T _item;
 
 	}
 
@@ -178,7 +201,7 @@ public abstract class BalancedListSplitter<T> {
 			List<T> list = new ArrayList<>(size());
 
 			for (ListItem listItem : this) {
-				list.add(listItem.item);
+				list.add(listItem._item);
 			}
 
 			return list;

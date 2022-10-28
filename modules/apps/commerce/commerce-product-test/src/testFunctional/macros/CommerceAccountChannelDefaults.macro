@@ -147,7 +147,8 @@ definition {
 				key_productName = "${channelName}",
 				key_value = "${shippingOption}",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
-	}			
+		}
+	}				
 	
 	macro editDefaultPriceList {
 		Variables.assertDefined(parameterList = "${currentChannelName},${currentPriceListName}");

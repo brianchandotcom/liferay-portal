@@ -13,7 +13,8 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, fireEvent, render} from '@testing-library/react';
+import {act, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -224,9 +225,9 @@ describe('FragmentsSidebar', () => {
 	});
 
 	it('has a sidebar panel title', () => {
-		const {getByText} = renderComponent();
+		renderComponent();
 
-		expect(getByText('fragments-and-widgets')).toBeInTheDocument();
+		expect(screen.getByText('fragments-and-widgets')).toBeInTheDocument();
 	});
 
 	it('normalizes fragments and widgets format', () => {
@@ -242,60 +243,54 @@ describe('FragmentsSidebar', () => {
 	});
 
 	it('filters fragments and widgets according to a input value', () => {
-		const {getByLabelText, queryByText} = renderComponent();
-		const input = getByLabelText('search-form');
+		renderComponent();
+		const input = screen.getByLabelText('search-fragments-and-widgets');
 
 		act(() => {
-			fireEvent.change(input, {
-				target: {value: 't 1'},
-			});
+			userEvent.type(input, 't 1');
 
 			jest.runAllTimers();
 		});
 
-		expect(queryByText('Portlet 1')).toBeInTheDocument();
-		expect(queryByText('Fragment 1')).toBeInTheDocument();
-		expect(queryByText('Fragment 2')).not.toBeInTheDocument();
-		expect(queryByText('Fragment 3')).not.toBeInTheDocument();
+		expect(screen.queryByText('Portlet 1')).toBeInTheDocument();
+		expect(screen.queryByText('Fragment 1')).toBeInTheDocument();
+		expect(screen.queryByText('Fragment 2')).not.toBeInTheDocument();
+		expect(screen.queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
 	it('filters collections according to a input value', () => {
-		const {getByLabelText, queryByText} = renderComponent();
-		const input = getByLabelText('search-form');
+		renderComponent();
+		const input = screen.getByLabelText('search-fragments-and-widgets');
 
 		act(() => {
-			fireEvent.change(input, {
-				target: {value: 'Widget Collection 1'},
-			});
+			userEvent.type(input, 'Widget Collection 1');
 
 			jest.runAllTimers();
 		});
 
-		expect(queryByText('Widget Collection 1')).toBeInTheDocument();
-		expect(queryByText('Portlet 1')).toBeInTheDocument();
-		expect(queryByText('Fragment 1')).not.toBeInTheDocument();
-		expect(queryByText('Fragment 2')).not.toBeInTheDocument();
-		expect(queryByText('Fragment 3')).not.toBeInTheDocument();
+		expect(screen.queryByText('Widget Collection 1')).toBeInTheDocument();
+		expect(screen.queryByText('Portlet 1')).toBeInTheDocument();
+		expect(screen.queryByText('Fragment 1')).not.toBeInTheDocument();
+		expect(screen.queryByText('Fragment 2')).not.toBeInTheDocument();
+		expect(screen.queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
 	it('filters widget template according to a input value', () => {
-		const {getByLabelText, queryByText} = renderComponent();
-		const input = getByLabelText('search-form');
+		renderComponent();
+		const input = screen.getByLabelText('search-fragments-and-widgets');
 
 		act(() => {
-			fireEvent.change(input, {
-				target: {value: 'Template Portlet 1'},
-			});
+			userEvent.type(input, 'Template Portlet 1');
 
 			jest.runAllTimers();
 		});
 
-		expect(queryByText('Widget Collection 1')).toBeInTheDocument();
-		expect(queryByText('Portlet 1')).toBeInTheDocument();
-		expect(queryByText('Template Portlet 1')).toBeInTheDocument();
-		expect(queryByText('Fragment 1')).not.toBeInTheDocument();
-		expect(queryByText('Fragment 2')).not.toBeInTheDocument();
-		expect(queryByText('Fragment 3')).not.toBeInTheDocument();
+		expect(screen.queryByText('Widget Collection 1')).toBeInTheDocument();
+		expect(screen.queryByText('Portlet 1')).toBeInTheDocument();
+		expect(screen.queryByText('Template Portlet 1')).toBeInTheDocument();
+		expect(screen.queryByText('Fragment 1')).not.toBeInTheDocument();
+		expect(screen.queryByText('Fragment 2')).not.toBeInTheDocument();
+		expect(screen.queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
 	it('sets square-hole icon when the widget is not instanceable', () => {
@@ -594,17 +589,21 @@ describe('FragmentsSidebar', () => {
 
 	describe('Button to switch the display style', () => {
 		it('shows the card view when the display style is list', () => {
-			const {getByTitle} = renderComponent();
+			renderComponent();
 
-			expect(getByTitle('switch-to-card-view')).toBeInTheDocument();
+			expect(
+				screen.getByTitle('switch-to-card-view')
+			).toBeInTheDocument();
 		});
 
 		it('shows the list view when the display style is card', () => {
-			const {getByTitle} = renderComponent();
+			renderComponent();
 
-			fireEvent.click(getByTitle('switch-to-card-view'));
+			userEvent.click(screen.getByTitle('switch-to-card-view'));
 
-			expect(getByTitle('switch-to-list-view')).toBeInTheDocument();
+			expect(
+				screen.getByTitle('switch-to-list-view')
+			).toBeInTheDocument();
 		});
 	});
 });

@@ -60,6 +60,11 @@
 	<td>//*[contains(@class, 'cp-activation-key-container')]/following::p[contains(text(),'download a developer key.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CAPITION_ABOVE_MENU</td>
+	<td>//div[contains(@class, 'cp-activation-key-container')]/following::div//p[contains(text(),'your developer key to download.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

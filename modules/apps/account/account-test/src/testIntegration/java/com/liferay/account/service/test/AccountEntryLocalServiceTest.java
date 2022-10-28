@@ -22,7 +22,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.test.util.AccountEntryArgs;
@@ -82,7 +81,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -514,8 +512,7 @@ public class AccountEntryLocalServiceTest {
 				});
 
 		for (int i = 0; i < accountEntries.size(); i++) {
-			_testGetUserAccountEntries(
-				users.get(i), Collections.singletonList(accountEntries.get(i)));
+			_testGetUserAccountEntries(users.get(i), accountEntries.get(i));
 		}
 	}
 
@@ -564,8 +561,7 @@ public class AccountEntryLocalServiceTest {
 			AccountEntryArgs.withOwner(accountEntryOwner),
 			AccountEntryArgs.withUsers(user2));
 
-		_testGetUserAccountEntries(
-			user1, Arrays.asList(accountEntryAA, accountEntryABA));
+		_testGetUserAccountEntries(user1, accountEntryAA, accountEntryABA);
 
 		AccountEntry accountEntryABB1 = AccountEntryTestUtil.addAccountEntry(
 			AccountEntryArgs.withOwner(accountEntryOwner),
@@ -575,16 +571,14 @@ public class AccountEntryLocalServiceTest {
 			AccountEntryArgs.withOrganizations(organizationABB));
 
 		_testGetUserAccountEntries(
-			user2,
-			Arrays.asList(accountEntryABA, accountEntryABB1, accountEntryABB2));
+			user2, accountEntryABA, accountEntryABB1, accountEntryABB2);
 
 		User user3 = UserTestUtil.addUser();
 
 		_organizationLocalService.addUserOrganization(
 			user3.getUserId(), organizationABA);
 
-		_testGetUserAccountEntries(
-			user3, Collections.singletonList(accountEntryABA));
+		_testGetUserAccountEntries(user3, accountEntryABA);
 
 		User user4 = UserTestUtil.addUser();
 
@@ -592,10 +586,8 @@ public class AccountEntryLocalServiceTest {
 			user4.getUserId(), organizationA);
 
 		_testGetUserAccountEntries(
-			user4,
-			Arrays.asList(
-				accountEntryAA, accountEntryABA, accountEntryABB1,
-				accountEntryABB2));
+			user4, accountEntryAA, accountEntryABA, accountEntryABB1,
+			accountEntryABB2);
 	}
 
 	@Test
@@ -606,9 +598,8 @@ public class AccountEntryLocalServiceTest {
 
 		_testGetUserAccountEntries(
 			accountEntryOwner,
-			Collections.singletonList(
-				AccountEntryTestUtil.addAccountEntry(
-					AccountEntryArgs.withOwner(accountEntryOwner))));
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withOwner(accountEntryOwner)));
 	}
 
 	@Test
@@ -638,8 +629,7 @@ public class AccountEntryLocalServiceTest {
 		}
 
 		for (int i = 0; i < accountEntries.size(); i++) {
-			_testGetUserAccountEntries(
-				users.get(i), Collections.singletonList(accountEntries.get(i)));
+			_testGetUserAccountEntries(users.get(i), accountEntries.get(i));
 		}
 	}
 
@@ -655,13 +645,11 @@ public class AccountEntryLocalServiceTest {
 				}) {
 
 			_testGetUserAccountEntries(
-				accountEntryMember,
-				Collections.singletonList(
-					AccountEntryTestUtil.addAccountEntry(
-						AccountEntryArgs.withOwner(accountEntryOwner),
-						AccountEntryArgs.withUsers(accountEntryMember),
-						AccountEntryArgs.withType(type))),
-				type);
+				accountEntryMember, type,
+				AccountEntryTestUtil.addAccountEntry(
+					AccountEntryArgs.withOwner(accountEntryOwner),
+					AccountEntryArgs.withUsers(accountEntryMember),
+					AccountEntryArgs.withType(type)));
 		}
 	}
 
@@ -713,7 +701,7 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchByAccountGroupIds() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
@@ -723,13 +711,13 @@ public class AccountEntryLocalServiceTest {
 			"accountGroupIds", new long[] {accountGroup.getAccountGroupId()});
 
 		_assertSearchWithParams(
-			AccountEntryTestUtil.addAccountEntries(
-				2, AccountEntryArgs.withAccountGroups(accountGroup)),
-			params);
+			params,
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withAccountGroups(accountGroup)));
 
 		_accountGroupLocalService.deleteAccountGroup(accountGroup);
 
-		_assertSearchWithParams(Collections.emptyList(), params);
+		_assertSearchWithParams(params);
 	}
 
 	@Test
@@ -740,14 +728,13 @@ public class AccountEntryLocalServiceTest {
 		User user2 = UserTestUtil.addUser();
 
 		_assertSearchWithParams(
-			Arrays.asList(
-				AccountEntryTestUtil.addAccountEntry(
-					AccountEntryArgs.withUsers(user1)),
-				AccountEntryTestUtil.addAccountEntry(
-					AccountEntryArgs.withUsers(user2))),
 			_getLinkedHashMap(
 				"accountUserIds",
-				new long[] {user1.getUserId(), user2.getUserId()}));
+				new long[] {user1.getUserId(), user2.getUserId()}),
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withUsers(user1)),
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withUsers(user2)));
 	}
 
 	@Test
@@ -769,18 +756,14 @@ public class AccountEntryLocalServiceTest {
 			personAccountEntry2.getAccountEntryId(), user.getUserId());
 
 		_assertSearchWithParams(
-			Arrays.asList(
-				businessAccountEntry1, businessAccountEntry2,
-				personAccountEntry1, personAccountEntry2),
-			new LinkedHashMap<>());
+			null, businessAccountEntry1, businessAccountEntry2,
+			personAccountEntry1, personAccountEntry2);
 		_assertSearchWithParams(
-			Arrays.asList(
-				businessAccountEntry1, businessAccountEntry2,
-				personAccountEntry1),
-			_getLinkedHashMap("allowNewUserMembership", Boolean.TRUE));
+			_getLinkedHashMap("allowNewUserMembership", Boolean.TRUE),
+			businessAccountEntry1, businessAccountEntry2, personAccountEntry1);
 		_assertSearchWithParams(
-			Collections.singletonList(personAccountEntry2),
-			_getLinkedHashMap("allowNewUserMembership", Boolean.FALSE));
+			_getLinkedHashMap("allowNewUserMembership", Boolean.FALSE),
+			personAccountEntry2);
 	}
 
 	@Test
@@ -791,13 +774,12 @@ public class AccountEntryLocalServiceTest {
 		String emailDomain2 = "bar.com";
 
 		_assertSearchWithParams(
-			Arrays.asList(
-				AccountEntryTestUtil.addAccountEntry(
-					AccountEntryArgs.withDomains(emailDomain1)),
-				AccountEntryTestUtil.addAccountEntry(
-					AccountEntryArgs.withDomains(emailDomain2))),
 			_getLinkedHashMap(
-				"domains", new String[] {emailDomain1, emailDomain2}));
+				"domains", new String[] {emailDomain1, emailDomain2}),
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withDomains(emailDomain1)),
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withDomains(emailDomain2)));
 	}
 
 	@Test
@@ -826,58 +808,57 @@ public class AccountEntryLocalServiceTest {
 			AccountEntryArgs.withOrganizations(organization));
 
 		_assertSearchWithParams(
-			Arrays.asList(accountEntry1),
 			_getLinkedHashMap(
 				"organizationIds",
-				new long[] {parentOrganization.getOrganizationId()}));
+				new long[] {parentOrganization.getOrganizationId()}),
+			accountEntry1);
 		_assertSearchWithParams(
-			Arrays.asList(accountEntry2),
 			_getLinkedHashMap(
 				"organizationIds",
-				new long[] {organization.getOrganizationId()}));
+				new long[] {organization.getOrganizationId()}),
+			accountEntry2);
 		_assertSearchWithParams(
-			Arrays.asList(accountEntry1, accountEntry2),
 			_getLinkedHashMap(
 				"organizationIds",
 				new long[] {
 					parentOrganization.getOrganizationId(),
 					organization.getOrganizationId()
-				}));
+				}),
+			accountEntry1, accountEntry2);
 	}
 
 	@Test
 	public void testSearchByParentAccountEntryId() throws Exception {
-		AccountEntryTestUtil.addAccountEntries(5);
+		AccountEntryTestUtil.addAccountEntry();
 
 		AccountEntry parentAccountEntry =
 			AccountEntryTestUtil.addAccountEntry();
 
 		_assertSearchWithParams(
-			AccountEntryTestUtil.addAccountEntries(
-				2, AccountEntryArgs.withParentAccount(parentAccountEntry)),
 			_getLinkedHashMap(
-				"parentAccountEntryId",
-				parentAccountEntry.getAccountEntryId()));
+				"parentAccountEntryId", parentAccountEntry.getAccountEntryId()),
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withParentAccount(parentAccountEntry)));
 	}
 
 	@Test
 	public void testSearchByStatus() throws Exception {
-		List<AccountEntry> activeAccountEntries =
-			AccountEntryTestUtil.addAccountEntries(3);
-		List<AccountEntry> inactiveAccountEntries =
-			AccountEntryTestUtil.addAccountEntries(
-				3, AccountEntryArgs.STATUS_INACTIVE);
+		AccountEntry activeAccountEntry =
+			AccountEntryTestUtil.addAccountEntry();
+		AccountEntry inactiveAccountEntry =
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.STATUS_INACTIVE);
 
 		_assertSearchWithParams(
-			activeAccountEntries,
-			_getLinkedHashMap("status", WorkflowConstants.STATUS_APPROVED));
-		_assertSearchWithParams(activeAccountEntries, new LinkedHashMap<>());
+			_getLinkedHashMap("status", WorkflowConstants.STATUS_APPROVED),
+			activeAccountEntry);
+		_assertSearchWithParams(null, activeAccountEntry);
 		_assertSearchWithParams(
-			inactiveAccountEntries,
-			_getLinkedHashMap("status", WorkflowConstants.STATUS_INACTIVE));
+			_getLinkedHashMap("status", WorkflowConstants.STATUS_INACTIVE),
+			inactiveAccountEntry);
 		_assertSearchWithParams(
-			ListUtil.concat(activeAccountEntries, inactiveAccountEntries),
-			_getLinkedHashMap("status", WorkflowConstants.STATUS_ANY));
+			_getLinkedHashMap("status", WorkflowConstants.STATUS_ANY),
+			activeAccountEntry, inactiveAccountEntry);
 	}
 
 	@Test
@@ -887,29 +868,27 @@ public class AccountEntryLocalServiceTest {
 		AccountEntry personAccountEntry = AccountEntryTestUtil.addAccountEntry(
 			AccountEntryArgs.TYPE_PERSON);
 
-		_assertSearchWithParams(
-			Arrays.asList(businessAccountEntry, personAccountEntry), null);
+		_assertSearchWithParams(null, businessAccountEntry, personAccountEntry);
 
 		_assertSearchWithParams(
-			Collections.singletonList(businessAccountEntry),
 			_getLinkedHashMap(
 				"types",
-				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS}));
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS}),
+			businessAccountEntry);
 		_assertSearchWithParams(
-			Collections.singletonList(personAccountEntry),
 			_getLinkedHashMap(
 				"types",
-				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON}));
+				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON}),
+			personAccountEntry);
 		_assertSearchWithParams(
-			Arrays.asList(businessAccountEntry, personAccountEntry),
 			_getLinkedHashMap(
 				"types",
 				new String[] {
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-				}));
+				}),
+			businessAccountEntry, personAccountEntry);
 		_assertSearchWithParams(
-			Collections.emptyList(),
 			_getLinkedHashMap("types", new String[] {"invalidType"}));
 	}
 
@@ -1225,8 +1204,8 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	private void _assertSearchWithParams(
-			List<AccountEntry> expectedAccountEntries,
-			LinkedHashMap<String, Object> params)
+			LinkedHashMap<String, Object> params,
+			AccountEntry... expectedAccountEntries)
 		throws Exception {
 
 		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
@@ -1235,9 +1214,13 @@ public class AccountEntryLocalServiceTest {
 				false);
 
 		Assert.assertEquals(
-			expectedAccountEntries.size(), baseModelSearchResult.getLength());
+			expectedAccountEntries.length, baseModelSearchResult.getLength());
+
+		List<AccountEntry> expectedAccountEntriesList = Arrays.asList(
+			expectedAccountEntries);
+
 		Assert.assertTrue(
-			expectedAccountEntries.containsAll(
+			expectedAccountEntriesList.containsAll(
 				baseModelSearchResult.getBaseModels()));
 	}
 
@@ -1304,19 +1287,19 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	private void _testGetUserAccountEntries(
-			User user, List<AccountEntry> expectedAccountEntries)
+			User user, AccountEntry... expectedAccountEntries)
 		throws Exception {
 
 		_testGetUserAccountEntries(
-			user, expectedAccountEntries,
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+			user, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			expectedAccountEntries);
 	}
 
 	private void _testGetUserAccountEntries(
-			User user, List<AccountEntry> expectedAccountEntries, String type)
+			User user, String type, AccountEntry... expectedAccountEntries)
 		throws Exception {
 
-		expectedAccountEntries = ListUtil.sort(expectedAccountEntries);
+		Arrays.sort(expectedAccountEntries);
 
 		List<AccountEntry> userAccountEntries =
 			_accountEntryLocalService.getUserAccountEntries(
@@ -1325,19 +1308,19 @@ public class AccountEntryLocalServiceTest {
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			userAccountEntries.toString(), expectedAccountEntries.size(),
+			userAccountEntries.toString(), expectedAccountEntries.length,
 			userAccountEntries.size());
 
 		Assert.assertEquals(
-			expectedAccountEntries.size(),
+			expectedAccountEntries.length,
 			_accountEntryLocalService.getUserAccountEntriesCount(
 				user.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 				null, new String[] {type}));
 
 		userAccountEntries = ListUtil.sort(userAccountEntries);
 
-		for (int i = 0; i < expectedAccountEntries.size(); i++) {
-			AccountEntry expectedAccountEntry = expectedAccountEntries.get(i);
+		for (int i = 0; i < expectedAccountEntries.length; i++) {
+			AccountEntry expectedAccountEntry = expectedAccountEntries[i];
 			AccountEntry userAccountEntry = userAccountEntries.get(i);
 
 			Assert.assertEquals(
@@ -1361,10 +1344,6 @@ public class AccountEntryLocalServiceTest {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Inject
-	private AccountEntryOrganizationRelLocalService
-		_accountEntryOrganizationRelLocalService;
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

@@ -150,6 +150,14 @@ public class BuildThemeMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @parameter
+	 */
+	public void setGeneratedThumbnailMaxSize(String generatedThumbnailMaxSize) {
+		_themeBuilderArgs.setGeneratedThumbnailMaxSize(
+			generatedThumbnailMaxSize);
+	}
+
+	/**
 	 * @parameter default-value="${project.artifactId}"
 	 */
 	public void setName(String name) {

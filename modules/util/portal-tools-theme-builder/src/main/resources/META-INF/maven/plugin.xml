@@ -56,6 +56,13 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>generatedThumbnailMaxSize</name>
+					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
 					<name>name</name>
 					<type>java.lang.String</type>
 					<required>false</required>

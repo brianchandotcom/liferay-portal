@@ -108,8 +108,11 @@ export function generateInstanceId(isNumbersOnly) {
 }
 
 export function getDefaultFieldName(isOptionField = false, fieldType = '') {
-	const defaultFieldName = fieldType?.label
-		? normalizeFieldName(fieldType.label)
+	const defaultFieldName = fieldType?.name
+		? normalizeFieldName(fieldType.name)
+				.split('_')
+				.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+				.join('')
 		: isOptionField
 		? Liferay.Language.get('option')
 		: Liferay.Language.get('field');

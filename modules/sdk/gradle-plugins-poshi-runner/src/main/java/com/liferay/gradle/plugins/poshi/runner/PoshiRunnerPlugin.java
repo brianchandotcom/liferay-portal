@@ -820,22 +820,23 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private void _populateSystemProperties(
-		Map<String, Object> systemProperties, Properties poshiProperties,
+		Map<String, Object> gradleSystemProperties, Properties poshiProperties,
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
-		systemProperties.putAll(poshiRunnerExtension.getPoshiProperties());
+		gradleSystemProperties.putAll(
+			poshiRunnerExtension.getPoshiProperties());
 
 		File baseDir = poshiRunnerExtension.getBaseDir();
 
 		if ((baseDir != null) && baseDir.exists()) {
-			systemProperties.put(
+			gradleSystemProperties.put(
 				"test.base.dir.name", project.relativePath(baseDir));
 		}
 
 		List<String> testNames = poshiRunnerExtension.getTestNames();
 
 		if (!testNames.isEmpty()) {
-			systemProperties.put(
+			gradleSystemProperties.put(
 				"test.name", CollectionUtils.join(",", testNames));
 		}
 
@@ -862,7 +863,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				sb.setLength(sb.length() - 1);
 
-				systemProperties.put(sb.toString(), entry.getValue());
+				gradleSystemProperties.put(sb.toString(), entry.getValue());
 			}
 		}
 
@@ -875,8 +876,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				String value = poshiProperties.getProperty(key);
 
-				systemProperties.put(key, value);
+				gradleSystemProperties.put(key, value);
 			}
+		}
+
+		Properties systemProperties = System.getProperties();
+
+		for (Object object : systemProperties.keySet()) {
+			String key = (String)object;
+
+			if (key.equals("user.dir")) {
+				continue;
+			}
+
+			gradleSystemProperties.put(key, System.getProperty(key));
 		}
 	}
 

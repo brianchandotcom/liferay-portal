@@ -30,9 +30,9 @@ definition {
 			value1 = "${description}");
 
 		TestrayRequirements.addRequirementCase(
-				buttonText = "Select Cases",
-				caseName = "${caseName}",
-				linkText = "Add Cases");
+			buttonText = "Select Cases",
+			caseName = "${caseName}",
+			linkText = "Add Cases");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}

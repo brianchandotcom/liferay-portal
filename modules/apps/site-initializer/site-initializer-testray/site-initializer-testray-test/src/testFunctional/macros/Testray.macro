@@ -317,6 +317,14 @@ definition {
 		Click(locator1 = "Testray#TESTFLOW_SIDEBAR");
 	}
 
+	macro kebabMenuOption {
+		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+
+		Click(
+			key_kebabOption = "${kebabOption}",
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+	}
+
 	macro projectTabNavigator {
 		Click(
 			key_navTabName = "${navTabName}",

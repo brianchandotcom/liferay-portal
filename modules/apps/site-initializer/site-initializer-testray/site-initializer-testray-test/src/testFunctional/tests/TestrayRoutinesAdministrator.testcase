@@ -117,7 +117,7 @@ definition {
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 
-            Testray.projectTabNavigator(navTabName = "Cases");
+			Testray.projectTabNavigator(navTabName = "Cases");
 
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",

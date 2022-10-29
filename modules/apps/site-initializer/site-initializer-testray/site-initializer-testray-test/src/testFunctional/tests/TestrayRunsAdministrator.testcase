@@ -73,8 +73,8 @@ definition {
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 		}
 
-		 task ("Go to tab cases and Add a new Case") {
-            Testray.projectTabNavigator(navTabName = "Cases");
+		task ("Go to tab cases and Add a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
 
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",

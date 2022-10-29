@@ -84,7 +84,13 @@ public abstract class BalancedListSplitter<T> {
 		List<List<T>> lists = new ArrayList<>(listItemLists.size());
 
 		for (ListItemList listItemList : listItemLists) {
-			lists.add(listItemList.toList());
+			List<T> newList = listItemList.toList();
+
+			if ((newList == null) || newList.isEmpty()) {
+				continue;
+			}
+
+			lists.add(newList);
 		}
 
 		return lists;

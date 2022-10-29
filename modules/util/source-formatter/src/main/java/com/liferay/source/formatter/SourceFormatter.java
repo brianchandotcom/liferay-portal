@@ -1294,7 +1294,9 @@ public class SourceFormatter {
 							"Found formatting issues:\n", "The commit '",
 							commitMessage, "' contains the word '", keyword,
 							"', which could reveal potential security ",
-							"vulnerablities."));
+							"vulnerablities. Please see the vulnerability ",
+							"keywords that are specified in source-formatter.",
+							"properties in the liferay-portal repository."));
 				}
 			}
 		}

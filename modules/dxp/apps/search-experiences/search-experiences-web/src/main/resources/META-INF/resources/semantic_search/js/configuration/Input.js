@@ -41,7 +41,6 @@ function Input({
 					<ModelAutocomplete
 						label={label}
 						name={name}
-						onBlur={onBlur}
 						onChange={onChange}
 						required={required}
 						value={value}

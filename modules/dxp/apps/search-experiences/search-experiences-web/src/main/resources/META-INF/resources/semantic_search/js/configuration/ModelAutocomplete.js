@@ -19,14 +19,7 @@ import React, {useState} from 'react';
  * will query for applicable models.
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */
-function ModelAutocomplete({
-	label,
-	name,
-	onBlur,
-	onChange,
-	required,
-	value = '',
-}) {
+function ModelAutocomplete({label, name, onChange, required, value = ''}) {
 	const [networkStatus, setNetworkStatus] = useState(4);
 
 	const {resource} = useResource({
@@ -53,7 +46,6 @@ function ModelAutocomplete({
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
 				name={name}
-				onBlur={onBlur}
 				onChange={onChange}
 				onItemsChange={() => {}}
 				required={required}

@@ -56,6 +56,12 @@ public class BuildThemeTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _diffsDir);
 	}
 
+	@Input
+	@Optional
+	public String getGeneratedThumbnailMaxSize() {
+		return GradleUtil.toString(_generatedThumbnailMaxSize);
+	}
+
 	@OutputDirectory
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
@@ -109,6 +115,10 @@ public class BuildThemeTask extends JavaExec {
 		_diffsDir = diffsDir;
 	}
 
+	public void setGeneratedThumbnailMaxSize(Object generatedThumbnailMaxSize) {
+		_generatedThumbnailMaxSize = generatedThumbnailMaxSize;
+	}
+
 	public void setOutputDir(Object outputDir) {
 		_outputDir = outputDir;
 	}
@@ -158,6 +168,9 @@ public class BuildThemeTask extends JavaExec {
 		List<String> args = new ArrayList<>(getArgs());
 
 		_addArg(args, "--diffs-dir", getDiffsDir());
+		_addArg(
+			args, "--generated-thumbnail-max-size",
+			getGeneratedThumbnailMaxSize());
 		_addArg(args, "--name", getThemeName());
 		_addArg(args, "--output-dir", getOutputDir());
 		_addArg(args, "--parent-name", getParentName());
@@ -189,6 +202,7 @@ public class BuildThemeTask extends JavaExec {
 	}
 
 	private Object _diffsDir;
+	private Object _generatedThumbnailMaxSize;
 	private Object _outputDir;
 	private Object _parentDir;
 	private Object _parentFile;

@@ -11,6 +11,7 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import {useResource} from '@clayui/data-provider';
+import {FocusScope} from '@clayui/shared';
 import React, {useState} from 'react';
 
 /**
@@ -41,26 +42,30 @@ function ModelAutocomplete({
 	});
 
 	return (
-		<ClayAutocomplete
-			aria-labelledby={label}
-			id={name}
-			items={(resource?.items || []).map(({modelId}) => modelId)}
-			loadingState={networkStatus}
-			messages={{
-				loading: Liferay.Language.get('loading'),
-				notFound: Liferay.Language.get('no-results-found'),
-			}}
-			name={name}
-			onBlur={onBlur}
-			onChange={onChange}
-			onItemsChange={() => {}}
-			required={required}
-			value={value}
-		>
-			{(item) => (
-				<ClayAutocomplete.Item key={item}>{item}</ClayAutocomplete.Item>
-			)}
-		</ClayAutocomplete>
+		<FocusScope>
+			<ClayAutocomplete
+				aria-labelledby={label}
+				id={name}
+				items={(resource?.items || []).map(({modelId}) => modelId)}
+				loadingState={networkStatus}
+				messages={{
+					loading: Liferay.Language.get('loading'),
+					notFound: Liferay.Language.get('no-results-found'),
+				}}
+				name={name}
+				onBlur={onBlur}
+				onChange={onChange}
+				onItemsChange={() => {}}
+				required={required}
+				value={value}
+			>
+				{(item) => (
+					<ClayAutocomplete.Item key={item}>
+						{item}
+					</ClayAutocomplete.Item>
+				)}
+			</ClayAutocomplete>
+		</FocusScope>
 	);
 }
 

@@ -64,9 +64,9 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"sentenceTransformProvider", semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider()
-			).put(
 				"sentenceTransformerEnabled", semanticSearchCompanyConfigurationDisplayContext.isSentenceTransformerEnabled()
+			).put(
+				"sentenceTransformProvider", semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider()
 			).put(
 				"textTruncationStrategy", semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy()
 			).put(

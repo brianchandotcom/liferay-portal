@@ -72,12 +72,7 @@ public class ReportsMessagingConfigurator {
 		for (ServiceRegistration<Destination> destinationServiceRegistration :
 				_destinationServiceRegistrations) {
 
-			Destination destination = _bundleContext.getService(
-				destinationServiceRegistration.getReference());
-
 			destinationServiceRegistration.unregister();
-
-			destination.destroy();
 		}
 
 		_destinationServiceRegistrations.clear();

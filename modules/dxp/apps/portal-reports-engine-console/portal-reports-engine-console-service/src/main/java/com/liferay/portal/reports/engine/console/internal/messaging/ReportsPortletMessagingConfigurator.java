@@ -69,12 +69,7 @@ public class ReportsPortletMessagingConfigurator {
 					destinationServiceRegistration :
 						_destinationServiceRegistrations) {
 
-				Destination destination = _bundleContext.getService(
-					destinationServiceRegistration.getReference());
-
 				destinationServiceRegistration.unregister();
-
-				destination.destroy();
 			}
 		}
 

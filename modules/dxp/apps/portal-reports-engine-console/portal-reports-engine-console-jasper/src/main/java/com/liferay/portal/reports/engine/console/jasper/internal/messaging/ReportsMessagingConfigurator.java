@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
-import com.liferay.portal.reports.engine.messaging.ReportCompilerRequestMessageListener;
 import com.liferay.portal.reports.engine.messaging.ReportRequestMessageListener;
 
 import java.util.ArrayList;
@@ -53,14 +52,6 @@ public class ReportsMessagingConfigurator {
 	@Activate
 	protected void activate(ComponentContext componentContext) {
 		_bundleContext = componentContext.getBundleContext();
-
-		MessageListener reportCompilerRequestMessageListener =
-			new ReportCompilerRequestMessageListener(
-				_reportEngine, new ByteArrayReportResultContainer());
-
-		_messageListeners.put(
-			ReportsEngineDestinationNames.REPORT_COMPILER,
-			reportCompilerRequestMessageListener);
 
 		MessageListener reportRequestMessageListener =
 			new ReportRequestMessageListener(

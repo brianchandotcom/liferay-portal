@@ -19,8 +19,6 @@ package com.liferay.portal.reports.engine.constants;
  */
 public class ReportsEngineDestinationNames {
 
-	public static final String REPORT_COMPILER = "liferay/report_compiler";
-
 	public static final String REPORT_REQUEST = "liferay/report_request";
 
 	public static final String REPORT_RESULT = "liferay/report_result";

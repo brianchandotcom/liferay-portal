@@ -36,7 +36,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -49,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
 public class ReportsMessagingConfigurator {
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_bundleContext = componentContext.getBundleContext();
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
 		MessageListener reportRequestMessageListener =
 			new ReportRequestMessageListener(
@@ -86,8 +85,6 @@ public class ReportsMessagingConfigurator {
 		_messageListeners.clear();
 
 		_messageListenerServiceRegistrations.clear();
-
-		_bundleContext = null;
 	}
 
 	private void _registerDestination(String destinationName) {

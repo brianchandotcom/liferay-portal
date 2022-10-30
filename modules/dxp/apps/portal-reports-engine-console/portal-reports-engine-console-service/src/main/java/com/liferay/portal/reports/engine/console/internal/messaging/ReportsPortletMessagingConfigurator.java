@@ -29,12 +29,12 @@ import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -50,13 +50,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ReportsPortletMessagingConfigurator {
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		_bundleContext = componentContext.getBundleContext();
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_bundleContext = bundleContext;
 
 		_reportsPortletMessagingConfiguration =
 			ConfigurableUtil.createConfigurable(
-				ReportsPortletMessagingConfiguration.class,
-				componentContext.getProperties());
+				ReportsPortletMessagingConfiguration.class, properties);
 
 		_registerReportsSchedulerEventDestination();
 	}
@@ -81,8 +82,6 @@ public class ReportsPortletMessagingConfigurator {
 		}
 
 		_messageListenerServiceRegistrations.clear();
-
-		_bundleContext = null;
 	}
 
 	private void _registerDestination(

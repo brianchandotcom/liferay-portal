@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.reports.engine.console.configuration.ReportsPortletMessagingConfiguration;
-import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineConsoleDestinationNames;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import java.util.Map;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.reports.engine.console.configuration.ReportsPortletMessagingConfiguration",
-	property = "destination.name=" + ReportsEngineConsoleDestinationNames.REPORTS_SCHEDULER_EVENT,
+	property = "destination.name=" + ReportsEngineDestinationNames.REPORTS_SCHEDULER_EVENT,
 	service = MessageListener.class
 )
 public class SchedulerEventMessageListener extends BaseMessageListener {
@@ -61,7 +61,7 @@ public class SchedulerEventMessageListener extends BaseMessageListener {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				ReportsEngineConsoleDestinationNames.REPORTS_SCHEDULER_EVENT);
+				ReportsEngineDestinationNames.REPORTS_SCHEDULER_EVENT);
 
 		destinationConfiguration.setMaximumQueueSize(
 			reportsPortletMessagingConfiguration.reportMessageQueueSize());

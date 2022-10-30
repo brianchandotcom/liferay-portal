@@ -15,6 +15,7 @@
 package com.liferay.notification.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,6 +97,7 @@ public class NotificationTemplateResourceTest
 				objectDefinitionId = 0L;
 				subject = LocalizedMapUtil.getI18nMap(
 					RandomTestUtil.randomLocaleStringMap());
+				type = NotificationConstants.TYPE_EMAIL;
 			}
 		};
 	}

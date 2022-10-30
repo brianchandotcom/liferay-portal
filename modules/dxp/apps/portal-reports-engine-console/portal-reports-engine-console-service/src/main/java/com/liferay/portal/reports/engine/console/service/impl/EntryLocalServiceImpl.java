@@ -57,7 +57,7 @@ import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
-import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleDestinationNames;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineConsoleDestinationNames;
 import com.liferay.portal.reports.engine.console.exception.DefinitionNameException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailDeliveryException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailNotificationsException;
@@ -69,8 +69,8 @@ import com.liferay.portal.reports.engine.console.service.base.EntryLocalServiceB
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence;
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
-import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

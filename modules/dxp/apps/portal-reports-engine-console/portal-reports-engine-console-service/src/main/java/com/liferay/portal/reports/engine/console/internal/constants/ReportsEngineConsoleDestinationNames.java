@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.constants;
+package com.liferay.portal.reports.engine.console.internal.constants;
 
 /**
  * @author Prathima Shreenath

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.reports.engine.console.configuration.ReportsPortletMessagingConfiguration;
-import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleDestinationNames;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineConsoleDestinationNames;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import java.util.ArrayList;

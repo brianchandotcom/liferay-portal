@@ -3,6 +3,4 @@ Bundle-SymbolicName: com.liferay.portal.reports.engine.api
 Bundle-Version: 7.0.5
 Export-Package:\
 	com.liferay.portal.reports.engine,\
-	com.liferay.portal.reports.engine.constants,\
-	com.liferay.portal.reports.engine.messaging,\
 	com.liferay.portal.reports.engine.servlet

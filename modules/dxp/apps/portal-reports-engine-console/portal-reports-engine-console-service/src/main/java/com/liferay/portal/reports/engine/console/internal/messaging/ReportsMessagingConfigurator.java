@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.jasper.internal.messaging;
+package com.liferay.portal.reports.engine.console.internal.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,8 +23,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportEngine;
-import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
-import com.liferay.portal.reports.engine.messaging.ReportRequestMessageListener;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 
 import java.util.ArrayList;
 import java.util.Dictionary;

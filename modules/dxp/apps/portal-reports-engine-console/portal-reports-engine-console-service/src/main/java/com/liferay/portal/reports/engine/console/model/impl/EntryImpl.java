@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
-import com.liferay.portal.reports.engine.constants.ReportsEngineDestinationNames;
 
 /**
  * @author Brian Wing Shun Chan

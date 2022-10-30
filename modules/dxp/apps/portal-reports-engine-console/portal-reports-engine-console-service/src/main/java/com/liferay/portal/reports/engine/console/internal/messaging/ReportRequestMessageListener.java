@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.messaging;
+package com.liferay.portal.reports.engine.console.internal.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

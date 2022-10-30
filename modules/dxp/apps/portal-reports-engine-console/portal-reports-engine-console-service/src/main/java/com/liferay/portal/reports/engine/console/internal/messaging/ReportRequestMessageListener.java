@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportDesignRetriever;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportGenerationException;
@@ -33,12 +34,10 @@ import com.liferay.portal.reports.engine.console.status.ReportStatus;
 public class ReportRequestMessageListener extends BaseMessageListener {
 
 	public ReportRequestMessageListener(
-		EntryLocalService entryLocalService, ReportEngine reportEngine,
-		ReportResultContainer reportResultContainer) {
+		EntryLocalService entryLocalService, ReportEngine reportEngine) {
 
 		_entryLocalService = entryLocalService;
 		_reportEngine = reportEngine;
-		_reportResultContainer = reportResultContainer;
 	}
 
 	@Override
@@ -51,7 +50,8 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 			reportRequest.getReportDesignRetriever();
 
 		ReportResultContainer reportResultContainer =
-			_reportResultContainer.clone(reportDesignRetriever.getReportName());
+			new ByteArrayReportResultContainer(
+				reportDesignRetriever.getReportName());
 
 		try {
 			_reportEngine.execute(reportRequest, reportResultContainer);
@@ -84,6 +84,5 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 
 	private final EntryLocalService _entryLocalService;
 	private final ReportEngine _reportEngine;
-	private final ReportResultContainer _reportResultContainer;
 
 }

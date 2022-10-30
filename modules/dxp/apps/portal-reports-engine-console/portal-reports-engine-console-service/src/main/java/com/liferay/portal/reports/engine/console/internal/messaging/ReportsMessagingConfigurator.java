@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
@@ -52,9 +51,7 @@ public class ReportsMessagingConfigurator {
 		_bundleContext = bundleContext;
 
 		MessageListener reportRequestMessageListener =
-			new ReportRequestMessageListener(
-				_entryLocalService, _reportEngine,
-				new ByteArrayReportResultContainer());
+			new ReportRequestMessageListener(_entryLocalService, _reportEngine);
 
 		_messageListeners.put(
 			ReportsEngineDestinationNames.REPORT_REQUEST,

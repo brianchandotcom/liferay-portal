@@ -149,7 +149,7 @@ public class ReportEngineImplTest extends TestCase {
 			"CsvDataSourceReport.jrxml", reportFormat);
 
 		ReportResultContainer reportResultContainer =
-			new ByteArrayReportResultContainer();
+			new ByteArrayReportResultContainer(null);
 
 		_reportEngine.execute(reportRequest, reportResultContainer);
 
@@ -211,7 +211,7 @@ public class ReportEngineImplTest extends TestCase {
 			dataSourceReportFileName, ReportFormat.PDF);
 
 		ReportResultContainer reportResultContainer =
-			new ByteArrayReportResultContainer();
+			new ByteArrayReportResultContainer(null);
 
 		_reportEngine.execute(reportRequest, reportResultContainer);
 

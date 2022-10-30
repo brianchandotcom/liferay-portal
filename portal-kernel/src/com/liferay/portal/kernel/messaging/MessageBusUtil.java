@@ -22,26 +22,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class MessageBusUtil {
 
-	public static Message createResponseMessage(Message requestMessage) {
-		Message responseMessage = new Message();
-
-		responseMessage.setDestinationName(
-			requestMessage.getResponseDestinationName());
-		responseMessage.setResponseId(requestMessage.getResponseId());
-
-		return responseMessage;
-	}
-
-	public static Message createResponseMessage(
-		Message requestMessage, Object payload) {
-
-		Message responseMessage = createResponseMessage(requestMessage);
-
-		responseMessage.setPayload(payload);
-
-		return responseMessage;
-	}
-
 	public static Destination getDestination(String destinationName) {
 		return _messageBus.getDestination(destinationName);
 	}

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Reports Engine API
 Bundle-SymbolicName: com.liferay.portal.reports.engine.api
-Bundle-Version: 7.0.5
+Bundle-Version: 8.0.0
 Export-Package:\
 	com.liferay.portal.reports.engine,\
 	com.liferay.portal.reports.engine.servlet

@@ -1355,7 +1355,7 @@ definition {
 	}
 
 	macro editCustomFieldInformation {
-		User.gotoEditCP(userScreenName = "${userScreenName}");
+		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
 		if (("${customFieldType}" == "Checkbox") || ("${customFieldType}" == "Radio")) {
 			Click(

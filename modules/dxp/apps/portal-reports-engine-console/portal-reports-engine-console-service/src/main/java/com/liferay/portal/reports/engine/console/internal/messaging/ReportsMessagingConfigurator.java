@@ -40,7 +40,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -89,13 +88,6 @@ public class ReportsMessagingConfigurator {
 		_messageListenerServiceRegistrations.clear();
 
 		_bundleContext = null;
-	}
-
-	@Modified
-	protected void modified(ComponentContext componentContext) {
-		deactivate();
-
-		activate(componentContext);
 	}
 
 	private void _registerDestination(String destinationName) {

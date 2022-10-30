@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
+import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -54,7 +55,8 @@ public class ReportsMessagingConfigurator {
 
 		MessageListener reportRequestMessageListener =
 			new ReportRequestMessageListener(
-				_reportEngine, new ByteArrayReportResultContainer());
+				_entryLocalService, _reportEngine,
+				new ByteArrayReportResultContainer());
 
 		_messageListeners.put(
 			ReportsEngineDestinationNames.REPORT_REQUEST,
@@ -170,6 +172,10 @@ public class ReportsMessagingConfigurator {
 
 	private final List<ServiceRegistration<Destination>>
 		_destinationServiceRegistrations = new ArrayList<>();
+
+	@Reference
+	private EntryLocalService _entryLocalService;
+
 	private final Map<String, MessageListener> _messageListeners =
 		new ConcurrentHashMap<>();
 	private final List<ServiceRegistration<MessageListener>>

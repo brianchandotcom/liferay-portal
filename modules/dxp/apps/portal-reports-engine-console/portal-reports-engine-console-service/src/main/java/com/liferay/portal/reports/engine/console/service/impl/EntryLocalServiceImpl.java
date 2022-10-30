@@ -57,10 +57,10 @@ import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
-import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineConsoleDestinationNames;
 import com.liferay.portal.reports.engine.console.exception.DefinitionNameException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailDeliveryException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailNotificationsException;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.console.internal.util.ReportsEngineConsoleSubscriptionSender;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Entry;
@@ -70,7 +70,6 @@ import com.liferay.portal.reports.engine.console.service.persistence.DefinitionP
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
 
-import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -307,8 +306,6 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		Message message = new Message();
 
 		message.setPayload(reportRequest);
-		message.setResponseDestinationName(
-			ReportsEngineConsoleDestinationNames.REPORTS_ADMIN);
 		message.setResponseId(String.valueOf(entry.getEntryId()));
 
 		_messageBus.sendMessage(

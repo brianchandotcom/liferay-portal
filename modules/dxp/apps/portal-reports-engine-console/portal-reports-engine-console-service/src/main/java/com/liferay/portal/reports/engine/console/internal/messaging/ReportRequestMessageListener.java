@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.portal.reports.engine.console.internal.messaging;
@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.reports.engine.ReportDesignRetriever;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportResultContainer;
+import com.liferay.portal.reports.engine.console.service.EntryLocalService;
+import com.liferay.portal.reports.engine.console.status.ReportStatus;
 
 /**
  * @author Michael C. Han
@@ -31,15 +33,18 @@ import com.liferay.portal.reports.engine.ReportResultContainer;
 public class ReportRequestMessageListener extends BaseMessageListener {
 
 	public ReportRequestMessageListener(
-		ReportEngine reportEngine,
+		EntryLocalService entryLocalService, ReportEngine reportEngine,
 		ReportResultContainer reportResultContainer) {
 
+		_entryLocalService = entryLocalService;
 		_reportEngine = reportEngine;
 		_reportResultContainer = reportResultContainer;
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		long entryId = GetterUtil.getLong(message.getResponseId());
+
 		ReportRequest reportRequest = (ReportRequest)message.getPayload();
 
 		ReportDesignRetriever reportDesignRetriever =
@@ -58,19 +63,26 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 				reportGenerationException);
 		}
 		finally {
-			Message responseMessage = MessageBusUtil.createResponseMessage(
-				message);
+			if (reportResultContainer.hasError()) {
+				ReportGenerationException reportGenerationException =
+					reportResultContainer.getReportGenerationException();
 
-			responseMessage.setPayload(reportResultContainer);
-
-			MessageBusUtil.sendMessage(
-				responseMessage.getDestinationName(), responseMessage);
+				_entryLocalService.updateEntryStatus(
+					entryId, ReportStatus.ERROR,
+					reportGenerationException.getMessage());
+			}
+			else {
+				_entryLocalService.updateEntry(
+					entryId, reportResultContainer.getReportName(),
+					reportResultContainer.getResults());
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReportRequestMessageListener.class);
 
+	private final EntryLocalService _entryLocalService;
 	private final ReportEngine _reportEngine;
 	private final ReportResultContainer _reportResultContainer;
 

@@ -59,8 +59,6 @@ public class ReportsPortletMessagingConfigurator {
 				ReportsPortletMessagingConfiguration.class,
 				componentContext.getProperties());
 
-		_registerReportsAdminDestination();
-
 		_registerReportsSchedulerEventDestination();
 	}
 
@@ -155,16 +153,6 @@ public class ReportsPortletMessagingConfigurator {
 		_destinationServiceRegistrations.add(destinationServiceRegistration);
 
 		destination.register(reportMessageListener);
-	}
-
-	private void _registerReportsAdminDestination() {
-		MessageListener adminMessageListener = new AdminMessageListener(
-			_entryLocalService);
-
-		_registerDestination(
-			adminMessageListener,
-			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			ReportsEngineConsoleDestinationNames.REPORTS_ADMIN);
 	}
 
 	private void _registerReportsSchedulerEventDestination() {

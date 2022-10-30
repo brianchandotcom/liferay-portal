@@ -19,8 +19,6 @@ package com.liferay.portal.reports.engine.console.internal.constants;
  */
 public class ReportsEngineConsoleDestinationNames {
 
-	public static final String REPORTS_ADMIN = "liferay/reports_admin";
-
 	public static final String REPORTS_SCHEDULER_EVENT =
 		"liferay/reports_scheduler_event";
 

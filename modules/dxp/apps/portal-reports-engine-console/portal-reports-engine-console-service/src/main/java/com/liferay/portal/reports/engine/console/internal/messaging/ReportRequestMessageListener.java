@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportDesignRetriever;
 import com.liferay.portal.reports.engine.ReportEngine;
@@ -34,7 +34,6 @@ import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngin
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
 
-import java.util.Dictionary;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -88,13 +87,10 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
-		Dictionary<String, Object> destinationProperties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destination.getName()
-			).build();
-
 		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination, destinationProperties);
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", destination.getName()));
 	}
 
 	@Deactivate

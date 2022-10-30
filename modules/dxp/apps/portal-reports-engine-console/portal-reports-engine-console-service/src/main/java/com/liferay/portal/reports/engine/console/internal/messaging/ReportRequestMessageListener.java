@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.reports.engine.ByteArrayReportResultContainer;
 import com.liferay.portal.reports.engine.ReportDesignRetriever;
@@ -25,20 +26,21 @@ import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportResultContainer;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	property = "destination.name=" + ReportsEngineDestinationNames.REPORT_REQUEST,
+	service = MessageListener.class
+)
 public class ReportRequestMessageListener extends BaseMessageListener {
-
-	public ReportRequestMessageListener(
-		EntryLocalService entryLocalService, ReportEngine reportEngine) {
-
-		_entryLocalService = entryLocalService;
-		_reportEngine = reportEngine;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -82,7 +84,10 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReportRequestMessageListener.class);
 
-	private final EntryLocalService _entryLocalService;
-	private final ReportEngine _reportEngine;
+	@Reference
+	private EntryLocalService _entryLocalService;
+
+	@Reference
+	private ReportEngine _reportEngine;
 
 }

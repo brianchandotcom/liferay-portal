@@ -19,17 +19,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineDestinationNames;
-import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -48,47 +41,10 @@ public class ReportsMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		MessageListener reportRequestMessageListener =
-			new ReportRequestMessageListener(_entryLocalService, _reportEngine);
-
-		_messageListeners.put(
-			ReportsEngineDestinationNames.REPORT_REQUEST,
-			reportRequestMessageListener);
-
-		for (String destinationName : _messageListeners.keySet()) {
-			_registerDestination(destinationName);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		for (ServiceRegistration<Destination> destinationServiceRegistration :
-				_destinationServiceRegistrations) {
-
-			destinationServiceRegistration.unregister();
-		}
-
-		_destinationServiceRegistrations.clear();
-
-		for (ServiceRegistration<MessageListener>
-				messageListenerServiceRegistration :
-					_messageListenerServiceRegistrations) {
-
-			messageListenerServiceRegistration.unregister();
-		}
-
-		_messageListeners.clear();
-
-		_messageListenerServiceRegistrations.clear();
-	}
-
-	private void _registerDestination(String destinationName) {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				destinationName);
+				ReportsEngineDestinationNames.REPORT_REQUEST);
 
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 
@@ -122,23 +78,13 @@ public class ReportsMessagingConfigurator {
 				"destination.name", destination.getName()
 			).build();
 
-		ServiceRegistration<Destination> destinationServiceRegistration =
-			_bundleContext.registerService(
-				Destination.class, destination, destinationProperties);
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination, destinationProperties);
+	}
 
-		_destinationServiceRegistrations.add(destinationServiceRegistration);
-
-		MessageListener messageListener = _messageListeners.get(
-			destinationName);
-
-		destination.register(messageListener);
-
-		ServiceRegistration<MessageListener>
-			messageListenerServiceRegistration = _bundleContext.registerService(
-				MessageListener.class, messageListener, destinationProperties);
-
-		_messageListenerServiceRegistrations.add(
-			messageListenerServiceRegistration);
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	private static final int _MAXIMUM_QUEUE_SIZE = 200;
@@ -146,23 +92,9 @@ public class ReportsMessagingConfigurator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReportsMessagingConfigurator.class);
 
-	private BundleContext _bundleContext;
-
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private final List<ServiceRegistration<Destination>>
-		_destinationServiceRegistrations = new ArrayList<>();
-
-	@Reference
-	private EntryLocalService _entryLocalService;
-
-	private final Map<String, MessageListener> _messageListeners =
-		new ConcurrentHashMap<>();
-	private final List<ServiceRegistration<MessageListener>>
-		_messageListenerServiceRegistrations = new ArrayList<>();
-
-	@Reference
-	private ReportEngine _reportEngine;
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

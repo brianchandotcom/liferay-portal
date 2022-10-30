@@ -16,16 +16,21 @@ package com.liferay.portal.reports.engine.console.internal.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.reports.engine.console.internal.constants.ReportsEngineConsoleDestinationNames;
 import com.liferay.portal.reports.engine.console.service.EntryLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gavin Wan
  */
+@Component(
+	property = "destination.name=" + ReportsEngineConsoleDestinationNames.REPORTS_SCHEDULER_EVENT,
+	service = MessageListener.class
+)
 public class SchedulerEventMessageListener extends BaseMessageListener {
-
-	public SchedulerEventMessageListener(EntryLocalService entryLocalService) {
-		_entryLocalService = entryLocalService;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -35,6 +40,7 @@ public class SchedulerEventMessageListener extends BaseMessageListener {
 		_entryLocalService.generateReport(entryId, reportName);
 	}
 
-	private final EntryLocalService _entryLocalService;
+	@Reference
+	private EntryLocalService _entryLocalService;
 
 }

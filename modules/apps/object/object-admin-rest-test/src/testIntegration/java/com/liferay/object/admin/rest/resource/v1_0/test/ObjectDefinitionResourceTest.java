@@ -269,7 +269,7 @@ public class ObjectDefinitionResourceTest
 						indexed = false;
 						indexedAsKeyword = false;
 						label = Collections.singletonMap("en_US", "Column");
-						name = "column";
+						name = StringUtil.randomId();
 						required = false;
 						system = false;
 					}

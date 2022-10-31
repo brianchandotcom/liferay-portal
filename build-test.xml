@@ -4515,8 +4515,15 @@ tell application "Safari" to quit
 
 			<get-testcase-property property.name="test.assert.warning.exceptions" />
 
-			<if>
+			<condition else="${test.portal.log.assert}" property="test.assert.warning.exceptions" value="${test.assert.warning.exceptions}">
 				<isset property="test.assert.warning.exceptions" />
+			</condition>
+
+			<if>
+				<or>
+					<equals arg1="${test.assert.warning.exceptions}" arg2="true" />
+					<equals arg1="${test.assert.warning.exceptions}" arg2="false" />
+				</or>
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">
 						test.assert.warning.exceptions=${test.assert.warning.exceptions}

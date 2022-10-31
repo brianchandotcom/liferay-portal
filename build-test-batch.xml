@@ -1670,6 +1670,7 @@ app.server.type=@{app.server.type}]]></echo>
 											<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
 											<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
 											<property name="test.class" value="${test.class}" />
+											<property name="test.portal.log.assert" value="@{test.portal.log.assert}" />
 										</ant>
 
 										<if>

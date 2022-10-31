@@ -489,6 +489,10 @@ definition {
 				ariaLabel = "Padding Left",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Padding Left");
+
 			MouseOver(
 				key_text = "restore",
 				locator1 = "MenuItem#ANY_ICON");
@@ -529,6 +533,10 @@ definition {
 				ariaLabel = "Padding Left",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Padding Left");
+
 			MouseOver(
 				key_text = "restore",
 				locator1 = "MenuItem#ANY_ICON");
@@ -568,6 +576,10 @@ definition {
 			Click(
 				ariaLabel = "Padding Left",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			Click(
+				locator1 = "Dropdown#DROPDOWN_SUBHEADER",
+				subHeader = "Padding Left");
 
 			MouseOver(
 				key_text = "restore",

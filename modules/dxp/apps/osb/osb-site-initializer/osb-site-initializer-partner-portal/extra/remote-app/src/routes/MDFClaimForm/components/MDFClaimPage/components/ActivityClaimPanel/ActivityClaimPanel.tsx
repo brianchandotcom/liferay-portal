@@ -56,7 +56,7 @@ const ActivityClaimPanel = ({
 	return (
 		<>
 			<ClayPanel
-				className="bg-brand-primary-lighten-6 border-brand-primary-lighten-5 mb-4 text-neutral-7"
+				className="border-brand-primary-lighten-2 mb-4 text-neutral-7"
 				displayType="secondary"
 				expanded={activity.selected && expanded}
 			>

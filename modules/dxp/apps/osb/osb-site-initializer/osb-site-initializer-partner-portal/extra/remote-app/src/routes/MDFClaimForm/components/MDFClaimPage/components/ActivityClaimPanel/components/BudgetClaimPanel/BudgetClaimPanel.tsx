@@ -37,7 +37,7 @@ const BudgetClaimPanel = ({
 
 	return (
 		<ClayPanel
-			className="bg-white"
+			className="bg-white border-neutral-4"
 			displayType="secondary"
 			expanded={budget.selected && expanded}
 		>

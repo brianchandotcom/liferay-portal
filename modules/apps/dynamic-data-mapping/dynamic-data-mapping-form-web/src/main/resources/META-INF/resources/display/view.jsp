@@ -106,6 +106,8 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 						HashMapBuilder.<String, Object>put(
 							"dataEngineModule", ddmFormDisplayContext.getDataEngineModule()
 						).put(
+							"displayChartAsTable", ddmFormDisplayContext.isDisplayChartAsTable()
+						).put(
 							"formDescription", formInstance.getDescription(displayLocale)
 						).put(
 							"formReportDataURL", formReportDataURL.toString()
@@ -272,6 +274,8 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 										"dataEngineModule", ddmFormDisplayContext.getDataEngineModule()
 									).put(
 										"description", StringUtil.trim(formInstance.getDescription(displayLocale))
+									).put(
+										"displayChartAsTable", ddmFormDisplayContext.isDisplayChartAsTable()
 									).put(
 										"formReportDataURL", formReportDataURL.toString()
 									).put(

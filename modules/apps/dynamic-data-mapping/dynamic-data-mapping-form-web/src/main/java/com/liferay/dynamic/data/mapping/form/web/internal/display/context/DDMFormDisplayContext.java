@@ -660,6 +660,19 @@ public class DDMFormDisplayContext {
 		return _autosaveEnabled;
 	}
 
+	public boolean isDisplayChartAsTable() throws PortalException {
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		if (ddmFormInstance == null) {
+			return false;
+		}
+
+		DDMFormInstanceSettings settingsModel =
+			ddmFormInstance.getSettingsModel();
+
+		return settingsModel.displayChartAsTable();
+	}
+
 	public boolean isFormAvailable() throws PortalException {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 

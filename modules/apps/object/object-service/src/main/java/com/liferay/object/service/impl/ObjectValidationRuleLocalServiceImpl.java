@@ -215,7 +215,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		Map<String, Object> variables = null;
 
-		if (PropsValues.OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION == 2) {
+		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
 			variables = ObjectEntryVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry);

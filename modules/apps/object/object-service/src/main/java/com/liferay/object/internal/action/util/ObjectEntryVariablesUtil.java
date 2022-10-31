@@ -40,7 +40,7 @@ public class ObjectEntryVariablesUtil {
 		SystemObjectDefinitionMetadataRegistry
 			systemObjectDefinitionMetadataRegistry) {
 
-		if (PropsValues.OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION == 2) {
+		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
 			Map<String, Object> allowedVariables =
 				HashMapBuilder.<String, Object>put(
 					"creator", payloadJSONObject.get("userId")

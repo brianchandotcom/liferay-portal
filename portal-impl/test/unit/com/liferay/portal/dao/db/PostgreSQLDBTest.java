@@ -35,6 +35,13 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testDoesNotRewordSqlWithColumnStartingByOid() throws Exception {
+		String sql = "alter table a add oidcUser varchar(75) null";
+
+		Assert.assertEquals(sql + "\n", buildSQL(sql));
+	}
+
+	@Test
 	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +

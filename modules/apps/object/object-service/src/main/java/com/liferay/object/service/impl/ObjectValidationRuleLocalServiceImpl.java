@@ -20,7 +20,7 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
-import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
+import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectValidationRule;
@@ -216,7 +216,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		Map<String, Object> variables = null;
 
 		if (PropsValues.OBJECT_DEFINITION_SCRIPT_VARIABLES_VERSION == 2) {
-			variables = ObjectActionVariablesUtil.toVariables(
+			variables = ObjectEntryVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataTracker);
 		}

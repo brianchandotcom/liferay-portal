@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * @author Carolina Barbosa
  */
-public class ObjectActionVariablesUtil {
+public class ObjectEntryVariablesUtil {
 
 	public static Map<String, Object> toVariables(
 		DTOConverterRegistry dtoConverterRegistry,

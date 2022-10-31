@@ -55,7 +55,7 @@ definition {
 
 		DDLDataDefinition.clickSave();
 
-		Alert.viewRequiredField();
+		Alert.viewSpecificRequiredField(fieldFieldLabel = "Name");
 	}
 
 	@priority = "3"

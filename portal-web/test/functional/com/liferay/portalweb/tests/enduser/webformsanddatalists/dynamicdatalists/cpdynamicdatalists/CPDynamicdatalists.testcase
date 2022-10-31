@@ -1418,7 +1418,9 @@ definition {
 
 		Button.clickPublish();
 
-		Alert.viewRequiredField();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Boolean Required The Boolean field is required.");
 
 		FormFields.viewRequiredAsterisk();
 

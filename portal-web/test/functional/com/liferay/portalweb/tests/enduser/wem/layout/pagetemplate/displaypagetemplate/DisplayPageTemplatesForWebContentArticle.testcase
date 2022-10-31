@@ -34,7 +34,7 @@ definition {
 		else {
 			JSONUser.tearDownNonAdminUsers();
 
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			JSONGroup.tearDownNonDefaultGroups();
 		}
 	}
 

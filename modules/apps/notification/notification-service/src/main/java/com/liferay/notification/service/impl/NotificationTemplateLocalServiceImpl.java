@@ -14,7 +14,6 @@
 
 package com.liferay.notification.service.impl;
 
-import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;

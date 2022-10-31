@@ -16,9 +16,9 @@ package com.liferay.notification.service.impl;
 
 import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.base.NotificationTemplateServiceBaseImpl;
-import com.liferay.notification.type.NotificationContext;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;

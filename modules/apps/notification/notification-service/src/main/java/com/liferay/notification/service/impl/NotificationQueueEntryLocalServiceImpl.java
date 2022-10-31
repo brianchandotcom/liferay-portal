@@ -15,6 +15,7 @@
 package com.liferay.notification.service.impl;
 
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
@@ -22,7 +23,6 @@ import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalSer
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.base.NotificationQueueEntryLocalServiceBaseImpl;
-import com.liferay.notification.type.NotificationContext;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;

@@ -45,7 +45,7 @@ public class NotificationTemplateLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static NotificationTemplate addNotificationTemplate(
-			com.liferay.notification.type.NotificationContext
+			com.liferay.notification.context.NotificationContext
 				notificationContext)
 		throws PortalException {
 
@@ -339,7 +339,7 @@ public class NotificationTemplateLocalServiceUtil {
 	}
 
 	public static NotificationTemplate updateNotificationTemplate(
-			com.liferay.notification.type.NotificationContext
+			com.liferay.notification.context.NotificationContext
 				notificationContext)
 		throws PortalException {
 

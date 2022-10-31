@@ -16,10 +16,10 @@ package com.liferay.notification.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
-import com.liferay.notification.type.NotificationContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;

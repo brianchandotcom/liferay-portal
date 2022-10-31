@@ -14,9 +14,9 @@
 
 package com.liferay.notification.type;
 
-import com.liferay.notification.context.NotificationContext;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;

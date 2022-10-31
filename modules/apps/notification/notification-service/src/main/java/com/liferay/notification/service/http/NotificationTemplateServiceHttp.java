@@ -53,7 +53,7 @@ public class NotificationTemplateServiceHttp {
 	public static com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
 				HttpPrincipal httpPrincipal,
-				com.liferay.notification.type.NotificationContext
+				com.liferay.notification.context.NotificationContext
 					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -229,7 +229,7 @@ public class NotificationTemplateServiceHttp {
 	public static com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
 				HttpPrincipal httpPrincipal,
-				com.liferay.notification.type.NotificationContext
+				com.liferay.notification.context.NotificationContext
 					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -275,7 +275,9 @@ public class NotificationTemplateServiceHttp {
 		NotificationTemplateServiceHttp.class);
 
 	private static final Class<?>[] _addNotificationTemplateParameterTypes0 =
-		new Class[] {com.liferay.notification.type.NotificationContext.class};
+		new Class[] {
+			com.liferay.notification.context.NotificationContext.class
+		};
 	private static final Class<?>[] _deleteNotificationTemplateParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteNotificationTemplateParameterTypes2 =
@@ -283,6 +285,8 @@ public class NotificationTemplateServiceHttp {
 	private static final Class<?>[] _getNotificationTemplateParameterTypes3 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateNotificationTemplateParameterTypes4 =
-		new Class[] {com.liferay.notification.type.NotificationContext.class};
+		new Class[] {
+			com.liferay.notification.context.NotificationContext.class
+		};
 
 }

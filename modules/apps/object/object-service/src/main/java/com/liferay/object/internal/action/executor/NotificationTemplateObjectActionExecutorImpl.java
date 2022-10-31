@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.action.executor;
 
-import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.context.NotificationContextBuilder;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.type.NotificationType;
@@ -57,29 +57,33 @@ public class NotificationTemplateObjectActionExecutorImpl
 			_notificationTypeServiceTracker.getNotificationType(
 				notificationTemplate.getType());
 
-		NotificationContext notificationContext = new NotificationContext();
+		NotificationContextBuilder notificationContextBuilder =
+			new NotificationContextBuilder();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		notificationContext.setClassName(objectDefinition.getClassName());
-
 		Map<String, Object> termValues = ObjectActionVariablesUtil.toVariables(
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 			_systemObjectDefinitionMetadataTracker);
 
-		notificationContext.setClassPK(
-			GetterUtil.getLong(termValues.get("id")));
-		notificationContext.setExternalReferenceCode(
-			GetterUtil.getString(termValues.get("externalReferenceCode")));
-
-		notificationContext.setNotificationTemplate(notificationTemplate);
-		notificationContext.setTermValues(termValues);
-		notificationContext.setUserId(userId);
-		notificationContext.setPortletId(objectDefinition.getPortletId());
-
-		notificationType.sendNotification(notificationContext);
+		notificationType.sendNotification(
+			notificationContextBuilder.className(
+				objectDefinition.getClassName()
+			).classPK(
+				GetterUtil.getLong(termValues.get("id"))
+			).externalReferenceCode(
+				GetterUtil.getString(termValues.get("externalReferenceCode"))
+			).notificationTemplate(
+				notificationTemplate
+			).termValues(
+				termValues
+			).userId(
+				userId
+			).portletId(
+				objectDefinition.getPortletId()
+			).build());
 	}
 
 	@Override

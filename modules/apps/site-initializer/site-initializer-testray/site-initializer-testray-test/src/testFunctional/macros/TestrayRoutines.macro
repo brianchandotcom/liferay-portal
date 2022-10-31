@@ -42,7 +42,7 @@ definition {
 		if (IsElementPresent(key_projectName = "Routines_1 Routine", locator1 = "Testray#ITEM_NAME")) {
 			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 	}
 

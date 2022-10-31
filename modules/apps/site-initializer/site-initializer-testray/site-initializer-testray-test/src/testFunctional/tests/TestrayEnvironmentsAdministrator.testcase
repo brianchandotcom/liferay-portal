@@ -200,6 +200,7 @@ definition {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
+		}
 
 		task ("Delete category and check if the category has been deleted") {
 			TestrayManage.deleteCategory(
@@ -219,6 +220,7 @@ definition {
 			TestrayManage.addNewCategory(category = "Environments_6 Category");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
+		}
 
 		task ("Edit a category and state if the name has edited") {
 			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
@@ -381,7 +383,7 @@ definition {
 		task ("Go to Categories and Add Category") {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory(category = "");
+			TestrayManage.addNewCategory();
 		}
 
 		task ("Assert a warning message is displayed") {

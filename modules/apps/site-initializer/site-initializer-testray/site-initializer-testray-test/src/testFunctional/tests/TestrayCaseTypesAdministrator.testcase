@@ -50,7 +50,7 @@ definition {
 		task ("Create a new Case Type and assert it was created") {
 			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			Testray.assertItemName(key_name = "Case_Type");
 		}
@@ -62,7 +62,7 @@ definition {
 		task ("Create a new Case Type, Delete it and asserts that it has been deleted") {
 			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			TestrayManage.deleteCasesTypes(valueName = "Case_Type");
 
@@ -76,7 +76,7 @@ definition {
 		task ("Create a new Case Type, Edit Case Type and asserts that it has been edited") {
 			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			TestrayManage.editNewName(
 				valueName = "Case_Type",

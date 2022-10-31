@@ -28,11 +28,11 @@ definition {
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category A");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
 			TestrayManage.addNewCategory(category = "Environments_1 Category B");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar and Add New Option") {
@@ -155,7 +155,7 @@ definition {
 
 			Testray.assertItemName(key_name = "01");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Then run should not appear on the list") {
@@ -198,7 +198,7 @@ definition {
 
 			TestrayRun.assertValueRun(valueRun = "Option 1");
 
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Then run should appear on the list edited") {

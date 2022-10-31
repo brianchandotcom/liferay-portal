@@ -359,6 +359,150 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-164924. Able to search page with workflow by inline text or map content."
+	@priority = "4"
+	test SearchPageWithWorkflowByInlineTextAndMapContent {
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWithWorkflowByInlineTextAndMapContent";
+
+		task ("Given enable workflow for Content Pages") {
+			task ("Enable Single Approver for Content Page") {
+				Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+
+				Workflow.configureWorkflow(
+					workflowDefinition = "Single Approver",
+					workflowResourceValue = "Content Page");
+			}
+		}
+
+		task ("When add a Heading with inline text to page and approve") {
+			task ("Add a Heading fragment,edit text and then submit for application") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "text",
+					text = "New editable fragment text");
+
+				PageEditor.submitForPublication();
+			}
+
+			task ("Approve latest modification") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+
+				UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+				Workflow.assignToMeTaskByActions(
+					workflowAssetTitle = "Test Content Page Name",
+					workflowAssetType = "Content Page",
+					workflowTask = "Review");
+
+				Workflow.approveTaskByActions(
+					workflowAssetTitle = "Test Content Page Name",
+					workflowAssetType = "Content Page",
+					workflowTask = "Review");
+			}
+		}
+
+		task ("Then able to find the page by inline text") {
+			task ("Search for inline text") {
+				Navigator.gotoSitePage(
+					pageName = "Search",
+					siteName = "Test Site Name");
+
+				Search.searchCP(searchTerm = "New editable fragment text");
+			}
+
+			task ("View the content page is shown in the search results") {
+				Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			}
+		}
+
+		task ("When add a heading fragment mapped to wc title and approve") {
+			task ("Add another content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Content Page Name 2",
+					type = "content");
+			}
+
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title");
+			}
+
+			task ("Add a Heading fragment,map it to wc title and then submit for application") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name 2",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditorMapping.gotoEditableFieldMapping(
+					fragmentName = "Heading",
+					id = "element-text");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "WC WebContent Title",
+					navItem = "Web Content");
+
+				WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
+				Select(
+					locator1 = "PageEditorEditableLink#FIELD",
+					value1 = "Title");
+
+				PageEditor.waitForAutoSave();
+
+				PageEditor.viewFragmentEditableText(
+					editableText = "WC WebContent Title",
+					fragmentName = "Heading",
+					id = "text");
+
+				PageEditor.submitForPublication();
+			}
+
+			task ("Approve latest modification") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+
+				UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+				Workflow.assignToMeTaskByActions(
+					workflowAssetTitle = "Test Content Page Name 2",
+					workflowAssetType = "Content Page",
+					workflowTask = "Review");
+
+				Workflow.approveTaskByActions(
+					workflowAssetTitle = "Test Content Page Name 2",
+					workflowAssetType = "Content Page",
+					workflowTask = "Review");
+			}
+		}
+
+		task ("Then able to find the page by inline text") {
+			task ("Search for inline text") {
+				Navigator.gotoSitePage(
+					pageName = "Search",
+					siteName = "Test Site Name");
+
+				Search.searchCP(searchTerm = "WC WebContent Title");
+			}
+
+			task ("View the content page is shown in the search results") {
+				Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name 2");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-91405. View content page is not shown in search results after deleting the associated category."
 	@priority = "3"
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {

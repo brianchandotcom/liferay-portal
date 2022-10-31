@@ -14,26 +14,20 @@
 
 package com.liferay.object.rest.internal.util;
 
-import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Carolina Barbosa
@@ -44,66 +38,36 @@ public class ObjectEntryValuesUtil {
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectField objectField,
-			ObjectRelationshipLocalService objectRelationshipLocalService,
-			SystemObjectDefinitionMetadataTracker
-				systemObjectDefinitionMetadataTracker,
-			long userId, Map<String, ?> values)
+			ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
+			long userId, Map<String, Object> values)
 		throws PortalException {
 
-		Object value = values.get(objectField.getName());
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801")) ||
-			!Objects.equals(
-				objectField.getRelationshipType(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
-			(GetterUtil.getLong(value) > 0)) {
-
-			return value;
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
+			return values.get(objectField.getName());
 		}
 
-		String externalReferenceCode = GetterUtil.getString(
-			values.get(
-				ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-					objectField,
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME)));
+		try {
+			ObjectFieldBusinessType objectFieldBusinessType =
+				objectFieldBusinessTypeTracker.getObjectFieldBusinessType(
+					objectField.getBusinessType());
 
-		if (Validator.isNull(externalReferenceCode)) {
-			return value;
+			return objectFieldBusinessType.getValue(objectField, values);
 		}
+		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchObjectEntryException);
+			}
 
-		ObjectRelationship objectRelationship =
-			objectRelationshipLocalService.
-				fetchObjectRelationshipByObjectFieldId2(
-					objectField.getObjectFieldId());
+			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
+				noSuchObjectEntryException.getExternalReferenceCode(), userId,
+				objectDefinitionLocalService.getObjectDefinition(
+					noSuchObjectEntryException.getObjectDefinitionId()));
 
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		if (objectDefinition.isSystem()) {
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				systemObjectDefinitionMetadataTracker.
-					getSystemObjectDefinitionMetadata(
-						objectDefinition.getName());
-
-			BaseModel<?> baseModel =
-				systemObjectDefinitionMetadata.
-					getBaseModelByExternalReferenceCode(
-						externalReferenceCode, objectDefinition.getCompanyId());
-
-			return baseModel.getPrimaryKeyObj();
+			return objectEntry.getObjectEntryId();
 		}
-
-		ObjectEntry objectEntry = objectEntryLocalService.fetchObjectEntry(
-			externalReferenceCode, objectDefinition.getObjectDefinitionId());
-
-		if (objectEntry == null) {
-			objectEntry = objectEntryLocalService.addObjectEntry(
-				externalReferenceCode, userId, objectDefinition);
-		}
-
-		return objectEntry.getObjectEntryId();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryValuesUtil.class);
 
 }

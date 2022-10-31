@@ -15,21 +15,32 @@ export const CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD = gql`
 	mutation createAdminLiferayExperienceCloud(
 		$AdminLiferayExperienceCloud: InputC_AdminLiferayExperienceCloud!
 	) {
-		c {
-			createAdminLiferayExperienceCloud(
-				AdminLiferayExperienceCloud: $AdminLiferayExperienceCloud
+		createAdminLiferayExperienceCloud(input: $AdminLiferayExperienceCloud)
+			@rest(
+				method: "POST"
+				type: "C_AdminLiferayExperienceCloud"
+				path: "/c/adminliferayexperienceclouds"
 			) {
-				emailAddress
-				fullName
-				githubUsername
-				liferayExperienceCloudEnvironmentId
-			}
+			emailAddress
+			fullName
+			githubUsername
+			liferayExperienceCloudEnvironmentId
 		}
 	}
 `;
 
-export function useCreateAdminLiferayExperienceCloud(variables) {
-	return useMutation(CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD, {
-		variables,
-	});
+export function useCreateAdminLiferayExperienceCloud(
+	variables,
+	options = {displaySuccess: false}
+) {
+	return useMutation(
+		CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD,
+		{
+			context: {
+				displaySuccess: options.displaySuccess,
+				type: 'liferay-rest',
+			},
+		},
+		variables
+	);
 }

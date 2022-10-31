@@ -15,23 +15,36 @@ export const CREATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT = gql`
 	mutation createLiferayExperienceCloudEnvironment(
 		$LiferayExperienceCloudEnvironment: InputC_LiferayExperienceCloudEnvironment!
 	) {
-		c {
-			createLiferayExperienceCloudEnvironment(
-				LiferayExperienceCloudEnvironment: $LiferayExperienceCloudEnvironment
+		createLiferayExperienceCloudEnvironment(
+			input: $LiferayExperienceCloudEnvironment
+		)
+			@rest(
+				method: "POST"
+				type: "C_LiferayExperienceCloudEnvironment"
+				path: "/c/liferayexperiencecloudenvironments"
 			) {
-				accountKey
-				incidentManagementEmailAddress
-				incidentManagementFullName
-				liferayExperienceCloudEnvironmentId
-				primaryRegion
-				projectId
-			}
+			accountKey
+			id
+			incidentManagementEmailAddress
+			incidentManagementFullName
+			primaryRegion
+			projectId
 		}
 	}
 `;
 
-export function useCreateLiferayExperienceCloudEnvironments(variables) {
-	return useMutation(CREATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT, {
-		variables,
-	});
+export function useCreateLiferayExperienceCloudEnvironments(
+	variables,
+	options = {displaySuccess: false}
+) {
+	return useMutation(
+		CREATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT,
+		{
+			context: {
+				displaySuccess: options.displaySuccess,
+				type: 'liferay-rest',
+			},
+		},
+		variables
+	);
 }

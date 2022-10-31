@@ -171,6 +171,12 @@ export async function getObjectDefinitions(parameters?: string) {
 	);
 }
 
+export async function getObjectField(objectFieldId: number) {
+	return await fetchJSON<ObjectField>(
+		`/o/object-admin/v1.0/object-fields/${objectFieldId}`
+	);
+}
+
 export async function getObjectFields(objectDefinitionId: number) {
 	return await getList<ObjectField>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`

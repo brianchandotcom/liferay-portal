@@ -417,13 +417,12 @@ definition {
 				resourceName = "com.liferay.portal.kernel.model.Layout",
 				roleTitle = "Regular Role Name");
 
-			Role.openRolesAdmin();
+			var objectId = JSONObject.getObjectId(objectName = "PurchaseOrder");
 
-			Role.definePermissionCmdCP(
-				navItem = "Control Panel",
-				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_VIEW_CHECKBOX",
-				roleTitle = "Regular Role Name",
-				subItem = "Purchase Orders");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectId}",
+				roleTitle = "Regular Role Name");
 
 			JSONRole.assignRoleToUser(
 				roleTitle = "Regular Role Name",

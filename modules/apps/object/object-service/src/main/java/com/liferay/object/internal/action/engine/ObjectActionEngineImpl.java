@@ -21,7 +21,7 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
-import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
+import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -120,7 +120,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		);
 
 		Set<Long> objectActionIds = _objectActionIdsThreadLocal.get();
-		Map<String, Object> variables = ObjectActionVariablesUtil.toVariables(
+		Map<String, Object> variables = ObjectEntryVariablesUtil.toVariables(
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 			_systemObjectDefinitionMetadataTracker);
 

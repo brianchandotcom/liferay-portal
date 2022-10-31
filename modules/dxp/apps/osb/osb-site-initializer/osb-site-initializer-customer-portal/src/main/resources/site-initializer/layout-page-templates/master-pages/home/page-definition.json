@@ -4,7 +4,9 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderRadius": "",
 						"borderWidth": "0",
+						"shadow": "",
 						"textAlign": ""
 					},
 					"indexed": true,
@@ -15,6 +17,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -40,7 +43,10 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderColor": "colorBrandPrimaryLighten6",
+								"borderRadius": "",
 								"borderWidth": "0",
+								"marginBottom": "7",
+								"shadow": "",
 								"textAlign": "",
 								"width": "100%"
 							},
@@ -48,10 +54,11 @@
 							"layout": {
 								"borderColor": "colorBrandPrimaryLighten6",
 								"borderWidth": 0,
-								"marginBottom": 0,
+								"marginBottom": 8,
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -63,11 +70,13 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"borderRadius": "",
 										"borderWidth": "0",
 										"marginLeft": "5",
 										"marginTop": "4",
 										"paddingLeft": "2",
 										"paddingTop": "3",
+										"shadow": "",
 										"textAlign": ""
 									},
 									"indexed": true,
@@ -77,6 +86,7 @@
 										"marginLeft": 4,
 										"marginRight": 0,
 										"marginTop": 2,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -95,8 +105,10 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
+												"borderRadius": "",
 												"marginBottom": "4",
 												"paddingBottom": "3",
+												"shadow": "",
 												"textAlign": ""
 											},
 											"indexed": true
@@ -117,10 +129,18 @@
 							},
 							{
 								"definition": {
+									"cssClasses": [
+										"position-fixed",
+										"w-100",
+										"bg-white"
+									],
+									"customCSS": ".[$FRAGMENT_CLASS$] {\nbottom: 0;\n}",
 									"fragmentStyle": {
 										"borderColor": "colorNeutral2",
+										"borderRadius": "",
 										"borderWidth": "1",
-										"shadow": "boxShadow"
+										"shadow": "boxShadow",
+										"textAlign": ""
 									},
 									"indexed": true,
 									"layout": {
@@ -133,6 +153,7 @@
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -144,8 +165,10 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
 												"borderWidth": "0",
 												"height": "82px",
+												"shadow": "",
 												"textAlign": ""
 											},
 											"indexed": true,
@@ -157,6 +180,7 @@
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -168,9 +192,11 @@
 											{
 												"definition": {
 													"fragmentStyle": {
+														"borderRadius": "",
 														"borderWidth": "0",
 														"marginBottom": "4",
 														"marginLeft": "5",
+														"shadow": "",
 														"textAlign": "center"
 													},
 													"indexed": true,
@@ -180,6 +206,7 @@
 														"marginLeft": 4,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -226,8 +253,10 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"marginRight": "7",
 																"marginTop": "4",
+																"shadow": "",
 																"textAlign": ""
 															},
 															"indexed": true
@@ -240,12 +269,14 @@
 											{
 												"definition": {
 													"fragmentStyle": {
+														"borderRadius": "",
 														"borderWidth": "0",
 														"marginBottom": "4",
 														"marginLeft": "2",
 														"marginTop": "4",
 														"paddingBottom": "2",
 														"paddingTop": "2",
+														"shadow": "",
 														"textAlign": "center"
 													},
 													"indexed": true,
@@ -256,6 +287,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 2,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -287,9 +319,11 @@
 																}
 															],
 															"fragmentStyle": {
+																"borderRadius": "",
 																"fontFamily": "fontFamilySansSerif",
 																"fontSize": "0.875rem",
 																"marginLeft": "2",
+																"shadow": "",
 																"textAlign": "center"
 															},
 															"indexed": true
@@ -301,9 +335,19 @@
 											},
 											{
 												"definition": {
+													"fragmentLink": {
+														"href": {
+															"value_i18n": {
+																"en_US": ""
+															}
+														},
+														"target": "Self"
+													},
 													"fragmentStyle": {
+														"borderRadius": "",
 														"borderWidth": "0",
 														"marginLeft": "3",
+														"shadow": "",
 														"textAlign": ""
 													},
 													"indexed": true,
@@ -313,6 +357,7 @@
 														"marginLeft": 1,
 														"marginRight": 0,
 														"marginTop": 0,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -346,7 +391,7 @@
 																								},
 																								{
 																									"fieldName": "privatePage",
-																									"fieldValue": "true"
+																									"fieldValue": "false"
 																								},
 																								{
 																									"fieldName": "siteKey",
@@ -379,8 +424,12 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
+												"borderWidth": "0",
 												"height": "50px",
-												"marginRight": "6"
+												"marginRight": "6",
+												"shadow": "",
+												"textAlign": ""
 											},
 											"indexed": true,
 											"layout": {
@@ -392,6 +441,7 @@
 												"marginLeft": 0,
 												"marginRight": 6,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -428,6 +478,7 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/customer-portal/sourcesanspro-regular-ttf);\n}",
 		"styleBook": {
 			"key": "customer-portal",
 			"name": "Customer Portal"

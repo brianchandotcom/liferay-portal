@@ -4,7 +4,9 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderRadius": "",
 						"borderWidth": "0",
+						"shadow": "",
 						"textAlign": ""
 					},
 					"indexed": true,
@@ -14,6 +16,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -25,6 +28,7 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderRadius": "",
 								"borderWidth": "0",
 								"height": "72px",
 								"marginBottom": "4",
@@ -32,6 +36,7 @@
 								"paddingLeft": "3",
 								"paddingRight": "3",
 								"paddingTop": "3",
+								"shadow": "",
 								"textAlign": ""
 							},
 							"indexed": true,
@@ -41,6 +46,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 1,
 								"paddingLeft": 1,
 								"paddingRight": 1,
@@ -87,6 +93,8 @@
 										}
 									],
 									"fragmentStyle": {
+										"borderRadius": "",
+										"shadow": "",
 										"textAlign": "",
 										"width": "126px"
 									},
@@ -100,9 +108,11 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderRadius": "",
 								"borderWidth": "0",
 								"paddingBottom": "3",
 								"paddingTop": "3",
+								"shadow": "",
 								"textAlign": ""
 							},
 							"indexed": true,
@@ -112,6 +122,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 1,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -134,8 +145,15 @@
 					},
 					{
 						"definition": {
+							"cssClasses": [
+								"position-fixed",
+								"w-100",
+								"bg-white"
+							],
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nbottom: 0;\n}",
 							"fragmentStyle": {
 								"borderColor": "colorNeutral1",
+								"borderRadius": "",
 								"borderWidth": "1",
 								"height": "82px",
 								"shadow": "boxShadow",
@@ -152,6 +170,7 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
+								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -163,7 +182,11 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"height": "82px"
+										"borderRadius": "",
+										"borderWidth": "0",
+										"height": "82px",
+										"shadow": "",
+										"textAlign": ""
 									},
 									"indexed": true,
 									"layout": {
@@ -174,6 +197,7 @@
 										"marginLeft": 0,
 										"marginRight": 0,
 										"marginTop": 0,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -185,9 +209,11 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
 												"borderWidth": "0",
 												"marginBottom": "4",
 												"marginLeft": "5",
+												"shadow": "",
 												"textAlign": "center"
 											},
 											"indexed": true,
@@ -197,6 +223,7 @@
 												"marginLeft": 4,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -243,8 +270,10 @@
 														}
 													],
 													"fragmentStyle": {
+														"borderRadius": "",
 														"marginRight": "7",
 														"marginTop": "4",
+														"shadow": "",
 														"textAlign": ""
 													},
 													"indexed": true
@@ -257,12 +286,14 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
 												"borderWidth": "0",
 												"marginBottom": "4",
 												"marginLeft": "2",
 												"marginTop": "4",
 												"paddingBottom": "2",
 												"paddingTop": "2",
+												"shadow": "",
 												"textAlign": "center"
 											},
 											"indexed": true,
@@ -273,6 +304,7 @@
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 2,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -304,9 +336,11 @@
 														}
 													],
 													"fragmentStyle": {
+														"borderRadius": "",
 														"fontFamily": "fontFamilySansSerif",
 														"fontSize": "0.875rem",
 														"marginLeft": "2",
+														"shadow": "",
 														"textAlign": "center"
 													},
 													"indexed": true
@@ -319,8 +353,10 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
 												"borderWidth": "0",
 												"marginLeft": "3",
+												"shadow": "",
 												"textAlign": ""
 											},
 											"indexed": true,
@@ -330,6 +366,7 @@
 												"marginLeft": 1,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -363,7 +400,7 @@
 																						},
 																						{
 																							"fieldName": "privatePage",
-																							"fieldValue": "true"
+																							"fieldValue": "false"
 																						},
 																						{
 																							"fieldName": "siteKey",
@@ -372,7 +409,8 @@
 																					]
 																				}
 																			}
-																		}
+																		},
+																		"target": "Self"
 																	}
 																},
 																"text": {
@@ -396,9 +434,11 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"borderRadius": "",
 										"borderWidth": "0",
 										"height": "50px",
 										"marginRight": "6",
+										"shadow": "",
 										"textAlign": ""
 									},
 									"indexed": true,
@@ -411,6 +451,7 @@
 										"marginLeft": 0,
 										"marginRight": 6,
 										"marginTop": 0,
+										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
 										"paddingRight": 0,
@@ -444,6 +485,7 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/cp/sourcesanspro-regular-ttf);\n}",
 		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

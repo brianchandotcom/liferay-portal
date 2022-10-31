@@ -114,11 +114,9 @@ public class MessageSenderJob implements Job {
 				_notifyClusterMember(jobKey, storageType);
 			}
 
-			if (storageType == StorageType.PERSISTED) {
-				Scheduler scheduler = jobExecutionContext.getScheduler();
+			Scheduler scheduler = jobExecutionContext.getScheduler();
 
-				scheduler.deleteJob(jobKey);
-			}
+			scheduler.deleteJob(jobKey);
 		}
 
 		message.put(SchedulerEngine.JOB_STATE, jobState);

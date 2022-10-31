@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -54,7 +55,7 @@ public class RevertFileVersionContentDashboardItemVersionActionProvider
 		}
 
 		return new RevertFileVersionContentDashboardItemVersionAction(
-			fileVersion, httpServletRequest, _language,
+			fileVersion, httpServletRequest, _language, _portal,
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 	}
 
@@ -105,5 +106,8 @@ public class RevertFileVersionContentDashboardItemVersionActionProvider
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private ModelResourcePermission<FileEntry> _modelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

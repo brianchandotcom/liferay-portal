@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
@@ -39,12 +39,13 @@ public class ViewFileVersionContentDashboardItemVersionAction
 
 	public ViewFileVersionContentDashboardItemVersionAction(
 		FileVersion fileVersion, HttpServletRequest httpServletRequest,
-		Language language,
+		Language language, Portal portal,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		_fileVersion = fileVersion;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_portal = portal;
 		_requestBackedPortletURLFactory = requestBackedPortletURLFactory;
 	}
 
@@ -66,7 +67,7 @@ public class ViewFileVersionContentDashboardItemVersionAction
 	@Override
 	public String getURL() {
 		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(
+			_portal.getLiferayPortletResponse(
 				(PortletResponse)_httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE));
 
@@ -91,6 +92,7 @@ public class ViewFileVersionContentDashboardItemVersionAction
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final Portal _portal;
 	private final RequestBackedPortletURLFactory
 		_requestBackedPortletURLFactory;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth.client.persistence.internal.upgrade.V1_1_0;
+package com.liferay.oauth.client.persistence.internal.upgrade.v1_1_0;
 
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

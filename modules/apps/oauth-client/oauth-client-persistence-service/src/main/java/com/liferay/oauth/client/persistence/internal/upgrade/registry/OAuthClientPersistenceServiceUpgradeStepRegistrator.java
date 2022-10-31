@@ -29,7 +29,7 @@ public class OAuthClientPersistenceServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0",
-			new com.liferay.oauth.client.persistence.internal.upgrade.V1_1_0.
+			new com.liferay.oauth.client.persistence.internal.upgrade.v1_1_0.
 				OAuthClientEntryOIDCUserInfoMapperJSONUpgradeProcess());
 	}
 

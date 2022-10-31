@@ -119,6 +119,10 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
+		
+		task ("Open the dropdown and verify that there are 5 DXP versions") {
+			CustomerPortal.viewVersions(dropDownItems = "7.4,7.3,7.2,7.1,7.0");
+		}
 
 		task ("Click in the link 'deploying activation keys article' and go to the page") {
 			Click(locator1 = "CustomerPortalSite#DEPLOY_ARTICLE_PAGE");

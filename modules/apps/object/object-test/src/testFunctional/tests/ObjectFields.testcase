@@ -1124,6 +1124,27 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 	}
 
+	@description = "LPS-162176 - Verify that the ERC field column is displayed in the Objects Field tab"
+	@priority = "5"
+	test CanSeeERCFieldOnObjectPage {
+		task ("Given an object is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162176",
+				objectName = "CustomObject162176",
+				pluralLabelName = "Custom Objects 162176");
+		}
+
+		task ("When goto the new object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162176");
+		}
+
+		task ("Then assert if the ERC is present on the page") {
+			AssertElementPresent(locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE");
+		}
+	}
+
 	@description = "Verify that it's possible to see the custom field label and system field label"
 	@priority = "5"
 	test CanSeeFieldLabel {

@@ -575,6 +575,11 @@
 		<td>//textarea[@name='description']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>EXTERNAL_REFERENCE_CODE</td>
+		<td>//div[@class='mt-1']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

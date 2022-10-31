@@ -41,7 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mikel Lorza
  */
-@Component(service = ContentDashboardItemVersionActionProvider.class)
+@Component(
+	property = "service.ranking:Integer=100",
+	service = ContentDashboardItemVersionActionProvider.class
+)
 public class RevertFileVersionContentDashboardItemVersionActionProvider
 	implements ContentDashboardItemVersionActionProvider<FileVersion> {
 

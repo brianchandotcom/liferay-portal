@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = ContentDashboardItemVersionActionProvider.class)
+@Component(
+	property = "service.ranking:Integer=200",
+	service = ContentDashboardItemVersionActionProvider.class
+)
 public class ViewFileVersionContentDashboardItemVersionActionProvider
 	implements ContentDashboardItemVersionActionProvider<FileVersion> {
 

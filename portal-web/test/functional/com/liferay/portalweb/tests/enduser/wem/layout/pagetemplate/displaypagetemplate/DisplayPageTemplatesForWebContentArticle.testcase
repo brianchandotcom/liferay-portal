@@ -785,6 +785,8 @@ definition {
 				text = "Web Content Content");
 
 			IFrame.closeFrame();
+
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
 		}
 	}
 

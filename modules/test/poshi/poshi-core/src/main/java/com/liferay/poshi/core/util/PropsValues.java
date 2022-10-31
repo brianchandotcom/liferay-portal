@@ -165,9 +165,6 @@ public class PropsValues {
 	public static final String[] TEST_DIRS = StringUtil.split(
 		PropsUtil.get("test.dirs"));
 
-	public static final String[] TEST_INCLUDE_DIR_NAMES = StringUtil.split(
-		PropsUtil.get("test.include.dir.names"));
-
 	public static final int TEST_JVM_MAX_RETRIES = GetterUtil.getInteger(
 		PropsUtil.get("test.jvm.max.retries"));
 
@@ -190,9 +187,6 @@ public class PropsValues {
 
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
 		PropsUtil.get("test.skip.tear.down"));
-
-	public static final String[] TEST_SUBREPO_DIRS = StringUtil.split(
-		PropsUtil.get("test.subrepo.dirs"));
 
 	public static final String[] TEST_SUPPORT_DIRS = StringUtil.split(
 		PropsUtil.get("test.support.dirs"));

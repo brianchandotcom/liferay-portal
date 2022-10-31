@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -155,13 +156,8 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			return _portalTableNames;
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		String sql = StringUtil.read(
-			currentThread.getContextClassLoader(),
-			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
-
-		Matcher matcher = _createTablePattern.matcher(sql);
+		Matcher matcher = _createTablePattern.matcher(
+			DBResourceUtil.getPortalTablesSQL());
 
 		Set<String> tableNames = new HashSet<>();
 

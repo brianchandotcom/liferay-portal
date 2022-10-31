@@ -114,8 +114,7 @@ public class EmailNotificationType extends BaseNotificationType {
 
 			notificationRecipientSetting.setNotificationRecipientId(
 				notificationRecipientId);
-			notificationRecipientSetting.setName(
-				String.valueOf(entry.getKey()));
+			notificationRecipientSetting.setName(entry.getKey());
 
 			if (entry.getValue() instanceof String) {
 				notificationRecipientSetting.setValue(

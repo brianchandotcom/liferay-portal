@@ -409,9 +409,9 @@ public class PortalImplAlternateURLTest {
 	private String _getI18nPath(Locale defaultLocale, Locale locale) {
 		String i18nPath = StringPool.BLANK;
 
-		if (((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) &&
-			 !locale.equals(defaultLocale)) ||
-			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
+		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) ||
+			((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE != 0) &&
+			 !locale.equals(defaultLocale))) {
 
 			i18nPath = StringPool.SLASH + locale.getLanguage();
 		}

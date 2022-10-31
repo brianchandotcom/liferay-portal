@@ -165,25 +165,24 @@ public class NotificationTemplateResourceImpl
 				_notificationTemplateService.getNotificationTemplate(
 					notificationTemplateId);
 
+		NotificationContext notificationContext = new NotificationContext();
+
+		notificationTemplate.setName(
+			StringUtil.appendParentheticalSuffix(
+				notificationTemplate.getName(), "copy"));
+
+		notificationContext.setNotificationTemplate(notificationTemplate);
+
+		NotificationRecipient notificationRecipient =
+			notificationTemplate.getNotificationRecipient();
+
+		notificationContext.setNotificationRecipient(notificationRecipient);
+		notificationContext.setNotificationRecipientSettings(
+			notificationRecipient.getNotificationRecipientSettings());
+
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
-				notificationTemplate.getUserId(),
-				notificationTemplate.getObjectDefinitionId(),
-				notificationTemplate.getBcc(),
-				notificationTemplate.getBodyMap(), notificationTemplate.getCc(),
-				notificationTemplate.getDescription(),
-				notificationTemplate.getFrom(),
-				notificationTemplate.getFromNameMap(),
-				StringUtil.appendParentheticalSuffix(
-					notificationTemplate.getName(), "copy"),
-				notificationTemplate.getRecipientType(),
-				notificationTemplate.getSubjectMap(),
-				notificationTemplate.getToMap(), notificationTemplate.getType(),
-				transform(
-					_notificationTemplateAttachmentLocalService.
-						getNotificationTemplateAttachments(
-							notificationTemplateId),
-					NotificationTemplateAttachment::getObjectFieldId)));
+				notificationContext));
 	}
 
 	@Override

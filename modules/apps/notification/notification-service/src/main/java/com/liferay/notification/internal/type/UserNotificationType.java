@@ -14,7 +14,6 @@
 
 package com.liferay.notification.internal.type;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
@@ -68,8 +67,7 @@ public class UserNotificationType extends BaseNotificationType {
 			for (Map.Entry<String, Object> entry : recipientMap.entrySet()) {
 				NotificationRecipientSetting notificationRecipientSetting =
 					notificationRecipientSettingLocalService.
-						createNotificationRecipientSetting(
-							_counterLocalService.increment());
+						createNotificationRecipientSetting(0L);
 
 				notificationRecipientSetting.setCompanyId(user.getCompanyId());
 				notificationRecipientSetting.setUserId(user.getUserId());
@@ -203,9 +201,6 @@ public class UserNotificationType extends BaseNotificationType {
 
 		return notificationQueueEntry;
 	}
-
-	@Reference
-	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

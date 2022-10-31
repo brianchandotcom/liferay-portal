@@ -65,21 +65,33 @@ public class NotificationTemplateLocalServiceImpl
 
 		_validate(notificationContext);
 
-		NotificationType notificationType =
-			_notificationTypeServiceTracker.getNotificationType(
-				notificationContext.getType());
-
-		notificationType.validateNotificationTemplate(notificationContext);
-
 		NotificationTemplate notificationTemplate =
-			notificationTemplatePersistence.update(
-				notificationContext.getNotificationTemplate());
+			notificationContext.getNotificationTemplate();
+
+		notificationTemplate.setNotificationTemplateId(
+			counterLocalService.increment());
+
+		notificationTemplate = notificationTemplatePersistence.update(
+			notificationTemplate);
+
+		NotificationRecipient notificationRecipient =
+			notificationContext.getNotificationRecipient();
+
+		notificationRecipient.setNotificationRecipientId(
+			counterLocalService.increment());
+		notificationRecipient.setClassPK(
+			notificationTemplate.getNotificationTemplateId());
 
 		_notificationRecipientLocalService.updateNotificationRecipient(
-			notificationContext.getNotificationRecipient());
+			notificationRecipient);
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationContext.getNotificationRecipientSettings()) {
+
+			notificationRecipientSetting.setNotificationRecipientId(
+				notificationRecipient.getNotificationRecipientId());
+			notificationRecipientSetting.setNotificationRecipientSettingId(
+				counterLocalService.increment());
 
 			_notificationRecipientSettingLocalService.
 				updateNotificationRecipientSetting(

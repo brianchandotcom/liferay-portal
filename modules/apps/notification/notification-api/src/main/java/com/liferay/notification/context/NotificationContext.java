@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,10 @@ import java.util.Map;
 public class NotificationContext {
 
 	public List<Long> getAttachmentObjectFieldIds() {
+		if (_attachmentObjectFieldIds == null) {
+			return Collections.emptyList();
+		}
+
 		return _attachmentObjectFieldIds;
 	}
 

@@ -320,6 +320,10 @@ public class NotificationTemplate implements Serializable {
 
 	@Schema
 	public Long getObjectDefinitionId() {
+		if (objectDefinitionId == null) {
+			return 0L;
+		}
+
 		return objectDefinitionId;
 	}
 

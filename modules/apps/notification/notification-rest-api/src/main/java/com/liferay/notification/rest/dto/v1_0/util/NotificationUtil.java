@@ -23,6 +23,7 @@ import com.liferay.notification.service.NotificationTemplateLocalServiceUtil;
 import com.liferay.notification.type.NotificationContext;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -104,7 +105,7 @@ public class NotificationUtil {
 		serviceBuilderNotificationTemplate.setUserName(user.getFullName());
 
 		serviceBuilderNotificationTemplate.setObjectDefinitionId(
-			notificationTemplate.getObjectDefinitionId());
+			GetterUtil.getLong(notificationTemplate.getObjectDefinitionId()));
 		serviceBuilderNotificationTemplate.setBodyMap(
 			LocalizedMapUtil.getLocalizedMap(notificationTemplate.getBody()));
 		serviceBuilderNotificationTemplate.setDescription(

@@ -77,6 +77,10 @@ public class NotificationQueueEntryLocalServiceImpl
 			notificationQueueEntry.getNotificationQueueEntryId(), false, true,
 			true);
 
+		if (notificationContext.getFileEntryIds() == null) {
+			return notificationQueueEntry;
+		}
+
 		for (long fileEntryId : notificationContext.getFileEntryIds()) {
 			_notificationQueueEntryAttachmentLocalService.
 				addNotificationQueueEntryAttachment(

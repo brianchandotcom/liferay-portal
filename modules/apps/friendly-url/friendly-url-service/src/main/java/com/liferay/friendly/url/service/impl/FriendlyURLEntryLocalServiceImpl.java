@@ -33,13 +33,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -153,7 +151,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
 
 		_updateFriendlyURLEntryLocalizations(
-			friendlyURLEntry, classNameId, classPK,
+			friendlyURLEntry, classNameId,
 			_merge(urlTitleMap, existingUrlTitleMap));
 
 		return friendlyURLEntry;
@@ -515,7 +513,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
 
 		_updateFriendlyURLEntryLocalizations(
-			friendlyURLEntry, classNameId, classPK, urlTitleMap);
+			friendlyURLEntry, classNameId, urlTitleMap);
 
 		return friendlyURLEntry;
 	}
@@ -711,7 +709,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private void _updateFriendlyURLEntryLocalizations(
-			FriendlyURLEntry friendlyURLEntry, long classNameId, long classPK,
+			FriendlyURLEntry friendlyURLEntry, long classNameId,
 			Map<String, String> urlTitleMap)
 		throws PortalException {
 
@@ -732,27 +730,16 @@ public class FriendlyURLEntryLocalServiceImpl
 							entry.getKey(), normalizedUrlTitle);
 
 				if (existingFriendlyURLEntryLocalization != null) {
-					if (existingFriendlyURLEntryLocalization.getClassPK() ==
-							classPK) {
+					String existingUrlTitle =
+						existingFriendlyURLEntryLocalization.getUrlTitle();
 
-						String existingUrlTitle =
-							existingFriendlyURLEntryLocalization.getUrlTitle();
+					if (existingUrlTitle.equals(oldURLTitle)) {
+						existingFriendlyURLEntryLocalization.
+							setFriendlyURLEntryId(
+								friendlyURLEntry.getFriendlyURLEntryId());
 
-						if (existingUrlTitle.equals(oldURLTitle)) {
-							existingFriendlyURLEntryLocalization.
-								setFriendlyURLEntryId(
-									friendlyURLEntry.getFriendlyURLEntryId());
-
-							updateFriendlyURLLocalization(
-								existingFriendlyURLEntryLocalization);
-						}
-					}
-					else {
-						updateFriendlyURLEntryLocalization(
-							friendlyURLEntry, entry.getKey(),
-							getUniqueUrlTitle(
-								friendlyURLEntry.getGroupId(), classNameId,
-								classPK, oldURLTitle));
+						updateFriendlyURLLocalization(
+							existingFriendlyURLEntryLocalization);
 					}
 				}
 				else {

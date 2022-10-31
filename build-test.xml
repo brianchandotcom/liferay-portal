@@ -13832,12 +13832,12 @@ if (ppstate.equals("normal")) {
 
 	<target name="record-test-generated-properties">
 		<if>
-			<and>
-				<isset property="env.JENKINS_HOME" />
-				<not>
+			<not>
+				<and>
 					<available file="test.generated.properties" />
-				</not>
-			</and>
+					<isset property="env.JENKINS_HOME" />
+				</and>
+			</not>
 			<then>
 				<setup-libs />
 

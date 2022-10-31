@@ -110,12 +110,15 @@ export const getAccountSubscriptions = gql`
 
 export const addAccountFlag = gql`
 	mutation addAccountFlag($accountFlag: InputC_AccountFlag!) {
-		c {
-			createAccountFlag(AccountFlag: $accountFlag) {
-				accountKey
-				name
-				finished
-			}
+		createAccountFlag(input: $accountFlag)
+			@rest(
+				method: "POST"
+				type: "C_AccountFlag"
+				path: "/c/accountflags"
+			) {
+			accountKey
+			name
+			finished
 		}
 	}
 `;
@@ -152,17 +155,42 @@ export const addDXPCloudEnvironment = gql`
 		$scopeKey: String!
 		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
 	) {
-		c {
-			createDXPCloudEnvironment(
-				scopeKey: $scopeKey
-				DXPCloudEnvironment: $DXPCloudEnvironment
+		createDXPCloudEnvironment(
+			scopeKey: $scopeKey
+			input: $DXPCloudEnvironment
+		)
+			@rest(
+				method: "POST"
+				type: "C_DXPCloudEnvironment"
+				path: "/c/dxpcloudenvironments/scopes/{args.scopeKey}"
 			) {
-				dxpCloudEnvironmentId
-				accountKey
-				dataCenterRegion
-				disasterDataCenterRegion
-				projectId
-			}
+			accountEntryId
+			accountKey
+			dataCenterRegion
+			disasterDataCenterRegion
+			id
+			projectId
+		}
+	}
+`;
+
+export const addAdminDXPCloud = gql`
+	mutation addAdminDXPCloud(
+		$scopeKey: String!
+		$AdminDXPCloud: InputC_AdminDXPCloud!
+	) {
+		createAdminDXPCloud(scopeKey: $scopeKey, input: $AdminDXPCloud)
+			@rest(
+				method: "POST"
+				type: "C_AdminDXPCloud"
+				path: "/c/admindxpclouds/scopes/{args.scopeKey}"
+			) {
+			accountEntryId
+			emailAddress
+			firstName
+			githubUsername
+			lastName
+			dxpCloudEnvironmentId
 		}
 	}
 `;
@@ -172,13 +200,17 @@ export const updateDXPCloudEnvironment = gql`
 		$dxpCloudEnvironmentId: Long!
 		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
 	) {
-		c {
-			updateDXPCloudEnvironment(
-				dxpCloudEnvironmentId: $dxpCloudEnvironmentId
-				DXPCloudEnvironment: $DXPCloudEnvironment
+		updateDXPCloudEnvironment(
+			dxpCloudEnvironmentId: $dxpCloudEnvironmentId
+			input: $DXPCloudEnvironment
+		)
+			@rest(
+				method: "PUT"
+				type: "C_DXPCloudEnvironment"
+				path: "/c/dxpcloudenvironments/{args.dxpCloudEnvironmentId}"
 			) {
-				dxpCloudEnvironmentId
-			}
+			accountEntryId
+			dxpCloudEnvironmentId
 		}
 	}
 `;
@@ -201,17 +233,42 @@ export const addAnalyticsCloudWorkspace = gql`
 		$scopeKey: String!
 		$analyticsCloudWorkspace: InputC_AnalyticsCloudWorkspace!
 	) {
-		c {
-			createAnalyticsCloudWorkspace(
-				scopeKey: $scopeKey
-				AnalyticsCloudWorkspace: $analyticsCloudWorkspace
+		createAnalyticsCloudWorkspace(
+			scopeKey: $scopeKey
+			input: $analyticsCloudWorkspace
+		)
+			@rest(
+				method: "POST"
+				type: "C_AnalyticsCloudWorkspace"
+				path: "/c/analyticscloudworkspaces/scopes/{args.scopeKey}"
 			) {
-				analyticsCloudWorkspaceId
-				accountKey
-				dataCenterLocation
-				ownerEmailAddress
-				workspaceName
-			}
+			accountEntryId
+			accountKey
+			dataCenterLocation
+			id
+			ownerEmailAddress
+			workspaceName
+		}
+	}
+`;
+
+export const addIncidentReportAnalyticsCloud = gql`
+	mutation addIncidentReportAnalyticsCloud(
+		$scopeKey: String!
+		$IncidentReportContactAnalyticsCloud: InputC_IncidentReportContactAnalyticsCloud!
+	) {
+		createIncidentReportContactAnalyticsCloud(
+			scopeKey: $scopeKey
+			input: $IncidentReportContactAnalyticsCloud
+		)
+			@rest(
+				method: "POST"
+				type: "C_IncidentReportContactAnalyticsCloud"
+				path: "/c/incidentreportcontactanalyticsclouds/scopes/{args.scopeKey}"
+			) {
+			accountEntryId
+			emailAddress
+			analyticsCloudWorkspaceId
 		}
 	}
 `;
@@ -264,56 +321,22 @@ export const getAnalyticsCloudPageInfo = gql`
 	}
 `;
 
-export const addAdminDXPCloud = gql`
-	mutation addAdminDXPCloud(
-		$scopeKey: String!
-		$AdminDXPCloud: InputC_AdminDXPCloud!
-	) {
-		c {
-			createAdminDXPCloud(
-				scopeKey: $scopeKey
-				AdminDXPCloud: $AdminDXPCloud
-			) {
-				emailAddress
-				firstName
-				githubUsername
-				lastName
-				dxpCloudEnvironmentId
-			}
-		}
-	}
-`;
-
-export const addIncidentReportAnalyticsCloud = gql`
-	mutation addIncidentReportAnalyticsCloud(
-		$scopeKey: String!
-		$IncidentReportContactAnalyticsCloud: InputC_IncidentReportContactAnalyticsCloud!
-	) {
-		c {
-			createIncidentReportContactAnalyticsCloud(
-				scopeKey: $scopeKey
-				IncidentReportContactAnalyticsCloud: $IncidentReportContactAnalyticsCloud
-			) {
-				emailAddress
-				analyticsCloudWorkspaceId
-			}
-		}
-	}
-`;
-
 export const addTeamMembersInvitation = gql`
 	mutation addTeamMembersInvitation(
 		$scopeKey: String!
 		$TeamMembersInvitation: InputC_TeamMembersInvitation!
 	) {
-		c {
-			createTeamMembersInvitation(
-				scopeKey: $scopeKey
-				TeamMembersInvitation: $TeamMembersInvitation
+		createTeamMembersInvitation(
+			scopeKey: $scopeKey
+			input: $TeamMembersInvitation
+		)
+			@rest(
+				method: "POST"
+				type: "C_TeamMembersInvitation"
+				path: "/c/teammembersinvitations/scopes/{args.scopeKey}"
 			) {
-				email
-				role
-			}
+			email
+			role
 		}
 	}
 `;
@@ -533,17 +556,21 @@ export const updateAccountSubscriptionGroups = gql`
 		$id: Long!
 		$accountSubscriptionGroup: InputC_AccountSubscriptionGroup!
 	) {
-		c {
-			updateAccountSubscriptionGroup(
-				accountSubscriptionGroupId: $id
-				AccountSubscriptionGroup: $accountSubscriptionGroup
+		updateAccountSubscriptionGroup(
+			accountSubscriptionGroupId: $id
+			input: $accountSubscriptionGroup
+		)
+			@rest(
+				method: "PUT"
+				type: "C_AccountSubscriptionGroup"
+				path: "/c/accountsubscriptiongroups/{args.accountSubscriptionGroupId}"
 			) {
-				accountSubscriptionGroupId
-				accountKey
-				activationStatus
-				externalReferenceCode
-				name
-			}
+			accountEntryId
+			accountSubscriptionGroupId
+			accountKey
+			activationStatus
+			externalReferenceCode
+			name
 		}
 	}
 `;
@@ -571,21 +598,5 @@ export const deleteAccountUserAccount = gql`
 			emailAddress: $emailAddress
 			externalReferenceCode: $accountKey
 		)
-	}
-`;
-
-export const updateAnalyticsCloudWorkspace = gql`
-	mutation putAnalyticsCloudWorkspace(
-		$analyticsCloudWorkspaceId: Long!
-		$analyticsCloudWorkspace: InputC_AnalyticsCloudWorkspace!
-	) {
-		c {
-			updateAnalyticsCloudWorkspace(
-				analyticsCloudWorkspaceId: $analyticsCloudWorkspaceId
-				AnalyticsCloudWorkspace: $analyticsCloudWorkspace
-			) {
-				analyticsCloudWorkspaceId
-			}
-		}
 	}
 `;

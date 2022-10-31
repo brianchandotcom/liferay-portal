@@ -34,6 +34,10 @@ function Input({
 	type,
 	value,
 }) {
+	const _handleEventChange = (event) => {
+		onChange(event.target.value);
+	};
+
 	const _renderInput = () => {
 		switch (type) {
 			case 'model':
@@ -70,7 +74,7 @@ function Input({
 						min={options.min}
 						name={name}
 						onBlur={onBlur}
-						onChange={(event) => onChange(event.target.value)}
+						onChange={_handleEventChange}
 						required={required}
 						type="number"
 						value={value}
@@ -83,7 +87,7 @@ function Input({
 						id={name}
 						name={name}
 						onBlur={onBlur}
-						onChange={(event) => onChange(event.target.value)}
+						onChange={_handleEventChange}
 						required={required}
 						value={value}
 					>
@@ -103,7 +107,7 @@ function Input({
 						id={name}
 						name={name}
 						onBlur={onBlur}
-						onChange={(event) => onChange(event.target.value)}
+						onChange={_handleEventChange}
 						required={required}
 						type="text"
 						value={value || ''}

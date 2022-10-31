@@ -71,7 +71,7 @@ export default function ({
 	model,
 	modelTimeout = '',
 	namespace = '',
-	sentenceTransformProvider,
+	sentenceTransformProvider = SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE,
 	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
@@ -80,7 +80,7 @@ export default function ({
 		const errors = {};
 
 		if (
-			!values.modelTimeout &&
+			values.modelTimeout === '' &&
 			values.sentenceTransformProvider ===
 				SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE
 		) {
@@ -108,7 +108,7 @@ export default function ({
 			}
 		}
 
-		if (!values.maxCharacterCount) {
+		if (!values.maxCharacterCount === '') {
 			errors.maxCharacterCount = Liferay.Language.get(
 				'this-field-is-required'
 			);
@@ -147,7 +147,7 @@ export default function ({
 			);
 		}
 
-		if (!values.cacheTimeout) {
+		if (values.cacheTimeout === '') {
 			errors.cacheTimeout = Liferay.Language.get(
 				'this-field-is-required'
 			);
@@ -185,12 +185,17 @@ export default function ({
 		validate: _handleFormikValidate,
 	});
 
-	const _handleBlur = (name) => () => formik.setFieldTouched(name);
+	const _handleBlur = (name) => () => {
+		formik.setFieldTouched(name);
+	};
 
-	const _handleChange = (name) => (val) => formik.setFieldValue(name, val);
+	const _handleChange = (name) => (val) => {
+		formik.setFieldValue(name, val);
+	};
 
-	const _handleCheckboxChange = (name) => (event) =>
+	const _handleCheckboxChange = (name) => (event) => {
 		formik.setFieldValue(name, event.target.checked);
+	};
 
 	return (
 		<div className="semantic-search-settings-root">

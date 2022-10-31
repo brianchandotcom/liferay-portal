@@ -1,0 +1,310 @@
+@component-name = "portal-search"
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "solr";
+	property portal.upstream = "true";
+	property solr.enabled = "true";
+	property testray.main.component.name = "SOLR Impl";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Solr Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	test AssertSearchAdmin {
+		property test.name.skip.portal.instance = "Solr#AssertSearchAdmin";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		var serverVersion = PropsUtil.get("solr.version");
+
+		SearchAdministration.assertEngineVendorAndVersions(
+			clientVersion = "${serverVersion}",
+			engineVendor = "Solr",
+			serverVersion = "${serverVersion}");
+	}
+
+	@priority = "4"
+	test AssertSearchInsightsExplain {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "apple");
+
+		Search.openSearchPage();
+
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Insights",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertChecked(
+			checkboxName = "Enable Score Explanation",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_STRING",
+			value1 = "debugQuery=true");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
+			value1 = "buckets");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
+			value1 = "explain");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Insights",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Uncheck(
+			checkboxName = "Enable Score Explanation",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_STRING",
+			value1 = "debugQuery=true");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
+			value1 = "explain");
+	}
+
+	@priority = "3"
+	test AssertSearchTuningDisabled {
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		Navigator.gotoNavTab(navTab = "Control Panel");
+
+		AssertElementNotPresent(
+			key_panel = "Search Tuning",
+			locator1 = "ApplicationsMenu#PORTLET");
+	}
+
+	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
+	@priority = "4"
+	test SolrSmokeTest {
+		property test.name.skip.portal.instance = "Solr#SolrSmokeTest";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
+			threadBody = "Orange",
+			threadSubject = "Apple");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Orange",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Apple");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.gotoPage(pageName = "Solr Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message");
+
+		Navigator.gotoPage(pageName = "Solr Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message");
+	}
+
+	@description = "This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal."
+	@priority = "4"
+	test SolrWithSolrCloudSmokeTest {
+		property dummy.socket.proxy.disabled = "true";
+		property solr.solrcloud.enabled = "true";
+		property test.name.skip.portal.instance = "Solr#SolrWithSolrCloudSmokeTest";
+
+		AssertConsoleTextPresent(value1 = "zkClient has connected");
+
+		AssertConsoleTextPresent(value1 = "Updated live nodes from ZooKeeper");
+
+		AssertConsoleTextPresent(value1 = "Cluster at localhost:9983 ready");
+
+		Navigator.openSpecificURL(url = "http://localhost:8983/solr/#/~cloud");
+
+		AssertVisible(locator1 = "SolrAdminDashboard#MENU_CLOUD");
+
+		AssertVisible(
+			key_cloudCollectionName = "liferay",
+			locator1 = "SolrAdminDashboard#CLOUD_COLLECTION");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
+			threadBody = "Orange",
+			threadSubject = "Apple");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Orange",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Apple");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.gotoPage(pageName = "Solr Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message");
+
+		Navigator.gotoPage(pageName = "Solr Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message");
+	}
+
+	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
+	@priority = "4"
+	test SolrWithSSLAuthenticationSmokeTest {
+		property solr.ssl.authentication.enabled = "true";
+		property test.name.skip.portal.instance = "Solr#SolrWithSSLAuthenticationSmokeTest";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
+			threadBody = "Orange",
+			threadSubject = "Apple");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Orange",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Apple");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Navigator.gotoPage(pageName = "Solr Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message");
+
+		Navigator.gotoPage(pageName = "Solr Page");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Message Boards Message");
+	}
+
+}

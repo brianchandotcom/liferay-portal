@@ -266,7 +266,7 @@ definition {
 
 		Button.clickPublish();
 
-		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required. You need to be signed in to edit this field.");
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
 	@description = "This is a test for LRQA-69446. This test verifies that is possible to remove a duplicated field (repeatable)"

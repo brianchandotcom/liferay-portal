@@ -91,14 +91,8 @@ public class AssetEntryItemSelectorView
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
-			new DynamicServletRequest(
-				(HttpServletRequest)servletRequest,
-				HashMapBuilder.put(
-					"multipleSelection",
-					_toStringArray(!itemSelectorCriterion.isSingleSelect())
-				).build()),
-			servletResponse, itemSelectorCriterion, portletURL,
-			itemSelectedEventName, search,
+			httpServletRequest, servletResponse, itemSelectorCriterion,
+			portletURL, itemSelectedEventName, search,
 			new AssetEntryItemSelectorViewDescriptor(
 				httpServletRequest,
 				new AssetBrowserDisplayContext(
@@ -120,6 +114,10 @@ public class AssetEntryItemSelectorView
 				_toStringArray(
 					_getGroupId(
 						assetEntryItemSelectorCriterion, servletRequest))
+			).put(
+				"multipleSelection",
+				_toStringArray(
+					!assetEntryItemSelectorCriterion.isSingleSelect())
 			).put(
 				"scopeGroupType",
 				_toStringArray(

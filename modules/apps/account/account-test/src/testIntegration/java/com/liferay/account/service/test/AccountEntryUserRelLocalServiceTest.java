@@ -31,7 +31,6 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -712,12 +711,15 @@ public class AccountEntryUserRelLocalServiceTest {
 			_accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(userId);
 
-		List<Long> actualAccountEntryIds = TransformUtil.transform(
-			accountEntryUserRels, AccountEntryUserRelModel::getAccountEntryId);
-
 		Assert.assertEquals(
-			ListUtil.sort(expectedAccountEntryIdsList),
-			ListUtil.sort(actualAccountEntryIds));
+			accountEntryUserRels.toString(), expectedAccountEntryIdsList.size(),
+			accountEntryUserRels.size());
+
+		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
+			Assert.assertTrue(
+				expectedAccountEntryIdsList.contains(
+					accountEntryUserRel.getAccountEntryId()));
+		}
 
 		// Delete all account entries for a user
 

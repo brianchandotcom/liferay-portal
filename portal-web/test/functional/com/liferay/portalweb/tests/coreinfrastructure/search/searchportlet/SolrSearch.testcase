@@ -36,7 +36,7 @@ definition {
 
 			Tag.tearDownCP(site = "Guest");
 
-			Page.tearDownCP();
+			PagesAdmin.tearDownCP();
 		}
 	}
 
@@ -329,19 +329,21 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all spell check indexes.");
+		SearchAdministration.executeReindex();
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 
 		Navigator.openURL();
 
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Guest");
 
 		PageEditor.addWidget(
 			portletName = "Language Selector",
 			targetFragmentName = "Container");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "de-DE",
@@ -368,7 +370,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		PagesAdmin.addPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -453,7 +455,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		PagesAdmin.addPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -946,7 +948,7 @@ definition {
 	test SearchContentPagesSmoke {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -958,7 +960,7 @@ definition {
 			portletName = "Search Results",
 			targetFragmentName = "Search Bar");
 
-		PageEditor.clickPublish();
+		PageEditor.publish();
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content",
@@ -1051,9 +1053,9 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Site 3 Home Page");
+		PagesAdmin.addPage(pageName = "Site 3 Home Page");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPage(
 			inheritChanges = "disable",
 			pageName = "Search Page",
 			pageTemplateName = "Search");
@@ -1112,7 +1114,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Test Site");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Test Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -1264,9 +1266,9 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Home");
+		PagesAdmin.addPage(pageName = "Home");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPage(
 			inheritChanges = "disable",
 			pageName = "Search Global Template Page",
 			pageTemplateName = "Search");
@@ -1587,7 +1589,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Wiki Test Page");
+		PagesAdmin.addPage(pageName = "Wiki Test Page");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -1966,7 +1968,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.openURL();
 
@@ -1974,7 +1976,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Search Page");
+		PagesAdmin.addPage(pageName = "Search Page");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
@@ -2051,7 +2053,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "New Site");
 
-		SitePages.openPagesAdmin(siteURLKey = "New Site");
+		PagesAdmin.openPagesAdmin(siteURLKey = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2110,7 +2112,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "${searchPage}");
+		PagesAdmin.addPage(pageName = "${searchPage}");
 
 		Navigator.gotoPage(pageName = "${searchPage}");
 
@@ -2385,7 +2387,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.openURL();
 
@@ -2445,9 +2447,9 @@ definition {
 	test ViewStagedAndLiveContentInSearchResults {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
-		SitePages.addPublicPage(
+		PagesAdmin.addPage(
 			inheritChanges = "disable",
 			pageName = "search",
 			pageTemplateName = "Search");

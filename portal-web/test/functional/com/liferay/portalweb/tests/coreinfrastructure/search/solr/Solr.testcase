@@ -16,7 +16,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Solr Page");
+		PagesAdmin.addPage(pageName = "Solr Page");
 	}
 
 	tearDown {
@@ -68,17 +68,13 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_STRING",
-			value1 = "debugQuery=true");
+		AssertElementPresent(
+			key_text = "\"explain\"",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
-			value1 = "buckets");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
-			value1 = "explain");
+		AssertElementPresent(
+			key_text = "\"_explanation\"",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -96,13 +92,13 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_STRING",
-			value1 = "debugQuery=true");
+		AssertElementPresent(
+			key_text = "\"explain\"",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
 
-		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_STRING",
-			value1 = "explain");
+		AssertElementNotPresent(
+			key_text = "\"_explanation\"",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
 	@priority = "3"
@@ -147,7 +143,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
@@ -221,7 +217,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.gotoPage(pageName = "Solr Page");
 
@@ -280,7 +276,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeReindex();
 
 		Navigator.gotoPage(pageName = "Solr Page");
 

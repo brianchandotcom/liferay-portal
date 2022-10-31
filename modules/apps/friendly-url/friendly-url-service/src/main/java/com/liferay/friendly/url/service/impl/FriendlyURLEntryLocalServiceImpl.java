@@ -423,13 +423,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public String getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK, String urlTitle) {
-
-		return getUniqueUrlTitle(groupId, classNameId, classPK, urlTitle, null);
-	}
-
-	@Override
-	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle,
 		String languageId) {
 

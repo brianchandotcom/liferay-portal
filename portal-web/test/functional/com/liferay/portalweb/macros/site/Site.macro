@@ -776,7 +776,9 @@ definition {
 			locator1 = "TextInput#MATOMO",
 			value1 = "${matomo}");
 
-		Button.click(button = "Save");
+		ClickNoError.mouseDownMouseUp(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 
 		if (isSet(confirmationText)) {
 			AssertConfirm(value1 = "${confirmationText}");

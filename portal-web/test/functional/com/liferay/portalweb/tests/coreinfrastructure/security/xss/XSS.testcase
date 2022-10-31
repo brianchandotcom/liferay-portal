@@ -365,7 +365,7 @@ definition {
 	@description = "This is a use case for LPS-123822, LPS-127611 and LPS-133261. View Matomo."
 	@priority = "3"
 	test NoXSSVulnerabilityInMatomo {
-		property test.name.skip.portal.instance = "XSS#ViewMatomo";
+		property test.name.skip.portal.instance = "XSS#NoXSSVulnerabilityInMatomo";
 
 		task ("Edit matomo CP") {
 			var portalURL = PropsUtil.get("portal.url");

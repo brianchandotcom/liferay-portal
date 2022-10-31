@@ -28,13 +28,6 @@ const ACTIONS = {
 		});
 	},
 
-	move({moveURL}) {
-		openModal({
-			title: Liferay.Language.get('move'),
-			url: moveURL,
-		});
-	},
-
 	permissions({permissionsURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

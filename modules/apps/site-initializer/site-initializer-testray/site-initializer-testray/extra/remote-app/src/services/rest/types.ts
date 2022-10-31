@@ -192,7 +192,7 @@ export type TestrayRequirement = {
 
 export type TestrayRequirementCase = {
 	case?: TestrayCase;
-	id?: number;
+	id: number;
 	r_caseToRequirementsCases_c_case?: TestrayCase;
 	r_requiremenToRequirementsCases_c_requirement?: TestrayRequirement;
 	requirement?: TestrayRequirement;

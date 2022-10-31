@@ -95,8 +95,10 @@ const RequirementTable = ({
 const CaseItems: React.FC<CaseItemsProps> = ({caseWithRequirements, cases}) => {
 	return (
 		<div>
+			<h5>{i18n.translate('case')}</h5>
+
 			{cases?.map((Case, index) => {
-				const requirements = caseWithRequirements[Case?.id];
+				const requirements = caseWithRequirements[Case?.id] || [];
 
 				return (
 					<div className="mt-3" key={index}>
@@ -179,8 +181,10 @@ const ExportCaseContainer: React.FC<CaseItemsProps> = ({
 	cases,
 }) => (
 	<div>
+		<h5 className="mt-5">{i18n.translate('associated-requirements')}</h5>
+
 		{cases.map((Case: TestrayCase) => {
-			const requirements = caseWithRequirements[Case?.id];
+			const requirements = caseWithRequirements[Case?.id] || [];
 
 			return requirements.map((requirement) => (
 				<div className="mt-3" key={requirement.key}>
@@ -211,7 +215,7 @@ const ExportCaseContainer: React.FC<CaseItemsProps> = ({
 								},
 								{
 									title: i18n.translate('component'),
-									value: Case?.component?.name,
+									value: requirement?.component?.name,
 								},
 								{
 									title: i18n.translate('jira-component'),
@@ -300,12 +304,6 @@ const Export = () => {
 	return (
 		<div className="export-case-container p-3">
 			<div>
-				<h5>{i18n.translate('case')}</h5>
-
-				<h5 className="mt-5">
-					{i18n.translate('associated-requirements')}
-				</h5>
-
 				<CaseItems
 					caseWithRequirements={casesWithRequirements}
 					cases={cases}

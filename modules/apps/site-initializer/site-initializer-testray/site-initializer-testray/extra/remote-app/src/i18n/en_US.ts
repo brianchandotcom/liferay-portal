@@ -49,6 +49,7 @@ export default {
 	'assigned': 'Assigned',
 	'assigned-users': 'Assigned Users',
 	'assignee': 'Assignee',
+	'associated-requirements': 'Associated Requirements',
 	'at-least-one-environment-stack-is-required':
 		'At least one environment stack is required.',
 	'attachment': 'Attachment',

@@ -30,7 +30,7 @@ type CaseRequirementLinkModalProps = {
 export type State = {caseId?: number; requirementId?: number}[];
 
 const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
-	items,
+	items = [],
 	modal: {observer, onClose, onSave, visible},
 }) => {
 	const [state, setState] = useState<State>([]);
@@ -55,7 +55,7 @@ const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 				listViewProps={{
 					initialContext: {
 						selectedRows: items.map(
-							({requirement}) => requirement?.id
+							({requirement}) => requirement?.id as number
 						),
 					},
 					managementToolbarProps: {

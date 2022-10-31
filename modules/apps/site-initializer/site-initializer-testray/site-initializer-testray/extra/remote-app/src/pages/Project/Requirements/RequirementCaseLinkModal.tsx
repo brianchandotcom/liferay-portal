@@ -55,7 +55,9 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 			<CaseListView
 				listViewProps={{
 					initialContext: {
-						selectedRows: items.map(({case: {id}}) => id),
+						selectedRows: items.map(
+							({case: Case}) => Case?.id as number
+						),
 					},
 					managementToolbarProps: {
 						title: i18n.translate('cases'),

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, service = UserToolAssetAddonEntry.class)
+@Component(service = UserToolAssetAddonEntry.class)
 public class PDFConvertionUserToolAssetAddonEntry
 	extends BaseConvertionUserToolAssetAddonEntry
 	implements UserToolAssetAddonEntry {

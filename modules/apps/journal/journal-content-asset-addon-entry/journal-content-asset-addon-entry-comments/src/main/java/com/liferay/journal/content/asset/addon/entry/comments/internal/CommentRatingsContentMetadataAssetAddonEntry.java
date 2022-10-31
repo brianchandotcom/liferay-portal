@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	immediate = true,
 	service = {
 		CommentRatingsContentMetadataAssetAddonEntry.class,
 		ContentMetadataAssetAddonEntry.class

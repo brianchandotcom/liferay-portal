@@ -34,6 +34,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -110,7 +111,8 @@ public class AnalyticsSettingsManager {
 			}
 		}
 
-		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();
+		Set<String> multiValuedKeys = new HashSet<>(
+			settingsDescriptor.getMultiValuedKeys());
 
 		multiValuedKeys.removeAll(configurationProperties.keySet());
 

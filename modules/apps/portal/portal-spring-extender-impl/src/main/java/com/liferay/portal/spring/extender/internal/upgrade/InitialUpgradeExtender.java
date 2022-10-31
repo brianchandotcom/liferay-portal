@@ -16,6 +16,7 @@ package com.liferay.portal.spring.extender.internal.upgrade;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
@@ -237,12 +238,9 @@ public class InitialUpgradeExtender
 		}
 
 		private void _upgrade() throws UpgradeException {
-			String tablesSQL = BundleUtil.getSQLTemplateString(
-				_bundle, "tables.sql");
-			String sequencesSQL = BundleUtil.getSQLTemplateString(
-				_bundle, "sequences.sql");
-			String indexesSQL = BundleUtil.getSQLTemplateString(
-				_bundle, "indexes.sql");
+			String tablesSQL = DBResourceUtil.getModuleTablesSQL(_bundle);
+			String sequencesSQL = DBResourceUtil.getModuleSequencesSQL(_bundle);
+			String indexesSQL = DBResourceUtil.getModuleIndexesSQL(_bundle);
 
 			try (Connection connection = _dataSource.getConnection()) {
 				if (tablesSQL != null) {

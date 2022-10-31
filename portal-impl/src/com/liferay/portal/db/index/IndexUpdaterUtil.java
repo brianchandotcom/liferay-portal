@@ -14,6 +14,7 @@
 
 package com.liferay.portal.db.index;
 
+import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.util.BundleUtil;
 
@@ -44,10 +44,8 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateIndexes(Bundle bundle) throws Exception {
-		String indexesSQL = BundleUtil.getSQLTemplateString(
-			bundle, "indexes.sql");
-		String tablesSQL = BundleUtil.getSQLTemplateString(
-			bundle, "tables.sql");
+		String indexesSQL = DBResourceUtil.getModuleIndexesSQL(bundle);
+		String tablesSQL = DBResourceUtil.getModuleTablesSQL(bundle);
 
 		if ((indexesSQL == null) || (tablesSQL == null)) {
 			return;
@@ -140,19 +138,9 @@ public class IndexUpdaterUtil {
 	private static void _updatePortalIndexes(DB db, Connection connection)
 		throws Exception {
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		String tablesSQL = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
-
-		String indexesSQL = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
-
-		db.updateIndexes(connection, tablesSQL, indexesSQL, true);
+		db.updateIndexes(
+			connection, DBResourceUtil.getPortalTablesSQL(),
+			DBResourceUtil.getPortalIndexesSQL(), true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

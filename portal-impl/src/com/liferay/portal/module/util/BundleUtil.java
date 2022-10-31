@@ -15,15 +15,7 @@
 package com.liferay.portal.module.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
 
 import java.util.Dictionary;
 
@@ -49,37 +41,11 @@ public class BundleUtil {
 				" does not exist");
 	}
 
-	public static String getSQLTemplateString(
-		Bundle bundle, String templateName) {
-
-		URL resource = bundle.getResource("/META-INF/sql/" + templateName);
-
-		if (resource == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to locate SQL template " + templateName);
-			}
-
-			return null;
-		}
-
-		try (InputStream inputStream = resource.openStream()) {
-			return StringUtil.read(inputStream);
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to read SQL template " + templateName, ioException);
-
-			return null;
-		}
-	}
-
 	public static boolean isLiferayServiceBundle(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
 		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(BundleUtil.class);
 
 }

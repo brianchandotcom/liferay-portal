@@ -41,7 +41,7 @@ public class NotificationQueueEntryLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationQueueEntry
 			addNotificationQueueEntry(
-				com.liferay.notification.type.NotificationContext
+				com.liferay.notification.context.NotificationContext
 					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -16,6 +16,7 @@ package com.liferay.notification.rest.internal.resource.v1_0;
 
 import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
@@ -24,7 +25,6 @@ import com.liferay.notification.rest.internal.odata.entity.v1_0.NotificationTemp
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
 import com.liferay.notification.service.NotificationTemplateService;
-import com.liferay.notification.type.NotificationContext;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.notification.util.LocalizedMapUtil;

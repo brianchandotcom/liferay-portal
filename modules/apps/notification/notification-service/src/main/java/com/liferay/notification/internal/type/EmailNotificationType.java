@@ -423,8 +423,8 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		return formatLocalizedContent(
 			StringUtil.merge(emailAddresses), locale,
-			notificationContext,
-			NotificationTermContributorConstants.RECIPIENT);
+			NotificationTermContributorConstants.RECIPIENT,
+			notificationContext);
 	}
 
 	private List<Long> _getFileEntryIds(

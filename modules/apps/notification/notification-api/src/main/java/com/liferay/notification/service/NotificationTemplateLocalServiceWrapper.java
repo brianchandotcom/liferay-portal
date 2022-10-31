@@ -40,7 +40,7 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				com.liferay.notification.type.NotificationContext
+				com.liferay.notification.context.NotificationContext
 					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -390,7 +390,7 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
-				com.liferay.notification.type.NotificationContext
+				com.liferay.notification.context.NotificationContext
 					notificationContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

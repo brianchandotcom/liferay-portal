@@ -16,6 +16,7 @@ package com.liferay.notification.internal.type;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.internal.type.users.provider.UsersProvider;
 import com.liferay.notification.internal.type.users.provider.UsersProviderTracker;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -23,7 +24,6 @@ import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.type.BaseNotificationType;
-import com.liferay.notification.type.NotificationContext;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;

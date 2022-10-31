@@ -14,8 +14,8 @@
 
 package com.liferay.notification.service;
 
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.notification.type.NotificationContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;

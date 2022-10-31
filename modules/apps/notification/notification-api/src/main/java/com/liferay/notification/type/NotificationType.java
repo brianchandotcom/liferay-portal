@@ -45,6 +45,8 @@ public interface NotificationType {
 
 	public String getType();
 
+	public String getTypeLanguageKey();
+
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException;
 

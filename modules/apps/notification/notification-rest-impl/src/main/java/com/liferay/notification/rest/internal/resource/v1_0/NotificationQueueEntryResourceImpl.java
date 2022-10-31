@@ -182,8 +182,7 @@ public class NotificationQueueEntryResourceImpl
 					contextAcceptLanguage.getPreferredLocale());
 				type = serviceBuilderNotificationQueueEntry.getType();
 				typeLabel = _language.get(
-					_getLocale(),
-					serviceBuilderNotificationQueueEntry.getType());
+					_getLocale(), notificationType.getTypeLanguageKey());
 			}
 		};
 	}

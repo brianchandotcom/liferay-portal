@@ -40,11 +40,12 @@ public interface CommerceChannelResource {
 		return new Builder();
 	}
 
-	public Page<CommerceChannel> getCommerceChannelsPage(Pagination pagination)
+	public Page<CommerceChannel> getCommerceChannelsPage(
+			String keywords, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCommerceChannelsPageHttpResponse(
-			Pagination pagination)
+			String keywords, Pagination pagination, String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -127,11 +128,12 @@ public interface CommerceChannelResource {
 		implements CommerceChannelResource {
 
 		public Page<CommerceChannel> getCommerceChannelsPage(
-				Pagination pagination)
+				String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getCommerceChannelsPageHttpResponse(pagination);
+				getCommerceChannelsPageHttpResponse(
+					keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -171,7 +173,7 @@ public interface CommerceChannelResource {
 		}
 
 		public HttpInvoker.HttpResponse getCommerceChannelsPageHttpResponse(
-				Pagination pagination)
+				String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -195,11 +197,19 @@ public interface CommerceChannelResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (keywords != null) {
+				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

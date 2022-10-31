@@ -54,7 +54,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceChannelResource {
 
-	public Page<CommerceChannel> getCommerceChannelsPage(Pagination pagination)
+	public Page<CommerceChannel> getCommerceChannelsPage(
+			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

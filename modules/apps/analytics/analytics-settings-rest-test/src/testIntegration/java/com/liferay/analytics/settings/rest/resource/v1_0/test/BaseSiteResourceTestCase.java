@@ -28,6 +28,7 @@ import com.liferay.analytics.settings.rest.client.pagination.Page;
 import com.liferay.analytics.settings.rest.client.pagination.Pagination;
 import com.liferay.analytics.settings.rest.client.resource.v1_0.SiteResource;
 import com.liferay.analytics.settings.rest.client.serdes.v1_0.SiteSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -56,6 +57,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -69,6 +71,8 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -197,7 +201,8 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetSitesPage() throws Exception {
-		Page<Site> page = siteResource.getSitesPage(Pagination.of(1, 10));
+		Page<Site> page = siteResource.getSitesPage(
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -205,7 +210,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site site2 = testGetSitesPage_addSite(randomSite());
 
-		page = siteResource.getSitesPage(Pagination.of(1, 10));
+		page = siteResource.getSitesPage(null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -216,7 +221,7 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetSitesPageWithPagination() throws Exception {
-		Page<Site> totalPage = siteResource.getSitesPage(null);
+		Page<Site> totalPage = siteResource.getSitesPage(null, null, null);
 
 		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
 
@@ -227,14 +232,14 @@ public abstract class BaseSiteResourceTestCase {
 		Site site3 = testGetSitesPage_addSite(randomSite());
 
 		Page<Site> page1 = siteResource.getSitesPage(
-			Pagination.of(1, totalCount + 2));
+			null, Pagination.of(1, totalCount + 2), null);
 
 		List<Site> sites1 = (List<Site>)page1.getItems();
 
 		Assert.assertEquals(sites1.toString(), totalCount + 2, sites1.size());
 
 		Page<Site> page2 = siteResource.getSitesPage(
-			Pagination.of(2, totalCount + 2));
+			null, Pagination.of(2, totalCount + 2), null);
 
 		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -243,11 +248,131 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(sites2.toString(), 1, sites2.size());
 
 		Page<Site> page3 = siteResource.getSitesPage(
-			Pagination.of(1, totalCount + 3));
+			null, Pagination.of(1, totalCount + 3), null);
 
 		assertContains(site1, (List<Site>)page3.getItems());
 		assertContains(site2, (List<Site>)page3.getItems());
 		assertContains(site3, (List<Site>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSitesPageWithSortDateTime() throws Exception {
+		testGetSitesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, site1, site2) -> {
+				BeanTestUtil.setProperty(
+					site1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSitesPageWithSortDouble() throws Exception {
+		testGetSitesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, site1, site2) -> {
+				BeanTestUtil.setProperty(site1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(site2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetSitesPageWithSortInteger() throws Exception {
+		testGetSitesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, site1, site2) -> {
+				BeanTestUtil.setProperty(site1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(site2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSitesPageWithSortString() throws Exception {
+		testGetSitesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, site1, site2) -> {
+				Class<?> clazz = site1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						site1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						site2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						site1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						site2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						site1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						site2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetSitesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Site, Site, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Site site1 = randomSite();
+		Site site2 = randomSite();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, site1, site2);
+		}
+
+		site1 = testGetSitesPage_addSite(site1);
+
+		site2 = testGetSitesPage_addSite(site2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Site> ascPage = siteResource.getSitesPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(site1, site2), (List<Site>)ascPage.getItems());
+
+			Page<Site> descPage = siteResource.getSitesPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(site2, site1), (List<Site>)descPage.getItems());
+		}
 	}
 
 	protected Site testGetSitesPage_addSite(Site site) throws Exception {

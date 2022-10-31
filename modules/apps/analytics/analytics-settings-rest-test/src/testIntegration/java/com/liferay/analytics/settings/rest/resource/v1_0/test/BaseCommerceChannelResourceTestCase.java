@@ -28,6 +28,7 @@ import com.liferay.analytics.settings.rest.client.pagination.Page;
 import com.liferay.analytics.settings.rest.client.pagination.Pagination;
 import com.liferay.analytics.settings.rest.client.resource.v1_0.CommerceChannelResource;
 import com.liferay.analytics.settings.rest.client.serdes.v1_0.CommerceChannelSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -56,6 +57,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -69,6 +71,8 @@ import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -200,7 +204,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 	public void testGetCommerceChannelsPage() throws Exception {
 		Page<CommerceChannel> page =
 			commerceChannelResource.getCommerceChannelsPage(
-				Pagination.of(1, 10));
+				RandomTestUtil.randomString(), Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -213,7 +217,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 				randomCommerceChannel());
 
 		page = commerceChannelResource.getCommerceChannelsPage(
-			Pagination.of(1, 10));
+			null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -227,7 +231,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 	@Test
 	public void testGetCommerceChannelsPageWithPagination() throws Exception {
 		Page<CommerceChannel> totalPage =
-			commerceChannelResource.getCommerceChannelsPage(null);
+			commerceChannelResource.getCommerceChannelsPage(null, null, null);
 
 		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
 
@@ -245,7 +249,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		Page<CommerceChannel> page1 =
 			commerceChannelResource.getCommerceChannelsPage(
-				Pagination.of(1, totalCount + 2));
+				null, Pagination.of(1, totalCount + 2), null);
 
 		List<CommerceChannel> commerceChannels1 =
 			(List<CommerceChannel>)page1.getItems();
@@ -256,7 +260,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		Page<CommerceChannel> page2 =
 			commerceChannelResource.getCommerceChannelsPage(
-				Pagination.of(2, totalCount + 2));
+				null, Pagination.of(2, totalCount + 2), null);
 
 		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -268,7 +272,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		Page<CommerceChannel> page3 =
 			commerceChannelResource.getCommerceChannelsPage(
-				Pagination.of(1, totalCount + 3));
+				null, Pagination.of(1, totalCount + 3), null);
 
 		assertContains(
 			commerceChannel1, (List<CommerceChannel>)page3.getItems());
@@ -276,6 +280,138 @@ public abstract class BaseCommerceChannelResourceTestCase {
 			commerceChannel2, (List<CommerceChannel>)page3.getItems());
 		assertContains(
 			commerceChannel3, (List<CommerceChannel>)page3.getItems());
+	}
+
+	@Test
+	public void testGetCommerceChannelsPageWithSortDateTime() throws Exception {
+		testGetCommerceChannelsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, commerceChannel1, commerceChannel2) -> {
+				BeanTestUtil.setProperty(
+					commerceChannel1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetCommerceChannelsPageWithSortDouble() throws Exception {
+		testGetCommerceChannelsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, commerceChannel1, commerceChannel2) -> {
+				BeanTestUtil.setProperty(
+					commerceChannel1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					commerceChannel2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetCommerceChannelsPageWithSortInteger() throws Exception {
+		testGetCommerceChannelsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, commerceChannel1, commerceChannel2) -> {
+				BeanTestUtil.setProperty(
+					commerceChannel1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					commerceChannel2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetCommerceChannelsPageWithSortString() throws Exception {
+		testGetCommerceChannelsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, commerceChannel1, commerceChannel2) -> {
+				Class<?> clazz = commerceChannel1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						commerceChannel1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						commerceChannel2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						commerceChannel1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						commerceChannel2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						commerceChannel1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						commerceChannel2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetCommerceChannelsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, CommerceChannel, CommerceChannel, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		CommerceChannel commerceChannel1 = randomCommerceChannel();
+		CommerceChannel commerceChannel2 = randomCommerceChannel();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, commerceChannel1, commerceChannel2);
+		}
+
+		commerceChannel1 = testGetCommerceChannelsPage_addCommerceChannel(
+			commerceChannel1);
+
+		commerceChannel2 = testGetCommerceChannelsPage_addCommerceChannel(
+			commerceChannel2);
+
+		for (EntityField entityField : entityFields) {
+			Page<CommerceChannel> ascPage =
+				commerceChannelResource.getCommerceChannelsPage(
+					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(commerceChannel1, commerceChannel2),
+				(List<CommerceChannel>)ascPage.getItems());
+
+			Page<CommerceChannel> descPage =
+				commerceChannelResource.getCommerceChannelsPage(
+					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(commerceChannel2, commerceChannel1),
+				(List<CommerceChannel>)descPage.getItems());
+		}
 	}
 
 	protected CommerceChannel testGetCommerceChannelsPage_addCommerceChannel(

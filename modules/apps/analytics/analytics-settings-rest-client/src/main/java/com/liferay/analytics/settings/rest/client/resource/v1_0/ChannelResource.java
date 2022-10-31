@@ -41,11 +41,11 @@ public interface ChannelResource {
 	}
 
 	public Page<Channel> getChannelsPage(
-			String keywords, String filterString, Pagination pagination)
+			String keywords, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelsPageHttpResponse(
-			String keywords, String filterString, Pagination pagination)
+			String keywords, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Channel patchChannel(Channel channel) throws Exception;
@@ -137,11 +137,11 @@ public interface ChannelResource {
 	public static class ChannelResourceImpl implements ChannelResource {
 
 		public Page<Channel> getChannelsPage(
-				String keywords, String filterString, Pagination pagination)
+				String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getChannelsPageHttpResponse(
-				keywords, filterString, pagination);
+				keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -181,7 +181,7 @@ public interface ChannelResource {
 		}
 
 		public HttpInvoker.HttpResponse getChannelsPageHttpResponse(
-				String keywords, String filterString, Pagination pagination)
+				String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -209,15 +209,15 @@ public interface ChannelResource {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
 			}
 
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

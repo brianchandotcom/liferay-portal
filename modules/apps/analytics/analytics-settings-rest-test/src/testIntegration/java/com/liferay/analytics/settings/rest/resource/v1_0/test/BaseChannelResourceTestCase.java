@@ -28,6 +28,7 @@ import com.liferay.analytics.settings.rest.client.pagination.Page;
 import com.liferay.analytics.settings.rest.client.pagination.Pagination;
 import com.liferay.analytics.settings.rest.client.resource.v1_0.ChannelResource;
 import com.liferay.analytics.settings.rest.client.serdes.v1_0.ChannelSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -200,7 +200,7 @@ public abstract class BaseChannelResourceTestCase {
 	@Test
 	public void testGetChannelsPage() throws Exception {
 		Page<Channel> page = channelResource.getChannelsPage(
-			RandomTestUtil.randomString(), null, Pagination.of(1, 10));
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -209,87 +209,13 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
 
 		page = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, 10));
+			null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(channel1, (List<Channel>)page.getItems());
 		assertContains(channel2, (List<Channel>)page.getItems());
 		assertValid(page);
-	}
-
-	@Test
-	public void testGetChannelsPageWithFilterDateTimeEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Channel channel1 = randomChannel();
-
-		channel1 = testGetChannelsPage_addChannel(channel1);
-
-		for (EntityField entityField : entityFields) {
-			Page<Channel> page = channelResource.getChannelsPage(
-				null, getFilterString(entityField, "between", channel1),
-				Pagination.of(1, 2));
-
-			assertEquals(
-				Collections.singletonList(channel1),
-				(List<Channel>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetChannelsPageWithFilterDoubleEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
-
-		for (EntityField entityField : entityFields) {
-			Page<Channel> page = channelResource.getChannelsPage(
-				null, getFilterString(entityField, "eq", channel1),
-				Pagination.of(1, 2));
-
-			assertEquals(
-				Collections.singletonList(channel1),
-				(List<Channel>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetChannelsPageWithFilterStringEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
-
-		for (EntityField entityField : entityFields) {
-			Page<Channel> page = channelResource.getChannelsPage(
-				null, getFilterString(entityField, "eq", channel1),
-				Pagination.of(1, 2));
-
-			assertEquals(
-				Collections.singletonList(channel1),
-				(List<Channel>)page.getItems());
-		}
 	}
 
 	@Test
@@ -306,7 +232,7 @@ public abstract class BaseChannelResourceTestCase {
 		Channel channel3 = testGetChannelsPage_addChannel(randomChannel());
 
 		Page<Channel> page1 = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, totalCount + 2));
+			null, Pagination.of(1, totalCount + 2), null);
 
 		List<Channel> channels1 = (List<Channel>)page1.getItems();
 
@@ -314,7 +240,7 @@ public abstract class BaseChannelResourceTestCase {
 			channels1.toString(), totalCount + 2, channels1.size());
 
 		Page<Channel> page2 = channelResource.getChannelsPage(
-			null, null, Pagination.of(2, totalCount + 2));
+			null, Pagination.of(2, totalCount + 2), null);
 
 		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -323,11 +249,133 @@ public abstract class BaseChannelResourceTestCase {
 		Assert.assertEquals(channels2.toString(), 1, channels2.size());
 
 		Page<Channel> page3 = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, totalCount + 3));
+			null, Pagination.of(1, totalCount + 3), null);
 
 		assertContains(channel1, (List<Channel>)page3.getItems());
 		assertContains(channel2, (List<Channel>)page3.getItems());
 		assertContains(channel3, (List<Channel>)page3.getItems());
+	}
+
+	@Test
+	public void testGetChannelsPageWithSortDateTime() throws Exception {
+		testGetChannelsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, channel1, channel2) -> {
+				BeanTestUtil.setProperty(
+					channel1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetChannelsPageWithSortDouble() throws Exception {
+		testGetChannelsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, channel1, channel2) -> {
+				BeanTestUtil.setProperty(channel1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(channel2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetChannelsPageWithSortInteger() throws Exception {
+		testGetChannelsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, channel1, channel2) -> {
+				BeanTestUtil.setProperty(channel1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(channel2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetChannelsPageWithSortString() throws Exception {
+		testGetChannelsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, channel1, channel2) -> {
+				Class<?> clazz = channel1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						channel1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						channel2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						channel1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						channel2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						channel1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						channel2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetChannelsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Channel, Channel, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Channel channel1 = randomChannel();
+		Channel channel2 = randomChannel();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, channel1, channel2);
+		}
+
+		channel1 = testGetChannelsPage_addChannel(channel1);
+
+		channel2 = testGetChannelsPage_addChannel(channel2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Channel> ascPage = channelResource.getChannelsPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(channel1, channel2),
+				(List<Channel>)ascPage.getItems());
+
+			Page<Channel> descPage = channelResource.getChannelsPage(
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(channel2, channel1),
+				(List<Channel>)descPage.getItems());
+		}
 	}
 
 	protected Channel testGetChannelsPage_addChannel(Channel channel)
@@ -363,9 +411,6 @@ public abstract class BaseChannelResourceTestCase {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
-
-	@Rule
-	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void assertContains(Channel channel, List<Channel> channels) {
 		boolean contains = false;

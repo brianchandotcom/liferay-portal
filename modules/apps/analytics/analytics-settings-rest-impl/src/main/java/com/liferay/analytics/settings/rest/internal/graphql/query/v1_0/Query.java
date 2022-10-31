@@ -118,14 +118,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channels(filter: ___, keywords: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channels(keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ChannelPage channels(
 			@GraphQLName("keywords") String keywords,
-			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -133,20 +133,21 @@ public class Query {
 			this::_populateResourceContext,
 			channelResource -> new ChannelPage(
 				channelResource.getChannelsPage(
-					keywords,
-					_filterBiFunction.apply(channelResource, filterString),
-					Pagination.of(page, pageSize))));
+					keywords, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(channelResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceChannels(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceChannels(keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public CommerceChannelPage commerceChannels(
+			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -154,7 +155,9 @@ public class Query {
 			this::_populateResourceContext,
 			commerceChannelResource -> new CommerceChannelPage(
 				commerceChannelResource.getCommerceChannelsPage(
-					Pagination.of(page, pageSize))));
+					keywords, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						commerceChannelResource, sortsString))));
 	}
 
 	/**
@@ -243,19 +246,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sites(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sites(keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SitePage sites(
+			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_siteResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			siteResource -> new SitePage(
-				siteResource.getSitesPage(Pagination.of(page, pageSize))));
+				siteResource.getSitesPage(
+					keywords, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(siteResource, sortsString))));
 	}
 
 	@GraphQLName("ChannelPage")

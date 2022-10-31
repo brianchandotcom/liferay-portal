@@ -40,10 +40,12 @@ public interface SiteResource {
 		return new Builder();
 	}
 
-	public Page<Site> getSitesPage(Pagination pagination) throws Exception;
+	public Page<Site> getSitesPage(
+			String keywords, Pagination pagination, String sortString)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse getSitesPageHttpResponse(
-			Pagination pagination)
+			String keywords, Pagination pagination, String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -124,9 +126,12 @@ public interface SiteResource {
 
 	public static class SiteResourceImpl implements SiteResource {
 
-		public Page<Site> getSitesPage(Pagination pagination) throws Exception {
+		public Page<Site> getSitesPage(
+				String keywords, Pagination pagination, String sortString)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getSitesPageHttpResponse(
-				pagination);
+				keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -166,7 +171,7 @@ public interface SiteResource {
 		}
 
 		public HttpInvoker.HttpResponse getSitesPageHttpResponse(
-				Pagination pagination)
+				String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -190,11 +195,19 @@ public interface SiteResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (keywords != null) {
+				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

@@ -54,7 +54,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SiteResource {
 
-	public Page<Site> getSitesPage(Pagination pagination) throws Exception;
+	public Page<Site> getSitesPage(
+			String keywords, Pagination pagination, Sort[] sorts)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

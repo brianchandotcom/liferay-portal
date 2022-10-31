@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>ObjectNotifications</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ObjectNotifications</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>NOTIFICATION_STATUS</td>
+		<td>//div[@class='dnd-td']//strong[contains(.,'${key_statusName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_QUEUE_NAME</td>
+		<td>//div[@class='dnd-td'][contains(.,'${key_objectName}')]</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

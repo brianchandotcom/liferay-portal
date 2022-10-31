@@ -64,7 +64,7 @@
 	</tr>
 	<tr>
 		<td>AUTOCOMPLETE_INPUT</td>
-		<td>//div[@class='dropdown-menu autocomplete-dropdown-menu show']//button[@class='dropdown-item' and contains(., '${key_entryName}')]</td>
+		<td>//div[@class='dropdown-menu autocomplete-dropdown-menu show']//button[@class='dropdown-item lfr-object__single-select--with-label' and contains(., '${key_entryName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

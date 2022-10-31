@@ -43,6 +43,19 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteQueue {
+		if (IsElementPresent(key_statusName = "${status}", locator1 = "ObjectNotifications#NOTIFICATION_STATUS")) {
+			Click(
+				key_text = "${triggerBy}",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+		}
+		else {
+			Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+		}
+	}
+
 	macro editNotificationTemplate {
 		Click(
 			key_name = "${notificationTemplateName}",
@@ -88,6 +101,14 @@ definition {
 				locator1 = "CKEditor#BODY_FIELD_IFRAME",
 				value1 = "${emailBody}");
 		}
+	}
+
+	macro resendNotificationInTheQueue {
+		Click(
+			key_text = "${triggerBy}",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Resend");
 	}
 
 }

@@ -66,6 +66,7 @@ definition {
 			inputExpression = "${inputExpression}",
 			inputMethod = "${inputMethod}",
 			inputValue = "${inputValue}",
+			notificationName = "${notificationName}",
 			notRefreshAttribute = "true",
 			objectLabel = "${objectLabel}",
 			scriptValidation = "${scriptValidation}",
@@ -1011,7 +1012,7 @@ definition {
 			if ("${thenAction}" == "Notification") {
 				Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
 
-				Click(
+				ClickNoError.clickNoMouseOver(
 					key_entryName = "${notificationName}",
 					locator1 = "ObjectAction#AUTOCOMPLETE_INPUT");
 			}

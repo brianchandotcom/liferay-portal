@@ -11,6 +11,11 @@
 			"value": "true"
 		},
 		{
+			"fieldReference": "displayChartAsTable",
+			"name": "displayChartAsTable",
+			"value": "false"
+		},
+		{
 			"fieldReference": "emailFromAddress",
 			"name": "emailFromAddress",
 			"value": ""

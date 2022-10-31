@@ -286,12 +286,12 @@ export function Rows({children, editable, pageIndex, rows}) {
 
 Rows.displayName = 'EditorVariant.Rows';
 
-export function Row({children, index, row}) {
+export function Row({children, row}) {
 	const rowRef = useRef(null);
 	const resizeInfoRef = useRef(null);
 
 	return (
-		<div className="position-relative row" key={index} ref={rowRef}>
+		<div className="position-relative row" ref={rowRef}>
 			{row.columns.map((column, index) =>
 				children({column, index, resizeInfoRef, rowRef})
 			)}

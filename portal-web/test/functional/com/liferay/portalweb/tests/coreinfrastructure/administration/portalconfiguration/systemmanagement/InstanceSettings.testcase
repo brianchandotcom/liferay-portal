@@ -825,10 +825,11 @@ definition {
 		}
 
 		task ("Then new instance config is changed and companyWebId is changed to companyId in config file") {
-			SystemSettings.viewTextareaValue(
-				fieldName = "charactersblacklist",
-				fieldValue = "'",
-				repeatableFieldNumber = "2");
+			AssertTextNotEquals.assertNotValue(
+				key_fieldName = "charactersblacklist",
+				key_repeatableFieldNumber = "2",
+				locator1 = "FormFields#REPEATABLE_TEXT_MULTILINE_FIELD",
+				value1 = "'");
 
 			OSGiConfig.assertTextNotInOSGIConfig(
 				osgiConfigFileName = "${exportConfigFileName}",

@@ -458,46 +458,10 @@ public class FriendlyURLEntryLocalServiceImpl
 			languageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 		}
 
-		for (int i = 1;; i++) {
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
-					groupId, classNameId, languageId, curUrlTitle);
-			List<FriendlyURLEntryLocalization>
-				friendlyURLEntryLocalizationList =
-					friendlyURLEntryLocalizationPersistence.findByG_C_NotL_U(
-						groupId, classNameId, languageId, curUrlTitle);
-
-			if (ListUtil.isEmpty(friendlyURLEntryLocalizationList)) {
-				if (Validator.isNull(languageId)) {
-					if ((friendlyURLEntryLocalization == null) ||
-						(friendlyURLEntryLocalization.getClassPK() ==
-							classPK)) {
-
-						break;
-					}
-				}
-				else {
-					if ((friendlyURLEntryLocalization == null) ||
-						((friendlyURLEntryLocalization.getClassPK() ==
-							classPK) &&
-						 languageId.equals(
-							 friendlyURLEntryLocalization.getLanguageId()))) {
-
-						break;
-					}
-				}
-			}
-			else {
-				String className = _portalUtil.getClassName(classNameId);
-
-				if (className.contains(Layout.class.getName()) &&
-					(friendlyURLEntryLocalization.getClassPK() == classPK) &&
-					languageId.equals(
-						friendlyURLEntryLocalization.getLanguageId())) {
-
-					break;
-				}
-			}
+		for (int i = 1;
+			 _existsFriendlyURLEntryWithUrlTitle(
+				 groupId, classNameId, classPK, curUrlTitle, languageId);
+			 i++) {
 
 			String suffix = StringPool.DASH + i;
 
@@ -628,53 +592,15 @@ public class FriendlyURLEntryLocalServiceImpl
 				urlTitle + " is longer than " + maxLength);
 		}
 
-		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizationList =
-			friendlyURLEntryLocalizationPersistence.findByG_C_U(
-				groupId, classNameId, normalizedUrlTitle);
+		FriendlyURLEntryLocalization existingFriendlyURLEntryLocalization =
+			friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
+				groupId, classNameId, languageId, normalizedUrlTitle);
 
-		List<FriendlyURLEntryLocalization>
-			friendlyURLEntryLocalizationsNotLanguage =
-				friendlyURLEntryLocalizationPersistence.findByG_C_NotL_U(
-					groupId, classNameId, languageId, urlTitle);
-
-		if (ListUtil.isEmpty(friendlyURLEntryLocalizationList) &&
-			ListUtil.isEmpty(friendlyURLEntryLocalizationsNotLanguage)) {
-
-			return;
-		}
-
-		String className = _portalUtil.getClassName(classNameId);
-
-		if (className.contains(Layout.class.getName())) {
-			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-					friendlyURLEntryLocalizationList) {
-
-				if ((classPK <= 0) ||
-					(friendlyURLEntryLocalization.getClassPK() != classPK)) {
-
-					throw new DuplicateFriendlyURLEntryException(
-						friendlyURLEntryLocalization.toString());
-				}
-			}
-		}
-		else if (friendlyURLEntryLocalizationsNotLanguage.size() > 1) {
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationsNotLanguage.get(0);
+		if ((existingFriendlyURLEntryLocalization != null) &&
+			(existingFriendlyURLEntryLocalization.getClassPK() != classPK)) {
 
 			throw new DuplicateFriendlyURLEntryException(
-				friendlyURLEntryLocalization.toString());
-		}
-		else if (!friendlyURLEntryLocalizationList.isEmpty()) {
-			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-					friendlyURLEntryLocalizationList) {
-
-				if ((classPK <= 0) ||
-					(friendlyURLEntryLocalization.getClassPK() != classPK)) {
-
-					throw new DuplicateFriendlyURLEntryException(
-						friendlyURLEntryLocalization.toString());
-				}
-			}
+				existingFriendlyURLEntryLocalization.toString());
 		}
 	}
 
@@ -702,6 +628,23 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		return true;
+	}
+
+	private boolean _existsFriendlyURLEntryWithUrlTitle(
+		long groupId, long classNameId, long notClassPK, String urlTitle,
+		String languageId) {
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
+				groupId, classNameId, languageId, urlTitle);
+
+		if ((friendlyURLEntryLocalization != null) &&
+			(friendlyURLEntryLocalization.getClassPK() != notClassPK)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getURLEncodedSubstring(
@@ -810,45 +753,17 @@ public class FriendlyURLEntryLocalServiceImpl
 								existingFriendlyURLEntryLocalization);
 						}
 					}
+					else {
+						updateFriendlyURLEntryLocalization(
+							friendlyURLEntry, entry.getKey(),
+							getUniqueUrlTitle(
+								friendlyURLEntry.getGroupId(), classNameId,
+								classPK, oldURLTitle));
+					}
 				}
 				else {
-					List<FriendlyURLEntryLocalization>
-						friendlyURLEntryLocalizationList =
-							friendlyURLEntryLocalizationPersistence.
-								findByG_C_NotL_U(
-									friendlyURLEntry.getGroupId(), classNameId,
-									entry.getKey(), normalizedUrlTitle);
-
-					String className = _portalUtil.getClassName(classNameId);
-
-					if (ListUtil.isEmpty(friendlyURLEntryLocalizationList)) {
-						if (className.contains(Layout.class.getName())) {
-							updateFriendlyURLEntryLocalization(
-								friendlyURLEntry, entry.getKey(),
-								normalizedUrlTitle);
-						}
-						else {
-							updateFriendlyURLEntryLocalization(
-								friendlyURLEntry, entry.getKey(),
-								normalizedUrlTitle);
-						}
-					}
-					else {
-						if (className.contains(Layout.class.getName())) {
-							updateFriendlyURLEntryLocalization(
-								friendlyURLEntry, entry.getKey(),
-								normalizedUrlTitle);
-						}
-						else {
-							normalizedUrlTitle = getUniqueUrlTitle(
-								friendlyURLEntry.getGroupId(), classNameId,
-								classPK, normalizedUrlTitle, entry.getKey());
-
-							updateFriendlyURLEntryLocalization(
-								friendlyURLEntry, entry.getKey(),
-								normalizedUrlTitle);
-						}
-					}
+					updateFriendlyURLEntryLocalization(
+						friendlyURLEntry, entry.getKey(), normalizedUrlTitle);
 				}
 			}
 			else if ((normalizedUrlTitle != null) &&

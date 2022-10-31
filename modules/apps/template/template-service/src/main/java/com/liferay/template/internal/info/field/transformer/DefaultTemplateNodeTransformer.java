@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = TemplateNodeTransformer.class)
+@Component(service = TemplateNodeTransformer.class)
 public class DefaultTemplateNodeTransformer
 	extends BaseTemplateNodeTransformer {
 

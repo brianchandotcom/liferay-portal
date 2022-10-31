@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"add.template.action.id=" + DDMActionKeys.ADD_TEMPLATE,
 		"default.model.resource.name=true",

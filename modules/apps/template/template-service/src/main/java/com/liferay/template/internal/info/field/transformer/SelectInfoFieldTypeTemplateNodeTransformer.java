@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true,
 	property = "info.field.type.class.name=com.liferay.info.field.type.SelectInfoFieldType",
 	service = TemplateNodeTransformer.class
 )

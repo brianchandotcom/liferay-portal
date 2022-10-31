@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	immediate = true,
 	property = "info.field.type.class.name=com.liferay.info.field.type.CategoriesInfoFieldType",
 	service = TemplateNodeTransformer.class
 )

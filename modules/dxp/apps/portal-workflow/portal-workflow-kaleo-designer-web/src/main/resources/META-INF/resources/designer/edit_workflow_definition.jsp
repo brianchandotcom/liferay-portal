@@ -48,6 +48,8 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		HashMapBuilder.<String, Object>put(
 			"accountEntryId", ParamUtil.getLong(liferayPortletRequest, "accountEntryId")
 		).put(
+			"clientExtensions", kaleoDesignerDisplayContext.getClientExtensionsJSONArray()
+		).put(
 			"definitionName", (kaleoDefinitionVersion == null) ? null : kaleoDefinitionVersion.getName()
 		).put(
 			"displayNames", LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale)

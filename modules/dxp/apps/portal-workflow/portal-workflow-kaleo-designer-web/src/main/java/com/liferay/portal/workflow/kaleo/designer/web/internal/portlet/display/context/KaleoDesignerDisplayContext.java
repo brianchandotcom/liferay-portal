@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,6 +55,7 @@ import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.client.extension.ActionExecutorClientExtensionTracker;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
@@ -89,10 +91,15 @@ import javax.servlet.jsp.PageContext;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
+		ActionExecutorClientExtensionTracker
+			actionExecutorClientExtensionTracker,
 		RenderRequest renderRequest,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
+
+		_actionExecutorClientExtensionTracker =
+			actionExecutorClientExtensionTracker;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -128,6 +135,11 @@ public class KaleoDesignerDisplayContext {
 		).setKeywords(
 			StringPool.BLANK
 		).buildString();
+	}
+
+	public JSONArray getClientExtensionsJSONArray() throws Exception {
+		return _actionExecutorClientExtensionTracker.
+			getClientExtensionsJSONArray();
 	}
 
 	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)
@@ -835,6 +847,8 @@ public class KaleoDesignerDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerDisplayContext.class);
 
+	private final ActionExecutorClientExtensionTracker
+		_actionExecutorClientExtensionTracker;
 	private boolean _companyAdministratorCanPublish;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;

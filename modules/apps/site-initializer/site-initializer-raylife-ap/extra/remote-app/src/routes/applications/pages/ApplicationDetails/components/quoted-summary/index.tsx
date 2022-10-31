@@ -125,7 +125,7 @@ const QuotedSummary = ({externalReferenceCode}: externalReferenceCodeType) => {
 	return (
 		<div className="bg-neutral-0 quoted-summary-container rounded">
 			<div className="pt-3 px-5 quoted-summary-title">
-				<h5 className="m-0">Quoted Summary</h5>
+				<h5 className="m-0">Quote Summary</h5>
 			</div>
 
 			<hr />

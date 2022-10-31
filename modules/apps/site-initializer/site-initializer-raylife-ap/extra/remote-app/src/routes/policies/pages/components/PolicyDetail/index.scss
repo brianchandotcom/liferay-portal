@@ -1,0 +1,55 @@
+.policy-detail-container {
+	.policy-detail-title::after {
+		background-color: var(--primary);
+		content: '';
+		display: block;
+		height: 1px;
+		margin-top: 5px;
+		position: relative;
+		width: 25px;
+	}
+
+	.border-link-active::after {
+		background-color: #4c84ff;
+		bottom: -1px;
+		content: '';
+		display: block;
+		display: block;
+		height: 2px;
+		left: -1px;
+		position: absolute;
+		right: -1px;
+		width: auto;
+		z-index: 1;
+	}
+
+	.nav-link {
+		align-items: center;
+		background-color: #f3f5f7;
+		border: solid 1px #e7e7ed;
+		border-left-color: transparent;
+		border-right-color: transparent;
+		cursor: pointer;
+		display: flex;
+		height: 49px;
+		margin-top: 10px;
+	}
+
+	.layout-line::after {
+		background-image: linear-gradient(
+			to right,
+			#aaa 0%,
+			#aaa 20%,
+			transparent 20%
+		);
+		background-position: 0 0;
+		background-repeat: repeat-x;
+		background-size: 6px 1px;
+		bottom: 0;
+		content: '';
+		height: 1px;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
+}

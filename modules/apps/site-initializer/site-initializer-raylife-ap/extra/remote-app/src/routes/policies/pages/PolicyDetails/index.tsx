@@ -19,6 +19,7 @@ import {
 	getPolicyByExternalReferenceCode,
 } from '../../../../common/services';
 import {getQuotesById} from '../../../../common/services/Quote';
+import PolicyDetail from '../components/PolicyDetail';
 import PolicySummary from '../components/PolicySummary';
 
 interface PolicySummary {
@@ -78,14 +79,18 @@ const PolicyDetails = () => {
 
 	return (
 		<div className="policy-details-container">
-			<div className="policy-detail-content py-4 row">
-				<div className="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-3 mb-4 summary-policy-content">
+			<div className="d-flex policy-detail-content">
+				<div className="mb-3 mr-3 summary-policy-content">
 					{policy && (
 						<PolicySummary
 							application={application}
 							policy={policy}
 						/>
 					)}
+				</div>
+
+				<div className="w-100">
+					<PolicyDetail />
 				</div>
 			</div>
 		</div>

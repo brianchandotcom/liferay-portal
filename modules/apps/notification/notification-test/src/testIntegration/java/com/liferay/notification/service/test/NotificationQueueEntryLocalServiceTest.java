@@ -15,15 +15,25 @@
 package com.liferay.notification.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.notification.model.NotificationRecipient;
+import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.service.NotificationRecipientLocalService;
+import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -83,19 +93,66 @@ public class NotificationQueueEntryLocalServiceTest {
 	private NotificationQueueEntry _addNotificationQueueEntry()
 		throws Exception {
 
+		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
+			_createNotificationContext(TestPropsValues.getUser()));
+	}
+
+	private NotificationContext _createNotificationContext(User user)
+		throws Exception {
+
 		NotificationContext notificationContext = new NotificationContext();
 
-		notificationContext.setNotificationQueueEntry(
+		NotificationQueueEntry notificationQueueEntry =
 			_notificationQueueEntryLocalService.createNotificationQueueEntry(
-				RandomTestUtil.randomInt()));
+				RandomTestUtil.randomInt());
 
-		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
-			notificationContext);
+		notificationQueueEntry.setUserId(user.getUserId());
+		notificationQueueEntry.setType(NotificationConstants.TYPE_EMAIL);
+
+		notificationContext.setNotificationQueueEntry(notificationQueueEntry);
+
+		NotificationRecipient notificationRecipient =
+			_notificationRecipientLocalService.createNotificationRecipient(
+				_counterLocalService.increment());
+
+		notificationRecipient.setClassName(
+			NotificationQueueEntry.class.getName());
+		notificationRecipient.setClassPK(
+			notificationQueueEntry.getNotificationQueueEntryId());
+
+		notificationContext.setNotificationRecipient(notificationRecipient);
+
+		NotificationRecipientSetting notificationRecipientSetting =
+			_notificationRecipientSettingLocalService.
+				createNotificationRecipientSetting(
+					_counterLocalService.increment());
+
+		notificationRecipientSetting.setNotificationRecipientId(
+			notificationRecipient.getNotificationRecipientId());
+
+		notificationContext.setNotificationRecipientSettings(
+			Arrays.asList(notificationRecipientSetting));
+
+		notificationContext.setType(
+			NotificationConstants.TYPE_USER_NOTIFICATION);
+
+		return notificationContext;
 	}
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private NotificationQueueEntryLocalService
 		_notificationQueueEntryLocalService;
+
+	@Inject
+	private NotificationRecipientLocalService
+		_notificationRecipientLocalService;
+
+	@Inject
+	private NotificationRecipientSettingLocalService
+		_notificationRecipientSettingLocalService;
 
 	@Inject
 	private NotificationTemplateLocalService _notificationTemplateLocalService;

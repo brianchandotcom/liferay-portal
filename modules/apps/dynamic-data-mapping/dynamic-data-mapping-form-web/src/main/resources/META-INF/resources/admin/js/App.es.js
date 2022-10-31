@@ -17,6 +17,7 @@ import {ClayModalProvider} from '@clayui/modal';
 import {
 	ConfigProvider,
 	FormProvider,
+	KeyboardDNDContextProvider,
 	parseProps,
 } from 'data-engine-js-components-web';
 import {
@@ -83,38 +84,43 @@ export default function App({
 						]}
 						value={state}
 					>
-						<ToastProvider>
-							<Router>
-								<AutoSaveProvider
-									interval={autosaveInterval}
-									url={autosaveURL}
-								>
-									<Route component={NavigationBar} path="/" />
-
-									<Suspense
-										fallback={<ClayLoadingIndicator />}
+						<KeyboardDNDContextProvider>
+							<ToastProvider>
+								<Router>
+									<AutoSaveProvider
+										interval={autosaveInterval}
+										url={autosaveURL}
 									>
-										<Switch>
-											<LazyRoute
-												exact
-												importPath={`${mainRequire}/admin/js/pages/FormBuilder.es`}
-												path="/"
-											/>
+										<Route
+											component={NavigationBar}
+											path="/"
+										/>
 
-											<LazyRoute
-												importPath={`${mainRequire}/admin/js/pages/RuleBuilder.es`}
-												path="/rules"
-											/>
+										<Suspense
+											fallback={<ClayLoadingIndicator />}
+										>
+											<Switch>
+												<LazyRoute
+													exact
+													importPath={`${mainRequire}/admin/js/pages/FormBuilder.es`}
+													path="/"
+												/>
 
-											<LazyRoute
-												importPath={`${mainRequire}/admin/js/pages/Report`}
-												path="/report"
-											/>
-										</Switch>
-									</Suspense>
-								</AutoSaveProvider>
-							</Router>
-						</ToastProvider>
+												<LazyRoute
+													importPath={`${mainRequire}/admin/js/pages/RuleBuilder.es`}
+													path="/rules"
+												/>
+
+												<LazyRoute
+													importPath={`${mainRequire}/admin/js/pages/Report`}
+													path="/report"
+												/>
+											</Switch>
+										</Suspense>
+									</AutoSaveProvider>
+								</Router>
+							</ToastProvider>
+						</KeyboardDNDContextProvider>
 					</FormProvider>
 				</ClayModalProvider>
 			</ConfigProvider>

@@ -74,3 +74,10 @@ export {default as FormReport} from './custom/form-report/index';
 
 export {FormFieldSettings} from './custom/form/FormFieldSettings.es';
 export {FormView} from './custom/form/FormView.es';
+
+// Keyboard drag and drop
+
+export {
+	KeyboardDNDContextProvider,
+	useSetSourceItem as useSetKeyboardDNDSourceItem,
+} from './core/components/KeyboardDNDContext';

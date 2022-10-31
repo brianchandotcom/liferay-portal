@@ -19,6 +19,7 @@ import {
 	ConfigProvider,
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	FormProvider,
+	KeyboardDNDContextProvider,
 	useConfig,
 	useForm,
 	useFormState,
@@ -360,12 +361,14 @@ const FieldSetModal = ({fieldSet, onClose: onCloseProp}) => {
 						sidebarPanels,
 					}}
 				>
-					<ModalContent
-						fieldSet={fieldSet}
-						onClose={onClose}
-						onUpdate={showPropagationModal}
-						updateFieldSetList={updateFieldSetList}
-					/>
+					<KeyboardDNDContextProvider>
+						<ModalContent
+							fieldSet={fieldSet}
+							onClose={onClose}
+							onUpdate={showPropagationModal}
+							updateFieldSetList={updateFieldSetList}
+						/>
+					</KeyboardDNDContextProvider>
 				</FormProvider>
 			</ConfigProvider>
 		</ClayModal>

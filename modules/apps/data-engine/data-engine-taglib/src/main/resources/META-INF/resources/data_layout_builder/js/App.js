@@ -16,6 +16,7 @@ import {ClayModalProvider} from '@clayui/modal';
 import {
 	ConfigProvider,
 	FormProvider,
+	KeyboardDNDContextProvider,
 	parseProps,
 } from 'data-engine-js-components-web';
 import {
@@ -74,9 +75,11 @@ const App = (props) => {
 						]}
 						value={{...state, ...dataDefinition, dataLayout}}
 					>
-						<DataEngineTaglibCompatibilityLayer />
+						<KeyboardDNDContextProvider>
+							<DataEngineTaglibCompatibilityLayer />
 
-						<FormBuilder />
+							<FormBuilder />
+						</KeyboardDNDContextProvider>
 					</FormProvider>
 				</ConfigProvider>
 			</ClayModalProvider>

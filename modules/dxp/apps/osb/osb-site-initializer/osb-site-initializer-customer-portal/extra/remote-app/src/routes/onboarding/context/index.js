@@ -289,6 +289,7 @@ const AppContextProvider = ({children}) => {
 					client.mutate({
 						context: {
 							displaySuccess: false,
+							type: 'liferay-rest',
 						},
 						mutation: addAccountFlag,
 						variables: {

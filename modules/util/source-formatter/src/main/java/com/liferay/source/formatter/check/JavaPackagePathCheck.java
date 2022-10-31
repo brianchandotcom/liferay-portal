@@ -277,6 +277,18 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, String packageName,
 		String className) {
 
+		for (String packagePart :
+				StringUtil.split(packageName, CharPool.PERIOD)) {
+
+			if (packagePart.matches("V\\d*(_\\d+)+")) {
+				addMessage(
+					fileName,
+					"Use lower case 'v' when it means version in the package");
+
+				return;
+			}
+		}
+
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		String filePath = StringUtil.replace(

@@ -583,6 +583,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163800. Can preview web content with predefined values in structure in Asset Libraries through site' s display page template."
+	@priority = "3"
+	test PreviewPredefinedValuesThroughTheDisplayPageOfSpecificSiteInAssetLibrary {
+		task ("Given a site designer has display page templates for web content") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.publish();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "Basic Web Content");
+
+			WebContent.addCP(webContentContent = "Web Content Content");
+
+			PortletEntry.save();
+		}
+
+		task ("When the site designer creates a web content in an Asset Library") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+			WebContentNavigator.gotoAddCP();
+
+			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+		}
+
+		task ("Then the site designer could preview the web content through display page") {
+			Panel.expandPanel(panel = "Display Page Preview");
+
+			WebContent.selectPreviewSite(siteName = "Test Site Name");
+
+			WebContent.selectPreviewDisplayPage(displayPageName = "Display Page Name");
+
+			Click(
+				key_text = "Preview",
+				locator1 = "Button#ANY");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Web Content Content");
+
+			IFrame.closeFrame();
+
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
 	@description = "This is a test for LPS-86221. A user can preview a published web content within its display page."
 	@priority = "5"
 	test PreviewPublishedWebContent {

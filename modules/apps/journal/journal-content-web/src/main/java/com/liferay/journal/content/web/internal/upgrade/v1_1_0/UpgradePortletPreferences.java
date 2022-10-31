@@ -79,7 +79,10 @@ public class UpgradePortletPreferences
 			String lfrScopeType = portletPreferences.getValue(
 				"lfrScopeType", StringPool.BLANK);
 
-			if (group.isCompany() && Objects.equals("company", lfrScopeType)) {
+			if (Validator.isBlank(lfrScopeType) ||
+				(group.isCompany() &&
+				 Objects.equals("company", lfrScopeType))) {
+
 				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 			}
 

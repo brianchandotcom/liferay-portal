@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
  * @author David Arques
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentDashboardPortletKeys.CONTENT_DASHBOARD_ADMIN,
 		"mvc.command.name=/content_dashboard/update_content_dashboard_configuration"

@@ -119,4 +119,14 @@ definition {
 			portalURL = "${portalURL}");
 	}
 
+	macro tearDownNonDefaultGroups {
+		var nameCurrentValues = JSONGroupAPI._getNameCurrentValues();
+
+		for (var nameCurrentValue : list "${nameCurrentValues}") {
+			if (("${nameCurrentValue}" != "Global") && ("${nameCurrentValue}" != "Guest")) {
+				JSONGroup.deleteGroupByName(groupName = "${nameCurrentValue}");
+			}
+		}
+	}
+
 }

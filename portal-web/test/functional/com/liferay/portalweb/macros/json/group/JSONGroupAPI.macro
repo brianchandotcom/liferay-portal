@@ -338,6 +338,28 @@ definition {
 		return "${groupNam}";
 	}
 
+	@summary = "Get the nameCurrentValues from existing groups"
+	macro _getNameCurrentValues {
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d parentGroupId=0 \
+				-d site=${site}
+		''';
+
+		var nameCurrentValues = JSONCurlUtil.post("${curl}", "$..nameCurrentValue");
+
+		return "${nameCurrentValues}";
+	}
+
 	@summary = "Get the parentGroupId from any existing site by using groupName"
 	macro _getParentGroupIdByName {
 		Variables.assertDefined(parameterList = "${groupName}");

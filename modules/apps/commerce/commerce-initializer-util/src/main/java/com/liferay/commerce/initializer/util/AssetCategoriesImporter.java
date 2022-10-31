@@ -309,7 +309,7 @@ public class AssetCategoriesImporter {
 			String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 				companyGroup.getGroupId(),
 				_portal.getClassNameId(AssetCategory.class),
-				assetCategory.getCategoryId(), titleEntry.getValue());
+				assetCategory.getCategoryId(), titleEntry.getValue(), null);
 
 			urlTitleMap.put(
 				LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);

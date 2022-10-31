@@ -2960,7 +2960,7 @@ public class CPDefinitionLocalServiceImpl
 
 				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 					companyGroup.getGroupId(), classNameId,
-					cpDefinition.getCProductId(), titleEntry.getValue());
+					cpDefinition.getCProductId(), titleEntry.getValue(), null);
 
 				newURLTitleMap.put(
 					LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);

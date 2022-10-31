@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Crescenzo Rega
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_USERS,
 	service = FDSActionProvider.class
 )

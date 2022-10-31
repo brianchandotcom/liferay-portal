@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	immediate = true,
 	property = {
 		"model.class.name=com.liferay.account.model.AccountEntry",
 		"service.ranking:Integer=100"

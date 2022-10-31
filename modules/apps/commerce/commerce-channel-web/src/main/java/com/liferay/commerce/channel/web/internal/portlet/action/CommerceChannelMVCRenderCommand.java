@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alec Sloan
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
 	service = MVCRenderCommand.class
 )

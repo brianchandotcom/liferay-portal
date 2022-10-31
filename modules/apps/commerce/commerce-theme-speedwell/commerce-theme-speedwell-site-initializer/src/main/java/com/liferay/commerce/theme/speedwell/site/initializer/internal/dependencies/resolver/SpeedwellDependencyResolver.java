@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = SpeedwellDependencyResolver.class)
+@Component(service = SpeedwellDependencyResolver.class)
 public class SpeedwellDependencyResolver {
 
 	public String getDependenciesPath() {

@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.COMMERCE_BASE_PRICE_LIST,
 	service = MessageListener.class
 )

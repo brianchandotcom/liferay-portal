@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabio Mastrorilli
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = DynamicInclude.class
 )
 public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {

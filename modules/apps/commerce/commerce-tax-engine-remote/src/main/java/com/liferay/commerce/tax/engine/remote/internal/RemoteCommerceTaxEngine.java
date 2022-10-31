@@ -68,7 +68,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	immediate = true,
 	property = "commerce.tax.engine.key=" + RemoteCommerceTaxEngine.KEY,
 	service = CommerceTaxEngine.class
 )

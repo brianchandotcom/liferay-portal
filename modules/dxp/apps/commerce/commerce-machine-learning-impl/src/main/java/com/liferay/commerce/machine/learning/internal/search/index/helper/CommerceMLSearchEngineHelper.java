@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = CommerceMLSearchEngineHelper.class)
+@Component(service = CommerceMLSearchEngineHelper.class)
 public class CommerceMLSearchEngineHelper {
 
 	public void createIndex(String indexName, String indexMappingFileName) {

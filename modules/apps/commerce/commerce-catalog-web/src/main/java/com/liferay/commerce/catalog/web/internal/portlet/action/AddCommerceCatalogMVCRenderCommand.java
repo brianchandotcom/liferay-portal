@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CATALOGS,
 		"mvc.command.name=/commerce_catalogs/add_commerce_catalog"

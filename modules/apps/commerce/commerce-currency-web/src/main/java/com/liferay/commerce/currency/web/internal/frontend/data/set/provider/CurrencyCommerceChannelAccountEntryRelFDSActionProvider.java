@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + CommerceCurrencyFDSNames.ACCOUNT_ENTRY_CURRENCIES,
 	service = FDSActionProvider.class
 )

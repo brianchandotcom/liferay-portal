@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Alicia García
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class CommerceImageServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

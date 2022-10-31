@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE,
 		"mvc.command.name=/commerce_inventory_warehouse/edit_commerce_inventory_warehouse_qualifiers"

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CommerceThemeMiniumHttpHelper.class)
+@Component(service = CommerceThemeMiniumHttpHelper.class)
 public class CommerceThemeMiniumHttpHelper {
 
 	public String getAccountManagementPortletURL(

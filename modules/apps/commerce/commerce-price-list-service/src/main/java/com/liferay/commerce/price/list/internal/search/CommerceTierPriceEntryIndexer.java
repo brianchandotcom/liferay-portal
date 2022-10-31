@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class CommerceTierPriceEntryIndexer
 	extends BaseIndexer<CommerceTierPriceEntry> {
 

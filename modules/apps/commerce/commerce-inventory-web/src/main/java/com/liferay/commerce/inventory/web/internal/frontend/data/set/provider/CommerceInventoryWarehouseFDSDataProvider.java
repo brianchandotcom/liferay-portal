@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + CommerceInventoryFDSNames.INVENTORY_WAREHOUSES,
 	service = FDSDataProvider.class
 )

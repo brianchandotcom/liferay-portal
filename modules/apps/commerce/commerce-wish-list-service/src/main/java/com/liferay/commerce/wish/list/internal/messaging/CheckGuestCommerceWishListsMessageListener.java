@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration",
-	immediate = true, service = CheckGuestCommerceWishListsMessageListener.class
+	service = CheckGuestCommerceWishListsMessageListener.class
 )
 public class CheckGuestCommerceWishListsMessageListener
 	extends BaseMessageListener {

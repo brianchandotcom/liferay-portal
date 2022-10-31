@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jaclyn Ong
  */
-@Component(immediate = true, service = PunchOutSessionHelper.class)
+@Component(service = PunchOutSessionHelper.class)
 public class PunchOutSessionHelper {
 
 	public HttpSession getHttpSession(HttpServletRequest httpServletRequest) {

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  * @author Crescenzo Rega
  */
-@Component(immediate = true, service = CSDiagramCPTypeHelper.class)
+@Component(service = CSDiagramCPTypeHelper.class)
 public class CSDiagramCPTypeHelperImpl implements CSDiagramCPTypeHelper {
 
 	public FileVersion getCPDiagramImageFileVersion(

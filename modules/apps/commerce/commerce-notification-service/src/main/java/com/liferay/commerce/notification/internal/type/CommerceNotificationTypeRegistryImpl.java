@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceNotificationTypeRegistry.class)
+@Component(service = CommerceNotificationTypeRegistry.class)
 public class CommerceNotificationTypeRegistryImpl
 	implements CommerceNotificationTypeRegistry {
 

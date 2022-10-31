@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.product.content.renderer.key=" + CSDiagramCPTypeConstants.NAME,
 		"commerce.product.content.renderer.order=" + Integer.MIN_VALUE,

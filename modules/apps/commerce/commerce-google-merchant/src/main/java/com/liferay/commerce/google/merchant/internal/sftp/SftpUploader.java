@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.google.merchant.internal.sftp.SftpConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = SftpUploader.class
 )
 public class SftpUploader {

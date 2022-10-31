@@ -77,7 +77,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.checkout.step.name=" + BillingAddressCommerceCheckoutStep.NAME,
 		"commerce.checkout.step.order:Integer=30"

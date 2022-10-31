@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceNotificationHelper.class)
+@Component(service = CommerceNotificationHelper.class)
 public class CommerceNotificationHelperImpl
 	implements CommerceNotificationHelper {
 

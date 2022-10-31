@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
  */
-@Component(immediate = true, service = CommerceCheckoutStepHttpHelper.class)
+@Component(service = CommerceCheckoutStepHttpHelper.class)
 public class DefaultCommerceCheckoutStepHttpHelper
 	implements CommerceCheckoutStepHttpHelper {
 

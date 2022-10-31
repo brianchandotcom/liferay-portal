@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Crescenzo Rega
  */
-@Component(immediate = true, service = ServiceWrapper.class)
+@Component(service = ServiceWrapper.class)
 public class CommerceChannelAccountEntryRelAccountEntryLocalServiceWrapper
 	extends AccountEntryLocalServiceWrapper {
 

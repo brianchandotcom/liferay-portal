@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=importForecasts",
 		"osgi.command.function=importRecommendations",

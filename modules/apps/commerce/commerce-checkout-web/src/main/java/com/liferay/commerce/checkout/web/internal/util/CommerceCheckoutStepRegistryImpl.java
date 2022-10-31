@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CommerceCheckoutStepRegistry.class)
+@Component(service = CommerceCheckoutStepRegistry.class)
 public class CommerceCheckoutStepRegistryImpl
 	implements CommerceCheckoutStepRegistry {
 

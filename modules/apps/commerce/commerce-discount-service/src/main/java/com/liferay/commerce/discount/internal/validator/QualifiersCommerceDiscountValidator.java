@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.discount.validator.key=" + QualifiersCommerceDiscountValidator.KEY,
 		"commerce.discount.validator.priority:Integer=20",

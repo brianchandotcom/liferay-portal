@@ -59,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageConfiguration",
-	immediate = true,
 	property = {
 		"commerce.product.definition.diagram.type.key=" + SVGCSDiagramType.KEY,
 		"commerce.product.definition.diagram.type.order:Integer=200"

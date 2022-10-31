@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Sbarra
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.commerce.term.model.CommerceTermEntry",
 	service = ModelPreFilterContributor.class
 )

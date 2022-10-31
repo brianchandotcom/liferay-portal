@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Riccardo Alberti
  */
-@Component(immediate = true, service = CommerceQualifierMetadataRegistry.class)
+@Component(service = CommerceQualifierMetadataRegistry.class)
 public class CommerceQualifierMetadataRegistryImpl
 	implements CommerceQualifierMetadataRegistry {
 

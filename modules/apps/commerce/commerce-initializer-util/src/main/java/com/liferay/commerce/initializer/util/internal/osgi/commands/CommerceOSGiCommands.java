@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=generateOrders",
 		"osgi.command.function=generateShipments",

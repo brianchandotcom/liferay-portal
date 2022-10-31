@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = "frontend.data.set.name=" + CommerceInventoryFDSNames.INVENTORY_REPLENISHMENT,
 	service = FDSView.class
 )

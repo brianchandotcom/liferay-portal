@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Andrea Sbarra
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class DefaultCommerceTermEntriesJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

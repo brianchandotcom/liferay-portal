@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	immediate = true,
 	property = "commerce.product.data.source.name=" + FrequentPatternCommerceMLRecommendationCPDataSourceImpl.NAME,
 	service = CPDataSource.class
 )

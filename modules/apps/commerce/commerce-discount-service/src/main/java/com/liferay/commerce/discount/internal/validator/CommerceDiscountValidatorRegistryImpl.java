@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Riccardo Alberti
  */
-@Component(immediate = true, service = CommerceDiscountValidatorRegistry.class)
+@Component(service = CommerceDiscountValidatorRegistry.class)
 public class CommerceDiscountValidatorRegistryImpl
 	implements CommerceDiscountValidatorRegistry {
 

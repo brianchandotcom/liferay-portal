@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.health.status.display.order:Integer=50",
 		"commerce.health.status.key=" + CommerceHealthStatusConstants.SAP_COMMERCE_HEALTH_STATUS_KEY

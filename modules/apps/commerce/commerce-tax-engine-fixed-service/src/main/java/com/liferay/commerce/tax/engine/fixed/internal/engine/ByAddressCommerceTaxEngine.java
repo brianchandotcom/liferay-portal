@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "commerce.tax.engine.key=" + ByAddressCommerceTaxEngine.KEY,
 	service = CommerceTaxEngine.class
 )

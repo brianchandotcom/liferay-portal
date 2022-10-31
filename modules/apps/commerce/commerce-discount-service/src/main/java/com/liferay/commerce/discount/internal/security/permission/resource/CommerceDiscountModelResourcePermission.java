@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscount",
 	service = ModelResourcePermission.class
 )

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.currency.configuration.RoundingTypeConfiguration",
-	immediate = true, service = CommercePriceFormatter.class
+	service = CommercePriceFormatter.class
 )
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceDiscountPermission.class)
+@Component(service = CommerceDiscountPermission.class)
 public class CommerceDiscountPermissionImpl
 	implements CommerceDiscountPermission {
 

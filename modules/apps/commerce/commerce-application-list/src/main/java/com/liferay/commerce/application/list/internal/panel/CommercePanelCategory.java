@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU,
 		"panel.category.order:Integer=80"

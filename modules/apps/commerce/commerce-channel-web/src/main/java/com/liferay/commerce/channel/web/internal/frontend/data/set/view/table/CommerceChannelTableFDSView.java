@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceChannelFDSNames.CHANNEL,
 		"frontend.data.set.name=" + CommerceChannelFDSNames.CHANNEL

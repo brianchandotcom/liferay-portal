@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.machine.learning.internal.recommendation.configuration.CommerceMLRecommendationsCollectionProviderConfiguration",
-	immediate = true, service = RelatedInfoItemCollectionProvider.class
+	service = RelatedInfoItemCollectionProvider.class
 )
 public class
 	ProductInteractionCommerceMLRecommendationRelatedInfoItemCollectionProvider

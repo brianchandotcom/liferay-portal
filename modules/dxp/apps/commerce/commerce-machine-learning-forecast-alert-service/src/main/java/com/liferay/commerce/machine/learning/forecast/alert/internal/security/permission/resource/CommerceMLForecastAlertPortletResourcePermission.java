@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  */
 @Component(
-	immediate = true,
 	property = "resource.name=" + CommerceMLForecastAlertConstants.RESOURCE_NAME,
 	service = PortletResourcePermission.class
 )

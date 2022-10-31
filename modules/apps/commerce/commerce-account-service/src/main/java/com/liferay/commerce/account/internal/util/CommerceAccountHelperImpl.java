@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceAccountHelper.class)
+@Component(service = CommerceAccountHelper.class)
 public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override

@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=CommerceUi.Application)",
 		"osgi.jaxrs.extension=true",

@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.qualifier.configuration.CommercePaymentMethodGroupRelCommerceQualifierConfiguration",
-	immediate = true,
 	service = {CommerceQualifierMetadata.class, ModelListener.class}
 )
 public class CommercePaymentMethodGroupRelCommerceQualifierMetadata

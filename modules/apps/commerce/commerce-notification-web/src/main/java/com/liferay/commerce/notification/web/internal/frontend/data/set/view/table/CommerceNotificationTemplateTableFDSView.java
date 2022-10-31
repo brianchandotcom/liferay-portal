@@ -65,7 +65,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceNotificationFDSNames.NOTIFICATION_TEMPLATES,
 		"frontend.data.set.name=" + CommerceNotificationFDSNames.NOTIFICATION_TEMPLATES

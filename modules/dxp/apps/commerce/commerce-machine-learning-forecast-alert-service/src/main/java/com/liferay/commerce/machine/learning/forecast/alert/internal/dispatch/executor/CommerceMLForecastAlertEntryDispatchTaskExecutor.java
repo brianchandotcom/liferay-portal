@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  */
 @Component(
-	immediate = true,
 	property = {
 		"dispatch.task.executor.name=" + CommerceMLForecastAlertEntryDispatchTaskExecutor.KEY,
 		"dispatch.task.executor.type=" + CommerceMLForecastAlertEntryDispatchTaskExecutor.KEY

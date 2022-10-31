@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Katie Nesterovich
  * @author Riccardo Alberti
  */
-@Component(immediate = true, service = CommerceAvalaraConnector.class)
+@Component(service = CommerceAvalaraConnector.class)
 public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 
 	@Override

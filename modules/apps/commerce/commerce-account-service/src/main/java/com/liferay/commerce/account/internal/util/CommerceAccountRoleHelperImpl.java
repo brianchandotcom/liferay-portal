@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceAccountRoleHelper.class)
+@Component(service = CommerceAccountRoleHelper.class)
 public class CommerceAccountRoleHelperImpl
 	implements CommerceAccountRoleHelper {
 

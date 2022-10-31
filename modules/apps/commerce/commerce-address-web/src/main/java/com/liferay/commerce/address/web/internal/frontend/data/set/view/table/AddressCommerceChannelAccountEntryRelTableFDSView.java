@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"frontend.data.set.name=" + CommerceAddressFDSNames.ACCOUNT_ENTRY_BILLING_ADDRESSES,
 		"frontend.data.set.name=" + CommerceAddressFDSNames.ACCOUNT_ENTRY_SHIPPING_ADDRESSES

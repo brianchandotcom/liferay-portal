@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Ivica Cardic
  */
-@Component(immediate = true, service = CommerceInventoryEngine.class)
+@Component(service = CommerceInventoryEngine.class)
 public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 	@Override

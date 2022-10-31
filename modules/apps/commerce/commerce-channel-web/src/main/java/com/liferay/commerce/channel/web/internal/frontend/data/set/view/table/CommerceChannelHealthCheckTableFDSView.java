@@ -58,7 +58,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK,
 		"frontend.data.set.name=" + CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK

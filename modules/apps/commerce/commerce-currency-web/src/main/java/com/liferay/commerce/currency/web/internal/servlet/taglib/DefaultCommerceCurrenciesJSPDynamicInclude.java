@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class DefaultCommerceCurrenciesJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

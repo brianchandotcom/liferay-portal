@@ -120,11 +120,9 @@ const VersionsContent = ({
 										</div>
 									</ClayLayout.ContentCol>
 
-									{Liferay.FeatureFlags['LPS-162924'] &&
-										actions &&
-										!!actions.length && (
-											<VersionActions actions={actions} />
-										)}
+									{actions && !!actions.length && (
+										<VersionActions actions={actions} />
+									)}
 								</li>
 							)
 						)}

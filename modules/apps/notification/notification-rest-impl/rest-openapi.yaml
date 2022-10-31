@@ -95,6 +95,8 @@ components:
                     type: object
                 type:
                     type: string
+                typeLabel:
+                    type: string
             type: object
 info:
     description:

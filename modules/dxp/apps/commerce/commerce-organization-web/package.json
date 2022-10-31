@@ -4,9 +4,7 @@
 		"commerce-frontend-js": "*",
 		"d3": "5.9.3",
 		"frontend-js-web": "*",
-		"html-webpack-plugin": "5.5.0",
-		"react": "16.12.0",
-		"webpack": "5.70.0"
+		"react": "16.12.0"
 	},
 	"jest": {
 		"testPathIgnorePatterns": [

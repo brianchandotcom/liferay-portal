@@ -1,8 +1,4 @@
 {
-	"dependencies": {
-		"gulp": "*",
-		"liferay-theme-tasks": "*"
-	},
 	"keywords": [
 		"liferay-theme"
 	],

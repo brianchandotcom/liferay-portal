@@ -3,10 +3,6 @@
 	"bugs": {
 		"url": "https://issues.liferay.com/"
 	},
-	"dependencies": {
-		"gulp": "*",
-		"liferay-theme-tasks": "*"
-	},
 	"keywords": [
 		"liferay-theme"
 	],

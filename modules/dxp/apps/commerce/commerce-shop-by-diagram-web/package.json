@@ -6,10 +6,8 @@
 		"d3": "5.9.3",
 		"fetch-mock": "^5.13.1",
 		"frontend-js-web": "*",
-		"html-webpack-plugin": "5.5.0",
 		"item-selector-taglib": "*",
-		"react": "16.12.0",
-		"webpack": "5.70.0"
+		"react": "16.12.0"
 	},
 	"jest": {
 		"moduleNameMapper": {

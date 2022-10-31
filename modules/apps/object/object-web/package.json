@@ -11,6 +11,7 @@
 		"frontend-js-web": "*",
 		"text-mask-core": "^5.1.2"
 	},
+	"main": "index.js",
 	"name": "@liferay/object-web",
 	"private": true,
 	"scripts": {

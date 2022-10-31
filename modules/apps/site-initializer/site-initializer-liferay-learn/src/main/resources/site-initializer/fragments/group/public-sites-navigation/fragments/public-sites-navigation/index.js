@@ -38,9 +38,8 @@ closeBtn.addEventListener('click', () => {
 	tabletMobileNavSection.classList.toggle('menu-open');
 });
 
-
 accountMenus.forEach((accountMenu) => {
-	accountMenu.addEventListener('click', () =>  {
+	accountMenu.addEventListener('click', () => {
 		accountMenu.classList.toggle('menu-open');
 	});
 });

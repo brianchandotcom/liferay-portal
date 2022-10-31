@@ -1,16 +1,22 @@
 {
-	"bcc": "",
-	"cc": "",
 	"description": "",
-	"from": "do-not-reply@raylife.com",
-	"fromName": {
-		"en-US": "Raylife"
-	},
 	"name": "Quote Retrieve Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "do-not-reply@raylife.com",
+			"fromName": {
+				"en-US": "Raylife"
+			},
+			"to": {
+				"en-US": "[%RETRIEVEEMAIL%]"
+			}
+		}
+	],
 	"subject": {
-		"en-US": "Continue your Raylife [%PRODUCTNAME%] quote"
+		"en_US": "Continue your Raylife [%PRODUCTNAME%] quote"
 	},
-	"to": {
-		"en-US": "[%RETRIEVEEMAIL%]"
-	}
+	"type": "email"
 }

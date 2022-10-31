@@ -1,17 +1,22 @@
 {
-	"bcc": "",
-	"cc": "",
 	"description": "",
-	"from": "solutions@liferay.com",
-	"fromName": {
-		"en-US": "Customer Portal"
-	},
 	"name": "Team Members Invitation Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "solutions@liferay.com",
+			"fromName": {
+				"en-US": "Customer Portal"
+			},
+			"to": {
+				"en-US": "[%EMAIL%]"
+			}
+		}
+	],
 	"subject": {
-		"en-US": "Customer Portal email"
-	},
-	"to": {
-		"en-US": "[%EMAIL%]"
+		"en_US": "Customer Portal email"
 	},
 	"type": "email"
 }

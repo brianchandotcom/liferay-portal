@@ -231,6 +231,7 @@ definition {
 	@description = "Verify that the user can add multiple notifications"
 	@priority = "4"
 	test CanAddMultipleNotifications {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleNotifications";
 
 		Workflow.openWorkflowListView();
@@ -1317,6 +1318,7 @@ definition {
 	@description = "Verify that the user can delete notification role types"
 	@priority = "3"
 	test CanDeleteNotificationRoleTypes {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNotificationRoleTypes";
 
 		Workflow.openWorkflowListView();

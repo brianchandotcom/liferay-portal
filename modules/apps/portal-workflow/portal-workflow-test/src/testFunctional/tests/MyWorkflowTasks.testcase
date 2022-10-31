@@ -52,6 +52,7 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
 	@priority = "5"
 	test AccountUserCanApproveTask {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1576,6 +1577,8 @@ definition {
 	@description = "LPS-135888 - Verify that when the user delete the order, the task is not displayed under My Workflow Tasks"
 	@priority = "3"
 	test TaskIsNotDisplayedAfterOrderIsDeleted {
+		property portal.upstream = "quarantine";
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(

@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -82,9 +80,6 @@ public class AssetBrowserDisplayContext {
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
 	}
 
 	public AssetBrowserSearch getAssetBrowserSearch()
@@ -642,7 +637,6 @@ public class AssetBrowserDisplayContext {
 	private Boolean _multipleSelection;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortalPreferences _portalPreferences;
 	private final PortletURL _portletURL;
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;

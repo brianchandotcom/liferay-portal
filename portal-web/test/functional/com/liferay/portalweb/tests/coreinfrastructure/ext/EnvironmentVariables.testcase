@@ -1,0 +1,69 @@
+@component-name = "portal-util-misc"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Ext";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
+	@priority = "3"
+	test ConfigurePortalExtPropertyViaSystemExt {
+		property custom.system.properties = "company-id-properties=true";
+		property test.name.skip.portal.instance = "EnvironmentVariables#ConfigurePortalExtPropertyViaSystemExt";
+
+		task ("Given a feature flag is disabled") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			AssertElementNotPresent(
+				key_category = "Import / Export",
+				key_portlet = "Import/Export Center",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			Refresh();
+		}
+
+		task ("When the feature flag is enabled via environment variable") {
+			var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+
+			var setenvFile = "${tomcatBinDir}/setenv.sh";
+
+			var fileContent = FileUtil.read("${setenvFile}");
+
+			var newFileContent = '''${fileContent}
+export LIFERAY_PROPS_BY_COMPANY_20097=feature.flag.COMMERCE-8087=true
+''';
+
+			FileUtil.write("${setenvFile}", "${newFileContent}");
+		}
+
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the feature flag is enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Import / Export",
+				panel = "Applications",
+				portlet = "Import/Export Center");
+
+			ImportExport.gotoImport();
+		}
+	}
+
+}

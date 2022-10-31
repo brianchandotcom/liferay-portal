@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "fragment.entry.processor.priority:Integer=6",
+	property = "fragment.entry.processor.priority:Integer=6",
 	service = FragmentEntryProcessor.class
 )
 public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {

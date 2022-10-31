@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentEntryProcessorHelper.class)
+@Component(service = FragmentEntryProcessorHelper.class)
 public class FragmentEntryProcessorHelperImpl
 	implements FragmentEntryProcessorHelper {
 

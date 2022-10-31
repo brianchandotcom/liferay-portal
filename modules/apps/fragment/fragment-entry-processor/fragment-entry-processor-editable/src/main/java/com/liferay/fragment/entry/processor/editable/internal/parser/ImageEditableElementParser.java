@@ -54,10 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true, property = "type=image",
-	service = EditableElementParser.class
-)
+@Component(property = "type=image", service = EditableElementParser.class)
 public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override

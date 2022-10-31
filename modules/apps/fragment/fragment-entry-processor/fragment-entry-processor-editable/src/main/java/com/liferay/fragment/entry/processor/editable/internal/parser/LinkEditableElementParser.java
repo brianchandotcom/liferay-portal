@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	immediate = true, property = "type=link",
-	service = EditableElementParser.class
-)
+@Component(property = "type=link", service = EditableElementParser.class)
 public class LinkEditableElementParser implements EditableElementParser {
 
 	@Override

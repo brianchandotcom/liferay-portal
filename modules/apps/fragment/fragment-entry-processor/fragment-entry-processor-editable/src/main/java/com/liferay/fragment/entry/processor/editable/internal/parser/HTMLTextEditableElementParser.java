@@ -29,10 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, property = "type=html",
-	service = EditableElementParser.class
-)
+@Component(property = "type=html", service = EditableElementParser.class)
 public class HTMLTextEditableElementParser extends TextEditableElementParser {
 
 	@Override

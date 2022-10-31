@@ -45,10 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true, property = "type=link",
-	service = EditableElementMapper.class
-)
+@Component(property = "type=link", service = EditableElementMapper.class)
 public class LinkEditableElementMapper implements EditableElementMapper {
 
 	@Override

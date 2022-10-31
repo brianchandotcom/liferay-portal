@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "fragment.entry.processor.priority:Integer=5",
+	property = "fragment.entry.processor.priority:Integer=5",
 	service = FragmentEntryProcessor.class
 )
 public class BackgroundImageFragmentEntryProcessor

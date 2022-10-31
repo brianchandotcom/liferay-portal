@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = "fragment.entry.processor.priority:Integer=1",
+	property = "fragment.entry.processor.priority:Integer=1",
 	service = FragmentEntryProcessor.class
 )
 public class FreeMarkerFragmentEntryProcessor

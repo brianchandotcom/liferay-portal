@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = "fragment.entry.processor.priority:Integer=3",
+	property = "fragment.entry.processor.priority:Integer=3",
 	service = FragmentEntryProcessor.class
 )
 public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {

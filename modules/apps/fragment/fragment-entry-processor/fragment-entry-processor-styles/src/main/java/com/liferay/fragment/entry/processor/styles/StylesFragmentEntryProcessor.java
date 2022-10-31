@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán
  */
 @Component(
-	immediate = true, property = "fragment.entry.processor.priority:Integer=7",
+	property = "fragment.entry.processor.priority:Integer=7",
 	service = FragmentEntryProcessor.class
 )
 public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {

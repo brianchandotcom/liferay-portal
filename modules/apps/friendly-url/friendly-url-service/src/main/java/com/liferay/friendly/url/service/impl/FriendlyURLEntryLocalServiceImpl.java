@@ -328,23 +328,6 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
-	public FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, long classNameId, String languageId, String urlTitle) {
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
-				groupId, classNameId, languageId,
-				_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
-
-		if (friendlyURLEntryLocalization != null) {
-			return friendlyURLEntryPersistence.fetchByPrimaryKey(
-				friendlyURLEntryLocalization.getFriendlyURLEntryId());
-		}
-
-		return null;
-	}
-
-	@Override
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 		long groupId, long classNameId, String urlTitle) {
 

@@ -25,6 +25,31 @@
 		<td>//button[@role='menuitem']//div[contains(.,'Relationship')]//span[contains(@class,'label-item') and contains(.,'${key_relationType}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>OPTIONS_TAB_RELATIONSHIPS_TYPE_AND_HIERARCHY</td>
+		<td>//div[contains(@class,'dnd-tr') and contains(.,'${key_relationType}')and contains(.,'${key_relationHierarchy}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE</td>
+		<td>//input[@disabled][contains(@class,'form-control') and contains(@value,'${key_relation}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OPTIONS_TAB_RELATIONSHIPS_DISABLED_OBJECT</td>
+		<td>//div[contains(@class,'custom-select__content--disabled') and contains(.,'${key_relationObject}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OPTIONS_TAB_RELATIONSHIPS_HIERARCHY</td>
+		<td>//span[contains(@class,'label-item') and contains(.,'${key_relationHierarchy}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OPTIONS_TAB_RELATIONSHIPS_LAYOUT_TAB</td>
+		<td>//div[contains(@class,'object-admin-panel__header') and contains(.,'${key_layout}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

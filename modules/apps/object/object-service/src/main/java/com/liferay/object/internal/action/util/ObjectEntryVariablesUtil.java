@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * @author Carolina Barbosa
  */
-public class ObjectActionVariablesUtil {
+public class ObjectEntryVariablesUtil {
 
 	public static Map<String, Object> toVariables(
 		DTOConverterRegistry dtoConverterRegistry,
@@ -55,7 +55,7 @@ public class ObjectActionVariablesUtil {
 
 				String contentType = _getContentType(
 					dtoConverterRegistry, objectDefinition,
-					systemObjectDefinitionMetadataTracker);
+					systemObjectDefinitionMetadataRegistry);
 
 				allVariables.putAll(
 					(Map<String, Object>)payloadJSONObject.get(

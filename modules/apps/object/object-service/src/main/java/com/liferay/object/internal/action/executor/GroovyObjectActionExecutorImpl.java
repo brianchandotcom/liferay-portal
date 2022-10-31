@@ -16,7 +16,7 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
+import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -50,7 +50,7 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 				payloadJSONObject.getLong("objectDefinitionId"));
 
 		Map<String, Object> results = _objectScriptingExecutor.execute(
-			ObjectActionVariablesUtil.toVariables(
+			ObjectEntryVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry),
 			new HashSet<>(), parametersUnicodeProperties.get("script"));

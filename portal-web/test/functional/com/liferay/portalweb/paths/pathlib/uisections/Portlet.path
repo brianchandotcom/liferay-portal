@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_ICON</td>
-	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>
+	<td>xpath=(//div[@id='main-content']//div[contains(@class,'lfr-tooltip-scope')]//*[name()='svg'][contains(@class,'icon-ellipsis')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,17 +142,17 @@
 </tr>
 <tr>
 	<td>SPECIFIC_BORDERLESS_ELLIPSIS_ICON</td>
-	<td>//header[contains(@class,'portlet-topper') and contains(.,'${key_portletName}')]//div[contains(@class,'portlet-options')]/a</td>
+	<td>//header[contains(@class,'portlet-topper') and contains(.,'${key_portletName}')]//div[contains(@class,'lfr-tooltip-scope')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_BORDERLESS_ELLIPSIS_ICON_INDEX</td>
-	<td>xpath=(//header[contains(@class,'portlet-topper') and contains(.,'${key_portletName}')]//div[contains(@class,'portlet-options')]/a)[${portletIndex}]</td>
+	<td>xpath=(//header[contains(@class,'portlet-topper') and contains(.,'${key_portletName}')]//div[contains(@class,'lfr-tooltip-scope')]//*[name()='svg'][contains(@class,'icon-ellipsis')])[${portletIndex}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_ELLIPSIS_ICON</td>
-	<td>//div[@id='main-content']//header[contains(.,'${key_portletName}')]//menu/div[contains(@class,'portlet-options')]/a</td>
+	<td>//div[@id='main-content']//header[contains(.,'${key_portletName}')]//div[contains(@class,'lfr-tooltip-scope')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,27 @@
+{
+	"externalReferenceCode": "Lead",
+	"label": {
+		"en_US": "Lead SF"
+	},
+	"name": "LeadSF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Account_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Prospect Account Name"
+			},
+			"name": "prospectAccountName",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Leads SF"
+	},
+	"scope": "company",
+	"storageType": "salesforce"
+}

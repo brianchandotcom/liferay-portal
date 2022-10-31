@@ -1,0 +1,27 @@
+{
+	"externalReferenceCode": "Lead_Qualification__c",
+	"label": {
+		"en_US": "Lead Qualification SF"
+	},
+	"name": "LeadQualificationSF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Lead_c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead"
+			},
+			"name": "lead",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Lead Qualifications SF"
+	},
+	"scope": "company",
+	"storageType": "salesforce"
+}

@@ -78,6 +78,17 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 					"LPS-64335");
 		}
 
+		if (absolutePath.contains("/internal/resource/") &&
+			fileName.endsWith("ResourceImpl.java") &&
+			content.contains(
+				"import com.liferay.petra.function.transform.TransformUtil") &&
+			content.contains("TransformUtil.transform(")) {
+
+			addMessage(
+				fileName,
+				"Use base class transform instead of TransformUtil.transform");
+		}
+
 		return content;
 	}
 

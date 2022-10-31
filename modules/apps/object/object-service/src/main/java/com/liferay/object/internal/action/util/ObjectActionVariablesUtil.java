@@ -49,13 +49,14 @@ public class ObjectActionVariablesUtil {
 			Map<String, Object> allVariables = new HashMap<>();
 
 			if (objectDefinition.isSystem()) {
+				allVariables.putAll(
+					(Map<String, Object>)payloadJSONObject.get(
+						"model" + objectDefinition.getName()));
+
 				String contentType = _getContentType(
 					dtoConverterRegistry, objectDefinition,
 					systemObjectDefinitionMetadataTracker);
 
-				allVariables.putAll(
-					(Map<String, Object>)payloadJSONObject.get(
-						"model" + objectDefinition.getName()));
 				allVariables.putAll(
 					(Map<String, Object>)payloadJSONObject.get(
 						"modelDTO" + contentType));

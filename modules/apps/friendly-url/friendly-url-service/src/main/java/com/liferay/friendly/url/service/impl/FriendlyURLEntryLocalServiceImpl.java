@@ -331,11 +331,9 @@ public class FriendlyURLEntryLocalServiceImpl
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
 		long groupId, long classNameId, String urlTitle) {
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
 		return friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
-			groupId, classNameId, defaultLanguageId,
+			groupId, classNameId,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 	}
 
@@ -377,11 +375,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			long groupId, long classNameId, String urlTitle)
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
 		return friendlyURLEntryLocalizationPersistence.findByG_C_L_U(
-			groupId, classNameId, defaultLanguageId,
+			groupId, classNameId,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 	}
 
@@ -569,10 +565,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			long groupId, long classNameId, long classPK, String urlTitle)
 		throws PortalException {
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		validate(groupId, classNameId, classPK, defaultLanguageId, urlTitle);
+		validate(
+			groupId, classNameId, classPK,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), urlTitle);
 	}
 
 	@Override
@@ -608,10 +603,9 @@ public class FriendlyURLEntryLocalServiceImpl
 	public void validate(long groupId, long classNameId, String urlTitle)
 		throws PortalException {
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		validate(groupId, classNameId, 0, defaultLanguageId, urlTitle);
+		validate(
+			groupId, classNameId, 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), urlTitle);
 	}
 
 	private boolean _containsAllURLTitles(

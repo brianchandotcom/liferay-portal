@@ -51,6 +51,12 @@
 				<finder-column name="languageId" />
 				<finder-column name="urlTitle" />
 			</finder>
+			<finder name="G_C_NotL_U" return-type="Collection">
+				<finder-column name="groupId" />
+				<finder-column name="classNameId" />
+				<finder-column comparator="!=" name="languageId" />
+				<finder-column name="urlTitle" />
+			</finder>
 		</localized-entity>
 
 		<!-- Finder methods -->

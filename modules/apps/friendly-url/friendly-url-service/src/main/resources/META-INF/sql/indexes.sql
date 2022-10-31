@@ -6,6 +6,7 @@ create unique index IX_D51F1A48 on FriendlyURLEntry (uuid_[$COLUMN_LENGTH:75$], 
 create index IX_4F41A5C8 on FriendlyURLEntryLocalization (friendlyURLEntryId, ctCollectionId);
 create unique index IX_BBF3E90F on FriendlyURLEntryLocalization (friendlyURLEntryId, languageId[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_40A51197 on FriendlyURLEntryLocalization (groupId, classNameId, classPK, languageId[$COLUMN_LENGTH:75$], ctCollectionId);
-create unique index IX_C753170C on FriendlyURLEntryLocalization (groupId, classNameId, urlTitle[$COLUMN_LENGTH:255$], ctCollectionId);
+create unique index IX_29720B13 on FriendlyURLEntryLocalization (groupId, classNameId, languageId[$COLUMN_LENGTH:75$], urlTitle[$COLUMN_LENGTH:255$], ctCollectionId);
+create index IX_C753170C on FriendlyURLEntryLocalization (groupId, classNameId, urlTitle[$COLUMN_LENGTH:255$], ctCollectionId);
 
 create unique index IX_5BE324B9 on FriendlyURLEntryMapping (classNameId, classPK, ctCollectionId);

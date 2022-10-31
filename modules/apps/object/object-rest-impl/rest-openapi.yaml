@@ -159,6 +159,7 @@ paths:
             tags: ["ObjectEntry"]
     "/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}":
         put:
+            operationId: putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode
             parameters:
                 - in: path
                   name: currentExternalReferenceCode

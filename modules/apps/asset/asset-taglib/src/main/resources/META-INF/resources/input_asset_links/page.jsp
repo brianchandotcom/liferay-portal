@@ -135,48 +135,42 @@
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				multiple: true,
 				onSelect: function (selectedItems) {
-					var assetEntries = [];
-					if (selectedItems.length) {
+					if (selectedItems) {
 						Array.prototype.forEach.call(
 							selectedItems,
 							(selectedItem) => {
 								const assetEntry = JSON.parse(selectedItem.value);
-								assetEntries.push(assetEntry);
+
+								var entityId = assetEntry.assetEntryId;
+
+								if (searchContainerData.indexOf(entityId) == -1) {
+									var entryLink =
+										'<div class="text-right"><a class="modify-link" data-rowId="' +
+										entityId +
+										'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
+
+									var entryHtml =
+										'<h4 class="list-group-title">' +
+										Liferay.Util.escapeHTML(assetEntry.title) +
+										'</h4><p class="list-group-subtitle">' +
+										Liferay.Util.escapeHTML(
+											assetEntry.classNameId
+										) +
+										'</p><p class="list-group-subtitle"><liferay-ui:message key="scope" />: ' +
+										Liferay.Util.escapeHTML(
+											assetEntry.groupDescriptiveName
+										) +
+										'</p>';
+
+									searchContainer.addRow(
+										[entryHtml, entryLink],
+										entityId
+									);
+
+									searchContainer.updateDataStore();
+								}
 							}
 						);
-					}
-
-					if (assetEntries) {
-						Array.prototype.forEach.call(assetEntries, (assetEntry) => {
-							var entityId = assetEntry.assetEntryId;
-
-							if (searchContainerData.indexOf(entityId) == -1) {
-								var entryLink =
-									'<div class="text-right"><a class="modify-link" data-rowId="' +
-									entityId +
-									'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
-
-								var entryHtml =
-									'<h4 class="list-group-title">' +
-									Liferay.Util.escapeHTML(assetEntry.title) +
-									'</h4><p class="list-group-subtitle">' +
-									Liferay.Util.escapeHTML(
-										assetEntry.classNameId
-									) +
-									'</p><p class="list-group-subtitle"><liferay-ui:message key="scope" />: ' +
-									Liferay.Util.escapeHTML(
-										assetEntry.groupDescriptiveName
-									) +
-									'</p>';
-
-								searchContainer.addRow(
-									[entryHtml, entryLink],
-									entityId
-								);
-
-								searchContainer.updateDataStore();
-							}
-						});
 					}
 				},
 				title: event.currentTarget.attr('data-title'),

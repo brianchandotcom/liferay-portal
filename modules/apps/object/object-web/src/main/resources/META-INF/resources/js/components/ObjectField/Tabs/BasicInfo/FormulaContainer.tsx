@@ -15,7 +15,7 @@
 import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
 interface FormulaContainerProps {
 	errors: ObjectFieldErrors;

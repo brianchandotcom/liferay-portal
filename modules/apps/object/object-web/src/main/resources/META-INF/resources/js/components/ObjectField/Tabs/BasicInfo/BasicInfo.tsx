@@ -26,19 +26,19 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {updateFieldSettings} from '../../utils/fieldSettings';
+import {updateFieldSettings} from '../../../../utils/fieldSettings';
 import {
 	FilterErrors,
 	FilterValidation,
 	ModalAddFilter,
-} from '../ModalAddFilter';
+} from '../../../ModalAddFilter';
+import ObjectFieldFormBase from '../../ObjectFieldFormBase';
+import {useObjectFieldForm} from '../../useObjectFieldForm';
 import {AttachmentProperties} from './AttachmentProperties';
 import {MaxLengthProperties} from './MaxLengthProperties';
-import ObjectFieldFormBase from './ObjectFieldFormBase';
 import {SearchableContainer} from './SearchableContainer';
-import {useObjectFieldForm} from './useObjectFieldForm';
 
-import './EditObjectField.scss';
+import './BasicInfo.scss';
 import {FormulaContainer} from './FormulaContainer';
 
 interface AggregationFilters {
@@ -59,7 +59,7 @@ interface AggregationFilters {
 interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
-interface IProps {
+interface BasicInfoProps {
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
@@ -78,7 +78,7 @@ interface IProps {
 const REQUIRED_MSG = Liferay.Language.get('required');
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-export default function EditObjectField({
+export function BasicInfo({
 	filterOperators,
 	forbiddenChars,
 	forbiddenLastChars,
@@ -92,7 +92,7 @@ export default function EditObjectField({
 	objectRelationshipId,
 	readOnly,
 	workflowStatusJSONArray,
-}: IProps) {
+}: BasicInfoProps) {
 	const [editingObjectFieldName, setEditingObjectFieldName] = useState<
 		string
 	>('');

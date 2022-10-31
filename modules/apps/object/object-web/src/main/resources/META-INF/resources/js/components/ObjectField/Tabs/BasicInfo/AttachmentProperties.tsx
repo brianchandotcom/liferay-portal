@@ -17,8 +17,8 @@ import {Input} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {normalizeFieldSettings} from '../../utils/fieldSettings';
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
+import {normalizeFieldSettings} from '../../../../utils/fieldSettings';
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
 interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;

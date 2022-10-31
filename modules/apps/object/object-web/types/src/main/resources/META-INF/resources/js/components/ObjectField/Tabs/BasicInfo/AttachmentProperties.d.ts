@@ -14,15 +14,15 @@
 
 /// <reference types="react" />
 
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
-interface FormulaContainerProps {
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
+interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];
-	setValues: (values: Partial<ObjectField>) => void;
+	onSettingsChange: (setting: ObjectFieldSetting) => void;
 }
-export declare function FormulaContainer({
+export declare function AttachmentProperties({
 	errors,
 	objectFieldSettings,
-	setValues,
-}: FormulaContainerProps): JSX.Element;
+	onSettingsChange,
+}: IAttachmentPropertiesProps): JSX.Element;
 export {};

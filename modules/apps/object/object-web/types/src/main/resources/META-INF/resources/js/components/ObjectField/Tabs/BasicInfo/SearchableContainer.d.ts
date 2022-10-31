@@ -14,35 +14,19 @@
 
 /// <reference types="react" />
 
-import './EditObjectField.scss';
-interface IProps {
-	filterOperators: TFilterOperators;
-	forbiddenChars: string[];
-	forbiddenLastChars: string[];
-	forbiddenNames: string[];
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
+interface ISearchableProps {
+	disabled?: boolean;
+	errors: ObjectFieldErrors;
 	isApproved: boolean;
-	isDefaultStorageType: boolean;
-	objectDefinitionId: number;
-	objectField: ObjectField;
-	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
-	objectRelationshipId: number;
+	objectField: Partial<ObjectField>;
 	readOnly: boolean;
-	workflowStatusJSONArray: LabelValueObject[];
+	setValues: (values: Partial<ObjectField>) => void;
 }
-export default function EditObjectField({
-	filterOperators,
-	forbiddenChars,
-	forbiddenLastChars,
-	forbiddenNames,
+export declare function SearchableContainer({
 	isApproved,
-	isDefaultStorageType,
-	objectDefinitionId,
-	objectField: initialValues,
-	objectFieldTypes,
-	objectName,
-	objectRelationshipId,
+	objectField,
 	readOnly,
-	workflowStatusJSONArray,
-}: IProps): JSX.Element;
+	setValues,
+}: ISearchableProps): JSX.Element;
 export {};

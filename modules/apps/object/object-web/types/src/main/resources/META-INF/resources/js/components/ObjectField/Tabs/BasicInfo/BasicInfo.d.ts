@@ -14,19 +14,35 @@
 
 /// <reference types="react" />
 
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
-interface ISearchableProps {
-	disabled?: boolean;
-	errors: ObjectFieldErrors;
+import './BasicInfo.scss';
+interface BasicInfoProps {
+	filterOperators: TFilterOperators;
+	forbiddenChars: string[];
+	forbiddenLastChars: string[];
+	forbiddenNames: string[];
 	isApproved: boolean;
-	objectField: Partial<ObjectField>;
+	isDefaultStorageType: boolean;
+	objectDefinitionId: number;
+	objectField: ObjectField;
+	objectFieldTypes: ObjectFieldType[];
+	objectName: string;
+	objectRelationshipId: number;
 	readOnly: boolean;
-	setValues: (values: Partial<ObjectField>) => void;
+	workflowStatusJSONArray: LabelValueObject[];
 }
-export declare function SearchableContainer({
+export declare function BasicInfo({
+	filterOperators,
+	forbiddenChars,
+	forbiddenLastChars,
+	forbiddenNames,
 	isApproved,
-	objectField,
+	isDefaultStorageType,
+	objectDefinitionId,
+	objectField: initialValues,
+	objectFieldTypes,
+	objectName,
+	objectRelationshipId,
 	readOnly,
-	setValues,
-}: ISearchableProps): JSX.Element;
+	workflowStatusJSONArray,
+}: BasicInfoProps): JSX.Element;
 export {};

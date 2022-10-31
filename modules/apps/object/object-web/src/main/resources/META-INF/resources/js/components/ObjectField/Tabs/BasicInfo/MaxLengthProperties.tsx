@@ -18,9 +18,9 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
-import {createAutoCorrectedNumberPipe} from '../../utils/createAutoCorrectedNumberPipe';
-import {normalizeFieldSettings} from '../../utils/fieldSettings';
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
+import {createAutoCorrectedNumberPipe} from '../../../../utils/createAutoCorrectedNumberPipe';
+import {normalizeFieldSettings} from '../../../../utils/fieldSettings';
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
 interface IMaxLengthPropertiesProps {
 	disabled?: boolean;

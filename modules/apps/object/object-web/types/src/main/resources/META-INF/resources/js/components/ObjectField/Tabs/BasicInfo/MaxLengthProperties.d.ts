@@ -14,7 +14,7 @@
 
 /// <reference types="react" />
 
-import {ObjectFieldErrors} from './ObjectFieldFormBase';
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface IMaxLengthPropertiesProps {
 	disabled?: boolean;
 	errors: ObjectFieldErrors;

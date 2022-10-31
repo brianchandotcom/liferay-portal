@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = "path=/portal/fragment/import_fragment_entries",
 	service = StrutsAction.class
 )

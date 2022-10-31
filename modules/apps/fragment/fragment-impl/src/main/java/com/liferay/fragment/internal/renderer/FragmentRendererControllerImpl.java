@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = FragmentRendererController.class)
+@Component(service = FragmentRendererController.class)
 public class FragmentRendererControllerImpl
 	implements FragmentRendererController {
 

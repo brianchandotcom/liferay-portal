@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=fragment-entry-link-instanceable",
 		"com.liferay.portlet.add-default-resource=true",

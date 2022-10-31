@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentEntryLinkHelper.class)
+@Component(service = FragmentEntryLinkHelper.class)
 public class FragmentEntryLinkHelperImpl implements FragmentEntryLinkHelper {
 
 	@Override

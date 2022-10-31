@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true, service = FragmentCollectionFilterRegistry.class)
+@Component(service = FragmentCollectionFilterRegistry.class)
 public class FragmentCollectionFilterRegistryImpl
 	implements FragmentCollectionFilterRegistry {
 

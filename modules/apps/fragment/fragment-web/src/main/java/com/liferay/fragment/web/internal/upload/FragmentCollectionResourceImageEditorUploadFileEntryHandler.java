@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true,
 	service = FragmentCollectionResourceImageEditorUploadFileEntryHandler.class
 )
 public class FragmentCollectionResourceImageEditorUploadFileEntryHandler

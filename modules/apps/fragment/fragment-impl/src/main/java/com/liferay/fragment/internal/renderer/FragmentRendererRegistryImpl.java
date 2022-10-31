@@ -48,7 +48,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = FragmentRendererRegistry.class)
+@Component(service = FragmentRendererRegistry.class)
 public class FragmentRendererRegistryImpl implements FragmentRendererRegistry {
 
 	@Override

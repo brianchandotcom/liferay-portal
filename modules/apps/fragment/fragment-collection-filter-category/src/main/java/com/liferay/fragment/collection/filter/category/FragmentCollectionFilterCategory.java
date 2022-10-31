@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true, service = FragmentCollectionFilter.class)
+@Component(service = FragmentCollectionFilter.class)
 public class FragmentCollectionFilterCategory
 	implements FragmentCollectionFilter {
 

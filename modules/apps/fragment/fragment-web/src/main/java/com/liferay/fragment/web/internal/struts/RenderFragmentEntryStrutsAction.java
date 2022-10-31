@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = "path=/portal/fragment/render_fragment_entry",
+	property = "path=/portal/fragment/render_fragment_entry",
 	service = StrutsAction.class
 )
 public class RenderFragmentEntryStrutsAction implements StrutsAction {

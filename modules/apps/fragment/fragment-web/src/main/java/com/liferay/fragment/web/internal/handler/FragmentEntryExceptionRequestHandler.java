@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	immediate = true, service = FragmentEntryExceptionRequestHandler.class
-)
+@Component(service = FragmentEntryExceptionRequestHandler.class)
 public class FragmentEntryExceptionRequestHandler {
 
 	public void handlePortalException(

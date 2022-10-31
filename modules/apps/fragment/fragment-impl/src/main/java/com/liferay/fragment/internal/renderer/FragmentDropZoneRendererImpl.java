@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentDropZoneRenderer.class)
+@Component(service = FragmentDropZoneRenderer.class)
 public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 
 	@Override

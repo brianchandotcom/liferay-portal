@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(immediate = true, service = FragmentCollectionFilter.class)
+@Component(service = FragmentCollectionFilter.class)
 public class FragmentCollectionFilterKeyword
 	implements FragmentCollectionFilter {
 

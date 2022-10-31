@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentEntryLinkListenerRegistry.class)
+@Component(service = FragmentEntryLinkListenerRegistry.class)
 public class FragmentEntryLinkListenerRegistryImpl
 	implements FragmentEntryLinkListenerRegistry {
 

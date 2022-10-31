@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = StagedModelDataHandler.class)
+@Component(service = StagedModelDataHandler.class)
 public class FragmentEntryLinkStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FragmentEntryLink> {
 

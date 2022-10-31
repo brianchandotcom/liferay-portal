@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pablo Molina
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
 		"mvc.command.name=/fragment/render_fragment_entry"

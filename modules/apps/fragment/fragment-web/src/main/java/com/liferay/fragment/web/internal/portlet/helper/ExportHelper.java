@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ExportHelper.class)
+@Component(service = ExportHelper.class)
 public class ExportHelper {
 
 	public File exportFragmentCollections(

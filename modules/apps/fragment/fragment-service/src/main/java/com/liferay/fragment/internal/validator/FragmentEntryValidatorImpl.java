@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = FragmentEntryValidator.class)
+@Component(service = FragmentEntryValidator.class)
 public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 
 	@Override

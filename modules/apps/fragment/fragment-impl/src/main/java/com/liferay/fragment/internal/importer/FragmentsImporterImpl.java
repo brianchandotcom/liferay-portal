@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentsImporter.class)
+@Component(service = FragmentsImporter.class)
 public class FragmentsImporterImpl implements FragmentsImporter {
 
 	@Override

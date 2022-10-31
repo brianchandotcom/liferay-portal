@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = PortletRegistry.class)
+@Component(service = PortletRegistry.class)
 public class PortletRegistryImpl implements PortletRegistry {
 
 	@Override

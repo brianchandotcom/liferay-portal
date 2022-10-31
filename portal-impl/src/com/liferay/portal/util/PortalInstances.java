@@ -577,6 +577,28 @@ public class PortalInstances {
 		httpServletRequest.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 
+		HttpSession httpSession = httpServletRequest.getSession(false);
+
+		if (httpSession != null) {
+			Locale locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
+
+			if (locale != null) {
+				String languageId = LanguageUtil.getLanguageId(locale);
+
+				if (LanguageUtil.isAvailableLocale(languageId)) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Session has updated language " + languageId);
+					}
+
+					httpServletRequest.setAttribute(
+						WebKeys.I18N_LANGUAGE_ID, languageId);
+
+					return;
+				}
+			}
+		}
+
 		// Virtual host default locale
 
 		String languageId = virtualHost.getLanguageId();
@@ -594,26 +616,6 @@ public class PortalInstances {
 
 			httpServletRequest.setAttribute(
 				WebKeys.I18N_LANGUAGE_ID, languageId);
-		}
-
-		HttpSession httpSession = httpServletRequest.getSession(false);
-
-		if (httpSession != null) {
-			Locale locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
-
-			if (locale != null) {
-				languageId = LanguageUtil.getLanguageId(locale);
-
-				if (LanguageUtil.isAvailableLocale(languageId)) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Session has updated language " + languageId);
-					}
-
-					httpServletRequest.setAttribute(
-						WebKeys.I18N_LANGUAGE_ID, languageId);
-				}
-			}
 		}
 	}
 

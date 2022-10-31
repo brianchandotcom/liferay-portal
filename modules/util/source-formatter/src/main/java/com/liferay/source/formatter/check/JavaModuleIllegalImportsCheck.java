@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
@@ -81,12 +82,10 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 		if (absolutePath.matches(".+/internal/resource/v\\d+_.+") &&
 			fileName.endsWith("ResourceImpl.java") &&
 			content.contains(
-				"import com.liferay.petra.function.transform.TransformUtil") &&
-			content.contains("TransformUtil.transform(")) {
+				"import com.liferay.petra.function.transform.TransformUtil")) {
 
-			addMessage(
-				fileName,
-				"Use base class transform instead of TransformUtil.transform");
+			content = StringUtil.replace(
+				content, "TransformUtil.transform(", "transform(");
 		}
 
 		return content;

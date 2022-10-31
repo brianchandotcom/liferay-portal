@@ -20,7 +20,7 @@ dependencies {
 	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.2"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
 
-	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.6"
+	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.4.0"
 	compileOnly group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

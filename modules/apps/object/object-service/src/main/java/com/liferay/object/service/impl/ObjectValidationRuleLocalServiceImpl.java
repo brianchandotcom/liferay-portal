@@ -206,9 +206,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			objectValidationRuleLocalService.getObjectValidationRules(
 				objectDefinitionId, true);
 
-		if ((objectValidationRules == null) ||
-			ListUtil.isEmpty(objectValidationRules)) {
-
+		if (ListUtil.isEmpty(objectValidationRules)) {
 			return;
 		}
 

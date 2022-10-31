@@ -201,7 +201,11 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewRequiredField();
+		AssertElementPresent(locator1 = "Icon#ASTERISK");
+
+		AssertTextEquals(
+			locator1 = "Message#REQUIRED_INFO",
+			value1 = "The Name field is required.");
 	}
 
 	macro assertLearnHowLink {

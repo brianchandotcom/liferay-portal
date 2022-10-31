@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,7 +33,7 @@ public class ConcatFunction
 		return Stream.of(
 			values
 		).filter(
-			Validator::isNotNull
+			Objects::nonNull
 		).map(
 			Object::toString
 		).collect(

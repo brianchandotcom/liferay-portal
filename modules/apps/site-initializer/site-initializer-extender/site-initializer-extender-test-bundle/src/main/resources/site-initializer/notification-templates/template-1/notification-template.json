@@ -1,14 +1,20 @@
 {
 	"description": "This is the description for Test Notification Template.",
-	"from": "test-integration@liferay.com",
-	"fromName": {
-		"en-US": "Test Integration"
-	},
 	"name": "Test Notification Template",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"from": "test-integration@liferay.com",
+			"fromName": {
+				"en-US": "Test Integration"
+			},
+			"to": {
+				"en-US": "test@liferay.com"
+			}
+		}
+	],
 	"subject": {
-		"en-US": "This Is a Subject for Test Notification Template"
+		"en_US": "This Is a Subject for Test Notification Template"
 	},
-	"to": {
-		"en-US": "test@liferay.com"
-	}
+	"type": "email"
 }

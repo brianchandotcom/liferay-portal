@@ -138,10 +138,12 @@ const SetupAnalyticsCloudPage = ({
 			const {data} = await client.mutate({
 				context: {
 					displaySuccess: false,
+					type: 'liferay-rest',
 				},
 				mutation: addAnalyticsCloudWorkspace,
 				variables: {
 					analyticsCloudWorkspace: {
+						accountEntryId: project.id,
 						accountKey: project.accountKey,
 						dataCenterLocation: analyticsCloud.dataCenterLocation,
 						ownerEmailAddress: analyticsCloud.ownerEmailAddress,
@@ -153,16 +155,17 @@ const SetupAnalyticsCloudPage = ({
 
 			if (data) {
 				const analyticsCloudWorkspaceId =
-					data.c?.createAnalyticsCloudWorkspace
-						?.analyticsCloudWorkspaceId;
+					data?.createAnalyticsCloudWorkspace?.id;
 
 				await client.mutate({
 					context: {
 						displaySuccess: false,
+						type: 'liferay-rest',
 					},
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
+							accountEntryId: project.id,
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
 							manageContactsURL: `https://analytics.liferay.com/workspace/${analyticsCloudWorkspaceId}/sites`,
@@ -174,9 +177,14 @@ const SetupAnalyticsCloudPage = ({
 				await Promise.all(
 					analyticsCloud?.incidentReportContact?.map(({email}) => {
 						return client.mutate({
+							context: {
+								displaySuccess: false,
+								type: 'liferay-rest',
+							},
 							mutation: addIncidentReportAnalyticsCloud,
 							variables: {
 								IncidentReportContactAnalyticsCloud: {
+									accountEntryId: project.id,
 									analyticsCloudWorkspaceId,
 									emailAddress: email,
 								},

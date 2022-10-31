@@ -129,7 +129,6 @@ const SetupDXPCloudPage = ({
 					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
-
 			if (data) {
 				const status = !!data.c?.dXPCloudEnvironments?.items?.length;
 
@@ -150,10 +149,12 @@ const SetupDXPCloudPage = ({
 			const {data} = await client.mutate({
 				context: {
 					displaySuccess: false,
+					type: 'liferay-rest',
 				},
 				mutation: addDXPCloudEnvironment,
 				variables: {
 					DXPCloudEnvironment: {
+						accountEntryId: project.id,
 						accountKey: project.accountKey,
 						dataCenterRegion: dxp.dataCenterRegion,
 						disasterDataCenterRegion: dxp.disasterDataCenterRegion,
@@ -165,16 +166,18 @@ const SetupDXPCloudPage = ({
 
 			if (data) {
 				const dxpCloudEnvironmentId =
-					data.c?.createDXPCloudEnvironment?.dxpCloudEnvironmentId;
+					data?.createDXPCloudEnvironment?.id;
 				await Promise.all(
 					dxp.admins.map(({email, firstName, github, lastName}) =>
 						client.mutate({
 							context: {
 								displaySuccess: false,
+								type: 'liferay-rest',
 							},
 							mutation: addAdminDXPCloud,
 							variables: {
 								AdminDXPCloud: {
+									accountEntryId: project.id,
 									dxpCloudEnvironmentId,
 									emailAddress: email,
 									firstName,
@@ -188,9 +191,13 @@ const SetupDXPCloudPage = ({
 				);
 
 				await client.mutate({
+					context: {
+						type: 'liferay-rest',
+					},
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
+							accountEntryId: project.id,
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
 							manageContactsURL: `https://console.liferay.cloud/projects/${dxpCloudEnvironmentId}/overview`,

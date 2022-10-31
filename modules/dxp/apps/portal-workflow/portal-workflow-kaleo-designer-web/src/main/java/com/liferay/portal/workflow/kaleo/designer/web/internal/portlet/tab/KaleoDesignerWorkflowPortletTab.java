@@ -29,6 +29,7 @@ import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.client.extension.ClientExtensionHelper;
 import com.liferay.portal.workflow.kaleo.exception.DuplicateKaleoDefinitionNameException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -139,7 +140,8 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 
 		if (_kaleoDesignerDisplayContext == null) {
 			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-				renderRequest, _kaleoDefinitionVersionLocalService,
+				_clientExtensionHelper, renderRequest,
+				_kaleoDefinitionVersionLocalService,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 				_userLocalService);
 		}
@@ -188,6 +190,9 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerWorkflowPortletTab.class);
+
+	@Reference
+	private ClientExtensionHelper _clientExtensionHelper;
 
 	private volatile boolean _companyAdministratorCanPublish;
 	private KaleoDefinitionVersionLocalService

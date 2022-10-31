@@ -161,7 +161,7 @@ public class LinkEditableElementParser implements EditableElementParser {
 			throw new FragmentEntryContentException(
 				_language.format(
 					resourceBundle,
-					"each-editable-image-element-must-contain-an-a-tag",
+					"each-editable-link-element-must-contain-an-a-tag",
 					new Object[] {"<em>", "</em>"}, false));
 		}
 	}

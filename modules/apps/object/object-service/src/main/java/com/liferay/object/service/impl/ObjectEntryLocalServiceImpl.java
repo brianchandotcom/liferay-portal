@@ -3001,6 +3001,51 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateObjectStateTransition(
+			long objectFieldId, long listTypeDefinitionId,
+			ObjectEntry objectEntry, Map.Entry<String, Serializable> entry)
+		throws PortalException {
+
+		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
+
+		ListTypeEntry originalListTypeEntry =
+			_listTypeEntryLocalService.getListTypeEntry(
+				listTypeDefinitionId,
+				_getValue(
+					String.valueOf(objectEntryValues.get(entry.getKey()))));
+
+		ObjectStateFlow objectStateFlow =
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				objectFieldId);
+
+		ObjectState objectState =
+			_objectStateLocalService.getObjectStateFlowObjectState(
+				originalListTypeEntry.getListTypeEntryId(),
+				objectStateFlow.getObjectStateFlowId());
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.getListTypeEntry(
+				listTypeDefinitionId, String.valueOf(entry.getValue()));
+
+		boolean invalidObjectStateTransition = true;
+
+		for (ObjectState nextObjectState :
+				_objectStateLocalService.getNextObjectStates(
+					objectState.getObjectStateId())) {
+
+			if (nextObjectState.getListTypeEntryId() ==
+					listTypeEntry.getListTypeEntryId()) {
+
+				invalidObjectStateTransition = false;
+			}
+		}
+
+		if (invalidObjectStateTransition) {
+			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
+				originalListTypeEntry.getKey(), listTypeEntry.getKey());
+		}
+	}
+
 	private void _validateOneToOneInsert(
 			String dbColumnName, long dbColumnValue,
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
@@ -3073,55 +3118,6 @@ public class ObjectEntryLocalServiceImpl
 			throw new ObjectEntryValuesException.OneToOneConstraintViolation(
 				dbColumnName, dbColumnValue,
 				dynamicObjectDefinitionTable.getTableName());
-		}
-	}
-
-	private void _validateStateTransition(
-			long objectFieldId, long listTypeDefinitionId,
-			ObjectEntry objectEntry, Map.Entry<String, Serializable> entry)
-		throws PortalException {
-
-		ListTypeEntry listTypeEntryRequest =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinitionId, String.valueOf(entry.getValue()));
-
-		ObjectStateFlow objectStateFlow =
-			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				objectFieldId);
-
-		ObjectState objectStateRequest =
-			_objectStateLocalService.getObjectStateFlowObjectState(
-				listTypeEntryRequest.getListTypeEntryId(),
-				objectStateFlow.getObjectStateFlowId());
-
-		Map<String, Serializable> objectEntryValues = objectEntry.getValues();
-
-		String objectEntryValue = _getValue(
-			String.valueOf(objectEntryValues.get(entry.getKey())));
-
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinitionId, objectEntryValue);
-
-		ObjectState objectState =
-			_objectStateLocalService.getObjectStateFlowObjectState(
-				listTypeEntry.getListTypeEntryId(),
-				objectStateFlow.getObjectStateFlowId());
-
-		List<ObjectState> objectStatesPossibles =
-			_objectStateLocalService.getNextObjectStates(
-				objectState.getObjectStateId());
-
-		Stream<ObjectState> stream = objectStatesPossibles.stream();
-
-		if (!Objects.equals(objectState, objectStateRequest) &&
-			!stream.anyMatch(
-				listPossiblesObjectStates -> Objects.equals(
-					listPossiblesObjectStates.getObjectStateId(),
-					objectStateRequest.getObjectStateId()))) {
-
-			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
-				listTypeEntry.getKey(), listTypeEntryRequest.getKey());
 		}
 	}
 
@@ -3304,7 +3300,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			if ((objectEntry != null) && objectField.isState()) {
-				_validateStateTransition(
+				_validateObjectStateTransition(
 					objectField.getObjectFieldId(),
 					objectField.getListTypeDefinitionId(), objectEntry, entry);
 			}

@@ -28,6 +28,7 @@ import com.liferay.notification.service.NotificationTemplateService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.notification.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -40,6 +41,8 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Locale;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -219,6 +222,14 @@ public class NotificationTemplateResourceImpl
 				notificationContext));
 	}
 
+	private Locale _getLocale() {
+		if (contextUser != null) {
+			return contextUser.getLocale();
+		}
+
+		return contextAcceptLanguage.getPreferredLocale();
+	}
+
 	private NotificationTemplate _toNotificationTemplate(
 		com.liferay.notification.model.NotificationTemplate
 			serviceBuilderNotificationTemplate) {
@@ -303,12 +314,17 @@ public class NotificationTemplateResourceImpl
 				subject = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
 				type = serviceBuilderNotificationTemplate.getType();
+				typeLabel = _language.get(
+					_getLocale(), notificationType.getTypeLanguageKey());
 			}
 		};
 	}
 
 	private static final EntityModel _entityModel =
 		new NotificationTemplateEntityModel();
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private NotificationTemplateAttachmentLocalService

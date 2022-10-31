@@ -151,13 +151,13 @@ const ActivityClaimPanel = ({
 						<InputMultipleFilesListing
 							description="Drag and drop your files here to upload."
 							fieldValue={`activities[${activityIndex}].contents`}
-							files={activity.contents}
+							files={activity.documents}
 							label="All Contents"
 							onAccept={(value: File[]) =>
 								setFieldValue(
 									`activities[${activityIndex}].contents`,
-									activity.contents
-										? activity.contents.concat(value)
+									activity.documents
+										? activity.documents.concat(value)
 										: value
 								)
 							}

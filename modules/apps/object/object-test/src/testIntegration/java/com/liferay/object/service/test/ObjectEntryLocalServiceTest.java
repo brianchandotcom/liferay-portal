@@ -587,6 +587,65 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectEntryWithFormulaObjectField() throws Exception {
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_FORMULA,
+			ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Full Name"), "fullName", false,
+			false,
+			Arrays.asList(
+				_createObjectFieldSetting(
+					"script",
+					"concat(firstName, \" \", middleName, \" \", lastName)"),
+				_createObjectFieldSetting(
+					"output", ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.service.impl.ObjectEntryLocalServiceImpl",
+				LoggerTestUtil.ERROR)) {
+
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", RandomTestUtil.randomString()
+				).put(
+					"emailAddressRequired", "john@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
+		}
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", RandomTestUtil.randomString()
+			).put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"firstName", "First"
+			).put(
+				"lastName", "Last"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"middleName", "Middle"
+			).build());
+
+		Assert.assertNotNull(objectEntry);
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals("First Middle Last", values.get("fullName"));
+
+		_objectFieldLocalService.deleteObjectField(objectField);
+	}
+
+	@Test
 	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
 		ObjectValidationRule objectValidationRule =
 			_objectValidationRuleLocalService.addObjectValidationRule(

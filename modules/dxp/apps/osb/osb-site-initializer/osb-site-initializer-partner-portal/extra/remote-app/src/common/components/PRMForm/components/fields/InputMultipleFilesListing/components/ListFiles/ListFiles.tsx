@@ -12,37 +12,36 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ArrayHelpers} from 'formik';
 
-interface Iprops {
+interface IProps {
 	arrayHelpers: ArrayHelpers;
 	files: File[];
 }
 
-const ListFiles = ({arrayHelpers, files}: Iprops) => {
+const ListFiles = ({arrayHelpers, files}: IProps) => {
 	return (
 		<div>
-			{files &&
-				files.map((file, index) => (
-					<div
-						className="align-items-center bg-neutral-0 border border-neutral-4 d-flex justify-content-between mt-2 p-2 rounded-xs shadow-sm"
-						key={index}
-					>
-						<div className="font-weight-bold">
-							<div className="text-neutral-8">{file.name}</div>
+			{files?.map((file, index) => (
+				<div
+					className="align-items-center bg-neutral-0 border border-neutral-4 d-flex justify-content-between mt-2 p-2 rounded-xs shadow-sm"
+					key={index}
+				>
+					<div className="font-weight-bold">
+						<div className="text-neutral-8">{file.name}</div>
 
-							<div className="text-neutral-5">
-								{(file.size / 1000).toFixed(2)} Kb
-							</div>
+						<div className="text-neutral-5">
+							{(file.size / 1000).toFixed(2)} Kb
 						</div>
-
-						<ClayButtonWithIcon
-							className="text-neutral-7"
-							displayType={null}
-							onClick={() => arrayHelpers.remove(index)}
-							small
-							symbol="times-circle"
-						/>
 					</div>
-				))}
+
+					<ClayButtonWithIcon
+						className="text-neutral-7"
+						displayType={null}
+						onClick={() => arrayHelpers.remove(index)}
+						small
+						symbol="times-circle"
+					/>
+				</div>
+			))}
 		</div>
 	);
 };

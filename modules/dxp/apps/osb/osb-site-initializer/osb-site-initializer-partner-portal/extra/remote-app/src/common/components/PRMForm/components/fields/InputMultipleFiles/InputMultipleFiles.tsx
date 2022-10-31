@@ -14,14 +14,17 @@ import {FormikContextType} from 'formik';
 import {useDropzone} from 'react-dropzone';
 
 import MDFClaim from '../../../../../interfaces/mdfClaim';
+import MDFRequestActivity from '../../../../../interfaces/mdfRequestActivity';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
-
 interface IProps {
+	currentActivity: MDFRequestActivity;
+	currentActivityIndex: number;
+	files: File[];
 	onAccept: (value: File[]) => void;
 }
 
-const DragAndDrop = ({
+const InputMultipleFiles = ({
 	description,
 	field,
 	label,
@@ -40,47 +43,49 @@ const DragAndDrop = ({
 	});
 
 	return (
-		<div className="d-flex flex-column">
-			{label && (
-				<label className="font-weight-semi-bold">
-					{label}
+		<>
+			<div className="d-flex flex-column">
+				{label && (
+					<label className="font-weight-semi-bold">
+						{label}
 
-					{required && <span className="text-danger">*</span>}
-				</label>
-			)}
+						{required && <span className="text-danger">*</span>}
+					</label>
+				)}
 
-			<div
-				{...getRootProps({
-					className:
-						'bg-white d-flex align-items-center rounded flex-column border-neutral-4 border',
-				})}
-			>
-				<ClayInput
-					{...getInputProps({
-						name: field.name,
-						required,
+				<div
+					{...getRootProps({
+						className:
+							'bg-white d-flex align-items-center rounded flex-column border-neutral-4 border',
 					})}
-				/>
+				>
+					<ClayInput
+						{...getInputProps({
+							name: field.name,
+							required,
+						})}
+					/>
 
-				<div className="align-items-center d-flex flex-column p-3">
-					<p className="font-weight-bold text-neutral-10 text-paragraph">
-						{description}
-					</p>
+					<div className="align-items-center d-flex flex-column p-3">
+						<p className="font-weight-bold text-neutral-10 text-paragraph">
+							{description}
+						</p>
 
-					<p className="text-neutral-7 w-75">
-						Only files with the following extensions wil be
-						accepted: doc, docx.jpeg, jpg, pdf, tif, tiff
-					</p>
+						<p className="text-neutral-7 w-75">
+							Only files with the following extensions wil be
+							accepted: doc, docx.jpeg, jpg, pdf, tif, tiff
+						</p>
 
-					<p className="font-weight-bold text-neutral-7">Or</p>
+						<p className="font-weight-bold text-neutral-7">Or</p>
 
-					<button className="btn btn-secondary" onClick={open}>
-						Select Files
-					</button>
+						<button className="btn btn-secondary" onClick={open}>
+							Select Files
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
-export default DragAndDrop;
+export default InputMultipleFiles;

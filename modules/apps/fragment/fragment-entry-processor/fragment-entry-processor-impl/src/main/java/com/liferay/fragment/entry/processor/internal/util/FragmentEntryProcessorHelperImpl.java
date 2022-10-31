@@ -124,7 +124,21 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public String getEditableValue(JSONObject jsonObject, Locale locale) {
-		return _getEditableValueByLocale(jsonObject, locale);
+		String value = jsonObject.getString(
+			_language.getLanguageId(locale), null);
+
+		if (value != null) {
+			return value;
+		}
+
+		value = jsonObject.getString(
+			_language.getLanguageId(LocaleUtil.getSiteDefault()));
+
+		if (Validator.isNull(value)) {
+			value = jsonObject.getString("defaultValue");
+		}
+
+		return value;
 	}
 
 	@Override
@@ -391,26 +405,6 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return false;
-	}
-
-	private String _getEditableValueByLocale(
-		JSONObject jsonObject, Locale locale) {
-
-		String value = jsonObject.getString(
-			_language.getLanguageId(locale), null);
-
-		if (value != null) {
-			return value;
-		}
-
-		value = jsonObject.getString(
-			_language.getLanguageId(LocaleUtil.getSiteDefault()));
-
-		if (Validator.isNull(value)) {
-			value = jsonObject.getString("defaultValue");
-		}
-
-		return value;
 	}
 
 	private long _getFileEntryId(

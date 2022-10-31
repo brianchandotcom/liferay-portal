@@ -112,11 +112,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_CONFIGURATION_MENUITEM</td>
-	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_menuItem}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH</td>
 	<td>//div[contains(@id,'${key_contentType}Content')]//td[contains(.,'${key_actionType}')]//following-sibling::td/following-sibling::td[contains(@class,'lfr-website-column')]//span</td>
 	<td></td>

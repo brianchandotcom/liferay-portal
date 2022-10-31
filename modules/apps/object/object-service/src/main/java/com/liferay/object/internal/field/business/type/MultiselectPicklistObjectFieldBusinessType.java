@@ -71,7 +71,7 @@ public class MultiselectPicklistObjectFieldBusinessType
 		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"picklist");
+			"multi-select-picklist");
 	}
 
 	@Override

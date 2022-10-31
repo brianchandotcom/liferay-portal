@@ -14,21 +14,32 @@ import {array, boolean, mixed, number, object, string} from 'yup';
 const KB_TO_MB = 1024;
 const MAX_MB = KB_TO_MB * 3;
 
-const validDocument = {
-	imageDocumentsTypes: [
-		'image/jpg',
-		'image/jpeg',
-		'image/tiff',
-		'image/png',
-		'application/pdf',
-		'application/msword',
-		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-	],
-	listOfLeadsDocumentsTypes: [
-		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-		'text/csv',
-	],
-	maxSize: MAX_MB,
+const validateDocument = {
+	fileSize: {
+		maxSize: MAX_MB,
+		message: 'File Size is too large',
+	},
+	imageDocument: {
+		message:
+			'Unsupported File Format, upload a valid format *jpg *jpeg *tiff *png *pdf *doc *docx',
+		types: [
+			'image/jpg',
+			'image/jpeg',
+			'image/tiff',
+			'image/png',
+			'application/pdf',
+			'application/msword',
+			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		],
+	},
+	listOfLeadsDocuments: {
+		message:
+			'Unsupported File Format, upload a valid format *csv *xlsx *xls',
+		types: [
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			'text/csv',
+		],
+	},
 };
 
 const claimSchema = object({
@@ -46,23 +57,27 @@ const claimSchema = object({
 										schema
 											.test(
 												'fileSize',
-												'File Size is too large',
+												validateDocument.fileSize
+													.message,
 												(invoice) => {
 													return invoice
 														? Math.ceil(
 																invoice.size /
 																	1000
 														  ) <=
-																validDocument.maxSize
+																validateDocument
+																	.fileSize
+																	.maxSize
 														: false;
 												}
 											)
 											.test(
 												'fileType',
-												'Unsupported File Format, upload a valid format *jpg *jpeg *gif *png *pdf',
+												validateDocument.imageDocument
+													.message,
 												(invoice) =>
 													invoice
-														? validDocument.imageDocumentsTypes.includes(
+														? validateDocument.imageDocument.types.includes(
 																invoice.type
 														  )
 														: false
@@ -99,20 +114,20 @@ const claimSchema = object({
 						schema
 							.test(
 								'fileSize',
-								'File Size is too large',
+								validateDocument.fileSize.message,
 								(listQualifiedLeads) =>
 									listQualifiedLeads
 										? Math.ceil(
 												listQualifiedLeads.size / 1000
-										  ) <= validDocument.maxSize
+										  ) <= validateDocument.fileSize.maxSize
 										: false
 							)
 							.test(
 								'fileType',
-								'Unsupported File Format, upload a valid format *csv *xlsx *xls ',
+								validateDocument.listOfLeadsDocuments.message,
 								(listQualifiedLeads) =>
 									listQualifiedLeads
-										? validDocument.listOfLeadsDocumentsTypes.includes(
+										? validateDocument.listOfLeadsDocuments.types.includes(
 												listQualifiedLeads.type
 										  )
 										: false
@@ -158,18 +173,21 @@ const claimSchema = object({
 
 	reimbursementInvoice: mixed()
 		.required('Required')
-		.test('fileSize', 'File Size is too large', (reimbursementInvoice) =>
-			reimbursementInvoice
-				? Math.ceil(reimbursementInvoice.size / 1000) <=
-				  validDocument.maxSize
-				: false
+		.test(
+			'fileSize',
+			validateDocument.fileSize.message,
+			(reimbursementInvoice) =>
+				reimbursementInvoice
+					? Math.ceil(reimbursementInvoice.size / 1000) <=
+					  validateDocument.fileSize.maxSize
+					: false
 		)
 		.test(
 			'fileType',
-			'Unsupported File Format, upload a valid format *jpg *jpeg *gif *png *pdf',
+			validateDocument.imageDocument.message,
 			(reimbursementInvoice) =>
 				reimbursementInvoice
-					? validDocument.imageDocumentsTypes.includes(
+					? validateDocument.imageDocument.types.includes(
 							reimbursementInvoice.type
 					  )
 					: false

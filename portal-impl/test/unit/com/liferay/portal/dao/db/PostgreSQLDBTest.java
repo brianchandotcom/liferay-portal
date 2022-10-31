@@ -84,6 +84,17 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 			buildSQL(RENAME_TABLE_QUERY));
 	}
 
+	@Test
+	public void testRewordSqlWithOidColumn() throws Exception {
+		String sql = "alter table a add oidcUser oid";
+
+		String rewordedSql = buildSQL(sql);
+
+		Assert.assertTrue(
+			rewordedSql.contains(sql) &&
+			rewordedSql.contains("create or replace rule"));
+	}
+
 	@Override
 	protected DB getDB() {
 		return new PostgreSQLDB(0, 0);

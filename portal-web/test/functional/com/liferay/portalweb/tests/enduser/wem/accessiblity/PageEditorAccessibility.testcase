@@ -28,6 +28,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165791. Focus on experience selector when the window width is less than 990px."
+	@priority = "3"
+	test FocusOnExperienceSelectorWhenWindowWidthLessThan990 {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator resize the window size less than 990px") {
+			SetWindowSize(value1 = "900,1040");
+		}
+
+		task ("Then the page creator can focus on the Experience selector") {
+			KeyPress(
+				locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//button[@aria-label='Experience']");
+		}
+	}
+
 	@description = "This is a test for LPS-165356. The Skip to Product Menu link only be focusable when the Product Menu is open."
 	@priority = "3"
 	test FocusOnSkipToProductMenuWhenProductMenuOpen {

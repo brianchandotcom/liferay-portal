@@ -177,6 +177,9 @@ public class PortalImplAlternateURLTest {
 		_testAlternateURLWithAssetDisplayPageEntry(
 			availableLocales, defaultLocale, friendlyURLMap, 2,
 			journalArticle.getResourcePrimKey(), themeDisplay);
+		_testAlternateURLWithAssetDisplayPageEntry(
+			availableLocales, defaultLocale, friendlyURLMap, 3,
+			journalArticle.getResourcePrimKey(), themeDisplay);
 	}
 
 	@Test
@@ -250,6 +253,8 @@ public class PortalImplAlternateURLTest {
 			availableLocales, defaultLocale, friendlyURLMap, 1, themeDisplay);
 		_testAlternateURLWithLayout(
 			availableLocales, defaultLocale, friendlyURLMap, 2, themeDisplay);
+		_testAlternateURLWithLayout(
+			availableLocales, defaultLocale, friendlyURLMap, 3, themeDisplay);
 	}
 
 	@Test

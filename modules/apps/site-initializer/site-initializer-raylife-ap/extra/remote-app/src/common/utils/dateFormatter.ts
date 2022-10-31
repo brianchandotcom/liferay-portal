@@ -30,6 +30,20 @@ export const sixMonthsAgo = currentMonth - 5;
 export const threeMonthsAgo = currentMonth - 2;
 export const lastYear = currentYear - 1;
 
+export const nowDate = currentDate;
+export const policyCreateDate = nowDate;
+export const getDataToAddYear = new Date();
+getDataToAddYear.setFullYear(getDataToAddYear.getFullYear() + 1);
+
+export const yearToYear = new Date(getDataToAddYear);
+export const endDate = new Date(getDataToAddYear);
+export const paymentDueDate = new Date(
+	new Date().getTime() + 5 * 24 * 60 * 60 * 1000
+);
+export const getLastPaymentDate = new Date();
+getLastPaymentDate.setMonth(getLastPaymentDate.getMonth() + 11);
+export const lastPaymentDate = new Date(getLastPaymentDate);
+
 export const january = '01';
 export const december = '12';
 

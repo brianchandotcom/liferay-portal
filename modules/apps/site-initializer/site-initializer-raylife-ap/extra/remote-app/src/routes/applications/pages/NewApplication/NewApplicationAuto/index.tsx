@@ -22,7 +22,9 @@ import MultiSteps from '../../../../../common/components/multi-steps';
 import ClayIconProvider from '../../../../../common/context/ClayIconProvider';
 import {
 	createOrUpdateRaylifeApplication,
+	createRaylifeAutoPolicy,
 	exitRaylifeApplication,
+	getApplicationsById,
 } from '../../../../../common/services';
 import {createRaylifeAutoQuote} from '../../../../../common/services/Quote';
 import {CONSTANTS} from '../../../../../common/utils/constants';
@@ -79,7 +81,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		},
 	];
 
-	const handleNextClick = (event: any) => {
+	const handleNextClick = async (event: any) => {
 		setSaveChanges(true);
 
 		event?.preventDefault();
@@ -136,6 +138,18 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		);
 
 		if (state.currentStep === 4) {
+			const quote = await createRaylifeAutoQuote(state);
+
+			const quoteId = quote?.data?.id;
+
+			const application = await getApplicationsById(
+				Number(state.applicationId)
+			);
+
+			const applicationData = application?.data?.items[0];
+
+			createRaylifeAutoPolicy(applicationData, quoteId);
+
 			redirectTo('Applications');
 			createRaylifeAutoQuote(state);
 		}

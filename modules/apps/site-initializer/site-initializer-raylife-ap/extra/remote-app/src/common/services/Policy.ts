@@ -13,7 +13,14 @@
  */
 
 import {Parameters, parametersFormater} from '.';
-import {getCurrentDate} from '../utils/dateFormatter';
+import {
+	endDate,
+	getCurrentDate,
+	lastPaymentDate,
+	nowDate,
+	paymentDueDate,
+	yearToYear,
+} from '../utils/dateFormatter';
 import {axios} from './liferay/api';
 import {Liferay} from './liferay/liferay';
 
@@ -88,4 +95,46 @@ export function getPolicyByExternalReferenceCode<T = unknown>(
 	return axios.get<T>(
 		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
 	);
+}
+
+type ApplicationDataTypes = {
+	dataJSON: string;
+	email: string;
+	firstName: string;
+	lastName: string;
+};
+
+const adaptPolicyRequest = (
+	applicationData: ApplicationDataTypes,
+	quoteId: number
+) => ({
+	boundDate: nowDate,
+	commission: 611.0 * 0.2,
+	currencyType: 'USD',
+	dataJSON: applicationData.dataJSON,
+	endDate,
+	lastPaymentDate,
+	paymentDueDate,
+	policyCreateDate: nowDate,
+	policyOwnerEmail: applicationData.email,
+	policyOwnerName: applicationData.firstName + ' ' + applicationData.lastName,
+	policyStatus: {
+		key: 'executed',
+		name: 'Executed',
+	},
+	productExternalReferenceCode: 'RAYAP-001',
+	productName: 'Auto',
+	r_quoteToPolicies_c_raylifeQuoteId: quoteId,
+	startDate: nowDate,
+	termPremium: 611.0,
+	yearToYear,
+});
+
+export function createRaylifeAutoPolicy(
+	applicationData: ApplicationDataTypes,
+	quoteId: number
+) {
+	const payload = adaptPolicyRequest(applicationData, quoteId);
+
+	return axios.post(`${DeliveryAPI}/`, payload);
 }

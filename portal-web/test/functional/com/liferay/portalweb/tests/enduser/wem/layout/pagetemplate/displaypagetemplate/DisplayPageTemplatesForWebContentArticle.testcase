@@ -646,7 +646,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-90999. Preview web content in Asset Libraries through sites' display page templates."
+	@description = "This is a test for LPS-163800. Preview web content in Asset Libraries through sites' display page templates."
 	@priority = "4"
 	test PreviewWebContentThroughTheDisplayPageOfSpecificSiteInAssetLibrary {
 		task ("Given a site designer has display page templates for web content") {

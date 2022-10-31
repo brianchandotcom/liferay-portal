@@ -175,6 +175,7 @@ export function FieldBase({
 	hideField,
 	hideEditedFlag,
 	id,
+	itemPath,
 	label,
 	localizedValue = {},
 	name,
@@ -414,7 +415,7 @@ export function FieldBase({
 				/>
 			)}
 
-			{defaultRows && <Layout rows={defaultRows} />}
+			{defaultRows && <Layout itemPath={itemPath} rows={defaultRows} />}
 		</ClayForm.Group>
 	);
 }

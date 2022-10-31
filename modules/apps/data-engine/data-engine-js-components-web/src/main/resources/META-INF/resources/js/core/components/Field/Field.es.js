@@ -132,6 +132,7 @@ const mountStruct = (event, field, value, key) => {
 const FieldLazy = ({
 	field,
 	fieldTypes,
+	itemPath,
 	onBlur,
 	onChange,
 	onFocus,
@@ -150,6 +151,7 @@ const FieldLazy = ({
 
 	return (
 		<ComponentLazy
+			itemPath={itemPath}
 			onBlur={(event) => {
 				focusDurationRef.current.end = new Date();
 				onBlur(mountStruct(event, field), focusDurationRef.current);
@@ -186,7 +188,7 @@ const getRootParentField = (field, currentLoc, {loc, root}) => {
 	};
 };
 
-export function Field({field, loc, ...otherProps}) {
+export function Field({field, itemPath, loc, ...otherProps}) {
 	const parentField = useContext(ParentFieldContext);
 	const {defaultLanguageId, editingLanguageId} = useFormState();
 	const {fieldTypes} = usePage();
@@ -252,6 +254,7 @@ export function Field({field, loc, ...otherProps}) {
 									readOnly: getReadOnly(field),
 								}}
 								fieldTypes={fieldTypes}
+								itemPath={itemPath}
 								{...otherProps}
 							/>
 						</ParentFieldContext.Provider>

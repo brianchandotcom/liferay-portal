@@ -26,7 +26,7 @@ import {mergeVariants} from '../../utils/merge-variants.es';
 import {Field} from '../Field/Field.es';
 import {VariantsContext} from './VariantsContext.es';
 
-export function Layout({components, editable, rows, viewMode}) {
+export function Layout({components, editable, itemPath, rows, viewMode}) {
 	const {containerElement, pageIndex} = usePage();
 	const {activePage, defaultLanguageId} = useFormState();
 	const {allowNestedFields, submitButtonId} = useConfig();
@@ -42,11 +42,16 @@ export function Layout({components, editable, rows, viewMode}) {
 		<Components.Rows
 			activePage={activePage}
 			editable={editable}
+			itemPath={itemPath}
 			pageIndex={pageIndex}
 			rows={rows}
 		>
 			{({index: rowIndex, row}) => (
-				<Components.Row key={rowIndex} row={row}>
+				<Components.Row
+					itemPath={[...itemPath, rowIndex]}
+					key={rowIndex}
+					row={row}
+				>
 					{({column, index, ...otherProps}) => (
 						<Components.Column
 							activePage={activePage}
@@ -54,6 +59,7 @@ export function Layout({components, editable, rows, viewMode}) {
 							column={column}
 							editable={editable}
 							index={index}
+							itemPath={[...itemPath, rowIndex, index]}
 							key={index}
 							pageIndex={pageIndex}
 							row={row}
@@ -67,6 +73,12 @@ export function Layout({components, editable, rows, viewMode}) {
 									activePage={activePage}
 									defaultLanguageId={defaultLanguageId}
 									editable={editable}
+									itemPath={[
+										...itemPath,
+										rowIndex,
+										index,
+										fieldProps.index,
+									]}
 									key={
 										fieldProps.field?.instanceId ??
 										fieldProps.field.name

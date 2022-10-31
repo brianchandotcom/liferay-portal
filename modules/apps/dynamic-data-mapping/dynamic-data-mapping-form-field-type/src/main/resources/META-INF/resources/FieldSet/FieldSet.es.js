@@ -52,6 +52,7 @@ const getRows = (rows, nestedFields) => {
 const FieldSet = ({
 	collapsible,
 	ddmStructureId,
+	itemPath,
 	label,
 	name,
 	nestedFields = [],
@@ -94,6 +95,7 @@ const FieldSet = ({
 	return (
 		<FieldBase
 			{...otherProps}
+			itemPath={itemPath}
 			name={name}
 			readOnly={readOnly}
 			repeatable={collapsible ? false : repeatable}
@@ -129,6 +131,7 @@ const FieldSet = ({
 									? isFieldsGroup && !belongsToFieldSet
 									: editable
 							}
+							itemPath={itemPath}
 							rows={getRows(rows, nestedFields)}
 						/>
 					</Panel>
@@ -139,6 +142,7 @@ const FieldSet = ({
 								? isFieldsGroup && !belongsToFieldSet
 								: editable
 						}
+						itemPath={itemPath}
 						rows={getRows(rows, nestedFields)}
 					/>
 				)}

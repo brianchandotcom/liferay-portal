@@ -222,6 +222,7 @@ const Page = ({
 					<Layout
 						components={Components}
 						editable={editable}
+						itemPath={[pageIndex]}
 						rows={page.rows}
 						viewMode={viewMode}
 					/>

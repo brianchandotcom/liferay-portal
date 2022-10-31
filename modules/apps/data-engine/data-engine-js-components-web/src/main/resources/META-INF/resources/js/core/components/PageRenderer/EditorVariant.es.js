@@ -40,6 +40,7 @@ export function Column({
 	column,
 	editable,
 	index: columnIndex,
+	itemPath,
 	pageIndex,
 	resizeInfoRef,
 	rowIndex,
@@ -254,7 +255,7 @@ export function Page({
 
 Page.displayName = 'EditorVariant.Page';
 
-export function Rows({children, editable, pageIndex, rows}) {
+export function Rows({children, editable, itemPath, pageIndex, rows}) {
 	if (!rows) {
 		return null;
 	}

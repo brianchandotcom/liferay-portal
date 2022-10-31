@@ -320,10 +320,6 @@ public class NotificationTemplate implements Serializable {
 
 	@Schema
 	public Long getObjectDefinitionId() {
-		if (objectDefinitionId == null) {
-			return 0L;
-		}
-
 		return objectDefinitionId;
 	}
 
@@ -461,6 +457,34 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
+
+	@Schema
+	public String getTypeLabel() {
+		return typeLabel;
+	}
+
+	public void setTypeLabel(String typeLabel) {
+		this.typeLabel = typeLabel;
+	}
+
+	@JsonIgnore
+	public void setTypeLabel(
+		UnsafeSupplier<String, Exception> typeLabelUnsafeSupplier) {
+
+		try {
+			typeLabel = typeLabelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String typeLabel;
 
 	@Override
 	public boolean equals(Object object) {
@@ -677,6 +701,20 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(type));
+
+			sb.append("\"");
+		}
+
+		if (typeLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(typeLabel));
 
 			sb.append("\"");
 		}

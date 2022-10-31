@@ -262,6 +262,20 @@ public class NotificationTemplateSerDes {
 			sb.append("\"");
 		}
 
+		if (notificationTemplate.getTypeLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(notificationTemplate.getTypeLabel()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -405,6 +419,15 @@ public class NotificationTemplateSerDes {
 			map.put("type", String.valueOf(notificationTemplate.getType()));
 		}
 
+		if (notificationTemplate.getTypeLabel() == null) {
+			map.put("typeLabel", null);
+		}
+		else {
+			map.put(
+				"typeLabel",
+				String.valueOf(notificationTemplate.getTypeLabel()));
+		}
+
 		return map;
 	}
 
@@ -514,6 +537,12 @@ public class NotificationTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeLabel")) {
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setTypeLabel(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

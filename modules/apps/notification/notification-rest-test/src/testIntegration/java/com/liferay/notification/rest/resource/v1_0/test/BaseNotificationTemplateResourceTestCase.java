@@ -195,6 +195,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		notificationTemplate.setName(regex);
 		notificationTemplate.setRecipientType(regex);
 		notificationTemplate.setType(regex);
+		notificationTemplate.setTypeLabel(regex);
 
 		String json = NotificationTemplateSerDes.toJSON(notificationTemplate);
 
@@ -206,6 +207,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		Assert.assertEquals(regex, notificationTemplate.getName());
 		Assert.assertEquals(regex, notificationTemplate.getRecipientType());
 		Assert.assertEquals(regex, notificationTemplate.getType());
+		Assert.assertEquals(regex, notificationTemplate.getTypeLabel());
 	}
 
 	@Test
@@ -1073,6 +1075,14 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (notificationTemplate.getTypeLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1326,6 +1336,17 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getTypeLabel(),
+						notificationTemplate2.getTypeLabel())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1564,6 +1585,14 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("typeLabel")) {
+			sb.append("'");
+			sb.append(String.valueOf(notificationTemplate.getTypeLabel()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1620,6 +1649,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				recipientType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				typeLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

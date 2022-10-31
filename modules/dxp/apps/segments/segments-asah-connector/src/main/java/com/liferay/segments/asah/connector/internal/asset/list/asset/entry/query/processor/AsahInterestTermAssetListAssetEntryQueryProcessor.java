@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sarai Díaz
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST,
 	service = AssetListAssetEntryQueryProcessor.class
 )

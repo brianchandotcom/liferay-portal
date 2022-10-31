@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = JSONWebServiceClient.class)
+@Component(service = JSONWebServiceClient.class)
 public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 	@Override

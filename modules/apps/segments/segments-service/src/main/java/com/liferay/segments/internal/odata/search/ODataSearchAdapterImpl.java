@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(immediate = true, service = ODataSearchAdapter.class)
+@Component(service = ODataSearchAdapter.class)
 public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 	@Override

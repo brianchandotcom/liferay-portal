@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo García
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.segments.model.SegmentsEntry",
 	service = BrowsePortletProvider.class
 )

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  * @author Stefan Tanasie
  */
-@Component(immediate = true, service = ConfigurationScreen.class)
+@Component(service = ConfigurationScreen.class)
 public class SegmentsCompanyConfigurationScreen implements ConfigurationScreen {
 
 	@Override

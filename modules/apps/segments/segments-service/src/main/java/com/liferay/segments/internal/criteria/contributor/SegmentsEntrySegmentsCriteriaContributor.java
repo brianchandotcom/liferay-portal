@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Eduardo García
  */
 @Component(
-	immediate = true,
 	property = {
 		"segments.criteria.contributor.key=" + SegmentsEntrySegmentsCriteriaContributor.KEY,
 		"segments.criteria.contributor.model.class.name=*",

@@ -59,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pablo Molina
  */
 @Component(
-	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
 		"product.navigation.control.menu.entry.order:Integer=110"

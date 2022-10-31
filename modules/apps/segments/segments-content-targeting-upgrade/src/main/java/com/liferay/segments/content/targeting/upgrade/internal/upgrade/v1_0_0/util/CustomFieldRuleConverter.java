@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "rule.converter.key=CustomFieldRule",
+	property = "rule.converter.key=CustomFieldRule",
 	service = RuleConverter.class
 )
 public class CustomFieldRuleConverter implements RuleConverter {

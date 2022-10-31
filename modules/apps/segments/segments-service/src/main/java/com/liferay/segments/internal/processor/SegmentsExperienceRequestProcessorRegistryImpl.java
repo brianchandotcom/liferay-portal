@@ -36,9 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eduardo García
  */
-@Component(
-	immediate = true, service = SegmentsExperienceRequestProcessorRegistry.class
-)
+@Component(service = SegmentsExperienceRequestProcessorRegistry.class)
 public class SegmentsExperienceRequestProcessorRegistryImpl
 	implements SegmentsExperienceRequestProcessorRegistry {
 

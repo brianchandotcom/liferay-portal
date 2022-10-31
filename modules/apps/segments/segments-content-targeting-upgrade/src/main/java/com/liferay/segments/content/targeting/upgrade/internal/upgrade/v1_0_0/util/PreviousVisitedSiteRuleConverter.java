@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "rule.converter.key=PreviousVisitedSiteRule",
+	property = "rule.converter.key=PreviousVisitedSiteRule",
 	service = RuleConverter.class
 )
 public class PreviousVisitedSiteRuleConverter implements RuleConverter {

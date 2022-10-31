@@ -290,7 +290,7 @@ this-is-a-language-key=This is a language key''',
 		}
 
 		task ("Then assert error message and File Upload field is required") {
-			FormPortlet.viewValidationErrorMessage();
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The File field is required.");
 
 			FormFields.viewFieldRequired(fieldLabel = "File Upload");
 		}

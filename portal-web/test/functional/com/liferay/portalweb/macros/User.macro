@@ -334,7 +334,9 @@ definition {
 				value1 = "Please enter a valid email address.");
 		}
 		else if ("${userEmailAddressVariation}" == "Null") {
-			Alert.viewRequiredField();
+			AssertTextEquals.assertPartialText(
+				locator1 = "TextInput#REQUIRED_ALERT",
+				value1 = "The Email Address field is required.");
 		}
 		else if ("${userEmailAddressVariation}" == "Root") {
 			Alert.viewRequestFailedToComplete();

@@ -16,21 +16,34 @@ export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUP = gql`
 		$accountSubscriptionGroupId: Long!
 		$AccountSubscriptionGroup: InputC_AccountSubscriptionGroup!
 	) {
-		c {
-			updateAccountSubscriptionGroup(
-				accountSubscriptionGroupId: $accountSubscriptionGroupId
-				AccountSubscriptionGroup: $AccountSubscriptionGroup
+		updateAccountSubscriptionGroup(
+			accountSubscriptionGroupId: $accountSubscriptionGroupId
+			input: $AccountSubscriptionGroup
+		)
+			@rest(
+				method: "PUT"
+				type: "C_AccountSubscriptionGroup"
+				path: "/c/accountsubscriptiongroups/{args.accountSubscriptionGroupId}"
 			) {
-				accountSubscriptionGroupId
-				accountKey
-				activationStatus
-			}
+			accountSubscriptionGroupId
+			accountKey
+			activationStatus
 		}
 	}
 `;
 
-export function useUpdateAccountSubscriptionGroup(variables) {
-	return useMutation(UPDATE_ACCOUNT_SUBSCRIPTION_GROUP, {
-		variables,
-	});
+export function useUpdateAccountSubscriptionGroup(
+	variables,
+	options = {displaySuccess: false}
+) {
+	return useMutation(
+		UPDATE_ACCOUNT_SUBSCRIPTION_GROUP,
+		{
+			context: {
+				displaySuccess: options.displaySuccess,
+				type: 'liferay-rest',
+			},
+		},
+		variables
+	);
 }

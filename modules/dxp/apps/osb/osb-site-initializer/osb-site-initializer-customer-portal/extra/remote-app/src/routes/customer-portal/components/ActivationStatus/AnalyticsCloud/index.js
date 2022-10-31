@@ -194,10 +194,12 @@ const ActivationStatusAnalyticsCloud = ({
 			await client.mutate({
 				context: {
 					displaySuccess: false,
+					type: 'liferay-rest',
 				},
 				mutation: updateAccountSubscriptionGroups,
 				variables: {
 					accountSubscriptionGroup: {
+						accountEntryId: project.id,
 						accountKey: project.accountKey,
 						activationStatus: STATUS_TAG_TYPE_NAMES.active,
 					},

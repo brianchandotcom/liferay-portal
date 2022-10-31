@@ -43,7 +43,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Lance Ji
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class PortletDisplayTemplateServiceTracker {
 
 	@Activate

@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = PortletDisplayTemplate.class)
+@Component(service = PortletDisplayTemplate.class)
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override

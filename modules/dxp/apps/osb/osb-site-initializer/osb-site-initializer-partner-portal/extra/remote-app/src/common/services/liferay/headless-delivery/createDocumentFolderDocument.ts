@@ -26,6 +26,9 @@ export default async function createDocumentFolderDocument(
 		`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/document-folders/${documentFolderId}/documents`,
 		Liferay.authToken,
 		{},
-		{body: formData, headers: {}}
+		{
+			body: formData,
+			headers: {},
+		}
 	);
 }

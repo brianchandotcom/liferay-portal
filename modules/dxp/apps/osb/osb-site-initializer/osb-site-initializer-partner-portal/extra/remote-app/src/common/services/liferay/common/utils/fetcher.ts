@@ -36,16 +36,16 @@ liferayFetcher.post = <T>(
 	token: string,
 	data: T,
 	options?: RequestInit
-) =>
-	liferayFetcher<T>(url, token, {
-		...options,
+) => {
+	return liferayFetcher<T>(url, token, {
 		body: JSON.stringify(data),
 		headers: {
-			...options?.headers,
 			'Content-Type': 'application/json',
 		},
 		method: 'POST',
+		...options,
 	});
+};
 
 liferayFetcher.put = <T>(
 	url: string,

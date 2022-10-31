@@ -129,7 +129,7 @@ public class PortalImplAlternateURLTest {
 	}
 
 	@Test
-	public void testAlternateURLWithDisplayPage() throws Exception {
+	public void testAlternateURLWithAssetDisplayPageEntry() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		Collection<Locale> availableLocales = Arrays.asList(
@@ -162,19 +162,19 @@ public class PortalImplAlternateURLTest {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, friendlyURLMap);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addDisplayPageTemplate(journalArticle);
+			_addAssetDisplayPageEntry(journalArticle);
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(
 			_group,
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 
-		_testAlternateURLWithDisplayPage(
+		_testAlternateURLWithAssetDisplayPageEntry(
 			availableLocales, defaultLocale, friendlyURLMap, 0,
 			journalArticle.getResourcePrimKey(), themeDisplay);
-		_testAlternateURLWithDisplayPage(
+		_testAlternateURLWithAssetDisplayPageEntry(
 			availableLocales, defaultLocale, friendlyURLMap, 1,
 			journalArticle.getResourcePrimKey(), themeDisplay);
-		_testAlternateURLWithDisplayPage(
+		_testAlternateURLWithAssetDisplayPageEntry(
 			availableLocales, defaultLocale, friendlyURLMap, 2,
 			journalArticle.getResourcePrimKey(), themeDisplay);
 	}
@@ -336,7 +336,7 @@ public class PortalImplAlternateURLTest {
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
-	private LayoutPageTemplateEntry _addDisplayPageTemplate(
+	private LayoutPageTemplateEntry _addAssetDisplayPageEntry(
 			JournalArticle journalArticle)
 		throws Exception {
 
@@ -364,17 +364,7 @@ public class PortalImplAlternateURLTest {
 		return layoutPageTemplateEntry;
 	}
 
-	private String _generateAssetPublisherContentURL(
-		String portalDomain, String languageId, String groupFriendlyURL) {
-
-		return StringBundler.concat(
-			"http://", portalDomain, languageId,
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-			Portal.FRIENDLY_URL_SEPARATOR, "asset_publisher", groupFriendlyURL,
-			"/content/content-title");
-	}
-
-	private String _generateDisplayPageURL(
+	private String _generateAssetDisplayPageEntryURL(
 		Locale defaultLocale, String friendlyURL, String groupFriendlyURL,
 		Locale locale, String portalURL) {
 
@@ -384,6 +374,16 @@ public class PortalImplAlternateURLTest {
 			groupFriendlyURL,
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
 			friendlyURL);
+	}
+
+	private String _generateAssetPublisherContentURL(
+		String portalDomain, String languageId, String groupFriendlyURL) {
+
+		return StringBundler.concat(
+			"http://", portalDomain, languageId,
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			Portal.FRIENDLY_URL_SEPARATOR, "asset_publisher", groupFriendlyURL,
+			"/content/content-title");
 	}
 
 	private String _generateLayoutURL(
@@ -582,7 +582,7 @@ public class PortalImplAlternateURLTest {
 		}
 	}
 
-	private void _testAlternateURLWithDisplayPage(
+	private void _testAlternateURLWithAssetDisplayPageEntry(
 			Collection<Locale> availableLocales, Locale defaultLocale,
 			Map<Locale, String> friendlyURLMap, int prependFriendlyURLStyle,
 			long resourcePrimKey, ThemeDisplay themeDisplay)
@@ -596,7 +596,7 @@ public class PortalImplAlternateURLTest {
 				prependFriendlyURLStyle;
 
 			for (Locale alternateLocale : availableLocales) {
-				String expectedAlternateURL = _generateDisplayPageURL(
+				String expectedAlternateURL = _generateAssetDisplayPageEntryURL(
 					defaultLocale, friendlyURLMap.get(alternateLocale),
 					_group.getFriendlyURL(), alternateLocale,
 					themeDisplay.getPortalURL());

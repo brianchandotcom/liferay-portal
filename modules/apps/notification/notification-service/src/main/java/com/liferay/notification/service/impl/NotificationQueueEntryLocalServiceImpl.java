@@ -56,14 +56,32 @@ public class NotificationQueueEntryLocalServiceImpl
 		throws PortalException {
 
 		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntryPersistence.update(
-				notificationContext.getNotificationQueueEntry());
+			notificationContext.getNotificationQueueEntry();
+
+		notificationQueueEntry.setNotificationQueueEntryId(
+			counterLocalService.increment());
+
+		notificationQueueEntry = notificationQueueEntryPersistence.update(
+			notificationQueueEntry);
+
+		NotificationRecipient notificationRecipient =
+			notificationContext.getNotificationRecipient();
+
+		notificationRecipient.setNotificationRecipientId(
+			counterLocalService.increment());
+		notificationRecipient.setClassPK(
+			notificationQueueEntry.getNotificationQueueEntryId());
 
 		_notificationRecipientLocalService.updateNotificationRecipient(
-			notificationContext.getNotificationRecipient());
+			notificationRecipient);
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationContext.getNotificationRecipientSettings()) {
+
+			notificationRecipientSetting.setNotificationRecipientSettingId(
+				counterLocalService.increment());
+			notificationRecipientSetting.setNotificationRecipientId(
+				notificationRecipient.getNotificationRecipientId());
 
 			_notificationRecipientSettingLocalService.
 				updateNotificationRecipientSetting(

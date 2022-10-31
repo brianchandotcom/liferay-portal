@@ -14,7 +14,6 @@
 
 package com.liferay.notification.type;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
@@ -118,8 +117,7 @@ public abstract class BaseNotificationType implements NotificationType {
 			notificationContext.getNotificationTemplate();
 
 		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntryLocalService.createNotificationQueueEntry(
-				counterLocalService.increment());
+			notificationQueueEntryLocalService.createNotificationQueueEntry(0L);
 
 		notificationQueueEntry.setUserId(user.getUserId());
 		notificationQueueEntry.setUserId(user.getUserId());
@@ -143,8 +141,7 @@ public abstract class BaseNotificationType implements NotificationType {
 		User user, long notificationQueueEntryId) {
 
 		NotificationRecipient notificationRecipient =
-			notificationRecipientLocalService.createNotificationRecipient(
-				counterLocalService.increment());
+			notificationRecipientLocalService.createNotificationRecipient(0L);
 
 		notificationRecipient.setCompanyId(user.getCompanyId());
 		notificationRecipient.setUserId(user.getUserId());
@@ -170,8 +167,7 @@ public abstract class BaseNotificationType implements NotificationType {
 
 			NotificationRecipientSetting notificationRecipientSetting =
 				notificationRecipientSettingLocalService.
-					createNotificationRecipientSetting(
-						counterLocalService.increment());
+					createNotificationRecipientSetting(0L);
 
 			notificationRecipientSetting.setCompanyId(user.getCompanyId());
 			notificationRecipientSetting.setUserId(user.getUserId());
@@ -320,9 +316,6 @@ public abstract class BaseNotificationType implements NotificationType {
 				notificationRecipientSettings);
 		}
 	}
-
-	@Reference
-	protected CounterLocalService counterLocalService;
 
 	@Reference
 	protected NotificationQueueEntryLocalService

@@ -264,21 +264,23 @@ public class PredicateExpressionVisitorImpl
 
 		Predicate predicate = null;
 
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinitionId, String.valueOf(left));
-
-		if ((objectField != null) &&
-			StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-			predicate = _contains(left, right);
-		}
-		else if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
+		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
 			predicate = Predicate.and((Predicate)left, (Predicate)right);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
 			predicate = Predicate.or((Predicate)left, (Predicate)right);
+		}
+		else {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_objectDefinitionId, String.valueOf(left));
+
+			if ((objectField != null) &&
+				StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				predicate = _contains(left, right);
+			}
 		}
 
 		if (predicate != null) {

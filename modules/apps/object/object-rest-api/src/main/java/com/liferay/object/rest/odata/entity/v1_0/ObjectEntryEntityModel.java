@@ -160,6 +160,17 @@ public class ObjectEntryEntityModel implements EntityModel {
 					 objectField.getDBType(),
 					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				return Optional.of(
+					new CollectionEntityField(
+						new StringEntityField(
+							objectField.getName(),
+							locale -> objectField.getName())));
+			}
+
 			return Optional.of(
 				new StringEntityField(
 					objectField.getName(), locale -> objectField.getName()));
@@ -202,16 +213,6 @@ public class ObjectEntryEntityModel implements EntityModel {
 			return Optional.of(
 				new IntegerEntityField(
 					objectField.getName(), locale -> objectField.getName()));
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-			return Optional.of(
-				new CollectionEntityField(
-					new StringEntityField(
-						objectField.getName(),
-						locale -> objectField.getName())));
 		}
 
 		return Optional.empty();

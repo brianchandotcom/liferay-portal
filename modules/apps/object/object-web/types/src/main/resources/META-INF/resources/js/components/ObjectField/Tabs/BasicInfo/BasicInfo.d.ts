@@ -12,36 +12,36 @@
  * details.
  */
 
-/// <reference types="react" />
-
+import React from 'react';
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface BasicInfoProps {
+	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
-	forbiddenChars: string[];
-	forbiddenLastChars: string[];
-	forbiddenNames: string[];
+	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
 	objectDefinitionId: number;
-	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
+	setValues: (values: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
 export declare function BasicInfo({
+	errors,
 	filterOperators,
-	forbiddenChars,
-	forbiddenLastChars,
-	forbiddenNames,
+	handleChange,
 	isApproved,
 	isDefaultStorageType,
 	objectDefinitionId,
-	objectField: initialValues,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
 	readOnly,
+	setValues,
+	values,
 	workflowStatusJSONArray,
 }: BasicInfoProps): JSX.Element;
 export {};

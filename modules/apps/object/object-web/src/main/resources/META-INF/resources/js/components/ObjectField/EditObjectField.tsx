@@ -13,11 +13,17 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import {SidePanelForm} from '@liferay/object-js-components-web';
+import {
+	API,
+	SidePanelForm,
+	openToast,
+	saveAndReload,
+} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import './EditObjectField.scss';
 import {BasicInfo} from './Tabs/BasicInfo/BasicInfo';
+import {useObjectFieldForm} from './useObjectFieldForm';
 
 interface EditObjectFieldProps {
 	filterOperators: TFilterOperators;
@@ -57,10 +63,49 @@ export default function EditObjectField({
 }: EditObjectFieldProps) {
 	const [activeIndex, setActiveIndex] = useState(0);
 
+	const onSubmit = async ({id, ...objectField}: ObjectField) => {
+		if (Liferay.FeatureFlags['LPS-164278']) {
+			delete objectField.listTypeDefinitionId;
+		}
+
+		delete objectField.system;
+
+		try {
+			await API.save(
+				`/o/object-admin/v1.0/object-fields/${id}`,
+				objectField
+			);
+
+			saveAndReload();
+			openToast({
+				message: Liferay.Language.get(
+					'the-object-field-was-updated-successfully'
+				),
+			});
+		}
+		catch (error) {
+			openToast({message: (error as Error).message, type: 'danger'});
+		}
+	};
+
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		setValues,
+		values,
+	} = useObjectFieldForm({
+		forbiddenChars,
+		forbiddenLastChars,
+		forbiddenNames,
+		initialValues: objectField,
+		onSubmit,
+	});
+
 	return (
 		<SidePanelForm
 			className="lfr-objects__edit-object-field"
-			onSubmit={() => {}}
+			onSubmit={handleSubmit}
 			readOnly={readOnly}
 			title={Liferay.Language.get('field')}
 		>
@@ -79,18 +124,18 @@ export default function EditObjectField({
 			<ClayTabs.Content activeIndex={activeIndex} fade>
 				<ClayTabs.TabPane>
 					<BasicInfo
+						errors={errors}
 						filterOperators={filterOperators}
-						forbiddenChars={forbiddenChars}
-						forbiddenLastChars={forbiddenLastChars}
-						forbiddenNames={forbiddenNames}
+						handleChange={handleChange}
 						isApproved={isApproved}
 						isDefaultStorageType={isDefaultStorageType}
 						objectDefinitionId={objectDefinitionId}
-						objectField={objectField}
 						objectFieldTypes={objectFieldTypes}
 						objectName={objectName}
 						objectRelationshipId={objectRelationshipId}
 						readOnly={readOnly}
+						setValues={setValues}
+						values={values}
 						workflowStatusJSONArray={workflowStatusJSONArray}
 					/>
 				</ClayTabs.TabPane>

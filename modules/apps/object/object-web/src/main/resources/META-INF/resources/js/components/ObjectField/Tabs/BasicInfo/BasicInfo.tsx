@@ -20,8 +20,6 @@ import {
 	Input,
 	InputLocalized,
 	invalidateRequired,
-	openToast,
-	saveAndReload,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -31,8 +29,9 @@ import {
 	FilterValidation,
 	ModalAddFilter,
 } from '../../../ModalAddFilter';
-import ObjectFieldFormBase from '../../ObjectFieldFormBase';
-import {useObjectFieldForm} from '../../useObjectFieldForm';
+import ObjectFieldFormBase, {
+	ObjectFieldErrors,
+} from '../../ObjectFieldFormBase';
 import {AttachmentProperties} from './AttachmentProperties';
 import {FormulaContainer} from './FormulaContainer';
 import {MaxLengthProperties} from './MaxLengthProperties';
@@ -57,18 +56,18 @@ interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
 interface BasicInfoProps {
+	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
-	forbiddenChars: string[];
-	forbiddenLastChars: string[];
-	forbiddenNames: string[];
+	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
 	objectDefinitionId: number;
-	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
+	setValues: (values: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
@@ -76,18 +75,18 @@ const REQUIRED_MSG = Liferay.Language.get('required');
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function BasicInfo({
+	errors,
 	filterOperators,
-	forbiddenChars,
-	forbiddenLastChars,
-	forbiddenNames,
+	handleChange,
 	isApproved,
 	isDefaultStorageType,
 	objectDefinitionId,
-	objectField: initialValues,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
 	readOnly,
+	setValues,
+	values,
 	workflowStatusJSONArray,
 }: BasicInfoProps) {
 	const [editingObjectFieldName, setEditingObjectFieldName] = useState<
@@ -107,45 +106,6 @@ export function BasicInfo({
 			setEditingFilter(false);
 			setVisibleModal(false);
 		},
-	});
-
-	const onSubmit = async ({id, ...objectField}: ObjectField) => {
-		if (Liferay.FeatureFlags['LPS-164278']) {
-			delete objectField.listTypeDefinitionId;
-		}
-
-		delete objectField.system;
-
-		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-fields/${id}`,
-				objectField
-			);
-
-			saveAndReload();
-			openToast({
-				message: Liferay.Language.get(
-					'the-object-field-was-updated-successfully'
-				),
-			});
-		}
-		catch (error) {
-			openToast({message: (error as Error).message, type: 'danger'});
-		}
-	};
-
-	const {
-		errors,
-		handleChange,
-		handleSubmit,
-		setValues,
-		values,
-	} = useObjectFieldForm({
-		forbiddenChars,
-		forbiddenLastChars,
-		forbiddenNames,
-		initialValues,
-		onSubmit,
 	});
 
 	const disableFieldFormBase = !!(

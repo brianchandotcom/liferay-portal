@@ -102,6 +102,8 @@ definition {
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
 
+		Click(locator1 = "ControlMenu#HEADING");
+
 		DDLDataDefinition.save(publicationsEnabled = "${publicationsEnabled}");
 	}
 

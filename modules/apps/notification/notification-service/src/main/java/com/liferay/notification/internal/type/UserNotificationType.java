@@ -16,6 +16,7 @@ package com.liferay.notification.internal.type;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.internal.type.users.provider.UsersProvider;
 import com.liferay.notification.internal.type.users.provider.UsersProviderTracker;
@@ -186,6 +187,21 @@ public class UserNotificationType extends BaseNotificationType {
 				notificationRecipientSetting.getValue()
 			).build(),
 			Object.class);
+	}
+
+	@Override
+	protected NotificationQueueEntry createNotificationQueueEntry(
+		User user, String body, NotificationContext notificationContext,
+		String subject) {
+
+		NotificationQueueEntry notificationQueueEntry =
+			super.createNotificationQueueEntry(
+				user, body, notificationContext, subject);
+
+		notificationQueueEntry.setStatus(
+			NotificationQueueEntryConstants.STATUS_SENT);
+
+		return notificationQueueEntry;
 	}
 
 	@Reference

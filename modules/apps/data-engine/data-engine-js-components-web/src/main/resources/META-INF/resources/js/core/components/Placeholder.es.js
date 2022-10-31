@@ -18,8 +18,16 @@ import React, {useContext} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../hooks/useDrop.es';
 import {ParentFieldContext} from './Field/ParentFieldContext.es';
+import {useIsOverTarget as useIsOverKeyboardTarget} from './KeyboardDNDContext';
 
-export function Placeholder({columnIndex, isRow, pageIndex, rowIndex, size}) {
+export function Placeholder({
+	columnIndex,
+	isRow,
+	keyboardDNDPosition,
+	pageIndex,
+	rowIndex,
+	size,
+}) {
 	const parentField = useContext(ParentFieldContext);
 	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex: columnIndex ?? 0,
@@ -28,6 +36,11 @@ export function Placeholder({columnIndex, isRow, pageIndex, rowIndex, size}) {
 		parentField,
 		rowIndex,
 	});
+
+	const overKeyboardTarget = useIsOverKeyboardTarget(
+		keyboardDNDPosition.itemPath,
+		keyboardDNDPosition.position
+	);
 
 	const Content = (
 		<ClayLayout.Col
@@ -40,9 +53,10 @@ export function Placeholder({columnIndex, isRow, pageIndex, rowIndex, size}) {
 			<div
 				className={classnames('ddm-target', {
 					'target-over targetOver':
-						overTarget &&
-						canDrop &&
-						!parentField.root?.ddmStructureId,
+						(overTarget &&
+							canDrop &&
+							!parentField.root?.ddmStructureId) ||
+						overKeyboardTarget,
 				})}
 				ref={!parentField.root?.ddmStructureId ? drop : undefined}
 			/>

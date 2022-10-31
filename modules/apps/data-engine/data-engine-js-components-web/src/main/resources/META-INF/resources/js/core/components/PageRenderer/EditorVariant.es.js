@@ -18,6 +18,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -27,9 +28,11 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 import {DRAG_FIELD_TYPE_MOVE} from '../../../utils/dragTypes';
 import {hasFieldSet} from '../../../utils/fields.es';
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
+import {useFormState} from '../../hooks/useForm.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 import FieldDragPreview from '../FieldDragPreview.es';
+import {useIsOverTarget as useIsOverKeyboardTarget} from '../KeyboardDNDContext';
 import {Placeholder} from '../Placeholder.es';
 import ResizableColumn from '../ResizableColumn.es';
 import * as DefaultVariant from './DefaultVariant.es';
@@ -70,6 +73,11 @@ export function Column({
 		rowIndex,
 	});
 
+	const overFieldKeyboardTarget = useIsOverKeyboardTarget(
+		column.fields.length ? [...itemPath, 0] : itemPath,
+		'middle'
+	);
+
 	const [{isDragging}, drag, preview] = useDrag({
 		item: {
 			data: firstField ?? undefined,
@@ -94,6 +102,7 @@ export function Column({
 		return (
 			<Placeholder
 				columnIndex={columnIndex}
+				keyboardDNDPosition={{itemPath, position: 'middle'}}
 				pageIndex={pageIndex}
 				rowIndex={rowIndex}
 				size={column.size}
@@ -129,12 +138,13 @@ export function Column({
 					'dragging': resizing || isDragging,
 					'hovered': editable && firstField.fieldName === hoveredId,
 					'selected': editable && firstField.fieldName === activeId,
-					'target-droppable': canDrop,
+					'target-droppable': canDrop || overFieldKeyboardTarget,
 					'target-over targetOver':
 						(!rootParentField.ddmStructureId &&
 							overTarget &&
 							canDrop) ||
-						resizing,
+						resizing ||
+						overFieldKeyboardTarget,
 				})}
 				column={column}
 				index={columnIndex}
@@ -215,6 +225,39 @@ export function Page({
 		rowIndex: 0,
 	});
 
+	const overKeyboardPageTarget = useIsOverKeyboardTarget(
+		[pageIndex],
+		'middle'
+	);
+
+	const formState = useFormState();
+
+	const hasSingleEmptyColumn = useMemo(() => {
+		const {rows} = formState.pages[pageIndex];
+
+		if (rows?.length === 1) {
+			const [firstRow] = rows;
+
+			if (firstRow.columns?.length === 1) {
+				const [firstColumn] = firstRow.columns;
+
+				if (firstColumn.fields?.length === 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}, [formState, pageIndex]);
+
+	const overKeyboardColumnTarget = useIsOverKeyboardTarget(
+		hasSingleEmptyColumn ? [pageIndex, 0, 0] : [pageIndex],
+		'middle'
+	);
+
+	const overKeyboardTarget =
+		overKeyboardPageTarget || overKeyboardColumnTarget;
+
 	return (
 		<DefaultVariant.Page
 			activePage={activePage}
@@ -233,8 +276,10 @@ export function Page({
 					>
 						<div
 							className={classNames('ddm-empty-page ddm-target', {
-								'target-droppable': canDrop,
-								'target-over targetOver': overTarget,
+								'target-droppable':
+									canDrop || overKeyboardTarget,
+								'target-over targetOver':
+									overTarget || overKeyboardTarget,
 							})}
 							ref={drop}
 						>
@@ -265,6 +310,10 @@ export function Rows({children, editable, itemPath, pageIndex, rows}) {
 			{editable && index === 0 && (
 				<Placeholder
 					isRow
+					keyboardDNDPosition={{
+						itemPath: [...itemPath, 0],
+						position: 'top',
+					}}
 					pageIndex={pageIndex}
 					rowIndex={0}
 					size={12}
@@ -276,6 +325,10 @@ export function Rows({children, editable, itemPath, pageIndex, rows}) {
 			{editable && (
 				<Placeholder
 					isRow
+					keyboardDNDPosition={{
+						itemPath: [...itemPath, index],
+						position: 'bottom',
+					}}
 					pageIndex={pageIndex}
 					rowIndex={index + 1}
 					size={12}

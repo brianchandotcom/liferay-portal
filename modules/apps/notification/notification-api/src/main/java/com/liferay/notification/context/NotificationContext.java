@@ -20,8 +20,6 @@ import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,14 +36,6 @@ public class NotificationContext {
 		}
 
 		return _attachmentObjectFieldIds;
-	}
-
-	public Map<String, Serializable> getAttributes() {
-		return _attributes;
-	}
-
-	public Serializable getAttributeValue(String name) {
-		return _attributes.get(name);
 	}
 
 	public String getClassName() {
@@ -123,10 +113,6 @@ public class NotificationContext {
 		_attachmentObjectFieldIds = attachmentObjectFieldIds;
 	}
 
-	public void setAttributes(Map<String, Serializable> attributes) {
-		_attributes = attributes;
-	}
-
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -184,7 +170,6 @@ public class NotificationContext {
 	}
 
 	private List<Long> _attachmentObjectFieldIds;
-	private Map<String, Serializable> _attributes;
 	private String _className;
 	private long _classPK;
 	private String _externalReferenceCode;

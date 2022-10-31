@@ -19,7 +19,6 @@ import {
 	Card,
 	Input,
 	InputLocalized,
-	SidePanelForm,
 	invalidateRequired,
 	openToast,
 	saveAndReload,
@@ -35,11 +34,9 @@ import {
 import ObjectFieldFormBase from '../../ObjectFieldFormBase';
 import {useObjectFieldForm} from '../../useObjectFieldForm';
 import {AttachmentProperties} from './AttachmentProperties';
+import {FormulaContainer} from './FormulaContainer';
 import {MaxLengthProperties} from './MaxLengthProperties';
 import {SearchableContainer} from './SearchableContainer';
-
-import './BasicInfo.scss';
-import {FormulaContainer} from './FormulaContainer';
 
 interface AggregationFilters {
 	defaultSort?: boolean;
@@ -544,12 +541,7 @@ export function BasicInfo({
 	}, [objectFields]);
 
 	return (
-		<SidePanelForm
-			className="lfr-objects__edit-object-field"
-			onSubmit={handleSubmit}
-			readOnly={readOnly}
-			title={Liferay.Language.get('field')}
-		>
+		<>
 			<Card title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
 					disableFlag={readOnly}
@@ -685,6 +677,6 @@ export function BasicInfo({
 					/>
 				</Card>
 			)}
-		</SidePanelForm>
+		</>
 	);
 }

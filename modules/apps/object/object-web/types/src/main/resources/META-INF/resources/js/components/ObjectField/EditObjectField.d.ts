@@ -14,7 +14,8 @@
 
 /// <reference types="react" />
 
-interface BasicInfoProps {
+import './EditObjectField.scss';
+interface EditObjectFieldProps {
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
@@ -29,7 +30,7 @@ interface BasicInfoProps {
 	readOnly: boolean;
 	workflowStatusJSONArray: LabelValueObject[];
 }
-export declare function BasicInfo({
+export default function EditObjectField({
 	filterOperators,
 	forbiddenChars,
 	forbiddenLastChars,
@@ -37,11 +38,11 @@ export declare function BasicInfo({
 	isApproved,
 	isDefaultStorageType,
 	objectDefinitionId,
-	objectField: initialValues,
+	objectField,
 	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
 	readOnly,
 	workflowStatusJSONArray,
-}: BasicInfoProps): JSX.Element;
+}: EditObjectFieldProps): JSX.Element;
 export {};

@@ -644,8 +644,11 @@ public class KBDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_liferayPortletRequest,
+						KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
 				).setMVCPath(
 					"/admin/common/move_object.jsp"
 				).setRedirect(
@@ -660,7 +663,7 @@ public class KBDropdownItemsProvider {
 					"resourceClassNameId", kbArticle.getClassNameId()
 				).setParameter(
 					"resourcePrimKey", kbArticle.getResourcePrimKey()
-				).buildRenderURL());
+				).buildString());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(

@@ -14,7 +14,6 @@
 
 package com.liferay.asset.browser.web.internal.display.context;
 
-import com.liferay.asset.browser.web.internal.configuration.AssetBrowserWebConfigurationValues;
 import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.internal.search.AddAssetEntryChecker;
 import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
@@ -27,6 +26,8 @@ import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.criteria.constants.ItemSelectorCriteriaConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -95,7 +97,7 @@ public class AssetBrowserDisplayContext {
 		assetBrowserSearch.setOrderByCol(getOrderByCol());
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
-		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
+		if (_isSearchWithDatabase()) {
 			long[] subtypeSelectionIds = ArrayUtil.filter(
 				new long[] {getSubtypeSelectionId()},
 				subtypeSelectionId -> subtypeSelectionId >= 0);
@@ -480,9 +482,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE ||
-			Validator.isNull(_getKeywords())) {
-
+		if (_isSearchWithDatabase() || Validator.isNull(_getKeywords())) {
 			return false;
 		}
 
@@ -599,6 +599,20 @@ public class AssetBrowserDisplayContext {
 		return statuses;
 	}
 
+	private boolean _isSearchWithDatabase() {
+		if (_searchWithDatabase != null) {
+			return _searchWithDatabase;
+		}
+
+		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
+			AssetBrowserDisplayContext.class.getClassLoader(), "portlet");
+
+		_searchWithDatabase = GetterUtil.getBoolean(
+			configuration.get("search.with.database"));
+
+		return _searchWithDatabase;
+	}
+
 	private boolean _isShowNonindexable() {
 		if (_showNonindexable != null) {
 			return _showNonindexable;
@@ -642,6 +656,7 @@ public class AssetBrowserDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Boolean _searchEverywhere;
+	private Boolean _searchWithDatabase;
 	private Boolean _showAddButton;
 	private Boolean _showNonindexable;
 	private Boolean _showScheduled;

@@ -80,10 +80,8 @@ public class FragmentEntryProcessorHelperImpl
 
 			Class<?> firstItemClass = firstItem.getClass();
 
-			String itemClassName = firstItemClass.getName();
-
 			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
-				_getInfoCollectionTextFormatter(itemClassName);
+				_getInfoCollectionTextFormatter(firstItemClass.getName());
 
 			return infoCollectionTextFormatter.format(collection, locale);
 		}
@@ -100,12 +98,10 @@ public class FragmentEntryProcessorHelperImpl
 
 		Class<?> fieldValueClass = fieldValue.getClass();
 
-		String itemClassName = fieldValueClass.getName();
-
 		InfoTextFormatter<Object> infoTextFormatter =
 			(InfoTextFormatter<Object>)
 				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoTextFormatter.class, itemClassName);
+					InfoTextFormatter.class, fieldValueClass.getName());
 
 		if (infoTextFormatter != null) {
 			return infoTextFormatter.format(fieldValue, locale);

@@ -39,15 +39,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
@@ -200,7 +203,7 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 	}
 
 	public Page<AnalyticsChannel> getAnalyticsChannelsPage(
-			long companyId, String keywords, int page, int size)
+			long companyId, String keywords, int page, int size, Sort[] sorts)
 		throws Exception {
 
 		try {
@@ -220,6 +223,25 @@ public class AnalyticsCloudClientImpl implements AnalyticsCloudClient {
 
 			url = HttpComponentsUtil.addParameter(url, "page", page);
 			url = HttpComponentsUtil.addParameter(url, "size", size);
+
+			if (!ArrayUtil.isEmpty(sorts)) {
+				StringBundler sb = new StringBundler(sorts.length * 3);
+
+				for (Sort sort : sorts) {
+					sb.append(sort.getFieldName());
+					sb.append(StringPool.COMMA);
+
+					if (sort.isReverse()) {
+						sb.append("desc");
+					}
+					else {
+						sb.append("asc");
+					}
+				}
+
+				url = HttpComponentsUtil.addParameter(
+					url, "sort", sb.toString());
+			}
 
 			options.setLocation(url);
 

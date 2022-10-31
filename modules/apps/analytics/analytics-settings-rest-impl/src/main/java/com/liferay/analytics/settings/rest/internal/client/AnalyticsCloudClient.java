@@ -17,6 +17,7 @@ package com.liferay.analytics.settings.rest.internal.client;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
+import com.liferay.portal.kernel.search.Sort;
 
 import java.util.Locale;
 import java.util.Map;
@@ -37,7 +38,7 @@ public interface AnalyticsCloudClient {
 		throws Exception;
 
 	public Page<AnalyticsChannel> getAnalyticsChannelsPage(
-			long companyId, String keywords, int page, int size)
+			long companyId, String keywords, int page, int size, Sort[] sorts)
 		throws Exception;
 
 	public AnalyticsChannel updateAnalyticsChannel(

@@ -43,7 +43,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemVersionActionProvider.class)
+@Component(
+	property = "service.ranking:Integer=300",
+	service = ContentDashboardItemVersionActionProvider.class
+)
 public class PreviewJournalArticleContentDashboardItemVersionActionProvider
 	implements ContentDashboardItemVersionActionProvider<JournalArticle> {
 

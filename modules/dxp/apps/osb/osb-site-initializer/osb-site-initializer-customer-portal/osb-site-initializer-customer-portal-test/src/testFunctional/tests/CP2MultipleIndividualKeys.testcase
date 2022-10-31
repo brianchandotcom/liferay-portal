@@ -96,34 +96,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-152782 | Test Summary: Verify if when clicked, the Download button will display a drop-down menu with the option Individual Keys (multiple files)"
-	@priority = "5"
-	test IndividualKeysIsPresentOnDownloadButton {
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(title = "${testAccount}");
-		}
-
-		task ("And I click on DXP product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
-		task ("When I click at the Actions dropdown button") {
-			CustomerPortal.clickAtButton(text = "Actions");
-		}
-
-		task ("Then I assert that the correct options at the dropdown are visible") {
-			var dropdownItemsList = "Generate New,Deactivate,Export All Key Details (csv)";
-
-			for (var dropdownItem : list "${dropdownItemsList}") {
-				CP2ActivationKeys.assertDropdownItemIsVisible(dropdownItem = "${dropdownItem}");
-			}
-		}
-	}
-
 	@description = "Verify that user can see the correct option of download when they select two keys with the same expiration date."
 	@ignore = "true"
 	@priority = "5"

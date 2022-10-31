@@ -22,7 +22,6 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductAccountGroup;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountGroupResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -77,7 +76,7 @@ public class ProductAccountGroupResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceAccountGroupRelService.getCommerceAccountGroupRels(
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId(),
@@ -104,7 +103,7 @@ public class ProductAccountGroupResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceAccountGroupRelService.getCommerceAccountGroupRels(
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId(),

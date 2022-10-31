@@ -42,7 +42,6 @@ import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.util.comparator.ThreadCreateDateComparator;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -185,7 +184,7 @@ public class MessageBoardThreadResourceImpl
 
 			return Page.of(
 				actions,
-				TransformUtil.transform(
+				transform(
 					_mbThreadService.getThreads(
 						mbCategory.getGroupId(), mbCategory.getCategoryId(),
 						new QueryDefinition<>(

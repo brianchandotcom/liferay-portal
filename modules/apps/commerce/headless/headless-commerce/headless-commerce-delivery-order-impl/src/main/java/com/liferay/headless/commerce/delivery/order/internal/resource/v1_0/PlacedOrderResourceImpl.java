@@ -26,7 +26,6 @@ import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderDTOConverter;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -73,7 +72,7 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceOrderService.getPlacedCommerceOrders(
 					commerceChannel.getGroupId(), accountId, null,
 					pagination.getStartPosition(), pagination.getEndPosition()),

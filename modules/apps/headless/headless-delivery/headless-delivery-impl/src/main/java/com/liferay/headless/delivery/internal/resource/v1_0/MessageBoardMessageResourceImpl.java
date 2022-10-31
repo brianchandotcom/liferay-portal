@@ -42,7 +42,6 @@ import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageModifiedDateComparator;
 import com.liferay.message.boards.util.comparator.MessageSubjectComparator;
 import com.liferay.message.boards.util.comparator.MessageURLSubjectComparator;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -192,7 +191,7 @@ public class MessageBoardMessageResourceImpl
 
 			return Page.of(
 				actions,
-				TransformUtil.transform(
+				transform(
 					_mbMessageService.getChildMessages(
 						mbMessage.getMessageId(),
 						Optional.ofNullable(
@@ -278,7 +277,7 @@ public class MessageBoardMessageResourceImpl
 
 			return Page.of(
 				actions,
-				TransformUtil.transform(
+				transform(
 					_mbMessageService.getChildMessages(
 						mbThread.getRootMessageId(), false,
 						new QueryDefinition<>(

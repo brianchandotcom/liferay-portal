@@ -24,7 +24,6 @@ import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
 import com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.PaymentMethodGroupRelOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -74,7 +73,7 @@ public class PaymentMethodGroupRelOrderTypeResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commercePaymentMethodGroupRelQualifierService.
 					getCommerceOrderTypeCommercePaymentMethodGroupRelQualifiers(
 						id, search, pagination.getStartPosition(),

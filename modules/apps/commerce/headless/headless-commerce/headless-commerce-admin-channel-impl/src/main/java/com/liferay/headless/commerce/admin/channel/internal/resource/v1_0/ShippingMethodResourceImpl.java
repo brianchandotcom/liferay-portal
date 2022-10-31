@@ -59,7 +59,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 			_commerceChannelService.getCommerceChannel(channelId);
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceShippingMethodService.getCommerceShippingMethods(
 					commerceChannel.getGroupId(), pagination.getStartPosition(),
 					pagination.getEndPosition(),

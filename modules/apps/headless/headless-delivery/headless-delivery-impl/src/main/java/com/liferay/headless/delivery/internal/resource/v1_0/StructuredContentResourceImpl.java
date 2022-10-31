@@ -68,7 +68,6 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -809,7 +808,7 @@ public class StructuredContentResourceImpl
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
-		return TransformUtil.transform(
+		return transform(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> DDMFormFieldUtil.getDDMFormField(
 				_ddmStructureService, ddmStructure, fieldName));

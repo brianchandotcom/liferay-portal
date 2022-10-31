@@ -32,7 +32,6 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverter;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.PinDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -137,7 +136,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	private List<Pin> _toPins(
 		CommerceContext commerceContext, List<CSDiagramPin> csDiagramPins) {
 
-		return TransformUtil.transform(
+		return transform(
 			csDiagramPins,
 			csDiagramPin -> _toPin(
 				commerceContext, csDiagramPin.getCSDiagramPinId()));

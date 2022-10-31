@@ -31,7 +31,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProd
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.PinUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -284,7 +283,7 @@ public class PinResourceImpl
 	}
 
 	private List<Pin> _toPins(List<CSDiagramPin> csDiagramPins) {
-		return TransformUtil.transform(
+		return transform(
 			csDiagramPins,
 			csDiagramPin -> _toPin(csDiagramPin.getCSDiagramPinId()));
 	}

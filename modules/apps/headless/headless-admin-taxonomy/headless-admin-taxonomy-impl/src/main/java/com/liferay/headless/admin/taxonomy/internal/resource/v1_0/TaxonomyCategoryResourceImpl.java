@@ -29,7 +29,6 @@ import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.CategoryEn
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -583,7 +582,7 @@ public class TaxonomyCategoryResourceImpl
 	private String[] _toStringArray(
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
-		return TransformUtil.transform(
+		return transform(
 			taxonomyCategoryProperties,
 			taxonomyCategoryProperty -> StringBundler.concat(
 				taxonomyCategoryProperty.getKey(), StringPool.COLON,

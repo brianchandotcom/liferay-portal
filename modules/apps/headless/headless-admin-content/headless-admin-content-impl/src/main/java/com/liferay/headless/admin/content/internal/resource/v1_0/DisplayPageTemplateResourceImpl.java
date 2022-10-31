@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryExcepti
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -104,7 +103,7 @@ public class DisplayPageTemplateResourceImpl
 					ActionKeys.VIEW, "getSiteDisplayPageTemplatesPage",
 					Group.class.getName(), siteId)
 			).build(),
-			TransformUtil.transform(
+			transform(
 				_layoutPageTemplateEntryLocalService.dynamicQuery(
 					dynamicQuery, pagination.getStartPosition(),
 					pagination.getEndPosition()),

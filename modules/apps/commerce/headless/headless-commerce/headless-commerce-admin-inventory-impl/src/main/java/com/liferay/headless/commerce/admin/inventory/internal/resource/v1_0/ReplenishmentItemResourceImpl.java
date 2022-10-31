@@ -22,7 +22,6 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
 import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.ReplenishmentItemDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -99,7 +98,7 @@ public class ReplenishmentItemResourceImpl
 		throws Exception {
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceInventoryReplenishmentItemService.
 					getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
 						contextCompany.getCompanyId(), sku,
@@ -118,7 +117,7 @@ public class ReplenishmentItemResourceImpl
 		throws Exception {
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceInventoryReplenishmentItemService.
 					getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
 						warehouseId, pagination.getStartPosition(),

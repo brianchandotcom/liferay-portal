@@ -16,7 +16,6 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.Language;
 import com.liferay.headless.delivery.resource.v1_0.LanguageResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -56,7 +55,7 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 		Locale defaultLocale = _getDefaultLocale(siteId);
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				availableLocales,
 				availableLocale -> _toLanguage(
 					contextAcceptLanguage.isAcceptAllLanguages(),

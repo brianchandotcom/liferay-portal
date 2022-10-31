@@ -43,7 +43,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -361,7 +360,7 @@ public class StructuredContentResourceImpl
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
-		return TransformUtil.transform(
+		return transform(
 			ddmStructure.getRootFieldNames(),
 			fieldName -> DDMFormFieldUtil.getDDMFormField(
 				_ddmStructureService, ddmStructure, fieldName));

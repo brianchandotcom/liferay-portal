@@ -20,7 +20,6 @@ import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
@@ -138,7 +137,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		Layout layout = _getLayout(siteId, friendlyUrlPath);
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_getSegmentsExperiences(layout),
 				segmentsExperience -> _toSitePage(
 					_isEmbeddedPageDefinition(), layout,

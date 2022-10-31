@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderItemDTOConverter;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -87,7 +86,7 @@ public class PlacedOrderItemResourceImpl
 
 		return Page.of(
 			_filterPlacedOrderItems(
-				TransformUtil.transform(
+				transform(
 					_commerceOrderItemService.getCommerceOrderItems(
 						placedOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					commerceOrderItem -> {

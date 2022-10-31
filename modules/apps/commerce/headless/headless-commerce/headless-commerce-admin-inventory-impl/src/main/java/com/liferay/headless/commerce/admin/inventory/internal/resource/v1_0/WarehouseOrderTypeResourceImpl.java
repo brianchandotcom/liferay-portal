@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseOrderType;
 import com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.WarehouseOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseOrderTypeResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -77,7 +76,7 @@ public class WarehouseOrderTypeResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceInventoryWarehouseRelService.
 					getCommerceOrderTypeCommerceInventoryWarehouseRels(
 						commerceInventoryWarehouse.
@@ -111,7 +110,7 @@ public class WarehouseOrderTypeResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceInventoryWarehouseRelService.
 					getCommerceOrderTypeCommerceInventoryWarehouseRels(
 						id, search, pagination.getStartPosition(),

@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -316,7 +315,7 @@ public class DataRecordCollectionResourceImpl
 
 		if (Validator.isNull(keywords)) {
 			return Page.of(
-				TransformUtil.transform(
+				transform(
 					_ddlRecordSetLocalService.search(
 						ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
 						keywords, DDLRecordSetConstants.SCOPE_DATA_ENGINE,

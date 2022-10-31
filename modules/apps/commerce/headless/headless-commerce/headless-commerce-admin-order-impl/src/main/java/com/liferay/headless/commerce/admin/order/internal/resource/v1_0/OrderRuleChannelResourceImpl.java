@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderRuleChannelDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleChannelResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -75,7 +74,7 @@ public class OrderRuleChannelResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_corEntryRelService.getCommerceChannelCOREntryRels(
 					corEntry.getCOREntryId(), null,
 					pagination.getStartPosition(), pagination.getEndPosition()),
@@ -100,7 +99,7 @@ public class OrderRuleChannelResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_corEntryRelService.getCommerceChannelCOREntryRels(
 					id, search, pagination.getStartPosition(),
 					pagination.getEndPosition()),

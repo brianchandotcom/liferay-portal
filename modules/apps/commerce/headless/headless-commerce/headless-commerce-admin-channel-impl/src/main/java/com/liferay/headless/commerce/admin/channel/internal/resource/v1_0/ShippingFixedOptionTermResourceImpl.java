@@ -25,7 +25,6 @@ import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm;
 import com.liferay.headless.commerce.admin.channel.internal.dto.v1_0.converter.ShippingFixedOptionTermDTOConverter;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -75,7 +74,7 @@ public class ShippingFixedOptionTermResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceShippingFixedOptionQualifierService.
 					getCommerceTermEntryCommerceShippingFixedOptionQualifiers(
 						id, search, pagination.getStartPosition(),

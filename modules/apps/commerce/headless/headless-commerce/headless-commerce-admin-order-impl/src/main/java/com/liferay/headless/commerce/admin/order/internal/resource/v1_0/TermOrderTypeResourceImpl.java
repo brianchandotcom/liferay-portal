@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.TermOrderTypeDTOConverter;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.TermOrderTypeResource;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -73,7 +72,7 @@ public class TermOrderTypeResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceTermEntryRelService.
 					getCommerceOrderTypeCommerceTermEntryRels(
 						commerceTermEntry.getCommerceTermEntryId(), null,
@@ -101,7 +100,7 @@ public class TermOrderTypeResourceImpl
 		}
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceTermEntryRelService.
 					getCommerceOrderTypeCommerceTermEntryRels(
 						id, search, pagination.getStartPosition(),

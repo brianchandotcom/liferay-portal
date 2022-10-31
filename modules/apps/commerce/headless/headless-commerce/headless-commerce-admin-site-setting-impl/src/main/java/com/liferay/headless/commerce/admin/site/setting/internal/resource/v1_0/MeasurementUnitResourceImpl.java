@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.site.setting.internal.dto.v1_0.conver
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.MeasurementUnitResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -119,7 +118,7 @@ public class MeasurementUnitResourceImpl
 			int type = _getType(measurementUnitType);
 
 			return Page.of(
-				TransformUtil.transform(
+				transform(
 					_cpMeasurementUnitService.getCPMeasurementUnitsByType(
 						contextCompany.getCompanyId(), type,
 						pagination.getStartPosition(),
@@ -144,7 +143,7 @@ public class MeasurementUnitResourceImpl
 		throws Exception {
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_cpMeasurementUnitService.getCPMeasurementUnits(
 					contextCompany.getCompanyId(),
 					pagination.getStartPosition(), pagination.getEndPosition(),

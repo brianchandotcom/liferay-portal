@@ -52,7 +52,6 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameCompa
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -445,7 +444,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		if (Validator.isNull(keywords)) {
 			return Page.of(
-				TransformUtil.transform(
+				transform(
 					_ddmStructureLayoutLocalService.getStructureLayouts(
 						ddmStructure.getGroupId(),
 						ddmStructure.getClassNameId(),

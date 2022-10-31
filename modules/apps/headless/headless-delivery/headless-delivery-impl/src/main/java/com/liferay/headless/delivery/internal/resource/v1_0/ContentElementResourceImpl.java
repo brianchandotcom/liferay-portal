@@ -21,7 +21,6 @@ import com.liferay.headless.delivery.dto.v1_0.ContentElement;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentElementEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -102,8 +101,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
 		return Page.of(
-			new HashMap<>(),
-			TransformUtil.transform(facets.values(), FacetUtil::toFacet),
+			new HashMap<>(), transform(facets.values(), FacetUtil::toFacet),
 			transform(
 				_assetHelper.getAssetEntries(
 					assetSearcher.search(searchContext)),

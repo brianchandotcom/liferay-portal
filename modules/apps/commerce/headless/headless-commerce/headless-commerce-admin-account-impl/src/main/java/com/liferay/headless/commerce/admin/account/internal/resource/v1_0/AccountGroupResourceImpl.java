@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.account.internal.odata.entity.v1_0.Ac
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -272,7 +271,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		return Page.of(
-			TransformUtil.transform(
+			transform(
 				_commerceAccountGroupService.
 					getCommerceAccountGroupsByCommerceAccountId(
 						commerceAccountId, pagination.getStartPosition(),

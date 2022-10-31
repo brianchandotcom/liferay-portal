@@ -604,9 +604,7 @@ public class PortalInstances {
 			if (locale != null) {
 				languageId = LanguageUtil.getLanguageId(locale);
 
-				if (Validator.isNotNull(languageId) &&
-					LanguageUtil.isAvailableLocale(languageId)) {
-
+				if (LanguageUtil.isAvailableLocale(languageId)) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Session has updated language " + languageId);

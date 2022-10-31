@@ -15,10 +15,11 @@
 import ClayButton from '@clayui/button';
 import {ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import BasePage from '../../components/BasePage';
 import SelectPanels from '../../components/people-step-components/SelectPanels';
+import {fetchPeopleData, updatePeopleData} from '../../utils/api';
 import {ESteps, TGenericComponent} from './WizardPage';
 
 interface IStepProps extends TGenericComponent {}
@@ -39,6 +40,34 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 	const [syncAllAccounts, setSyncAllAccounts] = useState(false);
 	const [syncAllContacts, setSyncAllContacts] = useState(false);
 
+	// TODO Add logic to populate Account, Organization and User Groups arrays when selected in the modal.
+	// Dont forget to use the appropriated request functions (see api.ts)
+	// Consider doing it by prop drilling.
+
+	const [syncedAccountGroupIds, setSyncedAccountGroupIds] = useState<
+		string[]
+	>([]);
+	const [syncedOrganizationIds, setSyncedOrganizationIds] = useState<
+		string[]
+	>([]);
+	const [syncedUserGroupIds, setSyncedUserGroupIds] = useState<string[]>([]);
+
+	useEffect(() => {
+		const request = async () => {
+			const response = await fetchPeopleData();
+
+			const {syncAllAccounts, syncAllContacts} = response;
+
+			setSyncAllAccounts(syncAllAccounts);
+			setSyncAllContacts(syncAllContacts);
+			setSyncedAccountGroupIds(['1']);
+			setSyncedOrganizationIds(['2']);
+			setSyncedUserGroupIds(['3']);
+		};
+
+		request();
+	}, []);
+
 	return (
 		<BasePage
 			description={Liferay.Language.get('sync-people-description')}
@@ -54,7 +83,7 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 						setSyncAllAccounts(!syncAll);
 						setSyncAllContacts(!syncAll);
 					}}
-					toggled={syncAll}
+					toggled={updateSyncAll(syncAllAccounts, syncAllContacts)}
 				/>
 
 				<ClayLabel className="ml-4" displayType="info">
@@ -84,7 +113,19 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 
 			<BasePage.Footer>
 				<ClayButton.Group spaced>
-					<ClayButton onClick={() => onChangeStep(ESteps.People)}>
+					<ClayButton
+						onClick={() => {
+							updatePeopleData(
+								syncAllAccounts,
+								syncAllContacts,
+								syncedAccountGroupIds,
+								syncedOrganizationIds,
+								syncedUserGroupIds
+							);
+
+							onChangeStep(ESteps.PeopleData);
+						}}
+					>
 						{Liferay.Language.get('next')}
 					</ClayButton>
 

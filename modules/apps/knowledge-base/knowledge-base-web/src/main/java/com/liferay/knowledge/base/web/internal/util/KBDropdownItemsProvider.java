@@ -643,9 +643,7 @@ public class KBDropdownItemsProvider {
 		KBArticle kbArticle) {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "move");
-			dropdownItem.putData(
-				"moveURL",
+			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
@@ -662,9 +660,7 @@ public class KBDropdownItemsProvider {
 					"resourceClassNameId", kbArticle.getClassNameId()
 				).setParameter(
 					"resourcePrimKey", kbArticle.getResourcePrimKey()
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
+				).buildRenderURL());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
@@ -676,9 +672,7 @@ public class KBDropdownItemsProvider {
 		KBFolder kbFolder) {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "move");
-			dropdownItem.putData(
-				"moveURL",
+			dropdownItem.setHref(
 				PortletURLBuilder.createRenderURL(
 					_liferayPortletResponse
 				).setMVCPath(
@@ -693,9 +687,7 @@ public class KBDropdownItemsProvider {
 					"resourceClassNameId", kbFolder.getClassNameId()
 				).setParameter(
 					"resourcePrimKey", kbFolder.getKbFolderId()
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
+				).buildRenderURL());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(

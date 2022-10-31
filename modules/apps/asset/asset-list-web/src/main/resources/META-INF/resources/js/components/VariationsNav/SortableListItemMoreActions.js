@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import classnames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -25,6 +26,7 @@ const SortableListItemMoreActions = ({
 	itemIsDeleteable,
 	onDeleteVariation,
 	onReorder,
+	sortableListItemName,
 	totalItems,
 }) => {
 	const [show, setShow] = useState(false);
@@ -70,6 +72,10 @@ const SortableListItemMoreActions = ({
 			onActiveChange={setShow}
 			trigger={
 				<ClayButtonWithIcon
+					aria-label={sub(
+						Liferay.Language.get('actions-for-x'),
+						sortableListItemName
+					)}
 					className={classnames('more-actions__button', {
 						'more-actions__button--active': show,
 					})}
@@ -111,6 +117,7 @@ SortableListItemMoreActions.propTypes = {
 	itemIsDeleteable: PropTypes.bool.isRequired,
 	onDeleteVariation: PropTypes.func.isRequired,
 	onReorder: PropTypes.func.isRequired,
+	sortableListItemName: PropTypes.string.isRequired,
 	totalItems: PropTypes.number.isRequired,
 };
 

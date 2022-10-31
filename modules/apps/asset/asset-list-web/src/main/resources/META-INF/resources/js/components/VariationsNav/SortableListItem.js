@@ -133,6 +133,7 @@ const SortableListItem = ({
 						})
 					}
 					onReorder={handleReorder}
+					sortableListItemName={sortableListItem.name}
 					totalItems={totalItems}
 				/>
 			</ClayList.ItemField>

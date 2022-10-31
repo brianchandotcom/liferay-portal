@@ -51,6 +51,10 @@ public class NotificationContext {
 		return _classPK;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public List<Long> getFileEntryIds() {
 		return _fileEntryIds;
 	}
@@ -92,6 +96,10 @@ public class NotificationContext {
 		return _notificationTemplate;
 	}
 
+	public String getPortletId() {
+		return _portletId;
+	}
+
 	public Map<String, Object> getTermValues() {
 		return _termValues;
 	}
@@ -122,6 +130,10 @@ public class NotificationContext {
 		_classPK = classPK;
 	}
 
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public void setFileEntryIds(List<Long> fileEntryIds) {
 		_fileEntryIds = fileEntryIds;
 	}
@@ -150,6 +162,10 @@ public class NotificationContext {
 		_notificationTemplate = notificationTemplate;
 	}
 
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
+	}
+
 	public void setTermValues(Map<String, Object> termValues) {
 		_termValues = termValues;
 	}
@@ -166,11 +182,13 @@ public class NotificationContext {
 	private Map<String, Serializable> _attributes;
 	private String _className;
 	private long _classPK;
+	private String _externalReferenceCode;
 	private List<Long> _fileEntryIds;
 	private NotificationQueueEntry _notificationQueueEntry;
 	private NotificationRecipient _notificationRecipient;
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;
+	private String _portletId;
 	private Map<String, Object> _termValues;
 	private String _type;
 	private long _userId;

@@ -71,10 +71,13 @@ public class NotificationTemplateObjectActionExecutorImpl
 
 		notificationContext.setClassPK(
 			GetterUtil.getLong(termValues.get("id")));
+		notificationContext.setExternalReferenceCode(
+			GetterUtil.getString(termValues.get("externalReferenceCode")));
 
 		notificationContext.setNotificationTemplate(notificationTemplate);
 		notificationContext.setTermValues(termValues);
 		notificationContext.setUserId(userId);
+		notificationContext.setPortletId(objectDefinition.getPortletId());
 
 		notificationType.sendNotification(notificationContext);
 	}

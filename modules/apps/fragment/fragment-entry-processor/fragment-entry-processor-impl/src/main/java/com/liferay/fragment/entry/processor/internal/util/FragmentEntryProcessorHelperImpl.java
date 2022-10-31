@@ -67,8 +67,6 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		String formattedFieldValue;
-
 		if (fieldValue instanceof Collection) {
 			Collection<Object> collection = (Collection<Object>)fieldValue;
 
@@ -87,39 +85,33 @@ public class FragmentEntryProcessorHelperImpl
 			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
 				_getInfoCollectionTextFormatter(itemClassName);
 
-			formattedFieldValue = infoCollectionTextFormatter.format(
-				collection, locale);
-		}
-		else {
-			if (fieldValue instanceof String) {
-				formattedFieldValue = (String)fieldValue;
-			}
-			else if (fieldValue instanceof Labeled) {
-				Labeled labeledFieldValue = (Labeled)fieldValue;
-
-				formattedFieldValue = labeledFieldValue.getLabel(locale);
-			}
-			else {
-				Class<?> fieldValueClass = fieldValue.getClass();
-
-				String itemClassName = fieldValueClass.getName();
-
-				InfoTextFormatter<Object> infoTextFormatter =
-					(InfoTextFormatter<Object>)
-						_infoItemServiceTracker.getFirstInfoItemService(
-							InfoTextFormatter.class, itemClassName);
-
-				if (infoTextFormatter == null) {
-					formattedFieldValue = fieldValue.toString();
-				}
-				else {
-					formattedFieldValue = infoTextFormatter.format(
-						fieldValue, locale);
-				}
-			}
+			return infoCollectionTextFormatter.format(collection, locale);
 		}
 
-		return formattedFieldValue;
+		if (fieldValue instanceof String) {
+			return (String)fieldValue;
+		}
+
+		if (fieldValue instanceof Labeled) {
+			Labeled labeledFieldValue = (Labeled)fieldValue;
+
+			return labeledFieldValue.getLabel(locale);
+		}
+
+		Class<?> fieldValueClass = fieldValue.getClass();
+
+		String itemClassName = fieldValueClass.getName();
+
+		InfoTextFormatter<Object> infoTextFormatter =
+			(InfoTextFormatter<Object>)
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoTextFormatter.class, itemClassName);
+
+		if (infoTextFormatter != null) {
+			return infoTextFormatter.format(fieldValue, locale);
+		}
+
+		return fieldValue.toString();
 	}
 
 	@Override

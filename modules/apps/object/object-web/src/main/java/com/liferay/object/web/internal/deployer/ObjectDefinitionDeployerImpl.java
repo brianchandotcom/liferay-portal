@@ -65,6 +65,8 @@ import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoLi
 import com.liferay.object.web.internal.info.permission.provider.ObjectEntryInfoPermissionProvider;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.layout.display.page.ObjectEntryLayoutDisplayPageProvider;
+import com.liferay.object.web.internal.notifications.ObjectUserNotificationDefinition;
+import com.liferay.object.web.internal.notifications.ObjectUserNotificationHandler;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory.ObjectFieldFDSFilterFactoryTracker;
@@ -79,6 +81,8 @@ import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadRes
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -179,6 +183,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					Constants.SERVICE_RANKING, 10
 				).put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				InfoItemFieldValuesProvider.class,
+				new ObjectEntryInfoItemFieldValuesProvider(
+					_assetDisplayPageFriendlyURLProvider,
+					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
+					_listTypeEntryLocalService, objectDefinition,
+					_objectEntryLocalService, _objectEntryManagerTracker,
+					_objectFieldLocalService, _templateInfoItemFieldSetProvider,
+					_userLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(
 					"item.class.name", objectDefinition.getClassName()
@@ -341,24 +359,22 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).put(
 					"mvc.command.name", "/object_entries/edit_object_entry"
-				).build()));
-
-		// TODO Explain 910ae730
-
-		serviceRegistrations.add(
+				).build()),
 			_bundleContext.registerService(
-				InfoItemFieldValuesProvider.class,
-				new ObjectEntryInfoItemFieldValuesProvider(
-					_assetDisplayPageFriendlyURLProvider,
-					_infoItemFieldReaderFieldSetProvider, _jsonFactory,
-					_listTypeEntryLocalService, objectDefinition,
-					_objectEntryLocalService, _objectEntryManagerTracker,
-					_objectFieldLocalService, _templateInfoItemFieldSetProvider,
-					_userLocalService),
+				UserNotificationDefinition.class,
+				new ObjectUserNotificationDefinition(
+					objectDefinition.getPortletId(),
+					_portal.getClassNameId(objectDefinition.getClassName()),
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"company.id", objectDefinition.getCompanyId()
-				).put(
-					"item.class.name", objectDefinition.getClassName()
+					"javax.portlet.name", objectDefinition.getPortletId()
+				).build()),
+			_bundleContext.registerService(
+				UserNotificationHandler.class,
+				new ObjectUserNotificationHandler(
+					_assetDisplayPageFriendlyURLProvider, objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"javax.portlet.name", objectDefinition.getPortletId()
 				).build()));
 
 		// Register ObjectEntriesPanelApp after ObjectEntriesPortlet. See

@@ -328,6 +328,27 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected String type;
 
+	public String getTypeLabel() {
+		return typeLabel;
+	}
+
+	public void setTypeLabel(String typeLabel) {
+		this.typeLabel = typeLabel;
+	}
+
+	public void setTypeLabel(
+		UnsafeSupplier<String, Exception> typeLabelUnsafeSupplier) {
+
+		try {
+			typeLabel = typeLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String typeLabel;
+
 	@Override
 	public NotificationTemplate clone() throws CloneNotSupportedException {
 		return (NotificationTemplate)super.clone();

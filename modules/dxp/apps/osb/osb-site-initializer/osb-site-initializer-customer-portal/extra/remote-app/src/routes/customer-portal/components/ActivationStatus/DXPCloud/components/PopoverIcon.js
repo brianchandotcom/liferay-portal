@@ -9,8 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 import i18n from '../../../../../../common/I18n';
 
@@ -21,12 +20,12 @@ const PopoverIcon = ({alignPosition = 'right'}) => {
 			className="cp-team-members-popover"
 			closeOnClickOutside
 			trigger={
-				<ClayButton className="px-1" displayType="unstyled">
-					<ClayIcon
-						className="cp-team-members-support-seat-icon ml-1 mr-1 py-0"
-						symbol="info-circle"
-					/>
-				</ClayButton>
+				<ClayButtonWithIcon
+					className="text-brand-primary-darken-2"
+					displayType={null}
+					size="sm"
+					symbol="info-circle"
+				/>
 			}
 		>
 			<p className="m-0 text-neutral-10">

@@ -44,6 +44,8 @@ public class NotificationTemplatesTableFDSView extends BaseTableFDSView {
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
+		).add(
+			"typeLabel", "type"
 		).build();
 	}
 

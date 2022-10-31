@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -51,35 +50,22 @@ public class ImportPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(
-			getResourceBundle(getLocale(portletRequest)), "import");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return StringBundler.concat(
-			"Liferay.Util.openModal({onClose: function(event){",
-			"window.location.reload();}, title: '", getMessage(portletRequest),
-			"', url: '",
-			PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-					PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/view_import.jsp"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString(),
-			"'});");
+		return _language.get(getLocale(portletRequest), "import");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return "javascript:void(0);";
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_import.jsp"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	@Override

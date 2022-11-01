@@ -78,7 +78,7 @@ public class AssetEntriesCheckerHelperTest {
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
 
-		setUpAssetEntriesCheckerHelper();
+		_setUpAssetEntriesCheckerHelper();
 	}
 
 	@Test
@@ -89,13 +89,13 @@ public class AssetEntriesCheckerHelperTest {
 		String portletId2 = LayoutTestUtil.addPortletToLayout(
 			_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
-		AssetEntry assetEntry1 = addAssetEntry(portletId1, false);
+		AssetEntry assetEntry1 = _addAssetEntry(portletId1, false);
 
-		AssetEntry assetEntry2 = addAssetEntry(portletId2, false);
+		AssetEntry assetEntry2 = _addAssetEntry(portletId2, false);
 
-		AssetEntry assetEntry3 = addAssetEntry(portletId2, true);
+		AssetEntry assetEntry3 = _addAssetEntry(portletId2, true);
 
-		AssetEntry assetEntry4 = addAssetEntry(portletId2, true);
+		AssetEntry assetEntry4 = _addAssetEntry(portletId2, true);
 
 		PortletPreferences portletId1PortletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, portletId1);
@@ -112,7 +112,7 @@ public class AssetEntriesCheckerHelperTest {
 				new Class<?>[] {PortletPreferences.class, Layout.class},
 				portletId1PortletPreferences, _layout);
 
-		assertAssetEntries(
+		_assertAssetEntries(
 			expectedPortletId1AssetEntries, actualPortletId1AssetEntries);
 
 		List<AssetEntry> expectedPortletId2AssetEntries = new ArrayList<>(
@@ -124,11 +124,11 @@ public class AssetEntriesCheckerHelperTest {
 				new Class<?>[] {PortletPreferences.class, Layout.class},
 				portletId2PortletPreferences, _layout);
 
-		assertAssetEntries(
+		_assertAssetEntries(
 			expectedPortletId2AssetEntries, actualPortletId2AssetEntries);
 	}
 
-	protected AssetEntry addAssetEntry(String portletId, boolean manualMode)
+	private AssetEntry _addAssetEntry(String portletId, boolean manualMode)
 		throws Exception {
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
@@ -165,7 +165,7 @@ public class AssetEntriesCheckerHelperTest {
 		return assetEntry;
 	}
 
-	protected void assertAssetEntries(
+	private void _assertAssetEntries(
 		List<AssetEntry> expectedAssetEntries,
 		List<AssetEntry> actualAssetEntries) {
 
@@ -193,9 +193,7 @@ public class AssetEntriesCheckerHelperTest {
 		}
 	}
 
-	protected void setUpAssetEntriesCheckerHelper()
-		throws ReflectiveOperationException {
-
+	private void _setUpAssetEntriesCheckerHelper() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			AssetEntriesCheckerHelperTest.class);
 

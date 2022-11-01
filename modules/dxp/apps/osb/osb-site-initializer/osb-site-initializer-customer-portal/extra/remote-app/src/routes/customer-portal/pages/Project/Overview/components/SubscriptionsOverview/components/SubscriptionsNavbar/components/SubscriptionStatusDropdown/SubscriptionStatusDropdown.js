@@ -54,8 +54,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		if (currentActiveItems.length !== MAX_SUBSCRIPTION_STATUS) {
 			onClick(currentActiveItems.map((item) => item.label));
-		}
-		else {
+		} else {
 			onClick();
 		}
 
@@ -63,20 +62,11 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 	};
 
 	const handleClickAll = () => {
-		items.active = !items.active;
+		setItems((previousItems) => [
+			...previousItems.map((item) => ({...item, active: true})),
+		]);
 
-		const newItems = items.map((object) => {
-			return {...object, active: true};
-		});
-
-		setItems([...newItems]);
-		const currentActiveItems = items.filter((item) => item.active);
-		if (currentActiveItems.length === MAX_SUBSCRIPTION_STATUS) {
-			onClick(currentActiveItems.map((item) => item.label));
-		}
-		else {
-			onClick();
-		}
+		onClick(items.map((item) => item.label));
 	};
 
 	const getDropdownItems = () => (

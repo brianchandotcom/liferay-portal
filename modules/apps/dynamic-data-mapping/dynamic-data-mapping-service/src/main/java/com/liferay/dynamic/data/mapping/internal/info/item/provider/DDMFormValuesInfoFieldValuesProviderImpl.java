@@ -56,6 +56,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -258,6 +259,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					LocalizedValue localizedValue =
 						ddmFormFieldOptions.getOptionLabels(optionValue);
 
+					if (localizedValue == null) {
+						continue;
+					}
+
 					keyLocalizedLabelPairs.add(
 						new KeyLocalizedLabelPair(
 							optionValue,
@@ -338,6 +343,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				LocalizedValue localizedValue =
 					ddmFormFieldOptions.getOptionLabels(valueString);
+
+				if (localizedValue == null) {
+					return Collections.emptyList();
+				}
 
 				return ListUtil.fromArray(
 					new KeyLocalizedLabelPair(

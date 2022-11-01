@@ -144,6 +144,9 @@ const Timers = ({setContentName, setErrors}) => {
 							script: filteredTimerActions.map(
 								({script}) => script
 							),
+							scriptLanguage: filteredTimerActions.map(
+								({scriptLanguage}) => scriptLanguage
+							),
 						};
 					}
 
@@ -156,7 +159,6 @@ const Timers = ({setContentName, setErrors}) => {
 		else {
 			taskTimers = null;
 		}
-
 		setSelectedItem((previousItem) => ({
 			...previousItem,
 			data: {...previousItem.data, taskTimers},
@@ -251,6 +253,9 @@ const Timers = ({setContentName, setErrors}) => {
 				section.script = data.find((entry) => entry[0] === 'script')[1][
 					index
 				];
+				section.scriptLanguage = data.find(
+					(entry) => entry[0] === 'scriptLanguage'
+				)[1][index];
 				sections.push(section);
 			}
 		}

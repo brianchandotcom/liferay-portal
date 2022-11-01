@@ -12,6 +12,28 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@description = "This is a use case for LPS-101370. Assert no documents need to be published after upgrading."
+	@priority = "3"
+	test AssertNoDocumentsNeedToBePublishedAfterUpgrade621021 {
+		property data.archive.type = "data-archive-local-staging-with-documents";
+		property database.types = "db2,mysql,oracle,postgresql";
+		property portal.version = "6.2.10.21";
+
+		task ("When: Go to staging site and try to publish to live") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("Then: Assert no documents need to be published on publish states") {
+			AssertElementNotPresent(
+				key_itemName = "Documents and Media",
+				locator1 = "StagingPublishToLive#SIMPLE_PUBLICATION_CONTENT_TYPE");
+		}
+	}
+
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
 	@priority = "5"
 	test DefaultSiteCanBeExportedAfterUpgrade71103 {

@@ -300,10 +300,12 @@ function parseProperty(data, item, property) {
 	if (property === 'execution-type') {
 		newProperty = 'executionType';
 	}
+	else if (property === 'script-language') {
+		newProperty = 'scriptLanguage';
+	}
 	else if (property === 'template-language') {
 		newProperty = 'templateLanguage';
 	}
-
 	if (Array.isArray(data[newProperty])) {
 		data[newProperty].push(item[property]);
 

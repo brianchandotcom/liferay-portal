@@ -35,6 +35,8 @@ definition {
 	@description = "This is a use case for LPS-143743. Assert that can import global scoped WC that comment on another site with no error."
 	@priority = "3"
 	test CanImportGlobalScopedWCThatCommentOnAnotherSite {
+		property test.name.skip.portal.instance = "SitesExportImport#CanImportGlobalScopedWCThatCommentOnAnotherSite";
+
 		task ("Given: Add a WC on Global site and an assert publisher widget to a page on "Test Site Name" site") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

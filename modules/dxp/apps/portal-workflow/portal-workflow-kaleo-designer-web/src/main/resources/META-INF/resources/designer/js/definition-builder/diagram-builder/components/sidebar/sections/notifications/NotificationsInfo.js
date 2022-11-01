@@ -179,7 +179,7 @@ const NotificationsInfo = ({
 	);
 
 	const [scriptLanguage, setScriptLanguage] = useState(
-		selectedItem.data.notifications?.recipients[notificationIndex]
+		selectedItem?.data.notifications?.recipients?.[notificationIndex]
 			?.scriptLanguage || DEFAULT_LANGUAGE
 	);
 

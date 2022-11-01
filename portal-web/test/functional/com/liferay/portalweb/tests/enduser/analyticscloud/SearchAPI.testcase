@@ -160,4 +160,53 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12143 | Test Summary: Fetch keywords with displayLanguageId parameter"
+	@priority = "3"
+	test RequestKeywordsUsingDisplayLanguageId {
+		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingDisplayLanguageId";
+
+		var parametersDisplay1 = "size=10&displayLanguageId=${displayLanguageId1}&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersDisplay2 = "size=10&displayLanguageId=${displayLanguageId2}&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var displayLanguageId1 = "en-US";
+		var displayLanguageId2 = "pt-BR";
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+		var keyword = "cloud";
+
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Go to the search bar and search for a keyword") {
+			SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+		}
+
+		task ("Run curl command to get keyword results using languageId = en-US") {
+			ACApi.getSearchKeywords(parameters = "${parametersDisplay1}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword}");
+		}
+
+		task ("Assert response returns en-US") {
+			ACApi.assertGenericJSONPathResponse(
+				apiPath = "search-keywords[0].displayLanguageId",
+				expected = "${displayLanguageId1}");
+		}
+
+		task ("Run curl command to get keyword results using languageId = pt-BR") {
+			ACApi.getSearchKeywords(parameters = "${parametersDisplay2}");
+		}
+
+		task ("Assert response returns empty") {
+			ACApi.assertSearchResponse(expected = "");
+		}
+	}
+
 }

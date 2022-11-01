@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(service = {})
-public class InfoSearchClassMapperTrackerUtil {
+public class InfoSearchClassMapperRegistryUtil {
 
 	public static String getClassName(String searchClassName) {
 		return _infoSearchClassMapperRegistry.getClassName(searchClassName);

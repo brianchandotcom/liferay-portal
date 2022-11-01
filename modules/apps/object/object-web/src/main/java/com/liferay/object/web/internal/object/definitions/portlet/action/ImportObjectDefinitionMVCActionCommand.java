@@ -18,6 +18,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -79,25 +80,32 @@ public class ImportObjectDefinitionMVCActionCommand
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
+			JSONObject jsonObject = null;
+
 			if (exception instanceof ObjectDefinitionNameException) {
 				Class<?> clazz = exception.getClass();
 
-				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse,
-					JSONUtil.put(
-						"type",
-						"ObjectDefinitionNameException." +
-							clazz.getSimpleName()));
+				jsonObject = JSONUtil.put(
+					"type",
+					"ObjectDefinitionNameException." + clazz.getSimpleName());
+			}
+			else if (exception instanceof ObjectViewColumnFieldNameException) {
+				jsonObject = JSONUtil.put(
+					"title",
+					_language.get(
+						_portal.getHttpServletRequest(actionRequest),
+						"the-structure-was-imported-without-a-custom-view"));
 			}
 			else {
-				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse,
-					JSONUtil.put(
-						"title",
-						_language.get(
-							_portal.getHttpServletRequest(actionRequest),
-							"the-structure-was-not-successfully-imported")));
+				jsonObject = JSONUtil.put(
+					"title",
+					_language.get(
+						_portal.getHttpServletRequest(actionRequest),
+						"the-structure-was-not-successfully-imported"));
 			}
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

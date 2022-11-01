@@ -32,7 +32,7 @@ import com.liferay.info.field.type.CategoriesInfoFieldType;
 import com.liferay.info.field.type.TagsInfoFieldType;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.type.categorization.Category;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -104,7 +104,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 							assetVocabulary.getTitleMap()
 						).build()
 					).build(),
-					() -> _getCategories(
+					() -> _getKeyLocalizedLabelPairs(
 						_filterByVocabularyId(
 							assetEntry.getCategories(),
 							assetVocabulary.getVocabularyId()))));
@@ -113,7 +113,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		infoFieldValues.add(
 			new InfoFieldValue<>(
 				_categoriesInfoField,
-				() -> _getCategories(
+				() -> _getKeyLocalizedLabelPairs(
 					_filterByVisibilityType(assetEntry.getCategories()))));
 		infoFieldValues.add(
 			new InfoFieldValue<>(
@@ -173,24 +173,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			assetCategory -> assetCategory.getVocabularyId() == vocabularyId);
 	}
 
-	private List<Category> _getCategories(List<AssetCategory> assetCategories) {
-		List<Category> categories = new SortedArrayList<>(
-			Comparator.comparing(Category::getKey));
-
-		for (AssetCategory assetCategory : assetCategories) {
-			categories.add(_getCategory(assetCategory));
-		}
-
-		return categories;
-	}
-
-	private Category _getCategory(AssetCategory assetCategory) {
-		return new Category(
-			assetCategory.getName(),
-			(InfoLocalizedValue<String>)InfoLocalizedValue.function(
-				assetCategory::getTitle));
-	}
-
 	private InfoFieldSet _getInfoFieldSet(
 		Collection<AssetVocabulary> assetVocabularies) {
 
@@ -225,6 +207,30 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		).name(
 			"categorization"
 		).build();
+	}
+
+	private KeyLocalizedLabelPair _getKeyLocalizedLabelPair(
+		AssetCategory assetCategory) {
+
+		return new KeyLocalizedLabelPair(
+			assetCategory.getName(),
+			(InfoLocalizedValue<String>)InfoLocalizedValue.function(
+				assetCategory::getTitle));
+	}
+
+	private List<KeyLocalizedLabelPair> _getKeyLocalizedLabelPairs(
+		List<AssetCategory> assetCategories) {
+
+		List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+			new SortedArrayList<>(
+				Comparator.comparing(KeyLocalizedLabelPair::getKey));
+
+		for (AssetCategory assetCategory : assetCategories) {
+			keyLocalizedLabelPairs.add(
+				_getKeyLocalizedLabelPair(assetCategory));
+		}
+
+		return keyLocalizedLabelPairs;
 	}
 
 	private Set<AssetVocabulary> _getNoninternalAssetVocabularies(

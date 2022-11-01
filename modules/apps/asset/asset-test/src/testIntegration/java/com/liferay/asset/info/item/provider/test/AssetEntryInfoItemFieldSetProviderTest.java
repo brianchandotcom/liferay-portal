@@ -34,7 +34,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.type.categorization.Category;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -212,10 +212,11 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
 
-		Category category = _getCategory(filteredInfoFieldValues);
+		KeyLocalizedLabelPair keyLocalizedLabelPair = _getKeyLocalizedLabelPair(
+			filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			category.getLabel(LocaleUtil.ENGLISH),
+			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
 			assetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
@@ -248,10 +249,11 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues.toString(), 1,
 			filteredInfoFieldValues.size());
 
-		Category category = _getCategory(filteredInfoFieldValues);
+		KeyLocalizedLabelPair keyLocalizedLabelPair = _getKeyLocalizedLabelPair(
+			filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			category.getLabel(LocaleUtil.ENGLISH),
+			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
 			publicAssetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
@@ -294,10 +296,11 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues.toString(), 1,
 			filteredInfoFieldValues.size());
 
-		Category category = _getCategory(filteredInfoFieldValues);
+		KeyLocalizedLabelPair keyLocalizedLabelPair = _getKeyLocalizedLabelPair(
+			filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			category.getLabel(LocaleUtil.ENGLISH),
+			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
 			assetCategory.getTitle(LocaleUtil.ENGLISH));
 	}
 
@@ -351,18 +354,6 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			null, null, visibilityTypePublic, new ServiceContext());
 	}
 
-	private Category _getCategory(
-		List<InfoFieldValue<Object>> filteredInfoFieldValues) {
-
-		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
-
-		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
-
-		List<Category> categories = (List<Category>)value;
-
-		return categories.get(0);
-	}
-
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
 		AssetEntry assetEntry, String fieldName) {
 
@@ -373,6 +364,19 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 				return Objects.equals(fieldName, infoField.getName());
 			});
+	}
+
+	private KeyLocalizedLabelPair _getKeyLocalizedLabelPair(
+		List<InfoFieldValue<Object>> filteredInfoFieldValues) {
+
+		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
+
+		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
+
+		List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+			(List<KeyLocalizedLabelPair>)value;
+
+		return keyLocalizedLabelPairs.get(0);
 	}
 
 	@Inject

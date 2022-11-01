@@ -15,7 +15,7 @@
 package com.liferay.asset.info.internal.item.provider;
 
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
-import com.liferay.info.type.categorization.Category;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -30,19 +30,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(service = InfoCollectionTextFormatter.class)
-public class CategoryCommaSeparatedLabelsInfoTextFormatter
-	implements InfoCollectionTextFormatter<Category> {
+public class KeyLocalizedLabelPairCommaSeparatedLabelsInfoTextFormatter
+	implements InfoCollectionTextFormatter<KeyLocalizedLabelPair> {
 
 	@Override
-	public String format(Collection<Category> categories, Locale locale) {
-		Stream<Category> stream = categories.stream();
+	public String format(
+		Collection<KeyLocalizedLabelPair> keyLocalizedLabelPairs,
+		Locale locale) {
+
+		Stream<KeyLocalizedLabelPair> stream = keyLocalizedLabelPairs.stream();
 
 		return stream.map(
-			assetCategory -> {
-				String title = assetCategory.getLabel(locale);
+			keyLocalizedLabelPair -> {
+				String title = keyLocalizedLabelPair.getLabel(locale);
 
 				if (Validator.isNull(title)) {
-					return assetCategory.getKey();
+					return keyLocalizedLabelPair.getKey();
 				}
 
 				return title;

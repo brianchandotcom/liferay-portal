@@ -17,7 +17,7 @@ package com.liferay.template.internal.info.field.transformer;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.type.categorization.Category;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Component;
 	property = "info.field.type.class.name=com.liferay.info.field.type.CategoriesInfoFieldType",
 	service = TemplateNodeTransformer.class
 )
-public class CategoryRepeatableFieldTemplateNodeTransformer
-	extends BaseRepeatableFieldTemplateNodeTransformer<Category> {
+public class KeyLocalizedLabelPairRepeatableFieldTemplateNodeTransformer
+	extends BaseRepeatableFieldTemplateNodeTransformer<KeyLocalizedLabelPair> {
 
 	@Override
-	protected UnsafeFunction<Category, TemplateNode, Exception>
+	protected UnsafeFunction<KeyLocalizedLabelPair, TemplateNode, Exception>
 		getTransformUnsafeFunction(
 			InfoFieldValue<Object> infoFieldValue, ThemeDisplay themeDisplay) {
 
@@ -47,14 +47,15 @@ public class CategoryRepeatableFieldTemplateNodeTransformer
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
-		return category -> new TemplateNode(
+		return keyLocalizedLabelPair -> new TemplateNode(
 			themeDisplay, infoField.getName(),
-			category.getLabel(themeDisplay.getLocale()),
+			keyLocalizedLabelPair.getLabel(themeDisplay.getLocale()),
 			infoFieldType.getName(),
 			HashMapBuilder.put(
-				"key", category.getKey()
+				"key", keyLocalizedLabelPair.getKey()
 			).put(
-				"label", category.getLabel(themeDisplay.getLocale())
+				"label",
+				keyLocalizedLabelPair.getLabel(themeDisplay.getLocale())
 			).build());
 	}
 

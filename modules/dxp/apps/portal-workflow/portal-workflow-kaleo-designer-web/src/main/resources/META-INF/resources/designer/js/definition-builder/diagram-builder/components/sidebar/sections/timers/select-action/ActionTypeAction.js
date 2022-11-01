@@ -113,9 +113,9 @@ const ActionTypeAction = ({
 
 ActionTypeAction.propTypes = {
 	actionSectionsIndex: PropTypes.number.isRequired,
-	actionSubSectionsIndex: PropTypes.number.isRequired,
+	actionSubSectionsIndex: PropTypes.number,
 	timersIndex: PropTypes.number.isRequired,
-	updateSelectedItem: PropTypes.func.isRequired,
+	updateSelectedItem: PropTypes.func,
 };
 
 export default ActionTypeAction;

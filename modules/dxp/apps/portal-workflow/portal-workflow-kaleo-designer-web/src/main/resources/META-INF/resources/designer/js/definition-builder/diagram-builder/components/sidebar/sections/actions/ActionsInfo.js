@@ -220,7 +220,7 @@ const ActionsInfo = ({
 };
 
 ActionsInfo.propTypes = {
-	executionTypeInput: PropTypes.func.isRequired,
+	executionTypeInput: PropTypes.func,
 	identifier: PropTypes.string.isRequired,
 	index: PropTypes.number.isRequired,
 	sectionsLength: PropTypes.number.isRequired,

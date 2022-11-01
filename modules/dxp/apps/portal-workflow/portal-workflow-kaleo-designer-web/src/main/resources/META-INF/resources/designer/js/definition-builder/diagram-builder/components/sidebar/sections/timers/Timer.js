@@ -158,7 +158,7 @@ const Timer = ({
 Timer.propTypes = {
 	sectionsLength: PropTypes.number.isRequired,
 	setTimerSections: PropTypes.func.isRequired,
-	timerActions: PropTypes.array.isRequired,
+	timerActions: PropTypes.array,
 	timerIdentifier: PropTypes.string.isRequired,
 	timersIndex: PropTypes.number.isRequired,
 };

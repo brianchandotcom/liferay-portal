@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.metrics.internal.sla.calendar;
 
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
-import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -35,9 +35,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = false, service = WorkflowMetricsSLACalendarTracker.class)
-public class WorkflowMetricsSLACalendarTrackerImpl
-	implements WorkflowMetricsSLACalendarTracker {
+@Component(
+	immediate = false, service = WorkflowMetricsSLACalendarRegistry.class
+)
+public class WorkflowMetricsSLACalendarRegistryImpl
+	implements WorkflowMetricsSLACalendarRegistry {
 
 	@Override
 	public WorkflowMetricsSLACalendar getWorkflowMetricsSLACalendar(

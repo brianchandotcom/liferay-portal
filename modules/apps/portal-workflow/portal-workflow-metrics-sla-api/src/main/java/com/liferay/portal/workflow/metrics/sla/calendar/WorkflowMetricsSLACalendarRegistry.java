@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * @author Rafael Praxedes
  */
-public interface WorkflowMetricsSLACalendarTracker {
+public interface WorkflowMetricsSLACalendarRegistry {
 
 	public WorkflowMetricsSLACalendar getWorkflowMetricsSLACalendar(String key);
 

@@ -28,11 +28,11 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.exporter.LayoutsExporter;
-import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.DisplayPageTemplateDTOConverter;
-import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.MasterPageDTOConverter;
-import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.PageTemplateCollectionDTOConverter;
-import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.PageTemplateDTOConverter;
-import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.UtilityPageTemplateDTOConverter;
+import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util.DisplayPageTemplateUtil;
+import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util.MasterPageUtil;
+import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util.PageTemplateCollectionUtil;
+import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util.PageTemplateUtil;
+import com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util.UtilityPageTemplateUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -266,7 +266,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_DISPLAY_PAGE_TEMPLATE,
 			objectWriter.writeValueAsString(
-				DisplayPageTemplateDTOConverter.toDTO(
+				DisplayPageTemplateUtil.toDisplayPageTemplate(
 					layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
@@ -316,7 +316,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		zipWriter.addEntry(
 			layoutUtilityPageEntryPath + "/utility-page.json",
 			objectWriter.writeValueAsString(
-				UtilityPageTemplateDTOConverter.toDTO(layoutUtilityPageEntry)));
+				UtilityPageTemplateUtil.toUtilityPageTemplate(
+					layoutUtilityPageEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutUtilityPageEntry.getPlid());
@@ -366,7 +367,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			masterLayoutPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE,
 			objectWriter.writeValueAsString(
-				MasterPageDTOConverter.toDTO(layoutPageTemplateEntry)));
+				MasterPageUtil.toMasterPage(layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -425,7 +426,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 				LayoutPageTemplateExportImportConstants.
 					FILE_NAME_PAGE_TEMPLATE_COLLECTION,
 			objectWriter.writeValueAsString(
-				PageTemplateCollectionDTOConverter.toDTO(
+				PageTemplateCollectionUtil.toPageTemplateCollection(
 					layoutPageTemplateCollection)));
 
 		String layoutPageTemplateEntryPath =
@@ -436,7 +437,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			layoutPageTemplateEntryPath + StringPool.SLASH +
 				LayoutPageTemplateExportImportConstants.FILE_NAME_PAGE_TEMPLATE,
 			objectWriter.writeValueAsString(
-				PageTemplateDTOConverter.toDTO(layoutPageTemplateEntry)));
+				PageTemplateUtil.toPageTemplate(layoutPageTemplateEntry)));
 
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());

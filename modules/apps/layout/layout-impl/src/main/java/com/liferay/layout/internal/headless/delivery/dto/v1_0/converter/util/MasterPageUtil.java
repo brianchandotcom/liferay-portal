@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
+package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util;
 
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -20,9 +20,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 /**
  * @author Rubén Pulido
  */
-public class MasterPageDTOConverter {
+public class MasterPageUtil {
 
-	public static MasterPage toDTO(
+	public static MasterPage toMasterPage(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		return new MasterPage() {

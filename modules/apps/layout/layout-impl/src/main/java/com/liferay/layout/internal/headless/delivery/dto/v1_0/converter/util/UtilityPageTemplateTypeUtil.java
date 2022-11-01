@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
+package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util;
 
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Víctor Galán
  */
-public class UtilityPageTemplateTypeConverter {
+public class UtilityPageTemplateTypeUtil {
 
 	public static final Map<String, Integer> externalToInternalValuesMap =
 		HashMapBuilder.put(

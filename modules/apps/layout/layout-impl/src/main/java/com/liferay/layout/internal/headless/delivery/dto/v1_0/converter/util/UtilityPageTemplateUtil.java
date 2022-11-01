@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
+package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util;
 
 import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -20,9 +20,9 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 /**
  * @author Bárbara Cabrera
  */
-public class UtilityPageTemplateDTOConverter {
+public class UtilityPageTemplateUtil {
 
-	public static UtilityPageTemplate toDTO(
+	public static UtilityPageTemplate toUtilityPageTemplate(
 		LayoutUtilityPageEntry layoutUtilityPageEntry) {
 
 		return new UtilityPageTemplate() {
@@ -33,7 +33,7 @@ public class UtilityPageTemplateDTOConverter {
 					layoutUtilityPageEntry.getExternalReferenceCode();
 				name = layoutUtilityPageEntry.getName();
 				type = Type.create(
-					UtilityPageTemplateTypeConverter.convertToExternalValue(
+					UtilityPageTemplateTypeUtil.convertToExternalValue(
 						layoutUtilityPageEntry.getType()));
 			}
 		};

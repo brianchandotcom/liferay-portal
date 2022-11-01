@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
+package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter.util;
 
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -20,9 +20,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 /**
  * @author Rubén Pulido
  */
-public class PageTemplateDTOConverter {
+public class PageTemplateUtil {
 
-	public static PageTemplate toDTO(
+	public static PageTemplate toPageTemplate(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		return new PageTemplate() {

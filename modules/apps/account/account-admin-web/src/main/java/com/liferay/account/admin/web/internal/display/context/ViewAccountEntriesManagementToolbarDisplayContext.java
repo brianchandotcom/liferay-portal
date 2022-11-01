@@ -272,11 +272,6 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	public Boolean isShowCreationMenu() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

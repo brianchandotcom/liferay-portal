@@ -129,11 +129,6 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	public Boolean isSelectable() {
 		return !_selectAccountUsersDisplayContext.isSingleSelect();
 	}

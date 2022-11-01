@@ -52,11 +52,6 @@ public class SelectAccountOrganizationsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	protected String getOrderByCol() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getOrderByColParam(), "name");

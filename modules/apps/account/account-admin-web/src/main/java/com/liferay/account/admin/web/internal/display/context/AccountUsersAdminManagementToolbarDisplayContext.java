@@ -390,11 +390,6 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	public Boolean isShowCreationMenu() {
 		return PortalPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);

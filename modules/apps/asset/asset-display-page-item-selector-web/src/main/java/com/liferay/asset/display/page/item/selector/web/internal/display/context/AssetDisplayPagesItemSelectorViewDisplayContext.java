@@ -47,11 +47,10 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 	public AssetDisplayPagesItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
 		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion,
-		String itemSelectedEventName, PortletURL portletURL) {
+		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
 		_assetDisplayPageSelectorCriterion = assetDisplayPageSelectorCriterion;
-		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
@@ -133,10 +132,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		_assetDisplayPageSearchContainer = assetDisplayPageSearchContainer;
 
 		return _assetDisplayPageSearchContainer;
-	}
-
-	public String getItemSelectedEventName() {
-		return _itemSelectedEventName;
 	}
 
 	public String getOrderByType() {
@@ -224,7 +219,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		_assetDisplayPageSelectorCriterion;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final String _itemSelectedEventName;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

@@ -35,10 +35,10 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 					<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-app-release" />
 				</or>
 				<then>
-					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web,com.liferay.search.experiences.api,com.liferay.search.experiences.lang,com.liferay.search.experiences.rest.api,com.liferay.search.experiences.rest.client,com.liferay.search.experiences.rest.impl,com.liferay.search.experiences.service,com.liferay.search.experiences.web,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ API,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ Impl,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ API,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ Impl"</echo>
+					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web,com.liferay.search.experiences.api,com.liferay.search.experiences.lang,com.liferay.search.experiences.rest.api,com.liferay.search.experiences.rest.client,com.liferay.search.experiences.rest.impl,com.liferay.search.experiences.service,com.liferay.search.experiences.web,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ API,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ Impl,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ API,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ Impl"</echo>
 				</then>
 				<else>
-					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web,com.liferay.search.experiences.api,com.liferay.search.experiences.lang,com.liferay.search.experiences.rest.api,com.liferay.search.experiences.rest.client,com.liferay.search.experiences.rest.impl,com.liferay.search.experiences.service,com.liferay.search.experiences.web</echo>
+					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web,com.liferay.search.experiences.api,com.liferay.search.experiences.lang,com.liferay.search.experiences.rest.api,com.liferay.search.experiences.rest.client,com.liferay.search.experiences.rest.impl,com.liferay.search.experiences.service,com.liferay.search.experiences.web</echo>
 
 					<pathconvert pathsep="," property="commerce.modules">
 						<path>
@@ -63,7 +63,7 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 						</chainedmapper>
 					</pathconvert>
 
-					<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">,${commerce.modules}"</echo>
+					<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config">,${commerce.modules}"</echo>
 				</else>
 			</if>
 		</sequential>

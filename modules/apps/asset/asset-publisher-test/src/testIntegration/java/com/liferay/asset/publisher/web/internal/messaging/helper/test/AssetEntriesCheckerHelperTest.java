@@ -22,7 +22,7 @@ import com.liferay.asset.publisher.test.util.AssetPublisherTestUtil;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -131,7 +131,7 @@ public class AssetEntriesCheckerHelperTest {
 	protected AssetEntry addAssetEntry(String portletId, boolean manualMode)
 		throws Exception {
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
 			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
@@ -256,6 +256,9 @@ public class AssetEntriesCheckerHelperTest {
 
 	@Inject
 	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Inject
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;

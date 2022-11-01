@@ -27,7 +27,7 @@ import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 import com.liferay.portal.search.internal.indexer.ModelPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
 import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsRegistry;
-import com.liferay.portal.search.internal.indexer.SearchPermissionFilterContributorsHolder;
+import com.liferay.portal.search.internal.indexer.SearchPermissionFilterContributorsRegistry;
 import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -109,8 +109,8 @@ public class PreFilterContributorHelperImpl
 	protected SearchPermissionChecker searchPermissionChecker;
 
 	@Reference
-	protected SearchPermissionFilterContributorsHolder
-		searchPermissionFilterContributorsHolder;
+	protected SearchPermissionFilterContributorsRegistry
+		searchPermissionFilterContributorsRegistry;
 
 	private void _addIndexerProvidedPreFilters(
 		BooleanFilter booleanFilter, Indexer<?> indexer,
@@ -227,7 +227,7 @@ public class PreFilterContributorHelperImpl
 		String entryClassName) {
 
 		Stream<SearchPermissionFilterContributor> stream =
-			searchPermissionFilterContributorsHolder.getAll();
+			searchPermissionFilterContributorsRegistry.getAll();
 
 		List<SearchPermissionFilterContributor> list = stream.collect(
 			Collectors.toList());

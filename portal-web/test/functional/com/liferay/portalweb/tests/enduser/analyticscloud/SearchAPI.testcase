@@ -209,4 +209,63 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12145 | Test Summary: Fetch keywords with page parameter"
+	@priority = "3"
+	test RequestKeywordsUsingPage {
+		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingPage";
+
+		var parametersFirstPage = "size=${size}&displayLanguageId=en-US&page=${firstPage}&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersSecondPage = "size=${size}&displayLanguageId=en-US&page=${secondPage}&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+		var firstKeyword = "workspace";
+		var secondKeyword = "analytics";
+		var size = "1";
+		var firstPage = "0";
+		var secondPage = "1";
+
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Go to the search bar and search for a keyword") {
+			for (var keyword : list "${firstKeyword},${secondKeyword}") {
+				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+			}
+		}
+
+		task ("Run curl command to get keyword results using page = 0") {
+			ACApi.getSearchKeywords(parameters = "${parametersFirstPage}");
+		}
+
+		task ("Assert response returns 0 for page") {
+			ACApi.assertGenericJSONPathResponse(
+				apiPath = "page.number",
+				expected = "${firstPage}");
+		}
+
+		task ("Assert response returns the second keyword") {
+			ACApi.assertSearchResponse(expected = "${secondKeyword}");
+		}
+
+		task ("Run curl command to get keyword results using page = 1") {
+			ACApi.getSearchKeywords(parameters = "${parametersSecondPage}");
+		}
+
+		task ("Assert response returns 1 for page") {
+			ACApi.assertGenericJSONPathResponse(
+				apiPath = "page.number",
+				expected = "${secondPage}");
+		}
+
+		task ("Assert response returns first keyword") {
+			ACApi.assertSearchResponse(expected = "${firstKeyword}");
+		}
+	}
+
 }

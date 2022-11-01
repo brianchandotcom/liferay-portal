@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = KeywordQueryContributorsHolder.class)
-public class KeywordQueryContributorsHolderImpl
-	implements KeywordQueryContributorsHolder {
+@Component(immediate = true, service = KeywordQueryContributorsRegistry.class)
+public class KeywordQueryContributorsRegistryImpl
+	implements KeywordQueryContributorsRegistry {
 
 	@Override
 	public Stream<KeywordQueryContributor> stream(

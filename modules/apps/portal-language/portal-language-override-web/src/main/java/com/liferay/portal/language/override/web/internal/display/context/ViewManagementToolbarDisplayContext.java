@@ -116,11 +116,6 @@ public class ViewManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	public Boolean isSelectable() {
 		return false;
 	}

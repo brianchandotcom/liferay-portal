@@ -22,7 +22,7 @@ List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigur
 
 <clay:dropdown-menu
 	borderless="<%= true %>"
-	cssClass="component-action text-white"
+	cssClass="component-action portlet-options text-white"
 	displayType="secondary"
 	dropdownItems='<%= (List<DropdownItem>)request.getAttribute("liferay-frontend:icon-options:dropdownItems") %>'
 	icon="ellipsis-v"

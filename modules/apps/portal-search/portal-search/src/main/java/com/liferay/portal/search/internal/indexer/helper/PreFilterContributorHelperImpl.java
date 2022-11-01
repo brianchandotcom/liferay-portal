@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 import com.liferay.portal.search.internal.indexer.ModelPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
-import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsHolder;
+import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.indexer.SearchPermissionFilterContributorsHolder;
 import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
@@ -102,7 +102,8 @@ public class PreFilterContributorHelperImpl
 		modelPreFilterContributorsRegistry;
 
 	@Reference
-	protected QueryPreFilterContributorsHolder queryPreFilterContributorsHolder;
+	protected QueryPreFilterContributorsRegistry
+		queryPreFilterContributorsRegistry;
 
 	@Reference
 	protected SearchPermissionChecker searchPermissionChecker;
@@ -181,7 +182,7 @@ public class PreFilterContributorHelperImpl
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		Stream<QueryPreFilterContributor> stream =
-			queryPreFilterContributorsHolder.stream(
+			queryPreFilterContributorsRegistry.stream(
 				getStrings(
 					"search.full.query.clause.contributors.excludes",
 					searchContext),

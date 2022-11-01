@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoItemFieldReaderTracker {
+public interface InfoItemFieldReaderRegistry {
 
 	public List<InfoItemFieldReader> getInfoItemFieldReaders(
 		String itemClassName);

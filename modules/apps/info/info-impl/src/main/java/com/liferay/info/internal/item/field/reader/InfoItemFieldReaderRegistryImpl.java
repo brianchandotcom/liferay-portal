@@ -22,7 +22,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.item.field.reader.InfoItemFieldReader;
-import com.liferay.info.item.field.reader.InfoItemFieldReaderTracker;
+import com.liferay.info.item.field.reader.InfoItemFieldReaderRegistry;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
@@ -50,9 +50,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemFieldReaderTracker.class)
-public class InfoItemFieldReaderTrackerImpl
-	implements InfoItemFieldReaderTracker {
+@Component(immediate = true, service = InfoItemFieldReaderRegistry.class)
+public class InfoItemFieldReaderRegistryImpl
+	implements InfoItemFieldReaderRegistry {
 
 	@Override
 	public List<InfoItemFieldReader> getInfoItemFieldReaders(

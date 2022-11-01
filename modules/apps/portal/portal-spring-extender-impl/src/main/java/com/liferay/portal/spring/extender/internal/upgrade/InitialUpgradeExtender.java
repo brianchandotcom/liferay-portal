@@ -238,9 +238,9 @@ public class InitialUpgradeExtender
 		}
 
 		private void _upgrade() throws UpgradeException {
-			String tablesSQL = DBResourceUtil.getModuleTablesSQL(_bundle);
-			String sequencesSQL = DBResourceUtil.getModuleSequencesSQL(_bundle);
 			String indexesSQL = DBResourceUtil.getModuleIndexesSQL(_bundle);
+			String sequencesSQL = DBResourceUtil.getModuleSequencesSQL(_bundle);
+			String tablesSQL = DBResourceUtil.getModuleTablesSQL(_bundle);
 
 			try (Connection connection = _dataSource.getConnection()) {
 				if (tablesSQL != null) {

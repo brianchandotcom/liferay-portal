@@ -6,7 +6,6 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:asset:asset-list-api")
 	testIntegrationCompile project(":apps:asset:asset-publisher-api")
-	testIntegrationCompile project(":apps:asset:asset-publisher-web")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

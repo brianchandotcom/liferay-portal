@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public interface ModelPreFilterContributorsHolder {
+public interface ModelPreFilterContributorsRegistry {
 
 	public Stream<ModelPreFilterContributor> stream(
 		String entryClassName, Collection<String> excludes,

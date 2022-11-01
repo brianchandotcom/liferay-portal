@@ -21,7 +21,7 @@ import com.liferay.analytics.message.sender.model.AnalyticsMessage;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.internal.model.AnalyticsUserImpl;
 import com.liferay.analytics.settings.internal.util.EntityModelListenerTracker;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
@@ -88,10 +88,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
 	property = Constants.SERVICE_PID + "=com.liferay.analytics.settings.configuration.AnalyticsConfiguration.scoped",
-	service = {AnalyticsConfigurationTracker.class, ManagedServiceFactory.class}
+	service = {
+		AnalyticsConfigurationRegistry.class, ManagedServiceFactory.class
+	}
 )
-public class AnalyticsConfigurationTrackerImpl
-	implements AnalyticsConfigurationTracker, ManagedServiceFactory {
+public class AnalyticsConfigurationRegistryImpl
+	implements AnalyticsConfigurationRegistry, ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {
@@ -725,7 +727,7 @@ public class AnalyticsConfigurationTrackerImpl
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsConfigurationTrackerImpl.class);
+		AnalyticsConfigurationRegistryImpl.class);
 
 	private static final Map<String, String> _defaultFieldNames =
 		HashMapBuilder.put(

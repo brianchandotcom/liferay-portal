@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Rachael Koestartyo
  */
 @ProviderType
-public interface AnalyticsConfigurationTracker {
+public interface AnalyticsConfigurationRegistry {
 
 	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId);
 

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "info.field.type.class.name=com.liferay.info.field.type.CategoriesInfoFieldType",
 	service = TemplateNodeTransformer.class
 )
-public class KeyLocalizedLabelPairRepeatableFieldTemplateNodeTransformer
+public class CategoriesInfoFieldTypeTemplateNodeTransformer
 	extends BaseRepeatableFieldTemplateNodeTransformer<KeyLocalizedLabelPair> {
 
 	@Override

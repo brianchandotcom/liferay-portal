@@ -25,7 +25,7 @@ import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -110,10 +110,10 @@ public class ServletContextUtil {
 		return _layoutListRetrieverRegistry;
 	}
 
-	public static ListObjectReferenceFactoryTracker
+	public static ListObjectReferenceFactoryRegistry
 		getListObjectReferenceFactoryTracker() {
 
-		return _listObjectReferenceFactoryTracker;
+		return _listObjectReferenceFactoryRegistry;
 	}
 
 	public static RequestContextMapper getRequestContextMapper() {
@@ -246,10 +246,11 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setListObjectReferenceFactoryTracker(
-		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
+	protected void setListObjectReferenceFactoryRegistry(
+		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry) {
 
-		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
+		_listObjectReferenceFactoryRegistry =
+			listObjectReferenceFactoryRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -297,8 +298,8 @@ public class ServletContextUtil {
 	private static LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
 	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
-	private static ListObjectReferenceFactoryTracker
-		_listObjectReferenceFactoryTracker;
+	private static ListObjectReferenceFactoryRegistry
+		_listObjectReferenceFactoryRegistry;
 	private static RequestContextMapper _requestContextMapper;
 	private static SegmentsEntryRetriever _segmentsEntryRetriever;
 	private static SegmentsExperienceLocalService

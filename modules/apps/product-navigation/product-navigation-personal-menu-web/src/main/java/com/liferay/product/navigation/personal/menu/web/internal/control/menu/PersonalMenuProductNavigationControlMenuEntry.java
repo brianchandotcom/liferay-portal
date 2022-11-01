@@ -25,7 +25,7 @@ import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationContr
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
-import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTracker;
+import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationRegistry;
 import com.liferay.product.navigation.personal.menu.web.internal.constants.PersonalMenuWebKeys;
 
 import java.io.IOException;
@@ -93,7 +93,7 @@ public class PersonalMenuProductNavigationControlMenuEntry
 				WebKeys.THEME_DISPLAY);
 
 		PersonalMenuConfiguration personalMenuConfiguration =
-			_personalMenuConfigurationTracker.
+			_personalMenuConfigurationRegistry.
 				getCompanyPersonalMenuConfiguration(
 					themeDisplay.getCompanyId());
 
@@ -118,7 +118,8 @@ public class PersonalMenuProductNavigationControlMenuEntry
 	}
 
 	@Reference
-	private PersonalMenuConfigurationTracker _personalMenuConfigurationTracker;
+	private PersonalMenuConfigurationRegistry
+		_personalMenuConfigurationRegistry;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.product.navigation.personal.menu.web)"

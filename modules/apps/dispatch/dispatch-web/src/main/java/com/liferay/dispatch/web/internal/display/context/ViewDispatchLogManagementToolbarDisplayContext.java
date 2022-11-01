@@ -69,11 +69,6 @@ public class ViewDispatchLogManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date", "status"};
 	}

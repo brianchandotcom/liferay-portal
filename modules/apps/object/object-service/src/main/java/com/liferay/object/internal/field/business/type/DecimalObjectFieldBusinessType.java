@@ -22,7 +22,6 @@ import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
@@ -55,17 +54,12 @@ public class DecimalObjectFieldBusinessType implements ObjectFieldBusinessType {
 	@Override
 	public String getDescription(Locale locale) {
 		return _language.get(
-			ResourceBundleUtil.getModuleAndPortalResourceBundle(
-				locale, getClass()),
-			"add-a-decimal-number-that-supports-fractional-portions");
+			locale, "add-a-decimal-number-that-supports-fractional-portions");
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			ResourceBundleUtil.getModuleAndPortalResourceBundle(
-				locale, getClass()),
-			"decimal");
+		return _language.get(locale, "decimal");
 	}
 
 	@Override

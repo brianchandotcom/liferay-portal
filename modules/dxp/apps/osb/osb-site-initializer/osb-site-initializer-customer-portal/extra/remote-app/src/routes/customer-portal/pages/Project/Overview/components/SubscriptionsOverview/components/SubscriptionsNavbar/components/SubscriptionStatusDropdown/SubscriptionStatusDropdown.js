@@ -54,26 +54,59 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		if (currentActiveItems.length !== MAX_SUBSCRIPTION_STATUS) {
 			onClick(currentActiveItems.map((item) => item.label));
-		}
-		else {
+		} else {
 			onClick();
 		}
 
 		setItems([...items]);
 	};
 
-	const getDropdownItems = () =>
-		items.map((item, index) => (
+	const handleClickAll = () => {
+		items.active = !items.active;
+
+		const newItems = items.map((object) => {
+			return {...object, active: true};
+		});
+
+		setItems([...newItems]);
+		const currentActiveItems = items.filter((item) => item.active);
+		if (currentActiveItems.length === MAX_SUBSCRIPTION_STATUS) {
+			onClick(currentActiveItems.map((item) => item.label));
+		} else {
+			onClick();
+		}
+	};
+
+	const getDropdownItems = () => (
+		<>
+			{items.map((item, index) => (
+				<DropDown.Item
+					className="pr-6"
+					disabled={
+						(item.active && activeItems.length < 2) || disabled
+					}
+					key={`${item.label}-${index}`}
+					onClick={() => handleOnClick(index)}
+					symbolRight={item.active && 'check'}
+				>
+					{i18n.translate(getKebabCase(item.label))}
+				</DropDown.Item>
+			))}
+
 			<DropDown.Item
 				className="pr-6"
-				disabled={(item.active && activeItems.length < 2) || disabled}
-				key={`${item.label}-${index}`}
-				onClick={() => handleOnClick(index)}
-				symbolRight={item.active && 'check'}
+				disabled={
+					activeItems.length === MAX_SUBSCRIPTION_STATUS || disabled
+				}
+				onClick={() => handleClickAll()}
+				symbolRight={
+					activeItems.length === MAX_SUBSCRIPTION_STATUS && 'check'
+				}
 			>
-				{i18n.translate(getKebabCase(item.label))}
+				{i18n.translate('all')}
 			</DropDown.Item>
-		));
+		</>
+	);
 
 	return (
 		<div className="align-items-center d-flex ml-2 mt-2">

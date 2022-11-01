@@ -23,7 +23,7 @@ import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalServic
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.internal.model.AnalyticsUserImpl;
-import com.liferay.analytics.settings.internal.util.EntityModelListenerTracker;
+import com.liferay.analytics.settings.internal.util.EntityModelListenerRegistry;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -275,7 +275,7 @@ public class AnalyticsConfigurationRegistryImpl
 
 		message.put(
 			"entityModelListener",
-			_entityModelListenerTracker.getEntityModelListener(
+			_entityModelListenerRegistry.getEntityModelListener(
 				baseModel.getModelClassName()));
 
 		message.setPayload(baseModels);
@@ -321,7 +321,7 @@ public class AnalyticsConfigurationRegistryImpl
 			Map<String, long[]> memberships = new HashMap<>();
 
 			for (EntityModelListener<?> entityModelListener :
-					_entityModelListenerTracker.getEntityModelListeners()) {
+					_entityModelListenerRegistry.getEntityModelListeners()) {
 
 				try {
 					long[] membershipIds = entityModelListener.getMembershipIds(
@@ -453,7 +453,7 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 				else {
 					Collection<EntityModelListener<?>> entityModelListeners =
-						_entityModelListenerTracker.getEntityModelListeners();
+						_entityModelListenerRegistry.getEntityModelListeners();
 
 					for (EntityModelListener<?> entityModelListener :
 							entityModelListeners) {
@@ -840,7 +840,7 @@ public class AnalyticsConfigurationRegistryImpl
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
-	private EntityModelListenerTracker _entityModelListenerTracker;
+	private EntityModelListenerRegistry _entityModelListenerRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

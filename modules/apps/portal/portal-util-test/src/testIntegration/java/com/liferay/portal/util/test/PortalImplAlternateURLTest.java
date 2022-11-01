@@ -160,12 +160,8 @@ public class PortalImplAlternateURLTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, friendlyURLMap);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_addAssetDisplayPageEntry(journalArticle);
-
 		ThemeDisplay themeDisplay = _getThemeDisplay(
-			_group,
-			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
+			_group, _addAssetDisplayPageEntry(journalArticle));
 
 		_testAlternateURLWithAssetDisplayPageEntry(
 			availableLocales, defaultLocale, friendlyURLMap, 0,
@@ -339,7 +335,7 @@ public class PortalImplAlternateURLTest {
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
-	private LayoutPageTemplateEntry _addAssetDisplayPageEntry(
+	private Layout _addAssetDisplayPageEntry(
 			JournalArticle journalArticle)
 		throws Exception {
 
@@ -364,7 +360,7 @@ public class PortalImplAlternateURLTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 
-		return layoutPageTemplateEntry;
+		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}
 
 	private String _generateAssetDisplayPageEntryURL(

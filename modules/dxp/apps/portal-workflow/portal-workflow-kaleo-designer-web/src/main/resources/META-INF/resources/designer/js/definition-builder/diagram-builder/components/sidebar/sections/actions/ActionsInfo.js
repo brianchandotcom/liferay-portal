@@ -13,21 +13,9 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import {DEFAULT_LANGUAGE} from '../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
 import BaseActionsInfo from '../shared-components/BaseActionsInfo';
-
-const scriptLanguageOptions = [
-	{
-		label: Liferay.Language.get('groovy'),
-		value: 'groovy',
-	},
-	{
-		label: Liferay.Language.get('java'),
-		value: 'java',
-	},
-];
 
 const ActionsInfo = ({
 	identifier,
@@ -60,8 +48,40 @@ const ActionsInfo = ({
 		},
 	]);
 
+	const actionTypeOptions = [
+		{
+			label: Liferay.Language.get('groovy'),
+			type: 'script',
+			value: 'groovy',
+		},
+		{
+			label: Liferay.Language.get('java'),
+			type: 'script',
+			value: 'java',
+		},
+		...clientExtensions.map((item) => {
+			const itemCopy = {...item};
+			itemCopy.type = 'clientExtension';
+			itemCopy.label = item.description;
+			delete itemCopy.description;
+			itemCopy.value = item.key;
+			delete itemCopy.key;
+
+			return Object.keys(itemCopy)
+				.sort()
+				.reduce((accumulator, key) => {
+					accumulator[key] = itemCopy[key];
+
+					return accumulator;
+				}, {});
+		}),
+	];
 	const [scriptLanguage, setScriptLanguage] = useState(
-		actions?.scriptLanguage?.[index] || DEFAULT_LANGUAGE
+		actions?.scriptLanguage?.[index] || 'select-a-script-type'
+	);
+
+	const [selectedActionType, setSelectedActionType] = useState(
+		actionTypeOptions.find((item) => item.value === scriptLanguage)
 	);
 
 	if (
@@ -94,16 +114,23 @@ const ActionsInfo = ({
 	};
 
 	const updateActionInfo = (item) => {
-		if (item.name && item.script && item.executionType) {
+		if (
+			item.name &&
+			(item.script ||
+				(selectedActionType?.type === 'clientExtension' &&
+					item.script === '')) &&
+			item.executionType
+		) {
 			setSections((prev) => {
-				prev[index] = {
-					...prev[index],
+				const updatedSection = [...prev];
+
+				updatedSection[index] = {
+					...updatedSection[index],
 					...item,
 				};
+				updateSelectedItem(updatedSection);
 
-				updateSelectedItem(prev);
-
-				return prev;
+				return updatedSection;
 			});
 		}
 	};
@@ -133,7 +160,7 @@ const ActionsInfo = ({
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 			<BaseActionsInfo
-				clientExtensions={clientExtensions}
+				actionTypes={actionTypeOptions}
 				description={description}
 				executionType={executionType}
 				executionTypeInput={executionTypeInput}
@@ -145,7 +172,7 @@ const ActionsInfo = ({
 				priority={priority}
 				script={script}
 				scriptLanguage={scriptLanguage}
-				scriptLanguageOptions={scriptLanguageOptions}
+				selectedActionType={selectedActionType}
 				selectedItem={selectedItem}
 				setDescription={setDescription}
 				setExecutionType={setExecutionType}
@@ -154,13 +181,18 @@ const ActionsInfo = ({
 				setPriority={setPriority}
 				setScript={setScript}
 				setScriptLanguage={setScriptLanguage}
+				setSelectedActionType={setSelectedActionType}
 				updateActionInfo={updateActionInfo}
 			/>
 
 			<div className="section-buttons-area">
 				<ClayButton
 					className="mr-3"
-					disabled={actions?.name === '' || script === ''}
+					disabled={
+						actions?.name === '' ||
+						(!selectedActionType === 'clientExtension' &&
+							script === '')
+					}
 					displayType="secondary"
 					onClick={() =>
 						setSections((prev) => {

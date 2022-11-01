@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author David Arques
  */
-public interface AnalyticsReportsInfoItemTracker {
+public interface AnalyticsReportsInfoItemRegistry {
 
 	public AnalyticsReportsInfoItem<?> getAnalyticsReportsInfoItem(String key);
 

@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author David Arques
  */
-@Component(service = AnalyticsReportsInfoItemTracker.class)
-public class AnalyticsReportsInfoItemTrackerImpl
-	implements AnalyticsReportsInfoItemTracker {
+@Component(service = AnalyticsReportsInfoItemRegistry.class)
+public class AnalyticsReportsInfoItemRegistryImpl
+	implements AnalyticsReportsInfoItemRegistry {
 
 	@Override
 	public AnalyticsReportsInfoItem<?> getAnalyticsReportsInfoItem(String key) {

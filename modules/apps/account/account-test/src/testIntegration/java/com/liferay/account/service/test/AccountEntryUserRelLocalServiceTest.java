@@ -629,7 +629,7 @@ public class AccountEntryUserRelLocalServiceTest {
 
 			String mailMessageBody = mailMessage.getBody();
 
-			Assert.assertTrue(mailMessageBody.contains(emailBody));
+			Assert.assertTrue(mailMessageBody.contains(invitationEmailBody));
 		}
 	}
 

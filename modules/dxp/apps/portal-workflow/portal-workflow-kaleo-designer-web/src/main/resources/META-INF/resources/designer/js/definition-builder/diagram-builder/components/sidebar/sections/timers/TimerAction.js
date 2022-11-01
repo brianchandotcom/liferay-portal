@@ -108,7 +108,7 @@ const TimerAction = ({
 
 TimerAction.propTypes = {
 	actionSectionsIndex: PropTypes.number.isRequired,
-	identifier: PropTypes.string.isRequired,
+	identifier: PropTypes.string,
 	sectionsLength: PropTypes.number.isRequired,
 	setActionSections: PropTypes.func.isRequired,
 	timersIndex: PropTypes.number.isRequired,

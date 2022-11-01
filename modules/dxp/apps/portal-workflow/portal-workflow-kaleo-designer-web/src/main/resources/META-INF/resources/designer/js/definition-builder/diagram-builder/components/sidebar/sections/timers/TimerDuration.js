@@ -99,7 +99,7 @@ TimerDuration.propTypes = {
 	selectedItem: PropTypes.object.isRequired,
 	setTimerSections: PropTypes.func.isRequired,
 	timerIdentifier: PropTypes.string.isRequired,
-	timersIndex: PropTypes.func.isRequired,
+	timersIndex: PropTypes.number.isRequired,
 };
 
 export default TimerDuration;

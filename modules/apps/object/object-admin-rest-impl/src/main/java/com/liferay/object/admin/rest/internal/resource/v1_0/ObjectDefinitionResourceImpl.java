@@ -322,9 +322,11 @@ public class ObjectDefinitionResourceImpl
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
-				objectDefinition.getEnableCategorization(),
-				objectDefinition.getEnableComments(),
-				objectDefinition.getEnableObjectEntryHistory(),
+				GetterUtil.getBoolean(
+					objectDefinition.getEnableCategorization(), true),
+				GetterUtil.getBoolean(objectDefinition.getEnableComments()),
+				GetterUtil.getBoolean(
+					objectDefinition.getEnableObjectEntryHistory()),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),

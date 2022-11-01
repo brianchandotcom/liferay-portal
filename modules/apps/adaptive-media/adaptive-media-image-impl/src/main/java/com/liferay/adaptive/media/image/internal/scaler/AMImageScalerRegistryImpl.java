@@ -15,7 +15,7 @@
 package com.liferay.adaptive.media.image.internal.scaler;
 
 import com.liferay.adaptive.media.image.scaler.AMImageScaler;
-import com.liferay.adaptive.media.image.scaler.AMImageScalerTracker;
+import com.liferay.adaptive.media.image.scaler.AMImageScalerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Sergio González
  */
-@Component(service = AMImageScalerTracker.class)
-public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
+@Component(service = AMImageScalerRegistry.class)
+public class AMImageScalerRegistryImpl implements AMImageScalerRegistry {
 
 	@Override
 	public AMImageScaler getAMImageScaler(String mimeType) {
@@ -81,7 +81,7 @@ public class AMImageScalerTrackerImpl implements AMImageScalerTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AMImageScalerTrackerImpl.class);
+		AMImageScalerRegistryImpl.class);
 
 	private ServiceTrackerMap<String, List<AMImageScaler>> _serviceTrackerMap;
 

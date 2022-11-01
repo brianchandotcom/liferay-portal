@@ -40,7 +40,7 @@ package com.liferay.adaptive.media.image.scaler;
  *
  * @author Sergio González
  */
-public interface AMImageScalerTracker {
+public interface AMImageScalerRegistry {
 
 	/**
 	 * Returns the enabled image scaler for the specific MIME type.

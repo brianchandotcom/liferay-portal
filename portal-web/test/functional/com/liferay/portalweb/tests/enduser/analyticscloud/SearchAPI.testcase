@@ -70,93 +70,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12142 | Test Summary: Fetch keywords without optional parameters"
-	@priority = "3"
-	test RequestKeywordsUsingNoParameters {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingNoParameters";
-
-		var keyword1 = "without optional parameters 1";
-		var keyword2 = "without optional parameters 2";
-
-		task ("Go to DXP and get analytics configuration") {
-			ACApi.getAnalyticsConfiguration();
-		}
-
-		task ("Go to Site Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "Home",
-				siteName = "guest");
-		}
-
-		task ("Type keyword in search bar") {
-			for (var keyword : list "${keyword1},${keyword2}") {
-				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
-			}
-		}
-
-		task ("Run curl command without optional parameters to get keyword results") {
-			ACApi.getSearchKeywords();
-		}
-
-		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(expected = "${keyword1}");
-		}
-
-		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(
-				expected = "${keyword2}",
-				keywordPosition = "1");
-		}
-	}
-
-	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12146 | Test Summary: Fetch keywords with size parameter "
-	@priority = "3"
-	test RequestKeywordsUsingSize {
-		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingSize";
-
-		var keyword1 = "with size parameters 1";
-		var keyword2 = "with size parameters 2";
-		var keyword3 = "with size parameters 3";
-		var parameters = "size=2&sort=lastModifiedDate,desc";
-		var size = "2";
-		
-		task ("Go to DXP and get analytics configuration") {
-			ACApi.getAnalyticsConfiguration();
-		}
-
-		task ("Go to Site Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "Home",
-				siteName = "guest");
-		}
-
-		task ("Type keyword in search bar") {
-			for (var keyword : list "${keyword1},${keyword2},${keyword3}") {
-				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
-			}
-		}
-
-		task ("Run curl command to get keyword results") {
-			ACApi.getSearchKeywords(parameters = "${parameters}");
-		}
-
-		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(expected = "${keyword3}");
-		}
-
-		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(
-				expected = "${keyword2}",
-				keywordPosition = "1");
-		}
-
-		task ("Assert response does not return keyword") {
-			ACApi.assertSearchKeywordNotPresent(
-				expected = "${keyword1}",
-				keywordPosition = "2");
-		}
-	}
-
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12143 | Test Summary: Fetch keywords with displayLanguageId parameter"
 	@priority = "3"
 	test RequestKeywordsUsingDisplayLanguageId {
@@ -203,6 +116,45 @@ definition {
 
 		task ("Assert response returns empty") {
 			ACApi.assertSearchResponse(expected = "");
+		}
+	}
+
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12142 | Test Summary: Fetch keywords without optional parameters"
+	@priority = "3"
+	test RequestKeywordsUsingNoParameters {
+		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingNoParameters";
+
+		var keyword1 = "without optional parameters 1";
+		var keyword2 = "without optional parameters 2";
+
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Type keyword in search bar") {
+			for (var keyword : list "${keyword1},${keyword2}") {
+				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+			}
+		}
+
+		task ("Run curl command without optional parameters to get keyword results") {
+			ACApi.getSearchKeywords();
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword1}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(
+				expected = "${keyword2}",
+				keywordPosition = "1");
 		}
 	}
 
@@ -262,6 +214,54 @@ definition {
 
 		task ("Assert response returns first keyword") {
 			ACApi.assertSearchResponse(expected = "${firstKeyword}");
+		}
+	}
+
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12146 | Test Summary: Fetch keywords with size parameter "
+	@priority = "3"
+	test RequestKeywordsUsingSize {
+		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingSize";
+
+		var keyword1 = "with size parameters 1";
+		var keyword2 = "with size parameters 2";
+		var keyword3 = "with size parameters 3";
+		var parameters = "size=2&sort=lastModifiedDate,desc";
+		var size = "2";
+
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Type keyword in search bar") {
+			for (var keyword : list "${keyword1},${keyword2},${keyword3}") {
+				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+			}
+		}
+
+		task ("Run curl command to get keyword results") {
+			ACApi.getSearchKeywords(parameters = "${parameters}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword3}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(
+				expected = "${keyword2}",
+				keywordPosition = "1");
+		}
+
+		task ("Assert response does not return keyword") {
+			ACApi.assertSearchKeywordNotPresent(
+				expected = "${keyword1}",
+				keywordPosition = "2");
 		}
 	}
 

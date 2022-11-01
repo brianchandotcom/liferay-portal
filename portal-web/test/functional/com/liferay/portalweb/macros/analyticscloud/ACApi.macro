@@ -1,5 +1,13 @@
 definition {
 
+	macro assertGenericJSONPathResponse {
+		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..${apiPath}");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expected}");
+	}
+
 	macro assertSearchKeywordNotPresent {
 		if (!(isSet(keywordPosition))) {
 			var keywordPosition = "0";
@@ -49,6 +57,22 @@ definition {
 		return "${apiResponse}";
 	}
 
+	macro getAnalyticsConfiguration {
+		ServerAdministration.openServerAdmin();
+
+		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
+
+		static var faroBackendURL = "${scriptValue}";
+
+		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
+
+		static var osbAsahFaroBackendSS = "${scriptValue}";
+
+		ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+
+		static var osbAsahProjectId = "${scriptValue}";
+	}
+
 	macro getSearchHeaderValues {
 		var script = '''
 			    out.println(com.liferay.portal.util.PrefsPropsUtil.getPreferences(com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId(), false).getMap().get("${header}")[0]);
@@ -85,30 +109,6 @@ definition {
 		static var apiResponse = JSONCurlUtil.get("${curl}");
 
 		return "${apiResponse}";
-	}
-
-	macro assertGenericJSONPathResponse {
-		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..${apiPath}");
-
-		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expected}");
-	}
-
-	macro getAnalyticsConfiguration {
-		ServerAdministration.openServerAdmin();
-
-		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
-
-		static var faroBackendURL = "${scriptValue}";
-
-		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
-
-		static var osbAsahFaroBackendSS = "${scriptValue}";
-
-		ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
-
-		static var osbAsahProjectId = "${scriptValue}";
 	}
 
 	macro getTokenValue {

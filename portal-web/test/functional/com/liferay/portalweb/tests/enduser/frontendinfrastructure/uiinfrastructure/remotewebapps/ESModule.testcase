@@ -6,15 +6,13 @@ definition {
 	property testray.main.component.name = "Remote Apps";
 
 	setUp {
+		task ("Given Liferay portal") {
+			TestCase.setUpPortalInstance();
 
-		task("Given Liferay portal"){
-		TestCase.setUpPortalInstance();
+			User.firstLoginPG();
+		}
 
-		User.firstLoginPG();
-
-		}	
-
-		task("When navigate to home page"){
+		task ("When navigate to home page") {
 			Navigator.gotoPage(pageName = "Home");
 		}
 	}
@@ -26,20 +24,18 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
-				PortalInstances.tearDownCP();
+			PortalInstances.tearDownCP();
 		}
 	}
 
 	@description = "LPS-165439. When add a remote app in the HTML of the page I'm able to see references to react and react-dom"
 	@priority = "5"
 	test CanGenerateTheAMDToESMBridge {
-		
-		task("Then import maps is referenced in the HTML of the page."){
-			
+		task ("Then import maps is referenced in the HTML of the page.") {
 			AssertElementPresent(locator1 = "//script[@type='importmap' and contains(.,'react-dom')]");
-			
+
 			AssertElementPresent(locator1 = "//script[@type='importmap' and contains(.,'react')]");
-		}	
+		}
 	}
+
 }

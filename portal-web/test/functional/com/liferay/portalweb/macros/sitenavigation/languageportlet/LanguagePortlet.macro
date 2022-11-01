@@ -94,7 +94,7 @@ definition {
 	macro viewLanguages {
 		if ("${displayTemplate}" == "Icon") {
 			for (var availableIcon : list "${availableIconList}") {
-				AssertVisible(
+				AssertElementPresent(
 					key_text = "${availableIcon}",
 					locator1 = "Icon#ANY");
 			}

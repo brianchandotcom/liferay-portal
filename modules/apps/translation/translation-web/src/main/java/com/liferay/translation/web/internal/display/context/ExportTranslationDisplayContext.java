@@ -43,7 +43,7 @@ import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.util.ArrayList;
@@ -71,8 +71,8 @@ public class ExportTranslationDisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, List<Object> models,
 		String title,
-		TranslationInfoItemFieldValuesExporterTracker
-			translationInfoItemFieldValuesExporterTracker) {
+		TranslationInfoItemFieldValuesExporterRegistry
+			translationInfoItemFieldValuesExporterRegistry) {
 
 		_classNameId = classNameId;
 		_classPKs = classPKs;
@@ -82,8 +82,8 @@ public class ExportTranslationDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_models = models;
 		_title = title;
-		_translationInfoItemFieldValuesExporterTracker =
-			translationInfoItemFieldValuesExporterTracker;
+		_translationInfoItemFieldValuesExporterRegistry =
+			translationInfoItemFieldValuesExporterRegistry;
 
 		_className = PortalUtil.getClassName(_classNameId);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -141,7 +141,7 @@ public class ExportTranslationDisplayContext {
 			() -> {
 				Collection<TranslationInfoItemFieldValuesExporter>
 					translationInfoItemFieldValuesExporters =
-						_translationInfoItemFieldValuesExporterTracker.
+						_translationInfoItemFieldValuesExporterRegistry.
 							getTranslationInfoItemFieldValuesExporters();
 
 				Stream<TranslationInfoItemFieldValuesExporter>
@@ -383,7 +383,7 @@ public class ExportTranslationDisplayContext {
 	private String _redirect;
 	private final ThemeDisplay _themeDisplay;
 	private final String _title;
-	private final TranslationInfoItemFieldValuesExporterTracker
-		_translationInfoItemFieldValuesExporterTracker;
+	private final TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 }

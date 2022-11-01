@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.translation.exporter;
 
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import java.util.Collection;
 
@@ -31,20 +31,20 @@ public class TranslationInfoItemFieldValuesExporterTrackerUtil {
 	public static Collection<TranslationInfoItemFieldValuesExporter>
 		getTranslationInfoItemFieldValuesExporters() {
 
-		return _translationInfoItemFieldValuesExporterTracker.
+		return _translationInfoItemFieldValuesExporterRegistry.
 			getTranslationInfoItemFieldValuesExporters();
 	}
 
 	@Reference(unbind = "-")
 	protected void setTranslationInfoItemFieldValuesExporterTracker(
-		TranslationInfoItemFieldValuesExporterTracker
-			translationInfoItemFieldValuesExporterTracker) {
+		TranslationInfoItemFieldValuesExporterRegistry
+			translationInfoItemFieldValuesExporterRegistry) {
 
-		_translationInfoItemFieldValuesExporterTracker =
-			translationInfoItemFieldValuesExporterTracker;
+		_translationInfoItemFieldValuesExporterRegistry =
+			translationInfoItemFieldValuesExporterRegistry;
 	}
 
-	private static TranslationInfoItemFieldValuesExporterTracker
-		_translationInfoItemFieldValuesExporterTracker;
+	private static TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 }

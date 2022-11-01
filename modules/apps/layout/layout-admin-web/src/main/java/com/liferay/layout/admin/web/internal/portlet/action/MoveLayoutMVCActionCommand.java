@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
@@ -115,7 +115,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 								_translationURLProvider),
 							layoutsAdminDisplayContext, liferayPortletRequest,
 							liferayPortletResponse,
-							_translationInfoItemFieldValuesExporterTracker);
+							_translationInfoItemFieldValuesExporterRegistry);
 
 					return millerColumnsDisplayContext.
 						getLayoutColumnsJSONArray();
@@ -157,8 +157,8 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 	private StagingGroupHelper _stagingGroupHelper;
 
 	@Reference
-	private TranslationInfoItemFieldValuesExporterTracker
-		_translationInfoItemFieldValuesExporterTracker;
+	private TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 	@Reference
 	private TranslationPermission _translationPermission;

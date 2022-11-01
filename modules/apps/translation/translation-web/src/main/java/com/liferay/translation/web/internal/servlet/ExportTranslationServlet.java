@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.translation.web.internal.helper.InfoItemHelper;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
@@ -183,7 +183,7 @@ public class ExportTranslationServlet extends HttpServlet {
 
 		Optional<TranslationInfoItemFieldValuesExporter>
 			exportFileFormatOptional =
-				_translationInfoItemFieldValuesExporterTracker.
+				_translationInfoItemFieldValuesExporterRegistry.
 					getTranslationInfoItemFieldValuesExporterOptional(
 						exportMimeType);
 
@@ -325,8 +325,8 @@ public class ExportTranslationServlet extends HttpServlet {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
-	private TranslationInfoItemFieldValuesExporterTracker
-		_translationInfoItemFieldValuesExporterTracker;
+	private TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

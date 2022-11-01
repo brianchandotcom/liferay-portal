@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
 
@@ -73,7 +73,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 				layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse),
-				_translationInfoItemFieldValuesExporterTracker);
+				_translationInfoItemFieldValuesExporterRegistry);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
@@ -108,8 +108,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 	private StagingGroupHelper _stagingGroupHelper;
 
 	@Reference
-	private TranslationInfoItemFieldValuesExporterTracker
-		_translationInfoItemFieldValuesExporterTracker;
+	private TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 	@Reference
 	private TranslationPermission _translationPermission;

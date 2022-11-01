@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.translation.web.internal.display.context.ExportTranslationDisplayContext;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
@@ -84,7 +84,7 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 					_getTitle(
 						translationRequestHelper.getModelClassName(),
 						models.get(0), themeDisplay.getLocale(), models.size()),
-					_translationInfoItemFieldValuesExporterTracker));
+					_translationInfoItemFieldValuesExporterRegistry));
 
 			return "/export_translation.jsp";
 		}
@@ -143,7 +143,7 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
-	private TranslationInfoItemFieldValuesExporterTracker
-		_translationInfoItemFieldValuesExporterTracker;
+	private TranslationInfoItemFieldValuesExporterRegistry
+		_translationInfoItemFieldValuesExporterRegistry;
 
 }

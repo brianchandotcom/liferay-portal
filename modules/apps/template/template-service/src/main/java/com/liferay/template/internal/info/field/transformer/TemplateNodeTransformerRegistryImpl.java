@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = TemplateNodeTransformerTracker.class)
-public class TemplateNodeTransformerTrackerImpl
-	implements TemplateNodeTransformerTracker {
+@Component(service = TemplateNodeTransformerRegistry.class)
+public class TemplateNodeTransformerRegistryImpl
+	implements TemplateNodeTransformerRegistry {
 
 	@Override
 	public TemplateNodeTransformer getTemplateNodeTransformer(

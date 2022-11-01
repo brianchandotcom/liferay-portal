@@ -15,7 +15,7 @@
 package com.liferay.info.internal.display.url.provider;
 
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -27,9 +27,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = InfoEditURLProviderTracker.class)
-public class InfoEditURLProviderTrackerImpl
-	implements InfoEditURLProviderTracker {
+@Component(immediate = true, service = InfoEditURLProviderRegistry.class)
+public class InfoEditURLProviderRegistryImpl
+	implements InfoEditURLProviderRegistry {
 
 	@Override
 	public <T> InfoEditURLProvider<T> getInfoEditURLProvider(String className) {

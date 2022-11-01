@@ -17,7 +17,7 @@ package com.liferay.info.display.url.provider;
 /**
  * @author Jürgen Kappler
  */
-public interface InfoEditURLProviderTracker {
+public interface InfoEditURLProviderRegistry {
 
 	public <T> InfoEditURLProvider<T> getInfoEditURLProvider(String className);
 

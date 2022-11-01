@@ -1,5 +1,15 @@
 definition {
 
+	macro assertAvailabelEntityTypes {
+		Click(locator1 = "ImportExport#ENTITY_TYPE");
+
+		for (var entityType : list "${entityTypes}") {
+			AssertTextEquals(
+				locator1 = "ImportExport#ENTITY_TYPE",
+				value1 = "${entityType}");
+		}
+	}
+
 	macro assertDownloadedFileName {
 		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFile}");
 

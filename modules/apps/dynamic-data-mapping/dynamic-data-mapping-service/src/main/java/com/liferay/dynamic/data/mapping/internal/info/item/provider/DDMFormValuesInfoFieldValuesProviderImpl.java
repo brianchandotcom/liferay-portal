@@ -217,58 +217,6 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 				return GetterUtil.getBoolean(valueString);
 			}
 			else if (Objects.equals(
-						ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
-					 Objects.equals(ddmFormFieldValue.getType(), "date")) {
-
-				if (Validator.isNull(valueString)) {
-					return null;
-				}
-
-				if (locale.equals(LocaleUtil.ROOT)) {
-					locale = LocaleUtil.getSiteDefault();
-				}
-
-				DateFormat dateFormat = DateFormat.getDateInstance(
-					DateFormat.SHORT, locale);
-
-				Date date = DateUtil.parseDate(
-					"yyyy-MM-dd", valueString, locale);
-
-				return dateFormat.format(date);
-			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(),
-						DDMFormFieldType.DECIMAL) ||
-					 Objects.equals(
-						 ddmFormFieldValue.getType(),
-						 DDMFormFieldType.NUMERIC)) {
-
-				if (Validator.isNull(valueString)) {
-					return null;
-				}
-
-				NumberFormat numberFormat = NumberFormat.getNumberInstance(
-					locale);
-
-				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-				String dataType = ddmFormField.getDataType();
-
-				if (dataType.equals(FieldConstants.DOUBLE) ||
-					dataType.equals(FieldConstants.FLOAT)) {
-
-					numberFormat.setMinimumFractionDigits(1);
-				}
-
-				return numberFormat.format(numberFormat.parse(valueString));
-			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
-					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
-
-				return _getWebImage(_jsonFactory.createJSONObject(valueString));
-			}
-			else if (Objects.equals(
 						ddmFormFieldValue.getType(),
 						DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
 					 Objects.equals(
@@ -321,6 +269,58 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 				}
 
 				return keyLocalizedLabelPairs;
+			}
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
+					 Objects.equals(ddmFormFieldValue.getType(), "date")) {
+
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
+
+				if (locale.equals(LocaleUtil.ROOT)) {
+					locale = LocaleUtil.getSiteDefault();
+				}
+
+				DateFormat dateFormat = DateFormat.getDateInstance(
+					DateFormat.SHORT, locale);
+
+				Date date = DateUtil.parseDate(
+					"yyyy-MM-dd", valueString, locale);
+
+				return dateFormat.format(date);
+			}
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(),
+						DDMFormFieldType.DECIMAL) ||
+					 Objects.equals(
+						 ddmFormFieldValue.getType(),
+						 DDMFormFieldType.NUMERIC)) {
+
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
+
+				NumberFormat numberFormat = NumberFormat.getNumberInstance(
+					locale);
+
+				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+				String dataType = ddmFormField.getDataType();
+
+				if (dataType.equals(FieldConstants.DOUBLE) ||
+					dataType.equals(FieldConstants.FLOAT)) {
+
+					numberFormat.setMinimumFractionDigits(1);
+				}
+
+				return numberFormat.format(numberFormat.parse(valueString));
+			}
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
+					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
+
+				return _getWebImage(_jsonFactory.createJSONObject(valueString));
 			}
 
 			return SanitizerUtil.sanitize(

@@ -37,9 +37,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchRequestContributorsHolder.class)
-public class SearchRequestContributorsHolderImpl
-	implements SearchRequestContributorsHolder {
+@Component(immediate = true, service = SearchRequestContributorsRegistry.class)
+public class SearchRequestContributorsRegistryImpl
+	implements SearchRequestContributorsRegistry {
 
 	@Override
 	public Stream<SearchRequestContributor> stream() {

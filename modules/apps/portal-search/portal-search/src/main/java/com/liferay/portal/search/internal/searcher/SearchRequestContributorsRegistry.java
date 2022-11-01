@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public interface SearchRequestContributorsHolder {
+public interface SearchRequestContributorsRegistry {
 
 	public Stream<SearchRequestContributor> stream();
 

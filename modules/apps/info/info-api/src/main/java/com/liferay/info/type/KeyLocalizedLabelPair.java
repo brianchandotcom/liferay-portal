@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.info.type.categorization;
+package com.liferay.info.type;
 
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.type.Keyed;
-import com.liferay.info.type.Labeled;
 
 import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
  */
-public class Category implements Keyed, Labeled {
+public class KeyLocalizedLabelPair implements Keyed, Labeled {
 
-	public Category(
+	public KeyLocalizedLabelPair(
 		String key, InfoLocalizedValue<String> labelInfoLocalizedValue) {
 
 		_key = key;

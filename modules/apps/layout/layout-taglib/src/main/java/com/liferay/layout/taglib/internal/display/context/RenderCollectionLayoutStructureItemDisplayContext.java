@@ -34,7 +34,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
@@ -509,12 +509,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		LayoutListRetrieverTracker layoutListRetrieverTracker =
+		LayoutListRetrieverRegistry layoutListRetrieverRegistry =
 			ServletContextUtil.getLayoutListRetrieverTracker();
 
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, ListObjectReference>)
-				layoutListRetrieverTracker.getLayoutListRetriever(
+				layoutListRetrieverRegistry.getLayoutListRetriever(
 					collectionJSONObject.getString("type"));
 
 		if (layoutListRetriever == null) {
@@ -534,13 +534,13 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		LayoutListRetrieverTracker layoutListRetrieverTracker =
+		LayoutListRetrieverRegistry layoutListRetrieverRegistry =
 			ServletContextUtil.getLayoutListRetrieverTracker();
 
 		String type = collectionJSONObject.getString("type");
 
 		LayoutListRetriever<?, ?> layoutListRetriever =
-			layoutListRetrieverTracker.getLayoutListRetriever(type);
+			layoutListRetrieverRegistry.getLayoutListRetriever(type);
 
 		if (layoutListRetriever == null) {
 			return null;

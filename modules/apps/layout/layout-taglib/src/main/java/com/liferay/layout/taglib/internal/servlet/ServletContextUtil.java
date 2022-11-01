@@ -24,7 +24,7 @@ import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -106,8 +106,8 @@ public class ServletContextUtil {
 		return _layoutDisplayPageProviderTracker;
 	}
 
-	public static LayoutListRetrieverTracker getLayoutListRetrieverTracker() {
-		return _layoutListRetrieverTracker;
+	public static LayoutListRetrieverRegistry getLayoutListRetrieverTracker() {
+		return _layoutListRetrieverRegistry;
 	}
 
 	public static ListObjectReferenceFactoryTracker
@@ -239,10 +239,10 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutListRetrieverTracker(
-		LayoutListRetrieverTracker layoutListRetrieverTracker) {
+	protected void setLayoutListRetrieverRegistry(
+		LayoutListRetrieverRegistry layoutListRetrieverRegistry) {
 
-		_layoutListRetrieverTracker = layoutListRetrieverTracker;
+		_layoutListRetrieverRegistry = layoutListRetrieverRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -296,7 +296,7 @@ public class ServletContextUtil {
 		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();
 	private static LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
-	private static LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 	private static ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
 	private static RequestContextMapper _requestContextMapper;

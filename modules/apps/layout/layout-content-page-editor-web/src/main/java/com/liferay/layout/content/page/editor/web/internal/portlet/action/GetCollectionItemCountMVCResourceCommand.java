@@ -22,7 +22,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
@@ -105,7 +105,7 @@ public class GetCollectionItemCountMVCResourceCommand
 
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, ListObjectReference>)
-				_layoutListRetrieverTracker.getLayoutListRetriever(type);
+				_layoutListRetrieverRegistry.getLayoutListRetriever(type);
 
 		if (layoutListRetriever != null) {
 			ListObjectReferenceFactory<?> listObjectReferenceFactory =
@@ -186,7 +186,7 @@ public class GetCollectionItemCountMVCResourceCommand
 	private Language _language;
 
 	@Reference
-	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 
 	@Reference
 	private ListObjectReferenceFactoryTracker

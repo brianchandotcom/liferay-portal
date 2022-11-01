@@ -27,7 +27,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -104,7 +104,7 @@ public class LayoutListRetrieverTest {
 
 		LayoutListRetriever<?, KeyListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, KeyListObjectReference>)
-				_layoutListRetrieverTracker.getLayoutListRetriever(
+				_layoutListRetrieverRegistry.getLayoutListRetriever(
 					InfoListProviderItemSelectorReturnType.class.getName());
 
 		KeyListObjectReference keyListObjectReference =
@@ -158,7 +158,7 @@ public class LayoutListRetrieverTest {
 
 		LayoutListRetriever<?, KeyListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, KeyListObjectReference>)
-				_layoutListRetrieverTracker.getLayoutListRetriever(
+				_layoutListRetrieverRegistry.getLayoutListRetriever(
 					InfoListProviderItemSelectorReturnType.class.getName());
 
 		KeyListObjectReference keyListObjectReference =
@@ -180,7 +180,7 @@ public class LayoutListRetrieverTest {
 	private Group _group;
 
 	@Inject
-	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 
 	private static class AssetEntryRelatedInfoItemCollectionProvider
 		implements RelatedInfoItemCollectionProvider<AssetEntry, AssetTag> {

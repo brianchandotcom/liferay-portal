@@ -27,7 +27,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
@@ -699,7 +699,7 @@ public class FragmentEntryConfigurationParserImpl
 
 			LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 				(LayoutListRetriever<?, ListObjectReference>)
-					_layoutListRetrieverTracker.getLayoutListRetriever(type);
+					_layoutListRetrieverRegistry.getLayoutListRetriever(type);
 
 			if (layoutListRetriever == null) {
 				return Collections.emptyList();
@@ -879,7 +879,7 @@ public class FragmentEntryConfigurationParserImpl
 	private Language _language;
 
 	@Reference
-	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

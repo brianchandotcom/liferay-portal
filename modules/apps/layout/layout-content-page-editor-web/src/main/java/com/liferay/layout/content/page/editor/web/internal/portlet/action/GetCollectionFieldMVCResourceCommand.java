@@ -49,7 +49,7 @@ import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
@@ -204,7 +204,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, ListObjectReference>)
-				_layoutListRetrieverTracker.getLayoutListRetriever(type);
+				_layoutListRetrieverRegistry.getLayoutListRetriever(type);
 
 		if (layoutListRetriever == null) {
 			return jsonObject;
@@ -569,7 +569,7 @@ public class GetCollectionFieldMVCResourceCommand
 	private Language _language;
 
 	@Reference
-	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 
 	@Reference
 	private ListObjectReferenceFactoryTracker

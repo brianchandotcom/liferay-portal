@@ -87,7 +87,7 @@ definition {
 		return "${apiResponse}";
 	}
 
-	macro assertGenericResponse {
+	macro assertGenericJSONPathResponse {
 		var actual = JSONUtil.getWithJSONPath("${apiResponse}", "$..${apiPath}");
 
 		TestUtils.assertEquals(

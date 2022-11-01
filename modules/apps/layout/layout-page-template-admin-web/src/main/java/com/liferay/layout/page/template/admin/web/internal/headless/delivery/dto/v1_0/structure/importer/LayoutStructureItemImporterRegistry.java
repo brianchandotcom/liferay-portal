@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemImporterTracker.class)
-public class LayoutStructureItemImporterTracker {
+@Component(service = LayoutStructureItemImporterRegistry.class)
+public class LayoutStructureItemImporterRegistry {
 
 	public LayoutStructureItemImporter getLayoutStructureItemImporter(
 		PageElement.Type type) {

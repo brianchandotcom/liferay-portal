@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Alejandro Tardín
  */
 @ProviderType
-public interface TranslationInfoItemFieldValuesExporterTracker {
+public interface TranslationInfoItemFieldValuesExporterRegistry {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link

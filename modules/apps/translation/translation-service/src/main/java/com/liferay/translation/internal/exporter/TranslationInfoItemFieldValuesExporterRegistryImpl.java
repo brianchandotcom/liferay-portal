@@ -18,7 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
-import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -31,9 +31,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = TranslationInfoItemFieldValuesExporterTracker.class)
-public class TranslationInfoItemFieldValuesExporterTrackerImpl
-	implements TranslationInfoItemFieldValuesExporterTracker {
+@Component(service = TranslationInfoItemFieldValuesExporterRegistry.class)
+public class TranslationInfoItemFieldValuesExporterRegistryImpl
+	implements TranslationInfoItemFieldValuesExporterRegistry {
 
 	@Override
 	public Optional<TranslationInfoItemFieldValuesExporter>

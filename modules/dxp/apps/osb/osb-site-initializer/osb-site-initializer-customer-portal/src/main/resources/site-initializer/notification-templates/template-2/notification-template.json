@@ -12,5 +12,6 @@
 	},
 	"to": {
 		"en-US": "[%EMAIL%]"
-	}
+	},
+	"type": "email"
 }

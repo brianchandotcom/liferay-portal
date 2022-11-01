@@ -52,7 +52,7 @@ function ModelAutocomplete({
 		variables: {
 			limit: 20,
 			pipeline_tag: 'feature-extraction',
-			query: autocompleteSearchValue,
+			query: autocompleteSearchValue.trim(),
 		},
 	});
 
@@ -72,13 +72,14 @@ function ModelAutocomplete({
 	};
 
 	const _handleInputChange = (event) => {
-		setShowDropDown(true);
 		setAutocompleteSearchValue(event.target.value);
+		setShowDropDown(true);
 	};
 
 	const _handleItemChange = (item) => {
-		setAutocompleteSearchValue(item);
 		onChange(item);
+
+		setAutocompleteSearchValue(item);
 		setShowDropDown(false);
 	};
 

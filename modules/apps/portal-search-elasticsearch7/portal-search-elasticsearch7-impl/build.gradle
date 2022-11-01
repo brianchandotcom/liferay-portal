@@ -92,6 +92,7 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
@@ -105,7 +106,6 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile project(":apps:portal-search:portal-search")
 	testCompile project(":apps:portal-search:portal-search-test-util")
-	testCompile project(":core:osgi-service-tracker-collections")
 	testCompile project(":core:petra:petra-sql-dsl-api")
 }
 

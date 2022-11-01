@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -321,6 +322,32 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
 
 				return _getWebImage(_jsonFactory.createJSONObject(valueString));
+			}
+			else if (Objects.equals(
+						ddmFormFieldValue.getType(),
+						DDMFormFieldTypeConstants.RADIO)) {
+
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
+
+				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
+
+				LocalizedValue localizedValue =
+					ddmFormFieldOptions.getOptionLabels(valueString);
+
+				return ListUtil.fromArray(
+					new KeyLocalizedLabelPair(
+						valueString,
+						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							localizedValue.getDefaultLocale()
+						).values(
+							localizedValue.getValues()
+						).build()));
 			}
 
 			return SanitizerUtil.sanitize(

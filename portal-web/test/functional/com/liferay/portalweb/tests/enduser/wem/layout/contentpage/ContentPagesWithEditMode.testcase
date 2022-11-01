@@ -222,7 +222,7 @@ definition {
 		}
 
 		task ("Assert ellipsis button of Asset Publisher present") {
-			MouseOver.mouseOverNotVisible(locator1 = "//div[contains(@class,'portlet-options')]/a[contains(@id,'AssetPublisher')]");
+			MouseOver.mouseOverNotVisible(locator1 = "//menu[contains(@class,'portlet-topper-toolbar')][contains(@id,'AssetPublisher')]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]");
 		}
 
 		task ("Edit Web Content Article and Blogs Entry via Contents panel") {

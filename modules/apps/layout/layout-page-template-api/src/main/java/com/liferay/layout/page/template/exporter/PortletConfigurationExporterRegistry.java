@@ -17,7 +17,7 @@ package com.liferay.layout.page.template.exporter;
 /**
  * @author Jürgen Kappler
  */
-public interface PortletConfigurationExporterTracker {
+public interface PortletConfigurationExporterRegistry {
 
 	public PortletConfigurationExporter getPortletConfigurationExporter(
 		String portletName);

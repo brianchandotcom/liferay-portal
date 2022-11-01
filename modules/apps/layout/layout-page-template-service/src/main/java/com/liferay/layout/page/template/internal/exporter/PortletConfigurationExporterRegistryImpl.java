@@ -15,7 +15,7 @@
 package com.liferay.layout.page.template.internal.exporter;
 
 import com.liferay.layout.page.template.exporter.PortletConfigurationExporter;
-import com.liferay.layout.page.template.exporter.PortletConfigurationExporterTracker;
+import com.liferay.layout.page.template.exporter.PortletConfigurationExporterRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = PortletConfigurationExporterTracker.class)
-public class PortletConfigurationExporterTrackerImpl
-	implements PortletConfigurationExporterTracker {
+@Component(service = PortletConfigurationExporterRegistry.class)
+public class PortletConfigurationExporterRegistryImpl
+	implements PortletConfigurationExporterRegistry {
 
 	@Override
 	public PortletConfigurationExporter getPortletConfigurationExporter(

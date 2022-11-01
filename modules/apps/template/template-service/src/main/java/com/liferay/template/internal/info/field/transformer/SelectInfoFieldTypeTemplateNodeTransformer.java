@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.template.info.field.transformer.BaseTemplateNodeTransformer;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -73,12 +74,24 @@ public class SelectInfoFieldTypeTemplateNodeTransformer
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
-		return new TemplateNode(
+		TemplateNode templateNode = new TemplateNode(
 			themeDisplay, infoField.getName(), stringValue,
 			infoFieldType.getName(),
 			HashMapBuilder.put(
 				"multiple", String.valueOf(multiple)
 			).build());
+
+		Optional<List<SelectInfoFieldType.Option>> optionsOptional =
+			infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
+
+		for (SelectInfoFieldType.Option option :
+				optionsOptional.orElse(Collections.emptyList())) {
+
+			templateNode.appendOptionMap(
+				option.getValue(), option.getLabel(themeDisplay.getLocale()));
+		}
+
+		return templateNode;
 	}
 
 	private JSONArray _getSelectedOptionValuesJSONArray(

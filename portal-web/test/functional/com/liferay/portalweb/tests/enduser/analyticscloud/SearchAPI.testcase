@@ -36,9 +36,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-		}
 	}
 
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12141 | Test Summary: Request search keywords using all parameters"
@@ -122,7 +119,7 @@ definition {
 		var keyword3 = "with size parameters 3";
 		var parameters = "size=2&sort=lastModifiedDate,desc";
 		var size = "2";
-
+		
 		task ("Go to DXP and get analytics configuration") {
 			ACApi.getAnalyticsConfiguration();
 		}

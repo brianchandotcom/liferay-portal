@@ -171,9 +171,11 @@ function AssetDisplayPageSelector({
 				className: 'cadmin',
 			},
 			onSelect(selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
+
 				setAssetDisplayPageSelected({
-					name: selectedItem.name,
-					plid: selectedItem.plid,
+					name: itemValue.name,
+					plid: itemValue.plid,
 				});
 			},
 			selectEventName: selectAssetDisplayPageEventName,

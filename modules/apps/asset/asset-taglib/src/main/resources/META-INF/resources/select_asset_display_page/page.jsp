@@ -106,14 +106,24 @@
 				pagesContainerInput.value = '';
 
 				if (selectedItem) {
-					if (selectedItem.type === 'asset-display-page') {
-						assetDisplayPageIdInput.value = selectedItem.id;
+					if (
+						selectedItem.returnType ===
+						'com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType'
+					) {
+						try {
+							var itemValue = JSON.parse(selectedItem.value);
+
+							assetDisplayPageIdInput.value = itemValue.id;
+
+							specificDisplayPageNameInput.value = itemValue.name;
+						}
+						catch (e) {}
 					}
 					else {
 						pagesContainerInput.value = selectedItem.id;
-					}
 
-					specificDisplayPageNameInput.value = selectedItem.name;
+						specificDisplayPageNameInput.value = selectedItem.name;
+					}
 
 					if (previewSpecificDisplayPageButton) {
 						previewSpecificDisplayPageButton.parentNode.remove();

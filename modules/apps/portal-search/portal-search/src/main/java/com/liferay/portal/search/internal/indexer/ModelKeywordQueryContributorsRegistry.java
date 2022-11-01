@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public interface ModelKeywordQueryContributorsHolder {
+public interface ModelKeywordQueryContributorsRegistry {
 
 	public Stream<KeywordQueryContributor> stream(
 		Collection<String> excludes, Collection<String> includes);

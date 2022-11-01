@@ -23,10 +23,10 @@ import java.util.stream.StreamSupport;
 /**
  * @author André de Oliveira
  */
-public class ModelKeywordQueryContributorsHolderImpl
-	implements ModelKeywordQueryContributorsHolder {
+public class ModelKeywordQueryContributorsRegistryImpl
+	implements ModelKeywordQueryContributorsRegistry {
 
-	public ModelKeywordQueryContributorsHolderImpl(
+	public ModelKeywordQueryContributorsRegistryImpl(
 		Iterable<KeywordQueryContributor> keywordQueryContributors) {
 
 		_keywordQueryContributors = keywordQueryContributors;

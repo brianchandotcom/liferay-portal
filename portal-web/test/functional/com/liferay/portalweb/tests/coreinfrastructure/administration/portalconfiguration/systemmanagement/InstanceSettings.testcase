@@ -703,9 +703,19 @@ definition {
 			fieldName = "mx",
 			fieldValue = "newliferay.com");
 
+		FormFields.editText(
+			fieldName = "virtualHostname",
+			fieldValue = "www.able.com");
+
 		PortletEntry.save();
 
 		ApplicationsMenu.gotoSite(site = "EditedLiferay");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		AssertElementPresent(
+			key_pageName = "Home",
+			locator1 = "Home#PAGE");
 
 		User.logoutPG();
 

@@ -43,13 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = IndexSynchronizer.class)
 public class IndexSynchronizerImpl implements IndexSynchronizer {
 
-	@Reference(unbind = "-")
-	public void setIndexDefinitionsHolder(
-		IndexDefinitionsRegistry indexDefinitionsRegistry) {
-
-		_indexDefinitionsRegistry = indexDefinitionsRegistry;
-	}
-
 	@Override
 	public void synchronizeIndexDefinition(
 		IndexDefinitionData indexDefinitionData) {
@@ -150,18 +143,15 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 		_serviceTrackerList.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setCreateIndexRequestExecutor(
-		CreateIndexRequestExecutor createIndexRequestExecutor) {
-
-		_createIndexRequestExecutor = createIndexRequestExecutor;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexSynchronizerImpl.class);
 
+	@Reference
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
+
+	@Reference
 	private IndexDefinitionsRegistry _indexDefinitionsRegistry;
+
 	private ServiceTrackerList<IndexRegistrar> _serviceTrackerList;
 
 }

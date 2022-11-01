@@ -1,6 +1,10 @@
 @import 'atlas-variables';
 @import 'pages';
 
+.alert-inline.alert .close {
+	top: 20% !important;
+}
+
 .stretched-link-layer {
 	position: relative;
 	z-index: 2;

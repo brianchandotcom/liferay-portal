@@ -9,18 +9,21 @@
  * distribution rights of the Software.
  */
 
+import LiferayAccountBrief from '../../../common/interfaces/liferayAccountBrief';
 import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 
 export default async function createMDFRequestActivitiesProxyAPI(
 	mdfRequestActivity: MDFRequestActivity,
+	company: LiferayAccountBrief,
 	mdfRequestId?: number,
 	mdFRequestExternalReferenceCodeSF?: string
 ) {
 	const dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
 		ResourceName.ACTIVITY_SALESFORCE,
 		mdfRequestActivity,
+		company,
 		mdfRequestId,
 		mdFRequestExternalReferenceCodeSF
 	);
@@ -29,6 +32,7 @@ export default async function createMDFRequestActivitiesProxyAPI(
 		const dtoMDFRequestResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_DXP,
 			mdfRequestActivity,
+			company,
 			mdfRequestId,
 			mdFRequestExternalReferenceCodeSF,
 			dtoMDFRequestActivitySFResponse.externalReferenceCode

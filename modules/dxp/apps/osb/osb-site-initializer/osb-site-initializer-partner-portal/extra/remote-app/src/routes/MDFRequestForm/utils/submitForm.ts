@@ -29,7 +29,6 @@ export default async function submitForm(
 	currentRequestStatus?: RequestStatus
 ) {
 	formikHelpers.setSubmitting(true);
-
 	if (currentRequestStatus) {
 		values.requestStatus = currentRequestStatus;
 	}
@@ -44,12 +43,14 @@ export default async function submitForm(
 				Liferay.FeatureFlags['LPS-164528']
 					? createMDFRequestActivitiesProxyAPI(
 							activity,
+							values.company,
 							dtoMDFRequest.id,
 							dtoMDFRequest.externalReferenceCodeSF
 					  )
 					: createMDFRequestActivities(
 							ResourceName.ACTIVITY_DXP,
 							activity,
+							values.company,
 							dtoMDFRequest.id,
 							dtoMDFRequest.externalReferenceCodeSF
 					  )

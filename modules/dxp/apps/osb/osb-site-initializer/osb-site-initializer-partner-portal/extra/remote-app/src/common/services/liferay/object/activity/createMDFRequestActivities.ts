@@ -10,6 +10,7 @@
  */
 
 import {Liferay} from '../..';
+import LiferayAccountBrief from '../../../../interfaces/liferayAccountBrief';
 import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
 import getDTOFromMDFRequestActivity from '../../../../utils/dto/mdf-request-activity/getDTOFromMDFRequestActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
@@ -19,6 +20,7 @@ import {ResourceName} from '../enum/resourceName';
 export default async function createMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
+	company: LiferayAccountBrief,
 	mdfRequestId?: number,
 	mdfRequestExternalReferenceCodeSF?: string,
 	externalReferenceCodeSF?: string
@@ -28,6 +30,7 @@ export default async function createMDFRequestActivities(
 		Liferay.authToken,
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,
+			company,
 			mdfRequestId,
 			mdfRequestExternalReferenceCodeSF,
 			externalReferenceCodeSF

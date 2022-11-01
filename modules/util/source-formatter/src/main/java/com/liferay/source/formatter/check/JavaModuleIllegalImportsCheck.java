@@ -78,7 +78,7 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 					"LPS-64335");
 		}
 
-		if (absolutePath.matches(".+/internal/resource/v\\d+_.+") &&
+		if (absolutePath.matches(".+/internal/resource/v\\d*(_\\d+)+/.+") &&
 			fileName.endsWith("ResourceImpl.java") &&
 			content.contains(
 				"import com.liferay.petra.function.transform.TransformUtil")) {

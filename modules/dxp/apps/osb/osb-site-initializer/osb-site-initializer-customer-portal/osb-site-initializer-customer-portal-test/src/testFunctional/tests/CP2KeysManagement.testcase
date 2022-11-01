@@ -530,4 +530,45 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-147568 | Test Summary: Assert that the tab statuses reflect with the amount of keys displayed in the table"
+	@priority = "4"
+	test AssertThatTheTabDisplaysTheFollowingStatuses {
+
+		// TODO LPS-147568 AssertThatTheTabDisplaysTheFollowingStatuses pending implementation
+
+	}
+
+
+	@description = "Automation ID: LPS-147571 | Test Summary: Verify that the pagination is only displayed when the table contains more than 5 activation keys"
+	@priority = "3"
+	test AssertTheListOfOptionsWhenPagingIsAvailable {
+		
+		// TODO LPS-147571 AssertTheListOfOptionsWhenPagingIsAvailable pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-147575 | Test Summary: Verify activation keys contain: Environment Name - Key Type - Environment Type - Exp. Date - Status - Download"
+	@priority = "3"
+	test AssertAllColumnsInTheTable {
+		
+		// TODO LPS-147575 AssertAllColumnsInTheTable pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-147577 | Test Summary: Make sure that when you hover the mouse over 'DNE' a tooltip appears with a message This key does not expire"
+	@priority = "3"
+	test YouMaySeeAMessageAsATooltip {
+		
+		// TODO LPS-147577 YouMaySeeAMessageAsATooltip pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-147582 | Test Summary: Verify that when the user clicks on the download icon a key is downloaded"
+	@priority = "4"
+	test CanViewTheActivationKeyDownload {
+		
+		// TODO LPS-147582 CanViewTheActivationKeyDownload pending implementation
+
+	}
+
 }

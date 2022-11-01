@@ -218,12 +218,13 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				return GetterUtil.getBoolean(valueString);
 			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(),
-						DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
-					 Objects.equals(
-						 ddmFormFieldValue.getType(),
-						 DDMFormFieldTypeConstants.SELECT)) {
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+				Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.SELECT)) {
 
 				if (Validator.isNull(valueString)) {
 					return null;
@@ -276,9 +277,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				return keyLocalizedLabelPairs;
 			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
-					 Objects.equals(ddmFormFieldValue.getType(), "date")) {
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
+				Objects.equals(ddmFormFieldValue.getType(), "date")) {
 
 				if (Validator.isNull(valueString)) {
 					return null;
@@ -296,12 +298,11 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				return dateFormat.format(date);
 			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(),
-						DDMFormFieldType.DECIMAL) ||
-					 Objects.equals(
-						 ddmFormFieldValue.getType(),
-						 DDMFormFieldType.NUMERIC)) {
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(), DDMFormFieldType.DECIMAL) ||
+				Objects.equals(
+					ddmFormFieldValue.getType(), DDMFormFieldType.NUMERIC)) {
 
 				if (Validator.isNull(valueString)) {
 					return null;
@@ -322,15 +323,17 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				return numberFormat.format(numberFormat.parse(valueString));
 			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
-					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
+				Objects.equals(ddmFormFieldValue.getType(), "image")) {
 
 				return _getWebImage(_jsonFactory.createJSONObject(valueString));
 			}
-			else if (Objects.equals(
-						ddmFormFieldValue.getType(),
-						DDMFormFieldTypeConstants.RADIO)) {
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.RADIO)) {
 
 				if (Validator.isNull(valueString)) {
 					return null;

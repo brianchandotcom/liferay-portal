@@ -15,7 +15,7 @@
 package com.liferay.layout.internal.list.retriever;
 
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
+import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ListObjectReferenceFactoryTracker.class)
-public class ListObjectReferenceTrackerImpl
-	implements ListObjectReferenceFactoryTracker {
+@Component(service = ListObjectReferenceFactoryRegistry.class)
+public class ListObjectReferenceRegistryImpl
+	implements ListObjectReferenceFactoryRegistry {
 
 	@Override
 	public ListObjectReferenceFactory<?> getListObjectReference(String type) {

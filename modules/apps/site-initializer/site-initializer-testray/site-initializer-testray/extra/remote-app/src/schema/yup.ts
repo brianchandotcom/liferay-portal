@@ -197,6 +197,7 @@ const yupSchema = {
 	}),
 	subtask: yup.object({
 		dueStatus: yup.string(),
+		errors: yup.string(),
 		id: yup.number().required(),
 		issue: yup.string(),
 		name: yup.string(),

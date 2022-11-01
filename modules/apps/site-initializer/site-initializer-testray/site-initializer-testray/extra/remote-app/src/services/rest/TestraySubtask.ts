@@ -30,12 +30,14 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		super({
 			adapter: ({
 				dueStatus,
+				errors,
 				name,
 				score,
 				taskId: r_taskToSubtasks_c_taskId,
 				userId: r_userToSubtasks_userId,
 			}) => ({
 				dueStatus,
+				errors,
 				name,
 				r_taskToSubtasks_c_taskId,
 				r_userToSubtasks_userId,

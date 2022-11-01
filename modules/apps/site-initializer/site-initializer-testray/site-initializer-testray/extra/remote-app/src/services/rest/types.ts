@@ -218,6 +218,7 @@ export type TestrayRun = {
 
 export type TestraySubTask = {
 	dueStatus: PickList;
+	errors: string;
 	id: number;
 	name: string;
 	r_taskToSubtasks_c_task: TestrayTask;

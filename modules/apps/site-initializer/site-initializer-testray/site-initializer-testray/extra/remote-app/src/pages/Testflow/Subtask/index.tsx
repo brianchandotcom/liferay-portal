@@ -26,16 +26,9 @@ import QATable from '../../../components/Table/QATable';
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
-import {
-	APIResponse,
-	TestraySubTask,
-	TestraySubTaskCaseResult,
-	TestrayTask,
-} from '../../../services/rest';
+import {TestraySubTask, TestrayTask} from '../../../services/rest';
 import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
-import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {getTimeFromNow} from '../../../util/date';
-import {searchUtil} from '../../../util/search';
 import SubtasksCaseResults from './SubtaskCaseResults';
 import SubtaskHeaderActions from './SubtaskHeaderActions';
 
@@ -53,19 +46,6 @@ const Subtasks = () => {
 	>(testraySubTaskImpl.getResource(subtaskId as string), (response) =>
 		testraySubTaskImpl.transformData(response)
 	);
-
-	const {data: testraySubTaskCaseResultData} = useFetch<
-		APIResponse<TestraySubTaskCaseResult>
-	>(
-		`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
-			'subtaskId',
-			subtaskId as string
-		)}&pageSize=100`,
-		(response) =>
-			testraySubtaskCaseResultImpl.transformDataFromList(response)
-	);
-
-	const testraySubTaskCaseResults = testraySubTaskCaseResultData?.items || [];
 
 	useEffect(() => {
 		if (testraySubtask) {
@@ -158,14 +138,7 @@ const Subtasks = () => {
 								},
 								{
 									title: i18n.translate('error'),
-									value: (
-										<Code>
-											{testraySubTaskCaseResults.length
-												? testraySubTaskCaseResults[0]
-														.caseResult?.errors
-												: null}
-										</Code>
-									),
+									value: <Code>{testraySubtask.errors}</Code>,
 								},
 							]}
 						/>

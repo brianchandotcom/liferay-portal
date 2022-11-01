@@ -16,6 +16,17 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Clob",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Errors"
+			},
+			"name": "errors",
+			"required": false,
+			"type": "Clob"
+		},
+		{
 			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,

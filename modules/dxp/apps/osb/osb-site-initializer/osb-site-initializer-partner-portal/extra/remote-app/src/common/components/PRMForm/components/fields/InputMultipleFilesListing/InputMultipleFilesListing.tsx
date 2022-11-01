@@ -15,34 +15,31 @@ import ListFiles from './components/ListFiles';
 
 interface IProps {
 	description: string;
-	fieldValue: string;
-	files?: File[];
 	label: string;
+	name: string;
 	onAccept: (value: File[]) => void;
+	value?: File[];
 }
 
 const InputMultipleFilesListing = ({
 	description,
-	fieldValue,
-	files,
 	label,
+	name,
 	onAccept,
-}: IProps) => {
-	return (
-		<>
-			<PRMFormik.Field
-				component={PRMForm.InputMultipleFiles}
-				description={description}
-				label={label}
-				onAccept={onAccept}
-			/>
-			<PRMFormik.Array
-				component={ListFiles}
-				files={files}
-				name={fieldValue}
-			/>
-		</>
-	);
-};
+	value,
+}: IProps) => (
+	<>
+		<PRMFormik.Field
+			component={PRMForm.InputMultipleFiles}
+			description={description}
+			label={label}
+			onAccept={onAccept}
+		/>
+
+		{value && (
+			<PRMFormik.Array component={ListFiles} files={value} name={name} />
+		)}
+	</>
+);
 
 export default InputMultipleFilesListing;

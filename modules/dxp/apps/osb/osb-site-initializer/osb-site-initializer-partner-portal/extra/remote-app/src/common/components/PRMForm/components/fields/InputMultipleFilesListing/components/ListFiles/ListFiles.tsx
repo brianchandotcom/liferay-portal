@@ -20,7 +20,7 @@ interface IProps {
 const ListFiles = ({arrayHelpers, files}: IProps) => {
 	return (
 		<div>
-			{files?.map((file, index) => (
+			{files.map((file, index) => (
 				<div
 					className="align-items-center bg-neutral-0 border border-neutral-4 d-flex justify-content-between mt-2 p-2 rounded-xs shadow-sm"
 					key={index}
@@ -29,7 +29,7 @@ const ListFiles = ({arrayHelpers, files}: IProps) => {
 						<div className="text-neutral-8">{file.name}</div>
 
 						<div className="text-neutral-5">
-							{(file.size / 1000).toFixed(2)} Kb
+							{(file.size / 1000).toFixed(2)} KB
 						</div>
 					</div>
 

@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jürgen Kappler
  */
 @ProviderType
-public interface InfoDisplayContributorFieldTracker {
+public interface InfoDisplayContributorFieldRegistry {
 
 	public List<InfoDisplayContributorField<?>> getInfoDisplayContributorFields(
 		String className);

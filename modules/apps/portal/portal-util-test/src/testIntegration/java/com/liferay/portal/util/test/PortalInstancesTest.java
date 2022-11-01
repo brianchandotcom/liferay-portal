@@ -138,7 +138,7 @@ public class PortalInstancesTest {
 	}
 
 	@Test
-	public void testi18nLanguageIdNotSet() throws Exception {
+	public void testI18nLanguageIdNotSet() throws Exception {
 		Group group = _initializeGroup();
 
 		String hostname =
@@ -156,12 +156,11 @@ public class PortalInstancesTest {
 
 		// Unavailable languageId
 
-		_testGetI18NLanguageId(
-			hostname, LanguageUtil.getLocale(_UNAVAILABLE_LANGUAGE_ID), null);
+		_testGetI18NLanguageId(hostname, LanguageUtil.getLocale("vi_VN"), null);
 	}
 
 	@Test
-	public void testi18nLanguageIdSet() throws Exception {
+	public void testI18nLanguageIdSet() throws Exception {
 		Group group = _initializeGroup();
 
 		String hostname =
@@ -275,8 +274,6 @@ public class PortalInstancesTest {
 	}
 
 	private static final String _SITE_DEFAULT_LANGUAGE_ID = "es_ES";
-
-	private static final String _UNAVAILABLE_LANGUAGE_ID = "vi_VN";
 
 	private Company _company;
 

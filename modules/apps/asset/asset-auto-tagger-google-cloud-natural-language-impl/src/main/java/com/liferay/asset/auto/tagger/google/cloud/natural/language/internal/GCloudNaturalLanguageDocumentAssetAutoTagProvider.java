@@ -17,7 +17,7 @@ package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal;
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorRegistry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +50,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 			if (_isEnabled(assetEntry)) {
 				TextExtractor<Object> textExtractor =
 					(TextExtractor<Object>)
-						_textExtractorTracker.getTextExtractor(
+						_textExtractorRegistry.getTextExtractor(
 							assetEntry.getClassName());
 
 				if (textExtractor != null) {
@@ -108,6 +108,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		_gCloudNaturalLanguageDocumentAssetAutoTaggerImpl;
 
 	@Reference
-	private TextExtractorTracker _textExtractorTracker;
+	private TextExtractorRegistry _textExtractorRegistry;
 
 }

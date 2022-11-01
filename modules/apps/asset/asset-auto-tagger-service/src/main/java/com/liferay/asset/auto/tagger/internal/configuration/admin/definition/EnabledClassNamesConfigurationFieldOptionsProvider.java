@@ -15,7 +15,7 @@
 package com.liferay.asset.auto.tagger.internal.configuration.admin.definition;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorRegistry;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
@@ -55,7 +55,7 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 		return stream.filter(
 			assetRendererFactory -> {
 				TextExtractor<?> textExtractor =
-					_textExtractorTracker.getTextExtractor(
+					_textExtractorRegistry.getTextExtractor(
 						assetRendererFactory.getClassName());
 
 				return textExtractor != null;
@@ -80,6 +80,6 @@ public class EnabledClassNamesConfigurationFieldOptionsProvider
 	}
 
 	@Reference
-	private TextExtractorTracker _textExtractorTracker;
+	private TextExtractorRegistry _textExtractorRegistry;
 
 }

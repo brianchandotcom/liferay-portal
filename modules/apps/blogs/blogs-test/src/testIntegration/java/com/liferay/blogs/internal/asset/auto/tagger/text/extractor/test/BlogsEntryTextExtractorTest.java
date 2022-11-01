@@ -16,7 +16,7 @@ package com.liferay.blogs.internal.asset.auto.tagger.text.extractor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorRegistry;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,7 +54,7 @@ public class BlogsEntryTextExtractorTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		TextExtractor<BlogsEntry> textExtractor =
-			(TextExtractor<BlogsEntry>)_textExtractorTracker.getTextExtractor(
+			(TextExtractor<BlogsEntry>)_textExtractorRegistry.getTextExtractor(
 				BlogsEntry.class.getName());
 
 		Assert.assertEquals(
@@ -63,6 +63,6 @@ public class BlogsEntryTextExtractorTest {
 	}
 
 	@Inject
-	private TextExtractorTracker _textExtractorTracker;
+	private TextExtractorRegistry _textExtractorRegistry;
 
 }

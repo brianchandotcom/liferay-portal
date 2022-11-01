@@ -16,7 +16,7 @@ package com.liferay.document.library.internal.asset.auto.tagger.text.extractor.t
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorRegistry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -65,7 +65,7 @@ public class FileEntryTextExtractorTest {
 			null, null, ServiceContextTestUtil.getServiceContext());
 
 		TextExtractor<FileEntry> textExtractor =
-			(TextExtractor<FileEntry>)_textExtractorTracker.getTextExtractor(
+			(TextExtractor<FileEntry>)_textExtractorRegistry.getTextExtractor(
 				DLFileEntryConstants.getClassName());
 
 		Assert.assertEquals(
@@ -74,6 +74,6 @@ public class FileEntryTextExtractorTest {
 	}
 
 	@Inject
-	private TextExtractorTracker _textExtractorTracker;
+	private TextExtractorRegistry _textExtractorRegistry;
 
 }

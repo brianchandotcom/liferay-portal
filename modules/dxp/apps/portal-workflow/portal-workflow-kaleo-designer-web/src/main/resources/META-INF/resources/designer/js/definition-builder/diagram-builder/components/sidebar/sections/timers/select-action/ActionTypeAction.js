@@ -41,23 +41,29 @@ const ActionTypeAction = ({
 			type: 'script',
 			value: 'java',
 		},
-		...clientExtensions.map((item) => {
-			const itemCopy = {...item};
-			itemCopy.type = 'clientExtension';
-			itemCopy.label = item.description;
-			delete itemCopy.description;
-			itemCopy.value = item.key;
-			delete itemCopy.key;
-
-			return Object.keys(itemCopy)
-				.sort()
-				.reduce((accumulator, key) => {
-					accumulator[key] = itemCopy[key];
-
-					return accumulator;
-				}, {});
-		}),
 	];
+
+	if (clientExtensions?.length) {
+		actionTypeOptions.push(
+			...clientExtensions.map((item) => {
+				const itemCopy = {...item};
+				itemCopy.type = 'clientExtension';
+				itemCopy.label = item.description;
+				delete itemCopy.description;
+				itemCopy.value = item.key;
+				delete itemCopy.key;
+
+				return Object.keys(itemCopy)
+					.sort()
+					.reduce((accumulator, key) => {
+						accumulator[key] = itemCopy[key];
+
+						return accumulator;
+					}, {});
+			})
+		);
+	}
+
 	const [selectedActionType, setSelectedActionType] = useState(
 		actionTypeOptions.find((item) => item.value === scriptLanguage)
 	);

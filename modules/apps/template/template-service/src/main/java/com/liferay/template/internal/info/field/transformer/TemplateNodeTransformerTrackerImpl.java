@@ -36,7 +36,9 @@ public class TemplateNodeTransformerTrackerImpl
 	implements TemplateNodeTransformerTracker {
 
 	@Override
-	public TemplateNodeTransformer geTemplateNodeTransformer(String className) {
+	public TemplateNodeTransformer getTemplateNodeTransformer(
+		String className) {
+
 		TemplateNodeTransformer templateNodeTransformer =
 			_templateNodeTransformerServiceTrackerMap.getService(className);
 
@@ -49,7 +51,7 @@ public class TemplateNodeTransformerTrackerImpl
 	}
 
 	@Override
-	public List<TemplateNodeTransformer> geTemplateNodeTransformers() {
+	public List<TemplateNodeTransformer> getTemplateNodeTransformers() {
 		return new ArrayList(
 			_templateNodeTransformerServiceTrackerMap.values());
 	}

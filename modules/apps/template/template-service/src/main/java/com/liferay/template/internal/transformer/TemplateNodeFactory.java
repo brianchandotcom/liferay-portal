@@ -41,7 +41,7 @@ public class TemplateNodeFactory {
 		Class<?> infoFieldTypeClass = infoFieldType.getClass();
 
 		TemplateNodeTransformer templateNodeTransformer =
-			_templateNodeTransformerTracker.geTemplateNodeTransformer(
+			_templateNodeTransformerTracker.getTemplateNodeTransformer(
 				infoFieldTypeClass.getName());
 
 		return templateNodeTransformer.transform(infoFieldValue, themeDisplay);

@@ -21,8 +21,8 @@ import java.util.List;
  */
 public interface TemplateNodeTransformerTracker {
 
-	public TemplateNodeTransformer geTemplateNodeTransformer(String className);
+	public TemplateNodeTransformer getTemplateNodeTransformer(String className);
 
-	public List<TemplateNodeTransformer> geTemplateNodeTransformers();
+	public List<TemplateNodeTransformer> getTemplateNodeTransformers();
 
 }

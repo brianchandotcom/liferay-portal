@@ -11,6 +11,7 @@
 
 import {FormikHelpers} from 'formik';
 
+import {RequestStatus} from '../../../common/enums/requestStatus';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
 import {Liferay} from '../../../common/services/liferay';
@@ -27,17 +28,25 @@ export default async function submitForm(
 	values: MDFClaim,
 	formikHelpers: Omit<FormikHelpers<MDFClaim>, 'setFieldValue'>,
 	mdfRequest: MDFRequestDTO,
-	claimParentFolderId: number
+	claimParentFolderId: number,
+	siteURL: string,
+	currentClaimStatus?: RequestStatus
 ) {
+	if (currentClaimStatus) {
+		values.claimStatus = currentClaimStatus;
+	}
+
 	formikHelpers.setSubmitting(true);
+
+	values.activities?.some((activity) =>
+		Boolean(activity.budgets?.some((budget) => !budget.selected))
+	)
+		? (values.partial = true)
+		: (values.partial = false);
 
 	const dtoMDFClaim = Liferay.FeatureFlags['LPS-164528']
 		? await createMDFClaimProxyAPI(values, mdfRequest)
-		: await createMDFClaim(
-				ResourceName.MDF_REQUEST_DXP,
-				values,
-				mdfRequest
-		  );
+		: await createMDFClaim(ResourceName.MDF_CLAIM_DXP, values, mdfRequest);
 
 	if (dtoMDFClaim?.id) {
 		const claimFolder = await createDocumentFolder(
@@ -164,4 +173,5 @@ export default async function submitForm(
 			}
 		}
 	}
+	Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
 }

@@ -20,10 +20,12 @@ export function getDTOFromMDFClaim(
 ): MDFClaimDTO {
 	return {
 		amountClaimed: mdfClaim.totalClaimAmount,
+		claimStatus: mdfClaim.claimStatus,
 		externalReferenceCodeSF,
 		mdfRequestExternalReferenceCodeSF: mdfRequest?.externalReferenceCodeSF,
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
 		mdfRequestedAmount: mdfClaim.totalrequestedAmount,
+		partial: mdfClaim.partial,
 		r_mdfRequestToMdfClaims_c_mdfRequestId:
 			mdfClaim.r_mdfRequestToMdfClaims_c_mdfRequestId,
 	};

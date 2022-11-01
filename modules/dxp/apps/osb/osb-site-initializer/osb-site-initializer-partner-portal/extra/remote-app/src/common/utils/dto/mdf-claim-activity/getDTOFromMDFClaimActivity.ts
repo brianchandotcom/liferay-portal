@@ -22,6 +22,7 @@ export default function getDTOFromMDFClaimActivity(
 		name: mdfClaimActivity.name,
 		r_activityToMDFClaimActivities_c_activityId: mdfClaimActivity.id,
 		r_mdfClaimToMdfClaimActivities_c_mdfClaimId: mdfClaimId,
+		selected: mdfClaimActivity.selected,
 		totalCost: mdfClaimActivity.totalCost,
 	};
 }

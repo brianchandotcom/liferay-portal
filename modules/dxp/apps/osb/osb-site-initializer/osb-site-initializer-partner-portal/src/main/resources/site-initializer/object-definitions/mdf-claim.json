@@ -54,16 +54,16 @@
 			"type": "BigDecimal"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Boolean",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Type"
+				"en_US": "Partial"
 			},
-			"name": "type",
+			"name": "partial",
 			"required": false,
-			"type": "String"
+			"type": "Boolean"
 		},
 		{
 			"DBType": "BigDecimal",
@@ -86,18 +86,6 @@
 				"en_US": "Payment Received"
 			},
 			"name": "paymentReceived",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Check"
-			},
-			"name": "check",
 			"required": false,
 			"type": "String"
 		},

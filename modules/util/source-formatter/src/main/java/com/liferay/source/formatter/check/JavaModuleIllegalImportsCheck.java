@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
@@ -84,8 +83,10 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			content.contains(
 				"import com.liferay.petra.function.transform.TransformUtil")) {
 
-			content = StringUtil.replace(
-				content, "TransformUtil.transform(", "transform(");
+			addMessage(
+				fileName,
+				"Do not use com.liferay.petra.function.transform." +
+					"TransformUtil in *ResourceImpl.java, see LPS-167117");
 		}
 
 		return content;

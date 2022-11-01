@@ -44,6 +44,8 @@ export function getDTOFromDealRegistration(
 		prospectState: dealRegistration.prospect.state,
 		r_accountToDealRegistrations_accountEntryId:
 			dealRegistration.partnerAccount.id,
+		r_activityToDealRegistrations_c_activityId:
+			dealRegistration.mdfActivityAssociated.id,
 		registrationStatus: dealRegistration.registrationStatus,
 	};
 }

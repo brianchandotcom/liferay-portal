@@ -22,6 +22,7 @@ import DealRegistration from '../../../../common/interfaces/dealRegistration';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import {StepType} from '../../enums/stepType';
 import useDynamicFieldEntries from '../../hooks/useDynamicFieldEntries';
+import useMDFActivityOptions from '../../hooks/useMDFActivityOptions';
 import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProps';
 
 const General = ({
@@ -38,11 +39,25 @@ const General = ({
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
-	const {companyOptions, onCompanySelected} = useCompanyOptions(
+	const {
+		companyOptions,
+		mdfActivitiesBySelectedCompany,
+		onCompanySelected,
+	} = useCompanyOptions(
 		companiesEntries,
 		useCallback(
 			(country, company) => {
 				setFieldValue('partnerAccount', company);
+			},
+			[setFieldValue]
+		)
+	);
+
+	const {mdfActivitiesOptions, onMDFActivitySelected} = useMDFActivityOptions(
+		mdfActivitiesBySelectedCompany,
+		useCallback(
+			(selectedActivity) => {
+				setFieldValue('mdfActivityAssociated', selectedActivity);
 			},
 			[setFieldValue]
 		)
@@ -105,6 +120,8 @@ const General = ({
 						component={PRMForm.Select}
 						label="MDF Activity Associated"
 						name="mdfActivityAssociated"
+						onChange={onMDFActivitySelected}
+						options={mdfActivitiesOptions}
 					/>
 				</PRMForm.Group>
 			</PRMForm.Section>

@@ -138,56 +138,46 @@ public class PortalInstancesTest {
 	}
 
 	@Test
-	public void testI18nLanguageIdNotSet() throws Exception {
+	public void testGetI18nLanguageId1() throws Exception {
 		Group group = _initializeGroup();
 
 		String hostname =
 			RandomTestUtil.randomString(6) + "." +
 				RandomTestUtil.randomString(3);
 
-		// No virtualHost language set
+		// No virtual host language set
 
 		_updateLayoutSetVirtualHostname(
-			group.getPublicLayoutSet(), hostname, StringPool.BLANK);
+			StringPool.BLANK, group.getPublicLayoutSet(), hostname);
 
-		// No session
-
-		_testGetI18NLanguageId(hostname, null, null);
-
-		// Unavailable languageId
-
-		_testGetI18NLanguageId(hostname, LanguageUtil.getLocale("vi_VN"), null);
+		_testGetI18NLanguageId(null, hostname, null);
+		_testGetI18NLanguageId(null, hostname, LanguageUtil.getLocale("vi_VN"));
 	}
 
 	@Test
-	public void testI18nLanguageIdSet() throws Exception {
+	public void testGetI18nLanguageId2() throws Exception {
 		Group group = _initializeGroup();
 
 		String hostname =
 			RandomTestUtil.randomString(6) + "." +
 				RandomTestUtil.randomString(3);
 
-		// VirtualHost language set
+		// Virtual host language set
 
 		_updateLayoutSetVirtualHostname(
-			group.getPublicLayoutSet(), hostname, _SITE_DEFAULT_LANGUAGE_ID);
+			"es_ES", group.getPublicLayoutSet(), hostname);
 
-		_testGetI18NLanguageId(hostname, null, _SITE_DEFAULT_LANGUAGE_ID);
+		_testGetI18NLanguageId("es_ES", hostname, null);
 
-		// Remove virtualHost language to test new changes
+		// Remove virtual host language to test new changes
 
 		_updateLayoutSetVirtualHostname(
-			group.getPublicLayoutSet(), hostname, StringPool.BLANK);
+			StringPool.BLANK, group.getPublicLayoutSet(), hostname);
 
-		// Verify I18NLanguageId is not set without Session and Locale
-
-		_testGetI18NLanguageId(hostname, null, null);
-
-		// Valid Session and Locale
-
+		_testGetI18NLanguageId(null, hostname, null);
 		_testGetI18NLanguageId(
-			hostname, _company.getLocale(),
-			LanguageUtil.getLanguageId(_company.getLocale()));
+			LanguageUtil.getLanguageId(_company.getLocale()), hostname,
+			_company.getLocale());
 	}
 
 	private Group _initializeGroup() throws Exception {
@@ -197,10 +187,10 @@ public class PortalInstancesTest {
 			group.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.setProperty(
-			"languageId", _SITE_DEFAULT_LANGUAGE_ID);
+			"languageId", "es_ES");
 
 		typeSettingsUnicodeProperties.setProperty(
-			PropsKeys.LOCALES, _SITE_DEFAULT_LANGUAGE_ID);
+			PropsKeys.LOCALES, "es_ES");
 
 		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
@@ -228,14 +218,13 @@ public class PortalInstancesTest {
 	}
 
 	private void _testGetI18NLanguageId(
-		String hostname, Locale locale, String expectedLanguageId) {
+		String expectedLanguageId, String hostname, Locale locale) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setServerName(hostname);
-
 		mockHttpServletRequest.addHeader("Host", hostname);
+		mockHttpServletRequest.setServerName(hostname);
 
 		if (locale != null) {
 			HttpSession httpSession = mockHttpServletRequest.getSession(true);
@@ -248,7 +237,6 @@ public class PortalInstancesTest {
 		Assert.assertEquals(
 			_company.getCompanyId(),
 			PortalInstances.getCompanyId(mockHttpServletRequest));
-
 		Assert.assertEquals(
 			expectedLanguageId,
 			mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
@@ -258,13 +246,13 @@ public class PortalInstancesTest {
 		Layout layout, String layoutHostname) {
 
 		_updateLayoutSetVirtualHostname(
-			layout.getLayoutSet(), layoutHostname, StringPool.BLANK);
+			StringPool.BLANK, layout.getLayoutSet(), layoutHostname);
 
 		layout.setLayoutSet(null);
 	}
 
 	private void _updateLayoutSetVirtualHostname(
-		LayoutSet layoutSet, String layoutHostname, String languageId) {
+		String languageId, LayoutSet layoutSet, String layoutHostname) {
 
 		_virtualHostLocalService.updateVirtualHosts(
 			_company.getCompanyId(), layoutSet.getLayoutSetId(),
@@ -272,8 +260,6 @@ public class PortalInstancesTest {
 				StringUtil.toLowerCase(layoutHostname), languageId
 			).build());
 	}
-
-	private static final String _SITE_DEFAULT_LANGUAGE_ID = "es_ES";
 
 	private Company _company;
 

@@ -25,7 +25,6 @@ import com.liferay.batch.planner.rest.resource.v1_0.PlanResource;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -209,13 +208,13 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				externalURL = batchPlannerPlan.getExternalURL();
 				id = batchPlannerPlan.getBatchPlannerPlanId();
 				internalClassName = batchPlannerPlan.getInternalClassName();
-				mappings = TransformUtil.transformToArray(
+				mappings = transformToArray(
 					_batchPlannerMappingService.getBatchPlannerMappings(
 						batchPlannerPlan.getBatchPlannerPlanId()),
 					batchPlannerMapping -> _toMapping(batchPlannerMapping),
 					Mapping.class);
 				name = batchPlannerPlan.getName();
-				policies = TransformUtil.transformToArray(
+				policies = transformToArray(
 					_batchPlannerPolicyService.getBatchPlannerPolicies(
 						batchPlannerPlan.getBatchPlannerPlanId()),
 					batchPlannerPolicy -> _toPolicy(batchPlannerPolicy),

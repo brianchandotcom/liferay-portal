@@ -27,7 +27,6 @@ import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingOption;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingMethodResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -73,7 +72,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 	private ShippingOption[] _getShippingOptions(long shippingMethodId)
 		throws PortalException {
 
-		return TransformUtil.transformToArray(
+		return transformToArray(
 			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
 				shippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new CommerceShippingFixedOptionPriorityComparator()),

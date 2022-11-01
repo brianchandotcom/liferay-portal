@@ -32,7 +32,6 @@ import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -521,7 +520,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 					batchEngineImportTask.getExecuteStatus());
 				externalReferenceCode =
 					batchEngineImportTask.getExternalReferenceCode();
-				failedItems = TransformUtil.transformToArray(
+				failedItems = transformToArray(
 					batchEngineImportTask.getBatchEngineImportTaskErrors(),
 					batchEngineImportTaskError -> _toFailedItem(
 						batchEngineImportTaskError),

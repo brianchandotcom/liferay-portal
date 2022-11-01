@@ -1226,6 +1226,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getJenkinsReportCommitElement() {
+		if (!(this instanceof WorkspaceBuild)) {
+			return null;
+		}
+
 		WorkspaceBuild workspaceBuild = (WorkspaceBuild)this;
 
 		Workspace workspace = workspaceBuild.getWorkspace();

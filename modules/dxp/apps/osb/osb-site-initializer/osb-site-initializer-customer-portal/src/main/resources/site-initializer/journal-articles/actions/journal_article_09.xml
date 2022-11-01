@@ -8,6 +8,6 @@
 		<dynamic-content language-id="en_US"><![CDATA[Connect your Liferay DXP to Analytics Cloud to gain insights into customer attributes and behavior.]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="ActionUrl" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[https://support-uat.lxc.liferay.com/web/customer-portal/project/#/{{accountKey}}/activation/analytics-cloud ]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[{{projectURL}}/activation/analytics-cloud ]]></dynamic-content>
 	</dynamic-element>
 </root>

@@ -108,11 +108,6 @@ public class BatchPlannerPlanTemplateManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean isDisabled() {
-		return false;
-	}
-
-	@Override
 	protected String getNavigation() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getNavigationParam(), "all");

@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public interface SearchPermissionFilterContributorsHolder {
+public interface SearchPermissionFilterContributorsRegistry {
 
 	public Stream<SearchPermissionFilterContributor> getAll();
 

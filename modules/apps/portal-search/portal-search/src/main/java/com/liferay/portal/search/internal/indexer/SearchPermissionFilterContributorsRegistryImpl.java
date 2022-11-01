@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true, service = SearchPermissionFilterContributorsHolder.class
+	immediate = true, service = SearchPermissionFilterContributorsRegistry.class
 )
-public class SearchPermissionFilterContributorsHolderImpl
-	implements SearchPermissionFilterContributorsHolder {
+public class SearchPermissionFilterContributorsRegistryImpl
+	implements SearchPermissionFilterContributorsRegistry {
 
 	@Override
 	public Stream<SearchPermissionFilterContributor> getAll() {

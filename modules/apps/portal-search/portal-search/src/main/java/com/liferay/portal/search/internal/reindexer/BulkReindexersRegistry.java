@@ -19,7 +19,7 @@ import com.liferay.portal.search.spi.reindexer.BulkReindexer;
 /**
  * @author André de Oliveira
  */
-public interface BulkReindexersHolder {
+public interface BulkReindexersRegistry {
 
 	public BulkReindexer getBulkReindexer(String className);
 

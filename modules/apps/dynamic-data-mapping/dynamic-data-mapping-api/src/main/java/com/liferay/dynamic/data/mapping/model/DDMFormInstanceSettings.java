@@ -107,6 +107,7 @@ import org.osgi.annotation.versioning.ProviderType;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
+								"displayChartAsTable",
 								"showPartialResultsToRespondents",
 								"limitToOneSubmissionPerUser",
 								"limitToOneSubmissionPerUserHeader",
@@ -131,6 +132,13 @@ public interface DDMFormInstanceSettings {
 
 	@DDMFormField
 	public boolean convertedFromPolls();
+
+	@DDMFormField(
+		label = "%display-chart-as-table",
+		tip = "%display-entries-of-the-following-field-types-as-tables-select-from-list-single-selection-multiple-selection-and-boolean",
+		type = "checkbox"
+	)
+	public boolean displayChartAsTable();
 
 	@DDMFormField(
 		label = "%from-address",

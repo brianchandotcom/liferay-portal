@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@liferay/eslint-plugin": "*",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.9"
 	},

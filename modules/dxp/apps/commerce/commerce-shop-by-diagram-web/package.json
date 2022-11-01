@@ -4,7 +4,6 @@
 		"@liferay/frontend-js-state-web": "*",
 		"commerce-frontend-js": "*",
 		"d3": "5.9.3",
-		"fetch-mock": "^5.13.1",
 		"frontend-js-web": "*",
 		"item-selector-taglib": "*",
 		"react": "16.12.0"

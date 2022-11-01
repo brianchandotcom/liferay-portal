@@ -303,7 +303,9 @@ function parseProperty(data, item, property) {
 	else if (property === 'template-language') {
 		newProperty = 'templateLanguage';
 	}
-
+	else if (property === 'script-language') {
+		newProperty = 'scriptLanguage';
+	}
 	if (Array.isArray(data[newProperty])) {
 		data[newProperty].push(item[property]);
 

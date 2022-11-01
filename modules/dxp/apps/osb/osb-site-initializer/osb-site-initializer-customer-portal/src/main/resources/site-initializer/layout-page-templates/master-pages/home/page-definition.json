@@ -478,7 +478,6 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/customer-portal/sourcesanspro-regular-ttf);\n}",
 		"styleBook": {
 			"key": "customer-portal",
 			"name": "Customer Portal"

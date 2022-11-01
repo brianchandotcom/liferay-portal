@@ -485,7 +485,6 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/cp/sourcesanspro-regular-ttf);\n}",
 		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

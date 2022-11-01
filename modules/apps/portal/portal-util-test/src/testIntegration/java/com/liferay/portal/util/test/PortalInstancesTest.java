@@ -138,8 +138,19 @@ public class PortalInstancesTest {
 	}
 
 	@Test
-	public void testGetI18nLanguageId1() throws Exception {
-		Group group = _initializeGroup();
+	public void testGetI18nLanguageId() throws Exception {
+		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty("languageId", "es_ES");
+
+		typeSettingsUnicodeProperties.setProperty(PropsKeys.LOCALES, "es_ES");
+
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		group = _groupLocalService.updateGroup(group);
 
 		String hostname =
 			RandomTestUtil.randomString(6) + "." +
@@ -152,15 +163,6 @@ public class PortalInstancesTest {
 
 		_testGetI18NLanguageId(null, hostname, null);
 		_testGetI18NLanguageId(null, hostname, LanguageUtil.getLocale("vi_VN"));
-	}
-
-	@Test
-	public void testGetI18nLanguageId2() throws Exception {
-		Group group = _initializeGroup();
-
-		String hostname =
-			RandomTestUtil.randomString(6) + "." +
-				RandomTestUtil.randomString(3);
 
 		// Virtual host language set
 
@@ -178,23 +180,6 @@ public class PortalInstancesTest {
 		_testGetI18NLanguageId(
 			LanguageUtil.getLanguageId(_company.getLocale()), hostname,
 			_company.getLocale());
-	}
-
-	private Group _initializeGroup() throws Exception {
-		Group group = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			group.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.setProperty(
-			"languageId", "es_ES");
-
-		typeSettingsUnicodeProperties.setProperty(
-			PropsKeys.LOCALES, "es_ES");
-
-		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-		return _groupLocalService.updateGroup(group);
 	}
 
 	private void _testGetCompanyId(

@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = QueryPreFilterContributorsHolder.class)
-public class QueryPreFilterContributorsHolderImpl
-	implements QueryPreFilterContributorsHolder {
+@Component(immediate = true, service = QueryPreFilterContributorsRegistry.class)
+public class QueryPreFilterContributorsRegistryImpl
+	implements QueryPreFilterContributorsRegistry {
 
 	@Override
 	public Stream<QueryPreFilterContributor> stream(

@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /**
  * @author André de Oliveira
  */
-public interface QueryPreFilterContributorsHolder {
+public interface QueryPreFilterContributorsRegistry {
 
 	public Stream<QueryPreFilterContributor> stream(
 		Collection<String> excludes, Collection<String> includes);

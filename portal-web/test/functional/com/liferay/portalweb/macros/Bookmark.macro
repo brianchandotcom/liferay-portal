@@ -140,7 +140,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#URL_REQUIRED",
-			value1 = "This field is required.");
+			value1 = "The URL field is required.");
 	}
 
 	macro addPG {

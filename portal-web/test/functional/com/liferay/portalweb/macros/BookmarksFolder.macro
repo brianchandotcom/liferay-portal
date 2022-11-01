@@ -27,13 +27,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "Name");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "Required");
-
-		Alert.viewRequiredField();
+			value1 = "The Name field is required.");
 	}
 
 	macro addNullSubfolderCP {
@@ -56,13 +50,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "Name");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "Required");
-
-		Alert.viewRequiredField();
+			value1 = "The Name field is required.");
 	}
 
 	macro addPG {

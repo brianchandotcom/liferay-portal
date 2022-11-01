@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.template.info.field.transformer;
+package com.liferay.template.internal.info.field.transformer;
+
+import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
 
 import java.util.List;
 

@@ -19,7 +19,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
-import com.liferay.template.info.field.transformer.TemplateNodeTransformerTracker;
 
 import java.util.ArrayList;
 import java.util.List;

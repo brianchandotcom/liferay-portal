@@ -23,9 +23,9 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -36,13 +36,20 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
+import org.hamcrest.CoreMatchers;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,58 +68,67 @@ public class ObjectEntryResourceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164801", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164801", "false"
+			).build());
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
+					false)));
 
-		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
+		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
+					false)));
+
+		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 	}
 
 	@Test
 	public void testGetNestedFieldDetailsInOneToManyRelationship()
 		throws Exception {
 
-		String relatedObjectFieldName = "x" + RandomTestUtil.randomString();
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, true, null,
-						RandomTestUtil.randomString(), relatedObjectFieldName,
-						false)));
-
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition, relatedObjectDefinition,
+				_objectDefinition1, _objectDefinition2,
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		String relatedObjectFieldValue = "x" + RandomTestUtil.randomString();
-
-		ObjectEntry relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
-			relatedObjectDefinition, relatedObjectFieldName,
-			relatedObjectFieldValue);
-
-		ObjectRelationshipLocalServiceUtil.
-			addObjectRelationshipMappingTableValues(
-				TestPropsValues.getUserId(),
-				objectRelationship.getObjectRelationshipId(),
-				_objectEntry.getPrimaryKey(),
-				relatedObjectEntry.getPrimaryKey(),
-				ServiceContextTestUtil.getServiceContext());
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			TestPropsValues.getUserId(),
+			objectRelationship.getObjectRelationshipId(),
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ServiceContextTestUtil.getServiceContext());
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				relatedObjectDefinition.getRESTContextPath(),
-				"?nestedFields=r_", objectRelationship.getName(), "_",
-				_objectDefinition.getPKObjectFieldName()),
+				_objectDefinition2.getRESTContextPath(), "?nestedFields=r_",
+				objectRelationship.getName(), "_",
+				_objectDefinition1.getPKObjectFieldName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -122,41 +138,110 @@ public class ObjectEntryResourceTest {
 		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
-			relatedObjectFieldValue,
-			itemJSONObject.getString(relatedObjectFieldName));
+			_OBJECT_FIELD_VALUE_2,
+			itemJSONObject.getString(_OBJECT_FIELD_NAME_2));
 
 		JSONObject relatedObjectJSONObject = itemJSONObject.getJSONObject(
 			StringBundler.concat(
 				"r_", objectRelationship.getName(), "_",
 				StringUtil.replaceLast(
-					_objectDefinition.getPKObjectFieldName(), "Id", "")));
+					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
 
 		Assert.assertEquals(
-			_OBJECT_FIELD_VALUE,
-			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME));
+			_OBJECT_FIELD_VALUE_1,
+			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
 
-		ObjectRelationshipLocalServiceUtil.
+		_objectRelationshipLocalService.
 			deleteObjectRelationshipMappingTableValues(
 				objectRelationship.getObjectRelationshipId(),
-				_objectEntry.getPrimaryKey(),
-				relatedObjectEntry.getPrimaryKey());
+				_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey());
 
-		ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
+		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
-
-		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-			relatedObjectDefinition);
 	}
 
-	private static final String _OBJECT_FIELD_NAME =
+	@Test
+	public void testPutByExternalReferenceCodeManyToManyRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry1.getExternalReferenceCode(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry2.getExternalReferenceCode()),
+			Http.Method.PUT);
+
+		Assert.assertEquals(
+			_objectEntry2.getExternalReferenceCode(),
+			jsonObject.getString("externalReferenceCode"));
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_2, jsonObject.getString(_OBJECT_FIELD_NAME_2));
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry2.getExternalReferenceCode(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				_objectEntry1.getExternalReferenceCode()),
+			Http.Method.PUT);
+
+		Assert.assertEquals(
+			_objectEntry1.getExternalReferenceCode(),
+			jsonObject.getString("externalReferenceCode"));
+		Assert.assertEquals(
+			_OBJECT_FIELD_VALUE_1, jsonObject.getString(_OBJECT_FIELD_NAME_1));
+
+		jsonObject = HTTPTestUtil.invoke(
+			null,
+			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry2.getExternalReferenceCode(), StringPool.SLASH,
+				objectRelationship.getName(), StringPool.SLASH,
+				RandomTestUtil.randomString()),
+			Http.Method.PUT);
+
+		Assert.assertThat(
+			jsonObject.getString("title"),
+			CoreMatchers.containsString("No ObjectEntry exists with the key"));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+	}
+
+	private static final String _OBJECT_FIELD_NAME_1 =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_VALUE =
+	private static final String _OBJECT_FIELD_NAME_2 =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_VALUE_1 =
+		RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_VALUE_2 =
 		RandomTestUtil.randomString();
 
 	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
+	private ObjectDefinition _objectDefinition1;
 
-	private ObjectEntry _objectEntry;
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition2;
+
+	private ObjectEntry _objectEntry1;
+	private ObjectEntry _objectEntry2;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

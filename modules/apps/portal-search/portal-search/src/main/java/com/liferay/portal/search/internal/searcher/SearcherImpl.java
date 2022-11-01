@@ -109,7 +109,8 @@ public class SearcherImpl implements Searcher {
 	protected IndexSearcherHelper indexSearcherHelper;
 
 	@Reference
-	protected SearchRequestContributorsHolder searchRequestContributorsHolder;
+	protected SearchRequestContributorsRegistry
+		searchRequestContributorsRegistry;
 
 	@Reference
 	protected SearchResponseBuilderFactory searchResponseBuilderFactory;
@@ -131,7 +132,7 @@ public class SearcherImpl implements Searcher {
 		SearchRequest searchRequest) {
 
 		Stream<SearchRequestContributor> stream =
-			searchRequestContributorsHolder.stream(
+			searchRequestContributorsRegistry.stream(
 				searchRequest.getIncludeContributors(),
 				searchRequest.getExcludeContributors());
 

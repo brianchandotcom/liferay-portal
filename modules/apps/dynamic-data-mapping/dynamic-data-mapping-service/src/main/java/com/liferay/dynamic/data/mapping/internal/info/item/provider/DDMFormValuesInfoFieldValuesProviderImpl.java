@@ -270,7 +270,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 			}
 			else if (Objects.equals(
 						ddmFormFieldValue.getType(),
-						DDMFormFieldTypeConstants.SELECT)) {
+						DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+					 Objects.equals(
+						 ddmFormFieldValue.getType(),
+						 DDMFormFieldTypeConstants.SELECT)) {
 
 				if (Validator.isNull(valueString)) {
 					return null;

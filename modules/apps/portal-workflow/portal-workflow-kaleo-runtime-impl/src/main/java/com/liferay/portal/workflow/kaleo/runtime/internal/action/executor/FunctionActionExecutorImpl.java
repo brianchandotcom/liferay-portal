@@ -34,6 +34,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -87,7 +88,7 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 			if (value instanceof Number || value instanceof String) {
 				payloadJSONObject.put(key, value);
 
-				return;
+				continue;
 			}
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -156,8 +157,9 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 		WorkflowTaskAssignee workflowTaskAssignee = workflowTaskAssignees.get(
 			0);
 
-		if (workflowTaskAssignee.getAssigneeClassName() !=
-				User.class.getName()) {
+		if (!Objects.equals(
+				workflowTaskAssignee.getAssigneeClassName(),
+				User.class.getName())) {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(

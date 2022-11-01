@@ -47,7 +47,9 @@ definition {
 	test CreateNewPublicationWithoutName {
 		Publications.createNewPublication(gotoPublicationsAdmin = "true");
 
-		Alert.viewRequiredField();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "The Name field is required.");
 	}
 
 	@priority = "5"

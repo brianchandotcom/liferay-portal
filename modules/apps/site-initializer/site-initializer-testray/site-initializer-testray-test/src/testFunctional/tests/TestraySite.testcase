@@ -43,7 +43,7 @@ definition {
 
 			PortletEntry.inputName(name = "Testray 2");
 
-			Click(locator1 = "Button#ADD");
+			Button.click(button = "Add");
 
 			Alert.viewSuccessMessage();
 		}

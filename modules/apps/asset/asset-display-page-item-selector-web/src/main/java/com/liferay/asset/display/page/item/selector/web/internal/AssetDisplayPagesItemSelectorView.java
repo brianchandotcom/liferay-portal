@@ -22,14 +22,13 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -64,11 +63,7 @@ public class AssetDisplayPagesItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, AssetDisplayPagesItemSelectorView.class);
-
-		return ResourceBundleUtil.getString(
-			resourceBundle, "display-page-templates");
+		return _language.get(locale, "display-page-templates");
 	}
 
 	@Override
@@ -110,6 +105,9 @@ public class AssetDisplayPagesItemSelectorView
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.asset.display.page.item.selector.web)"

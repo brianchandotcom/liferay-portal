@@ -56,9 +56,9 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 
 	@Reference(unbind = "-")
 	public void setIndexDefinitionsHolder(
-		IndexDefinitionsHolder indexDefinitionsHolder) {
+		IndexDefinitionsRegistry indexDefinitionsRegistry) {
 
-		_indexDefinitionsHolder = indexDefinitionsHolder;
+		_indexDefinitionsRegistry = indexDefinitionsRegistry;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 	public void synchronizeIndexes() {
 		List<IndexDefinitionData> list = new ArrayList<>();
 
-		_indexDefinitionsHolder.drainTo(list);
+		_indexDefinitionsRegistry.drainTo(list);
 
 		list.forEach(this::synchronizeIndexDefinition);
 
@@ -161,7 +161,7 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 		IndexSynchronizerImpl.class);
 
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
-	private IndexDefinitionsHolder _indexDefinitionsHolder;
+	private IndexDefinitionsRegistry _indexDefinitionsRegistry;
 	private final ArrayList<IndexRegistrar> _indexRegistrarContributors =
 		new ArrayList<>();
 

@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.index.instant;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.index.IndexDefinitionsHolderImpl;
+import com.liferay.portal.search.elasticsearch7.internal.index.IndexDefinitionsRegistryImpl;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizationPortalInitializedListener;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizer;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexSynchronizerImpl;
@@ -70,11 +70,11 @@ public class InstantIndexesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		IndexDefinitionsHolderImpl indexDefinitionsHolderImpl =
-			new IndexDefinitionsHolderImpl();
+		IndexDefinitionsRegistryImpl indexDefinitionsRegistryImpl =
+			new IndexDefinitionsRegistryImpl();
 
 		IndexSynchronizerImpl indexSynchronizerImpl = _createIndexSynchronizer(
-			_elasticsearchFixture, indexDefinitionsHolderImpl);
+			_elasticsearchFixture, indexDefinitionsRegistryImpl);
 
 		IndexSynchronizationPortalInitializedListener
 			indexSynchronizationPortalInitializedListener =
@@ -85,7 +85,7 @@ public class InstantIndexesTest {
 
 		microcontainer.wire(
 			IndexDefinition.class,
-			indexDefinitionsHolderImpl::addIndexDefinition,
+			indexDefinitionsRegistryImpl::addIndexDefinition,
 			indexSynchronizationPortalInitializedListener::addIndexDefinition);
 
 		microcontainer.wire(
@@ -202,13 +202,13 @@ public class InstantIndexesTest {
 
 	private IndexSynchronizerImpl _createIndexSynchronizer(
 		ElasticsearchFixture elasticsearchFixture,
-		IndexDefinitionsHolderImpl indexDefinitionsHolderImpl) {
+		IndexDefinitionsRegistryImpl indexDefinitionsRegistryImpl) {
 
 		return new IndexSynchronizerImpl() {
 			{
 				setCreateIndexRequestExecutor(
 					_createCreateIndexRequestExecutor(elasticsearchFixture));
-				setIndexDefinitionsHolder(indexDefinitionsHolderImpl);
+				setIndexDefinitionsHolder(indexDefinitionsRegistryImpl);
 			}
 		};
 	}

@@ -1129,7 +1129,9 @@ definition {
 
 		Button.clickPublish();
 
-		Alert.viewRequiredField();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "The Content field is required.");
 	}
 
 	@description = "This checks that a blog entry without content cannot be added."

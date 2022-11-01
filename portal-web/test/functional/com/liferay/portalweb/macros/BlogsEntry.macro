@@ -673,7 +673,9 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		Alert.viewRequiredField();
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "The Content field is required.");
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 	}

@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.layout.display.page.internal.request.attributes.contributor;
 
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemReference;
@@ -55,7 +55,7 @@ public class
 		httpServletRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
 			Optional.ofNullable(
-				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+				_analyticsReportsInfoItemRegistry.getAnalyticsReportsInfoItem(
 					className.getClassName())
 			).map(
 				analyticsReportsInfoItem -> new InfoItemReference(
@@ -71,7 +71,7 @@ public class
 	}
 
 	@Reference
-	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
+	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

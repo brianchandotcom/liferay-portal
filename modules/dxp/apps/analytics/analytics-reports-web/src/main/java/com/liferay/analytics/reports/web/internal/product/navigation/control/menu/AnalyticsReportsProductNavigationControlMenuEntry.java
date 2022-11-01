@@ -16,7 +16,7 @@ package com.liferay.analytics.reports.web.internal.product.navigation.control.me
 
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
@@ -215,7 +215,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
 			(AnalyticsReportsInfoItem<Object>)
-				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+				_analyticsReportsInfoItemRegistry.getAnalyticsReportsInfoItem(
 					infoItemReference.getClassName());
 
 		if ((analyticsReportsInfoItem == null) ||
@@ -417,7 +417,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		_analyticsReportsInfoItemObjectProviderTracker;
 
 	@Reference
-	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
+	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
 
 	@Reference
 	private Html _html;

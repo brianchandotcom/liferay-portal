@@ -16,7 +16,7 @@ package com.liferay.analytics.reports.web.internal.item.action.provider;
 
 import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsContentDashboardItemActionProvider;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderTracker;
 import com.liferay.analytics.reports.web.internal.item.action.AnalyticsReportsContentDashboardItemAction;
@@ -109,7 +109,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
 			(AnalyticsReportsInfoItem<Object>)
-				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+				_analyticsReportsInfoItemRegistry.getAnalyticsReportsInfoItem(
 					infoItemReference.getClassName());
 
 		if ((analyticsReportsInfoItem == null) ||
@@ -146,7 +146,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 		_analyticsReportsInfoItemObjectProviderTracker;
 
 	@Reference
-	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
+	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
 
 	@Reference
 	private Portal _portal;

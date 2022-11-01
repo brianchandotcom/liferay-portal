@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
@@ -126,7 +126,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 			AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
 				(AnalyticsReportsInfoItem<Object>)
-					_analyticsReportsInfoItemTracker.
+					_analyticsReportsInfoItemRegistry.
 						getAnalyticsReportsInfoItem(
 							infoItemReference.getClassName());
 
@@ -615,7 +615,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		_analyticsReportsInfoItemObjectProviderTracker;
 
 	@Reference
-	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
+	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
 
 	@Reference
 	private Http _http;

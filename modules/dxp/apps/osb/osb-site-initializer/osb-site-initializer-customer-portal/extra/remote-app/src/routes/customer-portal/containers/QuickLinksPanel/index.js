@@ -71,11 +71,12 @@ const QuickLinksPanel = () => {
 					const htmlBody = await structuredComponent.text();
 
 					accumulator.push(
-						htmlBody.replace('{{accountKey}}', project?.accountKey),
-						htmlBody.replace(
-							'{{projectURL}}',
-							pageRoutes.project(project?.accountKey)
-						)
+						htmlBody
+							.replace('{{accountKey}}', project?.accountKey)
+							.replace(
+								'{{projectURL}}',
+								pageRoutes.project(project?.accountKey)
+							)
 					);
 				}
 

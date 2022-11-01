@@ -145,17 +145,15 @@ public class LPKGDeployerRegistrar {
 				new AppKey(title, description, category, iconURL, required));
 		}
 
-		if ((app != null) &&
-			(!Objects.equals(title, app.getTitle()) ||
-			 !Objects.equals(description, app.getDescription()) ||
-			 !Objects.equals(category, app.getCategory()) ||
-			 !Objects.equals(iconURL, app.getIconURL()) ||
-			 (required != app.isRequired()))) {
+		if ((app != null) && (app.getRemoteAppId() != remoteAppId)) {
+			_appLocalService.uninstallApp(app.getRemoteAppId());
 
-			app = null;
+			app.setRemoteAppId(remoteAppId);
+			app.setVersion(version);
+
+			app = _appLocalService.updateApp(app);
 		}
-
-		if (app == null) {
+		else if (app == null) {
 			app = _appLocalService.updateApp(
 				0, remoteAppId, title, description, category, iconURL, version,
 				required, null);

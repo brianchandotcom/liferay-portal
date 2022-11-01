@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
-import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.Duration;
@@ -79,7 +79,7 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
-			_workflowMetricsSLACalendarTracker.getWorkflowMetricsSLACalendar(
+			_workflowMetricsSLACalendarRegistry.getWorkflowMetricsSLACalendar(
 				workflowMetricsSLADefinitionVersion.getCalendarKey());
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
 			_createWorkflowMetricsSLAStopwatch(
@@ -620,7 +620,7 @@ public class WorkflowMetricsSLAProcessor {
 		DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	@Reference
-	private WorkflowMetricsSLACalendarTracker
-		_workflowMetricsSLACalendarTracker;
+	private WorkflowMetricsSLACalendarRegistry
+		_workflowMetricsSLACalendarRegistry;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
-import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
+import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarRegistry;
 
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +41,7 @@ public class CalendarResourceImpl extends BaseCalendarResourceImpl {
 	@Override
 	public Page<Calendar> getCalendarsPage() throws Exception {
 		Map<String, String> workflowMetricsSLACalendarTitles =
-			_workflowMetricsSLACalendarTracker.
+			_workflowMetricsSLACalendarRegistry.
 				getWorkflowMetricsSLACalendarTitles(
 					contextAcceptLanguage.getPreferredLocale());
 
@@ -65,7 +65,7 @@ public class CalendarResourceImpl extends BaseCalendarResourceImpl {
 	}
 
 	@Reference
-	private WorkflowMetricsSLACalendarTracker
-		_workflowMetricsSLACalendarTracker;
+	private WorkflowMetricsSLACalendarRegistry
+		_workflowMetricsSLACalendarRegistry;
 
 }

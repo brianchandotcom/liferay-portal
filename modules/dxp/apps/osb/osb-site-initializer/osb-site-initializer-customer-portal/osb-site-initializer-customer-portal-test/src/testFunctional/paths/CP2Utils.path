@@ -61,7 +61,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CAPITION_ABOVE_MENU</td>
+	<td>CAPTION_ABOVE_MENU</td>
 	<td>//div[contains(@class, 'cp-activation-key-container')]/following::div//p[contains(text(),'your developer key to download.')]</td>
 	<td></td>
 </tr>

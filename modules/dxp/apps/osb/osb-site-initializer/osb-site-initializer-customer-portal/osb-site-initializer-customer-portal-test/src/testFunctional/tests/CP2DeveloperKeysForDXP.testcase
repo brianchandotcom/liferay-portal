@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("Assert that text 'To activate a local Liferay DXP instance, download a development key for your Liferay DXP version' is present") {
-			AssertElementPresent(locator1 = "CP2Utils#CAPITION_ABOVE_MENU");
+			AssertElementPresent(locator1 = "CP2Utils#CAPTION_ABOVE_MENU");
 		}
 
 		task ("Select 1 key and click in Download key") {

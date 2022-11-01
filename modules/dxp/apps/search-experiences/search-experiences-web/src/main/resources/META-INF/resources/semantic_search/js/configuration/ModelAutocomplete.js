@@ -39,6 +39,15 @@ function ModelAutocomplete({
 	const [showDropDown, setShowDropDown] = useState(false);
 
 	const {resource} = useResource({
+		fetchOptions: {
+			credentials: 'include',
+			headers: new Headers({
+				'Accept': 'application/json',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			}),
+		},
 		fetchPolicy: 'cache-first',
 		link: `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}
 		/o/search-experiences-rest/v1.0/sentence-transformer/ml-models`,

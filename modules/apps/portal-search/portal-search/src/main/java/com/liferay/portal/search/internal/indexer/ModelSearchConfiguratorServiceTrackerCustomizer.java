@@ -291,7 +291,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 				addSearchKeywordsQueryContributorHelper,
 				expandoQueryContributorHelper, indexerRegistry,
 				modelSearchConfigurator.getModelSearchSettings(),
-				new ModelKeywordQueryContributorsHolderImpl(
+				new ModelKeywordQueryContributorsRegistryImpl(
 					modelSearchConfigurator.getKeywordQueryContributors()),
 				modelSearchConfigurator.getSearchContextContributors(),
 				preFilterContributorHelper, _searchContextContributors,

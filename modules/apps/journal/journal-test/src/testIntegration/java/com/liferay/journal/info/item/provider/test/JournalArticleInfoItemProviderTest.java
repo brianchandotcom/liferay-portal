@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -79,7 +79,7 @@ public class JournalArticleInfoItemProviderTest {
 
 		InfoItemObjectProvider<JournalArticle> journalArticleInfoItemProvider =
 			(InfoItemObjectProvider<JournalArticle>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					JournalArticle.class.getName(),
 					infoItemIdentifier.getInfoItemServiceFilter());
@@ -106,7 +106,7 @@ public class JournalArticleInfoItemProviderTest {
 
 		InfoItemObjectProvider<JournalArticle> journalArticleInfoItemProvider =
 			(InfoItemObjectProvider<JournalArticle>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					JournalArticle.class.getName(),
 					infoItemIdentifier.getInfoItemServiceFilter());
@@ -118,7 +118,7 @@ public class JournalArticleInfoItemProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private ServiceContext _serviceContext;
 

@@ -15,7 +15,7 @@
 package com.liferay.translation.internal.security.permission.resource;
 
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -85,7 +85,7 @@ public class TranslationEntryModelResourcePermission
 		throws PortalException {
 
 		InfoItemPermissionProvider<Object> infoItemPermissionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemPermissionProvider.class,
 				translationEntry.getClassName());
 
@@ -124,7 +124,7 @@ public class TranslationEntryModelResourcePermission
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

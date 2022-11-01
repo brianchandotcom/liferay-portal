@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
@@ -91,7 +91,7 @@ public class LayoutsSEODisplayContext {
 
 	public LayoutsSEODisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
@@ -103,7 +103,7 @@ public class LayoutsSEODisplayContext {
 
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
@@ -516,7 +516,7 @@ public class LayoutsSEODisplayContext {
 		throws NoSuchFormVariationException {
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class,
 				layoutPageTemplateEntry.getClassName());
 
@@ -594,7 +594,7 @@ public class LayoutsSEODisplayContext {
 
 	private String _getTypeLabel(String className) {
 		InfoItemDetailsProvider infoItemDetailsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, className);
 
 		if (infoItemDetailsProvider == null) {
@@ -615,7 +615,7 @@ public class LayoutsSEODisplayContext {
 	private final DLURLHelper _dlurlHelper;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;
 	private final LayoutPageTemplateEntryLocalService

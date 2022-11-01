@@ -23,7 +23,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +79,7 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 				infoItemReference.getInfoItemIdentifier();
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				infoItemServiceTracker.getFirstInfoItemService(
+				infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					infoItemReference.getClassName(),
 					infoItemIdentifier.getInfoItemServiceFilter());
@@ -139,7 +139,7 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 	protected FragmentEntryConfigurationParser fragmentEntryConfigurationParser;
 
 	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
+	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
 	protected Portal portal;

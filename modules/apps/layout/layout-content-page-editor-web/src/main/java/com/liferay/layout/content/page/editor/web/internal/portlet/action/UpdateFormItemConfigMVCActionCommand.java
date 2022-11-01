@@ -32,7 +32,7 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -309,7 +309,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 				formStyledLayoutStructureItem.getClassNameId()));
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, itemClassName);
 
 		if (infoItemFormProvider == null) {
@@ -562,7 +562,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

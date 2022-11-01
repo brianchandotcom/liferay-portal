@@ -26,7 +26,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
@@ -61,13 +61,14 @@ public class InfoCollectionProviderLayoutListRetriever
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
 		InfoCollectionProvider<Object> infoCollectionProvider =
-			_infoItemServiceTracker.getInfoItemService(
+			_infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class, keyListObjectReference.getKey());
 
 		if (infoCollectionProvider == null) {
-			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
-				RelatedInfoItemCollectionProvider.class,
-				keyListObjectReference.getKey());
+			infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					RelatedInfoItemCollectionProvider.class,
+					keyListObjectReference.getKey());
 		}
 
 		if (infoCollectionProvider == null) {
@@ -137,13 +138,14 @@ public class InfoCollectionProviderLayoutListRetriever
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
 		InfoCollectionProvider<?> infoCollectionProvider =
-			_infoItemServiceTracker.getInfoItemService(
+			_infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class, keyListObjectReference.getKey());
 
 		if (infoCollectionProvider == null) {
-			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
-				RelatedInfoItemCollectionProvider.class,
-				keyListObjectReference.getKey());
+			infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					RelatedInfoItemCollectionProvider.class,
+					keyListObjectReference.getKey());
 		}
 
 		if (infoCollectionProvider == null) {
@@ -207,13 +209,14 @@ public class InfoCollectionProviderLayoutListRetriever
 		KeyListObjectReference keyListObjectReference) {
 
 		InfoCollectionProvider<Object> infoCollectionProvider =
-			_infoItemServiceTracker.getInfoItemService(
+			_infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class, keyListObjectReference.getKey());
 
 		if (infoCollectionProvider == null) {
-			infoCollectionProvider = _infoItemServiceTracker.getInfoItemService(
-				RelatedInfoItemCollectionProvider.class,
-				keyListObjectReference.getKey());
+			infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					RelatedInfoItemCollectionProvider.class,
+					keyListObjectReference.getKey());
 		}
 
 		if (infoCollectionProvider == null) {
@@ -242,7 +245,7 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
 				_getModelClassName(contextObject));
 
@@ -283,7 +286,7 @@ public class InfoCollectionProviderLayoutListRetriever
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

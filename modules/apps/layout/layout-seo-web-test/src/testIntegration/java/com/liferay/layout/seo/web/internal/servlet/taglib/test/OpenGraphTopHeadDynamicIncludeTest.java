@@ -33,7 +33,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -1543,7 +1543,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		InfoItemObjectProvider<?> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
 		Object infoItem = infoItemObjectProvider.getInfoItem(
@@ -1552,7 +1552,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
 
 		InfoItemDetailsProvider infoItemDetailsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, className);
 
 		httpServletRequest.setAttribute(
@@ -1581,7 +1581,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		throws Exception {
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, Layout.class.getName());
 
 		if (infoItemLanguagesProvider == null) {
@@ -1808,7 +1808,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	private GroupLocalService _groupLocalService;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
 	private Language _language;

@@ -16,7 +16,7 @@ package com.liferay.translation.web.internal.helper;
 
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.petra.string.StringBundler;
@@ -37,10 +37,10 @@ import java.util.Optional;
 public class InfoItemHelper {
 
 	public InfoItemHelper(
-		String className, InfoItemServiceTracker infoItemServiceTracker) {
+		String className, InfoItemServiceRegistry infoItemServiceRegistry) {
 
 		_className = className;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
 	public Optional<String> getInfoItemTitleOptional(
@@ -56,7 +56,7 @@ public class InfoItemHelper {
 				infoItemReferenceSuffixObjectValuePair.getKey();
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					infoItemReference.getClassName());
 
@@ -112,7 +112,7 @@ public class InfoItemHelper {
 		String className, Object object, Locale locale) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		InfoFieldValue<Object> titleInfoFieldValue =
@@ -132,6 +132,6 @@ public class InfoItemHelper {
 	private static final Log _log = LogFactoryUtil.getLog(InfoItemHelper.class);
 
 	private final String _className;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

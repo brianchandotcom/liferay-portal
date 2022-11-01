@@ -26,7 +26,7 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,9 +68,9 @@ import javax.servlet.http.HttpServletRequest;
 public class InfoRequestFieldValuesProviderHelper {
 
 	public InfoRequestFieldValuesProviderHelper(
-		InfoItemServiceTracker infoItemServiceTracker) {
+		InfoItemServiceRegistry infoItemServiceRegistry) {
 
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
@@ -207,7 +207,7 @@ public class InfoRequestFieldValuesProviderHelper {
 		String className, String formVariationKey, long groupId) {
 
 		InfoItemFormProvider<T> infoItemFormProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider == null) {
@@ -297,6 +297,6 @@ public class InfoRequestFieldValuesProviderHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InfoRequestFieldValuesProviderHelper.class);
 
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.translation.web.internal.servlet;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
@@ -96,7 +96,7 @@ public class ExportTranslationServlet extends HttpServlet {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					httpServletRequest, _infoItemServiceTracker,
+					httpServletRequest, _infoItemServiceRegistry,
 					_segmentsExperienceLocalService);
 
 			String className = translationRequestHelper.getClassName(
@@ -117,7 +117,7 @@ public class ExportTranslationServlet extends HttpServlet {
 					translationRequestHelper));
 
 			InfoItemPermissionProvider infoItemPermissionProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemPermissionProvider.class, className);
 
 			PermissionChecker permissionChecker =
@@ -171,7 +171,7 @@ public class ExportTranslationServlet extends HttpServlet {
 		throws IOException, PortalException {
 
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
-			className, _infoItemServiceTracker);
+			className, _infoItemServiceRegistry);
 
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
@@ -188,11 +188,11 @@ public class ExportTranslationServlet extends HttpServlet {
 						exportMimeType);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
 		Object object = infoItemObjectProvider.getInfoItem(classPK);
@@ -284,7 +284,7 @@ public class ExportTranslationServlet extends HttpServlet {
 		throws NoSuchInfoItemException {
 
 		InfoItemHelper infoItemHelper = new InfoItemHelper(
-			className, _infoItemServiceTracker);
+			className, _infoItemServiceRegistry);
 
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
@@ -307,7 +307,7 @@ public class ExportTranslationServlet extends HttpServlet {
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

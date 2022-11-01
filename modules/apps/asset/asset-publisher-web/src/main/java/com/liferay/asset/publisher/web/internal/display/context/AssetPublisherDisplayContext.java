@@ -51,7 +51,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.ItemSelector;
@@ -151,7 +151,7 @@ public class AssetPublisherDisplayContext {
 			AssetPublisherHelper assetPublisherHelper,
 			AssetPublisherWebConfiguration assetPublisherWebConfiguration,
 			AssetPublisherWebHelper assetPublisherWebHelper,
-			InfoItemServiceTracker infoItemServiceTracker,
+			InfoItemServiceRegistry infoItemServiceRegistry,
 			ItemSelector itemSelector, PortletRequest portletRequest,
 			PortletResponse portletResponse,
 			PortletPreferences portletPreferences,
@@ -166,7 +166,7 @@ public class AssetPublisherDisplayContext {
 		_assetPublisherHelper = assetPublisherHelper;
 		_assetPublisherWebConfiguration = assetPublisherWebConfiguration;
 		_assetPublisherWebHelper = assetPublisherWebHelper;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -338,7 +338,7 @@ public class AssetPublisherDisplayContext {
 				}
 
 				InfoCollectionProvider<AssetEntry> infoCollectionProvider =
-					_infoItemServiceTracker.getInfoItemService(
+					_infoItemServiceRegistry.getInfoItemService(
 						InfoCollectionProvider.class, getInfoListProviderKey());
 
 				if (infoCollectionProvider == null) {
@@ -919,7 +919,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
-			_infoItemServiceTracker.getInfoItemService(
+			_infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class, getInfoListProviderKey());
 
 		if (infoCollectionProvider == null) {
@@ -2200,7 +2200,7 @@ public class AssetPublisherDisplayContext {
 	private String[] _extensions;
 	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private String _infoListProviderKey;
 	private final ItemSelector _itemSelector;
 	private Boolean _mergeURLTags;

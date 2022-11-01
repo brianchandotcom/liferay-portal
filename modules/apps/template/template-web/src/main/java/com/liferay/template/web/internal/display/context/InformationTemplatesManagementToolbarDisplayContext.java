@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,9 +75,9 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		_informationTemplatesTemplateDisplayContext =
 			informationTemplatesTemplateDisplayContext;
 
-		_infoItemServiceTracker =
-			(InfoItemServiceTracker)liferayPortletRequest.getAttribute(
-				InfoItemServiceTracker.class.getName());
+		_infoItemServiceRegistry =
+			(InfoItemServiceRegistry)liferayPortletRequest.getAttribute(
+				InfoItemServiceRegistry.class.getName());
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -185,13 +185,13 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		}
 
 		for (InfoItemClassDetails infoItemClassDetails :
-				_infoItemServiceTracker.getInfoItemClassDetails(
+				_infoItemServiceRegistry.getInfoItemClassDetails(
 					_themeDisplay.getScopeGroupId(),
 					TemplateInfoItemCapability.KEY,
 					_themeDisplay.getPermissionChecker())) {
 
 			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFormVariationsProvider.class,
 					infoItemClassDetails.getClassName());
 
@@ -253,7 +253,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		InformationTemplatesManagementToolbarDisplayContext.class);
 
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final InformationTemplatesTemplateDisplayContext
 		_informationTemplatesTemplateDisplayContext;
 	private final ThemeDisplay _themeDisplay;

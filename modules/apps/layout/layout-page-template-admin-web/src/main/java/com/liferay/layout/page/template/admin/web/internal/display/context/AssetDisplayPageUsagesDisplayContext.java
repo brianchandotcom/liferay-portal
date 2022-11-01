@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
@@ -57,14 +57,14 @@ public class AssetDisplayPageUsagesDisplayContext {
 		AssetEntryService assetEntryService,
 		HttpServletRequest httpServletRequest,
 		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
-		InfoItemServiceTracker infoItemServiceTracker, Portal portal,
+		InfoItemServiceRegistry infoItemServiceRegistry, Portal portal,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_assetDisplayPageEntryService = assetDisplayPageEntryService;
 		_assetEntryService = assetEntryService;
 		_httpServletRequest = httpServletRequest;
 		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -207,7 +207,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 		}
 
 		InfoItemObjectProvider<?> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class,
 				_portal.getClassName(getClassNameId()));
 
@@ -216,7 +216,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
 				_portal.getClassName(getClassNameId()));
 
@@ -265,7 +265,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 	private Long _classTypeId;
 	private Boolean _defaultTemplate;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;

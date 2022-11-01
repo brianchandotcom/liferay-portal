@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -63,7 +63,7 @@ public class DDMStructureRelatedInfoCollectionProviderTest {
 
 		RelatedInfoItemCollectionProvider<?, ?>
 			relatedInfoItemCollectionProvider =
-				_infoItemServiceTracker.getInfoItemService(
+				_infoItemServiceRegistry.getInfoItemService(
 					RelatedInfoItemCollectionProvider.class,
 					_getKey(ddmStructure));
 
@@ -81,7 +81,7 @@ public class DDMStructureRelatedInfoCollectionProviderTest {
 
 		RelatedInfoItemCollectionProvider<?, ?>
 			relatedInfoItemCollectionProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					RelatedInfoItemCollectionProvider.class,
 					_getKey(ddmStructure));
 
@@ -107,6 +107,6 @@ public class DDMStructureRelatedInfoCollectionProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.info.internal.item.renderer;
 
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 
@@ -31,14 +31,14 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 
 	@Override
 	public InfoItemRenderer<?> getInfoItemRenderer(String key) {
-		return _infoItemServiceTracker.getInfoItemService(
+		return _infoItemServiceRegistry.getInfoItemService(
 			InfoItemRenderer.class, key);
 	}
 
 	@Override
 	public List<InfoItemRenderer<?>> getInfoItemRenderers() {
 		return (List<InfoItemRenderer<?>>)
-			(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+			(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 				InfoItemRenderer.class);
 	}
 
@@ -47,11 +47,11 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 		String itemClassName) {
 
 		return (List<InfoItemRenderer<?>>)
-			(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+			(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 				InfoItemRenderer.class, itemClassName);
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

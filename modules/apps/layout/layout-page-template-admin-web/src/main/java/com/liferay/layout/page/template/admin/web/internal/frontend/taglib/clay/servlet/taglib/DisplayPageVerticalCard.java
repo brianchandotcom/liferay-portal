@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
@@ -62,8 +62,8 @@ public class DisplayPageVerticalCard
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_infoItemServiceTracker =
-			(InfoItemServiceTracker)renderRequest.getAttribute(
+		_infoItemServiceRegistry =
+			(InfoItemServiceRegistry)renderRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -183,7 +183,7 @@ public class DisplayPageVerticalCard
 
 	private String _getSubtypeLabel() {
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				_layoutPageTemplateEntry.getClassName());
 
@@ -205,7 +205,7 @@ public class DisplayPageVerticalCard
 
 	private String _getTypeLabel() {
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class,
 				_layoutPageTemplateEntry.getClassName());
 
@@ -223,7 +223,7 @@ public class DisplayPageVerticalCard
 		DisplayPageVerticalCard.class);
 
 	private final Layout _draftLayout;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

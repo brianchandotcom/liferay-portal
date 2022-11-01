@@ -24,7 +24,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
@@ -205,7 +205,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		Optional<InfoItemReference> infoItemReferenceOptional) {
 
 		InfoItemObjectProvider<?> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
 		InfoItemReference infoItemReference = infoItemReferenceOptional.orElse(
@@ -255,7 +255,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			infoItemReference.getInfoItemIdentifier();
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, infoItemReference.getClassName(),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -353,7 +353,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 		try {
 			InfoItemPermissionProvider infoItemPermissionProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemPermissionProvider.class, className);
 
 			if ((infoItemPermissionProvider != null) &&
@@ -383,7 +383,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	private InfoItemRendererTracker _infoItemRendererTracker;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

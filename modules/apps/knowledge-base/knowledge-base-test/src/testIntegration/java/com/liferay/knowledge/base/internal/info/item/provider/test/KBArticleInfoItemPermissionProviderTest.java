@@ -15,7 +15,7 @@
 package com.liferay.knowledge.base.internal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -82,7 +82,7 @@ public class KBArticleInfoItemPermissionProviderTest {
 			String.valueOf(_kbArticle.getResourcePrimKey()), ActionKeys.VIEW);
 
 		InfoItemPermissionProvider<KBArticle> infoItemPermissionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemPermissionProvider.class, KBArticle.class.getName());
 
 		Assert.assertFalse(
@@ -96,7 +96,7 @@ public class KBArticleInfoItemPermissionProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@DeleteAfterTestRun
 	private KBArticle _kbArticle;

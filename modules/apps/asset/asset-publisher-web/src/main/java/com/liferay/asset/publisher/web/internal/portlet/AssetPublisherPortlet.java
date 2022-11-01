@@ -37,7 +37,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -288,7 +288,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebHelper, infoItemServiceTracker,
+					assetPublisherWebHelper, infoItemServiceRegistry,
 					itemSelector, resourceRequest, resourceResponse,
 					resourceRequest.getPreferences(), requestContextMapper,
 					segmentsEntryRetriever);
@@ -387,7 +387,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
 					assetPublisherHelper, assetPublisherWebConfiguration,
-					assetPublisherWebHelper, infoItemServiceTracker,
+					assetPublisherWebHelper, infoItemServiceRegistry,
 					itemSelector, renderRequest, renderResponse,
 					renderRequest.getPreferences(), requestContextMapper,
 					segmentsEntryRetriever);
@@ -454,7 +454,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected AssetRSSHelper assetRSSHelper;
 
 	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
+	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
 	protected ItemSelector itemSelector;

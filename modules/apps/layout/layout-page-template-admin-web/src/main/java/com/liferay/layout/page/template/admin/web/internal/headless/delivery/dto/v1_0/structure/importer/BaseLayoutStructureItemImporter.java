@@ -20,7 +20,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -477,7 +477,7 @@ public abstract class BaseLayoutStructureItemImporter {
 	protected GroupLocalService groupLocalService;
 
 	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
+	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
 	protected InfoSearchClassMapperTracker infoSearchClassMapperTracker;
@@ -550,7 +550,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		}
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class,
 				infoSearchClassMapperTracker.getClassName(
 					portal.getClassName(

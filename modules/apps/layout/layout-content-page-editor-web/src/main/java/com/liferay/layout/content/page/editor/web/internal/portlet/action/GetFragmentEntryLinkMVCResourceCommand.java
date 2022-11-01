@@ -21,7 +21,7 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -108,7 +108,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 				new ClassPKInfoItemIdentifier(itemClassPK);
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class, itemClassName,
 					infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -123,7 +123,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 					InfoDisplayWebKeys.INFO_ITEM, infoItemObject);
 
 				InfoItemDetailsProvider infoItemDetailsProvider =
-					_infoItemServiceTracker.getFirstInfoItemService(
+					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemDetailsProvider.class, itemClassName);
 
 				if (infoItemDetailsProvider != null) {
@@ -190,7 +190,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

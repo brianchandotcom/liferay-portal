@@ -17,7 +17,7 @@ package com.liferay.template.internal.info.item.renderer;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
@@ -58,14 +58,14 @@ public class TemplateInfoItemTemplatedRenderer<T>
 
 	public TemplateInfoItemTemplatedRenderer(
 		String className, DDMTemplateLocalService ddmTemplateLocalService,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		StagingGroupHelper stagingGroupHelper,
 		TemplateEntryLocalService templateEntryLocalService,
 		TemplateNodeFactory templateNodeFactory) {
 
 		_className = className;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_stagingGroupHelper = stagingGroupHelper;
 		_templateEntryLocalService = templateEntryLocalService;
 		_templateNodeFactory = templateNodeFactory;
@@ -104,7 +104,7 @@ public class TemplateInfoItemTemplatedRenderer<T>
 		String infoItemFormVariationKey = StringPool.BLANK;
 
 		InfoItemObjectVariationProvider<T> infoItemObjectVariationProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectVariationProvider.class, _className);
 
 		if (infoItemObjectVariationProvider != null) {
@@ -138,7 +138,7 @@ public class TemplateInfoItemTemplatedRenderer<T>
 				).build();
 
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
 					templateEntry.getInfoItemClassName());
 
@@ -203,7 +203,7 @@ public class TemplateInfoItemTemplatedRenderer<T>
 
 	private final String _className;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final StagingGroupHelper _stagingGroupHelper;
 	private final TemplateEntryLocalService _templateEntryLocalService;
 	private final TemplateNodeFactory _templateNodeFactory;

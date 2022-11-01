@@ -29,7 +29,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -351,11 +351,11 @@ public class AssetListEntryUsagesUtil {
 			return ResourceActionsUtil.getModelResource(locale, className);
 		}
 
-		InfoItemServiceTracker infoItemServiceTracker =
+		InfoItemServiceRegistry infoItemServiceRegistry =
 			InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
 		if (infoItemFormVariationsProvider == null) {
@@ -482,16 +482,16 @@ public class AssetListEntryUsagesUtil {
 				assetListEntryUsage.getClassName(),
 				InfoCollectionProvider.class.getName())) {
 
-			InfoItemServiceTracker infoItemServiceTracker =
+			InfoItemServiceRegistry infoItemServiceRegistry =
 				InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
 
 			InfoCollectionProvider<?> infoCollectionProvider =
-				infoItemServiceTracker.getInfoItemService(
+				infoItemServiceRegistry.getInfoItemService(
 					InfoCollectionProvider.class, assetListEntryUsage.getKey());
 
 			if (infoCollectionProvider == null) {
 				infoCollectionProvider =
-					infoItemServiceTracker.getInfoItemService(
+					infoItemServiceRegistry.getInfoItemService(
 						RelatedInfoItemCollectionProvider.class,
 						assetListEntryUsage.getKey());
 			}

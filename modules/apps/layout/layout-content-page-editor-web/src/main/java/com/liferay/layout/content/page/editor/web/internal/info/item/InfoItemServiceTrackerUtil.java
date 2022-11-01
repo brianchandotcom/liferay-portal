@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.info.item;
 
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,17 +25,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class InfoItemServiceTrackerUtil {
 
-	public static InfoItemServiceTracker getInfoItemServiceTracker() {
-		return _infoItemServiceTracker;
+	public static InfoItemServiceRegistry getInfoItemServiceTracker() {
+		return _infoItemServiceRegistry;
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoItemServiceTracker(
-		InfoItemServiceTracker infoItemServiceTracker) {
+	protected void setInfoItemServiceRegistry(
+		InfoItemServiceRegistry infoItemServiceRegistry) {
 
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
-	private static InfoItemServiceTracker _infoItemServiceTracker;
+	private static InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

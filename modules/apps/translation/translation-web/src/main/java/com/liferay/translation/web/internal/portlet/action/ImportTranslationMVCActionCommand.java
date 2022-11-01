@@ -18,7 +18,7 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,7 +109,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					_infoItemServiceTracker, actionRequest,
+					_infoItemServiceRegistry, actionRequest,
 					_segmentsExperienceLocalService);
 			List<Map<String, String>> failureMessages = new LinkedList<>();
 			List<String> successMessages = new ArrayList<>();
@@ -422,7 +422,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					).build();
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

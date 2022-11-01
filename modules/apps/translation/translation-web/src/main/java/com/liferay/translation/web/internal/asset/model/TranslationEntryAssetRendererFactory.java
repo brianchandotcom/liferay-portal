@@ -17,7 +17,7 @@ package com.liferay.translation.web.internal.asset.model;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
@@ -55,7 +55,7 @@ public class TranslationEntryAssetRendererFactory
 
 		if (translationEntry != null) {
 			return new TranslationEntryAssetRenderer(
-				_infoItemServiceTracker, _servletContext, translationEntry,
+				_infoItemServiceRegistry, _servletContext, translationEntry,
 				_translationInfoFieldChecker, _translationSnapshotProvider);
 		}
 
@@ -68,7 +68,7 @@ public class TranslationEntryAssetRendererFactory
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.translation.web)")
 	private ServletContext _servletContext;

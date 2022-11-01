@@ -34,7 +34,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererU
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -131,7 +131,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		return DisplayPageRendererUtil.toHTML(
 			BlogsEntry.class.getName(), 0, displayPageKey,
 			blogsEntry.getGroupId(), contextHttpServletRequest,
-			contextHttpServletResponse, blogsEntry, _infoItemServiceTracker,
+			contextHttpServletResponse, blogsEntry, _infoItemServiceRegistry,
 			_layoutDisplayPageProviderTracker, _layoutLocalService,
 			_layoutPageTemplateEntryService);
 	}
@@ -495,7 +495,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

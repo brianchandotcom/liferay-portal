@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.info.exception.InfoPermissionException;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -40,14 +40,14 @@ public class ObjectUtil {
 
 	public static Map<String, List<Map<String, Object>>>
 		getLayoutElementMapsListMap(
-			long companyId, InfoItemServiceTracker infoItemServiceTracker,
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			PermissionChecker permissionChecker) {
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
 
 		if (hideInputFragments(
-				companyId, infoItemServiceTracker, permissionChecker)) {
+				companyId, infoItemServiceRegistry, permissionChecker)) {
 
 			layoutElementMapsListMap.remove("INPUTS");
 		}
@@ -56,7 +56,7 @@ public class ObjectUtil {
 	}
 
 	public static Boolean hideInputFragments(
-		long companyId, InfoItemServiceTracker infoItemServiceTracker,
+		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 		PermissionChecker permissionChecker) {
 
 		if (_isLayoutTypeAssetDisplay()) {
@@ -73,7 +73,7 @@ public class ObjectUtil {
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			if (_hasPermissions(
-					objectDefinition, infoItemServiceTracker,
+					objectDefinition, infoItemServiceRegistry,
 					permissionChecker)) {
 
 				return false;
@@ -85,11 +85,11 @@ public class ObjectUtil {
 
 	private static boolean _hasPermissions(
 		ObjectDefinition objectDefinition,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		PermissionChecker permissionChecker) {
 
 		InfoPermissionProvider infoPermissionProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoPermissionProvider.class, objectDefinition.getClassName());
 
 		if (infoPermissionProvider == null) {

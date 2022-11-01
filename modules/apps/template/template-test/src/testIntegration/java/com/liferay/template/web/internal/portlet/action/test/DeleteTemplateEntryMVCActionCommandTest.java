@@ -17,7 +17,7 @@ package com.liferay.template.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -78,7 +78,7 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_templateEntry = TemplateTestUtil.addAnyTemplateEntry(
-			_infoItemServiceTracker, _serviceContext);
+			_infoItemServiceRegistry, _serviceContext);
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 			new MockLiferayPortletActionRequest();
 
 		TemplateEntry templateEntry = TemplateTestUtil.addAnyTemplateEntry(
-			_infoItemServiceTracker, _serviceContext);
+			_infoItemServiceRegistry, _serviceContext);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds",
@@ -162,7 +162,7 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject(filter = "mvc.command.name=/template/delete_template_entry")
 	private MVCActionCommand _mvcActionCommand;

@@ -50,7 +50,7 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -270,7 +270,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		return DisplayPageRendererUtil.toHTML(
 			FileEntry.class.getName(), _getDDMStructureId(fileEntry),
 			displayPageKey, fileEntry.getGroupId(), contextHttpServletRequest,
-			contextHttpServletResponse, fileEntry, _infoItemServiceTracker,
+			contextHttpServletResponse, fileEntry, _infoItemServiceRegistry,
 			_layoutDisplayPageProviderTracker, _layoutLocalService,
 			_layoutPageTemplateEntryService);
 	}
@@ -988,7 +988,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	private Indexer<?> _indexer;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

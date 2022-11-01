@@ -268,7 +268,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 
 		RelatedInfoItemCollectionProvider<CPDefinition, CPDefinition>
 			relatedInfoItemCollectionProvider =
-				infoItemServiceTracker.getInfoItemService(
+				infoItemServiceRegistry.getInfoItemService(
 					RelatedInfoItemCollectionProvider.class,
 					getInfoItemCollectionProviderName());
 
@@ -293,7 +293,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 
 	private void _testInfoCollectionProvider() {
 		InfoCollectionProvider<CPDefinition> infoCollectionProvider =
-			infoItemServiceTracker.getInfoItemService(
+			infoItemServiceRegistry.getInfoItemService(
 				InfoCollectionProvider.class,
 				getInfoItemCollectionProviderName());
 

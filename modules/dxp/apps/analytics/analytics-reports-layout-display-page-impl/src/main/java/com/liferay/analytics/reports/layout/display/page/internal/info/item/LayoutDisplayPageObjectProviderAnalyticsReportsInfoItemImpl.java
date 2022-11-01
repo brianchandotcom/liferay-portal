@@ -26,7 +26,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -211,7 +211,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 				layoutDisplayPageObjectProvider.getClassNameId());
 
 			Date date = (Date)Optional.ofNullable(
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class, className.getClassName())
 			).map(
 				infoItemFieldValuesProvider ->
@@ -263,7 +263,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 				layoutDisplayPageObjectProvider.getClassNameId());
 
 			InfoItemFieldValuesProvider infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
 					className.getClassName());
 
@@ -407,7 +407,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

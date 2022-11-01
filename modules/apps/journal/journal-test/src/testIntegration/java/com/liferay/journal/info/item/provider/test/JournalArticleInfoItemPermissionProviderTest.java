@@ -15,7 +15,7 @@
 package com.liferay.journal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -72,7 +72,7 @@ public class JournalArticleInfoItemPermissionProviderTest {
 			String.valueOf(article.getResourcePrimKey()), ActionKeys.VIEW);
 
 		InfoItemPermissionProvider<JournalArticle> infoItemPermissionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemPermissionProvider.class,
 				JournalArticle.class.getName());
 
@@ -87,7 +87,7 @@ public class JournalArticleInfoItemPermissionProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@DeleteAfterTestRun
 	private User _user;

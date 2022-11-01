@@ -16,7 +16,7 @@ package com.liferay.layout.type.controller.collection.internal.product.navigatio
 
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.type.controller.collection.internal.constants.CollectionPageLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.collection.internal.display.context.CollectionItemsDetailDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -102,7 +102,7 @@ public class CollectionItemsDetailProductNavigationControlMenuEntry
 				collectionItemsDetailDisplayContext =
 					new CollectionItemsDetailDisplayContext(
 						_assetListEntryLocalService,
-						_assetListAssetEntryProvider, _infoItemServiceTracker,
+						_assetListAssetEntryProvider, _infoItemServiceRegistry,
 						liferayRenderRequest, liferayRenderResponse,
 						themeDisplay);
 
@@ -214,7 +214,7 @@ public class CollectionItemsDetailProductNavigationControlMenuEntry
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

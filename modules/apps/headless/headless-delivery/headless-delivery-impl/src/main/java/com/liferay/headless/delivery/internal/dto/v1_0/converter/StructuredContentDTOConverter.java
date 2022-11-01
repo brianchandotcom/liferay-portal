@@ -38,7 +38,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedContentValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseStructuredContentResourceImpl;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
@@ -329,7 +329,7 @@ public class StructuredContentDTOConverter
 				journalArticle.getResourcePrimKey(),
 				ddmStructure.getStructureId(), dtoConverterContext,
 				journalArticle.getGroupId(), journalArticle,
-				_infoItemServiceTracker, _layoutDisplayPageProviderTracker,
+				_infoItemServiceRegistry, _layoutDisplayPageProviderTracker,
 				_layoutLocalService, _layoutPageTemplateEntryService,
 				"getStructuredContentRenderedContentByDisplayPageDisplayPage" +
 					"Key");
@@ -368,7 +368,7 @@ public class StructuredContentDTOConverter
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

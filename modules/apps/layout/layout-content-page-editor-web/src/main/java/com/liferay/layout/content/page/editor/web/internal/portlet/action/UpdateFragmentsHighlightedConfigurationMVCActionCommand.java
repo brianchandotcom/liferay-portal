@@ -22,7 +22,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
@@ -343,7 +343,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			ObjectUtil.getLayoutElementMapsListMap(
-				companyId, _infoItemServiceTracker, permissionChecker);
+				companyId, _infoItemServiceRegistry, permissionChecker);
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				layoutElementMapsListMap.entrySet()) {
@@ -498,7 +498,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

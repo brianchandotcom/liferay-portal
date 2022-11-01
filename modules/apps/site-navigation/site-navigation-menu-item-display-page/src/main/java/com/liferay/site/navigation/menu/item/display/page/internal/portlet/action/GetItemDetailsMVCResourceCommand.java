@@ -21,7 +21,7 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
@@ -163,7 +163,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay) {
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
 		if (infoItemFormVariationsProvider == null) {
@@ -200,7 +200,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private String _getItemType(String className, ThemeDisplay themeDisplay) {
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, className);
 
 		if (infoItemDetailsProvider == null) {
@@ -221,7 +221,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		GetItemDetailsMVCResourceCommand.class);
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -26,7 +26,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
@@ -172,7 +172,7 @@ public class ContentPageEditorDisplayContext {
 		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
@@ -192,7 +192,7 @@ public class ContentPageEditorDisplayContext {
 		_segmentsExperienceManager = segmentsExperienceManager;
 
 		this.httpServletRequest = httpServletRequest;
-		this.infoItemServiceTracker = infoItemServiceTracker;
+		this.infoItemServiceRegistry = infoItemServiceRegistry;
 		this.infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 		this.portletRequest = portletRequest;
 		this.stagingGroupHelper = stagingGroupHelper;
@@ -330,7 +330,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"formTypes",
 				MappingTypesUtil.getMappingTypesJSONArray(
-					infoItemServiceTracker, EditPageInfoItemCapability.KEY,
+					infoItemServiceRegistry, EditPageInfoItemCapability.KEY,
 					themeDisplay)
 			).put(
 				"fragmentCompositionDescriptionMaxLength",
@@ -941,7 +941,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected final HttpServletRequest httpServletRequest;
-	protected final InfoItemServiceTracker infoItemServiceTracker;
+	protected final InfoItemServiceRegistry infoItemServiceRegistry;
 	protected final InfoSearchClassMapperTracker infoSearchClassMapperTracker;
 	protected final PortletRequest portletRequest;
 	protected final StagingGroupHelper stagingGroupHelper;
@@ -1312,7 +1312,7 @@ public class ContentPageEditorDisplayContext {
 		Set<String> infoItemClassNames = new HashSet<>();
 
 		for (String infoItemClassName :
-				infoItemServiceTracker.getInfoItemClassNames(
+				infoItemServiceRegistry.getInfoItemClassNames(
 					InfoItemFormProvider.class)) {
 
 			infoItemClassNames.add(infoItemClassName);
@@ -1500,7 +1500,7 @@ public class ContentPageEditorDisplayContext {
 				MappingContentUtil.getMappingFieldsJSONArray(
 					String.valueOf(
 						layoutDisplayPageObjectProvider.getClassTypeId()),
-					themeDisplay.getScopeGroupId(), infoItemServiceTracker,
+					themeDisplay.getScopeGroupId(), infoItemServiceRegistry,
 					PortalUtil.getClassName(
 						layoutDisplayPageObjectProvider.getClassNameId()),
 					themeDisplay.getLocale()));

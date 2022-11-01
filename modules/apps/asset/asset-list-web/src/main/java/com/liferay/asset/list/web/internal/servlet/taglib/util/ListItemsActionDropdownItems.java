@@ -27,7 +27,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -54,7 +54,7 @@ public class ListItemsActionDropdownItems {
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		DLAppService dlAppService,
 		InfoEditURLProviderRegistry infoEditURLProviderRegistry,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		HttpServletRequest httpServletRequest) {
 
@@ -62,7 +62,7 @@ public class ListItemsActionDropdownItems {
 			assetDisplayPageFriendlyURLProvider;
 		_dlAppService = dlAppService;
 		_infoEditURLProviderRegistry = infoEditURLProviderRegistry;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 
 		_httpServletRequest = httpServletRequest;
@@ -90,7 +90,7 @@ public class ListItemsActionDropdownItems {
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -217,7 +217,7 @@ public class ListItemsActionDropdownItems {
 	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 	private String _redirect;
 	private final ThemeDisplay _themeDisplay;

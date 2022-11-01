@@ -18,7 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.blogs.internal.item.action.PreviewImageBlogsEntryContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,7 +44,7 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProvider
 		}
 
 		InfoItemFieldValuesProvider<BlogsEntry> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, BlogsEntry.class.getName());
 
 		return new PreviewImageBlogsEntryContentDashboardItemAction(
@@ -70,7 +70,7 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProvider
 		}
 
 		InfoItemFieldValuesProvider<BlogsEntry> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, BlogsEntry.class.getName());
 
 		ContentDashboardItemAction contentDashboardItemAction =
@@ -85,7 +85,7 @@ public class PreviewImageBlogsEntryContentDashboardItemActionProvider
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

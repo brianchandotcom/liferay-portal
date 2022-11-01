@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -34,13 +34,13 @@ import java.util.Locale;
 public class MappingTypesUtil {
 
 	public static JSONArray getMappingTypesJSONArray(
-		InfoItemServiceTracker infoItemServiceTracker, String itemCapabilityKey,
-		ThemeDisplay themeDisplay) {
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		String itemCapabilityKey, ThemeDisplay themeDisplay) {
 
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoItemClassDetails infoItemClassDetails :
-				infoItemServiceTracker.getInfoItemClassDetails(
+				infoItemServiceRegistry.getInfoItemClassDetails(
 					themeDisplay.getScopeGroupId(), itemCapabilityKey,
 					themeDisplay.getPermissionChecker())) {
 
@@ -51,7 +51,7 @@ public class MappingTypesUtil {
 				).put(
 					"subtypes",
 					_getMappingFormVariationsJSONArray(
-						infoItemClassDetails, infoItemServiceTracker,
+						infoItemClassDetails, infoItemServiceRegistry,
 						themeDisplay.getScopeGroupId(),
 						themeDisplay.getLocale())
 				).put(
@@ -67,13 +67,13 @@ public class MappingTypesUtil {
 
 	private static JSONArray _getMappingFormVariationsJSONArray(
 		InfoItemClassDetails infoItemClassDetails,
-		InfoItemServiceTracker infoItemServiceTracker, long groupId,
+		InfoItemServiceRegistry infoItemServiceRegistry, long groupId,
 		Locale locale) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				infoItemClassDetails.getClassName());
 

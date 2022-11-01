@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -101,13 +101,13 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 		InfoItemClassDetails infoItemClassDetails =
 			TemplateTestUtil.getFirstTemplateInfoItemClassDetails(
-				_infoItemServiceTracker, _group.getGroupId());
+				_infoItemServiceRegistry, _group.getGroupId());
 
 		String infoItemFormVariationKey = StringPool.BLANK;
 
 		InfoItemFormVariation infoItemFormVariation =
 			TemplateTestUtil.getFirstInfoItemFormVariation(
-				infoItemClassDetails, _infoItemServiceTracker,
+				infoItemClassDetails, _infoItemServiceRegistry,
 				_group.getGroupId());
 
 		if (infoItemFormVariation != null) {
@@ -228,7 +228,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject(filter = "mvc.command.name=/template/add_template_entry")
 	private MVCActionCommand _mvcActionCommand;

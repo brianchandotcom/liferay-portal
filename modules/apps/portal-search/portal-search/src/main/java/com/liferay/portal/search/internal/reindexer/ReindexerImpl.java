@@ -69,14 +69,14 @@ public class ReindexerImpl implements Reindexer {
 	}
 
 	@Reference
-	protected BulkReindexersHolder bulkReindexersHolder;
+	protected BulkReindexersRegistry bulkReindexersRegistry;
 
 	@Reference
 	protected IndexerRegistry indexerRegistry;
 
 	private Reindex _getReindex(long companyId) {
 		Reindex reindex = new Reindex(
-			indexerRegistry, bulkReindexersHolder, _executorService,
+			indexerRegistry, bulkReindexersRegistry, _executorService,
 			_reindexRequestsHolder);
 
 		reindex.setCompanyId(companyId);

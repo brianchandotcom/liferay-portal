@@ -138,15 +138,15 @@ public class ReindexWhenIndexerIsDisabledTest {
 			_CLASS_NAME
 		);
 
-		BulkReindexersHolderImpl bulkReindexersHolderImpl =
-			new BulkReindexersHolderImpl();
+		BulkReindexersRegistryImpl bulkReindexersRegistryImpl =
+			new BulkReindexersRegistryImpl();
 
-		bulkReindexersHolderImpl.addBulkReindexer(
+		bulkReindexersRegistryImpl.addBulkReindexer(
 			bulkReindexer,
 			Collections.singletonMap("indexer.class.name", _CLASS_NAME));
 
 		Reindex reindex = new Reindex(
-			indexerRegistry, bulkReindexersHolderImpl, null, null);
+			indexerRegistry, bulkReindexersRegistryImpl, null, null);
 
 		reindex.setSynchronousExecution(true);
 

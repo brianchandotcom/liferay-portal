@@ -35,12 +35,12 @@ public class Reindex {
 
 	public Reindex(
 		IndexerRegistry indexerRegistry,
-		BulkReindexersHolder bulkReindexersHolder,
+		BulkReindexersRegistry bulkReindexersRegistry,
 		ExecutorService executorService,
 		ReindexRequestsHolder reindexRequestsHolder) {
 
 		_indexerRegistry = indexerRegistry;
-		_bulkReindexersHolder = bulkReindexersHolder;
+		_bulkReindexersRegistry = bulkReindexersRegistry;
 		_executorService = executorService;
 		_reindexRequestsHolder = reindexRequestsHolder;
 	}
@@ -144,7 +144,7 @@ public class Reindex {
 			return;
 		}
 
-		BulkReindexer bulkReindexer = _bulkReindexersHolder.getBulkReindexer(
+		BulkReindexer bulkReindexer = _bulkReindexersRegistry.getBulkReindexer(
 			className);
 
 		bulkReindexer.reindex(_companyId, classPKs);
@@ -183,7 +183,7 @@ public class Reindex {
 
 	private static final Log _log = LogFactoryUtil.getLog(Reindex.class);
 
-	private final BulkReindexersHolder _bulkReindexersHolder;
+	private final BulkReindexersRegistry _bulkReindexersRegistry;
 	private long _companyId;
 	private CustomReindex _customReindex;
 	private CustomReindexBulk _customReindexBulk;

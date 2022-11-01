@@ -83,6 +83,8 @@ definition {
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
 				value1 = "${filePath}");
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 		}
 	}
 
@@ -101,8 +103,6 @@ definition {
 			templateFile = "${templateFile}",
 			templateName = "${templateName}",
 			templateScript = "${templateScript}");
-
-		Click(locator1 = "ControlMenu#HEADING");
 
 		DDLDataDefinition.save(publicationsEnabled = "${publicationsEnabled}");
 	}

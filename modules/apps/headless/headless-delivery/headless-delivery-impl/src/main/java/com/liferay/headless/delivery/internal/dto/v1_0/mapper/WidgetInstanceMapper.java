@@ -18,7 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.layout.page.template.exporter.PortletConfigurationExporter;
-import com.liferay.layout.page.template.exporter.PortletConfigurationExporterTracker;
+import com.liferay.layout.page.template.exporter.PortletConfigurationExporterRegistry;
 import com.liferay.layout.page.template.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -93,7 +93,7 @@ public class WidgetInstanceMapper {
 		}
 
 		PortletConfigurationExporter portletConfigurationExporter =
-			_portletConfigurationExporterTracker.
+			_portletConfigurationExporterRegistry.
 				getPortletConfigurationExporter(portletName);
 
 		if (portletConfigurationExporter != null) {
@@ -228,8 +228,8 @@ public class WidgetInstanceMapper {
 	private Portal _portal;
 
 	@Reference
-	private PortletConfigurationExporterTracker
-		_portletConfigurationExporterTracker;
+	private PortletConfigurationExporterRegistry
+		_portletConfigurationExporterRegistry;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

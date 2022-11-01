@@ -273,14 +273,15 @@ const BaseActionsInfo = ({
 };
 
 BaseActionsInfo.propTypes = {
+	actionTypes: PropTypes.array,
 	description: PropTypes.string,
 	executionType: PropTypes.string,
 	executionTypeInput: PropTypes.func,
-	executionTypeOptions: PropTypes.object,
+	executionTypeOptions: PropTypes.array,
 	name: PropTypes.string,
 	placeholderName: PropTypes.string,
 	placeholderScript: PropTypes.string,
-	priority: PropTypes.number,
+	priority: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	script: PropTypes.string,
 	scriptLanguage: PropTypes.string,
 	selectedItem: PropTypes.object,

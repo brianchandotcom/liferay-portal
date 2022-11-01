@@ -15,7 +15,7 @@
 package com.liferay.asset.auto.tagger.internal.text.extractor;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
+import com.liferay.asset.auto.tagger.text.extractor.TextExtractorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = TextExtractorTracker.class)
-public class TextExtractorTrackerImpl implements TextExtractorTracker {
+@Component(service = TextExtractorRegistry.class)
+public class TextExtractorRegistryImpl implements TextExtractorRegistry {
 
 	@Override
 	public TextExtractor<?> getTextExtractor(String className) {

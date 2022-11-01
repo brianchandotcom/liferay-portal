@@ -17,6 +17,7 @@ import React, {useEffect} from 'react';
 import {sortElements} from '../utils';
 
 const BaseActionsInfo = ({
+	actionTypes,
 	description,
 	executionType,
 	executionTypeInput,
@@ -27,7 +28,7 @@ const BaseActionsInfo = ({
 	priority,
 	script,
 	scriptLanguage,
-	scriptLanguageOptions,
+	selectedActionType,
 	setDescription,
 	setExecutionType,
 	setExecutionTypeOptions,
@@ -35,6 +36,7 @@ const BaseActionsInfo = ({
 	setPriority,
 	setScript,
 	setScriptLanguage,
+	setSelectedActionType,
 	updateActionInfo,
 }) => {
 	useEffect(() => {
@@ -107,16 +109,25 @@ const BaseActionsInfo = ({
 			</ClayForm.Group>
 
 			<ClayForm.Group>
-				<label htmlFor="script-language">
-					{Liferay.Language.get('script-language')}
+				<label htmlFor="type">
+					{Liferay.Language.get('type')}
+
+					<span className="ml-1 mr-1 text-warning">*</span>
 				</label>
 
 				<ClaySelect
 					aria-label="Select"
+					className={!selectedActionType ? 'select-placeholder' : ''}
 					defaultValue={scriptLanguage}
-					id="script-language"
+					id="type"
 					onChange={({target}) => {
 						setScriptLanguage(target.value);
+						setSelectedActionType(
+							actionTypes.find(
+								(item) => item.value === target.value
+							)
+						);
+						setScript('');
 					}}
 					onClickCapture={() =>
 						updateActionInfo({
@@ -129,10 +140,18 @@ const BaseActionsInfo = ({
 						})
 					}
 				>
-					{scriptLanguageOptions &&
-						scriptLanguageOptions.map((item) => (
+					<ClaySelect.Option
+						hidden
+						key={0}
+						label={Liferay.Language.get('select-a-script-type')}
+						value="select-a-script-type"
+					/>
+
+					{actionTypes &&
+						actionTypes.map((item, index) => (
 							<ClaySelect.Option
-								key={item.value}
+								className="select-options"
+								key={index + 1}
 								label={item.label}
 								value={item.value}
 							/>
@@ -140,34 +159,36 @@ const BaseActionsInfo = ({
 				</ClaySelect>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor="script">
-					{Liferay.Language.get('script')}
+			{selectedActionType?.type === 'script' && (
+				<ClayForm.Group>
+					<label htmlFor="script">
+						{Liferay.Language.get('script')}
 
-					<span className="ml-1 mr-1 text-warning">*</span>
-				</label>
+						<span className="ml-1 mr-1 text-warning">*</span>
+					</label>
 
-				<ClayInput
-					component="textarea"
-					id="script"
-					onBlur={() =>
-						updateActionInfo({
-							description,
-							executionType,
-							name,
-							priority,
-							script,
-							scriptLanguage,
-						})
-					}
-					onChange={({target}) => {
-						setScript(target.value);
-					}}
-					placeholder={placeholderScript}
-					type="text"
-					value={script}
-				/>
-			</ClayForm.Group>
+					<ClayInput
+						component="textarea"
+						id="script"
+						onBlur={() =>
+							updateActionInfo({
+								description,
+								executionType,
+								name,
+								priority,
+								script,
+								scriptLanguage,
+							})
+						}
+						onChange={({target}) => {
+							setScript(target.value);
+						}}
+						placeholder={placeholderScript}
+						type="text"
+						value={script}
+					/>
+				</ClayForm.Group>
+			)}
 
 			{typeof executionTypeInput !== 'undefined' && (
 				<ClayForm.Group>

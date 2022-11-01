@@ -104,12 +104,14 @@ definition {
 		}
 
 		task ("When I use deleteSiteStructuredContentFolderByExternalReferenceCode") {
-			var structuredContentUUId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${responseFromCreate}");
+			var structuredContentFolderErc = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.externalReferenceCode",
+				responseToParse = "${responseFromCreate}");
 			var structuredContentFolderId = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
 				element = "$.id",
 				responseToParse = "${responseFromCreate}");
 			var response = HeadlessWebcontentFolderAPI.deleteWebContentFolder(
-				externalReferenceCode = "${structuredContentUUId}",
+				externalReferenceCode = "${structuredContentFolderErc}",
 				groupName = "Site Name");
 		}
 
@@ -158,16 +160,18 @@ definition {
 		}
 
 		task ("When I use getSiteStructuredContentFolderByExternalReferenceCode") {
-			var structuredContentUUId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${responseFromCreate}");
+			var structuredContentFolderErc = HeadlessWebcontentFolderAPI.getElementOfCreatedStructuredContentFolder(
+				element = "$.externalReferenceCode",
+				responseToParse = "${responseFromCreate}");
 
 			var responseFromGet = HeadlessWebcontentFolderAPI.getSiteStructuredContentFoldersByErc(
-				externalReferenceCode = "${structuredContentUUId}",
+				externalReferenceCode = "${structuredContentFolderErc}",
 				groupName = "Site Name");
 		}
 
 		task ("Then I can retrieve the correct information from the response") {
 			HeadlessWebcontentFolderAPI.assertResponseHasCorrectDetails(
-				expectedExternalReferenceCodeValue = "${structuredContentUUId}",
+				expectedExternalReferenceCodeValue = "${structuredContentFolderErc}",
 				responseFromCreate = "${responseFromCreate}",
 				responseFromGet = "${responseFromGet}");
 		}

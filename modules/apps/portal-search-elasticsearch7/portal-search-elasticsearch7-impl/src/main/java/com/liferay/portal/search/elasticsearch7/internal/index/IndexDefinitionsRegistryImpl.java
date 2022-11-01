@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author André de Oliveira
  */
-@Component(service = IndexDefinitionsHolder.class)
-public class IndexDefinitionsHolderImpl implements IndexDefinitionsHolder {
+@Component(service = IndexDefinitionsRegistry.class)
+public class IndexDefinitionsRegistryImpl implements IndexDefinitionsRegistry {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,

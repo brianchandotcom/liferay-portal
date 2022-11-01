@@ -19,7 +19,7 @@ import java.util.Collection;
 /**
  * @author André de Oliveira
  */
-public interface IndexDefinitionsHolder {
+public interface IndexDefinitionsRegistry {
 
 	public void drainTo(Collection<IndexDefinitionData> collection);
 

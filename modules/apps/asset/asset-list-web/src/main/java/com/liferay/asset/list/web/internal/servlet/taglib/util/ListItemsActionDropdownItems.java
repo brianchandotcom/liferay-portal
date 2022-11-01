@@ -24,7 +24,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -53,7 +53,7 @@ public class ListItemsActionDropdownItems {
 	public ListItemsActionDropdownItems(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		DLAppService dlAppService,
-		InfoEditURLProviderTracker infoEditURLProviderTracker,
+		InfoEditURLProviderRegistry infoEditURLProviderRegistry,
 		InfoItemServiceTracker infoItemServiceTracker,
 		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		HttpServletRequest httpServletRequest) {
@@ -61,7 +61,7 @@ public class ListItemsActionDropdownItems {
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_dlAppService = dlAppService;
-		_infoEditURLProviderTracker = infoEditURLProviderTracker;
+		_infoEditURLProviderRegistry = infoEditURLProviderRegistry;
 		_infoItemServiceTracker = infoItemServiceTracker;
 		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 
@@ -173,7 +173,7 @@ public class ListItemsActionDropdownItems {
 		}
 
 		InfoEditURLProvider<Object> infoEditURLProvider =
-			_infoEditURLProviderTracker.getInfoEditURLProvider(className);
+			_infoEditURLProviderRegistry.getInfoEditURLProvider(className);
 
 		if (infoEditURLProvider == null) {
 			return null;
@@ -216,7 +216,7 @@ public class ListItemsActionDropdownItems {
 		_assetDisplayPageFriendlyURLProvider;
 	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoEditURLProviderTracker _infoEditURLProviderTracker;
+	private final InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 	private String _redirect;

@@ -18,7 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.blogs.internal.item.action.EditBlogsEntryContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -52,7 +52,7 @@ public class EditBlogsEntryContentDashboardItemActionProvider
 
 		return new EditBlogsEntryContentDashboardItemAction(
 			blogsEntry, httpServletRequest,
-			_infoEditURLProviderTracker.getInfoEditURLProvider(
+			_infoEditURLProviderRegistry.getInfoEditURLProvider(
 				BlogsEntry.class.getName()),
 			_language, _portal, _portletLocalService);
 	}
@@ -91,7 +91,7 @@ public class EditBlogsEntryContentDashboardItemActionProvider
 		EditBlogsEntryContentDashboardItemActionProvider.class);
 
 	@Reference
-	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
+	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 
 	@Reference
 	private Language _language;

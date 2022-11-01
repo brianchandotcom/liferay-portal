@@ -31,7 +31,7 @@ import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDr
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -119,7 +119,7 @@ public class AssetListPortlet extends MVCPortlet {
 			AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS,
 			new ListItemsActionDropdownItems(
 				_assetDisplayPageFriendlyURLProvider, _dlAppService,
-				_infoEditURLProviderTracker, _infoItemServiceTracker,
+				_infoEditURLProviderRegistry, _infoItemServiceTracker,
 				_infoSearchClassMapperTracker,
 				_portal.getHttpServletRequest(renderRequest)));
 		renderRequest.setAttribute(
@@ -177,7 +177,7 @@ public class AssetListPortlet extends MVCPortlet {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
+	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

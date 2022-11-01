@@ -42,7 +42,7 @@ public interface PortletConfigurationIcon {
 	@Deprecated
 	public String getAriaRole();
 
-	public default Map<String, Object> getContenxt(
+	public default Map<String, Object> getContext(
 		PortletRequest portletRequest) {
 
 		return Collections.emptyMap();

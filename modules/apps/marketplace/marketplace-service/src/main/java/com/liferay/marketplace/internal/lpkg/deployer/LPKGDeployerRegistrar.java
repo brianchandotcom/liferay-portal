@@ -264,6 +264,54 @@ public class LPKGDeployerRegistrar {
 	)
 	private Release _release;
 
+	private static class AppKey {
+
+		@Override
+		public boolean equals(Object object) {
+			AppKey appKey = (AppKey)object;
+
+			if (Objects.equals(appKey._title, _title) &&
+				Objects.equals(appKey._description, _description) &&
+				Objects.equals(appKey._category, _category) &&
+				Objects.equals(appKey._iconURL, _iconURL) &&
+				(appKey._required == _required)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _title);
+
+			hashCode = HashUtil.hash(hashCode, _description);
+			hashCode = HashUtil.hash(hashCode, _category);
+			hashCode = HashUtil.hash(hashCode, _iconURL);
+
+			return HashUtil.hash(hashCode, _required);
+		}
+
+		private AppKey(
+			String title, String description, String category, String iconURL,
+			boolean required) {
+
+			_title = title;
+			_description = description;
+			_category = category;
+			_iconURL = iconURL;
+			_required = required;
+		}
+
+		private final String _category;
+		private final String _description;
+		private final String _iconURL;
+		private final boolean _required;
+		private final String _title;
+
+	}
+
 	private static class Tuple {
 
 		@Override

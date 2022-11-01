@@ -947,7 +947,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 			Click(locator1 = "Portlet#PORTLET_CONTENT");
 
-			Portlet.deletePG(portletName = "com_liferay_journal_content_web_portlet_JournalContentPortlet");
+			Portlet.deletePG(portletName = "Web Content Display");
 		}
 
 		task ("Enable Web Content Display module via GogoShell") {

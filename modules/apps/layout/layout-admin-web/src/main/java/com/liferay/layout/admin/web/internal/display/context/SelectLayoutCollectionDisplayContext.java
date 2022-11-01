@@ -22,7 +22,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
+import com.liferay.layout.admin.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -237,7 +237,8 @@ public class SelectLayoutCollectionDisplayContext {
 					InfoItemFormProvider.class)) {
 
 			infoItemClassNames.add(
-				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
+				InfoSearchClassMapperRegistryUtil.getSearchClassName(
+					className));
 		}
 
 		return infoItemClassNames;

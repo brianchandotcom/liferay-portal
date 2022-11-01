@@ -17,7 +17,7 @@ package com.liferay.product.navigation.personal.menu.configuration;
 /**
  * @author Samuel Trong Tran
  */
-public interface PersonalMenuConfigurationTracker {
+public interface PersonalMenuConfigurationRegistry {
 
 	public PersonalMenuConfiguration getCompanyPersonalMenuConfiguration(
 		long companyId);

@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration;
-import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationTracker;
+import com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfigurationRegistry;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration.scoped",
 	service = {
-		ManagedServiceFactory.class, PersonalMenuConfigurationTracker.class
+		ManagedServiceFactory.class, PersonalMenuConfigurationRegistry.class
 	}
 )
-public class PersonalMenuConfigurationTrackerImpl
-	implements ManagedServiceFactory, PersonalMenuConfigurationTracker {
+public class PersonalMenuConfigurationRegistryImpl
+	implements ManagedServiceFactory, PersonalMenuConfigurationRegistry {
 
 	@Override
 	public void deleted(String pid) {

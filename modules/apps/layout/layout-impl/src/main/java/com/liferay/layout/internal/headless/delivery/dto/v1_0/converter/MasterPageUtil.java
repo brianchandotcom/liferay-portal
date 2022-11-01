@@ -14,27 +14,20 @@
 
 package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
 
-import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.headless.delivery.dto.v1_0.MasterPage;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 /**
- * @author Bárbara Cabrera
+ * @author Rubén Pulido
  */
-public class UtilityPageTemplateDTOConverter {
+public class MasterPageUtil {
 
-	public static UtilityPageTemplate toDTO(
-		LayoutUtilityPageEntry layoutUtilityPageEntry) {
+	public static MasterPage toMasterPage(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		return new UtilityPageTemplate() {
+		return new MasterPage() {
 			{
-				defaultTemplate =
-					layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry();
-				externalReferenceCode =
-					layoutUtilityPageEntry.getExternalReferenceCode();
-				name = layoutUtilityPageEntry.getName();
-				type = Type.create(
-					UtilityPageTemplateTypeConverter.convertToExternalValue(
-						layoutUtilityPageEntry.getType()));
+				name = layoutPageTemplateEntry.getName();
 			}
 		};
 	}

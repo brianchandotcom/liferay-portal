@@ -22,9 +22,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 /**
  * @author Rubén Pulido
  */
-public class DisplayPageTemplateDTOConverter {
+public class DisplayPageTemplateUtil {
 
-	public static DisplayPageTemplate toDTO(
+	public static DisplayPageTemplate toDisplayPageTemplate(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		return new DisplayPageTemplate() {

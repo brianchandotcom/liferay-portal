@@ -14,33 +14,20 @@
 
 package com.liferay.layout.internal.headless.delivery.dto.v1_0.converter;
 
-import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 /**
- * @author Jürgen Kappler
+ * @author Rubén Pulido
  */
-public class PageTemplateCollectionDTOConverter {
+public class PageTemplateUtil {
 
-	public static PageTemplateCollection toDTO(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+	public static PageTemplate toPageTemplate(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		return new PageTemplateCollection() {
+		return new PageTemplate() {
 			{
-				name = layoutPageTemplateCollection.getName();
-
-				setDescription(
-					() -> {
-						String description =
-							layoutPageTemplateCollection.getDescription();
-
-						if (Validator.isNull(description)) {
-							return null;
-						}
-
-						return description;
-					});
+				name = layoutPageTemplateEntry.getName();
 			}
 		};
 	}

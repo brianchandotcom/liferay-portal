@@ -35,7 +35,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.exception.DropzoneLayoutStructureItemException;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterContext;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterTracker;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.LayoutStructureItemImporterRegistry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
@@ -1127,7 +1127,7 @@ public class LayoutPageTemplatesImporterImpl
 		throws Exception {
 
 		LayoutStructureItemImporter layoutStructureItemImporter =
-			_layoutStructureItemImporterTracker.getLayoutStructureItemImporter(
+			_layoutStructureItemImporterRegistry.getLayoutStructureItemImporter(
 				pageElement.getType());
 
 		LayoutStructureItem layoutStructureItem = null;
@@ -1441,8 +1441,8 @@ public class LayoutPageTemplatesImporterImpl
 		_layoutPageTemplateStructureLocalService;
 
 	@Reference
-	private LayoutStructureItemImporterTracker
-		_layoutStructureItemImporterTracker;
+	private LayoutStructureItemImporterRegistry
+		_layoutStructureItemImporterRegistry;
 
 	@Reference
 	private Portal _portal;

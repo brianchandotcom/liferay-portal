@@ -34,7 +34,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
+import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -316,7 +316,8 @@ public class AssetListEntryUsagesUtil {
 
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(
-				InfoSearchClassMapperTrackerUtil.getSearchClassName(className));
+				InfoSearchClassMapperRegistryUtil.getSearchClassName(
+					className));
 	}
 
 	private static JSONObject _getInfoCollectionProviderActionsJSONObject(

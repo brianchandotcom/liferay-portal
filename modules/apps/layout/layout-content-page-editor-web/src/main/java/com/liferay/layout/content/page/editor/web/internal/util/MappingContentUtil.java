@@ -21,7 +21,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
+import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -86,7 +86,7 @@ public class MappingContentUtil {
 			String itemClassName, Locale locale)
 		throws Exception {
 
-		String className = InfoSearchClassMapperTrackerUtil.getClassName(
+		String className = InfoSearchClassMapperRegistryUtil.getClassName(
 			itemClassName);
 
 		InfoItemFormProvider<?> infoItemFormProvider =

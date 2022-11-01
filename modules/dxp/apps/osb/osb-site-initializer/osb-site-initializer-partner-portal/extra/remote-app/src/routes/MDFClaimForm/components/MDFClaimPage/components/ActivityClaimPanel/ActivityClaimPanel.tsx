@@ -151,23 +151,16 @@ const ActivityClaimPanel = ({
 						<InputMultipleFilesListing
 							description="Drag and drop your files here to upload."
 							label="All Contents"
-							name={`activities[${activityIndex}].contents`}
+							name={`activities[${activityIndex}].documents`}
 							onAccept={(value: File[]) =>
 								setFieldValue(
-									`activities[${activityIndex}].contents`,
+									`activities[${activityIndex}].documents`,
 									activity.documents
 										? activity.documents.concat(value)
 										: value
 								)
 							}
 							value={activity.documents}
-						/>
-
-						<PRMFormik.Array
-							component={ListFiles}
-							files={activity.contents}
-							name={`activities[${activityIndex}].contents`}
-							setFieldValue={setFieldValue}
 						/>
 					</ClayPanel.Body>
 				</PanelBody>

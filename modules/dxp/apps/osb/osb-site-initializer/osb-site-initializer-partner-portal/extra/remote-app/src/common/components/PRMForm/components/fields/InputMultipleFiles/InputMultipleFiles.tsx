@@ -73,7 +73,11 @@ const InputMultipleFiles = ({
 
 					<p className="font-weight-bold text-neutral-7">Or</p>
 
-					<button className="btn btn-secondary" onClick={open}>
+					<button
+						className="btn btn-secondary"
+						onClick={open}
+						type="button"
+					>
 						Select Files
 					</button>
 				</div>

@@ -40,7 +40,7 @@ export default function ({maxValue, namespace}) {
 
 		const searchParams = new URLSearchParams(queryString);
 
-		searchParams.set('basePrice', `[${min}TO${max}]`);
+		searchParams.set('basePrice', `[${min} TO ${max}]`);
 		searchParams.set('max', max);
 		searchParams.set('min', min);
 

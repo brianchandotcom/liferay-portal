@@ -11,6 +11,7 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import {useResource} from '@clayui/data-provider';
+import ClayDropDown from '@clayui/drop-down';
 import {FocusScope} from '@clayui/shared';
 import React, {useState} from 'react';
 
@@ -19,43 +20,107 @@ import React, {useState} from 'react';
  * will query for applicable models.
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */
-function ModelAutocomplete({label, name, onChange, required, value = ''}) {
-	const [networkStatus, setNetworkStatus] = useState(4);
+function ModelAutocomplete({
+	label,
+	name,
+	onBlur,
+	onChange,
+	required,
+	value = '',
+}) {
+	const [autocompleteSearchValue, setAutocompleteSearchValue] = useState(
+		value
+	);
+	const [networkState, setNetworkState] = useState(() => ({
+		error: false,
+		loading: false,
+		networkStatus: 4,
+	}));
+	const [showDropDown, setShowDropDown] = useState(false);
 
 	const {resource} = useResource({
 		fetchPolicy: 'cache-first',
 		link: `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}
 		/o/search-experiences-rest/v1.0/sentence-transformer/ml-models`,
-		onNetworkStatusChange: setNetworkStatus,
+		onNetworkStatusChange: (status) => {
+			setNetworkState({
+				error: status === 5,
+				loading: status > 1 && status < 4,
+				networkStatus: status,
+			});
+		},
 		variables: {
 			limit: 20,
 			pipeline_tag: 'feature-extraction',
-			query: value,
+			query: autocompleteSearchValue,
 		},
 	});
 
+	const _handleBlur = () => {
+		if (!autocompleteSearchValue) {
+			onChange('');
+		}
+		else if (value !== autocompleteSearchValue) {
+			setAutocompleteSearchValue(value);
+		}
+
+		onBlur();
+	};
+
+	const _handleFocus = () => {
+		setShowDropDown(true);
+	};
+
+	const _handleInputChange = (event) => {
+		setShowDropDown(true);
+		setAutocompleteSearchValue(event.target.value);
+	};
+
+	const _handleItemChange = (item) => {
+		setAutocompleteSearchValue(item);
+		onChange(item);
+		setShowDropDown(false);
+	};
+
 	return (
 		<FocusScope>
-			<ClayAutocomplete
-				aria-labelledby={label}
-				id={name}
-				items={(resource?.items || []).map(({modelId}) => modelId)}
-				loadingState={networkStatus}
-				messages={{
-					loading: Liferay.Language.get('loading'),
-					notFound: Liferay.Language.get('no-results-found'),
-				}}
-				name={name}
-				onChange={onChange}
-				onItemsChange={() => {}}
-				required={required}
-				value={value}
-			>
-				{(item) => (
-					<ClayAutocomplete.Item key={item}>
-						{item}
-					</ClayAutocomplete.Item>
-				)}
+			<ClayAutocomplete>
+				<ClayAutocomplete.Input
+					aria-label={label}
+					id={name}
+					name={name}
+					onBlur={_handleBlur}
+					onChange={_handleInputChange}
+					onFocus={_handleFocus}
+					required={required}
+					value={autocompleteSearchValue}
+				/>
+
+				<ClayAutocomplete.DropDown
+					active={showDropDown}
+					onSetActive={setShowDropDown}
+				>
+					<ClayDropDown.ItemList>
+						{(resource?.items || []).map(({modelId}) => (
+							<ClayDropDown.Item
+								key={modelId}
+								onClick={() => _handleItemChange(modelId)}
+							>
+								{modelId}
+							</ClayDropDown.Item>
+						))}
+
+						{!resource?.items?.length && (
+							<ClayDropDown.Item>
+								{networkState.loading ? (
+									<ClayAutocomplete.LoadingIndicator />
+								) : (
+									Liferay.Language.get('no-results-found')
+								)}
+							</ClayDropDown.Item>
+						)}
+					</ClayDropDown.ItemList>
+				</ClayAutocomplete.DropDown>
 			</ClayAutocomplete>
 		</FocusScope>
 	);

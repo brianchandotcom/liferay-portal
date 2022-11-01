@@ -38,7 +38,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.WebImage;
-import com.liferay.layout.taglib.internal.info.search.InfoSearchClassMapperTrackerUtil;
+import com.liferay.layout.taglib.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -993,7 +993,7 @@ public class RenderLayoutStructureDisplayContext {
 	private String _getMappedCollectionValue(
 		String collectionFieldId, InfoItemReference infoItemReference) {
 
-		String className = InfoSearchClassMapperTrackerUtil.getClassName(
+		String className = InfoSearchClassMapperRegistryUtil.getClassName(
 			infoItemReference.getClassName());
 
 		InfoItemServiceRegistry infoItemServiceRegistry =

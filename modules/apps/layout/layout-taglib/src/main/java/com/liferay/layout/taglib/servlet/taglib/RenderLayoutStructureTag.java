@@ -42,7 +42,7 @@ import com.liferay.layout.page.template.util.LayoutStructureUtil;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
-import com.liferay.layout.taglib.internal.info.search.InfoSearchClassMapperTrackerUtil;
+import com.liferay.layout.taglib.internal.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
@@ -345,7 +345,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				InfoItemDetailsProvider infoItemDetailsProvider =
 					infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemDetailsProvider.class,
-						InfoSearchClassMapperTrackerUtil.getClassName(
+						InfoSearchClassMapperRegistryUtil.getClassName(
 							renderCollectionLayoutStructureItemDisplayContext.
 								getCollectionItemType()));
 

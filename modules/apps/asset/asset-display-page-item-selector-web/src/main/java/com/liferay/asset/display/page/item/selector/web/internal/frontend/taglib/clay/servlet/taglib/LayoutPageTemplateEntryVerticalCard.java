@@ -17,11 +17,9 @@ package com.liferay.asset.display.page.item.selector.web.internal.frontend.tagli
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Date;
-import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
@@ -45,21 +43,6 @@ public class LayoutPageTemplateEntryVerticalCard implements VerticalCard {
 	public String getCssClass() {
 		return "card-interactive card-interactive-secondary " +
 			"layout-page-template-entry";
-	}
-
-	@Override
-	public Map<String, String> getDynamicAttributes() {
-		return HashMapBuilder.put(
-			"data-id",
-			String.valueOf(
-				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
-		).put(
-			"data-name", _layoutPageTemplateEntry.getName()
-		).put(
-			"data-plid", String.valueOf(_layoutPageTemplateEntry.getPlid())
-		).put(
-			"data-type", "asset-display-page"
-		).build();
 	}
 
 	@Override

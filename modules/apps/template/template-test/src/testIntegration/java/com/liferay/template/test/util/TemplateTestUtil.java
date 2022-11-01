@@ -198,4 +198,10 @@ public class TemplateTestUtil {
 			"${cur_item.getData()},</#if></#list></#if>");
 	}
 
+	public static String getSampleScriptFTL(String fieldName) {
+		return StringBundler.concat(
+			"<#if (", fieldName, ".getData())??>${", fieldName,
+			".getData()}</#if>");
+	}
+
 }

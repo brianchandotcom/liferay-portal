@@ -32,13 +32,13 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -276,10 +276,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					return null;
 				}
 
-				JSONArray optionReferencesJSONArray = null;
+				JSONArray optionValuesJSONArray = null;
 
 				try {
-					optionReferencesJSONArray = _jsonFactory.createJSONArray(
+					optionValuesJSONArray = _jsonFactory.createJSONArray(
 						valueString);
 				}
 				catch (JSONException jsonException) {
@@ -288,7 +288,7 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					}
 				}
 
-				if (optionReferencesJSONArray == null) {
+				if (optionValuesJSONArray == null) {
 					return null;
 				}
 
@@ -297,18 +297,27 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 				DDMFormFieldOptions ddmFormFieldOptions =
 					ddmFormField.getDDMFormFieldOptions();
 
-				JSONArray optionLabelsJSONArray =
-					_jsonFactory.createJSONArray();
+				List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+					new ArrayList<>();
 
-				for (int i = 0; i < optionReferencesJSONArray.length(); i++) {
+				for (int i = 0; i < optionValuesJSONArray.length(); i++) {
+					String optionValue = optionValuesJSONArray.getString(i);
+
 					LocalizedValue localizedValue =
-						ddmFormFieldOptions.getOptionLabels(
-							optionReferencesJSONArray.getString(i));
+						ddmFormFieldOptions.getOptionLabels(optionValue);
 
-					optionLabelsJSONArray.put(localizedValue.getString(locale));
+					keyLocalizedLabelPairs.add(
+						new KeyLocalizedLabelPair(
+							optionValue,
+							InfoLocalizedValue.<String>builder(
+							).defaultLocale(
+								localizedValue.getDefaultLocale()
+							).values(
+								localizedValue.getValues()
+							).build()));
 				}
 
-				return JSONUtil.toString(optionLabelsJSONArray);
+				return keyLocalizedLabelPairs;
 			}
 
 			return SanitizerUtil.sanitize(

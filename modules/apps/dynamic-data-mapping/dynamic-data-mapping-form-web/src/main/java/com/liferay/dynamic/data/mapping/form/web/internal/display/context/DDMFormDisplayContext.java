@@ -667,10 +667,10 @@ public class DDMFormDisplayContext {
 			return false;
 		}
 
-		DDMFormInstanceSettings settingsModel =
+		DDMFormInstanceSettings ddmFormInstanceSettings =
 			ddmFormInstance.getSettingsModel();
 
-		return settingsModel.displayChartAsTable();
+		return ddmFormInstanceSettings.displayChartAsTable();
 	}
 
 	public boolean isFormAvailable() throws PortalException {

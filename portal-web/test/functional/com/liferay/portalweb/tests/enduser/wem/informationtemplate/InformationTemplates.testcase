@@ -229,9 +229,9 @@ definition {
 				itemType = "Additional Order");
 		}
 
-		task ("Add the User Name and Order Number fields") {
+		task ("Add the Author and Order Number fields") {
 			InformationTemplates.addField(
-				fieldName = "User Name",
+				fieldName = "Author",
 				panelTitle = "Basic Information");
 
 			InformationTemplates.addField(

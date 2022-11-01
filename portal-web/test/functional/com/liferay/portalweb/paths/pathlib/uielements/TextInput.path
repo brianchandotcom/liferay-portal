@@ -161,6 +161,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESTINATION_URL</td>
+	<td>//input[contains(@name,'destinationURL_${key_index}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INPUT_CONTAINS_TITLE</td>
 	<td>//input[contains(@title,'${key_titleName}')]</td>
 	<td></td>
@@ -513,6 +518,11 @@
 <tr>
 	<td>PASSWORD_TYPE</td>
 	<td>//input[@type='password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PATTERN</td>
+	<td>//input[contains(@name,'pattern_${key_index}')]</td>
 	<td></td>
 </tr>
 <tr>

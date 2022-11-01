@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoItemServiceTracker {
+public interface InfoItemServiceRegistry {
 
 	public <P> List<P> getAllInfoItemServices(Class<P> serviceClass);
 

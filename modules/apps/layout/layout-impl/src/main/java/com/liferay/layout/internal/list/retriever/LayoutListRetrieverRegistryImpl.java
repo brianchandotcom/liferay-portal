@@ -15,7 +15,7 @@
 package com.liferay.layout.internal.list.retriever;
 
 import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
+import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = LayoutListRetrieverTracker.class)
-public class LayoutListRetrieverTrackerImpl
-	implements LayoutListRetrieverTracker {
+@Component(service = LayoutListRetrieverRegistry.class)
+public class LayoutListRetrieverRegistryImpl
+	implements LayoutListRetrieverRegistry {
 
 	@Override
 	public LayoutListRetriever<?, ?> getLayoutListRetriever(String type) {

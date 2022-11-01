@@ -21,7 +21,7 @@ import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.scaler.AMImageScaledImage;
 import com.liferay.adaptive.media.image.scaler.AMImageScaler;
-import com.liferay.adaptive.media.image.scaler.AMImageScalerTracker;
+import com.liferay.adaptive.media.image.scaler.AMImageScalerRegistry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.adaptive.media.processor.AMProcessor;
@@ -110,7 +110,7 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 			}
 
 			AMImageScaler amImageScaler =
-				_amImageScalerTracker.getAMImageScaler(
+				_amImageScalerRegistry.getAMImageScaler(
 					fileVersion.getMimeType());
 
 			if (amImageScaler == null) {
@@ -188,7 +188,7 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 	private AMImageEntryLocalService _amImageEntryLocalService;
 
 	@Reference
-	private AMImageScalerTracker _amImageScalerTracker;
+	private AMImageScalerRegistry _amImageScalerRegistry;
 
 	@Reference
 	private AMImageValidator _amImageValidator;

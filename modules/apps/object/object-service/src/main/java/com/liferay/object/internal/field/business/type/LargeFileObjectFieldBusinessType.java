@@ -17,7 +17,6 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
@@ -49,10 +48,7 @@ public class LargeFileObjectFieldBusinessType
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			ResourceBundleUtil.getModuleAndPortalResourceBundle(
-				locale, getClass()),
-			"large-file");
+		return _language.get(locale, "large-file");
 	}
 
 	@Override

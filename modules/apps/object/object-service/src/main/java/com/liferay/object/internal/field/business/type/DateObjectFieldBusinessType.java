@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.Locale;
@@ -47,18 +46,12 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return _language.get(
-			ResourceBundleUtil.getModuleAndPortalResourceBundle(
-				locale, getClass()),
-			"add-a-date");
+		return _language.get(locale, "add-a-date");
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			ResourceBundleUtil.getModuleAndPortalResourceBundle(
-				locale, getClass()),
-			"date");
+		return _language.get(locale, "date");
 	}
 
 	@Override

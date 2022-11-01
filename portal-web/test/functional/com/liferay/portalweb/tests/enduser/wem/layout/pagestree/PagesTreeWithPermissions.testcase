@@ -209,14 +209,24 @@ definition {
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 					roleTitle = "Regular Role Name");
 			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Regular Role Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.layout.seo",
+				roleTitle = "Regular Role Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Regular Role Name");
 		}
 
 		task ("Assign the regular role to new user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
-
 			JSONRole.assignRoleToUser(
 				roleTitle = "Regular Role Name",
 				userEmailAddress = "userea@liferay.com");

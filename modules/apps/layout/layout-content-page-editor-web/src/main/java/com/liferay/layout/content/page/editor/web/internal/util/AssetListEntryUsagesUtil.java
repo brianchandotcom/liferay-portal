@@ -33,7 +33,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceTrackerUtil;
+import com.liferay.layout.content.page.editor.web.internal.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -352,7 +352,7 @@ public class AssetListEntryUsagesUtil {
 		}
 
 		InfoItemServiceRegistry infoItemServiceRegistry =
-			InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
+			InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
@@ -483,7 +483,7 @@ public class AssetListEntryUsagesUtil {
 				InfoCollectionProvider.class.getName())) {
 
 			InfoItemServiceRegistry infoItemServiceRegistry =
-				InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
+				InfoItemServiceRegistryUtil.getInfoItemServiceRegistry();
 
 			InfoCollectionProvider<?> infoCollectionProvider =
 				infoItemServiceRegistry.getInfoItemService(

@@ -161,7 +161,7 @@ public class PortalImplAlternateURLTest {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, friendlyURLMap);
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(
-			_group, _addAssetDisplayPageEntry(journalArticle));
+			_group, _getAssetDisplayPageEntryLayout(journalArticle));
 
 		_testAlternateURLWithAssetDisplayPageEntry(
 			availableLocales, defaultLocale, friendlyURLMap, 0,
@@ -335,34 +335,6 @@ public class PortalImplAlternateURLTest {
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
-	private Layout _addAssetDisplayPageEntry(
-			JournalArticle journalArticle)
-		throws Exception {
-
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				journalArticle.getGroupId());
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), journalArticle.getGroupId(), 0,
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
-				0, 0, 0, 0, serviceContext);
-
-		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-			TestPropsValues.getUserId(), journalArticle.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getResourcePrimKey(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
-
-		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
-	}
-
 	private String _generateAssetDisplayPageEntryURL(
 		Locale defaultLocale, String friendlyURL, String groupFriendlyURL,
 		Locale locale, String portalURL) {
@@ -403,6 +375,34 @@ public class PortalImplAlternateURLTest {
 			"http://", portalDomain, languageId,
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 			groupFriendlyURL, layoutFriendlyURL);
+	}
+
+	private Layout _getAssetDisplayPageEntryLayout(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				journalArticle.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), journalArticle.getGroupId(), 0,
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
+				0, 0, 0, 0, serviceContext);
+
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			TestPropsValues.getUserId(), journalArticle.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			journalArticle.getResourcePrimKey(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
+
+		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}
 
 	private String _getI18nPath(Locale defaultLocale, Locale locale) {

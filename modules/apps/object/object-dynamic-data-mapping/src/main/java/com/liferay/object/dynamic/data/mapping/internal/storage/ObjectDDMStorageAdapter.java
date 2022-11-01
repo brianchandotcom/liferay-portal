@@ -175,22 +175,44 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_objectEntryManagerTracker.getObjectEntryManager(
 					objectDefinition.getStorageType());
 
-			ObjectEntry addObjectEntry = objectEntryManager.addObjectEntry(
+			long objectEntryId = ddmStorageAdapterSaveRequest.getPrimaryKey();
+
+			ObjectEntry objectEntry = objectEntryManager.fetchObjectEntry(
 				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
-				objectDefinition,
-				new ObjectEntry() {
-					{
-						properties = _getObjectEntryProperties(
-							ddmForm.getDDMFormFieldsMap(true),
-							ddmFormValues.getDDMFormFieldValues(),
-							_objectFieldLocalService.getObjectFields(
-								objectDefinitionId));
-					}
-				},
-				String.valueOf(ddmStorageAdapterSaveRequest.getGroupId()));
+				objectDefinition, objectEntryId);
+
+			if (objectEntry == null) {
+				objectEntry = objectEntryManager.addObjectEntry(
+					_getDTOConverterContext(
+						null, user, ddmForm.getDefaultLocale()),
+					objectDefinition,
+					new ObjectEntry() {
+						{
+							properties = _getObjectEntryProperties(
+								ddmForm.getDDMFormFieldsMap(true),
+								ddmFormValues.getDDMFormFieldValues(),
+								_objectFieldLocalService.getObjectFields(
+									objectDefinitionId));
+						}
+					},
+					String.valueOf(ddmStorageAdapterSaveRequest.getGroupId()));
+			}
+			else {
+				objectEntry.setProperties(
+					_getObjectEntryProperties(
+						ddmForm.getDDMFormFieldsMap(true),
+						ddmFormValues.getDDMFormFieldValues(),
+						_objectFieldLocalService.getObjectFields(
+							objectDefinitionId)));
+
+				objectEntry = objectEntryManager.updateObjectEntry(
+					_getDTOConverterContext(
+						null, user, ddmForm.getDefaultLocale()),
+					objectDefinition, objectEntryId, objectEntry);
+			}
 
 			return DDMStorageAdapterSaveResponse.Builder.newBuilder(
-				addObjectEntry.getId()
+				objectEntry.getId()
 			).build();
 		}
 		catch (Exception exception) {

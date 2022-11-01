@@ -80,7 +80,6 @@ const InputFile = ({
 				name={field.name}
 				onChange={handleChange}
 				ref={inputFileRef}
-				required={required}
 				type="file"
 				value=""
 			/>

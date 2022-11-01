@@ -15,12 +15,13 @@
 package com.liferay.account.service.test;
 
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
+import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -86,14 +86,17 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
 		_organizationAccountEntries.put(
 			_rootOrganization,
-			_addAccountEntryWithOrganization(_rootOrganization));
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withOrganizations(_rootOrganization)));
 
 		_organization = _organizationLocalService.addOrganization(
 			TestPropsValues.getUserId(), _rootOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
 
 		_organizationAccountEntries.put(
-			_organization, _addAccountEntryWithOrganization(_organization));
+			_organization,
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withOrganizations(_organization)));
 
 		_suborganization = _organizationLocalService.addOrganization(
 			TestPropsValues.getUserId(), _organization.getOrganizationId(),
@@ -101,7 +104,8 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
 		_organizationAccountEntries.put(
 			_suborganization,
-			_addAccountEntryWithOrganization(_suborganization));
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withOrganizations(_suborganization)));
 
 		_user = UserTestUtil.addUser();
 
@@ -293,24 +297,6 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	private AccountEntry _addAccountEntryWithOrganization(
-			Organization organization)
-		throws Exception {
-
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
-
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry.getAccountEntryId(), organization.getOrganizationId());
-
-		return accountEntry;
-	}
 
 	private Role _addOrganizationRole() throws Exception {
 		return _roleLocalService.addRole(

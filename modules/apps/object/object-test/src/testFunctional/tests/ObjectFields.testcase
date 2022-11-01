@@ -1124,7 +1124,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 	}
 
-	@description = "LPS-162176 - Verify that the ERC field column is displayed in the Objects Field tab"
+	@description = "LPS-162176 - Verify that the ERC is displayed on the object definition page"
 	@priority = "5"
 	test CanSeeERCFieldOnObjectPage {
 		task ("Given an object is created") {
@@ -1134,13 +1134,13 @@ definition {
 				pluralLabelName = "Custom Objects 162176");
 		}
 
-		task ("When goto the new object") {
+		task ("When the user navigates to the object definition") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 162176");
 		}
 
-		task ("Then assert if the ERC is present on the page") {
+		task ("Then the ERC is present on the page") {
 			AssertElementPresent(locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE");
 		}
 	}

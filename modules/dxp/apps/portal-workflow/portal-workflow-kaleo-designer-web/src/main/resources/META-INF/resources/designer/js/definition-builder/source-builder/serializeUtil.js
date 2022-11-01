@@ -106,7 +106,7 @@ function appendXMLActions(
 			buffer.push(
 				createTagWithEscapedContent(
 					'scriptLanguage',
-					scriptLanguage || DEFAULT_LANGUAGE
+					scriptLanguage[index] || DEFAULT_LANGUAGE
 				)
 			);
 

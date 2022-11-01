@@ -50,20 +50,8 @@ definition {
 		var keyword = "all parameters";
 		var parameters = "size=10&displayLanguageId=en-US&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
 
-		task ("Go to Server Administration") {
-			ServerAdministration.openServerAdmin();
-		}
-
-		task ("Get Faro Backend URL") {
-			var faroBackendURL = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
-		}
-
-		task ("Get OSB-Asah-Faro-Backend-Security-Signature") {
-			var osbAsahFaroBackendSS = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
-		}
-
-		task ("Get OSB-Asah-Project-Id") {
-			var osbAsahProjectId = ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
 		}
 
 		task ("Go to Site Page") {
@@ -77,11 +65,7 @@ definition {
 		}
 
 		task ("Run curl command to get keyword results") {
-			ACApi.getSearchKeywords(
-				faroBackendURL = "${faroBackendURL}",
-				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
-				osbAsahProjectId = "${osbAsahProjectId}",
-				parameters = "${parameters}");
+			ACApi.getSearchKeywords(parameters = "${parameters}");
 		}
 
 		task ("Assert response returns keyword") {
@@ -97,20 +81,8 @@ definition {
 		var keyword1 = "without optional parameters 1";
 		var keyword2 = "without optional parameters 2";
 
-		task ("Go to Server Administration") {
-			ServerAdministration.openServerAdmin();
-		}
-
-		task ("Get Faro Backend URL") {
-			var faroBackendURL = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
-		}
-
-		task ("Get OSB-Asah-Faro-Backend-Security-Signature") {
-			var osbAsahFaroBackendSS = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
-		}
-
-		task ("Get OSB-Asah-Project-Id") {
-			var osbAsahProjectId = ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
 		}
 
 		task ("Go to Site Page") {
@@ -126,10 +98,7 @@ definition {
 		}
 
 		task ("Run curl command without optional parameters to get keyword results") {
-			ACApi.getSearchKeywords(
-				faroBackendURL = "${faroBackendURL}",
-				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
-				osbAsahProjectId = "${osbAsahProjectId}");
+			ACApi.getSearchKeywords();
 		}
 
 		task ("Assert response returns keyword") {
@@ -154,20 +123,8 @@ definition {
 		var parameters = "size=2&sort=lastModifiedDate,desc";
 		var size = "2";
 
-		task ("Go to Server Administration") {
-			ServerAdministration.openServerAdmin();
-		}
-
-		task ("Get Faro Backend URL") {
-			var faroBackendURL = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
-		}
-
-		task ("Get OSB-Asah-Faro-Backend-Security-Signature") {
-			var osbAsahFaroBackendSS = ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendSecuritySignature");
-		}
-
-		task ("Get OSB-Asah-Project-Id") {
-			var osbAsahProjectId = ACApi.getSearchHeaderValues(header = "liferayAnalyticsProjectId");
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
 		}
 
 		task ("Go to Site Page") {
@@ -183,11 +140,7 @@ definition {
 		}
 
 		task ("Run curl command to get keyword results") {
-			ACApi.getSearchKeywords(
-				faroBackendURL = "${faroBackendURL}",
-				osbAsahFaroBackendSS = "${osbAsahFaroBackendSS}",
-				osbAsahProjectId = "${osbAsahProjectId}",
-				parameters = "${parameters}");
+			ACApi.getSearchKeywords(parameters = "${parameters}");
 		}
 
 		task ("Assert response returns keyword") {

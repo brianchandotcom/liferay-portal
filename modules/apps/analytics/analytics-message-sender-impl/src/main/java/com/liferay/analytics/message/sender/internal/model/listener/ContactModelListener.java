@@ -37,7 +37,7 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 	@Override
 	public List<String> getAttributeNames(long companyId) {
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
 
 		if (ArrayUtil.isEmpty(
 				analyticsConfiguration.syncedContactFieldNames())) {

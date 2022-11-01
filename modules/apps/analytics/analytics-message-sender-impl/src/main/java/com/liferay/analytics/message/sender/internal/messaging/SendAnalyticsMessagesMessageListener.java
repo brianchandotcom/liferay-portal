@@ -19,7 +19,7 @@ import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinati
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
 import com.liferay.analytics.message.storage.model.AnalyticsMessage;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -152,7 +152,7 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	private boolean _skipProcess(Message message) {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10632")) ||
-			!_analyticsConfigurationTracker.isActive()) {
+			!_analyticsConfigurationRegistry.isActive()) {
 
 			return true;
 		}
@@ -176,7 +176,7 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 		SendAnalyticsMessagesMessageListener.class);
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private AnalyticsMessageLocalService _analyticsMessageLocalService;

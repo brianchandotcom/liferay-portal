@@ -19,7 +19,7 @@ import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -227,7 +227,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				baseModel.getModelClassName(), User.class.getName())) {
 
 			AnalyticsConfiguration analyticsConfiguration =
-				_analyticsConfigurationTracker.getAnalyticsConfiguration(
+				_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 					shardedModel.getCompanyId());
 
 			includeAttributeNames = ListUtil.fromArray(
@@ -297,7 +297,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			User user = (User)baseModel;
 
 			AnalyticsConfiguration analyticsConfiguration =
-				_analyticsConfigurationTracker.getAnalyticsConfiguration(
+				_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 					user.getCompanyId());
 
 			includeAttributeNames = ListUtil.fromArray(
@@ -416,7 +416,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		DXPEntityDTOConverterImpl.class);
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

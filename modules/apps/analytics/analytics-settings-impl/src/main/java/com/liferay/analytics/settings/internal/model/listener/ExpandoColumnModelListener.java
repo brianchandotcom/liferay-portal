@@ -50,7 +50,7 @@ public class ExpandoColumnModelListener
 
 		if (_isCustomField(User.class.getName(), expandoColumn.getTableId())) {
 			AnalyticsConfiguration analyticsConfiguration =
-				analyticsConfigurationTracker.getAnalyticsConfiguration(
+				analyticsConfigurationRegistry.getAnalyticsConfiguration(
 					expandoColumn.getCompanyId());
 
 			if (ArrayUtil.isEmpty(

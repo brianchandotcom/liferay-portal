@@ -54,7 +54,7 @@ public class OrganizationModelListener
 	public void onAfterRemove(Organization organization)
 		throws ModelListenerException {
 
-		if (!analyticsConfigurationTracker.isActive() ||
+		if (!analyticsConfigurationRegistry.isActive() ||
 			isExcluded(organization)) {
 
 			return;

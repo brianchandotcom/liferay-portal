@@ -48,7 +48,7 @@ public class UserModelListener
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				user.getCompanyId());
 
 		if (analyticsConfiguration.syncAllContacts()) {

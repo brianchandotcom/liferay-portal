@@ -71,7 +71,7 @@ public class AnalyticsMessageSenderClientImpl
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
 			body, analyticsConfiguration.liferayAnalyticsDataSourceId(),
@@ -92,7 +92,7 @@ public class AnalyticsMessageSenderClientImpl
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
 
 		_checkEndpoints(analyticsConfiguration, companyId);
 

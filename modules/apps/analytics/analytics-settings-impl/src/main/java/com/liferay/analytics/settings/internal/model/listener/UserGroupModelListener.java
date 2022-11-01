@@ -41,7 +41,7 @@ public class UserGroupModelListener
 
 		super.onAfterRemove(userGroup);
 
-		if (!analyticsConfigurationTracker.isActive() ||
+		if (!analyticsConfigurationRegistry.isActive() ||
 			!isTracked(userGroup)) {
 
 			return;

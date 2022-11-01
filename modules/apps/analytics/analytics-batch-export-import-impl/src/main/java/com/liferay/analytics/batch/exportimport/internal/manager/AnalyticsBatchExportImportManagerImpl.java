@@ -17,7 +17,7 @@ package com.liferay.analytics.batch.exportimport.internal.manager;
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
@@ -215,7 +215,7 @@ public class AnalyticsBatchExportImportManagerImpl
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
 
 	private void _checkCompany(long companyId) {
-		if (_analyticsConfigurationTracker.isActive()) {
+		if (_analyticsConfigurationRegistry.isActive()) {
 			return;
 		}
 
@@ -224,7 +224,8 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		if (Validator.isNotNull(
 				analyticsConfiguration.liferayAnalyticsEndpointURL())) {
@@ -253,7 +254,8 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		options.setLocation(
 			HttpComponentsUtil.addParameter(
@@ -287,7 +289,8 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	private Http.Options _getOptions(long companyId) {
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		Http.Options options = new Http.Options();
 
@@ -406,7 +409,8 @@ public class AnalyticsBatchExportImportManagerImpl
 			(resourceLastModifiedDate != null) ? "INCREMENTAL" : "FULL");
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		options.setLocation(
 			analyticsConfiguration.liferayAnalyticsEndpointURL() +
@@ -452,7 +456,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			"EEE, dd MMM yyyy HH:mm:ss zzz");
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private AnalyticsMessageLocalService _analyticsMessageLocalService;

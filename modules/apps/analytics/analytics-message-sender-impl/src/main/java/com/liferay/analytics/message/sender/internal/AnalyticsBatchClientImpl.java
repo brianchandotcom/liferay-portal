@@ -65,7 +65,7 @@ public class AnalyticsBatchClientImpl
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
 
 		try (CloseableHttpClient closeableHttpClient =
 				getCloseableHttpClient()) {
@@ -123,7 +123,7 @@ public class AnalyticsBatchClientImpl
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
 
 		try (CloseableHttpClient closeableHttpClient =
 				getCloseableHttpClient()) {
@@ -180,7 +180,7 @@ public class AnalyticsBatchClientImpl
 		long companyId, HttpUriRequest httpUriRequest) {
 
 		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
 
 		httpUriRequest.setHeader(
 			"OSB-Asah-Data-Source-ID",

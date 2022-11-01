@@ -61,7 +61,7 @@ public class GroupModelListener extends BaseEntityModelListener<Group> {
 
 	@Override
 	public void onAfterRemove(Group group) throws ModelListenerException {
-		if (!analyticsConfigurationTracker.isActive() || isExcluded(group)) {
+		if (!analyticsConfigurationRegistry.isActive() || isExcluded(group)) {
 			return;
 		}
 

@@ -39,7 +39,7 @@ public class GroupModelListener
 	public void onAfterRemove(Group group) throws ModelListenerException {
 		super.onAfterRemove(group);
 
-		if (!analyticsConfigurationTracker.isActive() || !isTracked(group)) {
+		if (!analyticsConfigurationRegistry.isActive() || !isTracked(group)) {
 			return;
 		}
 

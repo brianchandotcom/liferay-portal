@@ -41,7 +41,7 @@ public class OrganizationModelListener
 
 		super.onAfterRemove(organization);
 
-		if (!analyticsConfigurationTracker.isActive() ||
+		if (!analyticsConfigurationRegistry.isActive() ||
 			!isTracked(organization)) {
 
 			return;

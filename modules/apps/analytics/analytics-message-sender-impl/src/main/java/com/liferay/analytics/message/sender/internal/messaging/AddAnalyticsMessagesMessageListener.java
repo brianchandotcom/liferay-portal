@@ -17,7 +17,7 @@ package com.liferay.analytics.message.sender.internal.messaging;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -42,7 +42,7 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) {
-		if (!_analyticsConfigurationTracker.isActive()) {
+		if (!_analyticsConfigurationRegistry.isActive()) {
 			return;
 		}
 
@@ -81,6 +81,6 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 		AddAnalyticsMessagesMessageListener.class);
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 }

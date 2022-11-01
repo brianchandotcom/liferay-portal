@@ -15,7 +15,7 @@
 package com.liferay.analytics.batch.exportimport.internal.dispatch.executor;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -50,7 +50,8 @@ public class UserAnalyticsDXPEntityExportDispatchTaskExecutor
 	@Override
 	protected boolean shouldExport(long companyId) {
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		if (analyticsConfiguration.syncAllContacts() ||
 			!ArrayUtil.isEmpty(analyticsConfiguration.syncedUserGroupIds()) ||
@@ -64,6 +65,6 @@ public class UserAnalyticsDXPEntityExportDispatchTaskExecutor
 	}
 
 	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 }

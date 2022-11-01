@@ -54,7 +54,7 @@ public class UserGroupModelListener extends BaseEntityModelListener<UserGroup> {
 	public void onAfterRemove(UserGroup userGroup)
 		throws ModelListenerException {
 
-		if (!analyticsConfigurationTracker.isActive() ||
+		if (!analyticsConfigurationRegistry.isActive() ||
 			isExcluded(userGroup)) {
 
 			return;

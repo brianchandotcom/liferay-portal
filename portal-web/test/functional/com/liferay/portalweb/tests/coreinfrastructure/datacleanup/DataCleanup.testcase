@@ -381,7 +381,7 @@ definition {
 	test FileConfigsWillTriggerDataCleanup {
 		property data.archive.type = "data-archive-portal";
 		property osgi.module.configuration.file.names = "com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration.config:com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration.config";
-		property osgi.module.configurations = "cleanUpSoftwareCatalogModuleData=B\"true\"${line.separator}removeExpiredJournalArticles=B\"true\"";
+		property osgi.module.configurations = "cleanUpSoftwareCatalogModuleData=B\"true\":removeExpiredJournalArticles=B\"true\"";
 		property portal.version = "6.2.10.21";
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.ExpiredJournalArticleUpgradeProcess");

@@ -62,17 +62,30 @@ public abstract class BaseTestClass implements TestClass {
 
 	@Override
 	public long getAverageDuration() {
+		if (_averageDuration != null) {
+			return _averageDuration;
+		}
+
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		return batchTestClassGroup.getAverageTestDuration(getTestName());
+		_averageDuration = batchTestClassGroup.getAverageTestDuration(
+			getTestName());
+
+		return _averageDuration;
 	}
 
 	@Override
 	public long getAverageOverheadDuration() {
+		if (_averageOverheadDuration != null) {
+			return _averageOverheadDuration;
+		}
+
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		return batchTestClassGroup.getAverageTestOverheadDuration(
-			getTestName());
+		_averageOverheadDuration =
+			batchTestClassGroup.getAverageTestOverheadDuration(getTestName());
+
+		return _averageOverheadDuration;
 	}
 
 	@Override
@@ -222,6 +235,8 @@ public abstract class BaseTestClass implements TestClass {
 		return getName();
 	}
 
+	private Long _averageDuration;
+	private Long _averageOverheadDuration;
 	private final BatchTestClassGroup _batchTestClassGroup;
 	private final File _testClassFile;
 	private final List<TestClassMethod> _testClassMethods = new ArrayList<>();

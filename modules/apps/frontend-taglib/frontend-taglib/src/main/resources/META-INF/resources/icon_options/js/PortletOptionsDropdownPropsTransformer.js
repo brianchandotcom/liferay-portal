@@ -35,7 +35,7 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
-	const dropdownClass = `${portletNamespace}portlet-options portlet-options-dropdown`;
+	const dropdownClass = `${portletNamespace}portlet-options`;
 
 	const handleDropdownMenuOpen = (event) => {
 		const portlet = event.target.closest('.portlet');
@@ -85,7 +85,7 @@ export default function propsTransformer({
 			};
 		}),
 		menuProps: {
-			className: dropdownClass,
+			className: `${dropdownClass} portlet-options-dropdown`,
 		},
 		onClick: (event) => {
 			handleDropdownMenuOpen(event);

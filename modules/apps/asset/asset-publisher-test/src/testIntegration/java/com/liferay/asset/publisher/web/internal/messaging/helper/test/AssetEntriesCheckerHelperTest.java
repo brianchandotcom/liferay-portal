@@ -82,19 +82,19 @@ public class AssetEntriesCheckerHelperTest {
 
 	@Test
 	public void testGetAssetEntries() throws Exception {
-		String portletId2 = LayoutTestUtil.addPortletToLayout(
+		String portletId = LayoutTestUtil.addPortletToLayout(
 			_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
-		AssetEntry assetEntry3 = _addAssetEntry();
+		AssetEntry assetEntry1 = _addAssetEntry();
 
-		AssetEntry assetEntry4 = _addAssetEntry();
+		AssetEntry assetEntry2 = _addAssetEntry();
 
 		_setPortletManualSelectionStylePreference(
-			portletId2, assetEntry3, assetEntry4);
+			portletId, assetEntry1, assetEntry2);
 
 		_assertAssetEntries(
 			Arrays.asList(
-				_addAssetEntry(), _addAssetEntry(), assetEntry3, assetEntry4),
+				_addAssetEntry(), _addAssetEntry(), assetEntry1, assetEntry2),
 			ReflectionTestUtil.invoke(
 				_assetEntriesCheckerHelper, "_getAssetEntries",
 				new Class<?>[] {PortletPreferences.class, Layout.class},
@@ -105,11 +105,11 @@ public class AssetEntriesCheckerHelperTest {
 				_layout));
 
 		_assertAssetEntries(
-			Arrays.asList(assetEntry3, assetEntry4),
+			Arrays.asList(assetEntry1, assetEntry2),
 			ReflectionTestUtil.invoke(
 				_assetEntriesCheckerHelper, "_getAssetEntries",
 				new Class<?>[] {PortletPreferences.class, Layout.class},
-				LayoutTestUtil.getPortletPreferences(_layout, portletId2),
+				LayoutTestUtil.getPortletPreferences(_layout, portletId),
 				_layout));
 	}
 

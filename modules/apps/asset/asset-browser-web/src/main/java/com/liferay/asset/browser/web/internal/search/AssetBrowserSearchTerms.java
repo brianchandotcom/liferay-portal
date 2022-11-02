@@ -34,8 +34,4 @@ public class AssetBrowserSearchTerms extends AssetBrowserDisplayTerms {
 		userName = DAOParamUtil.getString(portletRequest, USER_NAME);
 	}
 
-	public void setGroupId(long groupId) {
-		this.groupId = groupId;
-	}
-
 }

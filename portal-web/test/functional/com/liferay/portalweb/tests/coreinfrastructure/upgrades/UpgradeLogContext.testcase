@@ -34,15 +34,15 @@ definition {
 	test LogOutputReturnsUnmarkedWithoutCustomLog4j {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 
-		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
+		Log.viewLogFileContentNotPresent(logContent = "UpgradeLog=UpgradeLog");
 	}
 
 	@description = "LPS-158742. Given custom log4j is not added to portal and log context is not enabled. Then log lines will not be marked."
-	@priority = "3"
-	test LogOutputReturnsUnmarkedOnStartupWithoutLogContextAndCustomLog4j {
-		property custom.properties = "upgrade.database.auto.run=true";
+	@priority = "4"
+	test LogOutputReturnsMarkedWithDefaultName {
+		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 
-		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
+		Log.viewLogFileContentPresent(logContent = "UpgradeLog=UpgradeLog");
 	}
 
 }

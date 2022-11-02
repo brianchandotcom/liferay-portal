@@ -521,9 +521,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name");
 	}
 
 	macro addStyleBook {

@@ -98,9 +98,7 @@ definition {
 	test AddOrganizationComment {
 		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name");
 
 		Organization.addComment(orgComment = "This is a test comment!");
 
@@ -113,9 +111,7 @@ definition {
 	test AddOrganizationName50Characters {
 		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			orgName = "Organization Staging Organization Web Content Display",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Staging Organization Web Content Display");
 
 		Organization.openOrganizationsAdmin();
 
@@ -163,9 +159,7 @@ definition {
 	test AddOrganizations {
 		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			orgName = "Organization Name 1",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name 1");
 
 		Organization.openOrganizationsAdmin();
 
@@ -179,9 +173,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			orgName = "Organization Name 2",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name 2");
 
 		Organization.openOrganizationsAdmin();
 
@@ -195,9 +187,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			orgName = "Organization Name 3",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name 3");
 
 		Organization.openOrganizationsAdmin();
 
@@ -839,9 +829,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name");
 
 		Organization.openOrganizationsAdmin();
 
@@ -1426,9 +1414,7 @@ definition {
 	test ViewBack {
 		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
+		Organization.addCP(orgName = "Organization Name");
 
 		AssertElementPresent(locator1 = "Icon#BACK");
 

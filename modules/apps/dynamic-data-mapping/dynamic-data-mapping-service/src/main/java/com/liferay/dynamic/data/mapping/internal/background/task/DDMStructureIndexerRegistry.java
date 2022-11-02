@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Igor Fabiano Nazar
  * @author Lucas Marques de Paula
  */
-@Component(service = DDMStructureIndexerTracker.class)
-public class DDMStructureIndexerTracker {
+@Component(service = DDMStructureIndexerRegistry.class)
+public class DDMStructureIndexerRegistry {
 
 	public DDMStructureIndexer getDDMStructureIndexer(String className)
 		throws PortalException {
@@ -65,7 +65,7 @@ public class DDMStructureIndexerTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStructureIndexerTracker.class);
+		DDMStructureIndexerRegistry.class);
 
 	private ServiceTrackerMap<String, DDMStructureIndexer> _serviceTrackerMap;
 

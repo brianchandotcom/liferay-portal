@@ -21,7 +21,7 @@ import java.util.Collection;
 /**
  * @author Jeyvison Nascimento
  */
-public interface DataEngineNativeObjectTracker {
+public interface DataEngineNativeObjectRegistry {
 
 	public DataEngineNativeObject getDataEngineNativeObject(String className);
 

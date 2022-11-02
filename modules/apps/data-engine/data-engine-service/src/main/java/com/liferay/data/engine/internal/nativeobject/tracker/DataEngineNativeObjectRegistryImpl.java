@@ -15,7 +15,7 @@
 package com.liferay.data.engine.internal.nativeobject.tracker;
 
 import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
-import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
+import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -31,9 +31,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(service = DataEngineNativeObjectTracker.class)
-public class DataEngineNativeObjectTrackerImpl
-	implements DataEngineNativeObjectTracker {
+@Component(service = DataEngineNativeObjectRegistry.class)
+public class DataEngineNativeObjectRegistryImpl
+	implements DataEngineNativeObjectRegistry {
 
 	@Override
 	public DataEngineNativeObject getDataEngineNativeObject(String className) {

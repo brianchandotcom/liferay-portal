@@ -1,5 +1,15 @@
 definition {
 
+	macro assertOSGIConfigNotExist {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var osgiConfigExists = FileUtil.exists("${liferayHome}/osgi/configs/${osgiConfigFileName}");
+
+		if ("${osgiConfigExists}" == "true") {
+			fail("File ${osgiConfigFileName} exists");
+		}
+	}
+
 	macro assertTextInOSGIConfig {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

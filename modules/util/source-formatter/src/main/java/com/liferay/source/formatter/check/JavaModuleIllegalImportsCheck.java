@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
@@ -78,8 +79,13 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 					"LPS-64335");
 		}
 
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		String shortFileName = fileName.substring(pos + 1);
+
 		if (absolutePath.matches(".+/internal/resource/v\\d*(_\\d+)+/.+") &&
 			fileName.endsWith("ResourceImpl.java") &&
+			!shortFileName.startsWith("Base") &&
 			content.contains(
 				"import com.liferay.petra.function.transform.TransformUtil")) {
 

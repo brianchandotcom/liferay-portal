@@ -106,6 +106,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165824. The edit mode selector should have aria-label attribute."
+	@priority = "3"
+	test ViewAccessibilityOfEditModeSelector {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the edit mode selector should have correct aria-label") {
+			AssertAttributeValue(
+				attribute1 = "aria-label",
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+				value1 = "Page Edition Mode: Page Design");
+		}
+	}
+
 	@description = "This is a test for LPS-165625. The Language Selector shouldn't have aria-pressed attribute."
 	@priority = "2"
 	test ViewAccessibilityOfLanguageSelector {

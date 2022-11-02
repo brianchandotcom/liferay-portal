@@ -1,6 +1,7 @@
 definition {
 
 	macro _gotoChildArticle {
+		var key_kbChildArticleContent = "${kbChildArticleContent}";
 		var key_kbChildArticleTitle = "${kbChildArticleTitle}";
 
 		AssertTextEquals.assertPartialText(
@@ -10,6 +11,10 @@ definition {
 		AssertTextEquals(
 			locator1 = "KnowledgeBase#CHILD_PAGE_TITLE",
 			value1 = "${kbChildArticleTitle}");
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBase#CHILD_PAGE_CONTENT",
+			value1 = "${kbChildArticleContent}");
 
 		AssertClick(
 			locator1 = "KnowledgeBase#CHILD_PAGE_TITLE",
@@ -1375,7 +1380,9 @@ definition {
 				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
 		}
 		else {
-			KBArticle._gotoChildArticle(kbChildArticleTitle = "${kbChildArticleTitle}");
+			KBArticle._gotoChildArticle(
+				kbChildArticleContent = "${kbChildArticleContent}",
+				kbChildArticleTitle = "${kbChildArticleTitle}");
 		}
 
 		AssertTextEquals(

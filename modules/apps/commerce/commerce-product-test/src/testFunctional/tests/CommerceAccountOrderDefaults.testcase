@@ -550,6 +550,52 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9923. All channels can be linked to a currency."
+	@priority = "4"
+	test CanLinkAllChannelsToACurrency {
+		task ("Given a second channel (the Minium site is the first channel)") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Channel2",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("and given that the account has a default currency set to both channels") {
+			for (var channelNames : list "Minium Portal,Channel2") {
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+				Accounts.setDefaultCurrency(
+					channelEntry = "${channelNames}",
+					currencyName = "Euro");
+			}
+		}
+
+		task ("When the admin adds another default currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.setDefaultCurrency(
+				allOtherChannels = "true",
+				currencyName = "British Pound");
+		}
+
+		task ("Then the new default channel will be set for All Other Channels") {
+			SelectFrame.selectFrameTop();
+
+			AssertElementPresent(
+				key_entryDetail = "All Other Channels",
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTINGS_TABLE_ITEM");
+		}
+	}
+
 	@description = "COMMERCE-9885. Assert that can not assign default addresses to the same Channel."
 	@priority = "3"
 	test CanNotAssignDefaultAddressesToTheSameChannel {

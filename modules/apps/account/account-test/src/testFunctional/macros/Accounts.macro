@@ -1319,6 +1319,10 @@ definition {
 	}
 
 	macro setDefaultCurrency {
+		WaitForElementPresent(
+			key_title = "Add Default Currency",
+			locator1 = "Button#ANY_TITLE");
+
 		Click.javaScriptClick(
 			key_title = "Add Default Currency",
 			locator1 = "Button#ANY_TITLE");
@@ -1330,6 +1334,17 @@ definition {
 				key_fieldLabel = "Channel",
 				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
 				value1 = "${channelEntry}");
+		}
+
+		if (isSet(allOtherChannels) && ("${channelEntry}" == "true")) {
+			AssertTextPresent(
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "All Other Channels");
+
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "All Other Channels");
 		}
 
 		Select(

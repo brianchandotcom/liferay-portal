@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Leonardo Barros
  */
 @ProviderType
-public interface DDMExpressionFunctionTracker {
+public interface DDMExpressionFunctionRegistry {
 
 	public Map<String, DDMExpressionFunction> getCustomDDMExpressionFunctions();
 

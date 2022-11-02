@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.expression.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -46,7 +46,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)
-public class DDMExpressionFunctionTrackerTest {
+public class DDMExpressionFunctionRegistryTest {
 
 	@ClassRule
 	@Rule
@@ -68,7 +68,7 @@ public class DDMExpressionFunctionTrackerTest {
 	@Test
 	public void testGetCustomDDMExpressionFunctions() {
 		Map<String, DDMExpressionFunction> customDDMExpressionFunctions =
-			_ddmExpressionFunctionTracker.getCustomDDMExpressionFunctions();
+			_ddmExpressionFunctionRegistry.getCustomDDMExpressionFunctions();
 
 		Assert.assertNotNull(
 			customDDMExpressionFunctions.get("binaryFunction"));
@@ -83,10 +83,10 @@ public class DDMExpressionFunctionTrackerTest {
 		functionNames.add("setValue");
 
 		Map<String, DDMExpressionFunction> ddmExpressionFunctions1 =
-			_ddmExpressionFunctionTracker.getDDMExpressionFunctions(
+			_ddmExpressionFunctionRegistry.getDDMExpressionFunctions(
 				functionNames);
 		Map<String, DDMExpressionFunction> ddmExpressionFunctions2 =
-			_ddmExpressionFunctionTracker.getDDMExpressionFunctions(
+			_ddmExpressionFunctionRegistry.getDDMExpressionFunctions(
 				functionNames);
 
 		for (Map.Entry<String, DDMExpressionFunction> entry :
@@ -96,15 +96,15 @@ public class DDMExpressionFunctionTrackerTest {
 				entry.getValue(), ddmExpressionFunctions2.get(entry.getKey()));
 		}
 
-		_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
+		_ddmExpressionFunctionRegistry.ungetDDMExpressionFunctions(
 			ddmExpressionFunctions1);
-		_ddmExpressionFunctionTracker.ungetDDMExpressionFunctions(
+		_ddmExpressionFunctionRegistry.ungetDDMExpressionFunctions(
 			ddmExpressionFunctions2);
 	}
 
 	protected static void setUpDDMExpressionFunctionFactory() {
 		Bundle bundle = FrameworkUtil.getBundle(
-			DDMExpressionFunctionTrackerTest.class);
+			DDMExpressionFunctionRegistryTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -116,8 +116,8 @@ public class DDMExpressionFunctionTrackerTest {
 	private static ServiceRegistration<DDMExpressionFunctionFactory>
 		_serviceRegistration;
 
-	@Inject(type = DDMExpressionFunctionTracker.class)
-	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
+	@Inject(type = DDMExpressionFunctionRegistry.class)
+	private DDMExpressionFunctionRegistry _ddmExpressionFunctionRegistry;
 
 	private static class BinaryFunction
 		implements DDMExpressionFunction.Function2<Object, Object, Boolean> {

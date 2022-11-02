@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.expression.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMExpressionFunctionTracker.class)
-public class DDMExpressionFunctionTrackerImpl
-	implements DDMExpressionFunctionTracker {
+@Component(service = DDMExpressionFunctionRegistry.class)
+public class DDMExpressionFunctionRegistryImpl
+	implements DDMExpressionFunctionRegistry {
 
 	@Override
 	public Map<String, DDMExpressionFunction>

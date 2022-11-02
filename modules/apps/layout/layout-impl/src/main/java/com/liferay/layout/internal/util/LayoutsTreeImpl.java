@@ -16,6 +16,7 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.layout.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -56,6 +58,8 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutsadmin.util.LayoutsTree;
+import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.util.ArrayList;
@@ -595,6 +599,21 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			if (GetterUtil.getBoolean(
+					httpServletRequest.getAttribute(
+						ProductNavigationProductMenuWebKeys.
+							RETURN_LAYOUTS_AS_ARRAY))) {
+
+				LayoutActionProvider layoutActionProvider =
+					new LayoutActionProvider(
+						httpServletRequest, _language,
+						_siteNavigationMenuLocalService);
+
+				jsonObject.put(
+					"actions",
+					layoutActionProvider.getActionsJSONArray(layout));
+			}
+
 			if (childrenJSONSerializable instanceof JSONArray) {
 				JSONArray childrenJSONArray =
 					(JSONArray)childrenJSONSerializable;
@@ -820,6 +839,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private LayoutContentModelResourcePermission
 		_layoutContentModelResourcePermission;
 
@@ -840,6 +862,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Reference
 	private Sites _sites;

@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Leonardo Barros
  */
 @ProviderType
-public interface DDMFormInstanceRecordWriterTracker {
+public interface DDMFormInstanceRecordWriterRegistry {
 
 	public DDMFormInstanceRecordWriter getDDMFormInstanceRecordWriter(
 		String type);

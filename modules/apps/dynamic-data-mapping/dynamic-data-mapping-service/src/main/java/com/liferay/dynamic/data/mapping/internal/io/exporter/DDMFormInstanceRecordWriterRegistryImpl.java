@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.io.exporter;
 
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMFormInstanceRecordWriterTracker.class)
-public class DDMFormInstanceRecordWriterTrackerImpl
-	implements DDMFormInstanceRecordWriterTracker {
+@Component(service = DDMFormInstanceRecordWriterRegistry.class)
+public class DDMFormInstanceRecordWriterRegistryImpl
+	implements DDMFormInstanceRecordWriterRegistry {
 
 	@Override
 	public DDMFormInstanceRecordWriter getDDMFormInstanceRecordWriter(

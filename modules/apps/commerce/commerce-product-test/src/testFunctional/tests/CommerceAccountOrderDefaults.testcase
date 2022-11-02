@@ -1155,6 +1155,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9704. We can select only All Other Channels option after selecting default for each channel."
+	@priority = "3"
+	test CanSelectOnlyAllOtherChannelsForDefaultPriceList {
+		property portal.acceptance = "false";
+
+		task ("Given two more channels Test Channel 1 and Test Channel 2") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("And 2 new Price Lists") {
+			for (var priceLists : list "Test Price List 1,Test Price List 2") {
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+					catalogName = "Minium",
+					currencyCode = "USD",
+					priceListName = "${priceLists}");
+			}
+		}
+
+		task ("When a default price list for Minium Portal Channel, Test Channel 1, Test Channel 2 is set") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium Portal",
+				priceListTitle = "Test Price List 1");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Test Channel 1",
+				priceListTitle = "Test Price List 2");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Test Channel 2",
+				priceListTitle = "Test Price List 1");
+		}
+
+		task ("Then only All Other Channels option is listed") {
+			Click.javaScriptClick(
+				key_title = "Add Default Price List",
+				locator1 = "Button#ANY_TITLE");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementPresent(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "All Other Channels");
+
+			for (var channelEntry : list "Minium Portal, Test Channel 1,Test Channel 2") {
+				AssertElementNotPresent(
+					key_value = "${channelEntry}",
+					locator1 = "CommerceEntry#CHANNEL_ACCOUNT_DEFAULTS_MODAL_DROPDOWN");
+			}
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("When a default is also set for All Other Channels option") {
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "All Other Channels",
+				priceListTitle = "Test Price List 2");
+		}
+
+		task ("Then setting another default for All Other Channels option is not possible and an error message is shown") {
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				assertError = "true",
+				channelEntry = "All Other Channels",
+				priceListTitle = "Test Price List 1");
+		}
+	}
+
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account shipping address for each channel"
 	@priority = "3"
 	test CanSelectOnlyAllOtherChannelsForDefaultShippingAddress {
@@ -2263,6 +2343,200 @@ definition {
 				productQuantity = "1",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9704. We can use Override Eligibility option while selecting a default price list to override other eligibilities."
+	@priority = "3"
+	test DefaultPriceListCanOverrideOtherEligibilities {
+		property portal.acceptance = "false";
+
+		task ("Given a second site and account with a user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer2@liferay.com",
+				userFirstName = "Buyer2",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium 2");
+		}
+
+		task ("And two more channels(Test Channel 1 and Test Channel 2)") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("And Test Price List 1 with priority 1") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 1",
+				priority = "1");
+		}
+
+		task ("And Test Price List 2 with priority 2") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 2",
+				priority = "2");
+		}
+
+		task ("And Test Price List 3 with priority 0") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 3",
+				priority = "0");
+		}
+
+		task ("And Test Price List 1 entry for U-Joint with price set as 20.00 and eligible for Minium Portal") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account",
+				channelsEligibility = "Minium Portal");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "20",
+				priceListName = "Test Price List 1",
+				productSKU = "MIN55861");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("And Test Price List 2 entry for U-Joint with price set as 30.00 and eligible for Test Channel 2") {
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 2");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account 2",
+				channelsEligibility = "Test Channel 2");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "30",
+				priceListName = "Test Price List 2",
+				productSKU = "MIN55861");
+		}
+
+		task ("And Test Price List 3 entry for U-Joint with price set as 50.00") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "50",
+				priceListName = "Test Price List 3",
+				productSKU = "MIN55861");
+		}
+
+		task ("When Test Price 3 is set default for Minium Portal Channel for Commerce Account with override eligibility set to true") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium Portal",
+				override = "true",
+				priceListTitle = "Test Price List 3");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then verifies that the Catalog price of U-Joint is 50.00") {
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 50.00");
+		}
+
+		task ("Given the settings are changed for price lists eligibility") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account",
+				channelsEligibility = "Test Channel 1");
+
+			Click(locator1 = "Icon#BACK");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 2");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account 2",
+				channelsEligibility = "Minium 2 Portal");
+
+			Click(locator1 = "Icon#BACK");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 3");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(
+				accountsEligibility = "Commerce Account",
+				channelsEligibility = "Minium Portal");
+		}
+
+		task ("When Test Price 3 is set default for Minium Portal Channel for Commerce Account 2") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account 2");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium 2 Portal",
+				priceListTitle = "Test Price List 3");
+		}
+
+		task ("Then buyer2 verifies that the Catalog price of U-Joint is 30.00") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium-2",
+				userEmailAddress = "buyer2@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 30.00");
 		}
 	}
 

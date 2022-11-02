@@ -28,16 +28,18 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro deleteChannelAccountManagersEntry {
-		Variables.assertDefined(parameterList = "${channelName},${userFullName}");
+	macro deleteAccountChannelDefaultsEntry {
+		Variables.assertDefined(parameterList = "${channelName},${defaultEntryName},${defaultEntryLabel}");
 
 		Click(
 			key_firstColumnValue = "${channelName}",
-			key_secondColumnValue = "${userFullName}",
-			key_table = "defaultUsers",
+			key_secondColumnValue = "${defaultEntryName}",
+			key_table = "${defaultEntryLabel}",
 			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Delete");
+
+		SelectFrameTop();
 	}
 
 	macro editChannelAccountManagersEntry {
@@ -145,6 +147,113 @@ definition {
 				key_productName = "${channelName}",
 				key_value = "${shippingOption}",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+	}			
+	
+	macro editDefaultPriceList {
+		Variables.assertDefined(parameterList = "${currentChannelName},${currentPriceListName}");
+
+		Click(
+			key_firstColumnValue = "${currentChannelName}",
+			key_secondColumnValue = "${currentPriceListName}",
+			key_table = "PriceLists",
+			locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(newChannelName)) {
+			Select(
+				key_selectFieldLabel = "Channel",
+				locator1 = "CommerceEntry#ANY_SELECT",
+				value1 = "${newChannelName}");
+		}
+
+		if (isSet(override) && ("${override}" == "true")) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Override Eligibility",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (isSet(newPriceListName)) {
+			Select(
+				key_selectFieldLabel = "Price List",
+				locator1 = "CommerceEntry#ANY_SELECT",
+				value1 = "${newPriceListName}");
+		}
+
+		Button.clickSave();
+
+		if (isSet(assertError) && ("${assertError}" == "true")) {
+			Alert.viewErrorMessage(errorMessage = "Error:There is already a price list defined for the selected channel.");
+		}
+
+		SelectFrameTop();
+	}
+
+	macro setDefaultPriceList {
+		WaitForElementPresent(
+			key_title = "Add Default Price List",
+			locator1 = "Button#ANY_TITLE");
+
+		Click.javaScriptClick(
+			key_title = "Add Default Price List",
+			locator1 = "Button#ANY_TITLE");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(channelEntry) && ("${channelEntry}" != "")) {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "${channelEntry}");
+		}
+
+		if (isSet(override) && ("${override}" == "true")) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Override Eligibility",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Select(
+			key_fieldLabel = "Price List",
+			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+			value1 = "${priceListTitle}");
+
+		Button.clickSave();
+
+		if (isSet(assertError) && ("${assertError}" == "true")) {
+			Alert.viewErrorMessage(errorMessage = "Error:There is already a price list defined for the selected channel.");
+		}
+
+		SelectFrameTop();
+	}
+
+	macro viewDefaultPriceListEntries {
+		if (isSet(priceListEntries)) {
+			if (isSet(row) && ("${row}" != "")) {
+				for (var priceListEntry : list "${priceListEntries}") {
+					AssertElementPresent(
+						key_entryDetails = "${priceListEntry}",
+						key_row = "${row}",
+						key_termType = "${priceListLabel}",
+						locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS");
+				}
+			}
+			else {
+				for (var priceListEntry : list "${priceListEntries}") {
+					AssertElementPresent(
+						key_entryDetails = "${priceListEntry}",
+						key_row = "1",
+						key_termType = "${priceListLabel}",
+						locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_ENTRY_DETAILS");
+				}
+			}
+		}
+		else {
+			AssertElementPresent(
+				key_termType = "${priceListLabel}",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 		}
 	}
 

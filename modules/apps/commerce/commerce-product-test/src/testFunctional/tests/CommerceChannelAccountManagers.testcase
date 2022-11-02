@@ -794,9 +794,10 @@ definition {
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
-			CommerceAccountChannelDefaults.deleteChannelAccountManagersEntry(
+			CommerceAccountChannelDefaults.deleteAccountChannelDefaultsEntry(
 				channelName = "Minium Portal",
-				userFullName = "Sales Agent");
+				defaultEntryLabel = "defaultUsers",
+				defaultEntryName = "Sales Agent");
 
 			AssertElementNotPresent(
 				key_firstColumnValue = "Minium Portal",

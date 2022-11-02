@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
+import org.osgi.service.component.annotations.Component;
 
 import java.io.Serializable;
 
@@ -47,23 +49,25 @@ import java.util.Map;
 /**
  * @author Adam Brandizzi
  */
-public class WorkflowTaskPermissionChecker {
+public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 
+	@Override
 	public void check(
-			long groupId, WorkflowTask workflowTask,
-			PermissionChecker permissionChecker)
+			PermissionChecker permissionChecker, WorkflowTask workflowTask,
+			long groupId)
 		throws PortalException {
 
-		if (!hasPermission(groupId, workflowTask, permissionChecker)) {
+		if (!contains(permissionChecker, workflowTask, groupId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, WorkflowTask.class.getName(),
 				workflowTask.getWorkflowTaskId(), ActionKeys.VIEW);
 		}
 	}
 
-	public boolean hasPermission(
-		long groupId, WorkflowTask workflowTask,
-		PermissionChecker permissionChecker) {
+	@Override
+	public boolean contains(
+		PermissionChecker permissionChecker, WorkflowTask workflowTask,
+		long groupId) {
 
 		if (permissionChecker.isOmniadmin() ||
 			permissionChecker.isCompanyAdmin()) {
@@ -248,6 +252,6 @@ public class WorkflowTaskPermissionChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowTaskPermissionChecker.class);
+		WorkflowTaskPermissionImpl.class);
 
 }

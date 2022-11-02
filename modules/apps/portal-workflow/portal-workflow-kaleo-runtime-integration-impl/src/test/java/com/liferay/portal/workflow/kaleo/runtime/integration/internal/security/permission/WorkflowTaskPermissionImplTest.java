@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import java.io.Serializable;
 
@@ -58,7 +59,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Adam Brandizzi
  */
-public class WorkflowTaskPermissionCheckerTest {
+public class WorkflowTaskPermissionImplTest {
 
 	@ClassRule
 	@Rule
@@ -80,9 +81,9 @@ public class WorkflowTaskPermissionCheckerTest {
 	@Test
 	public void testCompanyAdminHasPermission() {
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockWorkflowTask(),
-				_mockCompanyAdminPermissionChecker()));
+			_workflowTaskPermissionChecker.contains(
+				_mockCompanyAdminPermissionChecker(), _mockWorkflowTask(),
+				RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -91,11 +92,11 @@ public class WorkflowTaskPermissionCheckerTest {
 			_mockContentReviewerPermissionChecker(RandomTestUtil.randomLong());
 
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(),
+			_workflowTaskPermissionChecker.contains(
+				permissionChecker,
 				_mockWorkflowTask(
 					User.class.getName(), permissionChecker.getUserId()),
-				permissionChecker));
+				RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -103,12 +104,12 @@ public class WorkflowTaskPermissionCheckerTest {
 		long[] permissionCheckerRoleIds = _randomPermissionCheckerRoleIds();
 
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(),
+			_workflowTaskPermissionChecker.contains(
+				_mockContentReviewerPermissionChecker(
+					RandomTestUtil.randomLong(), permissionCheckerRoleIds),
 				_mockWorkflowTask(
 					Role.class.getName(), permissionCheckerRoleIds[0]),
-				_mockContentReviewerPermissionChecker(
-					RandomTestUtil.randomLong(), permissionCheckerRoleIds)));
+				RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -118,13 +119,13 @@ public class WorkflowTaskPermissionCheckerTest {
 		long[] permissionCheckerRoleIds = _randomPermissionCheckerRoleIds();
 
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(),
-				_mockWorkflowTask(
-					Role.class.getName(), permissionCheckerRoleIds[0]),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), permissionCheckerRoleIds,
-					false, false, false)));
+					false, false, false),
+				_mockWorkflowTask(
+					Role.class.getName(), permissionCheckerRoleIds[0]),
+				RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -132,13 +133,13 @@ public class WorkflowTaskPermissionCheckerTest {
 		long[] permissionCheckerRoleIds = _randomPermissionCheckerRoleIds();
 
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(),
-				_mockCompletedWorkflowTask(
-					Role.class.getName(), permissionCheckerRoleIds[0]),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), permissionCheckerRoleIds,
-					false, false, false)));
+					false, false, false),
+				_mockCompletedWorkflowTask(
+					Role.class.getName(), permissionCheckerRoleIds[0]),
+				RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -146,13 +147,13 @@ public class WorkflowTaskPermissionCheckerTest {
 		long[] permissionCheckerRoleIds = _randomPermissionCheckerRoleIds();
 
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(),
-				_mockWorkflowTask(
-					Role.class.getName(), permissionCheckerRoleIds[0]),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), permissionCheckerRoleIds,
-					false, false, false)));
+					false, false, false),
+				_mockWorkflowTask(
+					Role.class.getName(), permissionCheckerRoleIds[0]),
+				RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -160,11 +161,11 @@ public class WorkflowTaskPermissionCheckerTest {
 		long assigneeUserId = RandomTestUtil.randomLong();
 
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				assigneeUserId,
-				_mockWorkflowTask(User.class.getName(), assigneeUserId),
+			_workflowTaskPermissionChecker.contains(
 				_mockContentReviewerPermissionChecker(
-					RandomTestUtil.randomLong())));
+					RandomTestUtil.randomLong()),
+				_mockWorkflowTask(User.class.getName(), assigneeUserId),
+				assigneeUserId));
 	}
 
 	@Test
@@ -172,21 +173,21 @@ public class WorkflowTaskPermissionCheckerTest {
 		long assigneeRoleId = RandomTestUtil.randomLong();
 
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				assigneeRoleId,
-				_mockWorkflowTask(Role.class.getName(), assigneeRoleId),
+			_workflowTaskPermissionChecker.contains(
 				_mockContentReviewerPermissionChecker(
-					RandomTestUtil.randomLong())));
+					RandomTestUtil.randomLong()),
+				_mockWorkflowTask(Role.class.getName(), assigneeRoleId),
+				assigneeRoleId));
 	}
 
 	@Test
 	public void testNotContentReviewerHasNoPermission() {
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockWorkflowTask(),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
-					false)));
+					false),
+				_mockWorkflowTask(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -194,11 +195,11 @@ public class WorkflowTaskPermissionCheckerTest {
 		_mockAssetRendererHasViewPermission(true);
 
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockCompletedWorkflowTask(),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
-					false)));
+					false),
+				_mockCompletedWorkflowTask(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -206,11 +207,11 @@ public class WorkflowTaskPermissionCheckerTest {
 		_mockAssetRendererHasViewPermission(true);
 
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockWorkflowTask(),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
-					false)));
+					false),
+				_mockWorkflowTask(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -219,11 +220,11 @@ public class WorkflowTaskPermissionCheckerTest {
 		_mockUserNotificationEventLocalServiceUtil(1);
 
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockWorkflowTask(),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
-					false)));
+					false),
+				_mockWorkflowTask(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -231,11 +232,11 @@ public class WorkflowTaskPermissionCheckerTest {
 		_mockAssetRendererHasViewPermission(false);
 
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockCompletedWorkflowTask(),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
-					false)));
+					false),
+				_mockCompletedWorkflowTask(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -243,19 +244,19 @@ public class WorkflowTaskPermissionCheckerTest {
 		_mockAssetRendererHasViewPermission(false);
 
 		Assert.assertFalse(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockWorkflowTask(),
+			_workflowTaskPermissionChecker.contains(
 				_mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
-					false)));
+					false),
+				_mockWorkflowTask(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
 	public void testOmniadminHasPermission() {
 		Assert.assertTrue(
-			_workflowTaskPermissionChecker.hasPermission(
-				RandomTestUtil.randomLong(), _mockWorkflowTask(),
-				_mockOmniadminPermissionChecker()));
+			_workflowTaskPermissionChecker.contains(
+				_mockOmniadminPermissionChecker(), _mockWorkflowTask(),
+				RandomTestUtil.randomLong()));
 	}
 
 	private static void _setUpGroupLocalServiceUtil() {
@@ -499,7 +500,7 @@ public class WorkflowTaskPermissionCheckerTest {
 	private static final String _TEST_CONTEXT_ENTRY_CLASS_NAME =
 		"TEST_CONTEXT_ENTRY_CLASS_NAME";
 
-	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
-		new WorkflowTaskPermissionChecker();
+	private final WorkflowTaskPermission _workflowTaskPermissionChecker =
+		new WorkflowTaskPermissionImpl();
 
 }

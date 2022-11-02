@@ -21,7 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
@@ -185,18 +185,18 @@ public class FragmentRendererControllerImpl
 		FragmentRenderer fragmentRenderer = null;
 
 		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
-			fragmentRenderer = _fragmentRendererTracker.getFragmentRenderer(
+			fragmentRenderer = _fragmentRendererRegistry.getFragmentRenderer(
 				fragmentEntryLink.getRendererKey());
 		}
 
 		if ((fragmentRenderer == null) && fragmentEntryLink.isTypeReact()) {
-			fragmentRenderer = _fragmentRendererTracker.getFragmentRenderer(
+			fragmentRenderer = _fragmentRendererRegistry.getFragmentRenderer(
 				FragmentRendererConstants.
 					FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT);
 		}
 
 		if (fragmentRenderer == null) {
-			fragmentRenderer = _fragmentRendererTracker.getFragmentRenderer(
+			fragmentRenderer = _fragmentRendererRegistry.getFragmentRenderer(
 				FragmentRendererConstants.FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY);
 		}
 
@@ -230,7 +230,7 @@ public class FragmentRendererControllerImpl
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

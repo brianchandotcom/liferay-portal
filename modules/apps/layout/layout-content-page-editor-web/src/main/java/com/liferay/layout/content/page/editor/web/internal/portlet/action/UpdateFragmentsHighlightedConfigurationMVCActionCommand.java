@@ -19,7 +19,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -117,7 +117,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 		}
 
 		FragmentRenderer fragmentRenderer =
-			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
+			_fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
 
 		if (fragmentRenderer != null) {
 			return fragmentEntryKey;
@@ -238,7 +238,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			}
 
 			FragmentRenderer fragmentRenderer =
-				_fragmentRendererTracker.getFragmentRenderer(key);
+				_fragmentRendererRegistry.getFragmentRenderer(key);
 
 			if (fragmentRenderer != null) {
 				String label = fragmentRenderer.getLabel(
@@ -492,7 +492,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -22,7 +22,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
@@ -79,7 +79,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 				groupId, fragmentEntryKey, serviceContext.getLocale());
 
 		FragmentRenderer fragmentRenderer =
-			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
+			_fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
 
 		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
 			throw new NoSuchEntryException();
@@ -214,7 +214,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

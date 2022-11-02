@@ -21,7 +21,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
@@ -240,7 +240,7 @@ public class FragmentCollectionManager {
 			new LinkedHashMap<>();
 
 		for (FragmentRenderer fragmentRenderer :
-				_fragmentRendererTracker.getFragmentRenderers()) {
+				_fragmentRendererRegistry.getFragmentRenderers()) {
 
 			if (!fragmentRenderer.isSelectable(httpServletRequest) ||
 				!_isAllowedFragmentEntryKey(
@@ -639,7 +639,7 @@ public class FragmentCollectionManager {
 	private FragmentEntryService _fragmentEntryService;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

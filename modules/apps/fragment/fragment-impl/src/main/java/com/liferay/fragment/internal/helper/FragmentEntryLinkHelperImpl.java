@@ -19,7 +19,7 @@ import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,7 +65,7 @@ public class FragmentEntryLinkHelperImpl implements FragmentEntryLinkHelper {
 		}
 
 		FragmentRenderer fragmentRenderer =
-			_fragmentRendererTracker.getFragmentRenderer(
+			_fragmentRendererRegistry.getFragmentRenderer(
 				fragmentEntryLink.getRendererKey());
 
 		if (fragmentRenderer != null) {
@@ -83,6 +83,6 @@ public class FragmentEntryLinkHelperImpl implements FragmentEntryLinkHelper {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 }

@@ -89,7 +89,8 @@ public class FragmentRendererRegistryImpl implements FragmentRendererRegistry {
 
 				emitter.emit(fragmentRenderer.getKey());
 			},
-			new FragmentRendererTrackerServiceTrackerCustomizer(bundleContext));
+			new FragmentRendererRegistryServiceTrackerCustomizer(
+				bundleContext));
 	}
 
 	@Deactivate
@@ -108,11 +109,11 @@ public class FragmentRendererRegistryImpl implements FragmentRendererRegistry {
 
 	private ServiceTrackerMap<String, FragmentRenderer> _serviceTrackerMap;
 
-	private class FragmentRendererTrackerServiceTrackerCustomizer
+	private class FragmentRendererRegistryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<FragmentRenderer, FragmentRenderer> {
 
-		public FragmentRendererTrackerServiceTrackerCustomizer(
+		public FragmentRendererRegistryServiceTrackerCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;

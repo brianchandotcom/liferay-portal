@@ -24,7 +24,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -264,7 +264,7 @@ public class FragmentEntryLinkManager {
 					}
 
 					FragmentRenderer fragmentRenderer =
-						_fragmentRendererTracker.getFragmentRenderer(
+						_fragmentRendererRegistry.getFragmentRenderer(
 							rendererKey);
 
 					if (fragmentRenderer != null) {
@@ -479,7 +479,7 @@ public class FragmentEntryLinkManager {
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

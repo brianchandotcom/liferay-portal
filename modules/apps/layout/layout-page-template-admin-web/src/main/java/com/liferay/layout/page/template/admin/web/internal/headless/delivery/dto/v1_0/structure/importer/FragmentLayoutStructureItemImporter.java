@@ -27,7 +27,7 @@ import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -248,7 +248,7 @@ public class FragmentLayoutStructureItemImporter
 			layout.getCompanyId(), layout.getGroupId(), fragmentKey);
 
 		FragmentRenderer fragmentRenderer =
-			_fragmentRendererTracker.getFragmentRenderer(fragmentKey);
+			_fragmentRendererRegistry.getFragmentRenderer(fragmentKey);
 
 		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
 			warningMessages.add(
@@ -1134,7 +1134,7 @@ public class FragmentLayoutStructureItemImporter
 	private FragmentEntryValidator _fragmentEntryValidator;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentRendererRegistry _fragmentRendererRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

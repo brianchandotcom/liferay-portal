@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(service = DataStorageTracker.class)
-public class DataStorageTracker {
+@Component(service = DataStorageRegistry.class)
+public class DataStorageRegistry {
 
 	public DataStorage getDataStorage(String dataStorageType) {
 		return _serviceTrackerMap.getService(dataStorageType);

@@ -4,6 +4,8 @@ components:
             properties:
                 channelId:
                     type: string
+                commerceSyncEnabled:
+                    type: boolean
                 createDate:
                     format: date
                     type: string

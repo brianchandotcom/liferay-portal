@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Katie Nesterovich
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = {
 		"dispatch.task.executor.name=" + CommerceAvalaraDispatchTaskExecutor.AVALARA,
 		"dispatch.task.executor.type=" + CommerceAvalaraDispatchTaskExecutor.AVALARA

@@ -147,7 +147,7 @@ public class UpdateDataProviderMVCActionCommand
 		DDMDataProviderInstance dataProviderInstance) {
 
 		DDMDataProvider ddmDataProvider =
-			ddmDataProviderTracker.getDDMDataProvider(
+			ddmDataProviderRegistry.getDDMDataProvider(
 				dataProviderInstance.getType());
 
 		Class<?> clazz = ddmDataProvider.getSettings();

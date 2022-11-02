@@ -17,10 +17,10 @@ package com.liferay.dynamic.data.mapping.data.provider.internal;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInvoker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseStatus;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
@@ -191,11 +191,11 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 		Optional<DDMDataProvider> ddmDataProviderTypeOptional =
 			ddmDataProviderInstanceOptional.map(
 				ddmDataProviderInstance ->
-					ddmDataProviderTracker.getDDMDataProvider(
+					ddmDataProviderRegistry.getDDMDataProvider(
 						ddmDataProviderInstance.getType()));
 
 		return ddmDataProviderTypeOptional.orElseGet(
-			() -> ddmDataProviderTracker.getDDMDataProviderByInstanceId(
+			() -> ddmDataProviderRegistry.getDDMDataProviderByInstanceId(
 				ddmDataProviderInstanceId));
 	}
 
@@ -215,7 +215,7 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 	protected DDMDataProviderInstanceSettings ddmDataProviderInstanceSettings;
 
 	@Reference
-	protected DDMDataProviderTracker ddmDataProviderTracker;
+	protected DDMDataProviderRegistry ddmDataProviderRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInvokerImpl.class);

@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.data.provider.instance.internal;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -131,7 +131,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 	protected DDMDataProviderInstanceService ddmDataProviderInstanceService;
 
 	@Reference
-	protected DDMDataProviderTracker ddmDataProviderTracker;
+	protected DDMDataProviderRegistry ddmDataProviderRegistry;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
@@ -155,7 +155,7 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 				dataProviderInstanceId);
 
 		DDMDataProvider ddmDataProvider =
-			ddmDataProviderTracker.getDDMDataProvider(
+			ddmDataProviderRegistry.getDDMDataProvider(
 				ddmDataProviderInstance.getType());
 
 		if (!ClassUtil.isSubclass(

@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.data.provider.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -49,8 +49,8 @@ public class DDMDataProviderInstanceSettingsImplTest {
 		_ddmDataProviderInstanceSettingsImpl =
 			new DDMDataProviderInstanceSettingsImpl();
 
-		_ddmDataProviderInstanceSettingsImpl.ddmDataProviderTracker =
-			_ddmDataProviderTracker;
+		_ddmDataProviderInstanceSettingsImpl.ddmDataProviderRegistry =
+			_ddmDataProviderRegistry;
 		_ddmDataProviderInstanceSettingsImpl.jsonDDMFormValuesDeserializer =
 			_ddmFormValuesDeserializer;
 	}
@@ -58,7 +58,7 @@ public class DDMDataProviderInstanceSettingsImplTest {
 	@Test
 	public void testGetSettings() {
 		Mockito.when(
-			_ddmDataProviderTracker.getDDMDataProvider(
+			_ddmDataProviderRegistry.getDDMDataProvider(
 				Mockito.nullable(String.class))
 		).thenReturn(
 			_ddmDataProvider
@@ -99,7 +99,7 @@ public class DDMDataProviderInstanceSettingsImplTest {
 	@Test(expected = IllegalStateException.class)
 	public void testGetSettingsCatchException() {
 		Mockito.when(
-			_ddmDataProviderTracker.getDDMDataProvider(
+			_ddmDataProviderRegistry.getDDMDataProvider(
 				Mockito.nullable(String.class))
 		).thenThrow(
 			IllegalStateException.class
@@ -137,8 +137,8 @@ public class DDMDataProviderInstanceSettingsImplTest {
 		Mockito.mock(DDMDataProviderInstance.class);
 	private DDMDataProviderInstanceSettingsImpl
 		_ddmDataProviderInstanceSettingsImpl;
-	private final DDMDataProviderTracker _ddmDataProviderTracker = Mockito.mock(
-		DDMDataProviderTracker.class);
+	private final DDMDataProviderRegistry _ddmDataProviderRegistry =
+		Mockito.mock(DDMDataProviderRegistry.class);
 	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer =
 		Mockito.mock(DDMFormValuesDeserializer.class);
 

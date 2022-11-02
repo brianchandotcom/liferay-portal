@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.data.provider.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -41,7 +41,7 @@ public class DDMDataProviderInstanceSettingsImpl
 		DDMDataProviderInstance ddmDataProviderInstance, Class<T> clazz) {
 
 		DDMDataProvider ddmDataProvider =
-			ddmDataProviderTracker.getDDMDataProvider(
+			ddmDataProviderRegistry.getDDMDataProvider(
 				ddmDataProviderInstance.getType());
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
@@ -65,7 +65,7 @@ public class DDMDataProviderInstanceSettingsImpl
 	}
 
 	@Reference
-	protected DDMDataProviderTracker ddmDataProviderTracker;
+	protected DDMDataProviderRegistry ddmDataProviderRegistry;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;

@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.data.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -66,7 +66,7 @@ public class DDMDataProviderTest {
 	@Test
 	public void testGetDDMDataProviderByInstanceId() {
 		DDMDataProvider testDataProvider =
-			_ddmDataProviderTracker.getDDMDataProviderByInstanceId("test");
+			_ddmDataProviderRegistry.getDDMDataProviderByInstanceId("test");
 
 		Assert.assertNotNull(testDataProvider);
 	}
@@ -74,7 +74,7 @@ public class DDMDataProviderTest {
 	@Test
 	public void testInvokeDataProvider() throws Exception {
 		DDMDataProvider testDataProvider =
-			_ddmDataProviderTracker.getDDMDataProviderByInstanceId("test");
+			_ddmDataProviderRegistry.getDDMDataProviderByInstanceId("test");
 
 		DDMDataProviderRequest.Builder builder =
 			DDMDataProviderRequest.Builder.newBuilder();
@@ -107,7 +107,7 @@ public class DDMDataProviderTest {
 	}
 
 	@Inject
-	private static DDMDataProviderTracker _ddmDataProviderTracker;
+	private static DDMDataProviderRegistry _ddmDataProviderRegistry;
 
 	private static ServiceRegistration<DDMDataProvider> _serviceRegistration;
 

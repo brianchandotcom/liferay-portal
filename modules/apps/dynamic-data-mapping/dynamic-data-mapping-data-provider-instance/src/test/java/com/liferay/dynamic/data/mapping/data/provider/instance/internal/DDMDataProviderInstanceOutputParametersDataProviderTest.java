@@ -15,9 +15,9 @@
 package com.liferay.dynamic.data.mapping.data.provider.instance.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -81,7 +81,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		_ddmDataProviderInstanceOutputParametersDataProvider.
 			ddmDataProviderInstanceService = _ddmDataProviderInstanceService;
 		_ddmDataProviderInstanceOutputParametersDataProvider.
-			ddmDataProviderTracker = _ddmDataProviderTracker;
+			ddmDataProviderRegistry = _ddmDataProviderRegistry;
 		_ddmDataProviderInstanceOutputParametersDataProvider.
 			jsonDDMFormValuesDeserializer = _ddmFormValuesDeserializer;
 	}
@@ -108,7 +108,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		);
 
 		Mockito.when(
-			_ddmDataProviderTracker.getDDMDataProvider("rest")
+			_ddmDataProviderRegistry.getDDMDataProvider("rest")
 		).thenReturn(
 			_ddmDataProvider
 		);
@@ -270,7 +270,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		);
 
 		Mockito.when(
-			_ddmDataProviderTracker.getDDMDataProvider("rest")
+			_ddmDataProviderRegistry.getDDMDataProvider("rest")
 		).thenReturn(
 			_ddmDataProvider
 		);
@@ -370,8 +370,8 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService = Mockito.mock(
 			DDMDataProviderInstanceService.class);
-	private final DDMDataProviderTracker _ddmDataProviderTracker = Mockito.mock(
-		DDMDataProviderTracker.class);
+	private final DDMDataProviderRegistry _ddmDataProviderRegistry =
+		Mockito.mock(DDMDataProviderRegistry.class);
 	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer =
 		Mockito.mock(DDMFormValuesDeserializer.class);
 

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.display.cont
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.display.DDMDataProviderDisplay;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.DDMDataProviderDisplayTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.helper.DDMDataProviderRequestHelper;
@@ -97,7 +97,7 @@ public class DDMDataProviderDisplayContext {
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		DDMDataProviderDisplayTracker ddmDataProviderDisplayTracker,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
-		DDMDataProviderTracker ddmDataProviderTracker,
+		DDMDataProviderRegistry ddmDataProviderRegistry,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesDeserializer ddmFormValuesDeserializer,
 		UserLocalService userLocalService) {
@@ -106,7 +106,7 @@ public class DDMDataProviderDisplayContext {
 		_renderResponse = renderResponse;
 		_ddmDataProviderDisplayTracker = ddmDataProviderDisplayTracker;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
-		_ddmDataProviderTracker = ddmDataProviderTracker;
+		_ddmDataProviderRegistry = ddmDataProviderRegistry;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
 		_userLocalService = userLocalService;
@@ -173,7 +173,7 @@ public class DDMDataProviderDisplayContext {
 			ddmDataProviderInstance, _renderRequest, "type");
 
 		DDMDataProvider ddmDataProvider =
-			_ddmDataProviderTracker.getDDMDataProvider(type);
+			_ddmDataProviderRegistry.getDDMDataProvider(type);
 
 		Class<?> clazz = ddmDataProvider.getSettings();
 
@@ -658,7 +658,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	private Set<String> _getDDMDataProviderTypes() {
-		return _ddmDataProviderTracker.getDDMDataProviderTypes();
+		return _ddmDataProviderRegistry.getDDMDataProviderTypes();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -766,8 +766,8 @@ public class DDMDataProviderDisplayContext {
 	private DDMDataProviderInstance _ddmDataProviderInstance;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
+	private final DDMDataProviderRegistry _ddmDataProviderRegistry;
 	private final DDMDataProviderRequestHelper _ddmDataProviderRequestHelper;
-	private final DDMDataProviderTracker _ddmDataProviderTracker;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 	private String _displayStyle;

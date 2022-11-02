@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -263,7 +263,7 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 				_getDDMDataProviderInstance(httpServletRequest);
 
 			DDMDataProvider ddmDataProvider =
-				_ddmDataProviderTracker.getDDMDataProvider(
+				_ddmDataProviderRegistry.getDDMDataProvider(
 					ddmDataProviderInstance.getType());
 
 			DDMFormValues ddmFormValues = getDataProviderFormValues(
@@ -304,7 +304,7 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 
 	@Reference
-	private DDMDataProviderTracker _ddmDataProviderTracker;
+	private DDMDataProviderRegistry _ddmDataProviderRegistry;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;

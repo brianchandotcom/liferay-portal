@@ -15,10 +15,10 @@
 package com.liferay.dynamic.data.mapping.data.provider.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseStatus;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -316,14 +316,14 @@ public class DDMDataProviderInvokerImplTest {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderTracker ddmDataProviderTracker = Mockito.mock(
-			DDMDataProviderTracker.class);
+		DDMDataProviderRegistry ddmDataProviderRegistry = Mockito.mock(
+			DDMDataProviderRegistry.class);
 
-		ddmDataProviderInvokerImpl.ddmDataProviderTracker =
-			ddmDataProviderTracker;
+		ddmDataProviderInvokerImpl.ddmDataProviderRegistry =
+			ddmDataProviderRegistry;
 
 		Mockito.when(
-			ddmDataProviderTracker.getDDMDataProvider(Mockito.anyString())
+			ddmDataProviderRegistry.getDDMDataProvider(Mockito.anyString())
 		).thenReturn(
 			null
 		);
@@ -331,7 +331,7 @@ public class DDMDataProviderInvokerImplTest {
 		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
 		Mockito.when(
-			ddmDataProviderTracker.getDDMDataProviderByInstanceId("1")
+			ddmDataProviderRegistry.getDDMDataProviderByInstanceId("1")
 		).thenReturn(
 			ddmDataProvider
 		);
@@ -342,7 +342,7 @@ public class DDMDataProviderInvokerImplTest {
 		Assert.assertNotNull(result);
 
 		Mockito.verify(
-			ddmDataProviderTracker, Mockito.times(1)
+			ddmDataProviderRegistry, Mockito.times(1)
 		).getDDMDataProviderByInstanceId(
 			"1"
 		);
@@ -353,11 +353,11 @@ public class DDMDataProviderInvokerImplTest {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderTracker ddmDataProviderTracker = Mockito.mock(
-			DDMDataProviderTracker.class);
+		DDMDataProviderRegistry ddmDataProviderRegistry = Mockito.mock(
+			DDMDataProviderRegistry.class);
 
-		ddmDataProviderInvokerImpl.ddmDataProviderTracker =
-			ddmDataProviderTracker;
+		ddmDataProviderInvokerImpl.ddmDataProviderRegistry =
+			ddmDataProviderRegistry;
 
 		DDMDataProviderInstance ddmDataProviderInstance = Mockito.mock(
 			DDMDataProviderInstance.class);
@@ -371,7 +371,7 @@ public class DDMDataProviderInvokerImplTest {
 		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
 		Mockito.when(
-			ddmDataProviderTracker.getDDMDataProvider("rest")
+			ddmDataProviderRegistry.getDDMDataProvider("rest")
 		).thenReturn(
 			ddmDataProvider
 		);
@@ -382,7 +382,7 @@ public class DDMDataProviderInvokerImplTest {
 		Assert.assertNotNull(result);
 
 		Mockito.verify(
-			ddmDataProviderTracker, Mockito.times(1)
+			ddmDataProviderRegistry, Mockito.times(1)
 		).getDDMDataProvider(
 			"rest"
 		);

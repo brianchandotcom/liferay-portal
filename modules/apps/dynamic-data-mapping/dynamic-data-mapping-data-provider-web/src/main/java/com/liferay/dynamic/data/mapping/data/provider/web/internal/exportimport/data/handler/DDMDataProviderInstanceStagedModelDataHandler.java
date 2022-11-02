@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.exportimport
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -149,7 +149,7 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		throws Exception {
 
 		DDMDataProvider ddmDataProvider =
-			_ddmDataProviderTracker.getDDMDataProvider(
+			_ddmDataProviderRegistry.getDDMDataProvider(
 				dataProviderInstance.getType());
 
 		if (ddmDataProvider == null) {
@@ -232,7 +232,7 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		_ddmDataProviderInstanceLocalService;
 
 	@Reference
-	private DDMDataProviderTracker _ddmDataProviderTracker;
+	private DDMDataProviderRegistry _ddmDataProviderRegistry;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;

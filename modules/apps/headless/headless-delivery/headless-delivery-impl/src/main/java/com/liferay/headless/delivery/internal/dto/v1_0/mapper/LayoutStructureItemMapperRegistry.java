@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemMapperTracker.class)
-public class LayoutStructureItemMapperTracker {
+@Component(service = LayoutStructureItemMapperRegistry.class)
+public class LayoutStructureItemMapperRegistry {
 
 	public LayoutStructureItemMapper getLayoutStructureItemMapper(
 		String className) {

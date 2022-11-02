@@ -791,44 +791,6 @@
 				[$SCOPE$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.countByGroupRoleAndTeamRole">
-		<![CDATA[
-			SELECT
-				COUNT(Role_.roleId) AS COUNT_VALUE
-			FROM
-				Role_
-			WHERE
-				(Role_.companyId = ?) AND
-				(
-					(
-						(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(LOWER(Role_.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
-					)
-					[$EXCLUDED_NAMES$]
-					[$TYPE$]
-				) OR
-				(
-					(Role_.classNameId = ?) AND
-					(Role_.roleId != ?) AND
-					(
-						Role_.classPK IN
-							(
-								SELECT
-									Team.teamId
-								FROM
-									Team
-								WHERE
-									(groupId = ?) AND
-									(
-										(LOWER(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-										(LOWER(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
-									)
-							)
-					)
-				)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.countByC_N_D_T">
 		<![CDATA[
 			SELECT
@@ -864,46 +826,6 @@
 					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$TYPE$]
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByGroupRoleAndTeamRole">
-		<![CDATA[
-			SELECT
-				{Role_.*}
-			FROM
-				Role_
-			WHERE
-				(Role_.companyId = ?) AND
-				(
-					(
-						(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(LOWER(Role_.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
-					)
-					[$EXCLUDED_NAMES$]
-					[$TYPE$]
-				) OR
-				(
-					(Role_.classNameId = ?) AND
-					(Role_.roleId != ?) AND
-					(
-						Role_.classPK IN
-							(
-								SELECT
-									Team.teamId
-								FROM
-									Team
-								WHERE
-									(groupId = ?) AND
-									(
-										(LOWER(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-										(LOWER(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
-									)
-							)
-					)
-				)
-			ORDER BY
-				Role_.name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByC_N_D_T">

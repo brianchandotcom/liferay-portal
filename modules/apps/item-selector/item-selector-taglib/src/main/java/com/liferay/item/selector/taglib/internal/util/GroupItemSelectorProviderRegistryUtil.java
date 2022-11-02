@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Cristina González
  */
 @Component(immediate = true, service = {})
-public class GroupItemSelectorTrackerUtil {
+public class GroupItemSelectorProviderRegistryUtil {
 
 	public static Optional<GroupItemSelectorProvider>
 		getGroupItemSelectorProviderOptional(String groupType) {

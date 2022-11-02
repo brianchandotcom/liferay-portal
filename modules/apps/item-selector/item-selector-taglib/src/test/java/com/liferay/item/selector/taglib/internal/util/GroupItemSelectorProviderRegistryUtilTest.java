@@ -40,7 +40,7 @@ import org.mockito.Mockito;
 /**
  * @author Cristina González
  */
-public class GroupItemSelectorTrackerUtilTest {
+public class GroupItemSelectorProviderRegistryUtilTest {
 
 	@ClassRule
 	@Rule
@@ -50,8 +50,9 @@ public class GroupItemSelectorTrackerUtilTest {
 	@Test
 	public void testGetGroupItemSelectorProviderOptionalWithoutRegisteredGroupItemSelectorProvider() {
 		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				RandomTestUtil.randomString());
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional(
+					RandomTestUtil.randomString());
 
 		Assert.assertTrue(!groupItemSelectorProviderOptional.isPresent());
 	}
@@ -59,14 +60,14 @@ public class GroupItemSelectorTrackerUtilTest {
 	@Test
 	public void testGetGroupItemSelectorProviderOptionalWithRegisteredGroupItemSelectorProvider() {
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap",
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
 			new MockServiceTrackerMap(
 				Collections.singletonMap(
 					"test", new MockGroupItemSelectorProvider())));
 
 		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				"test");
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional("test");
 
 		Assert.assertTrue(groupItemSelectorProviderOptional.isPresent());
 
@@ -76,53 +77,58 @@ public class GroupItemSelectorTrackerUtilTest {
 		Assert.assertEquals("icon", groupItemSelectorProvider.getIcon());
 
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap", null);
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
+			null);
 	}
 
 	@Test
 	public void testGetGroupItemSelectorProviderOptionalWithRegisteredInactiveGroupItemSelectorProvider() {
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap",
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
 			new MockServiceTrackerMap(
 				Collections.singletonMap(
 					"test", new MockGroupItemSelectorProvider(false))));
 
 		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				"test");
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional("test");
 
 		Assert.assertFalse(groupItemSelectorProviderOptional.isPresent());
 
 		Assert.assertTrue(
 			SetUtil.isEmpty(
-				GroupItemSelectorTrackerUtil.
+				GroupItemSelectorProviderRegistryUtil.
 					getGroupItemSelectorProviderTypes()));
 
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap", null);
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
+			null);
 	}
 
 	@Test
 	public void testGetGroupItemSelectorProviderTypesWithoutRegisteredGroupItemSelectorProvider() {
 		Assert.assertEquals(
 			Collections.emptySet(),
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes());
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderTypes());
 	}
 
 	@Test
 	public void testGetGroupItemSelectorProviderTypesWithRegisteredGroupItemSelectorProvider() {
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap",
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
 			new MockServiceTrackerMap(
 				Collections.singletonMap(
 					"test", new MockGroupItemSelectorProvider())));
 
 		Assert.assertEquals(
 			Collections.singleton("test"),
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes());
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderTypes());
 
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap", null);
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
+			null);
 	}
 
 	private static class MockGroupItemSelectorProvider

@@ -18,7 +18,6 @@ import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -33,14 +32,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -143,7 +139,8 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 			value = webImage.toJSONObject();
 
-			long fileEntryId = _getFileEntryId(webImage);
+			long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+				webImage);
 
 			if (fileEntryId != 0) {
 				JSONObject valueJSONObject = (JSONObject)value;
@@ -160,31 +157,6 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
-	}
-
-	private long _getFileEntryId(WebImage webImage) {
-		InfoItemReference infoItemReference = webImage.getInfoItemReference();
-
-		if ((infoItemReference == null) ||
-			!Objects.equals(
-				infoItemReference.getClassName(), FileEntry.class.getName())) {
-
-			return 0;
-		}
-
-		InfoItemIdentifier fileEntryInfoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(fileEntryInfoItemIdentifier instanceof
-				ClassPKInfoItemIdentifier)) {
-
-			return 0;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
-
-		return classPKInfoItemIdentifier.getClassPK();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

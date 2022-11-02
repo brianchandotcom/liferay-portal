@@ -28,7 +28,6 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -66,7 +65,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -79,7 +77,6 @@ import com.liferay.segments.context.RequestContextMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.PortletURL;
@@ -425,7 +422,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 				value = webImage.toJSONObject();
 
-				long fileEntryId = _getFileEntryId(webImage);
+				long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+					webImage);
 
 				if (fileEntryId != 0) {
 					JSONObject valueJSONObject = (JSONObject)value;
@@ -463,31 +461,6 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return displayObjectJSONObject;
-	}
-
-	private long _getFileEntryId(WebImage webImage) {
-		InfoItemReference infoItemReference = webImage.getInfoItemReference();
-
-		if ((infoItemReference == null) ||
-			!Objects.equals(
-				infoItemReference.getClassName(), FileEntry.class.getName())) {
-
-			return 0;
-		}
-
-		InfoItemIdentifier fileEntryInfoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(fileEntryInfoItemIdentifier instanceof
-				ClassPKInfoItemIdentifier)) {
-
-			return 0;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
-
-		return classPKInfoItemIdentifier.getClassPK();
 	}
 
 	private Object _getInfoItem(HttpServletRequest httpServletRequest) {

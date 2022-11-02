@@ -89,13 +89,16 @@ public class AssetEntriesCheckerHelperTest {
 		String portletId2 = LayoutTestUtil.addPortletToLayout(
 			_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
 
-		AssetEntry assetEntry1 = _addAssetEntry(portletId1, false);
+		AssetEntry assetEntry1 = _addAssetEntry();
 
-		AssetEntry assetEntry2 = _addAssetEntry(portletId2, false);
+		AssetEntry assetEntry2 = _addAssetEntry();
 
-		AssetEntry assetEntry3 = _addAssetEntry(portletId2, true);
+		AssetEntry assetEntry3 = _addAssetEntry();
 
-		AssetEntry assetEntry4 = _addAssetEntry(portletId2, true);
+		AssetEntry assetEntry4 = _addAssetEntry();
+
+		_setPortletManualSelectionStylePreference(
+			portletId2, assetEntry3, assetEntry4);
 
 		PortletPreferences portletId1PortletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, portletId1);
@@ -128,41 +131,15 @@ public class AssetEntriesCheckerHelperTest {
 			expectedPortletId2AssetEntries, actualPortletId2AssetEntries);
 	}
 
-	private AssetEntry _addAssetEntry(String portletId, boolean manualMode)
-		throws Exception {
-
+	private AssetEntry _addAssetEntry() throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
 			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+		return _assetEntryLocalService.getEntry(
 			_group.getGroupId(), blogsEntry.getUuid());
-
-		if (manualMode) {
-			PortletPreferences portletPreferences =
-				LayoutTestUtil.getPortletPreferences(_layout, portletId);
-
-			portletPreferences.setValue("selectionStyle", "manual");
-
-			String[] assetEntryXmls = portletPreferences.getValues(
-				"assetEntryXml", new String[0]);
-
-			String assetEntryXml = AssetPublisherTestUtil.getAssetEntryXml(
-				assetEntry);
-
-			if (!ArrayUtil.contains(assetEntryXmls, assetEntryXml)) {
-				assetEntryXmls = ArrayUtil.append(
-					assetEntryXmls, assetEntryXml);
-
-				portletPreferences.setValues("assetEntryXml", assetEntryXmls);
-
-				portletPreferences.store();
-			}
-		}
-
-		return assetEntry;
 	}
 
 	private void _assertAssetEntries(
@@ -191,6 +168,33 @@ public class AssetEntriesCheckerHelperTest {
 				expectedAssetEntry.getClassUuid(),
 				actualAssetEntry.getClassUuid());
 		}
+	}
+
+	private void _setPortletManualSelectionStylePreference(
+			String portletId, AssetEntry... assetEntries)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			LayoutTestUtil.getPortletPreferences(_layout, portletId);
+
+		portletPreferences.setValue("selectionStyle", "manual");
+
+		String[] assetEntryXmls = portletPreferences.getValues(
+			"assetEntryXml", new String[0]);
+
+		for (AssetEntry assetEntry : assetEntries) {
+			String assetEntryXml = AssetPublisherTestUtil.getAssetEntryXml(
+				assetEntry);
+
+			if (!ArrayUtil.contains(assetEntryXmls, assetEntryXml)) {
+				assetEntryXmls = ArrayUtil.append(
+					assetEntryXmls, assetEntryXml);
+			}
+		}
+
+		portletPreferences.setValues("assetEntryXml", assetEntryXmls);
+
+		portletPreferences.store();
 	}
 
 	private void _setUpAssetEntriesCheckerHelper() throws Exception {

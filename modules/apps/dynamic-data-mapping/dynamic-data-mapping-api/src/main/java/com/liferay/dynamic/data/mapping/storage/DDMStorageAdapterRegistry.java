@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Leonardo Barros
  */
 @ProviderType
-public interface DDMStorageAdapterTracker {
+public interface DDMStorageAdapterRegistry {
 
 	public DDMStorageAdapter getDDMStorageAdapter(String type);
 

@@ -31,7 +31,7 @@ import org.osgi.framework.Filter;
 /**
  * @author Leonardo Barros
  */
-public class DDMStorageAdapterTrackerImplTest {
+public class DDMStorageAdapterRegistryImplTest {
 
 	@ClassRule
 	@Rule
@@ -40,8 +40,8 @@ public class DDMStorageAdapterTrackerImplTest {
 
 	@Test
 	public void testActivate() throws Exception {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
-			new DDMStorageAdapterTrackerImpl();
+		DDMStorageAdapterRegistryImpl ddmStorageAdapterRegistryImpl =
+			new DDMStorageAdapterRegistryImpl();
 
 		BundleContext bundleContext = Mockito.mock(BundleContext.class);
 
@@ -55,21 +55,21 @@ public class DDMStorageAdapterTrackerImplTest {
 			Mockito.anyString()
 		);
 
-		ddmStorageAdapterTrackerImpl.activate(bundleContext);
+		ddmStorageAdapterRegistryImpl.activate(bundleContext);
 
 		Assert.assertNotNull(
-			ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap);
+			ddmStorageAdapterRegistryImpl.ddmStorageAdapterServiceTrackerMap);
 	}
 
 	@Test
 	public void testDeactivate() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
-			new DDMStorageAdapterTrackerImpl();
+		DDMStorageAdapterRegistryImpl ddmStorageAdapterRegistryImpl =
+			new DDMStorageAdapterRegistryImpl();
 
-		ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap =
+		ddmStorageAdapterRegistryImpl.ddmStorageAdapterServiceTrackerMap =
 			_ddmStorageAdapterServiceTrackerMap;
 
-		ddmStorageAdapterTrackerImpl.deactivate();
+		ddmStorageAdapterRegistryImpl.deactivate();
 
 		Mockito.verify(
 			_ddmStorageAdapterServiceTrackerMap, Mockito.times(1)
@@ -78,13 +78,13 @@ public class DDMStorageAdapterTrackerImplTest {
 
 	@Test
 	public void testGetDDMStorageAdapter() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
-			new DDMStorageAdapterTrackerImpl();
+		DDMStorageAdapterRegistryImpl ddmStorageAdapterRegistryImpl =
+			new DDMStorageAdapterRegistryImpl();
 
-		ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap =
+		ddmStorageAdapterRegistryImpl.ddmStorageAdapterServiceTrackerMap =
 			_ddmStorageAdapterServiceTrackerMap;
 
-		ddmStorageAdapterTrackerImpl.getDDMStorageAdapter("json");
+		ddmStorageAdapterRegistryImpl.getDDMStorageAdapter("json");
 
 		Mockito.verify(
 			_ddmStorageAdapterServiceTrackerMap, Mockito.times(1)
@@ -95,13 +95,13 @@ public class DDMStorageAdapterTrackerImplTest {
 
 	@Test
 	public void testGetDDMStorageAdapterTypes() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
-			new DDMStorageAdapterTrackerImpl();
+		DDMStorageAdapterRegistryImpl ddmStorageAdapterRegistryImpl =
+			new DDMStorageAdapterRegistryImpl();
 
-		ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap =
+		ddmStorageAdapterRegistryImpl.ddmStorageAdapterServiceTrackerMap =
 			_ddmStorageAdapterServiceTrackerMap;
 
-		ddmStorageAdapterTrackerImpl.getDDMStorageAdapterTypes();
+		ddmStorageAdapterRegistryImpl.getDDMStorageAdapterTypes();
 
 		Mockito.verify(
 			_ddmStorageAdapterServiceTrackerMap, Mockito.times(1)

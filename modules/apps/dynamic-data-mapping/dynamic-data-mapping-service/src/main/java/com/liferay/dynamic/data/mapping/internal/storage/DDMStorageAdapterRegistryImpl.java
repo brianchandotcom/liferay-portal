@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -29,8 +29,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DDMStorageAdapterTracker.class)
-public class DDMStorageAdapterTrackerImpl implements DDMStorageAdapterTracker {
+@Component(service = DDMStorageAdapterRegistry.class)
+public class DDMStorageAdapterRegistryImpl
+	implements DDMStorageAdapterRegistry {
 
 	@Override
 	public DDMStorageAdapter getDDMStorageAdapter(String type) {

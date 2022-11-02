@@ -40,9 +40,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -750,7 +750,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	private DDMStorageAdapter _getDDMStorageAdapter(String type) {
-		return _ddmStorageAdapterTracker.getDDMStorageAdapter(
+		return _ddmStorageAdapterRegistry.getDDMStorageAdapter(
 			GetterUtil.getString(type, StorageType.DEFAULT.toString()));
 	}
 
@@ -1045,7 +1045,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	private DDMFormValuesValidator _ddmFormValuesValidator;
 
 	@Reference
-	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;

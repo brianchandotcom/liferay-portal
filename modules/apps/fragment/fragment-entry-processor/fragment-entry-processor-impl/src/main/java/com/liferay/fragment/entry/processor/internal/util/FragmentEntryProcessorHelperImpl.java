@@ -62,55 +62,6 @@ public class FragmentEntryProcessorHelperImpl
 	implements FragmentEntryProcessorHelper {
 
 	@Override
-	public String formatMappedValue(Object fieldValue, Locale locale) {
-		if (fieldValue == null) {
-			return null;
-		}
-
-		if (fieldValue instanceof Collection) {
-			Collection<Object> collection = (Collection<Object>)fieldValue;
-
-			if (collection.isEmpty()) {
-				return StringPool.BLANK;
-			}
-
-			Iterator<Object> iterator = collection.iterator();
-
-			Object firstItem = iterator.next();
-
-			Class<?> firstItemClass = firstItem.getClass();
-
-			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
-				_getInfoCollectionTextFormatter(firstItemClass.getName());
-
-			return infoCollectionTextFormatter.format(collection, locale);
-		}
-
-		if (fieldValue instanceof String) {
-			return (String)fieldValue;
-		}
-
-		if (fieldValue instanceof Labeled) {
-			Labeled labeledFieldValue = (Labeled)fieldValue;
-
-			return labeledFieldValue.getLabel(locale);
-		}
-
-		Class<?> fieldValueClass = fieldValue.getClass();
-
-		InfoTextFormatter<Object> infoTextFormatter =
-			(InfoTextFormatter<Object>)
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoTextFormatter.class, fieldValueClass.getName());
-
-		if (infoTextFormatter != null) {
-			return infoTextFormatter.format(fieldValue, locale);
-		}
-
-		return fieldValue.toString();
-	}
-
-	@Override
 	public String getEditableValue(JSONObject jsonObject, Locale locale) {
 		String value = jsonObject.getString(
 			_language.getLanguageId(locale), null);
@@ -356,7 +307,7 @@ public class FragmentEntryProcessorHelperImpl
 			return valueJSONObject;
 		}
 
-		return formatMappedValue(value, locale);
+		return _formatMappedValue(value, locale);
 	}
 
 	@Override
@@ -401,6 +352,54 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return false;
+	}
+
+	private String _formatMappedValue(Object fieldValue, Locale locale) {
+		if (fieldValue == null) {
+			return null;
+		}
+
+		if (fieldValue instanceof Collection) {
+			Collection<Object> collection = (Collection<Object>)fieldValue;
+
+			if (collection.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			Iterator<Object> iterator = collection.iterator();
+
+			Object firstItem = iterator.next();
+
+			Class<?> firstItemClass = firstItem.getClass();
+
+			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
+				_getInfoCollectionTextFormatter(firstItemClass.getName());
+
+			return infoCollectionTextFormatter.format(collection, locale);
+		}
+
+		if (fieldValue instanceof String) {
+			return (String)fieldValue;
+		}
+
+		if (fieldValue instanceof Labeled) {
+			Labeled labeledFieldValue = (Labeled)fieldValue;
+
+			return labeledFieldValue.getLabel(locale);
+		}
+
+		Class<?> fieldValueClass = fieldValue.getClass();
+
+		InfoTextFormatter<Object> infoTextFormatter =
+			(InfoTextFormatter<Object>)
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoTextFormatter.class, fieldValueClass.getName());
+
+		if (infoTextFormatter != null) {
+			return infoTextFormatter.format(fieldValue, locale);
+		}
+
+		return fieldValue.toString();
 	}
 
 	private long _getFileEntryId(

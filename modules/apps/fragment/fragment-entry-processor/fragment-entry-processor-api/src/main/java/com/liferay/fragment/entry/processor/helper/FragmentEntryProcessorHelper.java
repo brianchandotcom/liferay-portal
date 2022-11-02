@@ -33,8 +33,6 @@ import java.util.Optional;
 @ProviderType
 public interface FragmentEntryProcessorHelper {
 
-	public String formatMappedValue(Object value, Locale locale);
-
 	public String getEditableValue(JSONObject jsonObject, Locale locale);
 
 	public long getFileEntryId(

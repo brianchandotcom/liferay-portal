@@ -14,10 +14,21 @@
 
 package com.liferay.commerce.avalara.connector;
 
+import java.util.List;
+import java.util.Map;
+
+import net.avalara.avatax.rest.client.models.TaxCodeModel;
+
 /**
  * @author Riccardo Alberti
  */
 public interface CommerceAvalaraConnector {
+
+	public Map<String, String> getCompanyCodes() throws Exception;
+
+	public List<TaxCodeModel> getTaxCodeModels() throws Exception;
+
+	public String getTaxRateByZipCode() throws Exception;
 
 	public void verifyConnection(
 			String accountNumber, String licenseKey, String serviceURL)

@@ -15,11 +15,16 @@
 package com.liferay.commerce.avalara.connector.constants;
 
 /**
- * @author Riccardo Alberti
+ * @author Crescenzo Rega
  */
-public class CommerceAvalaraConstants {
+public class CommerceAvalaraWebKeys {
 
-	public static final String CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY =
-		"P0000000";
+	public static final String AVALARA_COMPANIES = "avalaraCompanies";
+
+	public static final String CONNECTION_ESTABLISHED = "connectionEstablished";
+
+	public static final String JOB_PREVIOUSLY_RUN = "jobPreviouslyRun";
+
+	public static final String LATEST_DISPATCH_LOG = "latestDispatchLog";
 
 }

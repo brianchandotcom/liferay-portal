@@ -939,7 +939,7 @@
 
 <tr>
 	<td>MORE_LINK</td>
-	<td>//*[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'Page Design Options')]//*[name()='svg'][contains(@class,'lexicon-icon-cog')]</td>
+	<td>//*[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'Page Design Options')]//a[*[name()='svg'][contains(@class,'lexicon-icon-cog')]]</td>
 	<td></td>
 </tr>
 

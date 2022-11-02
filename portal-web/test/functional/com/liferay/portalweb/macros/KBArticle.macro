@@ -1453,16 +1453,10 @@ definition {
 				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
 				value1 = "${kbArticleTitle}");
 
-			if ("${kbWorkflowStatus}" == "Pending") {
+			if (isSet(kbStatus)) {
 				AssertTextEquals(
 					locator1 = "KnowledgeBase#ARTICLE_TABLE_ARTICLE_STATUS",
-					value1 = "Pending");
-			}
-
-			if ("${kbStatus}" == "Draft") {
-				AssertTextEquals(
-					locator1 = "KnowledgeBase#ARTICLE_TABLE_ARTICLE_STATUS",
-					value1 = "Draft");
+					value1 = "${kbStatus}");
 			}
 
 			AssertClick(

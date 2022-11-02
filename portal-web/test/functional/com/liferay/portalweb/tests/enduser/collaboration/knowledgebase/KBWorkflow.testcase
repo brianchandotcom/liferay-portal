@@ -111,7 +111,7 @@ definition {
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbWorkflowStatus = "Pending");
+			kbStatus = "Pending");
 
 		KBArticle.viewInfoPanel(
 			kbArticleTitle = "Knowledge Base Article Title",

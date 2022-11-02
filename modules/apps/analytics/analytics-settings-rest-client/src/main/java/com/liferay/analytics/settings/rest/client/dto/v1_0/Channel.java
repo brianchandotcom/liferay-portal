@@ -56,6 +56,27 @@ public class Channel implements Cloneable, Serializable {
 
 	protected String channelId;
 
+	public Boolean getCommerceSyncEnabled() {
+		return commerceSyncEnabled;
+	}
+
+	public void setCommerceSyncEnabled(Boolean commerceSyncEnabled) {
+		this.commerceSyncEnabled = commerceSyncEnabled;
+	}
+
+	public void setCommerceSyncEnabled(
+		UnsafeSupplier<Boolean, Exception> commerceSyncEnabledUnsafeSupplier) {
+
+		try {
+			commerceSyncEnabled = commerceSyncEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean commerceSyncEnabled;
+
 	public Date getCreateDate() {
 		return createDate;
 	}

@@ -75,6 +75,16 @@ public class ChannelSerDes {
 			sb.append("\"");
 		}
 
+		if (channel.getCommerceSyncEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"commerceSyncEnabled\": ");
+
+			sb.append(channel.getCommerceSyncEnabled());
+		}
+
 		if (channel.getCreateDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -151,6 +161,15 @@ public class ChannelSerDes {
 			map.put("channelId", String.valueOf(channel.getChannelId()));
 		}
 
+		if (channel.getCommerceSyncEnabled() == null) {
+			map.put("commerceSyncEnabled", null);
+		}
+		else {
+			map.put(
+				"commerceSyncEnabled",
+				String.valueOf(channel.getCommerceSyncEnabled()));
+		}
+
 		if (channel.getCreateDate() == null) {
 			map.put("createDate", null);
 		}
@@ -197,6 +216,14 @@ public class ChannelSerDes {
 			if (Objects.equals(jsonParserFieldName, "channelId")) {
 				if (jsonParserFieldValue != null) {
 					channel.setChannelId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "commerceSyncEnabled")) {
+
+				if (jsonParserFieldValue != null) {
+					channel.setCommerceSyncEnabled(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "createDate")) {

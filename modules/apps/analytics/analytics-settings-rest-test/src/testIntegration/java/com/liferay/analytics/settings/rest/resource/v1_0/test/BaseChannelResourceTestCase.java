@@ -488,6 +488,16 @@ public abstract class BaseChannelResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"commerceSyncEnabled", additionalAssertFieldName)) {
+
+				if (channel.getCommerceSyncEnabled() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (channel.getCreateDate() == null) {
 					valid = false;
@@ -606,6 +616,19 @@ public abstract class BaseChannelResourceTestCase {
 			if (Objects.equals("channelId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						channel1.getChannelId(), channel2.getChannelId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"commerceSyncEnabled", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						channel1.getCommerceSyncEnabled(),
+						channel2.getCommerceSyncEnabled())) {
 
 					return false;
 				}
@@ -748,6 +771,11 @@ public abstract class BaseChannelResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("commerceSyncEnabled")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("createDate")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -838,6 +866,7 @@ public abstract class BaseChannelResourceTestCase {
 			{
 				channelId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				commerceSyncEnabled = RandomTestUtil.randomBoolean();
 				createDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

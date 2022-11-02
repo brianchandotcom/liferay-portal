@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
-import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
+import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -94,12 +94,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 			contentDashboardAdminDisplayContext = Mockito.mock(
 				ContentDashboardAdminDisplayContext.class);
 
-		ContentDashboardItemFilterProviderTracker
-			contentDashboardItemFilterProviderTracker = Mockito.mock(
-				ContentDashboardItemFilterProviderTracker.class);
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry = Mockito.mock(
+				ContentDashboardItemFilterProviderRegistry.class);
 
 		Mockito.when(
-			contentDashboardItemFilterProviderTracker.
+			contentDashboardItemFilterProviderRegistry.
 				getContentDashboardItemFilterProviders()
 		).thenReturn(
 			Collections.singletonList(
@@ -189,7 +189,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					Mockito.mock(AssetCategoryLocalService.class),
 					Mockito.mock(AssetVocabularyLocalService.class),
 					contentDashboardAdminDisplayContext,
-					contentDashboardItemFilterProviderTracker,
+					contentDashboardItemFilterProviderRegistry,
 					Mockito.mock(GroupLocalService.class),
 					new MockHttpServletRequest(), LanguageUtil.getLanguage(),
 					mockLiferayPortletActionRequest,
@@ -241,7 +241,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					Mockito.mock(AssetVocabularyLocalService.class),
 					contentDashboardAdminDisplayContext,
 					Mockito.mock(
-						ContentDashboardItemFilterProviderTracker.class),
+						ContentDashboardItemFilterProviderRegistry.class),
 					Mockito.mock(GroupLocalService.class),
 					new MockHttpServletRequest(), LanguageUtil.getLanguage(),
 					mockLiferayPortletActionRequest,
@@ -281,12 +281,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 
 			};
 
-		ContentDashboardItemFilterProviderTracker
-			contentDashboardItemFilterProviderTracker = Mockito.mock(
-				ContentDashboardItemFilterProviderTracker.class);
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry = Mockito.mock(
+				ContentDashboardItemFilterProviderRegistry.class);
 
 		Mockito.when(
-			contentDashboardItemFilterProviderTracker.
+			contentDashboardItemFilterProviderRegistry.
 				getContentDashboardItemFilterProviders()
 		).thenReturn(
 			Collections.singletonList(
@@ -376,7 +376,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					Mockito.mock(AssetCategoryLocalService.class),
 					Mockito.mock(AssetVocabularyLocalService.class),
 					Mockito.mock(ContentDashboardAdminDisplayContext.class),
-					contentDashboardItemFilterProviderTracker,
+					contentDashboardItemFilterProviderRegistry,
 					Mockito.mock(GroupLocalService.class),
 					new MockHttpServletRequest(), LanguageUtil.getLanguage(),
 					mockLiferayPortletActionRequest,

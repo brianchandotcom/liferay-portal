@@ -23,7 +23,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
+import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -79,8 +79,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext,
-		ContentDashboardItemFilterProviderTracker
-			contentDashboardItemFilterProviderTracker,
+		ContentDashboardItemFilterProviderRegistry
+			contentDashboardItemFilterProviderRegistry,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		LiferayPortletRequest liferayPortletRequest,
@@ -95,8 +95,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_contentDashboardAdminDisplayContext =
 			contentDashboardAdminDisplayContext;
-		_contentDashboardItemFilterProviderTracker =
-			contentDashboardItemFilterProviderTracker;
+		_contentDashboardItemFilterProviderRegistry =
+			contentDashboardItemFilterProviderRegistry;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -128,7 +128,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 		List<ContentDashboardItemFilterProvider>
 			contentDashboardItemFilterProviders =
-				_contentDashboardItemFilterProviderTracker.
+				_contentDashboardItemFilterProviderRegistry.
 					getContentDashboardItemFilterProviders();
 
 		try {
@@ -457,7 +457,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 		List<ContentDashboardItemFilterProvider>
 			contentDashboardItemFilterProviders =
-				_contentDashboardItemFilterProviderTracker.
+				_contentDashboardItemFilterProviderRegistry.
 					getContentDashboardItemFilterProviders();
 
 		for (ContentDashboardItemFilterProvider
@@ -610,7 +610,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 		List<ContentDashboardItemFilterProvider>
 			contentDashboardItemFilterProviders =
-				_contentDashboardItemFilterProviderTracker.
+				_contentDashboardItemFilterProviderRegistry.
 					getContentDashboardItemFilterProviders();
 
 		Stream<ContentDashboardItemFilterProvider> stream =
@@ -931,8 +931,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final ContentDashboardAdminDisplayContext
 		_contentDashboardAdminDisplayContext;
-	private final ContentDashboardItemFilterProviderTracker
-		_contentDashboardItemFilterProviderTracker;
+	private final ContentDashboardItemFilterProviderRegistry
+		_contentDashboardItemFilterProviderRegistry;
 	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;

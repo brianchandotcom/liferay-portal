@@ -148,6 +148,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_simpleDTOConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, _user);
+
 		_user = TestPropsValues.getUser();
 
 		PermissionThreadLocal.setPermissionChecker(

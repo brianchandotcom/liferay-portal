@@ -249,6 +249,7 @@ definition {
 		}
 
 		Portlet.gotoPortletOptions(
+			portletIndex = "${portletIndex}",
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 
@@ -355,6 +356,7 @@ definition {
 	macro selectWebContent {
 		WebContentDisplayPortlet.gotoSelectWebContent(
 			depotName = "${depotName}",
+			portletIndex = "${portletIndex}",
 			portletName = "${portletName}");
 
 		if (isSet(depotName)) {

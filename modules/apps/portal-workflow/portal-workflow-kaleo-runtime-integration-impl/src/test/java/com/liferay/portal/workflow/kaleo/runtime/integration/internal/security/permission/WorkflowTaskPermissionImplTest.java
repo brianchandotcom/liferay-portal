@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -49,7 +47,6 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,16 +63,12 @@ public class WorkflowTaskPermissionImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() {
-		_setUpGroupLocalServiceUtil();
-	}
-
 	@Before
 	public void setUp() {
+		_setUpGroupLocalService();
 		_setUpWorkflowHandlerRegistryUtil();
 
-		_mockUserNotificationEventLocalServiceUtil(0);
+		_mockUserNotificationEventLocalService(0);
 	}
 
 	@Test
@@ -217,7 +210,7 @@ public class WorkflowTaskPermissionImplTest {
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnPendingTaskWithNotification() {
 		_mockAssetRendererHasViewPermission(true);
-		_mockUserNotificationEventLocalServiceUtil(1);
+		_mockUserNotificationEventLocalService(1);
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.contains(
@@ -257,19 +250,6 @@ public class WorkflowTaskPermissionImplTest {
 			_workflowTaskPermissionChecker.contains(
 				_mockOmniadminPermissionChecker(), _mockWorkflowTask(),
 				RandomTestUtil.randomLong()));
-	}
-
-	private static void _setUpGroupLocalServiceUtil() {
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service",
-			new GroupLocalServiceWrapper() {
-
-				@Override
-				public Group getGroup(long groupId) {
-					return ProxyFactory.newDummyInstance(Group.class);
-				}
-
-			});
 	}
 
 	private void _mockAssetRendererHasViewPermission(
@@ -390,9 +370,10 @@ public class WorkflowTaskPermissionImplTest {
 		};
 	}
 
-	private void _mockUserNotificationEventLocalServiceUtil(int count) {
+	private void _mockUserNotificationEventLocalService(int count) {
 		ReflectionTestUtil.setFieldValue(
-			UserNotificationEventLocalServiceUtil.class, "_service",
+			_workflowTaskPermissionChecker,
+			"_userNotificationEventLocalService",
 			new UserNotificationEventLocalServiceWrapper() {
 
 				@Override
@@ -451,6 +432,19 @@ public class WorkflowTaskPermissionImplTest {
 
 	private long[] _randomPermissionCheckerRoleIds() {
 		return new long[] {RandomTestUtil.randomLong()};
+	}
+
+	private void _setUpGroupLocalService() {
+		ReflectionTestUtil.setFieldValue(
+			_workflowTaskPermissionChecker, "_groupLocalService",
+			new GroupLocalServiceWrapper() {
+
+				@Override
+				public Group getGroup(long groupId) {
+					return ProxyFactory.newDummyInstance(Group.class);
+				}
+
+			});
 	}
 
 	private void _setUpWorkflowHandlerRegistryUtil() {

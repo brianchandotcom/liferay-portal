@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.Serializable;
 
@@ -46,9 +45,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adam Brandizzi
  */
+@Component(service = WorkflowTaskPermission.class)
 public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 
 	@Override
@@ -76,16 +79,15 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 		}
 
 		int userNotificationEventsCount =
-			UserNotificationEventLocalServiceUtil.
-				getUserNotificationEventsCount(
-					permissionChecker.getUserId(), PortletKeys.MY_WORKFLOW_TASK,
-					HashMapBuilder.put(
-						"workflowInstanceId",
-						String.valueOf(workflowTask.getWorkflowInstanceId())
-					).put(
-						"workflowTaskId",
-						String.valueOf(workflowTask.getWorkflowTaskId())
-					).build());
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
+				permissionChecker.getUserId(), PortletKeys.MY_WORKFLOW_TASK,
+				HashMapBuilder.put(
+					"workflowInstanceId",
+					String.valueOf(workflowTask.getWorkflowInstanceId())
+				).put(
+					"workflowTaskId",
+					String.valueOf(workflowTask.getWorkflowTaskId())
+				).build());
 
 		if (hasAssetViewPermission(workflowTask, permissionChecker) &&
 			((userNotificationEventsCount > 0) ||
@@ -130,7 +132,7 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 			List<Group> groups = new ArrayList<>();
 
 			if (groupId != WorkflowConstants.DEFAULT_GROUP_ID) {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = _groupLocalService.getGroup(groupId);
 
 				if (group.isOrganization()) {
 					groups.addAll(_getAncestorOrganizationGroups(group));
@@ -206,9 +208,8 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 
 		List<Group> groups = new ArrayList<>();
 
-		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(
-				group.getOrganizationId());
+		Organization organization = _organizationLocalService.getOrganization(
+			group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
 			groups.add(ancestorOrganization.getGroup());
@@ -253,5 +254,15 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowTaskPermissionImpl.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

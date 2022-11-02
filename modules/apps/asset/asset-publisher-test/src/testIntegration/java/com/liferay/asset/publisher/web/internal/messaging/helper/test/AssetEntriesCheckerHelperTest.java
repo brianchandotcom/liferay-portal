@@ -92,38 +92,25 @@ public class AssetEntriesCheckerHelperTest {
 		_setPortletManualSelectionStylePreference(
 			portletId2, assetEntry3, assetEntry4);
 
-		PortletPreferences portletId1PortletPreferences =
-			LayoutTestUtil.getPortletPreferences(
-				_layout,
-				LayoutTestUtil.addPortletToLayout(
-					_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER));
-
-		PortletPreferences portletId2PortletPreferences =
-			LayoutTestUtil.getPortletPreferences(_layout, portletId2);
-
-		List<AssetEntry> expectedPortletId1AssetEntries = Arrays.asList(
-			_addAssetEntry(), _addAssetEntry(), assetEntry3, assetEntry4);
-
-		List<AssetEntry> actualPortletId1AssetEntries =
+		_assertAssetEntries(
+			Arrays.asList(
+				_addAssetEntry(), _addAssetEntry(), assetEntry3, assetEntry4),
 			ReflectionTestUtil.invoke(
 				_assetEntriesCheckerHelper, "_getAssetEntries",
 				new Class<?>[] {PortletPreferences.class, Layout.class},
-				portletId1PortletPreferences, _layout);
+				LayoutTestUtil.getPortletPreferences(
+					_layout,
+					LayoutTestUtil.addPortletToLayout(
+						_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER)),
+				_layout));
 
 		_assertAssetEntries(
-			expectedPortletId1AssetEntries, actualPortletId1AssetEntries);
-
-		List<AssetEntry> expectedPortletId2AssetEntries = Arrays.asList(
-			assetEntry3, assetEntry4);
-
-		List<AssetEntry> actualPortletId2AssetEntries =
+			Arrays.asList(assetEntry3, assetEntry4),
 			ReflectionTestUtil.invoke(
 				_assetEntriesCheckerHelper, "_getAssetEntries",
 				new Class<?>[] {PortletPreferences.class, Layout.class},
-				portletId2PortletPreferences, _layout);
-
-		_assertAssetEntries(
-			expectedPortletId2AssetEntries, actualPortletId2AssetEntries);
+				LayoutTestUtil.getPortletPreferences(_layout, portletId2),
+				_layout));
 	}
 
 	private AssetEntry _addAssetEntry() throws Exception {

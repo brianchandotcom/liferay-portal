@@ -19,7 +19,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -118,7 +118,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		String className = ParamUtil.getString(resourceRequest, "className");
 
 		ContentDashboardItemFactory<?> contentDashboardItemFactory =
-			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+			_contentDashboardItemFactoryRegistry.getContentDashboardItemFactory(
 				className);
 
 		if (contentDashboardItemFactory == null) {
@@ -174,8 +174,8 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		GetContentDashboardItemVersionsMVCResourceCommand.class);
 
 	@Reference
-	private ContentDashboardItemFactoryTracker
-		_contentDashboardItemFactoryTracker;
+	private ContentDashboardItemFactoryRegistry
+		_contentDashboardItemFactoryRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

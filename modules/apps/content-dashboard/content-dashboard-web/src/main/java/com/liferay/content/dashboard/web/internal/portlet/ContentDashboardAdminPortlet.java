@@ -26,7 +26,7 @@ import com.liferay.content.dashboard.web.internal.data.provider.ContentDashboard
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminSharingDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
 import com.liferay.content.dashboard.web.internal.provider.AssetVocabulariesProvider;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
@@ -120,7 +120,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 			contentDashboardItemSearchContainerFactory =
 				ContentDashboardItemSearchContainerFactory.getInstance(
 					_assetCategoryLocalService, _assetVocabularyLocalService,
-					_contentDashboardItemFactoryTracker,
+					_contentDashboardItemFactoryRegistry,
 					_contentDashboardSearchRequestBuilderFactory,
 					_infoSearchClassMapperTracker, _portal, renderRequest,
 					renderResponse, _searcher);
@@ -172,7 +172,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 			ContentDashboardWebKeys.
 				CONTENT_DASHBOARD_ADMIN_SHARING_DISPLAY_CONTEXT,
 			new ContentDashboardAdminSharingDisplayContext(
-				_contentDashboardItemFactoryTracker,
+				_contentDashboardItemFactoryRegistry,
 				_portal.getHttpServletRequest(liferayPortletRequest),
 				_infoSearchClassMapperTracker));
 
@@ -194,8 +194,8 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
-	private ContentDashboardItemFactoryTracker
-		_contentDashboardItemFactoryTracker;
+	private ContentDashboardItemFactoryRegistry
+		_contentDashboardItemFactoryRegistry;
 
 	@Reference
 	private ContentDashboardItemFilterProviderRegistry

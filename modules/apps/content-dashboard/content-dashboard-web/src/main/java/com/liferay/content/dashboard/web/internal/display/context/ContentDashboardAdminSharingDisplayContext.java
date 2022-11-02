@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.web.internal.display.context;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,12 +36,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentDashboardAdminSharingDisplayContext {
 
 	public ContentDashboardAdminSharingDisplayContext(
-		ContentDashboardItemFactoryTracker contentDashboardItemFactoryTracker,
+		ContentDashboardItemFactoryRegistry contentDashboardItemFactoryRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoSearchClassMapperTracker infoSearchClassMapperTracker) {
 
-		_contentDashboardItemFactoryTracker =
-			contentDashboardItemFactoryTracker;
+		_contentDashboardItemFactoryRegistry =
+			contentDashboardItemFactoryRegistry;
 		_httpServletRequest = httpServletRequest;
 		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 	}
@@ -57,7 +57,7 @@ public class ContentDashboardAdminSharingDisplayContext {
 
 	public boolean isSharingButtonVisible() throws PortalException {
 		ContentDashboardItemFactory<?> contentDashboardItemFactory =
-			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+			_contentDashboardItemFactoryRegistry.getContentDashboardItemFactory(
 				_getClassName());
 
 		if (contentDashboardItemFactory == null) {
@@ -83,7 +83,7 @@ public class ContentDashboardAdminSharingDisplayContext {
 
 	public boolean isSharingCollaboratorsVisible() throws PortalException {
 		ContentDashboardItemFactory<?> contentDashboardItemFactory =
-			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+			_contentDashboardItemFactoryRegistry.getContentDashboardItemFactory(
 				_getClassName());
 
 		if (contentDashboardItemFactory == null) {
@@ -161,8 +161,8 @@ public class ContentDashboardAdminSharingDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentDashboardAdminSharingDisplayContext.class);
 
-	private final ContentDashboardItemFactoryTracker
-		_contentDashboardItemFactoryTracker;
+	private final ContentDashboardItemFactoryRegistry
+		_contentDashboardItemFactoryRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 

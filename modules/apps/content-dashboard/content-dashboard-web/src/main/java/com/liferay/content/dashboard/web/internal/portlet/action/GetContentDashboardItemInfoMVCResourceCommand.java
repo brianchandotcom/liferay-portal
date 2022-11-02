@@ -25,7 +25,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
@@ -110,7 +110,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				resourceRequest, "className");
 
 			ContentDashboardItemFactory<?> contentDashboardItemFactory =
-				_contentDashboardItemFactoryTracker.
+				_contentDashboardItemFactoryRegistry.
 					getContentDashboardItemFactory(className);
 
 			if (contentDashboardItemFactory == null) {
@@ -676,8 +676,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
-	private ContentDashboardItemFactoryTracker
-		_contentDashboardItemFactoryTracker;
+	private ContentDashboardItemFactoryRegistry
+		_contentDashboardItemFactoryRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

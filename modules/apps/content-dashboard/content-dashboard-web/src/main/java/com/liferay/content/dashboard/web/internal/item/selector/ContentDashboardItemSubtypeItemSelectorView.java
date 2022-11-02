@@ -21,7 +21,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -184,10 +184,10 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			_jsonFactory.createJSONArray();
 
 		for (String className :
-				_contentDashboardItemFactoryTracker.getClassNames()) {
+				_contentDashboardItemFactoryRegistry.getClassNames()) {
 
 			ContentDashboardItemFactory<?> contentDashboardItemFactory =
-				_contentDashboardItemFactoryTracker.
+				_contentDashboardItemFactoryRegistry.
 					getContentDashboardItemFactory(className);
 
 			if (contentDashboardItemFactory == null) {
@@ -411,8 +411,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private ContentDashboardItemFactoryTracker
-		_contentDashboardItemFactoryTracker;
+	private ContentDashboardItemFactoryRegistry
+		_contentDashboardItemFactoryRegistry;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

@@ -24,7 +24,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -589,8 +589,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			"_assetVocabularyLocalService", assetVocabularyLocalService);
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand,
-			"_contentDashboardItemFactoryTracker",
-			new ContentDashboardItemFactoryTracker() {
+			"_contentDashboardItemFactoryRegistry",
+			new ContentDashboardItemFactoryRegistry() {
 
 				public ContentDashboardItemFactory<?>
 					getContentDashboardItemFactory(String className) {

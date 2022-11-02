@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 
 import {updateLanguageId} from '../actions/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
@@ -133,7 +133,6 @@ export default function Translation({
 	languageId,
 	showNotTranslated = true,
 }) {
-	const [active, setActive] = useState(false);
 	const editableValues = useMemo(
 		() => getEditableValues(fragmentEntryLinks),
 		[fragmentEntryLinks]
@@ -175,7 +174,6 @@ export default function Translation({
 
 	return (
 		<ClayDropDown
-			active={active}
 			closeOnClick
 			hasLeftSymbols
 			hasRightSymbols
@@ -185,7 +183,6 @@ export default function Translation({
 					className: 'cadmin',
 				},
 			}}
-			onActiveChange={setActive}
 			trigger={
 				<ClayButton
 					className="btn-monospaced"
@@ -226,7 +223,6 @@ export default function Translation({
 									languageId: language.languageId,
 								})
 							);
-							setActive(false);
 						}}
 						translatedValuesLength={language.values.length}
 					/>

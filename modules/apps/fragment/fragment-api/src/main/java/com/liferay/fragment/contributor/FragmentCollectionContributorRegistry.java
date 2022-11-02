@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jürgen Kappler
  */
 @ProviderType
-public interface FragmentCollectionContributorTracker {
+public interface FragmentCollectionContributorRegistry {
 
 	public FragmentCollectionContributor getFragmentCollectionContributor(
 		String fragmentCollectionKey);

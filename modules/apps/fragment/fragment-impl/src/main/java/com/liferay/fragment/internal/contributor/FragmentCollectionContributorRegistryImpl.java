@@ -17,7 +17,7 @@ package com.liferay.fragment.internal.contributor;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistration;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -54,10 +54,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Jürgen Kappler
  */
 @Component(
-	immediate = true, service = FragmentCollectionContributorTracker.class
+	immediate = true, service = FragmentCollectionContributorRegistry.class
 )
-public class FragmentCollectionContributorTrackerImpl
-	implements FragmentCollectionContributorTracker {
+public class FragmentCollectionContributorRegistryImpl
+	implements FragmentCollectionContributorRegistry {
 
 	@Override
 	public FragmentCollectionContributor getFragmentCollectionContributor(
@@ -246,7 +246,7 @@ public class FragmentCollectionContributorTrackerImpl
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentCollectionContributorTrackerImpl.class);
+		FragmentCollectionContributorRegistryImpl.class);
 
 	private final Map<String, FragmentComposition> _fragmentCompositions =
 		new ConcurrentHashMap<>();

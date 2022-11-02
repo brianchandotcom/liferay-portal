@@ -348,8 +348,7 @@ public class LayoutActionProvider {
 			return _groupId;
 		}
 
-		Group group = _groupProvider.getGroup(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
+		Group group = _groupProvider.getGroup(_httpServletRequest);
 
 		if (group != null) {
 			_groupId = group.getGroupId();
@@ -370,7 +369,7 @@ public class LayoutActionProvider {
 			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT;
 
 		String pageTypeSelectedOptionSessionValue = SessionClicks.get(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
+			_httpServletRequest,
 			_namespace +
 				ProductNavigationProductMenuWebKeys.PAGE_TYPE_SELECTED_OPTION,
 			ProductNavigationProductMenuWebKeys.PUBLIC_LAYOUT);

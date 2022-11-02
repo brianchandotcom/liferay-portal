@@ -39,7 +39,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceCheckoutStep;
-import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
+import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -270,7 +270,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		try {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
-				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
+				_commerceCheckoutStepRegistry.getCommerceCheckoutSteps(
 					httpServletRequest, themeDisplay.getResponse(), true);
 
 			if ((commerceCheckoutSteps != null) &&
@@ -775,8 +775,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceCheckoutStepServicesTracker
-		_commerceCheckoutStepServicesTracker;
+	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

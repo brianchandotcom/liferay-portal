@@ -20,7 +20,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.util.CommerceCheckoutStep;
-import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
+import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -41,14 +41,12 @@ import javax.servlet.jsp.PageContext;
 public class CheckoutDisplayContext {
 
 	public CheckoutDisplayContext(
-			CommerceCheckoutStepServicesTracker
-				commerceCheckoutStepServicesTracker,
+			CommerceCheckoutStepRegistry commerceCheckoutStepRegistry,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, Portal portal)
 		throws Exception {
 
-		_commerceCheckoutStepServicesTracker =
-			commerceCheckoutStepServicesTracker;
+		_commerceCheckoutStepRegistry = commerceCheckoutStepRegistry;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -64,12 +62,12 @@ public class CheckoutDisplayContext {
 			liferayPortletRequest, "checkoutStepName");
 
 		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
+			_commerceCheckoutStepRegistry.getCommerceCheckoutStep(
 				checkoutStepName);
 
 		if ((commerceCheckoutStep == null) && (_commerceOrder != null)) {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
-				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
+				_commerceCheckoutStepRegistry.getCommerceCheckoutSteps(
 					_httpServletRequest, _httpServletResponse, true);
 
 			commerceCheckoutStep = commerceCheckoutSteps.get(0);
@@ -81,7 +79,7 @@ public class CheckoutDisplayContext {
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps()
 		throws Exception {
 
-		return _commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
+		return _commerceCheckoutStepRegistry.getCommerceCheckoutSteps(
 			_httpServletRequest, _httpServletResponse, true);
 	}
 
@@ -95,10 +93,9 @@ public class CheckoutDisplayContext {
 
 	public String getPreviousCheckoutStepName() throws Exception {
 		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.
-				getPreviousCommerceCheckoutStep(
-					_commerceCheckoutStep.getName(), _httpServletRequest,
-					_httpServletResponse);
+			_commerceCheckoutStepRegistry.getPreviousCommerceCheckoutStep(
+				_commerceCheckoutStep.getName(), _httpServletRequest,
+				_httpServletResponse);
 
 		if ((commerceCheckoutStep == null) ||
 			(_commerceCheckoutStep.isOrder() &&
@@ -158,8 +155,7 @@ public class CheckoutDisplayContext {
 	}
 
 	private final CommerceCheckoutStep _commerceCheckoutStep;
-	private final CommerceCheckoutStepServicesTracker
-		_commerceCheckoutStepServicesTracker;
+	private final CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
 	private final CommerceOrder _commerceOrder;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

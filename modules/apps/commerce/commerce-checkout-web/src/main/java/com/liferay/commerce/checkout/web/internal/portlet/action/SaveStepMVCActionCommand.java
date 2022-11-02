@@ -16,7 +16,7 @@ package com.liferay.commerce.checkout.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.util.CommerceCheckoutStep;
-import com.liferay.commerce.util.CommerceCheckoutStepServicesTracker;
+import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -64,7 +64,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
+			_commerceCheckoutStepRegistry.getNextCommerceCheckoutStep(
 				checkoutStepName, _portal.getHttpServletRequest(actionRequest),
 				_portal.getHttpServletResponse(actionResponse));
 
@@ -85,7 +85,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "checkoutStepName");
 
 		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
+			_commerceCheckoutStepRegistry.getCommerceCheckoutStep(
 				checkoutStepName);
 
 		commerceCheckoutStep.processAction(actionRequest, actionResponse);
@@ -113,8 +113,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CommerceCheckoutStepServicesTracker
-		_commerceCheckoutStepServicesTracker;
+	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ARTICLE_PREVIEW_VERSION_NUMBER</td>
+	<td>//span[contains(@class,'workflow-version')]/span[contains(@class,'workflow-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KB_TOOLS</td>
 	<td>//div[@class='kb-tools']//span[.='${key_kbTool}']</td>
 	<td></td>

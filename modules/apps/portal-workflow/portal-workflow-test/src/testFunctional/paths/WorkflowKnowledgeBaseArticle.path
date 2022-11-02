@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ARTICLE_PREVIEW_ARTICLE_STATUS</td>
+	<td>//li[contains(@class,'nav-item')]//span[@class='workflow-status']/span[contains(text(),'${key_kbArticleStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ARTICLE_TABLE_ARTICLE_STATUS</td>
 	<td>//div[contains(.,'${key_kbArticleTitle}')]//span[@class='workflow-status']/span[contains(text(),'${key_kbArticleStatus}')]</td>
 	<td></td>

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -54,7 +55,7 @@ public class TXTAISentenceTransformer
 		return _getSentenceEmbedding(semanticSearchConfiguration, input);
 	}
 
-	private Double[] _getSentenceEmbedding(
+	private String _getLocation(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		String hostAddress = semanticSearchConfiguration.txtaiHostAddress();
@@ -63,11 +64,26 @@ public class TXTAISentenceTransformer
 			hostAddress += "/";
 		}
 
+		return StringBundler.concat(
+			hostAddress, "transform?text=", URLCodec.encodeURL(text, false));
+	}
+
+	private Double[] _getSentenceEmbedding(
+		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
+
 		try {
-			String responseJSON = _http.URLtoString(
-				StringBundler.concat(
-					hostAddress, "transform?text=",
-					URLCodec.encodeURL(text, false)));
+			Http.Options options = new Http.Options();
+
+			if (!Validator.isBlank(
+					semanticSearchConfiguration.txtaiUserName())) {
+
+				_setAuthOptions(options, semanticSearchConfiguration);
+			}
+
+			options.setLocation(
+				_getLocation(semanticSearchConfiguration, text));
+
+			String responseJSON = _http.URLtoString(options);
 
 			if (_isJSONArray(responseJSON)) {
 				List<Double> list = JSONUtil.toDoubleList(
@@ -89,6 +105,17 @@ public class TXTAISentenceTransformer
 		}
 
 		return false;
+	}
+
+	private void _setAuthOptions(
+		Http.Options options,
+		SemanticSearchConfiguration semanticSearchConfiguration) {
+
+		options.setAuth(
+			HttpComponentsUtil.getDomain(
+				semanticSearchConfiguration.txtaiHostAddress()),
+			-1, null, semanticSearchConfiguration.txtaiUserName(),
+			semanticSearchConfiguration.txtaiPassword());
 	}
 
 	@Reference

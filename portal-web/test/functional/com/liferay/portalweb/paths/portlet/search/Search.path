@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON</td>
-	<td>//header[contains(@class,'portlet-topper') and contains(.,'Search')][ancestor::header[@id='banner']]//div[contains(@class,'portlet-options')]/a</td>
+	<td>//header[contains(@class,'portlet-topper') and contains(.,'Search')][ancestor::header[@id='banner']]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

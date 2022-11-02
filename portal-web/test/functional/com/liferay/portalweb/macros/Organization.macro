@@ -459,23 +459,6 @@ definition {
 		}
 	}
 
-	macro viewAssignMemberCP {
-		if (isSet(userMiddleName)) {
-			var key_userName = "${userFirstName} ${userMiddleName} ${userLastName}";
-
-			AssertTextEquals(
-				locator1 = "UsersAndOrganizationsOrganization#USER_TABLE_NAME",
-				value1 = "${userFirstName} ${userMiddleName} ${userLastName}");
-		}
-		else {
-			var key_userName = "${userName}";
-
-			AssertTextEquals(
-				locator1 = "UsersAndOrganizationsOrganization#USER_TABLE_NAME",
-				value1 = "${userName}");
-		}
-	}
-
 	macro viewCP {
 		AssertTextEquals(
 			key_columnName = "name",
@@ -532,6 +515,10 @@ definition {
 			value1 = "${parentOrgName}");
 
 		IFrame.closeFrame();
+	}
+
+	macro viewUser {
+		LexiconEntry.viewEntryName(rowEntry = "${userName}");
 	}
 
 }

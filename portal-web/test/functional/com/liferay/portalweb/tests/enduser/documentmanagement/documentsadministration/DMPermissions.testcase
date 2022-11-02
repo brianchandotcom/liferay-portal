@@ -2977,9 +2977,7 @@ definition {
 
 		User.searchCP(searchTerm = "usersn");
 
-		Organization.viewAssignMemberCP(
-			userName = "userfn userln",
-			userScreenName = "usersn");
+		Organization.viewUser(userName = "userfn userln");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 

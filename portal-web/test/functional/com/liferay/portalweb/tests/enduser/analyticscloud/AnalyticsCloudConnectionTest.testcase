@@ -581,7 +581,7 @@ definition {
 
 			Organization.gotoCP(orgName = "Organization Name 1");
 
-			Organization.viewAssignMemberCP(userName = "userfn userln");
+			Organization.viewUser(userName = "userfn userln");
 		}
 
 		task ("Connect to AC") {
@@ -618,7 +618,7 @@ definition {
 
 			Organization.gotoCP(orgName = "Organization Name 2");
 
-			Organization.viewAssignMemberCP(userName = "userfn userln");
+			Organization.viewUser(userName = "userfn userln");
 		}
 
 		task ("Connect to AC") {
@@ -738,7 +738,7 @@ definition {
 
 			Organization.gotoCP(orgName = "Organization Name");
 
-			Organization.viewAssignMemberCP(userName = "userfn userln");
+			Organization.viewUser(userName = "userfn userln");
 		}
 
 		task ("Connect to AC") {

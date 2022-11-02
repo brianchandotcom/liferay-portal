@@ -519,11 +519,11 @@ definition {
 
 		Organization.gotoCP(orgName = "Organization Name 1");
 
-		Organization.viewAssignMemberCP(userName = "userfn1 userln1");
+		Organization.viewUser(userName = "userfn1 userln1");
 
-		Organization.viewAssignMemberCP(userName = "userfn3 userln3");
+		Organization.viewUser(userName = "userfn3 userln3");
 
-		Organization.viewAssignMemberCP(userName = "userfn5 userln5");
+		Organization.viewUser(userName = "userfn5 userln5");
 	}
 
 	@priority = "5"
@@ -552,7 +552,7 @@ definition {
 
 		Organization.gotoCP(orgName = "Organization Name");
 
-		Organization.viewAssignMemberCP(userName = "userfn userln");
+		Organization.viewUser(userName = "userfn userln");
 	}
 
 	@description = "Add a site to an organization, assign user to that organization and assert it displays in My Dashboard"
@@ -1412,9 +1412,7 @@ definition {
 
 		User.searchCP(searchTerm = "usersn");
 
-		Organization.viewAssignMemberCP(
-			userName = "userfn userln",
-			userScreenName = "usersn");
+		Organization.viewUser(userName = "userfn userln");
 
 		User.searchCP(searchTerm = "test");
 

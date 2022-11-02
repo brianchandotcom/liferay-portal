@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.internal.helper;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -55,7 +55,7 @@ public class FragmentEntryLinkHelperImpl implements FragmentEntryLinkHelper {
 		}
 
 		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
+			_fragmentCollectionContributorRegistry.getFragmentEntries(locale);
 
 		FragmentEntry contributedFragmentEntry = fragmentEntries.get(
 			rendererKey);
@@ -76,8 +76,8 @@ public class FragmentEntryLinkHelperImpl implements FragmentEntryLinkHelper {
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

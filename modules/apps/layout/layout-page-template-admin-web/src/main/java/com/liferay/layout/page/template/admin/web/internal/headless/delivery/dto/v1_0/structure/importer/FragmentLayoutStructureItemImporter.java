@@ -17,7 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentCollection;
@@ -742,7 +742,7 @@ public class FragmentLayoutStructureItemImporter
 			return fragmentEntry;
 		}
 
-		return _fragmentCollectionContributorTracker.getFragmentEntry(
+		return _fragmentCollectionContributorRegistry.getFragmentEntry(
 			fragmentKey);
 	}
 
@@ -1115,8 +1115,8 @@ public class FragmentLayoutStructureItemImporter
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

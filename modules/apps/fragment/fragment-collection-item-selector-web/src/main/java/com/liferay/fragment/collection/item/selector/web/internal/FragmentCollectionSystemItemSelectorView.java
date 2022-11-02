@@ -16,7 +16,7 @@ package com.liferay.fragment.collection.item.selector.web.internal;
 
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -82,7 +82,7 @@ public class FragmentCollectionSystemItemSelectorView
 			fragmentCollectionItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new FragmentCollectionContributorItemSelectorViewDescriptor(
-				_fragmentCollectionContributorTracker,
+				_fragmentCollectionContributorRegistry,
 				(HttpServletRequest)servletRequest, portletURL));
 	}
 
@@ -91,8 +91,8 @@ public class FragmentCollectionSystemItemSelectorView
 			new FragmentCollectionItemSelectorReturnType());
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

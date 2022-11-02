@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntry;
@@ -105,7 +105,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		String rendererKey = fragmentEntryLink.getRendererKey();
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			_fragmentCollectionContributorTracker,
+			_fragmentCollectionContributorRegistry,
 			fragmentEntryLink.getFragmentEntryId(), rendererKey);
 
 		return new PageFragmentInstanceDefinition() {
@@ -239,8 +239,8 @@ public class PageFragmentInstanceDefinitionMapper {
 	}
 
 	private FragmentEntry _getFragmentEntry(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
 		long fragmentEntryId, String rendererKey) {
 
 		FragmentEntry fragmentEntry =
@@ -251,7 +251,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		}
 
 		Map<String, FragmentEntry> fragmentEntries =
-			fragmentCollectionContributorTracker.getFragmentEntries();
+			fragmentCollectionContributorRegistry.getFragmentEntries();
 
 		return fragmentEntries.get(rendererKey);
 	}
@@ -957,8 +957,8 @@ public class PageFragmentInstanceDefinitionMapper {
 		PageFragmentInstanceDefinitionMapper.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

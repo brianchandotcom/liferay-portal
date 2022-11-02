@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -103,7 +103,7 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 
 		if (fragmentEntry == null) {
 			fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryKey);
 		}
 
@@ -111,8 +111,8 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;

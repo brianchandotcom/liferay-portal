@@ -19,7 +19,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -228,7 +228,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorTracker.getFragmentEntry(
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-image");
 
 		long defaultSegmentsExperienceId =
@@ -302,8 +302,8 @@ public class LayoutAdaptiveMediaProcessorTest {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	private FragmentEntryLink _fragmentEntryLink;
 

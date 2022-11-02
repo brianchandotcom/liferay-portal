@@ -16,7 +16,7 @@ package com.liferay.fragment.internal.renderer;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
 import com.liferay.fragment.model.FragmentEntry;
@@ -123,7 +123,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink) {
 
 		Map<String, FragmentEntry> fragmentCollectionContributorEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries();
+			_fragmentCollectionContributorRegistry.getFragmentEntries();
 
 		return fragmentCollectionContributorEntries.get(
 			fragmentEntryLink.getRendererKey());
@@ -153,7 +153,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
 			fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
 		}
 
@@ -216,7 +216,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
 			fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryLink.getRendererKey());
 
 			if (fragmentEntry == null) {
@@ -475,8 +475,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

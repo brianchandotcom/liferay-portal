@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -40,8 +40,8 @@ public class RenderFragmentEntryDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)
+		_fragmentCollectionContributorRegistry =
+			(FragmentCollectionContributorRegistry)
 				_httpServletRequest.getAttribute(
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 	}
@@ -121,15 +121,15 @@ public class RenderFragmentEntryDisplayContext {
 
 		if (fragmentEntry == null) {
 			fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					fragmentEntryKey);
 		}
 
 		return fragmentEntry;
 	}
 
-	private final FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private final FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 	private final HttpServletRequest _httpServletRequest;
 
 }

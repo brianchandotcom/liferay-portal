@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.struts;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -73,7 +73,7 @@ public class RenderFragmentEntryStrutsAction implements StrutsAction {
 			_fragmentRendererController);
 		httpServletRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-			_fragmentCollectionContributorTracker);
+			_fragmentCollectionContributorRegistry);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, false);
@@ -110,8 +110,8 @@ public class RenderFragmentEntryStrutsAction implements StrutsAction {
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;

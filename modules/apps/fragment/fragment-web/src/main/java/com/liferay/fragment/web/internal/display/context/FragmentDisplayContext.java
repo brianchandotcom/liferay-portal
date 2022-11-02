@@ -17,7 +17,7 @@ package com.liferay.fragment.web.internal.display.context;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
@@ -83,8 +83,8 @@ public class FragmentDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)
+		_fragmentCollectionContributorRegistry =
+			(FragmentCollectionContributorRegistry)
 				_httpServletRequest.getAttribute(
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -240,7 +240,7 @@ public class FragmentDisplayContext {
 	}
 
 	public FragmentCollectionContributor getFragmentCollectionContributor() {
-		return _fragmentCollectionContributorTracker.
+		return _fragmentCollectionContributorRegistry.
 			getFragmentCollectionContributor(getFragmentCollectionKey());
 	}
 
@@ -248,7 +248,7 @@ public class FragmentDisplayContext {
 		getFragmentCollectionContributors(Locale locale) {
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributors();
 
 		Collections.sort(
@@ -658,7 +658,7 @@ public class FragmentDisplayContext {
 		}
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributors();
 
 		if (ListUtil.isEmpty(fragmentCollectionContributors)) {
@@ -679,7 +679,7 @@ public class FragmentDisplayContext {
 	}
 
 	private FragmentCollectionContributor _getFragmentCollectionContributor() {
-		return _fragmentCollectionContributorTracker.
+		return _fragmentCollectionContributorRegistry.
 			getFragmentCollectionContributor(getFragmentCollectionKey());
 	}
 
@@ -806,8 +806,8 @@ public class FragmentDisplayContext {
 
 	private SearchContainer<Object> _contributedEntriesSearchContainer;
 	private FragmentCollection _fragmentCollection;
-	private final FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private final FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 	private Long _fragmentCollectionId;
 	private String _fragmentCollectionKey;
 	private SearchContainer<Object> _fragmentEntriesSearchContainer;

@@ -17,7 +17,7 @@ package com.liferay.fragment.contributor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -82,7 +82,7 @@ public class FragmentCollectionContributorTest {
 	@Test
 	public void testRegisterContributedFragmentEntries() {
 		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries();
+			_fragmentCollectionContributorRegistry.getFragmentEntries();
 
 		Assert.assertNotNull(
 			fragmentEntries.get(
@@ -102,19 +102,19 @@ public class FragmentCollectionContributorTest {
 
 	@Test
 	public void testRegisterFragmentCollectionContributor() {
-		_fragmentCollectionContributorTracker.getFragmentCollectionContributor(
+		_fragmentCollectionContributorRegistry.getFragmentCollectionContributor(
 			TestFragmentCollectionContributor.TEST_FRAGMENT_COLLECTION_KEY);
 
 		Assert.assertNotNull(
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributor(
 					TestFragmentCollectionContributor.
 						TEST_FRAGMENT_COLLECTION_KEY));
 	}
 
 	@Inject
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	private ServiceRegistration<FragmentCollectionContributor>
 		_serviceRegistration;

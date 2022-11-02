@@ -17,7 +17,7 @@ package com.liferay.style.book.web.internal.display.context;
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
@@ -97,8 +97,8 @@ public class EditStyleBookEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)renderRequest.getAttribute(
+		_fragmentCollectionContributorRegistry =
+			(FragmentCollectionContributorRegistry)renderRequest.getAttribute(
 				StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
@@ -233,7 +233,7 @@ public class EditStyleBookEntryDisplayContext {
 				if (fragmentCollections.size() < 4) {
 					List<FragmentCollectionContributor>
 						fragmentCollectionContributors =
-							_fragmentCollectionContributorTracker.
+							_fragmentCollectionContributorRegistry.
 								getFragmentCollectionContributors();
 
 					Collections.sort(
@@ -300,12 +300,12 @@ public class EditStyleBookEntryDisplayContext {
 					_themeDisplay.getCompanyGroupId()
 				});
 
-		if (_fragmentCollectionContributorTracker == null) {
+		if (_fragmentCollectionContributorRegistry == null) {
 			return fragmentCollectionsCount;
 		}
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributors();
 
 		return fragmentCollectionsCount + fragmentCollectionContributors.size();
@@ -614,8 +614,8 @@ public class EditStyleBookEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditStyleBookEntryDisplayContext.class.getName());
 
-	private final FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private final FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;

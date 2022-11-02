@@ -15,7 +15,7 @@
 package com.liferay.style.book.web.internal.display.context;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
@@ -49,8 +49,8 @@ public class PreviewFragmentCollectionDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)
+		_fragmentCollectionContributorRegistry =
+			(FragmentCollectionContributorRegistry)
 				httpServletRequest.getAttribute(
 					StyleBookWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 	}
@@ -81,7 +81,7 @@ public class PreviewFragmentCollectionDisplayContext {
 		}
 
 		FragmentCollectionContributor fragmentCollectionContributor =
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributor(getFragmentCollectionKey());
 
 		if (fragmentCollectionContributor != null) {
@@ -149,8 +149,8 @@ public class PreviewFragmentCollectionDisplayContext {
 		return _groupId;
 	}
 
-	private final FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private final FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 	private String _fragmentCollectionKey;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;

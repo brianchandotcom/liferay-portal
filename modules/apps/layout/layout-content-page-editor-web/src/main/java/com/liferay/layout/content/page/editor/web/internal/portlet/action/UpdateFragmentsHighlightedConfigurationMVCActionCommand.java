@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -124,7 +124,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 		}
 
 		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorTracker.getFragmentEntry(
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				fragmentEntryKey);
 
 		if (fragmentEntry != null) {
@@ -132,7 +132,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 		}
 
 		FragmentComposition fragmentComposition =
-			_fragmentCollectionContributorTracker.getFragmentComposition(
+			_fragmentCollectionContributorRegistry.getFragmentComposition(
 				fragmentEntryKey);
 
 		if (fragmentComposition != null) {
@@ -291,7 +291,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			}
 
 			FragmentComposition fragmentComposition =
-				_fragmentCollectionContributorTracker.getFragmentComposition(
+				_fragmentCollectionContributorRegistry.getFragmentComposition(
 					key);
 
 			if (fragmentComposition == null) {
@@ -479,8 +479,8 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 		UpdateFragmentsHighlightedConfigurationMVCActionCommand.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentCompositionService _fragmentCompositionService;

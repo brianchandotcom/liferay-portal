@@ -15,7 +15,7 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -209,7 +209,7 @@ public class FragmentRendererControllerImpl
 		ResourceBundleLoader resourceBundleLoader =
 			new AggregateResourceBundleLoader(
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-				_fragmentCollectionContributorTracker.
+				_fragmentCollectionContributorRegistry.
 					getResourceBundleLoader());
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
@@ -223,8 +223,8 @@ public class FragmentRendererControllerImpl
 		FragmentRendererControllerImpl.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

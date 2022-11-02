@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -86,8 +86,8 @@ public class EditFragmentEntryDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 
-		_fragmentCollectionContributorTracker =
-			(FragmentCollectionContributorTracker)
+		_fragmentCollectionContributorRegistry =
+			(FragmentCollectionContributorRegistry)
 				_httpServletRequest.getAttribute(
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_fragmentEntryProcessorRegistry =
@@ -154,7 +154,7 @@ public class EditFragmentEntryDisplayContext {
 
 		if (fragmentEntry == null) {
 			fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					getFragmentEntryKey());
 		}
 
@@ -647,8 +647,8 @@ public class EditFragmentEntryDisplayContext {
 
 	private String _configurationContent;
 	private String _cssContent;
-	private final FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private final FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;

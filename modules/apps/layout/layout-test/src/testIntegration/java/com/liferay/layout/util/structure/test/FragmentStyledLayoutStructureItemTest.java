@@ -16,7 +16,7 @@ package com.liferay.layout.util.structure.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
@@ -102,7 +102,7 @@ public class FragmentStyledLayoutStructureItemTest {
 			StringPool.BLANK, 0, null, fragmentEntry.getType(), serviceContext);
 
 		FragmentEntry contributedFragmentEntry =
-			_fragmentCollectionContributorTracker.getFragmentEntry(
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"BASIC_COMPONENT-heading");
 
 		_contributedFragmentEntryLink =
@@ -216,8 +216,8 @@ public class FragmentStyledLayoutStructureItemTest {
 	private FragmentEntryLink _contributedFragmentEntryLink;
 
 	@Inject
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	private FragmentEntryLink _fragmentEntryLink;
 

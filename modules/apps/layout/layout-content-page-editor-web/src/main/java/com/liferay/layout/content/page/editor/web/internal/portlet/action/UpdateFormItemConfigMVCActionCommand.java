@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
@@ -167,7 +167,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		FragmentCollectionContributor fragmentCollectionContributor =
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributor("INPUTS");
 
 		if (fragmentCollectionContributor == null) {
@@ -200,7 +200,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 			FragmentEntry fragmentEntry =
-				_fragmentCollectionContributorTracker.getFragmentEntry(
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
 					_getFragmentEntryKey(infoFieldType));
 
 			if ((fragmentEntry == null) ||
@@ -222,7 +222,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorTracker.getFragmentEntry(
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
 				"INPUTS-submit-button");
 
 		if ((fragmentEntry == null) ||
@@ -549,8 +549,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		UpdateFormItemConfigMVCActionCommand.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 
 	@Reference
 	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;

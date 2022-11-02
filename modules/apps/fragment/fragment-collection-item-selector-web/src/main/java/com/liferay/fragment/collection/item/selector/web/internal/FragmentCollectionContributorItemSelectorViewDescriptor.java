@@ -16,7 +16,7 @@ package com.liferay.fragment.collection.item.selector.web.internal;
 
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
@@ -45,12 +45,12 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<FragmentCollectionContributor> {
 
 	public FragmentCollectionContributorItemSelectorViewDescriptor(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
 		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
-		_fragmentCollectionContributorTracker =
-			fragmentCollectionContributorTracker;
+		_fragmentCollectionContributorRegistry =
+			fragmentCollectionContributorRegistry;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 	}
@@ -138,12 +138,12 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 	private List<FragmentCollectionContributor>
 		_getFragmentCollectionContributors(boolean orderByAsc) {
 
-		if (_fragmentCollectionContributorTracker == null) {
+		if (_fragmentCollectionContributorRegistry == null) {
 			return Collections.emptyList();
 		}
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
-			_fragmentCollectionContributorTracker.
+			_fragmentCollectionContributorRegistry.
 				getFragmentCollectionContributors();
 
 		ThemeDisplay themeDisplay =
@@ -163,8 +163,8 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
-	private final FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
+	private final FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 

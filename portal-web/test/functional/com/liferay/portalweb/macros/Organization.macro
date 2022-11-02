@@ -111,51 +111,15 @@ definition {
 	}
 
 	macro addCP {
-		AssertClick(
-			locator1 = "NavBar#ORGANIZATIONS",
-			value1 = "Organizations");
-
-		var key_navItem = "Organizations";
-
-		AssertElementPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
-
 		LexiconEntry.gotoAdd();
-
-		if ("${orgType}" == "Location") {
-			MenuItem.click(menuItem = "Location");
-		}
-		else if (IsElementPresent(key_menuItem = "Organization", locator1 = "MenuItem#ANY_MENU_ITEM")) {
-			MenuItem.click(menuItem = "Organization");
-		}
 
 		Type(
 			locator1 = "TextInput#NAME",
 			value1 = "${orgName}");
 
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
-
 		Button.clickSave();
 
-		if ("${organizationName}" == "Duplicate") {
-			Alert.viewRequestFailedToComplete();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "The organization name is already taken.");
-		}
-		else {
-			var key_orgType = "${orgType}";
-
-			Alert.viewSuccessMessage();
-
-			AssertTextEquals(
-				locator1 = "TextInput#NAME",
-				value1 = "${orgName}");
-
-			AssertTextEquals.assertValue(
-				locator1 = "UsersAndOrganizationsEditOrganization#DETAILS_TYPE",
-				value1 = "${orgType}");
-		}
+		Alert.viewSuccessMessage();
 	}
 
 	macro addSecurityQuestionsCP {

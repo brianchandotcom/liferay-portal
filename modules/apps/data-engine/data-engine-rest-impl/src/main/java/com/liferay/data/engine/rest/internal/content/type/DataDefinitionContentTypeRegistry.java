@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(service = DataDefinitionContentTypeTracker.class)
-public class DataDefinitionContentTypeTracker {
+@Component(service = DataDefinitionContentTypeRegistry.class)
+public class DataDefinitionContentTypeRegistry {
 
 	public Long getClassNameId(String contentType) {
 		return Optional.ofNullable(

@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.entry.util.ObjectEntryNameUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -554,6 +555,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			"taskItemDelegateName");
 
 		if (taskItemDelegateName != null) {
+			taskItemDelegateName = ObjectEntryNameUtil.fromTechnicalName(
+				taskItemDelegateName);
+
 			_objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					contextCompany.getCompanyId(), taskItemDelegateName);

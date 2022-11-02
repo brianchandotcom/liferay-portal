@@ -110,16 +110,6 @@ definition {
 		selenium.typeEditor();
 	}
 
-	function typeEditor {
-		selenium.waitForElementPresent();
-
-		selenium.waitForEditable();
-
-		selenium.mouseOver();
-
-		selenium.typeEditor();
-	}
-
 	function typeNoMouseOver {
 		selenium.waitForElementPresent();
 

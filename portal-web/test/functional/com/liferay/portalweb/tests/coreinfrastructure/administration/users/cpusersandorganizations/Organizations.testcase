@@ -34,8 +34,6 @@ definition {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AddMultipleSuborganizations";
 		property testray.component.names = "Training";
 
-		SearchAdministration.executeReindex();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -367,8 +365,6 @@ definition {
 		property test.name.skip.portal.instance = "CPUsersandorganizations#AddOrganizationTeam";
 		property testray.component.names = "Training";
 
-		SearchAdministration.executeReindex();
-
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		Organization.openOrganizationsAdmin();
@@ -537,8 +533,6 @@ definition {
 	test AssignMultipleUsersToOrganization {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#AssignMultipleUsersToOrganization";
 		property testray.component.names = "Training";
-
-		SearchAdministration.executeReindex();
 
 		var count = "1";
 
@@ -1521,8 +1515,6 @@ definition {
 	@priority = "4"
 	test SearchTags {
 		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#SearchTags";
-
-		SearchAdministration.executeReindex();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

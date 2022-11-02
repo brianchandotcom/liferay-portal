@@ -519,6 +519,8 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
 		Organization.addCP(
 			orgName = "Organization Name",
 			orgType = "Organization");

@@ -106,10 +106,7 @@ definition {
 
 	@priority = "3"
 	test AddOrganizationComment {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
 		Organization.addCP(
 			orgName = "Organization Name",
@@ -124,10 +121,7 @@ definition {
 
 	@priority = "3"
 	test AddOrganizationName50Characters {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
 		Organization.addCP(
 			orgName = "Organization Staging Organization Web Content Display",
@@ -168,23 +162,26 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
-		Organization.addCP(
-			organizationName = "Duplicate",
-			orgName = "Organization Name",
-			orgType = "Organization");
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "Organization Name");
+
+		Button.clickSave();
+
+		Alert.viewRequestFailedToComplete();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "The organization name is already taken.");
 	}
 
 	@priority = "4"
 	test AddOrganizations {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
 		Organization.addCP(
 			orgName = "Organization Name 1",
@@ -205,10 +202,7 @@ definition {
 			orgName = "Organization Name 1",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
 		Organization.addCP(
 			orgName = "Organization Name 2",
@@ -229,10 +223,7 @@ definition {
 			orgName = "Organization Name 2",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
 		Organization.addCP(
 			orgName = "Organization Name 3",
@@ -901,6 +892,8 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
 		Organization.addCP(
 			orgName = "Organization Name",
 			orgType = "Organization");
@@ -1536,10 +1529,7 @@ definition {
 
 	@priority = "3"
 	test ViewBack {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		Organization.openOrganizationsAdmin();
 
 		Organization.addCP(
 			orgName = "Organization Name",

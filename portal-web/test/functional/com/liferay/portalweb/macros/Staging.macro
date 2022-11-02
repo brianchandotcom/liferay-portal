@@ -837,7 +837,7 @@ definition {
 		if ("${rangeAll}" == "true") {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_ALL_CHANGE");
 
-			Click(locator1 = "Link#REFRESH_COUNTS");
+			ClickNoError(locator1 = "Link#REFRESH_COUNTS");
 		}
 
 		if (isSet(checkContentNameList)) {

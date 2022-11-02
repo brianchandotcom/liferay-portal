@@ -94,7 +94,7 @@ definition {
 			Click.javaScriptClick(locator1 = "Link#REFRESH_COUNTS");
 		}
 		else {
-			Click(locator1 = "Link#REFRESH_COUNTS");
+			ClickNoError(locator1 = "Link#REFRESH_COUNTS");
 		}
 	}
 

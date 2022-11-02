@@ -6213,7 +6213,8 @@ public class JournalArticleLocalServiceImpl
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey(), title,
+				article.getResourcePrimKey(),
+				_friendlyURLNormalizer.normalizeWithPeriods(title),
 				_language.getLanguageId(entry.getKey()));
 
 			friendlyURLMap.put(entry.getKey(), urlTitle);
@@ -9252,7 +9253,9 @@ public class JournalArticleLocalServiceImpl
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
-				resourcePrimKey, friendlyURL, languageId);
+				resourcePrimKey,
+				_friendlyURLNormalizer.normalizeWithPeriods(friendlyURL),
+				languageId);
 
 			urlTitleMap.put(languageId, urlTitle);
 		}
@@ -9269,7 +9272,9 @@ public class JournalArticleLocalServiceImpl
 						groupId,
 						_classNameLocalService.getClassNameId(
 							JournalArticle.class),
-						resourcePrimKey, value, languageId);
+						resourcePrimKey,
+						_friendlyURLNormalizer.normalizeWithPeriods(value),
+						languageId);
 
 				urlTitleMap.put(languageId, urlTitle);
 			}

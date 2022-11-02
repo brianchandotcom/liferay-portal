@@ -56,6 +56,11 @@ public class AssetEntryItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String[] getOrderByKeys() {
+		return new String[] {"title", "modified-date"};
+	}
+
+	@Override
 	public SearchContainer<AssetEntry> getSearchContainer()
 		throws PortalException {
 

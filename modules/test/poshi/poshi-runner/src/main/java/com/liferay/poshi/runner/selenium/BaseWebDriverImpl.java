@@ -1469,6 +1469,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public String getWebElementAttribute(String locator, String attributeName) {
+		WebElement webElement = getWebElement(locator);
+
+		return webElement.getAttribute(attributeName);
+	}
+
+	@Override
 	public String getWindowHandle() {
 		return _webDriver.getWindowHandle();
 	}

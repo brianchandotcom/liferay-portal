@@ -69,6 +69,4 @@ public interface FragmentEntryProcessorHelper {
 
 	public boolean isMappedCollection(JSONObject jsonObject);
 
-	public boolean isMappedLayout(JSONObject jsonObject);
-
 }

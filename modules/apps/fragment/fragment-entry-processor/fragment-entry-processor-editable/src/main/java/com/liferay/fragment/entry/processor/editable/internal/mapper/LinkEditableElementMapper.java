@@ -68,8 +68,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 				fragmentEntryProcessorContext.getMode());
 		boolean collectionMapped =
 			_fragmentEntryProcessorHelper.isMappedCollection(configJSONObject);
-		boolean layoutMapped = _fragmentEntryProcessorHelper.isMappedLayout(
-			configJSONObject);
+		boolean layoutMapped = _isMappedLayout(configJSONObject);
 		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
 			configJSONObject);
 
@@ -199,7 +198,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		if (!_fragmentEntryProcessorHelper.isMappedLayout(jsonObject)) {
+		if (!_isMappedLayout(jsonObject)) {
 			return StringPool.BLANK;
 		}
 
@@ -237,6 +236,14 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		}
 
 		return _portal.getLayoutRelativeURL(layout, themeDisplay);
+	}
+
+	private boolean _isMappedLayout(JSONObject jsonObject) {
+		if (jsonObject.has("layout")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _replaceLinkContent(

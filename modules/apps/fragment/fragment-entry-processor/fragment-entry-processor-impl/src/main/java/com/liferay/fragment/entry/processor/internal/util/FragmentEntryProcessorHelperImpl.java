@@ -345,15 +345,6 @@ public class FragmentEntryProcessorHelperImpl
 		return false;
 	}
 
-	@Override
-	public boolean isMappedLayout(JSONObject jsonObject) {
-		if (jsonObject.has("layout")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _formatMappedValue(Object fieldValue, Locale locale) {
 		if (fieldValue == null) {
 			return null;

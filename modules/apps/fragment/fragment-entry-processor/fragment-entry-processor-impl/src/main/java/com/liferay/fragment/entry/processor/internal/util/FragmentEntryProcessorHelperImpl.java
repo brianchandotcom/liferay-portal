@@ -345,7 +345,15 @@ public class FragmentEntryProcessorHelperImpl
 		if (value instanceof WebImage) {
 			WebImage webImage = (WebImage)value;
 
-			return webImage.toJSONObject();
+			JSONObject valueJSONObject = webImage.toJSONObject();
+
+			long fileEntryId = getFileEntryId(webImage);
+
+			if (fileEntryId != 0) {
+				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
+			}
+
+			return valueJSONObject;
 		}
 
 		return formatMappedValue(value, locale);

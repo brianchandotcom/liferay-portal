@@ -173,7 +173,7 @@ describe('ExperienceToolbarSection', () => {
 			getByLabelText,
 		} = renderExperienceToolbarSection(mockState, mockConfig);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -205,7 +205,9 @@ describe('ExperienceToolbarSection', () => {
 			getByLabelText,
 		} = renderExperienceToolbarSection(mockState, mockConfig);
 
-		const dropDownButtonLabel = getByLabelText('experience');
+		const dropDownButtonLabel = getByLabelText('experience', {
+			exact: false,
+		});
 		const dropDownButton = container.querySelector(
 			'.page-editor__toolbar-experience'
 		);
@@ -279,7 +281,7 @@ describe('ExperienceToolbarSection', () => {
 			mockDispatch
 		);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -327,7 +329,7 @@ describe('ExperienceToolbarSection', () => {
 			getByLabelText,
 		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -405,7 +407,7 @@ describe('ExperienceToolbarSection', () => {
 			getByLabelText,
 		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -494,7 +496,7 @@ describe('ExperienceToolbarSection', () => {
 			getByText,
 		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -588,7 +590,7 @@ describe('ExperienceToolbarSection', () => {
 			getByText,
 		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -757,7 +759,7 @@ describe('ExperienceToolbarSection', () => {
 			mockDispatch
 		);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -829,7 +831,7 @@ describe('ExperienceToolbarSection', () => {
 			getByLabelText,
 		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		userEvent.click(dropDownButton);
 
@@ -874,7 +876,7 @@ describe('ExperienceToolbarSection', () => {
 			mockConfig
 		);
 
-		const dropDownButton = getByLabelText('experience');
+		const dropDownButton = getByLabelText('experience', {exact: false});
 
 		// ESC
 
@@ -900,7 +902,7 @@ describe('ExperienceToolbarSection', () => {
 
 		// clickoutside
 
-		userEvent.click(dropDownButton);
+		userEvent.click(dropDownButton, {exact: false});
 
 		await findByRole('list');
 

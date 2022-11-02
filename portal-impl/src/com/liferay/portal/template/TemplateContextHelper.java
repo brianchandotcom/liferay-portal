@@ -618,20 +618,9 @@ public class TemplateContextHelper {
 			_log.error(securityException);
 		}
 
-		try {
-			UtilLocator utilLocator = UtilLocator.getInstance();
+		// SAX reader util
 
-			// Util locator
-
-			variables.put("utilLocator", utilLocator);
-
-			// SAX reader util
-
-			variables.put("saxReaderUtil", SAXReaderUtil.getSAXReader());
-		}
-		catch (SecurityException securityException) {
-			_log.error(securityException);
-		}
+		variables.put("saxReaderUtil", SAXReaderUtil.getSAXReader());
 
 		// Session clicks
 

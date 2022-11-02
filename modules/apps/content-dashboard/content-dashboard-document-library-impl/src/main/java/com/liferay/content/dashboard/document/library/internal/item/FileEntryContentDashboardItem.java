@@ -21,7 +21,7 @@ import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionAction;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemVersionActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
@@ -92,8 +92,8 @@ public class FileEntryContentDashboardItem
 		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
 		ContentDashboardItemActionProviderRegistry
 			contentDashboardItemActionProviderRegistry,
-		ContentDashboardItemVersionActionProviderTracker
-			contentDashboardItemVersionActionProviderTracker,
+		ContentDashboardItemVersionActionProviderRegistry
+			contentDashboardItemVersionActionProviderRegistry,
 		ContentDashboardItemSubtype contentDashboardItemSubtype,
 		DLDisplayContextProvider dlDisplayContextProvider,
 		DLURLHelper dlURLHelper, FileEntry fileEntry, Group group,
@@ -116,8 +116,8 @@ public class FileEntryContentDashboardItem
 
 		_contentDashboardItemActionProviderRegistry =
 			contentDashboardItemActionProviderRegistry;
-		_contentDashboardItemVersionActionProviderTracker =
-			contentDashboardItemVersionActionProviderTracker;
+		_contentDashboardItemVersionActionProviderRegistry =
+			contentDashboardItemVersionActionProviderRegistry;
 		_contentDashboardItemSubtype = contentDashboardItemSubtype;
 		_dlDisplayContextProvider = dlDisplayContextProvider;
 		_dlURLHelper = dlURLHelper;
@@ -522,7 +522,7 @@ public class FileEntryContentDashboardItem
 
 		List<ContentDashboardItemVersionActionProvider>
 			contentDashboardItemVersionActionProviders =
-				_contentDashboardItemVersionActionProviderTracker.
+				_contentDashboardItemVersionActionProviderRegistry.
 					getContentDashboardItemVersionActionProviders(
 						FileVersion.class.getName());
 
@@ -695,8 +695,8 @@ public class FileEntryContentDashboardItem
 	private final ContentDashboardItemActionProviderRegistry
 		_contentDashboardItemActionProviderRegistry;
 	private final ContentDashboardItemSubtype _contentDashboardItemSubtype;
-	private final ContentDashboardItemVersionActionProviderTracker
-		_contentDashboardItemVersionActionProviderTracker;
+	private final ContentDashboardItemVersionActionProviderRegistry
+		_contentDashboardItemVersionActionProviderRegistry;
 	private final DLDisplayContextProvider _dlDisplayContextProvider;
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;

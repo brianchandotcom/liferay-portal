@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderRegistry;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
@@ -80,7 +80,7 @@ public class FileEntryContentDashboardItemFactory
 		return new FileEntryContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderRegistry,
-			_contentDashboardItemVersionActionProviderTracker,
+			_contentDashboardItemVersionActionProviderRegistry,
 			contentDashboardItemSubtypeFactory.create(
 				dlFileEntry.getFileEntryTypeId(), dlFileEntry.getFileEntryId()),
 			_dlDisplayContextProvider, _dlURLHelper, fileEntry,
@@ -112,8 +112,8 @@ public class FileEntryContentDashboardItemFactory
 		_contentDashboardItemSubtypeFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemVersionActionProviderTracker
-		_contentDashboardItemVersionActionProviderTracker;
+	private ContentDashboardItemVersionActionProviderRegistry
+		_contentDashboardItemVersionActionProviderRegistry;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderRegistry;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -100,7 +100,7 @@ public class JournalArticleContentDashboardItemFactory
 		return new JournalArticleContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderRegistry,
-			_contentDashboardItemVersionActionProviderTracker,
+			_contentDashboardItemVersionActionProviderRegistry,
 			contentDashboardItemSubtypeFactory.create(
 				ddmStructure.getStructureId(),
 				journalArticle.getResourcePrimKey()),
@@ -133,8 +133,8 @@ public class JournalArticleContentDashboardItemFactory
 		_contentDashboardItemSubtypeFactoryTracker;
 
 	@Reference
-	private ContentDashboardItemVersionActionProviderTracker
-		_contentDashboardItemVersionActionProviderTracker;
+	private ContentDashboardItemVersionActionProviderRegistry
+		_contentDashboardItemVersionActionProviderRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

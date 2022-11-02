@@ -27,7 +27,7 @@ import com.liferay.commerce.product.content.web.internal.util.CPQueryRule;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
@@ -88,7 +88,7 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 						_cpContentListEntryRendererRegistry,
 						_cpContentListRendererRegistry, _cpDataSourceRegistry,
 						_cpDefinitionHelper, _cpInstanceHelper,
-						_cpPublisherWebHelper, _cpTypeServicesTracker,
+						_cpPublisherWebHelper, _cpTypeRegistry,
 						httpServletRequest, _itemSelector);
 
 			httpServletRequest.setAttribute(
@@ -504,7 +504,7 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 	private CPPublisherWebHelper _cpPublisherWebHelper;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

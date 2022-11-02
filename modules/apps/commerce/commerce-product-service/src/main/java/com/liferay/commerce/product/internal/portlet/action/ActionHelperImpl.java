@@ -31,7 +31,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -426,12 +426,12 @@ public class ActionHelperImpl implements ActionHelper {
 
 	@Override
 	public CPType getCPType(String name) {
-		return _cpTypeServicesTracker.getCPType(name);
+		return _cpTypeRegistry.getCPType(name);
 	}
 
 	@Override
 	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
+		return _cpTypeRegistry.getCPTypes();
 	}
 
 	@Override
@@ -483,7 +483,7 @@ public class ActionHelperImpl implements ActionHelper {
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private Portal _portal;

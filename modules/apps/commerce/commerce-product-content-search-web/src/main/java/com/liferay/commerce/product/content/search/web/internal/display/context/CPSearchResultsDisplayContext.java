@@ -26,7 +26,7 @@ import com.liferay.commerce.product.content.search.web.internal.configuration.CP
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -65,7 +65,7 @@ public class CPSearchResultsDisplayContext {
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPTypeServicesTracker cpTypeServicesTracker,
+			CPTypeRegistry cpTypeRegistry,
 			HttpServletRequest httpServletRequest,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
@@ -74,7 +74,7 @@ public class CPSearchResultsDisplayContext {
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
+		_cpTypeRegistry = cpTypeRegistry;
 		_httpServletRequest = httpServletRequest;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
@@ -180,7 +180,7 @@ public class CPSearchResultsDisplayContext {
 	}
 
 	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
+		return _cpTypeRegistry.getCPTypes();
 	}
 
 	public String getDisplayStyle() {
@@ -355,7 +355,7 @@ public class CPSearchResultsDisplayContext {
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
+	private final CPTypeRegistry _cpTypeRegistry;
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;

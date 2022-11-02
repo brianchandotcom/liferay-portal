@@ -37,7 +37,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -98,7 +98,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			CPDefinitionLocalService cpDefinitionLocalService,
 			CPFriendlyURL cpFriendlyURL,
 			CPPublisherWebHelper cpPublisherWebHelper,
-			CPTypeServicesTracker cpTypeServicesTracker,
+			CPTypeRegistry cpTypeRegistry,
 			DLFileEntryLocalService dlFileEntryLocalService,
 			ModelResourcePermission<DLFileEntry>
 				dlFileEntryModelResourcePermission,
@@ -108,7 +108,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		super(
 			contentListEntryRendererRegistry, cpContentListRendererRegistry,
-			cpPublisherWebHelper, cpTypeServicesTracker, httpServletRequest);
+			cpPublisherWebHelper, cpTypeRegistry, httpServletRequest);
 
 		_amImageHTMLTagFactory = amImageHTMLTagFactory;
 		_commerceCatalogDefaultImage = commerceCatalogDefaultImage;

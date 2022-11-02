@@ -19,7 +19,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,7 +60,7 @@ public class CPSearchResultsConfigurationAction
 				new CPSearchResultsDisplayContext(
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionHelper,
-					_cpTypeServicesTracker, httpServletRequest,
+					_cpTypeRegistry, httpServletRequest,
 					portletSharedSearchResponse);
 
 			httpServletRequest.setAttribute(
@@ -96,7 +96,7 @@ public class CPSearchResultsConfigurationAction
 	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

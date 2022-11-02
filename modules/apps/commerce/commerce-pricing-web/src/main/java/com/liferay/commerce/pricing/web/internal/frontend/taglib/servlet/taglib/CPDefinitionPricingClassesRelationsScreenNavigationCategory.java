@@ -21,7 +21,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -99,7 +99,7 @@ public class CPDefinitionPricingClassesRelationsScreenNavigationCategory
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		CPType cpType = _cpTypeServicesTracker.getCPType(
+		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());
 
 		try {
@@ -156,7 +156,7 @@ public class CPDefinitionPricingClassesRelationsScreenNavigationCategory
 	private CommercePricingClassService _commercePricingClassService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

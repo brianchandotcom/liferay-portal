@@ -27,7 +27,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
@@ -160,7 +160,7 @@ public class ProductDTOConverter
 	}
 
 	private CPType _getCPType(String name) {
-		return _cpTypeServicesTracker.getCPType(name);
+		return _cpTypeRegistry.getCPType(name);
 	}
 
 	private String _getSku(CPDefinition cpDefinition, Locale locale) {
@@ -242,7 +242,7 @@ public class ProductDTOConverter
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private Language _language;

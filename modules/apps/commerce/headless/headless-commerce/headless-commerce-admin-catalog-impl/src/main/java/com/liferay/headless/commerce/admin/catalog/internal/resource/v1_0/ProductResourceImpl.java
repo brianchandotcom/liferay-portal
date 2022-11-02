@@ -44,7 +44,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
@@ -1080,7 +1080,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		// Diagram
 
-		CPType cpType = _cpTypeServicesTracker.getCPType(
+		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());
 
 		if ((cpType != null) &&
@@ -1355,7 +1355,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private CPSpecificationOptionService _cpSpecificationOptionService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private CSDiagramEntryService _csDiagramEntryService;

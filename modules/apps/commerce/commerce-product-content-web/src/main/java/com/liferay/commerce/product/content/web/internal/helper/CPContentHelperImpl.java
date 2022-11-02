@@ -59,7 +59,7 @@ import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -377,7 +377,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
+		return _cpTypeRegistry.getCPTypes();
 	}
 
 	@Override
@@ -910,7 +910,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 	private CProductLocalService _cProductLocalService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private DDMHelper _ddmHelper;

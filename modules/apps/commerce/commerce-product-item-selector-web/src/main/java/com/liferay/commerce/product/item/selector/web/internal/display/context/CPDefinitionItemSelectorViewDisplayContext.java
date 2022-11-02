@@ -22,7 +22,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,14 +48,14 @@ public class CPDefinitionItemSelectorViewDisplayContext
 	public CPDefinitionItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName, CPDefinitionService cpDefinitionService,
-		CPTypeServicesTracker cpTypeServicesTracker) {
+		CPTypeRegistry cpTypeRegistry) {
 
 		super(
 			httpServletRequest, portletURL, itemSelectedEventName,
 			CPDefinitionItemSelectorView.class.getSimpleName());
 
 		_cpDefinitionService = cpDefinitionService;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
+		_cpTypeRegistry = cpTypeRegistry;
 
 		setDefaultOrderByCol("name");
 	}
@@ -65,7 +65,7 @@ public class CPDefinitionItemSelectorViewDisplayContext
 	}
 
 	public CPType getCPType(String name) {
-		return _cpTypeServicesTracker.getCPType(name);
+		return _cpTypeRegistry.getCPType(name);
 	}
 
 	@Override
@@ -168,6 +168,6 @@ public class CPDefinitionItemSelectorViewDisplayContext
 	}
 
 	private final CPDefinitionService _cpDefinitionService;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
+	private final CPTypeRegistry _cpTypeRegistry;
 
 }

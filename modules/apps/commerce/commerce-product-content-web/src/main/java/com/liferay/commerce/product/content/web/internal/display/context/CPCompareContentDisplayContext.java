@@ -26,7 +26,7 @@ import com.liferay.commerce.product.content.web.internal.configuration.CPCompare
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -58,7 +58,7 @@ public class CPCompareContentDisplayContext {
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPTypeServicesTracker cpTypeServicesTracker,
+			CPTypeRegistry cpTypeRegistry,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -66,7 +66,7 @@ public class CPCompareContentDisplayContext {
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
+		_cpTypeRegistry = cpTypeRegistry;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -206,7 +206,7 @@ public class CPCompareContentDisplayContext {
 	}
 
 	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
+		return _cpTypeRegistry.getCPTypes();
 	}
 
 	public String getDisplayStyle() {
@@ -270,6 +270,6 @@ public class CPCompareContentDisplayContext {
 	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final List<Long> _cpDefinitionIds;
 	private final CPRequestHelper _cpRequestHelper;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
+	private final CPTypeRegistry _cpTypeRegistry;
 
 }

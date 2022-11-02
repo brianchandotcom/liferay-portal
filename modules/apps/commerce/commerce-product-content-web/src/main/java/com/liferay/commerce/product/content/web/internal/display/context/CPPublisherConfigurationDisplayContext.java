@@ -30,7 +30,7 @@ import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHe
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceUtil;
@@ -86,13 +86,13 @@ public class CPPublisherConfigurationDisplayContext
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper,
 			CPPublisherWebHelper cpPublisherWebHelper,
-			CPTypeServicesTracker cpTypeServicesTracker,
+			CPTypeRegistry cpTypeRegistry,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector)
 		throws PortalException {
 
 		super(
 			contentListEntryRendererRegistry, cpContentListRendererRegistry,
-			cpPublisherWebHelper, cpTypeServicesTracker, httpServletRequest);
+			cpPublisherWebHelper, cpTypeRegistry, httpServletRequest);
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetTagLocalService = assetTagLocalService;

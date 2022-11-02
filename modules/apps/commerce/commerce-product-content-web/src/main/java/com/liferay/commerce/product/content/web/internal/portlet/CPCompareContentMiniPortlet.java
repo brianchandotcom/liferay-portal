@@ -20,7 +20,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.util.CPCompareContentHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,7 +82,7 @@ public class CPCompareContentMiniPortlet extends MVCPortlet {
 					new CPCompareContentMiniDisplayContext(
 						_cpCompareHelper, _cpContentListEntryRendererRegistry,
 						_cpContentListRendererRegistry, _cpDefinitionHelper,
-						_cpTypeServicesTracker,
+						_cpTypeRegistry,
 						_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -116,7 +116,7 @@ public class CPCompareContentMiniPortlet extends MVCPortlet {
 	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private Portal _portal;

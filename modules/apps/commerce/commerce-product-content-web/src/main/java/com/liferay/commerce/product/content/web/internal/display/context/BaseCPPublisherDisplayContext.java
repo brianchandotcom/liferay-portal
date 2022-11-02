@@ -26,7 +26,7 @@ import com.liferay.commerce.product.content.web.internal.configuration.CPPublish
 import com.liferay.commerce.product.content.web.internal.display.context.helper.CPContentRequestHelper;
 import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHelper;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,7 +51,7 @@ public class BaseCPPublisherDisplayContext {
 			CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPPublisherWebHelper cpPublisherWebHelper,
-			CPTypeServicesTracker cpTypeServicesTracker,
+			CPTypeRegistry cpTypeRegistry,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -59,7 +59,7 @@ public class BaseCPPublisherDisplayContext {
 			contentListEntryRendererRegistry;
 		this.cpContentListRendererRegistry = cpContentListRendererRegistry;
 		this.cpPublisherWebHelper = cpPublisherWebHelper;
-		this.cpTypeServicesTracker = cpTypeServicesTracker;
+		this.cpTypeRegistry = cpTypeRegistry;
 
 		cpContentRequestHelper = new CPContentRequestHelper(httpServletRequest);
 
@@ -157,7 +157,7 @@ public class BaseCPPublisherDisplayContext {
 	}
 
 	public List<CPType> getCPTypes() {
-		return cpTypeServicesTracker.getCPTypes();
+		return cpTypeRegistry.getCPTypes();
 	}
 
 	public String getDataSource() {
@@ -255,7 +255,7 @@ public class BaseCPPublisherDisplayContext {
 	protected final CPPublisherPortletInstanceConfiguration
 		cpPublisherPortletInstanceConfiguration;
 	protected final CPPublisherWebHelper cpPublisherWebHelper;
-	protected final CPTypeServicesTracker cpTypeServicesTracker;
+	protected final CPTypeRegistry cpTypeRegistry;
 	protected String dataSource;
 	protected String renderSelection;
 	protected String selectionStyle;

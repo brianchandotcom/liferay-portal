@@ -69,7 +69,7 @@ import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRel
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.util.CPVersionContributor;
 import com.liferay.commerce.product.util.CPVersionContributorRegistryUtil;
@@ -1390,7 +1390,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product type
 
-		CPType cpType = _cpTypeServicesTracker.getCPType(
+		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());
 
 		if (cpType != null) {
@@ -3152,7 +3152,7 @@ public class CPDefinitionLocalServiceImpl
 				"Expiration date " + expirationDate + " is in the past");
 		}
 
-		CPType cpType = _cpTypeServicesTracker.getCPType(productTypeName);
+		CPType cpType = _cpTypeRegistry.getCPType(productTypeName);
 
 		if (cpType == null) {
 			throw new CPDefinitionProductTypeNameException();
@@ -3242,8 +3242,8 @@ public class CPDefinitionLocalServiceImpl
 	@BeanReference(type = CProductPersistence.class)
 	private CProductPersistence _cProductPersistence;
 
-	@ServiceReference(type = CPTypeServicesTracker.class)
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	@ServiceReference(type = CPTypeRegistry.class)
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@ServiceReference(type = DDMStructureLocalService.class)
 	private DDMStructureLocalService _ddmStructureLocalService;

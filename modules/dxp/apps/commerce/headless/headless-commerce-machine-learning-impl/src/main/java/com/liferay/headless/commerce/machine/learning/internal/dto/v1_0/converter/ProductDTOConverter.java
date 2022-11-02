@@ -25,7 +25,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.Product;
@@ -75,7 +75,7 @@ public class ProductDTOConverter
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 		CProduct cProduct = cpDefinition.getCProduct();
-		CPType cpType = _cpTypeServicesTracker.getCPType(
+		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
@@ -159,7 +159,7 @@ public class ProductDTOConverter
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private ProductOptionDTOConverter _productOptionDTOConverter;

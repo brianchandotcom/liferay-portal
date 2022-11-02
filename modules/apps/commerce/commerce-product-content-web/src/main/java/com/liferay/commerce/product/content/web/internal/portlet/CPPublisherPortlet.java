@@ -25,7 +25,7 @@ import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHe
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -90,8 +90,8 @@ public class CPPublisherPortlet extends MVCPortlet {
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDataSourceRegistry,
 					_cpDefinitionHelper, _cpDefinitionLocalService,
-					_cpFriendlyURL, _cpPublisherWebHelper,
-					_cpTypeServicesTracker, _dlFileEntryLocalService,
+					_cpFriendlyURL, _cpPublisherWebHelper, _cpTypeRegistry,
+					_dlFileEntryLocalService,
 					_dlFileEntryModelResourcePermission,
 					_friendlyURLEntryLocalService,
 					_portal.getHttpServletRequest(renderRequest), _portal);
@@ -145,7 +145,7 @@ public class CPPublisherPortlet extends MVCPortlet {
 	private CPPublisherWebHelper _cpPublisherWebHelper;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

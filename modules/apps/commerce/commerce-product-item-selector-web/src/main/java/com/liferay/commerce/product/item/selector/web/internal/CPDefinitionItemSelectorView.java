@@ -18,7 +18,7 @@ import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.item.selector.web.internal.display.context.CPDefinitionItemSelectorViewDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -100,7 +100,7 @@ public class CPDefinitionItemSelectorView
 			cpDefinitionItemSelectorViewDisplayContext =
 				new CPDefinitionItemSelectorViewDisplayContext(
 					httpServletRequest, portletURL, itemSelectedEventName,
-					_cpDefinitionService, _cpTypeServicesTracker);
+					_cpDefinitionService, _cpTypeRegistry);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -123,7 +123,7 @@ public class CPDefinitionItemSelectorView
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private Language _language;

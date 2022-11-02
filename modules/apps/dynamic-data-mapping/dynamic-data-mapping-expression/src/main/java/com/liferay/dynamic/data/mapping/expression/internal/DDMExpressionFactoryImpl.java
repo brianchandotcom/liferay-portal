@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +35,7 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 		throws DDMExpressionException {
 
 		DDMExpressionImpl<T> ddmExpressionImpl = new DDMExpressionImpl<>(
-			ddmExpressionFunctionTracker,
+			ddmExpressionFunctionRegistry,
 			createExpressionRequest.getExpression());
 
 		ddmExpressionImpl.setDDMExpressionActionHandler(
@@ -51,6 +51,6 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 	}
 
 	@Reference
-	protected DDMExpressionFunctionTracker ddmExpressionFunctionTracker;
+	protected DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry;
 
 }

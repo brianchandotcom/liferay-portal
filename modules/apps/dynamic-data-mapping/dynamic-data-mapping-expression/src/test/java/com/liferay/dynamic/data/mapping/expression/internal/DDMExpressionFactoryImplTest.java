@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.expression.internal;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.functions.PowFunction;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -45,7 +45,7 @@ public class DDMExpressionFactoryImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpDDMExpressionFunctionTracker();
+		_setUpDDMExpressionFunctionRegistry();
 	}
 
 	@Test
@@ -61,12 +61,12 @@ public class DDMExpressionFactoryImplTest {
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal(8)));
 	}
 
-	private void _setUpDDMExpressionFunctionTracker() throws Exception {
-		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
-			Mockito.mock(DDMExpressionFunctionTracker.class);
+	private void _setUpDDMExpressionFunctionRegistry() throws Exception {
+		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
+			Mockito.mock(DDMExpressionFunctionRegistry.class);
 
 		Mockito.when(
-			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+			ddmExpressionFunctionRegistry.getDDMExpressionFunctionFactories(
 				Mockito.any())
 		).thenReturn(
 			HashMapBuilder.<String, DDMExpressionFunctionFactory>put(
@@ -75,8 +75,8 @@ public class DDMExpressionFactoryImplTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
-			ddmExpressionFunctionTracker);
+			_ddmExpressionFactoryImpl, "ddmExpressionFunctionRegistry",
+			ddmExpressionFunctionRegistry);
 	}
 
 	private final DDMExpressionFactoryImpl _ddmExpressionFactoryImpl =

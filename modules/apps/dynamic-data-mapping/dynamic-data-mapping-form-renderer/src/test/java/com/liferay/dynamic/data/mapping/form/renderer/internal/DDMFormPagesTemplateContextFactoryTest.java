@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.DDMFormEvaluatorImpl;
@@ -1096,19 +1096,19 @@ public class DDMFormPagesTemplateContextFactoryTest {
 					"setVisible", () -> new SetVisibleFunction()
 				).build();
 
-		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
-			Mockito.mock(DDMExpressionFunctionTracker.class);
+		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
+			Mockito.mock(DDMExpressionFunctionRegistry.class);
 
 		Mockito.when(
-			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+			ddmExpressionFunctionRegistry.getDDMExpressionFunctionFactories(
 				Mockito.any())
 		).thenReturn(
 			ddmExpressionFunctionFactoryMap
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
-			ddmExpressionFunctionTracker);
+			ddmExpressionFactoryImpl, "ddmExpressionFunctionRegistry",
+			ddmExpressionFunctionRegistry);
 
 		return ddmFormEvaluator;
 	}

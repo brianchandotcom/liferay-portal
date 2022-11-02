@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -44,8 +44,8 @@ public class AllFunctionTest {
 		_allFunction = new AllFunction(_ddmExpressionFactoryImpl);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
-			Mockito.mock(DDMExpressionFunctionTracker.class));
+			_ddmExpressionFactoryImpl, "ddmExpressionFunctionRegistry",
+			Mockito.mock(DDMExpressionFunctionRegistry.class));
 	}
 
 	@Test

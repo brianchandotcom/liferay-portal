@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.helper;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.form.builder.internal.util.DDMExpressionFunctionMetadata;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -84,7 +84,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 
 	@Test
 	public void testPopulateCustomDDMExpressionFunctionsMetadata() {
-		_mockDDMExpressionFunctionTracker();
+		_mockDDMExpressionFunctionRegistry();
 
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionMetadatasMap = new HashMap<>();
@@ -164,12 +164,12 @@ public class DDMExpressionFunctionMetadataHelperTest {
 			ddmExpressionFunctionMetadatas.size());
 	}
 
-	private void _mockDDMExpressionFunctionTracker() {
-		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
-			Mockito.mock(DDMExpressionFunctionTracker.class);
+	private void _mockDDMExpressionFunctionRegistry() {
+		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
+			Mockito.mock(DDMExpressionFunctionRegistry.class);
 
 		Mockito.when(
-			ddmExpressionFunctionTracker.getCustomDDMExpressionFunctions()
+			ddmExpressionFunctionRegistry.getCustomDDMExpressionFunctions()
 		).thenReturn(
 			HashMapBuilder.<String, DDMExpressionFunction>put(
 				"binaryFunction", new BinaryFunction()
@@ -182,7 +182,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_ddmExpressionFunctionMetadataHelper,
-			"_ddmExpressionFunctionTracker", ddmExpressionFunctionTracker);
+			"_ddmExpressionFunctionRegistry", ddmExpressionFunctionRegistry);
 	}
 
 	private static final DDMExpressionFunctionMetadataHelper

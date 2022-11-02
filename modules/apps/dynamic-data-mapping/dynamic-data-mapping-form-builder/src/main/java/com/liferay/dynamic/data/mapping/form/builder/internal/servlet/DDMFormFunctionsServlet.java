@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.servlet;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -107,7 +107,7 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 
 		functionNames.add("sum");
 
-		return _ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+		return _ddmExpressionFunctionRegistry.getDDMExpressionFunctionFactories(
 			functionNames);
 	}
 
@@ -130,7 +130,7 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Reference
-	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
+	private DDMExpressionFunctionRegistry _ddmExpressionFunctionRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

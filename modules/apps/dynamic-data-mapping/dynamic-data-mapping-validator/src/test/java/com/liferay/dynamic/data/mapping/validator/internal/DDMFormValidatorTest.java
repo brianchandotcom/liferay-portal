@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -595,8 +595,8 @@ public class DDMFormValidatorTest {
 			new DDMExpressionFactoryImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
-			Mockito.mock(DDMExpressionFunctionTracker.class));
+			ddmExpressionFactoryImpl, "ddmExpressionFunctionRegistry",
+			Mockito.mock(DDMExpressionFunctionRegistry.class));
 
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValidatorImpl, "_ddmExpressionFactory",

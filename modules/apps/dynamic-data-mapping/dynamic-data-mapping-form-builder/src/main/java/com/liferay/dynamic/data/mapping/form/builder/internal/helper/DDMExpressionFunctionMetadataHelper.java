@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.helper;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.form.builder.internal.util.DDMExpressionFunctionMetadata;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -76,7 +76,7 @@ public class DDMExpressionFunctionMetadataHelper {
 		Locale locale) {
 
 		Map<String, DDMExpressionFunction> customDDMExpressionFunctions =
-			_ddmExpressionFunctionTracker.getCustomDDMExpressionFunctions();
+			_ddmExpressionFunctionRegistry.getCustomDDMExpressionFunctions();
 
 		for (Map.Entry<String, DDMExpressionFunction> entry :
 				customDDMExpressionFunctions.entrySet()) {
@@ -264,7 +264,7 @@ public class DDMExpressionFunctionMetadataHelper {
 		).build();
 
 	@Reference
-	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
+	private DDMExpressionFunctionRegistry _ddmExpressionFunctionRegistry;
 
 	@Reference
 	private Language _language;

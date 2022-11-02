@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.expression.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ComparisonExpression;
@@ -53,11 +53,11 @@ public class DDMExpressionModelTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_ddmExpressionFunctionTracker = Mockito.mock(
-			DDMExpressionFunctionTracker.class);
+		_ddmExpressionFunctionRegistry = Mockito.mock(
+			DDMExpressionFunctionRegistry.class);
 
 		Mockito.when(
-			_ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+			_ddmExpressionFunctionRegistry.getDDMExpressionFunctionFactories(
 				Mockito.any())
 		).thenReturn(
 			HashMapBuilder.<String, DDMExpressionFunctionFactory>put(
@@ -73,7 +73,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testAndExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker, "true && (2 != 3)");
+			_ddmExpressionFunctionRegistry, "true && (2 != 3)");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -121,7 +121,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testArithmeticExpression() throws Exception {
 		DDMExpressionImpl<Double> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker, "a + b * c - d");
+			_ddmExpressionFunctionRegistry, "a + b * c - d");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -186,7 +186,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testFunctionCallExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker, "date()");
+			_ddmExpressionFunctionRegistry, "date()");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -203,7 +203,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testGreaterThanExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker, "(2 * 5) > 3");
+			_ddmExpressionFunctionRegistry, "(2 * 5) > 3");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -260,7 +260,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testLessThanEqualExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker,
+			_ddmExpressionFunctionRegistry,
 			"((1 + 4) / (5 - 2)) <= sum(Var1,Var2)");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
@@ -390,7 +390,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testNotExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker, "not false");
+			_ddmExpressionFunctionRegistry, "not false");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -410,7 +410,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testOrExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			_ddmExpressionFunctionTracker,
+			_ddmExpressionFunctionRegistry,
 			"(-3 < Var1) || (not equals(Var2,sum(Var3,Var4)))");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
@@ -522,7 +522,7 @@ public class DDMExpressionModelTest {
 		Assert.assertEquals("Var4", term.getValue());
 	}
 
-	private static DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
+	private static DDMExpressionFunctionRegistry _ddmExpressionFunctionRegistry;
 
 	private static class TestDDMExpressionFunctionFactory
 		implements DDMExpressionFunctionFactory {

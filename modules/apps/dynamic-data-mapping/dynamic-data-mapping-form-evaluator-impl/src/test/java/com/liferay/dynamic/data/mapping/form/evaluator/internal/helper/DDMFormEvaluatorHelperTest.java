@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.helper;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
@@ -1802,7 +1802,7 @@ public class DDMFormEvaluatorHelperTest {
 				_mockDDMFormFieldTypeServicesTracker(),
 				_mockDDMFormPageChangeTracker());
 
-		_mockDDMExpressionFunctionTracker();
+		_mockDDMExpressionFunctionRegistry();
 
 		return ddmFormEvaluatorHelper.evaluate();
 	}
@@ -2075,20 +2075,20 @@ public class DDMFormEvaluatorHelperTest {
 			ddmFormEvaluatorFieldContextKey);
 	}
 
-	private void _mockDDMExpressionFunctionTracker() throws Exception {
-		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
-			Mockito.mock(DDMExpressionFunctionTracker.class);
+	private void _mockDDMExpressionFunctionRegistry() throws Exception {
+		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
+			Mockito.mock(DDMExpressionFunctionRegistry.class);
 
 		Mockito.when(
-			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+			ddmExpressionFunctionRegistry.getDDMExpressionFunctionFactories(
 				Mockito.any())
 		).thenReturn(
 			_createDDMExpressionFunctionMap()
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFactory, "ddmExpressionFunctionTracker",
-			ddmExpressionFunctionTracker);
+			_ddmExpressionFactory, "ddmExpressionFunctionRegistry",
+			ddmExpressionFunctionRegistry);
 	}
 
 	private DDMFormFieldTypeServicesTracker

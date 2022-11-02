@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.converter;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -380,8 +380,8 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 	}
 
 	private void _setUpDDMExpressionFactory() throws Exception {
-		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
-			Mockito.mock(DDMExpressionFunctionTracker.class);
+		DDMExpressionFunctionRegistry ddmExpressionFunctionRegistry =
+			Mockito.mock(DDMExpressionFunctionRegistry.class);
 
 		Map<String, DDMExpressionFunctionFactory>
 			ddmExpressionFunctionFactories = new HashMap<>();
@@ -398,15 +398,15 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 		}
 
 		Mockito.when(
-			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+			ddmExpressionFunctionRegistry.getDDMExpressionFunctionFactories(
 				Mockito.any())
 		).thenReturn(
 			ddmExpressionFunctionFactories
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
-			ddmExpressionFunctionTracker);
+			_ddmExpressionFactoryImpl, "ddmExpressionFunctionRegistry",
+			ddmExpressionFunctionRegistry);
 	}
 
 	private void _setUpDDMFormRuleConverter() throws Exception {

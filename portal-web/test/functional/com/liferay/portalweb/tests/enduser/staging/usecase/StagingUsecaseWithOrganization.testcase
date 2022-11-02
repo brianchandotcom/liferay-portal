@@ -38,11 +38,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Given: An administrator of staging organization is added") {
-			User.openUsersAdmin();
-
-			Organization.addCP(
-				orgName = "Staging Organization Name",
-				orgType = "Organization");
+			JSONOrganization.addOrganization(organizationName = "Staging Organization Name");
 
 			Organization.openOrganizationsAdmin();
 

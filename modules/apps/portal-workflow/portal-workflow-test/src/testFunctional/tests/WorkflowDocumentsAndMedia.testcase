@@ -104,14 +104,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Space Program Academy of Continuing Education",
-			orgType = "Organization");
+		JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
 
 		Organization.openOrganizationsAdmin();
 

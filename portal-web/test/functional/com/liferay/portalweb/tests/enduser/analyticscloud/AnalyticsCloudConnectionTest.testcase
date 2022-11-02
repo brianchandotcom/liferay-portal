@@ -566,14 +566,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.addCP(
-				orgName = "Organization Name 1",
-				orgType = "Organization");
+			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name 1",
@@ -612,14 +605,7 @@ definition {
 		}
 
 		task ("Create a new organization and assign the organization for the created user") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.addCP(
-				orgName = "Organization Name 2",
-				orgType = "Organization");
+			JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name 2",
@@ -741,14 +727,7 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			Organization.addCP(
-				orgName = "Organization Name",
-				orgType = "Organization");
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name",

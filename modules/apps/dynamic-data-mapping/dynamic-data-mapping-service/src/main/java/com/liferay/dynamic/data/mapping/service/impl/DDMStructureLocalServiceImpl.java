@@ -26,7 +26,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
-import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerTracker;
+import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerRegistry;
 import com.liferay.dynamic.data.mapping.internal.constants.DDMDestinationNames;
 import com.liferay.dynamic.data.mapping.internal.search.helper.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
@@ -1861,7 +1861,7 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		DDMStructureIndexer ddmStructureIndexer =
-			_ddmStructureIndexerTracker.getDDMStructureIndexer(
+			_ddmStructureIndexerRegistry.getDDMStructureIndexer(
 				structure.getClassName());
 
 		if (ddmStructureIndexer == null) {
@@ -2199,7 +2199,7 @@ public class DDMStructureLocalServiceImpl
 	private DDMSearchHelper _ddmSearchHelper;
 
 	@Reference
-	private DDMStructureIndexerTracker _ddmStructureIndexerTracker;
+	private DDMStructureIndexerRegistry _ddmStructureIndexerRegistry;
 
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;

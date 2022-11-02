@@ -328,10 +328,11 @@ function TopperInteractionFilter({itemElement, itemId}) {
 
 	useEffect(() => {
 		if (
-			keyboardTargetId === itemId ||
-			(activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar &&
-				isMounted() &&
-				isActive)
+			itemElement &&
+			(keyboardTargetId === itemId ||
+				(activationOrigin === ITEM_ACTIVATION_ORIGINS.sidebar &&
+					isMounted() &&
+					isActive))
 		) {
 			itemElement.scrollIntoView({
 				behavior: 'instant',

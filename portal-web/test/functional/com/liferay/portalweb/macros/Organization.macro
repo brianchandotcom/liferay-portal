@@ -488,24 +488,6 @@ definition {
 			key_tableEntry = "${orgType}",
 			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 			value1 = "${orgType}");
-
-		LexiconEntry.openEntryMenu(rowEntry = "${orgName}");
-
-		MenuItem.click(menuItem = "Edit");
-
-		var key_orgType = "${orgType}";
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Edit ${orgName}");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "${orgName}");
-
-		AssertTextEquals.assertValue(
-			locator1 = "UsersAndOrganizationsEditOrganization#DETAILS_TYPE",
-			value1 = "${orgType}");
 	}
 
 	macro viewLocalizedCountryCP {

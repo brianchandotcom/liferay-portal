@@ -87,6 +87,23 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
+		LexiconEntry.openEntryMenu(rowEntry = "Organization Name");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit Organization Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Organization Name");
+
+		AssertTextEquals.assertValue(
+			key_text = "Type",
+			locator1 = "TextInput#ANY",
+			value1 = "Organization");
+
 		LexiconEntry.viewNoEntry(rowEntry = "Organization Name");
 
 		ProductMenu.viewNoSite(site = "Organization Name");

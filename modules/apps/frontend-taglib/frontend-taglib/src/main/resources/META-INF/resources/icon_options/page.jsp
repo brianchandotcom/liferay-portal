@@ -26,7 +26,7 @@ List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigur
 	displayType="secondary"
 	dropdownItems='<%= (List<DropdownItem>)request.getAttribute("liferay-frontend:icon-options:dropdownItems") %>'
 	icon="ellipsis-v"
-	monospaced="<%= true %>"
+	monospaced='<%= (boolean)request.getAttribute("liferay-frontend:icon-options:monospaced") %>'
 	propsTransformer="icon_options/js/PortletOptionsDropdownPropsTransformer"
 	small="<%= true %>"
 />

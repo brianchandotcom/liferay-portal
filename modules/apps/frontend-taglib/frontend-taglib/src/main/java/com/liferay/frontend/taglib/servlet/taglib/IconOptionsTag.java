@@ -53,6 +53,14 @@ public class IconOptionsTag extends IncludeTag {
 		return super.doEndTag();
 	}
 
+	public boolean isMonospaced() {
+		return _monospaced;
+	}
+
+	public void setMonospaced(boolean monospaced) {
+		_monospaced = monospaced;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -64,6 +72,7 @@ public class IconOptionsTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_monospaced = false;
 		_portletConfigurationIcons = null;
 	}
 
@@ -81,6 +90,8 @@ public class IconOptionsTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:icon-options:dropdownItems", _getDropdownItems());
+		httpServletRequest.setAttribute(
+			"liferay-frontend:icon-options:monospaced", isMonospaced());
 		httpServletRequest.setAttribute(
 			"liferay-frontend:icon-options:portletConfigurationIcons",
 			_getPortletConfigurationIcons());
@@ -224,6 +235,7 @@ public class IconOptionsTag extends IncludeTag {
 
 	private static final String _PAGE = "/icon_options/page.jsp";
 
+	private boolean _monospaced;
 	private List<PortletConfigurationIcon> _portletConfigurationIcons;
 
 }

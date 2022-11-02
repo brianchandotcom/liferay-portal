@@ -24,7 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Marcellus Tavares
  */
 @ProviderType
-public interface DDMFormFieldTypeServicesTracker {
+public interface DDMFormFieldTypeServicesRegistry {
 
 	public DDMFormFieldRenderer getDDMFormFieldRenderer(String name);
 

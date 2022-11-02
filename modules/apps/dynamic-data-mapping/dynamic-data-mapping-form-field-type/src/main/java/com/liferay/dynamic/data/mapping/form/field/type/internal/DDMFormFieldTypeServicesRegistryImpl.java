@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
@@ -48,9 +48,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcellus Tavares
  */
-@Component(service = DDMFormFieldTypeServicesTracker.class)
-public class DDMFormFieldTypeServicesTrackerImpl
-	implements DDMFormFieldTypeServicesTracker {
+@Component(service = DDMFormFieldTypeServicesRegistry.class)
+public class DDMFormFieldTypeServicesRegistryImpl
+	implements DDMFormFieldTypeServicesRegistry {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer(String name) {
@@ -231,7 +231,7 @@ public class DDMFormFieldTypeServicesTrackerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormFieldTypeServicesTrackerImpl.class);
+		DDMFormFieldTypeServicesRegistryImpl.class);
 
 	private ServiceTrackerMap<String, DDMFormFieldRenderer>
 		_ddmFormFieldRendererServiceTrackerMap;

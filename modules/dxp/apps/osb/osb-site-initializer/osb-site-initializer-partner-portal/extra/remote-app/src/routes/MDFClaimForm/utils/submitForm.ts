@@ -38,11 +38,9 @@ export default async function submitForm(
 
 	formikHelpers.setSubmitting(true);
 
-	values.activities?.some((activity) =>
+	values.partial = values.activities?.some((activity) =>
 		Boolean(activity.budgets?.some((budget) => !budget.selected))
-	)
-		? (values.partial = true)
-		: (values.partial = false);
+	);
 
 	const dtoMDFClaim = Liferay.FeatureFlags['LPS-164528']
 		? await createMDFClaimProxyAPI(values, mdfRequest)

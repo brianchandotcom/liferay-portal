@@ -51,7 +51,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 			ServiceWrapper<DDMStructurePermissionSupport>
 				structurePermissionSupportServiceWrapper =
-					_ddmPermissionSupportTracker.
+					_ddmPermissionSupportRegistry.
 						getDDMStructurePermissionSupportServiceWrapper(
 							classNameId);
 
@@ -72,7 +72,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMTemplatePermissionSupportServiceWrapper(
 						resourceClassNameId);
 
@@ -89,7 +89,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMTemplatePermissionSupportServiceWrapper(
 						resourceClassName);
 
@@ -105,7 +105,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMStructurePermissionSupport>
 			structurePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMStructurePermissionSupportServiceWrapper(classNameId);
 
 		return _ddmPermissionSupportHelper.contains(
@@ -122,7 +122,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMTemplatePermissionSupportServiceWrapper(
 						resourceClassNameId);
 
@@ -139,7 +139,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMTemplatePermissionSupportServiceWrapper(
 						resourceClassName);
 
@@ -161,7 +161,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMStructurePermissionSupport>
 			structurePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMStructurePermissionSupportServiceWrapper(className);
 
 		if (structurePermissionSupportServiceWrapper == null) {
@@ -196,7 +196,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 
 		ServiceWrapper<DDMTemplatePermissionSupport>
 			templatePermissionSupportServiceWrapper =
-				_ddmPermissionSupportTracker.
+				_ddmPermissionSupportRegistry.
 					getDDMTemplatePermissionSupportServiceWrapper(
 						resourceClassName);
 
@@ -308,7 +308,7 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 	private DDMPermissionSupportHelper _ddmPermissionSupportHelper;
 
 	@Reference
-	private DDMPermissionSupportTracker _ddmPermissionSupportTracker;
+	private DDMPermissionSupportRegistry _ddmPermissionSupportRegistry;
 
 	@Reference
 	private Portal _portal;

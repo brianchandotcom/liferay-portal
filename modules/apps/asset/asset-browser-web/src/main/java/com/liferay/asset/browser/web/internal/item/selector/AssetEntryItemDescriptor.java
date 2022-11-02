@@ -14,12 +14,16 @@
 
 package com.liferay.asset.browser.web.internal.item.selector;
 
+import com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext;
+import com.liferay.asset.browser.web.internal.frontend.taglib.clay.servlet.taglib.AssetEntryVerticalCard;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -28,6 +32,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
 import java.util.Locale;
+
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,16 +44,17 @@ public class AssetEntryItemDescriptor
 	implements ItemSelectorViewDescriptor.ItemDescriptor {
 
 	public AssetEntryItemDescriptor(
+		AssetBrowserDisplayContext assetBrowserDisplayContext,
 		AssetEntry assetEntry, HttpServletRequest httpServletRequest) {
 
+		_assetBrowserDisplayContext = assetBrowserDisplayContext;
 		_assetEntry = assetEntry;
+		_httpServletRequest = httpServletRequest;
 
 		_assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(
 					_assetEntry.getClassNameId());
-
-		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
@@ -118,6 +125,15 @@ public class AssetEntryItemDescriptor
 		return _assetEntry.getUserName();
 	}
 
+	@Override
+	public VerticalCard getVerticalCard(
+		RenderRequest renderRequest, RowChecker rowChecker) {
+
+		return new AssetEntryVerticalCard(
+			_assetEntry, renderRequest, _assetBrowserDisplayContext);
+	}
+
+	private final AssetBrowserDisplayContext _assetBrowserDisplayContext;
 	private final AssetEntry _assetEntry;
 	private final AssetRendererFactory<?> _assetRendererFactory;
 	private final HttpServletRequest _httpServletRequest;

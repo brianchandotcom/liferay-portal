@@ -47,7 +47,8 @@ public class AssetEntryItemSelectorViewDescriptor
 
 	@Override
 	public ItemDescriptor getItemDescriptor(AssetEntry assetEntry) {
-		return new AssetEntryItemDescriptor(assetEntry, _httpServletRequest);
+		return new AssetEntryItemDescriptor(
+			_assetBrowserDisplayContext, assetEntry, _httpServletRequest);
 	}
 
 	@Override

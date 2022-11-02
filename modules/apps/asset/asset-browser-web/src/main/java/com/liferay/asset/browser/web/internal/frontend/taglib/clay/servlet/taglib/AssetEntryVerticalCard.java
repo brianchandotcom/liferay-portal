@@ -186,6 +186,17 @@ public class AssetEntryVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public boolean isDisabled() {
+		if (_assetEntry.getEntryId() ==
+				_assetBrowserDisplayContext.getRefererAssetEntryId()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isSelectable() {
 		return _assetBrowserDisplayContext.isMultipleSelection();
 	}

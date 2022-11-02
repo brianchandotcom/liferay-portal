@@ -183,6 +183,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLOATING_TOOLTIP_CONTENT</td>
+	<td>//div[contains(@class,'tooltip-inner')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_LINK_LIVE</td>
 	<td>//a[contains(@data-qa-id,'live')]</td>
 	<td></td>

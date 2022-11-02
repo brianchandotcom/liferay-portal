@@ -273,6 +273,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9704. We can edit and delete a default price list entry"
+	@priority = "3"
+	test CanEditAndDeleteDefaultPriceList {
+		property portal.acceptance = "false";
+
+		task ("Given 2 new Price Lists") {
+			for (var priceLists : list "Test Price List 1,Test Price List 2") {
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+					catalogName = "Minium",
+					currencyCode = "USD",
+					priceListName = "${priceLists}");
+			}
+		}
+
+		task ("And Test Price 1 is set as default for Minium Portal Channel") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium Portal",
+				priceListTitle = "Test Price List 1");
+
+			CommerceAccountChannelDefaults.viewDefaultPriceListEntries(
+				priceListEntries = "Minium Portal,Test Price List 1,Yes,No",
+				priceListLabel = "PriceList");
+		}
+
+		task ("When default price list is edited") {
+			CommerceAccountChannelDefaults.editDefaultPriceList(
+				currentChannelName = "Minium Portal",
+				currentPriceListName = "Test Price List 1",
+				newChannelName = "All Other Channels",
+				newPriceListName = "Test Price List 2");
+		}
+
+		task ("Then new default price list is saved correctly and listed") {
+			CommerceAccountChannelDefaults.viewDefaultPriceListEntries(
+				priceListEntries = "All Channels,Test Price List 2,Yes,No",
+				priceListLabel = "PriceList");
+		}
+
+		task ("When default price list is deleted") {
+			CommerceAccountChannelDefaults.deleteAccountChannelDefaultsEntry(
+				channelName = "All Channels",
+				defaultEntryLabel = "PriceList",
+				defaultEntryName = "Test Price List 2");
+		}
+
+		task ("Then there is no default price list listed on the table") {
+			CommerceAccountChannelDefaults.viewDefaultPriceListEntries(priceListLabel = "PriceList");
+		}
+	}
+
 	@description = "COMMERCE-9934. Default currency can be edited."
 	@priority = "5"
 	test CanEditDefaultCurrency {
@@ -1033,6 +1089,169 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9704. We can see the price list price that has the highest priority in hierarchy mode(default mode)."
+	@priority = "3"
+	test CanSeeHighestPriorityPriceListPriceInHierarchyMode {
+		property portal.acceptance = "false";
+
+		task ("Given Test Price List 1 with priority 1 and Test Price List 2 with priority 2") {
+			for (var priority : list "1,2") {
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+					catalogName = "Minium",
+					currencyCode = "USD",
+					priceListName = "Test Price List ${priority}",
+					priority = "${priority}");
+			}
+		}
+
+		task ("And Test Price List 1 entry for U-Joint with price set as 20.00 ") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "20",
+				priceListName = "Test Price List 1",
+				productSKU = "MIN55861");
+		}
+
+		task ("And Test Price List 2 entry for U-Joint with price set as 18.00 ") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "18",
+				priceListName = "Test Price List 2",
+				productSKU = "MIN55861");
+		}
+
+		task ("When Test Price 1 is set as default for Minium Portal Channel for Commerce Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium Portal",
+				priceListTitle = "Test Price List 1");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then verifies that the Catalog price of U-Joint is 20.00 as of the default price list price") {
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 20.00");
+		}
+
+		task ("When there is no default price list for Account per Channel") {
+			User.logoutPG();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.deleteAccountChannelDefaultsEntry(
+				channelName = "Minium Portal",
+				defaultEntryLabel = "PriceList",
+				defaultEntryName = "Test Price List 1");
+		}
+
+		task ("Then buyer verifies that the Catalog price of U-Joint is 18.00 according to the priority") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 18.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9704. We can see the lowest price list price in the Catalog when the lowest mode is set."
+	@priority = "3"
+	test CanSeeLowestPriceListPriceInLowestMode {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.pricing.configuration.CommercePricingConfiguration.config";
+		property osgi.module.configurations = "commercePriceListDiscovery=\"lowest\"";
+		property portal.acceptance = "false";
+
+		task ("Given Test Price List 1 with priority 1") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 1",
+				priority = "1");
+		}
+
+		task ("And Test Price List 2 with priority 0") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 2");
+		}
+
+		task ("And a Test Price List 1 entry for U-Joint with price set as 20.00 ") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "20",
+				priceListName = "Test Price List 1",
+				productSKU = "MIN55861");
+		}
+
+		task ("And a Test Price List 2 entry for U-Joint with price set as 18.00 ") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "18",
+				priceListName = "Test Price List 2",
+				productSKU = "MIN55861");
+		}
+
+		task ("And Test Price List 1 is set as default for Minium Portal Channel") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium Portal",
+				priceListTitle = "Test Price List 1");
+
+			CommerceAccountChannelDefaults.viewDefaultPriceListEntries(
+				priceListEntries = "Minium Portal,Test Price List 1,Yes,No",
+				priceListLabel = "PriceList");
+		}
+
+		task ("When buyer user logs in and goes to the Catalog page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then verifies that the Catalog price of U-Joint is 18.00") {
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 18.00");
+		}
+	}
+
 	@description = "COMMERCE-9857. All sites should display the product discount when the discount is set to All Channels."
 	@priority = "4"
 	test CanSelectAllOtherChannelsForDefaultDiscount {
@@ -1502,6 +1721,121 @@ definition {
 				key_entryDetail = "Euro",
 				key_settingHeader = "Currencies",
 				locator1 = "Account#DEFAULT_SETTINGS_TABLE_ITEM");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9704. We can set a default price list per channel and account."
+	@priority = "3"
+	test CanSetDefaultPriceListPerChannel {
+		property portal.acceptance = "false";
+
+		task ("Given a second Minium site and a second account with a user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(
+				siteName = "Minium 2",
+				siteTemplateName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer2@liferay.com",
+				userFirstName = "Buyer2",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium 2");
+		}
+
+		task ("And two more channels(Test Channel 1 and Test Channel 2)") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("And 2 new Price Lists") {
+			for (var priceLists : list "Test Price List 1,Test Price List 2") {
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+					catalogName = "Minium",
+					currencyCode = "USD",
+					priceListName = "${priceLists}");
+			}
+		}
+
+		task ("And a Test Price List 1 entry for U-Joint with price set as 20.00 ") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "20",
+				priceListName = "Test Price List 1",
+				productSKU = "MIN55861");
+		}
+
+		task ("And a Test Price List 2 entry for U-Joint with price set as 18.00 ") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "18",
+				priceListName = "Test Price List 2",
+				productSKU = "MIN55861");
+		}
+
+		task ("When Test Price 1 is set default for Minium Portal Channel for Commerce Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium Portal",
+				priceListTitle = "Test Price List 1");
+		}
+
+		task ("And Test Price 2 is set default for Minium 2 Portal Channel for Commerce Account 2") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account 2");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			CommerceAccountChannelDefaults.setDefaultPriceList(
+				channelEntry = "Minium 2 Portal",
+				priceListTitle = "Test Price List 2");
+		}
+
+		task ("When buyer user 1 logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then verifies that the price of U-Joint is 20.00") {
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 20.00");
+		}
+
+		task ("When buyer user 2 logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium-2",
+				userEmailAddress = "buyer2@liferay.com");
+		}
+
+		task ("Then verifies that the price of U-Joint is 18.00") {
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 18.00");
 		}
 	}
 
@@ -2379,20 +2713,14 @@ definition {
 			}
 		}
 
-		task ("And Test Price List 1 with priority 1") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List 1",
-				priority = "1");
-		}
-
-		task ("And Test Price List 2 with priority 2") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List 2",
-				priority = "2");
+		task ("Given Test Price List 1 with priority 1 and Test Price List 2 with priority 2") {
+			for (var priority : list "1,2") {
+				CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+					catalogName = "Minium",
+					currencyCode = "USD",
+					priceListName = "Test Price List ${priority}",
+					priority = "${priority}");
+			}
 		}
 
 		task ("And Test Price List 3 with priority 0") {

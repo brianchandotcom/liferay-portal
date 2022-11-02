@@ -15,9 +15,9 @@
 package com.liferay.portal.workflow.web.internal.portlet.tab;
 
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,15 +25,14 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
-import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.BaseWorkflowPortletTab;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionDisplayContext;
 import com.liferay.portal.workflow.web.internal.request.preprocessor.helper.WorkflowPreprocessorHelper;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletException;
@@ -42,18 +41,13 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
 @Component(
-	configurationPid = "com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = "portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION,
 	service = WorkflowPortletTab.class
 )
@@ -85,12 +79,10 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 			WorkflowDefinitionDisplayContext displayContext =
 				new WorkflowDefinitionDisplayContext(
-					ctEntryLocalService, portal, renderRequest,
+					ctEntryLocalService, portal, _portletResourcePermission,
+					renderRequest,
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					userLocalService);
-
-			displayContext.setCompanyAdministratorCanPublish(
-				_companyAdministratorCanPublish);
 
 			renderRequest.setAttribute(
 				WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT,
@@ -115,17 +107,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 				throw new PortletException(exception);
 			}
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		WorkflowDefinitionConfiguration workflowDefinitionConfiguration =
-			ConfigurableUtil.createConfigurable(
-				WorkflowDefinitionConfiguration.class, properties);
-
-		_companyAdministratorCanPublish =
-			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
 	@Override
@@ -166,7 +147,10 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 				themeDisplay.getCompanyId(), name, version));
 	}
 
-	private volatile boolean _companyAdministratorCanPublish;
+	@Reference(
+		target = "(resource.name=" + WorkflowConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"

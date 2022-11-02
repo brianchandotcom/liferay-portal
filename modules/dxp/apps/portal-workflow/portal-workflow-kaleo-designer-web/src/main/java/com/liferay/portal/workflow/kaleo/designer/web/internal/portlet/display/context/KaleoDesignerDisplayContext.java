@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -91,6 +92,7 @@ public class KaleoDesignerDisplayContext {
 	public KaleoDesignerDisplayContext(
 		RenderRequest renderRequest,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
+		PortletResourcePermission portletResourcePermission,
 		ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
 
@@ -99,6 +101,7 @@ public class KaleoDesignerDisplayContext {
 
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
+		_portletResourcePermission = portletResourcePermission;
 		_resourceBundleLoader = resourceBundleLoader;
 		_userLocalService = userLocalService;
 
@@ -107,17 +110,10 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public boolean canPublishWorkflowDefinition() {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((_companyAdministratorCanPublish &&
-			 permissionChecker.isCompanyAdmin()) ||
-			permissionChecker.isOmniadmin()) {
-
-			return true;
-		}
-
-		return false;
+		return _portletResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			_themeDisplay.getCompanyGroupId(),
+			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
 	}
 
 	public String getClearResultsURL() throws PortletException {
@@ -638,12 +634,6 @@ public class KaleoDesignerDisplayContext {
 			KaleoDesignerActionKeys.ADD_NEW_WORKFLOW);
 	}
 
-	public void setCompanyAdministratorCanPublish(
-		boolean companyAdministratorCanPublish) {
-
-		_companyAdministratorCanPublish = companyAdministratorCanPublish;
-	}
-
 	public void setKaleoDesignerRequestHelper(RenderRequest renderRequest) {
 		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
 			renderRequest);
@@ -835,10 +825,10 @@ public class KaleoDesignerDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerDisplayContext.class);
 
-	private boolean _companyAdministratorCanPublish;
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;

@@ -33,9 +33,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -85,11 +86,13 @@ public class WorkflowDefinitionDisplayContext {
 
 	public WorkflowDefinitionDisplayContext(
 		CTEntryLocalService ctEntryLocalService, Portal portal,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
 
 		_ctEntryLocalService = ctEntryLocalService;
 		_portal = portal;
+		_portletResourcePermission = portletResourcePermission;
 		_resourceBundleLoader = resourceBundleLoader;
 		_userLocalService = userLocalService;
 
@@ -98,17 +101,12 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	public boolean canPublishWorkflowDefinition() {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		ThemeDisplay themeDisplay =
+			_workflowDefinitionRequestHelper.getThemeDisplay();
 
-		if ((_companyAdministratorCanPublish &&
-			 permissionChecker.isCompanyAdmin()) ||
-			permissionChecker.isOmniadmin()) {
-
-			return true;
-		}
-
-		return false;
+		return _portletResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			themeDisplay.getCompanyGroupId(), ActionKeys.ADD_DEFINITION);
 	}
 
 	public String getClearResultsURL(HttpServletRequest httpServletRequest) {
@@ -564,12 +562,6 @@ public class WorkflowDefinitionDisplayContext {
 		return workflowDefinitions;
 	}
 
-	public void setCompanyAdministratorCanPublish(
-		boolean companyAdministratorCanPublish) {
-
-		_companyAdministratorCanPublish = companyAdministratorCanPublish;
-	}
-
 	protected Predicate<WorkflowDefinition> createPredicate(
 		String description, String title, int status, boolean andOperator) {
 
@@ -724,11 +716,11 @@ public class WorkflowDefinitionDisplayContext {
 	private static final String _HTML =
 		"<a class='alert-link' href='[$RENDER_URL$]'>[$MESSAGE$]</a>";
 
-	private boolean _companyAdministratorCanPublish;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private String _orderByCol;
 	private String _orderByType;
 	private final Portal _portal;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionRequestHelper

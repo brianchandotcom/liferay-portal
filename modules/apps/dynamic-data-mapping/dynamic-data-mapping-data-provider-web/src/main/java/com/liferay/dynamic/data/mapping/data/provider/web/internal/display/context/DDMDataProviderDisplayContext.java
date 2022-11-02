@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.display.DDMDataProviderDisplay;
-import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.DDMDataProviderDisplayTracker;
+import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.DDMDataProviderDisplayRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.helper.DDMDataProviderRequestHelper;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.search.DDMDataProviderSearch;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.security.permission.resource.DDMDataProviderInstancePermission;
@@ -95,7 +95,7 @@ public class DDMDataProviderDisplayContext {
 
 	public DDMDataProviderDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		DDMDataProviderDisplayTracker ddmDataProviderDisplayTracker,
+		DDMDataProviderDisplayRegistry ddmDataProviderDisplayRegistry,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		DDMDataProviderRegistry ddmDataProviderRegistry,
 		DDMFormRenderer ddmFormRenderer,
@@ -104,7 +104,7 @@ public class DDMDataProviderDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_ddmDataProviderDisplayTracker = ddmDataProviderDisplayTracker;
+		_ddmDataProviderDisplayRegistry = ddmDataProviderDisplayRegistry;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 		_ddmDataProviderRegistry = ddmDataProviderRegistry;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -653,7 +653,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	private DDMDataProviderDisplay _getDDMDataProviderDisplay() {
-		return _ddmDataProviderDisplayTracker.getDDMDataProviderDisplay(
+		return _ddmDataProviderDisplayRegistry.getDDMDataProviderDisplay(
 			_getRefererPortletName());
 	}
 
@@ -762,7 +762,8 @@ public class DDMDataProviderDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
-	private final DDMDataProviderDisplayTracker _ddmDataProviderDisplayTracker;
+	private final DDMDataProviderDisplayRegistry
+		_ddmDataProviderDisplayRegistry;
 	private DDMDataProviderInstance _ddmDataProviderInstance;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;

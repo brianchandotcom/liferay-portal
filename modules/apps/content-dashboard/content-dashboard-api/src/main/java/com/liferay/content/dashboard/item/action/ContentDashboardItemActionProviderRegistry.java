@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * @author Cristina González
  */
-public interface ContentDashboardItemActionProviderTracker {
+public interface ContentDashboardItemActionProviderRegistry {
 
 	public Optional<ContentDashboardItemActionProvider>
 		getContentDashboardItemActionProviderOptional(

@@ -15,7 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -37,9 +37,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemActionProviderTracker.class)
-public class ContentDashboardItemActionProviderTrackerImpl
-	implements ContentDashboardItemActionProviderTracker {
+@Component(service = ContentDashboardItemActionProviderRegistry.class)
+public class ContentDashboardItemActionProviderRegistryImpl
+	implements ContentDashboardItemActionProviderRegistry {
 
 	@Override
 	public Optional<ContentDashboardItemActionProvider>

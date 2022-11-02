@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.task.web.internal.permission;
+package com.liferay.portal.workflow.kaleo.runtime.integration.internal.security.permission;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;

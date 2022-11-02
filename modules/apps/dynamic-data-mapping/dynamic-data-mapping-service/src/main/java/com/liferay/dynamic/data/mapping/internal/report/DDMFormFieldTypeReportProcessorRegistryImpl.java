@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
-import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessorTracker;
+import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -27,9 +27,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcos Martins
  */
-@Component(service = DDMFormFieldTypeReportProcessorTracker.class)
-public class DDMFormFieldTypeReportProcessorTrackerImpl
-	implements DDMFormFieldTypeReportProcessorTracker {
+@Component(service = DDMFormFieldTypeReportProcessorRegistry.class)
+public class DDMFormFieldTypeReportProcessorRegistryImpl
+	implements DDMFormFieldTypeReportProcessorRegistry {
 
 	@Override
 	public DDMFormFieldTypeReportProcessor getDDMFormFieldTypeReportProcessor(

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.report;
 /**
  * @author Marcos Martins
  */
-public interface DDMFormFieldTypeReportProcessorTracker {
+public interface DDMFormFieldTypeReportProcessorRegistry {
 
 	public DDMFormFieldTypeReportProcessor getDDMFormFieldTypeReportProcessor(
 		String type);

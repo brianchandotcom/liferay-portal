@@ -22,7 +22,7 @@ import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataRecordEntityM
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordCollectionModelResourcePermission;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordModelResourcePermission;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
-import com.liferay.data.engine.rest.internal.storage.DataStorageTracker;
+import com.liferay.data.engine.rest.internal.storage.DataStorageRegistry;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.data.engine.storage.DataStorage;
@@ -452,7 +452,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			throw new ValidationException("Data storage type is null");
 		}
 
-		DataStorage dataStorage = _dataStorageTracker.getDataStorage(
+		DataStorage dataStorage = _dataStorageRegistry.getDataStorage(
 			dataStorageType);
 
 		if (dataStorage == null) {
@@ -536,7 +536,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		_dataRecordModelResourcePermission;
 
 	@Reference
-	private DataStorageTracker _dataStorageTracker;
+	private DataStorageRegistry _dataStorageRegistry;
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

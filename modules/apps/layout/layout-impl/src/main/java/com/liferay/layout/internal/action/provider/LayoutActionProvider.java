@@ -294,8 +294,7 @@ public class LayoutActionProvider {
 
 		if (Validator.isNull(backURL)) {
 			backURL = ParamUtil.getString(
-				PortalUtil.getOriginalServletRequest(
-					_httpServletRequest),
+				PortalUtil.getOriginalServletRequest(_httpServletRequest),
 				"backURL", _themeDisplay.getURLCurrent());
 		}
 

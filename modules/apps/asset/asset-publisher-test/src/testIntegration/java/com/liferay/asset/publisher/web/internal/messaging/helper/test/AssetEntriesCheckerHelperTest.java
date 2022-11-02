@@ -42,7 +42,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Constructor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -102,9 +101,8 @@ public class AssetEntriesCheckerHelperTest {
 		PortletPreferences portletId2PortletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, portletId2);
 
-		List<AssetEntry> expectedPortletId1AssetEntries = new ArrayList<>(
-			Arrays.asList(
-				_addAssetEntry(), _addAssetEntry(), assetEntry3, assetEntry4));
+		List<AssetEntry> expectedPortletId1AssetEntries = Arrays.asList(
+			_addAssetEntry(), _addAssetEntry(), assetEntry3, assetEntry4);
 
 		List<AssetEntry> actualPortletId1AssetEntries =
 			ReflectionTestUtil.invoke(
@@ -115,8 +113,8 @@ public class AssetEntriesCheckerHelperTest {
 		_assertAssetEntries(
 			expectedPortletId1AssetEntries, actualPortletId1AssetEntries);
 
-		List<AssetEntry> expectedPortletId2AssetEntries = new ArrayList<>(
-			Arrays.asList(assetEntry3, assetEntry4));
+		List<AssetEntry> expectedPortletId2AssetEntries = Arrays.asList(
+			assetEntry3, assetEntry4);
 
 		List<AssetEntry> actualPortletId2AssetEntries =
 			ReflectionTestUtil.invoke(

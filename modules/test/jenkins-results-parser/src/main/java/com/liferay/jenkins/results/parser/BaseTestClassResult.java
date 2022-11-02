@@ -68,18 +68,21 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	@Override
 	public Element getGitHubElement(Boolean uniqueFailures) {
 		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
-			"div", null);
+			"details", null);
 
-		downstreamBuildListItemElement.add(
+		Element summaryElement = Dom4JUtil.getNewElement(
+			"summary", downstreamBuildListItemElement);
+
+		summaryElement.add(
 			Dom4JUtil.getNewAnchorElement(
 				getTestClassReportURL(), getClassName()));
 
 		TestHistory testHistory = getTestHistory();
 
 		if (testHistory != null) {
-			downstreamBuildListItemElement.addText(" - ");
+			summaryElement.addText(" - ");
 
-			downstreamBuildListItemElement.add(
+			summaryElement.add(
 				Dom4JUtil.getNewAnchorElement(
 					testHistory.getTestrayCaseResultURL(),
 					JenkinsResultsParserUtil.combine(
@@ -111,8 +114,10 @@ public abstract class BaseTestClassResult implements TestClassResult {
 			return null;
 		}
 
-		Dom4JUtil.getOrderedListElement(
-			failureElements, downstreamBuildListItemElement, 5);
+		Element failuresElement = Dom4JUtil.getNewElement(
+			"div", downstreamBuildListItemElement);
+
+		Dom4JUtil.getOrderedListElement(failureElements, failuresElement, 5);
 
 		return downstreamBuildListItemElement;
 	}

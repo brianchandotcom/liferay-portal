@@ -42,6 +42,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,6 +65,35 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class WorkflowDefinitionResourceImpl
 	extends BaseWorkflowDefinitionResourceImpl implements EntityModelResource {
+
+	@Override
+	public void create(
+			Collection<WorkflowDefinition> workflowDefinitions,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			if (contextBatchUnsafeConsumer != null) {
+				contextBatchUnsafeConsumer.accept(
+					workflowDefinitions,
+					workflowDefinition -> postWorkflowDefinitionDeploy(
+						workflowDefinition));
+			}
+			else {
+				for (WorkflowDefinition workflowDefinition :
+						workflowDefinitions) {
+
+					postWorkflowDefinitionDeploy(workflowDefinition);
+				}
+			}
+		}
+		else {
+			super.create(workflowDefinitions, parameters);
+		}
+	}
 
 	@Override
 	public void deleteWorkflowDefinition(Long workflowDefinitionId)

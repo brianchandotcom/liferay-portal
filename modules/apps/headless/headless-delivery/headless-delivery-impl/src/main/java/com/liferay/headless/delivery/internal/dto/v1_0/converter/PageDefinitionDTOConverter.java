@@ -18,7 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.headless.delivery.dto.v1_0.StyleBook;
-import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperTracker;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperRegistry;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -87,7 +87,7 @@ public class PageDefinitionDTOConverter
 			{
 				pageElement = PageElementUtil.toPageElement(
 					layout.getGroupId(), layoutStructure,
-					mainLayoutStructureItem, _layoutStructureItemMapperTracker,
+					mainLayoutStructureItem, _layoutStructureItemMapperRegistry,
 					saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
 				version =
@@ -223,7 +223,8 @@ public class PageDefinitionDTOConverter
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
-	private LayoutStructureItemMapperTracker _layoutStructureItemMapperTracker;
+	private LayoutStructureItemMapperRegistry
+		_layoutStructureItemMapperRegistry;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

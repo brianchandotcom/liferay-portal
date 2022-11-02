@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperTracker;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperRegistry;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -76,11 +76,12 @@ public class PageElementDTOConverter
 
 		return PageElementUtil.toPageElement(
 			groupId, layoutStructure, layoutStructureItem,
-			_layoutStructureItemMapperTracker, saveInlineContent,
+			_layoutStructureItemMapperRegistry, saveInlineContent,
 			saveMappingConfiguration);
 	}
 
 	@Reference
-	private LayoutStructureItemMapperTracker _layoutStructureItemMapperTracker;
+	private LayoutStructureItemMapperRegistry
+		_layoutStructureItemMapperRegistry;
 
 }

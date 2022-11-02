@@ -16,7 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
-import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperTracker;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperRegistry;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 
@@ -32,7 +32,7 @@ public class PageElementUtil {
 	public static PageElement toPageElement(
 		long groupId, LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem,
-		LayoutStructureItemMapperTracker layoutStructureItemMapperTracker,
+		LayoutStructureItemMapperRegistry layoutStructureItemMapperRegistry,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
 		List<PageElement> pageElements = new ArrayList<>();
@@ -50,20 +50,20 @@ public class PageElementUtil {
 				pageElements.add(
 					_toPageElement(
 						groupId, childLayoutStructureItem,
-						layoutStructureItemMapperTracker, saveInlineContent,
+						layoutStructureItemMapperRegistry, saveInlineContent,
 						saveMappingConfiguration));
 			}
 			else {
 				pageElements.add(
 					toPageElement(
 						groupId, layoutStructure, childLayoutStructureItem,
-						layoutStructureItemMapperTracker, saveInlineContent,
+						layoutStructureItemMapperRegistry, saveInlineContent,
 						saveMappingConfiguration));
 			}
 		}
 
 		PageElement pageElement = _toPageElement(
-			groupId, layoutStructureItem, layoutStructureItemMapperTracker,
+			groupId, layoutStructureItem, layoutStructureItemMapperRegistry,
 			saveInlineContent, saveMappingConfiguration);
 
 		if ((pageElement != null) && !pageElements.isEmpty()) {
@@ -76,13 +76,13 @@ public class PageElementUtil {
 
 	private static PageElement _toPageElement(
 		long groupId, LayoutStructureItem layoutStructureItem,
-		LayoutStructureItemMapperTracker layoutStructureItemMapperTracker,
+		LayoutStructureItemMapperRegistry layoutStructureItemMapperRegistry,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
 		Class<?> clazz = layoutStructureItem.getClass();
 
 		LayoutStructureItemMapper layoutStructureItemMapper =
-			layoutStructureItemMapperTracker.getLayoutStructureItemMapper(
+			layoutStructureItemMapperRegistry.getLayoutStructureItemMapper(
 				clazz.getName());
 
 		if (layoutStructureItemMapper == null) {

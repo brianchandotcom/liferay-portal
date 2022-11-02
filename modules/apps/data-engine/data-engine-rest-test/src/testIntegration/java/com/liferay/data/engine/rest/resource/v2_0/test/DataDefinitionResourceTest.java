@@ -15,7 +15,7 @@
 package com.liferay.data.engine.rest.resource.v2_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
+import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectRegistry;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
@@ -804,8 +804,8 @@ public class DataDefinitionResourceTest
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
-	@Inject(type = DataEngineNativeObjectTracker.class)
-	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
+	@Inject(type = DataEngineNativeObjectRegistry.class)
+	private DataEngineNativeObjectRegistry _dataEngineNativeObjectRegistry;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

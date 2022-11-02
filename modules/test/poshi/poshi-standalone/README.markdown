@@ -19,7 +19,14 @@ To create the necessary files to use Poshi Standalone, run the following command
 
 ### Poshi Properties
 
-Poshi Properties are necessary for configuring how tests are run within a particular Poshi project, and full list of properties is available [here](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown). Default properties can be set in [poshi.properties](poshi.properties) and additional user properties can be set in a `poshi-ext.properties` file.
+Poshi Properties are necessary for configuring how tests are run within a particular Poshi project, and full list of properties is available [here](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown). Default properties can be set in [poshi.properties](poshi.properties) and custom user properties can be set in a `poshi-ext.properties` file.
+
+Additionally, properties can also be set as a [Gradle JVM System Property](https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_system_properties). For example:
+```
+./gradlew runPoshi -Dtest.name=Liferay#Smoke
+```
+
+The property load order is `poshi.properties`, then `poshi-ext.properties`, followed by Gradle JVM System properties. Each group of properties will supersede the previous (Gradle system properties will override poshi-ext.properties, poshi-ext.properties will override poshi.properties).
 
 #### Essential Properties
 Property Name | Default Value | Description

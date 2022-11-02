@@ -18,7 +18,7 @@ package com.liferay.dynamic.data.mapping.form.page.change;
  * @author Bruno Oliveira
  * @author Carolina Barbosa
  */
-public interface DDMFormPageChangeTracker {
+public interface DDMFormPageChangeRegistry {
 
 	public DDMFormPageChange getDDMFormPageChangeByDDMFormInstanceId(
 		String ddmFormInstanceId);

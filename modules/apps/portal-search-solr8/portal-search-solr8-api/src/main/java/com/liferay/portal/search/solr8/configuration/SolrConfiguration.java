@@ -44,7 +44,7 @@ public interface SolrConfiguration {
 	public String defaultCollection();
 
 	@Meta.AD(
-		deflt = "true", description = "log-exceptions-only-help",
+		deflt = "true", description = "log-exceptions-only-help[solr]",
 		required = false
 	)
 	public boolean logExceptionsOnly();

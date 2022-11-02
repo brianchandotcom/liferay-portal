@@ -394,7 +394,7 @@ const CodeMirrorEditor = ({
 				/>
 			)}
 
-			<div className="d-flex flex-column flex-grow-1 position-relative">
+			<div className="d-flex flex-column flex-grow-1 overflow-hidden position-relative">
 				{isFocused && !readOnly ? (
 					<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
 				) : null}

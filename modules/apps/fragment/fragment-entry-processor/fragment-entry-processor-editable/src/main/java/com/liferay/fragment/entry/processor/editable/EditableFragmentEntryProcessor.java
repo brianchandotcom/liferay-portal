@@ -382,13 +382,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_editableElementParserServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, EditableElementParser.class, "type");
-
 		_editableElementMapperServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, EditableElementMapper.class, "type");
+		_editableElementParserServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, EditableElementParser.class, "type");
 	}
 
 	@Deactivate

@@ -23,7 +23,7 @@ import java.util.Set;
  * @author Marco Leo
  */
 @ProviderType
-public interface CPTypeServicesTracker {
+public interface CPTypeRegistry {
 
 	public CPType getCPType(String name);
 

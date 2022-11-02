@@ -16,7 +16,7 @@ package com.liferay.commerce.product.internal.type;
 
 import com.liferay.commerce.product.internal.type.comparator.CPTypeServiceWrapperDisplayOrderComparator;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPTypeServicesTracker.class)
-public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
+@Component(immediate = true, service = CPTypeRegistry.class)
+public class CPTypeRegistryImpl implements CPTypeRegistry {
 
 	@Override
 	public CPType getCPType(String name) {
@@ -106,7 +106,7 @@ public class CPTypeServicesTrackerImpl implements CPTypeServicesTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CPTypeServicesTrackerImpl.class);
+		CPTypeRegistryImpl.class);
 
 	private ServiceTrackerMap<String, ServiceWrapper<CPType>>
 		_cpTypeServiceTrackerMap;

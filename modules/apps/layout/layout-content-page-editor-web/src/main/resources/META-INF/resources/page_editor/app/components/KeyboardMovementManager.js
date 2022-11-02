@@ -97,6 +97,14 @@ export default function KeyboardMovementManager() {
 				let thunk;
 
 				if (actionType === ACTION_TYPES.move) {
+					if (source.itemId === target.itemId) {
+						setText(null);
+
+						disableMovement();
+
+						return;
+					}
+
 					thunk = moveItem({
 						itemId: source.itemId,
 						parentItemId: dropItemId,
@@ -351,27 +359,11 @@ function getInitialTarget(source, layoutDataRef, fragmentEntryLinksRef) {
 		};
 	}
 	else if (actionType === ACTION_TYPES.move) {
-		const target = {
+		return {
 			itemId: source.itemId,
-			position: TARGET_POSITIONS.MIDDLE,
+			name: source.name,
+			position: TARGET_POSITIONS.BOTTOM,
 		};
-
-		return (
-			getNextTarget(
-				source,
-				target,
-				fragmentEntryLinks,
-				layoutDataRef,
-				DIRECTIONS.up
-			) ||
-			getNextTarget(
-				source,
-				target,
-				fragmentEntryLinks,
-				layoutDataRef,
-				DIRECTIONS.down
-			)
-		);
 	}
 }
 
@@ -387,6 +379,13 @@ function getNextTarget(
 	const checkValidTarget = (nextTarget) => {
 		const nextTargetItem = layoutData.items[nextTarget.itemId];
 		const sourceItem = layoutData.items[source.itemId];
+
+		if (
+			source.itemId === nextTarget.itemId &&
+			nextTarget.position === TARGET_POSITIONS.BOTTOM
+		) {
+			return {...nextTarget, name: source.name};
+		}
 
 		if (
 			itemIsAncestor(sourceItem, nextTargetItem, layoutDataRef) ||

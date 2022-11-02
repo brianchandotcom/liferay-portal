@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * @author Cristina González
  */
-public interface ContentDashboardItemSubtypeFactoryTracker {
+public interface ContentDashboardItemSubtypeFactoryRegistry {
 
 	public Collection<String> getClassNames();
 

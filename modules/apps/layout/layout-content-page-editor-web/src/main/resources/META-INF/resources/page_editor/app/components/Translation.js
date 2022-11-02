@@ -176,6 +176,7 @@ export default function Translation({
 	return (
 		<ClayDropDown
 			active={active}
+			closeOnClick
 			hasLeftSymbols
 			hasRightSymbols
 			menuElementAttrs={{

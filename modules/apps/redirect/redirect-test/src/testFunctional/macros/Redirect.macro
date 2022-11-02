@@ -141,6 +141,39 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addPattern {
+		if ("${patternIndex}" != "0") {
+			Click(
+				key_index = "${patternIndex}",
+				locator1 = "Icon#PLUS_REPEATABLE");
+		}
+
+		Type(
+			key_index = "${patternIndex}",
+			key_text = "Pattern",
+			locator1 = "TextInput#PATTERN",
+			value1 = "${pattern}");
+
+		var key_index = ${destinationIndex} + 1;
+
+		Type(
+			key_index = "${destinationIndex}",
+			key_text = "Destination URL",
+			locator1 = "TextInput#DESTINATION_URL",
+			value1 = "${destinationURL}");
+
+		Click(locator1 = "Button#SAVE");
+
+		if (isSet(error)) {
+			Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+		}
+		else {
+			Alert.viewSuccessMessage();
+
+			Alert.closeMessage(messageType = "SUCCESS");
+		}
+	}
+
 	macro configureFriendlyURLRedirection {
 		var baseURL = "${baseURL}";
 
@@ -280,6 +313,12 @@ definition {
 			tableEntry = "${sourceURL}");
 	}
 
+	macro gotoPatternsTab {
+		Click(
+			key_tab = "Patterns",
+			locator1 = "NavTab#TAB_LINK");
+	}
+
 	macro ignoreEntry {
 		if (!(isSet(skipNavigation))) {
 			AssertClick(
@@ -361,6 +400,16 @@ definition {
 		}
 
 		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirectEntryId=${redirectEntryId}");
+	}
+
+	macro openToPatterns {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_navigation=patterns");
+	}
+
+	macro removePattern {
+		Click(
+			key_index = "${index}",
+			locator1 = "Icon#REMOVE_REPEATABLE");
 	}
 
 	macro view404URLs {

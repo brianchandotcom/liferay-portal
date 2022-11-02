@@ -226,6 +226,34 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165288. The Page Design Options panel should have correct accessibility."
+	@priority = "3"
+	test ViewAccessibilityOfPageDesignOptionsPanel {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the Page Design Options panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+		}
+
+		task ("Then the Page Design Options panel should have correct accessibility") {
+			AssertElementPresent(locator1 = "//h2[normalize-space(text())='Page Design Options']");
+
+			AssertAttributeValue(
+				attribute1 = "title",
+				locator1 = "PageEditor#MORE_LINK",
+				value1 = "More Page Design Options");
+		}
+	}
+
 	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
 	@priority = "3"
 	test ViewPageTitleOfViewModeAndEditMode {

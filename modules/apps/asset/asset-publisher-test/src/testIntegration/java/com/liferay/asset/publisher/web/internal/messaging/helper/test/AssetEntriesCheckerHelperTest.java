@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -134,21 +135,20 @@ public class AssetEntriesCheckerHelperTest {
 
 		Iterator<AssetEntry> expectedAssetEntriesIterator =
 			expectedAssetEntries.iterator();
-		Iterator<AssetEntry> actualAssetEntriesIterator =
-			expectedAssetEntries.iterator();
 
-		while (expectedAssetEntriesIterator.hasNext() &&
-			   actualAssetEntriesIterator.hasNext()) {
-
+		while (expectedAssetEntriesIterator.hasNext()) {
 			AssetEntry expectedAssetEntry = expectedAssetEntriesIterator.next();
-			AssetEntry actualAssetEntry = actualAssetEntriesIterator.next();
 
-			Assert.assertEquals(
-				expectedAssetEntry.getClassName(),
-				actualAssetEntry.getClassName());
-			Assert.assertEquals(
-				expectedAssetEntry.getClassUuid(),
-				actualAssetEntry.getClassUuid());
+			Assert.assertTrue(
+				ListUtil.exists(
+					actualAssetEntries,
+					actualAssetEntry ->
+						Objects.equals(
+							expectedAssetEntry.getClassName(),
+							actualAssetEntry.getClassName()) &&
+						Objects.equals(
+							expectedAssetEntry.getClassUuid(),
+							actualAssetEntry.getClassUuid())));
 		}
 	}
 

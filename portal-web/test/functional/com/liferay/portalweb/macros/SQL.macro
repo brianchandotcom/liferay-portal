@@ -15,6 +15,14 @@ definition {
 		}
 	}
 
+	macro assertTextInMySQLStatementResult {
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+
+		if (!(contains("${sqlResults}", "${text}"))) {
+			fail("The MySql query result does not contain text: ${text}");
+		}
+	}
+
 	macro dropMySQLIndex {
 		Variables.assertDefined(parameterList = "${indexName},${tableName}");
 

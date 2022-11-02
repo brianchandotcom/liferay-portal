@@ -78,57 +78,73 @@ export default function ({
 	return (
 		<>
 			<ClayTabs className="nav-left" modern>
-				<ClayTabs.Item
-					active={activeTabKeyValue === 0}
-					innerProps={{
-						'aria-controls': 'tabpanel-1',
-					}}
-					onClick={() => {
-						display(navDescriptionId);
-						setActiveTabKeyValue(0);
-					}}
-				>
-					{Liferay.Language.get('full-description')}
-				</ClayTabs.Item>
+				{hasDescription ? (
+					<ClayTabs.Item
+						active={activeTabKeyValue === 0}
+						innerProps={{
+							'aria-controls': 'tabpanel-1',
+						}}
+						onClick={() => {
+							display(navDescriptionId);
+							setActiveTabKeyValue(0);
+						}}
+					>
+						{Liferay.Language.get('full-description')}
+					</ClayTabs.Item>
+				) : (
+					<></>
+				)}
 
-				<ClayTabs.Item
-					active={activeTabKeyValue === 1}
-					innerProps={{
-						'aria-controls': 'tabpanel-2',
-					}}
-					onClick={() => {
-						display(navSpecificationsId);
-						setActiveTabKeyValue(1);
-					}}
-				>
-					{Liferay.Language.get('specifications')}
-				</ClayTabs.Item>
+				{hasCPDefinitionSpecificationOptionValues ? (
+					<ClayTabs.Item
+						active={activeTabKeyValue === 1}
+						innerProps={{
+							'aria-controls': 'tabpanel-2',
+						}}
+						onClick={() => {
+							display(navSpecificationsId);
+							setActiveTabKeyValue(1);
+						}}
+					>
+						{Liferay.Language.get('specifications')}
+					</ClayTabs.Item>
+				) : (
+					<></>
+				)}
 
-				<ClayTabs.Item
-					active={activeTabKeyValue === 2}
-					innerProps={{
-						'aria-controls': 'tabpanel-3',
-					}}
-					onClick={() => {
-						display(navCPMediaId);
-						setActiveTabKeyValue(2);
-					}}
-				>
-					{Liferay.Language.get('attachments')}
-				</ClayTabs.Item>
+				{hasCPMedia ? (
+					<ClayTabs.Item
+						active={activeTabKeyValue === 2}
+						innerProps={{
+							'aria-controls': 'tabpanel-3',
+						}}
+						onClick={() => {
+							display(navCPMediaId);
+							setActiveTabKeyValue(2);
+						}}
+					>
+						{Liferay.Language.get('attachments')}
+					</ClayTabs.Item>
+				) : (
+					<></>
+				)}
 
-				<ClayTabs.Item
-					active={activeTabKeyValue === 3}
-					innerProps={{
-						'aria-controls': 'tabpanel-4',
-					}}
-					onClick={() => {
-						display(navReplacementsId);
-						setActiveTabKeyValue(3);
-					}}
-				>
-					{Liferay.Language.get('replacements')}
-				</ClayTabs.Item>
+				{hasReplacements ? (
+					<ClayTabs.Item
+						active={activeTabKeyValue === 3}
+						innerProps={{
+							'aria-controls': 'tabpanel-4',
+						}}
+						onClick={() => {
+							display(navReplacementsId);
+							setActiveTabKeyValue(3);
+						}}
+					>
+						{Liferay.Language.get('replacements')}
+					</ClayTabs.Item>
+				) : (
+					<></>
+				)}
 			</ClayTabs>
 		</>
 	);

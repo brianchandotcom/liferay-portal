@@ -94,7 +94,9 @@ function ResultListItem({explanation = '', fields, id, score = 0}) {
 			</ClayList.ItemField>
 
 			<ClayList.ItemField expand>
-				<ClayList.ItemTitle>{fields.assetTitle}</ClayList.ItemTitle>
+				<ClayList.ItemTitle>
+					{fields.assetTitle || id}
+				</ClayList.ItemTitle>
 
 				{getResultDefaultKeys(locale).map((property) =>
 					_renderListRow(property, fields[property])

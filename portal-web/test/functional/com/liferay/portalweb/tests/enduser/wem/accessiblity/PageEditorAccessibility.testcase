@@ -404,6 +404,13 @@ definition {
 				locator1 = "Button#ANY_WITH_ARIA_LABEL",
 				value1 = "true");
 
+			TestUtils.assertElementFocused(element = "//button[@aria-label='Experience']");
+
+			KeyPress(
+				ariaLabel = "Experience",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\TAB");
+
 			TestUtils.assertElementFocused(element = "//button[@aria-label='New Experience']");
 
 			KeyPress(

@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(service = DDMPermissionSupportTracker.class)
-public class DDMPermissionSupportTracker {
+@Component(service = DDMPermissionSupportRegistry.class)
+public class DDMPermissionSupportRegistry {
 
 	public ServiceWrapper<DDMStructurePermissionSupport>
 			getDDMStructurePermissionSupportServiceWrapper(long classNameId)

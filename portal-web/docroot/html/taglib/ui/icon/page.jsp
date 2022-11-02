@@ -65,7 +65,7 @@ if (useDialog || (urlIsNotNull && url.startsWith("javascript:"))) {
 		<span
 			class="<%= cssClass %>"
 
-			<c:if test="<%= toolTip %>">
+			<c:if test="<%= toolTip && !urlIsNotNull %>">
 				tabindex="0"
 			</c:if>
 

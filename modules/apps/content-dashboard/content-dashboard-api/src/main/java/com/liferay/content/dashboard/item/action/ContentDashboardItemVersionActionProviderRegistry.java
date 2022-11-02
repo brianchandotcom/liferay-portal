@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Stefan Tanasie
  */
-public interface ContentDashboardItemVersionActionProviderTracker {
+public interface ContentDashboardItemVersionActionProviderRegistry {
 
 	public List<ContentDashboardItemVersionActionProvider>
 		getContentDashboardItemVersionActionProviders(String className);

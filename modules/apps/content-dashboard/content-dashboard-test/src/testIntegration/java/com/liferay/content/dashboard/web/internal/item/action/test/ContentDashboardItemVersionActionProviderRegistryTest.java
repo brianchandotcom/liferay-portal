@@ -16,7 +16,7 @@ package com.liferay.content.dashboard.web.internal.item.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionAction;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -45,7 +45,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Jürgen Kappler
  */
 @RunWith(Arquillian.class)
-public class ContentDashboardItemVersionActionProviderTrackerTest {
+public class ContentDashboardItemVersionActionProviderRegistryTest {
 
 	@ClassRule
 	@Rule
@@ -62,7 +62,7 @@ public class ContentDashboardItemVersionActionProviderTrackerTest {
 			() -> {
 				List<ContentDashboardItemVersionActionProvider>
 					contentDashboardItemVersionActionProviders =
-						_contentDashboardItemVersionActionProviderTracker.
+						_contentDashboardItemVersionActionProviderRegistry.
 							getContentDashboardItemVersionActionProviders(
 								RandomTestUtil.randomString());
 
@@ -82,7 +82,7 @@ public class ContentDashboardItemVersionActionProviderTrackerTest {
 			() -> {
 				List<ContentDashboardItemVersionActionProvider>
 					contentDashboardItemVersionActionProviders =
-						_contentDashboardItemVersionActionProviderTracker.
+						_contentDashboardItemVersionActionProviderRegistry.
 							getContentDashboardItemVersionActionProviders(
 								TestItem.class.getName());
 
@@ -106,7 +106,7 @@ public class ContentDashboardItemVersionActionProviderTrackerTest {
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			ContentDashboardItemVersionActionProviderTrackerTest.class);
+			ContentDashboardItemVersionActionProviderRegistryTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -124,8 +124,8 @@ public class ContentDashboardItemVersionActionProviderTrackerTest {
 	}
 
 	@Inject
-	private ContentDashboardItemVersionActionProviderTracker
-		_contentDashboardItemVersionActionProviderTracker;
+	private ContentDashboardItemVersionActionProviderRegistry
+		_contentDashboardItemVersionActionProviderRegistry;
 
 	private static class TestContentDashboardItemVersionAction
 		implements ContentDashboardItemVersionAction {

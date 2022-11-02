@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.item.action;
 
-import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Stefan Tanasie
  */
-@Component(service = ContentDashboardItemVersionActionProviderTracker.class)
-public class ContentDashboardItemVersionActionProviderTrackerImpl
-	implements ContentDashboardItemVersionActionProviderTracker {
+@Component(service = ContentDashboardItemVersionActionProviderRegistry.class)
+public class ContentDashboardItemVersionActionProviderRegistryImpl
+	implements ContentDashboardItemVersionActionProviderRegistry {
 
 	@Override
 	public List<ContentDashboardItemVersionActionProvider>

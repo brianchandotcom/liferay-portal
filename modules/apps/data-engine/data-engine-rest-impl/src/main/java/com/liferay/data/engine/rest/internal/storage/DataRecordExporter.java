@@ -16,7 +16,7 @@ package com.liferay.data.engine.rest.internal.storage;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.storage.util.DataStorageUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -40,13 +40,13 @@ import java.util.stream.Stream;
 public class DataRecordExporter {
 
 	public DataRecordExporter(
-		DataDefinitionContentTypeTracker dataDefinitionContentTypeTracker,
+		DataDefinitionContentTypeRegistry dataDefinitionContentTypeRegistry,
 		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
 		SPIDDMFormRuleConverter spiDDMFormRuleConverter) {
 
-		_dataDefinitionContentTypeTracker = dataDefinitionContentTypeTracker;
+		_dataDefinitionContentTypeRegistry = dataDefinitionContentTypeRegistry;
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
@@ -64,9 +64,9 @@ public class DataRecordExporter {
 			dataRecord.getDataRecordCollectionId());
 
 		DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(
-			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			ddlRecordSet.getDDMStructure(), _ddmStructureLayoutLocalService,
-			_spiDDMFormRuleConverter);
+			_dataDefinitionContentTypeRegistry,
+			_ddmFormFieldTypeServicesTracker, ddlRecordSet.getDDMStructure(),
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -100,8 +100,8 @@ public class DataRecordExporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataRecordExporter.class);
 
-	private final DataDefinitionContentTypeTracker
-		_dataDefinitionContentTypeTracker;
+	private final DataDefinitionContentTypeRegistry
+		_dataDefinitionContentTypeRegistry;
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;

@@ -17,7 +17,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataRecordEntityModel;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordCollectionModelResourcePermission;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordModelResourcePermission;
@@ -156,7 +156,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
 
 		DataRecordExporter dataRecordExporter = new DataRecordExporter(
-			_dataDefinitionContentTypeTracker, _ddlRecordSetLocalService,
+			_dataDefinitionContentTypeRegistry, _ddlRecordSetLocalService,
 			_ddmFormFieldTypeServicesTracker, _ddmStructureLayoutLocalService,
 			_spiDDMFormRuleConverter);
 
@@ -524,7 +524,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	}
 
 	@Reference
-	private DataDefinitionContentTypeTracker _dataDefinitionContentTypeTracker;
+	private DataDefinitionContentTypeRegistry
+		_dataDefinitionContentTypeRegistry;
 
 	@Reference
 	private DataRecordCollectionModelResourcePermission

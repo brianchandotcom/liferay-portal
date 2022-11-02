@@ -30,7 +30,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataDefinitionEntityModel;
@@ -165,7 +165,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataDefinitionId);
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
 				ddmStructure.getClassNameId());
 
 		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks =
@@ -256,7 +256,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			ActionKeys.VIEW);
 
 		return DataDefinitionUtil.toDataDefinition(
-			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
+			_dataDefinitionContentTypeRegistry,
+			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.getStructure(dataDefinitionId),
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
@@ -333,7 +334,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			siteId,
-			_dataDefinitionContentTypeTracker.getClassNameId(contentType),
+			_dataDefinitionContentTypeRegistry.getClassNameId(contentType),
 			dataDefinitionKey);
 
 		_dataDefinitionModelResourcePermission.check(
@@ -341,9 +342,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			ddmStructure.getStructureId(), ActionKeys.VIEW);
 
 		return DataDefinitionUtil.toDataDefinition(
-			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			ddmStructure, _ddmStructureLayoutLocalService,
-			_spiDDMFormRuleConverter);
+			_dataDefinitionContentTypeRegistry,
+			_ddmFormFieldTypeServicesTracker, ddmStructure,
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
 	@Override
@@ -373,7 +374,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				transform(
 					_ddmStructureLocalService.getStructures(
 						siteId,
-						_dataDefinitionContentTypeTracker.getClassNameId(
+						_dataDefinitionContentTypeRegistry.getClassNameId(
 							contentType),
 						pagination.getStartPosition(),
 						pagination.getEndPosition(),
@@ -383,7 +384,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				pagination,
 				_ddmStructureLocalService.getStructuresCount(
 					siteId,
-					_dataDefinitionContentTypeTracker.getClassNameId(
+					_dataDefinitionContentTypeRegistry.getClassNameId(
 						contentType)));
 		}
 
@@ -397,7 +398,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			searchContext -> {
 				searchContext.setAttribute(
 					Field.CLASS_NAME_ID,
-					_dataDefinitionContentTypeTracker.getClassNameId(
+					_dataDefinitionContentTypeRegistry.getClassNameId(
 						contentType));
 				searchContext.setAttribute(Field.DESCRIPTION, keywords);
 				searchContext.setAttribute(Field.NAME, keywords);
@@ -406,7 +407,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			},
 			sorts,
 			document -> DataDefinitionUtil.toDataDefinition(
-				_dataDefinitionContentTypeTracker,
+				_dataDefinitionContentTypeRegistry,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
@@ -436,7 +437,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
 				contentType);
 
 		ddmForm.setAllowInvalidAvailableLocalesForProperty(
@@ -456,7 +457,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			PrincipalThreadLocal.getUserId(), siteId,
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			_dataDefinitionContentTypeTracker.getClassNameId(contentType),
+			_dataDefinitionContentTypeRegistry.getClassNameId(contentType),
 			dataDefinition.getDataDefinitionKey(),
 			LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 			LocalizedValueUtil.toLocaleStringMap(
@@ -496,16 +497,16 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			ddmStructure.getGroupId());
 
 		dataDefinition = DataDefinitionUtil.toDataDefinition(
-			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			ddmStructure, _ddmStructureLayoutLocalService,
-			_spiDDMFormRuleConverter);
+			_dataDefinitionContentTypeRegistry,
+			_ddmFormFieldTypeServicesTracker, ddmStructure,
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 		_resourceLocalService.addResources(
 			contextCompany.getCompanyId(), siteId,
 			PrincipalThreadLocal.getUserId(),
 			ResourceActionsUtil.getCompositeModelName(
 				_portal.getClassName(
-					_dataDefinitionContentTypeTracker.getClassNameId(
+					_dataDefinitionContentTypeRegistry.getClassNameId(
 						contentType)),
 				DDMStructure.class.getName()),
 			dataDefinition.getId(), false, false, false);
@@ -566,7 +567,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
 				ddmStructure.getClassNameId());
 
 		ddmForm.setAllowInvalidAvailableLocalesForProperty(
@@ -589,7 +590,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 			DataDefinition existingDataDefinition =
 				DataDefinitionUtil.toDataDefinition(
-					_dataDefinitionContentTypeTracker,
+					_dataDefinitionContentTypeRegistry,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmStructureLocalService.getStructure(
 						deDataDefinitionFieldLink.getClassPK()),
@@ -947,7 +948,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		DataDefinition existingDataDefinition =
 			DataDefinitionUtil.toDataDefinition(
-				_dataDefinitionContentTypeTracker,
+				_dataDefinitionContentTypeRegistry,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
 				_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
@@ -1202,9 +1203,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		throws Exception {
 
 		return DataDefinitionUtil.toDataDefinition(
-			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			ddmStructure, _ddmStructureLayoutLocalService,
-			_spiDDMFormRuleConverter);
+			_dataDefinitionContentTypeRegistry,
+			_ddmFormFieldTypeServicesTracker, ddmStructure,
+			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
 	private DataDefinitionValidationException
@@ -1452,7 +1453,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_ddmFormSerializer.serialize(builder.build());
 
 		return DataDefinitionUtil.toDataDefinition(
-			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
+			_dataDefinitionContentTypeRegistry,
+			_ddmFormFieldTypeServicesTracker,
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				GetterUtil.getLong(
@@ -1514,7 +1516,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		new DataDefinitionEntityModel();
 
 	@Reference
-	private DataDefinitionContentTypeTracker _dataDefinitionContentTypeTracker;
+	private DataDefinitionContentTypeRegistry
+		_dataDefinitionContentTypeRegistry;
 
 	@Reference
 	private DataDefinitionModelResourcePermission

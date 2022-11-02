@@ -90,9 +90,7 @@ public class UpgradePortletPreferences
 				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 			}
 
-			if (!group.isCompany() && !group.isLayout() &&
-				Validator.isNull(lfrScopeType)) {
-
+			if (!group.isCompany() && !group.isLayout()) {
 				return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 			}
 

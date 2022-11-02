@@ -53,9 +53,13 @@ export default function AssetDisplayPagePreview({
 			onClick: () => {
 				setActive(false);
 				setSelectedSite({groupId: site.groupId, name: site.name});
+
+				if (site.groupId !== selectedSite?.groupId) {
+					setAssetDisplayPageSelected(null);
+				}
 			},
 		}));
-	}, [sites]);
+	}, [sites, selectedSite?.groupId]);
 
 	return (
 		<>

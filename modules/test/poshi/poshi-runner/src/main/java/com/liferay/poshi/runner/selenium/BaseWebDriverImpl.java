@@ -4566,6 +4566,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				put("CONTROL", Keys.CONTROL);
 				put("CTRL", Keys.CONTROL);
 				put("END", Keys.END);
+				put("F5", Keys.F5);
+				put("F11", Keys.F11);
+				put("F12", Keys.F12);
 				put("HOME", Keys.HOME);
 				put("SHIFT", Keys.SHIFT);
 				put("TAB", Keys.TAB);

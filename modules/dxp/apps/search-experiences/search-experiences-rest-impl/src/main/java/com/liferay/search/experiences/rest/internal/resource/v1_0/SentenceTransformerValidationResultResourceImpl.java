@@ -67,8 +67,6 @@ public class SentenceTransformerValidationResultResourceImpl
 			"embeddingVectorDimensions",
 			jsonObject.getInt("embeddingVectorDimensions")
 		).put(
-			"enabled", jsonObject.getBoolean("enabled")
-		).put(
 			"enableGPU", jsonObject.getBoolean("enableGPU")
 		).put(
 			"huggingFaceAccessToken",
@@ -82,6 +80,9 @@ public class SentenceTransformerValidationResultResourceImpl
 			"model", jsonObject.getString("model")
 		).put(
 			"modelTimeout", jsonObject.getInt("modelTimeout")
+		).put(
+			"sentenceTransformerEnabled",
+			jsonObject.getBoolean("sentenceTransformerEnabled")
 		).put(
 			"sentenceTransformProvider",
 			jsonObject.getString("sentenceTransformProvider")

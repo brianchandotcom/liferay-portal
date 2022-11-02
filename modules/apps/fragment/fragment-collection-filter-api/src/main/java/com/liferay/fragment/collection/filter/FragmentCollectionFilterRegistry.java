@@ -22,7 +22,7 @@ import java.util.List;
  * @author Pablo Molina
  */
 @ProviderType
-public interface FragmentCollectionFilterTracker {
+public interface FragmentCollectionFilterRegistry {
 
 	public FragmentCollectionFilter getFragmentCollectionFilter(String key);
 

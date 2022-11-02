@@ -15,7 +15,7 @@
 package com.liferay.fragment.collection.filter.internal;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
-import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -38,9 +38,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Pablo Molina
  */
-@Component(immediate = true, service = FragmentCollectionFilterTracker.class)
-public class FragmentCollectionFilterTrackerImpl
-	implements FragmentCollectionFilterTracker {
+@Component(immediate = true, service = FragmentCollectionFilterRegistry.class)
+public class FragmentCollectionFilterRegistryImpl
+	implements FragmentCollectionFilterRegistry {
 
 	@Override
 	public FragmentCollectionFilter getFragmentCollectionFilter(String key) {
@@ -72,7 +72,7 @@ public class FragmentCollectionFilterTrackerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentCollectionFilterTrackerImpl.class);
+		FragmentCollectionFilterRegistryImpl.class);
 
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;

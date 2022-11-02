@@ -430,6 +430,50 @@ definition {
 		return "${response}";
 	}
 
+	macro assertCreateBatchInActionBlock {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		var actualBatch = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.createBatch");
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(objectDefinitionId)) {
+			var href = "${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/${objectSchema}/batch";
+		}
+		else if (isSet(en_US_plural_label)) {
+			var href = "${portalURL}/o/c/${en_US_plural_label}/batch";
+		}
+		else {
+			var href = "${portalURL}/o/object-admin/v1.0/object-definitions/batch";
+		}
+
+		var expectedBatch = StringUtil.add("{method=POST,", " href=${href}}", "");
+
+		TestUtils.assertEquals(
+			actual = "${actualBatch}",
+			expected = "${expectedBatch}");
+	}
+
+	macro assertCreateBatchWithGetObjectSchemas {
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${objectSchemas}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		for (var objectSchema : list "${objectSchemas}") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/${objectSchema} \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test
+			''';
+
+			var response = JSONCurlUtil.get("${curl}");
+
+			ObjectDefinitionAPI.assertCreateBatchInActionBlock(
+				objectDefinitionId = "${objectDefinitionId}",
+				objectSchema = "${objectSchema}",
+				responseToParse = "${response}");
+		}
+	}
+
 	macro assertEmployeeHasNestedFieldManager {
 		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
 			expectedEmployeeFirstname = "${expectedEmployeeFirstname}",
@@ -638,6 +682,20 @@ definition {
 		var objectDefinitionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${name}')]['id']");
 
 		return "${objectDefinitionId}";
+	}
+
+	macro getObjectDefinitions {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test
+		''';
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
 	}
 
 	macro getObjectEntries {

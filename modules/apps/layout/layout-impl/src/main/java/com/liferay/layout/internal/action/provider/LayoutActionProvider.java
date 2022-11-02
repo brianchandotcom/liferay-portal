@@ -75,12 +75,12 @@ public class LayoutActionProvider {
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST));
 
-		_groupProvider = (GroupProvider)_liferayPortletRequest.getAttribute(
+		_groupProvider = (GroupProvider)httpServletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
 		_namespace = PortalUtil.getPortletNamespace(
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
-		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

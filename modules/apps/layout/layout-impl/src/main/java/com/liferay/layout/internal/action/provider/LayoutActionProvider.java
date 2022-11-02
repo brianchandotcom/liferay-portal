@@ -68,13 +68,12 @@ public class LayoutActionProvider {
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
 		_httpServletRequest = httpServletRequest;
-
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			(PortletRequest)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST));
-
 		_language = language;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST));
 
 		_groupProvider = (GroupProvider)_liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);

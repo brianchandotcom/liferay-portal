@@ -347,9 +347,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Organization.gotoCP(
-				orgName = "Liferay DXP, Inc.",
-				searchToken = "Liferay DXP, Inc.");
+			Organization.gotoCP(orgName = "Liferay DXP, Inc.");
 
 			User.searchCP(searchTerm = "Test DLC 1");
 
@@ -384,9 +382,7 @@ definition {
 
 			Navigator.gotoBack();
 
-			Organization.gotoCP(
-				orgName = "Liferay, Inc.",
-				searchToken = "Liferay, Inc.");
+			Organization.gotoCP(orgName = "Liferay, Inc.");
 
 			User.searchCP(searchTerm = "Test DLC 1");
 

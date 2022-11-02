@@ -579,9 +579,7 @@ definition {
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-			Organization.gotoCP(
-				orgName = "Organization Name 1",
-				searchToken = "Organization Name 1");
+			Organization.gotoCP(orgName = "Organization Name 1");
 
 			Organization.viewAssignMemberCP(userName = "userfn userln");
 		}
@@ -618,9 +616,7 @@ definition {
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-			Organization.gotoCP(
-				orgName = "Organization Name 2",
-				searchToken = "Organization Name 2");
+			Organization.gotoCP(orgName = "Organization Name 2");
 
 			Organization.viewAssignMemberCP(userName = "userfn userln");
 		}
@@ -740,9 +736,7 @@ definition {
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-			Organization.gotoCP(
-				orgName = "Organization Name",
-				searchToken = "Organization Name");
+			Organization.gotoCP(orgName = "Organization Name");
 
 			Organization.viewAssignMemberCP(userName = "userfn userln");
 		}

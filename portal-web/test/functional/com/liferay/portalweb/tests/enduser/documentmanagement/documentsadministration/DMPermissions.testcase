@@ -2973,9 +2973,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.gotoCP(
-			orgName = "Organization Name",
-			searchToken = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		User.searchCP(searchTerm = "usersn");
 

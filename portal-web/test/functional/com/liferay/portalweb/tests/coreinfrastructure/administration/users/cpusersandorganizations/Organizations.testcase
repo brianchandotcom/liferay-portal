@@ -500,9 +500,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.gotoCP(
-			orgName = "Organization Name 1",
-			searchToken = "Organization");
+		Organization.gotoCP(orgName = "Organization Name 1");
 
 		Organization.viewAssignMemberCP(userName = "userfn1 userln1");
 
@@ -535,9 +533,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.gotoCP(
-			orgName = "Organization Name",
-			searchToken = "Organization");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		Organization.viewAssignMemberCP(userName = "userfn userln");
 	}
@@ -1395,9 +1391,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.gotoCP(
-			orgName = "Organization Name",
-			searchToken = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		User.searchCP(searchTerm = "usersn");
 

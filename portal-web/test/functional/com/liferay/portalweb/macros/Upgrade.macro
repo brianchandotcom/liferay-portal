@@ -602,9 +602,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.gotoCP(
-			orgName = "Organization1",
-			searchToken = "Organization1");
+		Organization.gotoCP(orgName = "Organization1");
 
 		User.searchCP(searchTerm = "usersn");
 
@@ -629,9 +627,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		Organization.gotoCP(
-			orgName = "Sub-organization-Pre",
-			searchToken = "Sub-organization-Pre");
+		Organization.gotoCP(orgName = "Sub-organization-Pre");
 
 		Organization.viewAssignMemberCP(
 			userName = "userfn userln",

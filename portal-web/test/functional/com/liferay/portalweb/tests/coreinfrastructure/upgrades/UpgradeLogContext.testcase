@@ -7,6 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portal.version = "7.3.10";
+	property skip.upgrade-legacy-database = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {

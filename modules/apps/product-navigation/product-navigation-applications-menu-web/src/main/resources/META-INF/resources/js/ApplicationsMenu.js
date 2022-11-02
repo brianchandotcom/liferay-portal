@@ -29,7 +29,7 @@ import '../css/ApplicationsMenu.scss';
 
 const getOpenMenuTooltip = (keyLabel) => (
 	<>
-		<div>{Liferay.Language.get('open-menu')}</div>
+		<div>{Liferay.Language.get('open-applications-menu')}</div>
 		<kbd className="c-kbd c-kbd-dark">
 			<kbd className="c-kbd">{keyLabel}</kbd>
 
@@ -494,7 +494,7 @@ const ApplicationsMenu = ({
 			)}
 
 			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('open-menu')}
+				aria-label={Liferay.Language.get('open-applications-menu')}
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				data-title-set-as-html

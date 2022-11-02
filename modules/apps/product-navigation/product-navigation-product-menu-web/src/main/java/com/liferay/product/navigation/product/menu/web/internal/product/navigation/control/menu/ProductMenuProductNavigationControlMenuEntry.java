@@ -139,7 +139,9 @@ public class ProductMenuProductNavigationControlMenuEntry
 			HtmlUtil.escape(
 				_language.get(httpServletRequest, "skip-to-product-menu"))
 		).put(
-			"title", HtmlUtil.escape(_language.get(httpServletRequest, "menu"))
+			"title",
+			HtmlUtil.escape(
+				_language.get(httpServletRequest, "open-close-product-menu"))
 		).build();
 
 		try {

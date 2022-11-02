@@ -121,7 +121,7 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	private static final Pattern _jUnitTestNamePattern = Pattern.compile(
-		"(?<testClassName>.*Test)\\.(?<testName>test.*)");
+		"(?<testClassName>.*Test)\\.(?<testName>[^\\.]+)");
 
 	private final String _batchName;
 	private Map<String, TestClassReport> _testClassReportsMap;

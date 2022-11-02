@@ -15,7 +15,7 @@
 package com.liferay.fragment.renderer.collection.filter.internal.display.context;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
-import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
 import com.liferay.fragment.collection.filter.constants.FragmentCollectionFilterConstants;
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -50,13 +50,13 @@ import javax.servlet.http.HttpServletRequest;
 public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 	public CollectionAppliedFiltersFragmentRendererDisplayContext(
-		FragmentCollectionFilterTracker fragmentCollectionFilterTracker,
+		FragmentCollectionFilterRegistry fragmentCollectionFilterRegistry,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		_fragmentCollectionFilterTracker = fragmentCollectionFilterTracker;
+		_fragmentCollectionFilterRegistry = fragmentCollectionFilterRegistry;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_httpServletRequest = httpServletRequest;
@@ -118,7 +118,7 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 			}
 
 			FragmentCollectionFilter fragmentCollectionFilter =
-				_fragmentCollectionFilterTracker.getFragmentCollectionFilter(
+				_fragmentCollectionFilterRegistry.getFragmentCollectionFilter(
 					parameterData.get(1));
 
 			if (fragmentCollectionFilter == null) {
@@ -193,8 +193,8 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 
 	private Map<String, Object> _collectionAppliedFiltersProps;
 	private final boolean _editMode;
-	private final FragmentCollectionFilterTracker
-		_fragmentCollectionFilterTracker;
+	private final FragmentCollectionFilterRegistry
+		_fragmentCollectionFilterRegistry;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final FragmentEntryLink _fragmentEntryLink;

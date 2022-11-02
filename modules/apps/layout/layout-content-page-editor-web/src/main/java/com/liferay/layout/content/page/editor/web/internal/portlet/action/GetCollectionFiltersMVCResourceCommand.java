@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.collection.filter.FragmentCollectionFilter;
-import com.liferay.fragment.collection.filter.FragmentCollectionFilterTracker;
+import com.liferay.fragment.collection.filter.FragmentCollectionFilterRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -60,7 +60,7 @@ public class GetCollectionFiltersMVCResourceCommand
 			_jsonFactory.createJSONObject();
 
 		for (FragmentCollectionFilter fragmentCollectionFilter :
-				_fragmentCollectionFilterTracker.
+				_fragmentCollectionFilterRegistry.
 					getFragmentCollectionFilters()) {
 
 			fragmentCollectionFiltersJSONObject.put(
@@ -99,7 +99,7 @@ public class GetCollectionFiltersMVCResourceCommand
 		GetCollectionFiltersMVCResourceCommand.class);
 
 	@Reference
-	private FragmentCollectionFilterTracker _fragmentCollectionFilterTracker;
+	private FragmentCollectionFilterRegistry _fragmentCollectionFilterRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

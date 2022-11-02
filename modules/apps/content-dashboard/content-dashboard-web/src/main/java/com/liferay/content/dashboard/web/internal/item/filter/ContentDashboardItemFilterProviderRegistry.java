@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemFilterProviderTracker.class)
-public class ContentDashboardItemFilterProviderTracker {
+@Component(service = ContentDashboardItemFilterProviderRegistry.class)
+public class ContentDashboardItemFilterProviderRegistry {
 
 	public List<ContentDashboardItemFilterProvider>
 		getContentDashboardItemFilterProviders() {

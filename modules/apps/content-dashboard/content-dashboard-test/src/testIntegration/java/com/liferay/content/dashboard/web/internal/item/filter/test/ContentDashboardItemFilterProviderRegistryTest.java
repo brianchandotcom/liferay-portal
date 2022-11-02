@@ -42,20 +42,20 @@ import org.osgi.framework.ServiceReference;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class ContentDashboardItemFilterProviderTrackerTest {
+public class ContentDashboardItemFilterProviderRegistryTest {
 
 	@Before
 	public void setUp() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			ContentDashboardItemFilterProviderTrackerTest.class);
+			ContentDashboardItemFilterProviderRegistryTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 
 		_serviceReference = _bundleContext.getServiceReference(
 			"com.liferay.content.dashboard.web.internal.item.filter." +
-				"ContentDashboardItemFilterProviderTracker");
+				"ContentDashboardItemFilterProviderRegistry");
 
-		_contentDashboardItemFilterProviderTracker = _bundleContext.getService(
+		_contentDashboardItemFilterProviderRegistry = _bundleContext.getService(
 			_serviceReference);
 	}
 
@@ -98,7 +98,7 @@ public class ContentDashboardItemFilterProviderTrackerTest {
 
 		List<ContentDashboardItemFilterProvider>
 			contentDashboardItemFilterProviders = ReflectionTestUtil.invoke(
-				_contentDashboardItemFilterProviderTracker,
+				_contentDashboardItemFilterProviderRegistry,
 				"getContentDashboardItemFilterProviders", new Class<?>[0]);
 
 		Stream<ContentDashboardItemFilterProvider> stream =
@@ -114,7 +114,7 @@ public class ContentDashboardItemFilterProviderTrackerTest {
 	}
 
 	private BundleContext _bundleContext;
-	private Object _contentDashboardItemFilterProviderTracker;
+	private Object _contentDashboardItemFilterProviderRegistry;
 	private ServiceReference<?> _serviceReference;
 
 }

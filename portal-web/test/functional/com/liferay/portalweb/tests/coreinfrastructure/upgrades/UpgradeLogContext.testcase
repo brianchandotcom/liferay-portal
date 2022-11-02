@@ -29,18 +29,18 @@ definition {
 		Log.viewLogFileContentPresent(logContent = "ExampleText=ExampleText");
 	}
 
-	@description = "LPS-158742. Given custom log4j is not added to portal and log context is not enabled. Then log lines will not be marked."
-	@priority = "3"
-	test LogOutputReturnsUnmarkedOnStartupWithoutLogContextAndCustomLog4j {
-		property custom.properties = "upgrade.database.auto.run=true";
-
-		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
-	}
-
 	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."
 	@priority = "4"
 	test LogOutputReturnsUnmarkedOnStartupWithoutCustomLog4j {
 		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
+
+		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
+	}
+
+	@description = "LPS-158742. Given custom log4j is not added to portal and log context is not enabled. Then log lines will not be marked."
+	@priority = "3"
+	test LogOutputReturnsUnmarkedOnStartupWithoutLogContextAndCustomLog4j {
+		property custom.properties = "upgrade.database.auto.run=true";
 
 		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
 	}

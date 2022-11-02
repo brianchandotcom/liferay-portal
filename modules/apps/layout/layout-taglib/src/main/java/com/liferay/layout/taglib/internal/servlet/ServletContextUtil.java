@@ -106,12 +106,12 @@ public class ServletContextUtil {
 		return _layoutDisplayPageProviderTracker;
 	}
 
-	public static LayoutListRetrieverRegistry getLayoutListRetrieverTracker() {
+	public static LayoutListRetrieverRegistry getLayoutListRetrieverRegistry() {
 		return _layoutListRetrieverRegistry;
 	}
 
 	public static ListObjectReferenceFactoryRegistry
-		getListObjectReferenceFactoryTracker() {
+		getListObjectReferenceFactoryRegistry() {
 
 		return _listObjectReferenceFactoryRegistry;
 	}

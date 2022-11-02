@@ -8911,7 +8911,7 @@ org.apache.catalina.tribes.level = FINE]]>
 				<copy
 					file="@{log.file}"
 					overwrite="true"
-					tofile="${liferay.home}/log"
+					tofile="${liferay.home}/liferay.log"
 				/>
 			</sequential>
 		</for>

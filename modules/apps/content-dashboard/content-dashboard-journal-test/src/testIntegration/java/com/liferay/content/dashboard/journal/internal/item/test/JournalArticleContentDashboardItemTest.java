@@ -28,7 +28,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVersionActionProvider;
@@ -1075,7 +1075,7 @@ public class JournalArticleContentDashboardItemTest {
 
 		Optional<ContentDashboardItemActionProvider>
 			contentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderTracker.
+				_contentDashboardItemActionProviderRegistry.
 					getContentDashboardItemActionProviderOptional(
 						JournalArticle.class.getName(), type);
 
@@ -1144,8 +1144,8 @@ public class JournalArticleContentDashboardItemTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private ContentDashboardItemActionProviderTracker
-		_contentDashboardItemActionProviderTracker;
+	private ContentDashboardItemActionProviderRegistry
+		_contentDashboardItemActionProviderRegistry;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.journal.internal.item.JournalArticleContentDashboardItemFactory"

@@ -20,7 +20,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemVersion;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
@@ -59,8 +59,8 @@ public class BlogsEntryContentDashboardItem
 	public BlogsEntryContentDashboardItem(
 		List<AssetCategory> assetCategories, List<AssetTag> assetTags,
 		BlogsEntry blogsEntry,
-		ContentDashboardItemActionProviderTracker
-			contentDashboardItemActionProviderTracker,
+		ContentDashboardItemActionProviderRegistry
+			contentDashboardItemActionProviderRegistry,
 		Group group, Language language, Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
@@ -78,8 +78,8 @@ public class BlogsEntryContentDashboardItem
 		}
 
 		_blogsEntry = blogsEntry;
-		_contentDashboardItemActionProviderTracker =
-			contentDashboardItemActionProviderTracker;
+		_contentDashboardItemActionProviderRegistry =
+			contentDashboardItemActionProviderRegistry;
 		_group = group;
 		_language = language;
 		_portal = portal;
@@ -119,7 +119,7 @@ public class BlogsEntryContentDashboardItem
 
 		List<ContentDashboardItemActionProvider>
 			contentDashboardItemActionProviders =
-				_contentDashboardItemActionProviderTracker.
+				_contentDashboardItemActionProviderRegistry.
 					getContentDashboardItemActionProviders(
 						BlogsEntry.class.getName(), types);
 
@@ -182,7 +182,7 @@ public class BlogsEntryContentDashboardItem
 
 			Optional<ContentDashboardItemActionProvider>
 				contentDashboardItemActionProviderOptional =
-					_contentDashboardItemActionProviderTracker.
+					_contentDashboardItemActionProviderRegistry.
 						getContentDashboardItemActionProviderOptional(
 							BlogsEntry.class.getName(),
 							ContentDashboardItemAction.Type.EDIT);
@@ -198,7 +198,7 @@ public class BlogsEntryContentDashboardItem
 
 		Optional<ContentDashboardItemActionProvider>
 			viewContentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderTracker.
+				_contentDashboardItemActionProviderRegistry.
 					getContentDashboardItemActionProviderOptional(
 						BlogsEntry.class.getName(),
 						ContentDashboardItemAction.Type.VIEW);
@@ -210,7 +210,7 @@ public class BlogsEntryContentDashboardItem
 			() -> {
 				Optional<ContentDashboardItemActionProvider>
 					editContentDashboardItemActionProviderOptional =
-						_contentDashboardItemActionProviderTracker.
+						_contentDashboardItemActionProviderRegistry.
 							getContentDashboardItemActionProviderOptional(
 								BlogsEntry.class.getName(),
 								ContentDashboardItemAction.Type.EDIT);
@@ -327,7 +327,7 @@ public class BlogsEntryContentDashboardItem
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		Optional<ContentDashboardItemActionProvider>
 			contentDashboardItemActionProviderOptional =
-				_contentDashboardItemActionProviderTracker.
+				_contentDashboardItemActionProviderRegistry.
 					getContentDashboardItemActionProviderOptional(
 						BlogsEntry.class.getName(),
 						ContentDashboardItemAction.Type.VIEW);
@@ -374,8 +374,8 @@ public class BlogsEntryContentDashboardItem
 	private final List<AssetCategory> _assetCategories;
 	private final List<AssetTag> _assetTags;
 	private final BlogsEntry _blogsEntry;
-	private final ContentDashboardItemActionProviderTracker
-		_contentDashboardItemActionProviderTracker;
+	private final ContentDashboardItemActionProviderRegistry
+		_contentDashboardItemActionProviderRegistry;
 	private final Group _group;
 	private final Language _language;
 	private final Portal _portal;

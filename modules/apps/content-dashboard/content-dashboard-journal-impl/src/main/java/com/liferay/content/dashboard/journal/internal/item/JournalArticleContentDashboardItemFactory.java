@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
-import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderRegistry;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActionProviderTracker;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
@@ -99,7 +99,7 @@ public class JournalArticleContentDashboardItemFactory
 
 		return new JournalArticleContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(),
-			_contentDashboardItemActionProviderTracker,
+			_contentDashboardItemActionProviderRegistry,
 			_contentDashboardItemVersionActionProviderTracker,
 			contentDashboardItemSubtypeFactory.create(
 				ddmStructure.getStructureId(),
@@ -125,8 +125,8 @@ public class JournalArticleContentDashboardItemFactory
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private ContentDashboardItemActionProviderTracker
-		_contentDashboardItemActionProviderTracker;
+	private ContentDashboardItemActionProviderRegistry
+		_contentDashboardItemActionProviderRegistry;
 
 	@Reference
 	private ContentDashboardItemSubtypeFactoryTracker

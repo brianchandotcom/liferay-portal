@@ -336,6 +336,8 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"children", _getChildKBArticlesJSONArray(kbArticle)
 				).put(
+					"classNameId", kbArticle.getClassNameId()
+				).put(
 					"href",
 					_kbArticleURLHelper.createViewWithRedirectURL(
 						kbArticle,
@@ -361,6 +363,9 @@ public class KBAdminNavigationDisplayContext {
 				"children",
 				_getChildrenJSONArray(
 					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			).put(
+				"classNameId",
+				PortalUtil.getClassNameId(KBFolderConstants.getClassName())
 			).put(
 				"href",
 				PortletURLBuilder.createRenderURL(
@@ -400,6 +405,8 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"children", _getChildrenJSONArray(kbFolder.getKbFolderId())
 				).put(
+					"classNameId", kbFolder.getClassNameId()
+				).put(
 					"href",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
@@ -429,6 +436,8 @@ public class KBAdminNavigationDisplayContext {
 						kbArticle, _selectedItemAncestorIds)
 				).put(
 					"children", _getChildKBArticlesJSONArray(kbArticle)
+				).put(
+					"classNameId", kbArticle.getClassNameId()
 				).put(
 					"href",
 					_kbArticleURLHelper.createViewWithRedirectURL(

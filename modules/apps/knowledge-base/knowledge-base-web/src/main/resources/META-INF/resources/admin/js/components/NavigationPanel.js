@@ -58,8 +58,10 @@ export default function NavigationPanel({
 
 		fetch(moveURL, {
 			body: objectToFormData({
-				[`${portletNamespace}resourcePrimKey`]: item.id,
+				[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
 				[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
+				[`${portletNamespace}resourceClassNameId`]: item.classNameId,
+				[`${portletNamespace}resourcePrimKey`]: item.id,
 			}),
 			method: 'POST',
 		})
@@ -140,6 +142,7 @@ export default function NavigationPanel({
 }
 
 const itemShape = {
+	classNameId: PropTypes.string.isRequired,
 	href: PropTypes.string.isRequired,
 	id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,

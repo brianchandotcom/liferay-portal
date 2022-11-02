@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -355,7 +355,7 @@ public class DDMFormAdminDisplayContextTest {
 			Mockito.mock(DDMFormFieldTypesSerializer.class),
 			Mockito.mock(DDMFormInstanceLocalService.class),
 			Mockito.mock(DDMFormInstanceRecordLocalService.class),
-			Mockito.mock(DDMFormInstanceRecordWriterTracker.class),
+			Mockito.mock(DDMFormInstanceRecordWriterRegistry.class),
 			_mockDDMFormInstanceService(),
 			Mockito.mock(DDMFormInstanceVersionLocalService.class),
 			Mockito.mock(DDMFormRenderer.class),

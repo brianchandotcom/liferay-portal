@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFor
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminFieldSetDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -151,7 +151,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
-					_ddmFormInstanceRecordWriterTracker,
+					_ddmFormInstanceRecordWriterRegistry,
 					_ddmFormInstanceService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 					_ddmFormTemplateContextFactory, _ddmFormValuesFactory,
@@ -174,7 +174,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
-					_ddmFormInstanceRecordWriterTracker,
+					_ddmFormInstanceRecordWriterRegistry,
 					_ddmFormInstanceService,
 					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 					_ddmFormTemplateContextFactory, _ddmFormValuesFactory,
@@ -226,8 +226,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		_ddmFormInstanceRecordLocalService;
 
 	@Reference
-	private DDMFormInstanceRecordWriterTracker
-		_ddmFormInstanceRecordWriterTracker;
+	private DDMFormInstanceRecordWriterRegistry
+		_ddmFormInstanceRecordWriterRegistry;
 
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;

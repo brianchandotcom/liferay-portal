@@ -21,9 +21,9 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporte
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterResponse;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -289,7 +289,7 @@ public class DDMFormInstanceRecordExporterImpl
 		throws Exception {
 
 		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter =
-			ddmFormInstanceRecordWriterTracker.getDDMFormInstanceRecordWriter(
+			ddmFormInstanceRecordWriterRegistry.getDDMFormInstanceRecordWriter(
 				type);
 
 		DDMFormInstanceRecordWriterRequest.Builder builder =
@@ -315,8 +315,8 @@ public class DDMFormInstanceRecordExporterImpl
 		ddmFormInstanceRecordLocalService;
 
 	@Reference
-	protected DDMFormInstanceRecordWriterTracker
-		ddmFormInstanceRecordWriterTracker;
+	protected DDMFormInstanceRecordWriterRegistry
+		ddmFormInstanceRecordWriterRegistry;
 
 	@Reference
 	protected DDMFormInstanceVersionLocalService

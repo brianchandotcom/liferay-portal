@@ -20,9 +20,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRendere
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterResponse;
-import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -715,14 +715,14 @@ public class DDMFormInstanceRecordExporterImplTest {
 		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
 			new DDMFormInstanceRecordExporterImpl();
 
-		ddmFormInstanceRecordExporterImpl.ddmFormInstanceRecordWriterTracker =
-			_ddmFormInstanceRecordWriterTracker;
+		ddmFormInstanceRecordExporterImpl.ddmFormInstanceRecordWriterRegistry =
+			_ddmFormInstanceRecordWriterRegistry;
 
 		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter = Mockito.mock(
 			DDMFormInstanceRecordWriter.class);
 
 		Mockito.when(
-			_ddmFormInstanceRecordWriterTracker.getDDMFormInstanceRecordWriter(
+			_ddmFormInstanceRecordWriterRegistry.getDDMFormInstanceRecordWriter(
 				"txt")
 		).thenReturn(
 			ddmFormInstanceRecordWriter
@@ -745,10 +745,10 @@ public class DDMFormInstanceRecordExporterImplTest {
 		Assert.assertArrayEquals(new byte[] {1, 2, 3}, content);
 
 		InOrder inOrder = Mockito.inOrder(
-			_ddmFormInstanceRecordWriterTracker, ddmFormInstanceRecordWriter);
+			_ddmFormInstanceRecordWriterRegistry, ddmFormInstanceRecordWriter);
 
 		inOrder.verify(
-			_ddmFormInstanceRecordWriterTracker, Mockito.times(1)
+			_ddmFormInstanceRecordWriterRegistry, Mockito.times(1)
 		).getDDMFormInstanceRecordWriter(
 			"txt"
 		);
@@ -780,9 +780,9 @@ public class DDMFormInstanceRecordExporterImplTest {
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService = Mockito.mock(
 			DDMFormInstanceRecordLocalService.class);
-	private final DDMFormInstanceRecordWriterTracker
-		_ddmFormInstanceRecordWriterTracker = Mockito.mock(
-			DDMFormInstanceRecordWriterTracker.class);
+	private final DDMFormInstanceRecordWriterRegistry
+		_ddmFormInstanceRecordWriterRegistry = Mockito.mock(
+			DDMFormInstanceRecordWriterRegistry.class);
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService = Mockito.mock(
 			DDMFormInstanceVersionLocalService.class);

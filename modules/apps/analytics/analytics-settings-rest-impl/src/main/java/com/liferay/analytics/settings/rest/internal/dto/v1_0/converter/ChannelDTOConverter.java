@@ -45,9 +45,16 @@ public class ChannelDTOConverter
 			AnalyticsChannel analyticsChannel)
 		throws Exception {
 
+		ChannelDTOConverterContext channelDTOConverterContext =
+			(ChannelDTOConverterContext)dtoConverterContext;
+
 		return new Channel() {
 			{
 				channelId = String.valueOf(analyticsChannel.getId());
+
+				commerceSyncEnabled =
+					channelDTOConverterContext.isCommerceSyncEnabled(channelId);
+
 				dataSources = TransformUtil.transform(
 					analyticsChannel.getAnalyticsDataSources(),
 					analyticsDataSource -> _dataSourceDTOConverter.toDTO(

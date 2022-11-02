@@ -21,6 +21,7 @@ import com.liferay.analytics.settings.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChannel;
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverter;
+import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ChannelDTOConverterContext;
 import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +40,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -78,7 +80,70 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@Override
 	public Channel patchChannel(Channel channel) throws Exception {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		String[] commerceSyncEnabledChannelIds =
+			analyticsConfiguration.commerceSyncEnabledChannelIds();
+
+		if (channel.getCommerceSyncEnabled() != null) {
+			boolean commerceSyncEnabled = ArrayUtil.contains(
+				commerceSyncEnabledChannelIds, channel.getChannelId());
+
+			if (channel.getCommerceSyncEnabled() && !commerceSyncEnabled) {
+				commerceSyncEnabledChannelIds = ArrayUtil.append(
+					commerceSyncEnabledChannelIds, channel.getChannelId());
+
+				_analyticsSettingsManager.updateCompanyConfiguration(
+					contextCompany.getCompanyId(),
+					HashMapBuilder.<String, Object>put(
+						"commerceSyncEnabledChannelIds",
+						commerceSyncEnabledChannelIds
+					).build());
+			}
+
+			if (!channel.getCommerceSyncEnabled() && commerceSyncEnabled) {
+				commerceSyncEnabledChannelIds = ArrayUtil.remove(
+					commerceSyncEnabledChannelIds, channel.getChannelId());
+
+				_analyticsSettingsManager.updateCompanyConfiguration(
+					contextCompany.getCompanyId(),
+					HashMapBuilder.<String, Object>put(
+						"commerceSyncEnabledChannelIds",
+						commerceSyncEnabledChannelIds
+					).build());
+			}
+		}
+
 		DataSource[] dataSources = channel.getDataSources();
+
+		if (ArrayUtil.isEmpty(dataSources)) {
+			return _channelDTOConverter.toDTO(
+				new ChannelDTOConverterContext(
+					channel.getChannelId(),
+					contextAcceptLanguage.getPreferredLocale(),
+					commerceSyncEnabledChannelIds),
+				_analyticsCloudClient.updateAnalyticsChannel(
+					channel.getChannelId(),
+					Stream.of(
+						analyticsConfiguration.syncedCommerceChannelIds()
+					).map(
+						Long::valueOf
+					).toArray(
+						Long[]::new
+					),
+					contextUser.getCompanyId(),
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					contextAcceptLanguage.getPreferredLocale(),
+					Stream.of(
+						analyticsConfiguration.syncedGroupIds()
+					).map(
+						Long::valueOf
+					).toArray(
+						Long[]::new
+					)));
+		}
 
 		if (dataSources.length > 1) {
 			throw new PortalException("Unable to update multiple data sources");
@@ -102,10 +167,6 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			ArrayUtil.isNotEmpty(analyticsDataSource.getCommerceChannelIds()),
 			null, ArrayUtil.isNotEmpty(analyticsDataSource.getSiteIds()));
 
-		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsSettingsManager.getAnalyticsConfiguration(
-				contextUser.getCompanyId());
-
 		_updateCommerceChannelGroups(
 			analyticsConfiguration.syncedCommerceChannelIds(),
 			channel.getChannelId(), contextCompany.getCompanyId(),
@@ -124,7 +185,12 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				"syncedGroupIds", analyticsDataSource.getSiteIds()
 			).build());
 
-		return _channelDTOConverter.toDTO(analyticsChannel);
+		return _channelDTOConverter.toDTO(
+			new ChannelDTOConverterContext(
+				channel.getChannelId(),
+				contextAcceptLanguage.getPreferredLocale(),
+				commerceSyncEnabledChannelIds),
+			analyticsChannel);
 	}
 
 	@Override

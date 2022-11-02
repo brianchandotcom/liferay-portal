@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface FragmentRendererTracker {
+public interface FragmentRendererRegistry {
 
 	public FragmentRenderer getFragmentRenderer(String key);
 

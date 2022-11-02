@@ -18,7 +18,7 @@ import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
@@ -48,8 +48,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = FragmentRendererTracker.class)
-public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
+@Component(immediate = true, service = FragmentRendererRegistry.class)
+public class FragmentRendererRegistryImpl implements FragmentRendererRegistry {
 
 	@Override
 	public FragmentRenderer getFragmentRenderer(String key) {
@@ -98,7 +98,7 @@ public class FragmentRendererTrackerImpl implements FragmentRendererTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentRendererTrackerImpl.class);
+		FragmentRendererRegistryImpl.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -25,12 +25,16 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -123,6 +127,37 @@ public class WorkflowDefinitionResourceImpl
 		throws Exception {
 
 		return Page.of(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_DEFINITION, "postWorkflowDefinition",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DEFINITION, "postWorkflowDefinitionBatch",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteWorkflowDefinitionBatch",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getWorkflowDefinitionsPage",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).put(
+				"updateActive",
+				addAction(
+					ActionKeys.UPDATE, "postWorkflowDefinitionUpdateActive",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putWorkflowDefinitionBatch",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).build(),
 			transform(
 				_workflowDefinitionManager.getLatestWorkflowDefinitions(
 					active, contextCompany.getCompanyId(),
@@ -283,6 +318,23 @@ public class WorkflowDefinitionResourceImpl
 						workflowTransition),
 					Transition.class);
 				version = String.valueOf(workflowDefinition.getVersion());
+
+				setActions(
+					() -> HashMapBuilder.put(
+						"delete",
+						addAction(
+							ActionKeys.DELETE,
+							workflowDefinition.getWorkflowDefinitionId(),
+							"deleteWorkflowDefinition",
+							_workflowDefinitionModelResourcePermission)
+					).put(
+						"update",
+						addAction(
+							ActionKeys.UPDATE,
+							workflowDefinition.getWorkflowDefinitionId(),
+							"putWorkflowDefinition",
+							_workflowDefinitionModelResourcePermission)
+					).build());
 			}
 		};
 	}
@@ -301,5 +353,11 @@ public class WorkflowDefinitionResourceImpl
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.workflow.WorkflowDefinition)"
+	)
+	private ModelResourcePermission<?>
+		_workflowDefinitionModelResourcePermission;
 
 }

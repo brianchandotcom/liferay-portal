@@ -200,6 +200,13 @@ components:
             type: object
         WorkflowDefinition:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 active:
                     type: boolean
                 content:
@@ -245,6 +252,13 @@ components:
             description:
                 Represents an instance to be executed in a workflow.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 completed:
                     description:
                         A flag that indicates whether the instance is complete.
@@ -401,6 +415,13 @@ components:
             description:
                 Represents a task to be executed in a workflow.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 assigneePerson:
                     allOf:
                         - $ref: "#/components/schemas/Creator"

@@ -83,6 +83,8 @@ public class WorkflowConstants {
 
 	public static final String LABEL_SCHEDULED = "scheduled";
 
+	public static final String RESOURCE_NAME = "com.liferay.portal.workflow";
+
 	public static final String SERVICE_NAME = "com.liferay.portal.workflow";
 
 	public static final int STATUS_ANY = -1;

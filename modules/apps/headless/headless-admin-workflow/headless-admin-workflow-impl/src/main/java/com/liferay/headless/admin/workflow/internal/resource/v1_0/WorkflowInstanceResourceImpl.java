@@ -20,9 +20,12 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
@@ -87,6 +90,12 @@ public class WorkflowInstanceResourceImpl
 		throws Exception {
 
 		return Page.of(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getWorkflowInstancesPage",
+					WorkflowConstants.RESOURCE_NAME, null)
+			).build(),
 			transform(
 				_workflowInstanceManager.getWorkflowInstances(
 					contextCompany.getCompanyId(), contextUser.getUserId(),
@@ -185,11 +194,33 @@ public class WorkflowInstanceResourceImpl
 					workflowInstance.getWorkflowDefinitionName();
 				workflowDefinitionVersion = String.valueOf(
 					workflowInstance.getWorkflowDefinitionVersion());
+
+				setActions(
+					() -> HashMapBuilder.put(
+						"changeTransition",
+						addAction(
+							ActionKeys.UPDATE,
+							workflowInstance.getWorkflowInstanceId(),
+							"postWorkflowInstanceChangeTransition",
+							_workflowInstanceModelResourcePermission)
+					).put(
+						"delete",
+						addAction(
+							ActionKeys.DELETE,
+							workflowInstance.getWorkflowInstanceId(),
+							"deleteWorkflowInstance",
+							_workflowInstanceModelResourcePermission)
+					).build());
 			}
 		};
 	}
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.workflow.WorkflowInstance)"
+	)
+	private ModelResourcePermission<?> _workflowInstanceModelResourcePermission;
 
 }

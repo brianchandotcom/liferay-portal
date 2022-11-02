@@ -624,6 +624,10 @@ definition {
 		}
 
 		task ("Then the site designer could preview the web content through display page") {
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
 			Panel.expandPanel(panel = "Display Page Preview");
 
 			WebContent.selectPreviewSite(siteName = "Test Site Name");

@@ -21,6 +21,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -54,12 +55,6 @@ public class BuildThemeTask extends JavaExec {
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getDiffsDir() {
 		return GradleUtil.toFile(getProject(), _diffsDir);
-	}
-
-	@Input
-	@Optional
-	public String getGeneratedThumbnailMaxSize() {
-		return GradleUtil.toString(_generatedThumbnailMaxSize);
 	}
 
 	@OutputDirectory
@@ -97,6 +92,18 @@ public class BuildThemeTask extends JavaExec {
 		return GradleUtil.toString(_themeName);
 	}
 
+	@Input
+	@Optional
+	public Integer getThumbnailHeight() {
+		return GradleUtil.toInteger(_thumbnailHeight);
+	}
+
+	@Input
+	@Optional
+	public Integer getThumbnailWidth() {
+		return GradleUtil.toInteger(_thumbnailWidth);
+	}
+
 	@InputDirectory
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
@@ -113,10 +120,6 @@ public class BuildThemeTask extends JavaExec {
 
 	public void setDiffsDir(Object diffsDir) {
 		_diffsDir = diffsDir;
-	}
-
-	public void setGeneratedThumbnailMaxSize(Object generatedThumbnailMaxSize) {
-		_generatedThumbnailMaxSize = generatedThumbnailMaxSize;
 	}
 
 	public void setOutputDir(Object outputDir) {
@@ -141,6 +144,14 @@ public class BuildThemeTask extends JavaExec {
 
 	public void setThemeName(Object themeName) {
 		_themeName = themeName;
+	}
+
+	public void setThumbnailHeight(Object thumbnailHeight) {
+		_thumbnailHeight = thumbnailHeight;
+	}
+
+	public void setThumbnailWidth(Object thumbnailWidth) {
+		_thumbnailWidth = thumbnailWidth;
 	}
 
 	public void setUnstyledDir(Object unstyledDir) {
@@ -168,14 +179,13 @@ public class BuildThemeTask extends JavaExec {
 		List<String> args = new ArrayList<>(getArgs());
 
 		_addArg(args, "--diffs-dir", getDiffsDir());
-		_addArg(
-			args, "--generated-thumbnail-max-size",
-			getGeneratedThumbnailMaxSize());
 		_addArg(args, "--name", getThemeName());
 		_addArg(args, "--output-dir", getOutputDir());
 		_addArg(args, "--parent-name", getParentName());
 		_addArg(args, "--parent-path", _getParentPath());
 		_addArg(args, "--template-extension", getTemplateExtension());
+		_addArg(args, "--thumbnail-height", Objects.toString(getThumbnailHeight()));
+		_addArg(args, "--thumbnail-width", Objects.toString(getThumbnailWidth()));
 		_addArg(args, "--unstyled-path", _getUnstyledPath());
 
 		return args;
@@ -202,13 +212,14 @@ public class BuildThemeTask extends JavaExec {
 	}
 
 	private Object _diffsDir;
-	private Object _generatedThumbnailMaxSize;
 	private Object _outputDir;
 	private Object _parentDir;
 	private Object _parentFile;
 	private Object _parentName;
 	private Object _templateExtension;
 	private Object _themeName;
+	private Object _thumbnailHeight;
+	private Object _thumbnailWidth;
 	private Object _unstyledDir;
 	private Object _unstyledFile;
 

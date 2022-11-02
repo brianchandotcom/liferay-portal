@@ -33,13 +33,6 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>generatedThumbnailMaxSize</name>
-					<type>java.lang.String</type>
-					<required>false</required>
-					<editable>true</editable>
-					<description/>
-				</parameter>
-				<parameter>
 					<name>name</name>
 					<type>java.lang.String</type>
 					<required>false</required>
@@ -70,6 +63,20 @@
 				<parameter>
 					<name>templateExtension</name>
 					<type>java.lang.String</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>thumbnailHeight</name>
+					<type>int</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>thumbnailWidth</name>
+					<type>int</type>
 					<required>false</required>
 					<editable>true</editable>
 					<description/>

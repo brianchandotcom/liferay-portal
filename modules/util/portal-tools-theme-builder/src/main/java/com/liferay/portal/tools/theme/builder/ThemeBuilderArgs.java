@@ -28,10 +28,6 @@ public class ThemeBuilderArgs {
 		return _diffsDir;
 	}
 
-	public String getGeneratedThumbnailMaxSize() {
-		return _generatedThumbnailMaxSize;
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -52,16 +48,20 @@ public class ThemeBuilderArgs {
 		return _templateExtension;
 	}
 
+	public int getThumbnailHeight() {
+		return _thumbnailHeight;
+	}
+
+	public int getThumbnailWidth() {
+		return _thumbnailWidth;
+	}
+
 	public File getUnstyledDir() {
 		return _unstyledDir;
 	}
 
 	public void setDiffsDir(File diffsDir) {
 		_diffsDir = diffsDir;
-	}
-
-	public void setGeneratedThumbnailMaxSize(String generatedThumbnailMaxSize) {
-		_generatedThumbnailMaxSize = generatedThumbnailMaxSize;
 	}
 
 	public void setName(String name) {
@@ -84,6 +84,14 @@ public class ThemeBuilderArgs {
 		_templateExtension = templateExtension;
 	}
 
+	public void setThumbnailHeight(int thumbnailHeight) {
+		_thumbnailHeight = thumbnailHeight;
+	}
+
+	public void setThumbnailWidth(int thumbnailWidth) {
+		_thumbnailWidth = thumbnailWidth;
+	}
+
 	public void setUnstyledDir(File unstyledDir) {
 		_unstyledDir = unstyledDir;
 	}
@@ -92,12 +100,13 @@ public class ThemeBuilderArgs {
 		return _help;
 	}
 
-	protected static final String DEFAULT_GENERATED_THUMBNAIL_MAX_SIZE =
-		"160x120";
-
 	protected static final String DEFAULT_NAME;
 
 	protected static final String DEFAULT_TEMPLATE_EXTENSION = "ftl";
+
+	protected static final int DEFAULT_THUMBNAIL_HEIGHT = 120;
+
+	protected static final int DEFAULT_THUMBNAIL_WIDTH = 160;
 
 	static {
 		File userDir = new File(System.getProperty("user.dir"));
@@ -111,13 +120,6 @@ public class ThemeBuilderArgs {
 		names = {"-d", "--diffs-dir"}
 	)
 	private File _diffsDir;
-
-	@Parameter(
-		description = "The maximum image dimensions (WxH) for the generated thumbnail.",
-		names = "--generated-thumbnail-max-size"
-	)
-	private String _generatedThumbnailMaxSize =
-		DEFAULT_GENERATED_THUMBNAIL_MAX_SIZE;
 
 	@Parameter(
 		description = "Print this message.", help = true,
@@ -155,6 +157,18 @@ public class ThemeBuilderArgs {
 		names = {"-t", "--template-extension"}
 	)
 	private String _templateExtension = DEFAULT_TEMPLATE_EXTENSION;
+
+	@Parameter(
+		description = "The height for the generated thumbnail.",
+		names = "--thumbnail-height"
+	)
+	private int _thumbnailHeight = DEFAULT_THUMBNAIL_HEIGHT;
+
+	@Parameter(
+		description = "The width for the generated thumbnail.",
+		names = "--thumbnail-width"
+	)
+	private int _thumbnailWidth = DEFAULT_THUMBNAIL_WIDTH;
 
 	@Parameter(
 		converter = FileConverter.class,

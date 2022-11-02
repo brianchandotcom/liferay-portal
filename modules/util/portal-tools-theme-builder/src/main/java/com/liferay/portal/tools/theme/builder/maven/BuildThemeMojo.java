@@ -150,14 +150,6 @@ public class BuildThemeMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
-	 */
-	public void setGeneratedThumbnailMaxSize(String generatedThumbnailMaxSize) {
-		_themeBuilderArgs.setGeneratedThumbnailMaxSize(
-			generatedThumbnailMaxSize);
-	}
-
-	/**
 	 * @parameter default-value="${project.artifactId}"
 	 */
 	public void setName(String name) {
@@ -190,6 +182,20 @@ public class BuildThemeMojo extends AbstractMojo {
 	 */
 	public void setTemplateExtension(String templateExtension) {
 		_themeBuilderArgs.setTemplateExtension(templateExtension);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setThumbnailHeight(int thumbnailHeight) {
+		_themeBuilderArgs.setThumbnailHeight(thumbnailHeight);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setThumbnailWidth(int thumbnailWidth) {
+		_themeBuilderArgs.setThumbnailHeight(thumbnailWidth);
 	}
 
 	/**

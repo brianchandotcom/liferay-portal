@@ -130,7 +130,7 @@ public class ThemeBuilderTest {
 
 		ThemeBuilder themeBuilder = new ThemeBuilder(
 			diffsDir, name, outputDir, parentDir, parentName, templateExtension,
-			unstyledDir);
+			null, null, unstyledDir);
 
 		themeBuilder.build();
 	}

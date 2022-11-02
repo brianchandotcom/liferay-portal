@@ -134,7 +134,7 @@ public class ThemeBuilderCompareTest {
 
 		ThemeBuilder themeBuilder = new ThemeBuilder(
 			_diffsDir, _name, outputDir, _parentDir, _parentName,
-			_templateExtension, _unstyledJarFile);
+			_templateExtension, null, null, _unstyledJarFile);
 
 		themeBuilder.build();
 

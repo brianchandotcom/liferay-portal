@@ -43,8 +43,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemFactoryTracker.class)
-public class ContentDashboardItemFactoryTracker {
+@Component(service = ContentDashboardItemFactoryRegistry.class)
+public class ContentDashboardItemFactoryRegistry {
 
 	public Collection<String> getClassNames() {
 		return Collections.unmodifiableCollection(_serviceTrackerMap.keySet());
@@ -66,7 +66,7 @@ public class ContentDashboardItemFactoryTracker {
 					(contentDashboardItemFactory, emitter) -> emitter.emit(
 						GenericUtil.getGenericClassName(
 							contentDashboardItemFactory))),
-				new ContentDashboardItemFactoryTrackerCustomizer(
+				new ContentDashboardItemFactoryRegistryCustomizer(
 					bundleContext));
 	}
 
@@ -76,7 +76,7 @@ public class ContentDashboardItemFactoryTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ContentDashboardItemFactoryTracker.class);
+		ContentDashboardItemFactoryRegistry.class);
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
@@ -93,11 +93,11 @@ public class ContentDashboardItemFactoryTracker {
 	private volatile ServiceTrackerMap<String, ContentDashboardItemFactory<?>>
 		_serviceTrackerMap;
 
-	private class ContentDashboardItemFactoryTrackerCustomizer
+	private class ContentDashboardItemFactoryRegistryCustomizer
 		implements ServiceTrackerCustomizer
 			<ContentDashboardItemFactory, ContentDashboardItemFactory> {
 
-		public ContentDashboardItemFactoryTrackerCustomizer(
+		public ContentDashboardItemFactoryRegistryCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;

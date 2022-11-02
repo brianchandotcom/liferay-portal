@@ -15,7 +15,7 @@
 package com.liferay.item.selector.taglib.internal.display.context;
 
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
-import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
+import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorProviderRegistryUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -51,14 +51,15 @@ public class GroupSelectorDisplayContextTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap",
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
 			new MockServiceTrackerMap());
 	}
 
 	@After
 	public void tearDown() {
 		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap", null);
+			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
+			null);
 	}
 
 	@Test

@@ -16,7 +16,7 @@ package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
+import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorProviderRegistryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -97,8 +97,8 @@ public class GroupSelectorTag extends IncludeTag {
 		String groupType = _getGroupType(httpServletRequest);
 
 		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				groupType);
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional(groupType);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -150,7 +150,7 @@ public class GroupSelectorTag extends IncludeTag {
 		}
 		else {
 			Optional<GroupItemSelectorProvider> groupSelectorProviderOptional =
-				GroupItemSelectorTrackerUtil.
+				GroupItemSelectorProviderRegistryUtil.
 					getGroupItemSelectorProviderOptional(
 						_getGroupType(httpServletRequest));
 

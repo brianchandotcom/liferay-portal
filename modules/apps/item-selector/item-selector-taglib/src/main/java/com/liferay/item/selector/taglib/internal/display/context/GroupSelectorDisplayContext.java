@@ -19,7 +19,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
 import com.liferay.item.selector.taglib.internal.util.EntryURLUtil;
-import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
+import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorProviderRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
@@ -51,8 +51,8 @@ public class GroupSelectorDisplayContext {
 
 	public String getGroupItemSelectorIcon() {
 		Optional<GroupItemSelectorProvider> optional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				_getGroupType());
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional(_getGroupType());
 
 		return optional.map(
 			GroupItemSelectorProvider::getIcon
@@ -63,8 +63,8 @@ public class GroupSelectorDisplayContext {
 
 	public String getGroupItemSelectorLabel(String groupType) {
 		Optional<GroupItemSelectorProvider> optional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				groupType);
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional(groupType);
 
 		return optional.map(
 			groupItemSelectorProvider -> groupItemSelectorProvider.getLabel(
@@ -91,7 +91,8 @@ public class GroupSelectorDisplayContext {
 	}
 
 	public Set<String> getGroupTypes() {
-		return GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes();
+		return GroupItemSelectorProviderRegistryUtil.
+			getGroupItemSelectorProviderTypes();
 	}
 
 	public SearchContainer<Group> getSearchContainer() {
@@ -137,8 +138,8 @@ public class GroupSelectorDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		Optional<GroupItemSelectorProvider> optional =
-			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				_getGroupType());
+			GroupItemSelectorProviderRegistryUtil.
+				getGroupItemSelectorProviderOptional(_getGroupType());
 
 		return optional.map(
 			groupItemSelectorProvider ->

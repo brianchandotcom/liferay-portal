@@ -197,6 +197,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
+	@priority = "3"
+	test ViewPageTitleOfViewModeAndEditMode {
+		task ("Given a page creator has a published content page") {
+			Navigator.openURL();
+
+			var siteName = selenium.getText("Home#SITE_NAME");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the page creator accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page title doesn't have (Editing)") {
+			var viewModeTitle = selenium.getTitle();
+
+			TestUtils.assertEquals(
+				actual = "${viewModeTitle}",
+				expected = "Test Page Name - Test Site Name - ${siteName}");
+		}
+
+		task ("When the page creator accesses to the content page at edit mode") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Then the title has (Editing)") {
+			var editModeTitle = selenium.getTitle();
+
+			TestUtils.assertEquals(
+				actual = "${editModeTitle}",
+				expected = "Test Page Name - Test Site Name - ${siteName} (Editing)");
+		}
+	}
+
 	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
 	@priority = "3"
 	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {

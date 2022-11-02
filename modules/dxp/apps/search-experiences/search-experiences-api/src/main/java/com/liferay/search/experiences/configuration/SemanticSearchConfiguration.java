@@ -56,6 +56,18 @@ public interface SemanticSearchConfiguration {
 	public String txtaiHostAddress();
 
 	@Meta.AD(
+		deflt = "", description = "sentence-transformer-txtai-username-help",
+		name = "username", required = false
+	)
+	public String txtaiUserName();
+
+	@Meta.AD(
+		deflt = "", description = "sentence-transformer-txtai-password-help",
+		name = "password", required = false
+	)
+	public String txtaiPassword();
+
+	@Meta.AD(
 		deflt = "", description = "sentence-transformer-model-help",
 		name = "model", required = false
 	)

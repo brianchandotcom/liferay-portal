@@ -1060,7 +1060,6 @@ ${company.getKeyObj()}
 
 			var templateScript = '''
 ${objectUtil("com.liferay.portal.service.UserLocalServiceUtil").getService()}<br />
-${utilLocator.findUtil("com.liferay.portal.service.UserLocalService")}<br />
 ${staticUtil["com.liferay.portal.service.UserLocalServiceUtil"].getService()}<br />
 
 ${staticUtil["java.lang.Runtime"].getRuntime()}

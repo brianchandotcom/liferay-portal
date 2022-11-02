@@ -12,7 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
@@ -170,8 +170,14 @@ function TestConnectionButton({
 					Number(embeddingVectorDimensions)
 				) {
 					return setTestResultsMessage({
-						message: Liferay.Language.get(
-							'the-dimensions-from-the-connection-do-not-match-the-configured-embedding-vector-dimensions'
+						message: sub(
+							Liferay.Language.get(
+								'the-dimensions-from-the-connection-do-not-match-the-configured-embedding-vector-dimensions.expected-x-but-got-x'
+							),
+							[
+								embeddingVectorDimensions,
+								responseData.expectedDimensions,
+							]
 						),
 						type: 'warning',
 					});

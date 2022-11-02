@@ -83,15 +83,8 @@ public class AssetEntriesCheckerHelperTest {
 
 	@Test
 	public void testGetAssetEntries() throws Exception {
-		String portletId1 = LayoutTestUtil.addPortletToLayout(
-			_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
-
 		String portletId2 = LayoutTestUtil.addPortletToLayout(
 			_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER);
-
-		AssetEntry assetEntry1 = _addAssetEntry();
-
-		AssetEntry assetEntry2 = _addAssetEntry();
 
 		AssetEntry assetEntry3 = _addAssetEntry();
 
@@ -101,13 +94,17 @@ public class AssetEntriesCheckerHelperTest {
 			portletId2, assetEntry3, assetEntry4);
 
 		PortletPreferences portletId1PortletPreferences =
-			LayoutTestUtil.getPortletPreferences(_layout, portletId1);
+			LayoutTestUtil.getPortletPreferences(
+				_layout,
+				LayoutTestUtil.addPortletToLayout(
+					_layout, AssetPublisherPortletKeys.ASSET_PUBLISHER));
 
 		PortletPreferences portletId2PortletPreferences =
 			LayoutTestUtil.getPortletPreferences(_layout, portletId2);
 
 		List<AssetEntry> expectedPortletId1AssetEntries = new ArrayList<>(
-			Arrays.asList(assetEntry1, assetEntry2, assetEntry3, assetEntry4));
+			Arrays.asList(
+				_addAssetEntry(), _addAssetEntry(), assetEntry3, assetEntry4));
 
 		List<AssetEntry> actualPortletId1AssetEntries =
 			ReflectionTestUtil.invoke(

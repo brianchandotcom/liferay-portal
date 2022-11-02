@@ -250,6 +250,8 @@ public interface LiferaySelenium {
 
 	public String getTitle();
 
+	public String getWebElementAttribute(String locator, String attributeName);
+
 	public void goBack();
 
 	public boolean isAlertPresent();

@@ -68,7 +68,7 @@ definition {
 		task ("Publish the staged information template to Live") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-			Staging.publishCustomPublication(checkContentNameList = "Template");
+			Staging.publishCustomPublication(checkContentNameList = "Templates");
 		}
 
 		task ("View the information template in live site") {

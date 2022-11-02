@@ -44,7 +44,7 @@ definition {
 		task ("Publish to Live") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-			Staging.publishCustomPublication(checkContentNameList = "Template");
+			Staging.publishCustomPublication(checkContentNameList = "Templates");
 		}
 
 		task ("View the widget template in live site") {

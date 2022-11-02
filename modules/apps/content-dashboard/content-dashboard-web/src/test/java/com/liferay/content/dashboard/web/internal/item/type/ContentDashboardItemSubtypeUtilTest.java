@@ -16,7 +16,7 @@ package com.liferay.content.dashboard.web.internal.item.type;
 
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
-import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryRegistry;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -60,7 +60,7 @@ public class ContentDashboardItemSubtypeUtilTest {
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						_getContentDashboardItemSubtypeFactoryTracker(
+						_getContentDashboardItemSubtypeFactoryRegistry(
 							contentDashboardItemSubtype,
 							contentDashboardItemSubtypeFactory),
 						contentDashboardItemSubtype.getInfoItemReference());
@@ -79,7 +79,7 @@ public class ContentDashboardItemSubtypeUtilTest {
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						_getContentDashboardItemSubtypeFactoryTracker(
+						_getContentDashboardItemSubtypeFactoryRegistry(
 							contentDashboardItemSubtype, null),
 						contentDashboardItemSubtype.getInfoItemReference());
 
@@ -100,7 +100,7 @@ public class ContentDashboardItemSubtypeUtilTest {
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						_getContentDashboardItemSubtypeFactoryTracker(
+						_getContentDashboardItemSubtypeFactoryRegistry(
 							contentDashboardItemSubtype,
 							contentDashboardItemSubtypeFactory),
 						JSONFactoryUtil.createJSONObject(
@@ -123,7 +123,7 @@ public class ContentDashboardItemSubtypeUtilTest {
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						_getContentDashboardItemSubtypeFactoryTracker(
+						_getContentDashboardItemSubtypeFactoryRegistry(
 							contentDashboardItemSubtype, null),
 						JSONFactoryUtil.createJSONObject(
 							contentDashboardItemSubtype.toJSONString(
@@ -143,7 +143,7 @@ public class ContentDashboardItemSubtypeUtilTest {
 			contentDashboardItemSubtypeOptional =
 				ContentDashboardItemSubtypeUtil.
 					toContentDashboardItemSubtypeOptional(
-						_getContentDashboardItemSubtypeFactoryTracker(
+						_getContentDashboardItemSubtypeFactoryRegistry(
 							contentDashboardItemSubtype, null),
 						contentDashboardItemSubtype.toJSONString(
 							LocaleUtil.US));
@@ -205,28 +205,28 @@ public class ContentDashboardItemSubtypeUtilTest {
 		return contentDashboardItemSubtypeFactory;
 	}
 
-	private ContentDashboardItemSubtypeFactoryTracker
-		_getContentDashboardItemSubtypeFactoryTracker(
+	private ContentDashboardItemSubtypeFactoryRegistry
+		_getContentDashboardItemSubtypeFactoryRegistry(
 			ContentDashboardItemSubtype contentDashboardItemSubtype,
 			ContentDashboardItemSubtypeFactory
 				contentDashboardItemSubtypeFactory) {
 
-		ContentDashboardItemSubtypeFactoryTracker
-			contentDashboardItemSubtypeFactoryTracker = Mockito.mock(
-				ContentDashboardItemSubtypeFactoryTracker.class);
+		ContentDashboardItemSubtypeFactoryRegistry
+			contentDashboardItemSubtypeFactoryRegistry = Mockito.mock(
+				ContentDashboardItemSubtypeFactoryRegistry.class);
 
 		InfoItemReference infoItemReference =
 			contentDashboardItemSubtype.getInfoItemReference();
 
 		Mockito.when(
-			contentDashboardItemSubtypeFactoryTracker.
+			contentDashboardItemSubtypeFactoryRegistry.
 				getContentDashboardItemSubtypeFactoryOptional(
 					infoItemReference.getClassName())
 		).thenReturn(
 			Optional.ofNullable(contentDashboardItemSubtypeFactory)
 		);
 
-		return contentDashboardItemSubtypeFactoryTracker;
+		return contentDashboardItemSubtypeFactoryRegistry;
 	}
 
 }

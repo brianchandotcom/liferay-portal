@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
-import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys;
 import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardItemSearchContainerFactory;
@@ -141,7 +141,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					new ContentDashboardDropdownItemsProvider(
 						_language, liferayPortletRequest,
 						liferayPortletResponse, _portal),
-					_contentDashboardItemSubtypeFactoryTracker, _itemSelector,
+					_contentDashboardItemSubtypeFactoryRegistry, _itemSelector,
 					_language.get(
 						_portal.getLocale(liferayPortletRequest),
 						LanguageConstants.KEY_DIR),
@@ -202,8 +202,8 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		_contentDashboardItemFilterProviderTracker;
 
 	@Reference
-	private ContentDashboardItemSubtypeFactoryTracker
-		_contentDashboardItemSubtypeFactoryTracker;
+	private ContentDashboardItemSubtypeFactoryRegistry
+		_contentDashboardItemSubtypeFactoryRegistry;
 
 	@Reference
 	private ContentDashboardSearchRequestBuilderFactory

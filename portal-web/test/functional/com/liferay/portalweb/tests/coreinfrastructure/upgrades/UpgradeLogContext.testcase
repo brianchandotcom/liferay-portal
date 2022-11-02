@@ -9,15 +9,7 @@ definition {
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		User.firstLoginPG();
 	}
 
 	@description = "LPS-158742. Given custom log4j is added to portal and log context is enabled. Then log lines will be marked with custom context name."

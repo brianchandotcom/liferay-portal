@@ -57,10 +57,10 @@ public class JSBundleConfigPortalWebResources {
 	}
 
 	@Reference
-	private JSBundleConfigServlet _jsBundleConfigServlet;
+	private JSBundleConfigRegistry _jsBundleConfigRegistry;
 
 	@Reference
-	private JSBundleConfigTracker _jsBundleConfigTracker;
+	private JSBundleConfigServlet _jsBundleConfigServlet;
 
 	private ServiceRegistration<?> _serviceRegistration;
 
@@ -73,7 +73,7 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsBundleConfigTracker.getLastModified();
+			return _jsBundleConfigRegistry.getLastModified();
 		}
 
 		@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.bundle.config.extender.internal.servlet.taglib;
 
-import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigTracker;
+import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -68,8 +68,8 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		StringWriter stringWriter = new StringWriter();
 
-		Collection<JSBundleConfigTracker.JSConfig> jsConfigs =
-			_jsBundleConfigTracker.getJSConfigs();
+		Collection<JSBundleConfigRegistry.JSConfig> jsConfigs =
+			_jsBundleConfigRegistry.getJSConfigs();
 
 		if (!jsConfigs.isEmpty()) {
 			stringWriter.write("<script data-senna-track=\"temporary\" ");
@@ -77,7 +77,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 			stringWriter.write("\">");
 
-			for (JSBundleConfigTracker.JSConfig jsConfig : jsConfigs) {
+			for (JSBundleConfigRegistry.JSConfig jsConfig : jsConfigs) {
 				URL url = jsConfig.getURL();
 
 				try (InputStream inputStream = url.openStream()) {
@@ -115,7 +115,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		String bundleConfig = stringWriter.toString();
 
 		_objectValuePair = new ObjectValuePair<>(
-			_jsBundleConfigTracker.getLastModified(), bundleConfig);
+			_jsBundleConfigRegistry.getLastModified(), bundleConfig);
 
 		_writeResponse(httpServletResponse, bundleConfig);
 	}
@@ -126,7 +126,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_js.jspf#resources");
 	}
 
-	private String _getModuleMain(JSBundleConfigTracker.JSConfig jsConfig) {
+	private String _getModuleMain(JSBundleConfigRegistry.JSConfig jsConfig) {
 		try {
 			ServletContext servletContext = jsConfig.getServletContext();
 
@@ -165,7 +165,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private boolean _isStale() {
-		if (_jsBundleConfigTracker.getLastModified() >
+		if (_jsBundleConfigRegistry.getLastModified() >
 				_objectValuePair.getKey()) {
 
 			return true;
@@ -187,7 +187,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		JSBundleConfigTopHeadDynamicInclude.class);
 
 	@Reference
-	private JSBundleConfigTracker _jsBundleConfigTracker;
+	private JSBundleConfigRegistry _jsBundleConfigRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -203,13 +203,12 @@ public class SolrIndexingFixture implements IndexingFixture {
 
 	protected IndexSearcher createIndexSearcher(
 		final SearchEngineAdapter searchEngineAdapter,
-		final SolrClientManager solrClientManager) {
+		SolrClientManager solrClientManager) {
 
-		return new SolrIndexSearcher() {
+		SolrIndexSearcher solrIndexSearcher = new SolrIndexSearcher() {
 			{
 				setFacetProcessor(_facetProcessor);
 				setProps(createProps());
-				setQuerySuggester(createSolrQuerySuggester(solrClientManager));
 				setSearchRequestBuilderFactory(
 					new SearchRequestBuilderFactoryImpl());
 				setSearchResponseBuilderFactory(
@@ -219,20 +218,30 @@ public class SolrIndexingFixture implements IndexingFixture {
 				activate(_properties);
 			}
 		};
+
+		ReflectionTestUtil.setFieldValue(
+			solrIndexSearcher, "_querySuggester",
+			createSolrQuerySuggester(solrClientManager));
+
+		return solrIndexSearcher;
 	}
 
 	protected IndexWriter createIndexWriter(
 		final SearchEngineAdapter searchEngineAdapter) {
 
-		return new SolrIndexWriter() {
+		SolrIndexWriter solrIndexWriter = new SolrIndexWriter() {
 			{
 				setSearchEngineAdapter(searchEngineAdapter);
-				setSpellCheckIndexWriter(
-					createSolrSpellCheckIndexWriter(searchEngineAdapter));
 
 				activate(_properties);
 			}
 		};
+
+		ReflectionTestUtil.setFieldValue(
+			solrIndexWriter, "_spellCheckIndexWriter",
+			createSolrSpellCheckIndexWriter(searchEngineAdapter));
+
+		return solrIndexWriter;
 	}
 
 	protected NGramQueryBuilderImpl createNGramQueryBuilder() {

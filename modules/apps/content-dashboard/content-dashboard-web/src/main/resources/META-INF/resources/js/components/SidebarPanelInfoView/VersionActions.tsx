@@ -42,7 +42,10 @@ const VersionActions = ({actions}: IProps) => {
 			availableActionMethods[type as keyof IAvailableActionMethods](url);
 		}
 		else {
-			if (process.env.NODE_ENV === 'development') {
+			if (
+				process.env.NODE_ENV === 'development' ||
+				process.env.NODE_ENV === 'test'
+			) {
 				console.error(
 					`No action type method called ${type} is available in availableActionMethods object definition`
 				);

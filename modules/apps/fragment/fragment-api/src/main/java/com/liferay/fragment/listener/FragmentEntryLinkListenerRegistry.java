@@ -17,7 +17,7 @@ package com.liferay.fragment.listener;
 /**
  * @author Eudaldo Alonso
  */
-public interface FragmentEntryLinkListenerTracker {
+public interface FragmentEntryLinkListenerRegistry {
 
 	public Iterable<FragmentEntryLinkListener> getFragmentEntryLinkListeners();
 

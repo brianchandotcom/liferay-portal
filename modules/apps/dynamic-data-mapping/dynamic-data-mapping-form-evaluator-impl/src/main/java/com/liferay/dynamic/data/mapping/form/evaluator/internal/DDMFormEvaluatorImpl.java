@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.helper.DDMFormEvaluatorHelper;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeTracker;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,7 +38,7 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 		DDMFormEvaluatorHelper formEvaluatorHelper = new DDMFormEvaluatorHelper(
 			ddmExpressionFactory, ddmFormEvaluatorEvaluateRequest,
-			ddmFormFieldTypeServicesTracker, ddmFormPageChangeTracker);
+			ddmFormFieldTypeServicesRegistry, ddmFormPageChangeTracker);
 
 		return formEvaluatorHelper.evaluate();
 	}
@@ -47,7 +47,7 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 	protected DDMExpressionFactory ddmExpressionFactory;
 
 	@Reference
-	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+	protected DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	protected DDMFormPageChangeTracker ddmFormPageChangeTracker;

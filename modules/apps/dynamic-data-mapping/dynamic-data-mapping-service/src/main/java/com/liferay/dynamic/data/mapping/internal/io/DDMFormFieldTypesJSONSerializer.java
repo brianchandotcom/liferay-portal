@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.io;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
@@ -86,7 +86,7 @@ public class DDMFormFieldTypesJSONSerializer
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		Map<String, Object> ddmFormFieldTypeProperties =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldType.getName());
 
 		jsonObject.put(
@@ -146,7 +146,7 @@ public class DDMFormFieldTypesJSONSerializer
 		);
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldRenderer(
 				ddmFormFieldType.getName());
 
 		if (ddmFormFieldRenderer instanceof BaseDDMFormFieldRenderer) {
@@ -165,7 +165,7 @@ public class DDMFormFieldTypesJSONSerializer
 		DDMFormFieldTypesJSONSerializer.class);
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

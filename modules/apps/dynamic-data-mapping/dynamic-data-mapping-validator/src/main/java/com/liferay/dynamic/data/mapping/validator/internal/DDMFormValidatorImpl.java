@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -374,7 +374,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 
 		Set<String> ddmFormFieldTypeNames = new HashSet<>(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames());
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames());
 
 		ddmFormFieldTypeNames.addAll(
 			SetUtil.fromArray(DDMConstants.SUPPORTED_DDM_FORM_FIELD_TYPES));
@@ -475,6 +475,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.validator.internal;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -74,7 +74,7 @@ public class DDMFormValidatorTest {
 	@Before
 	public void setUp() {
 		_setUpBeanPropertiesUtil();
-		_setUpDDMFormFieldTypeServicesTracker();
+		_setUpDDMFormFieldTypeServicesRegistry();
 		_setUpDDMFormValidator();
 
 		ReflectionTestUtil.setFieldValue(
@@ -575,19 +575,19 @@ public class DDMFormValidatorTest {
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
-	private void _setUpDDMFormFieldTypeServicesTracker() {
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+	private void _setUpDDMFormFieldTypeServicesRegistry() {
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames()
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames()
 		).thenReturn(
 			SetUtil.fromArray("date", "html-çê的Ü", "html-text_*", "html-text_@")
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmFormValidatorImpl, "_ddmFormFieldTypeServicesTracker",
-			ddmFormFieldTypeServicesTracker);
+			_ddmFormValidatorImpl, "_ddmFormFieldTypeServicesRegistry",
+			ddmFormFieldTypeServicesRegistry);
 	}
 
 	private void _setUpDDMFormValidator() {

@@ -19,7 +19,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
 import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -60,7 +60,7 @@ public class EditCPOptionExternalReferenceCodeMVCRenderCommand
 			CPOptionDisplayContext cpOptionDisplayContext =
 				new CPOptionDisplayContext(
 					_configurationProvider, cpOption,
-					_ddmFormFieldTypeServicesTracker,
+					_ddmFormFieldTypeServicesRegistry,
 					_portletResourcePermission,
 					_portal.getHttpServletRequest(renderRequest));
 
@@ -81,7 +81,7 @@ public class EditCPOptionExternalReferenceCodeMVCRenderCommand
 	private CPOptionService _cpOptionService;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private Portal _portal;

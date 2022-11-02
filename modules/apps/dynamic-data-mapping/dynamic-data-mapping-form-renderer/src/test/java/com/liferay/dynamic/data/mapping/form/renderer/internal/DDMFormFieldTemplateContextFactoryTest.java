@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldCont
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -319,30 +319,30 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		);
 	}
 
-	protected DDMFormFieldTypeServicesTracker
-		mockDDMFormFieldTypeServicesTracker(
+	protected DDMFormFieldTypeServicesRegistry
+		mockDDMFormFieldTypeServicesRegistry(
 			DDMFormFieldRenderer ddmFormFieldRenderer,
 			DDMFormFieldTemplateContextContributor
 				ddmFormFieldTemplateContextContributor) {
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldRenderer(
 				Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldRenderer
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.
+			ddmFormFieldTypeServicesRegistry.
 				getDDMFormFieldTemplateContextContributor(Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldTemplateContextContributor
 		);
 
-		return ddmFormFieldTypeServicesTracker;
+		return ddmFormFieldTypeServicesRegistry;
 	}
 
 	private static void _setUpDDMFormTemplateContextFactoryUtil() {
@@ -387,8 +387,8 @@ public class DDMFormFieldTemplateContextFactoryTest {
 				_groupLocalService, _htmlParser, new JSONFactoryImpl(), true,
 				new DDMFormLayout());
 
-		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
-			mockDDMFormFieldTypeServicesTracker(
+		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesRegistry(
+			mockDDMFormFieldTypeServicesRegistry(
 				ddmFormFieldRenderer, ddmFormFieldTemplateContextContributor));
 
 		return ddmFormFieldTemplateContextFactory;

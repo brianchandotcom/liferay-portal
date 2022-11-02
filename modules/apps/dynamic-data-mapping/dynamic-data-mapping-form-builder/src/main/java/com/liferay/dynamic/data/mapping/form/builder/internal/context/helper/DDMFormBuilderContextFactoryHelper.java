@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.builder.internal.context.helper;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -70,7 +70,7 @@ public class DDMFormBuilderContextFactoryHelper {
 	public DDMFormBuilderContextFactoryHelper(
 		Optional<DDMStructure> ddmStructureOptional,
 		Optional<DDMStructureVersion> ddmStructureVersionOptional,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, JSONFactory jsonFactory,
@@ -79,7 +79,7 @@ public class DDMFormBuilderContextFactoryHelper {
 
 		_ddmStructureOptional = ddmStructureOptional;
 		_ddmStructureVersionOptional = ddmStructureVersionOptional;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
@@ -111,7 +111,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		throws PortalException {
 
 		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				ddmFormField.getType());
 
 		DDMForm ddmForm = DDMFormFactory.create(
@@ -475,8 +475,8 @@ public class DDMFormBuilderContextFactoryHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormBuilderContextFactoryHelper.class);
 
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 	private final Optional<DDMStructure> _ddmStructureOptional;
 	private final Optional<DDMStructureVersion> _ddmStructureVersionOptional;

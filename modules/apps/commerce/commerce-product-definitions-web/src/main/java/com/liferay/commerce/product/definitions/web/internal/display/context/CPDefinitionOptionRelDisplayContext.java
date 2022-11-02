@@ -23,7 +23,7 @@ import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -68,13 +68,13 @@ public class CPDefinitionOptionRelDisplayContext
 	public CPDefinitionOptionRelDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		ConfigurationProvider configurationProvider,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
 		_configurationProvider = configurationProvider;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_itemSelector = itemSelector;
 	}
 
@@ -129,7 +129,7 @@ public class CPDefinitionOptionRelDisplayContext
 		DDMFormFieldType ddmFormFieldType, Locale locale) {
 
 		String label = MapUtil.getString(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldType.getName()),
 			"ddm.form.field.type.label");
 
@@ -164,7 +164,7 @@ public class CPDefinitionOptionRelDisplayContext
 		throws PortalException {
 
 		List<DDMFormFieldType> ddmFormFieldTypes =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes();
 
 		CPOptionConfiguration cpOptionConfiguration =
 			_configurationProvider.getConfiguration(
@@ -229,8 +229,8 @@ public class CPDefinitionOptionRelDisplayContext
 
 	private final ConfigurationProvider _configurationProvider;
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private final ItemSelector _itemSelector;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeser
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextVisitor;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -276,7 +276,7 @@ public class DDMFormContextToDDMForm
 		String type, String serializedValue, Locale defaultLocale) {
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(type);
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueAccessor(type);
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
@@ -295,7 +295,7 @@ public class DDMFormContextToDDMForm
 	}
 
 	@Reference
-	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+	protected DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	protected DDMFormRuleDeserializer ddmFormRuleDeserializer;

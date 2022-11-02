@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.io;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.internal.io.util.DDMFormFieldSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
@@ -72,7 +72,7 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 		}
 
 		DDMFormFieldSerializerUtil.serialize(
-			ddmFormLayout.getDDMFormFields(), _ddmFormFieldTypeServicesTracker,
+			ddmFormLayout.getDDMFormFields(), _ddmFormFieldTypeServicesRegistry,
 			_jsonFactory, jsonObject);
 
 		DDMFormLayoutSerializerSerializeResponse.Builder builder =
@@ -211,7 +211,7 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 	}
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

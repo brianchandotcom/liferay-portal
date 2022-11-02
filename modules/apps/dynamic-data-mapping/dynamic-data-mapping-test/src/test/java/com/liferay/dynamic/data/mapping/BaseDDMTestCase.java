@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset.FieldSetDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.radio.RadioDDMFormFieldType;
@@ -413,61 +413,61 @@ public abstract class BaseDDMTestCase {
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	protected DDMFormFieldTypeServicesTracker
-		getMockedDDMFormFieldTypeServicesTracker() {
+	protected DDMFormFieldTypeServicesRegistry
+		getMockedDDMFormFieldTypeServicesRegistry() {
 
 		setUpDefaultDDMFormFieldType();
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class);
 
 		DDMFormFieldRenderer ddmFormFieldRenderer = Mockito.mock(
 			DDMFormFieldRenderer.class);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldRenderer(
 				Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldRenderer
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				Mockito.anyString())
 		).thenReturn(
 			_defaultDDMFormFieldType
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				Mockito.eq("fieldset"))
 		).thenReturn(
 			new FieldSetDDMFormFieldType()
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				Mockito.eq("radio"))
 		).thenReturn(
 			new RadioDDMFormFieldType()
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				Mockito.eq("select"))
 		).thenReturn(
 			new SelectDDMFormFieldType()
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				Mockito.eq("text"))
 		).thenReturn(
 			new TextDDMFormFieldType()
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				Mockito.anyString())
 		).thenReturn(
 			HashMapBuilder.<String, Object>put(
@@ -479,7 +479,7 @@ public abstract class BaseDDMTestCase {
 			).build()
 		);
 
-		return ddmFormFieldTypeServicesTracker;
+		return ddmFormFieldTypeServicesRegistry;
 	}
 
 	protected String read(String fileName) throws IOException {
@@ -518,8 +518,8 @@ public abstract class BaseDDMTestCase {
 
 	protected void setUpDDMFormJSONDeserializer() {
 		ReflectionTestUtil.setFieldValue(
-			ddmFormJSONDeserializer, "_ddmFormFieldTypeServicesTracker",
-			getMockedDDMFormFieldTypeServicesTracker());
+			ddmFormJSONDeserializer, "_ddmFormFieldTypeServicesRegistry",
+			getMockedDDMFormFieldTypeServicesRegistry());
 
 		ReflectionTestUtil.setFieldValue(
 			ddmFormJSONDeserializer, "_jsonFactory", jsonFactory);
@@ -527,8 +527,8 @@ public abstract class BaseDDMTestCase {
 
 	protected void setUpDDMFormJSONSerializer() {
 		ReflectionTestUtil.setFieldValue(
-			ddmFormJSONSerializer, "_ddmFormFieldTypeServicesTracker",
-			getMockedDDMFormFieldTypeServicesTracker());
+			ddmFormJSONSerializer, "_ddmFormFieldTypeServicesRegistry",
+			getMockedDDMFormFieldTypeServicesRegistry());
 
 		ReflectionTestUtil.setFieldValue(
 			ddmFormJSONSerializer, "_jsonFactory", jsonFactory);

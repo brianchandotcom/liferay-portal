@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.io;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.internal.io.util.DDMFormFieldDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -197,7 +197,7 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
 		ddmForm.setDDMFormFields(
 			DDMFormFieldDeserializerUtil.deserialize(
-				_ddmFormFieldTypeServicesTracker, jsonArray, _jsonFactory));
+				_ddmFormFieldTypeServicesRegistry, jsonArray, _jsonFactory));
 	}
 
 	protected static void setDDMFormLocalizedValuesDefaultLocale(
@@ -242,10 +242,10 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+	protected void setDDMFormFieldTypeServicesRegistry(
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
 
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -256,8 +256,8 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormJSONDeserializer.class);
 
-	private static DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private static DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private static JSONFactory _jsonFactory;
 
 }

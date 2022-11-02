@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -113,10 +113,10 @@ public class DDMFormPagesTemplateContextFactory {
 		_ddmFormEvaluator = ddmFormEvaluator;
 	}
 
-	public void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+	public void setDDMFormFieldTypeServicesRegistry(
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
 
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 	}
 
 	protected String getValue(
@@ -216,8 +216,8 @@ public class DDMFormPagesTemplateContextFactory {
 				_ddmStructureLocalService, _groupLocalService, _htmlParser,
 				_jsonFactory, _pageEnabled, _ddmFormLayout);
 
-		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
-			_ddmFormFieldTypeServicesTracker);
+		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesRegistry(
+			_ddmFormFieldTypeServicesRegistry);
 
 		return ddmFormFieldTemplateContextFactory.create();
 	}
@@ -439,7 +439,7 @@ public class DDMFormPagesTemplateContextFactory {
 	private DDMFormEvaluator _ddmFormEvaluator;
 	private DDMFormEvaluatorEvaluateResponse _ddmFormEvaluatorEvaluateResponse;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;
 	private final DDMFormLayout _ddmFormLayout;
 	private final DDMFormRenderingContext _ddmFormRenderingContext;

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.internal.context.DDMFormContextToDDMFormValues;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -351,7 +351,7 @@ public class DDMFormAdminDisplayContextTest {
 			Mockito.mock(DDMFormBuilderContextFactory.class),
 			Mockito.mock(DDMFormBuilderSettingsRetriever.class),
 			_getDDMFormContextToDDMFormValues(),
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class),
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class),
 			Mockito.mock(DDMFormFieldTypesSerializer.class),
 			Mockito.mock(DDMFormInstanceLocalService.class),
 			Mockito.mock(DDMFormInstanceRecordLocalService.class),

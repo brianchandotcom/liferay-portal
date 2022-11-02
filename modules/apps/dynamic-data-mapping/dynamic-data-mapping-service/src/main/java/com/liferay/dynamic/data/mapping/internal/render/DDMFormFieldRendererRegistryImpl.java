@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -47,7 +47,7 @@ public class DDMFormFieldRendererRegistryImpl
 		}
 
 		Set<String> ddmFormFieldTypeNames =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames();
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames();
 
 		if (ddmFormFieldTypeNames.contains(ddmFormFieldType)) {
 			return _defaultDDMFormFieldRenderer;
@@ -88,7 +88,7 @@ public class DDMFormFieldRendererRegistryImpl
 	private BundleContext _bundleContext;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference(target = "(ddm.form.field.renderer.type=freemarker)")
 	private DDMFormFieldRenderer _defaultDDMFormFieldRenderer;

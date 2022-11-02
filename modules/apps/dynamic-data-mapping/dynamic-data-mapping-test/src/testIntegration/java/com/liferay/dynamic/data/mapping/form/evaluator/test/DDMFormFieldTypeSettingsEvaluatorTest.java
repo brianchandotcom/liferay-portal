@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateR
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -133,7 +133,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 	@Test
 	public void testSelectDataSourceTypeManual() throws Exception {
 		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType("select");
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType("select");
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			ddmFormFieldType.getDDMFormFieldTypeSettings());
@@ -230,7 +230,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 				outputParametersSettings);
 
 		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType("select");
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType("select");
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			ddmFormFieldType.getDDMFormFieldTypeSettings());
@@ -299,7 +299,7 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 	@Inject(type = DDMFormEvaluator.class)
 	private DDMFormEvaluator _ddmFormEvaluator;
 
-	@Inject(type = DDMFormFieldTypeServicesTracker.class)
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	@Inject(type = DDMFormFieldTypeServicesRegistry.class)
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.context;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -135,7 +135,7 @@ public class DDMFormContextToDDMFormTest {
 	@Test
 	public void testGetValueFromValueAccessor() throws IOException {
 		Mockito.when(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueAccessor(
 				Mockito.anyString())
 		).thenReturn(
 			_ddmFormFieldValueAccessor
@@ -147,8 +147,8 @@ public class DDMFormContextToDDMFormTest {
 			false
 		);
 
-		_ddmFormContextToDDMForm.ddmFormFieldTypeServicesTracker =
-			_ddmFormFieldTypeServicesTracker;
+		_ddmFormContextToDDMForm.ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistry;
 
 		Object result = _ddmFormContextToDDMForm.getValueFromValueAccessor(
 			"checkbox", "false", LocaleUtil.US);
@@ -159,14 +159,14 @@ public class DDMFormContextToDDMFormTest {
 	@Test
 	public void testGetValueWithoutValueAccessor() throws IOException {
 		Mockito.when(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueAccessor(
 				Mockito.anyString())
 		).thenReturn(
 			null
 		);
 
-		_ddmFormContextToDDMForm.ddmFormFieldTypeServicesTracker =
-			_ddmFormFieldTypeServicesTracker;
+		_ddmFormContextToDDMForm.ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistry;
 
 		Object result = _ddmFormContextToDDMForm.getValueFromValueAccessor(
 			"checkbox", "false", LocaleUtil.US);
@@ -181,9 +181,9 @@ public class DDMFormContextToDDMFormTest {
 	}
 
 	private DDMFormContextToDDMForm _ddmFormContextToDDMForm;
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker = Mockito.mock(
-			DDMFormFieldTypeServicesTracker.class);
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry = Mockito.mock(
+			DDMFormFieldTypeServicesRegistry.class);
 	private final DDMFormFieldValueAccessor<Object> _ddmFormFieldValueAccessor =
 		Mockito.mock(DDMFormFieldValueAccessor.class);
 

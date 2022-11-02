@@ -36,7 +36,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetValueFunctionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SetVisibleFunctionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factory.SumFunctionFactory;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.CheckboxDDMFormFieldValueAccessor;
@@ -1799,7 +1799,7 @@ public class DDMFormEvaluatorHelperTest {
 		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
 			new DDMFormEvaluatorHelper(
 				_ddmExpressionFactory, builder.build(),
-				_mockDDMFormFieldTypeServicesTracker(),
+				_mockDDMFormFieldTypeServicesRegistry(),
 				_mockDDMFormPageChangeTracker());
 
 		_mockDDMExpressionFunctionRegistry();
@@ -2091,20 +2091,20 @@ public class DDMFormEvaluatorHelperTest {
 			ddmExpressionFunctionRegistry);
 	}
 
-	private DDMFormFieldTypeServicesTracker
-		_mockDDMFormFieldTypeServicesTracker() {
+	private DDMFormFieldTypeServicesRegistry
+		_mockDDMFormFieldTypeServicesRegistry() {
 
 		Map<String, DDMFormFieldValueAccessor<?>> ddmFormFieldValueAccessorMap =
 			_createDDMFormFieldValueAccessorMap();
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class);
 
 		for (Map.Entry<String, DDMFormFieldValueAccessor<?>> entry :
 				ddmFormFieldValueAccessorMap.entrySet()) {
 
 			Mockito.when(
-				ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
+				ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueAccessor(
 					Mockito.eq(entry.getKey()))
 			).then(
 				(Answer<DDMFormFieldValueAccessor<?>>)
@@ -2112,7 +2112,7 @@ public class DDMFormEvaluatorHelperTest {
 			);
 		}
 
-		return ddmFormFieldTypeServicesTracker;
+		return ddmFormFieldTypeServicesRegistry;
 	}
 
 	private DDMFormPageChangeTracker _mockDDMFormPageChangeTracker() {

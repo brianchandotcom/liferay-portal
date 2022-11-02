@@ -18,7 +18,7 @@ import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -193,7 +193,7 @@ public class DataDefinitionDDMFormUtilTest {
 						setDefaultLanguageId("en_US");
 					}
 				},
-				_ddmFormFieldTypeServicesTracker));
+				_ddmFormFieldTypeServicesRegistry));
 	}
 
 	@Test
@@ -326,7 +326,7 @@ public class DataDefinitionDDMFormUtilTest {
 		Mockito.doReturn(
 			ddmFormFieldType
 		).when(
-			_ddmFormFieldTypeServicesTracker
+			_ddmFormFieldTypeServicesRegistry
 		).getDDMFormFieldType(
 			"select"
 		);
@@ -353,9 +353,9 @@ public class DataDefinitionDDMFormUtilTest {
 		);
 	}
 
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker = Mockito.mock(
-			DDMFormFieldTypeServicesTracker.class);
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry = Mockito.mock(
+			DDMFormFieldTypeServicesRegistry.class);
 	private final Language _language = Mockito.mock(Language.class);
 
 	@com.liferay.dynamic.data.mapping.annotations.DDMForm

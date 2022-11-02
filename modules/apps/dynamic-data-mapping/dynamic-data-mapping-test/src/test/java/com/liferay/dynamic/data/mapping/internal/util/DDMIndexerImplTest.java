@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.internal.test.util.DDMFixture;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
@@ -274,8 +274,8 @@ public class DDMIndexerImplTest {
 		return new DDMFormJSONSerializer() {
 			{
 				ReflectionTestUtil.setFieldValue(
-					this, "_ddmFormFieldTypeServicesTracker",
-					Mockito.mock(DDMFormFieldTypeServicesTracker.class));
+					this, "_ddmFormFieldTypeServicesRegistry",
+					Mockito.mock(DDMFormFieldTypeServicesRegistry.class));
 				ReflectionTestUtil.setFieldValue(
 					this, "_jsonFactory", new JSONFactoryImpl());
 			}

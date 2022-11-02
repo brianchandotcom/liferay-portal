@@ -47,7 +47,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -241,7 +241,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			_updateDataDefinition(
 				dataDefinition, dataDefinition.getId(),
 				DataDefinitionDDMFormUtil.toDDMForm(
-					dataDefinition, _ddmFormFieldTypeServicesTracker));
+					dataDefinition, _ddmFormFieldTypeServicesRegistry));
 		}
 
 		_ddmStructureLocalService.deleteStructure(dataDefinitionId);
@@ -257,7 +257,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeRegistry,
-			_ddmFormFieldTypeServicesTracker,
+			_ddmFormFieldTypeServicesRegistry,
 			_ddmStructureLocalService.getStructure(dataDefinitionId),
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
@@ -280,7 +280,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		Set<String> ddmFormFieldTypeNames =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeNames();
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames();
 
 		Stream<String> stream = ddmFormFieldTypeNames.stream();
 
@@ -343,7 +343,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeRegistry,
-			_ddmFormFieldTypeServicesTracker, ddmStructure,
+			_ddmFormFieldTypeServicesRegistry, ddmStructure,
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
@@ -408,7 +408,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			sorts,
 			document -> DataDefinitionUtil.toDataDefinition(
 				_dataDefinitionContentTypeRegistry,
-				_ddmFormFieldTypeServicesTracker,
+				_ddmFormFieldTypeServicesRegistry,
 				_ddmStructureLocalService.getStructure(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
 				_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter));
@@ -434,7 +434,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataActionKeys.ADD_DATA_DEFINITION);
 
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
-			dataDefinition, _ddmFormFieldTypeServicesTracker);
+			dataDefinition, _ddmFormFieldTypeServicesRegistry);
 
 		DataDefinitionContentType dataDefinitionContentType =
 			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
@@ -498,7 +498,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		dataDefinition = DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeRegistry,
-			_ddmFormFieldTypeServicesTracker, ddmStructure,
+			_ddmFormFieldTypeServicesRegistry, ddmStructure,
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 		_resourceLocalService.addResources(
@@ -564,7 +564,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			ddmStructure.getDefinition());
 
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
-			dataDefinition, _ddmFormFieldTypeServicesTracker);
+			dataDefinition, _ddmFormFieldTypeServicesRegistry);
 
 		DataDefinitionContentType dataDefinitionContentType =
 			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
@@ -591,7 +591,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinition existingDataDefinition =
 				DataDefinitionUtil.toDataDefinition(
 					_dataDefinitionContentTypeRegistry,
-					_ddmFormFieldTypeServicesTracker,
+					_ddmFormFieldTypeServicesRegistry,
 					_ddmStructureLocalService.getStructure(
 						deDataDefinitionFieldLink.getClassPK()),
 					_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
@@ -858,11 +858,11 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		String ddmFormFieldName, ResourceBundle resourceBundle) {
 
 		Map<String, Object> ddmFormFieldTypeProperties =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldName);
 
 		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				ddmFormFieldName);
 
 		JSONObject jsonObject = JSONUtil.put(
@@ -938,7 +938,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		List<String> removedFieldNames = new ArrayList<>();
 
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
-			dataDefinition, _ddmFormFieldTypeServicesTracker);
+			dataDefinition, _ddmFormFieldTypeServicesRegistry);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
@@ -949,12 +949,12 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DataDefinition existingDataDefinition =
 			DataDefinitionUtil.toDataDefinition(
 				_dataDefinitionContentTypeRegistry,
-				_ddmFormFieldTypeServicesTracker,
+				_ddmFormFieldTypeServicesRegistry,
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
 				_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 		DDMForm existingDDMForm = DataDefinitionDDMFormUtil.toDDMForm(
-			existingDataDefinition, _ddmFormFieldTypeServicesTracker);
+			existingDataDefinition, _ddmFormFieldTypeServicesRegistry);
 
 		Map<String, DDMFormField> existingDDMFormFieldsMap =
 			existingDDMForm.getDDMFormFieldsMap(true);
@@ -997,7 +997,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		String ddmFormFieldTypeName, Locale locale) {
 
 		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 				ddmFormFieldTypeName);
 
 		return new AggregateResourceBundle(
@@ -1074,7 +1074,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					ddmStructureLayoutId);
 
 			DataLayout dataLayout = DataLayoutUtil.toDataLayout(
-				_ddmFormFieldTypeServicesTracker,
+				_ddmFormFieldTypeServicesRegistry,
 				ddmStructureLayout.getDDMFormLayout(),
 				_spiDDMFormRuleConverter);
 
@@ -1089,7 +1089,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 			ddmFormLayout = DataLayoutUtil.toDDMFormLayout(
 				dataLayout, ddmStructure.getDDMForm(),
-				_ddmFormFieldTypeServicesTracker, _ddmFormRuleDeserializer);
+				_ddmFormFieldTypeServicesRegistry, _ddmFormRuleDeserializer);
 
 			ddmFormLayout.setDefinitionSchemaVersion(definitionSchemaVersion);
 
@@ -1204,7 +1204,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeRegistry,
-			_ddmFormFieldTypeServicesTracker, ddmStructure,
+			_ddmFormFieldTypeServicesRegistry, ddmStructure,
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 	}
 
@@ -1454,7 +1454,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeRegistry,
-			_ddmFormFieldTypeServicesTracker,
+			_ddmFormFieldTypeServicesRegistry,
 			_ddmStructureLocalService.updateStructure(
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				GetterUtil.getLong(
@@ -1537,7 +1537,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference(target = "(ddm.form.layout.serializer.type=json)")
 	private DDMFormLayoutSerializer _ddmFormLayoutSerializer;

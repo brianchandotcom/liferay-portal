@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSett
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -154,7 +154,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
 		DDMFormContextDeserializer<DDMFormValues> ddmFormContextToDDMFormValues,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer,
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
@@ -178,7 +178,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
 		_ddmFormBuilderSettingsRetriever = ddmFormBuilderSettingsRetriever;
 		_ddmFormContextToDDMFormValues = ddmFormContextToDDMFormValues;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_ddmFormFieldTypesSerializer = ddmFormFieldTypesSerializer;
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
@@ -366,7 +366,7 @@ public class DDMFormAdminDisplayContext {
 	public JSONArray getDDMFormFieldTypesJSONArray() throws PortalException {
 		List<DDMFormFieldType> availableDDMFormFieldTypes =
 			_filterDDMFormFieldTypes(
-				_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes());
+				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes());
 
 		String serializedFormFieldTypes = _serialize(
 			availableDDMFormFieldTypes);
@@ -531,7 +531,7 @@ public class DDMFormAdminDisplayContext {
 		return new DDMFormViewFormInstanceRecordsDisplayContext(
 			renderRequest, renderResponse, getDDMFormInstance(),
 			_ddmFormInstanceRecordLocalService,
-			_ddmFormFieldTypeServicesTracker);
+			_ddmFormFieldTypeServicesRegistry);
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {
@@ -863,7 +863,7 @@ public class DDMFormAdminDisplayContext {
 
 			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 				DDMFormFieldType ddmFormFieldType =
-					_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+					_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
 						ddmFormField.getType());
 
 				if (ddmFormFieldType == null) {
@@ -1801,8 +1801,8 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormBuilderSettingsRetriever;
 	private final DDMFormContextDeserializer<DDMFormValues>
 		_ddmFormContextToDDMFormValues;
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private final DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 	private DDMFormInstance _ddmFormInstance;
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;

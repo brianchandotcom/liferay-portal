@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.io.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -47,17 +47,17 @@ public class DDMFormFieldSerializerUtil {
 
 	public static void serialize(
 		List<DDMFormField> ddmFormFields,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		JSONFactory jsonFactory, JSONObject jsonObject) {
 
 		jsonObject.put(
 			"fields",
 			_fieldsToJSONArray(
-				ddmFormFields, ddmFormFieldTypeServicesTracker, jsonFactory));
+				ddmFormFields, ddmFormFieldTypeServicesRegistry, jsonFactory));
 	}
 
 	private static void _addNestedFields(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		JSONFactory jsonFactory, JSONObject jsonObject,
 		List<DDMFormField> nestedDDMFormFields) {
 
@@ -68,18 +68,18 @@ public class DDMFormFieldSerializerUtil {
 		jsonObject.put(
 			"nestedFields",
 			_fieldsToJSONArray(
-				nestedDDMFormFields, ddmFormFieldTypeServicesTracker,
+				nestedDDMFormFields, ddmFormFieldTypeServicesRegistry,
 				jsonFactory));
 	}
 
 	private static void _addProperties(
 		DDMFormField ddmFormField,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		JSONFactory jsonFactory, JSONObject jsonObject) {
 
 		DDMForm ddmFormFieldTypeSettingsDDMForm =
 			_getDDMFormFieldTypeSettingsDDMForm(
-				ddmFormFieldTypeServicesTracker, ddmFormField.getType());
+				ddmFormFieldTypeServicesRegistry, ddmFormField.getType());
 
 		for (DDMFormField ddmFormFieldTypeSetting :
 				ddmFormFieldTypeSettingsDDMForm.getDDMFormFields()) {
@@ -118,7 +118,7 @@ public class DDMFormFieldSerializerUtil {
 
 	private static JSONArray _fieldsToJSONArray(
 		List<DDMFormField> ddmFormFields,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		JSONFactory jsonFactory) {
 
 		_trim(ddmFormFields);
@@ -128,7 +128,7 @@ public class DDMFormFieldSerializerUtil {
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			jsonArray.put(
 				_toJSONObject(
-					ddmFormField, ddmFormFieldTypeServicesTracker,
+					ddmFormField, ddmFormFieldTypeServicesRegistry,
 					jsonFactory));
 		}
 
@@ -136,11 +136,11 @@ public class DDMFormFieldSerializerUtil {
 	}
 
 	private static DDMForm _getDDMFormFieldTypeSettingsDDMForm(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		String type) {
 
 		DDMFormFieldType ddmFormFieldType =
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(type);
 
 		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
 			DefaultDDMFormFieldTypeSettings.class;
@@ -231,17 +231,17 @@ public class DDMFormFieldSerializerUtil {
 
 	private static JSONObject _toJSONObject(
 		DDMFormField ddmFormField,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		JSONFactory jsonFactory) {
 
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
 		_addProperties(
-			ddmFormField, ddmFormFieldTypeServicesTracker, jsonFactory,
+			ddmFormField, ddmFormFieldTypeServicesRegistry, jsonFactory,
 			jsonObject);
 
 		_addNestedFields(
-			ddmFormFieldTypeServicesTracker, jsonFactory, jsonObject,
+			ddmFormFieldTypeServicesRegistry, jsonFactory, jsonObject,
 			ddmFormField.getNestedDDMFormFields());
 
 		return jsonObject;

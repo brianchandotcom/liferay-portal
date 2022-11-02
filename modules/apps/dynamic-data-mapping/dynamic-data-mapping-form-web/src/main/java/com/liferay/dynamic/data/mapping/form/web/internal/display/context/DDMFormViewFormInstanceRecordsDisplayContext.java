@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.DDMFormInstanceRecordSearch;
@@ -87,14 +87,14 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			DDMFormInstance ddmFormInstance,
 			DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
-			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker)
+			DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ddmFormInstance = ddmFormInstance;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -182,7 +182,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		String ddmFormFieldType = ddmFormField.getType();
 
 		final DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
 				ddmFormFieldType);
 
 		List<String> renderedDDMFormFieldValues = ListUtil.toList(
@@ -667,8 +667,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	private static final int _MAX_COLUMNS = 5;
 
 	private final List<DDMFormField> _ddmFormFields = new ArrayList<>();
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private final DDMFormInstance _ddmFormInstance;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;

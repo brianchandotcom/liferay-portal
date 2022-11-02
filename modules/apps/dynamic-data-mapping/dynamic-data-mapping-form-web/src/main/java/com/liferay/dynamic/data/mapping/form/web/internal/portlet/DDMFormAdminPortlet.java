@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -148,7 +148,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormBuilderContextFactory,
 					_ddmFormBuilderSettingsRetriever,
 					_ddmFormContextToDDMFormValues,
-					_ddmFormFieldTypeServicesTracker,
+					_ddmFormFieldTypeServicesRegistry,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
 					_ddmFormInstanceRecordWriterRegistry,
@@ -171,7 +171,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormBuilderContextFactory,
 					_ddmFormBuilderSettingsRetriever,
 					_ddmFormContextToDDMFormValues,
-					_ddmFormFieldTypeServicesTracker,
+					_ddmFormFieldTypeServicesRegistry,
 					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
 					_ddmFormInstanceRecordWriterRegistry,
@@ -213,7 +213,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		_ddmFormContextToDDMFormValues;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference(target = "(ddm.form.field.types.serializer.type=json)")
 	private DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;

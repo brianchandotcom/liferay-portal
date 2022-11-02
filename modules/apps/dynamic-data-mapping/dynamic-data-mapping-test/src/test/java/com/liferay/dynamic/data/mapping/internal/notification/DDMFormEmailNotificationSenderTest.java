@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.notification;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -56,7 +56,7 @@ public class DDMFormEmailNotificationSenderTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_setUpDDMFormEmailNotificationSender();
-		_setUpDDMFormFieldTypeServicesTracker();
+		_setUpDDMFormFieldTypeServicesRegistry();
 		_setUpHtmlUtil();
 	}
 
@@ -150,13 +150,14 @@ public class DDMFormEmailNotificationSenderTest {
 		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender();
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmFormEmailNotificationSender, "_ddmFormFieldTypeServicesTracker",
-			_ddmFormFieldTypeServicesTracker);
+			_ddmFormEmailNotificationSender,
+			"_ddmFormFieldTypeServicesRegistry",
+			_ddmFormFieldTypeServicesRegistry);
 	}
 
-	private static void _setUpDDMFormFieldTypeServicesTracker() {
+	private static void _setUpDDMFormFieldTypeServicesRegistry() {
 		Mockito.when(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
 				Mockito.anyString())
 		).thenReturn(
 			_defaultDDMFormFieldValueRenderer
@@ -218,9 +219,9 @@ public class DDMFormEmailNotificationSenderTest {
 
 	private static DDMFormEmailNotificationSender
 		_ddmFormEmailNotificationSender;
-	private static final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker = Mockito.mock(
-			DDMFormFieldTypeServicesTracker.class);
+	private static final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry = Mockito.mock(
+			DDMFormFieldTypeServicesRegistry.class);
 	private static final DefaultDDMFormFieldValueRenderer
 		_defaultDDMFormFieldValueRenderer =
 			new DefaultDDMFormFieldValueRenderer();

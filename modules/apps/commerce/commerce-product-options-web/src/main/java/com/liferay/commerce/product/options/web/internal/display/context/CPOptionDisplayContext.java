@@ -22,7 +22,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -62,14 +62,14 @@ public class CPOptionDisplayContext {
 
 	public CPOptionDisplayContext(
 			ConfigurationProvider configurationProvider, CPOption cpOption,
-			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+			DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 			PortletResourcePermission portletResourcePermission,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_configurationProvider = configurationProvider;
 		_cpOption = cpOption;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_portletResourcePermission = portletResourcePermission;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
@@ -110,7 +110,7 @@ public class CPOptionDisplayContext {
 		DDMFormFieldType ddmFormFieldType, Locale locale) {
 
 		String label = MapUtil.getString(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldType.getName()),
 			"ddm.form.field.type.label");
 
@@ -135,7 +135,7 @@ public class CPOptionDisplayContext {
 		throws PortalException {
 
 		List<DDMFormFieldType> ddmFormFieldTypes =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes();
 
 		CPOptionConfiguration cpOptionConfiguration =
 			_configurationProvider.getConfiguration(
@@ -283,7 +283,7 @@ public class CPOptionDisplayContext {
 		String ddmFormFieldTypeName) {
 
 		Map<String, Object> ddmFormFieldTypeProperties =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldTypeName);
 
 		if (ddmFormFieldTypeProperties == null) {
@@ -295,7 +295,7 @@ public class CPOptionDisplayContext {
 
 	private boolean _isListFieldTypeDataDomain(String ddmFormFieldTypeName) {
 		Map<String, Object> properties =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldTypeName);
 
 		String fieldTypeDataDomain = MapUtil.getString(
@@ -315,8 +315,8 @@ public class CPOptionDisplayContext {
 
 	private final ConfigurationProvider _configurationProvider;
 	private CPOption _cpOption;
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private final PortletResourcePermission _portletResourcePermission;
 
 }

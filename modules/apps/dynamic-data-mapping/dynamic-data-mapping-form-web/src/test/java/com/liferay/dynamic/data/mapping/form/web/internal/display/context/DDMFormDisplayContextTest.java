@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -740,7 +740,7 @@ public class DDMFormDisplayContextTest {
 		throws PortalException {
 
 		return new DDMFormDisplayContext(
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class),
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class),
 			_ddmFormInstanceLocalService,
 			Mockito.mock(DDMFormInstanceRecordService.class),
 			Mockito.mock(DDMFormInstanceRecordVersionLocalService.class),

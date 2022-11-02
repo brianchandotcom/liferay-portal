@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -171,23 +171,23 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest {
 		return ddmFormField;
 	}
 
-	private DDMFormFieldTypeServicesTracker
-		_mockDDMFormFieldTypeServicesTracker() {
+	private DDMFormFieldTypeServicesRegistry
+		_mockDDMFormFieldTypeServicesRegistry() {
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class);
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 			_mockDDMFormFieldValueRenderer();
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
 				Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldValueRenderer
 		);
 
-		return ddmFormFieldTypeServicesTracker;
+		return ddmFormFieldTypeServicesRegistry;
 	}
 
 	private DDMFormFieldValueRenderer _mockDDMFormFieldValueRenderer() {
@@ -275,7 +275,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest {
 				renderRequest, Mockito.mock(RenderResponse.class),
 				_mockDDMFormInstance(),
 				Mockito.mock(DDMFormInstanceRecordLocalService.class),
-				_mockDDMFormFieldTypeServicesTracker());
+				_mockDDMFormFieldTypeServicesRegistry());
 	}
 
 	private void _setUpPortalUtil() {

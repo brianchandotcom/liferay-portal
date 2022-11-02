@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.io.exporter;
 
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordExporterException;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
@@ -147,7 +147,7 @@ public class DDMFormInstanceRecordExporterImpl
 			ddmFormField.getFieldReference());
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
 				ddmFormField.getType());
 
 		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
@@ -308,7 +308,7 @@ public class DDMFormInstanceRecordExporterImpl
 	}
 
 	@Reference
-	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+	protected DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	protected DDMFormInstanceRecordLocalService

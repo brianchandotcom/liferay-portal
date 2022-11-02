@@ -31,7 +31,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
@@ -157,7 +157,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		DataRecordExporter dataRecordExporter = new DataRecordExporter(
 			_dataDefinitionContentTypeRegistry, _ddlRecordSetLocalService,
-			_ddmFormFieldTypeServicesTracker, _ddmStructureLayoutLocalService,
+			_ddmFormFieldTypeServicesRegistry, _ddmStructureLayoutLocalService,
 			_spiDDMFormRuleConverter);
 
 		return dataRecordExporter.export(
@@ -545,7 +545,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private DDMIndexer _ddmIndexer;

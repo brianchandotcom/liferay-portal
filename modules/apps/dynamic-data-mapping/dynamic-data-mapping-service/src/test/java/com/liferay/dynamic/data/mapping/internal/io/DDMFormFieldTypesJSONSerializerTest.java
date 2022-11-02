@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.io;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
@@ -87,24 +87,24 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		JSONAssert.assertEquals(_createExpectedJSON(), actualJSON, false);
 	}
 
-	protected DDMFormFieldTypeServicesTracker
-		getMockedDDMFormFieldTypeServicesTracker() {
+	protected DDMFormFieldTypeServicesRegistry
+		getMockedDDMFormFieldTypeServicesRegistry() {
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			Mockito.mock(DDMFormFieldTypeServicesRegistry.class);
 
 		DDMFormFieldRenderer ddmFormFieldRenderer = Mockito.mock(
 			DDMFormFieldRenderer.class);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldRenderer(
 				Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldRenderer
 		);
 
 		Mockito.when(
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				Mockito.anyString())
 		).thenReturn(
 			HashMapBuilder.<String, Object>put(
@@ -116,7 +116,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			).build()
 		);
 
-		return ddmFormFieldTypeServicesTracker;
+		return ddmFormFieldTypeServicesRegistry;
 	}
 
 	protected String serialize(List<DDMFormFieldType> ddmFormFieldTypes) {
@@ -158,11 +158,11 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	private void _setUpDDMFormFieldTypesJSONSerializer() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializer.class,
-			"_ddmFormFieldTypeServicesTracker");
+			"_ddmFormFieldTypeServicesRegistry");
 
 		field.set(
 			_ddmFormFieldTypesSerializer,
-			getMockedDDMFormFieldTypeServicesTracker());
+			getMockedDDMFormFieldTypeServicesRegistry());
 
 		field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializer.class, "_jsonFactory");

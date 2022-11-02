@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionRegistry;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -950,9 +950,9 @@ public class DDMFormValuesValidatorTest {
 			ddmExpressionFactoryImpl);
 
 		ReflectionTestUtil.setFieldValue(
-			_ddmFormValuesValidatorImpl, "_ddmFormFieldTypeServicesTracker",
+			_ddmFormValuesValidatorImpl, "_ddmFormFieldTypeServicesRegistry",
 			ProxyFactory.newDummyInstance(
-				DDMFormFieldTypeServicesTracker.class));
+				DDMFormFieldTypeServicesRegistry.class));
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl,
 			"_ddmFormFieldValueExpressionParameterAccessor",

@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
@@ -246,7 +246,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		String type) {
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(type);
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueAccessor(
+				type);
 
 		if (ddmFormFieldValueAccessor != null) {
 			return ddmFormFieldValueAccessor;
@@ -439,7 +440,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	private DDMFormFieldValueExpressionParameterAccessor
 		_ddmFormFieldValueExpressionParameterAccessor;

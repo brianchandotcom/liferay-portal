@@ -18,7 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -60,7 +60,7 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 						_actionHelper,
 						_portal.getHttpServletRequest(renderRequest),
 						_configurationProvider,
-						_ddmFormFieldTypeServicesTracker, _itemSelector);
+						_ddmFormFieldTypeServicesRegistry, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -88,7 +88,7 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

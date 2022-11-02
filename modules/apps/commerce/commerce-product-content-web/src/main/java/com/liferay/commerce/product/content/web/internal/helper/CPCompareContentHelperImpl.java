@@ -34,7 +34,7 @@ import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
@@ -384,7 +384,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 				cpDefinition.getCPDefinitionOptionRels()) {
 
 			Map<String, Object> properties =
-				_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 					cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
 			String fieldTypeDataDomain = MapUtil.getString(
@@ -420,7 +420,7 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

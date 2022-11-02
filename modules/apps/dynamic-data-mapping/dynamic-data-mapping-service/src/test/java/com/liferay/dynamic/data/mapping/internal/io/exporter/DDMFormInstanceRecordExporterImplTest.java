@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.io.exporter;
 
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordExporterException;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
@@ -315,8 +315,8 @@ public class DDMFormInstanceRecordExporterImplTest {
 		DDMFormInstanceRecordExporterImpl ddmFormInstanceRecordExporterImpl =
 			new DDMFormInstanceRecordExporterImpl();
 
-		ddmFormInstanceRecordExporterImpl.ddmFormFieldTypeServicesTracker =
-			_ddmFormFieldTypeServicesTracker;
+		ddmFormInstanceRecordExporterImpl.ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistry;
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer = Mockito.mock(
 			DDMFormFieldValueRenderer.class);
@@ -337,7 +337,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 		Locale locale = new Locale("pt", "BR");
 
 		Mockito.when(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
 				"text")
 		).thenReturn(
 			ddmFormFieldValueRenderer
@@ -365,7 +365,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 		Assert.assertEquals("value1", actualValue);
 
 		Mockito.verify(
-			_ddmFormFieldTypeServicesTracker, Mockito.times(1)
+			_ddmFormFieldTypeServicesRegistry, Mockito.times(1)
 		).getDDMFormFieldValueRenderer(
 			"text"
 		);
@@ -774,9 +774,9 @@ public class DDMFormInstanceRecordExporterImplTest {
 		languageUtil.setLanguage(_language);
 	}
 
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker = Mockito.mock(
-			DDMFormFieldTypeServicesTracker.class);
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry = Mockito.mock(
+			DDMFormFieldTypeServicesRegistry.class);
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService = Mockito.mock(
 			DDMFormInstanceRecordLocalService.class);

@@ -21,7 +21,7 @@ import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.storage.util.DataStorageUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.petra.string.StringPool;
@@ -42,13 +42,13 @@ public class DataRecordExporter {
 	public DataRecordExporter(
 		DataDefinitionContentTypeRegistry dataDefinitionContentTypeRegistry,
 		DDLRecordSetLocalService ddlRecordSetLocalService,
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
 		SPIDDMFormRuleConverter spiDDMFormRuleConverter) {
 
 		_dataDefinitionContentTypeRegistry = dataDefinitionContentTypeRegistry;
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
 		_spiDDMFormRuleConverter = spiDDMFormRuleConverter;
 	}
@@ -65,7 +65,7 @@ public class DataRecordExporter {
 
 		DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeRegistry,
-			_ddmFormFieldTypeServicesTracker, ddlRecordSet.getDDMStructure(),
+			_ddmFormFieldTypeServicesRegistry, ddlRecordSet.getDDMStructure(),
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -103,8 +103,8 @@ public class DataRecordExporter {
 	private final DataDefinitionContentTypeRegistry
 		_dataDefinitionContentTypeRegistry;
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private final DDMFormFieldTypeServicesTracker
-		_ddmFormFieldTypeServicesTracker;
+	private final DDMFormFieldTypeServicesRegistry
+		_ddmFormFieldTypeServicesRegistry;
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
 	private final SPIDDMFormRuleConverter _spiDDMFormRuleConverter;

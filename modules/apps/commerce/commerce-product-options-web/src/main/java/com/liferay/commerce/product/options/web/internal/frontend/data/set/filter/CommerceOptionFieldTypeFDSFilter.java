@@ -19,7 +19,7 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.options.web.internal.constants.CommerceOptionFDSNames;
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -56,7 +56,7 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseSelectionFDSFilter {
 		DDMFormFieldType ddmFormFieldType, Locale locale) {
 
 		String label = MapUtil.getString(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
 				ddmFormFieldType.getName()),
 			"ddm.form.field.type.label");
 
@@ -79,7 +79,7 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseSelectionFDSFilter {
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes() {
 		List<DDMFormFieldType> ddmFormFieldTypes =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
+			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes();
 
 		CPOptionConfiguration cpOptionConfiguration = null;
 
@@ -138,7 +138,7 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseSelectionFDSFilter {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private Language _language;

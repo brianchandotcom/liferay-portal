@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
@@ -138,10 +138,10 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	}
 
 	@Override
-	protected DDMFormFieldTypeServicesTracker
-		getDDMFormFieldTypeServicesTracker() {
+	protected DDMFormFieldTypeServicesRegistry
+		getDDMFormFieldTypeServicesRegistry() {
 
-		return _ddmFormFieldTypeServicesTracker;
+		return _ddmFormFieldTypeServicesRegistry;
 	}
 
 	@Override
@@ -265,7 +265,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	private DDLRecordSetVersionService _ddlRecordSetVersionService;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private DDMFormFieldValueRendererRegistry

@@ -732,6 +732,42 @@ definition {
 			rowEntry = "Knowledge Base Article Title");
 	}
 
+	@description = "This test ensures that suggestion form is displayed on the KB article preview page when the KB article has suggestions."
+	@priority = "5"
+	test CanViewArticlesWithSuggestions {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		for (var suggestionCount : list "1,2") {
+			KBArticleSuggestion.addPG(
+				kbArticleTitle = "Knowledge Base Article1 Title",
+				kbSuggestionBody = "Knowledge Base Article1 Suggestion${suggestionCount}");
+		}
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbStatus = "Approved",
+			versionNumber = "1");
+
+		for (var suggestionCount : list "1,2") {
+			KBArticleSuggestion.viewPG(
+				kbSuggestionBody = "Knowledge Base Article1 Suggestion${suggestionCount}",
+				kbSuggestionUserName = "Test Test",
+				status = "New");
+		}
+	}
+
 	@description = "This test ensures that a user is able to embed a video in a KB article."
 	@priority = "4"
 	@refactordone

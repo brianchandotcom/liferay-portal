@@ -1463,6 +1463,19 @@ definition {
 				locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
 				value1 = "${kbArticleTitle}");
 
+			if (isSet(kbStatus)) {
+				AssertTextEquals(
+					key_kbArticleStatus = "${kbStatus}",
+					locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_PREVIEW_ARTICLE_STATUS",
+					value1 = "${kbStatus}");
+			}
+
+			if (isSet(versionNumber)) {
+				AssertTextEquals(
+					locator1 = "KnowledgeBase#ARTICLE_PREVIEW_VERSION_NUMBER",
+					value1 = "${versionNumber}");
+			}
+
 			if (isSet(highlight)) {
 				AssertVisible(
 					key_itemName = "${kbArticleTitle}",

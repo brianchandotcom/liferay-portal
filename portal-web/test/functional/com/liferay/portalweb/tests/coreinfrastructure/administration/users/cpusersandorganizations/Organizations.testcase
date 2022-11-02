@@ -337,6 +337,8 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
 
+		Breadcrumb.viewActiveEntry(breadcrumbName = "Organization Name");
+
 		Suborganization.viewCP(
 			orgName = "Organization Name",
 			orgType = "Organization",

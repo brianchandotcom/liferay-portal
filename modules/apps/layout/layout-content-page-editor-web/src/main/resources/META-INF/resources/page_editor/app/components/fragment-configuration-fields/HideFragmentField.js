@@ -107,7 +107,7 @@ export function HideFragmentField({
 							setNextValue(eventValue);
 							onValueSelect(field.name, eventValue);
 
-							if (eventValue && hasRequiredChild()) {
+							if (event.target.checked && hasRequiredChild()) {
 								const {message} = getFormErrorDescription({
 									type: FORM_ERROR_TYPES.hiddenFragment,
 								});

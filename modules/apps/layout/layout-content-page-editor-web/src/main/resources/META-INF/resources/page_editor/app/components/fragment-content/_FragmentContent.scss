@@ -58,6 +58,10 @@ html#{$cadmin-selector} {
 					}
 				}
 			}
+
+			.portlet-content.portlet-content-editable {
+				min-height: 54px;
+			}
 		}
 
 		.portlet-msg-info {

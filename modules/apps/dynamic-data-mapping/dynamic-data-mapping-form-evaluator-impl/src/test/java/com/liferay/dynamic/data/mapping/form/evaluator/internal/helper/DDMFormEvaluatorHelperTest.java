@@ -42,7 +42,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValue
 import com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.CheckboxDDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.numeric.NumericDDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChange;
-import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeTracker;
+import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -1800,7 +1800,7 @@ public class DDMFormEvaluatorHelperTest {
 			new DDMFormEvaluatorHelper(
 				_ddmExpressionFactory, builder.build(),
 				_mockDDMFormFieldTypeServicesRegistry(),
-				_mockDDMFormPageChangeTracker());
+				_mockDDMFormPageChangeRegistry());
 
 		_mockDDMExpressionFunctionRegistry();
 
@@ -2115,18 +2115,18 @@ public class DDMFormEvaluatorHelperTest {
 		return ddmFormFieldTypeServicesRegistry;
 	}
 
-	private DDMFormPageChangeTracker _mockDDMFormPageChangeTracker() {
-		DDMFormPageChangeTracker ddmFormPageChangeTracker = Mockito.mock(
-			DDMFormPageChangeTracker.class);
+	private DDMFormPageChangeRegistry _mockDDMFormPageChangeRegistry() {
+		DDMFormPageChangeRegistry ddmFormPageChangeRegistry = Mockito.mock(
+			DDMFormPageChangeRegistry.class);
 
 		Mockito.when(
-			ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
+			ddmFormPageChangeRegistry.getDDMFormPageChangeByDDMFormInstanceId(
 				Mockito.anyString())
 		).then(
 			(Answer<DDMFormPageChange>)invocation -> new DDMTestFormPageChange()
 		);
 
-		return ddmFormPageChangeTracker;
+		return ddmFormPageChangeRegistry;
 	}
 
 	private static final Company _company = Mockito.mock(Company.class);

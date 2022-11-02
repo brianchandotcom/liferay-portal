@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateR
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChange;
-import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeTracker;
+import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -75,7 +75,7 @@ public class DDMFormPageChangeTest {
 	@Test
 	public void testDDMFormPageChangeEvaluate() throws Exception {
 		DDMFormPageChange ddmFormPageChange =
-			_ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
+			_ddmFormPageChangeRegistry.getDDMFormPageChangeByDDMFormInstanceId(
 				_DDM_FORM_INSTANCE_ID);
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
@@ -114,7 +114,7 @@ public class DDMFormPageChangeTest {
 	@Test
 	public void testGetDDMFormPageChangeByDDMFormInstanceId() {
 		DDMFormPageChange ddmFormPageChange =
-			_ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
+			_ddmFormPageChangeRegistry.getDDMFormPageChangeByDDMFormInstanceId(
 				_DDM_FORM_INSTANCE_ID);
 
 		Assert.assertNotNull(ddmFormPageChange);
@@ -145,7 +145,7 @@ public class DDMFormPageChangeTest {
 		RandomTestUtil.randomString();
 
 	@Inject
-	private static DDMFormPageChangeTracker _ddmFormPageChangeTracker;
+	private static DDMFormPageChangeRegistry _ddmFormPageChangeRegistry;
 
 	private static ServiceRegistration<DDMFormPageChange> _serviceRegistration;
 

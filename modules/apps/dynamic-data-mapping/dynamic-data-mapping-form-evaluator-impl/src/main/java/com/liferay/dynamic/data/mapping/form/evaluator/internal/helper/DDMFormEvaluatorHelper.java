@@ -34,7 +34,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditing
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChange;
-import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeTracker;
+import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -78,12 +78,12 @@ public class DDMFormEvaluatorHelper {
 		DDMExpressionFactory ddmExpressionFactory,
 		DDMFormEvaluatorEvaluateRequest ddmFormEvaluatorEvaluateRequest,
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
-		DDMFormPageChangeTracker ddmFormPageChangeTracker) {
+		DDMFormPageChangeRegistry ddmFormPageChangeRegistry) {
 
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormEvaluatorEvaluateRequest = ddmFormEvaluatorEvaluateRequest;
 		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
-		_ddmFormPageChangeTracker = ddmFormPageChangeTracker;
+		_ddmFormPageChangeRegistry = ddmFormPageChangeRegistry;
 
 		_ddmForm = ddmFormEvaluatorEvaluateRequest.getDDMForm();
 
@@ -253,7 +253,7 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		DDMFormPageChange ddmFormPageChange =
-			_ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
+			_ddmFormPageChangeRegistry.getDDMFormPageChangeByDDMFormInstanceId(
 				String.valueOf(
 					_ddmFormEvaluatorEvaluateRequest.getDDMFormInstanceId()));
 
@@ -1069,7 +1069,7 @@ public class DDMFormEvaluatorHelper {
 	private final DDMFormFieldTypeServicesRegistry
 		_ddmFormFieldTypeServicesRegistry;
 	private final DDMFormLayout _ddmFormLayout;
-	private final DDMFormPageChangeTracker _ddmFormPageChangeTracker;
+	private final DDMFormPageChangeRegistry _ddmFormPageChangeRegistry;
 	private List<String> _evaluatedActions;
 	private final Map<Integer, Integer> _pageFlow = new HashMap<>();
 

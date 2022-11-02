@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -220,7 +220,7 @@ public class DDMFormPortlet extends MVCPortlet {
 			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 			_ddmFormValuesFactory, _ddmFormValuesMerger,
 			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration(),
-			_ddmStorageAdapterTracker, _groupLocalService, _jsonFactory,
+			_ddmStorageAdapterRegistry, _groupLocalService, _jsonFactory,
 			_npmResolver, _objectFieldLocalService,
 			_objectFieldSettingLocalService, _objectRelationshipLocalService,
 			_portal, renderRequest, renderResponse, _roleLocalService,
@@ -308,7 +308,7 @@ public class DDMFormPortlet extends MVCPortlet {
 		_ddmFormWebConfigurationActivator;
 
 	@Reference
-	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

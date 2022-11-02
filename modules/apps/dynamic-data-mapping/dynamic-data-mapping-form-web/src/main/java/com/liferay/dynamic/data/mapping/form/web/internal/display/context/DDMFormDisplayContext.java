@@ -46,7 +46,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.model.ObjectField;
@@ -128,7 +128,7 @@ public class DDMFormDisplayContext {
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMFormWebConfiguration ddmFormWebConfiguration,
-		DDMStorageAdapterTracker ddmStorageAdapterTracker,
+		DDMStorageAdapterRegistry ddmStorageAdapterRegistry,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		NPMResolver npmResolver,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -151,7 +151,7 @@ public class DDMFormDisplayContext {
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormWebConfiguration = ddmFormWebConfiguration;
-		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
+		_ddmStorageAdapterRegistry = ddmStorageAdapterRegistry;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 		_npmResolver = npmResolver;
@@ -601,7 +601,7 @@ public class DDMFormDisplayContext {
 	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {
 		try {
 			DDMStorageAdapter ddmStorageAdapter =
-				_ddmStorageAdapterTracker.getDDMStorageAdapter(
+				_ddmStorageAdapterRegistry.getDDMStorageAdapter(
 					ddmFormInstance.getStorageType());
 
 			if (ddmStorageAdapter != null) {
@@ -1230,7 +1230,7 @@ public class DDMFormDisplayContext {
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMFormWebConfiguration _ddmFormWebConfiguration;
-	private final DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+	private final DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 	private final GroupLocalService _groupLocalService;
 	private Boolean _hasAddFormInstanceRecordPermission;
 	private Boolean _hasViewPermission;

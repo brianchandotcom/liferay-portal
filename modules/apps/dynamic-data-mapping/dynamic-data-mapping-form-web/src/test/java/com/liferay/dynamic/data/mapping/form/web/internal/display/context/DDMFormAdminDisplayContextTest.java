@@ -35,7 +35,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
@@ -363,7 +363,7 @@ public class DDMFormAdminDisplayContextTest {
 			Mockito.mock(DDMFormValuesFactory.class),
 			Mockito.mock(DDMFormValuesMerger.class),
 			Mockito.mock(DDMFormWebConfiguration.class),
-			Mockito.mock(DDMStorageAdapterTracker.class),
+			Mockito.mock(DDMStorageAdapterRegistry.class),
 			Mockito.mock(DDMStructureLocalService.class),
 			Mockito.mock(DDMStructureService.class),
 			Mockito.mock(JSONFactory.class), Mockito.mock(NPMResolver.class),

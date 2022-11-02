@@ -29,9 +29,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterDeleteRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
@@ -175,7 +175,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	private DDMStorageAdapter _getDDMStorageAdapter() {
-		return _ddmStorageAdapterTracker.getDDMStorageAdapter(
+		return _ddmStorageAdapterRegistry.getDDMStorageAdapter(
 			StorageType.DEFAULT.toString());
 	}
 
@@ -217,7 +217,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	private DDMFormValuesValidator _ddmFormValuesValidator;
 
 	@Reference
-	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;

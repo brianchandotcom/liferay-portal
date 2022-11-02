@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.data.provider.instance.internal;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -48,7 +48,7 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		Set<String> storageTypes =
-			ddmStorageAdapterTracker.getDDMStorageAdapterTypes();
+			ddmStorageAdapterRegistry.getDDMStorageAdapterTypes();
 
 		Optional<HttpServletRequest> httpServletRequestOptional =
 			ddmDataProviderRequest.getParameterOptional(
@@ -90,7 +90,7 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 	}
 
 	@Reference
-	protected DDMStorageAdapterTracker ddmStorageAdapterTracker;
+	protected DDMStorageAdapterRegistry ddmStorageAdapterRegistry;
 
 	@Reference
 	private Language _language;

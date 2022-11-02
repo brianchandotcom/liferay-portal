@@ -41,7 +41,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
@@ -110,7 +110,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMFormWebConfiguration ddmFormWebConfiguration,
-		DDMStorageAdapterTracker ddmStorageAdapterTracker,
+		DDMStorageAdapterRegistry ddmStorageAdapterRegistry,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
 		NPMResolver npmResolver,
@@ -128,7 +128,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			ddmFormInstanceVersionLocalService, ddmFormRenderer,
 			ddmFormTemplateContextFactory, ddmFormValuesFactory,
 			ddmFormValuesMerger, ddmFormWebConfiguration,
-			ddmStorageAdapterTracker, ddmStructureLocalService,
+			ddmStorageAdapterRegistry, ddmStructureLocalService,
 			ddmStructureService, jsonFactory, npmResolver,
 			objectDefinitionLocalService, portal);
 

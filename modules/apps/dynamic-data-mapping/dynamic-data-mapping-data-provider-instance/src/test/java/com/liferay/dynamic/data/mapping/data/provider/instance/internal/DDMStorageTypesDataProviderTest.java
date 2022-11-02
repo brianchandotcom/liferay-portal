@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.data.provider.instance.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -49,8 +49,8 @@ public class DDMStorageTypesDataProviderTest {
 	public static void setUpClass() {
 		_ddmStorageTypesDataProvider = new DDMStorageTypesDataProvider();
 
-		_ddmStorageTypesDataProvider.ddmStorageAdapterTracker =
-			_ddmStorageAdapterTracker;
+		_ddmStorageTypesDataProvider.ddmStorageAdapterRegistry =
+			_ddmStorageAdapterRegistry;
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -84,7 +84,7 @@ public class DDMStorageTypesDataProviderTest {
 
 	private void _testStorageTypes(Set<String> expectedSet) {
 		Mockito.when(
-			_ddmStorageAdapterTracker.getDDMStorageAdapterTypes()
+			_ddmStorageAdapterRegistry.getDDMStorageAdapterTypes()
 		).thenReturn(
 			expectedSet
 		);
@@ -118,8 +118,8 @@ public class DDMStorageTypesDataProviderTest {
 		Assert.assertEquals(keyValuePairs, optional.get());
 	}
 
-	private static final DDMStorageAdapterTracker _ddmStorageAdapterTracker =
-		Mockito.mock(DDMStorageAdapterTracker.class);
+	private static final DDMStorageAdapterRegistry _ddmStorageAdapterRegistry =
+		Mockito.mock(DDMStorageAdapterRegistry.class);
 	private static DDMStorageTypesDataProvider _ddmStorageTypesDataProvider;
 
 }

@@ -60,7 +60,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
@@ -166,7 +166,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMFormWebConfiguration ddmFormWebConfiguration,
-		DDMStorageAdapterTracker ddmStorageAdapterTracker,
+		DDMStorageAdapterRegistry ddmStorageAdapterRegistry,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureService ddmStructureService, JSONFactory jsonFactory,
 		NPMResolver npmResolver,
@@ -191,7 +191,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmFormWebConfiguration = ddmFormWebConfiguration;
-		_ddmStorageAdapterTracker = ddmStorageAdapterTracker;
+		_ddmStorageAdapterRegistry = ddmStorageAdapterRegistry;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureService = ddmStructureService;
 		_npmResolver = npmResolver;
@@ -1256,7 +1256,7 @@ public class DDMFormAdminDisplayContext {
 	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {
 		try {
 			DDMStorageAdapter ddmStorageAdapter =
-				_ddmStorageAdapterTracker.getDDMStorageAdapter(
+				_ddmStorageAdapterRegistry.getDDMStorageAdapter(
 					ddmFormInstance.getStorageType());
 
 			if (ddmStorageAdapter != null) {
@@ -1817,7 +1817,7 @@ public class DDMFormAdminDisplayContext {
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMFormWebConfiguration _ddmFormWebConfiguration;
-	private final DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+	private final DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 	private DDMStructure _ddmStructure;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMStructureService _ddmStructureService;

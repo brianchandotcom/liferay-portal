@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
-import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -81,7 +81,7 @@ public class FragmentEntryLinkModelListener
 				fragmentEntryLink.getFragmentEntryLinkId());
 
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					_fragmentEntryLinkListenerTracker.
+					_fragmentEntryLinkListenerRegistry.
 						getFragmentEntryLinkListeners()) {
 
 				fragmentEntryLinkListener.onDeleteFragmentEntryLink(
@@ -294,7 +294,8 @@ public class FragmentEntryLinkModelListener
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

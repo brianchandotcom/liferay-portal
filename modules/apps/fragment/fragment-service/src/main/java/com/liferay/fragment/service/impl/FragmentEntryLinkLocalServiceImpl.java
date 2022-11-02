@@ -18,7 +18,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
-import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -605,7 +605,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		_updateFragmentEntryLinkLayout(fragmentEntryLink);
 
 		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				_fragmentEntryLinkListenerTracker.
+				_fragmentEntryLinkListenerRegistry.
 					getFragmentEntryLinkListeners()) {
 
 			fragmentEntryLinkListener.
@@ -780,7 +780,8 @@ public class FragmentEntryLinkLocalServiceImpl
 	private FragmentCollectionPersistence _fragmentCollectionPersistence;
 
 	@Reference
-	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
 	private FragmentEntryPersistence _fragmentEntryPersistence;

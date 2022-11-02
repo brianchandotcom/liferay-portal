@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
-import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCompositionService;
@@ -132,7 +132,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					_fragmentEntryLinkListenerTracker.
+					_fragmentEntryLinkListenerRegistry.
 						getFragmentEntryLinkListeners()) {
 
 				fragmentEntryLinkListener.onAddFragmentEntryLink(
@@ -183,7 +183,8 @@ public class AddFragmentEntryLinksMVCActionCommand
 	private FragmentCompositionService _fragmentCompositionService;
 
 	@Reference
-	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

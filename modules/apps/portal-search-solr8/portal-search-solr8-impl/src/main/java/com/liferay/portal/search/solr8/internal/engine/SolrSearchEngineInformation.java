@@ -27,7 +27,6 @@ import com.liferay.portal.search.engine.NodeInformationBuilder;
 import com.liferay.portal.search.engine.NodeInformationBuilderFactory;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
-import com.liferay.portal.search.solr8.internal.SolrSearchEngine;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 
 import java.util.ArrayList;
@@ -124,7 +123,7 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 
 	@Override
 	public String getVendorString() {
-		return solrSearchEngine.getVendor();
+		return "Solr";
 	}
 
 	@Activate
@@ -161,9 +160,6 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 
 	@Reference
 	protected SolrClientManager solrClientManager;
-
-	@Reference
-	protected SolrSearchEngine solrSearchEngine;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrSearchEngineInformation.class);

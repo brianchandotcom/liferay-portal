@@ -25,11 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true,
-	property = {"search.engine.id=SYSTEM_ENGINE", "search.engine.impl=Solr"},
-	service = {SearchEngine.class, SolrSearchEngine.class}
-)
+@Component(property = "search.engine.impl=Solr", service = SearchEngine.class)
 public class SolrSearchEngine implements SearchEngine {
 
 	@Override

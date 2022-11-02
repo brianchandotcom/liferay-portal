@@ -90,6 +90,10 @@ public class SentenceTransformerValidationResultResourceImpl
 			jsonObject.getString("textTruncationStrategy")
 		).put(
 			"txtaiHostAddress", jsonObject.getString("txtaiHostAddress")
+		).put(
+			"txtaiPassword", jsonObject.getString("txtaiPassword")
+		).put(
+			"txtaiUserName", jsonObject.getString("txtaiUserName")
 		).build();
 	}
 

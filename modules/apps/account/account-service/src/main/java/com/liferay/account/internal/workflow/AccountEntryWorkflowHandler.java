@@ -17,7 +17,7 @@ package com.liferay.account.internal.workflow;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
@@ -49,7 +49,7 @@ public class AccountEntryWorkflowHandler
 
 	@Override
 	public String getType(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, getClassName());
+		return _language.get(locale, "account");
 	}
 
 	@Override
@@ -77,5 +77,8 @@ public class AccountEntryWorkflowHandler
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

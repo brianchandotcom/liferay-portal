@@ -19,6 +19,7 @@ import {useDragLayer} from 'react-dnd';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {config} from '../config/index';
 import {useSelector} from '../contexts/StoreContext';
 import selectLanguageId from '../selectors/selectLanguageId';
 import getWidget from '../utils/getWidget';
@@ -83,7 +84,11 @@ export default function DragPreview() {
 		item: monitor.getItem(),
 	}));
 
-	if (!isDragging || !item?.id) {
+	if (
+		!isDragging ||
+		!item?.id ||
+		item.namespace !== config.portletNamespace
+	) {
 		return null;
 	}
 

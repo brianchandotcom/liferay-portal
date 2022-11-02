@@ -46,14 +46,21 @@ const getItemStyles = (currentOffset, ref, rtl) => {
 export default function DragPreview() {
 	const ref = useRef();
 
-	const {languageId} = useConstants();
+	const {languageId, portletNamespace} = useConstants();
+
 	const items = useItems();
 	const rtl = Liferay.Language.direction[languageId] === 'rtl';
 
-	const {currentOffset, isDragging, itemId} = useDragLayer((monitor) => ({
+	const {
+		currentOffset,
+		isDragging,
+		itemId,
+		namespace: itemNamespace,
+	} = useDragLayer((monitor) => ({
 		currentOffset: monitor.getClientOffset(),
 		isDragging: monitor.isDragging(),
 		itemId: monitor.getItem()?.id,
+		namespace: monitor.getItem()?.namespace,
 	}));
 
 	const [label, setLabel] = useState();
@@ -77,7 +84,11 @@ export default function DragPreview() {
 		}
 	}, [itemId, items]);
 
-	return !isDragging ? null : (
+	if (!isDragging || itemNamespace !== portletNamespace) {
+		return null;
+	}
+
+	return (
 		<div className="site-navigation__drag-preview">
 			<div
 				className="site-navigation__drag-preview__content"

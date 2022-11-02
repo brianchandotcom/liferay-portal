@@ -21,7 +21,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -184,8 +183,9 @@ public class BuildThemeTask extends JavaExec {
 		_addArg(args, "--parent-name", getParentName());
 		_addArg(args, "--parent-path", _getParentPath());
 		_addArg(args, "--template-extension", getTemplateExtension());
-		_addArg(args, "--thumbnail-height", Objects.toString(getThumbnailHeight()));
-		_addArg(args, "--thumbnail-width", Objects.toString(getThumbnailWidth()));
+		_addArg(
+			args, "--thumbnail-height", String.valueOf(getThumbnailHeight()));
+		_addArg(args, "--thumbnail-width", String.valueOf(getThumbnailWidth()));
 		_addArg(args, "--unstyled-path", _getUnstyledPath());
 
 		return args;

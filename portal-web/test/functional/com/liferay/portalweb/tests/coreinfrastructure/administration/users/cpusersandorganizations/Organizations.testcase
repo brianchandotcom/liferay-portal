@@ -50,7 +50,7 @@ definition {
 
 			UsersAndOrganizationsNavigator.gotoOrganizations();
 
-			LexiconEntry.gotoEntry(rowEntry = "Organization Name 1");
+			Organization.gotoCP(orgName = "Organization Name 1");
 
 			Organization.viewParentOrganizationCP(
 				orgName = "Suborganization Name ${count}",
@@ -335,7 +335,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		Breadcrumb.viewActiveEntry(breadcrumbName = "Organization Name");
 
@@ -483,7 +483,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Organization Name 1");
+		Organization.gotoCP(orgName = "Organization Name 1");
 
 		for (var userName : list "userfn1 userln1,userfn3 userln3,userfn5 userln5") {
 			AssertTextEquals(
@@ -644,7 +644,7 @@ definition {
 
 			Organization.openOrganizationsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+			Organization.gotoCP(orgName = "Organization Name");
 
 			LexiconEntry.viewEntryContent(
 				rowAny = "userfn userln",
@@ -681,7 +681,7 @@ definition {
 		task ("Then the user should be created and associated under the organization") {
 			Organization.openOrganizationsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+			Organization.gotoCP(orgName = "Organization Name");
 
 			LexiconEntry.viewEntryContent(
 				rowAny = "userfn userln",
@@ -1079,7 +1079,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Deactivate",
@@ -1097,7 +1097,7 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Activate",
@@ -1287,13 +1287,13 @@ definition {
 
 		Organization.openOrganizationsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		Organization.removeAssignee(userFullName = "userfn userln");
 
 		Organization.openOrganizationsAdmin();
 
-		LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		LexiconTable.viewTableEntryNotPresent(tableEntry = "userfn");
 	}

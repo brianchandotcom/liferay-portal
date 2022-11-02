@@ -25,7 +25,7 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -38,7 +38,6 @@ import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
-import com.liferay.info.type.WebImage;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
@@ -284,7 +283,7 @@ public class GetCollectionFieldMVCResourceCommand
 		for (Object object : list) {
 			jsonArray.put(
 				_getDisplayObjectJSONObject(
-					infoItemFieldValuesProvider, object,
+					infoItemFieldValuesProvider, itemType, object,
 					LocaleUtil.fromLanguageId(languageId)));
 		}
 
@@ -405,39 +404,21 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private JSONObject _getDisplayObjectJSONObject(
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Object object, Locale locale) {
+		String itemType, Object object, Locale locale) {
 
 		JSONObject displayObjectJSONObject = _jsonFactorys.createJSONObject();
 
-		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class, itemType);
 
-		for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
+		InfoForm infoForm = infoItemFormProvider.getInfoForm();
 
-			Object value = infoFieldValue.getValue(locale);
-
-			if (value instanceof WebImage) {
-				WebImage webImage = (WebImage)value;
-
-				value = webImage.toJSONObject();
-
-				long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-					webImage);
-
-				if (fileEntryId != 0) {
-					JSONObject valueJSONObject = (JSONObject)value;
-
-					valueJSONObject.put(
-						"fileEntryId", String.valueOf(fileEntryId));
-				}
-			}
-			else {
-				value = _fragmentEntryProcessorHelper.formatMappedValue(
-					value, locale);
-			}
-
-			InfoField infoField = infoFieldValue.getInfoField();
+		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
+			Object value =
+				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
+					infoField.getName(), infoItemFieldValuesProvider, locale,
+					object);
 
 			displayObjectJSONObject.put(
 				infoField.getName(), value
@@ -445,6 +426,9 @@ public class GetCollectionFieldMVCResourceCommand
 				infoField.getUniqueId(), value
 			);
 		}
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
 		InfoItemReference infoItemReference =
 			infoItemFieldValues.getInfoItemReference();

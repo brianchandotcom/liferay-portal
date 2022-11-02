@@ -627,6 +627,14 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (workflowInstance.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("completed", additionalAssertFieldName)) {
 				if (workflowInstance.getCompleted() == null) {
 					valid = false;
@@ -773,6 +781,17 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)workflowInstance1.getActions(),
+						(Map)workflowInstance2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("completed", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -962,6 +981,11 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("completed")) {
 			throw new IllegalArgumentException(

@@ -61,6 +61,16 @@ public class WorkflowInstanceSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (workflowInstance.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(workflowInstance.getActions()));
+		}
+
 		if (workflowInstance.getCompleted() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -199,6 +209,13 @@ public class WorkflowInstanceSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (workflowInstance.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(workflowInstance.getActions()));
+		}
+
 		if (workflowInstance.getCompleted() == null) {
 			map.put("completed", null);
 		}
@@ -292,7 +309,14 @@ public class WorkflowInstanceSerDes {
 			WorkflowInstance workflowInstance, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "completed")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					workflowInstance.setActions(
+						(Map)WorkflowInstanceSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "completed")) {
 				if (jsonParserFieldValue != null) {
 					workflowInstance.setCompleted(
 						(Boolean)jsonParserFieldValue);

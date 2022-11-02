@@ -20,6 +20,7 @@ import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowInstanceSe
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -34,6 +35,28 @@ public class WorkflowInstance implements Cloneable, Serializable {
 	public static WorkflowInstance toDTO(String json) {
 		return WorkflowInstanceSerDes.toDTO(json);
 	}
+
+	public Map<String, Map<String, String>> getActions() {
+		return actions;
+	}
+
+	public void setActions(Map<String, Map<String, String>> actions) {
+		this.actions = actions;
+	}
+
+	public void setActions(
+		UnsafeSupplier<Map<String, Map<String, String>>, Exception>
+			actionsUnsafeSupplier) {
+
+		try {
+			actions = actionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Map<String, String>> actions;
 
 	public Boolean getCompleted() {
 		return completed;

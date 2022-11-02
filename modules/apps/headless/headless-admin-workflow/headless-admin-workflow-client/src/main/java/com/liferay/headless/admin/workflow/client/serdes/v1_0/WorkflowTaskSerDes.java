@@ -63,6 +63,16 @@ public class WorkflowTaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (workflowTask.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(workflowTask.getActions()));
+		}
+
 		if (workflowTask.getAssigneePerson() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -281,6 +291,13 @@ public class WorkflowTaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (workflowTask.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(workflowTask.getActions()));
+		}
+
 		if (workflowTask.getAssigneePerson() == null) {
 			map.put("assigneePerson", null);
 		}
@@ -429,7 +446,14 @@ public class WorkflowTaskSerDes {
 			WorkflowTask workflowTask, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "assigneePerson")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setActions(
+						(Map)WorkflowTaskSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assigneePerson")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setAssigneePerson(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

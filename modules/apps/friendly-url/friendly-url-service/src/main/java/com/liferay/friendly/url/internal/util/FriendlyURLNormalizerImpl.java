@@ -166,6 +166,11 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	}
 
 	@Override
+	public String normalizeWithPeriods(String friendlyURL) {
+		return normalize(friendlyURL, true, false);
+	}
+
+	@Override
 	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
 		return normalize(friendlyURL, true, true);
 	}

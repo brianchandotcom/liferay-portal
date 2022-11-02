@@ -23,7 +23,10 @@
 
 	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
 		'<portlet:namespace />minimize'
-	] = function () {
-		Liferay.Portlet.minimize('#p_p_id_<%= portletDisplay.getId() %>_', this);
+	] = function (event) {
+		Liferay.Portlet.minimize(
+			'#p_p_id_<%= portletDisplay.getId() %>_',
+			event.target.closest('button')
+		);
 	};
 </aui:script>

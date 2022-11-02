@@ -73,7 +73,7 @@ export default function propsTransformer({
 
 							Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__?.[
 								action
-							]?.();
+							]?.(event);
 						}
 						else {
 							event.preventDefault();

@@ -61,11 +61,6 @@ public class MinimizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return "portlet-minimize portlet-minimize-icon";
-	}
-
-	@Override
 	public String getJspPath() {
 		return "/configuration/icon/minimize.jsp";
 	}

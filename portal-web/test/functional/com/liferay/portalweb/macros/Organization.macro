@@ -509,50 +509,27 @@ definition {
 	macro viewParentOrganizationCP {
 		Organization.gotoEdit(orgName = "${orgName}");
 
-		if (isSet(parentOrgName)) {
-			var key_orgName = "${subOrgName}";
+		var key_orgName = "${subOrgName}";
 
-			AssertClick(
-				locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON",
-				value1 = "Change");
+		AssertClick(
+			locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON",
+			value1 = "Change");
 
-			SelectFrame(
-				key_title = "Select Parent Organization",
-				locator1 = "IFrame#MODAL_ANY");
+		SelectFrame(
+			key_title = "Select Parent Organization",
+			locator1 = "IFrame#MODAL_ANY");
 
-			AssertTextEquals(
-				key_columnName = "name",
-				key_rowEntry = "${subOrgName}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "${subOrgName}");
+		AssertTextEquals(
+			key_columnName = "name",
+			key_rowEntry = "${subOrgName}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+			value1 = "${subOrgName}");
 
-			AssertTextEquals(
-				key_columnName = "parent-organization",
-				key_rowEntry = "${subOrgName}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "${parentOrgName}");
-		}
-		else {
-			AssertClick(
-				locator1 = "UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_SELECT_BUTTON",
-				value1 = "Select");
-
-			SelectFrame(
-				key_title = "Select Parent Organization",
-				locator1 = "IFrame#MODAL_ANY");
-
-			AssertTextEquals(
-				key_columnName = "name",
-				key_rowEntry = "${subOrgName}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "${subOrgName}");
-
-			AssertTextEquals(
-				key_columnName = "parent-organization",
-				key_rowEntry = "${subOrgName}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
-				value1 = "");
-		}
+		AssertTextEquals(
+			key_columnName = "parent-organization",
+			key_rowEntry = "${subOrgName}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+			value1 = "${parentOrgName}");
 
 		IFrame.closeFrame();
 	}

@@ -544,7 +544,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENTS_EDITOR</td>
-	<td>xpath=(//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentEditor')]/div[contains(@data-placeholder,'Type your comment here.')])[last()]</td>
+	<td>//div[contains(@id,'pageEditorCommentEditor')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -5,4 +5,6 @@ Export-Package:\
 	com.liferay.commerce.avalara.connector,\
 	com.liferay.commerce.avalara.connector.configuration,\
 	com.liferay.commerce.avalara.connector.constants,\
+	com.liferay.commerce.avalara.connector.dispatch,\
+	com.liferay.commerce.avalara.connector.engine,\
 	com.liferay.commerce.avalara.connector.exception

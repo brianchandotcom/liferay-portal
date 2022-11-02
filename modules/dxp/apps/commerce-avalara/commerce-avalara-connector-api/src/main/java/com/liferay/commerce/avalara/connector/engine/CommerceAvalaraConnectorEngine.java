@@ -12,14 +12,19 @@
  *
  */
 
-package com.liferay.commerce.avalara.connector.constants;
+package com.liferay.commerce.avalara.connector.engine;
+
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
 
 /**
  * @author Riccardo Alberti
  */
-public class CommerceAvalaraConstants {
+public interface CommerceAvalaraConnectorEngine {
 
-	public static final String CP_TAX_CATEGORY_ERC_TANGIBLE_PERSONAL_PROPERTY =
-		"P0000000";
+	public void createTaxCategories(long userId) throws Exception;
+
+	public void removeByAddressEntries(CommerceTaxMethod commerceTaxMethod);
+
+	public void updateByAddressEntries(long groupId) throws Exception;
 
 }

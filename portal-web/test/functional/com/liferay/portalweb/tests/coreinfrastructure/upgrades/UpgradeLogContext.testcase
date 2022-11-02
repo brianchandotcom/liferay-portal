@@ -20,19 +20,19 @@ definition {
 		}
 	}
 
-	@description = "LPS-158742. Given xml is added to portal and log context is enabled. Then log lines will be marked."
+	@description = "LPS-158742. Given xml is added to portal and log context is enabled. Then log lines will be marked with custom context name."
 	@priority = "3"
 	test LogOutputReturnsMarkedOnStartupWithLogContextAndXML {
-		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.log.context.name=upgradeLog${line.separator}upgrade.database.auto.run=true";
+		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.log.context.name=ExampleText${line.separator}upgrade.database.auto.run=true";
 		property log.context.enabled = "true";
 
-		Log.viewLogFileContentPresent(logContent = "upgradeLog=upgradeLog");
+		Log.viewLogFileContentPresent(logContent = "ExampleText=ExampleText");
 	}
 
 	@description = "LPS-158742. Given xml is not added to portal and log context is not enabled. Then log lines will not be marked."
 	@priority = "3"
 	test LogOutputReturnsUnmarkedOnStartupWithoutLogContextAndXML {
-		property custom.properties = "upgrade.log.context.name=upgradeLog${line.separator}upgrade.database.auto.run=true";
+		property custom.properties = "upgrade.database.auto.run=true";
 
 		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
 	}
@@ -40,7 +40,7 @@ definition {
 	@description = "LPS-158742. Given xml is not added to portal and log context is enabled. Then log lines will not be marked."
 	@priority = "4"
 	test LogOutputReturnsUnmarkedOnStartupWithoutXML {
-		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.log.context.name=upgradeLog${line.separator}upgrade.database.auto.run=true";
+		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
 
 		Log.viewLogFileContentNotPresent(logContent = "upgradeLog=upgradeLog");
 	}

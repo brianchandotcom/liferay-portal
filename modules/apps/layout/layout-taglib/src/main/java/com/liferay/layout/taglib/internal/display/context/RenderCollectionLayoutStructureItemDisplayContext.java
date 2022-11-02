@@ -510,7 +510,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		LayoutListRetrieverRegistry layoutListRetrieverRegistry =
-			ServletContextUtil.getLayoutListRetrieverTracker();
+			ServletContextUtil.getLayoutListRetrieverRegistry();
 
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
 			(LayoutListRetriever<?, ListObjectReference>)
@@ -535,7 +535,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		LayoutListRetrieverRegistry layoutListRetrieverRegistry =
-			ServletContextUtil.getLayoutListRetrieverTracker();
+			ServletContextUtil.getLayoutListRetrieverRegistry();
 
 		String type = collectionJSONObject.getString("type");
 
@@ -547,7 +547,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry =
-			ServletContextUtil.getListObjectReferenceFactoryTracker();
+			ServletContextUtil.getListObjectReferenceFactoryRegistry();
 
 		ListObjectReferenceFactory<?> listObjectReferenceFactory =
 			listObjectReferenceFactoryRegistry.getListObjectReference(type);

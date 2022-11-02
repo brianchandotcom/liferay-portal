@@ -690,6 +690,8 @@ definition {
 	@description = "This test asserts that a user can update the general informations. Including update the default site name, default mail domain and so."
 	@priority = "4"
 	test CanUpdateGeneralInfos {
+		property portal.acceptance = "true";
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "General",

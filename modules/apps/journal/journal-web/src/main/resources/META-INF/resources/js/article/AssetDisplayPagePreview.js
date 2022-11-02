@@ -335,9 +335,12 @@ function AssetDisplayPageSelector({
 							});
 						});
 				}}
-				title={Liferay.Language.get(
-					'a-draft-will-be-saved-before-displaying-the-preview'
-				)}
+				title={
+					assetDisplayPageSelected &&
+					Liferay.Language.get(
+						'a-draft-will-be-saved-before-displaying-the-preview'
+					)
+				}
 			>
 				{Liferay.Language.get('preview')}
 			</ClayButton>

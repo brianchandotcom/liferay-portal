@@ -370,19 +370,7 @@ definition {
 	}
 
 	macro gotoCP {
-		Search.searchCP(searchTerm = "${searchToken}");
-
-		var key_orgName = "${orgName}";
-
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}");
-
-		AssertClick(
-			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME",
-			value1 = "${orgName}");
-
-		Breadcrumb.viewActiveEntry(breadcrumbName = "${orgName}");
+		LexiconEntry.gotoEntry(rowEntry = "${orgName}");
 	}
 
 	macro gotoEdit {

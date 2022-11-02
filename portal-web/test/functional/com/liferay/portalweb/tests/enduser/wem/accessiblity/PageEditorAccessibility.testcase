@@ -135,6 +135,124 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165278. The page creator could see hovered status when navigate through treeview nodes via keyboard."
+	@priority = "3"
+	test NavigateThroughTreeviewNodesViaKeyboard {
+		task ("Given a page creator has fragment composition on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "1",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("When the page creator accesses to the Browser panel") {
+			PageEditor.gotoTab(tabName = "Browser");
+		}
+
+		task ("Then the page creator could navigate through treeview nodes via keyboard") {
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Container'][@aria-selected]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+
+			AssertVisible(
+				key_index = "1",
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+			AssertVisible(
+				key_index = "1",
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
+
+			KeyPress(
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//div[contains(@role,'treeitem') and contains(.,'Container')]//button[contains(@class,'treeview-node-list') and @aria-expanded='true']",
+				value1 = "\DOWN");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Grid'][@aria-selected]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+
+			AssertVisible(
+				key_index = "1",
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+			AssertVisible(
+				key_index = "1",
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
+
+			KeyPress(
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//div[contains(@role,'treeitem') and contains(.,'Grid')]//button[contains(@class,'treeview-node-list') and @aria-expanded='true']",
+				value1 = "\DOWN");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Module'][@aria-selected]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+
+			KeyPress(
+				key_nodeName = "Module",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//div[contains(@role,'treeitem') and contains(.,'Module')]//button[contains(@class,'treeview-node-list') and @aria-expanded='true']",
+				value1 = "\DOWN");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Heading'][@aria-selected]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+
+			AssertVisible(
+				key_index = "1",
+				key_nodeName = "Heading",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
+
+			AssertVisible(
+				key_index = "1",
+				key_nodeName = "Heading",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	@description = "This is a test for LPS-165485. The page creator could switch edit mode via keyboard."
 	@priority = "3"
 	test SwitchEditModeViaKeyboard {

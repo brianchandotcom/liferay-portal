@@ -267,6 +267,237 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-159626. Verify that can publish web content with URL references to live via remote staging."
+	@priority = "3"
+	test CanPublishWCWithURLReferenceViaRemoteStaging {
+		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property databases.size = "1";
+		property test.name.skip.portal.instance = "Staging#CanPublishWCWithURLReferenceViaRemoteStaging";
+
+		task ("Given: Add 10 content pages with 2 Grid modules and 2 WCD in each") {
+			for (var pageCount : list "1,2,3") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Page ${pageCount}",
+					type = "content");
+
+				for (var i : list "1,2") {
+					JSONLayout.addPublicLayout(
+						groupName = "Site Name",
+						layoutName = "Page ${pageCount}${i}",
+						parentLayoutName = "Page ${pageCount}",
+						type = "content");
+				}
+			}
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Page 111",
+				parentLayoutName = "Page 11",
+				type = "content");
+
+			for (var nums : list "1,2,3,11,12,111,21,22,31,32") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Page ${nums}",
+					siteName = "Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Grid");
+
+				PageEditor.editLayoutGrid(
+					columnCount = "2",
+					panel = "General");
+
+				for (var n : list "1,2") {
+					PageEditor.addElementToColumn(
+						columnNumber = "${n}",
+						navTab = "Widgets",
+						portletName = "Web Content Display");
+				}
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("And: Add a structure and template with 20 text fields and create a menu WC using the created structure 1 with pages name and URLs") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+			WebContentStructures.addCP(structureName = "WC Structure 1");
+
+			for (var num : list "1,2,3,11,12,111,21,22,31,32") {
+				DataEngine.addField(
+					fieldFieldLabel = "Open page ${num}",
+					fieldName = "Text");
+
+				DataEngine.addFieldNested(
+					fieldFieldLabel = "URL${num}",
+					fieldName = "Text",
+					targetFieldLabel = "Open page ${num}");
+			}
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure 1");
+
+			var templateScript = '''
+<p> <a href="${Openpage1.URL1.getData()}">${Openpage1.getData()}</a> </p>
+<p> <a href="${Openpage2.URL2.getData()}">${Openpage2.getData()}</a> </p>
+<p> <a href="${Openpage3.URL3.getData()}">${Openpage3.getData()}</a> </p>
+<p> <a href="${Openpage11.URL11.getData()}">${Openpage11.getData()}</a> </p>
+<p> <a href="${Openpage12.URL12.getData()}">${Openpage12.getData()}</a> </p>
+<p> <a href="${Openpage111.URL111.getData()}">${Openpage111.getData()}</a> </p>
+<p> <a href="${Openpage21.URL21.getData()}">${Openpage21.getData()}</a> </p>
+<p> <a href="${Openpage22.URL22.getData()}">${Openpage22.getData()}</a> </p>
+<p> <a href="${Openpage31.URL31.getData()}">${Openpage31.getData()}</a> </p>
+<p> <a href="${Openpage32.URL32.getData()}">${Openpage32.getData()}</a> </p>
+''';
+
+			WebContentTemplates.addCP(
+				templateName = "WC Template 1",
+				templateScript = "${templateScript}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure 1");
+
+			PortletEntry.inputTitle(title = "Menu");
+
+			for (var num : list "1,2,3,11,12,111,21,22,31,32") {
+				DERenderer.inputDataInTextField(
+					fieldLabel = "Open page ${num}",
+					value = "Open page ${num}");
+
+				DERenderer.inputDataInTextField(
+					fieldLabel = "URL${num}",
+					value = "/web/site-name/page-${num}");
+			}
+
+			PortletEntry.publish();
+		}
+
+		task ("And: Add another structure and template with 2 text fields and create 10 WC articles for their pages using the created structure 2") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+			WebContentStructures.addCP(structureName = "WC Structure 2");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Title",
+				fieldName = "Text");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Content",
+				fieldLocation = "2",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure 2");
+
+			var templateScript = '''
+<h1>${Title.getData()}</h1>
+<p>${Content.getData()}</p>
+''';
+
+			WebContentTemplates.addCP(
+				templateName = "WC Template 2",
+				templateScript = "${templateScript}");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			for (var num : list "1,2,3,11,12,111,21,22,31,32") {
+				WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure 2");
+
+				PortletEntry.inputTitle(title = "Content-${num}");
+
+				DERenderer.inputDataInTextField(
+					fieldLabel = "Title",
+					value = "Content-${num}");
+
+				DERenderer.inputDataInTextField(
+					fieldLabel = "Content",
+					value = "Text Content-${num}");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("And: Edit each page to show their WC articles and a menu WC via the WCDs") {
+			for (var nums : list "1,2,3,11,12,111,21,22,31,32") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Page ${nums}",
+					siteName = "Site Name");
+
+				WebContentDisplayPortlet.selectWebContent(webContentTitle = "Menu");
+
+				IFrame.closeFrame();
+
+				WebContentDisplayPortlet.selectWebContent(
+					portletIndex = "2",
+					webContentTitle = "Content-${nums}");
+
+				IFrame.closeFrame();
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("When: Enable remote staging using the same site names and publish all the site web contents to live") {
+			JSONGroup.addGroup(
+				groupName = "Site Name",
+				portalURL = "http://localhost:9080");
+
+			var remoteGroupId = JSONGroupSetter.setGroupId(
+				groupName = "Site Name",
+				portalURL = "http://localhost:9080");
+
+			JSONStaging.enableRemoteStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Site Name",
+				remoteGroupId = "${remoteGroupId}",
+				remotePort = "9080");
+
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.configurePublishToLive(
+				checkContentNameList = "Web Content",
+				contentDateRange = "All");
+
+			Staging.publishToLive(remoteStaging = "true");
+		}
+
+		task ("Then: Assert the links point to the correct pages and show the correct articles on the page on the remote live site") {
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.openSitePage(
+				baseURL = "http://localhost:9080",
+				pageName = "Page 1",
+				siteName = "Site Name");
+
+			for (var nums : list "111,21,3") {
+				ClickNoError(
+					key_text = "Open page ${nums}",
+					locator1 = "Link#ANY");
+
+				AssertTextEquals.assertPartialText(
+					index = "2",
+					locator1 = "WCD#WEB_CONTENT_CONTENT",
+					value1 = "Content-${nums}");
+
+				AssertLocation.assertPartialLocation(value1 = "/web/site-name/page-${nums}");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-90127."
 	@priority = "3"
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {

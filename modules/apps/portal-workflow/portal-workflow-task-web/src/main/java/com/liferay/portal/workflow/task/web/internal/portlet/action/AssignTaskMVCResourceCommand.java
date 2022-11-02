@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -68,19 +68,19 @@ public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 			workflowTask.getOptionalAttributes(), "groupId",
 			themeDisplay.getSiteGroupId());
 
-		_workflowTaskPermissionChecker.check(
-			groupId, workflowTask, themeDisplay.getPermissionChecker());
+		_workflowTaskPermission.check(
+			themeDisplay.getPermissionChecker(), workflowTask, groupId);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"hasPermission",
-				_workflowTaskPermissionChecker.hasPermission(
-					groupId,
+				_workflowTaskPermission.contains(
+					themeDisplay.getPermissionChecker(),
 					workflowTaskManager.assignWorkflowTaskToUser(
 						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 						workflowTaskId, assigneeUserId, comment, null, null),
-					themeDisplay.getPermissionChecker())));
+					groupId)));
 
 		SessionMessages.add(resourceRequest, "requestProcessed", "");
 	}
@@ -88,7 +88,7 @@ public class AssignTaskMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	protected WorkflowTaskManager workflowTaskManager;
 
-	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
-		new WorkflowTaskPermissionChecker();
+	@Reference
+	private WorkflowTaskPermission _workflowTaskPermission;
 
 }

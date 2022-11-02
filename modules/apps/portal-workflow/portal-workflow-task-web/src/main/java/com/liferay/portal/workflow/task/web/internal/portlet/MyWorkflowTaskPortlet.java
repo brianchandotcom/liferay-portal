@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 import com.liferay.portal.workflow.task.web.internal.configuration.WorkflowTaskWebConfiguration;
 import com.liferay.portal.workflow.task.web.internal.display.context.WorkflowTaskDisplayContext;
-import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
 import java.io.IOException;
 
@@ -162,8 +162,8 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			workflowTask.getOptionalAttributes(), "groupId",
 			themeDisplay.getSiteGroupId());
 
-		_workflowTaskPermissionChecker.check(
-			groupId, workflowTask, themeDisplay.getPermissionChecker());
+		_workflowTaskPermission.check(
+			themeDisplay.getPermissionChecker(), workflowTask, groupId);
 	}
 
 	private void _setWorkflowTaskDisplayContextRenderRequestAttribute(
@@ -204,8 +204,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 	@Reference
 	private Portal _portal;
 
-	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
-		new WorkflowTaskPermissionChecker();
+	@Reference
+	private WorkflowTaskPermission _workflowTaskPermission;
+
 	private volatile WorkflowTaskWebConfiguration _workflowTaskWebConfiguration;
 
 }

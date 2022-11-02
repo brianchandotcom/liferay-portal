@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.task.web.internal.notifications;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -38,7 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import java.io.Serializable;
 
@@ -73,7 +74,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	public static void setUpClass() throws Exception {
 		_setUpUserNotificationEventLocalService();
 		_setUpWorkflowTaskManagerUtil();
-		_setUpWorkflowTaskPermissionChecker();
+		_setUpWorkflowTaskPermission();
 	}
 
 	@Before
@@ -288,16 +289,22 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			workflowTaskManager);
 	}
 
-	private static void _setUpWorkflowTaskPermissionChecker() throws Exception {
+	private static void _setUpWorkflowTaskPermission() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			_workflowTaskUserNotificationHandler,
-			"_workflowTaskPermissionChecker",
-			new WorkflowTaskPermissionChecker() {
+			_workflowTaskUserNotificationHandler, "_workflowTaskPermission",
+			new WorkflowTaskPermission() {
 
 				@Override
-				public boolean hasPermission(
-					long groupId, WorkflowTask workflowTask,
-					PermissionChecker permissionChecker) {
+				public void check(
+						PermissionChecker permissionChecker,
+						WorkflowTask workflowTask, long groupId)
+					throws PortalException {
+				}
+
+				@Override
+				public boolean contains(
+					PermissionChecker permissionChecker,
+					WorkflowTask workflowTask, long groupId) {
 
 					return true;
 				}

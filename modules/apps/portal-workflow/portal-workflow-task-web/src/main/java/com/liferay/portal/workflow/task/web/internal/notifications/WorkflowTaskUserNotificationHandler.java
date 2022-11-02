@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
-import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
+import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -270,8 +270,8 @@ public class WorkflowTaskUserNotificationHandler
 			workflowTask.getOptionalAttributes(), "groupId",
 			themeDisplay.getSiteGroupId());
 
-		return _workflowTaskPermissionChecker.hasPermission(
-			groupId, workflowTask, themeDisplay.getPermissionChecker());
+		return _workflowTaskPermission.contains(
+			themeDisplay.getPermissionChecker(), workflowTask, groupId);
 	}
 
 	private static final String _BODY_TEMPLATE_DEFAULT =
@@ -291,7 +291,7 @@ public class WorkflowTaskUserNotificationHandler
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
-	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
-		new WorkflowTaskPermissionChecker();
+	@Reference
+	private WorkflowTaskPermission _workflowTaskPermission;
 
 }

@@ -15,7 +15,7 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import {navigate} from 'frontend-js-web';
+import {fetch, navigate, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -26,7 +26,17 @@ const ITEM_TYPES_SYMBOL = {
 	folder: 'folder',
 };
 
-export default function NavigationPanel({items, selectedItemId}) {
+const ITEM_TYPES = {
+	article: 'article',
+	folder: 'folder',
+};
+
+export default function NavigationPanel({
+	items,
+	moveURL,
+	portletNamespace,
+	selectedItemId,
+}) {
 	const handleClickItem = (event, item) => {
 		if (event.defaultPrevented) {
 			return;
@@ -38,11 +48,47 @@ export default function NavigationPanel({items, selectedItemId}) {
 		navigate(item.href);
 	};
 
+	const handleItemMove = (item, parentItem) => {
+		if (
+			item.type === ITEM_TYPES.folder &&
+			parentItem.type === ITEM_TYPES.article
+		) {
+			return false;
+		}
+
+		fetch(moveURL, {
+			body: objectToFormData({
+				[`${portletNamespace}resourcePrimKey`]: item.id,
+				[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
+			}),
+			method: 'POST',
+		})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error();
+				}
+
+				return response.json();
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
+
+		return true;
+	};
+
 	return (
 		<ClayTreeView
 			defaultItems={items}
 			defaultSelectedKeys={new Set([selectedItemId])}
+			dragAndDrop
 			nestedKey="children"
+			onItemMove={handleItemMove}
 			showExpanderOnHover={false}
 		>
 			{(item) => {

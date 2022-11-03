@@ -995,7 +995,7 @@ definition {
 				value1 = "\ENTER");
 
 			if (isSet(upCount)) {
-				var i = "1";
+				var i = "0";
 
 				while ("${i}" != "${upCount}") {
 					KeyPress(
@@ -1026,7 +1026,7 @@ definition {
 				value1 = "\ENTER");
 
 			if (isSet(upCount)) {
-				var i = "1";
+				var i = "0";
 
 				while ("${i}" != "${upCount}") {
 					KeyPress(
@@ -1152,7 +1152,7 @@ definition {
 			value1 = "\ENTER");
 
 		if (isSet(upCount)) {
-			var i = "1";
+			var i = "0";
 
 			while ("${i}" != "${upCount}") {
 				KeyPress(

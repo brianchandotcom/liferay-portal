@@ -16,6 +16,8 @@ package com.liferay.commerce.inventory.internal.method;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryAvailabilityConstants;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
+import com.liferay.commerce.inventory.engine.contributor.CommerceInventoryEngineContributor;
+import com.liferay.commerce.inventory.engine.contributor.CommerceInventoryEngineContributorRegistry;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethod;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
@@ -78,6 +80,16 @@ public class DefaultCommerceInventoryMethodImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
+
+		for (CommerceInventoryEngineContributor
+				commerceInventoryEngineContributor :
+					_commerceInventoryEngineContributorRegistry.
+						getCommerceInventoryEngineContributors()) {
+
+			commerceInventoryEngineContributor.consumeQuantityContribute(
+				userId, commerceInventoryWarehouseId, sku, quantity,
+				bookedQuantityId, context);
+		}
 	}
 
 	@Override
@@ -101,6 +113,15 @@ public class DefaultCommerceInventoryMethodImpl
 					getCommerceInventoryWarehouseItemId(),
 				commerceInventoryWarehouseItem.getQuantity() - quantity,
 				commerceInventoryWarehouseItem.getMvccVersion());
+
+		for (CommerceInventoryEngineContributor
+				commerceInventoryEngineContributor :
+					_commerceInventoryEngineContributorRegistry.
+						getCommerceInventoryEngineContributors()) {
+
+			commerceInventoryEngineContributor.decreaseStockQuantityContribute(
+				userId, commerceInventoryWarehouseId, sku, quantity);
+		}
 	}
 
 	@Override
@@ -194,6 +215,15 @@ public class DefaultCommerceInventoryMethodImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(null), quantity);
+
+		for (CommerceInventoryEngineContributor
+				commerceInventoryEngineContributor :
+					_commerceInventoryEngineContributorRegistry.
+						getCommerceInventoryEngineContributors()) {
+
+			commerceInventoryEngineContributor.increaseStockQuantityContribute(
+				userId, commerceInventoryWarehouseId, sku, quantity);
+		}
 	}
 
 	private String _getAvailabilityStatus(
@@ -230,6 +260,10 @@ public class DefaultCommerceInventoryMethodImpl
 	@Reference
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
+
+	@Reference
+	private CommerceInventoryEngineContributorRegistry
+		_commerceInventoryEngineContributorRegistry;
 
 	@Reference
 	private CommerceInventoryWarehouseItemLocalService

@@ -17,8 +17,6 @@ package com.liferay.commerce.inventory.internal.engine;
 import com.liferay.commerce.inventory.configuration.CommerceInventoryGroupConfiguration;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
-import com.liferay.commerce.inventory.engine.contributor.CommerceInventoryEngineContributor;
-import com.liferay.commerce.inventory.engine.contributor.CommerceInventoryEngineContributorRegistry;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethod;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,16 +60,6 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		commerceInventoryMethod.consumeQuantity(
 			userId, commerceInventoryWarehouseId, sku, quantity,
 			bookedQuantityId, context);
-
-		for (CommerceInventoryEngineContributor
-				commerceInventoryEngineContributor :
-					_commerceInventoryEngineContributorRegistry.
-						getCommerceInventoryEngineContributors()) {
-
-			commerceInventoryEngineContributor.consumeQuantityContribute(
-				userId, commerceInventoryWarehouseId, sku, quantity,
-				bookedQuantityId, context);
-		}
 	}
 
 	@Override
@@ -88,15 +76,6 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 		commerceInventoryMethod.decreaseStockQuantity(
 			userId, commerceInventoryWarehouseId, sku, quantity);
-
-		for (CommerceInventoryEngineContributor
-				commerceInventoryEngineContributor :
-					_commerceInventoryEngineContributorRegistry.
-						getCommerceInventoryEngineContributors()) {
-
-			commerceInventoryEngineContributor.decreaseStockQuantityContribute(
-				userId, commerceInventoryWarehouseId, sku, quantity);
-		}
 	}
 
 	@Override
@@ -176,15 +155,6 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 		commerceInventoryMethod.increaseStockQuantity(
 			userId, commerceInventoryWarehouseId, sku, quantity);
-
-		for (CommerceInventoryEngineContributor
-				commerceInventoryEngineContributor :
-					_commerceInventoryEngineContributorRegistry.
-						getCommerceInventoryEngineContributors()) {
-
-			commerceInventoryEngineContributor.increaseStockQuantityContribute(
-				userId, commerceInventoryWarehouseId, sku, quantity);
-		}
 	}
 
 	private CommerceInventoryMethod _getCommerceInventoryMethod(
@@ -219,10 +189,6 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceInventoryEngineImpl.class);
-
-	@Reference
-	private CommerceInventoryEngineContributorRegistry
-		_commerceInventoryEngineContributorRegistry;
 
 	@Reference
 	private CommerceInventoryMethodRegistry _commerceInventoryMethodRegistry;

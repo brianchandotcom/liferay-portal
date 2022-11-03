@@ -199,9 +199,10 @@ const ActivationStatusAnalyticsCloud = ({
 				mutation: updateAccountSubscriptionGroups,
 				variables: {
 					accountSubscriptionGroup: {
-						accountEntryId: project.id,
 						accountKey: project.accountKey,
 						activationStatus: STATUS_TAG_TYPE_NAMES.active,
+						r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+							project.id,
 					},
 					id:
 						subscriptionGroupAnalyticsCloud?.accountSubscriptionGroupId,

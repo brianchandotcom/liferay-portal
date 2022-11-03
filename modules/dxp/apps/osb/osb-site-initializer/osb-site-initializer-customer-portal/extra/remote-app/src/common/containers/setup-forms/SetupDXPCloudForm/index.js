@@ -154,11 +154,12 @@ const SetupDXPCloudPage = ({
 				mutation: addDXPCloudEnvironment,
 				variables: {
 					DXPCloudEnvironment: {
-						accountEntryId: project.id,
 						accountKey: project.accountKey,
 						dataCenterRegion: dxp.dataCenterRegion,
 						disasterDataCenterRegion: dxp.disasterDataCenterRegion,
 						projectId: dxp.projectId,
+						r_accountEntryToDXPCloudEnvironment_accountEntryId:
+							project?.id,
 					},
 					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
@@ -177,12 +178,13 @@ const SetupDXPCloudPage = ({
 							mutation: addAdminDXPCloud,
 							variables: {
 								AdminDXPCloud: {
-									accountEntryId: project.id,
 									dxpCloudEnvironmentId,
 									emailAddress: email,
 									firstName,
 									githubUsername: github,
 									lastName,
+									r_accountEntryToDXPCloudEnvironment_accountEntryId:
+										project?.id,
 								},
 								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 							},
@@ -197,10 +199,11 @@ const SetupDXPCloudPage = ({
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
-							accountEntryId: project.id,
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
 							manageContactsURL: `https://console.liferay.cloud/projects/${dxpCloudEnvironmentId}/overview`,
+							r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+								project.id,
 						},
 						id: subscriptionGroupId,
 					},

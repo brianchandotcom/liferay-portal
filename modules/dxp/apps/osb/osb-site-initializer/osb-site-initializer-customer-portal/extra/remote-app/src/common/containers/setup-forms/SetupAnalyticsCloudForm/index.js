@@ -143,10 +143,11 @@ const SetupAnalyticsCloudPage = ({
 				mutation: addAnalyticsCloudWorkspace,
 				variables: {
 					analyticsCloudWorkspace: {
-						accountEntryId: project.id,
 						accountKey: project.accountKey,
 						dataCenterLocation: analyticsCloud.dataCenterLocation,
 						ownerEmailAddress: analyticsCloud.ownerEmailAddress,
+						r_accountEntryToDXPCloudEnvironment_accountEntryId:
+							project?.id,
 						workspaceName: analyticsCloud.workspaceName,
 					},
 					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
@@ -165,10 +166,11 @@ const SetupAnalyticsCloudPage = ({
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
-							accountEntryId: project.id,
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
 							manageContactsURL: `https://analytics.liferay.com/workspace/${analyticsCloudWorkspaceId}/sites`,
+							r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+								project?.id,
 						},
 						id: subscriptionGroupId,
 					},
@@ -184,9 +186,10 @@ const SetupAnalyticsCloudPage = ({
 							mutation: addIncidentReportAnalyticsCloud,
 							variables: {
 								IncidentReportContactAnalyticsCloud: {
-									accountEntryId: project.id,
 									analyticsCloudWorkspaceId,
 									emailAddress: email,
+									r_accountEntryToDXPCloudEnvironment_accountEntryId:
+										project.id,
 								},
 								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 							},

@@ -196,6 +196,8 @@ const InviteTeamMembersPage = ({
 						variables: {
 							TeamMembersInvitation: {
 								email,
+								r_accountEntryToDXPCloudEnvironment_accountEntryId:
+									project?.id,
 								role: role.key,
 							},
 							scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),

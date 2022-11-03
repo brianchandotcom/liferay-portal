@@ -4,8 +4,6 @@ Bundle-Version: 12.0.1
 Export-Package:\
 	com.liferay.layout.page.template.constants,\
 	com.liferay.layout.page.template.exception,\
-	com.liferay.layout.page.template.exporter,\
-	com.liferay.layout.page.template.importer,\
 	com.liferay.layout.page.template.info.item.capability,\
 	com.liferay.layout.page.template.model,\
 	com.liferay.layout.page.template.serializer,\

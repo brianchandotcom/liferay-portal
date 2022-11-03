@@ -152,11 +152,12 @@ export function Column({
 				ref={columnRef}
 				rowIndex={rowIndex}
 			>
-				{editable && isFieldSelected && (
+				{editable && (
 					<Actions
 						activePage={pageIndex}
 						fieldId={firstField.fieldName}
 						fieldType={firstField.type}
+						isFieldSelected={isFieldSelected}
 						isFieldSet={isFieldSet}
 						parentFieldName={parentField?.fieldName}
 						ref={actionsRef}

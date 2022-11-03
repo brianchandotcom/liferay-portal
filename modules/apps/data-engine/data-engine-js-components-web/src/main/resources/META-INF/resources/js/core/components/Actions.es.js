@@ -189,7 +189,14 @@ export function ActionsControls({
 
 export const Actions = forwardRef(
 	(
-		{activePage, fieldId, fieldType, isFieldSet, parentFieldName},
+		{
+			activePage,
+			fieldId,
+			fieldType,
+			isFieldSelected,
+			isFieldSet,
+			parentFieldName,
+		},
 		actionsRef
 	) => {
 		const {fieldTypes} = useConfig();
@@ -206,6 +213,7 @@ export const Actions = forwardRef(
 		return (
 			<div
 				className={classNames('ddm-field-actions-container', {
+					'ddm-field-actions-container--selected': isFieldSelected,
 					'ddm-fieldset': isFieldSet,
 				})}
 				ref={actionsRef}

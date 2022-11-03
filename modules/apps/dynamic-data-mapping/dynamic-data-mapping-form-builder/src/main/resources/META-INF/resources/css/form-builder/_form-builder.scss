@@ -28,6 +28,8 @@ $c: '.ddm-form-builder';
 	.ddm-field-container {
 		border: 2px solid transparent;
 
+		&:focus,
+		&:focus-within,
 		&.dragging,
 		&.expanded,
 		&.hovered,

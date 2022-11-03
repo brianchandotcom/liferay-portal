@@ -154,7 +154,7 @@ const NotificationsInfo = ({
 
 	if (
 		selectedItem.data.notifications?.recipients?.[notificationIndex]
-			.length !== 0
+			?.length !== 0
 	) {
 		recipientTypeHolder = getRecipientType(
 			selectedItem.data.notifications?.recipients?.[notificationIndex]

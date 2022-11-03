@@ -15,8 +15,8 @@
 /// <reference types="react" />
 
 interface ReadOnlyContainerProps {
-	values: Partial<ObjectField>;
 	setValues: (value: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 export declare function ReadOnlyContainer({
 	setValues,

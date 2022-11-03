@@ -15,8 +15,8 @@
 /// <reference types="react" />
 
 interface AdvancedTabProps {
-	values: Partial<ObjectField>;
 	setValues: (value: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 export declare function AdvancedTab({
 	setValues,

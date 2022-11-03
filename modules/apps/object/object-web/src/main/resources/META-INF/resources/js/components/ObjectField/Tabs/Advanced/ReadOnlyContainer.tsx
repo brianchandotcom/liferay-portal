@@ -13,17 +13,47 @@
  */
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import {Card} from '@liferay/object-js-components-web';
+import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
 import React from 'react';
 
 interface ReadOnlyContainerProps {
-	values: Partial<ObjectField>;
 	setValues: (value: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 
+const updateReadOnlyScriptSetting = (
+	objectFieldSettings: ObjectFieldSetting[],
+	script: string
+) => {
+	return [
+		...(objectFieldSettings?.filter(
+			(objectFieldSetting) => objectFieldSetting.name !== 'readOnlyScript'
+		) as ObjectFieldSetting[]),
+		{
+			name: 'readOnlyScript',
+			value: script,
+		},
+	] as ObjectFieldSetting[];
+};
+
+const findObjectFieldSetting = (
+	objectFieldSettings: ObjectFieldSetting[],
+	fieldSettingName: ObjectFieldSettingName
+) => {
+	return objectFieldSettings?.find(
+		(fieldSetting) => fieldSetting.name === fieldSettingName
+	);
+};
+
 export function ReadOnlyContainer({setValues, values}: ReadOnlyContainerProps) {
-	const readOnlySetting = values.objectFieldSettings?.find(
-		(fieldSetting) => fieldSetting.name === 'readOnly'
+	const readOnlySetting = findObjectFieldSetting(
+		values.objectFieldSettings as ObjectFieldSetting[],
+		'readOnly'
+	);
+
+	const readOnlyScriptSetting = findObjectFieldSetting(
+		values.objectFieldSettings as ObjectFieldSetting[],
+		'readOnlyScript'
 	);
 
 	const setReadOnly = (value: string) => {
@@ -31,7 +61,8 @@ export function ReadOnlyContainer({setValues, values}: ReadOnlyContainerProps) {
 			objectFieldSettings: [
 				...(values.objectFieldSettings?.filter(
 					(objectFieldSetting) =>
-						objectFieldSetting.name !== 'readOnly'
+						objectFieldSetting.name !== 'readOnly' &&
+						objectFieldSetting.name !== 'readOnlyScript'
 				) as ObjectFieldSetting[]),
 				{
 					name: 'readOnly',
@@ -72,6 +103,52 @@ export function ReadOnlyContainer({setValues, values}: ReadOnlyContainerProps) {
 					value="conditional"
 				/>
 			</ClayRadioGroup>
+
+			{readOnlySetting?.value === 'conditional' && (
+				<ExpressionBuilder
+					feedbackMessage={Liferay.Language.get(
+						'use-expressions-to-create-a-condition'
+					)}
+					label={Liferay.Language.get('expression-builder')}
+					onChange={({target: {value}}) => {
+						setValues({
+							objectFieldSettings: updateReadOnlyScriptSetting(
+								values.objectFieldSettings as ObjectFieldSetting[],
+								value
+							),
+						});
+					}}
+					onOpenModal={() => {
+						const parentWindow = Liferay.Util.getOpener();
+
+						parentWindow.Liferay.fire(
+							'openExpressionBuilderModal',
+							{
+								header: Liferay.Language.get('formula-builder'),
+								onSave: (script: string) => {
+									setValues({
+										objectFieldSettings: updateReadOnlyScriptSetting(
+											values.objectFieldSettings as ObjectFieldSetting[],
+											script
+										),
+									});
+								},
+								placeholder: `<#-- ${Liferay.Util.sub(
+									Liferay.Language.get(
+										'add-formulas-to-calculate-values-based-on-other-fields-type-x-to-use-the-autocomplete-feature'
+									),
+									['"${"']
+								)} -->`,
+								required: false,
+								source: readOnlyScriptSetting?.value ?? '',
+								validateExpressionURL: '',
+							}
+						);
+					}}
+					placeholder={Liferay.Language.get('create-an-expression')}
+					value={(readOnlyScriptSetting?.value as string) ?? ''}
+				/>
+			)}
 		</Card>
 	);
 }

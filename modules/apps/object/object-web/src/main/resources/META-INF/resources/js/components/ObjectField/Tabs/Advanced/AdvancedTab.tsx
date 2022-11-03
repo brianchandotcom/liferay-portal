@@ -17,8 +17,8 @@ import React from 'react';
 import {ReadOnlyContainer} from './ReadOnlyContainer';
 
 interface AdvancedTabProps {
-	values: Partial<ObjectField>;
 	setValues: (value: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 
 export function AdvancedTab({setValues, values}: AdvancedTabProps) {

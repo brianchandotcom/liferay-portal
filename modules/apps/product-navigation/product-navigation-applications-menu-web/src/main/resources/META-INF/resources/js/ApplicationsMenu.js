@@ -262,7 +262,7 @@ const AppsPanel = ({
 
 			<div className="applications-menu-bg applications-menu-border-top applications-menu-content">
 				<ClayLayout.ContainerFluid>
-					<ClayLayout.Row>
+					<ClayLayout.Row className="flex-nowrap">
 						<ClayLayout.Col lg="9" md="8">
 							<ClayTabs.Content activeIndex={activeTab}>
 								{categories.map(({childCategories}, index) => (
@@ -351,7 +351,7 @@ const AppsPanel = ({
 					<ClayLayout.Row>
 						<ClayLayout.Col lg="9" md="8">
 							<ClayLayout.ContentRow
-								className="applications-menu-border-top c-py-3"
+								className="applications-menu-border-top bg-white c-py-3"
 								verticalAlign="center"
 							>
 								<ClayLayout.ContentCol expand>

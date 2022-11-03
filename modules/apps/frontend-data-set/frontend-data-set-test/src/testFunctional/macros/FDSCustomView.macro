@@ -75,7 +75,6 @@ definition {
 		Click(
 			key_itemName = "Save View",
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
-
 	}
 
 	macro saveViewAs {
@@ -133,4 +132,5 @@ definition {
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
+
 }

@@ -20,7 +20,6 @@ import com.liferay.chat.internal.jabber.JabberImpl;
 import com.liferay.chat.internal.jabber.JabberUtil;
 import com.liferay.chat.internal.model.listener.UserModelListener;
 import com.liferay.chat.internal.poller.ChatPollerProcessor;
-import com.liferay.chat.internal.settings.definition.ChatGroupServiceConfigurationBeanDeclaration;
 import com.liferay.chat.internal.util.DefaultBuddyFinderImpl;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
@@ -44,7 +43,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			Arrays.asList(
 				PortalProfile.PORTAL_PROFILE_NAME_CE,
 				PortalProfile.PORTAL_PROFILE_NAME_DXP),
-			ChatGroupServiceConfigurationBeanDeclaration.class.getName(),
 			ChatPollerProcessor.class.getName(),
 			DefaultBuddyFinderImpl.class.getName(), JabberImpl.class.getName(),
 			JabberUtil.class.getName(), LoginPostAction.class.getName(),

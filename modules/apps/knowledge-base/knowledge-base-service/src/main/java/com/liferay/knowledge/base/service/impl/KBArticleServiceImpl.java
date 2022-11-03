@@ -312,8 +312,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 	@Override
 	public String getGroupKBArticlesRSS(
-			int status, int rssDelta, String rssDisplayStyle, String rssFormat,
-			ThemeDisplay themeDisplay)
+			int status, int max, String type, double version,
+			String displayStyle, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Group group = themeDisplay.getScopeGroup();
@@ -327,12 +327,12 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		String feedURL = _portal.getLayoutFullURL(themeDisplay);
 
 		List<KBArticle> kbArticles = getGroupKBArticles(
-			group.getGroupId(), status, 0, rssDelta,
+			group.getGroupId(), status, 0, max,
 			new KBArticleModifiedDateComparator());
 
 		return _exportToRSS(
-			rssDisplayStyle, rssFormat, name, description, feedURL, kbArticles,
-			themeDisplay);
+			feedURL, description, displayStyle, kbArticles, name, themeDisplay,
+			type, version);
 	}
 
 	@Override
@@ -358,8 +358,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 	@Override
 	public String getKBArticleRSS(
-			long resourcePrimKey, int status, int rssDelta,
-			String rssDisplayStyle, String rssFormat, ThemeDisplay themeDisplay)
+			long resourcePrimKey, int status, int max, String type,
+			double version, String displayStyle, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
@@ -377,8 +377,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			new KBArticleModifiedDateComparator());
 
 		return _exportToRSS(
-			rssDisplayStyle, rssFormat, name, description, feedURL,
-			ListUtil.subList(kbArticles, 0, rssDelta), themeDisplay);
+			feedURL, description, displayStyle,
+			ListUtil.subList(kbArticles, 0, max), name, themeDisplay, type,
+			version);
 	}
 
 	@Override
@@ -891,9 +892,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	private String _exportToRSS(
-		String rssDisplayStyle, String rssFormat, String name,
-		String description, String feedURL, List<KBArticle> kbArticles,
-		ThemeDisplay themeDisplay) {
+		String feedURL, String description, String displayStyle,
+		List<KBArticle> kbArticles, String name, ThemeDisplay themeDisplay,
+		String type, double version) {
 
 		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 
@@ -914,7 +915,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 			String value = null;
 
-			if (rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 				value = _htmlParser.extractText(kbArticle.getDescription());
 
 				if (Validator.isNull(value)) {
@@ -922,7 +923,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 						_htmlParser.extractText(kbArticle.getContent()), 200);
 				}
 			}
-			else if (rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
+			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
 			}
 			else {
@@ -953,10 +954,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			syndEntries.add(syndEntry);
 		}
 
-		syndFeed.setFeedType(
-			RSSUtil.getFeedType(
-				RSSUtil.getFormatType(rssFormat),
-				RSSUtil.getFormatVersion(rssFormat)));
+		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
 
 		List<SyndLink> syndLinks = new ArrayList<>();
 

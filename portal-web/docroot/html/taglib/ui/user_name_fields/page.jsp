@@ -68,7 +68,7 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 				</aui:input>
 			</c:when>
 			<c:otherwise>
-				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("Value") %>' showEmptyOption="<%= true %>">
+				<aui:select disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" label="<%= fieldName %>" name='<%= fieldName.concat("ListTypeValue") %>' showEmptyOption="<%= true %>">
 
 					<%
 					String listTypeName = StringPool.BLANK;

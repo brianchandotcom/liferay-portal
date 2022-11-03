@@ -25,6 +25,7 @@ import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -35,6 +36,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,6 +97,16 @@ public class ObjectEntryInfoItemCreator
 				_getGroupId(_objectDefinition, String.valueOf(groupId)),
 				_objectDefinition.getObjectDefinitionId(), values,
 				serviceContext);
+		}
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
+
+			if (throwable instanceof ObjectValidationRuleEngineException) {
+				throw new InfoFormValidationException.CustomValidation(
+					throwable.getLocalizedMessage());
+			}
+
+			throw new InfoFormException();
 		}
 		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {

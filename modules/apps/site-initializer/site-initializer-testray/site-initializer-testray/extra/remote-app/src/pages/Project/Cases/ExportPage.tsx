@@ -12,16 +12,17 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import classNames from 'classnames';
 import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
-import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import {useHeader} from '../../../hooks';
 import useFormActions from '../../../hooks/useFormActions';
 import useStorage from '../../../hooks/useStorage';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../services/liferay';
 import {STORAGE_KEYS} from '../../../util/constants';
 import BuildFormCases from '../Routines/Builds/BuildForm/BuildFormCases';
 
@@ -33,8 +34,7 @@ const ExportPage = () => {
 	const [caseIds, setCaseIds] = useState<number[]>([]);
 	const [, setExportCaseIds] = useStorage<number[]>(
 		`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}`,
-		[],
-		sessionStorage
+		[]
 	);
 
 	useEffect(() => {
@@ -43,22 +43,13 @@ const ExportPage = () => {
 		}, 10);
 	}, [setTabs]);
 
+	useEffect(() => {
+		setExportCaseIds(caseIds);
+	}, [caseIds, setExportCaseIds]);
+
 	const {
-		form: {onClose, submitting},
+		form: {onClose},
 	} = useFormActions();
-
-	const onSubmit = () => {
-		if (caseIds.length) {
-			setExportCaseIds(caseIds);
-
-			return window.open(`/group/testray#/export/${id}`, '_blank');
-		}
-
-		return Liferay.Util.openToast({
-			message: i18n.translate('mark-at-least-one-case-to-export'),
-			type: 'danger',
-		});
-	};
 
 	return (
 		<Container
@@ -69,14 +60,24 @@ const ExportPage = () => {
 				<BuildFormCases caseIds={caseIds} setCaseIds={setCaseIds} />
 
 				<div className="mt-4">
-					<Form.Footer
-						onClose={onClose}
-						onSubmit={onSubmit}
-						primaryButtonProps={{
-							loading: submitting,
-							title: 'Export',
-						}}
-					/>
+					<ClayButton.Group spaced>
+						<Link
+							className={classNames('btn btn-primary', {
+								disabled: !caseIds.length,
+							})}
+							target="_blank"
+							to={`/export/${id}`}
+						>
+							{i18n.translate('export')}
+						</Link>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => onClose()}
+						>
+							{i18n.translate('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
 				</div>
 			</ClayForm>
 		</Container>

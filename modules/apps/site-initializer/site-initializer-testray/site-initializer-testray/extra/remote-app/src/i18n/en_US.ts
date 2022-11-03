@@ -163,6 +163,7 @@ export default {
 	'estimated-duration': 'Estimated Duration',
 	'execution-date': 'Execution Date',
 	'expand': 'Expand',
+	'export': 'Export',
 	'export-cases': 'Export Cases',
 	'export-csv': 'Export CSV',
 	'failed': 'Failed',

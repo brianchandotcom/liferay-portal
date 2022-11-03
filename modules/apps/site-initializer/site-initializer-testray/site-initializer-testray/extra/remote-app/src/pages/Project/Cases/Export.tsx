@@ -245,11 +245,7 @@ const ExportCaseContainer: React.FC<CaseItemsProps> = ({
 const Export = () => {
 	const {id} = useParams();
 
-	const [caseIds] = useStorage(
-		`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}`,
-		[],
-		sessionStorage
-	);
+	const [caseIds] = useStorage(`${STORAGE_KEYS.EXPORT_CASE_IDS}-${id}`, []);
 
 	const {data: casesData, loading} = useFetch<APIResponse<TestrayCase>>(
 		`/cases?filter=${searchUtil.in(

@@ -41,19 +41,18 @@ public class SelectInfoFieldType implements InfoFieldType {
 	public static class Option {
 
 		public Option(
-			boolean default, InfoLocalizedValue<String> label, String value) {
+			boolean active, InfoLocalizedValue<String> label, String value) {
 
+			_active = active;
 			_label = label;
 			_value = value;
-
-			_default = default;
 		}
 
 		public Option(InfoLocalizedValue<String> label, String value) {
 			_label = label;
 			_value = value;
 
-			_default = false;
+			_active = false;
 		}
 
 		public String getLabel(Locale locale) {
@@ -64,11 +63,11 @@ public class SelectInfoFieldType implements InfoFieldType {
 			return _value;
 		}
 
-		public boolean isDefault() {
-			return _default;
+		public boolean isActive() {
+			return _active;
 		}
 
-		private final boolean _default;
+		private final boolean _active;
 		private final InfoLocalizedValue<String> _label;
 		private final String _value;
 

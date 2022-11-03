@@ -1,0 +1,1946 @@
+[
+	{
+		"key": "AF",
+		"name": "Afghanistan",
+		"name_i18n": {
+			"en-US": "Afghanistan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AX",
+		"name": "Aland Islands",
+		"name_i18n": {
+			"en-US": "Åland Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AL",
+		"name": "Albania",
+		"name_i18n": {
+			"en-US": "Albania"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DZ",
+		"name": "Algeria",
+		"name_i18n": {
+			"en-US": "Algeria"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AS",
+		"name": "American Samoa",
+		"name_i18n": {
+			"en-US": "American Samoa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AD",
+		"name": "Andorra",
+		"name_i18n": {
+			"en-US": "Andorra"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AO",
+		"name": "Angola",
+		"name_i18n": {
+			"en-US": "Angola"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AI",
+		"name": "Anguilla",
+		"name_i18n": {
+			"en-US": "Anguilla"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AQ",
+		"name": "Antarctica",
+		"name_i18n": {
+			"en-US": "Antarctica"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AG",
+		"name": "Antigua and Barbuda",
+		"name_i18n": {
+			"en-US": "Antigua and Barbuda"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AR",
+		"name": "Argentina",
+		"name_i18n": {
+			"en-US": "Argentina"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AM",
+		"name": "Armenia",
+		"name_i18n": {
+			"en-US": "Armenia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AW",
+		"name": "Aruba",
+		"name_i18n": {
+			"en-US": "Aruba"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AU",
+		"name": "Australia",
+		"name_i18n": {
+			"en-US": "Australia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AT",
+		"name": "Austria",
+		"name_i18n": {
+			"en-US": "Austria"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AZ",
+		"name": "Azerbaijan",
+		"name_i18n": {
+			"en-US": "Azerbaijan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BS",
+		"name": "Bahamas",
+		"name_i18n": {
+			"en-US": "Bahamas"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BH",
+		"name": "Bahrain",
+		"name_i18n": {
+			"en-US": "Bahrain"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BD",
+		"name": "Bangladesh",
+		"name_i18n": {
+			"en-US": "Bangladesh"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BB",
+		"name": "Barbados",
+		"name_i18n": {
+			"en-US": "Barbados"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BY",
+		"name": "Belarus",
+		"name_i18n": {
+			"en-US": "Belarus"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BE",
+		"name": "Belgium",
+		"name_i18n": {
+			"en-US": "Belgium"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BZ",
+		"name": "Belize",
+		"name_i18n": {
+			"en-US": "Belize"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BJ",
+		"name": "Benin",
+		"name_i18n": {
+			"en-US": "Benin"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BM",
+		"name": "Bermuda",
+		"name_i18n": {
+			"en-US": "Bermuda"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BT",
+		"name": "Bhutan",
+		"name_i18n": {
+			"en-US": "Bhutan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BO",
+		"name": "Bolivia",
+		"name_i18n": {
+			"en-US": "Bolivia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BA",
+		"name": "Bosnia and Herzegovina",
+		"name_i18n": {
+			"en-US": "Bosnia and Herzegovina"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BW",
+		"name": "Botswana",
+		"name_i18n": {
+			"en-US": "Botswana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BV",
+		"name": "Bouvet Island",
+		"name_i18n": {
+			"en-US": "Bouvet Island"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BR",
+		"name": "Brazil",
+		"name_i18n": {
+			"en-US": "Brazil"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IO",
+		"name": "British Indian Ocean Territory",
+		"name_i18n": {
+			"en-US": "British Indian Ocean Territory"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BN",
+		"name": "Brunei Darussalam",
+		"name_i18n": {
+			"en-US": "Brunei Darussalam"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BG",
+		"name": "Bulgaria",
+		"name_i18n": {
+			"en-US": "Bulgaria"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BF",
+		"name": "Burkina Faso",
+		"name_i18n": {
+			"en-US": "Burkina Faso"
+		},
+		"type": "string"
+	},
+	{
+		"key": "BI",
+		"name": "Burundi",
+		"name_i18n": {
+			"en-US": "Burundi"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KH",
+		"name": "Cambodia",
+		"name_i18n": {
+			"en-US": "Cambodia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CM",
+		"name": "Cameroon",
+		"name_i18n": {
+			"en-US": "Cameroon"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CA",
+		"name": "Canada",
+		"name_i18n": {
+			"en-US": "Canada"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CV",
+		"name": "Cape Verde",
+		"name_i18n": {
+			"en-US": "Cape Verde"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KY",
+		"name": "Cayman Islands",
+		"name_i18n": {
+			"en-US": "Cayman Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CF",
+		"name": "Central African Republic",
+		"name_i18n": {
+			"en-US": "Central African Republic"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TD",
+		"name": "Chad",
+		"name_i18n": {
+			"en-US": "Chad"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CL",
+		"name": "Chile",
+		"name_i18n": {
+			"en-US": "Chile"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CN",
+		"name": "China",
+		"name_i18n": {
+			"en-US": "China"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CX",
+		"name": "Christmas Island",
+		"name_i18n": {
+			"en-US": "Christmas Island"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CC",
+		"name": "Cocos (Keeling) Islands",
+		"name_i18n": {
+			"en-US": "Cocos (Keeling) Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CO",
+		"name": "Colombia",
+		"name_i18n": {
+			"en-US": "Colombia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KM",
+		"name": "Comoros",
+		"name_i18n": {
+			"en-US": "Comoros"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CG",
+		"name": "Congo",
+		"name_i18n": {
+			"en-US": "Congo"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CD",
+		"name": "Congo, The Democratic Republic of the",
+		"name_i18n": {
+			"en-US": "Congo, The Democratic Republic of the"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CK",
+		"name": "Cook Islands",
+		"name_i18n": {
+			"en-US": "Cook Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CR",
+		"name": "Costa Rica",
+		"name_i18n": {
+			"en-US": "Costa Rica"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CI",
+		"name": "Cote D'Ivoire",
+		"name_i18n": {
+			"en-US": "Cote D'Ivoire"
+		},
+		"type": "string"
+	},
+	{
+		"key": "HR",
+		"name": "Croatia",
+		"name_i18n": {
+			"en-US": "Croatia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CU",
+		"name": "Cuba",
+		"name_i18n": {
+			"en-US": "Cuba"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CY",
+		"name": "Cyprus",
+		"name_i18n": {
+			"en-US": "Cyprus"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CZ",
+		"name": "Czech Republic",
+		"name_i18n": {
+			"en-US": "Czech Republic"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DK",
+		"name": "Denmark",
+		"name_i18n": {
+			"en-US": "Denmark"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DJ",
+		"name": "Djibouti",
+		"name_i18n": {
+			"en-US": "Djibouti"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DM",
+		"name": "Dominica",
+		"name_i18n": {
+			"en-US": "Dominica"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DO",
+		"name": "Dominican Republic",
+		"name_i18n": {
+			"en-US": "Dominican Republic"
+		},
+		"type": "string"
+	},
+	{
+		"key": "EC",
+		"name": "Ecuador",
+		"name_i18n": {
+			"en-US": "Ecuador"
+		},
+		"type": "string"
+	},
+	{
+		"key": "EG",
+		"name": "Egypt",
+		"name_i18n": {
+			"en-US": "Egypt"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SV",
+		"name": "El Salvador",
+		"name_i18n": {
+			"en-US": "El Salvador"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GQ",
+		"name": "Equatorial Guinea",
+		"name_i18n": {
+			"en-US": "Equatorial Guinea"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ER",
+		"name": "Eritrea",
+		"name_i18n": {
+			"en-US": "Eritrea"
+		},
+		"type": "string"
+	},
+	{
+		"key": "EE",
+		"name": "Estonia",
+		"name_i18n": {
+			"en-US": "Estonia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ET",
+		"name": "Ethiopia",
+		"name_i18n": {
+			"en-US": "Ethiopia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FK",
+		"name": "Falkland Islands (Malvinas)",
+		"name_i18n": {
+			"en-US": "Falkland Islands (Malvinas)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FO",
+		"name": "Faroe Islands",
+		"name_i18n": {
+			"en-US": "Faroe Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FJ",
+		"name": "Fiji",
+		"name_i18n": {
+			"en-US": "Fiji"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FI",
+		"name": "Finland",
+		"name_i18n": {
+			"en-US": "Finland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FR",
+		"name": "France",
+		"name_i18n": {
+			"en-US": "France"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GF",
+		"name": "French Guiana",
+		"name_i18n": {
+			"en-US": "French Guiana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PF",
+		"name": "French Polynesia",
+		"name_i18n": {
+			"en-US": "French Polynesia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TF",
+		"name": "French Southern Territories",
+		"name_i18n": {
+			"en-US": "French Southern Territories"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GA",
+		"name": "Gabon",
+		"name_i18n": {
+			"en-US": "Gabon"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GM",
+		"name": "Gambia",
+		"name_i18n": {
+			"en-US": "Gambia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GE",
+		"name": "Georgia",
+		"name_i18n": {
+			"en-US": "Georgia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "DE",
+		"name": "Germany",
+		"name_i18n": {
+			"en-US": "Germany"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GH",
+		"name": "Ghana",
+		"name_i18n": {
+			"en-US": "Ghana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GI",
+		"name": "Gibraltar",
+		"name_i18n": {
+			"en-US": "Gibraltar"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GR",
+		"name": "Greece",
+		"name_i18n": {
+			"en-US": "Greece"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GL",
+		"name": "Greenland",
+		"name_i18n": {
+			"en-US": "Greenland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GD",
+		"name": "Grenada",
+		"name_i18n": {
+			"en-US": "Grenada"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GP",
+		"name": "Guadeloupe",
+		"name_i18n": {
+			"en-US": "Guadeloupe"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GU",
+		"name": "Guam",
+		"name_i18n": {
+			"en-US": "Guam"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GT",
+		"name": "Guatemala",
+		"name_i18n": {
+			"en-US": "Guatemala"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GG",
+		"name": "Guernsey",
+		"name_i18n": {
+			"en-US": "Guernsey"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GN",
+		"name": "Guinea",
+		"name_i18n": {
+			"en-US": "Guinea"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GW",
+		"name": "Guinea-Bissau",
+		"name_i18n": {
+			"en-US": "Guinea-Bissau"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GY",
+		"name": "Guyana",
+		"name_i18n": {
+			"en-US": "Guyana"
+		},
+		"type": "string"
+	},
+	{
+		"key": "HT",
+		"name": "Haiti",
+		"name_i18n": {
+			"en-US": "Haiti"
+		},
+		"type": "string"
+	},
+	{
+		"key": "HM",
+		"name": "Heard Island and Mcdonald Islands",
+		"name_i18n": {
+			"en-US": "Heard Island and Mcdonald Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VA",
+		"name": "Holy See (Vatican City State)",
+		"name_i18n": {
+			"en-US": "Holy See (Vatican City State)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "HN",
+		"name": "Honduras",
+		"name_i18n": {
+			"en-US": "Honduras"
+		},
+		"type": "string"
+	},
+	{
+		"key": "HK",
+		"name": "Hong Kong",
+		"name_i18n": {
+			"en-US": "Hong Kong"
+		},
+		"type": "string"
+	},
+	{
+		"key": "HU",
+		"name": "Hungary",
+		"name_i18n": {
+			"en-US": "Hungary"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IS",
+		"name": "Iceland",
+		"name_i18n": {
+			"en-US": "Iceland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IN",
+		"name": "India",
+		"name_i18n": {
+			"en-US": "India"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ID",
+		"name": "Indonesia",
+		"name_i18n": {
+			"en-US": "Indonesia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IR",
+		"name": "Iran, Islamic Republic Of",
+		"name_i18n": {
+			"en-US": "Iran, Islamic Republic Of"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IQ",
+		"name": "Iraq",
+		"name_i18n": {
+			"en-US": "Iraq"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IE",
+		"name": "Ireland",
+		"name_i18n": {
+			"en-US": "Ireland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IM",
+		"name": "Isle of Man",
+		"name_i18n": {
+			"en-US": "Isle of Man"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IL",
+		"name": "Israel",
+		"name_i18n": {
+			"en-US": "Israel"
+		},
+		"type": "string"
+	},
+	{
+		"key": "IT",
+		"name": "Italy",
+		"name_i18n": {
+			"en-US": "Italy"
+		},
+		"type": "string"
+	},
+	{
+		"key": "JM",
+		"name": "Jamaica",
+		"name_i18n": {
+			"en-US": "Jamaica"
+		},
+		"type": "string"
+	},
+	{
+		"key": "JP",
+		"name": "Japan",
+		"name_i18n": {
+			"en-US": "Japan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "JE",
+		"name": "Jersey",
+		"name_i18n": {
+			"en-US": "Jersey"
+		},
+		"type": "string"
+	},
+	{
+		"key": "JO",
+		"name": "Jordan",
+		"name_i18n": {
+			"en-US": "Jordan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KZ",
+		"name": "Kazakhstan",
+		"name_i18n": {
+			"en-US": "Kazakhstan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KE",
+		"name": "Kenya",
+		"name_i18n": {
+			"en-US": "Kenya"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KI",
+		"name": "Kiribati",
+		"name_i18n": {
+			"en-US": "Kiribati"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KP",
+		"name": "Korea, Democratic People's Republic of",
+		"name_i18n": {
+			"en-US": "Korea, Democratic People's Republic of"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KR",
+		"name": "Korea, Republic of",
+		"name_i18n": {
+			"en-US": "Korea, Republic of"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KW",
+		"name": "Kuwait",
+		"name_i18n": {
+			"en-US": "Kuwait"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KG",
+		"name": "Kyrgyzstan",
+		"name_i18n": {
+			"en-US": "Kyrgyzstan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LA",
+		"name": "Lao People's Democratic Republic",
+		"name_i18n": {
+			"en-US": "Lao People's Democratic Republic"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LV",
+		"name": "Latvia",
+		"name_i18n": {
+			"en-US": "Latvia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LB",
+		"name": "Lebanon",
+		"name_i18n": {
+			"en-US": "Lebanon"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LS",
+		"name": "Lesotho",
+		"name_i18n": {
+			"en-US": "Lesotho"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LR",
+		"name": "Liberia",
+		"name_i18n": {
+			"en-US": "Liberia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LY",
+		"name": "Libyan Arab Jamahiriya",
+		"name_i18n": {
+			"en-US": "Libyan Arab Jamahiriya"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LI",
+		"name": "Liechtenstein",
+		"name_i18n": {
+			"en-US": "Liechtenstein"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LT",
+		"name": "Lithuania",
+		"name_i18n": {
+			"en-US": "Lithuania"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LU",
+		"name": "Luxembourg",
+		"name_i18n": {
+			"en-US": "Luxembourg"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MO",
+		"name": "Macao",
+		"name_i18n": {
+			"en-US": "Macao"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MK",
+		"name": "Macedonia",
+		"name_i18n": {
+			"en-US": "Macedonia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MG",
+		"name": "Madagascar",
+		"name_i18n": {
+			"en-US": "Madagascar"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MW",
+		"name": "Malawi",
+		"name_i18n": {
+			"en-US": "Malawi"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MY",
+		"name": "Malaysia",
+		"name_i18n": {
+			"en-US": "Malaysia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MV",
+		"name": "Maldives",
+		"name_i18n": {
+			"en-US": "Maldives"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ML",
+		"name": "Mali",
+		"name_i18n": {
+			"en-US": "Mali"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MT",
+		"name": "Malta",
+		"name_i18n": {
+			"en-US": "Malta"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MH",
+		"name": "Marshall Islands",
+		"name_i18n": {
+			"en-US": "Marshall Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MQ",
+		"name": "Martinique",
+		"name_i18n": {
+			"en-US": "Martinique"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MR",
+		"name": "Mauritania",
+		"name_i18n": {
+			"en-US": "Mauritania"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MU",
+		"name": "Mauritius",
+		"name_i18n": {
+			"en-US": "Mauritius"
+		},
+		"type": "string"
+	},
+	{
+		"key": "YT",
+		"name": "Mayotte",
+		"name_i18n": {
+			"en-US": "Mayotte"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MX",
+		"name": "Mexico",
+		"name_i18n": {
+			"en-US": "Mexico"
+		},
+		"type": "string"
+	},
+	{
+		"key": "FM",
+		"name": "Micronesia, Federated States of",
+		"name_i18n": {
+			"en-US": "Micronesia, Federated States of"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MD",
+		"name": "Moldova, Republic of",
+		"name_i18n": {
+			"en-US": "Moldova, Republic of"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MC",
+		"name": "Monaco",
+		"name_i18n": {
+			"en-US": "Monaco"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MN",
+		"name": "Mongolia",
+		"name_i18n": {
+			"en-US": "Mongolia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MS",
+		"name": "Montserrat",
+		"name_i18n": {
+			"en-US": "Montserrat"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MA",
+		"name": "Morocco",
+		"name_i18n": {
+			"en-US": "Morocco"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MZ",
+		"name": "Mozambique",
+		"name_i18n": {
+			"en-US": "Mozambique"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MM",
+		"name": "Myanmar",
+		"name_i18n": {
+			"en-US": "Myanmar"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NA",
+		"name": "Namibia",
+		"name_i18n": {
+			"en-US": "Namibia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NR",
+		"name": "Nauru",
+		"name_i18n": {
+			"en-US": "Nauru"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NP",
+		"name": "Nepal",
+		"name_i18n": {
+			"en-US": "Nepal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NL",
+		"name": "Netherlands",
+		"name_i18n": {
+			"en-US": "Netherlands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AN",
+		"name": "Netherlands Antilles",
+		"name_i18n": {
+			"en-US": "Netherlands Antilles"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NC",
+		"name": "New Caledonia",
+		"name_i18n": {
+			"en-US": "New Caledonia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NZ",
+		"name": "New Zealand",
+		"name_i18n": {
+			"en-US": "New Zealand"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NI",
+		"name": "Nicaragua",
+		"name_i18n": {
+			"en-US": "Nicaragua"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NE",
+		"name": "Niger",
+		"name_i18n": {
+			"en-US": "Niger"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NG",
+		"name": "Nigeria",
+		"name_i18n": {
+			"en-US": "Nigeria"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NU",
+		"name": "Niue",
+		"name_i18n": {
+			"en-US": "Niue"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NF",
+		"name": "Norfolk Island",
+		"name_i18n": {
+			"en-US": "Norfolk Island"
+		},
+		"type": "string"
+	},
+	{
+		"key": "MP",
+		"name": "Northern Mariana Islands",
+		"name_i18n": {
+			"en-US": "Northern Mariana Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "NO",
+		"name": "Norway",
+		"name_i18n": {
+			"en-US": "Norway"
+		},
+		"type": "string"
+	},
+	{
+		"key": "OM",
+		"name": "Oman",
+		"name_i18n": {
+			"en-US": "Oman"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PK",
+		"name": "Pakistan",
+		"name_i18n": {
+			"en-US": "Pakistan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PW",
+		"name": "Palau",
+		"name_i18n": {
+			"en-US": "Palau"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PS",
+		"name": "Palestinian",
+		"name_i18n": {
+			"en-US": "Palestinian"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PA",
+		"name": "Panama",
+		"name_i18n": {
+			"en-US": "Panama"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PG",
+		"name": "Papua New Guinea",
+		"name_i18n": {
+			"en-US": "Papua New Guinea"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PY",
+		"name": "Paraguay",
+		"name_i18n": {
+			"en-US": "Paraguay"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PE",
+		"name": "Peru",
+		"name_i18n": {
+			"en-US": "Peru"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PH",
+		"name": "Philippines",
+		"name_i18n": {
+			"en-US": "Philippines"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PN",
+		"name": "Pitcairn",
+		"name_i18n": {
+			"en-US": "Pitcairn"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PL",
+		"name": "Poland",
+		"name_i18n": {
+			"en-US": "Poland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PT",
+		"name": "Portugal",
+		"name_i18n": {
+			"en-US": "Portugal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PR",
+		"name": "Puerto Rico",
+		"name_i18n": {
+			"en-US": "Puerto Rico"
+		},
+		"type": "string"
+	},
+	{
+		"key": "QA",
+		"name": "Qatar",
+		"name_i18n": {
+			"en-US": "Qatar"
+		},
+		"type": "string"
+	},
+	{
+		"key": "RE",
+		"name": "Reunion",
+		"name_i18n": {
+			"en-US": "Reunion"
+		},
+		"type": "string"
+	},
+	{
+		"key": "RO",
+		"name": "Romania",
+		"name_i18n": {
+			"en-US": "Romania"
+		},
+		"type": "string"
+	},
+	{
+		"key": "RU",
+		"name": "Russian Federation",
+		"name_i18n": {
+			"en-US": "Russian Federation"
+		},
+		"type": "string"
+	},
+	{
+		"key": "RW",
+		"name": "RWANDA",
+		"name_i18n": {
+			"en-US": "RWANDA"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SH",
+		"name": "Saint Helena",
+		"name_i18n": {
+			"en-US": "Saint Helena"
+		},
+		"type": "string"
+	},
+	{
+		"key": "KN",
+		"name": "Saint Kitts and Nevis",
+		"name_i18n": {
+			"en-US": "Saint Kitts and Nevis"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LC",
+		"name": "Saint Lucia",
+		"name_i18n": {
+			"en-US": "Saint Lucia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "PM",
+		"name": "Saint Pierre and Miquelon",
+		"name_i18n": {
+			"en-US": "Saint Pierre and Miquelon"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VC",
+		"name": "Saint Vincent and the Grenadines",
+		"name_i18n": {
+			"en-US": "Saint Vincent and the Grenadines"
+		},
+		"type": "string"
+	},
+	{
+		"key": "WS",
+		"name": "Samoa",
+		"name_i18n": {
+			"en-US": "Samoa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SM",
+		"name": "San Marino",
+		"name_i18n": {
+			"en-US": "San Marino"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ST",
+		"name": "Sao Tome and Principe",
+		"name_i18n": {
+			"en-US": "Sao Tome and Principe"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SA",
+		"name": "Saudi Arabia",
+		"name_i18n": {
+			"en-US": "Saudi Arabia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SN",
+		"name": "Senegal",
+		"name_i18n": {
+			"en-US": "Senegal"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CS",
+		"name": "Serbia and Montenegro",
+		"name_i18n": {
+			"en-US": "Serbia and Montenegro"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SC",
+		"name": "Seychelles",
+		"name_i18n": {
+			"en-US": "Seychelles"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SL",
+		"name": "Sierra Leone",
+		"name_i18n": {
+			"en-US": "Sierra Leone"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SG",
+		"name": "Singapore",
+		"name_i18n": {
+			"en-US": "Singapore"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SK",
+		"name": "Slovakia",
+		"name_i18n": {
+			"en-US": "Slovakia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SI",
+		"name": "Slovenia",
+		"name_i18n": {
+			"en-US": "Slovenia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SB",
+		"name": "Solomon Islands",
+		"name_i18n": {
+			"en-US": "Solomon Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SO",
+		"name": "Somalia",
+		"name_i18n": {
+			"en-US": "Somalia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ZA",
+		"name": "South Africa",
+		"name_i18n": {
+			"en-US": "South Africa"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GS",
+		"name": "South Georgia and the South Sandwich Islands",
+		"name_i18n": {
+			"en-US": "South Georgia and the South Sandwich Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ES",
+		"name": "Spain",
+		"name_i18n": {
+			"en-US": "Spain"
+		},
+		"type": "string"
+	},
+	{
+		"key": "LK",
+		"name": "Sri Lanka",
+		"name_i18n": {
+			"en-US": "Sri Lanka"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SD",
+		"name": "Sudan",
+		"name_i18n": {
+			"en-US": "Sudan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SR",
+		"name": "Suriname",
+		"name_i18n": {
+			"en-US": "Suriname"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SJ",
+		"name": "Svalbard and Jan Mayen",
+		"name_i18n": {
+			"en-US": "Svalbard and Jan Mayen"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SZ",
+		"name": "Swaziland",
+		"name_i18n": {
+			"en-US": "Swaziland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SE",
+		"name": "Sweden",
+		"name_i18n": {
+			"en-US": "Sweden"
+		},
+		"type": "string"
+	},
+	{
+		"key": "CH",
+		"name": "Switzerland",
+		"name_i18n": {
+			"en-US": "Switzerland"
+		},
+		"type": "string"
+	},
+	{
+		"key": "SY",
+		"name": "Syrian Arab Republic",
+		"name_i18n": {
+			"en-US": "Syrian Arab Republic"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TW",
+		"name": "Taiwan",
+		"name_i18n": {
+			"en-US": "Taiwan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TJ",
+		"name": "Tajikistan",
+		"name_i18n": {
+			"en-US": "Tajikistan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TZ",
+		"name": "Tanzania, United Republic of",
+		"name_i18n": {
+			"en-US": "Tanzania, United Republic of"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TH",
+		"name": "Thailand",
+		"name_i18n": {
+			"en-US": "Thailand"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TL",
+		"name": "Timor-Leste",
+		"name_i18n": {
+			"en-US": "Timor-Leste"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TG",
+		"name": "Togo",
+		"name_i18n": {
+			"en-US": "Togo"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TK",
+		"name": "Tokelau",
+		"name_i18n": {
+			"en-US": "Tokelau"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TO",
+		"name": "Tonga",
+		"name_i18n": {
+			"en-US": "Tonga"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TT",
+		"name": "Trinidad and Tobago",
+		"name_i18n": {
+			"en-US": "Trinidad and Tobago"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TN",
+		"name": "Tunisia",
+		"name_i18n": {
+			"en-US": "Tunisia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TR",
+		"name": "Turkey",
+		"name_i18n": {
+			"en-US": "Turkey"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TM",
+		"name": "Turkmenistan",
+		"name_i18n": {
+			"en-US": "Turkmenistan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TC",
+		"name": "Turks and Caicos Islands",
+		"name_i18n": {
+			"en-US": "Turks and Caicos Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "TV",
+		"name": "Tuvalu",
+		"name_i18n": {
+			"en-US": "Tuvalu"
+		},
+		"type": "string"
+	},
+	{
+		"key": "UG",
+		"name": "Uganda",
+		"name_i18n": {
+			"en-US": "Uganda"
+		},
+		"type": "string"
+	},
+	{
+		"key": "UA",
+		"name": "Ukraine",
+		"name_i18n": {
+			"en-US": "Ukraine"
+		},
+		"type": "string"
+	},
+	{
+		"key": "AE",
+		"name": "United Arab Emirates",
+		"name_i18n": {
+			"en-US": "United Arab Emirates"
+		},
+		"type": "string"
+	},
+	{
+		"key": "GB",
+		"name": "United Kingdom",
+		"name_i18n": {
+			"en-US": "United Kingdom"
+		},
+		"type": "string"
+	},
+	{
+		"key": "US",
+		"name": "United States",
+		"name_i18n": {
+			"en-US": "United States"
+		},
+		"type": "string"
+	},
+	{
+		"key": "UM",
+		"name": "United States Minor Outlying Islands",
+		"name_i18n": {
+			"en-US": "United States Minor Outlying Islands"
+		},
+		"type": "string"
+	},
+	{
+		"key": "UY",
+		"name": "Uruguay",
+		"name_i18n": {
+			"en-US": "Uruguay"
+		},
+		"type": "string"
+	},
+	{
+		"key": "UZ",
+		"name": "Uzbekistan",
+		"name_i18n": {
+			"en-US": "Uzbekistan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VU",
+		"name": "Vanuatu",
+		"name_i18n": {
+			"en-US": "Vanuatu"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VE",
+		"name": "Venezuela",
+		"name_i18n": {
+			"en-US": "Venezuela"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VN",
+		"name": "Viet Nam",
+		"name_i18n": {
+			"en-US": "Viet Nam"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VG",
+		"name": "Virgin Islands, British",
+		"name_i18n": {
+			"en-US": "Virgin Islands, British"
+		},
+		"type": "string"
+	},
+	{
+		"key": "VI",
+		"name": "Virgin Islands, U.S.",
+		"name_i18n": {
+			"en-US": "Virgin Islands, U.S."
+		},
+		"type": "string"
+	},
+	{
+		"key": "WF",
+		"name": "Wallis and Futuna",
+		"name_i18n": {
+			"en-US": "Wallis and Futuna"
+		},
+		"type": "string"
+	},
+	{
+		"key": "EH",
+		"name": "Western Sahara",
+		"name_i18n": {
+			"en-US": "Western Sahara"
+		},
+		"type": "string"
+	},
+	{
+		"key": "YE",
+		"name": "Yemen",
+		"name_i18n": {
+			"en-US": "Yemen"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ZM",
+		"name": "Zambia",
+		"name_i18n": {
+			"en-US": "Zambia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "ZW",
+		"name": "Zimbabwe",
+		"name_i18n": {
+			"en-US": "Zimbabwe"
+		},
+		"type": "string"
+	}
+]

@@ -2871,7 +2871,10 @@ definition {
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
 	@priority = "4"
+	@uitest
 	test DocumentsVersionHistoryClickBack {
+		property portal.acceptance = "true";
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
@@ -2921,6 +2924,8 @@ definition {
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
 	@priority = "4"
 	test DocumentsVersionHistoryDeleteVersion {
+		property portal.acceptance = "true";
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
@@ -3075,6 +3080,7 @@ definition {
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
 	@priority = "3"
+	@uitest
 	test DocumentsVersionHistoryInformation {
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
@@ -3188,6 +3194,7 @@ definition {
 
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
 	@priority = "3"
+	@uitest
 	test DocumentsVersionHistoryOrdered {
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
@@ -3298,6 +3305,8 @@ definition {
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
 	@priority = "4"
 	test DocumentsVersionHistoryRevertVersion {
+		property portal.acceptance = "true";
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(
@@ -3348,6 +3357,8 @@ definition {
 	@description = "LPS-164334: Add a Version History Page to Documents and Media"
 	@priority = "4"
 	test DocumentsVersionHistoryViewVersion {
+		property portal.acceptance = "true";
+
 		task ("Given the Version History page for documents") {
 			task ("Create a Document") {
 				JSONDocument.addFileWithUploadedFile(

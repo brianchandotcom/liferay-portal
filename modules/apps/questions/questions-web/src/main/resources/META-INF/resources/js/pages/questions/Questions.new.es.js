@@ -93,6 +93,7 @@ export default withRouter(({history, location, match: {params}}) => {
 	});
 
 	const {
+		buildParams,
 		changePage,
 		historyPushParser,
 		navigateToNewQuestion,
@@ -245,6 +246,7 @@ export default withRouter(({history, location, match: {params}}) => {
 
 				<QuestionList
 					{...commonProps}
+					buildParams={buildParams}
 					changePage={changePage}
 					creatorId={creatorId}
 					error={error}

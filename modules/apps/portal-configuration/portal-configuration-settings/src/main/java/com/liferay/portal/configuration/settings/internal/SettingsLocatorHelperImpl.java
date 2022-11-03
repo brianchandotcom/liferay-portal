@@ -14,10 +14,18 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
+import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.configuration.settings.internal.scoped.configuration.admin.service.ScopedConfigurationManagedServiceFactory;
+import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -34,8 +42,9 @@ import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.PropertiesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -44,21 +53,27 @@ import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.BundleEvent;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Iván Zaera
@@ -217,24 +232,211 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return getConfigurationBeanSettings(settingsId);
 	}
 
+	public SafeCloseable registerConfigurationBeanClass(
+		Class<?> configurationBeanClass) {
+
+		if (configurationBeanClass.getAnnotation(Meta.OCD.class) == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping registration for class (no Meta.OCD " +
+						"annotation): " + configurationBeanClass.getName());
+			}
+
+			return null;
+		}
+
+		for (Method methods : configurationBeanClass.getMethods()) {
+			Meta.AD annotation = methods.getAnnotation(Meta.AD.class);
+
+			if (annotation == null) {
+				continue;
+			}
+
+			if (annotation.required()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping registration for class (Meta.AD has " +
+							"required = true): " +
+								configurationBeanClass.getName());
+				}
+
+				return null;
+			}
+		}
+
+		String configurationPid = ConfigurationPidUtil.getConfigurationPid(
+			configurationBeanClass);
+
+		if (_configurationBeanClasses.containsKey(configurationPid)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping registration for class (already registered): " +
+						configurationPid);
+			}
+
+			return null;
+		}
+
+		LocationVariableResolver locationVariableResolver =
+			new LocationVariableResolver(
+				new ClassLoaderResourceManager(
+					configurationBeanClass.getClassLoader()),
+				SettingsLocatorHelperImpl.this);
+
+		ConfigurationBeanManagedService configurationBeanManagedService =
+			new ConfigurationBeanManagedService(
+				_bundleContext, configurationBeanClass,
+				configurationBean -> _configurationBeanSettings.put(
+					configurationBeanClass,
+					new ConfigurationBeanSettings(
+						locationVariableResolver, configurationBean,
+						_portalPropertiesSettings)));
+
+		configurationBeanManagedService.register();
+
+		ScopedConfigurationManagedServiceFactory
+			scopedConfigurationManagedServiceFactory =
+				new ScopedConfigurationManagedServiceFactory(
+					_bundleContext, configurationBeanClass,
+					locationVariableResolver);
+
+		scopedConfigurationManagedServiceFactory.register();
+
+		_scopedConfigurationManagedServiceFactories.put(
+			scopedConfigurationManagedServiceFactory.getName(),
+			scopedConfigurationManagedServiceFactory);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registering configuration class: " +
+					configurationBeanClass.getName());
+		}
+
+		_configurationBeanClasses.put(
+			configurationBeanManagedService.getConfigurationPid(),
+			configurationBeanClass);
+
+		return () -> {
+			_configurationBeanClasses.remove(configurationPid);
+
+			_scopedConfigurationManagedServiceFactories.remove(
+				configurationPid);
+			scopedConfigurationManagedServiceFactory.unregister();
+
+			_configurationBeanSettings.remove(configurationBeanClass);
+			configurationBeanManagedService.unregister();
+		};
+	}
+
+	public class ConfigurationBeanClassBundleTrackerCustomizer
+		implements BundleTrackerCustomizer<List<SafeCloseable>> {
+
+		@Override
+		public List<SafeCloseable> addingBundle(
+			Bundle bundle, BundleEvent bundleEvent) {
+
+			String bundleSymbolicName = bundle.getSymbolicName();
+
+			if (bundleSymbolicName.endsWith(".test")) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping bundle (do not check test modules): " +
+							bundleSymbolicName);
+				}
+
+				return null;
+			}
+
+			ExtendedMetaTypeInformation metaTypeInformation =
+				_extendedMetaTypeService.getMetaTypeInformation(bundle);
+
+			if (metaTypeInformation == null) {
+				return null;
+			}
+
+			List<SafeCloseable> autoCloseables = new ArrayList<>();
+
+			for (String pid :
+					ArrayUtil.append(
+						metaTypeInformation.getPids(),
+						metaTypeInformation.getFactoryPids())) {
+
+				Class<?> configurationBeanClass;
+
+				try {
+					configurationBeanClass = bundle.loadClass(pid);
+				}
+				catch (ClassNotFoundException classNotFoundException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Class not found: " +
+								classNotFoundException.getMessage());
+					}
+
+					continue;
+				}
+
+				SafeCloseable safeCloseable = registerConfigurationBeanClass(
+					configurationBeanClass);
+
+				if (safeCloseable != null) {
+					autoCloseables.add(safeCloseable);
+				}
+			}
+
+			if (ListUtil.isEmpty(autoCloseables)) {
+				return null;
+			}
+
+			return autoCloseables;
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			List<SafeCloseable> autoCloseables) {
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent,
+			List<SafeCloseable> safeCloseables) {
+
+			if (ListUtil.isEmpty(safeCloseables)) {
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Un-registering configuration classes for bundle: " +
+						bundle.getSymbolicName());
+			}
+
+			for (SafeCloseable safeCloseable : safeCloseables) {
+				safeCloseable.close();
+			}
+		}
+
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_configurationBeanDeclarationServiceTracker =
-			new ConfigurationBeanDeclarationServiceTracker(bundleContext);
+		_bundleContext = bundleContext;
 
-		_configurationBeanDeclarationServiceTracker.open();
+		_bundleTracker = new BundleTracker<>(
+			bundleContext, Bundle.ACTIVE,
+			new ConfigurationBeanClassBundleTrackerCustomizer());
 
-		_configurationBeanDeclarationServiceTrackerFactory =
-			new ConfigurationBeanDeclarationServiceTrackerFactory(
-				bundleContext);
-
-		_configurationBeanDeclarationServiceTrackerFactory.open();
+		_bundleTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_configurationBeanDeclarationServiceTracker.close();
-		_configurationBeanDeclarationServiceTrackerFactory.close();
+		_bundleTracker.close();
+
+		_bundleTracker = null;
+
+		_bundleContext = null;
 	}
 
 	@Reference(
@@ -328,16 +530,19 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationBean, parentSettings);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SettingsLocatorHelperImpl.class);
+
+	private BundleContext _bundleContext;
+	private BundleTracker<List<SafeCloseable>> _bundleTracker;
 	private final ConcurrentMap<String, Class<?>> _configurationBeanClasses =
 		new ConcurrentHashMap<>();
-	private ServiceTracker
-		<ConfigurationBeanDeclaration, ConfigurationBeanManagedService>
-			_configurationBeanDeclarationServiceTracker;
-	private ServiceTracker
-		<ConfigurationBeanDeclaration, ScopedConfigurationManagedServiceFactory>
-			_configurationBeanDeclarationServiceTrackerFactory;
 	private final Map<Class<?>, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private ExtendedMetaTypeService _extendedMetaTypeService;
+
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private Settings _portalPropertiesSettings;
@@ -345,126 +550,5 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private final Map<String, ScopedConfigurationManagedServiceFactory>
 		_scopedConfigurationManagedServiceFactories = new ConcurrentHashMap<>();
-
-	private class ConfigurationBeanDeclarationServiceTracker
-		extends ServiceTracker
-			<ConfigurationBeanDeclaration, ConfigurationBeanManagedService> {
-
-		@Override
-		public ConfigurationBeanManagedService addingService(
-			ServiceReference<ConfigurationBeanDeclaration> serviceReference) {
-
-			ConfigurationBeanDeclaration configurationBeanDeclaration =
-				context.getService(serviceReference);
-
-			Class<?> configurationBeanClass =
-				configurationBeanDeclaration.getConfigurationBeanClass();
-
-			ConfigurationBeanManagedService configurationBeanManagedService =
-				new ConfigurationBeanManagedService(
-					context, configurationBeanClass,
-					configurationBean -> {
-						LocationVariableResolver locationVariableResolver =
-							new LocationVariableResolver(
-								new ClassLoaderResourceManager(
-									configurationBeanClass.getClassLoader()),
-								SettingsLocatorHelperImpl.this);
-
-						_configurationBeanSettings.put(
-							configurationBeanClass,
-							new ConfigurationBeanSettings(
-								locationVariableResolver, configurationBean,
-								_portalPropertiesSettings));
-					});
-
-			_configurationBeanClasses.put(
-				configurationBeanManagedService.getConfigurationPid(),
-				configurationBeanClass);
-
-			configurationBeanManagedService.register();
-
-			return configurationBeanManagedService;
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ConfigurationBeanDeclaration> serviceReference,
-			ConfigurationBeanManagedService configurationBeanManagedService) {
-
-			context.ungetService(serviceReference);
-
-			configurationBeanManagedService.unregister();
-
-			Class<?> configurationBeanClass = _configurationBeanClasses.remove(
-				configurationBeanManagedService.getConfigurationPid());
-
-			_configurationBeanSettings.remove(configurationBeanClass);
-		}
-
-		private ConfigurationBeanDeclarationServiceTracker(
-			BundleContext bundleContext) {
-
-			super(bundleContext, ConfigurationBeanDeclaration.class, null);
-		}
-
-	}
-
-	private class ConfigurationBeanDeclarationServiceTrackerFactory
-		extends ServiceTracker
-			<ConfigurationBeanDeclaration,
-			 ScopedConfigurationManagedServiceFactory> {
-
-		@Override
-		public ScopedConfigurationManagedServiceFactory addingService(
-			ServiceReference<ConfigurationBeanDeclaration> serviceReference) {
-
-			ConfigurationBeanDeclaration configurationBeanDeclaration =
-				context.getService(serviceReference);
-
-			Class<?> configurationBeanClass =
-				configurationBeanDeclaration.getConfigurationBeanClass();
-
-			LocationVariableResolver locationVariableResolver =
-				new LocationVariableResolver(
-					new ClassLoaderResourceManager(
-						configurationBeanClass.getClassLoader()),
-					SettingsLocatorHelperImpl.this);
-
-			ScopedConfigurationManagedServiceFactory
-				scopedConfigurationManagedServiceFactory =
-					new ScopedConfigurationManagedServiceFactory(
-						context, configurationBeanClass,
-						locationVariableResolver);
-
-			scopedConfigurationManagedServiceFactory.register();
-
-			_scopedConfigurationManagedServiceFactories.put(
-				scopedConfigurationManagedServiceFactory.getName(),
-				scopedConfigurationManagedServiceFactory);
-
-			return scopedConfigurationManagedServiceFactory;
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ConfigurationBeanDeclaration> serviceReference,
-			ScopedConfigurationManagedServiceFactory
-				scopedConfigurationManagedServiceFactory) {
-
-			context.ungetService(serviceReference);
-
-			_scopedConfigurationManagedServiceFactories.remove(
-				scopedConfigurationManagedServiceFactory.getName());
-
-			scopedConfigurationManagedServiceFactory.unregister();
-		}
-
-		private ConfigurationBeanDeclarationServiceTrackerFactory(
-			BundleContext bundleContext) {
-
-			super(bundleContext, ConfigurationBeanDeclaration.class, null);
-		}
-
-	}
 
 }

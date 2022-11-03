@@ -68,9 +68,7 @@ public class RedirectEntrySourceURLUpgradeProcess extends UpgradeProcess {
 
 				String lowerCaseSourceURL = StringUtil.toLowerCase(sourceURL);
 
-				if (!sourceURLs.contains(lowerCaseSourceURL)) {
-					sourceURLs.add(lowerCaseSourceURL);
-
+				if (sourceURLs.add(lowerCaseSourceURL)) {
 					if (!sourceURL.equals(lowerCaseSourceURL)) {
 						redirectEntryIds.put(
 							lowerCaseSourceURL, redirectEntryId);

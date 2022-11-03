@@ -58,6 +58,7 @@ export default function NavigationPanel({
 
 		fetch(moveKBObjectURL, {
 			body: objectToFormData({
+				[`${portletNamespace}dragAndDrop`]: true,
 				[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
 				[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
 				[`${portletNamespace}resourceClassNameId`]: item.classNameId,

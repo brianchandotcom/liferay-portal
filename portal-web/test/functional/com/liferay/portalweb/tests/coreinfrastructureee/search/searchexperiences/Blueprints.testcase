@@ -3803,7 +3803,6 @@ definition {
 
 		Button.clickDone();
 
-
 		var elementSourceJson = '''
 {
 	"description_i18n": {
@@ -3840,7 +3839,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "\"es_ES\": \"Descripción en Español\"");
-			
+
 		Click(
 			ariaLabel = "Edit Title",
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");

@@ -1322,7 +1322,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				)
 			));
 
-		if (!teamRoles.isEmpty()) {
+		if (ListUtil.isNotEmpty(teamRoles)) {
 			roles.addAll(teamRoles);
 		}
 
@@ -1356,7 +1356,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				)
 			));
 
-		if (!userGroupRoles.isEmpty()) {
+		if (ListUtil.isNotEmpty(userGroupRoles)) {
 			roles.addAll(userGroupRoles);
 		}
 

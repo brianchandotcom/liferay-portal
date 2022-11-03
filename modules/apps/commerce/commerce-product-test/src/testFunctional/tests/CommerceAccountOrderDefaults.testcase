@@ -240,7 +240,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9937. A default currency can be deleted."
+	@description = "COMMERCE-9931 and COMMERCE-9937. A default currency can be deleted and should not be visible in the Minium site."
 	@priority = "4"
 	test CanDeleteDefaultCurrency {
 		task ("Given an account with a default Currency") {
@@ -263,13 +263,32 @@ definition {
 			Accounts.deleteDefaultSetting(
 				currentDefault = "Euro",
 				settingHeader = "Currencies");
-		}
 
-		task ("Then the default currency should be deleted") {
 			AssertElementNotPresent(
 				key_entryDetail = "Euro",
 				key_settingHeader = "Currencies",
 				locator1 = "Account#DEFAULT_SETTINGS_TABLE_ITEM");
+		}
+
+		task ("and when the buyer views the Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("then the currency should show US Dollar instead of Euro") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "€");
 		}
 	}
 

@@ -128,15 +128,11 @@ public class RSSUtil {
 			return VERSION_DEFAULT;
 		}
 
-		int x = format.indexOf("10");
-
-		if (x >= 0) {
+		if (format.contains("10") || format.contains("1.0")) {
 			return 1.0;
 		}
 
-		int y = format.indexOf("20");
-
-		if (y >= 0) {
+		if (format.contains("20") || format.contains("2.0")) {
 			return 2.0;
 		}
 

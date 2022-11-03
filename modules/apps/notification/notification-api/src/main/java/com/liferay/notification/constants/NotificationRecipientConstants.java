@@ -19,6 +19,8 @@ package com.liferay.notification.constants;
  */
 public class NotificationRecipientConstants {
 
+	public static final String TYPE_EMAIL = "email";
+
 	public static final String TYPE_ROLE = "role";
 
 	public static final String TYPE_TERM = "term";

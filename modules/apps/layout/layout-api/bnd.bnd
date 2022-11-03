@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.layout.exporter,\
 	com.liferay.layout.friendly.url,\
 	com.liferay.layout.helper,\
+	com.liferay.layout.importer,\
 	com.liferay.layout.list.retriever,\
 	com.liferay.layout.model,\
 	com.liferay.layout.portlet.category,\
@@ -22,6 +23,7 @@ Export-Package:\
 	com.liferay.layout.util,\
 	com.liferay.layout.util.comparator,\
 	com.liferay.layout.util.constants,\
+	com.liferay.layout.util.converter,\
 	com.liferay.layout.util.structure,\
 	com.liferay.layout.util.structure.collection,\
 	com.liferay.layout.util.template

@@ -1864,10 +1864,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@47.9.0":
-  version "47.9.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.9.0.tgz#140cb677ac67ea904af15cee3f714aa39c0ed179"
-  integrity sha512-98VQcjHCkSjQL1o1h6KMFxqnOmGof6ZKfgLMCO6wvehk2R/9lvteDP5yQsUldfHt10EHIwMpHaQILZCymfJ+Vg==
+"@liferay/npm-scripts@47.8.3":
+  version "47.8.3"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.8.3.tgz#fa23f358fb6f02f325b8c4ad88548c8b7a5b58bf"
+  integrity sha512-EXn1YQZojjcXEDm9pHMjlc2DetUYbLYo9Qe2H55wdneQRGukE6R5r6jeQpmJkr/661dVJUw/1Ck8DKBfL7JnkQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

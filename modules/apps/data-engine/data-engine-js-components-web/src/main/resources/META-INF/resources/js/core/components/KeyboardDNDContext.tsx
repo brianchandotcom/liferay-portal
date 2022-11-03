@@ -27,6 +27,7 @@ import React, {
 // @ts-ignore
 
 import {useForm, useFormState} from '../hooks/useForm.es';
+import {getFieldChildren} from '../utils/getFieldChildren';
 
 const ARROW_DOWN_KEYCODE = 40;
 const ARROW_UP_KEYCODE = 38;
@@ -265,25 +266,7 @@ function getItemChildren(item: any): any[] {
 		case 'column':
 			return item.fields || [];
 		case 'field': {
-			if (item.rows?.every((row: any) => row.columns)) {
-				return (
-					item.rows?.map((row: any) => ({
-						...row,
-						columns: row.columns.map((column: any) => ({
-							...column,
-							fields: column.fields.map((fieldName: any) =>
-								item.nestedFields.find(
-									(field: any) =>
-										field.fieldName === fieldName
-								)
-							),
-						})),
-					})) || []
-				);
-			}
-			else {
-				return [];
-			}
+			return getFieldChildren(item);
 		}
 		default:
 			return [];

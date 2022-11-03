@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -102,23 +104,25 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _addInstance(ActionRequest actionRequest) throws Exception {
+		String password = PropsValues.DEFAULT_ADMIN_PASSWORD;
+
 		String screenNameAdmin = ParamUtil.getString(
 			actionRequest, "screenNameAdmin");
 
-		if (Validator.isNull(screenNameAdmin)) {
+		if (Validator.isNull(password) && Validator.isNull(screenNameAdmin)) {
 			throw new UserScreenNameException.MustNotBeNull(screenNameAdmin);
 		}
 
 		String emailAdmin = ParamUtil.getString(actionRequest, "emailAdmin");
 
-		if (Validator.isNull(emailAdmin)) {
+		if (Validator.isNull(password) && Validator.isNull(emailAdmin)) {
 			throw new UserEmailAddressException.MustValidate(emailAdmin, null);
 		}
 
 		String passwordAdmin = ParamUtil.getString(
 			actionRequest, "passwordAdmin");
 
-		if (Validator.isNull(passwordAdmin)) {
+		if (Validator.isNull(password) && Validator.isNull(passwordAdmin)) {
 			throw new UserPasswordException.MustNotBeNull(0);
 		}
 

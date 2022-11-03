@@ -154,8 +154,8 @@ public class PortalImplLayoutPortletTest {
 			_portal.getPlidFromPortletId(_group.getGroupId(), portletId));
 
 		ContentLayoutTestUtil.markItemForDeletionFromLayout(
-			draftLayout, portletId,
-			layoutDataJSONObject.getString("addedItemId"));
+			layoutDataJSONObject.getString("addedItemId"), draftLayout,
+			portletId);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 

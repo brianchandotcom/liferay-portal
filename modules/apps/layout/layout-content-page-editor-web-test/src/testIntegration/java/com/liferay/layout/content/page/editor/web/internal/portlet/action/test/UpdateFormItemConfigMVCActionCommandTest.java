@@ -171,7 +171,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
-					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
 					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
@@ -224,7 +224,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
-					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
 					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
@@ -275,7 +275,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
-					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
 					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
@@ -362,7 +362,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
-					_layout, "{}", LayoutDataItemTypeConstants.TYPE_FORM,
+					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
 					_segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
@@ -422,8 +422,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				MockObject.class.getName());
 
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
-				_layout, String.valueOf(classNameId), "0",
-				_segmentsExperienceId, false, _INFO_FIELDS);
+				false, String.valueOf(classNameId), "0", _layout,
+				_segmentsExperienceId, _INFO_FIELDS);
 
 			String formItemId = jsonObject.getString("addedItemId");
 
@@ -476,8 +476,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				MockObject.class.getName());
 
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
-				_layout, String.valueOf(classNameId), "0",
-				_segmentsExperienceId, false, _INFO_FIELDS);
+				false, String.valueOf(classNameId), "0", _layout,
+				_segmentsExperienceId, _INFO_FIELDS);
 
 			String formItemId = jsonObject.getString("addedItemId");
 

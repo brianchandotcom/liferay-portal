@@ -108,10 +108,10 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -145,10 +145,10 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, true,
+				true,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -190,10 +190,10 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -261,13 +261,13 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
-				layout,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0",
+				"0", layout,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				false, infoField);
+				infoField);
 
 			String formItemId = jsonObject.getString("addedItemId");
 
@@ -312,10 +312,10 @@ public class AddInfoItemStrutsActionValidationTest {
 				_group.getStagingGroup());
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -359,10 +359,10 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -410,10 +410,10 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -456,10 +456,10 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(

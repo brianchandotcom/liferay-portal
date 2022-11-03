@@ -216,7 +216,7 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 		throws Exception {
 
 		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
-			_layout, "{}", itemType, parentItemId, 0, _segmentsExperienceId);
+			"{}", itemType, _layout, parentItemId, 0, _segmentsExperienceId);
 
 		return addItemJSONObject.getString("addedItemId");
 	}

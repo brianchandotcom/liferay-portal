@@ -396,9 +396,6 @@ public class LayoutWorkflowHandlerTest {
 		Assert.assertNotNull(fragmentEntry);
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			layout, fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -408,8 +405,10 @@ public class LayoutWorkflowHandlerTest {
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put("headingLevel", "h1")
 			).toString(),
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0);
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0, segmentsExperienceId);
 	}
 
 	private void _approveUserWorkflowTasks() throws PortalException {

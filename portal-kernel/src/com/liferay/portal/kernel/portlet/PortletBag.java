@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
@@ -92,9 +91,6 @@ public interface PortletBag extends Cloneable {
 	public ResourceBundle getResourceBundle(Locale locale);
 
 	public String getResourceBundleBaseName();
-
-	public List<SchedulerEventMessageListener>
-		getSchedulerEventMessageListeners();
 
 	public ServletContext getServletContext();
 

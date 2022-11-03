@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
@@ -377,24 +376,6 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public List<SchedulerEventMessageListener>
-		getSchedulerEventMessageListeners() {
-
-		if (_schedulerEventMessageListeners == null) {
-			synchronized (this) {
-				if (_schedulerEventMessageListeners == null) {
-					_schedulerEventMessageListeners =
-						ServiceTrackerListFactory.open(
-							_bundleContext, SchedulerEventMessageListener.class,
-							_filterString);
-				}
-			}
-		}
-
-		return _toList(_schedulerEventMessageListeners);
-	}
-
-	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -627,8 +608,6 @@ public class PortletBagImpl implements PortletBag {
 		_preferencesValidatorInstances;
 	private final String _resourceBundleBaseName;
 	private volatile ResourceBundleLoader _resourceBundleLoader;
-	private volatile ServiceTrackerList<SchedulerEventMessageListener>
-		_schedulerEventMessageListeners;
 	private final List<ServiceRegistration<?>> _serviceRegistrations;
 	private final ServletContext _servletContext;
 	private volatile ServiceTrackerList<SocialActivityInterpreter>

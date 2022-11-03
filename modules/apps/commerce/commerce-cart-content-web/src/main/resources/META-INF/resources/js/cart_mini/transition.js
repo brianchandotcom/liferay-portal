@@ -64,6 +64,10 @@ export default function ({namespace}) {
 							label: Liferay.Language.get('cancel'),
 							on: {
 								click() {
+									if (form) {
+										form.reset();
+									}
+
 									dialog.hide();
 								},
 							},
@@ -77,6 +81,10 @@ export default function ({namespace}) {
 								'<span aria-hidden="true">&times;</span>',
 							on: {
 								click() {
+									if (form) {
+										form.reset();
+									}
+
 									dialog.hide();
 								},
 							},

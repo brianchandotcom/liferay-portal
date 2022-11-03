@@ -27,6 +27,12 @@ const ShowPartialResultsAlert: React.FC<IProps> = ({
 		!showPartialResultsToRespondents
 	);
 
+	const showPartialResultsMessage = dismissible
+		? Liferay.Language.get(
+				'your-responses-will-be-visible-to-all-form-respondents'
+		  )
+		: Liferay.Language.get('respondents-can-see-all-submitted-form-data');
+
 	return (
 		<div
 			className={classNames('lfr-ddm__show-partial-results-alert', {
@@ -38,9 +44,7 @@ const ShowPartialResultsAlert: React.FC<IProps> = ({
 				onClose={dismissible ? () => setDismissed(true) : undefined}
 				title="Info"
 			>
-				{Liferay.Language.get(
-					'your-responses-will-be-visible-to-all-form-respondents'
-				)}
+				{showPartialResultsMessage}
 
 				{dismissible && (
 					<ClayAlert.Footer>

@@ -33,16 +33,16 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		</a>
 	</c:if>
 
-	<c:if test="<%= enableRSS && (kbArticle.isApproved() || !kbArticle.isFirstVersion()) && !Objects.equals(portletDisplay.getRootPortletId(), KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
+	<c:if test="<%= kbGroupServiceConfiguration.enableRSS() && (kbArticle.isApproved() || !kbArticle.isFirstVersion()) && !Objects.equals(portletDisplay.getRootPortletId(), KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
 		<liferay-portlet:resourceURL id="kbArticleRSS" varImpl="kbArticleRSSURL">
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 		</liferay-portlet:resourceURL>
 
 		<liferay-rss:rss
-			delta="<%= rssDelta %>"
-			displayStyle="<%= rssDisplayStyle %>"
-			feedType="<%= rssFeedType %>"
+			delta="<%= GetterUtil.getInteger(kbGroupServiceConfiguration.rssDelta()) %>"
+			displayStyle="<%= kbGroupServiceConfiguration.rssDisplayStyle() %>"
+			feedType="<%= kbGroupServiceConfiguration.rssFeedType() %>"
 			resourceURL="<%= kbArticleRSSURL %>"
 		/>
 	</c:if>

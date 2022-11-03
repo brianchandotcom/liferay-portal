@@ -45,7 +45,7 @@
 
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
-			redirect='<%= ParamUtil.getString(request, "redirect") %>'
+
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

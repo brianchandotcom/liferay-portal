@@ -73,6 +73,64 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165776. The page creator could add elements into the Grid via keyboard."
+	@priority = "5"
+	test AddElementsIntoGrid {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator adds a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Then the page creator could add elements into Grid via keyboard") {
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				upCount = "1");
+
+			AssertElementPresent(
+				key_columnNumber = "3",
+				key_elementHeader = "//div[@aria-label='Heading']",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Content Management",
+				upCount = "4",
+				widgetName = "Asset Publisher");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[@aria-label='Asset Publisher']",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				upCount = "6");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Button",
+				position = "1");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Grid",
+				position = "2");
+		}
+	}
+
 	@description = "This is a test for LPS-165776. The page creator could add fragments to page via keyboard."
 	@priority = "5"
 	test AddFragmentsToPage {

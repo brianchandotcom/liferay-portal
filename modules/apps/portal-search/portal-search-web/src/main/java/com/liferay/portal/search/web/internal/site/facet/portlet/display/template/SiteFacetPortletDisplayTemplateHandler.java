@@ -86,14 +86,14 @@ public class SiteFacetPortletDisplayTemplateHandler
 			"scopeSearchFacetDisplayContext");
 		templateVariableGroup.addVariable(
 			"term-frequency", Integer.class,
-			PortletDisplayTemplateConstants.ENTRY, "getCount()");
+			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
 		templateVariableGroup.addVariable(
 			"term-name", String.class, PortletDisplayTemplateConstants.ENTRY,
 			"getDescriptiveName()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"term", BucketDisplayContext.class,
-			PortletDisplayTemplateConstants.ENTRY, "getDescriptiveName()");
+			PortletDisplayTemplateConstants.ENTRY, "getBucketText()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

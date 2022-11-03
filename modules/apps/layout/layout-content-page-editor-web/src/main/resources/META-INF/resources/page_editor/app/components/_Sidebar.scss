@@ -138,6 +138,10 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		&--open {
 			transform: translateX(0);
 		}
+
+		&:focus-visible {
+			outline: none;
+		}
 	}
 
 	&__resizer {

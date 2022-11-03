@@ -386,6 +386,45 @@ definition {
 			fieldName = "Text");
 	}
 
+	@description = "LPS-163705 - Verify if you can add an expiration date to the form."
+	@priority = "5"
+	test CanAddExpirationDate {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		AssertElementPresent(locator1 = "Form#EXPIRATION_DATE_DISABLED");
+
+		Click(locator1 = "Form#NEVER_EXPIRE");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2001");
+
+		AssertElementPresent(
+			key_feedbackMessage = "Please enter a valid expiration date. Only future dates are accepted.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2100");
+
+		Click(locator1 = "FormFields#DATE_CALENDAR");
+
+		Form.save();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+	}
+
 	@description = "Verify that a Form can be created"
 	@priority = "5"
 	test CanBeCreated {

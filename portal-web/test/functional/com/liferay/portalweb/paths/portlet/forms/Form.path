@@ -389,6 +389,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TAB_SUBMISSIONS</td>
+	<td>//a[contains(@class,'tab-content') and contains(.,'Submissions')] | //span[contains(text(),'Submissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -694,6 +699,29 @@
 <tr>
 	<td>PAGE_PAGINATION</td>
 	<td>//input[contains(@class,'page-header-title') and @value='${key_fieldName}']/../../../h5[contains(.,'${key_pagination}')]</td>
+	<td></td>
+</tr>
+
+<!--SUBMISSIONS-->
+
+<tr>
+	<td>EXPIRATION_DATE_DISABLED</td>
+	<td>//input[contains(@name, 'datePicker') and contains(@type, 'hidden')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEVER_EXPIRE</td>
+	<td>//input[contains(@type, 'checkbox')]//..//span[contains(text(), 'Never Expire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE</td>
+	<td>//div[contains(@class, 'input-group-item')]/ancestor::div//input[contains(@placeholder, '${value}') and contains(@value, '${value}')]/../label[contains(text(), 'Expiration Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEEDBACK_MESSAGE</td>
+	<td>//div[contains(@class, 'form-feedback-group')]//div[contains(@class, 'form-feedback-item') and contains(text(), '${key_feedbackMessage}')]</td>
 	<td></td>
 </tr>
 </tbody>

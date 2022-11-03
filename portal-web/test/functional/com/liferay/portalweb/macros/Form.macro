@@ -638,6 +638,10 @@ definition {
 		}
 	}
 
+	macro gotoSubmissionsTab {
+		Click(locator1 = "Form#SETTINGS_TAB_SUBMISSIONS");
+	}
+
 	macro modifyModuleDefinitionTimeout {
 		Form.openToJavaScriptLoader();
 

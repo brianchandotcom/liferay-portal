@@ -22,6 +22,14 @@ definition {
 		Log.viewLogFileContentPresent(logContent = "ExampleText=ExampleText");
 	}
 
+	@description = "LPS-158742. Given custom log4j is not added to portal and log context is not enabled. Then log lines will not be marked."
+	@priority = "4"
+	test LogOutputReturnsMarkedWithDefaultName {
+		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
+
+		Log.viewLogFileContentPresent(logContent = "UpgradeLog=UpgradeLog");
+	}
+
 	@description = "LPS-158742. Given custom log4j is not added to portal and log context is enabled. Then log lines will not be marked."
 	@priority = "3"
 	test LogOutputReturnsUnmarkedWithoutCustomLog4j {
@@ -29,14 +37,6 @@ definition {
 		property log.context.enabled = "false";
 
 		Log.viewLogFileContentNotPresent(logContent = "UpgradeLog=UpgradeLog");
-	}
-
-	@description = "LPS-158742. Given custom log4j is not added to portal and log context is not enabled. Then log lines will not be marked."
-	@priority = "4"
-	test LogOutputReturnsMarkedWithDefaultName {
-		property custom.properties = "upgrade.log.context.enabled=true${line.separator}upgrade.database.auto.run=true";
-
-		Log.viewLogFileContentPresent(logContent = "UpgradeLog=UpgradeLog");
 	}
 
 }

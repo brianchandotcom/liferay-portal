@@ -197,10 +197,6 @@ public class NotificationTemplateLocalServiceImpl
 
 		_validate(notificationContext);
 
-		NotificationTemplate notificationTemplate =
-			notificationTemplatePersistence.update(
-				notificationContext.getNotificationTemplate());
-
 		NotificationRecipient notificationRecipient =
 			_notificationRecipientLocalService.updateNotificationRecipient(
 				notificationContext.getNotificationRecipient());
@@ -224,6 +220,10 @@ public class NotificationTemplateLocalServiceImpl
 				updateNotificationRecipientSetting(
 					notificationRecipientSetting);
 		}
+
+		NotificationTemplate notificationTemplate =
+			notificationTemplatePersistence.update(
+				notificationContext.getNotificationTemplate());
 
 		List<Long> oldAttachmentObjectFieldIds = new ArrayList<>();
 

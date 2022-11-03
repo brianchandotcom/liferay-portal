@@ -91,7 +91,7 @@ public class ViewNotificationTemplatesDisplayContext {
 		return creationMenu;
 	}
 
-	public Object getEditorConfig(String editorConfigKey) {
+	public Object getEditorConfig() {
 		HttpServletRequest httpServletRequest =
 			_notificationRequestHelper.getRequest();
 
@@ -101,7 +101,7 @@ public class ViewNotificationTemplatesDisplayContext {
 
 		EditorConfiguration editorConfiguration =
 			_editorConfigurationFactory.getEditorConfiguration(
-				themeDisplay.getPpid(), editorConfigKey, "ckeditor_classic",
+				themeDisplay.getPpid(), "rich_text", "ckeditor_classic",
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
 				).build(),

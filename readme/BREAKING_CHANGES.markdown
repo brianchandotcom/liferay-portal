@@ -1036,3 +1036,28 @@ Upgrade MySQL to 5.7.28 or higher or set the protocol to TLSv1.2 manually (See h
 
 ### Why was this change made?
 - This change was made due to security vulnerability.
+
+---------------------------------------
+
+## Removed UtilLocator
+
+- **Date:** 2022-Nov-2
+- **JIRA Ticket:** [LPS-165363](https://issues.liferay.com/browse/LPS-165363)
+
+### What changed?
+
+- UtilLocator is removed. Templates can no longer use utilLocator.findUtil() to access Util classes.
+
+### Who is affected?
+
+- For the clients who is currently using utilLocator within templates to access the Util classes
+
+### How should I update my code?
+
+- There is no replacement for this removal.
+- The workaround is to set LIFERAY_TEMPLATE_PERIOD_ENGINE_PERIOD_SERVICE_PERIOD_LOCATOR_PERIOD_RESTRICT environment variable to false and access the desired util class using ServiceLocator instead. However, please note that this approach would open unrestricted access to all published OSGi services to templates.
+
+### Why was this change made?
+
+- This change was made due to security vulnerability.
+- UtilLocator currently gives unrestricted access of all UtilClasses to templates which poses a risk of misuse or malicious attack. Commonly used Util classes such as StringUtil are already added to template context and ready to be used.

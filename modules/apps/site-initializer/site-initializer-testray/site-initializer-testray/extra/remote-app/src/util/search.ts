@@ -86,7 +86,7 @@ export class SearchBuilder {
 			return query.substring(0, query.length - 3);
 		}
 
-		return query;
+		return encodeURIComponent(query);
 	}
 
 	static removeEmptyFilter(filter: Filter) {

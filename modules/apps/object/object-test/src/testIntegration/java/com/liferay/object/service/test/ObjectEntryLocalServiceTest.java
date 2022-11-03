@@ -2051,6 +2051,10 @@ public class ObjectEntryLocalServiceTest {
 				"firstName", "John"
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"multipleListTypeEntriesKey",
+				(Serializable)Arrays.asList(
+					"multipleListTypeEntryKey1", "multipleListTypeEntryKey2")
 			).build());
 
 		_assertCount(1);
@@ -2076,7 +2080,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"multipleListTypeEntriesKey",
 				(Serializable)Arrays.asList(
-					"listTypeEntryKey1", "listTypeEntryKey2")
+					"multipleListTypeEntryKey3", "multipleListTypeEntryKey4")
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -2104,7 +2108,7 @@ public class ObjectEntryLocalServiceTest {
 			"listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(
-			"listTypeEntryKey1, listTypeEntryKey2",
+			"multipleListTypeEntryKey3, multipleListTypeEntryKey4",
 			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(StringPool.BLANK, values.get("script"));
@@ -2143,7 +2147,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"multipleListTypeEntriesKey",
 				(Serializable)Arrays.asList(
-					"listTypeEntryKey2", "listTypeEntryKey3")
+					"multipleListTypeEntryKey5", "multipleListTypeEntryKey6")
 			).put(
 				"numberOfBooksWritten", 5
 			).put(
@@ -2170,13 +2174,13 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("João", values.get("firstName"));
 		Assert.assertEquals(180D, values.get("height"));
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
-		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(
 			"listTypeEntryKey1", values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
+		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(
-			"listTypeEntryKey2, listTypeEntryKey3",
+			"multipleListTypeEntryKey5, multipleListTypeEntryKey6",
 			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
@@ -2234,6 +2238,9 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(
+			"multipleListTypeEntryKey5, multipleListTypeEntryKey6",
+			values.get("multipleListTypeEntriesKey"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(script, values.get("script"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));

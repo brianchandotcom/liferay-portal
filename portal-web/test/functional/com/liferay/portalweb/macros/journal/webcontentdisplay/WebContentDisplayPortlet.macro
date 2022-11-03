@@ -379,7 +379,7 @@ definition {
 
 			Click(
 				key_listEntry = "${webContentTitle}",
-				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
 
 			SelectFrame(value1 = "relative=top");
 

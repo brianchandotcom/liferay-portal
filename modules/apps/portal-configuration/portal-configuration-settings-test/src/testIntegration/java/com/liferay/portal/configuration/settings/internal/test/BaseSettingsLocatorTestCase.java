@@ -15,16 +15,20 @@
 package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
+import com.liferay.portal.configuration.settings.internal.samples.TestConfiguration;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,6 +48,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -68,6 +73,17 @@ public abstract class BaseSettingsLocatorTestCase {
 	public static void setUpClass() throws Exception {
 		companyId = TestPropsValues.getCompanyId();
 		groupId = TestPropsValues.getGroupId();
+
+		_safeCloseable = ReflectionTestUtil.invoke(
+			_settingsLocatorHelper, "registerConfigurationBeanClass",
+			new Class<?>[] {Class.class}, TestConfiguration.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		if (_safeCloseable != null) {
+			_safeCloseable.close();
+		}
 	}
 
 	@After
@@ -258,6 +274,11 @@ public abstract class BaseSettingsLocatorTestCase {
 	@Inject
 	private static PortletPreferencesLocalService
 		_portletPreferencesLocalService;
+
+	private static SafeCloseable _safeCloseable;
+
+	@Inject
+	private static SettingsLocatorHelper _settingsLocatorHelper;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

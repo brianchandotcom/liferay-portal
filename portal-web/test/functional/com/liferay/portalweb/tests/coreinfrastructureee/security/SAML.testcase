@@ -684,6 +684,7 @@ definition {
 	@description = "This is a use case for LRQA-47412. Assert signed SAML metadata."
 	@priority = "4"
 	test AssertSignedSAMLMetadata {
+		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "SAML#AssertSignedSAMLMetadata";
 
 		task ("Configure samlidp as IdP") {
@@ -717,6 +718,7 @@ definition {
 	@priority = "4"
 	test AssertSSOFailsWhenAlgorithmsMismatch {
 		property blacklist.saml.algorithms = "true";
+		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "SAML#AssertSSOFailsWhenAlgorithmsMismatch";
 
 		task ("Configure samlidp as IdP") {

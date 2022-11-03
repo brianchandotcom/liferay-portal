@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.importer.helper;
+package com.liferay.layout.internal.importer;
 
 import com.liferay.layout.importer.PortletPreferencesPortletConfigurationImporter;
 import com.liferay.portal.kernel.model.Layout;

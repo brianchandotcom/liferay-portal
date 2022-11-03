@@ -44,7 +44,7 @@ const Review = ({
 						},
 						{
 							title: 'MDF Activity Associated',
-							value: 'MDF Activity AssociatedDraft',
+							value: values.mdfActivityAssociated.name,
 						},
 					]}
 					title="General Details"

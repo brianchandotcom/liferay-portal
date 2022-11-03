@@ -24,7 +24,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
-import com.liferay.layout.page.template.util.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructureUtil;
 import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;

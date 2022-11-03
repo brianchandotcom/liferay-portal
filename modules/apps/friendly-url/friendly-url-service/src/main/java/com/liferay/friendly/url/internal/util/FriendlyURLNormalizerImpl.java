@@ -44,7 +44,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalize(String friendlyURL) {
-		return normalize(friendlyURL, false, false);
+		return _normalize(friendlyURL, false, false);
 	}
 
 	@Override
@@ -167,15 +167,15 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalizeWithPeriods(String friendlyURL) {
-		return normalize(friendlyURL, true, false);
+		return _normalize(friendlyURL, true, false);
 	}
 
 	@Override
 	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
-		return normalize(friendlyURL, true, true);
+		return _normalize(friendlyURL, true, true);
 	}
 
-	protected String normalize(
+	private String _normalize(
 		String friendlyURL, boolean periods, boolean slashes) {
 
 		if (Validator.isNull(friendlyURL)) {

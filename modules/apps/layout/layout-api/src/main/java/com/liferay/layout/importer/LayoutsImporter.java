@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.importer;
+package com.liferay.layout.importer;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.util.structure.LayoutStructure;

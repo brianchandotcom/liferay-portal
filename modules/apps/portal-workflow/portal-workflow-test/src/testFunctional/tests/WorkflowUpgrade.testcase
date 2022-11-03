@@ -110,6 +110,7 @@ definition {
 		Upgrade.approveWorkflow();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewAndApproveWorkflowBlogsAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
@@ -129,6 +130,7 @@ definition {
 		Upgrade.approveWorkflow();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewAndApproveWorkflowBlogsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal";

@@ -162,7 +162,7 @@ definition {
 				ariaLabel = "Mark Favorite",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Button",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
 
 			AssertTextEquals(
 				locator1 = "Tooltip#GENERIC_TOOLTIP",
@@ -172,7 +172,7 @@ definition {
 				ariaLabel = "Mark Favorite",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Button",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
 
 			AssertElementPresent(
 				key_collectionName = "Favorites",
@@ -193,7 +193,7 @@ definition {
 				ariaLabel = "Unmark Favorite",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Button",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
 
 			AssertTextEquals(
 				locator1 = "Tooltip#GENERIC_TOOLTIP",
@@ -203,7 +203,7 @@ definition {
 				ariaLabel = "Unmark Favorite",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Button",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
 
 			AssertElementNotPresent(
 				key_collectionName = "Favorites",

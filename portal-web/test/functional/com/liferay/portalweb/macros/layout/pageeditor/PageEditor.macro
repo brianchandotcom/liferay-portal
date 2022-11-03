@@ -4062,7 +4062,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				ariaLabel = "Mark Favorite",
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
 		}
 		else {
 			Click.clickAtNotVisible(
@@ -4415,7 +4415,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				ariaLabel = "Unmark Favorite",
 				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_FAVORITE");
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL");
 		}
 		else {
 			Click.clickAtNotVisible(

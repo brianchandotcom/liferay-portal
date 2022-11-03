@@ -227,20 +227,27 @@ function getItemChildren(item: any): any[] {
 			return item.columns || [];
 		case 'column':
 			return item.fields || [];
-		case 'field':
-			return (
-				item.rows?.map((row: any) => ({
-					...row,
-					columns: row.columns.map((column: any) => ({
-						...column,
-						fields: column.fields.map((fieldName: any) =>
-							item.nestedFields.find(
-								(field: any) => field.fieldName === fieldName
-							)
-						),
-					})),
-				})) || []
-			);
+		case 'field': {
+			if (item.rows?.every((row: any) => row.columns)) {
+				return (
+					item.rows?.map((row: any) => ({
+						...row,
+						columns: row.columns.map((column: any) => ({
+							...column,
+							fields: column.fields.map((fieldName: any) =>
+								item.nestedFields.find(
+									(field: any) =>
+										field.fieldName === fieldName
+								)
+							),
+						})),
+					})) || []
+				);
+			}
+			else {
+				return [];
+			}
+		}
 		default:
 			return [];
 	}

@@ -324,11 +324,6 @@ public class OfflineOpenIdConnectSessionManager {
 		}
 
 		if (_destinationServiceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_destinationServiceRegistration.getReference());
-
-			destination.destroy();
-
 			_destinationServiceRegistration.unregister();
 
 			_destinationServiceRegistration = null;

@@ -555,13 +555,15 @@ public class EditUserMVCActionCommand
 			actionRequest);
 
 		long prefixListTypeId = _getListTypeId(
-			actionRequest, "prefixValue", ListTypeConstants.CONTACT_PREFIX);
+			actionRequest, "prefixListTypeValue",
+			ListTypeConstants.CONTACT_PREFIX);
 
 		dynamicActionRequest.setParameter(
 			"prefixListTypeId", String.valueOf(prefixListTypeId));
 
 		long suffixListTypeId = _getListTypeId(
-			actionRequest, "suffixValue", ListTypeConstants.CONTACT_SUFFIX);
+			actionRequest, "suffixListTypeValue",
+			ListTypeConstants.CONTACT_SUFFIX);
 
 		dynamicActionRequest.setParameter(
 			"suffixListTypeId", String.valueOf(suffixListTypeId));

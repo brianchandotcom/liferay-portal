@@ -15,7 +15,7 @@ import React from 'react';
 
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
 import Input from './Input';
-import TestConnectionButton from './TestConnectionButton';
+import TestConfigurationButton from './TestConfigurationButton';
 import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
 
 /**
@@ -335,7 +335,7 @@ export default function ({
 					value={formik.values.embeddingVectorDimensions}
 				/>
 
-				<TestConnectionButton
+				<TestConfigurationButton
 					assetEntryClassNames={formik.values.assetEntryClassNames}
 					cacheTimeout={formik.values.cacheTimeout}
 					embeddingVectorDimensions={

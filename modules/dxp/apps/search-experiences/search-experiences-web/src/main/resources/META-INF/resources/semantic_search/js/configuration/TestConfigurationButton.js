@@ -21,7 +21,7 @@ import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
  * A button to test the connection for the semantic search settings page.
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */
-function TestConnectionButton({
+function TestConfigurationButton({
 	assetEntryClassNames,
 	cacheTimeout,
 	embeddingVectorDimensions,
@@ -91,7 +91,7 @@ function TestConnectionButton({
 		return {};
 	};
 
-	const _handleTestConnectionButtonClick = () => {
+	const _handleTestConfigurationButtonClick = () => {
 		setLoading(true);
 
 		// Organizing fetch body property groups by how they appear in the UI.
@@ -206,7 +206,7 @@ function TestConnectionButton({
 			.catch((error) => {
 				setTestResultsMessage({
 					message: Liferay.Language.get(
-						'unable-to-test-connection-due-to-an-unexpected-error'
+						'unable-to-test-configuration-due-to-an-unexpected-error'
 					),
 					type: 'danger',
 				});
@@ -221,11 +221,12 @@ function TestConnectionButton({
 	};
 
 	return (
-		<div className="test-connection-button-root">
+		<div className="test-configuration-button-root">
 			<ClayButton
+				aria-label={Liferay.Language.get('test-configuration')}
 				disabled={loading}
 				displayType="secondary"
-				onClick={_handleTestConnectionButtonClick}
+				onClick={_handleTestConfigurationButtonClick}
 			>
 				{loading && (
 					<span className="inline-item inline-item-before">
@@ -233,21 +234,19 @@ function TestConnectionButton({
 					</span>
 				)}
 
-				{Liferay.Language.get('test-connection')}
+				{Liferay.Language.get('test-configuration')}
 			</ClayButton>
 
 			{!!testResultsMessage.message && (
-				<div className="test-connection-button-results">
-					<ClayAlert
-						className="mt-2"
-						displayType={testResultsMessage.type}
-						title={testResultsMessage.message}
-						variant="feedback"
-					/>
-				</div>
+				<ClayAlert
+					className="mt-2"
+					displayType={testResultsMessage.type}
+					title={testResultsMessage.message}
+					variant="feedback"
+				/>
 			)}
 		</div>
 	);
 }
 
-export default TestConnectionButton;
+export default TestConfigurationButton;

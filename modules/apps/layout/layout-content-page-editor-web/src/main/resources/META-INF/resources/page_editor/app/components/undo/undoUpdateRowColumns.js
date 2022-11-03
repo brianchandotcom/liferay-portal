@@ -25,13 +25,11 @@ function undoAction({action}) {
 		// LPS-164654 We need to restore all deleted columns in reversed orders
 		// so the backend can recover each column children correctly.
 
-		for (const columnId of deletedColumnIds.reverse()) {
-			await LayoutService.unmarkItemForDeletion({
-				itemId: columnId,
-				onNetworkStatus: dispatch,
-				segmentsExperienceId,
-			});
-		}
+		await LayoutService.unmarkItemsForDeletion({
+			itemIds: deletedColumnIds.reverse(),
+			onNetworkStatus: dispatch,
+			segmentsExperienceId,
+		});
 
 		const {layoutData, pageContents} = await LayoutService.updateItemConfig(
 			{

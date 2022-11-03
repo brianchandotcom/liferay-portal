@@ -228,17 +228,17 @@ export default {
 	/**
 	 * Unmarks an item for deletion
 	 * @param {object} options
-	 * @param {string} options.itemId id of the item to be updated
+	 * @param {string[]} options.itemIds id of the item to be updated
 	 * @param {string} options.segmentsExperienceId Segments experience id
 	 * @param {function} options.onNetworkStatus
 	 * @return {Promise<void>}
 	 */
-	unmarkItemForDeletion({itemId, onNetworkStatus, segmentsExperienceId}) {
+	unmarkItemsForDeletion({itemIds, onNetworkStatus, segmentsExperienceId}) {
 		return layoutServiceFetch(
-			config.unmarkItemForDeletionURL,
+			config.unmarkItemsForDeletionURL,
 			{
 				body: {
-					itemId,
+					itemIds: JSON.stringify(itemIds),
 					segmentsExperienceId,
 				},
 			},

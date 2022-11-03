@@ -211,7 +211,7 @@ export interface Config {
 		toolbarPluginId: string;
 	}>;
 
-	unmarkItemForDeletionURL: string;
+	unmarkItemsForDeletionURL: string;
 	updateCollectionDisplayConfigURL: string;
 	updateConfigurationValuesURL: string;
 	updateFormItemConfigURL: string;

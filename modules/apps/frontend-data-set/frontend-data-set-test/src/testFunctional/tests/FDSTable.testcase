@@ -60,9 +60,13 @@ definition {
 		}
 
 		task ("Then: There is no hyphen in any header text") {
-			AssertTextNotPresent(
-				locator1 = "FrontendDataSet#HEADER_ROW",
-				value1 = "-");
+			var header = selenium.getText("FrontendDataSet#HEADER_ROW");
+
+			var containsHyphen = StringUtil.contains("${header}", "-");
+
+			TestUtils.assertEquals(
+				actual = "${containsHyphen}",
+				expected = "false");
 		}
 
 		task ("And Then: First letter is capitalized for all headers and localized Spanish headers are present") {

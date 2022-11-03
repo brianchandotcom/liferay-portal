@@ -54,6 +54,7 @@ interface IState {
 		| {
 				dragType: 'move';
 				fieldName: string;
+				itemPath: number[];
 				pageIndex: number;
 				parentField: Record<string, any>;
 		  };
@@ -502,7 +503,15 @@ function getNextValidTarget(
 
 			// Current dnd restriction: you can only drop items over/below rows.
 
-			(itemType === 'field' && position !== 'middle')
+			(itemType === 'field' && position !== 'middle') ||
+
+			// Do not allow items inside themselves
+
+			(sourceItem.dragType === 'move' &&
+				sourceItem.itemPath.length <= itemPath.length &&
+				sourceItem.itemPath.every(
+					(value, index) => itemPath[index] === value
+				))
 		) {
 			return false;
 		}

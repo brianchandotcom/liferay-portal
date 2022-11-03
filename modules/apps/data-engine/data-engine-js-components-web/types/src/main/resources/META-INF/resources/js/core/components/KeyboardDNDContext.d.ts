@@ -29,6 +29,7 @@ interface IState {
 		| {
 				dragType: 'move';
 				fieldName: string;
+				itemPath: number[];
 				pageIndex: number;
 				parentField: Record<string, any>;
 		  };

@@ -198,6 +198,7 @@ export const Actions = forwardRef(
 			fieldType,
 			isFieldSelected,
 			isFieldSet,
+			itemPath,
 			parentFieldName,
 		},
 		actionsRef
@@ -257,6 +258,7 @@ export const Actions = forwardRef(
 			setKeyboardDNDSourceItem({
 				dragType: 'move',
 				fieldName: fieldId,
+				itemPath,
 				pageIndex,
 				parentField,
 			});

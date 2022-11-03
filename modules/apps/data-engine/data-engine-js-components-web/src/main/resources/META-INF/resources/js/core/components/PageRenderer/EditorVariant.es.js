@@ -159,6 +159,7 @@ export function Column({
 						fieldType={firstField.type}
 						isFieldSelected={isFieldSelected}
 						isFieldSet={isFieldSet}
+						itemPath={itemPath}
 						parentFieldName={parentField?.fieldName}
 						ref={actionsRef}
 					/>

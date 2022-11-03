@@ -106,18 +106,20 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 					CompanyThreadLocal.setWithSafeCloseable(
 						_portal.getCompanyId(httpServletRequest))) {
 
-				User user = _userLocalService.getUser(userId);
+				User user = _userLocalService.fetchUser(userId);
 
-				userEmailAddress = user.getEmailAddress();
+				if (user != null) {
+					userEmailAddress = user.getEmailAddress();
 
-				auditRequestThreadLocal.setRealUserEmailAddress(
-					userEmailAddress);
+					auditRequestThreadLocal.setRealUserEmailAddress(
+						userEmailAddress);
 
-				auditRequestThreadLocal.setRealUserId(userId);
+					auditRequestThreadLocal.setRealUserId(userId);
 
-				userLogin = _getUserLogin(user);
+					userLogin = _getUserLogin(user);
 
-				auditRequestThreadLocal.setRealUserLogin(userLogin);
+					auditRequestThreadLocal.setRealUserLogin(userLogin);
+				}
 			}
 		}
 

@@ -16,8 +16,8 @@ package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutsImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -114,43 +114,37 @@ public class DisplayPagesImporterTest {
 
 		_importLayoutPageTemplateEntry(testCaseName);
 
-		List<LayoutPageTemplatesImporterResultEntry>
-			layoutPageTemplatesImporterResultEntries =
-				_getLayoutPageTemplatesImporterResultEntries(testCaseName);
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_getLayoutsImporterResultEntries(testCaseName);
 
-		LayoutPageTemplatesImporterResultEntry
-			layoutPageTemplatesImporterResultEntry =
-				layoutPageTemplatesImporterResultEntries.get(0);
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(0);
 
 		Assert.assertEquals(
-			LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
-			layoutPageTemplatesImporterResultEntry.getStatus());
+			LayoutsImporterResultEntry.Status.IGNORED,
+			layoutsImporterResultEntry.getStatus());
 		Assert.assertEquals(
 			String.format(
 				"%s/display-page-templates/%s/display-page-template.json was " +
 					"ignored because a display page template with the same " +
 						"key already exists.",
 				testCaseName, testCaseName),
-			layoutPageTemplatesImporterResultEntry.getErrorMessage());
+			layoutsImporterResultEntry.getErrorMessage());
 	}
 
 	@Test
 	public void testImportDisplayPages() throws Exception {
-		List<LayoutPageTemplatesImporterResultEntry>
-			layoutPageTemplatesImporterResultEntries =
-				_getLayoutPageTemplatesImporterResultEntries(
-					"display-page-template-multiple");
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_getLayoutsImporterResultEntries("display-page-template-multiple");
 
 		Assert.assertEquals(
-			layoutPageTemplatesImporterResultEntries.toString(), 2,
-			layoutPageTemplatesImporterResultEntries.size());
+			layoutsImporterResultEntries.toString(), 2,
+			layoutsImporterResultEntries.size());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
-			_getLayoutPageTemplateEntry(
-				layoutPageTemplatesImporterResultEntries, 0);
+			_getLayoutPageTemplateEntry(layoutsImporterResultEntries, 0);
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
-			_getLayoutPageTemplateEntry(
-				layoutPageTemplatesImporterResultEntries, 1);
+			_getLayoutPageTemplateEntry(layoutsImporterResultEntries, 1);
 
 		List<String> actualLayoutPageTemplateEntryNames = ListUtil.sort(
 			new ArrayList() {
@@ -266,20 +260,18 @@ public class DisplayPagesImporterTest {
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
-		List<LayoutPageTemplatesImporterResultEntry>
-			layoutPageTemplatesImporterResultEntries,
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
 		int index) {
 
-		LayoutPageTemplatesImporterResultEntry
-			layoutPageTemplatesImporterResultEntry =
-				layoutPageTemplatesImporterResultEntries.get(index);
+		LayoutsImporterResultEntry layoutsImporterResultEntry =
+			layoutsImporterResultEntries.get(index);
 
 		Assert.assertEquals(
-			LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
-			layoutPageTemplatesImporterResultEntry.getStatus());
+			LayoutsImporterResultEntry.Status.IMPORTED,
+			layoutsImporterResultEntry.getStatus());
 
 		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(
-			layoutPageTemplatesImporterResultEntry.getName());
+			layoutsImporterResultEntry.getName());
 
 		layoutPageTemplateEntryKey = StringUtil.replace(
 			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
@@ -293,46 +285,42 @@ public class DisplayPagesImporterTest {
 		return layoutPageTemplateEntry;
 	}
 
-	private List<LayoutPageTemplatesImporterResultEntry>
-			_getLayoutPageTemplatesImporterResultEntries(String testCaseName)
+	private List<LayoutsImporterResultEntry> _getLayoutsImporterResultEntries(
+			String testCaseName)
 		throws Exception {
 
 		File file = _generateZipFile(testCaseName);
 
-		List<LayoutPageTemplatesImporterResultEntry>
-			layoutPageTemplatesImporterResultEntries = null;
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
 
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try {
-			layoutPageTemplatesImporterResultEntries =
-				_layoutsImporter.importFile(
-					_user.getUserId(), _group.getGroupId(), 0, file, false);
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
+				_user.getUserId(), _group.getGroupId(), 0, file, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		Assert.assertNotNull(layoutPageTemplatesImporterResultEntries);
+		Assert.assertNotNull(layoutsImporterResultEntries);
 
-		return layoutPageTemplatesImporterResultEntries;
+		return layoutsImporterResultEntries;
 	}
 
 	private LayoutPageTemplateEntry _importLayoutPageTemplateEntry(
 			String testCaseName)
 		throws Exception {
 
-		List<LayoutPageTemplatesImporterResultEntry>
-			layoutPageTemplatesImporterResultEntries =
-				_getLayoutPageTemplatesImporterResultEntries(testCaseName);
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_getLayoutsImporterResultEntries(testCaseName);
 
 		Assert.assertEquals(
-			layoutPageTemplatesImporterResultEntries.toString(), 1,
-			layoutPageTemplatesImporterResultEntries.size());
+			layoutsImporterResultEntries.toString(), 1,
+			layoutsImporterResultEntries.size());
 
-		return _getLayoutPageTemplateEntry(
-			layoutPageTemplatesImporterResultEntries, 0);
+		return _getLayoutPageTemplateEntry(layoutsImporterResultEntries, 0);
 	}
 
 	private void _populateZipWriter(ZipWriter zipWriter, URL url)

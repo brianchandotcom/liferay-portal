@@ -17,17 +17,15 @@ package com.liferay.layout.page.template.importer;
 /**
  * @author Rubén Pulido
  */
-public class LayoutPageTemplatesImporterResultEntry {
+public class LayoutsImporterResultEntry {
 
-	public LayoutPageTemplatesImporterResultEntry(
-		String name, int type, Status status) {
-
+	public LayoutsImporterResultEntry(String name, int type, Status status) {
 		_name = name;
 		_type = type;
 		_status = status;
 	}
 
-	public LayoutPageTemplatesImporterResultEntry(
+	public LayoutsImporterResultEntry(
 		String name, int type, Status status, String errorMessage) {
 
 		_name = name;
@@ -36,7 +34,7 @@ public class LayoutPageTemplatesImporterResultEntry {
 		_errorMessage = errorMessage;
 	}
 
-	public LayoutPageTemplatesImporterResultEntry(
+	public LayoutsImporterResultEntry(
 		String name, int type, Status status, String[] warningMessages) {
 
 		_name = name;

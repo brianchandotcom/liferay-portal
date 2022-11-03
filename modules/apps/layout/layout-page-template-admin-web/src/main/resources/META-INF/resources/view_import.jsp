@@ -54,10 +54,10 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 		</liferay-frontend:fieldset-group>
 
 		<%
-		Map<LayoutPageTemplatesImporterResultEntry.Status, List<LayoutPageTemplatesImporterResultEntry>> layoutPageTemplatesImporterResultEntryMap = importDisplayContext.getLayoutPageTemplatesImporterResultEntryMap();
+		Map<LayoutsImporterResultEntry.Status, List<LayoutsImporterResultEntry>> layoutsImporterResultEntryMap = importDisplayContext.getLayoutsImporterResultEntryMap();
 		%>
 
-		<c:if test="<%= MapUtil.isNotEmpty(layoutPageTemplatesImporterResultEntryMap) %>">
+		<c:if test="<%= MapUtil.isNotEmpty(layoutsImporterResultEntryMap) %>">
 
 			<%
 			String dialogType = importDisplayContext.getDialogType();
@@ -69,13 +69,13 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 				<ul class="<%= dialogType %>-list-items">
 
 					<%
-					Map<Integer, List<LayoutPageTemplatesImporterResultEntry>> importedLayoutPageTemplatesImporterResultEntriesMap = importDisplayContext.getImportedLayoutPageTemplatesImporterResultEntriesMap();
+					Map<Integer, List<LayoutsImporterResultEntry>> importedLayoutsImporterResultEntriesMap = importDisplayContext.getImportedLayoutsImporterResultEntriesMap();
 					%>
 
-					<c:if test="<%= MapUtil.isNotEmpty(importedLayoutPageTemplatesImporterResultEntriesMap) %>">
+					<c:if test="<%= MapUtil.isNotEmpty(importedLayoutsImporterResultEntriesMap) %>">
 
 						<%
-						for (Map.Entry<Integer, List<LayoutPageTemplatesImporterResultEntry>> entrySet : importedLayoutPageTemplatesImporterResultEntriesMap.entrySet()) {
+						for (Map.Entry<Integer, List<LayoutsImporterResultEntry>> entrySet : importedLayoutsImporterResultEntriesMap.entrySet()) {
 						%>
 
 							<li>
@@ -89,20 +89,20 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					</c:if>
 
 					<%
-					List<LayoutPageTemplatesImporterResultEntry> layoutPageTemplatesImporterResultEntriesWithWarnings = importDisplayContext.getLayoutPageTemplatesImporterResultEntriesWithWarnings();
+					List<LayoutsImporterResultEntry> layoutsImporterResultEntriesWithWarnings = importDisplayContext.getLayoutsImporterResultEntriesWithWarnings();
 					%>
 
-					<c:if test="<%= ListUtil.isNotEmpty(layoutPageTemplatesImporterResultEntriesWithWarnings) %>">
+					<c:if test="<%= ListUtil.isNotEmpty(layoutsImporterResultEntriesWithWarnings) %>">
 
 						<%
-						for (int i = 0; i < layoutPageTemplatesImporterResultEntriesWithWarnings.size(); i++) {
-							LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = layoutPageTemplatesImporterResultEntriesWithWarnings.get(i);
+						for (int i = 0; i < layoutsImporterResultEntriesWithWarnings.size(); i++) {
+							LayoutsImporterResultEntry layoutsImporterResultEntry = layoutsImporterResultEntriesWithWarnings.get(i);
 
-							String[] warningMessages = layoutPageTemplatesImporterResultEntry.getWarningMessages();
+							String[] warningMessages = layoutsImporterResultEntry.getWarningMessages();
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getWarningMessage(layoutPageTemplatesImporterResultEntry.getName())) %></span>
+								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(importDisplayContext.getWarningMessage(layoutsImporterResultEntry.getName())) %></span>
 
 								<ul>
 
@@ -129,22 +129,22 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					int total = 0;
 					int viewTotal = 0;
 
-					List<LayoutPageTemplatesImporterResultEntry> notImportedLayoutPageTemplatesImporterResultEntries = importDisplayContext.getNotImportedLayoutPageTemplatesImporterResultEntries();
+					List<LayoutsImporterResultEntry> notImportedLayoutsImporterResultEntries = importDisplayContext.getNotImportedLayoutsImporterResultEntries();
 					%>
 
-					<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutPageTemplatesImporterResultEntries) %>">
+					<c:if test="<%= ListUtil.isNotEmpty(notImportedLayoutsImporterResultEntries) %>">
 
 						<%
-						total = notImportedLayoutPageTemplatesImporterResultEntries.size();
+						total = notImportedLayoutsImporterResultEntries.size();
 
 						viewTotal = (total > 10) ? 10 : total;
 
 						for (int i = 0; i < viewTotal; i++) {
-							LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = notImportedLayoutPageTemplatesImporterResultEntries.get(i);
+							LayoutsImporterResultEntry layoutsImporterResultEntry = notImportedLayoutsImporterResultEntries.get(i);
 						%>
 
 							<li>
-								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(layoutPageTemplatesImporterResultEntry.getErrorMessage()) %></span>
+								<span class="<%= dialogType %>-info"><%= HtmlUtil.escape(layoutsImporterResultEntry.getErrorMessage()) %></span>
 							</li>
 
 						<%

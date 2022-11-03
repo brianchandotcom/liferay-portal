@@ -16,8 +16,8 @@ package com.liferay.fragment.web.internal.struts;
 
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutsImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporterResultEntry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -112,28 +112,24 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 			JSONArray pageTemplatesImportResultJSONArray =
 				_jsonFactory.createJSONArray();
 
-			List<LayoutPageTemplatesImporterResultEntry>
-				layoutPageTemplatesImporterResultEntries =
-					_layoutsImporter.importFile(
-						themeDisplay.getUserId(), groupId, 0L, file, true);
+			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+				_layoutsImporter.importFile(
+					themeDisplay.getUserId(), groupId, 0L, file, true);
 
-			for (LayoutPageTemplatesImporterResultEntry
-					layoutPageTemplatesImporterResultEntry :
-						layoutPageTemplatesImporterResultEntries) {
+			for (LayoutsImporterResultEntry layoutsImporterResultEntry :
+					layoutsImporterResultEntries) {
 
 				pageTemplatesImportResultJSONArray.put(
 					JSONUtil.put(
 						"errorMessage",
-						layoutPageTemplatesImporterResultEntry.getErrorMessage()
+						layoutsImporterResultEntry.getErrorMessage()
 					).put(
-						"name", layoutPageTemplatesImporterResultEntry.getName()
+						"name", layoutsImporterResultEntry.getName()
 					).put(
 						"status",
 						() -> {
-							LayoutPageTemplatesImporterResultEntry.Status
-								status =
-									layoutPageTemplatesImporterResultEntry.
-										getStatus();
+							LayoutsImporterResultEntry.Status status =
+								layoutsImporterResultEntry.getStatus();
 
 							return status.getLabel();
 						}

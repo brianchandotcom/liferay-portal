@@ -40,8 +40,8 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
 import com.liferay.layout.page.template.exception.MasterPageValidatorException;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutsImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -132,12 +132,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	@Override
-	public List<LayoutPageTemplatesImporterResultEntry> importFile(
+	public List<LayoutsImporterResultEntry> importFile(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			File file, boolean overwrite)
 		throws Exception {
 
-		_layoutPageTemplatesImporterResultEntries = new ArrayList<>();
+		_layoutsImporterResultEntries = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			_processMasterLayoutPageTemplateEntries(
@@ -157,7 +157,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 		}
 
-		return _layoutPageTemplatesImporterResultEntries;
+		return _layoutsImporterResultEntries;
 	}
 
 	@Override
@@ -278,11 +278,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						displayPageTemplateValidatorException);
 				}
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						zipEntry.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-display-" +
@@ -318,11 +318,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						exception);
 				}
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						displayPageTemplate.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
@@ -458,11 +458,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						masterPageValidatorException);
 				}
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						zipEntry.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-master-page-" +
@@ -497,11 +497,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						exception);
 				}
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						masterPage.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
@@ -606,11 +606,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						exception);
 				}
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						zipEntry.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
@@ -651,11 +651,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 						exception);
 				}
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						pageTemplate.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-its-page-" +
@@ -902,11 +902,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				DisplayPageTemplate displayPageTemplate =
 					displayPageTemplateEntry.getDisplayPageTemplate();
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						displayPageTemplate.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-of-invalid-" +
@@ -982,17 +982,17 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 								getLayoutPageTemplateEntryId(),
 							previewFileEntryId);
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						name, layoutPageTemplateEntryType,
-						LayoutPageTemplatesImporterResultEntry.Status.IMPORTED,
+						LayoutsImporterResultEntry.Status.IMPORTED,
 						warningMessages.toArray(new String[0])));
 			}
 			else {
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						name, layoutPageTemplateEntryType,
-						LayoutPageTemplatesImporterResultEntry.Status.IGNORED,
+						LayoutsImporterResultEntry.Status.IGNORED,
 						_getErrorMessage(
 							groupId, _MESSAGE_KEY_IGNORED,
 							new String[] {
@@ -1015,10 +1015,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_log.warn(portalException);
 			}
 
-			_layoutPageTemplatesImporterResultEntries.add(
-				new LayoutPageTemplatesImporterResultEntry(
+			_layoutsImporterResultEntries.add(
+				new LayoutsImporterResultEntry(
 					name, layoutPageTemplateEntryType,
-					LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+					LayoutsImporterResultEntry.Status.INVALID,
 					_getErrorMessage(
 						groupId, _MESSAGE_KEY_INVALID,
 						new String[] {
@@ -1052,11 +1052,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				MasterPage masterPage = masterPageEntry.getMasterPage();
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						masterPage.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-of-invalid-" +
@@ -1214,11 +1214,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				PageTemplate pageTemplate = pageTemplateEntry.getPageTemplate();
 
-				_layoutPageTemplatesImporterResultEntries.add(
-					new LayoutPageTemplatesImporterResultEntry(
+				_layoutsImporterResultEntries.add(
+					new LayoutsImporterResultEntry(
 						pageTemplate.getName(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-						LayoutPageTemplatesImporterResultEntry.Status.INVALID,
+						LayoutsImporterResultEntry.Status.INVALID,
 						_getErrorMessage(
 							groupId,
 							"x-could-not-be-imported-because-of-invalid-" +
@@ -1430,12 +1430,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
-	private List<LayoutPageTemplatesImporterResultEntry>
-		_layoutPageTemplatesImporterResultEntries;
-
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	private List<LayoutsImporterResultEntry> _layoutsImporterResultEntries;
 
 	@Reference
 	private LayoutStructureItemImporterRegistry

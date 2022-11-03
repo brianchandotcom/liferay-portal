@@ -318,18 +318,13 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 				selectorRef.current
 			);
 
-			if (
-				event.shiftKey &&
-				focusableElements.indexOf(event.target) === 0
-			) {
-				event.preventDefault();
-
-				buttonRef.current?.focus();
-
-				return;
+			if (event.shiftKey) {
+				if (focusableElements.indexOf(event.target) === 0) {
+					event.preventDefault();
+					buttonRef.current?.focus();
+				}
 			}
-
-			if (
+			else if (
 				focusableElements.indexOf(event.target) ===
 				focusableElements.length - 1
 			) {

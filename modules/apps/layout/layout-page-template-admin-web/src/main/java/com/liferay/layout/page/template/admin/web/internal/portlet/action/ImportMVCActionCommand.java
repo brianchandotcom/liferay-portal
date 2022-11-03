@@ -15,8 +15,8 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.layout.page.template.importer.LayoutsImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporterResultEntry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,20 +84,18 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "overwrite", true);
 
 		try {
-			List<LayoutPageTemplatesImporterResultEntry>
-				layoutPageTemplatesImporterResultEntries =
-					_layoutsImporter.importFile(
-						themeDisplay.getUserId(),
-						themeDisplay.getScopeGroupId(),
-						layoutPageTemplateCollectionId, file, overwrite);
+			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+				_layoutsImporter.importFile(
+					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+					layoutPageTemplateCollectionId, file, overwrite);
 
-			if (ListUtil.isEmpty(layoutPageTemplatesImporterResultEntries)) {
+			if (ListUtil.isEmpty(layoutsImporterResultEntries)) {
 				return;
 			}
 
 			SessionMessages.add(
-				actionRequest, "layoutPageTemplatesImporterResultEntries",
-				layoutPageTemplatesImporterResultEntries);
+				actionRequest, "layoutsImporterResultEntries",
+				layoutsImporterResultEntries);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

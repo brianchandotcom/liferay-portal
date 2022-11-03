@@ -113,6 +113,10 @@ definition {
 			title = "${iconName}");
 	}
 
+	macro clickViewMore {
+		Button.click(button = "View More");
+	}
+
 	macro deleteSecondCategoryFilter {
 		Click(locator1 = "ContentDashboard#DELETE_SECOND_FILTER_SELECTED");
 	}
@@ -274,6 +278,18 @@ definition {
 		WaitForPageLoad();
 
 		WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_CHART_SVG");
+	}
+
+	macro goToVersionHistoryPage {
+		ContentDashboard.goToContentDashboard();
+
+		LexiconTable.clickEllipsisItem(
+			item = "Info",
+			tableEntry = "${assetName}");
+
+		ContentDashboard.openVersionsTab();
+
+		ContentDashboard.clickViewMore();
 	}
 
 	macro moveToPage {

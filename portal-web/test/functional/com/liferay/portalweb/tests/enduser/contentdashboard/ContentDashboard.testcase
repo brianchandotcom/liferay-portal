@@ -6332,6 +6332,58 @@ definition {
 		}
 	}
 
+	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@priority = "4"
+	test ViewMoreButtonToDocumentsVersionHistory {
+		property portal.acceptance = "true";
+
+		task ("Given the info panel of a document") {
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Add versions for the document") {
+				var count = "0";
+
+				while ("${count}" != "10") {
+					JSONDocument.checkOutFile(
+						dmDocumentTitle = "DM Document Title",
+						groupName = "Test Site Name");
+
+					JSONDocument.checkInFile(
+						dmDocumentTitle = "DM Document Title",
+						groupName = "Test Site Name");
+
+					var count = ${count} + 1;
+				}
+			}
+		}
+
+		task ("When the user clicks on the View More button") {
+			ContentDashboard.goToVersionHistoryPage(assetName = "DM Document Title");
+		}
+
+		task ("And the user is redirected to the Version History page for documents") {
+			AssertLocation.assertPartialLocation(value1 = "document_library%2Fview_file_entry_history");
+
+			SiteAdmin.viewPortletTitle(portletTitle = "DM Document Title");
+		}
+
+		task ("Then this page should contain a table of all the Version Histories of the Document") {
+			for (var indexNumber : list "1,2,3,4,5,6,7,8,9,10,11") {
+				AssertVisible(
+					index = "${indexNumber}",
+					key_tableEntry = "DM Document Title",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+			}
+		}
+	}
+
 	@description = "LPS-161544 Given the Version History page for Web Contents
 	When the user clicks on back
 	Then the Web Content is selected and the Info Panel is open to the Versions tab"

@@ -59,9 +59,12 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 	const formState = useFormState();
 	const formStateRef = useRef(formState);
 	const [state, setState] = useState<IState | null>(null);
+
 	const isDragging = useMemo(() => Boolean(state as any), [state]);
+	const stateRef = useRef(state);
 
 	formStateRef.current = formState;
+	stateRef.current = state;
 
 	useEffect(() => {
 		if (!isDragging) {
@@ -106,25 +109,23 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				event.keyCode === ARROW_DOWN_KEYCODE ||
 				event.keyCode === ARROW_UP_KEYCODE
 			) {
-				const direction =
-					event.keyCode === ARROW_DOWN_KEYCODE ? 'down' : 'up';
-
-				setState((state) =>
-					getNextValidTarget(formStateRef.current, state!, direction)
+				setState(
+					getNextValidTarget(
+						formStateRef.current,
+						stateRef.current!,
+						event.keyCode === ARROW_DOWN_KEYCODE ? 'down' : 'up'
+					)
 				);
 			}
 			else if (event.keyCode === ESCAPE_KEYCODE) {
 				setState(null);
 			}
 			else if (event.keyCode === ENTER_KEYCODE) {
-				setState((state) => {
-					handleDrop(state!);
-
-					return null;
-				});
+				handleDrop(stateRef.current!);
+				setState(null);
 			}
 			else if (event.keyCode === HOME_KEYCODE) {
-				setState((state) =>
+				setState(
 					getNextValidTarget(
 						formStateRef.current,
 						{
@@ -133,14 +134,14 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 								itemType: 'page',
 								position: 'top',
 							},
-							sourceItem: state!.sourceItem,
+							sourceItem: stateRef.current!.sourceItem,
 						},
 						'down'
 					)
 				);
 			}
 			else if (event.keyCode === END_KEYCODE) {
-				setState((state) =>
+				setState(
 					getNextValidTarget(
 						formStateRef.current,
 						{
@@ -151,7 +152,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 								itemType: 'page',
 								position: 'bottom',
 							},
-							sourceItem: state!.sourceItem,
+							sourceItem: stateRef.current!.sourceItem,
 						},
 						'up'
 					)

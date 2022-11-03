@@ -23,6 +23,7 @@ export const CREATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT = gql`
 				type: "C_LiferayExperienceCloudEnvironment"
 				path: "/c/liferayexperiencecloudenvironments"
 			) {
+			accountEntryId
 			accountKey
 			id
 			incidentManagementEmailAddress

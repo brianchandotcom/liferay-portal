@@ -21,6 +21,7 @@ export const CREATE_ADMIN_LIFERAY_EXPERIENCE_CLOUD = gql`
 				type: "C_AdminLiferayExperienceCloud"
 				path: "/c/adminliferayexperienceclouds"
 			) {
+			accountEntryId
 			emailAddress
 			fullName
 			githubUsername

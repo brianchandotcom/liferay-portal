@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaPackagePathCheck" files="commerce-dashboard-web/src/main/java/com/liferay/commerce/dashboard/web/internal/configuration/definition/CommerceDashboardForecastPortletInstanceConfigurationBeanDeclaration\.java" />
 		<suppress checks="JSPLanguageKeysCheck" files="commerce-machine-learning-forecast-alert-web/src/main/resources/META-INF/resources/forecast_alert_action\.jsp" />
 	</source-check>
 </suppressions>

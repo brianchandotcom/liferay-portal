@@ -14,8 +14,9 @@
 
 package com.liferay.notification.internal.term;
 
-import com.liferay.notification.term.contributor.NotificationTermContributor;
-import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
+import com.liferay.notification.internal.term.evaluator.DefaultNotificationTermEvaluator;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluatorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -28,98 +29,104 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
  */
-@Component(service = NotificationTermContributorRegistry.class)
-public class NotificationTermContributorRegistryImpl
-	implements NotificationTermContributorRegistry {
+@Component(service = NotificationTermEvaluatorRegistry.class)
+public class NotificationTermEvaluatorRegistryImpl
+	implements NotificationTermEvaluatorRegistry {
 
 	@Override
-	public List<NotificationTermContributor>
-		getNotificationTermContributorsByNotificationTermContributorKey(
+	public List<NotificationTermEvaluator>
+		getNotificationTermEvaluatorsByNotificationTermEvaluatorKey(
 			String key) {
 
-		return _getNotificationTermContributors(
-			key, _serviceTrackerMapByNotificationTermContributorKey);
+		return _getNotificationTermEvaluators(
+			key, _serviceTrackerMapByNotificationTermEvaluatorKey);
 	}
 
 	@Override
-	public List<NotificationTermContributor>
-		getNotificationTermContributorsByNotificationTypeKey(String key) {
+	public List<NotificationTermEvaluator>
+		getNotificationTermEvaluatorsByNotificationTypeKey(String key) {
 
-		return _getNotificationTermContributors(
+		return _getNotificationTermEvaluators(
 			key, _serviceTrackerMapByNotificationTypeKey);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMapByNotificationTermContributorKey =
+		_serviceTrackerMapByNotificationTermEvaluatorKey =
 			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, NotificationTermContributor.class,
+				bundleContext, NotificationTermEvaluator.class,
 				"notification.term.contributor.key",
 				ServiceTrackerCustomizerFactory.
-					<NotificationTermContributor>serviceWrapper(bundleContext));
+					<NotificationTermEvaluator>serviceWrapper(bundleContext));
 		_serviceTrackerMapByNotificationTypeKey =
 			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, NotificationTermContributor.class,
+				bundleContext, NotificationTermEvaluator.class,
 				"notification.type.key",
 				ServiceTrackerCustomizerFactory.
-					<NotificationTermContributor>serviceWrapper(bundleContext));
+					<NotificationTermEvaluator>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMapByNotificationTermContributorKey.close();
+		_serviceTrackerMapByNotificationTermEvaluatorKey.close();
 
 		_serviceTrackerMapByNotificationTypeKey.close();
 	}
 
-	private List<NotificationTermContributor> _getNotificationTermContributors(
+	private List<NotificationTermEvaluator> _getNotificationTermEvaluators(
 		String key,
 		ServiceTrackerMap
 			<String,
 			 List
 				 <ServiceTrackerCustomizerFactory.ServiceWrapper
-					 <NotificationTermContributor>>> serviceTrackerMap) {
+					 <NotificationTermEvaluator>>> serviceTrackerMap) {
+
+		if (key == null) {
+			return Collections.singletonList(_defaultNotificationTermEvaluator);
+		}
 
 		List
 			<ServiceTrackerCustomizerFactory.ServiceWrapper
-				<NotificationTermContributor>>
-					notificationTermContributorWrappers =
-						serviceTrackerMap.getService(key);
+				<NotificationTermEvaluator>> notificationTermEvaluatorWrappers =
+					serviceTrackerMap.getService(key);
 
-		if (notificationTermContributorWrappers == null) {
-			return Collections.emptyList();
+		if (notificationTermEvaluatorWrappers == null) {
+			return Collections.singletonList(_defaultNotificationTermEvaluator);
 		}
 
-		List<NotificationTermContributor> notificationTermContributors =
+		List<NotificationTermEvaluator> notificationTermEvaluators =
 			new ArrayList<>();
 
 		for (ServiceTrackerCustomizerFactory.ServiceWrapper
-				<NotificationTermContributor>
-					tableActionProviderServiceWrapper :
-						notificationTermContributorWrappers) {
+				<NotificationTermEvaluator> tableActionProviderServiceWrapper :
+					notificationTermEvaluatorWrappers) {
 
-			notificationTermContributors.add(
+			notificationTermEvaluators.add(
 				tableActionProviderServiceWrapper.getService());
 		}
 
-		return notificationTermContributors;
+		return notificationTermEvaluators;
 	}
+
+	@Reference
+	private DefaultNotificationTermEvaluator _defaultNotificationTermEvaluator;
 
 	private ServiceTrackerMap
 		<String,
 		 List
 			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermContributor>>>
-					_serviceTrackerMapByNotificationTermContributorKey;
+				 <NotificationTermEvaluator>>>
+					_serviceTrackerMapByNotificationTermEvaluatorKey;
 	private ServiceTrackerMap
 		<String,
 		 List
 			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermContributor>>>
+				 <NotificationTermEvaluator>>>
 					_serviceTrackerMapByNotificationTypeKey;
 
 }

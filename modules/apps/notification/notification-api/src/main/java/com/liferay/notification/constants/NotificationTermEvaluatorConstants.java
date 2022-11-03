@@ -17,7 +17,7 @@ package com.liferay.notification.constants;
 /**
  * @author Gustavo Lima
  */
-public class NotificationTermContributorConstants {
+public class NotificationTermEvaluatorConstants {
 
 	public static final String BODY_AND_SUBJECT = "bodyAndSubject";
 

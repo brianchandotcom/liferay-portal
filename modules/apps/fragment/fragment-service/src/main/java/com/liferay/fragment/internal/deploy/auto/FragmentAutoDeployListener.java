@@ -15,7 +15,7 @@
 package com.liferay.fragment.internal.deploy.auto;
 
 import com.liferay.fragment.importer.FragmentsImporter;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
@@ -196,7 +196,7 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 		if ((company != null) && (group != null) &&
 			(company.getGroupId() != group.getGroupId())) {
 
-			_layoutPageTemplatesImporter.importFile(
+			_layoutsImporter.importFile(
 				user.getUserId(), groupId, 0L, file, true);
 		}
 	}
@@ -303,7 +303,7 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+	private LayoutsImporter _layoutsImporter;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

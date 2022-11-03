@@ -16,8 +16,8 @@ package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -307,7 +307,7 @@ public class DisplayPagesImporterTest {
 
 		try {
 			layoutPageTemplatesImporterResultEntries =
-				_layoutPageTemplatesImporter.importFile(
+				_layoutsImporter.importFile(
 					_user.getUserId(), _group.getGroupId(), 0, file, false);
 		}
 		finally {
@@ -394,11 +394,11 @@ public class DisplayPagesImporterTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutsImporter _layoutsImporter;
 
 	private User _user;
 

@@ -16,8 +16,8 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -143,7 +143,7 @@ public class ExportImportMasterLayoutsTest {
 
 		try {
 			layoutPageTemplatesImporterResultEntries =
-				_layoutPageTemplatesImporter.importFile(
+				_layoutsImporter.importFile(
 					TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 					false);
 		}
@@ -295,11 +295,11 @@ public class ExportImportMasterLayoutsTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutsImporter _layoutsImporter;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_page_template_admin/export_master_layouts"

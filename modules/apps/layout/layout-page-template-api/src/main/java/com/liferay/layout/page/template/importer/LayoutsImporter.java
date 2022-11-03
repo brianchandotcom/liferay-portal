@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jürgen Kappler
  */
 @ProviderType
-public interface LayoutPageTemplatesImporter {
+public interface LayoutsImporter {
 
 	public void importFile(
 			long userId, long groupId, File file, boolean overwrite)

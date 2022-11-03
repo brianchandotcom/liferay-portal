@@ -97,6 +97,7 @@ export default function Sidebar() {
 	sidebarWidthRef.current = sidebarWidth;
 
 	const sidebarContentRef = useRef();
+	const tabListRef = useRef();
 
 	const panels = useSelector(selectAvailablePanels(config.panels));
 	const sidebarHidden = store.sidebar.hidden;
@@ -296,6 +297,27 @@ export default function Sidebar() {
 		}
 	};
 
+	const handleTabKeyDown = (event) => {
+		if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+			const tabs = Array.from(
+				tabListRef.current.querySelectorAll('button')
+			);
+
+			const positionActiveTab = tabs.indexOf(document.activeElement);
+
+			const activeTab =
+				tabs[
+					event.key === 'ArrowUp'
+						? positionActiveTab - 1
+						: positionActiveTab + 1
+				];
+
+			if (activeTab) {
+				activeTab.focus();
+			}
+		}
+	};
+
 	const handleSeparatorKeyDown = (event) => {
 		if (
 			Liferay.Language.direction?.[themeDisplay?.getLanguageId()] ===
@@ -365,6 +387,9 @@ export default function Sidebar() {
 						'page-editor__sidebar__buttons--hidden': sidebarHidden,
 					})}
 					onClick={deselectItem}
+					onKeyDown={handleTabKeyDown}
+					ref={tabListRef}
+					role="tablist"
 				>
 					{panels.reduce((elements, group, groupIndex) => {
 						const buttons = group.map((panelId) => {
@@ -402,7 +427,11 @@ export default function Sidebar() {
 
 							return (
 								<ClayButtonWithIcon
-									aria-pressed={active}
+									aria-controls={sidebarContentId}
+									aria-label={Liferay.Language.get(
+										panel.label
+									)}
+									aria-selected={active}
 									className={classNames({active})}
 									data-panel-id={panel.sidebarPanelId}
 									data-tooltip-align="left"
@@ -412,8 +441,12 @@ export default function Sidebar() {
 									onClick={() => handleClick(panel)}
 									onFocus={prefetch}
 									onMouseEnter={prefetch}
+									role="tab"
 									small={true}
 									symbol={icon}
+									tabIndex={
+										sidebarPanelId !== panelId ? '-1' : null
+									}
 									title={label}
 								/>
 							);
@@ -449,7 +482,7 @@ export default function Sidebar() {
 					id={sidebarContentId}
 					onClick={deselectItem}
 					ref={sidebarContentRef}
-					role="region"
+					role="tabpanel"
 					tabIndex="-1"
 				>
 					{hasError ? (

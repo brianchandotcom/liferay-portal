@@ -167,8 +167,6 @@ public class OfflineOpenIdConnectSessionManager {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		_bundleContext = bundleContext;
-
 		OpenIdConnectConfiguration openIdConnectConfiguration =
 			ConfigurableUtil.createConfigurable(
 				OpenIdConnectConfiguration.class, properties);
@@ -387,8 +385,6 @@ public class OfflineOpenIdConnectSessionManager {
 	private AuthorizationServerMetadataResolver
 		_authorizationServerMetadataResolver;
 
-	private volatile BundleContext _bundleContext;
-
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
 
@@ -415,8 +411,8 @@ public class OfflineOpenIdConnectSessionManager {
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	private volatile long _tokenRefreshOffsetMillis = 60 * Time.SECOND;
-	private volatile int _tokenRefreshScheduledInterval = 480;
+	private long _tokenRefreshOffsetMillis = 60 * Time.SECOND;
+	private int _tokenRefreshScheduledInterval = 480;
 	private TokensRefreshMessageListener _tokensRefreshMessageListener;
 
 	@Reference

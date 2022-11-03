@@ -64,7 +64,39 @@ definition {
 
 	@description = "LPS-164617. Assert that it's possible to make changes in the FDS "
 	@priority = "4"
-	test CanBeEditted {
+	test CanBeEdited {
+		task ("And Given A custom view is created and selected") {
+			FDSCustomView.createNewView(key_nameView = "New View");
+		}
+
+		task ("When Make some changes to dataset display") {
+			FDSCustomView.selectColumn(key_itemName = "Description");
+
+			FDSFilters.editFilters(
+				key_disableFilters = "Blue",
+				key_enableFilters = "Red",
+				key_filter = "Color");
+		}
+
+		task ("And Click Save button") {
+			FDSCustomView.saveCustomView();
+		}
+
+		task ("Change selection to default view and assert an aspect from default view") {
+			FDSCustomView.viewNoColumn(key_field = "Description");
+
+			FDSCustomView.verifyFilterSummaryLabel(key_filter = "Blue, Green, Yellow");
+		}
+
+		task ("then change selection to editted custom view and assert some aspects of it ") {
+			Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+
+			FDSCustomView.selectView(key_itemName = "Default View");
+
+			FDSCustomView.viewColumn(key_field = "Description");
+
+			FDSCustomView.verifyFilterSummaryLabel(key_filter = "Green, Yellow, Red");
+		}
 	}
 
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
@@ -276,5 +308,4 @@ definition {
 				reset_filter = "Restablecer filtros");
 		}
 	}
-
 }

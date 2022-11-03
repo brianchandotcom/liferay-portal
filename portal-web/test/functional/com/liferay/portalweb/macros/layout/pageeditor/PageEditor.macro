@@ -1133,6 +1133,51 @@ definition {
 		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
 	}
 
+	macro addWidgetViaKeyboard {
+		PageEditor.assertFragmentSidebarLoaded();
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Widgets");
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+			value1 = "${widgetName}");
+
+		KeyPress(
+			ariaLabel = "Add ${widgetName}",
+			key_collectionName = "${categoryName}",
+			key_fragmentName = "${widgetName}",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+			value1 = "\ENTER");
+
+		if (isSet(upCount)) {
+			var i = "1";
+
+			while ("${i}" != "${upCount}") {
+				KeyPress(
+					ariaLabel = "Add ${widgetName}",
+					key_collectionName = "${categoryName}",
+					key_fragmentName = "${widgetName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+					value1 = "\UP");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		KeyPress(
+			ariaLabel = "Add ${widgetName}",
+			key_collectionName = "${categoryName}",
+			key_fragmentName = "${widgetName}",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+			value1 = "\ENTER");
+
+		PageEditor.waitForAutoSave();
+
+		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_CLEAR_BUTTON");
+	}
+
 	macro assertAutoImageResolution {
 		if ("${type}" == "backgroundImage") {
 			var backgroundImage = Css.getCssValue(

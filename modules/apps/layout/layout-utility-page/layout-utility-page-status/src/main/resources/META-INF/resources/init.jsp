@@ -16,10 +16,14 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+<%@ taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.layout.utility.page.status.internal.display.context.StatusDisplayContext" %><%@
+<%@ page import="com.liferay.layout.utility.page.constants.LayoutUtilityPageEntryConstants" %><%@
+page import="com.liferay.layout.utility.page.model.LayoutUtilityPageEntry" %><%@
+page import="com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil" %><%@
+page import="com.liferay.layout.utility.page.status.internal.display.context.StatusDisplayContext" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@

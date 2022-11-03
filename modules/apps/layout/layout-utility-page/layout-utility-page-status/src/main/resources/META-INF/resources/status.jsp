@@ -17,88 +17,102 @@
 <%@ include file="/init.jsp" %>
 
 <%
-StatusDisplayContext statusDisplayContext = new StatusDisplayContext(request);
-
-int status = ParamUtil.getInteger(request, "status");
-
-if (status > 0) {
-	response.setStatus(status);
-}
+LayoutUtilityPageEntry layoutUtilityPageEntry = LayoutUtilityPageEntryLocalServiceUtil.fetchDefaultLayoutUtilityPageEntry(themeDisplay.getScopeGroupId(), LayoutUtilityPageEntryConstants.Type.ERROR_404.getType());
 %>
 
 <c:choose>
-	<c:when test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
-		<h3 class="alert alert-danger">
-			<liferay-ui:message key="forbidden" />
-		</h3>
-
-		<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
-
-		<br /><br />
-
-		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
-	</c:when>
-	<c:when test="<%= SessionErrors.contains(request, PortalException.class.getName()) || SessionErrors.contains(request, SystemException.class.getName()) %>">
-		<h3 class="alert alert-danger">
-			<liferay-ui:message key="internal-server-error" />
-		</h3>
-
-		<liferay-ui:message key="an-error-occurred-while-accessing-the-requested-resource" />
-
-		<br /><br />
-
-		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
-	</c:when>
-	<c:when test="<%= SessionErrors.contains(request, TransformException.class.getName()) %>">
-		<h3 class="alert alert-danger">
-			<liferay-ui:message key="internal-server-error" />
-		</h3>
-
-		<liferay-ui:message key="an-error-occurred-while-processing-the-requested-resource" />
-
-		<br /><br />
-
-		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
-
-		<br /><br />
-
-		<%
-		TransformException te = (TransformException)SessionErrors.get(request, TransformException.class.getName());
-		%>
-
-		<div>
-			<%= StringUtil.replace(HtmlUtil.escape(te.getMessage()), '\n', "<br />\n") %>
-		</div>
-	</c:when>
-	<c:when test="<%= statusDisplayContext.isNoSuchResourceException() %>">
-		<h3 class="alert alert-danger">
-			<liferay-ui:message key="not-found" />
-		</h3>
-
-		<liferay-ui:message key="the-requested-resource-could-not-be-found" />
-
-		<br /><br />
-
-		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+	<c:when test="<%= layoutUtilityPageEntry != null %>">
+		<liferay-layout:render-layout-utility-page-entry
+			type="<%= layoutUtilityPageEntry.getType() %>"
+		/>
 	</c:when>
 	<c:otherwise>
-		<h3 class="alert alert-danger">
-			<liferay-ui:message key="internal-server-error" />
-		</h3>
-
-		<liferay-ui:message key="an-error-occurred-while-accessing-the-requested-resource" />
-
-		<br /><br />
-
-		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 
 		<%
-		statusDisplayContext.logSessionErrors();
+		StatusDisplayContext statusDisplayContext = new StatusDisplayContext(request);
+
+		int status = ParamUtil.getInteger(request, "status");
+
+		if (status > 0) {
+			response.setStatus(status);
+		}
 		%>
 
+		<c:choose>
+			<c:when test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
+				<h3 class="alert alert-danger">
+					<liferay-ui:message key="forbidden" />
+				</h3>
+
+				<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+
+				<br /><br />
+
+				<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+			</c:when>
+			<c:when test="<%= SessionErrors.contains(request, PortalException.class.getName()) || SessionErrors.contains(request, SystemException.class.getName()) %>">
+				<h3 class="alert alert-danger">
+					<liferay-ui:message key="internal-server-error" />
+				</h3>
+
+				<liferay-ui:message key="an-error-occurred-while-accessing-the-requested-resource" />
+
+				<br /><br />
+
+				<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+			</c:when>
+			<c:when test="<%= SessionErrors.contains(request, TransformException.class.getName()) %>">
+				<h3 class="alert alert-danger">
+					<liferay-ui:message key="internal-server-error" />
+				</h3>
+
+				<liferay-ui:message key="an-error-occurred-while-processing-the-requested-resource" />
+
+				<br /><br />
+
+				<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+
+				<br /><br />
+
+				<%
+				TransformException te = (TransformException)SessionErrors.get(request, TransformException.class.getName());
+				%>
+
+				<div>
+					<%= StringUtil.replace(HtmlUtil.escape(te.getMessage()), '\n', "<br />\n") %>
+				</div>
+			</c:when>
+			<c:when test="<%= statusDisplayContext.isNoSuchResourceException() %>">
+				<h3 class="alert alert-danger">
+					<liferay-ui:message key="not-found" />
+				</h3>
+
+				<liferay-ui:message key="the-requested-resource-could-not-be-found" />
+
+				<br /><br />
+
+				<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+			</c:when>
+			<c:otherwise>
+				<h3 class="alert alert-danger">
+					<liferay-ui:message key="internal-server-error" />
+				</h3>
+
+				<liferay-ui:message key="an-error-occurred-while-accessing-the-requested-resource" />
+
+				<br /><br />
+
+				<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+
+				<%
+				statusDisplayContext.logSessionErrors();
+				%>
+
+			</c:otherwise>
+		</c:choose>
+
+		<hr class="separator" />
+
+		<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
 	</c:otherwise>
 </c:choose>
-
-<hr class="separator" />
-
-<a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>

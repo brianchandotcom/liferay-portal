@@ -71,13 +71,13 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	const dueStatus = watch('dueStatus');
 	const issue = watch('issue');
 
-	const setRolesUser = useCallback(() => {
+	const setDueStatus = useCallback(() => {
 		setValue('dueStatus', status?.key);
 	}, [setValue, status]);
 
 	useEffect(() => {
-		setRolesUser();
-	}, [setRolesUser]);
+		setDueStatus();
+	}, [setDueStatus]);
 
 	const _onSubmit = () => {
 		testraySubTaskImpl

@@ -51,26 +51,20 @@ const CaseResultEditTest = () => {
 		mutateCaseResult: KeyedMutator<any>;
 	} = useOutletContext();
 
-	const {
-		formState: {errors},
-		handleSubmit,
-		register,
-		watch,
-	} = useForm<CaseResultForm>({
+	const {handleSubmit, register} = useForm<CaseResultForm>({
 		defaultValues: caseResult?.dueStatus
 			? ({
 					commentMBMessage: caseResult?.commentMBMessage,
-					dueStatus: caseResult?.dueStatus.key,
+					dueStatus:
+						caseResult?.dueStatus.key ===
+						CaseResultStatuses.IN_PROGRESS
+							? CaseResultStatuses.PASSED
+							: caseResult?.dueStatus.key,
 					issue: caseResult?.issue,
 			  } as any)
 			: {},
 		resolver: yupResolver(yupSchema.caseResult),
 	});
-
-	const inputProps = {
-		errors,
-		register,
-	};
 
 	const _onSubmit = async ({
 		commentMBMessage,
@@ -95,10 +89,6 @@ const CaseResultEditTest = () => {
 			.catch(onError);
 	};
 
-	const dueStatus = watch('dueStatus');
-	const commentMBMessage = watch('commentMBMessage');
-	const issue = watch('issue');
-
 	return (
 		<Container>
 			<ClayAlert displayType="info">
@@ -118,16 +108,13 @@ const CaseResultEditTest = () => {
 					{label: 'Blocked', value: CaseResultStatuses.BLOCKED},
 					{label: 'Test Fix', value: CaseResultStatuses.TEST_FIX},
 				]}
-				{...inputProps}
-				value={dueStatus}
+				register={register}
 			/>
 
 			<Form.Input
 				className="container-fluid-max-md"
 				label={i18n.translate('issues')}
 				name="issue"
-				{...inputProps}
-				value={issue}
 			/>
 
 			<Form.Input
@@ -135,8 +122,6 @@ const CaseResultEditTest = () => {
 				label={i18n.translate('comment')}
 				name="commentMBMessage"
 				type="textarea"
-				{...inputProps}
-				value={commentMBMessage}
 			/>
 
 			<Footer

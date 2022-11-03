@@ -17,6 +17,7 @@ import DealRegistration from '../../../common/interfaces/dealRegistration';
 import {Liferay} from '../../../common/services/liferay';
 import createDealRegistration from '../../../common/services/liferay/object/deal-registration/createDealRegistration';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
+import createDealRegistrationProxyAPI from './createDealRegistrationProxyAPI';
 
 export default async function submitForm(
 	values: DealRegistration,
@@ -30,7 +31,9 @@ export default async function submitForm(
 		values.registrationStatus = currentRequestStatus;
 	}
 
-	await createDealRegistration(ResourceName.DEAL_REGISTRATION_DXP, values);
+	Liferay.FeatureFlags['LPS-164528']
+		? await createDealRegistrationProxyAPI(values)
+		: createDealRegistration(ResourceName.DEAL_REGISTRATION_DXP, values);
 
 	Liferay.Util.navigate(
 		`${siteURL}/${PRMPageRoute.DEAL_REGISTRATION_LISTING}`

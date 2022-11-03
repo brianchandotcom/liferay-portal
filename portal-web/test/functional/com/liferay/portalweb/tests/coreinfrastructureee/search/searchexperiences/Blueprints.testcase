@@ -3803,13 +3803,6 @@ definition {
 
 		Button.clickDone();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "\"es_ES\": \"Título en Español\"");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "\"es_ES\": \"Descripción en Español\"");
 
 		var elementSourceJson = '''
 {
@@ -3836,6 +3829,18 @@ definition {
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
 			value1 = "${elementSourceJson}");
 
+		WaitForElementPresent(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "de_DE&quot: &quotTitel auf Deutsch");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "\"es_ES\": \"Título en Español\"");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "\"es_ES\": \"Descripción en Español\"");
+			
 		Click(
 			ariaLabel = "Edit Title",
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");

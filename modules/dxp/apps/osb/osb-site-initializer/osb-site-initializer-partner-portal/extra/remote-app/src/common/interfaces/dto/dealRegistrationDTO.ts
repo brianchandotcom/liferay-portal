@@ -28,6 +28,7 @@ export default interface DealRegistrationDTO
 	additionalContactFirstName?: string;
 	additionalContactLastName?: string;
 	additionalInformationAboutTheOpportunity?: string;
+	leadExternalReferenceCode?: string;
 	primaryProspectBusinessUnit?: string;
 	primaryProspectDepartment?: LiferayPicklist;
 	primaryProspectEmailAddress?: string;

@@ -13,7 +13,8 @@ import DealRegistration from '../../../interfaces/dealRegistration';
 import DealRegistrationDTO from '../../../interfaces/dto/dealRegistrationDTO';
 
 export function getDTOFromDealRegistration(
-	dealRegistration: DealRegistration
+	dealRegistration: DealRegistration,
+	leadExternalReferenceCode?: string
 ): DealRegistrationDTO {
 	return {
 		additionalContactEmailAddress:
@@ -23,6 +24,7 @@ export function getDTOFromDealRegistration(
 		additionalContactLastName: dealRegistration.additionalContact?.lastName,
 		additionalInformationAboutTheOpportunity:
 			dealRegistration.additionalInformationAboutTheOpportunity,
+		leadExternalReferenceCode,
 		primaryProspectBusinessUnit:
 			dealRegistration.primaryProspect.businessUnit,
 		primaryProspectDepartment: dealRegistration.primaryProspect.department,

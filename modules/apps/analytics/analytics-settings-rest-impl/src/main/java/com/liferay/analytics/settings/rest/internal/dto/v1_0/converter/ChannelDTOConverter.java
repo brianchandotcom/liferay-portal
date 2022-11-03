@@ -51,8 +51,10 @@ public class ChannelDTOConverter
 		return new Channel() {
 			{
 				channelId = String.valueOf(analyticsChannel.getId());
+
 				commerceSyncEnabled =
 					channelDTOConverterContext.isCommerceSyncEnabled(channelId);
+
 				dataSources = TransformUtil.transform(
 					analyticsChannel.getAnalyticsDataSources(),
 					analyticsDataSource -> _dataSourceDTOConverter.toDTO(

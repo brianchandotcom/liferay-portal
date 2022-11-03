@@ -10,8 +10,8 @@ definition {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 		Click(
-			key_optionName = "${key_itemName}",
-			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
+			value1 = "${key_itemName}");
 	}
 
 	macro compareValue {
@@ -70,11 +70,12 @@ definition {
 	}
 
 	macro saveCustomView {
-		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
+		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
-			key_optionName = "Save View",
+			key_itemName = "Save View",
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+
 	}
 
 	macro saveViewAs {
@@ -132,5 +133,4 @@ definition {
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
-
 }

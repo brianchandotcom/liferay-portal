@@ -1,8 +1,5 @@
 {
-	"friendlyURL": "/my-evp-request-form",
-	"friendlyURL_i18n": {
-		"en_US": "/request-form"
-	},
+	"friendlyURL": "/request-form",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Request Form"

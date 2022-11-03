@@ -839,6 +839,65 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9936. A disabled default currency should not be usable."
+	@priority = "4"
+	test CannotUseDisabledCurrency {
+		task ("Given an account with a default Currency") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			Accounts.setDefaultCurrency(currencyName = "Euro");
+		}
+
+		task ("and the currency is disabled") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet");
+
+			CommerceEntry.selectEntryEllipsis(entryName = "Euro");
+
+			DropdownMenuItem.click(menuItem = "Deactivate");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			ScrollWebElementIntoView(
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTINGS_HEADER");
+
+			AssertElementPresent(
+				key_activeStatus = "No",
+				key_currentDefault = "Euro",
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTING_ACTIVE_STATUS");
+		}
+
+		task ("When the buyer view products on the Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the currency should be set to Dollars and not Euros") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "€");
+		}
+	}
+
 	@description = "COMMERCE-9725. A default delivery term that has been disabled should not be displayed at checkout."
 	@priority = "4"
 	test CannotUseDisabledDefaultDeliveryTerm {

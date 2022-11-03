@@ -1177,6 +1177,12 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
+	macro selectEntryEllipsis {
+		Click(
+			key_itemName = "${entryName}",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+	}
+
 	macro setEntryEligibility {
 		if (isSet(paymentMethod)) {
 			CommerceEntry.clickTableEntryEditButton(

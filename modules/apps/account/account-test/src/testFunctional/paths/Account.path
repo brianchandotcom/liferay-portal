@@ -228,6 +228,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_SETTING_ACTIVE_STATUS</td>
+	<td>//div[contains(@id,'${key_settingHeader}')]//div[@class='dnd-tr']//div[contains(.,'${key_currentDefault}')]//following-sibling::div[contains(.,'${key_activeStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -45,8 +45,12 @@ const General = ({
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		companiesEntries,
 		useCallback(
-			(country, company) => {
+			(country, company, accountExternalReferenceCodeSF) => {
 				setFieldValue('partnerAccount', company);
+				setFieldValue(
+					'accountExternalReferenceCodeSF',
+					accountExternalReferenceCodeSF
+				);
 			},
 			[setFieldValue]
 		)

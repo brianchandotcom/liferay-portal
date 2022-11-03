@@ -15,7 +15,7 @@
 package com.liferay.fragment.internal.deploy.auto;
 
 import com.liferay.fragment.importer.FragmentsImporter;
-import com.liferay.layout.page.template.importer.LayoutsImporter;
+import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;

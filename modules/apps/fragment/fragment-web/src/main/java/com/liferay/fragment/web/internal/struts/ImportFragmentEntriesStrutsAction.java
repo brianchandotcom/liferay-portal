@@ -16,8 +16,8 @@ package com.liferay.fragment.web.internal.struts;
 
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
-import com.liferay.layout.page.template.importer.LayoutsImporter;
-import com.liferay.layout.page.template.importer.LayoutsImporterResultEntry;
+import com.liferay.layout.importer.LayoutsImporter;
+import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;

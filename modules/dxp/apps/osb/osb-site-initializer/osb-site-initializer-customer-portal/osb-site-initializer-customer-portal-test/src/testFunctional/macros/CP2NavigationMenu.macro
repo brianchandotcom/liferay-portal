@@ -41,7 +41,7 @@ definition {
 	macro assertStatusOptions {
 		Click(
 			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-			title = "All");
+			title = "Active");
 
 		for (var status : list "${statusList}") {
 			var status = "${status}";

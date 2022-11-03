@@ -44,6 +44,7 @@ export declare function useObjectFieldForm({
 			showCounter: unknown;
 			showFilesInDocumentsAndMedia: unknown;
 			stateFlow: unknown;
+			readOnly: unknown;
 			storageDLFolderPath: unknown;
 		}
 	>;

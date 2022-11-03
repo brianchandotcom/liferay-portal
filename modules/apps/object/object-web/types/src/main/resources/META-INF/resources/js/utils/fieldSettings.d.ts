@@ -127,6 +127,14 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	readOnly?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
 	storageDLFolderPath?:
 		| string
 		| number

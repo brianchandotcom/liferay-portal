@@ -49,8 +49,8 @@ public class ScopeSearchFacetDisplayContext {
 		return _siteFacetPortletInstanceConfiguration;
 	}
 
-	public List<ScopeSearchFacetTermDisplayContext> getTermDisplayContexts() {
-		return _scopeSearchFacetTermDisplayContexts;
+	public List<BucketDisplayContext> getTermDisplayContexts() {
+		return _bucketDisplayContexts;
 	}
 
 	public boolean isNothingSelected() {
@@ -100,11 +100,11 @@ public class ScopeSearchFacetDisplayContext {
 	}
 
 	public void setTermDisplayContexts(
-		List<ScopeSearchFacetTermDisplayContext>
-			scopeSearchFacetTermDisplayContexts) {
+		List<BucketDisplayContext>
+			bucketDisplayContexts) {
 
-		_scopeSearchFacetTermDisplayContexts =
-			scopeSearchFacetTermDisplayContexts;
+		_bucketDisplayContexts =
+			bucketDisplayContexts;
 	}
 
 	private long _displayStyleGroupId;
@@ -114,8 +114,8 @@ public class ScopeSearchFacetDisplayContext {
 	private String _parameterValue;
 	private List<String> _parameterValues;
 	private boolean _renderNothing;
-	private List<ScopeSearchFacetTermDisplayContext>
-		_scopeSearchFacetTermDisplayContexts;
+	private List<BucketDisplayContext>
+		_bucketDisplayContexts;
 	private SiteFacetPortletInstanceConfiguration
 		_siteFacetPortletInstanceConfiguration;
 

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetTermDisplayContext;
 import com.liferay.portal.search.web.internal.site.facet.configuration.SiteFacetPortletInstanceConfiguration;
 
 import java.util.ArrayList;
@@ -149,24 +149,24 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		_httpServletRequest = httpServletRequest;
 	}
 
-	protected ScopeSearchFacetTermDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildTermDisplayContext(
 		long groupId, int count, boolean selected) {
 
-		ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext =
-			new ScopeSearchFacetTermDisplayContext();
+		BucketDisplayContext bucketDisplayContext =
+			new BucketDisplayContext();
 
-		scopeSearchFacetTermDisplayContext.setFrequency(count);
-		scopeSearchFacetTermDisplayContext.setBucketText(
+		bucketDisplayContext.setFrequency(count);
+		bucketDisplayContext.setBucketText(
 			_getDescriptiveName(groupId));
-		scopeSearchFacetTermDisplayContext.setFilterValue(
+		bucketDisplayContext.setFilterValue(
 			String.valueOf(groupId));
-		scopeSearchFacetTermDisplayContext.setSelected(selected);
-		scopeSearchFacetTermDisplayContext.setFrequencyVisible(_showCounts);
+		bucketDisplayContext.setSelected(selected);
+		bucketDisplayContext.setFrequencyVisible(_showCounts);
 
-		return scopeSearchFacetTermDisplayContext;
+		return bucketDisplayContext;
 	}
 
-	protected ScopeSearchFacetTermDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildTermDisplayContext(
 		TermCollector termCollector) {
 
 		int count = termCollector.getFrequency();
@@ -178,7 +178,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		return buildTermDisplayContext(termCollector, count);
 	}
 
-	protected ScopeSearchFacetTermDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildTermDisplayContext(
 		TermCollector termCollector, int count) {
 
 		long groupId = GetterUtil.getLong(termCollector.getTerm());
@@ -186,15 +186,15 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		return buildTermDisplayContext(groupId, count, isSelected(groupId));
 	}
 
-	protected List<ScopeSearchFacetTermDisplayContext> buildTermDisplayContexts(
+	protected List<BucketDisplayContext> buildTermDisplayContexts(
 		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {
 			return getEmptySearchResultTermDisplayContexts();
 		}
 
-		List<ScopeSearchFacetTermDisplayContext>
-			scopeSearchFacetTermDisplayContexts = new ArrayList<>(
+		List<BucketDisplayContext>
+			bucketDisplayContexts = new ArrayList<>(
 				termCollectors.size());
 
 		int limit = termCollectors.size();
@@ -209,12 +209,12 @@ public class ScopeSearchFacetDisplayContextBuilder {
 			int count = termCollector.getFrequency();
 
 			if (_countThreshold <= count) {
-				scopeSearchFacetTermDisplayContexts.add(
+				bucketDisplayContexts.add(
 					buildTermDisplayContext(termCollector, count));
 			}
 		}
 
-		return scopeSearchFacetTermDisplayContexts;
+		return bucketDisplayContexts;
 	}
 
 	protected long getDisplayStyleGroupId() {
@@ -228,16 +228,16 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		return displayStyleGroupId;
 	}
 
-	protected List<ScopeSearchFacetTermDisplayContext>
+	protected List<BucketDisplayContext>
 		getEmptySearchResultTermDisplayContexts() {
 
 		Stream<Long> groupIdsStream = _selectedGroupIds.stream();
 
-		Stream<ScopeSearchFacetTermDisplayContext>
-			scopeSearchFacetTermDisplayContextsStream = groupIdsStream.map(
+		Stream<BucketDisplayContext>
+			bucketDisplayContextsStream = groupIdsStream.map(
 				groupId -> buildTermDisplayContext(groupId, 0, true));
 
-		return scopeSearchFacetTermDisplayContextsStream.collect(
+		return bucketDisplayContextsStream.collect(
 			Collectors.toList());
 	}
 

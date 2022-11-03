@@ -27,7 +27,6 @@ page import="com.liferay.portal.search.web.internal.facet.display.context.Folder
 page import="com.liferay.portal.search.web.internal.facet.display.context.FolderSearcher" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookupImpl" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext" %><%@
-page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder" %><%@

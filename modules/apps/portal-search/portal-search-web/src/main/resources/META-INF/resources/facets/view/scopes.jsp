@@ -65,17 +65,17 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 						</li>
 
 						<%
-						List<ScopeSearchFacetTermDisplayContext> scopeSearchFacetTermDisplayContexts = scopeSearchFacetDisplayContext.getTermDisplayContexts();
+						List<BucketDisplayContext> bucketDisplayContexts = scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
-						for (ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext : scopeSearchFacetTermDisplayContexts) {
+						for (BucketDisplayContext bucketDisplayContext : bucketDisplayContexts) {
 						%>
 
 							<li class="facet-value">
-								<a class="<%= scopeSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= scopeSearchFacetTermDisplayContext.getFilterValue() %>" href="javascript:void(0);">
-									<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getBucketText()) %>
+								<a class="<%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= bucketDisplayContext.getFilterValue() %>" href="javascript:void(0);">
+									<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
 
-									<c:if test="<%= scopeSearchFacetTermDisplayContext.isFrequencyVisible() %>">
-										<span class="frequency">(<%= scopeSearchFacetTermDisplayContext.getFrequency() %>)</span>
+									<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
+										<span class="frequency">(<%= bucketDisplayContext.getFrequency() %>)</span>
 									</c:if>
 								</a>
 							</li>

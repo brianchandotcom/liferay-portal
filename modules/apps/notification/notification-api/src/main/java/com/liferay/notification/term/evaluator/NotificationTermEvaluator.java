@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.notification.term.contributor;
+package com.liferay.notification.term.evaluator;
 
-import java.util.List;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Locale;
 
 /**
  * @author Gustavo Lima
  */
-public interface NotificationTermContributorRegistry {
+public interface NotificationTermEvaluator {
 
-	public List<NotificationTermContributor>
-		getNotificationTermContributorsByNotificationTermContributorKey(
-			String key);
-
-	public List<NotificationTermContributor>
-		getNotificationTermContributorsByNotificationTypeKey(String key);
+	public String evaluate(Locale locale, Object object, String termName)
+		throws PortalException;
 
 }

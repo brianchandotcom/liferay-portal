@@ -21,7 +21,7 @@ import com.liferay.mail.kernel.service.MailService;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
-import com.liferay.notification.constants.NotificationTermContributorConstants;
+import com.liferay.notification.constants.NotificationTermEvaluatorConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -232,7 +232,7 @@ public class EmailNotificationType extends BaseNotificationType {
 						notificationRecipientSetting.getValue(
 							siteDefaultLocale),
 						siteDefaultLocale,
-						NotificationTermContributorConstants.RECIPIENT,
+						NotificationTermEvaluatorConstants.RECIPIENT,
 						notificationContext);
 				}
 			).build();
@@ -413,8 +413,7 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		return formatLocalizedContent(
 			StringUtil.merge(emailAddresses), locale,
-			NotificationTermContributorConstants.RECIPIENT,
-			notificationContext);
+			NotificationTermEvaluatorConstants.RECIPIENT, notificationContext);
 	}
 
 	private List<Long> _getFileEntryIds(

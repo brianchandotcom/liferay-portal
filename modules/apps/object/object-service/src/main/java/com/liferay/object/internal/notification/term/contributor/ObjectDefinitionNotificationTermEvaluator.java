@@ -14,30 +14,27 @@
 
 package com.liferay.object.internal.notification.term.contributor;
 
-import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Gustavo Lima
  */
-public class ObjectDefinitionNotificationTermContributor
-	implements NotificationTermContributor {
+public class ObjectDefinitionNotificationTermEvaluator
+	implements NotificationTermEvaluator {
 
-	public ObjectDefinitionNotificationTermContributor(
+	public ObjectDefinitionNotificationTermEvaluator(
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService,
 		UserLocalService userLocalService) {
@@ -48,14 +45,7 @@ public class ObjectDefinitionNotificationTermContributor
 	}
 
 	@Override
-	public List<String> getTermNames() {
-		Map<String, Long> objectFieldIds = _getObjectFieldIds();
-
-		return new ArrayList<>(objectFieldIds.keySet());
-	}
-
-	@Override
-	public String getTermValue(Locale locale, Object object, String termName)
+	public String evaluate(Locale locale, Object object, String termName)
 		throws PortalException {
 
 		if (!(object instanceof Map)) {
@@ -87,20 +77,6 @@ public class ObjectDefinitionNotificationTermContributor
 		}
 
 		return String.valueOf(termValues.get(objectField.getDBColumnName()));
-	}
-
-	@Override
-	public String getTermValue(String termName, Locale locale) {
-		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
-			return LanguageUtil.get(locale, "creator");
-		}
-
-		Map<String, Long> objectFieldIds = _getObjectFieldIds();
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectFieldIds.get(termName));
-
-		return objectField.getLabel(locale);
 	}
 
 	private Map<String, Long> _getObjectFieldIds() {

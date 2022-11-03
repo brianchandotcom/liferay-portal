@@ -102,16 +102,6 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		).build();
 	}
 
-	public String getAvailableActions(
-		RedirectNotFoundEntry redirectNotFoundEntry) {
-
-		if (redirectNotFoundEntry.isIgnored()) {
-			return "unignoreSelectedRedirectNotFoundEntries";
-		}
-
-		return "ignoreSelectedRedirectNotFoundEntries";
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		return PortletURLBuilder.createRenderURL(

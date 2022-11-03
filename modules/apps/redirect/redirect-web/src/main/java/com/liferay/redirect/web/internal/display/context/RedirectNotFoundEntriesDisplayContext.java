@@ -16,6 +16,7 @@ package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -139,6 +140,30 @@ public class RedirectNotFoundEntriesDisplayContext {
 		).build();
 	}
 
+	public String getActionURL() throws Exception {
+		SearchContainer<RedirectNotFoundEntry> searchContainer =
+			searchContainer();
+
+		return String.valueOf(searchContainer.getIteratorURL());
+	}
+
+	public String getAvailableActions(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
+
+		if (redirectNotFoundEntry.isIgnored()) {
+			return "unignoreSelectedRedirectNotFoundEntries";
+		}
+
+		return "ignoreSelectedRedirectNotFoundEntries";
+	}
+
+	public String getEmptyResultsMessage() throws Exception {
+		SearchContainer<RedirectNotFoundEntry> searchContainer =
+			searchContainer();
+
+		return searchContainer.getEmptyResultsMessage();
+	}
+
 	public RedirectNotFoundEntriesManagementToolbarDisplayContext
 			getRedirectNotFoundEntriesManagementToolbarDisplayContext()
 		throws Exception {
@@ -151,6 +176,22 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 	public String getSearchContainerId() {
 		return "redirectNotFoundEntries";
+	}
+
+	public String getURL(RedirectNotFoundEntry redirectNotFoundEntry) {
+		return RedirectUtil.getGroupBaseURL(_themeDisplay) + StringPool.SLASH +
+			redirectNotFoundEntry.getUrl();
+	}
+
+	public boolean hasResults() throws Exception {
+		SearchContainer<RedirectNotFoundEntry> searchContainer =
+			searchContainer();
+
+		if (searchContainer.getTotal() == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public SearchContainer<RedirectNotFoundEntry> searchContainer()

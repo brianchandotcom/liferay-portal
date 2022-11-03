@@ -32,6 +32,8 @@ export default function DocumentLibrary({
 		`${namespace}entriesContainer`
 	);
 
+	let documentLibraryUploadComponent;
+
 	Liferay.componentReady(`${namespace}${searchContainerId}`).then(
 		(searchContainerComponent) => {
 			searchContainer = searchContainerComponent;
@@ -128,19 +130,21 @@ export default function DocumentLibrary({
 
 	function _plugUpload() {
 		AUI().use('document-library-upload-2', () => {
-			new Liferay.DocumentLibraryUpload2({
-				appViewEntryTemplates: config.appViewEntryTemplates,
-				columnNames: config.columnNames,
-				displayStyle: config.displayStyle,
-				documentLibraryNamespace: namespace,
-				entriesContainer,
-				folderId: config.defaultParentFolderId,
-				maxFileSize: config.maxFileSize,
-				redirect: encodeURIComponent(config.redirect),
-				scopeGroupId: config.scopeGroupId,
-				uploadURL: config.uploadURL,
-				viewFileEntryURL: config.viewFileEntryURL,
-			});
+			documentLibraryUploadComponent = new Liferay.DocumentLibraryUpload2(
+				{
+					appViewEntryTemplates: config.appViewEntryTemplates,
+					columnNames: config.columnNames,
+					displayStyle: config.displayStyle,
+					documentLibraryNamespace: namespace,
+					entriesContainer,
+					folderId: config.defaultParentFolderId,
+					maxFileSize: config.maxFileSize,
+					redirect: encodeURIComponent(config.redirect),
+					scopeGroupId: config.scopeGroupId,
+					uploadURL: config.uploadURL,
+					viewFileEntryURL: config.viewFileEntryURL,
+				}
+			);
 		});
 	}
 
@@ -174,5 +178,13 @@ export default function DocumentLibrary({
 			title: sub(dialogTitle, [selectedItems]),
 			url: selectFolderURL,
 		});
+	};
+
+	return {
+		dispose() {
+			document.removeEventListener('dragenter', _plugUpload);
+
+			documentLibraryUploadComponent?.destroy();
+		},
 	};
 }

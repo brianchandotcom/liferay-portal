@@ -243,6 +243,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 							"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
 						).build()
 					%>'
+					destroyOnNavigate="<%= true %>"
 					module="document_library/js/DocumentLibrary"
 				/>
 			</c:when>

@@ -30,8 +30,10 @@ import {useForm, useFormState} from '../hooks/useForm.es';
 
 const ARROW_DOWN_KEYCODE = 40;
 const ARROW_UP_KEYCODE = 38;
+const END_KEYCODE = 35;
 const ENTER_KEYCODE = 13;
 const ESCAPE_KEYCODE = 27;
+const HOME_KEYCODE = 36;
 
 type ITargetPosition = 'bottom' | 'middle' | 'top';
 type IItemType = 'root' | 'page' | 'row' | 'column' | 'field';
@@ -120,6 +122,40 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 
 					return null;
 				});
+			}
+			else if (event.keyCode === HOME_KEYCODE) {
+				setState((state) =>
+					getNextValidTarget(
+						formStateRef.current,
+						{
+							currentTarget: {
+								itemPath: [0],
+								itemType: 'page',
+								position: 'top',
+							},
+							sourceItem: state!.sourceItem,
+						},
+						'down'
+					)
+				);
+			}
+			else if (event.keyCode === END_KEYCODE) {
+				setState((state) =>
+					getNextValidTarget(
+						formStateRef.current,
+						{
+							currentTarget: {
+								itemPath: [
+									formStateRef.current.pages.length - 1,
+								],
+								itemType: 'page',
+								position: 'bottom',
+							},
+							sourceItem: state!.sourceItem,
+						},
+						'up'
+					)
+				);
 			}
 		};
 

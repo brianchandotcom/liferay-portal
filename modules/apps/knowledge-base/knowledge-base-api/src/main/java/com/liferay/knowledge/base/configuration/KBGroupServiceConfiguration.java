@@ -181,16 +181,17 @@ public interface KBGroupServiceConfiguration {
 	@Meta.AD(deflt = "true", name = "enable-rss", required = false)
 	public boolean enableRSS();
 
-	@Meta.AD(deflt = "20", name = "rss-delta", required = false)
-	public int rssDelta();
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		name = "rss-delta", required = false
+	)
+	public String rssDelta();
 
 	@Meta.AD(
-		deflt = "full-content", name = "rss-display-style", required = false
+		deflt = "${server-property://com.liferay.portal/rss.feed.display.style.default}",
+		name = "rss-display-style", required = false
 	)
 	public String rssDisplayStyle();
-
-	@Meta.AD(deflt = "atom10", name = "rss-format", required = false)
-	public String rssFormat();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/rss.feed.type.default}",

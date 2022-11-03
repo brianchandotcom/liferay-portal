@@ -234,6 +234,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"3.25.0", "3.26.0",
 			new com.liferay.object.internal.upgrade.v3_26_0.
 				ObjectFieldSettingUpgradeProcess(_portalUUID));
+
+		registry.register(
+			"3.26.0", "3.26.1",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectField", "className", "VARCHAR(255) null"));
 	}
 
 	@Reference

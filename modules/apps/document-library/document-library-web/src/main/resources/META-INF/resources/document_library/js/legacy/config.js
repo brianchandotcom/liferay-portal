@@ -37,7 +37,7 @@
 							'uploader',
 						],
 					},
-					'document-library-upload-2': {
+					'document-library-upload-component': {
 						path: 'DocumentLibraryUpload.js',
 						requires: [
 							'aui-component',
@@ -47,8 +47,6 @@
 							'aui-parse-content',
 							'aui-progressbar',
 							'aui-template-deprecated',
-							'aui-tooltip',
-							'liferay-history-manager',
 							'liferay-search-container',
 							'querystring-parse-simple',
 							'uploader',

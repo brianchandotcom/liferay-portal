@@ -129,8 +129,8 @@ export default function DocumentLibrary({
 	}
 
 	function _plugUpload() {
-		AUI().use('document-library-upload-2', () => {
-			documentLibraryUploadComponent = new Liferay.DocumentLibraryUpload2(
+		AUI().use('document-library-upload-component', () => {
+			documentLibraryUploadComponent = new Liferay.DocumentLibraryUploadComponent(
 				{
 					appViewEntryTemplates: config.appViewEntryTemplates,
 					columnNames: config.columnNames,

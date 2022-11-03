@@ -13,7 +13,7 @@
  */
 
 AUI.add(
-	'document-library-upload-2',
+	'document-library-upload-component',
 	(A) => {
 		const AArray = A.Array;
 		const ANode = A.Node;
@@ -1644,7 +1644,7 @@ AUI.add(
 			},
 		});
 
-		Liferay.DocumentLibraryUpload2 = DocumentLibraryUpload;
+		Liferay.DocumentLibraryUploadComponent = DocumentLibraryUpload;
 	},
 	'',
 	{

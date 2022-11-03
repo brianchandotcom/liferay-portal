@@ -19,12 +19,18 @@ export default function ({namespace}) {
 		`${namespace}orderTransition`
 	);
 
-	const delegateHandler = delegate(
-		orderTransition,
-		'click',
-		`${namespace}transition(event)`,
-		'.transition-link'
-	);
+	let delegateHandler = null;
+
+	if (orderTransition) {
+		delegateHandler = delegate(
+			orderTransition,
+			'click',
+			'.transition-link',
+			(event) => {
+				window[`${namespace}transition`](event);
+			}
+		);
+	}
 
 	Liferay.after('current-order-updated', () => {
 		Liferay.Portlet.refresh(`#p_p_id${namespace}`);
@@ -32,7 +38,9 @@ export default function ({namespace}) {
 
 	return {
 		dispose() {
-			delegateHandler.dispose();
+			if (delegateHandler) {
+				delegateHandler.dispose();
+			}
 		},
 	};
 }

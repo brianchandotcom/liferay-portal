@@ -14,22 +14,20 @@
 
 export default function ({namespace}) {
 	Liferay.provide(window, `${namespace}transition`, (event) => {
-		const link = event.currentTarget;
+		const link = event.delegateTarget;
 
-		const workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
+		const workflowTaskId = parseInt(link.dataset.workflowtaskid, 10);
 
 		const form = document.getElementById(`${namespace}transitionFm`);
 
-		document.getElementById(
-			`${namespace}transitionCommerceOrderId`
-		).value = link.getData('commerceOrderId');
+		document.getElementById(`${namespace}transitionCommerceOrderId`).value =
+			link.dataset.commerceorderid;
 
 		document.getElementById(
 			`${namespace}workflowTaskId`
 		).value = workflowTaskId;
-		document.getElementById(
-			`${namespace}transitionName`
-		).value = link.getData('transitionName');
+		document.getElementById(`${namespace}transitionName`).value =
+			link.dataset.transitionname;
 
 		if (workflowTaskId <= 0) {
 			submitForm(form);
@@ -41,12 +39,13 @@ export default function ({namespace}) {
 			`${namespace}transitionComments`
 		);
 
+		transitionComments.classList.remove('hide');
+
 		transitionComments.style.display = 'block';
 
 		const dialog = Liferay.Util.Window.getWindow({
 			dialog: {
 				bodyContent: form,
-				destroyOnHide: true,
 				height: 400,
 				resizable: false,
 				toolbars: {
@@ -65,7 +64,7 @@ export default function ({namespace}) {
 							label: Liferay.Language.get('cancel'),
 							on: {
 								click() {
-									dialog.style.display = 'none';
+									dialog.hide();
 								},
 							},
 						},
@@ -78,7 +77,7 @@ export default function ({namespace}) {
 								'<span aria-hidden="true">&times;</span>',
 							on: {
 								click() {
-									dialog.style.display = 'none';
+									dialog.hide();
 								},
 							},
 						},

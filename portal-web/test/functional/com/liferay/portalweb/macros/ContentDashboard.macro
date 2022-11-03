@@ -78,7 +78,14 @@ definition {
 			key_version = "${versionName}",
 			locator1 = "ContentDashboard#VERSION_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		if (IsVisible(locator1 = "ContentDashboard#INFO_PANEL")) {
+			MenuItem.clickNoError(menuItem = "${menuItem}");
+		}
+		else {
+			ClickNoError(
+				key_menuItem = "${menuItem}",
+				locator1 = "ContentDashboard#VERSION_HISTORY_ELLIPSIS");
+		}
 	}
 
 	macro clickOnFirstBar {

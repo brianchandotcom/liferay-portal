@@ -326,6 +326,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERSION_HISTORY_ELLIPSIS</td>
+	<td>//*[contains(@class,'dropdown-menu') and contains(@class,'show')] //*[@class='dropdown-item' and contains(.,'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERSION_ELLIPSIS</td>
 	<td>//*[contains(@class,'list-group-item')][contains(.,'${key_version}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

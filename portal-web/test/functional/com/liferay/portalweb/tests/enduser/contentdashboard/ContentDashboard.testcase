@@ -254,7 +254,7 @@ definition {
 				ContentDashboard.openVersionsTab();
 
 				ContentDashboard.clickMenuOfVersion(
-					item = "Compare to...",
+					menuItem = "Compare to...",
 					versionName = "Version 1.1");
 			}
 		}
@@ -305,7 +305,7 @@ definition {
 
 			task ("Open view mode of a version") {
 				ContentDashboard.clickMenuOfVersion(
-					item = "View",
+					menuItem = "View",
 					versionName = "Version 1.0");
 			}
 		}
@@ -2611,7 +2611,7 @@ definition {
 			ContentDashboard.openVersionsTab();
 
 			ContentDashboard.clickMenuOfVersion(
-				item = "Compare to...",
+				menuItem = "Compare to...",
 				versionName = "Version 1.1");
 		}
 
@@ -2664,7 +2664,7 @@ definition {
 			ContentDashboard.openVersionsTab();
 
 			ContentDashboard.clickMenuOfVersion(
-				item = "Compare to...",
+				menuItem = "Compare to...",
 				versionName = "Version 1.0");
 		}
 
@@ -2981,7 +2981,7 @@ definition {
 
 		task ("When the user opens the kebab menu of a version And the user clicks on the Download action") {
 			ContentDashboard.clickMenuOfVersion(
-				item = "Download",
+				menuItem = "Download",
 				versionName = "Version 1.0");
 		}
 
@@ -3137,7 +3137,7 @@ definition {
 
 		task ("Expire the web content version") {
 			ContentDashboard.clickMenuOfVersion(
-				item = "Expire",
+				menuItem = "Expire",
 				versionName = "Version 1.0");
 		}
 
@@ -5636,7 +5636,7 @@ definition {
 
 		task ("When user select the revert option of an older version") {
 			ContentDashboard.clickMenuOfVersion(
-				item = "Revert",
+				menuItem = "Revert",
 				versionName = "Version 1.0");
 		}
 
@@ -6247,7 +6247,7 @@ definition {
 
 		task ("When the user opens the kebab menu of a version And the user clicks on the View action") {
 			ContentDashboard.clickMenuOfVersion(
-				item = "View",
+				menuItem = "View",
 				versionName = "Version 1.0");
 		}
 

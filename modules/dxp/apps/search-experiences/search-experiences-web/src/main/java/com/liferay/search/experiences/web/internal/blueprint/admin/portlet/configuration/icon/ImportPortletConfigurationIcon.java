@@ -15,10 +15,8 @@
 package com.liferay.search.experiences.web.internal.blueprint.admin.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -28,7 +26,8 @@ import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,34 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class ImportPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
-	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(getLocale(portletRequest), "import");
-	}
-
-	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				portletRequest, SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/sxp_blueprint_admin/view_import.jsp"
-		).setRedirect(
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)portletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return themeDisplay.getURLCurrent();
-			}
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
+	public String getJspPath() {
+		return "/sxp_blueprint_admin/view_import.jsp";
 	}
 
 	@Override
@@ -98,8 +74,8 @@ public class ImportPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isUseDialog() {
-		return true;
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Reference
@@ -113,5 +89,10 @@ public class ImportPortletConfigurationIcon
 		unbind = "-"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.search.experiences.web)"
+	)
+	private ServletContext _servletContext;
 
 }

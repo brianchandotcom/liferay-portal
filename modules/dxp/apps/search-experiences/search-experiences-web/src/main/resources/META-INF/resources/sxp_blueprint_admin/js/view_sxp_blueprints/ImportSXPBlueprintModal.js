@@ -13,21 +13,30 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayModal from '@clayui/modal';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, getOpener} from 'frontend-js-web';
-import React, {useState} from 'react';
+import ClayModal, {useModal} from '@clayui/modal';
+import {fetch, navigate} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 const VALID_EXTENSIONS = '.json';
 
-const ImportSXPBlueprintModal = ({redirectURL}) => {
-	const isMounted = useIsMounted();
+const ImportSXPBlueprintModal = ({componentId, redirectURL}) => {
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [importFile, setImportFile] = useState();
+	const [visible, setVisible] = useState(false);
 
-	const _handleClose = (data) => {
-		getOpener().Liferay.fire('closeModal', data);
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			setVisible(false);
+		},
+	});
+
+	const _handleClose = (redirect) => {
+		onClose(false);
+
+		if (redirect) {
+			navigate(redirect);
+		}
 	};
 
 	const _handleFormError = (error) => {
@@ -89,8 +98,8 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 
 					setLoadingResponse(false);
 
-					if (ok && isMounted()) {
-						_handleClose({redirect: redirectURL});
+					if (ok) {
+						_handleClose(redirectURL);
 					}
 				})
 				.catch(() => {
@@ -102,8 +111,32 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 		}
 	};
 
-	return (
-		<div className="import-sxp-blueprint-form">
+	useEffect(() => {
+		Liferay.component(
+			componentId,
+			{
+				open: () => {
+					setVisible(true);
+				},
+			},
+			{
+				destroyOnNavigate: true,
+			}
+		);
+
+		return () => Liferay.destroyComponent(componentId);
+	}, [componentId, setVisible]);
+
+	return visible ? (
+		<ClayModal
+			className="import-sxp-blueprint-form"
+			observer={observer}
+			size="full-screen"
+		>
+			<ClayModal.Header>
+				{Liferay.Language.get('import')}
+			</ClayModal.Header>
+
 			<ClayModal.Body>
 				{errorMessage && (
 					<ClayAlert
@@ -170,8 +203,8 @@ const ImportSXPBlueprintModal = ({redirectURL}) => {
 					</ClayButton.Group>
 				}
 			/>
-		</div>
-	);
+		</ClayModal>
+	) : null;
 };
 
 export default ImportSXPBlueprintModal;

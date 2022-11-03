@@ -16,27 +16,32 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	redirect = PortletURLBuilder.createRenderURL(
-		renderResponse
-	).setMVCRenderCommandName(
-		"/sxp_blueprint_admin/view_sxp_blueprints"
-	).buildString();
-}
-%>
+<liferay-ui:icon
+	id="importIcon"
+	message="import"
+	onClick='<%= liferayPortletResponse.getNamespace() + "openImportModal();" %>'
+	url="javascript:void(0);"
+/>
 
 <div>
-	<span aria-hidden="true" class="loading-animation"></span>
-
 	<react:component
 		module="sxp_blueprint_admin/js/view_sxp_blueprints/ImportSXPBlueprintModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"redirectURL", redirect
+				"componentId", liferayPortletResponse.getNamespace() + "importModal"
+			).put(
+				"redirectURL", currentURL
 			).build()
 		%>'
 	/>
 </div>
+
+<aui:script>
+	function <portlet:namespace />openImportModal() {
+		Liferay.componentReady('<portlet:namespace />importModal').then(
+			(importModal) => {
+				importModal.open();
+			}
+		);
+	}
+</aui:script>

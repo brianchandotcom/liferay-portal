@@ -1495,9 +1495,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "The Name field is required.");
+		Alert.viewSpecificRequiredField(fieldFieldLabel = "Name");
 
 		Click(locator1 = "Icon#CLOSE");
 
@@ -1522,9 +1520,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "The Currency field is required.");
+		Alert.viewSpecificRequiredField(fieldFieldLabel = "Currency");
 	}
 
 	test AssertPriceListIsAppliedToAllAssociatedAccounts {

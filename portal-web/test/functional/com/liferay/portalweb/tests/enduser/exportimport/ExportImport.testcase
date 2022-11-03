@@ -924,6 +924,8 @@ definition {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
 
 		task ("Given: User configure the export on Global Site to include Pages but exclude DM's and WC's then export it") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
+
 			LAR.openExportAdmin(siteScopeName = "Global");
 
 			LexiconEntry.gotoAdd();

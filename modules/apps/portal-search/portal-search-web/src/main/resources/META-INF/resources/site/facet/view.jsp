@@ -63,7 +63,7 @@ SiteFacetPortletInstanceConfiguration siteFacetPortletInstanceConfiguration = sc
 				%>'
 				displayStyle="<%= siteFacetPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= scopeSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-				entries="<%= scopeSearchFacetDisplayContext.getTermDisplayContexts() %>"
+				entries="<%= scopeSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
 				<liferay-ui:panel-container
 					extended="<%= true %>"
@@ -85,7 +85,7 @@ SiteFacetPortletInstanceConfiguration siteFacetPortletInstanceConfiguration = sc
 								<%
 								int i = 0;
 
-								for (BucketDisplayContext bucketDisplayContext : scopeSearchFacetDisplayContext.getTermDisplayContexts()) {
+								for (BucketDisplayContext bucketDisplayContext : scopeSearchFacetDisplayContext.getBucketDisplayContexts()) {
 									i++;
 								%>
 

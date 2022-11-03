@@ -65,7 +65,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = scopeSearchFacet
 						</li>
 
 						<%
-						List<BucketDisplayContext> bucketDisplayContexts = scopeSearchFacetDisplayContext.getTermDisplayContexts();
+						List<BucketDisplayContext> bucketDisplayContexts = scopeSearchFacetDisplayContext.getBucketDisplayContexts();
 
 						for (BucketDisplayContext bucketDisplayContext : bucketDisplayContexts) {
 						%>

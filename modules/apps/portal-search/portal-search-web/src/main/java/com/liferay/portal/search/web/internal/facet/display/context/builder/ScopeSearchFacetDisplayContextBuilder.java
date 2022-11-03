@@ -79,8 +79,8 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		scopeSearchFacetDisplayContext.setRenderNothing(isRenderNothing());
 		scopeSearchFacetDisplayContext.setSiteFacetPortletInstanceConfiguration(
 			_siteFacetPortletInstanceConfiguration);
-		scopeSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts(getTermCollectors()));
+		scopeSearchFacetDisplayContext.setBucketDisplayContexts(
+			buildBucketDisplayContexts(getTermCollectors()));
 
 		return scopeSearchFacetDisplayContext;
 	}
@@ -149,7 +149,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		_httpServletRequest = httpServletRequest;
 	}
 
-	protected BucketDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildBucketDisplayContext(
 		long groupId, int count, boolean selected) {
 
 		BucketDisplayContext bucketDisplayContext =
@@ -166,7 +166,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		return bucketDisplayContext;
 	}
 
-	protected BucketDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildBucketDisplayContext(
 		TermCollector termCollector) {
 
 		int count = termCollector.getFrequency();
@@ -175,22 +175,22 @@ public class ScopeSearchFacetDisplayContextBuilder {
 			return null;
 		}
 
-		return buildTermDisplayContext(termCollector, count);
+		return buildBucketDisplayContext(termCollector, count);
 	}
 
-	protected BucketDisplayContext buildTermDisplayContext(
+	protected BucketDisplayContext buildBucketDisplayContext(
 		TermCollector termCollector, int count) {
 
 		long groupId = GetterUtil.getLong(termCollector.getTerm());
 
-		return buildTermDisplayContext(groupId, count, isSelected(groupId));
+		return buildBucketDisplayContext(groupId, count, isSelected(groupId));
 	}
 
-	protected List<BucketDisplayContext> buildTermDisplayContexts(
+	protected List<BucketDisplayContext> buildBucketDisplayContexts(
 		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {
-			return getEmptySearchResultTermDisplayContexts();
+			return getEmptySearchResultBucketDisplayContexts();
 		}
 
 		List<BucketDisplayContext>
@@ -210,7 +210,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 
 			if (_countThreshold <= count) {
 				bucketDisplayContexts.add(
-					buildTermDisplayContext(termCollector, count));
+					buildBucketDisplayContext(termCollector, count));
 			}
 		}
 
@@ -229,13 +229,13 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	}
 
 	protected List<BucketDisplayContext>
-		getEmptySearchResultTermDisplayContexts() {
+		getEmptySearchResultBucketDisplayContexts() {
 
 		Stream<Long> groupIdsStream = _selectedGroupIds.stream();
 
 		Stream<BucketDisplayContext>
 			bucketDisplayContextsStream = groupIdsStream.map(
-				groupId -> buildTermDisplayContext(groupId, 0, true));
+				groupId -> buildBucketDisplayContext(groupId, 0, true));
 
 		return bucketDisplayContextsStream.collect(
 			Collectors.toList());

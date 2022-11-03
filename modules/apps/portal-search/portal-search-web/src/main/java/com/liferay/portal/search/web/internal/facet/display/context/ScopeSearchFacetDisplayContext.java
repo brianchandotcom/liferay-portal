@@ -49,7 +49,7 @@ public class ScopeSearchFacetDisplayContext {
 		return _siteFacetPortletInstanceConfiguration;
 	}
 
-	public List<BucketDisplayContext> getTermDisplayContexts() {
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;
 	}
 
@@ -99,7 +99,7 @@ public class ScopeSearchFacetDisplayContext {
 			siteFacetPortletInstanceConfiguration;
 	}
 
-	public void setTermDisplayContexts(
+	public void setBucketDisplayContexts(
 		List<BucketDisplayContext>
 			bucketDisplayContexts) {
 

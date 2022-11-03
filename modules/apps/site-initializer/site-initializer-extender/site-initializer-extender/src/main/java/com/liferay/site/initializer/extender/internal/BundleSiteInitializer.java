@@ -470,20 +470,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues =
 				_invoke(() -> _addOrUpdateListTypeDefinitions(serviceContext));
 
-			ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
-				_objectDefinitionResourceFactory.create();
-
-			ObjectDefinitionResource objectDefinitionResource =
-				objectDefinitionResourceBuilder.user(
-					serviceContext.fetchUser()
-				).build();
-
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues =
 					_invoke(
 						() -> _addObjectDefinitions(
 							listTypeDefinitionIdsStringUtilReplaceValues,
-							objectDefinitionResource, serviceContext,
+							serviceContext,
 							siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
@@ -1055,7 +1047,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addObjectDefinitions(
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
-			ObjectDefinitionResource objectDefinitionResource,
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
@@ -1083,6 +1074,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getObjectDefinitionId()));
 		}
+
+		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			objectDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".object-actions.json")) {
@@ -1209,8 +1208,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrKnowledgeBaseObjects(
-			boolean folder, long parentKnowledgeBaseObjectId,
-			String parentResourcePath, ServiceContext serviceContext)
+			boolean folder,
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource,
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource,
+			long parentKnowledgeBaseObjectId, String parentResourcePath,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1236,14 +1238,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (jsonObject.has("articleBody")) {
 				_addOrUpdateKnowledgeBaseArticle(
-					folder, jsonObject, parentKnowledgeBaseObjectId,
+					folder, jsonObject, knowledgeBaseArticleResource,
+					knowledgeBaseFolderResource, parentKnowledgeBaseObjectId,
 					resourcePath.substring(
 						0, resourcePath.indexOf(".metadata.json")),
 					serviceContext);
 			}
 			else {
 				_addOrUpdateKnowledgeBaseFolder(
-					jsonObject, parentKnowledgeBaseObjectId,
+					jsonObject, knowledgeBaseArticleResource,
+					knowledgeBaseFolderResource, parentKnowledgeBaseObjectId,
 					resourcePath.substring(
 						0, resourcePath.indexOf(".metadata.json")),
 					serviceContext);
@@ -1545,17 +1549,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Long _addOrUpdateDocumentFolder(
-			Long documentFolderId, long groupId, String resourcePath,
-			ServiceContext serviceContext)
+			Long documentFolderId,
+			DocumentFolderResource documentFolderResource, long groupId,
+			String resourcePath)
 		throws Exception {
-
-		DocumentFolderResource.Builder documentFolderResourceBuilder =
-			_documentFolderResourceFactory.create();
-
-		DocumentFolderResource documentFolderResource =
-			documentFolderResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		DocumentFolder documentFolder = null;
 
@@ -1607,8 +1604,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addOrUpdateDocuments(
-			Long documentFolderId, long groupId, String parentResourcePath,
-			ServiceContext serviceContext,
+			Long documentFolderId,
+			DocumentFolderResource documentFolderResource,
+			DocumentResource documentResource, long groupId,
+			String parentResourcePath, ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
@@ -1622,21 +1621,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return documentsStringUtilReplaceValues;
 		}
 
-		DocumentResource.Builder documentResourceBuilder =
-			_documentResourceFactory.create();
-
-		DocumentResource documentResource = documentResourceBuilder.user(
-			serviceContext.fetchUser()
-		).build();
-
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
 				documentsStringUtilReplaceValues.putAll(
 					_addOrUpdateDocuments(
 						_addOrUpdateDocumentFolder(
-							documentFolderId, groupId, resourcePath,
-							serviceContext),
-						groupId, resourcePath, serviceContext,
+							documentFolderId, documentFolderResource, groupId,
+							resourcePath),
+						documentFolderResource, documentResource, groupId,
+						resourcePath, serviceContext,
 						siteNavigationMenuItemSettingsBuilder));
 
 				continue;
@@ -1806,13 +1799,30 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Group group = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
+		DocumentFolderResource.Builder documentFolderResourceBuilder =
+			_documentFolderResourceFactory.create();
+
+		DocumentFolderResource documentFolderResource =
+			documentFolderResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		DocumentResource.Builder documentResourceBuilder =
+			_documentResourceFactory.create();
+
+		DocumentResource documentResource = documentResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
 		return HashMapBuilder.putAll(
 			_addOrUpdateDocuments(
-				null, group.getGroupId(), "/site-initializer/documents/company",
+				null, documentFolderResource, documentResource,
+				group.getGroupId(), "/site-initializer/documents/company",
 				serviceContext, siteNavigationMenuItemSettingsBuilder)
 		).putAll(
 			_addOrUpdateDocuments(
-				null, serviceContext.getScopeGroupId(),
+				null, documentFolderResource, documentResource,
+				serviceContext.getScopeGroupId(),
 				"/site-initializer/documents/group", serviceContext,
 				siteNavigationMenuItemSettingsBuilder)
 		).build();
@@ -1835,6 +1845,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		StructuredContentFolderResource.Builder
+			structuredContentFolderResourceBuilder =
+				_structuredContentFolderResourceFactory.create();
+
+		StructuredContentFolderResource structuredContentFolderResource =
+			structuredContentFolderResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
 		for (String resourcePath : resourcePaths) {
 			parentResourcePath = resourcePath.substring(
 				0, resourcePath.length() - 1);
@@ -1843,7 +1862,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_addOrUpdateJournalArticles(
 					ddmStructureLocalService, ddmTemplateLocalService,
 					_addOrUpdateStructuredContentFolders(
-						documentFolderId, parentResourcePath, serviceContext),
+						documentFolderId, parentResourcePath, serviceContext,
+						structuredContentFolderResource),
 					documentsStringUtilReplaceValues, resourcePath,
 					serviceContext, siteNavigationMenuItemSettingsBuilder);
 
@@ -1985,19 +2005,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 			siteNavigationMenuItemSettingsBuilder);
 	}
 
-	private KnowledgeBaseArticle _addOrUpdateKnowledgeBaseArticle(
+	private void _addOrUpdateKnowledgeBaseArticle(
 			boolean folder, JSONObject jsonObject,
-			long parentKnowledgeBaseObjectId, ServiceContext serviceContext)
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource,
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource,
+			long parentKnowledgeBaseObjectId, String resourcePath,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		KnowledgeBaseArticleResource.Builder
-			knowledgeBaseArticleResourceBuilder =
-				_knowledgeBaseArticleResourceFactory.create();
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			_addOrUpdateKnowledgeBaseArticle(
+				folder, jsonObject, knowledgeBaseArticleResource,
+				parentKnowledgeBaseObjectId, serviceContext);
 
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			knowledgeBaseArticleResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
+		_addOrKnowledgeBaseObjects(
+			false, knowledgeBaseArticleResource, knowledgeBaseFolderResource,
+			knowledgeBaseArticle.getId(), resourcePath, serviceContext);
+	}
+
+	private KnowledgeBaseArticle _addOrUpdateKnowledgeBaseArticle(
+			boolean folder, JSONObject jsonObject,
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource,
+			long parentKnowledgeBaseObjectId, ServiceContext serviceContext)
+		throws Exception {
 
 		KnowledgeBaseArticle knowledgeBaseArticle = KnowledgeBaseArticle.toDTO(
 			jsonObject.toString());
@@ -2018,34 +2048,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 				knowledgeBaseArticle);
 	}
 
-	private void _addOrUpdateKnowledgeBaseArticle(
-			boolean folder, JSONObject jsonObject,
-			long parentKnowledgeBaseObjectId, String resourcePath,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		KnowledgeBaseArticle knowledgeBaseArticle =
-			_addOrUpdateKnowledgeBaseArticle(
-				folder, jsonObject, parentKnowledgeBaseObjectId,
-				serviceContext);
-
-		_addOrKnowledgeBaseObjects(
-			false, knowledgeBaseArticle.getId(), resourcePath, serviceContext);
-	}
-
 	private void _addOrUpdateKnowledgeBaseArticles(
 			ServiceContext serviceContext)
 		throws Exception {
 
-		_addOrKnowledgeBaseObjects(
-			true, 0, "/site-initializer/knowledge-base-articles",
-			serviceContext);
-	}
+		KnowledgeBaseArticleResource.Builder
+			knowledgeBaseArticleResourceBuilder =
+				_knowledgeBaseArticleResourceFactory.create();
 
-	private KnowledgeBaseFolder _addOrUpdateKnowledgeBaseFolder(
-			JSONObject jsonObject, long parentKnowledgeBaseObjectId,
-			ServiceContext serviceContext)
-		throws Exception {
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			knowledgeBaseArticleResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
 
 		KnowledgeBaseFolderResource.Builder knowledgeBaseFolderResourceBuilder =
 			_knowledgeBaseFolderResourceFactory.create();
@@ -2056,6 +2070,35 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).user(
 				serviceContext.fetchUser()
 			).build();
+
+		_addOrKnowledgeBaseObjects(
+			true, knowledgeBaseArticleResource, knowledgeBaseFolderResource, 0,
+			"/site-initializer/knowledge-base-articles", serviceContext);
+	}
+
+	private void _addOrUpdateKnowledgeBaseFolder(
+			JSONObject jsonObject,
+			KnowledgeBaseArticleResource knowledgeBaseArticleResource,
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource,
+			long parentKnowledgeBaseObjectId, String resourcePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			_addOrUpdateKnowledgeBaseFolder(
+				jsonObject, knowledgeBaseFolderResource,
+				parentKnowledgeBaseObjectId, serviceContext);
+
+		_addOrKnowledgeBaseObjects(
+			true, knowledgeBaseArticleResource, knowledgeBaseFolderResource,
+			knowledgeBaseFolder.getId(), resourcePath, serviceContext);
+	}
+
+	private KnowledgeBaseFolder _addOrUpdateKnowledgeBaseFolder(
+			JSONObject jsonObject,
+			KnowledgeBaseFolderResource knowledgeBaseFolderResource,
+			long parentKnowledgeBaseObjectId, ServiceContext serviceContext)
+		throws Exception {
 
 		KnowledgeBaseFolder knowledgeBaseFolder = KnowledgeBaseFolder.toDTO(
 			jsonObject.toString());
@@ -2068,19 +2111,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(),
 				knowledgeBaseFolder.getExternalReferenceCode(),
 				knowledgeBaseFolder);
-	}
-
-	private void _addOrUpdateKnowledgeBaseFolder(
-			JSONObject jsonObject, long parentKnowledgeBaseObjectId,
-			String resourcePath, ServiceContext serviceContext)
-		throws Exception {
-
-		KnowledgeBaseFolder knowledgeBaseFolder =
-			_addOrUpdateKnowledgeBaseFolder(
-				jsonObject, parentKnowledgeBaseObjectId, serviceContext);
-
-		_addOrKnowledgeBaseObjects(
-			true, knowledgeBaseFolder.getId(), resourcePath, serviceContext);
 	}
 
 	private Map<String, Layout> _addOrUpdateLayout(
@@ -2239,6 +2269,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
+		ListTypeEntryResource.Builder listTypeEntryResourceBuilder =
+			_listTypeEntryResourceFactory.create();
+
+		ListTypeEntryResource listTypeEntryResource =
+			listTypeEntryResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".list-type-entries.json")) {
 				continue;
@@ -2295,14 +2333,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONArray jsonArray = _jsonFactory.createJSONArray(
 				listTypeEntriesJSON);
 
-			ListTypeEntryResource.Builder listTypeEntryResourceBuilder =
-				_listTypeEntryResourceFactory.create();
-
-			ListTypeEntryResource listTypeEntryResource =
-				listTypeEntryResourceBuilder.user(
-					serviceContext.fetchUser()
-				).build();
-
 			for (int i = 0; i < jsonArray.length(); i++) {
 				ListTypeEntry listTypeEntry = ListTypeEntry.toDTO(
 					String.valueOf(jsonArray.getJSONObject(i)));
@@ -2335,6 +2365,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addOrUpdateNotificationTemplate(
 			Map<String, String> documentsStringUtilReplaceValues,
+			NotificationTemplateResource notificationTemplateResource,
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
@@ -2374,15 +2405,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		NotificationTemplate notificationTemplate = NotificationTemplate.toDTO(
 			notificationTemplateJSONObject.toString());
-
-		NotificationTemplateResource.Builder
-			notificationTemplateResourceBuilder =
-				_notificationTemplateResourceFactory.create();
-
-		NotificationTemplateResource notificationTemplateResource =
-			notificationTemplateResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		Page<NotificationTemplate> notificationTemplatesPage =
 			notificationTemplateResource.getNotificationTemplatesPage(
@@ -2453,9 +2475,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		NotificationTemplateResource.Builder
+			notificationTemplateResourceBuilder =
+				_notificationTemplateResourceFactory.create();
+
+		NotificationTemplateResource notificationTemplateResource =
+			notificationTemplateResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
 		for (String resourcePath : resourcePaths) {
 			_addOrUpdateNotificationTemplate(
-				documentsStringUtilReplaceValues,
+				documentsStringUtilReplaceValues, notificationTemplateResource,
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 				resourcePath, serviceContext);
 		}
@@ -2628,8 +2659,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateOrganization(
-			String json, Organization parentOrganization,
-			ServiceContext serviceContext)
+			String json, OrganizationResource organizationResource,
+			Organization parentOrganization)
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
@@ -2643,16 +2674,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		organization.setParentOrganization(parentOrganization);
-
-		OrganizationResource.Builder organizationResourceBuilder =
-			_organizationResourceFactory.create();
-
-		OrganizationResource organizationResource =
-			organizationResourceBuilder.user(
-				serviceContext.fetchUser()
-			).httpServletRequest(
-				serviceContext.getRequest()
-			).build();
 
 		Page<Organization> organizationsPage = null;
 
@@ -2688,7 +2709,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addOrUpdateOrganization(
-				jsonArray.getString(i), organization, serviceContext);
+				jsonArray.getString(i), organizationResource, organization);
 		}
 	}
 
@@ -2702,6 +2723,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		OrganizationResource.Builder organizationResourceBuilder =
+			_organizationResourceFactory.create();
+
+		OrganizationResource organizationResource =
+			organizationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).httpServletRequest(
+				serviceContext.getRequest()
+			).build();
+
 		for (String resourcePath : resourcePaths) {
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
@@ -2710,7 +2741,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				return;
 			}
 
-			_addOrUpdateOrganization(json, null, serviceContext);
+			_addOrUpdateOrganization(json, organizationResource, null);
 		}
 	}
 
@@ -3007,17 +3038,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Long _addOrUpdateStructuredContentFolders(
 			Long documentFolderId, String parentResourcePath,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext,
+			StructuredContentFolderResource structuredContentFolderResource)
 		throws Exception {
-
-		StructuredContentFolderResource.Builder
-			structuredContentFolderResourceBuilder =
-				_structuredContentFolderResourceFactory.create();
-
-		StructuredContentFolderResource structuredContentFolderResource =
-			structuredContentFolderResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		String json = SiteInitializerUtil.read(
 			parentResourcePath + ".metadata.json", _servletContext);
@@ -3045,17 +3068,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private TaxonomyCategory _addOrUpdateTaxonomyCategoryTaxonomyCategory(
-			String parentTaxonomyCategoryId, ServiceContext serviceContext,
-			TaxonomyCategory taxonomyCategory)
+			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory,
+			TaxonomyCategoryResource taxonomyCategoryResource)
 		throws Exception {
-
-		TaxonomyCategoryResource.Builder taxonomyCategoryResourceBuilder =
-			_taxonomyCategoryResourceFactory.create();
-
-		TaxonomyCategoryResource taxonomyCategoryResource =
-			taxonomyCategoryResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		Page<TaxonomyCategory> taxonomyCategoryPage =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
@@ -3083,9 +3098,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addOrUpdateTaxonomyVocabularies(
 			long groupId, String parentResourcePath,
-			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
-				siteNavigationMenuItemSettingsBuilder)
+				siteNavigationMenuItemSettingsBuilder,
+			TaxonomyCategoryResource taxonomyCategoryResource,
+			TaxonomyVocabularyResource taxonomyVocabularyResource)
 		throws Exception {
 
 		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues =
@@ -3097,14 +3113,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return taxonomyCategoryIdsStringUtilReplaceValues;
 		}
-
-		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
-			_taxonomyVocabularyResourceFactory.create();
-
-		TaxonomyVocabularyResource taxonomyVocabularyResource =
-			taxonomyVocabularyResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
@@ -3150,8 +3158,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			taxonomyCategoryIdsStringUtilReplaceValues.putAll(
 				_addTaxonomyCategories(
 					StringUtil.replaceLast(resourcePath, ".json", "/"), null,
-					serviceContext, siteNavigationMenuItemSettingsBuilder,
-					taxonomyVocabulary.getId()));
+					siteNavigationMenuItemSettingsBuilder,
+					taxonomyCategoryResource, taxonomyVocabulary.getId()));
 		}
 
 		return taxonomyCategoryIdsStringUtilReplaceValues;
@@ -3166,24 +3174,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Group group = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
-		return HashMapBuilder.putAll(
-			_addOrUpdateTaxonomyVocabularies(
-				group.getGroupId(),
-				"/site-initializer/taxonomy-vocabularies/company",
-				serviceContext, siteNavigationMenuItemSettingsBuilder)
-		).putAll(
-			_addOrUpdateTaxonomyVocabularies(
-				serviceContext.getScopeGroupId(),
-				"/site-initializer/taxonomy-vocabularies/group", serviceContext,
-				siteNavigationMenuItemSettingsBuilder)
-		).build();
-	}
-
-	private TaxonomyCategory _addOrUpdateTaxonomyVocabularyTaxonomyCategory(
-			ServiceContext serviceContext, TaxonomyCategory taxonomyCategory,
-			long vocabularyId)
-		throws Exception {
-
 		TaxonomyCategoryResource.Builder taxonomyCategoryResourceBuilder =
 			_taxonomyCategoryResourceFactory.create();
 
@@ -3191,6 +3181,35 @@ public class BundleSiteInitializer implements SiteInitializer {
 			taxonomyCategoryResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
+
+		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
+			_taxonomyVocabularyResourceFactory.create();
+
+		TaxonomyVocabularyResource taxonomyVocabularyResource =
+			taxonomyVocabularyResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		return HashMapBuilder.putAll(
+			_addOrUpdateTaxonomyVocabularies(
+				group.getGroupId(),
+				"/site-initializer/taxonomy-vocabularies/company",
+				siteNavigationMenuItemSettingsBuilder, taxonomyCategoryResource,
+				taxonomyVocabularyResource)
+		).putAll(
+			_addOrUpdateTaxonomyVocabularies(
+				serviceContext.getScopeGroupId(),
+				"/site-initializer/taxonomy-vocabularies/group",
+				siteNavigationMenuItemSettingsBuilder, taxonomyCategoryResource,
+				taxonomyVocabularyResource)
+		).build();
+	}
+
+	private TaxonomyCategory _addOrUpdateTaxonomyVocabularyTaxonomyCategory(
+			TaxonomyCategory taxonomyCategory,
+			TaxonomyCategoryResource taxonomyCategoryResource,
+			long vocabularyId)
+		throws Exception {
 
 		Page<TaxonomyCategory> taxonomyCategoryPage =
 			taxonomyCategoryResource.
@@ -3597,9 +3616,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private Map<String, String> _addTaxonomyCategories(
 			String parentResourcePath, String parentTaxonomyCategoryId,
-			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder,
+			TaxonomyCategoryResource taxonomyCategoryResource,
 			long taxonomyVocabularyId)
 		throws Exception {
 
@@ -3633,11 +3652,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (parentTaxonomyCategoryId == null) {
 				taxonomyCategory =
 					_addOrUpdateTaxonomyVocabularyTaxonomyCategory(
-						serviceContext, taxonomyCategory, taxonomyVocabularyId);
+						taxonomyCategory, taxonomyCategoryResource,
+						taxonomyVocabularyId);
 			}
 			else {
 				taxonomyCategory = _addOrUpdateTaxonomyCategoryTaxonomyCategory(
-					parentTaxonomyCategoryId, serviceContext, taxonomyCategory);
+					parentTaxonomyCategoryId, taxonomyCategory,
+					taxonomyCategoryResource);
 			}
 
 			TaxonomyCategory finalTaxonomyCategory = taxonomyCategory;
@@ -3661,9 +3682,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			taxonomyCategoryIdsStringUtilReplaceValues.putAll(
 				_addTaxonomyCategories(
 					StringUtil.replaceLast(resourcePath, ".json", "/"),
-					taxonomyCategory.getId(), serviceContext,
+					taxonomyCategory.getId(),
 					siteNavigationMenuItemSettingsBuilder,
-					taxonomyVocabularyId));
+					taxonomyCategoryResource, taxonomyVocabularyId));
 		}
 
 		return taxonomyCategoryIdsStringUtilReplaceValues;
@@ -3688,6 +3709,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).httpServletRequest(
 				serviceContext.getRequest()
 			).build();
+
+		AccountRoleResource.Builder builder =
+			_accountRoleResourceFactory.create();
+
+		AccountRoleResource accountRoleResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
@@ -3730,8 +3758,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				j++;
 
 				_associateUserAccounts(
-					accountBriefsJSONObject,
-					jsonObject.getString("emailAddress"), serviceContext);
+					accountBriefsJSONObject, accountRoleResource,
+					jsonObject.getString("emailAddress"));
 
 				userId = userAccount.getId();
 			}
@@ -3756,8 +3784,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						userAccount.getEmailAddress());
 
 				_associateUserAccounts(
-					accountBriefsJSONObject,
-					jsonObject.getString("emailAddress"), serviceContext);
+					accountBriefsJSONObject, accountRoleResource,
+					jsonObject.getString("emailAddress"));
 			}
 		}
 	}
@@ -3906,8 +3934,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _associateUserAccounts(
-			JSONObject accountBriefsJSONObject, String emailAddress,
-			ServiceContext serviceContext)
+			JSONObject accountBriefsJSONObject,
+			AccountRoleResource accountRoleResource, String emailAddress)
 		throws Exception {
 
 		if (!accountBriefsJSONObject.has("roleBriefs")) {
@@ -3920,13 +3948,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (JSONUtil.isEmpty(jsonArray)) {
 			return;
 		}
-
-		AccountRoleResource.Builder builder =
-			_accountRoleResourceFactory.create();
-
-		AccountRoleResource accountRoleResource = builder.user(
-			serviceContext.fetchUser()
-		).build();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Page<AccountRole> accountRolePage =

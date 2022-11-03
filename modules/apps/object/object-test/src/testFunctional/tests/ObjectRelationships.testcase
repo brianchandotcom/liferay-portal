@@ -1231,6 +1231,7 @@ definition {
 	@priority = "5"
 	test CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		task ("Add 3 users entries to relate to custom object entries") {
 			for (var userNum : list "1,2,3") {

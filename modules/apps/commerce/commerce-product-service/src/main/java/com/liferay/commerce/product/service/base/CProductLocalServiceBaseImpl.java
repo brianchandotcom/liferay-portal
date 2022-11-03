@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -46,14 +46,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -62,6 +61,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the c product local service.
@@ -76,8 +78,7 @@ import javax.sql.DataSource;
  */
 public abstract class CProductLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CProductLocalService, CTService<CProduct>,
-			   IdentifiableOSGiService {
+	implements AopService, CProductLocalService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -558,82 +559,24 @@ public abstract class CProductLocalServiceBaseImpl
 		return cProductPersistence.update(cProduct);
 	}
 
-	/**
-	 * Returns the c product local service.
-	 *
-	 * @return the c product local service
-	 */
-	public CProductLocalService getCProductLocalService() {
-		return cProductLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the c product local service.
-	 *
-	 * @param cProductLocalService the c product local service
-	 */
-	public void setCProductLocalService(
-		CProductLocalService cProductLocalService) {
-
-		this.cProductLocalService = cProductLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CProductLocalService.class, IdentifiableOSGiService.class,
+			CTService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the c product persistence.
-	 *
-	 * @return the c product persistence
-	 */
-	public CProductPersistence getCProductPersistence() {
-		return cProductPersistence;
-	}
-
-	/**
-	 * Sets the c product persistence.
-	 *
-	 * @param cProductPersistence the c product persistence
-	 */
-	public void setCProductPersistence(
-		CProductPersistence cProductPersistence) {
-
-		this.cProductPersistence = cProductPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.product.model.CProduct",
-			cProductLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cProductLocalService = (CProductLocalService)aopProxy;
 
 		_setLocalServiceUtilService(cProductLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.product.model.CProduct");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -708,23 +651,16 @@ public abstract class CProductLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CProductLocalService.class)
 	protected CProductLocalService cProductLocalService;
 
-	@BeanReference(type = CProductPersistence.class)
+	@Reference
 	protected CProductPersistence cProductPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CProductLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

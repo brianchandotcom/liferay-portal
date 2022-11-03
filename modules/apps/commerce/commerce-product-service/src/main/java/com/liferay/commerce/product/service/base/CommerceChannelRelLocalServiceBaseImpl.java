@@ -21,7 +21,7 @@ import com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -41,14 +41,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -57,6 +56,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce channel rel local service.
@@ -71,7 +73,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceChannelRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceChannelRelLocalService, CTService<CommerceChannelRel>,
+	implements AopService, CommerceChannelRelLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -407,102 +409,25 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 		return commerceChannelRelPersistence.update(commerceChannelRel);
 	}
 
-	/**
-	 * Returns the commerce channel rel local service.
-	 *
-	 * @return the commerce channel rel local service
-	 */
-	public CommerceChannelRelLocalService getCommerceChannelRelLocalService() {
-		return commerceChannelRelLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce channel rel local service.
-	 *
-	 * @param commerceChannelRelLocalService the commerce channel rel local service
-	 */
-	public void setCommerceChannelRelLocalService(
-		CommerceChannelRelLocalService commerceChannelRelLocalService) {
-
-		this.commerceChannelRelLocalService = commerceChannelRelLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceChannelRelLocalService.class, IdentifiableOSGiService.class,
+			CTService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce channel rel persistence.
-	 *
-	 * @return the commerce channel rel persistence
-	 */
-	public CommerceChannelRelPersistence getCommerceChannelRelPersistence() {
-		return commerceChannelRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce channel rel persistence.
-	 *
-	 * @param commerceChannelRelPersistence the commerce channel rel persistence
-	 */
-	public void setCommerceChannelRelPersistence(
-		CommerceChannelRelPersistence commerceChannelRelPersistence) {
-
-		this.commerceChannelRelPersistence = commerceChannelRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce channel rel finder.
-	 *
-	 * @return the commerce channel rel finder
-	 */
-	public CommerceChannelRelFinder getCommerceChannelRelFinder() {
-		return commerceChannelRelFinder;
-	}
-
-	/**
-	 * Sets the commerce channel rel finder.
-	 *
-	 * @param commerceChannelRelFinder the commerce channel rel finder
-	 */
-	public void setCommerceChannelRelFinder(
-		CommerceChannelRelFinder commerceChannelRelFinder) {
-
-		this.commerceChannelRelFinder = commerceChannelRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.product.model.CommerceChannelRel",
-			commerceChannelRelLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceChannelRelLocalService =
+			(CommerceChannelRelLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceChannelRelLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.product.model.CommerceChannelRel");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -580,26 +505,19 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceChannelRelLocalService.class)
 	protected CommerceChannelRelLocalService commerceChannelRelLocalService;
 
-	@BeanReference(type = CommerceChannelRelPersistence.class)
+	@Reference
 	protected CommerceChannelRelPersistence commerceChannelRelPersistence;
 
-	@BeanReference(type = CommerceChannelRelFinder.class)
+	@Reference
 	protected CommerceChannelRelFinder commerceChannelRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceChannelRelLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

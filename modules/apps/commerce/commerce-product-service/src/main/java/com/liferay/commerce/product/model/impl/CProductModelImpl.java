@@ -119,24 +119,6 @@ public class CProductModelImpl
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
@@ -167,9 +149,19 @@ public class CProductModelImpl
 	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.commerce.product.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.commerce.product.model.CProduct"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public CProductModelImpl() {
 	}
@@ -738,7 +730,7 @@ public class CProductModelImpl
 	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
 	/**
@@ -747,7 +739,7 @@ public class CProductModelImpl
 	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override

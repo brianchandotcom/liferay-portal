@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -46,14 +46,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -62,6 +61,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp definition link local service.
@@ -76,7 +78,7 @@ import javax.sql.DataSource;
  */
 public abstract class CPDefinitionLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPDefinitionLinkLocalService, CTService<CPDefinitionLink>,
+	implements AopService, CPDefinitionLinkLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -534,82 +536,24 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 		return cpDefinitionLinkPersistence.update(cpDefinitionLink);
 	}
 
-	/**
-	 * Returns the cp definition link local service.
-	 *
-	 * @return the cp definition link local service
-	 */
-	public CPDefinitionLinkLocalService getCPDefinitionLinkLocalService() {
-		return cpDefinitionLinkLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the cp definition link local service.
-	 *
-	 * @param cpDefinitionLinkLocalService the cp definition link local service
-	 */
-	public void setCPDefinitionLinkLocalService(
-		CPDefinitionLinkLocalService cpDefinitionLinkLocalService) {
-
-		this.cpDefinitionLinkLocalService = cpDefinitionLinkLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPDefinitionLinkLocalService.class, IdentifiableOSGiService.class,
+			CTService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the cp definition link persistence.
-	 *
-	 * @return the cp definition link persistence
-	 */
-	public CPDefinitionLinkPersistence getCPDefinitionLinkPersistence() {
-		return cpDefinitionLinkPersistence;
-	}
-
-	/**
-	 * Sets the cp definition link persistence.
-	 *
-	 * @param cpDefinitionLinkPersistence the cp definition link persistence
-	 */
-	public void setCPDefinitionLinkPersistence(
-		CPDefinitionLinkPersistence cpDefinitionLinkPersistence) {
-
-		this.cpDefinitionLinkPersistence = cpDefinitionLinkPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.product.model.CPDefinitionLink",
-			cpDefinitionLinkLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpDefinitionLinkLocalService = (CPDefinitionLinkLocalService)aopProxy;
 
 		_setLocalServiceUtilService(cpDefinitionLinkLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.product.model.CPDefinitionLink");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -686,23 +630,16 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CPDefinitionLinkLocalService.class)
 	protected CPDefinitionLinkLocalService cpDefinitionLinkLocalService;
 
-	@BeanReference(type = CPDefinitionLinkPersistence.class)
+	@Reference
 	protected CPDefinitionLinkPersistence cpDefinitionLinkPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLinkLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

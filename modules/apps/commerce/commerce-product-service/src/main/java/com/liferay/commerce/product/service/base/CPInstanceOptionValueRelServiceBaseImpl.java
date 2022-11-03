@@ -19,7 +19,7 @@ import com.liferay.commerce.product.service.CPInstanceOptionValueRelService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelFinder;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp instance option value rel remote service.
@@ -49,136 +51,32 @@ import javax.sql.DataSource;
  */
 public abstract class CPInstanceOptionValueRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPInstanceOptionValueRelService, IdentifiableOSGiService {
+	implements AopService, CPInstanceOptionValueRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPInstanceOptionValueRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPInstanceOptionValueRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp instance option value rel local service.
-	 *
-	 * @return the cp instance option value rel local service
-	 */
-	public
-		com.liferay.commerce.product.service.
-			CPInstanceOptionValueRelLocalService
-				getCPInstanceOptionValueRelLocalService() {
-
-		return cpInstanceOptionValueRelLocalService;
-	}
-
-	/**
-	 * Sets the cp instance option value rel local service.
-	 *
-	 * @param cpInstanceOptionValueRelLocalService the cp instance option value rel local service
-	 */
-	public void setCPInstanceOptionValueRelLocalService(
-		com.liferay.commerce.product.service.
-			CPInstanceOptionValueRelLocalService
-				cpInstanceOptionValueRelLocalService) {
-
-		this.cpInstanceOptionValueRelLocalService =
-			cpInstanceOptionValueRelLocalService;
-	}
-
-	/**
-	 * Returns the cp instance option value rel remote service.
-	 *
-	 * @return the cp instance option value rel remote service
-	 */
-	public CPInstanceOptionValueRelService
-		getCPInstanceOptionValueRelService() {
-
-		return cpInstanceOptionValueRelService;
-	}
-
-	/**
-	 * Sets the cp instance option value rel remote service.
-	 *
-	 * @param cpInstanceOptionValueRelService the cp instance option value rel remote service
-	 */
-	public void setCPInstanceOptionValueRelService(
-		CPInstanceOptionValueRelService cpInstanceOptionValueRelService) {
-
-		this.cpInstanceOptionValueRelService = cpInstanceOptionValueRelService;
-	}
-
-	/**
-	 * Returns the cp instance option value rel persistence.
-	 *
-	 * @return the cp instance option value rel persistence
-	 */
-	public CPInstanceOptionValueRelPersistence
-		getCPInstanceOptionValueRelPersistence() {
-
-		return cpInstanceOptionValueRelPersistence;
-	}
-
-	/**
-	 * Sets the cp instance option value rel persistence.
-	 *
-	 * @param cpInstanceOptionValueRelPersistence the cp instance option value rel persistence
-	 */
-	public void setCPInstanceOptionValueRelPersistence(
-		CPInstanceOptionValueRelPersistence
-			cpInstanceOptionValueRelPersistence) {
-
-		this.cpInstanceOptionValueRelPersistence =
-			cpInstanceOptionValueRelPersistence;
-	}
-
-	/**
-	 * Returns the cp instance option value rel finder.
-	 *
-	 * @return the cp instance option value rel finder
-	 */
-	public CPInstanceOptionValueRelFinder getCPInstanceOptionValueRelFinder() {
-		return cpInstanceOptionValueRelFinder;
-	}
-
-	/**
-	 * Sets the cp instance option value rel finder.
-	 *
-	 * @param cpInstanceOptionValueRelFinder the cp instance option value rel finder
-	 */
-	public void setCPInstanceOptionValueRelFinder(
-		CPInstanceOptionValueRelFinder cpInstanceOptionValueRelFinder) {
-
-		this.cpInstanceOptionValueRelFinder = cpInstanceOptionValueRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpInstanceOptionValueRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPInstanceOptionValueRelService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpInstanceOptionValueRelService =
+			(CPInstanceOptionValueRelService)aopProxy;
+
+		_setServiceUtilService(cpInstanceOptionValueRelService);
 	}
 
 	/**
@@ -241,27 +139,22 @@ public abstract class CPInstanceOptionValueRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.product.service.
 			CPInstanceOptionValueRelLocalService
 				cpInstanceOptionValueRelLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelService.class)
 	protected CPInstanceOptionValueRelService cpInstanceOptionValueRelService;
 
-	@BeanReference(type = CPInstanceOptionValueRelPersistence.class)
+	@Reference
 	protected CPInstanceOptionValueRelPersistence
 		cpInstanceOptionValueRelPersistence;
 
-	@BeanReference(type = CPInstanceOptionValueRelFinder.class)
+	@Reference
 	protected CPInstanceOptionValueRelFinder cpInstanceOptionValueRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

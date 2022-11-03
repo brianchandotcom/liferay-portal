@@ -19,7 +19,7 @@ import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CPTaxCategoryServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp tax category remote service.
@@ -49,126 +51,30 @@ import javax.sql.DataSource;
  */
 public abstract class CPTaxCategoryServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPTaxCategoryService, IdentifiableOSGiService {
+	implements AopService, CPTaxCategoryService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPTaxCategoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPTaxCategoryServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp tax category local service.
-	 *
-	 * @return the cp tax category local service
-	 */
-	public com.liferay.commerce.product.service.CPTaxCategoryLocalService
-		getCPTaxCategoryLocalService() {
-
-		return cpTaxCategoryLocalService;
-	}
-
-	/**
-	 * Sets the cp tax category local service.
-	 *
-	 * @param cpTaxCategoryLocalService the cp tax category local service
-	 */
-	public void setCPTaxCategoryLocalService(
-		com.liferay.commerce.product.service.CPTaxCategoryLocalService
-			cpTaxCategoryLocalService) {
-
-		this.cpTaxCategoryLocalService = cpTaxCategoryLocalService;
-	}
-
-	/**
-	 * Returns the cp tax category remote service.
-	 *
-	 * @return the cp tax category remote service
-	 */
-	public CPTaxCategoryService getCPTaxCategoryService() {
-		return cpTaxCategoryService;
-	}
-
-	/**
-	 * Sets the cp tax category remote service.
-	 *
-	 * @param cpTaxCategoryService the cp tax category remote service
-	 */
-	public void setCPTaxCategoryService(
-		CPTaxCategoryService cpTaxCategoryService) {
-
-		this.cpTaxCategoryService = cpTaxCategoryService;
-	}
-
-	/**
-	 * Returns the cp tax category persistence.
-	 *
-	 * @return the cp tax category persistence
-	 */
-	public CPTaxCategoryPersistence getCPTaxCategoryPersistence() {
-		return cpTaxCategoryPersistence;
-	}
-
-	/**
-	 * Sets the cp tax category persistence.
-	 *
-	 * @param cpTaxCategoryPersistence the cp tax category persistence
-	 */
-	public void setCPTaxCategoryPersistence(
-		CPTaxCategoryPersistence cpTaxCategoryPersistence) {
-
-		this.cpTaxCategoryPersistence = cpTaxCategoryPersistence;
-	}
-
-	/**
-	 * Returns the cp tax category finder.
-	 *
-	 * @return the cp tax category finder
-	 */
-	public CPTaxCategoryFinder getCPTaxCategoryFinder() {
-		return cpTaxCategoryFinder;
-	}
-
-	/**
-	 * Sets the cp tax category finder.
-	 *
-	 * @param cpTaxCategoryFinder the cp tax category finder
-	 */
-	public void setCPTaxCategoryFinder(
-		CPTaxCategoryFinder cpTaxCategoryFinder) {
-
-		this.cpTaxCategoryFinder = cpTaxCategoryFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpTaxCategoryService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPTaxCategoryService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpTaxCategoryService = (CPTaxCategoryService)aopProxy;
+
+		_setServiceUtilService(cpTaxCategoryService);
 	}
 
 	/**
@@ -229,24 +135,19 @@ public abstract class CPTaxCategoryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CPTaxCategoryLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.product.service.CPTaxCategoryLocalService
 		cpTaxCategoryLocalService;
 
-	@BeanReference(type = CPTaxCategoryService.class)
 	protected CPTaxCategoryService cpTaxCategoryService;
 
-	@BeanReference(type = CPTaxCategoryPersistence.class)
+	@Reference
 	protected CPTaxCategoryPersistence cpTaxCategoryPersistence;
 
-	@BeanReference(type = CPTaxCategoryFinder.class)
+	@Reference
 	protected CPTaxCategoryFinder cpTaxCategoryFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

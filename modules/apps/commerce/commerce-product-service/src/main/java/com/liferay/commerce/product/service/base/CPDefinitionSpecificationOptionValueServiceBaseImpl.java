@@ -18,7 +18,7 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPDefinitionSpecificationOptionValuePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp definition specification option value remote service.
@@ -48,7 +50,7 @@ import javax.sql.DataSource;
  */
 public abstract class CPDefinitionSpecificationOptionValueServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPDefinitionSpecificationOptionValueService,
+	implements AopService, CPDefinitionSpecificationOptionValueService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -56,110 +58,25 @@ public abstract class CPDefinitionSpecificationOptionValueServiceBaseImpl
 	 *
 	 * Never modify or reference this class directly. Use <code>CPDefinitionSpecificationOptionValueService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionSpecificationOptionValueServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp definition specification option value local service.
-	 *
-	 * @return the cp definition specification option value local service
-	 */
-	public com.liferay.commerce.product.service.
-		CPDefinitionSpecificationOptionValueLocalService
-			getCPDefinitionSpecificationOptionValueLocalService() {
-
-		return cpDefinitionSpecificationOptionValueLocalService;
-	}
-
-	/**
-	 * Sets the cp definition specification option value local service.
-	 *
-	 * @param cpDefinitionSpecificationOptionValueLocalService the cp definition specification option value local service
-	 */
-	public void setCPDefinitionSpecificationOptionValueLocalService(
-		com.liferay.commerce.product.service.
-			CPDefinitionSpecificationOptionValueLocalService
-				cpDefinitionSpecificationOptionValueLocalService) {
-
-		this.cpDefinitionSpecificationOptionValueLocalService =
-			cpDefinitionSpecificationOptionValueLocalService;
-	}
-
-	/**
-	 * Returns the cp definition specification option value remote service.
-	 *
-	 * @return the cp definition specification option value remote service
-	 */
-	public CPDefinitionSpecificationOptionValueService
-		getCPDefinitionSpecificationOptionValueService() {
-
-		return cpDefinitionSpecificationOptionValueService;
-	}
-
-	/**
-	 * Sets the cp definition specification option value remote service.
-	 *
-	 * @param cpDefinitionSpecificationOptionValueService the cp definition specification option value remote service
-	 */
-	public void setCPDefinitionSpecificationOptionValueService(
-		CPDefinitionSpecificationOptionValueService
-			cpDefinitionSpecificationOptionValueService) {
-
-		this.cpDefinitionSpecificationOptionValueService =
-			cpDefinitionSpecificationOptionValueService;
-	}
-
-	/**
-	 * Returns the cp definition specification option value persistence.
-	 *
-	 * @return the cp definition specification option value persistence
-	 */
-	public CPDefinitionSpecificationOptionValuePersistence
-		getCPDefinitionSpecificationOptionValuePersistence() {
-
-		return cpDefinitionSpecificationOptionValuePersistence;
-	}
-
-	/**
-	 * Sets the cp definition specification option value persistence.
-	 *
-	 * @param cpDefinitionSpecificationOptionValuePersistence the cp definition specification option value persistence
-	 */
-	public void setCPDefinitionSpecificationOptionValuePersistence(
-		CPDefinitionSpecificationOptionValuePersistence
-			cpDefinitionSpecificationOptionValuePersistence) {
-
-		this.cpDefinitionSpecificationOptionValuePersistence =
-			cpDefinitionSpecificationOptionValuePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpDefinitionSpecificationOptionValueService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPDefinitionSpecificationOptionValueService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpDefinitionSpecificationOptionValueService =
+			(CPDefinitionSpecificationOptionValueService)aopProxy;
+
+		_setServiceUtilService(cpDefinitionSpecificationOptionValueService);
 	}
 
 	/**
@@ -223,24 +140,19 @@ public abstract class CPDefinitionSpecificationOptionValueServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.product.service.
 		CPDefinitionSpecificationOptionValueLocalService
 			cpDefinitionSpecificationOptionValueLocalService;
 
-	@BeanReference(type = CPDefinitionSpecificationOptionValueService.class)
 	protected CPDefinitionSpecificationOptionValueService
 		cpDefinitionSpecificationOptionValueService;
 
-	@BeanReference(type = CPDefinitionSpecificationOptionValuePersistence.class)
+	@Reference
 	protected CPDefinitionSpecificationOptionValuePersistence
 		cpDefinitionSpecificationOptionValuePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

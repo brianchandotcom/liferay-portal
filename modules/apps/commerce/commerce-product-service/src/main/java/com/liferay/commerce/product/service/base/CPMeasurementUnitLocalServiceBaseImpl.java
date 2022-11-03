@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -46,14 +46,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -62,6 +61,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp measurement unit local service.
@@ -76,7 +78,7 @@ import javax.sql.DataSource;
  */
 public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPMeasurementUnitLocalService, CTService<CPMeasurementUnit>,
+	implements AopService, CPMeasurementUnitLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -581,82 +583,24 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 		return cpMeasurementUnitPersistence.update(cpMeasurementUnit);
 	}
 
-	/**
-	 * Returns the cp measurement unit local service.
-	 *
-	 * @return the cp measurement unit local service
-	 */
-	public CPMeasurementUnitLocalService getCPMeasurementUnitLocalService() {
-		return cpMeasurementUnitLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the cp measurement unit local service.
-	 *
-	 * @param cpMeasurementUnitLocalService the cp measurement unit local service
-	 */
-	public void setCPMeasurementUnitLocalService(
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
-
-		this.cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPMeasurementUnitLocalService.class, IdentifiableOSGiService.class,
+			CTService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the cp measurement unit persistence.
-	 *
-	 * @return the cp measurement unit persistence
-	 */
-	public CPMeasurementUnitPersistence getCPMeasurementUnitPersistence() {
-		return cpMeasurementUnitPersistence;
-	}
-
-	/**
-	 * Sets the cp measurement unit persistence.
-	 *
-	 * @param cpMeasurementUnitPersistence the cp measurement unit persistence
-	 */
-	public void setCPMeasurementUnitPersistence(
-		CPMeasurementUnitPersistence cpMeasurementUnitPersistence) {
-
-		this.cpMeasurementUnitPersistence = cpMeasurementUnitPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.product.model.CPMeasurementUnit",
-			cpMeasurementUnitLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpMeasurementUnitLocalService = (CPMeasurementUnitLocalService)aopProxy;
 
 		_setLocalServiceUtilService(cpMeasurementUnitLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.product.model.CPMeasurementUnit");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -734,23 +678,16 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CPMeasurementUnitLocalService.class)
 	protected CPMeasurementUnitLocalService cpMeasurementUnitLocalService;
 
-	@BeanReference(type = CPMeasurementUnitPersistence.class)
+	@Reference
 	protected CPMeasurementUnitPersistence cpMeasurementUnitPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPMeasurementUnitLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

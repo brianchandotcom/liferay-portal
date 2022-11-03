@@ -19,7 +19,7 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelRelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce channel rel remote service.
@@ -49,126 +51,30 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceChannelRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceChannelRelService, IdentifiableOSGiService {
+	implements AopService, CommerceChannelRelService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceChannelRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce channel rel local service.
-	 *
-	 * @return the commerce channel rel local service
-	 */
-	public com.liferay.commerce.product.service.CommerceChannelRelLocalService
-		getCommerceChannelRelLocalService() {
-
-		return commerceChannelRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce channel rel local service.
-	 *
-	 * @param commerceChannelRelLocalService the commerce channel rel local service
-	 */
-	public void setCommerceChannelRelLocalService(
-		com.liferay.commerce.product.service.CommerceChannelRelLocalService
-			commerceChannelRelLocalService) {
-
-		this.commerceChannelRelLocalService = commerceChannelRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce channel rel remote service.
-	 *
-	 * @return the commerce channel rel remote service
-	 */
-	public CommerceChannelRelService getCommerceChannelRelService() {
-		return commerceChannelRelService;
-	}
-
-	/**
-	 * Sets the commerce channel rel remote service.
-	 *
-	 * @param commerceChannelRelService the commerce channel rel remote service
-	 */
-	public void setCommerceChannelRelService(
-		CommerceChannelRelService commerceChannelRelService) {
-
-		this.commerceChannelRelService = commerceChannelRelService;
-	}
-
-	/**
-	 * Returns the commerce channel rel persistence.
-	 *
-	 * @return the commerce channel rel persistence
-	 */
-	public CommerceChannelRelPersistence getCommerceChannelRelPersistence() {
-		return commerceChannelRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce channel rel persistence.
-	 *
-	 * @param commerceChannelRelPersistence the commerce channel rel persistence
-	 */
-	public void setCommerceChannelRelPersistence(
-		CommerceChannelRelPersistence commerceChannelRelPersistence) {
-
-		this.commerceChannelRelPersistence = commerceChannelRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce channel rel finder.
-	 *
-	 * @return the commerce channel rel finder
-	 */
-	public CommerceChannelRelFinder getCommerceChannelRelFinder() {
-		return commerceChannelRelFinder;
-	}
-
-	/**
-	 * Sets the commerce channel rel finder.
-	 *
-	 * @param commerceChannelRelFinder the commerce channel rel finder
-	 */
-	public void setCommerceChannelRelFinder(
-		CommerceChannelRelFinder commerceChannelRelFinder) {
-
-		this.commerceChannelRelFinder = commerceChannelRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceChannelRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceChannelRelService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceChannelRelService = (CommerceChannelRelService)aopProxy;
+
+		_setServiceUtilService(commerceChannelRelService);
 	}
 
 	/**
@@ -230,25 +136,20 @@ public abstract class CommerceChannelRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CommerceChannelRelLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.product.service.CommerceChannelRelLocalService
 			commerceChannelRelLocalService;
 
-	@BeanReference(type = CommerceChannelRelService.class)
 	protected CommerceChannelRelService commerceChannelRelService;
 
-	@BeanReference(type = CommerceChannelRelPersistence.class)
+	@Reference
 	protected CommerceChannelRelPersistence commerceChannelRelPersistence;
 
-	@BeanReference(type = CommerceChannelRelFinder.class)
+	@Reference
 	protected CommerceChannelRelFinder commerceChannelRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

@@ -19,7 +19,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPInstanceServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPInstanceFinder;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp instance remote service.
@@ -49,122 +51,30 @@ import javax.sql.DataSource;
  */
 public abstract class CPInstanceServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPInstanceService, IdentifiableOSGiService {
+	implements AopService, CPInstanceService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPInstanceService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPInstanceServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp instance local service.
-	 *
-	 * @return the cp instance local service
-	 */
-	public com.liferay.commerce.product.service.CPInstanceLocalService
-		getCPInstanceLocalService() {
-
-		return cpInstanceLocalService;
-	}
-
-	/**
-	 * Sets the cp instance local service.
-	 *
-	 * @param cpInstanceLocalService the cp instance local service
-	 */
-	public void setCPInstanceLocalService(
-		com.liferay.commerce.product.service.CPInstanceLocalService
-			cpInstanceLocalService) {
-
-		this.cpInstanceLocalService = cpInstanceLocalService;
-	}
-
-	/**
-	 * Returns the cp instance remote service.
-	 *
-	 * @return the cp instance remote service
-	 */
-	public CPInstanceService getCPInstanceService() {
-		return cpInstanceService;
-	}
-
-	/**
-	 * Sets the cp instance remote service.
-	 *
-	 * @param cpInstanceService the cp instance remote service
-	 */
-	public void setCPInstanceService(CPInstanceService cpInstanceService) {
-		this.cpInstanceService = cpInstanceService;
-	}
-
-	/**
-	 * Returns the cp instance persistence.
-	 *
-	 * @return the cp instance persistence
-	 */
-	public CPInstancePersistence getCPInstancePersistence() {
-		return cpInstancePersistence;
-	}
-
-	/**
-	 * Sets the cp instance persistence.
-	 *
-	 * @param cpInstancePersistence the cp instance persistence
-	 */
-	public void setCPInstancePersistence(
-		CPInstancePersistence cpInstancePersistence) {
-
-		this.cpInstancePersistence = cpInstancePersistence;
-	}
-
-	/**
-	 * Returns the cp instance finder.
-	 *
-	 * @return the cp instance finder
-	 */
-	public CPInstanceFinder getCPInstanceFinder() {
-		return cpInstanceFinder;
-	}
-
-	/**
-	 * Sets the cp instance finder.
-	 *
-	 * @param cpInstanceFinder the cp instance finder
-	 */
-	public void setCPInstanceFinder(CPInstanceFinder cpInstanceFinder) {
-		this.cpInstanceFinder = cpInstanceFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpInstanceService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPInstanceService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpInstanceService = (CPInstanceService)aopProxy;
+
+		_setServiceUtilService(cpInstanceService);
 	}
 
 	/**
@@ -223,24 +133,19 @@ public abstract class CPInstanceServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CPInstanceLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.product.service.CPInstanceLocalService
 		cpInstanceLocalService;
 
-	@BeanReference(type = CPInstanceService.class)
 	protected CPInstanceService cpInstanceService;
 
-	@BeanReference(type = CPInstancePersistence.class)
+	@Reference
 	protected CPInstancePersistence cpInstancePersistence;
 
-	@BeanReference(type = CPInstanceFinder.class)
+	@Reference
 	protected CPInstanceFinder cpInstanceFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

@@ -160,8 +160,15 @@ public class JournalArticleLocalServiceTest {
 
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
-		String friendlyURL = _friendlyURLNormalizer.normalize(
-			RandomTestUtil.randomString());
+		String friendlyURL = _friendlyURLNormalizer.normalizeWithPeriods(
+			StringBundler.concat(
+				RandomTestUtil.randomString(5), StringPool.PERIOD,
+				RandomTestUtil.randomString(5), StringPool.SLASH,
+				RandomTestUtil.randomString(5)));
+
+		Assert.assertTrue(friendlyURL.contains(StringPool.DASH));
+		Assert.assertFalse(friendlyURL.contains(StringPool.PERIOD));
+		Assert.assertTrue(friendlyURL.contains(StringPool.SLASH));
 
 		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
 

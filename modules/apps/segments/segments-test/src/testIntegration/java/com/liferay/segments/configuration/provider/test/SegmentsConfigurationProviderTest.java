@@ -185,9 +185,20 @@ public class SegmentsConfigurationProviderTest {
 						"roleSegmentationEnabled", true
 					).build())) {
 
-			Assert.assertTrue(
-				_segmentsConfigurationProvider.isRoleSegmentationEnabled(
-					TestPropsValues.getCompanyId()));
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"roleSegmentationEnabled", true
+							).build(),
+							SettingsFactoryUtil.getSettingsFactory())) {
+
+				Assert.assertTrue(
+					_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+						TestPropsValues.getCompanyId()));
+			}
 		}
 	}
 

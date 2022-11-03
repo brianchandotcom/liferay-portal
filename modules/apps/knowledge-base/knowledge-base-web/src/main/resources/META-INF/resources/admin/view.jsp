@@ -281,6 +281,8 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 													<portlet:param name="redirect" value="<%= currentURL %>" />
 													<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 													<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+													<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+													<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 													<portlet:param name="selectedItemId" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 												</liferay-portlet:renderURL>
 

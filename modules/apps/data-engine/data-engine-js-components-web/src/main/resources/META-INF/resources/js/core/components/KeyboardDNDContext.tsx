@@ -46,9 +46,17 @@ interface IState {
 		position: ITargetPosition;
 	};
 
-	sourceItem: {
-		fieldType: Record<string, any>;
-	};
+	sourceItem:
+		| {
+				dragType: 'add';
+				fieldType: Record<string, any>;
+		  }
+		| {
+				dragType: 'move';
+				fieldName: string;
+				pageIndex: number;
+				parentField: Record<string, any>;
+		  };
 }
 
 const KeyboardDNDContext = React.createContext<
@@ -73,33 +81,74 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 		}
 
 		const handleDrop = (state: IState) => {
-			const {fieldType} = state.sourceItem;
-			const {itemPath, itemType, position} = state.currentTarget;
-			const [pageIndex, rowIndex = 0, columnIndex = 0] = itemPath;
+			const {
+				itemPath: targetItemPath,
+				itemType: targetItemType,
+				position: targetPosition,
+			} = state.currentTarget;
 
-			const [parentField, grandParentField] = itemPath
+			const [
+				targetPageIndex,
+				targetRowIndex = 0,
+				targetColumnIndex = 0,
+			] = targetItemPath;
+
+			const targetIndexes = {
+				columnIndex: targetColumnIndex,
+				pageIndex: targetPageIndex,
+				rowIndex:
+					targetPosition === 'bottom'
+						? targetRowIndex + 1
+						: targetRowIndex,
+			};
+
+			const [targetField, targetParentField] = targetItemPath
 				.map((_, index) =>
-					getItem(formStateRef.current, itemPath.slice(0, index + 1))
+					getItem(
+						formStateRef.current,
+						targetItemPath.slice(0, index + 1)
+					)
 				)
 				.filter((item) => getItemType(item) === 'field')
 				.reverse();
 
-			dispatch({
-				payload: {
-					data: {
-						fieldName: parentField?.fieldName,
-						parentFieldName: grandParentField?.fieldName,
+			if (state.sourceItem.dragType === 'add') {
+				const {fieldType: sourceFieldType} = state.sourceItem;
+
+				dispatch({
+					payload: {
+						data: {
+							fieldName: targetField?.fieldName,
+							parentFieldName: targetParentField?.fieldName,
+						},
+						fieldType: sourceFieldType,
+						indexes: targetIndexes,
 					},
-					fieldType,
-					indexes: {
-						columnIndex,
-						pageIndex,
-						rowIndex:
-							position === 'bottom' ? rowIndex + 1 : rowIndex,
+					type:
+						targetItemType === 'field'
+							? 'section_add'
+							: 'field_add',
+				});
+			}
+			else if (state.sourceItem.dragType === 'move') {
+				const {
+					fieldName: sourceFieldName,
+					pageIndex: sourcePageIndex,
+					parentField: sourceParentField,
+				} = state.sourceItem;
+
+				dispatch({
+					payload: {
+						sourceFieldName,
+						sourceFieldPage: sourcePageIndex,
+						sourceParentField,
+						targetFieldName: targetField?.fieldName,
+						targetIndexes,
+						targetParentFieldName: targetParentField?.fieldName,
 					},
-				},
-				type: itemType === 'field' ? 'section_add' : 'field_add',
-			});
+					type: 'field_move',
+				});
+			}
 		};
 
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -130,12 +179,12 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 					getNextValidTarget(
 						formStateRef.current,
 						{
+							...stateRef.current!,
 							currentTarget: {
 								itemPath: [0],
 								itemType: 'page',
 								position: 'top',
 							},
-							sourceItem: stateRef.current!.sourceItem,
 						},
 						'down'
 					)
@@ -146,6 +195,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 					getNextValidTarget(
 						formStateRef.current,
 						{
+							...stateRef.current!,
 							currentTarget: {
 								itemPath: [
 									formStateRef.current.pages.length - 1,
@@ -153,7 +203,6 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 								itemType: 'page',
 								position: 'bottom',
 							},
-							sourceItem: stateRef.current!.sourceItem,
 						},
 						'up'
 					)

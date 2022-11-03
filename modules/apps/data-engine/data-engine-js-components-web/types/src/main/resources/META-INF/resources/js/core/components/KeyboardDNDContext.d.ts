@@ -21,9 +21,17 @@ interface IState {
 		itemType: IItemType;
 		position: ITargetPosition;
 	};
-	sourceItem: {
-		fieldType: Record<string, any>;
-	};
+	sourceItem:
+		| {
+				dragType: 'add';
+				fieldType: Record<string, any>;
+		  }
+		| {
+				dragType: 'move';
+				fieldName: string;
+				pageIndex: number;
+				parentField: Record<string, any>;
+		  };
 }
 export declare function KeyboardDNDContextProvider({
 	children,

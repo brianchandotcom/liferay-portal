@@ -41,6 +41,25 @@ public class InfoFormValidationException extends InfoFormException {
 			locale, "x-an-error-occurred", fieldLabel, false);
 	}
 
+	public static class CustomValidation extends InfoFormValidationException {
+
+		public CustomValidation(String message) {
+			_message = message;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			if (_message != null) {
+				return _message;
+			}
+
+			return super.getLocalizedMessage(locale);
+		}
+
+		private final String _message;
+
+	}
+
 	public static class ExceedsMaxLength extends InvalidInfoFieldValue {
 
 		public ExceedsMaxLength(String infoFieldUniqueId, int maxLength) {

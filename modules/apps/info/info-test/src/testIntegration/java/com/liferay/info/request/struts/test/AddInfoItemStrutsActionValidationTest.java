@@ -28,6 +28,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.info.item.creator.MockInfoItemCreator;
 import com.liferay.info.test.util.model.MockObject;
+import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -102,7 +103,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -139,7 +140,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				true,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -182,7 +183,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout,
+				"0", layout, _layoutStructureHelper,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				infoField);
@@ -233,7 +234,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -280,7 +281,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -331,7 +332,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
@@ -377,7 +378,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(
@@ -463,6 +464,9 @@ public class AddInfoItemStrutsActionValidationTest {
 
 	@Inject
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Inject
+	private LayoutStructureHelper _layoutStructureHelper;
 
 	@Inject
 	private Portal _portal;

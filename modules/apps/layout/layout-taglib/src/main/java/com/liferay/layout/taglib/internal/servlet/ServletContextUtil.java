@@ -24,6 +24,7 @@ import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
+import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
@@ -108,6 +109,10 @@ public class ServletContextUtil {
 
 	public static LayoutListRetrieverRegistry getLayoutListRetrieverRegistry() {
 		return _layoutListRetrieverRegistry;
+	}
+
+	public static LayoutStructureHelper getLayoutStructureHelper() {
+		return _layoutStructureHelper;
 	}
 
 	public static ListObjectReferenceFactoryRegistry
@@ -246,6 +251,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutStructureHelper(
+		LayoutStructureHelper layoutStructureHelper) {
+
+		_layoutStructureHelper = layoutStructureHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setListObjectReferenceFactoryRegistry(
 		ListObjectReferenceFactoryRegistry listObjectReferenceFactoryRegistry) {
 
@@ -298,6 +310,7 @@ public class ServletContextUtil {
 	private static LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
 	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
+	private static LayoutStructureHelper _layoutStructureHelper;
 	private static ListObjectReferenceFactoryRegistry
 		_listObjectReferenceFactoryRegistry;
 	private static RequestContextMapper _requestContextMapper;

@@ -15,6 +15,7 @@
 package com.liferay.layout.internal.importer;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.internal.importer.structure.util.LayoutStructureItemImporter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

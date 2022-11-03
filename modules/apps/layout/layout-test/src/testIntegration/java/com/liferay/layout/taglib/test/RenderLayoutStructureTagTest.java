@@ -23,8 +23,8 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
+import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
-import com.liferay.layout.util.structure.LayoutStructureUtil;
 import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -165,7 +165,7 @@ public class RenderLayoutStructureTagTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			InfoFormException infoFormException = new InfoFormException();
 
@@ -220,7 +220,7 @@ public class RenderLayoutStructureTagTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			InfoFormValidationException infoFormValidationException =
 				new InfoFormValidationException(infoField.getUniqueId());
@@ -280,7 +280,7 @@ public class RenderLayoutStructureTagTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout);
@@ -324,7 +324,7 @@ public class RenderLayoutStructureTagTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, infoField);
+				"0", layout, _layoutStructureHelper, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout);
@@ -503,7 +503,7 @@ public class RenderLayoutStructureTagTest {
 			new RenderLayoutStructureTag();
 
 		renderLayoutStructureTag.setLayoutStructure(
-			LayoutStructureUtil.getLayoutStructure(
+			_layoutStructureHelper.getLayoutStructure(
 				layout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid())));
@@ -527,6 +527,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutStructureHelper _layoutStructureHelper;
 
 	@Inject
 	private Portal _portal;

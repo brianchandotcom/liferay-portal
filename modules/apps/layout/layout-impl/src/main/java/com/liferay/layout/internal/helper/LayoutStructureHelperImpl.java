@@ -12,32 +12,41 @@
  * details.
  */
 
-package com.liferay.layout.util.structure;
+package com.liferay.layout.internal.helper;
 
+import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Validator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
  */
-public class LayoutStructureUtil {
+@Component(service = LayoutStructureHelper.class)
+public class LayoutStructureHelperImpl implements LayoutStructureHelper {
 
-	public static LayoutStructure getLayoutStructure(
+	@Override
+	public LayoutStructure getLayoutStructure(
 		long plid, long segmentsExperienceId) {
 
 		try {
 			Layout layout = _getLayout(plid);
 
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
+				_layoutPageTemplateStructureLocalService.
 					fetchLayoutPageTemplateStructure(
 						layout.getGroupId(), layout.getPlid(), true);
 
@@ -64,8 +73,8 @@ public class LayoutStructureUtil {
 		}
 	}
 
-	private static Layout _getLayout(long plid) {
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+	private Layout _getLayout(long plid) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if (layout instanceof VirtualLayout) {
 			VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -76,9 +85,9 @@ public class LayoutStructureUtil {
 		return layout;
 	}
 
-	private static String _getMasterLayoutData(long masterLayoutPlid) {
+	private String _getMasterLayoutData(long masterLayoutPlid) {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
+			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(masterLayoutPlid);
 
 		if (masterLayoutPageTemplateEntry == null) {
@@ -86,7 +95,7 @@ public class LayoutStructureUtil {
 		}
 
 		LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
+			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					masterLayoutPageTemplateEntry.getGroupId(),
 					masterLayoutPageTemplateEntry.getPlid());
@@ -99,7 +108,7 @@ public class LayoutStructureUtil {
 			getDefaultSegmentsExperienceData();
 	}
 
-	private static LayoutStructure _mergeLayoutStructure(
+	private LayoutStructure _mergeLayoutStructure(
 		String data, String masterLayoutData) {
 
 		LayoutStructure masterLayoutStructure = LayoutStructure.of(
@@ -131,6 +140,17 @@ public class LayoutStructureUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutStructureUtil.class);
+		LayoutStructureHelperImpl.class);
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 }

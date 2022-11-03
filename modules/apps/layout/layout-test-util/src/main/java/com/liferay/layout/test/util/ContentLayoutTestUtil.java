@@ -22,9 +22,9 @@ import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.util.structure.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
@@ -78,18 +78,20 @@ public class ContentLayoutTestUtil {
 
 	public static JSONObject addFormToLayout(
 			boolean addCaptcha, String classNameId, String classTypeId,
-			Layout layout, long segmentsExperienceId, InfoField... infoFields)
+			Layout layout, LayoutStructureHelper layoutStructureHelper,
+			long segmentsExperienceId, InfoField... infoFields)
 		throws Exception {
 
 		return addFormToLayout(
 			addCaptcha, classNameId, classTypeId, _INPUT_HTML, layout,
-			segmentsExperienceId, infoFields);
+			layoutStructureHelper, segmentsExperienceId, infoFields);
 	}
 
 	public static JSONObject addFormToLayout(
 			boolean addCaptcha, String classNameId, String classTypeId,
-			String inputHTML, Layout layout, long segmentsExperienceId,
-			InfoField... infoFields)
+			String inputHTML, Layout layout,
+			LayoutStructureHelper layoutStructureHelper,
+			long segmentsExperienceId, InfoField... infoFields)
 		throws Exception {
 
 		JSONObject jsonObject = addItemToLayout(
@@ -99,7 +101,7 @@ public class ContentLayoutTestUtil {
 				"classTypeId", classTypeId
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_FORM, layout,
-			segmentsExperienceId);
+			layoutStructureHelper, segmentsExperienceId);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -160,7 +162,7 @@ public class ContentLayoutTestUtil {
 
 		jsonObject.put(
 			"layoutData",
-			LayoutStructureUtil.getLayoutStructure(
+			layoutStructureHelper.getLayoutStructure(
 				layout.getPlid(), segmentsExperienceId));
 
 		return jsonObject;
@@ -168,13 +170,15 @@ public class ContentLayoutTestUtil {
 
 	public static String addFormToPublishedLayout(
 			boolean addCaptcha, String classNameId, String classTypeId,
-			Layout layout, InfoField<?>... infoField)
+			Layout layout, LayoutStructureHelper layoutStructureHelper,
+			InfoField<?>... infoField)
 		throws Exception {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		JSONObject jsonObject = addFormToLayout(
 			addCaptcha, classNameId, classTypeId, draftLayout,
+			layoutStructureHelper,
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid()),
 			infoField);
@@ -272,11 +276,12 @@ public class ContentLayoutTestUtil {
 
 	public static JSONObject addItemToLayout(
 			String itemConfig, String itemType, Layout layout,
+			LayoutStructureHelper layoutStructureHelper,
 			long segmentsExperienceId)
 		throws Exception {
 
 		LayoutStructure layoutStructure =
-			LayoutStructureUtil.getLayoutStructure(
+			layoutStructureHelper.getLayoutStructure(
 				layout.getPlid(), segmentsExperienceId);
 
 		return addItemToLayout(

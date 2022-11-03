@@ -27,6 +27,10 @@ export const currentDateString = currentDate.split('-');
 export const getCurrentMonth = new Date().getMonth();
 export const sixMonthsAgo = getCurrentMonth - 5;
 export const threeMonthsAgo = getCurrentMonth - 2;
+
+export const nextMonth = getCurrentMonth + 1;
+export const nextThreeMonths = getCurrentMonth + 3;
+
 export const lastMonth = getCurrentMonth - 1;
 export const lastYear = currentYear - 1;
 export const january = '01';
@@ -53,6 +57,14 @@ export const oneYearAgoDate = convertDateToString(
 
 export const lastYearSixMonthsAgoPeriod = convertDateToString(
 	new Date(new Date(new Date().setFullYear(lastYear)).setMonth(sixMonthsAgo))
+).split('-');
+
+export const nextMonthDate = convertDateToString(
+	new Date(new Date().setMonth(nextMonth))
+).split('-');
+
+export const nextThreeMonthsDate = convertDateToString(
+	new Date(new Date().setMonth(nextThreeMonths))
 ).split('-');
 
 export const getDayOfYear = Math.floor(

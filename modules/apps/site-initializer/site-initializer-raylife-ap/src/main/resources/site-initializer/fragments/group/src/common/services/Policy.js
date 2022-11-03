@@ -71,3 +71,16 @@ export function getPoliciesForSalesGoal(
 		`${DeliveryAPI}/?fields=boundDate,termPremium&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentYear}-${currentMonth}-31 and boundDate ge ${periodYear}-${periodMonth}-01`
 	);
 }
+
+export function getPoliciesChartExpiringPolicies(
+	currentYear,
+	currentMonth,
+	currentDay,
+	periodYear,
+	periodMonth,
+	periodDay
+) {
+	return axios.get(
+		`${DeliveryAPI}/?fields=endDate,totalCount,productName&pageSize=200&filter=endDate ge ${currentYear}-${currentMonth}-${currentDay} and endDate le ${periodYear}-${periodMonth}-${periodDay}`
+	);
+}

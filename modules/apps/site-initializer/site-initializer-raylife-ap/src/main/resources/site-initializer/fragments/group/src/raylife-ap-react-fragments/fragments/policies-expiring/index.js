@@ -16,7 +16,15 @@ import {ClaySelect} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {getActivePolicies, getProducts} from '../../../common/services';
+import {
+	getPoliciesChartExpiringPolicies,
+	getProducts,
+} from '../../../common/services';
+import {
+	currentDateString,
+	nextMonthDate,
+	nextThreeMonthsDate,
+} from '../../../common/utils/dateFormatter';
 
 const PERIOD = {
 	THIS_MONTH: '1',
@@ -29,7 +37,11 @@ export default function () {
 	const [chartTitle, setChartTitle] = useState('');
 	const [loadData, setLoadData] = useState(false);
 
-	const [columns, setColumns] = useState([]);
+	const [thisMonthTotalPolicies, setThisMonthTotalPolicies] = useState(0);
+	const [expiringPolicies, setExpiringPolicies] = useState(0);
+	const [threeMonthTotalPolicies, setThreeMonthsTotalPolicies] = useState(0);
+
+	const [columnsLegend, setColumnsLegend] = useState([]);
 	const [colors, setColors] = useState({});
 
 	const options = [
@@ -55,25 +67,60 @@ export default function () {
 		'#B5CDFE',
 	];
 
+	const colorsChart = {
+		expiring: '#ec0d6b',
+		remaining: '#fbcee1',
+	};
+
 	const MAX_NAME_LENGHT = 15;
 
 	useEffect(() => {
-		Promise.allSettled([getProducts(), getActivePolicies()]).then(
-			(results) => {
-				const [productQuotesResult, policiesResult] = results;
+		Promise.allSettled([
+			getProducts(),
+			getPoliciesChartExpiringPolicies(
+				currentDateString[0],
+				currentDateString[1],
+				currentDateString[2],
+				nextMonthDate[0],
+				nextMonthDate[1],
+				nextMonthDate[2]
+			),
+		]).then((results) => {
+			const [
+				productQuotesResult,
+				expiringPoliciesResultThisMonth,
+			] = results;
 
-				const columnsArr = [];
-				const colorsObj = {};
+			const columnsArr = [];
+			const colorsObj = {};
 
-				const activePolicies = policiesResult?.value?.data;
+			const totalFilteredPolicies =
+				expiringPoliciesResultThisMonth?.value?.data;
 
-				setChartTitle(activePolicies?.totalCount);
+			const arrayOfExpiringPolicies = [];
 
+			totalFilteredPolicies?.items?.forEach((policy) => {
+				const policyEndDate = Date.parse(policy?.endDate);
+
+				const currentDate = new Date();
+
+				const differenceOfDays = policyEndDate - currentDate;
+
+				const renewalDue =
+					Math.floor(differenceOfDays / (1000 * 60 * 60 * 24)) + 1;
+
+				if (renewalDue < 15) {
+					arrayOfExpiringPolicies.push(policy);
+				}
+			});
+
+			setExpiringPolicies(arrayOfExpiringPolicies?.length);
+
+			if (selectedFilterDate === PERIOD.THIS_MONTH) {
 				productQuotesResult?.value?.data?.items?.map(
 					(productQuote, index) => {
-						const countActivePolicies = activePolicies?.items.filter(
-							(application) =>
-								productQuote.name === application.productName
+						const countExpiredPolicies = arrayOfExpiringPolicies?.filter(
+							(policy) => productQuote.name === policy.productName
 						).length;
 
 						const shortDescription = productQuote.shortDescription;
@@ -94,30 +141,104 @@ export default function () {
 
 						colorsObj[fullName] = colorsArray[index];
 
-						if (countActivePolicies > 0) {
+						if (countExpiredPolicies > 0) {
 							columnsArr[index] = [
 								fullName,
-								countActivePolicies,
+								countExpiredPolicies,
 								productName,
 							];
 						}
+
+						setThisMonthTotalPolicies(
+							totalFilteredPolicies?.totalCount
+						);
 					}
 				);
 
-				setColumns(columnsArr);
+				setChartTitle(arrayOfExpiringPolicies?.length?.toString());
+				setColumnsLegend(columnsArr);
 				setColors(colorsObj);
-
-				setLoadData(true);
 			}
-		);
+
+			if (selectedFilterDate === PERIOD.THREE_MONTH) {
+				getPoliciesChartExpiringPolicies(
+					currentDateString[0],
+					currentDateString[1],
+					currentDateString[2],
+					nextThreeMonthsDate[0],
+					nextThreeMonthsDate[1],
+					nextThreeMonthsDate[2]
+				).then((results) => {
+					const expiringPoliciesResultThreeMonths = results?.data;
+
+					setThreeMonthsTotalPolicies(
+						expiringPoliciesResultThreeMonths?.totalCount
+					);
+				});
+			}
+
+			setLoadData(true);
+		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [selectedFilterDate]);
+
+	const chartLoadData = [
+		{
+			dataColumns: [
+				['expiring', expiringPolicies],
+				['remaining', thisMonthTotalPolicies - expiringPolicies],
+			],
+			period: 1,
+		},
+		{
+			dataColumns: [
+				['expiring', expiringPolicies],
+				['remaining', threeMonthTotalPolicies - expiringPolicies],
+			],
+			period: 2,
+		},
+	];
+
+	const getData = () => {
+		return chartLoadData?.filter(
+			(data) => data.period === Number(selectedFilterDate)
+		);
+	};
 
 	const chartData = {
-		colors,
-		columns,
+		colors: colorsChart,
+		columns: getData()[0]?.dataColumns,
+		legend: {
+			colors,
+			columnsLegend,
+		},
 		type: 'donut',
 	};
+
+	const LegendElement = () => (
+		<div className="d-flex legend-container">
+			{chartData?.legend?.columnsLegend?.map((column, index) => (
+				<div
+					className="d-flex flex-row justify-content-between legend-content pr-1"
+					key={index}
+				>
+					<div className="align-items-center d-flex flex-row justify-content-between mr-2">
+						<div
+							className="flex-shrink-0 legend-color mr-2 rounded-circle"
+							style={{
+								backgroundColor:
+									chartData?.legend?.colors[column[0]],
+							}}
+						></div>
+
+						<span className="legend-title">{column[2]}</span>
+					</div>
+
+					<span className="font-weight-bolder">{column[1]}</span>
+				</div>
+			))}
+		</div>
+	);
 
 	return (
 		<div className="d-flex flex-column flex-shrink-0 pb-4 policies-expiring-container pt-3 px-3">
@@ -145,7 +266,12 @@ export default function () {
 			</div>
 
 			{!!chartData.columns.length && (
-				<DonutChart chartData={chartData} title={chartTitle} />
+				<DonutChart
+					LegendElement={LegendElement}
+					chartData={chartData}
+					hasLegend={true}
+					title={chartTitle}
+				/>
 			)}
 
 			{!chartData.columns.length && loadData && (

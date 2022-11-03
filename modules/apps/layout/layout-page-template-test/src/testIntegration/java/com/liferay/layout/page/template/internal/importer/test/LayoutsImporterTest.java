@@ -97,6 +97,7 @@ import java.util.stream.Stream;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.Portlet;
+import javax.portlet.PortletPreferences;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -346,7 +347,7 @@ public class LayoutsImporterTest {
 
 		Assert.assertNotNull(instanceId);
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences jxPortletPreferences =
 			_portletPreferenceValueLocalService.getPreferences(
 				_portletPreferencesLocalService.fetchPortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,

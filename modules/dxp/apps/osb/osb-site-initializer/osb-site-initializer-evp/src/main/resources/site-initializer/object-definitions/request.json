@@ -243,7 +243,7 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Request: Request Status$]",
 			"name": "requestStatus",
-			"required": false,
+			"required": true,
 			"state": true,
 			"type": "String"
 		},

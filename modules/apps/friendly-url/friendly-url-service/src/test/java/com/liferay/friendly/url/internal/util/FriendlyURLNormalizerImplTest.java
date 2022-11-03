@@ -197,42 +197,46 @@ public class FriendlyURLNormalizerImplTest {
 
 	@Test
 	public void testNormalizeWithPeriods() {
-		String s1 = RandomTestUtil.randomString();
-		String s2 = RandomTestUtil.randomString();
+		String friendlyURLPrefix = RandomTestUtil.randomString();
+		String friendlyURLSuffix = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			_friendlyURLNormalizerImpl.normalize(s1 + s2),
-			_friendlyURLNormalizerImpl.normalizeWithPeriods(s1 + s2));
-
-		Assert.assertEquals(
-			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.DASH + s2),
+			_friendlyURLNormalizerImpl.normalize(
+				friendlyURLPrefix + friendlyURLSuffix),
 			_friendlyURLNormalizerImpl.normalizeWithPeriods(
-				s1 + StringPool.PERIOD + s2));
-
+				friendlyURLPrefix + friendlyURLSuffix));
 		Assert.assertEquals(
-			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.SLASH + s2),
+			_friendlyURLNormalizerImpl.normalize(
+				friendlyURLPrefix + StringPool.DASH + friendlyURLSuffix),
 			_friendlyURLNormalizerImpl.normalizeWithPeriods(
-				s1 + StringPool.SLASH + s2));
+				friendlyURLPrefix + StringPool.PERIOD + friendlyURLSuffix));
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(
+				friendlyURLPrefix + StringPool.SLASH + friendlyURLSuffix),
+			_friendlyURLNormalizerImpl.normalizeWithPeriods(
+				friendlyURLPrefix + StringPool.SLASH + friendlyURLSuffix));
 	}
 
 	@Test
 	public void testNormalizeWithPeriodsAndSlashes() {
-		String s1 = RandomTestUtil.randomString();
-		String s2 = RandomTestUtil.randomString();
+		String friendlyURLPrefix = RandomTestUtil.randomString();
+		String friendlyURLSuffix = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			_friendlyURLNormalizerImpl.normalize(s1 + s2),
-			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(s1 + s2));
-
-		Assert.assertEquals(
-			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.DASH + s2),
+			_friendlyURLNormalizerImpl.normalize(
+				friendlyURLPrefix + friendlyURLSuffix),
 			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(
-				s1 + StringPool.PERIOD + s2));
-
+				friendlyURLPrefix + friendlyURLSuffix));
 		Assert.assertEquals(
-			_friendlyURLNormalizerImpl.normalize(s1 + StringPool.DASH + s2),
+			_friendlyURLNormalizerImpl.normalize(
+				friendlyURLPrefix + StringPool.DASH + friendlyURLSuffix),
 			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(
-				s1 + StringPool.SLASH + s2));
+				friendlyURLPrefix + StringPool.PERIOD + friendlyURLSuffix));
+		Assert.assertEquals(
+			_friendlyURLNormalizerImpl.normalize(
+				friendlyURLPrefix + StringPool.DASH + friendlyURLSuffix),
+			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes(
+				friendlyURLPrefix + StringPool.SLASH + friendlyURLSuffix));
 	}
 
 	@Test

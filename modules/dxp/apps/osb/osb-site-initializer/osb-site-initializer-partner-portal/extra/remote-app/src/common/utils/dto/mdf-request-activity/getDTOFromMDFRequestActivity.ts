@@ -48,7 +48,7 @@ export default function getDTOFromMDFRequestActivity(
 		name: mdfRequestActivity.name,
 		overallMessageContentCTA: mdfRequestActivity.overallMessageContentCTA,
 		primaryThemeOrMessage: mdfRequestActivity.primaryThemeOrMessage,
-		r_accountToActivity_accountEntryId: company.id,
+		r_accountToActivities_accountEntryId: company.id,
 		r_mdfRequestToActivities_c_mdfRequestId: mdfRequestId,
 		sourceAndSizeOfInviteeList:
 			mdfRequestActivity.sourceAndSizeOfInviteeList,

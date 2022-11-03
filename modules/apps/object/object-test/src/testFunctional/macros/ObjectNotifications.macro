@@ -33,6 +33,20 @@ definition {
 			value1 = "${emailBody}");
 	}
 
+	macro addNotificationTemplateAttachment {
+		Click(
+			key_dataSource = "Select a Data Source",
+			locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
+
+		Click(
+			key_objectLabel = "${objectLabel}",
+			locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS_SELECT_OBJECT");
+
+		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
+
+		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
+	}
+
 	macro deleteNotificationTemplate {
 		Click(
 			key_objectLabel = "${templateName}",

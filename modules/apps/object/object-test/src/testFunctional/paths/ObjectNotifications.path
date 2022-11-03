@@ -20,6 +20,26 @@
 		<td>//div[@class='dnd-td'][contains(.,'${key_objectName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DATA_SOURCE_ATTACHMENTS</td>
+		<td>//div[@tabindex='0']//span[contains(.,'${key_dataSource}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DATA_SOURCE_ATTACHMENTS_SELECT_OBJECT</td>
+		<td>//div[@class='dropdown-menu show']//div[@class='d-flex justify-content-between' and contains(.,'${key_objectLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FIELD_ATTACHMENTS_OBJECT</td>
+		<td>//div[@class='input-group-item']//div[@class="form-control form-control-tag-group input-group"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD</td>
+		<td>//span[@class='custom-control-label']//span[@class="custom-control-label-text"]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

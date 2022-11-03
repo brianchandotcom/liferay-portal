@@ -21,6 +21,58 @@ definition {
 		}
 	}
 
+	@description = "LPS-161924 - Verify that it's possible to add attachments to the notification template"
+	@priority = "3"
+	test CanAddAttachment {
+		task ("Given an object with an attachment field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161924",
+				objectName = "CustomObject161924",
+				pluralLabelName = "Custom Objects 161924");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Attachment",
+				fieldLabelName = "From Computer And Show Files In DM",
+				fieldName = "fromComputerAndShowFilesInDM",
+				fieldType = "Long",
+				fileSource = "userComputer",
+				isRequired = "false",
+				objectName = "CustomObject161924");
+		}
+
+		task ("And given a notification template is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				fromAddress = "test@liferay",
+				fromName = "Test Test",
+				name = "Notification Template");
+		}
+
+		task ("When an attachment is added to the notification template") {
+			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object 161924");
+
+			Button.clickSave();
+		}
+
+		task ("Then the attachment should be present in the notification template") {
+			Click(
+				key_objectLabel = "Notification Template",
+				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+			MenuItem.clickNoError(menuItem = "View");
+
+			AssertElementPresent(
+				key_dataSource = "Custom Object 161924",
+				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
+
+			AssertElementPresent(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
+		}
+	}
+
 	@description = "LPS-161917 - Verify that it's possible to create an e-mail notification template"
 	@priority = "3"
 	test CanCreateEmailTemplate {

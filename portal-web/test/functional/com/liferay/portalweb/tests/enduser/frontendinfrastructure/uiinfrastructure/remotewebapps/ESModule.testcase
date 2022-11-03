@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Given a custom element with "Use ES Modules" option created") {
+		task ("Given a Remote App > Custom Element with Use ES modules checked") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
 				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
 				customElementHtmlName = "app-element",
@@ -19,13 +19,11 @@ definition {
 				customElementUseESM = "true");
 		}
 
-		task ("And Given a widget page created") {
+		task ("And Given Add created Remote App portlet to widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "My Widget Page");
-		}
 
-		task ("And Given adding the app portlet to the page") {
 			Navigator.gotoPage(pageName = "My Widget Page");
 
 			Click(locator1 = "ControlMenu#ADD");
@@ -65,20 +63,12 @@ definition {
 		}
 	}
 
-	@description = "LPS-165439. When add a remote app in the HTML of the page I'm able to see references to react and react-dom"
-	@priority = "5"
-	test CanGenerateTheAMDToESMBridge {
-
-		// To-do CanGenerateTheAMDToESMBridge testcase
-
-	}
-
 	@description = "LPS-165438. When add a remote app in the html <script> tag with src is rendered as a module type"
 	@priority = "5"
 	test CanRenderCustomElementAsModuleType {
-
-		// To-do CanRenderCustomElementAsModuleType testcase
-
+		task ("When Navigate to remote app portlet page Then in the html <script> tag with src 'https://localhost:8081/runtime.js' is rendered as a module type") {
+			AssertElementPresent(locator1 = "//script[@src='https://localhost:8081/runtime.js']");
+		}
 	}
 
 }

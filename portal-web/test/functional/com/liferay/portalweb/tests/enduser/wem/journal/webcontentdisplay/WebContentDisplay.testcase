@@ -1059,8 +1059,8 @@ ${company.getKeyObj()}
 			NavItem.gotoTemplates();
 
 			var templateScript = '''
-${objectUtil("com.liferay.portal.service.UserLocalServiceUtil").getService()}<br />
-${staticUtil["com.liferay.portal.service.UserLocalServiceUtil"].getService()}<br />
+${objectUtil("com.liferay.portal.kernel.service.UserLocalServiceUtil").getService()}<br />
+${staticUtil["com.liferay.portal.kernel.service.UserLocalServiceUtil"].getService()}<br />
 
 ${staticUtil["java.lang.Runtime"].getRuntime()}
 

@@ -22,6 +22,7 @@ import {
 import React, {useState} from 'react';
 
 import './EditObjectField.scss';
+import {AdvancedTab} from './Tabs/Advanced/AdvancedTab';
 import {BasicInfo} from './Tabs/BasicInfo/BasicInfo';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
@@ -143,7 +144,7 @@ export default function EditObjectField({
 
 				{Liferay.FeatureFlags['LPS-159913'] ? (
 					<ClayTabs.TabPane>
-						{/* TODO Advanced TAB Component */}
+						<AdvancedTab setValues={setValues} values={values} />
 					</ClayTabs.TabPane>
 				) : (
 					<></>

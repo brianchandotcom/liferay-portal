@@ -952,6 +952,105 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro addFragmentViaKeyboard {
+		PageEditor.assertFragmentSidebarLoaded();
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		if (!(isSet(displayStyle))) {
+			var displayStyle = "list";
+		}
+
+		if ("${displayStyle}" == "list") {
+			var switchTo = "card";
+		}
+		else {
+			var switchTo = "list";
+		}
+
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (IsElementNotPresent(key_switchTo = "${switchTo}", locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON")) {
+			Click(
+				key_switchTo = "",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		AssertVisible(
+			key_switchTo = "${switchTo}",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+		if ("${displayStyle}" == "card") {
+			KeyPress(
+				ariaLabel = "Add ${fragmentName}",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			if (isSet(upCount)) {
+				var i = "1";
+
+				while ("${i}" != "${upCount}") {
+					KeyPress(
+						ariaLabel = "Add ${fragmentName}",
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL",
+						value1 = "\UP");
+
+					var i = ${i} + 1;
+				}
+			}
+
+			KeyPress(
+				ariaLabel = "Add ${fragmentName}",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM_BUTTON_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+		}
+
+		if ("${displayStyle}" == "list") {
+			KeyPress(
+				ariaLabel = "Add ${fragmentName}",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			if (isSet(upCount)) {
+				var i = "1";
+
+				while ("${i}" != "${upCount}") {
+					KeyPress(
+						ariaLabel = "Add ${fragmentName}",
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+						value1 = "\UP");
+
+					var i = ${i} + 1;
+				}
+			}
+
+			KeyPress(
+				ariaLabel = "Add ${fragmentName}",
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+		}
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro addVideoFragmentURL {
 		Type(
 			key_text = "URL",

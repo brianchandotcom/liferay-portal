@@ -33,7 +33,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -74,13 +73,6 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		_blogsEntryLocalService.checkEntries();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		deactivate();
-
-		activate(properties);
 	}
 
 	@Reference

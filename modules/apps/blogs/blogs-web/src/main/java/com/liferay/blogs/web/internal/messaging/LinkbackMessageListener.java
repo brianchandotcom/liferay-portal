@@ -34,7 +34,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,13 +77,6 @@ public class LinkbackMessageListener extends BaseMessageListener {
 		_linkbackConsumer.verifyNewTrackbacks();
 
 		LinkbackProducerUtil.sendQueuedPingbacks();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		deactivate();
-
-		activate(properties);
 	}
 
 	@Reference

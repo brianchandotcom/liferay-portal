@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -62,9 +61,9 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteMBMessagesListener extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		modified(properties);
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
 
 		String cronExpression = GetterUtil.getString(
 			properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
@@ -76,38 +75,27 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 
 		_schedulerEntryImpl = new SchedulerEntryImpl(clazz.getName(), trigger);
 
-		if (_initialized) {
-			deactivate();
-		}
-
 		_schedulerEngineHelper.register(
 			this, _schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
-
-		_initialized = true;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_initialized) {
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unscheduling trigger");
-				}
-
-				_schedulerEngineHelper.unschedule(
-					_schedulerEntryImpl, StorageType.MEMORY_CLUSTERED);
-			}
-			catch (SchedulerException schedulerException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to unschedule trigger", schedulerException);
-				}
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unscheduling trigger");
 			}
 
-			_schedulerEngineHelper.unregister(this);
+			_schedulerEngineHelper.unschedule(
+				_schedulerEntryImpl, StorageType.MEMORY_CLUSTERED);
+		}
+		catch (SchedulerException schedulerException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to unschedule trigger", schedulerException);
+			}
 		}
 
-		_initialized = false;
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
@@ -146,19 +134,12 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 		}
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
-			AkismetServiceConfiguration.class, properties);
-	}
-
 	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteMBMessagesListener.class);
 
-	private volatile AkismetServiceConfiguration _akismetServiceConfiguration;
-	private volatile boolean _initialized;
+	private AkismetServiceConfiguration _akismetServiceConfiguration;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

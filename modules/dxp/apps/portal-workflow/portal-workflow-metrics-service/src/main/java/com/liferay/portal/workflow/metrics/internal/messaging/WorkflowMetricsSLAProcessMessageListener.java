@@ -51,7 +51,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -152,13 +151,6 @@ public class WorkflowMetricsSLAProcessMessageListener
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		deactivate();
-
-		activate(properties);
 	}
 
 	private String _getBackgroundTaskName(

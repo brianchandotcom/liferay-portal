@@ -33,7 +33,6 @@ import java.util.Date;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -44,7 +43,6 @@ public class CheckNotificationQueueEntryMessageListener
 	extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate() {
 		Class<?> clazz = getClass();
 

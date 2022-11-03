@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -819,9 +818,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	private JournalArticle _journalArticle;
 

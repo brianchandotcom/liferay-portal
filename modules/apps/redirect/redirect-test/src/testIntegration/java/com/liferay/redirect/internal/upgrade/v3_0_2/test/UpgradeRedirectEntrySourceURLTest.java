@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -114,7 +116,7 @@ public class UpgradeRedirectEntrySourceURLTest {
 			redirectEntryId6, _group2.getGroupId(), _group2.getCompanyId(),
 			"destination3", "Page3");
 
-		_redirectEntrySourceURLUpgradeProcess.upgrade();
+		_runUpgrade();
 
 		RedirectEntry redirectEntry1 =
 			RedirectEntryLocalServiceUtil.getRedirectEntry(redirectEntryId1);
@@ -153,7 +155,7 @@ public class UpgradeRedirectEntrySourceURLTest {
 			redirectEntryId3, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination3", "PageC");
 
-		_redirectEntrySourceURLUpgradeProcess.upgrade();
+		_runUpgrade();
 
 		RedirectEntry redirectEntry1 =
 			RedirectEntryLocalServiceUtil.getRedirectEntry(redirectEntryId1);
@@ -183,7 +185,7 @@ public class UpgradeRedirectEntrySourceURLTest {
 			redirectEntryId2, _group1.getGroupId(), _group1.getCompanyId(),
 			"destination2", "TestPage");
 
-		_redirectEntrySourceURLUpgradeProcess.upgrade();
+		_runUpgrade();
 
 		RedirectEntry redirectEntry1 =
 			RedirectEntryLocalServiceUtil.getRedirectEntry(redirectEntryId1);
@@ -219,6 +221,14 @@ public class UpgradeRedirectEntrySourceURLTest {
 			preparedStatement.setString(10, sourceURL);
 
 			preparedStatement.executeUpdate();
+		}
+	}
+
+	private void _runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			_redirectEntrySourceURLUpgradeProcess.upgrade();
 		}
 	}
 

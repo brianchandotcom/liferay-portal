@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
 import {openToast} from 'frontend-js-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
@@ -240,29 +241,33 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 	]);
 
 	return (
-		<ClayDropDown.ItemList>
-			{dropdownItems.map((dropdownItem, index, array) =>
-				dropdownItem.type === 'separator' ? (
-					index !== array.length - 1 && (
-						<ClayDropDown.Divider key={index} />
-					)
-				) : (
-					<React.Fragment key={index}>
-						<ClayDropDown.Item
-							onClick={() => {
-								setActive(false);
+		<FocusScope>
+			<div>
+				<ClayDropDown.ItemList>
+					{dropdownItems.map((dropdownItem, index, array) =>
+						dropdownItem.type === 'separator' ? (
+							index !== array.length - 1 && (
+								<ClayDropDown.Divider key={index} />
+							)
+						) : (
+							<React.Fragment key={index}>
+								<ClayDropDown.Item
+									onClick={() => {
+										setActive(false);
 
-								dropdownItem.action();
-							}}
-							symbolLeft={dropdownItem.icon}
-						>
-							<p className="d-inline-block m-0 ml-4">
-								{dropdownItem.label}
-							</p>
-						</ClayDropDown.Item>
-					</React.Fragment>
-				)
-			)}
-		</ClayDropDown.ItemList>
+										dropdownItem.action();
+									}}
+									symbolLeft={dropdownItem.icon}
+								>
+									<p className="d-inline-block m-0 ml-4">
+										{dropdownItem.label}
+									</p>
+								</ClayDropDown.Item>
+							</React.Fragment>
+						)
+					)}
+				</ClayDropDown.ItemList>
+			</div>
+		</FocusScope>
 	);
 };

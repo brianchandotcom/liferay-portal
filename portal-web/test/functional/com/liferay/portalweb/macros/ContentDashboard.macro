@@ -117,6 +117,22 @@ definition {
 		Button.click(button = "View More");
 	}
 
+	macro createVersionsForDocument {
+		var count = "0";
+
+		while ("${count}" != "${versionsCreated}") {
+			JSONDocument.checkOutFile(
+				dmDocumentTitle = "${dmDocumentTitle}",
+				groupName = "${groupName}");
+
+			JSONDocument.checkInFile(
+				dmDocumentTitle = "${dmDocumentTitle}",
+				groupName = "${groupName}");
+
+			var count = ${count} + 1;
+		}
+	}
+
 	macro deleteSecondCategoryFilter {
 		Click(locator1 = "ContentDashboard#DELETE_SECOND_FILTER_SELECTED");
 	}

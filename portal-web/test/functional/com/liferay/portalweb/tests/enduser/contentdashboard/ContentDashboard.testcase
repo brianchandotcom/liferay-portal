@@ -2886,19 +2886,10 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "10") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "10");
 			}
 
 			task ("Navigate to Version History Page") {
@@ -2937,19 +2928,10 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "2") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "2");
 			}
 
 			task ("Navigate to Version History Page") {
@@ -3000,28 +2982,22 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "10") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "2");
 			}
 
 			task ("Navigate to Version History Page") {
-				ContentDashboard.goToVersionHistoryPage(assetName = "DM Document Title");
+				ContentDashboard.navigateToDocumentVersionHistoryPage(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					siteURLKey = "test-site-name");
 			}
 		}
 
 		task ("When the user clicks on Download option the kebab menu") {
-			ContentDashboard.downloadVersion(version = "1.4");
+			ContentDashboard.downloadVersion(version = "1.2");
 		}
 
 		task ("Then the document is downloaded") {
@@ -3093,19 +3069,10 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "10") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "10");
 			}
 
 			task ("Navigate to Content Dashboard") {
@@ -3207,19 +3174,10 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "10") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "10");
 			}
 
 			task ("Navigate to Content Dashboard") {
@@ -3318,19 +3276,10 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "2") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "2");
 			}
 
 			task ("Navigate to Version History Page") {
@@ -3370,23 +3319,17 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "10") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "10");
 			}
 
 			task ("Navigate to Version History Page") {
-				ContentDashboard.goToVersionHistoryPage(assetName = "DM Document Title");
+				ContentDashboard.navigateToDocumentVersionHistoryPage(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					siteURLKey = "test-site-name");
 			}
 		}
 
@@ -6882,19 +6825,10 @@ definition {
 			}
 
 			task ("Add versions for the document") {
-				var count = "0";
-
-				while ("${count}" != "10") {
-					JSONDocument.checkOutFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					JSONDocument.checkInFile(
-						dmDocumentTitle = "DM Document Title",
-						groupName = "Test Site Name");
-
-					var count = ${count} + 1;
-				}
+				ContentDashboard.createVersionsForDocument(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					versionsCreated = "10");
 			}
 		}
 

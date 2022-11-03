@@ -366,12 +366,6 @@ definition {
 
 				PageEditor.waitForAutoSave();
 
-				if (("${fragmentName}" == "Grid") || ("${fragmentName}" == "Container")) {
-					PageEditor.viewFragment(
-						fragmentName = "${fragmentName}",
-						position = "${position}");
-				}
-
 				if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Collection Display") || ("${fragmentName}" == "Display Page Content")) {
 					PageEditor.viewFragmentMessageInfo(fragmentName = "${fragmentName}");
 				}
@@ -808,12 +802,6 @@ definition {
 		}
 
 		PageEditor.waitForAutoSave();
-
-		if (("${fragmentName}" == "Grid") || ("${fragmentName}" == "Container")) {
-			PageEditor.viewFragment(
-				fragmentName = "${fragmentName}",
-				position = "${position}");
-		}
 
 		if (("${fragmentName}" == "Content Display") || ("${fragmentName}" == "Collection Display") || ("${fragmentName}" == "Display Page Content")) {
 			PageEditor.viewFragmentMessageInfo(fragmentName = "${fragmentName}");

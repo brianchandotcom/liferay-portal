@@ -1717,6 +1717,8 @@ definition {
 	@description = "LPS-147944 - Verify it is possible to view more than 20 picklists for the picklist drop-down"
 	@priority = "4"
 	test CanViewMoreThan20Picklists {
+		property portal.upstream = "quarantine";
+
 		for (var numberPicklist : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21") {
 			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist ${numberPicklist}");
 		}

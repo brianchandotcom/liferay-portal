@@ -21,31 +21,19 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import VersionActions, {IAction} from './VersionActions';
 import formatDate from './utils/formatDate';
 
-const useIsFirstRender = (): boolean => {
-	const isFirstRef = useRef(true);
-
-	if (isFirstRef.current) {
-		isFirstRef.current = false;
-
-		return true;
-	}
-
-	return isFirstRef.current;
-};
-
 const VersionsContent = ({
+	active,
 	getItemVersionsURL,
 	languageTag = 'en',
 	onError,
 }: IProps) => {
 	const [loading, setLoading] = useState(false);
+	const dataIsFetchedRef = useRef(false);
 
 	const [versionsData, setVersionsData] = useState({
 		versions: [],
 		viewVersionsURL: '',
 	} as IData);
-
-	const isFirst: boolean = useIsFirstRender();
 
 	const getVersionsData = useCallback(async (): Promise<void> => {
 		try {
@@ -59,6 +47,7 @@ const VersionsContent = ({
 			const data: IData = await response.json();
 
 			setVersionsData(data);
+			dataIsFetchedRef.current = true;
 		}
 		catch (error: unknown) {
 			onError();
@@ -73,15 +62,10 @@ const VersionsContent = ({
 	}, [getItemVersionsURL, onError]);
 
 	useEffect((): void => {
-
-		// prevent the initial fetch when the tab is inactive
-
-		if (isFirst) {
-			return;
+		if (active && !dataIsFetchedRef.current) {
+			getVersionsData();
 		}
-
-		getVersionsData();
-	}, [getVersionsData, isFirst]);
+	}, [active, getVersionsData]);
 
 	const {versions, viewVersionsURL} = versionsData;
 
@@ -168,6 +152,7 @@ interface IData {
 }
 
 interface IProps {
+	active: boolean;
 	getItemVersionsURL: string;
 	languageTag?: string;
 	onError: () => void;

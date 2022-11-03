@@ -239,6 +239,7 @@ const SidebarPanelInfoView = ({
 						{showTabs && (
 							<ClayTabs.TabPane aria-labelledby="tab-2">
 								<VersionsContent
+									active={activeTabKeyValue === 1}
 									getItemVersionsURL={getItemVersionsURL}
 									languageTag={languageTag}
 									onError={handleError}

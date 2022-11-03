@@ -193,4 +193,89 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165776. The page creator could reorder fragments on page editor via Browser panel with keyboard."
+	@priority = "5"
+	test ReorderElements {
+		task ("Given a page creator has fragments on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				navTab = "Fragments");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Container");
+
+			PageEditor.addWidget(
+				portletName = "Documents and Media",
+				targetFragmentName = "Heading");
+		}
+
+		task ("When the page creator accesses to the Browser panel") {
+			PageEditor.gotoTab(tabName = "Browser");
+		}
+
+		task ("Then the page creator could reorder elements via keyboard") {
+			PageEditor.reorderElementViaKeyboard(
+				elementName = "Documents and Media",
+				upCount = "4");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[@aria-label='Documents and Media']",
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Container",
+				position = "1");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Documents and Media",
+				position = "2");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Image",
+				position = "3");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Heading",
+				position = "4");
+
+			PageEditor.reorderElementViaKeyboard(
+				downCount = "3",
+				elementName = "Image");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Container",
+				position = "1");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Documents and Media",
+				position = "2");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Heading",
+				position = "3");
+
+			PageEditor.viewFragmentOrder(
+				fragmentName = "Image",
+				position = "4");
+		}
+	}
+
 }

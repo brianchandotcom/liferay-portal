@@ -28,6 +28,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165776. The page creator could add elements into the Container via keyboard."
+	@priority = "5"
+	test AddElementsIntoContainer {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator adds a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Then the page creator could add elements into Container via keyboard") {
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				upCount = "1");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[@aria-label='Button']",
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Content Management",
+				upCount = "1",
+				widgetName = "Web Content Display");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[@aria-label='Web Content Display']",
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-165776. The page creator could add fragments to page via keyboard."
 	@priority = "5"
 	test AddFragmentsToPage {

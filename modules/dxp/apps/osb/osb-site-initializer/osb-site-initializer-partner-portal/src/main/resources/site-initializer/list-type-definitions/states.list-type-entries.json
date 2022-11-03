@@ -1,6 +1,6 @@
 [
 	{
-		"key": "alabama",
+		"key": "AL",
 		"name": "Alabama",
 		"name_i18n": {
 			"en-US": "Alabama"
@@ -8,7 +8,7 @@
 		"type": "string"
 	},
 	{
-		"key": "alaska",
+		"key": "AK",
 		"name": "Alaska",
 		"name_i18n": {
 			"en-US": "Alaska"
@@ -16,7 +16,7 @@
 		"type": "string"
 	},
 	{
-		"key": "arizona",
+		"key": "AZ",
 		"name": "Arizona",
 		"name_i18n": {
 			"en-US": "Arizona"
@@ -24,7 +24,7 @@
 		"type": "string"
 	},
 	{
-		"key": "arkansas",
+		"key": "AR",
 		"name": "Arkansas",
 		"name_i18n": {
 			"en-US": "Arkansas"
@@ -32,7 +32,7 @@
 		"type": "string"
 	},
 	{
-		"key": "california",
+		"key": "CA",
 		"name": "California",
 		"name_i18n": {
 			"en-US": "California"
@@ -40,7 +40,7 @@
 		"type": "string"
 	},
 	{
-		"key": "colorado",
+		"key": "CO",
 		"name": "Colorado",
 		"name_i18n": {
 			"en-US": "Colorado"
@@ -48,7 +48,7 @@
 		"type": "string"
 	},
 	{
-		"key": "connecticut",
+		"key": "CT",
 		"name": "Connecticut",
 		"name_i18n": {
 			"en-US": "Connecticut"
@@ -56,7 +56,7 @@
 		"type": "string"
 	},
 	{
-		"key": "delaware",
+		"key": "DE",
 		"name": "Delaware",
 		"name_i18n": {
 			"en-US": "Delaware"
@@ -64,7 +64,7 @@
 		"type": "string"
 	},
 	{
-		"key": "districtOfColumbia",
+		"key": "DC",
 		"name": "District of Columbia",
 		"name_i18n": {
 			"en-US": "District of Columbia"
@@ -72,7 +72,7 @@
 		"type": "string"
 	},
 	{
-		"key": "florida",
+		"key": "FL",
 		"name": "Florida",
 		"name_i18n": {
 			"en-US": "Florida"
@@ -80,15 +80,7 @@
 		"type": "string"
 	},
 	{
-		"key": "africa",
-		"name": "Africa",
-		"name_i18n": {
-			"en-US": "Africa"
-		},
-		"type": "string"
-	},
-	{
-		"key": "georgia",
+		"key": "GA",
 		"name": "Georgia",
 		"name_i18n": {
 			"en-US": "Georgia"
@@ -96,7 +88,7 @@
 		"type": "string"
 	},
 	{
-		"key": "hawaii",
+		"key": "HI",
 		"name": "Hawaii",
 		"name_i18n": {
 			"en-US": "Hawaii"
@@ -104,15 +96,7 @@
 		"type": "string"
 	},
 	{
-		"key": "dach",
-		"name": "DACH",
-		"name_i18n": {
-			"en-US": "DACH"
-		},
-		"type": "string"
-	},
-	{
-		"key": "idaho",
+		"key": "ID",
 		"name": "Idaho",
 		"name_i18n": {
 			"en-US": "Idaho"
@@ -120,7 +104,7 @@
 		"type": "string"
 	},
 	{
-		"key": "illinois",
+		"key": "IL",
 		"name": "Illinois",
 		"name_i18n": {
 			"en-US": "Illinois"
@@ -128,7 +112,7 @@
 		"type": "string"
 	},
 	{
-		"key": "indiana",
+		"key": "IN",
 		"name": "Indiana",
 		"name_i18n": {
 			"en-US": "Indiana"
@@ -136,7 +120,7 @@
 		"type": "string"
 	},
 	{
-		"key": "iowa",
+		"key": "IA",
 		"name": "Iowa",
 		"name_i18n": {
 			"en-US": "Iowa"
@@ -144,7 +128,7 @@
 		"type": "string"
 	},
 	{
-		"key": "kansas",
+		"key": "KS",
 		"name": "Kansas",
 		"name_i18n": {
 			"en-US": "Kansas"
@@ -152,7 +136,7 @@
 		"type": "string"
 	},
 	{
-		"key": "kentucky",
+		"key": "KY",
 		"name": "Kentucky",
 		"name_i18n": {
 			"en-US": "Kentucky"
@@ -160,7 +144,7 @@
 		"type": "string"
 	},
 	{
-		"key": "louisiana",
+		"key": "LA",
 		"name": "Louisiana",
 		"name_i18n": {
 			"en-US": "Louisiana"
@@ -168,7 +152,7 @@
 		"type": "string"
 	},
 	{
-		"key": "maine",
+		"key": "ME",
 		"name": "Maine",
 		"name_i18n": {
 			"en-US": "Maine"
@@ -176,7 +160,7 @@
 		"type": "string"
 	},
 	{
-		"key": "maryland",
+		"key": "MD",
 		"name": "Maryland",
 		"name_i18n": {
 			"en-US": "Maryland"
@@ -184,7 +168,7 @@
 		"type": "string"
 	},
 	{
-		"key": "massachusetts",
+		"key": "MA",
 		"name": "Massachusetts",
 		"name_i18n": {
 			"en-US": "Massachusetts"
@@ -192,7 +176,7 @@
 		"type": "string"
 	},
 	{
-		"key": "michigan",
+		"key": "MI",
 		"name": "Michigan",
 		"name_i18n": {
 			"en-US": "Michigan"
@@ -200,7 +184,7 @@
 		"type": "string"
 	},
 	{
-		"key": "minnesota",
+		"key": "MN",
 		"name": "Minnesota",
 		"name_i18n": {
 			"en-US": "Minnesota"
@@ -208,7 +192,7 @@
 		"type": "string"
 	},
 	{
-		"key": "mississippi",
+		"key": "MS",
 		"name": "Mississippi",
 		"name_i18n": {
 			"en-US": "Mississippi"
@@ -216,7 +200,7 @@
 		"type": "string"
 	},
 	{
-		"key": "missouri",
+		"key": "MO",
 		"name": "Missouri",
 		"name_i18n": {
 			"en-US": "Missouri"
@@ -224,7 +208,7 @@
 		"type": "string"
 	},
 	{
-		"key": "montana",
+		"key": "MT",
 		"name": "Montana",
 		"name_i18n": {
 			"en-US": "Montana"
@@ -232,7 +216,7 @@
 		"type": "string"
 	},
 	{
-		"key": "nebraska",
+		"key": "NE",
 		"name": "Nebraska",
 		"name_i18n": {
 			"en-US": "Nebraska"
@@ -240,7 +224,7 @@
 		"type": "string"
 	},
 	{
-		"key": "nevada",
+		"key": "NV",
 		"name": "Nevada",
 		"name_i18n": {
 			"en-US": "Nevada"
@@ -248,7 +232,7 @@
 		"type": "string"
 	},
 	{
-		"key": "newHampshire",
+		"key": "NH",
 		"name": "New Hampshire",
 		"name_i18n": {
 			"en-US": "New Hampshire"
@@ -256,7 +240,7 @@
 		"type": "string"
 	},
 	{
-		"key": "newJersey",
+		"key": "NJ",
 		"name": "New Jersey",
 		"name_i18n": {
 			"en-US": "New Jersey"
@@ -264,7 +248,7 @@
 		"type": "string"
 	},
 	{
-		"key": "newMexico",
+		"key": "NM",
 		"name": "New Mexico",
 		"name_i18n": {
 			"en-US": "New Mexico"
@@ -272,7 +256,7 @@
 		"type": "string"
 	},
 	{
-		"key": "newYork",
+		"key": "NY",
 		"name": "New York",
 		"name_i18n": {
 			"en-US": "New York"
@@ -280,7 +264,7 @@
 		"type": "string"
 	},
 	{
-		"key": "northCarolina",
+		"key": "NC",
 		"name": "North Carolina",
 		"name_i18n": {
 			"en-US": "North Carolina"
@@ -288,7 +272,7 @@
 		"type": "string"
 	},
 	{
-		"key": "northDakota",
+		"key": "ND",
 		"name": "North Dakota",
 		"name_i18n": {
 			"en-US": "North Dakota"
@@ -296,7 +280,7 @@
 		"type": "string"
 	},
 	{
-		"key": "ohio",
+		"key": "OH",
 		"name": "Ohio",
 		"name_i18n": {
 			"en-US": "Ohio"
@@ -304,7 +288,7 @@
 		"type": "string"
 	},
 	{
-		"key": "oklahoma",
+		"key": "OK",
 		"name": "Oklahoma",
 		"name_i18n": {
 			"en-US": "Oklahoma"
@@ -312,7 +296,7 @@
 		"type": "string"
 	},
 	{
-		"key": "oregon",
+		"key": "OR",
 		"name": "Oregon",
 		"name_i18n": {
 			"en-US": "Oregon"
@@ -320,7 +304,7 @@
 		"type": "string"
 	},
 	{
-		"key": "pennsylvania",
+		"key": "PA",
 		"name": "Pennsylvania",
 		"name_i18n": {
 			"en-US": "Pennsylvania"
@@ -328,7 +312,7 @@
 		"type": "string"
 	},
 	{
-		"key": "puertoRico",
+		"key": "PR",
 		"name": "Puerto Rico",
 		"name_i18n": {
 			"en-US": "Puerto Rico"
@@ -336,7 +320,7 @@
 		"type": "string"
 	},
 	{
-		"key": "rhodeIsland",
+		"key": "RI",
 		"name": "Rhode Island",
 		"name_i18n": {
 			"en-US": "Rhode Island"
@@ -344,7 +328,7 @@
 		"type": "string"
 	},
 	{
-		"key": "southCarolina",
+		"key": "SC",
 		"name": "South Carolina",
 		"name_i18n": {
 			"en-US": "South Carolina"
@@ -352,7 +336,7 @@
 		"type": "string"
 	},
 	{
-		"key": "southDakota",
+		"key": "SD",
 		"name": "South Dakota",
 		"name_i18n": {
 			"en-US": "South Dakota"
@@ -360,7 +344,7 @@
 		"type": "string"
 	},
 	{
-		"key": "tennessee",
+		"key": "TN",
 		"name": "Tennessee",
 		"name_i18n": {
 			"en-US": "Tennessee"
@@ -368,7 +352,7 @@
 		"type": "string"
 	},
 	{
-		"key": "texas",
+		"key": "TX",
 		"name": "Texas",
 		"name_i18n": {
 			"en-US": "Texas"
@@ -376,7 +360,7 @@
 		"type": "string"
 	},
 	{
-		"key": "utah",
+		"key": "UT",
 		"name": "Utah",
 		"name_i18n": {
 			"en-US": "Utah"
@@ -384,7 +368,7 @@
 		"type": "string"
 	},
 	{
-		"key": "vermont",
+		"key": "VT",
 		"name": "Vermont",
 		"name_i18n": {
 			"en-US": "Vermont"
@@ -392,7 +376,7 @@
 		"type": "string"
 	},
 	{
-		"key": "virginia",
+		"key": "VA",
 		"name": "Virginia",
 		"name_i18n": {
 			"en-US": "Virginia"
@@ -400,7 +384,7 @@
 		"type": "string"
 	},
 	{
-		"key": "washington",
+		"key": "WA",
 		"name": "Washington",
 		"name_i18n": {
 			"en-US": "Washington"
@@ -408,10 +392,26 @@
 		"type": "string"
 	},
 	{
-		"key": "westVirginia",
+		"key": "WV",
 		"name": "West Virginia",
 		"name_i18n": {
 			"en-US": "West Virginia"
+		},
+		"type": "string"
+	},
+	{
+		"key": "WI",
+		"name": "Wisconsin",
+		"name_i18n": {
+			"en-US": "Wisconsin"
+		},
+		"type": "string"
+	},
+	{
+		"key": "WY",
+		"name": "Wyoming",
+		"name_i18n": {
+			"en-US": "Wyoming"
 		},
 		"type": "string"
 	}

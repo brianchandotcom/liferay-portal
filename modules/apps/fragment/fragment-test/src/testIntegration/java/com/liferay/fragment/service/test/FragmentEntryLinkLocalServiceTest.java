@@ -34,6 +34,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,11 +44,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -145,8 +145,6 @@ public class FragmentEntryLinkLocalServiceTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"propagateChanges", false
 			).build());
-
-		_setFreeMarkerEnabled(true);
 	}
 
 	@Test
@@ -188,64 +186,68 @@ public class FragmentEntryLinkLocalServiceTest {
 	public void testAddFragmentEntryLinkWithFreeMarkerDisabledEmptyRendererKey()
 		throws Exception {
 
-		_setFreeMarkerEnabled(false);
+		try (AutoCloseable autoCloseable =
+				_getFreeMarkerDisabledAutoCloseable()) {
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntryWithFreeMarker.getFragmentEntryId(),
-				_defaultSegmentsExperienceId, _layout.getPlid(),
-				_fragmentEntryWithFreeMarker.getCss(),
-				_fragmentEntryWithFreeMarker.getHtml(),
-				_fragmentEntryWithFreeMarker.getJs(),
-				_fragmentEntryWithFreeMarker.getConfiguration(),
-				StringPool.BLANK, StringPool.BLANK, 0, null,
-				_fragmentEntryWithFreeMarker.getType(), _serviceContext);
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					_fragmentEntryWithFreeMarker.getFragmentEntryId(),
+					_defaultSegmentsExperienceId, _layout.getPlid(),
+					_fragmentEntryWithFreeMarker.getCss(),
+					_fragmentEntryWithFreeMarker.getHtml(),
+					_fragmentEntryWithFreeMarker.getJs(),
+					_fragmentEntryWithFreeMarker.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, null,
+					_fragmentEntryWithFreeMarker.getType(), _serviceContext);
 
-		Assert.assertNotNull(
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId()));
+			Assert.assertNotNull(
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId()));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
 
-		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+			JSONObject editableJSONObject = jsonObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		Assert.assertEquals(1, editableJSONObject.length());
+			Assert.assertEquals(1, editableJSONObject.length());
+		}
 	}
 
 	@Test
 	public void testAddFragmentEntryLinkWithFreeMarkerDisabledNotEmptyRendererKey()
 		throws Exception {
 
-		_setFreeMarkerEnabled(false);
+		try (AutoCloseable autoCloseable =
+				_getFreeMarkerDisabledAutoCloseable()) {
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntryWithFreeMarker.getFragmentEntryId(),
-				_defaultSegmentsExperienceId, _layout.getPlid(),
-				_fragmentEntryWithFreeMarker.getCss(),
-				_fragmentEntryWithFreeMarker.getHtml(),
-				_fragmentEntryWithFreeMarker.getJs(),
-				_fragmentEntryWithFreeMarker.getConfiguration(),
-				StringPool.BLANK, StringPool.BLANK, 0, "TABS",
-				_fragmentEntryWithFreeMarker.getType(), _serviceContext);
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					_fragmentEntryWithFreeMarker.getFragmentEntryId(),
+					_defaultSegmentsExperienceId, _layout.getPlid(),
+					_fragmentEntryWithFreeMarker.getCss(),
+					_fragmentEntryWithFreeMarker.getHtml(),
+					_fragmentEntryWithFreeMarker.getJs(),
+					_fragmentEntryWithFreeMarker.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, "TABS",
+					_fragmentEntryWithFreeMarker.getType(), _serviceContext);
 
-		Assert.assertNotNull(
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId()));
+			Assert.assertNotNull(
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId()));
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
 
-		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+			JSONObject editableJSONObject = jsonObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
-		Assert.assertEquals(3, editableJSONObject.length());
+			Assert.assertEquals(3, editableJSONObject.length());
+		}
 	}
 
 	@Test
@@ -878,6 +880,19 @@ public class FragmentEntryLinkLocalServiceTest {
 			_serviceContext);
 	}
 
+	private AutoCloseable _getFreeMarkerDisabledAutoCloseable()
+		throws Exception {
+
+		return new CompanyConfigurationTemporarySwapper(
+			_group.getCompanyId(),
+			"com.liferay.fragment.entry.processor.freemarker.internal." +
+				"configuration.FreeMarkerFragmentEntryProcessorConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"enable.freemarker", false
+			).build(),
+			SettingsFactoryUtil.getSettingsFactory());
+	}
+
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
@@ -919,26 +934,8 @@ public class FragmentEntryLinkLocalServiceTest {
 		return StringUtil.read(inputStream);
 	}
 
-	private void _setFreeMarkerEnabled(boolean freeMarkerEnabled)
-		throws Exception {
-
-		_configurationProvider.saveCompanyConfiguration(
-			_configurationBeanDeclaration.getConfigurationBeanClass(),
-			_group.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"enable.freemarker", freeMarkerEnabled
-			).build());
-
-		Thread.sleep(200);
-	}
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject(
-		filter = "component.name=com.liferay.fragment.entry.processor.freemarker.internal.settings.definition.FreeMarkerFragmentEntryProcessorConfigurationBeanDeclaration"
-	)
-	private ConfigurationBeanDeclaration _configurationBeanDeclaration;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;
@@ -959,9 +956,6 @@ public class FragmentEntryLinkLocalServiceTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateCollectionLocalService

@@ -59,4 +59,35 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165776. The page creator could add widgets to page via keyboard."
+	@priority = "5"
+	test AddWidgetsToPage {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator could add fragments to page via keyboard") {
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Collaboration",
+				widgetName = "Blogs");
+
+			PageEditor.viewFragment(fragmentName = "Blogs");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Content Management",
+				widgetName = "Asset Publisher");
+
+			PageEditor.viewFragment(fragmentName = "Asset Publisher");
+		}
+	}
+
 }

@@ -248,11 +248,6 @@ public class UpgradeRedirectEntrySourceURLTest {
 		"com.liferay.redirect.internal.upgrade.v3_0_2." +
 			"RedirectEntrySourceURLUpgradeProcess";
 
-	@Inject(
-		filter = "(&(objectClass=com.liferay.redirect.internal.upgrade.registry.RedirectServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private CounterLocalService _counterLocalService;
 
@@ -266,5 +261,10 @@ public class UpgradeRedirectEntrySourceURLTest {
 
 	private UpgradeProcess _redirectEntrySourceURLUpgradeProcess;
 	private Timestamp _timestamp;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.redirect.internal.upgrade.registry.RedirectServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

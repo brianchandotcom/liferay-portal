@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:document-library:document-library-api")
+	compileOnly project(":apps:document-library:document-library-taglib")
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:fragment:fragment-item-selector-api")
 	compileOnly project(":apps:fragment:fragment-service")

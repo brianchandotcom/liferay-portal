@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -51,6 +53,20 @@ public class FragmentCollectionResourcesDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public long getFolderId() throws PortalException {
+		if (_folderId != null) {
+			return _folderId;
+		}
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				_fragmentDisplayContext.getFragmentCollectionId());
+
+		_folderId = fragmentCollection.getResourcesFolderId();
+
+		return _folderId;
+	}
+
 	public SearchContainer<FileEntry> getSearchContainer()
 		throws PortalException {
 
@@ -74,12 +90,12 @@ public class FragmentCollectionResourcesDisplayContext {
 
 		searchContainer.setResultsAndTotal(
 			() -> PortletFileRepositoryUtil.getPortletFileEntries(
-				_themeDisplay.getScopeGroupId(), _getFolderId(),
+				_themeDisplay.getScopeGroupId(), getFolderId(),
 				WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
 				searchContainer.getEnd(),
 				searchContainer.getOrderByComparator()),
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_themeDisplay.getScopeGroupId(), _getFolderId()));
+				_themeDisplay.getScopeGroupId(), getFolderId()));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
@@ -88,18 +104,12 @@ public class FragmentCollectionResourcesDisplayContext {
 		return _searchContainer;
 	}
 
-	private long _getFolderId() throws PortalException {
-		if (_folderId != null) {
-			return _folderId;
+	public boolean isShowRepositoryBrowser() {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158675"))) {
+			return true;
 		}
 
-		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
-				_fragmentDisplayContext.getFragmentCollectionId());
-
-		_folderId = fragmentCollection.getResourcesFolderId();
-
-		return _folderId;
+		return false;
 	}
 
 	private Long _folderId;

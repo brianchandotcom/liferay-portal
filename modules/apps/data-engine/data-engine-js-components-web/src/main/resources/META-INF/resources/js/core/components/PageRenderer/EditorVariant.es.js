@@ -218,6 +218,8 @@ export function Page({
 	invalidFormMessage,
 	pageIndex,
 }) {
+	const dropTargetRef = useRef();
+
 	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex: 0,
 		origin: DND_ORIGIN_TYPE.EMPTY,
@@ -258,6 +260,16 @@ export function Page({
 	const overKeyboardTarget =
 		overKeyboardPageTarget || overKeyboardColumnTarget;
 
+	useEffect(() => {
+		if (overKeyboardTarget && dropTargetRef.current) {
+			dropTargetRef.current.scrollIntoView({
+				behavior: 'auto',
+				block: 'center',
+				inline: 'center',
+			});
+		}
+	}, [overKeyboardTarget]);
+
 	return (
 		<DefaultVariant.Page
 			activePage={activePage}
@@ -281,7 +293,13 @@ export function Page({
 								'target-over targetOver':
 									overTarget || overKeyboardTarget,
 							})}
-							ref={drop}
+							ref={(element) => {
+								if (drop) {
+									drop(element);
+								}
+
+								dropTargetRef.current = element;
+							}}
 						>
 							<p className="ddm-empty-page-message">
 								{Liferay.Language.get(

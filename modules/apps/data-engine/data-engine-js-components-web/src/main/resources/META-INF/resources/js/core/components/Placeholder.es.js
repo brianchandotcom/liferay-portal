@@ -14,7 +14,7 @@
 
 import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../hooks/useDrop.es';
 import {ParentFieldContext} from './Field/ParentFieldContext.es';
@@ -29,6 +29,8 @@ export function Placeholder({
 	size,
 }) {
 	const parentField = useContext(ParentFieldContext);
+	const placeholderRef = useRef(null);
+
 	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex: columnIndex ?? 0,
 		origin: DND_ORIGIN_TYPE.EMPTY,
@@ -41,6 +43,16 @@ export function Placeholder({
 		keyboardDNDPosition.itemPath,
 		keyboardDNDPosition.position
 	);
+
+	useEffect(() => {
+		if (overKeyboardTarget && placeholderRef.current) {
+			placeholderRef.current.scrollIntoView({
+				behavior: 'auto',
+				block: 'center',
+				inline: 'center',
+			});
+		}
+	}, [overKeyboardTarget]);
 
 	const Content = (
 		<ClayLayout.Col
@@ -58,7 +70,13 @@ export function Placeholder({
 							!parentField.root?.ddmStructureId) ||
 						overKeyboardTarget,
 				})}
-				ref={!parentField.root?.ddmStructureId ? drop : undefined}
+				ref={(element) => {
+					if (!parentField.root?.ddmStructureId && drop) {
+						drop(element);
+					}
+
+					placeholderRef.current = element;
+				}}
 			/>
 		</ClayLayout.Col>
 	);

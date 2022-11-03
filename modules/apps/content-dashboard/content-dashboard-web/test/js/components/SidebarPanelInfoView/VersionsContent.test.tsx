@@ -93,12 +93,14 @@ window.submitForm = jest.fn();
 const fetchItemVersionsURL =
 	'http://localhost:8080/fetch-manage-collaborators-button-url';
 
-const _getComponent = () => {
+const _getComponent = (props = {}) => {
 	return (
 		<VersionsContent
+			active={false}
 			getItemVersionsURL={fetchItemVersionsURL}
 			languageTag="en"
 			onError={() => {}}
+			{...props}
 		/>
 	);
 };
@@ -118,7 +120,7 @@ describe('Versions Content component', () => {
 			expect(fetch).not.toHaveBeenCalledWith(fetchItemVersionsURL);
 		});
 
-		rerender(_getComponent());
+		rerender(_getComponent({active: true}));
 
 		await waitFor(() => {
 			expect(fetch).toHaveBeenCalledWith(fetchItemVersionsURL);
@@ -126,8 +128,7 @@ describe('Versions Content component', () => {
 	});
 
 	it('displays the versions list', async () => {
-		const {getByText, rerender} = render(_getComponent());
-		rerender(_getComponent());
+		const {getByText} = render(_getComponent({active: true}));
 
 		await waitFor(() => {
 			expect(getByText('2.1', {exact: false})).toBeInTheDocument();
@@ -138,9 +139,7 @@ describe('Versions Content component', () => {
 	});
 
 	it('displays View more link if viewVersionsURL is provided', async () => {
-		const {container, rerender} = render(_getComponent());
-
-		rerender(_getComponent());
+		const {container} = render(_getComponent({active: true}));
 
 		await waitFor(() => {
 			const link = container.querySelector(
@@ -160,9 +159,7 @@ describe('Versions Content component', () => {
 			sub: jest.fn(),
 		}));
 
-		const {container, rerender} = render(_getComponent());
-
-		rerender(_getComponent());
+		const {container} = render(_getComponent({active: true}));
 
 		await waitFor(() => {
 			const link = container.querySelectorAll('a.btn-secondary');
@@ -178,8 +175,9 @@ describe('Versions actions', () => {
 	});
 
 	it('are rendered within each version', async () => {
-		const {getAllByText, getAllByTitle, rerender} = render(_getComponent());
-		rerender(_getComponent());
+		const {getAllByText, getAllByTitle} = render(
+			_getComponent({active: true})
+		);
 
 		await waitFor(() => {
 			const expireActionButtons: HTMLElement[] = getAllByText('Expire');

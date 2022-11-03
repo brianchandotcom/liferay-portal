@@ -22,5 +22,15 @@ interface AdvancedTabProps {
 }
 
 export function AdvancedTab({setValues, values}: AdvancedTabProps) {
-	return <ReadOnlyContainer setValues={setValues} values={values} />;
+	return (
+		<ReadOnlyContainer
+			disabled={
+				values.system ||
+				values.businessType === 'Aggregation' ||
+				values.businessType === 'Formula'
+			}
+			setValues={setValues}
+			values={values}
+		/>
+	);
 }

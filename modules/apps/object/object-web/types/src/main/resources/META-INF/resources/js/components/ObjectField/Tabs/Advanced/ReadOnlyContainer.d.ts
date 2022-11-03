@@ -15,10 +15,12 @@
 /// <reference types="react" />
 
 interface ReadOnlyContainerProps {
+	disabled?: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
 export declare function ReadOnlyContainer({
+	disabled,
 	setValues,
 	values,
 }: ReadOnlyContainerProps): JSX.Element;

@@ -17,6 +17,7 @@ import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
 import React from 'react';
 
 interface ReadOnlyContainerProps {
+	disabled?: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
@@ -45,7 +46,11 @@ const findObjectFieldSetting = (
 	);
 };
 
-export function ReadOnlyContainer({setValues, values}: ReadOnlyContainerProps) {
+export function ReadOnlyContainer({
+	disabled,
+	setValues,
+	values,
+}: ReadOnlyContainerProps) {
 	const readOnlySetting = findObjectFieldSetting(
 		values.objectFieldSettings as ObjectFieldSetting[],
 		'readOnly'
@@ -73,31 +78,24 @@ export function ReadOnlyContainer({setValues, values}: ReadOnlyContainerProps) {
 	};
 
 	return (
-		<Card title={Liferay.Language.get('read-only')}>
-			<ClayRadioGroup
-				defaultValue={
-					readOnlySetting
-						? (readOnlySetting?.value as string)
-						: values.system ||
-						  values.businessType === 'Formula' ||
-						  values.businessType === 'Aggregation'
-						? 'true'
-						: 'false'
-				}
-			>
+		<Card disabled={disabled} title={Liferay.Language.get('read-only')}>
+			<ClayRadioGroup defaultValue={readOnlySetting?.value as string}>
 				<ClayRadio
+					disabled={disabled}
 					label={Liferay.Language.get('true')}
 					onClick={() => setReadOnly('true')}
 					value="true"
 				/>
 
 				<ClayRadio
+					disabled={disabled}
 					label={Liferay.Language.get('false')}
 					onClick={() => setReadOnly('false')}
 					value="false"
 				/>
 
 				<ClayRadio
+					disabled={disabled}
 					label={Liferay.Language.get('conditional')}
 					onClick={() => setReadOnly('conditional')}
 					value="conditional"

@@ -1,0 +1,62 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-165776. The page creator could add fragments to page via keyboard."
+	@priority = "5"
+	test AddFragmentsToPage {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator could add fragments to page via keyboard") {
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.viewFragment(fragmentName = "Heading");
+
+			PageEditor.addFragmentViaKeyboard(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
+	}
+
+}

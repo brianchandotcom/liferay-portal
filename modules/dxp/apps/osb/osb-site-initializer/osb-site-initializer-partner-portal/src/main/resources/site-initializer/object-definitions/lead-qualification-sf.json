@@ -8,13 +8,13 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Lead_c",
+			"externalReferenceCode": "Lead__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Lead"
+				"en_US": "Lead External Reference Code"
 			},
-			"name": "lead",
+			"name": "leadExternalReferenceCode",
 			"required": false,
 			"type": "String"
 		}

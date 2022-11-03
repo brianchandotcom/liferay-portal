@@ -8,13 +8,26 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "Partner_Account_Name__c",
+			"externalReferenceCode": "Company",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Prospect Account Name"
 			},
 			"name": "prospectAccountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "LastName",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Last Name"
+			},
+			"name": "primaryProspectLastName",
 			"required": false,
 			"type": "String"
 		}

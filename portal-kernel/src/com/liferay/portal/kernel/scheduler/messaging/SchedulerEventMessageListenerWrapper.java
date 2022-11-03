@@ -169,6 +169,6 @@ public class SchedulerEventMessageListenerWrapper
 
 	private final Lock _lock = new ReentrantLock();
 	private MessageListener _messageListener;
-	private volatile SchedulerEntry _schedulerEntry;
+	private SchedulerEntry _schedulerEntry;
 
 }

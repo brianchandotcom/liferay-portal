@@ -162,10 +162,10 @@ public class RenderLayoutStructureTagTest {
 				_getMockHttpServletRequest(layout);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			InfoFormException infoFormException = new InfoFormException();
 
@@ -217,10 +217,10 @@ public class RenderLayoutStructureTagTest {
 				_getMockHttpServletRequest(layout);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			InfoFormValidationException infoFormValidationException =
 				new InfoFormValidationException(infoField.getUniqueId());
@@ -277,10 +277,10 @@ public class RenderLayoutStructureTagTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout);
@@ -321,10 +321,10 @@ public class RenderLayoutStructureTagTest {
 			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
-				layout, false,
+				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", infoField);
+				"0", layout, infoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout);

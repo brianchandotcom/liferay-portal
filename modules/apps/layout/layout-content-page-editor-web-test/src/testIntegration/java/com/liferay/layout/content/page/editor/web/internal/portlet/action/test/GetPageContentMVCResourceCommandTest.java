@@ -272,7 +272,6 @@ public class GetPageContentMVCResourceCommandTest {
 		JournalArticle journalArticle = _createJournalArticle();
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			_layout, defaultSegmentsExperienceId,
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -284,7 +283,8 @@ public class GetPageContentMVCResourceCommandTest {
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					))
-			).toString());
+			).toString(),
+			_layout, defaultSegmentsExperienceId);
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_getMockLiferayPortletResourceRequest(defaultSegmentsExperienceId);
@@ -315,7 +315,6 @@ public class GetPageContentMVCResourceCommandTest {
 		JournalArticle journalArticle = _createJournalArticle();
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			_layout, defaultSegmentsExperienceId,
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -327,7 +326,8 @@ public class GetPageContentMVCResourceCommandTest {
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					))
-			).toString());
+			).toString(),
+			_layout, defaultSegmentsExperienceId);
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
@@ -343,7 +343,6 @@ public class GetPageContentMVCResourceCommandTest {
 				_portal.getClassNameId(Layout.class), _layout.getPlid());
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			_layout, segmentsExperience.getSegmentsExperienceId(),
 			JSONUtil.put(
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -355,7 +354,8 @@ public class GetPageContentMVCResourceCommandTest {
 					).put(
 						"classPK", journalArticle.getResourcePrimKey()
 					))
-			).toString());
+			).toString(),
+			_layout, segmentsExperience.getSegmentsExperienceId());
 
 		jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",

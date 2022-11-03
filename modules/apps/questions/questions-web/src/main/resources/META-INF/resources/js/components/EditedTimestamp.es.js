@@ -42,7 +42,7 @@ const EditedTimestamp = ({dateCreated, dateModified, operationText}) => {
 
 	return (
 		<ClayTooltipProvider>
-			<span className="c-ml-2 small">
+			<span className="c-ml-1 small">
 				{dateModified === dateCreated ? (
 					selectedText
 				) : (

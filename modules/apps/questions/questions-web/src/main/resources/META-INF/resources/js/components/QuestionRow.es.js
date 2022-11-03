@@ -33,7 +33,9 @@ export default function QuestionRow({
 	creatorId,
 	currentSection,
 	items,
+	linkProps,
 	question,
+	rowSelected,
 	showSectionLabel,
 }) {
 	const sectionTitle =
@@ -55,9 +57,14 @@ export default function QuestionRow({
 				portraitURL: '',
 				userId: '0',
 		  };
+	const isRowSelected = rowSelected === question.friendlyUrlPath;
 
 	return (
-		<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">
+		<div
+			className={`c-mt-4 c-p-3 position-relative question-row text-secondary ${
+				isRowSelected && 'question-row-selected'
+			}`}
+		>
 			<div className="align-items-center d-flex flex-wrap justify-content-between">
 				<span>
 					{showSectionLabel && (
@@ -124,6 +131,7 @@ export default function QuestionRow({
 			<Link
 				className="questions-title stretched-link"
 				to={`/questions/${sectionTitle}/${question.friendlyUrlPath}`}
+				{...linkProps}
 			>
 				<h2
 					className={classNames(

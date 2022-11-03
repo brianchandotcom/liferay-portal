@@ -37,6 +37,10 @@ export default function App(props) {
 		? `${packageName}/js/pages/questions/Questions.new.es`
 		: `${packageName}/js/pages/questions/Questions.es`;
 
+	const userActivityPage = Liferay.FeatureFlags['LPS-167151']
+		? `${packageName}/js/pages/home/UserActivity.new.es`
+		: `${packageName}/js/pages/home/UserActivity.es`;
+
 	let path = props.historyRouterBasePath;
 
 	if (path && props.i18nPath) {
@@ -95,7 +99,7 @@ export default function App(props) {
 								<Route
 									component={(props) => (
 										<Component
-											module={`${packageName}/js/pages/home/UserActivity.es`}
+											module={userActivityPage}
 											props={props}
 										/>
 									)}

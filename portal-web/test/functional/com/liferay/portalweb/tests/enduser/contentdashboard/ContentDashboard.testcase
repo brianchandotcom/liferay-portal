@@ -2869,6 +2869,60 @@ definition {
 		}
 	}
 
+
+	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@priority = "3"
+	test DocumentsVersionHistoryOrdered {
+		task ("Given the Version History page for documents") {
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Add versions for the document") {
+				var count = "0";
+
+				while ("${count}" != "10") {
+					JSONDocument.checkOutFile(
+						dmDocumentTitle = "DM Document Title",
+						groupName = "Test Site Name");
+
+					JSONDocument.checkInFile(
+						dmDocumentTitle = "DM Document Title",
+						groupName = "Test Site Name");
+
+					var count = ${count} + 1;
+				}
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel sidebar") {
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "DM Document Title");
+			}
+
+			task ("Open versions tab") {
+				ContentDashboard.openVersionsTab(assetName = "DM Document Title");
+			}
+		}
+
+		task ("When the user access to the page") {
+			ContentDashboard.clickViewMore();
+		}
+
+		task ("Then the table lists all the Version entries ordered by Version with the latest entries at the top") {
+			ContentDashboard.viewHistoryVersionOrder(assetVersionList = "1.11,1.10,1.9,1.8,1.7,1.6,1.5,1.4,1.3,1.2,1.1,1.0");
+		}
+	}
+
 	@description = "LPS-151065 Given a Document asset using a New Document Type
     When the user opens Info Panel at Content Dashboard
     Then 'Document - ' and structure's name text will be exhibit"

@@ -469,4 +469,24 @@ definition {
 			locator1 = "ContentDashboard#VIEW_TRANSLATED_ASSET_ICON");
 	}
 
+	macro viewHistoryVersionOrder {
+		var count = "1";
+		var list1 = ListUtil.newListFromString("${assetVersionList}");
+
+		var size = ListUtil.size("${list1}");
+
+		while ("${count}" != "${size}") {
+			var versionName = ListUtil.get("${list1}", "${count}");
+
+			AssertVisible(
+				index = "${count}",
+				key_tableEntry = "${versionName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+			var count = ${count} + 1;
+
+			var count = StringUtil.valueOf("${count}");
+		}
+	}
+
 }

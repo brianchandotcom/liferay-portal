@@ -153,7 +153,7 @@ public class KBArticleNavigationFragmentDisplayContext {
 	}
 
 	private boolean _isMaxNestingLevelReached(int level) {
-		if ((_maxNestingLevel - level) <= 1) {
+		if ((_maxNestingLevel - level) < 1) {
 			return true;
 		}
 

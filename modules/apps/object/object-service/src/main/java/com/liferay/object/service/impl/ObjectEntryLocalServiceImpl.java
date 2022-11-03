@@ -219,6 +219,10 @@ public class ObjectEntryLocalServiceImpl
 			user.isDefaultUser(), objectDefinitionId,
 			objectDefinition.getPortletId(), serviceContext, userId, values);
 
+		values = _fillPicklistDefaultValue(
+			_objectFieldLocalService.getObjectFields(objectDefinitionId),
+			values);
+
 		long objectEntryId = counterLocalService.increment();
 
 		_insertIntoTable(
@@ -1497,6 +1501,23 @@ public class ObjectEntryLocalServiceImpl
 			objectField.getDBColumnName());
 
 		return column.in(ArrayUtil.toLongArray(accountEntryIds));
+	}
+
+	private Map<String, Serializable> _fillPicklistDefaultValue(
+		List<ObjectField> objectFields, Map<String, Serializable> values) {
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
+				!values.containsKey(objectField.getName())) {
+
+				values.put(
+					objectField.getName(), objectField.getDefaultValue());
+			}
+		}
+
+		return values;
 	}
 
 	private Predicate _fillPredicate(

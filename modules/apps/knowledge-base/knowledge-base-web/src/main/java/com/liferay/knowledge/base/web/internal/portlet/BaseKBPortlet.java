@@ -32,6 +32,7 @@ import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.rss.util.RSSUtil;
 
 import java.io.IOException;
 
@@ -102,14 +104,18 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		long resourcePrimKey = ParamUtil.getLong(
 			resourceRequest, "resourcePrimKey");
 
-		int rssDelta = ParamUtil.getInteger(resourceRequest, "rssDelta");
-		String rssDisplayStyle = ParamUtil.getString(
-			resourceRequest, "rssDisplayStyle");
-		String rssFormat = ParamUtil.getString(resourceRequest, "rssFormat");
+		String displayStyle = ParamUtil.getString(
+			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+		int max = ParamUtil.getInteger(
+			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+		String type = ParamUtil.getString(
+			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
+		double version = ParamUtil.getDouble(
+			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
 
 		String rss = kbArticleService.getKBArticleRSS(
-			resourcePrimKey, WorkflowConstants.STATUS_APPROVED, rssDelta,
-			rssDisplayStyle, rssFormat, themeDisplay);
+			resourcePrimKey, WorkflowConstants.STATUS_APPROVED, max, type,
+			version, displayStyle, themeDisplay);
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, null,

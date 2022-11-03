@@ -245,7 +245,8 @@ export function FieldBase({
 		type === 'text' ||
 		type === 'numeric' ||
 		type === 'image' ||
-		type === 'search_location';
+		type === 'search_location' ||
+		type === 'select';
 
 	const accessibleProps = {
 		...(accessible && fieldDetails && {'aria-labelledby': fieldDetailsId}),

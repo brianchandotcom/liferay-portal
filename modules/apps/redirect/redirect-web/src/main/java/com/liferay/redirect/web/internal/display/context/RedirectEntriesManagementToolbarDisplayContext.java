@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.model.RedirectEntry;
-import com.liferay.redirect.web.internal.security.permission.resource.RedirectEntryPermission;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 
 import java.util.List;
@@ -84,19 +82,6 @@ public class RedirectEntriesManagementToolbarDisplayContext
 				"/redirect/delete_redirect_entry"
 			).buildString()
 		).build();
-	}
-
-	public String getAvailableActions(RedirectEntry redirectEntry)
-		throws PortalException {
-
-		if (RedirectEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(), redirectEntry,
-				ActionKeys.DELETE)) {
-
-			return "deleteSelectedRedirectEntries";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Override

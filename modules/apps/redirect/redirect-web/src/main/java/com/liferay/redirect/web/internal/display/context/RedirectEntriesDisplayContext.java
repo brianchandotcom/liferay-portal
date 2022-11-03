@@ -16,7 +16,9 @@ package com.liferay.redirect.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -62,6 +64,7 @@ import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -138,6 +141,25 @@ public class RedirectEntriesDisplayContext {
 		).build();
 	}
 
+	public String getActionURL() throws Exception {
+		SearchContainer<RedirectEntry> searchContainer = searchContainer();
+
+		return String.valueOf(searchContainer.getIteratorURL());
+	}
+
+	public String getAvailableActions(RedirectEntry redirectEntry)
+		throws PortalException {
+
+		if (RedirectEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), redirectEntry,
+				ActionKeys.DELETE)) {
+
+			return "deleteSelectedRedirectEntries";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getExpirationDateInputValue(RedirectEntry redirectEntry) {
 		if (redirectEntry == null) {
 			return null;
@@ -166,6 +188,19 @@ public class RedirectEntriesDisplayContext {
 
 	public String getSearchContainerId() {
 		return "redirectEntries";
+	}
+
+	public String getSidebarPanelURL() {
+		ResourceURL resourceURL = _liferayPortletResponse.createResourceURL();
+
+		resourceURL.setResourceID("/redirect/info_panel");
+
+		return resourceURL.toString();
+	}
+
+	public String getSourceURL(RedirectEntry redirectEntry) {
+		return RedirectUtil.getGroupBaseURL(_themeDisplay) + StringPool.SLASH +
+			redirectEntry.getSourceURL();
 	}
 
 	public boolean isStagingGroup() {

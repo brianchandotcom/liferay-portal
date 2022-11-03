@@ -18,24 +18,18 @@
 
 <%
 RedirectEntriesDisplayContext redirectEntriesDisplayContext = (RedirectEntriesDisplayContext)request.getAttribute(RedirectEntriesDisplayContext.class.getName());
-
-SearchContainer<RedirectEntry> redirectSearchContainer = redirectEntriesDisplayContext.searchContainer();
-
-RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarDisplayContext = redirectEntriesDisplayContext.getRedirectManagementToolbarDisplayContext();
 %>
 
 <c:if test="<%= !redirectEntriesDisplayContext.isStagingGroup() %>">
 	<clay:management-toolbar
-		managementToolbarDisplayContext="<%= redirectEntriesManagementToolbarDisplayContext %>"
+		managementToolbarDisplayContext="<%= redirectEntriesDisplayContext.getRedirectManagementToolbarDisplayContext() %>"
 		propsTransformer="js/RedirectManagementToolbarPropsTransformer"
 	/>
 </c:if>
 
 <div class="closed redirect-entries sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/redirect/info_panel" var="sidebarPanelURL" />
-
 	<liferay-frontend:sidebar-panel
-		resourceURL="<%= sidebarPanelURL %>"
+		resourceURL="<%= redirectEntriesDisplayContext.getSidebarPanelURL() %>"
 		searchContainerId="<%= redirectEntriesDisplayContext.getSearchContainerId() %>"
 	>
 		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
@@ -53,12 +47,12 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 			</div>
 		</c:if>
 
-		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
+		<aui:form action="<%= redirectEntriesDisplayContext.getActionURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<liferay-ui:search-container
 				id="<%= redirectEntriesDisplayContext.getSearchContainerId() %>"
-				searchContainer="<%= redirectSearchContainer %>"
+				searchContainer="<%= redirectEntriesDisplayContext.searchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.redirect.model.RedirectEntry"
@@ -69,7 +63,7 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 					<%
 					row.setData(
 						HashMapBuilder.<String, Object>put(
-							"actions", redirectEntriesManagementToolbarDisplayContext.getAvailableActions(redirectEntry)
+							"actions", redirectEntriesDisplayContext.getAvailableActions(redirectEntry)
 						).build());
 					%>
 
@@ -79,7 +73,7 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 					>
 
 						<%
-						String sourceURL = URLCodec.decodeURL(HtmlUtil.escape(RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL()));
+						String sourceURL = URLCodec.decodeURL(HtmlUtil.escape(redirectEntriesDisplayContext.getSourceURL(redirectEntry)));
 						%>
 
 						<bdi data-title="<%= HtmlUtil.escapeAttribute(sourceURL) %>">
@@ -125,23 +119,16 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 
-					<%
-					List<DropdownItem> dropdownItems = redirectEntriesDisplayContext.getActionDropdownItems(redirectEntry);
-					%>
-
 					<liferay-ui:search-container-column-text>
-						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-							<clay:dropdown-actions
-								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-								dropdownItems="<%= dropdownItems %>"
-							/>
-						</c:if>
+						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+							dropdownItems="<%= redirectEntriesDisplayContext.getActionDropdownItems(redirectEntry) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
 					markupView="lexicon"
-					searchContainer="<%= redirectSearchContainer %>"
 				/>
 			</liferay-ui:search-container>
 		</aui:form>

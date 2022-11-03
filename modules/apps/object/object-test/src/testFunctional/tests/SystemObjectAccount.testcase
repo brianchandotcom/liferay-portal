@@ -145,6 +145,8 @@ definition {
 	@description = "LPS-151765 - Verify if Cascade deletion type of Relationship One to Many can delete and you also will delete the child related entry (if you also have permissions for it)"
 	@priority = "4"
 	test CanDeleteRelationshipWhenDeletionTypeIsCascade {
+		property portal.upstream = "quarantine";
+
 		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(
@@ -332,6 +334,8 @@ definition {
 	@description = "LPS-151765 - Verify if Disassociate deletion type of Relationship One to Many can delete normally and nothing happens with the child"
 	@priority = "4"
 	test CannotDeleteRelationshipWhenDeletionTypeIsDisassociate {
+		property portal.upstream = "quarantine";
+
 		Accounts.openAccountsAdmin();
 
 		Accounts.addBusinessAccount(

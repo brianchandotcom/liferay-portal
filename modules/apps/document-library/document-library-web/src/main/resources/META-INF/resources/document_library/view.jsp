@@ -216,7 +216,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				<liferay-frontend:component
 					context='<%=
 						HashMapBuilder.<String, Object>put(
-							"columnNames", new String[] {dlViewDisplayContext.getColumnNames()}
+							"columnNames", dlViewDisplayContext.getEntryColumnNames()
 						).put(
 							"defaultParentFolderId", dlViewDisplayContext.getFolderId()
 						).put(

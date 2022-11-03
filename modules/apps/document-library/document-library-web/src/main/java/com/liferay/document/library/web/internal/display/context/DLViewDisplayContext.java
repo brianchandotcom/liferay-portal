@@ -153,6 +153,10 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
+	public String[] getEntryColumnNames() {
+		return _dlPortletInstanceSettingsHelper.getEntryColumns();
+	}
+
 	public Folder getFolder() {
 		return _dlAdminDisplayContext.getFolder();
 	}

@@ -1,8 +1,20 @@
-import { spawn } from 'child_process';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
+import {rgPath} from '@vscode/ripgrep';
+import {spawn} from 'child_process';
 import * as vscode from 'vscode';
-
-import { rgPath } from '@vscode/ripgrep';
 
 export interface RipgrepArgs {
 	args?: string[];
@@ -12,13 +24,13 @@ export interface RipgrepArgs {
 }
 
 export interface RipgrepMatch {
-	location: vscode.Location;
-	fullMatchText: string;
 	captures: string[];
+	fullMatchText: string;
+	location: vscode.Location;
 }
 
 export async function ripgrep(ripgrepArgs: RipgrepArgs): Promise<string[]> {
-	const { args = [], globs = [], paths, search } = ripgrepArgs;
+	const {args = [], globs = [], paths, search} = ripgrepArgs;
 
 	const totalArgs = [...args];
 
@@ -28,7 +40,7 @@ export async function ripgrep(ripgrepArgs: RipgrepArgs): Promise<string[]> {
 
 	const ripgrepProcess = spawn(
 		rgPath,
-		totalArgs.concat([search, '--', ...paths]),
+		totalArgs.concat([search, '--', ...paths])
 	);
 
 	let text = '';
@@ -40,13 +52,13 @@ export async function ripgrep(ripgrepArgs: RipgrepArgs): Promise<string[]> {
 }
 
 interface RipgrepMatchData {
-	path: {
-		text: string;
-	};
+	['line_number']: number;
 	lines: {
 		text: string;
 	};
-	['line_number']: number;
+	path: {
+		text: string;
+	};
 	submatches: {
 		match: {
 			text: string;
@@ -56,9 +68,9 @@ interface RipgrepMatchData {
 }
 
 export async function ripgrepMatches(
-	ripgrepArgs: RipgrepArgs,
+	ripgrepArgs: RipgrepArgs
 ): Promise<RipgrepMatch[]> {
-	const { args = [] } = ripgrepArgs;
+	const {args = []} = ripgrepArgs;
 	const lines = await ripgrep({
 		...ripgrepArgs,
 		args: [...args, '--json'],
@@ -69,13 +81,13 @@ export async function ripgrepMatches(
 	const results: RipgrepMatch[] = [];
 
 	for (const line of lines) {
-		const obj = JSON.parse(line);
+		const object = JSON.parse(line);
 
-		if (obj.type !== 'match') {
+		if (object.type !== 'match') {
 			continue;
 		}
 
-		const data: RipgrepMatchData = obj.data;
+		const data: RipgrepMatchData = object.data;
 
 		const filePath: string = data.path.text;
 		const lineNumber: number = Number(data.line_number);
@@ -94,12 +106,12 @@ export async function ripgrepMatches(
 			}
 
 			results.push({
+				captures: match ? match.slice(1) : [],
+				fullMatchText: submatchText,
 				location: new vscode.Location(
 					vscode.Uri.file(filePath),
-					new vscode.Position(lineNumber - 1, columnNumber),
+					new vscode.Position(lineNumber - 1, columnNumber)
 				),
-				fullMatchText: submatchText,
-				captures: match ? match.slice(1) : [],
 			});
 		}
 	}

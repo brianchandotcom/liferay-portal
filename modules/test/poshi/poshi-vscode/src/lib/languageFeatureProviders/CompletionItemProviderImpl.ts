@@ -1,14 +1,28 @@
-import * as vscode from 'vscode';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import { chain as _chain } from 'lodash';
-import { ripgrep, RipgrepMatch, ripgrepMatches } from '../ripgrep';
+import * as vscode from 'vscode';
+
 import { isCompletionEnabled } from '../configurationProvider';
+import { RipgrepMatch, ripgrep, ripgrepMatches } from '../ripgrep';
 
 const classNamePattern = /\b([A-Z][A-Za-z]+)/g;
 const pathNamePattern = /"([A-Z][A-Za-z]+)/g;
 
 function isCompleteProperty(
 	lineText: vscode.TextLine,
-	position: vscode.Position,
 ) {
 	return lineText.text.trimLeft().startsWith('property');
 }
@@ -145,7 +159,7 @@ export class CompletionItemProviderImpl
 				classNamePattern,
 			);
 
-			if (!!functionOrMacroFileBaseName) {
+			if (functionOrMacroFileBaseName) {
 				const functionOrMacroNames = await this._getItems(
 					`**/${functionOrMacroFileBaseName}.{function,macro}`,
 					'(?:macro|function) ([_a-zA-Z]+)',
@@ -161,7 +175,7 @@ export class CompletionItemProviderImpl
 		if (context.triggerCharacter === '#') {
 			const pathName = getPatternMatch(line, position, pathNamePattern);
 
-			if (!!pathName) {
+			if (pathName) {
 				const locatorNames = await this._getItems(
 					`**/${pathName}.path`,
 					'<td>([A-Z][A-Z_-]+)</td>',
@@ -176,7 +190,7 @@ export class CompletionItemProviderImpl
 
 		if (
 			context.triggerCharacter === ' ' &&
-			isCompleteProperty(line, position)
+			isCompleteProperty(line)
 		) {
 			const workspaceFolder = vscode.workspace.getWorkspaceFolder(
 				document.uri,
@@ -194,15 +208,15 @@ export class CompletionItemProviderImpl
 
 	private async _getProps(workspaceUri: vscode.Uri): Promise<string[]> {
 		const lines: string[] = await ripgrep({
-			search: 'test.case.available.property.names=.*?\n\n',
+			args: ['--multiline', '--multiline-dotall'],
 			paths: [
 				vscode.Uri.joinPath(workspaceUri, 'test.properties').fsPath,
 			],
-			args: ['--multiline', '--multiline-dotall'],
+			search: 'test.case.available.property.names=.*?\n\n',
 		});
 
 		const results = [];
-		const pattern = new RegExp(/^\s*([a-z\.]+),\\/);
+		const pattern = new RegExp(/^\s*([a-z.]+),\\/);
 
 		for (const line of lines) {
 			const match = line.match(pattern);
@@ -219,8 +233,8 @@ export class CompletionItemProviderImpl
 		const uris: vscode.Uri[] = await vscode.workspace.findFiles(glob);
 
 		const matches: RipgrepMatch[] = await ripgrepMatches({
-			search: search,
 			paths: uris.map((uri) => uri.fsPath),
+			search,
 		});
 
 		return _chain(matches)

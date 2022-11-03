@@ -1,18 +1,32 @@
-import * as path from 'path';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
+import * as path from 'path';
 import * as vscode from 'vscode';
 
-import { ripgrepMatches } from '../ripgrep';
-import { getToken } from '../tokens';
+import {ripgrepMatches} from '../ripgrep';
+import {getToken} from '../tokens';
 
 async function findUsageLocations(
 	className: string,
 	methodName: string,
-	workspaceFolder: vscode.WorkspaceFolder,
+	workspaceFolder: vscode.WorkspaceFolder
 ) {
 	const matches = await ripgrepMatches({
-		search: `${className}\.${methodName}`,
 		paths: [workspaceFolder?.uri.fsPath],
+		// eslint-disable-next-line no-useless-escape
+		search: `${className}\.${methodName}`,
 	});
 
 	return matches.map((ripgrepMatch) => ripgrepMatch.location);
@@ -23,7 +37,7 @@ export class ReferenceProviderImpl implements vscode.ReferenceProvider {
 		document: vscode.TextDocument,
 		position: vscode.Position,
 		_context: vscode.ReferenceContext,
-		_token: vscode.CancellationToken,
+		_token: vscode.CancellationToken
 	): Promise<vscode.Location[] | undefined> {
 		const line = document.lineAt(position);
 
@@ -34,33 +48,36 @@ export class ReferenceProviderImpl implements vscode.ReferenceProvider {
 		}
 
 		const workspaceFolder = vscode.workspace.getWorkspaceFolder(
-			document.uri,
+			document.uri
 		);
 
 		if (!workspaceFolder) {
 			return;
 		}
 
-		let fileName;
-		let methodName;
-
 		switch (token.type) {
-			case 'methodDefinition':
-				fileName = path.parse(document.fileName).name;
-				methodName = token.matches[1];
+			case 'methodDefinition': {
+				const fileName = path.parse(document.fileName).name;
+				const methodName = token.matches[1];
 
 				return await findUsageLocations(
-					path.parse(document.fileName).name,
-					token.matches[1],
-					workspaceFolder,
+					fileName,
+					methodName,
+					workspaceFolder
 				);
+			}
+			case 'methodInvocation': {
+				const fileName = token.matches[1];
+				const methodName = token.matches[2];
 
-			case 'methodInvocation':
 				return await findUsageLocations(
-					token.matches[1],
-					token.matches[2],
-					workspaceFolder,
+					fileName,
+					methodName,
+					workspaceFolder
 				);
+			}
+			default:
+				break;
 		}
 	}
 }

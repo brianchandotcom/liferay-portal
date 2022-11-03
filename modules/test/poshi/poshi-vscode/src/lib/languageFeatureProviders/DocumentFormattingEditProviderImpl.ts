@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import * as vscode from 'vscode';
 
 import { isSourceFormatterEnabled } from '../configurationProvider';
@@ -8,8 +22,8 @@ export class DocumentFormattingEditProviderImpl
 {
 	async provideDocumentFormattingEdits(
 		document: vscode.TextDocument,
-		options: vscode.FormattingOptions,
-		token: vscode.CancellationToken,
+		_options: vscode.FormattingOptions,
+		_token: vscode.CancellationToken,
 	): Promise<vscode.TextEdit[] | undefined> {
 		if (!isSourceFormatterEnabled()) {
 			return;
@@ -24,6 +38,7 @@ export class DocumentFormattingEditProviderImpl
 		const textEdits = [];
 
 		// line 44 was deleted
+
 		const lineRemovedRegex = new RegExp(/.* line (\d+) was deleted/g);
 		for (const match of sfOutput.matchAll(lineRemovedRegex)) {
 			const deletedLine = Number(match[1]);
@@ -39,6 +54,7 @@ export class DocumentFormattingEditProviderImpl
 		}
 
 		// lines 39-40 were deleted
+
 		const linesRemovedRegex = new RegExp(
 			/.* lines (\d+)-(\d+) were deleted/g,
 		);
@@ -57,6 +73,7 @@ export class DocumentFormattingEditProviderImpl
 		}
 
 		// line 38 was added
+
 		const lineAddedRegex = new RegExp(/.* line (\d+) was added/g);
 		for (const match of sfOutput.matchAll(lineAddedRegex)) {
 			const addedLine = Number(match[1]);
@@ -70,6 +87,7 @@ export class DocumentFormattingEditProviderImpl
 		}
 
 		// lines 26-30 were added
+
 		const linesAddedRegex = new RegExp(/.* lines (\d+)-(\d+) were added/g);
 		for (const match of sfOutput.matchAll(linesAddedRegex)) {
 			const firstAddedLine = Number(match[1]);
@@ -90,8 +108,8 @@ export class DocumentFormattingEditProviderImpl
 		);
 		for (const match of sfOutput.matchAll(lineChangedRegex)) {
 			const changedLine = Number(match[1]);
-			const oldText = match[2].trim().replace(/[\[\]]/g, '');
-			const newText = match[3].trim().replace(/[\[\]]/g, '');
+			const oldText = match[2].trim().replace(/[[\]]/g, '');
+			const newText = match[3].trim().replace(/[[\]]/g, '');
 
 			const numberOfChangedLines = oldText.split('\n').length;
 
@@ -110,6 +128,7 @@ export class DocumentFormattingEditProviderImpl
 		}
 
 		// Sort in descending order so that later edits are applied first and line numbers stay relevant
+
 		textEdits.sort((a, b) => {
 			if (a.range.start.isBefore(b.range.start)) {
 				return 1;

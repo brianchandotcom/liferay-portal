@@ -1,20 +1,36 @@
-import { spawn } from 'child_process';
-import { dirname } from 'path';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
+import {spawn} from 'child_process';
+import {dirname} from 'path';
 import * as vscode from 'vscode';
 
-import { sourceFormatterJarPath } from './configurationProvider';
+import {sourceFormatterJarPath} from './configurationProvider';
 
-export const getSourceFormatterOutput = async (
-	documentFilePath: string,
-): Promise<string | undefined> => {
+export async function getSourceFormatterOutput(
+	documentFilePath: string
+): Promise<string | undefined> {
 	let text = '';
 
 	try {
 		const sfPath = sourceFormatterJarPath();
 
 		await vscode.workspace.fs.stat(
-			vscode.Uri.from({ scheme: 'file', path: sfPath }),
+			vscode.Uri.from({
+				path: sfPath,
+				scheme: 'file',
+			})
 		);
 
 		const javaProcess = spawn(
@@ -22,6 +38,7 @@ export const getSourceFormatterOutput = async (
 			[
 				// '-Xdebug',
 				// '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005',
+
 				'-jar',
 				sfPath,
 				'-Dsource.auto.fix=false',
@@ -31,7 +48,7 @@ export const getSourceFormatterOutput = async (
 			],
 			{
 				cwd: dirname(sfPath),
-			},
+			}
 		);
 
 		for await (const chunk of javaProcess.stdout) {
@@ -39,15 +56,15 @@ export const getSourceFormatterOutput = async (
 		}
 
 		return text.trim();
-	} catch (error) {
-		const err = error as Error;
+	} catch (thrown) {
+		const error = thrown as Error;
 
 		if (error instanceof vscode.FileSystemError) {
 			vscode.window.showWarningMessage(
-				'Source formatter jar not found:\n' + error.message,
+				'Source formatter jar not found:\n' + error.message
 			);
 		} else {
-			vscode.window.showWarningMessage(err.message);
+			vscode.window.showWarningMessage(error.message);
 		}
 	}
-};
+}

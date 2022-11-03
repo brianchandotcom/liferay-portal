@@ -1,27 +1,41 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import * as vscode from 'vscode';
 
-import { RipgrepMatch, ripgrepMatches } from '../ripgrep';
-import { isGoToDefinitionEnabled } from '../configurationProvider';
-import { getToken } from '../tokens';
+import {isGoToDefinitionEnabled} from '../configurationProvider';
+import {RipgrepMatch, ripgrepMatches} from '../ripgrep';
+import {getToken} from '../tokens';
 
 const getFileLocations = async (
-	glob: string,
+	glob: string
 ): Promise<vscode.Location[] | undefined> => {
 	const files = await vscode.workspace.findFiles(glob);
 
-	if (files.length === 0) {
+	if (!files.length) {
 		return;
 	}
 
 	return files.map(
-		(uri) => new vscode.Location(uri, new vscode.Position(0, 0)),
+		(uri) => new vscode.Location(uri, new vscode.Position(0, 0))
 	);
 };
 
 const getFileMethodLocations = async (files: vscode.Uri[], search: string) => {
 	const lines = await ripgrepMatches({
-		search,
 		paths: files.map((uri) => uri.fsPath),
+		search,
 	});
 
 	return lines.map((ripgrepMatch: RipgrepMatch) => ripgrepMatch.location);
@@ -29,11 +43,11 @@ const getFileMethodLocations = async (files: vscode.Uri[], search: string) => {
 
 const getMethodLocations = async (
 	glob: string,
-	search: string,
+	search: string
 ): Promise<vscode.Location[] | undefined> => {
 	const files = await vscode.workspace.findFiles(glob);
 
-	if (files.length === 0) {
+	if (!files.length) {
 		return;
 	}
 
@@ -43,7 +57,7 @@ const getMethodLocations = async (
 export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 	async provideDefinition(
 		document: vscode.TextDocument,
-		position: vscode.Position,
+		position: vscode.Position
 	): Promise<vscode.Definition | undefined> {
 		if (!isGoToDefinitionEnabled()) {
 			return;
@@ -60,55 +74,61 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 		switch (token.type) {
 			case 'className':
 				return getFileLocations(
-					`**/${token.matches[1]}.{function,macro}`,
+					`**/${token.matches[1]}.{function,macro}`
 				);
-			case 'methodInvocation':
+			case 'methodInvocation': {
 				const [, className, methodName] = token.matches;
 
 				return getMethodLocations(
 					`**/${className}.{function,macro}`,
-					`(?:macro|function) (${methodName}) \\{`,
+					`(?:macro|function) (${methodName}) \\{`
 				);
+			}
 			case 'pathFileName':
 				return getFileLocations(`**/${token.matches[1]}.path`);
-			case 'pathLocator':
+			case 'pathLocator': {
 				const [, fileName, locatorName] = token.matches;
 
 				return getMethodLocations(
 					`**/${fileName}.path`,
-					`<td>(${locatorName})</td>`,
+					`<td>(${locatorName})</td>`
 				);
-			case 'variable':
+			}
+			case 'variable': {
 				const [, variableName] = token.matches;
 
 				const variableLocations = await getFileMethodLocations(
 					[document.uri],
-					`var (${variableName}) `,
+					`var (${variableName}) `
 				);
 
 				return variableLocations
 					.filter((location) =>
-						location.range.start.isBefore(position),
+						location.range.start.isBefore(position)
 					)
 					.pop();
+			}
 			case 'liferaySelenium':
 				return getFileLocations(
-					`**/poshi-runner/**/selenium/BaseWebDriverImpl.java`,
+					`**/poshi-runner/**/selenium/BaseWebDriverImpl.java`
 				);
 			case 'liferaySeleniumMethod':
 				return getMethodLocations(
 					`**/poshi-runner/**/selenium/BaseWebDriverImpl.java`,
-					`public .* (${token.matches[2]})\\(`,
+					`public .* (${token.matches[2]})\\(`
 				);
 			case 'utilClass':
 				return getFileLocations(`**/poshi/**/${token.matches[1]}.java`);
-			case 'utilClassMethod':
+			case 'utilClassMethod': {
 				const [, utilFileName, utilMethodName] = token.matches;
 
 				return getMethodLocations(
 					`**/poshi/**/${utilFileName}.java`,
-					`public static .* (${utilMethodName})\\(`,
+					`public static .* (${utilMethodName})\\(`
 				);
+			}
+			default:
+				break;
 		}
 	}
 }

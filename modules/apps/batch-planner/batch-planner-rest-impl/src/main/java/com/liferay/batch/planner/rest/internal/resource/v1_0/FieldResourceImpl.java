@@ -17,9 +17,9 @@ package com.liferay.batch.planner.rest.internal.resource.v1_0;
 import com.liferay.batch.planner.rest.dto.v1_0.Field;
 import com.liferay.batch.planner.rest.internal.vulcan.batch.engine.FieldProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.FieldResource;
+import com.liferay.object.entry.util.ObjectEntryNameUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Comparator;
@@ -72,12 +72,10 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 			return _fieldProvider.getFields(internalClassName);
 		}
 
-		String objectDefinitionName = StringUtil.replaceLast(
-			internalClassName.substring(idx + 1),
-			String.valueOf(contextCompany.getCompanyId()), "");
-
 		return _fieldProvider.getFields(
-			contextCompany.getCompanyId(), objectDefinitionName,
+			contextCompany.getCompanyId(),
+			ObjectEntryNameUtil.fromTechnicalName(
+				internalClassName.substring(idx + 1)),
 			contextUriInfo);
 	}
 

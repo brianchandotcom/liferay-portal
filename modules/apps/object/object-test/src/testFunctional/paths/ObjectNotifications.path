@@ -40,6 +40,11 @@
 		<td>//span[@class='custom-control-label']//span[@class="custom-control-label-text"]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DELETE_ATTACHMENT_BUTTON</td>
+		<td>//*[@class='lexicon-icon lexicon-icon-times-small']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

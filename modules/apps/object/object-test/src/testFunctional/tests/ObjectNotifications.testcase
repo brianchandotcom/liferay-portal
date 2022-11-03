@@ -102,6 +102,58 @@ definition {
 		}
 	}
 
+	@description = "LPS-161928 - Verify that it's possible to delete attachments to the notification template"
+	@priority = "3"
+	test CanDeleteAttachment {
+		task ("Given an object with an attachment field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161928",
+				objectName = "CustomObject161928",
+				pluralLabelName = "Custom Objects 161928");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Attachment",
+				fieldLabelName = "From Computer And Show Files In DM",
+				fieldName = "fromComputerAndShowFilesInDM",
+				fieldType = "Long",
+				fileSource = "userComputer",
+				isRequired = "false",
+				objectName = "CustomObject161928");
+		}
+
+		task ("And given a notification template is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				fromAddress = "test@liferay",
+				fromName = "Test Test",
+				name = "Notification Template");
+		}
+
+		task ("And given an attachment is added to the notification template") {
+			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object 161928");
+
+			Button.clickSave();
+		}
+
+		task ("When the attachment is deleted from the notification template") {
+			Click(
+				key_objectLabel = "Notification Template",
+				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+			MenuItem.clickNoError(menuItem = "View");
+
+			Click(locator1 = "ObjectNotifications#DELETE_ATTACHMENT_BUTTON");
+		}
+
+		task ("Then the attachment shouldn't be present in the notification template") {
+			AssertElementNotPresent(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
+		}
+	}
+
 	@description = "LPS-161919 - Verify that it's possible to delete an e-mail notification template"
 	@priority = "3"
 	test CanDeleteEmailTemplate {

@@ -64,10 +64,10 @@ import javax.servlet.http.HttpSession;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -162,7 +162,7 @@ public class OfflineOpenIdConnectSessionManager {
 		return openIdConnectSession.getOpenIdConnectSessionId();
 	}
 
-	@Modified
+	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {

@@ -1676,7 +1676,7 @@ definition {
 			locator1 = "KnowledgeBaseArticle#INFO_VERSION_TITLE",
 			value1 = "${entryVersion}");
 
-		var modifiedDate = DateUtil.getFormattedCurrentDate("MMMM dd, yyyy");
+		var modifiedDate = DateUtil.getFormattedCurrentDate("MMMM d, yyyy");
 
 		AssertTextEquals.assertPartialText(
 			key_entryVersion = "${entryVersion}",

@@ -220,6 +220,7 @@ type ObjectFieldSettingName =
 	| 'objectFieldName'
 	| 'objectRelationshipName'
 	| 'output'
+	| 'readOnly'
 	| 'script'
 	| 'showCounter'
 	| 'showFilesInDocumentsAndMedia'

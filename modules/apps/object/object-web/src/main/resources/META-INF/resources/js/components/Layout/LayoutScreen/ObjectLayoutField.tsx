@@ -12,12 +12,12 @@
  * details.
  */
 
+import ClayLabel from '@clayui/label';
 import {Panel, PanelSimpleBody} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {HeaderDropdown} from './HeaderDropdown';
-import {RequiredLabel} from './RequiredLabel';
 
 interface ObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
@@ -72,7 +72,29 @@ export function ObjectLayoutField({
 						{objectFieldType?.label} |{' '}
 					</small>
 
-					<RequiredLabel required={objectField?.required} />
+					<ClayLabel
+						className="label-inside-custom-select"
+						displayType={
+							objectField?.required ? 'warning' : 'success'
+						}
+					>
+						{objectField?.required
+							? Liferay.Language.get('mandatory')
+							: Liferay.Language.get('optional')}
+					</ClayLabel>
+
+					{objectField.objectFieldSettings?.find(
+						(fieldSetting: ObjectFieldSetting) =>
+							fieldSetting.value === 'true' ||
+							fieldSetting.value === 'conditional'
+					) && (
+						<ClayLabel
+							className="label-inside-custom-select"
+							displayType="secondary"
+						>
+							{Liferay.Language.get('read-only')}
+						</ClayLabel>
+					)}
 				</PanelSimpleBody>
 			</Panel>
 		</>

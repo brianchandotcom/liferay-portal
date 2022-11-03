@@ -14,6 +14,7 @@
 
 import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
+import './ModalAddObjectLayoutField.scss';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	observer: Observer;

@@ -13,7 +13,6 @@ import {useEffect, useState} from 'react';
 
 import LiferayAccountBrief from '../interfaces/liferayAccountBrief';
 import LiferayPicklist from '../interfaces/liferayPicklist';
-import useGetMDFActivity from '../services/liferay/object/activity/useGetMDFActivity';
 import useGetCompanyExtenderByAccountEntryId from '../services/liferay/object/company-extenders/useGetCompanyExtenderByAccountEntryId';
 
 export default function useCompanyOptions(
@@ -31,8 +30,6 @@ export default function useCompanyOptions(
 	const {data: companyExtender} = useGetCompanyExtenderByAccountEntryId(
 		selectedAccountBrief?.id
 	);
-
-	const {data: mdfActivities} = useGetMDFActivity(selectedAccountBrief?.id);
 
 	useEffect(() => {
 		if (selectedAccountBrief) {
@@ -57,7 +54,6 @@ export default function useCompanyOptions(
 
 	return {
 		companyOptions,
-		mdfActivitiesBySelectedCompany: mdfActivities?.items,
 		onCompanySelected,
 	};
 }

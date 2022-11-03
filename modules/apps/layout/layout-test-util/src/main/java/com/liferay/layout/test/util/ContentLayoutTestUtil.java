@@ -24,7 +24,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.page.template.util.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;

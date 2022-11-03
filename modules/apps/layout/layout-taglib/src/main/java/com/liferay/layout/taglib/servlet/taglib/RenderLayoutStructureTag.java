@@ -38,7 +38,7 @@ import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.helper.CollectionPaginationHelper;
-import com.liferay.layout.page.template.util.LayoutStructureUtil;
+import com.liferay.layout.util.structure.LayoutStructureUtil;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;

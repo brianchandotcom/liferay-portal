@@ -274,7 +274,10 @@ const AppContextProvider = ({children}) => {
 				);
 
 				if (accountBrief) {
-					getProject(projectExternalReferenceCode, accountBrief);
+					const project = await getProject(
+						projectExternalReferenceCode,
+						accountBrief
+					);
 					getSubscriptionGroups(projectExternalReferenceCode);
 					getDXPCloudActivationStatus(projectExternalReferenceCode);
 					getAnalyticsCloudActivationStatus(
@@ -294,6 +297,7 @@ const AppContextProvider = ({children}) => {
 						mutation: addAccountFlag,
 						variables: {
 							accountFlag: {
+								accountEntryId: project?.id,
 								accountKey: projectExternalReferenceCode,
 								finished: true,
 								name: ROUTE_TYPES.onboarding,

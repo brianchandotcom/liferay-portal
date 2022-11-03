@@ -116,6 +116,7 @@ export const addAccountFlag = gql`
 				type: "C_AccountFlag"
 				path: "/c/accountflags"
 			) {
+			accountEntryId
 			accountKey
 			name
 			finished
@@ -335,6 +336,7 @@ export const addTeamMembersInvitation = gql`
 				type: "C_TeamMembersInvitation"
 				path: "/c/teammembersinvitations/scopes/{args.scopeKey}"
 			) {
+			accountEntryId
 			email
 			role
 		}

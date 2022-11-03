@@ -12,6 +12,7 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder} from '../../util/search';
@@ -44,7 +45,9 @@ class TestrayCaseTypeImpl extends Rest<CaseType, TestrayCaseType> {
 		);
 
 		if (response?.totalCount) {
-			throw new Error(i18n.sub('the-x-name-already-exists', 'case-type'));
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'case-type')
+			);
 		}
 	}
 

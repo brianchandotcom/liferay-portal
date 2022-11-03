@@ -12,6 +12,7 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder} from '../../util/search';
@@ -61,7 +62,9 @@ class TestraySuiteRest extends Rest<Suite, TestraySuite> {
 		);
 
 		if (response?.totalCount) {
-			throw new Error(i18n.sub('the-x-name-already-exists', 'suite'));
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'suite')
+			);
 		}
 	}
 	protected async beforeCreate(suite: Suite): Promise<void> {

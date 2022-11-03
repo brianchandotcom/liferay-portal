@@ -12,6 +12,7 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder, searchUtil} from '../../util/search';
@@ -83,7 +84,9 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 		);
 
 		if (response?.totalCount) {
-			throw new Error(i18n.sub('the-x-name-already-exists', 'tasks'));
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'tasks')
+			);
 		}
 	}
 

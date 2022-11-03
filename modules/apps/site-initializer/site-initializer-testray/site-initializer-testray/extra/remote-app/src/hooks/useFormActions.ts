@@ -15,6 +15,7 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import TestrayError from '../TestrayError';
 import i18n from '../i18n';
 import {Liferay} from '../services/liferay';
 
@@ -52,7 +53,10 @@ export type FormComponent = Omit<Form, 'forceRefetch'>;
 const onError = (error: any) => {
 	let errorMessage = i18n.translate('an-unexpected-error-occurred');
 
-	if (['development', 'test'].includes(process.env.NODE_ENV as string)) {
+	if (
+		['development', 'test'].includes(process.env.NODE_ENV as string) ||
+		error instanceof TestrayError
+	) {
 		console.error(error);
 
 		errorMessage = error.message;

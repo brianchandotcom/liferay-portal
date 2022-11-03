@@ -12,6 +12,7 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
@@ -178,7 +179,9 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		);
 
 		if (response?.totalCount) {
-			throw new Error(i18n.sub('the-x-name-already-exists', 'build'));
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'build')
+			);
 		}
 	}
 

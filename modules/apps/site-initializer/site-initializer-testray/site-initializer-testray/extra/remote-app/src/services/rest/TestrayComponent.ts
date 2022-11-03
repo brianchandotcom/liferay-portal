@@ -12,6 +12,7 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
 import i18n from '../../i18n';
 import {State} from '../../pages/Standalone/Teams/TeamsFormModal';
 import yupSchema from '../../schema/yup';
@@ -85,7 +86,9 @@ class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
 		);
 
 		if (response?.items?.length) {
-			throw new Error(i18n.sub('the-x-name-already-exists', 'component'));
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'component')
+			);
 		}
 	}
 

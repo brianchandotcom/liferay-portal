@@ -27,7 +27,7 @@ import com.liferay.headless.admin.content.resource.v1_0.PageDefinitionResource;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -148,7 +148,7 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 		ObjectWriter objectWriter = objectMapper.writer(filterProvider);
 
 		try {
-			_layoutPageTemplatesImporter.importPageElement(
+			_layoutsImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
 				objectWriter.writeValueAsString(
 					pageDefinition.getPageElement()),
@@ -258,10 +258,10 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 		_layoutPageTemplatePortletResourcePermission;
 
 	@Reference
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+	private LayoutPermission _layoutPermission;
 
 	@Reference
-	private LayoutPermission _layoutPermission;
+	private LayoutsImporter _layoutsImporter;
 
 	@Reference
 	private Portal _portal;

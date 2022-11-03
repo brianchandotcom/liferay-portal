@@ -19,8 +19,8 @@ import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -323,7 +323,7 @@ public class MasterLayoutsImporterTest {
 
 		try {
 			layoutPageTemplatesImporterResultEntries =
-				_layoutPageTemplatesImporter.importFile(
+				_layoutsImporter.importFile(
 					_user.getUserId(), _group.getGroupId(), 0, file, false);
 		}
 		finally {
@@ -438,11 +438,11 @@ public class MasterLayoutsImporterTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutsImporter _layoutsImporter;
 
 	private ServiceRegistration<FragmentCollectionContributor>
 		_serviceRegistration;

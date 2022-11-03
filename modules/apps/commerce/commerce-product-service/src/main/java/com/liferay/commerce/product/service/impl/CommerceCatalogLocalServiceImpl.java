@@ -21,7 +21,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CommerceCatalogLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -50,17 +50,23 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alec Sloan
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CommerceCatalog",
+	service = AopService.class
+)
 public class CommerceCatalogLocalServiceImpl
 	extends CommerceCatalogLocalServiceBaseImpl {
 
@@ -136,7 +142,7 @@ public class CommerceCatalogLocalServiceImpl
 
 		serviceContext.setCompanyId(company.getCompanyId());
 		serviceContext.setUserId(defaultUser.getUserId());
-		serviceContext.setUuid(PortalUUIDUtil.generate());
+		serviceContext.setUuid(_portalUUID.generate());
 
 		return commerceCatalogLocalService.addCommerceCatalog(
 			null, CommerceCatalogConstants.MASTER_COMMERCE_CATALOG,
@@ -445,22 +451,25 @@ public class CommerceCatalogLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@BeanReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
+	private PortalUUID _portalUUID;
+
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

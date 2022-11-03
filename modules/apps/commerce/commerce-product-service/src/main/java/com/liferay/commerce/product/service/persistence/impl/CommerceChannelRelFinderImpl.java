@@ -27,18 +27,21 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(service = CommerceChannelRelFinder.class)
 public class CommerceChannelRelFinderImpl
 	extends CommerceChannelRelFinderBaseImpl
 	implements CommerceChannelRelFinder {
@@ -96,7 +99,7 @@ public class CommerceChannelRelFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			queryPos.add(PortalUtil.getClassNameId(className));
+			queryPos.add(_portal.getClassNameId(className));
 			queryPos.add(classPK);
 
 			if (Validator.isNotNull(name)) {
@@ -175,7 +178,7 @@ public class CommerceChannelRelFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			queryPos.add(PortalUtil.getClassNameId(className));
+			queryPos.add(_portal.getClassNameId(className));
 			queryPos.add(classPK);
 
 			if (Validator.isNotNull(name)) {
@@ -217,7 +220,7 @@ public class CommerceChannelRelFinderImpl
 	}
 
 	private boolean _isValidClassName(String className) {
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = _portal.getClassNameId(className);
 
 		List<Long> validClassNameIds = _findClassNameIds();
 
@@ -227,7 +230,10 @@ public class CommerceChannelRelFinderImpl
 	private static final String _FIND_CLASS_NAME_IDS =
 		CommerceChannelRelFinder.class.getName() + ".findClassNameIds";
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

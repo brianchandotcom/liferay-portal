@@ -14,20 +14,30 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.base.CommerceChannelAccountEntryRelServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CommerceChannelAccountEntryRel"
+	},
+	service = AopService.class
+)
 public class CommerceChannelAccountEntryRelServiceImpl
 	extends CommerceChannelAccountEntryRelServiceBaseImpl {
 
@@ -168,10 +178,10 @@ public class CommerceChannelAccountEntryRelServiceImpl
 				commerceChannelId, classPK, overrideEligibility, priority);
 	}
 
-	private static volatile ModelResourcePermission<AccountEntry>
-		_accountEntryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CommerceChannelAccountEntryRelServiceImpl.class,
-				"_accountEntryModelResourcePermission", AccountEntry.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<CommerceCatalog>
+		_accountEntryModelResourcePermission;
 
 }

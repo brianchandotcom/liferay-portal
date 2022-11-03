@@ -37,7 +37,7 @@ import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocal
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.io.Serializable;
@@ -84,10 +83,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Igor Beslic
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionValueRel",
+	service = AopService.class
+)
 public class CPDefinitionOptionValueRelLocalServiceImpl
 	extends CPDefinitionOptionValueRelLocalServiceBaseImpl {
 
@@ -985,36 +991,36 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
 
-	@BeanReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@BeanReference(type = CPDefinitionOptionRelLocalService.class)
+	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
-	@BeanReference(type = CPDefinitionOptionRelPersistence.class)
+	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
-	@BeanReference(type = CPInstanceLocalService.class)
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelLocalService.class)
+	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
 
-	@BeanReference(type = CPOptionLocalService.class)
+	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
-	@BeanReference(type = CPOptionValueLocalService.class)
+	@Reference
 	private CPOptionValueLocalService _cpOptionValueLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = FriendlyURLNormalizer.class)
+	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

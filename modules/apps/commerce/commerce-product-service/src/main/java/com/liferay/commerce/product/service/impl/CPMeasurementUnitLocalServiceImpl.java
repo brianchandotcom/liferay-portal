@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.DuplicateCPMeasurementUnitKeyExcep
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.base.CPMeasurementUnitLocalServiceBaseImpl;
 import com.liferay.commerce.product.util.comparator.CPMeasurementUnitPriorityComparator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -29,17 +30,23 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CPMeasurementUnit",
+	service = AopService.class
+)
 public class CPMeasurementUnitLocalServiceImpl
 	extends CPMeasurementUnitLocalServiceBaseImpl {
 
@@ -385,7 +392,7 @@ public class CPMeasurementUnitLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

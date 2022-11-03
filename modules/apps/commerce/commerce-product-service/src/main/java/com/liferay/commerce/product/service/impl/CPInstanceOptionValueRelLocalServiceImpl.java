@@ -18,18 +18,20 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.base.CPInstanceOptionValueRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the cp instance option value rel local service.
@@ -46,6 +48,10 @@ import java.util.Set;
  * @author Igor Beslic
  * @see    CPInstanceOptionValueRelLocalServiceBaseImpl
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CPInstanceOptionValueRel",
+	service = AopService.class
+)
 public class CPInstanceOptionValueRelLocalServiceImpl
 	extends CPInstanceOptionValueRelLocalServiceBaseImpl {
 
@@ -309,10 +315,10 @@ public class CPInstanceOptionValueRelLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CPDefinitionOptionRelPersistence.class)
+	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

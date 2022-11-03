@@ -37,8 +37,8 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -78,12 +78,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -95,9 +93,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CPAttachmentFileEntry",
+	service = AopService.class
+)
 public class CPAttachmentFileEntryLocalServiceImpl
 	extends CPAttachmentFileEntryLocalServiceBaseImpl {
 
@@ -136,13 +141,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		Date expirationDate = null;
 		Date now = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CPAttachmentFileEntryDisplayDateException.class);
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPAttachmentFileEntryExpirationDateException.class);
@@ -290,7 +295,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
-			long userId = PortalUtil.getValidUserId(
+			long userId = _portal.getValidUserId(
 				cpAttachmentFileEntry.getCompanyId(),
 				cpAttachmentFileEntry.getUserId());
 
@@ -480,9 +485,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
-		long cpDefinitionClassNameId = _portal.getClassNameId(
-			CPDefinition.class);
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		if (_jsonHelper.isArray(serializedDDMFormValues)) {
@@ -496,7 +498,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
-				CPField.RELATED_ENTITY_CLASS_NAME_ID, cpDefinitionClassNameId
+				CPField.RELATED_ENTITY_CLASS_NAME_ID,
+				_portal.getClassNameId(CPDefinition.class)
 			).put(
 				CPField.RELATED_ENTITY_CLASS_PK, cpDefinitionId
 			).put(
@@ -665,13 +668,13 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		Date expirationDate = null;
 		Date now = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CPAttachmentFileEntryDisplayDateException.class);
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPAttachmentFileEntryExpirationDateException.class);
@@ -792,7 +795,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			for (CPAttachmentFileEntry cpAttachmentFileEntry :
 					cpAttachmentFileEntries) {
 
-				long userId = PortalUtil.getValidUserId(
+				long userId = _portal.getValidUserId(
 					cpAttachmentFileEntry.getCompanyId(),
 					cpAttachmentFileEntry.getUserId());
 
@@ -997,34 +1000,34 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPAttachmentFileEntryLocalServiceImpl.class);
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@BeanReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = DLAppLocalService.class)
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = JSONFactory.class)
+	@Reference
 	private JSONFactory _jsonFactory;
 
-	@ServiceReference(type = JsonHelper.class)
+	@Reference
 	private JsonHelper _jsonHelper;
 
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
-	@ServiceReference(type = RepositoryProvider.class)
+	@Reference
 	private RepositoryProvider _repositoryProvider;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

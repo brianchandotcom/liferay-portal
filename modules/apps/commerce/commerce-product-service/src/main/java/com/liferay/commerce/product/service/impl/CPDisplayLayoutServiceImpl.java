@@ -22,23 +22,31 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CPDisplayLayout"
+	},
+	service = AopService.class
+)
 public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
@@ -46,7 +54,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			long groupId, Class<?> clazz, long classPK, String layoutUuid)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
+		_groupPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT);
 
 		_checkCPDisplayLayout(clazz.getName(), classPK, ActionKeys.VIEW);
@@ -62,7 +70,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.getCPDisplayLayout(cpDisplayLayoutId);
 
-		GroupPermissionUtil.check(
+		_groupPermission.check(
 			getPermissionChecker(), cpDisplayLayout.getGroupId(),
 			ActionKeys.ADD_LAYOUT);
 
@@ -99,7 +107,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			int start, int end, Sort sort)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
+		_groupPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return cpDisplayLayoutLocalService.searchCPDisplayLayout(
@@ -164,20 +172,22 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			true);
 	}
 
-	private static volatile ModelResourcePermission<CommerceCatalog>
-		_commerceCatalogModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CPDisplayLayoutServiceImpl.class,
-				"_commerceCatalogModelResourcePermission",
-				CommerceCatalog.class);
-
-	@BeanReference(type = CommerceCatalogLocalService.class)
+	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
-	@BeanReference(type = CPDefinitionLocalService.class)
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceCatalog)"
+	)
+	private ModelResourcePermission<CommerceCatalog>
+		_commerceCatalogModelResourcePermission;
+
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@ServiceReference(type = LayoutLocalService.class)
+	@Reference
+	private GroupPermission _groupPermission;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 }

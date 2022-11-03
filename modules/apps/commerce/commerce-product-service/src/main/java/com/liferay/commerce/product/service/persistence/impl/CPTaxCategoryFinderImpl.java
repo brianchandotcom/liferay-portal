@@ -27,14 +27,17 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Sbarra
  */
+@Component(service = CPTaxCategoryFinder.class)
 public class CPTaxCategoryFinderImpl
 	extends CPTaxCategoryFinderBaseImpl implements CPTaxCategoryFinder {
 
@@ -157,7 +160,7 @@ public class CPTaxCategoryFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

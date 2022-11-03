@@ -17,21 +17,31 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  */
+@Component(
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CPOptionValue"
+	},
+	service = AopService.class
+)
 public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
@@ -193,10 +203,9 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<CPOption>
-		_cpOptionModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CPOptionValueServiceImpl.class,
-				"_cpOptionModelResourcePermission", CPOption.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
+	)
+	private ModelResourcePermission<CPOption> _cpOptionModelResourcePermission;
 
 }

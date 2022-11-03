@@ -24,6 +24,7 @@ import com.liferay.commerce.product.service.base.CommerceChannelAccountEntryRelL
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -34,13 +35,19 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CommerceChannelAccountEntryRel",
+	service = AopService.class
+)
 public class CommerceChannelAccountEntryRelLocalServiceImpl
 	extends CommerceChannelAccountEntryRelLocalServiceBaseImpl {
 
@@ -365,13 +372,13 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = AccountEntryLocalService.class)
+	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -24,14 +24,17 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  */
+@Component(service = CPAttachmentFileEntryFinder.class)
 public class CPAttachmentFileEntryFinderImpl
 	extends CPAttachmentFileEntryFinderBaseImpl
 	implements CPAttachmentFileEntryFinder {
@@ -87,7 +90,7 @@ public class CPAttachmentFileEntryFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

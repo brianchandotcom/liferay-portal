@@ -23,8 +23,8 @@ import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
-import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPField;
@@ -83,11 +83,11 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -129,14 +129,13 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -159,10 +158,17 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CPDefinition",
+	service = AopService.class
+)
 public class CPDefinitionLocalServiceImpl
 	extends CPDefinitionLocalServiceBaseImpl {
 
@@ -203,13 +209,13 @@ public class CPDefinitionLocalServiceImpl
 		Date expirationDate = null;
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CPDefinitionDisplayDateException.class);
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPDefinitionExpirationDateException.class);
@@ -549,7 +555,7 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition newCPDefinition =
 			(CPDefinition)originalCPDefinition.clone();
 
-		newCPDefinition.setUuid(PortalUUIDUtil.generate());
+		newCPDefinition.setUuid(_portalUUID.generate());
 
 		long newCPDefinitionId = counterLocalService.increment();
 
@@ -563,7 +569,7 @@ public class CPDefinitionLocalServiceImpl
 
 		CProduct newCProduct = (CProduct)originalCProduct.clone();
 
-		newCProduct.setUuid(PortalUUIDUtil.generate());
+		newCProduct.setUuid(_portalUUID.generate());
 
 		long cProductId = counterLocalService.increment();
 
@@ -615,7 +621,7 @@ public class CPDefinitionLocalServiceImpl
 					newCPDefinition.getCProductId()) {
 
 				newCPDefinitionLocalization.setName(
-					LanguageUtil.format(
+					_language.format(
 						LocaleUtil.fromLanguageId(
 							newCPDefinitionLocalization.getLanguageId()),
 						"copy-of-x", newCPDefinitionLocalization.getName()));
@@ -635,7 +641,7 @@ public class CPDefinitionLocalServiceImpl
 			CPAttachmentFileEntry newCPAttachmentFileEntry =
 				(CPAttachmentFileEntry)cpAttachmentFileEntry.clone();
 
-			newCPAttachmentFileEntry.setUuid(PortalUUIDUtil.generate());
+			newCPAttachmentFileEntry.setUuid(_portalUUID.generate());
 
 			long cpAttachmentFileEntryId = counterLocalService.increment();
 
@@ -656,7 +662,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinitionLink newCPDefinitionLink =
 				(CPDefinitionLink)cpDefinitionLink.clone();
 
-			newCPDefinitionLink.setUuid(PortalUUIDUtil.generate());
+			newCPDefinitionLink.setUuid(_portalUUID.generate());
 			newCPDefinitionLink.setCPDefinitionLinkId(
 				counterLocalService.increment());
 			newCPDefinitionLink.setCPDefinitionId(newCPDefinitionId);
@@ -677,7 +683,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinitionOptionRel newCPDefinitionOptionRel =
 				(CPDefinitionOptionRel)cpDefinitionOptionRel.clone();
 
-			newCPDefinitionOptionRel.setUuid(PortalUUIDUtil.generate());
+			newCPDefinitionOptionRel.setUuid(_portalUUID.generate());
 
 			long newCPDefinitionOptionRelId = counterLocalService.increment();
 
@@ -703,8 +709,7 @@ public class CPDefinitionLocalServiceImpl
 					(CPDefinitionOptionValueRel)
 						cpDefinitionOptionValueRel.clone();
 
-				newCPDefinitionOptionValueRel.setUuid(
-					PortalUUIDUtil.generate());
+				newCPDefinitionOptionValueRel.setUuid(_portalUUID.generate());
 				newCPDefinitionOptionValueRel.setCPDefinitionOptionValueRelId(
 					counterLocalService.increment());
 				newCPDefinitionOptionValueRel.setCPDefinitionOptionRelId(
@@ -734,7 +739,7 @@ public class CPDefinitionLocalServiceImpl
 						cpDefinitionSpecificationOptionValue.clone();
 
 			newCPDefinitionSpecificationOptionValue.setUuid(
-				PortalUUIDUtil.generate());
+				_portalUUID.generate());
 			newCPDefinitionSpecificationOptionValue.
 				setCPDefinitionSpecificationOptionValueId(
 					counterLocalService.increment());
@@ -753,7 +758,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDisplayLayout newCPDisplayLayout =
 				(CPDisplayLayout)cpDisplayLayout.clone();
 
-			newCPDisplayLayout.setUuid(PortalUUIDUtil.generate());
+			newCPDisplayLayout.setUuid(_portalUUID.generate());
 			newCPDisplayLayout.setCPDisplayLayoutId(
 				counterLocalService.increment());
 			newCPDisplayLayout.setClassPK(newCPDefinitionId);
@@ -767,7 +772,7 @@ public class CPDefinitionLocalServiceImpl
 		for (CPInstance cpInstance : cpInstances) {
 			CPInstance newCPInstance = (CPInstance)cpInstance.clone();
 
-			newCPInstance.setUuid(PortalUUIDUtil.generate());
+			newCPInstance.setUuid(_portalUUID.generate());
 
 			long cpInstanceId = counterLocalService.increment();
 
@@ -776,7 +781,7 @@ public class CPDefinitionLocalServiceImpl
 			newCPInstance.setCPInstanceId(cpInstanceId);
 
 			newCPInstance.setCPDefinitionId(newCPDefinitionId);
-			newCPInstance.setCPInstanceUuid(PortalUUIDUtil.generate());
+			newCPInstance.setCPInstanceUuid(_portalUUID.generate());
 
 			List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
 				_cpInstanceOptionValueRelPersistence.findByCPInstanceId(
@@ -788,7 +793,7 @@ public class CPDefinitionLocalServiceImpl
 				CPInstanceOptionValueRel newCPInstanceOptionValueRel =
 					(CPInstanceOptionValueRel)cpInstanceOptionValueRel.clone();
 
-				newCPInstanceOptionValueRel.setUuid(PortalUUIDUtil.generate());
+				newCPInstanceOptionValueRel.setUuid(_portalUUID.generate());
 				newCPInstanceOptionValueRel.setCPInstanceOptionValueRelId(
 					counterLocalService.increment());
 				newCPInstanceOptionValueRel.setCPInstanceId(
@@ -928,7 +933,7 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition newCPDefinition =
 			(CPDefinition)originalCPDefinition.clone();
 
-		newCPDefinition.setUuid(PortalUUIDUtil.generate());
+		newCPDefinition.setUuid(_portalUUID.generate());
 
 		long newCPDefinitionId = counterLocalService.increment();
 
@@ -1010,7 +1015,7 @@ public class CPDefinitionLocalServiceImpl
 					newCPDefinition.getCProductId()) {
 
 				newCPDefinitionLocalization.setName(
-					LanguageUtil.format(
+					_language.format(
 						LocaleUtil.fromLanguageId(
 							newCPDefinitionLocalization.getLanguageId()),
 						"copy-of-x", newCPDefinitionLocalization.getName()));
@@ -1030,7 +1035,7 @@ public class CPDefinitionLocalServiceImpl
 			CPAttachmentFileEntry newCPAttachmentFileEntry =
 				(CPAttachmentFileEntry)cpAttachmentFileEntry.clone();
 
-			newCPAttachmentFileEntry.setUuid(PortalUUIDUtil.generate());
+			newCPAttachmentFileEntry.setUuid(_portalUUID.generate());
 
 			long cpAttachmentFileEntryId = counterLocalService.increment();
 
@@ -1051,7 +1056,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinitionLink newCPDefinitionLink =
 				(CPDefinitionLink)cpDefinitionLink.clone();
 
-			newCPDefinitionLink.setUuid(PortalUUIDUtil.generate());
+			newCPDefinitionLink.setUuid(_portalUUID.generate());
 			newCPDefinitionLink.setCPDefinitionLinkId(
 				counterLocalService.increment());
 			newCPDefinitionLink.setCPDefinitionId(newCPDefinitionId);
@@ -1072,7 +1077,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinitionOptionRel newCPDefinitionOptionRel =
 				(CPDefinitionOptionRel)cpDefinitionOptionRel.clone();
 
-			newCPDefinitionOptionRel.setUuid(PortalUUIDUtil.generate());
+			newCPDefinitionOptionRel.setUuid(_portalUUID.generate());
 
 			long newCPDefinitionOptionRelId = counterLocalService.increment();
 
@@ -1098,8 +1103,7 @@ public class CPDefinitionLocalServiceImpl
 					(CPDefinitionOptionValueRel)
 						cpDefinitionOptionValueRel.clone();
 
-				newCPDefinitionOptionValueRel.setUuid(
-					PortalUUIDUtil.generate());
+				newCPDefinitionOptionValueRel.setUuid(_portalUUID.generate());
 				newCPDefinitionOptionValueRel.setCPDefinitionOptionValueRelId(
 					counterLocalService.increment());
 				newCPDefinitionOptionValueRel.setCPDefinitionOptionRelId(
@@ -1129,7 +1133,7 @@ public class CPDefinitionLocalServiceImpl
 						cpDefinitionSpecificationOptionValue.clone();
 
 			newCPDefinitionSpecificationOptionValue.setUuid(
-				PortalUUIDUtil.generate());
+				_portalUUID.generate());
 			newCPDefinitionSpecificationOptionValue.
 				setCPDefinitionSpecificationOptionValueId(
 					counterLocalService.increment());
@@ -1148,7 +1152,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDisplayLayout newCPDisplayLayout =
 				(CPDisplayLayout)cpDisplayLayout.clone();
 
-			newCPDisplayLayout.setUuid(PortalUUIDUtil.generate());
+			newCPDisplayLayout.setUuid(_portalUUID.generate());
 			newCPDisplayLayout.setCPDisplayLayoutId(
 				counterLocalService.increment());
 			newCPDisplayLayout.setClassPK(newCPDefinitionId);
@@ -1162,7 +1166,7 @@ public class CPDefinitionLocalServiceImpl
 		for (CPInstance cpInstance : cpInstances) {
 			CPInstance newCPInstance = (CPInstance)cpInstance.clone();
 
-			newCPInstance.setUuid(PortalUUIDUtil.generate());
+			newCPInstance.setUuid(_portalUUID.generate());
 
 			long cpInstanceId = counterLocalService.increment();
 
@@ -1183,7 +1187,7 @@ public class CPDefinitionLocalServiceImpl
 				CPInstanceOptionValueRel newCPInstanceOptionValueRel =
 					(CPInstanceOptionValueRel)cpInstanceOptionValueRel.clone();
 
-				newCPInstanceOptionValueRel.setUuid(PortalUUIDUtil.generate());
+				newCPInstanceOptionValueRel.setUuid(_portalUUID.generate());
 				newCPInstanceOptionValueRel.setCPInstanceOptionValueRelId(
 					counterLocalService.increment());
 				newCPInstanceOptionValueRel.setCPInstanceId(
@@ -2150,13 +2154,13 @@ public class CPDefinitionLocalServiceImpl
 		Date expirationDate = null;
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CPDefinitionDisplayDateException.class);
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPDefinitionExpirationDateException.class);
@@ -2610,12 +2614,12 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
-			CommercePriceListLocalServiceUtil.
+			_commercePriceListLocalService.
 				getCatalogBaseCommercePriceListByType(
 					cpInstance.getGroupId(), type);
 
 		CommercePriceEntry commercePriceEntry =
-			CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(), cpInstanceUuid);
 
 		if (commercePriceEntry == null) {
@@ -2624,7 +2628,7 @@ public class CPDefinitionLocalServiceImpl
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
+		_commercePriceEntryLocalService.addCommercePriceEntry(
 			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(),
 			commercePriceEntry.getPrice(), null, serviceContext);
@@ -2807,7 +2811,7 @@ public class CPDefinitionLocalServiceImpl
 			new Date(), WorkflowConstants.STATUS_SCHEDULED);
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
-			long userId = PortalUtil.getValidUserId(
+			long userId = _portal.getValidUserId(
 				cpDefinition.getCompanyId(), cpDefinition.getUserId());
 
 			ServiceContext serviceContext = new ServiceContext();
@@ -2847,7 +2851,7 @@ public class CPDefinitionLocalServiceImpl
 
 		if ((cpDefinitions != null) && !cpDefinitions.isEmpty()) {
 			for (CPDefinition cpDefinition : cpDefinitions) {
-				long userId = PortalUtil.getValidUserId(
+				long userId = _portal.getValidUserId(
 					cpDefinition.getCompanyId(), cpDefinition.getUserId());
 
 				ServiceContext serviceContext = new ServiceContext();
@@ -3166,105 +3170,118 @@ public class CPDefinitionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalServiceImpl.class);
 
-	@ServiceReference(type = AssetEntryLocalService.class)
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	@ServiceReference(type = AssetLinkLocalService.class)
+	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@ServiceReference(type = CommerceAccountGroupRelLocalService.class)
+	@Reference
 	private CommerceAccountGroupRelLocalService
 		_commerceAccountGroupRelLocalService;
 
-	@BeanReference(type = CommerceChannelRelLocalService.class)
+	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
-	@BeanReference(type = CPAttachmentFileEntryLocalService.class)
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
 
-	@BeanReference(type = CPAttachmentFileEntryPersistence.class)
+	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
 
-	@BeanReference(type = CPDefinitionLinkLocalService.class)
+	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
-	@BeanReference(type = CPDefinitionLinkPersistence.class)
+	@Reference
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;
 
-	@BeanReference(type = CPDefinitionOptionRelLocalService.class)
+	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
-	@BeanReference(type = CPDefinitionOptionRelPersistence.class)
+	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
 
-	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
+	@Reference
 	private CPDefinitionOptionValueRelPersistence
 		_cpDefinitionOptionValueRelPersistence;
 
-	@BeanReference(
-		type = CPDefinitionSpecificationOptionValueLocalService.class
-	)
+	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
 
-	@BeanReference(type = CPDefinitionSpecificationOptionValuePersistence.class)
+	@Reference
 	private CPDefinitionSpecificationOptionValuePersistence
 		_cpDefinitionSpecificationOptionValuePersistence;
 
-	@BeanReference(type = CPDisplayLayoutLocalService.class)
+	@Reference
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
-	@BeanReference(type = CPDisplayLayoutPersistence.class)
+	@Reference
 	private CPDisplayLayoutPersistence _cpDisplayLayoutPersistence;
 
-	@BeanReference(type = CPInstanceLocalService.class)
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelLocalService.class)
+	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelPersistence.class)
+	@Reference
 	private CPInstanceOptionValueRelPersistence
 		_cpInstanceOptionValueRelPersistence;
 
-	@BeanReference(type = CPInstancePersistence.class)
+	@Reference
 	private CPInstancePersistence _cpInstancePersistence;
 
-	@BeanReference(type = CProductLocalService.class)
+	@Reference
 	private CProductLocalService _cProductLocalService;
 
-	@BeanReference(type = CProductPersistence.class)
+	@Reference
 	private CProductPersistence _cProductPersistence;
 
-	@ServiceReference(type = CPTypeRegistry.class)
+	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
 
-	@ServiceReference(type = DDMStructureLocalService.class)
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = FriendlyURLEntryLocalService.class)
+	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
-	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
+	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
-	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

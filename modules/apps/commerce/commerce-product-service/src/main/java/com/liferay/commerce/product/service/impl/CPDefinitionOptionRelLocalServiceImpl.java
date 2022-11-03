@@ -34,7 +34,7 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueR
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -85,10 +84,17 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Igor Beslic
  */
+@Component(
+	property = "model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel",
+	service = AopService.class
+)
 public class CPDefinitionOptionRelLocalServiceImpl
 	extends CPDefinitionOptionRelLocalServiceBaseImpl {
 
@@ -959,40 +965,40 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
 
-	@ServiceReference(type = ConfigurationProvider.class)
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@BeanReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@BeanReference(type = CPDefinitionOptionValueRelLocalService.class)
+	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
 
-	@BeanReference(type = CPDefinitionOptionValueRelPersistence.class)
+	@Reference
 	private CPDefinitionOptionValueRelPersistence
 		_cpDefinitionOptionValueRelPersistence;
 
-	@BeanReference(type = CPInstanceLocalService.class)
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelPersistence.class)
+	@Reference
 	private CPInstanceOptionValueRelPersistence
 		_cpInstanceOptionValueRelPersistence;
 
-	@BeanReference(type = CPOptionLocalService.class)
+	@Reference
 	private CPOptionLocalService _cpOptionLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = JSONFactory.class)
+	@Reference
 	private JSONFactory _jsonFactory;
 
-	@ServiceReference(type = JsonHelper.class)
+	@Reference
 	private JsonHelper _jsonHelper;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

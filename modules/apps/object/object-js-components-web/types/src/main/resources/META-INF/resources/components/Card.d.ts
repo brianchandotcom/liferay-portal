@@ -14,15 +14,8 @@
 
 import React from 'react';
 import './Card.scss';
-export declare function Card({
-	children,
-	className,
-	title,
-	tooltip,
-	viewMode,
-	...otherProps
-}: IProps): JSX.Element;
-interface IProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+	disabled?: boolean;
 	title: string;
 	tooltip?: ITooltip | null;
 	viewMode?: 'inline' | 'no-children' | 'no-margin' | 'no-padding';
@@ -31,4 +24,13 @@ interface ITooltip {
 	content: string;
 	symbol: string;
 }
+export declare function Card({
+	children,
+	className,
+	disabled,
+	title,
+	tooltip,
+	viewMode,
+	...otherProps
+}: CardProps): JSX.Element;
 export {};

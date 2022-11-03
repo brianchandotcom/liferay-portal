@@ -61,6 +61,10 @@
 	&-title {
 		margin: 0;
 
+		&--disabled {
+			opacity: 0.5;
+		}
+
 		&--with-padding {
 			padding: 8px 46px 8px 16px;
 		}

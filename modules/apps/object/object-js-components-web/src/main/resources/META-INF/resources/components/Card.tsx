@@ -18,14 +18,27 @@ import React from 'react';
 
 import './Card.scss';
 
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+	disabled?: boolean;
+	title: string;
+	tooltip?: ITooltip | null;
+	viewMode?: 'inline' | 'no-children' | 'no-margin' | 'no-padding';
+}
+
+interface ITooltip {
+	content: string;
+	symbol: string;
+}
+
 export function Card({
 	children,
 	className,
+	disabled,
 	title,
 	tooltip,
 	viewMode,
 	...otherProps
-}: IProps) {
+}: CardProps) {
 	const inline = viewMode === 'inline';
 	const noChildren = viewMode === 'no-children';
 	const noMargin = viewMode === 'no-margin';
@@ -49,7 +62,16 @@ export function Card({
 						title
 					) : (
 						<div className="lfr-objects__card-header">
-							<h3 className="lfr-objects__card-title">{title}</h3>
+							<h3
+								className={classNames(
+									'lfr-objects__card-title',
+									{
+										'lfr-objects__card-title--disabled': disabled,
+									}
+								)}
+							>
+								{title}
+							</h3>
 
 							{tooltip && (
 								<span
@@ -78,15 +100,4 @@ export function Card({
 			)}
 		</div>
 	);
-}
-
-interface IProps extends React.HTMLAttributes<HTMLDivElement> {
-	title: string;
-	tooltip?: ITooltip | null;
-	viewMode?: 'inline' | 'no-children' | 'no-margin' | 'no-padding';
-}
-
-interface ITooltip {
-	content: string;
-	symbol: string;
 }

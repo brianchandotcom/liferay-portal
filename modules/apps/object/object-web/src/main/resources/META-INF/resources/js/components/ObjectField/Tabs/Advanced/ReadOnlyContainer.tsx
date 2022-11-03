@@ -18,8 +18,8 @@ import React from 'react';
 
 interface ReadOnlyContainerProps {
 	disabled?: boolean;
+	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (value: Partial<ObjectField>) => void;
-	values: Partial<ObjectField>;
 }
 
 const updateReadOnlyScriptSetting = (
@@ -48,27 +48,27 @@ const findObjectFieldSetting = (
 
 export function ReadOnlyContainer({
 	disabled,
+	objectFieldSettings,
 	setValues,
-	values,
 }: ReadOnlyContainerProps) {
 	const readOnlySetting = findObjectFieldSetting(
-		values.objectFieldSettings as ObjectFieldSetting[],
+		objectFieldSettings,
 		'readOnly'
 	);
 
 	const readOnlyScriptSetting = findObjectFieldSetting(
-		values.objectFieldSettings as ObjectFieldSetting[],
+		objectFieldSettings,
 		'readOnlyScript'
 	);
 
 	const setReadOnly = (value: string) => {
 		setValues({
 			objectFieldSettings: [
-				...(values.objectFieldSettings?.filter(
+				...objectFieldSettings?.filter(
 					(objectFieldSetting) =>
 						objectFieldSetting.name !== 'readOnly' &&
 						objectFieldSetting.name !== 'readOnlyScript'
-				) as ObjectFieldSetting[]),
+				),
 				{
 					name: 'readOnly',
 					value,
@@ -111,7 +111,7 @@ export function ReadOnlyContainer({
 					onChange={({target: {value}}) => {
 						setValues({
 							objectFieldSettings: updateReadOnlyScriptSetting(
-								values.objectFieldSettings as ObjectFieldSetting[],
+								objectFieldSettings,
 								value
 							),
 						});
@@ -126,7 +126,7 @@ export function ReadOnlyContainer({
 								onSave: (script: string) => {
 									setValues({
 										objectFieldSettings: updateReadOnlyScriptSetting(
-											values.objectFieldSettings as ObjectFieldSetting[],
+											objectFieldSettings,
 											script
 										),
 									});

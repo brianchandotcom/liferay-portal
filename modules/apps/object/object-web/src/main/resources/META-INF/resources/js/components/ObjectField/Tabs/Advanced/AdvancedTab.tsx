@@ -29,8 +29,10 @@ export function AdvancedTab({setValues, values}: AdvancedTabProps) {
 				values.businessType === 'Aggregation' ||
 				values.businessType === 'Formula'
 			}
+			objectFieldSettings={
+				values.objectFieldSettings as ObjectFieldSetting[]
+			}
 			setValues={setValues}
-			values={values}
 		/>
 	);
 }

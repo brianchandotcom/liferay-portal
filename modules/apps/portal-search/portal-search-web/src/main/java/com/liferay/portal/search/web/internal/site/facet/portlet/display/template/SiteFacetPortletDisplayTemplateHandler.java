@@ -48,7 +48,7 @@ public class SiteFacetPortletDisplayTemplateHandler
 
 	@Override
 	public String getClassName() {
-		return ScopeSearchFacetTermDisplayContext.class.getName();
+		return ScopeSearchFacetDisplayContext.class.getName();
 	}
 
 	@Override

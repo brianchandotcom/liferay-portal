@@ -45,7 +45,9 @@
 		<field localized="true" name="label" type="String">
 			<validator name="required" />
 		</field>
-		<field name="className" type="String" />
+		<field name="className" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="enableCategorization" type="boolean" />
 		<field name="enableComments" type="boolean" />
 		<field name="enableObjectEntryHistory" type="boolean" />

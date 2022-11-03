@@ -94,14 +94,11 @@ export default function ({
 				externalTypeInput.value = template.externalType;
 			}
 
-			const taskItemDelegateName = template.taskItemDelegateName;
+			let selectedClassNameValue = template.internalClassName;
 
-			const selectedClassNameValue =
-				template.internalClassName +
-				'' +
-				(taskItemDelegateName !== 'DEFAULT'
-					? '#C_' + taskItemDelegateName
-					: '');
+			if (template.taskItemDelegateName !== 'DEFAULT') {
+				selectedClassNameValue += '#' + template.taskItemDelegateName;
+			}
 
 			const internalClassTemplateOption = internalClassNameSelect.querySelector(
 				`option[value='${selectedClassNameValue}']`

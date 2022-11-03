@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Date;
@@ -109,7 +110,9 @@ public class ContentDashboardItemVersion {
 				contentDashboardItemVersionAction :
 					_contentDashboardItemVersionActions) {
 
-			if (contentDashboardItemVersionAction == null) {
+			if ((contentDashboardItemVersionAction == null) ||
+				Validator.isNull(contentDashboardItemVersionAction.getURL())) {
+
 				continue;
 			}
 

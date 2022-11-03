@@ -329,6 +329,14 @@ public class DownstreamBuild extends BaseBuild {
 		return warningMessages;
 	}
 
+	public synchronized void update() {
+		super.update();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(getResult())) {
+			setStatus("completed");
+		}
+	}
+
 	protected DownstreamBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 	}
@@ -735,6 +743,14 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		return testResultGitHubElements;
+	}
+
+	protected void setResult(String result) {
+		this.result = result;
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			setStatus("running");
+		}
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

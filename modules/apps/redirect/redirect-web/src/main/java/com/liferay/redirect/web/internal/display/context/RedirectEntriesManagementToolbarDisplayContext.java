@@ -64,7 +64,7 @@ public class RedirectEntriesManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedRedirectEntries");
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

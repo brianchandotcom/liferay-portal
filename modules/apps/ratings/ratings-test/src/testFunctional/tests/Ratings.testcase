@@ -1022,7 +1022,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
+			column = "2",
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");

@@ -4310,6 +4310,58 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_DISABLED");
 	}
 
+	macro reorderElementViaKeyboard {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		KeyPress(
+			ariaLabel = "Move ${elementName}",
+			key_index = "${index}",
+			key_nodeName = "${elementName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_BUTTON_WITH_ARIA_LABEL_INDEX",
+			value1 = "\ENTER");
+
+		if (isSet(upCount)) {
+			var i = "0";
+
+			while ("${i}" != "${upCount}") {
+				KeyPress(
+					ariaLabel = "Move ${elementName}",
+					key_index = "${index}",
+					key_nodeName = "${elementName}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_BUTTON_WITH_ARIA_LABEL_INDEX",
+					value1 = "\UP");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		if (isSet(downCount)) {
+			var i = "0";
+
+			while ("${i}" != "${downCount}") {
+				KeyPress(
+					ariaLabel = "Move ${elementName}",
+					key_index = "${index}",
+					key_nodeName = "${elementName}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_BUTTON_WITH_ARIA_LABEL_INDEX",
+					value1 = "\DOWN");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		KeyPress(
+			ariaLabel = "Move ${elementName}",
+			key_index = "${index}",
+			key_nodeName = "${elementName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_BUTTON_WITH_ARIA_LABEL_INDEX",
+			value1 = "\ENTER");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro reorderSets {
 		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_REORDER_SETS_BUTTON");
 

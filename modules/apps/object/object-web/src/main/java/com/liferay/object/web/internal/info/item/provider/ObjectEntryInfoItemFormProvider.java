@@ -484,6 +484,8 @@ public class ObjectEntryInfoItemFormProvider
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
 			options.add(
 				new SelectInfoFieldType.Option(
+					Objects.equals(
+						objectField.getDefaultValue(), listTypeEntry.getKey()),
 					new FunctionInfoLocalizedValue<>(listTypeEntry::getName),
 					listTypeEntry.getKey()));
 		}

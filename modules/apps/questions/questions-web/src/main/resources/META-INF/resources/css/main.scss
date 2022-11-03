@@ -36,11 +36,13 @@
 			border: 1px solid $primary-l1;
 		}
 	}
+
 	&:not(#user-activity-row) {
 		&:after {
 			background-color: $secondary-l3;
 		}
 	}
+
 	&:after {
 		border-radius: 0.25rem;
 		opacity: 0;
@@ -348,19 +350,21 @@
 	width: 400px;
 }
 
-.panel-from-activity {
+.activity-panel {
 	max-height: 850px;
 	overflow: auto;
 	overflow-x: hidden;
 	padding: 8px;
 }
-.panel-from-activity,
+
+.activity-panel,
 div {
 	::-webkit-scrollbar {
 		background: #fff;
 		border-radius: 5px;
 		width: 5px;
 	}
+
 	::-webkit-scrollbar-thumb {
 		background: #a7a9bc;
 	}

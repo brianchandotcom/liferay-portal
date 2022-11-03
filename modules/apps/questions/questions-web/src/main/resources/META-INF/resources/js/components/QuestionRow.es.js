@@ -57,13 +57,15 @@ export default function QuestionRow({
 				portraitURL: '',
 				userId: '0',
 		  };
-	const isRowSelected = rowSelected === question.friendlyUrlPath;
+
+	const isRowSelected = question.friendlyUrlPath === rowSelected;
 
 	return (
 		<div
-			className={`c-mt-4 c-p-3 position-relative question-row text-secondary ${
-				isRowSelected && 'question-row-selected'
-			}`}
+			className={classNames(
+				'c-mt-4 c-p-3 position-relative question-row text-secondary',
+				{'question-row-selected': isRowSelected}
+			)}
 		>
 			<div className="align-items-center d-flex flex-wrap justify-content-between">
 				<span>

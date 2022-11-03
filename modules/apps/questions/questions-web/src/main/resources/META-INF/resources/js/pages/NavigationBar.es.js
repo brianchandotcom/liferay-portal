@@ -45,9 +45,11 @@ export default withRouter(({history, location}) => {
 	const getLabel = () => {
 		if (location.pathname.includes('tags')) {
 			return Liferay.Language.get('tags');
-		} else if (location.pathname.includes('activity')) {
+		}
+		else if (location.pathname.includes('activity')) {
 			return Liferay.Language.get('activity');
-		} else if (location.pathname.includes('subscriptions')) {
+		}
+		else if (location.pathname.includes('subscriptions')) {
 			return Liferay.Language.get('subscriptions');
 		}
 

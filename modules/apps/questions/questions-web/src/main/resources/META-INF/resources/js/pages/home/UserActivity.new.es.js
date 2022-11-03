@@ -75,9 +75,9 @@ export default withRouter(
 
 			setLoading(true);
 
-			fetchUserActivity().then(({data, loading}) => {
+			fetchUserActivity().then(({data}) => {
 				setTotalCount(data?.messageBoardMessages.totalCount || 0);
-				setLoading(loading);
+				setLoading(false);
 			});
 		}, [fetchUserActivity, page, pageSize]);
 
@@ -119,7 +119,7 @@ export default withRouter(
 					</div>
 
 					<div className="border-top container d-flex flex-row justify-content-between">
-						<div className="c-mb-2 c-mr-2 c-px-0 col-xl-7 panel-from-activity">
+						<div className="activity-panel c-mb-2 c-mr-2 c-px-0 col-xl-7">
 							<PaginatedList
 								activeDelta={pageSize}
 								activePage={page}
@@ -184,7 +184,7 @@ export default withRouter(
 							</PaginatedList>
 						</div>
 
-						<div className="border-left c-p-4 col-xl-5 modal-body panel-from-activity">
+						<div className="activity-panel border-left c-p-4 col-xl-5 modal-body">
 							<Question
 								display={{
 									actions: false,

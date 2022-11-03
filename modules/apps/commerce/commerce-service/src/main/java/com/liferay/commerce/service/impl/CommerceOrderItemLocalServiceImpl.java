@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -2293,6 +2294,13 @@ public class CommerceOrderItemLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.UID
 	};
 
+	private static volatile CommerceOrderLocalService
+		_commerceOrderLocalService =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				CommerceOrderLocalService.class,
+				CommerceOrderItemLocalServiceImpl.class,
+				"_commerceOrderLocalService", true);
+
 	@Reference
 	private CommerceInventoryBookedQuantityLocalService
 		_commerceInventoryBookedQuantityLocalService;
@@ -2309,9 +2317,6 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Reference
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
-
-	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;

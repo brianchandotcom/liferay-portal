@@ -17,8 +17,6 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
-import com.liferay.layout.page.template.exporter.PortletConfigurationExporter;
-import com.liferay.layout.page.template.exporter.PortletConfigurationExporterRegistry;
 import com.liferay.layout.page.template.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,15 +88,6 @@ public class WidgetInstanceMapper {
 
 		if (portlet == null) {
 			return null;
-		}
-
-		PortletConfigurationExporter portletConfigurationExporter =
-			_portletConfigurationExporterRegistry.
-				getPortletConfigurationExporter(portletName);
-
-		if (portletConfigurationExporter != null) {
-			return portletConfigurationExporter.getPortletConfiguration(
-				plid, portletId);
 		}
 
 		return _portletPreferencesPortletConfigurationExporter.
@@ -226,10 +215,6 @@ public class WidgetInstanceMapper {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletConfigurationExporterRegistry
-		_portletConfigurationExporterRegistry;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

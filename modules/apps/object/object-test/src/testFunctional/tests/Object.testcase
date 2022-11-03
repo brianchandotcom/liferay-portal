@@ -323,6 +323,43 @@ definition {
 			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
 	}
 
+	@description = "LPS-162021 - Verify that the delete modal 'Delete' button is disabled by default"
+	@priority = "4"
+	test CanViewDeleteButtonDisabledByDefault {
+		task ("Given an object with a field is created and published via API") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162021",
+				objectName = "CustomObject162021",
+				pluralLabelName = "Custom Objects 162021");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject162021");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162021");
+		}
+
+		task ("When the user selects to delete the object") {
+			ObjectAdmin.openObjectAdmin();
+
+			Click(
+				key_objectLabel = "Custom Object 162021",
+				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+		}
+
+		task ("Then the delete modal will have the 'delete' button disabled by default") {
+			AssertElementPresent(
+				key_text = "Delete",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
 	@description = "Verify that it's possible to view the custom object after restarting portal"
 	@priority = "5"
 	test CanViewObjectAfterRestart {

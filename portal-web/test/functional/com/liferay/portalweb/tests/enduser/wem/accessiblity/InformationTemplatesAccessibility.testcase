@@ -1,0 +1,60 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-164875. The template creator could leave code mirror via keyboard."
+	@priority = "2"
+	test LeaveCodeMirrorViaKeyboard {
+		task ("Given a template creator has a information template") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemType = "Category");
+		}
+
+		task ("When the template creator edits contents in code mirror") {
+			KeyPress(
+				key_text = "Save",
+				locator1 = "Button#ANY",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'CodeMirror-code')]");
+		}
+
+		task ("Then the template creator could comes out of code mirror via keyboard") {
+			KeyPress(
+				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//input[contains(@id,'SearchInputId')]");
+		}
+	}
+
+}

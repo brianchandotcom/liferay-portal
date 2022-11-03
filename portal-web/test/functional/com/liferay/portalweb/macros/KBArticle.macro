@@ -8,11 +8,11 @@ definition {
 			locator1 = "KnowledgeBase#CHILD_PAGE_HEADER",
 			value1 = "Child Article");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#CHILD_PAGE_TITLE",
 			value1 = "${kbChildArticleTitle}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#CHILD_PAGE_CONTENT",
 			value1 = "${kbChildArticleContent}");
 

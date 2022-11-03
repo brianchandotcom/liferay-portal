@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -38,6 +39,18 @@ public class ObjectRelationshipTestUtil {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), type);
+	}
+
+	public static void relateObjectEntries(
+			long objectEntryId1, long objectEntryId2,
+			ObjectRelationship objectRelationship, long userId)
+		throws Exception {
+
+		ObjectRelationshipLocalServiceUtil.
+			addObjectRelationshipMappingTableValues(
+				userId, objectRelationship.getObjectRelationshipId(),
+				objectEntryId1, objectEntryId2,
+				ServiceContextTestUtil.getServiceContext());
 	}
 
 }

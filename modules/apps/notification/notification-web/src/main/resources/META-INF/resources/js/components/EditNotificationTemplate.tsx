@@ -52,13 +52,12 @@ interface IProps {
 	notificationTemplateId: number;
 	notificationTemplateType: string;
 }
+
 interface Role {
-	accountId: number;
 	description: string;
-	displayName: string;
 	id: number;
 	name: string;
-	roleId: number;
+	roleType: string;
 }
 
 interface User {
@@ -276,10 +275,9 @@ export default function EditNotificationTemplate({
 		validate,
 	});
 
-	const getAccountRoles = async (searchTerm: string) => {
-		const apiURL = '/o/headless-admin-user/v1.0/accounts/0/account-roles';
-		const query = `${apiURL}?page=1&pageSize=10&sort=name:asc${
-			searchTerm ? `&filter=contains(name, '${searchTerm}')` : ''
+	const getRoles = async (searchTerm: string) => {
+		const query = `/o/headless-admin-user/v1.0/roles?page=1&pageSize=10${
+			searchTerm ? `&search=${searchTerm}` : ''
 		}`;
 		const response = await fetch(query, {
 			headers: HEADERS,
@@ -288,9 +286,9 @@ export default function EditNotificationTemplate({
 
 		const responseJSON = await response.json();
 
-		const roles = responseJSON.items.map(({displayName, name}: Role) => {
+		const roles = responseJSON.items.map(({name}: Role) => {
 			return {
-				label: displayName,
+				label: name,
 				value: name,
 			};
 		});
@@ -386,7 +384,7 @@ export default function EditNotificationTemplate({
 	useEffect(() => {
 		const delayDebounceFn = setTimeout(() => {
 			values.recipientType === 'role'
-				? getAccountRoles(searchTerm)
+				? getRoles(searchTerm)
 				: getUserAccounts(searchTerm);
 		}, 500);
 
@@ -542,7 +540,7 @@ export default function EditNotificationTemplate({
 												});
 
 												if (item.value === 'role') {
-													getAccountRoles('');
+													getRoles('');
 												}
 											}}
 											options={RECIPIENT_OPTIONS}

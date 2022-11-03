@@ -760,9 +760,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		scriptingDestination.register(schedulerEventMessageListenerWrapper);
 
 		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			"(objectClass=" + SchedulerEventMessageListener.class.getName() +
-				")",
+			_bundleContext, SchedulerEventMessageListener.class,
 			new SchedulerEventMessageListenerServiceTrackerCustomizer());
 
 		DependencyManagerSyncUtil.registerSyncCallable(

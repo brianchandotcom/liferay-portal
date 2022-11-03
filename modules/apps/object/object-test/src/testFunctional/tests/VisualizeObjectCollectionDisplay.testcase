@@ -25,6 +25,7 @@ definition {
 	@priority = "5"
 	test CanDisplayEntriesOnTableFormat {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 299",
@@ -159,6 +160,7 @@ definition {
 	@priority = "5"
 	test ObjectEntriesAreRendered {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 302",

@@ -1,0 +1,31 @@
+definition {
+
+	macro viewLogFileContentNotPresent {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "copy-log-file");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileContent = FileUtil.read("${liferayHome}/liferay.log");
+
+		if (contains("${fileContent}", "${logContent}")) {
+			fail("${logContent} is present in portal log.");
+		}
+	}
+
+	macro viewLogFileContentPresent {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "copy-log-file");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileContent = FileUtil.read("${liferayHome}/liferay.log");
+
+		if (!(contains("${fileContent}", "${logContent}"))) {
+			fail("${logContent} is not present in portal log.");
+		}
+	}
+
+}

@@ -27,7 +27,6 @@ import {
 } from '../../../app/contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
-import useTabsKeyboardNavigation from '../../../app/utils/useTabsKeyboardNavigation';
 import {useId} from '../../../core/hooks/useId';
 import {useSessionState} from '../../../core/hooks/useSessionState';
 import {COLLECTION_IDS} from './FragmentsSidebar';
@@ -106,18 +105,22 @@ export default function TabsPanel({
 		};
 	}, [setScrollPosition]);
 
-	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
-		numberOfPanels: tabs.length,
-		selectPanel: (panelIndex) => {
-			const tab = tabs[panelIndex];
-
-			setActiveTabId(tab.id);
-		},
-	});
-
 	return (
 		<>
-			<ClayTabs className="flex-shrink-0 page-editor__sidebar__fragments-widgets-panel__tabs px-3">
+			<ClayTabs
+				activation="automatic"
+				active={activeTabId}
+				className="flex-shrink-0 page-editor__sidebar__fragments-widgets-panel__tabs px-3"
+				onActiveChange={(activeTabId) => {
+					setActiveTabId(activeTabId);
+
+					setScrollPosition(0);
+
+					if (wrapperElementRef.current) {
+						wrapperElementRef.current.scrollTop = 0;
+					}
+				}}
+			>
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.id === activeTabId}
@@ -126,16 +129,6 @@ export default function TabsPanel({
 							'id': getTabId(index),
 						}}
 						key={index}
-						onClick={() => {
-							setActiveTabId(tab.id);
-							setScrollPosition(0);
-
-							if (wrapperElementRef.current) {
-								wrapperElementRef.current.scrollTop = 0;
-							}
-						}}
-						onKeyDown={(event) => onTabItemKeyDown(event, index)}
-						ref={(ref) => tabItemRef(ref, index)}
 					>
 						{tab.label}
 					</ClayTabs.Item>
@@ -144,9 +137,7 @@ export default function TabsPanel({
 
 			<div className="overflow-auto pt-4 px-3" ref={wrapperElementRef}>
 				<ClayTabs.Content
-					activeIndex={tabs.findIndex(
-						(tab) => tab.id === activeTabId
-					)}
+					activeIndex={activeTabId}
 					className="page-editor__sidebar__fragments-widgets-panel__tab-content"
 					fade
 				>
@@ -191,7 +182,7 @@ TabsPanel.propTypes = {
 	tabs: PropTypes.arrayOf(
 		PropTypes.shape({
 			collections: PropTypes.arrayOf(PropTypes.shape({})),
-			id: PropTypes.string,
+			id: PropTypes.number,
 			label: PropTypes.string,
 		})
 	),

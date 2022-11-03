@@ -27,7 +27,6 @@ import {CollectionItemContext} from '../contexts/CollectionItemContext';
 import {useSelector, useSelectorCallback} from '../contexts/StoreContext';
 import selectCanViewItemConfiguration from '../selectors/selectCanViewItemConfiguration';
 import {deepEqual} from '../utils/checkDeepEqual';
-import useTabsKeyboardNavigation from '../utils/useTabsKeyboardNavigation';
 
 export default function ItemConfiguration({activeItemId, activeItemType}) {
 	const collectionContext = useCollectionActiveItemContext();
@@ -74,18 +73,6 @@ function ItemConfigurationContent({
 		[panelsIds]
 	);
 
-	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
-		numberOfPanels: panels.length,
-		selectPanel: (panelIndex) => {
-			const nextPanel = panels[panelIndex];
-
-			setActivePanel({
-				id: nextPanel.id,
-				type: nextPanel.type || null,
-			});
-		},
-	});
-
 	useEffect(() => {
 		if (
 			!panels.length ||
@@ -126,27 +113,28 @@ function ItemConfigurationContent({
 				</ClayAlert>
 			) : (
 				<>
-					<ClayTabs className="flex-nowrap pt-2 px-3">
-						{panels.map((panel, index) => (
+					<ClayTabs
+						activation="automatic"
+						active={panels.findIndex(
+							(panel) => panel.panelId === activePanel.id
+						)}
+						className="flex-nowrap pt-2 px-3"
+						onActiveChange={(activeIndex) => {
+							const panel = panels[activeIndex];
+
+							setActivePanel({
+								id: panel.panelId,
+								type: panel.type || null,
+							});
+						}}
+					>
+						{panels.map((panel) => (
 							<ClayTabs.Item
-								active={panel.panelId === activePanel.id}
 								innerProps={{
 									'aria-controls': `${panelIdPrefix}-${panel.panelId}`,
 									'id': `${tabIdPrefix}-${panel.panelId}`,
 								}}
 								key={panel.panelId}
-								onClick={() => {
-									setActivePanel({
-										id: panel.panelId,
-										type: panel.type || null,
-									});
-								}}
-								onKeyDown={(event) => {
-									onTabItemKeyDown(event, index);
-								}}
-								ref={(ref) => {
-									tabItemRef(ref, index);
-								}}
 							>
 								<span
 									className="c-inner page-editor__page-structure__item-configuration-tab text-truncate"

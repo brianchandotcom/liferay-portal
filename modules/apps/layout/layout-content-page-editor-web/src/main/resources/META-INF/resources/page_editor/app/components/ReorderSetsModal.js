@@ -31,10 +31,9 @@ import {useId} from '../../core/hooks/useId';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
-import useTabsKeyboardNavigation from '../utils/useTabsKeyboardNavigation';
 
-const FRAGMENTS_ID = 'fragments';
-const WIDGETS_ID = 'widgets';
+const FRAGMENTS_ID = 0;
+const WIDGETS_ID = 1;
 
 const ACCEPTING_ITEM_TYPE = 'acceptingItemType';
 
@@ -177,15 +176,6 @@ function Tabs({updateLists}) {
 		[fragments, widgets]
 	);
 
-	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
-		numberOfPanels: tabs.length,
-		selectPanel: (panelIndex) => {
-			const nextPanel = tabs[panelIndex];
-
-			setActiveTabId(nextPanel.id);
-		},
-	});
-
 	useEffect(() => {
 		if (activeTabId === WIDGETS_ID && !widgets) {
 			dispatch(
@@ -198,28 +188,26 @@ function Tabs({updateLists}) {
 
 	return (
 		<>
-			<ClayTabs className="px-3">
-				{tabs.map(({id, label}, index) => (
+			<ClayTabs
+				activation="automatic"
+				active={activeTabId}
+				className="px-3"
+				onActiveChange={setActiveTabId}
+			>
+				{tabs.map(({id, label}) => (
 					<ClayTabs.Item
-						active={activeTabId === id}
 						innerProps={{
 							'aria-controls': getTabPanelId(id),
 							'id': getTabId(id),
 						}}
 						key={id}
-						onClick={() => setActiveTabId(id)}
-						onKeyDown={(event) => onTabItemKeyDown(event, index)}
-						ref={(ref) => tabItemRef(ref, index)}
 					>
 						{label}
 					</ClayTabs.Item>
 				))}
 			</ClayTabs>
 
-			<ClayTabs.Content
-				activeIndex={tabs.findIndex((tab) => tab.id === activeTabId)}
-				fade
-			>
+			<ClayTabs.Content activeIndex={activeTabId} fade>
 				{tabs.map(({id, items}) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(id)}

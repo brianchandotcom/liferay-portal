@@ -27,7 +27,6 @@ import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import LayoutService from '../../../app/services/LayoutService';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
-import useTabsKeyboardNavigation from '../../../app/utils/useTabsKeyboardNavigation';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useId} from '../../../core/hooks/useId';
 import {useSetStyleBook, useStyleBook} from '../hooks/useStyleBook';
@@ -123,13 +122,6 @@ export default function PageDesignOptionsSidebar() {
 		]
 	);
 
-	const {onTabItemKeyDown, tabItemRef} = useTabsKeyboardNavigation({
-		numberOfPanels: tabs.length,
-		selectPanel: (panelIndex) => {
-			setActiveTabId(panelIndex);
-		},
-	});
-
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
 
@@ -153,18 +145,19 @@ export default function PageDesignOptionsSidebar() {
 				{Liferay.Language.get('page-design-options')}
 			</SidebarPanelHeader>
 
-			<ClayTabs className="flex-shrink-0 page-editor__sidebar__page-design-options__tabs px-3">
+			<ClayTabs
+				activation="automatic"
+				active={activeTabId}
+				className="flex-shrink-0 page-editor__sidebar__page-design-options__tabs px-3"
+				onActiveChange={setActiveTabId}
+			>
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
-						active={activeTabId === index}
 						innerProps={{
 							'aria-controls': getTabPanelId(index),
 							'id': getTabId(index),
 						}}
 						key={index}
-						onClick={() => setActiveTabId(index)}
-						onKeyDown={(event) => onTabItemKeyDown(event, index)}
-						ref={(ref) => tabItemRef(ref, index)}
 					>
 						{tab.label}
 					</ClayTabs.Item>
@@ -234,7 +227,7 @@ const OptionList = ({options = [], icon, type}) => {
 							}}
 							role="button"
 							selectable
-							tabindex="0"
+							tabIndex="0"
 						>
 							<ClayCard.AspectRatio
 								className="card-item-first"

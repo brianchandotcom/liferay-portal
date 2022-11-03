@@ -24,15 +24,12 @@ interface NotificationTemplate {
 	name: string;
 	objectDefinitionId: number | null;
 	recipientType: RecipientType;
-	recipients: Partial<TEmailRecipients>[] | Partial<TTermRecipients>[] | [];
+	recipients: Recipients[];
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
 }
-
-type TTermRecipients = {[key in 'term' | 'userScreenName' | 'roleName']: string};
-
-type TEmailRecipients = {
+declare type Recipients = {
 	bcc: string;
 	cc: string;
 	from: string;

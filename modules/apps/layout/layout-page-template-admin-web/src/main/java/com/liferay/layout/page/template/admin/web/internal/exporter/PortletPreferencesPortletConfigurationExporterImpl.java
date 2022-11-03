@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.exporter;
 
-import com.liferay.layout.page.template.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;

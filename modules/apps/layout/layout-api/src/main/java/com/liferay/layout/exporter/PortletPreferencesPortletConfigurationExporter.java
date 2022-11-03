@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.exporter;
+package com.liferay.layout.exporter;
 
 import java.util.Map;
 

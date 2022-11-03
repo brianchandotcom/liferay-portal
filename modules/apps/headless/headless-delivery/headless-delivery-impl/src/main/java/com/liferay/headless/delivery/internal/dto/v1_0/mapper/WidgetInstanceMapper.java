@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
-import com.liferay.layout.page.template.exporter.PortletPreferencesPortletConfigurationExporter;
+import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;

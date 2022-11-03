@@ -15,7 +15,7 @@
 // @ts-ignore
 
 import {useTimeout} from '@liferay/frontend-js-react-web';
-import React, {useEffect, useReducer, useRef} from 'react';
+import React, {useEffect, useReducer, useRef, useState} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewCard from './TreeviewCard';
@@ -809,6 +809,8 @@ function Treeview({
 
 	const {filteredNodes, nodes, selectedNodeIds} = state;
 
+	const [shouldBeFocusable, setShouldBeFocusable] = useState(true);
+
 	useEffect(() => {
 		const filterFn = getFilterFn(filter);
 
@@ -843,11 +845,15 @@ function Treeview({
 
 	const handleFocus = () => {
 		cancelTimer();
+		setShouldBeFocusable(false);
+
 		dispatch({type: 'ACTIVATE'});
 	};
 
 	const handleBlur = () => {
 		cancelTimer();
+
+		setShouldBeFocusable(true);
 
 		// Due to React's event bubbling, we may get a "focus" event
 		// immediately after this "blur" (eg. when moving around inside
@@ -868,7 +874,7 @@ function Treeview({
 				onFocus={handleFocus}
 				onMouseDown={handleMouseDown}
 				role="tree"
-				tabIndex={0}
+				tabIndex={shouldBeFocusable ? 0 : undefined}
 			/>
 		</TreeviewContext.Provider>
 	);

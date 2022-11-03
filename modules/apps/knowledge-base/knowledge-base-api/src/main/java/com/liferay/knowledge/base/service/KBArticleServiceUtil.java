@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.rss.util.RSSUtil;
 
 import java.io.InputStream;
 
@@ -172,7 +173,7 @@ public class KBArticleServiceUtil {
 		throws PortalException {
 
 		return getService().getGroupKBArticlesRSS(
-			status, rssDelta, rssDisplayStyle, rssFormat, themeDisplay);
+			status, rssDelta, RSSUtil.getFormatType(rssFormat), RSSUtil.getFormatVersion(rssFormat), rssDisplayStyle, themeDisplay);
 	}
 
 	public static KBArticle getKBArticle(long resourcePrimKey, int version)
@@ -197,8 +198,8 @@ public class KBArticleServiceUtil {
 		throws PortalException {
 
 		return getService().getKBArticleRSS(
-			resourcePrimKey, status, rssDelta, rssDisplayStyle, rssFormat,
-			themeDisplay);
+			resourcePrimKey, status, rssDelta, RSSUtil.getFormatType(rssFormat), RSSUtil.getFormatVersion(rssFormat),
+			rssDisplayStyle, themeDisplay);
 	}
 
 	public static List<KBArticle> getKBArticles(

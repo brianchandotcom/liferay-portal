@@ -58,11 +58,11 @@ definition {
 		task ("Open the drop-down and assert the active status") {
 			Click(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "All");
+				title = "Active");
 
 			AssertVisible(
 				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
-				status = "Active");
+				status = "All");
 		}
 	}
 
@@ -82,7 +82,7 @@ definition {
 		task ("Open the drop-down and assert the expired status") {
 			Click(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "All");
+				title = "Active");
 
 			AssertVisible(
 				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
@@ -106,7 +106,7 @@ definition {
 		task ("Open the drop-down and assert the future status") {
 			Click(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "All");
+				title = "Active");
 
 			AssertVisible(
 				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
@@ -150,7 +150,7 @@ definition {
 		task ("Select a status and open a subscription card") {
 			AssertVisible(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "All");
+				title = "Active");
 
 			CustomerPortal.enterOnSubscription(modalTitle = "LXC - SM Non-Production");
 		}
@@ -158,11 +158,11 @@ definition {
 		task ("Assert that the subscription status is active") {
 			Click(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "All");
+				title = "Active");
 
 			AssertVisible(
 				locator1 = "CP2NavigationMenu#STATUS_OPTIONS",
-				status = "Active");
+				status = "All");
 		}
 
 		task ("Go back to Homepage and join a project again") {
@@ -174,7 +174,7 @@ definition {
 		task ("Assert that the active status is no longer selected") {
 			AssertElementNotPresent(
 				locator1 = "CP2NavigationMenu#STATUS_BUTTON",
-				title = "Active");
+				title = "All");
 		}
 	}
 

@@ -23,6 +23,10 @@ import java.util.List;
  */
 public class ScopeSearchFacetDisplayContext {
 
+	public List<BucketDisplayContext> getBucketDisplayContexts() {
+		return _bucketDisplayContexts;
+	}
+
 	public long getDisplayStyleGroupId() {
 		return _displayStyleGroupId;
 	}
@@ -49,16 +53,18 @@ public class ScopeSearchFacetDisplayContext {
 		return _siteFacetPortletInstanceConfiguration;
 	}
 
-	public List<BucketDisplayContext> getBucketDisplayContexts() {
-		return _bucketDisplayContexts;
-	}
-
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setBucketDisplayContexts(
+		List<BucketDisplayContext> bucketDisplayContexts) {
+
+		_bucketDisplayContexts = bucketDisplayContexts;
 	}
 
 	public void setDisplayStyleGroupId(long displayStyleGroupId) {
@@ -99,14 +105,7 @@ public class ScopeSearchFacetDisplayContext {
 			siteFacetPortletInstanceConfiguration;
 	}
 
-	public void setBucketDisplayContexts(
-		List<BucketDisplayContext>
-			bucketDisplayContexts) {
-
-		_bucketDisplayContexts =
-			bucketDisplayContexts;
-	}
-
+	private List<BucketDisplayContext> _bucketDisplayContexts;
 	private long _displayStyleGroupId;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;
@@ -114,8 +113,6 @@ public class ScopeSearchFacetDisplayContext {
 	private String _parameterValue;
 	private List<String> _parameterValues;
 	private boolean _renderNothing;
-	private List<BucketDisplayContext>
-		_bucketDisplayContexts;
 	private SiteFacetPortletInstanceConfiguration
 		_siteFacetPortletInstanceConfiguration;
 

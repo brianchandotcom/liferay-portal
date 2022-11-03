@@ -152,16 +152,13 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	protected BucketDisplayContext buildBucketDisplayContext(
 		long groupId, int count, boolean selected) {
 
-		BucketDisplayContext bucketDisplayContext =
-			new BucketDisplayContext();
+		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
+		bucketDisplayContext.setBucketText(_getDescriptiveName(groupId));
+		bucketDisplayContext.setFilterValue(String.valueOf(groupId));
 		bucketDisplayContext.setFrequency(count);
-		bucketDisplayContext.setBucketText(
-			_getDescriptiveName(groupId));
-		bucketDisplayContext.setFilterValue(
-			String.valueOf(groupId));
-		bucketDisplayContext.setSelected(selected);
 		bucketDisplayContext.setFrequencyVisible(_showCounts);
+		bucketDisplayContext.setSelected(selected);
 
 		return bucketDisplayContext;
 	}
@@ -193,9 +190,8 @@ public class ScopeSearchFacetDisplayContextBuilder {
 			return getEmptySearchResultBucketDisplayContexts();
 		}
 
-		List<BucketDisplayContext>
-			bucketDisplayContexts = new ArrayList<>(
-				termCollectors.size());
+		List<BucketDisplayContext> bucketDisplayContexts = new ArrayList<>(
+			termCollectors.size());
 
 		int limit = termCollectors.size();
 
@@ -233,12 +229,11 @@ public class ScopeSearchFacetDisplayContextBuilder {
 
 		Stream<Long> groupIdsStream = _selectedGroupIds.stream();
 
-		Stream<BucketDisplayContext>
-			bucketDisplayContextsStream = groupIdsStream.map(
+		Stream<BucketDisplayContext> bucketDisplayContextsStream =
+			groupIdsStream.map(
 				groupId -> buildBucketDisplayContext(groupId, 0, true));
 
-		return bucketDisplayContextsStream.collect(
-			Collectors.toList());
+		return bucketDisplayContextsStream.collect(Collectors.toList());
 	}
 
 	protected String getFirstParameterValueString() {

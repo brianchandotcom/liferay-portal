@@ -65,6 +65,10 @@ public class CompareVersionsJournalArticleContentDashboardItemVersionAction
 		return "compare-versions";
 	}
 
+	public Type getType() {
+		return Type.NAVIGATE;
+	}
+
 	@Override
 	public String getURL() {
 		LiferayPortletResponse liferayPortletResponse =

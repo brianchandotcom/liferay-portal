@@ -162,6 +162,18 @@ function TestConnectionButton({
 					throw new Error(responseData.message);
 				}
 
+				// If the response expected dimensions is 0. This means no
+				// results were returned from the sentence transformer.
+
+				if (Number(responseData.expectedDimensions === 0)) {
+					return setTestResultsMessage({
+						message: Liferay.Language.get(
+							'the-sentence-transform-provider-returned-no-results-please-check-the-configured-settings'
+						),
+						type: 'danger',
+					});
+				}
+
 				// If the expected dimensions don't match the configure
 				// dimensions.
 

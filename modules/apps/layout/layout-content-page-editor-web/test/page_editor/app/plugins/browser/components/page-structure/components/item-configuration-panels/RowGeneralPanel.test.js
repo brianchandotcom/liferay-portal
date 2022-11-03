@@ -112,7 +112,6 @@ describe('RowGeneralPanel', () => {
 		expect(updateRowColumns).toHaveBeenCalledWith({
 			itemId: '0',
 			numberOfColumns: 6,
-			viewportSizeId: 'desktop',
 		});
 	});
 

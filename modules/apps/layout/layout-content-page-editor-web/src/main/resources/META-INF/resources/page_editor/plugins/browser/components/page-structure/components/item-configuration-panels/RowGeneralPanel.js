@@ -104,7 +104,6 @@ export function RowGeneralPanel({item}) {
 					updateRowColumns({
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
-						viewportSizeId: selectedViewportSize,
 					})
 				);
 			}
@@ -147,7 +146,6 @@ export function RowGeneralPanel({item}) {
 					updateRowColumns({
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
-						viewportSizeId: selectedViewportSize,
 					})
 				);
 			}

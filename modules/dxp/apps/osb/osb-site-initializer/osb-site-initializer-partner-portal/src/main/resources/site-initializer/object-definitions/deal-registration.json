@@ -41,8 +41,8 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -50,7 +50,7 @@
 			},
 			"name": "additionalInformationAboutTheOpportunity",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",
@@ -218,7 +218,7 @@
 			"label": {
 				"en_US": "Prospect Country"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Regions$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Countries$]",
 			"name": "prospectCountry",
 			"required": false,
 			"type": "String"
@@ -242,7 +242,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Postal Code"
+				"en_US": "Prospect Postal Code"
 			},
 			"name": "prospectPostalCode",
 			"required": false,

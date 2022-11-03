@@ -214,6 +214,9 @@ public class NotificationTemplateLocalServiceImpl
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationContext.getNotificationRecipientSettings()) {
 
+			notificationRecipientSetting.setNotificationRecipientSettingId(
+				counterLocalService.increment());
+
 			_notificationRecipientSettingLocalService.
 				updateNotificationRecipientSetting(
 					notificationRecipientSetting);

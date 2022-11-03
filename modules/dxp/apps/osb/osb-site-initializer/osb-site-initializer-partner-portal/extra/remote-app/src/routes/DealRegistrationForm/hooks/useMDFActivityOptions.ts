@@ -15,14 +15,15 @@ import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
 
 export default function useMDFActivityOptions(
 	mdfActivities: MDFRequestActivity[] | undefined,
-	handleSelected: (selectedTactic?: MDFRequestActivity) => void
+	handleSelected: (selectedActivity?: MDFRequestActivity) => void
 ) {
 	const onMDFActivitySelected = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const optionSelected = mdfActivities?.find(
-			(mdfActivity) => mdfActivity.id === +event.target.value
+			(mdfActivity) => mdfActivity.id === Number(event.target.value)
 		);
+
 		handleSelected(optionSelected);
 	};
 

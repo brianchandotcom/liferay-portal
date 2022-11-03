@@ -19,10 +19,12 @@ import liferayFetcher from '../../common/utils/fetcher';
 
 export default function useGetMDFActivity(accountEntryId?: number) {
 	return useSWR(
-		[
-			`/o/${LiferayAPIs.OBJECT}/activities?filter=accountEntryId eq '${accountEntryId}'`,
-			Liferay.authToken,
-		],
+		accountEntryId
+			? [
+					`/o/${LiferayAPIs.OBJECT}/activities?filter=accountEntryId eq '${accountEntryId}'`,
+					Liferay.authToken,
+			  ]
+			: null,
 		(url, token) =>
 			liferayFetcher<LiferayItems<MDFRequestActivity[]>>(url, token)
 	);

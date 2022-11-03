@@ -22,12 +22,16 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 
 <c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
 	<div class="knowledge-base-vertical-bar <%= kbAdminNavigationDisplayContext.isProductMenuOpen() ? StringPool.BLANK : "expanded" %>" id="<portlet:namespace />verticalBarId">
+		<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
+
 		<react:component
 			componentId="verticalBarId"
 			module="admin/js/components/VerticalBar"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"items", kbAdminNavigationDisplayContext.getVerticalNavigationJSONObjects()
+				).put(
+					"moveKBObjectURL", moveKBObjectURL
 				).put(
 					"parentContainerId", liferayPortletResponse.getNamespace() + "verticalBarId"
 				).put(

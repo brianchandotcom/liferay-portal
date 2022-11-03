@@ -33,7 +33,7 @@ const ITEM_TYPES = {
 
 export default function NavigationPanel({
 	items,
-	moveURL,
+	moveKBObjectURL,
 	portletNamespace,
 	selectedItemId,
 }) {
@@ -56,7 +56,7 @@ export default function NavigationPanel({
 			return false;
 		}
 
-		fetch(moveURL, {
+		fetch(moveKBObjectURL, {
 			body: objectToFormData({
 				[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
 				[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,

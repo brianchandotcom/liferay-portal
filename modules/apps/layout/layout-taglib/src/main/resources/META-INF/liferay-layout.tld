@@ -228,6 +228,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>render-layout-utility-page-entry</name>
+		<tag-class>com.liferay.layout.taglib.servlet.taglib.RenderLayoutUtilityPageEntryTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description></description>
 		<name>select-layout</name>
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.react.SelectLayoutTag</tag-class>

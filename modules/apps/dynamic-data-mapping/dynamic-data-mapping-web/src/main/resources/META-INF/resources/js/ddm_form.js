@@ -80,7 +80,9 @@ AUI.add(
 			'<ul class="lfr-ddm-pages-container nav vertical-scrolling"></ul>';
 
 		const TPL_REPEATABLE_ADD =
-			'<a class="lfr-ddm-repeatable-add-button" href="javascript:void(0);">' +
+			'<a aria-label="' +
+			Liferay.Language.get('add-custom-tags') +
+			'" class="lfr-ddm-repeatable-add-button" href="javascript:void(0);" role="button">' +
 			Liferay.Util.getLexiconIconTpl('plus') +
 			'</a>';
 
@@ -90,7 +92,9 @@ AUI.add(
 			'</div>';
 
 		const TPL_REPEATABLE_DELETE =
-			'<a class="hide lfr-ddm-repeatable-delete-button" href="javascript:void(0);">' +
+			'<a aria-label="' +
+			Liferay.Language.get('remove-custom-tags') +
+			'" class="hide lfr-ddm-repeatable-delete-button" href="javascript:void(0);" role="button">' +
 			Liferay.Util.getLexiconIconTpl('hr') +
 			'</a>';
 

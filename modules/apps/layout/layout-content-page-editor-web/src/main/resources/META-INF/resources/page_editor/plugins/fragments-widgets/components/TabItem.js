@@ -144,7 +144,7 @@ const ListItem = React.forwardRef(
 					<div className="text-truncate title">{item.label}</div>
 				</div>
 
-				<AddButton item={item} />
+				{!disabled && <AddButton item={item} />}
 
 				<HighlightButton
 					item={item}
@@ -210,9 +210,11 @@ const CardItem = React.forwardRef(
 								</section>
 							</div>
 
-							<div className="autofit-col">
-								<AddButton item={item} />
-							</div>
+							{!disabled && (
+								<div className="autofit-col">
+									<AddButton item={item} />
+								</div>
+							)}
 
 							<div className="autofit-col">
 								<HighlightButton

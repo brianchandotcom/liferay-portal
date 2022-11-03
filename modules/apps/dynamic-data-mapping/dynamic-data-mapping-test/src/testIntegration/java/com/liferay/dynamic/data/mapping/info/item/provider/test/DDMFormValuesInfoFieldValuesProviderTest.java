@@ -119,7 +119,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 				expectedKey1, expectedKey2
 			).toString());
 
-		_testGetInfoFieldValues(
+		_assertGetInfoFieldValues(
 			ddmFormField.getName(), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value,
@@ -147,7 +147,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 		JournalArticle journalArticle = _addJournalArticle(
 			ddmFormField, expectedKey);
 
-		_testGetInfoFieldValues(
+		_assertGetInfoFieldValues(
 			ddmFormField.getName(), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value,
@@ -172,7 +172,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 		JournalArticle journalArticle = _addJournalArticle(
 			ddmFormField, StringPool.BLANK);
 
-		_testGetInfoFieldValues(
+		_assertGetInfoFieldValues(
 			ddmFormField.getName(), journalArticle,
 			value -> Assert.assertNull(value));
 	}
@@ -199,7 +199,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 				expectedKey
 			).toString());
 
-		_testGetInfoFieldValues(
+		_assertGetInfoFieldValues(
 			ddmFormField.getName(), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value,
@@ -224,7 +224,7 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 		JournalArticle journalArticle = _addJournalArticle(
 			ddmFormField, StringPool.BLANK);
 
-		_testGetInfoFieldValues(
+		_assertGetInfoFieldValues(
 			ddmFormField.getName(), journalArticle,
 			value -> _assertExpectedKeyLocalizedLabelPairs(
 				value, Collections.emptyMap()));
@@ -309,6 +309,31 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 		}
 	}
 
+	private void _assertGetInfoFieldValues(
+			String ddmFormFieldName, JournalArticle journalArticle,
+			UnsafeConsumer<Object, Exception> assertValueUnsafeConsumer)
+		throws Exception {
+
+		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues =
+			_ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+				journalArticle,
+				_ddmBeanTranslator.translate(
+					journalArticle.getDDMFormValues()));
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+
+		InfoFieldValue<InfoLocalizedValue<Object>> infoFieldValue =
+			infoFieldValues.get(0);
+
+		InfoField infoField = infoFieldValue.getInfoField();
+
+		Assert.assertEquals(ddmFormFieldName, infoField.getName());
+
+		assertValueUnsafeConsumer.accept(
+			infoFieldValue.getValue(LocaleUtil.US));
+	}
+
 	private DDMForm _createDDMForm(DDMFormField ddmFormField) {
 		DDMForm ddmForm = new DDMForm();
 
@@ -377,31 +402,6 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 		ddmFormFieldValue.setValue(value);
 
 		return ddmFormFieldValue;
-	}
-
-	private void _testGetInfoFieldValues(
-			String ddmFormFieldName, JournalArticle journalArticle,
-			UnsafeConsumer<Object, Exception> assertValueUnsafeConsumer)
-		throws Exception {
-
-		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues =
-			_ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-				journalArticle,
-				_ddmBeanTranslator.translate(
-					journalArticle.getDDMFormValues()));
-
-		Assert.assertEquals(
-			infoFieldValues.toString(), 1, infoFieldValues.size());
-
-		InfoFieldValue<InfoLocalizedValue<Object>> infoFieldValue =
-			infoFieldValues.get(0);
-
-		InfoField infoField = infoFieldValue.getInfoField();
-
-		Assert.assertEquals(ddmFormFieldName, infoField.getName());
-
-		assertValueUnsafeConsumer.accept(
-			infoFieldValue.getValue(LocaleUtil.US));
 	}
 
 	@Inject

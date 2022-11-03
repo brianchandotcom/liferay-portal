@@ -121,6 +121,16 @@ definition {
 		Click(locator1 = "ContentDashboard#DELETE_SECOND_FILTER_SELECTED");
 	}
 
+	macro downloadVersion {
+		Click.waitForMenuToggleJSClick(
+			key_tableEntry = "${version}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		ClickNoError(
+			key_text = "download",
+			locator1 = "MenuItem#ANY_ICON");
+	}
+
 	macro editAsset {
 		LexiconTable.clickEllipsisItem(
 			item = "Edit",

@@ -15,8 +15,8 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -86,7 +86,7 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			List<LayoutPageTemplatesImporterResultEntry>
 				layoutPageTemplatesImporterResultEntries =
-					_layoutPageTemplatesImporter.importFile(
+					_layoutsImporter.importFile(
 						themeDisplay.getUserId(),
 						themeDisplay.getScopeGroupId(),
 						layoutPageTemplateCollectionId, file, overwrite);
@@ -117,7 +117,7 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 	private Language _language;
 
 	@Reference
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+	private LayoutsImporter _layoutsImporter;
 
 	@Reference
 	private Portal _portal;

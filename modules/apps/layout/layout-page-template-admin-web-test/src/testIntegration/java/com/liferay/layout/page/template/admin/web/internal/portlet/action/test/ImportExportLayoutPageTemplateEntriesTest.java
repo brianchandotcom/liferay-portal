@@ -33,8 +33,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -1103,7 +1103,7 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 
 		try {
 			layoutPageTemplatesImporterResultEntries =
-				_layoutPageTemplatesImporter.importFile(
+				_layoutsImporter.importFile(
 					TestPropsValues.getUserId(), groupId, 0, file, overwrite);
 		}
 		finally {
@@ -1369,11 +1369,11 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutsImporter _layoutsImporter;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_page_template_admin/export_layout_page_template_entries"

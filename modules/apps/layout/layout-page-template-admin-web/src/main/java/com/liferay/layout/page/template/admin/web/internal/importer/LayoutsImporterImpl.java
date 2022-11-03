@@ -40,8 +40,8 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
 import com.liferay.layout.page.template.exception.MasterPageValidatorException;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -120,9 +120,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutPageTemplatesImporter.class)
-public class LayoutPageTemplatesImporterImpl
-	implements LayoutPageTemplatesImporter {
+@Component(service = LayoutsImporter.class)
+public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Override
 	public void importFile(
@@ -1199,13 +1198,11 @@ public class LayoutPageTemplatesImporterImpl
 				_layoutPageTemplateEntryLocalService.
 					fetchLayoutPageTemplateEntry(groupId, entry.getKey());
 
-			Callable<Void> callable =
-				new BasicLayoutPageTemplatesImporterCallable(
-					groupId,
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId(),
-					layoutPageTemplateEntry, overwrite, pageTemplateEntry,
-					zipFile);
+			Callable<Void> callable = new BasicLayoutsImporterCallable(
+				groupId,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateEntry, overwrite, pageTemplateEntry, zipFile);
 
 			try {
 				TransactionInvokerUtil.invoke(_transactionConfig, callable);
@@ -1396,7 +1393,7 @@ public class LayoutPageTemplatesImporterImpl
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplatesImporterImpl.class);
+		LayoutsImporterImpl.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 	private static final TransactionConfig _transactionConfig =
@@ -1545,8 +1542,7 @@ public class LayoutPageTemplatesImporterImpl
 
 	}
 
-	private class BasicLayoutPageTemplatesImporterCallable
-		implements Callable<Void> {
+	private class BasicLayoutsImporterCallable implements Callable<Void> {
 
 		@Override
 		public Void call() throws Exception {
@@ -1563,7 +1559,7 @@ public class LayoutPageTemplatesImporterImpl
 			return null;
 		}
 
-		private BasicLayoutPageTemplatesImporterCallable(
+		private BasicLayoutsImporterCallable(
 			long groupId, long layoutPageTemplateCollectionId,
 			LayoutPageTemplateEntry layoutPageTemplateEntry, boolean overwrite,
 			PageTemplateEntry pageTemplateEntry, ZipFile zipFile) {

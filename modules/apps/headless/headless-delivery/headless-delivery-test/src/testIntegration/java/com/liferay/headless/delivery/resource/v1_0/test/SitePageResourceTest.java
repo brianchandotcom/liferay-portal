@@ -17,7 +17,7 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.pagination.Page;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -246,7 +246,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				layoutStructure.addRootLayoutStructureItem();
 
-				_layoutPageTemplatesImporter.importPageElement(
+				_layoutsImporter.importPageElement(
 					layout, layoutStructure, layoutStructure.getMainItemId(),
 					_read("test-page-element.json"), 0);
 			}
@@ -322,15 +322,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
+
+	@Inject
+	private LayoutsImporter _layoutsImporter;
 
 	@Inject
 	private Portal _portal;

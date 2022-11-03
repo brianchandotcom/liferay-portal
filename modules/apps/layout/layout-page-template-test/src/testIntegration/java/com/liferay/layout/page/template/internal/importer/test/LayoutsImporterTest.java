@@ -24,8 +24,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
+import com.liferay.layout.page.template.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -116,7 +115,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Jürgen Kappler
  */
 @RunWith(Arquillian.class)
-public class LayoutPageTemplatesImporterTest {
+public class LayoutsImporterTest {
 
 	@ClassRule
 	@Rule
@@ -722,7 +721,7 @@ public class LayoutPageTemplatesImporterTest {
 
 		try {
 			layoutPageTemplatesImporterResultEntries =
-				_layoutPageTemplatesImporter.importFile(
+				_layoutsImporter.importFile(
 					_user.getUserId(), _group.getGroupId(), 0, file, false);
 		}
 		finally {
@@ -800,7 +799,7 @@ public class LayoutPageTemplatesImporterTest {
 
 		try {
 			layoutPageTemplatesImporterResultEntries =
-				_layoutPageTemplatesImporter.importFile(
+				_layoutsImporter.importFile(
 					_user.getUserId(), _group.getGroupId(), 0, file, false);
 		}
 		finally {
@@ -878,8 +877,7 @@ public class LayoutPageTemplatesImporterTest {
 	private void _registerTestPortlet(String portletId) throws Exception {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				Portlet.class,
-				new LayoutPageTemplatesImporterTest.TestPortlet(),
+				Portlet.class, new LayoutsImporterTest.TestPortlet(),
 				HashMapDictionaryBuilder.put(
 					"com.liferay.portlet.instanceable", "true"
 				).put(
@@ -1074,11 +1072,11 @@ public class LayoutPageTemplatesImporterTest {
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutsImporter _layoutsImporter;
 
 	@Inject
 	private PortletPermission _portletPermission;

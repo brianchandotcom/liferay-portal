@@ -602,45 +602,6 @@ public class ObjectEntryLocalServiceTest {
 					"\"listTypeEntryKeyRequired\"",
 				objectEntryValuesException.getMessage());
 		}
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"multipleListTypeEntriesKey",
-				(Serializable)Collections.singletonList("listTypeEntryKey1")
-			).build());
-
-		Assert.assertNotNull(objectEntry);
-
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
-
-		Assert.assertEquals(
-			"listTypeEntryKey1", values.get("multipleListTypeEntriesKey"));
-
-		objectEntry = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"emailAddressRequired", "john@liferay.com"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"multipleListTypeEntriesKey",
-				(Serializable)Arrays.asList(
-					"listTypeEntryKey1", "listTypeEntryKey2")
-			).build());
-
-		values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
-
-		Assert.assertEquals(
-			"listTypeEntryKey1, listTypeEntryKey2",
-			values.get("multipleListTypeEntriesKey"));
-
-		_objectEntryLocalService.deleteObjectEntry(
-			objectEntry.getObjectEntryId());
 	}
 
 	@Test

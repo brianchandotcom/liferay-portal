@@ -21,7 +21,7 @@ export default function useGetMDFActivity(accountEntryId?: number) {
 	return useSWR(
 		accountEntryId
 			? [
-					`/o/${LiferayAPIs.OBJECT}/activities?filter=accountEntryId eq '${accountEntryId}'`,
+					`/o/${LiferayAPIs.OBJECT}/activities?filter=r_accountToActivities_accountEntryId eq '${accountEntryId}'`,
 					Liferay.authToken,
 			  ]
 			: null,

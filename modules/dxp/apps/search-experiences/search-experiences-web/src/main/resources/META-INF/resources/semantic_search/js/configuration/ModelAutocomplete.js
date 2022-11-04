@@ -65,7 +65,7 @@ function ModelAutocomplete({
 		},
 	});
 
-	const _handleBlur = () => {
+	const _handleInputBlur = () => {
 		if (!autocompleteSearchValue) {
 			onChange('');
 		}
@@ -76,13 +76,34 @@ function ModelAutocomplete({
 		onBlur();
 	};
 
-	const _handleFocus = () => {
+	const _handleInputChange = (event) => {
+
+		// Immediately show loading spinner when typing.
+
+		if (!networkState.loading) {
+			setNetworkState({
+				error: false,
+				loading: true,
+				networkStatus: 4,
+			});
+		}
+
+		setAutocompleteSearchValue(event.target.value);
 		setShowDropDown(true);
 	};
 
-	const _handleInputChange = (event) => {
-		setAutocompleteSearchValue(event.target.value);
+	const _handleInputFocus = () => {
 		setShowDropDown(true);
+	};
+
+	const _handleInputKeyDown = (event) => {
+
+		// Prevent form submission to prevent saving an input that isn't one of
+		// the autocomplete items from the models endpoint.
+
+		if (event.key === 'Enter') {
+			event.preventDefault();
+		}
 	};
 
 	const _handleItemChange = (item) => {
@@ -92,6 +113,42 @@ function ModelAutocomplete({
 		setShowDropDown(false);
 	};
 
+	const _renderAutocompleteDropdownItems = () => {
+
+		// Loading
+
+		if (networkState.loading) {
+			return (
+				<ClayDropDown.Item disabled>
+					{Liferay.Language.get('loading')}
+				</ClayDropDown.Item>
+			);
+		}
+
+		// No Results
+
+		if (!resource?.items?.length) {
+			return (
+				<ClayDropDown.Item disabled>
+					{Liferay.Language.get('no-results-found')}
+				</ClayDropDown.Item>
+			);
+		}
+
+		// Has Results
+
+		if (resource?.items) {
+			return (resource?.items || []).map(({modelId}) => (
+				<ClayDropDown.Item
+					key={modelId}
+					onClick={() => _handleItemChange(modelId)}
+				>
+					{modelId}
+				</ClayDropDown.Item>
+			));
+		}
+	};
+
 	return (
 		<FocusScope>
 			<ClayAutocomplete>
@@ -99,9 +156,10 @@ function ModelAutocomplete({
 					aria-label={label}
 					id={name}
 					name={name}
-					onBlur={_handleBlur}
+					onBlur={_handleInputBlur}
 					onChange={_handleInputChange}
-					onFocus={_handleFocus}
+					onFocus={_handleInputFocus}
+					onKeyDown={_handleInputKeyDown}
 					required={required}
 					value={autocompleteSearchValue}
 				/>
@@ -111,24 +169,7 @@ function ModelAutocomplete({
 					onSetActive={setShowDropDown}
 				>
 					<ClayDropDown.ItemList>
-						{(resource?.items || []).map(({modelId}) => (
-							<ClayDropDown.Item
-								key={modelId}
-								onClick={() => _handleItemChange(modelId)}
-							>
-								{modelId}
-							</ClayDropDown.Item>
-						))}
-
-						{!resource?.items?.length && (
-							<ClayDropDown.Item>
-								{networkState.loading ? (
-									<ClayAutocomplete.LoadingIndicator />
-								) : (
-									Liferay.Language.get('no-results-found')
-								)}
-							</ClayDropDown.Item>
-						)}
+						{_renderAutocompleteDropdownItems()}
 					</ClayDropDown.ItemList>
 				</ClayAutocomplete.DropDown>
 			</ClayAutocomplete>

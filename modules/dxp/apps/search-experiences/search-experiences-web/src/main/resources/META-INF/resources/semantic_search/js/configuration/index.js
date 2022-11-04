@@ -79,6 +79,14 @@ export default function ({
 	const _handleFormikValidate = (values) => {
 		const errors = {};
 
+		// Validate "Model" field.
+
+		if (values.model === '') {
+			errors.model = Liferay.Language.get('this-field-is-required');
+		}
+
+		// Validate "Model Timeout" field.
+
 		if (
 			values.modelTimeout === '' &&
 			values.sentenceTransformProvider ===
@@ -108,6 +116,8 @@ export default function ({
 			}
 		}
 
+		// Validate "Max Character Count" field.
+
 		if (!values.maxCharacterCount === '') {
 			errors.maxCharacterCount = Liferay.Language.get(
 				'this-field-is-required'
@@ -133,6 +143,8 @@ export default function ({
 			}
 		}
 
+		// Validate "Asset Entry Class Names" field.
+
 		if (!values.assetEntryClassNames?.length) {
 			errors.assetEntryClassNames = sub(
 				Liferay.Language.get('the-x-field-is-required'),
@@ -140,12 +152,16 @@ export default function ({
 			);
 		}
 
+		// Validate "Language IDs" field.
+
 		if (!values.languageIds?.length) {
 			errors.languageIds = sub(
 				Liferay.Language.get('the-x-field-is-required'),
 				[Liferay.Language.get('language-ids')]
 			);
 		}
+
+		// Validate "Cache Timeout" field.
 
 		if (values.cacheTimeout === '') {
 			errors.cacheTimeout = Liferay.Language.get(
@@ -277,6 +293,7 @@ export default function ({
 							name={`${namespace}model`}
 							onBlur={_handleInputBlur('model')}
 							onChange={_handleInputChange('model')}
+							required
 							touched={formik.touched.model}
 							type="model"
 							value={formik.values.model}
@@ -292,7 +309,7 @@ export default function ({
 							onBlur={_handleInputBlur('modelTimeout')}
 							onChange={_handleInputChange('modelTimeout')}
 							options={{max: 60, min: 0}}
-							required={true}
+							required
 							touched={formik.touched.modelTimeout}
 							type="number"
 							value={formik.values.modelTimeout}
@@ -377,7 +394,7 @@ export default function ({
 					onBlur={_handleInputBlur('maxCharacterCount')}
 					onChange={_handleInputChange('maxCharacterCount')}
 					options={{max: 10000, min: 50}}
-					required={true}
+					required
 					touched={formik.touched.maxCharacterCount}
 					type="number"
 					value={formik.values.maxCharacterCount}
@@ -411,7 +428,7 @@ export default function ({
 					name={`${namespace}assetEntryClassNames`}
 					onBlur={_handleInputBlur('assetEntryClassNames')}
 					onChange={_handleInputChange('assetEntryClassNames')}
-					required={true}
+					required
 					touched={formik.touched.assetEntryClassNames}
 					type="multiple"
 					value={formik.values.assetEntryClassNames}
@@ -429,7 +446,7 @@ export default function ({
 					name={`${namespace}languageIds`}
 					onBlur={_handleInputBlur('languageIds')}
 					onChange={_handleInputChange('languageIds')}
-					required={true}
+					required
 					touched={formik.touched.languageIds}
 					type="multiple"
 					value={formik.values.languageIds}
@@ -446,7 +463,7 @@ export default function ({
 				onBlur={_handleInputBlur('cacheTimeout')}
 				onChange={_handleInputChange('cacheTimeout')}
 				options={{min: 0}}
-				required={true}
+				required
 				touched={formik.touched.cacheTimeout}
 				type="number"
 				value={formik.values.cacheTimeout}

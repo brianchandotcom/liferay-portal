@@ -288,38 +288,29 @@ definition {
 		}
 
 		task ("Add two segments via JSONWS") {
-			for (var num : list "1,2") {
-				JSONSegmentsentry.addSegment(
-					fieldName = "Last Name",
-					groupName = "Test Site Name",
-					operator = "equals",
-					segmentName = "Segment With User${num}",
-					text = "userln${num}");
-			}
+			var segmentId1 = JSONSegmentsentry.addSegment(
+				fieldName = "Last Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User1",
+				text = "userln1");
+			var segmentId2 = JSONSegmentsentry.addSegment(
+				fieldName = "Last Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User2",
+				text = "userln2");
 		}
 
-		task ("Add a segment with two conditions") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Segments");
-
-			Segmentation.addProperties(propertyOption = "Segment");
-
-			Segmentation.fillProperty(selectLink = "Segment With User1");
-
-			Segmentation.addProperties(propertyOption = "Segment");
-
-			Segmentation.fillProperty(
-				indexNumber = "2",
-				selectLink = "Segment With User2");
-
-			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
-
-			Segmentation.fillTitle(titleField = "Segment Title");
-
-			Button.clickSave();
+		task ("Add a segment with two conditions via JSONWS") {
+			JSONSegmentsentry.addSegment(
+				conditionType = "Segments",
+				fieldName = "Segment",
+				firstSegmentId = "${segmentId1}",
+				groupName = "Test Site Name",
+				operator = "Or",
+				secondSegmentId = "${segmentId2}",
+				segmentName = "Segment Title");
 		}
 
 		task ("Navigate to page editor") {

@@ -173,7 +173,18 @@ public class ObjectStateTransitionLocalServiceImpl
 			if (!persistedTargetObjectStateIds.contains(
 					objectStateTransition.getTargetObjectStateId())) {
 
-				addObjectStateTransition(objectStateTransition);
+				User user = _userLocalService.fetchUser(
+					PrincipalThreadLocal.getUserId());
+
+				if (user == null) {
+					return;
+				}
+
+				addObjectStateTransition(
+					user.getUserId(),
+					objectStateTransition.getObjectStateFlowId(),
+					objectStateTransition.getSourceObjectStateId(),
+					objectStateTransition.getTargetObjectStateId());
 			}
 		}
 	}

@@ -3022,7 +3022,10 @@ definition {
 			}
 
 			task ("Navigate to Version History Page") {
-				ContentDashboard.goToVersionHistoryPage(assetName = "DM Document Title");
+				ContentDashboard.navigateToDocumentVersionHistoryPage(
+					dmDocumentTitle = "DM Document Title",
+					groupName = "Test Site Name",
+					siteURLKey = "test-site-name");
 			}
 		}
 
@@ -3285,8 +3288,8 @@ definition {
 
 		task ("When the user clicks on Revert option the kebab menu") {
 			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Revert ",
-				rowEntry = "${rowEntry}");
+				menuItem = "Revert",
+				rowEntry = "1.0");
 		}
 
 		task ("Then a new version that is a copy of the selected version of the Document is created") {

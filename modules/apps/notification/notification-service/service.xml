@@ -80,7 +80,7 @@
 
 		<!-- Other fields -->
 
-		<column name="className" type="String" />
+		<column name="classNameId" type="String" />
 		<column name="classPK" type="long" />
 
 		<!-- Finder methods -->

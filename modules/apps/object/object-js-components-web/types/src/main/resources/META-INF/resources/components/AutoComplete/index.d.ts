@@ -14,24 +14,29 @@
 
 import React from 'react';
 import './index.scss';
-interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
-	children: (item: any) => React.ReactNode;
+interface AutoCompleteProps<T> extends React.HTMLAttributes<HTMLElement> {
+	children: (item: T) => React.ReactNode;
 	contentRight?: React.ReactNode;
 	disabled?: boolean;
 	emptyStateMessage: string;
 	error?: string;
 	feedbackMessage?: string;
 	hasEmptyItem?: boolean;
-	items: any[];
+	items: T[];
 	label: string;
 	onChangeQuery: (value: string) => void;
-	onSelectItem: (item: any) => void;
+	onSelectEmptyStateItem?: (emptyStateItem: EmptyStateItem) => void;
+	onSelectItem: (item: T) => void;
 	placeholder?: string;
 	query: string;
 	required?: boolean;
 	value?: string;
 }
-export default function AutoComplete({
+declare type EmptyStateItem = {
+	id: string;
+	label: string;
+};
+export default function AutoComplete<T>({
 	children,
 	className,
 	contentRight,
@@ -41,13 +46,14 @@ export default function AutoComplete({
 	feedbackMessage,
 	hasEmptyItem,
 	id,
-	items: initialItems,
+	items,
 	label,
 	onChangeQuery,
+	onSelectEmptyStateItem,
 	onSelectItem,
 	placeholder,
 	query,
 	required,
 	value,
-}: IAutoCompleteProps): JSX.Element;
+}: AutoCompleteProps<T>): JSX.Element;
 export {};

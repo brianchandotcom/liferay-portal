@@ -17,9 +17,13 @@ import ClayModal from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
-import {TProperty} from '../components/PropertiesTable';
-import ChannelTab from './ChannelTab';
-import SitesTab from './SitesTab';
+import {TProperty} from '../../pages/wizard/PropertyStep';
+import {updateProperty} from '../../utils/api';
+import {SUCCESS_MESSAGE} from '../../utils/constants';
+import Loading from '../Loading';
+import ChannelTab from '../properties-step/ChannelTab';
+import SitesTab from '../properties-step/SitesTab';
+import {TItem} from '../table/Table';
 
 interface IAssignModalProps {
 	observer: any;
@@ -32,6 +36,12 @@ export enum ETabs {
 	Sites = 1,
 }
 
+function getIds(items: TItem[]): number[] {
+	return items
+		.filter(({checked, disabled}) => checked && !disabled)
+		.map(({id}) => Number(id));
+}
+
 const AssignModal: React.FC<IAssignModalProps> = ({
 	observer,
 	onCloseModal,
@@ -40,6 +50,34 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState<ETabs>(
 		ETabs.Channel
 	);
+	const [submitting, setSubmitting] = useState(false);
+	const [commerceChannelIds, setCommerceChannelIds] = useState<number[]>([]);
+	const [siteIds, setSiteIds] = useState<number[]>([]);
+
+	const handleSubmit = () => {
+		setSubmitting(true);
+
+		const request = async () => {
+			const {ok} = await updateProperty({
+				channelId: property.channelId,
+				commerceChannelIds,
+				dataSourceId: property.dataSources[0]?.dataSourceId,
+				siteIds,
+			});
+
+			setSubmitting(false);
+
+			if (ok) {
+				Liferay.Util.openToast({
+					message: SUCCESS_MESSAGE,
+				});
+
+				onCloseModal();
+			}
+		};
+
+		request();
+	};
 
 	return (
 		<ClayModal center observer={observer} size="lg">
@@ -73,14 +111,20 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 					<ClayTabs.TabPane aria-labelledby="tab-1">
 						<ChannelTab
-							description="Channels can only be assigned to a single property at a time. Sites belonging to a channel will be automatically selected when a channel has been selected. "
-							displayChannels={!!property?.commerceEnabled}
+							onChannelsChange={(items) =>
+								setCommerceChannelIds(getIds(items))
+							}
 							property={property}
 						/>
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane aria-labelledby="tab-2">
-						<SitesTab displayChannels property={property} />
+						<SitesTab
+							onSitesChange={(items) => {
+								setSiteIds(getIds(items));
+							}}
+							property={property}
+						/>
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>
 			</ClayModal.Body>
@@ -95,7 +139,18 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary">
+						<ClayButton
+							disabled={
+								(!siteIds.length &&
+									!commerceChannelIds.length) ||
+								submitting
+							}
+							displayType="primary"
+							onClick={handleSubmit}
+							type="submit"
+						>
+							{submitting && <Loading inline />}
+
 							{Liferay.Language.get('assign')}
 						</ClayButton>
 					</ClayButton.Group>

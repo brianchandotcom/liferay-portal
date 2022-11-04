@@ -12,10 +12,19 @@
  * details.
  */
 
-import React from 'react';
-
-const SitesTab = () => {
-	return <div>SitesTab</div>;
+export type TFilter = {
+	type: OrderBy;
+	value: string;
 };
 
-export default SitesTab;
+export enum OrderBy {
+	Asc = 'asc',
+	Desc = 'desc',
+}
+
+export function DEFAULT_FILTER(value: string) {
+	return {
+		type: OrderBy.Asc,
+		value,
+	};
+}

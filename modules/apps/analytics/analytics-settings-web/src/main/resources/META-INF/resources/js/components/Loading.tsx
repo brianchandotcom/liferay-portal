@@ -12,14 +12,21 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
-const LoadingInline: React.FC = () => {
+interface ILoadingProps {
+	inline?: boolean;
+}
+
+const Loading: React.FC<ILoadingProps> = ({inline = false}) => {
 	return (
-		<span className="inline-item inline-item-before">
+		<span
+			className={classNames({'inline-item inline-item-before': inline})}
+		>
 			<span aria-hidden="true" className="loading-animation" />
 		</span>
 	);
 };
 
-export default LoadingInline;
+export default Loading;

@@ -16,8 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
-import {deleteConnection} from '../utils/api';
-import LoadingInline from './LoadingInline';
+import {deleteConnection} from '../../utils/api';
+import Loading from '../Loading';
 
 interface IDisconnectModalProps {
 	observer: any;
@@ -66,16 +66,18 @@ const DisconnectModal: React.FC<IDisconnectModalProps> = ({
 							onClick={async () => {
 								setSubmitting(true);
 
-								await deleteConnection();
+								const {ok} = await deleteConnection();
 
 								setSubmitting(false);
 
-								onOpenChange(false);
+								if (ok) {
+									onOpenChange(false);
 
-								window.location.reload();
+									window.location.reload();
+								}
 							}}
 						>
-							{submitting && <LoadingInline />}
+							{submitting && <Loading inline />}
 
 							{Liferay.Language.get('disconnect')}
 						</ClayButton>

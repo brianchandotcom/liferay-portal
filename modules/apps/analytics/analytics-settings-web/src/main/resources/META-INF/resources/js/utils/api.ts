@@ -12,54 +12,62 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import request from './request';
 
 export function fetchConnection(token: string) {
-	return fetch('/o/analytics-settings-rest/v1.0/data-sources', {
+	return request('/data-sources', {
 		body: JSON.stringify({
 			token,
 		}),
-		headers: {'Content-Type': 'application/json'},
 		method: 'POST',
 	});
 }
 
 export function deleteConnection() {
-	return fetch('/o/analytics-settings-rest/v1.0/data-sources', {
-		method: 'DELETE',
-	});
+	return request('/data-sources', {method: 'DELETE'});
 }
 
 export function fetchProperties() {
-	return fetch('/o/analytics-settings-rest/v1.0/channels', {
-		method: 'GET',
-	})
-		.then((response) => response.json())
-		.then((data) => data);
+	return request('/channels', {method: 'GET'});
 }
 
 export function createProperty(name: string) {
-	return fetch('/o/analytics-settings-rest/v1.0/channels', {
+	return request('/channels', {
 		body: JSON.stringify({
 			name,
 		}),
-		headers: {'Content-Type': 'application/json'},
 		method: 'POST',
 	});
 }
 
-export function fetchChannels() {
-	return fetch('/o/analytics-settings-rest/v1.0/commerce-channels', {
-		method: 'GET',
-	})
-		.then((response) => response.json())
-		.then((data) => data);
+export function updateProperty({
+	channelId,
+	commerceChannelIds,
+	dataSourceId,
+	siteIds,
+}: {
+	channelId: string;
+	commerceChannelIds: number[];
+	dataSourceId: string;
+	siteIds: number[];
+}) {
+	return request('/channels', {
+		body: JSON.stringify({
+			channelId,
+			dataSources: [{commerceChannelIds, dataSourceId, siteIds}],
+		}),
+		method: 'PATCH',
+	});
 }
 
-export function fetchSites() {
-	return fetch('/o/analytics-settings-rest/v1.0/sites', {
+export function fetchChannels(queryString?: string) {
+	return request(`/commerce-channels?${queryString}`, {
 		method: 'GET',
-	})
-		.then((response) => response.json())
-		.then((data) => data);
+	});
+}
+
+export function fetchSites(queryString?: string) {
+	return request(`/sites?${queryString}`, {
+		method: 'GET',
+	});
 }

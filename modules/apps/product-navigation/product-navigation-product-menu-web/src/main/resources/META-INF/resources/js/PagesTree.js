@@ -98,6 +98,7 @@ export default function PagesTree({
 				onItemMove={onItemMove}
 				onLoadMore={onLoadMore}
 				selectionMode={null}
+				showExpanderOnHover={false}
 			>
 				{(item, selection, expand, load) => (
 					<ClayTreeView.Item>

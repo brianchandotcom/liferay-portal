@@ -368,14 +368,14 @@ definition {
 			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
 	}
 
-	@description = "LPS-162021 - Verify that the delete modal 'Delete' button is disabled by default"
+	@description = "LPS-162024 - Verify that an error message is shown when the user enters the wrong value in the confirmation field"
 	@priority = "4"
-	test CanViewDeleteButtonDisabledByDefault {
-		task ("Given an object with a field is created and published via API") {
+	test CanViewErrorMessageWithIncorrectValue {
+		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 162021",
-				objectName = "CustomObject162021",
-				pluralLabelName = "Custom Objects 162021");
+				labelName = "Custom Object 162024",
+				objectName = "CustomObject162024",
+				pluralLabelName = "Custom Objects 162024");
 
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
@@ -383,25 +383,29 @@ definition {
 				fieldName = "customObjectField",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "CustomObject162021");
+				objectName = "CustomObject162024");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162021");
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162024");
 		}
 
-		task ("When the user selects to delete the object") {
+		task ("When the user enters an incorrect value in the confirmation field while deleting the object") {
 			ObjectAdmin.openObjectAdmin();
 
 			Click(
-				key_objectLabel = "Custom Object 162021",
+				key_objectLabel = "Custom Object 162024",
 				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 			MenuItem.clickNoError(menuItem = "Delete");
+
+			SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+			Type(
+				locator1 = "ObjectAdmin#PLACEHOLDER_DELETE_OBJECT",
+				value1 = "anyone");
 		}
 
-		task ("Then the delete modal will have the 'delete' button disabled by default") {
-			AssertElementPresent(
-				key_text = "Delete",
-				locator1 = "Button#ANY_DISABLED");
+		task ("Then an error message is shown") {
+			AssertElementPresent(locator1 = "Message#WARNING_FEEDBACK");
 		}
 	}
 

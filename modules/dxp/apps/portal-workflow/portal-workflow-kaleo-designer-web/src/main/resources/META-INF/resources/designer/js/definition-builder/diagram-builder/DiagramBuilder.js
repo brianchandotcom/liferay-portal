@@ -43,11 +43,11 @@ const deserializeUtil = new DeserializeUtil();
 
 export default function DiagramBuilder() {
 	const {
-		clientExtensions,
 		currentEditor,
 		definitionId,
 		deserialize,
 		elements,
+		functionActionExecutors,
 		selectedLanguageId,
 		setActive,
 		setBlockingErrors,
@@ -381,9 +381,9 @@ export default function DiagramBuilder() {
 	}, [definitionId, version]);
 
 	const contextProps = {
-		clientExtensions,
 		collidingElements,
 		elementRectangle,
+		functionActionExecutors,
 		selectedItem,
 		selectedItemNewId,
 		setCollidingElements,

@@ -134,32 +134,6 @@ public class KaleoDesignerDisplayContext {
 		).buildString();
 	}
 
-	// TODO Rename getClientExtensionsJSONArray
-
-	public JSONArray getClientExtensionsJSONArray() throws Exception {
-		return JSONUtil.toJSONArray(
-			_functionActionExecutorServiceWrapperTracker.
-				getFunctionActionExecutorServiceWrappers(),
-			functionActionExecutorServiceWrapper -> {
-				Map<String, Object> properties =
-					functionActionExecutorServiceWrapper.getProperties();
-
-				String key = MapUtil.getString(
-					properties,
-					FunctionActionExecutorServiceWrapperTracker.KEY);
-
-				// TODO Is "client.extension.description" actually set?
-
-				return JSONUtil.put(
-					"description",
-					MapUtil.getString(
-						properties, "client.extension.description", key)
-				).put(
-					"key", key
-				);
-			});
-	}
-
 	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
 
@@ -247,6 +221,30 @@ public class KaleoDesignerDisplayContext {
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
 		).build();
+	}
+
+	public JSONArray getFunctionActionExecutorsJSONArray() throws Exception {
+		return JSONUtil.toJSONArray(
+			_functionActionExecutorServiceWrapperTracker.
+				getFunctionActionExecutorServiceWrappers(),
+			functionActionExecutorServiceWrapper -> {
+				Map<String, Object> properties =
+					functionActionExecutorServiceWrapper.getProperties();
+
+				String key = MapUtil.getString(
+					properties,
+					FunctionActionExecutorServiceWrapperTracker.KEY);
+
+				// TODO Is "client.extension.description" actually set?
+
+				return JSONUtil.put(
+					"description",
+					MapUtil.getString(
+						properties, "client.extension.description", key)
+				).put(
+					"key", key
+				);
+			});
 	}
 
 	public KaleoDefinition getKaleoDefinition(

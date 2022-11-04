@@ -23,7 +23,9 @@ const ActionTypeAction = ({
 	actionType,
 	setActionSections,
 }) => {
-	const {clientExtensions, selectedItem} = useContext(DiagramBuilderContext);
+	const {functionActionExecutors, selectedItem} = useContext(
+		DiagramBuilderContext
+	);
 	const validActionData =
 		actionData.actionType === 'timerActions' ? actionData : null;
 	const [script, setScript] = useState(validActionData?.script || '');
@@ -43,11 +45,11 @@ const ActionTypeAction = ({
 		},
 	];
 
-	if (clientExtensions?.length) {
+	if (functionActionExecutors?.length) {
 		actionTypeOptions.push(
-			...clientExtensions.map((item) => {
+			...functionActionExecutors.map((item) => {
 				const itemCopy = {...item};
-				itemCopy.type = 'clientExtension';
+				itemCopy.type = 'functionActionExecutor';
 				itemCopy.label = item.description;
 				delete itemCopy.description;
 				itemCopy.value = item.key;
@@ -77,7 +79,7 @@ const ActionTypeAction = ({
 		if (
 			item.name &&
 			(item.script ||
-				(selectedActionType?.type === 'clientExtension' &&
+				(selectedActionType?.type === 'functionActionExecutor' &&
 					item.script === ''))
 		) {
 			setActionSections((previousSections) => {

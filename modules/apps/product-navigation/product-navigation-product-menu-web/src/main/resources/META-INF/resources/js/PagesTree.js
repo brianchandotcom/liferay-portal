@@ -17,10 +17,11 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useSessionState} from '@liferay/layout-content-page-editor-web';
-import {fetch, openModal, openToast} from 'frontend-js-web';
+import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
+const ENTER_KEYCODE = 13;
 const ROOT_ITEM_ID = '0';
 const NOT_DROPPABLE_TYPES = ['url', 'link_to_layout'];
 
@@ -105,6 +106,14 @@ export default function PagesTree({
 							active={
 								selectedLayoutId === item.id ? 'true' : null
 							}
+							onKeyDown={(event) => {
+								if (
+									event.keyCode === ENTER_KEYCODE &&
+									item.regularURL
+								) {
+									navigate(item.regularURL);
+								}
+							}}
 						>
 							{item.icon && <ClayIcon symbol={item.icon} />}
 
@@ -151,6 +160,14 @@ export default function PagesTree({
 											: null
 									}
 									expandable={item.hasChildren}
+									onKeyDown={(event) => {
+										if (
+											event.keyCode === ENTER_KEYCODE &&
+											item.regularURL
+										) {
+											navigate(item.regularURL);
+										}
+									}}
 								>
 									{item.icon && (
 										<ClayIcon symbol={item.icon} />

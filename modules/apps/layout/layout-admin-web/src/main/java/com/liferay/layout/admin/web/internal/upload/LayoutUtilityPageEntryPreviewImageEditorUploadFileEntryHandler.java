@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.upload;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -46,12 +46,12 @@ public class LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long layoutUtilityPageTemplateEntryId = ParamUtil.getLong(
-			uploadPortletRequest, "layoutUtilityPageTemplateEntryId");
+		long layoutUtilityPageEntryId = ParamUtil.getLong(
+			uploadPortletRequest, "layoutUtilityPageEntryId");
 
 		_layoutUtilityPageEntryModelResourcePermission.check(
-			themeDisplay.getPermissionChecker(),
-			layoutUtilityPageTemplateEntryId, ActionKeys.UPDATE);
+			themeDisplay.getPermissionChecker(), layoutUtilityPageEntryId,
+			ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class LayoutUtilityPageEntryPreviewImageEditorUploadFileEntryHandler
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.utility.page.model.LayoutUtilityPageEntry)"
 	)
-	private ModelResourcePermission<LayoutPageTemplateEntry>
+	private ModelResourcePermission<LayoutUtilityPageEntry>
 		_layoutUtilityPageEntryModelResourcePermission;
 
 	@Reference

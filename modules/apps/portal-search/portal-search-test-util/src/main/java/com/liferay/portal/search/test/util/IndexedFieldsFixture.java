@@ -237,8 +237,7 @@ public class IndexedFieldsFixture {
 	}
 
 	private boolean _isSearchEngine(String vendor) {
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
-			_searchEngineHelper.getDefaultSearchEngineId());
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		return vendor.equals(searchEngine.getVendor());
 	}

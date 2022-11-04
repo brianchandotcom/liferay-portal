@@ -51,6 +51,13 @@ public class UnmarkItemsForDeletionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		return _unmarkItemsForDeletion(actionRequest, actionResponse);
+	}
+
+	private JSONObject _unmarkItemsForDeletion(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

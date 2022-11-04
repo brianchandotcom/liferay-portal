@@ -76,4 +76,86 @@ public interface ContentDashboardItem<T> {
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);
 
+	public static class SpecificInformation<T> {
+
+		public SpecificInformation(
+			String help, String key, Type type, T value) {
+
+			_help = help;
+			_key = key;
+			_type = type;
+			_value = value;
+		}
+
+		public SpecificInformation(String key, Type type, T value) {
+			_key = key;
+			_type = type;
+			_value = value;
+
+			_help = null;
+		}
+
+		public String getHelp() {
+			return _help;
+		}
+
+		public String getKey() {
+			return _key;
+		}
+
+		public Type getType() {
+			return _type;
+		}
+
+		public T getValue() {
+			return _value;
+		}
+
+		public enum Type {
+
+			DATE, STRING, URL
+
+		}
+
+		public JSONObject toJSONObject(Language language, Locale locale) {
+			return JSONUtil.put(
+				"help", language.get(locale, getHelp())
+			).put(
+				"title", language.get(locale, getKey())
+			).put(
+				"type", getType()
+			).put(
+				"value", _toString(getValue())
+			);
+		}
+
+		private String _toString(Date date) {
+			Instant instant = date.toInstant();
+
+			ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+			LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+
+			return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		}
+
+		private String _toString(Object object) {
+			if (object == null) {
+				return null;
+			}
+
+			if (object instanceof Date) {
+				return _toString((Date)object);
+			}
+
+			return String.valueOf(object);
+		}
+
+		private final String _help;
+		private final String _key;
+		private final Type _type;
+		private final T _value;
+
+	}
+
 }

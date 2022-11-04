@@ -3156,7 +3156,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			taxonomyCategoryIdsStringUtilReplaceValues.putAll(
-				_addTaxonomyCategories(
+				_addOrUpdateTaxonomyCategories(
 					StringUtil.replaceLast(resourcePath, ".json", "/"), null,
 					siteNavigationMenuItemSettingsBuilder,
 					taxonomyCategoryResource, taxonomyVocabulary.getId()));
@@ -3614,7 +3614,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			zipWriter.getFile(), true);
 	}
 
-	private Map<String, String> _addTaxonomyCategories(
+	private Map<String, String> _addOrUpdateTaxonomyCategories(
 			String parentResourcePath, String parentTaxonomyCategoryId,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder,
@@ -3680,7 +3680,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				});
 
 			taxonomyCategoryIdsStringUtilReplaceValues.putAll(
-				_addTaxonomyCategories(
+				_addOrUpdateTaxonomyCategories(
 					StringUtil.replaceLast(resourcePath, ".json", "/"),
 					taxonomyCategory.getId(),
 					siteNavigationMenuItemSettingsBuilder,

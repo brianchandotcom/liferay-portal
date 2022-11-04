@@ -160,9 +160,6 @@ public class EmailNotificationType extends BaseNotificationType {
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException {
 
-		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
-
 		User user = userLocalService.getUser(notificationContext.getUserId());
 
 		siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
@@ -171,16 +168,15 @@ public class EmailNotificationType extends BaseNotificationType {
 		notificationContext.setFileEntryIds(
 			_getFileEntryIds(user.getCompanyId(), notificationContext));
 
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
 		String body = formatLocalizedContent(
 			notificationTemplate.getBodyMap(), notificationContext);
-		String subject = formatLocalizedContent(
-			notificationTemplate.getSubjectMap(), notificationContext);
-
-		EmailAddressValidator emailAddressValidator =
-			EmailAddressValidatorFactory.getInstance();
-
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
+		String subject = formatLocalizedContent(
+			notificationTemplate.getSubjectMap(), notificationContext);
 
 		Map<String, String> notificationRecipientSettingsEvaluatedMap =
 			HashMapBuilder.put(
@@ -245,6 +241,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 			User toUser = userLocalService.fetchUser(
 				GetterUtil.getLong(emailAddressOrUserId));
+
+			EmailAddressValidator emailAddressValidator =
+				EmailAddressValidatorFactory.getInstance();
 
 			if ((toUser == null) &&
 				emailAddressValidator.validate(

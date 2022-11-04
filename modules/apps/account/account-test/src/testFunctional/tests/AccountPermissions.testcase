@@ -1857,6 +1857,84 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that the User's available updates accounts within the page with update permission of share account role."
+	@priority = "5"
+	test CanUpdateAccountWithUpdateShareAccountRole {
+		task ("Given add account a new user and account role with view permission") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn userln");
+
+			JSONRole.addSharedAccountRole(roleTitle = "Update Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Update role",
+				roleType = "account");
+		}
+
+		task ("When assign the user to account with update permission of role") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Update Role",
+				accountUserName = "userfn userln");
+		}
+
+		task ("Then in the accounts table Account Name can be upated") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+			Accounts.goToEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Account Name");
+
+			AssertTextEquals(
+				key_portletName = "Account",
+				locator1 = "Portlet#TITLE",
+				value1 = "Edit Account Name");
+
+			PortletEntry.inputName(name = "Edit Account Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewEntryName(rowEntry = "Edit Account Name");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+		}
+	}
+
 	@description = "This test filters Accounts by status."
 	@priority = "4"
 	@refactorneeded

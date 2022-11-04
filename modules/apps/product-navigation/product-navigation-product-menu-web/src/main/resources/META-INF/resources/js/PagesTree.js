@@ -148,6 +148,7 @@ export default function PagesTree({
 											item.hasChildren ||
 											item.children?.length,
 									})}
+									expandable={item.hasChildren}
 								>
 									{item.icon && (
 										<ClayIcon symbol={item.icon} />

@@ -12,7 +12,6 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
-import {FocusScope} from '@clayui/shared';
 import React, {useState} from 'react';
 
 /**
@@ -150,30 +149,28 @@ function ModelAutocomplete({
 	};
 
 	return (
-		<FocusScope>
-			<ClayAutocomplete>
-				<ClayAutocomplete.Input
-					aria-label={label}
-					id={name}
-					name={name}
-					onBlur={_handleInputBlur}
-					onChange={_handleInputChange}
-					onFocus={_handleInputFocus}
-					onKeyDown={_handleInputKeyDown}
-					required={required}
-					value={autocompleteSearchValue}
-				/>
+		<ClayAutocomplete>
+			<ClayAutocomplete.Input
+				aria-label={label}
+				id={name}
+				name={name}
+				onBlur={_handleInputBlur}
+				onChange={_handleInputChange}
+				onFocus={_handleInputFocus}
+				onKeyDown={_handleInputKeyDown}
+				required={required}
+				value={autocompleteSearchValue}
+			/>
 
-				<ClayAutocomplete.DropDown
-					active={showDropDown}
-					onSetActive={setShowDropDown}
-				>
-					<ClayDropDown.ItemList>
-						{_renderAutocompleteDropdownItems()}
-					</ClayDropDown.ItemList>
-				</ClayAutocomplete.DropDown>
-			</ClayAutocomplete>
-		</FocusScope>
+			<ClayAutocomplete.DropDown
+				active={showDropDown}
+				onSetActive={setShowDropDown}
+			>
+				<ClayDropDown.ItemList>
+					{_renderAutocompleteDropdownItems()}
+				</ClayDropDown.ItemList>
+			</ClayAutocomplete.DropDown>
+		</ClayAutocomplete>
 	);
 }
 

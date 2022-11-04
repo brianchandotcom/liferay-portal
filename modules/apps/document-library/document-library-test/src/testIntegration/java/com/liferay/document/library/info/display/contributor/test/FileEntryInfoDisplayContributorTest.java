@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -58,6 +60,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.Locale;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,11 +90,14 @@ public class FileEntryInfoDisplayContributorTest {
 
 	@Test
 	public void testDisplayPageURLCustomLocaleAlgorithm1() throws Exception {
-		int originalLocalePrependFriendlyURLStyle =
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+			_group.getCompanyId());
 
 		try {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+			preferences.setValue(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, String.valueOf(1));
+
+			preferences.store();
 
 			_withAndWithoutAssetEntry(
 				fileEntry -> {
@@ -114,8 +121,7 @@ public class FileEntryInfoDisplayContributorTest {
 				});
 		}
 		finally {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
-				originalLocalePrependFriendlyURLStyle;
+			preferences.reset(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
 	}
 
@@ -155,11 +161,14 @@ public class FileEntryInfoDisplayContributorTest {
 
 	@Test
 	public void testDisplayPageURLCustomLocaleAlgorithm2() throws Exception {
-		int originalLocalePrependFriendlyURLStyle =
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+			_group.getCompanyId());
 
 		try {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+			preferences.setValue(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, String.valueOf(2));
+
+			preferences.store();
 
 			_withAndWithoutAssetEntry(
 				fileEntry -> {
@@ -183,8 +192,7 @@ public class FileEntryInfoDisplayContributorTest {
 				});
 		}
 		finally {
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
-				originalLocalePrependFriendlyURLStyle;
+			preferences.reset(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
 	}
 

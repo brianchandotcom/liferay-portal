@@ -28,8 +28,7 @@ import com.liferay.notification.type.NotificationType;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -119,7 +118,8 @@ public class UserNotificationType extends BaseNotificationType {
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		List<Map<String, String>> notificationRecipientSettings =
+			new ArrayList<>();
 
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
@@ -128,9 +128,6 @@ public class UserNotificationType extends BaseNotificationType {
 			_usersProviderServiceTracker.getUsersProvider(
 				notificationTemplate.getRecipientType());
 
-		List<Map<String, String>> notificationRecipientSettings =
-			new ArrayList<>();
-
 		for (User user : usersProvider.provide(notificationContext)) {
 			siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
 			userLocale = user.getLocale();
@@ -138,7 +135,7 @@ public class UserNotificationType extends BaseNotificationType {
 			_userNotificationEventLocalService.sendUserNotificationEvents(
 				user.getUserId(), notificationContext.getPortletId(),
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				jsonObject.put(
+				JSONUtil.put(
 					"className", notificationContext.getClassName()
 				).put(
 					"classPK", notificationContext.getClassPK()
@@ -201,9 +198,6 @@ public class UserNotificationType extends BaseNotificationType {
 
 		return notificationQueueEntry;
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private UserNotificationEventLocalService

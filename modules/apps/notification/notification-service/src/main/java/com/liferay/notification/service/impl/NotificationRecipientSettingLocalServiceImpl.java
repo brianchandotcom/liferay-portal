@@ -37,7 +37,7 @@ public class NotificationRecipientSettingLocalServiceImpl
 			long notificationRecipientId, String name)
 		throws NoSuchNotificationRecipientSettingException {
 
-		return notificationRecipientSettingPersistence.findByN_NRI(
+		return notificationRecipientSettingPersistence.findByNRI_N(
 			notificationRecipientId, name);
 	}
 

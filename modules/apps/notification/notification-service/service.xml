@@ -114,7 +114,7 @@
 		<finder name="NotificationRecipientId" return-type="Collection">
 			<finder-column name="notificationRecipientId" />
 		</finder>
-		<finder name="N_NRI" return-type="NotificationRecipientSetting">
+		<finder name="NRI_N" return-type="NotificationRecipientSetting">
 			<finder-column name="notificationRecipientId" />
 			<finder-column name="name" />
 		</finder>

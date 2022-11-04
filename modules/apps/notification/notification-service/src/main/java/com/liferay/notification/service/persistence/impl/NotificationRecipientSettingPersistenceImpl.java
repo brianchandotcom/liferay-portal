@@ -1774,8 +1774,8 @@ public class NotificationRecipientSettingPersistenceImpl
 		_FINDER_COLUMN_NOTIFICATIONRECIPIENTID_NOTIFICATIONRECIPIENTID_2 =
 			"notificationRecipientSetting.notificationRecipientId = ?";
 
-	private FinderPath _finderPathFetchByN_NRI;
-	private FinderPath _finderPathCountByN_NRI;
+	private FinderPath _finderPathFetchByNRI_N;
+	private FinderPath _finderPathCountByNRI_N;
 
 	/**
 	 * Returns the notification recipient setting where notificationRecipientId = &#63; and name = &#63; or throws a <code>NoSuchNotificationRecipientSettingException</code> if it could not be found.
@@ -1786,12 +1786,12 @@ public class NotificationRecipientSettingPersistenceImpl
 	 * @throws NoSuchNotificationRecipientSettingException if a matching notification recipient setting could not be found
 	 */
 	@Override
-	public NotificationRecipientSetting findByN_NRI(
+	public NotificationRecipientSetting findByNRI_N(
 			long notificationRecipientId, String name)
 		throws NoSuchNotificationRecipientSettingException {
 
 		NotificationRecipientSetting notificationRecipientSetting =
-			fetchByN_NRI(notificationRecipientId, name);
+			fetchByNRI_N(notificationRecipientId, name);
 
 		if (notificationRecipientSetting == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1825,10 +1825,10 @@ public class NotificationRecipientSettingPersistenceImpl
 	 * @return the matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
 	 */
 	@Override
-	public NotificationRecipientSetting fetchByN_NRI(
+	public NotificationRecipientSetting fetchByNRI_N(
 		long notificationRecipientId, String name) {
 
-		return fetchByN_NRI(notificationRecipientId, name, true);
+		return fetchByNRI_N(notificationRecipientId, name, true);
 	}
 
 	/**
@@ -1840,7 +1840,7 @@ public class NotificationRecipientSettingPersistenceImpl
 	 * @return the matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
 	 */
 	@Override
-	public NotificationRecipientSetting fetchByN_NRI(
+	public NotificationRecipientSetting fetchByNRI_N(
 		long notificationRecipientId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
@@ -1855,7 +1855,7 @@ public class NotificationRecipientSettingPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByN_NRI, finderArgs, this);
+				_finderPathFetchByNRI_N, finderArgs, this);
 		}
 
 		if (result instanceof NotificationRecipientSetting) {
@@ -1876,17 +1876,17 @@ public class NotificationRecipientSettingPersistenceImpl
 
 			sb.append(_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE);
 
-			sb.append(_FINDER_COLUMN_N_NRI_NOTIFICATIONRECIPIENTID_2);
+			sb.append(_FINDER_COLUMN_NRI_N_NOTIFICATIONRECIPIENTID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_NRI_NAME_3);
+				sb.append(_FINDER_COLUMN_NRI_N_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_N_NRI_NAME_2);
+				sb.append(_FINDER_COLUMN_NRI_N_NAME_2);
 			}
 
 			String sql = sb.toString();
@@ -1911,7 +1911,7 @@ public class NotificationRecipientSettingPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByN_NRI, finderArgs, list);
+							_finderPathFetchByNRI_N, finderArgs, list);
 					}
 				}
 				else {
@@ -1926,7 +1926,7 @@ public class NotificationRecipientSettingPersistenceImpl
 							}
 
 							_log.warn(
-								"NotificationRecipientSettingPersistenceImpl.fetchByN_NRI(long, String, boolean) with parameters (" +
+								"NotificationRecipientSettingPersistenceImpl.fetchByNRI_N(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -1964,11 +1964,11 @@ public class NotificationRecipientSettingPersistenceImpl
 	 * @return the notification recipient setting that was removed
 	 */
 	@Override
-	public NotificationRecipientSetting removeByN_NRI(
+	public NotificationRecipientSetting removeByNRI_N(
 			long notificationRecipientId, String name)
 		throws NoSuchNotificationRecipientSettingException {
 
-		NotificationRecipientSetting notificationRecipientSetting = findByN_NRI(
+		NotificationRecipientSetting notificationRecipientSetting = findByNRI_N(
 			notificationRecipientId, name);
 
 		return remove(notificationRecipientSetting);
@@ -1982,10 +1982,10 @@ public class NotificationRecipientSettingPersistenceImpl
 	 * @return the number of matching notification recipient settings
 	 */
 	@Override
-	public int countByN_NRI(long notificationRecipientId, String name) {
+	public int countByNRI_N(long notificationRecipientId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByN_NRI;
+		FinderPath finderPath = _finderPathCountByNRI_N;
 
 		Object[] finderArgs = new Object[] {notificationRecipientId, name};
 
@@ -1996,17 +1996,17 @@ public class NotificationRecipientSettingPersistenceImpl
 
 			sb.append(_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE);
 
-			sb.append(_FINDER_COLUMN_N_NRI_NOTIFICATIONRECIPIENTID_2);
+			sb.append(_FINDER_COLUMN_NRI_N_NOTIFICATIONRECIPIENTID_2);
 
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_NRI_NAME_3);
+				sb.append(_FINDER_COLUMN_NRI_N_NAME_3);
 			}
 			else {
 				bindName = true;
 
-				sb.append(_FINDER_COLUMN_N_NRI_NAME_2);
+				sb.append(_FINDER_COLUMN_NRI_N_NAME_2);
 			}
 
 			String sql = sb.toString();
@@ -2041,13 +2041,13 @@ public class NotificationRecipientSettingPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_N_NRI_NOTIFICATIONRECIPIENTID_2 =
+	private static final String _FINDER_COLUMN_NRI_N_NOTIFICATIONRECIPIENTID_2 =
 		"notificationRecipientSetting.notificationRecipientId = ? AND ";
 
-	private static final String _FINDER_COLUMN_N_NRI_NAME_2 =
+	private static final String _FINDER_COLUMN_NRI_N_NAME_2 =
 		"notificationRecipientSetting.name = ?";
 
-	private static final String _FINDER_COLUMN_N_NRI_NAME_3 =
+	private static final String _FINDER_COLUMN_NRI_N_NAME_3 =
 		"(notificationRecipientSetting.name IS NULL OR notificationRecipientSetting.name = '')";
 
 	public NotificationRecipientSettingPersistenceImpl() {
@@ -2080,7 +2080,7 @@ public class NotificationRecipientSettingPersistenceImpl
 			notificationRecipientSetting);
 
 		finderCache.putResult(
-			_finderPathFetchByN_NRI,
+			_finderPathFetchByNRI_N,
 			new Object[] {
 				notificationRecipientSetting.getNotificationRecipientId(),
 				notificationRecipientSetting.getName()
@@ -2181,9 +2181,9 @@ public class NotificationRecipientSettingPersistenceImpl
 			notificationRecipientSettingModelImpl.getName()
 		};
 
-		finderCache.putResult(_finderPathCountByN_NRI, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByNRI_N, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByN_NRI, args,
+			_finderPathFetchByNRI_N, args,
 			notificationRecipientSettingModelImpl);
 	}
 
@@ -2750,13 +2750,13 @@ public class NotificationRecipientSettingPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"notificationRecipientId"}, false);
 
-		_finderPathFetchByN_NRI = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByN_NRI",
+		_finderPathFetchByNRI_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByNRI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"notificationRecipientId", "name"}, true);
 
-		_finderPathCountByN_NRI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_NRI",
+		_finderPathCountByNRI_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNRI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"notificationRecipientId", "name"}, false);
 

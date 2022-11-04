@@ -96,8 +96,8 @@ public class NotificationRecipientCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", className=");
-		sb.append(className);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append("}");
@@ -145,13 +145,7 @@ public class NotificationRecipientCacheModel
 			notificationRecipientImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (className == null) {
-			notificationRecipientImpl.setClassName("");
-		}
-		else {
-			notificationRecipientImpl.setClassName(className);
-		}
-
+		notificationRecipientImpl.setClassNameId(classNameId);
 		notificationRecipientImpl.setClassPK(classPK);
 
 		notificationRecipientImpl.resetOriginalValues();
@@ -172,7 +166,8 @@ public class NotificationRecipientCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		className = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 	}
@@ -204,12 +199,7 @@ public class NotificationRecipientCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (className == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(className);
-		}
+		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
 	}
@@ -222,7 +212,7 @@ public class NotificationRecipientCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String className;
+	public long classNameId;
 	public long classPK;
 
 }

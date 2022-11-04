@@ -57,9 +57,9 @@ public class NotificationRecipientTable
 	public final Column<NotificationRecipientTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<NotificationRecipientTable, String> className =
+	public final Column<NotificationRecipientTable, Long> classNameId =
 		createColumn(
-			"className", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<NotificationRecipientTable, Long> classPK =
 		createColumn("classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 

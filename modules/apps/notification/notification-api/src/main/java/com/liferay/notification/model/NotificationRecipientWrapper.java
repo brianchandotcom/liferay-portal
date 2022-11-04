@@ -53,7 +53,7 @@ public class NotificationRecipientWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("className", getClassName());
+		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 
 		return attributes;
@@ -110,10 +110,10 @@ public class NotificationRecipientWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String className = (String)attributes.get("className");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (className != null) {
-			setClassName(className);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
 		}
 
 		Long classPK = (Long)attributes.get("classPK");
@@ -129,13 +129,23 @@ public class NotificationRecipientWrapper
 	}
 
 	/**
-	 * Returns the class name of this notification recipient.
+	 * Returns the fully qualified class name of this notification recipient.
 	 *
-	 * @return the class name of this notification recipient
+	 * @return the fully qualified class name of this notification recipient
 	 */
 	@Override
 	public String getClassName() {
 		return model.getClassName();
+	}
+
+	/**
+	 * Returns the class name ID of this notification recipient.
+	 *
+	 * @return the class name ID of this notification recipient
+	 */
+	@Override
+	public long getClassNameId() {
+		return model.getClassNameId();
 	}
 
 	/**
@@ -205,11 +215,6 @@ public class NotificationRecipientWrapper
 		return model.getNotificationRecipientSettings();
 	}
 
-	@Override
-	public Map<String, Object> getNotificationRecipientSettingsMap() {
-		return model.getNotificationRecipientSettingsMap();
-	}
-
 	/**
 	 * Returns the primary key of this notification recipient.
 	 *
@@ -265,14 +270,19 @@ public class NotificationRecipientWrapper
 		model.persist();
 	}
 
-	/**
-	 * Sets the class name of this notification recipient.
-	 *
-	 * @param className the class name of this notification recipient
-	 */
 	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
+	}
+
+	/**
+	 * Sets the class name ID of this notification recipient.
+	 *
+	 * @param classNameId the class name ID of this notification recipient
+	 */
+	@Override
+	public void setClassNameId(long classNameId) {
+		model.setClassNameId(classNameId);
 	}
 
 	/**

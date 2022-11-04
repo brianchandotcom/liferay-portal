@@ -228,12 +228,12 @@ public class NotificationRecipientSettingPersistenceTest {
 	}
 
 	@Test
-	public void testCountByN_NRI() throws Exception {
-		_persistence.countByN_NRI(RandomTestUtil.nextLong(), "");
+	public void testCountByNRI_N() throws Exception {
+		_persistence.countByNRI_N(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByN_NRI(0L, "null");
+		_persistence.countByNRI_N(0L, "null");
 
-		_persistence.countByN_NRI(0L, (String)null);
+		_persistence.countByNRI_N(0L, (String)null);
 	}
 
 	@Test

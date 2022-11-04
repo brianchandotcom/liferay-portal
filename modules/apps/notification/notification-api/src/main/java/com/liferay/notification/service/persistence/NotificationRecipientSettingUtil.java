@@ -693,12 +693,12 @@ public class NotificationRecipientSettingUtil {
 	 * @return the matching notification recipient setting
 	 * @throws NoSuchNotificationRecipientSettingException if a matching notification recipient setting could not be found
 	 */
-	public static NotificationRecipientSetting findByN_NRI(
+	public static NotificationRecipientSetting findByNRI_N(
 			long notificationRecipientId, String name)
 		throws com.liferay.notification.exception.
 			NoSuchNotificationRecipientSettingException {
 
-		return getPersistence().findByN_NRI(notificationRecipientId, name);
+		return getPersistence().findByNRI_N(notificationRecipientId, name);
 	}
 
 	/**
@@ -708,10 +708,10 @@ public class NotificationRecipientSettingUtil {
 	 * @param name the name
 	 * @return the matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
 	 */
-	public static NotificationRecipientSetting fetchByN_NRI(
+	public static NotificationRecipientSetting fetchByNRI_N(
 		long notificationRecipientId, String name) {
 
-		return getPersistence().fetchByN_NRI(notificationRecipientId, name);
+		return getPersistence().fetchByNRI_N(notificationRecipientId, name);
 	}
 
 	/**
@@ -722,10 +722,10 @@ public class NotificationRecipientSettingUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
 	 */
-	public static NotificationRecipientSetting fetchByN_NRI(
+	public static NotificationRecipientSetting fetchByNRI_N(
 		long notificationRecipientId, String name, boolean useFinderCache) {
 
-		return getPersistence().fetchByN_NRI(
+		return getPersistence().fetchByNRI_N(
 			notificationRecipientId, name, useFinderCache);
 	}
 
@@ -736,12 +736,12 @@ public class NotificationRecipientSettingUtil {
 	 * @param name the name
 	 * @return the notification recipient setting that was removed
 	 */
-	public static NotificationRecipientSetting removeByN_NRI(
+	public static NotificationRecipientSetting removeByNRI_N(
 			long notificationRecipientId, String name)
 		throws com.liferay.notification.exception.
 			NoSuchNotificationRecipientSettingException {
 
-		return getPersistence().removeByN_NRI(notificationRecipientId, name);
+		return getPersistence().removeByNRI_N(notificationRecipientId, name);
 	}
 
 	/**
@@ -751,8 +751,8 @@ public class NotificationRecipientSettingUtil {
 	 * @param name the name
 	 * @return the number of matching notification recipient settings
 	 */
-	public static int countByN_NRI(long notificationRecipientId, String name) {
-		return getPersistence().countByN_NRI(notificationRecipientId, name);
+	public static int countByNRI_N(long notificationRecipientId, String name) {
+		return getPersistence().countByNRI_N(notificationRecipientId, name);
 	}
 
 	/**

@@ -496,7 +496,7 @@ public interface NotificationRecipientSettingPersistence
 	 * @return the matching notification recipient setting
 	 * @throws NoSuchNotificationRecipientSettingException if a matching notification recipient setting could not be found
 	 */
-	public NotificationRecipientSetting findByN_NRI(
+	public NotificationRecipientSetting findByNRI_N(
 			long notificationRecipientId, String name)
 		throws NoSuchNotificationRecipientSettingException;
 
@@ -507,7 +507,7 @@ public interface NotificationRecipientSettingPersistence
 	 * @param name the name
 	 * @return the matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
 	 */
-	public NotificationRecipientSetting fetchByN_NRI(
+	public NotificationRecipientSetting fetchByNRI_N(
 		long notificationRecipientId, String name);
 
 	/**
@@ -518,7 +518,7 @@ public interface NotificationRecipientSettingPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching notification recipient setting, or <code>null</code> if a matching notification recipient setting could not be found
 	 */
-	public NotificationRecipientSetting fetchByN_NRI(
+	public NotificationRecipientSetting fetchByNRI_N(
 		long notificationRecipientId, String name, boolean useFinderCache);
 
 	/**
@@ -528,7 +528,7 @@ public interface NotificationRecipientSettingPersistence
 	 * @param name the name
 	 * @return the notification recipient setting that was removed
 	 */
-	public NotificationRecipientSetting removeByN_NRI(
+	public NotificationRecipientSetting removeByNRI_N(
 			long notificationRecipientId, String name)
 		throws NoSuchNotificationRecipientSettingException;
 
@@ -539,7 +539,7 @@ public interface NotificationRecipientSettingPersistence
 	 * @param name the name
 	 * @return the number of matching notification recipient settings
 	 */
-	public int countByN_NRI(long notificationRecipientId, String name);
+	public int countByNRI_N(long notificationRecipientId, String name);
 
 	/**
 	 * Caches the notification recipient setting in the entity cache if it is enabled.

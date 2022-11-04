@@ -15,6 +15,7 @@
 package com.liferay.notification.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface NotificationRecipientModel
-	extends BaseModel<NotificationRecipient>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<NotificationRecipient>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -205,25 +206,37 @@ public interface NotificationRecipientModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the class name of this notification recipient.
+	 * Returns the fully qualified class name of this notification recipient.
 	 *
-	 * @return the class name of this notification recipient
+	 * @return the fully qualified class name of this notification recipient
 	 */
-	@AutoEscape
+	@Override
 	public String getClassName();
 
-	/**
-	 * Sets the class name of this notification recipient.
-	 *
-	 * @param className the class name of this notification recipient
-	 */
 	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this notification recipient.
+	 *
+	 * @return the class name ID of this notification recipient
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this notification recipient.
+	 *
+	 * @param classNameId the class name ID of this notification recipient
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
 	 * Returns the class pk of this notification recipient.
 	 *
 	 * @return the class pk of this notification recipient
 	 */
+	@Override
 	public long getClassPK();
 
 	/**
@@ -231,6 +244,7 @@ public interface NotificationRecipientModel
 	 *
 	 * @param classPK the class pk of this notification recipient
 	 */
+	@Override
 	public void setClassPK(long classPK);
 
 	@Override

@@ -42,7 +42,7 @@ create table NotificationRecipient (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	className VARCHAR(75) null,
+	classNameId LONG,
 	classPK LONG
 );
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -76,7 +77,7 @@ public class NotificationRecipientModelImpl
 		{"notificationRecipientId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"className", Types.VARCHAR}, {"classPK", Types.BIGINT}
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,12 +92,12 @@ public class NotificationRecipientModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationRecipient (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationRecipientId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,className VARCHAR(75) null,classPK LONG)";
+		"create table NotificationRecipient (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationRecipientId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationRecipient";
@@ -302,11 +303,11 @@ public class NotificationRecipientModelImpl
 			(BiConsumer<NotificationRecipient, Date>)
 				NotificationRecipient::setModifiedDate);
 		attributeGetterFunctions.put(
-			"className", NotificationRecipient::getClassName);
+			"classNameId", NotificationRecipient::getClassNameId);
 		attributeSetterBiConsumers.put(
-			"className",
-			(BiConsumer<NotificationRecipient, String>)
-				NotificationRecipient::setClassName);
+			"classNameId",
+			(BiConsumer<NotificationRecipient, Long>)
+				NotificationRecipient::setClassNameId);
 		attributeGetterFunctions.put(
 			"classPK", NotificationRecipient::getClassPK);
 		attributeSetterBiConsumers.put(
@@ -485,21 +486,36 @@ public class NotificationRecipientModelImpl
 
 	@Override
 	public String getClassName() {
-		if (_className == null) {
+		if (getClassNameId() <= 0) {
 			return "";
 		}
-		else {
-			return _className;
-		}
+
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
 	@Override
 	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
+	}
+
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_className = className;
+		_classNameId = classNameId;
 	}
 
 	@Override
@@ -528,7 +544,8 @@ public class NotificationRecipientModelImpl
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
-			PortalUtil.getClassNameId(NotificationRecipient.class.getName()));
+			PortalUtil.getClassNameId(NotificationRecipient.class.getName()),
+			getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -598,7 +615,7 @@ public class NotificationRecipientModelImpl
 		notificationRecipientImpl.setUserName(getUserName());
 		notificationRecipientImpl.setCreateDate(getCreateDate());
 		notificationRecipientImpl.setModifiedDate(getModifiedDate());
-		notificationRecipientImpl.setClassName(getClassName());
+		notificationRecipientImpl.setClassNameId(getClassNameId());
 		notificationRecipientImpl.setClassPK(getClassPK());
 
 		notificationRecipientImpl.resetOriginalValues();
@@ -627,8 +644,8 @@ public class NotificationRecipientModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		notificationRecipientImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		notificationRecipientImpl.setClassName(
-			this.<String>getColumnOriginalValue("className"));
+		notificationRecipientImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
 		notificationRecipientImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
 
@@ -754,13 +771,7 @@ public class NotificationRecipientModelImpl
 			notificationRecipientCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		notificationRecipientCacheModel.className = getClassName();
-
-		String className = notificationRecipientCacheModel.className;
-
-		if ((className != null) && (className.length() == 0)) {
-			notificationRecipientCacheModel.className = null;
-		}
+		notificationRecipientCacheModel.classNameId = getClassNameId();
 
 		notificationRecipientCacheModel.classPK = getClassPK();
 
@@ -835,7 +846,7 @@ public class NotificationRecipientModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _className;
+	private long _classNameId;
 	private long _classPK;
 
 	public <T> T getColumnValue(String columnName) {
@@ -876,7 +887,7 @@ public class NotificationRecipientModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("className", _className);
+		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 	}
 
@@ -917,7 +928,7 @@ public class NotificationRecipientModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("className", 256L);
+		columnBitmasks.put("classNameId", 256L);
 
 		columnBitmasks.put("classPK", 512L);
 

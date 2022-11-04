@@ -65,8 +65,8 @@ import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoLi
 import com.liferay.object.web.internal.info.permission.provider.ObjectEntryInfoPermissionProvider;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.layout.display.page.ObjectEntryLayoutDisplayPageProvider;
-import com.liferay.object.web.internal.notifications.ObjectUserNotificationDefinition;
-import com.liferay.object.web.internal.notifications.ObjectUserNotificationHandler;
+import com.liferay.object.web.internal.notification.ObjectUserNotificationDefinition;
+import com.liferay.object.web.internal.notification.ObjectUserNotificationHandler;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory.ObjectFieldFDSFilterFactoryTracker;

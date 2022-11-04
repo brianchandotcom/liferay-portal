@@ -336,8 +336,8 @@ definition {
 		Navigator.openURL();
 
 		ContentPagesNavigator.openEditContentPage(
-				pageName = "Home",
-				siteName = "Guest");
+			pageName = "Home",
+			siteName = "Guest");
 
 		PageEditor.addWidget(
 			portletName = "Language Selector",
@@ -397,9 +397,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
-		while (IsElementNotPresent(key_searchAssetTitle = "WC Title 1", locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE")) {
-			Pause(locator1 = "5000");
-		}
+		WaitForElementPresent(
+			key_searchAssetTitle = "WC Title 1",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -2410,14 +2410,10 @@ definition {
 			groupName = "Guest",
 			title = "Apple");
 
-		Pause(locator1 = "1000");
-
 		JSONWebcontent.addWebContent(
 			content = "Content",
 			groupName = "Guest",
 			title = "Banana");
-
-		Pause(locator1 = "1000");
 
 		JSONWebcontent.addWebContent(
 			content = "Content",

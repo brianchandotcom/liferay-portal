@@ -35,6 +35,7 @@ import com.liferay.notification.service.NotificationTemplateAttachmentLocalServi
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.LocalizedMapUtil;
+import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
@@ -59,7 +60,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -128,7 +128,8 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationQueueEntry.getNotificationRecipient();
 
 		Map<String, Object> notificationRecipientSettingsMap =
-			notificationRecipient.getNotificationRecipientSettingsMap();
+			NotificationRecipientSettingUtil.toMap(
+				notificationRecipient.getNotificationRecipientSettings());
 
 		return String.valueOf(notificationRecipientSettingsMap.get("fromName"));
 	}
@@ -141,7 +142,8 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationQueueEntry.getNotificationRecipient();
 
 		Map<String, Object> notificationRecipientSettingsMap =
-			notificationRecipient.getNotificationRecipientSettingsMap();
+			NotificationRecipientSettingUtil.toMap(
+				notificationRecipient.getNotificationRecipientSettings());
 
 		return String.valueOf(notificationRecipientSettingsMap.get("to"));
 	}
@@ -291,7 +293,8 @@ public class EmailNotificationType extends BaseNotificationType {
 				notificationQueueEntry.getNotificationRecipient();
 
 			Map<String, Object> notificationRecipientSettingsMap =
-				notificationRecipient.getNotificationRecipientSettingsMap();
+				NotificationRecipientSettingUtil.toMap(
+					notificationRecipient.getNotificationRecipientSettings());
 
 			try {
 				MailMessage mailMessage = new MailMessage(
@@ -345,21 +348,10 @@ public class EmailNotificationType extends BaseNotificationType {
 	public Object[] toRecipients(
 		List<NotificationRecipientSetting> notificationRecipientSettings) {
 
-		Map<String, Object> recipientsMap = new HashMap<>();
-
-		for (NotificationRecipientSetting notificationRecipientSetting :
-				notificationRecipientSettings) {
-
-			Object value = notificationRecipientSetting.getValue();
-
-			if (Validator.isXml(notificationRecipientSetting.getValue())) {
-				value = notificationRecipientSetting.getValueMap();
-			}
-
-			recipientsMap.put(notificationRecipientSetting.getName(), value);
-		}
-
-		return new Object[] {recipientsMap};
+		return new Object[] {
+			NotificationRecipientSettingUtil.toMap(
+				notificationRecipientSettings)
+		};
 	}
 
 	@Override
@@ -370,7 +362,8 @@ public class EmailNotificationType extends BaseNotificationType {
 		super.validateNotificationTemplate(notificationContext);
 
 		Map<String, Object> notificationRecipientSettingsMap =
-			notificationContext.getNotificationRecipientSettingsMap();
+			NotificationRecipientSettingUtil.toMap(
+				notificationContext.getNotificationRecipientSettings());
 
 		if (Validator.isNull(notificationRecipientSettingsMap.get("from"))) {
 			throw new NotificationTemplateFromException("From is null");

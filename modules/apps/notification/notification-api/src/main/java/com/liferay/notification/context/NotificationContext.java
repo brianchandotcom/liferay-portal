@@ -18,10 +18,8 @@ import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +49,10 @@ public class NotificationContext {
 	}
 
 	public List<Long> getFileEntryIds() {
+		if (_fileEntryIds == null) {
+			return Collections.emptyList();
+		}
+
 		return _fileEntryIds;
 	}
 
@@ -66,25 +68,6 @@ public class NotificationContext {
 		getNotificationRecipientSettings() {
 
 		return _notificationRecipientSettings;
-	}
-
-	public Map<String, Object> getNotificationRecipientSettingsMap() {
-		Map<String, Object> notificationRecipientSettingsMap = new HashMap<>();
-
-		for (NotificationRecipientSetting notificationRecipientSetting :
-				getNotificationRecipientSettings()) {
-
-			Object value = notificationRecipientSetting.getValue();
-
-			if (Validator.isXml(notificationRecipientSetting.getValue())) {
-				value = notificationRecipientSetting.getValueMap();
-			}
-
-			notificationRecipientSettingsMap.put(
-				notificationRecipientSetting.getName(), value);
-		}
-
-		return notificationRecipientSettingsMap;
 	}
 
 	public NotificationTemplate getNotificationTemplate() {

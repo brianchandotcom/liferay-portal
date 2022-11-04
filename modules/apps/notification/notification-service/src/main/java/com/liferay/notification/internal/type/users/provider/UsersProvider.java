@@ -25,9 +25,9 @@ import java.util.List;
  */
 public interface UsersProvider {
 
+	public String getRecipientType();
+
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException;
-
-	public String getRecipientType();
 
 }

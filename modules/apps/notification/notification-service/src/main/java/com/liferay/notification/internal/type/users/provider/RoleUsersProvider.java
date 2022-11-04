@@ -44,6 +44,11 @@ import org.osgi.service.component.annotations.Reference;
 public class RoleUsersProvider implements UsersProvider {
 
 	@Override
+	public String getRecipientType() {
+		return NotificationRecipientConstants.TYPE_ROLE;
+	}
+
+	@Override
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException {
 
@@ -71,11 +76,6 @@ public class RoleUsersProvider implements UsersProvider {
 
 		return TransformUtil.transform(
 			userIds, userId -> _userLocalService.getUser(userId));
-	}
-
-	@Override
-	public String getRecipientType() {
-		return NotificationRecipientConstants.TYPE_ROLE;
 	}
 
 	@Reference

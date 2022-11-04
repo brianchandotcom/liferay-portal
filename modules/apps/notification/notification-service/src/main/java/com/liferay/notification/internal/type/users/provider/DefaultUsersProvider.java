@@ -39,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultUsersProvider implements UsersProvider {
 
 	@Override
+	public String getRecipientType() {
+		return NotificationRecipientConstants.TYPE_USER;
+	}
+
+	@Override
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException {
 
@@ -54,11 +59,6 @@ public class DefaultUsersProvider implements UsersProvider {
 				_userLocalService.getUserByScreenName(
 					notificationRecipientSetting.getCompanyId(),
 					notificationRecipientSetting.getValue()));
-	}
-
-	@Override
-	public String getRecipientType() {
-		return NotificationRecipientConstants.TYPE_USER;
 	}
 
 	@Reference

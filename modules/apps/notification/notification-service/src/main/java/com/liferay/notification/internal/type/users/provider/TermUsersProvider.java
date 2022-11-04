@@ -45,6 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 public class TermUsersProvider implements UsersProvider {
 
 	@Override
+	public String getRecipientType() {
+		return NotificationRecipientConstants.TYPE_TERM;
+	}
+
+	@Override
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException {
 
@@ -97,11 +102,6 @@ public class TermUsersProvider implements UsersProvider {
 		}
 
 		return users;
-	}
-
-	@Override
-	public String getRecipientType() {
-		return NotificationRecipientConstants.TYPE_TERM;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

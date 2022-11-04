@@ -175,16 +175,6 @@ public class DDMFormPagesTemplateContextFactory {
 				ddmFormLayoutColumn.getDDMFormFieldNames();
 
 			if (!GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-164998")) &&
-				ddmFormFieldNames.contains("limitToOneSubmissionPerUser")) {
-
-				ddmFormFieldNames = new ArrayList<>(ddmFormFieldNames);
-
-				ddmFormFieldNames.remove("limitToOneSubmissionPerUserBody");
-				ddmFormFieldNames.remove("limitToOneSubmissionPerUserHeader");
-			}
-
-			if (!GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-164999")) &&
 				ddmFormFieldNames.contains("displayChartAsTable")) {
 

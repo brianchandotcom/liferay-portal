@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,7 +48,6 @@ import com.liferay.redirect.model.RedirectEntryModel;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.search.RedirectEntrySearch;
-import com.liferay.redirect.web.internal.security.permission.resource.RedirectEntryPermission;
 import com.liferay.redirect.web.internal.util.RedirectUtil;
 import com.liferay.redirect.web.internal.util.comparator.RedirectComparator;
 import com.liferay.redirect.web.internal.util.comparator.RedirectDateComparator;
@@ -77,6 +77,7 @@ public class RedirectEntriesDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		ModelResourcePermission<RedirectEntry> modelResourcePermission,
 		RedirectEntryLocalService redirectEntryLocalService,
 		RedirectEntryService redirectEntryService,
 		StagingGroupHelper stagingGroupHelper) {
@@ -84,6 +85,7 @@ public class RedirectEntriesDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_modelResourcePermission = modelResourcePermission;
 		_redirectEntryLocalService = redirectEntryLocalService;
 		_redirectEntryService = redirectEntryService;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -103,7 +105,7 @@ public class RedirectEntriesDisplayContext {
 		RedirectEntry redirectEntry) {
 
 		return DropdownItemListBuilder.add(
-			() -> RedirectEntryPermission.contains(
+			() -> _modelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), redirectEntry,
 				ActionKeys.UPDATE),
 			dropdownItem -> {
@@ -122,7 +124,7 @@ public class RedirectEntriesDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "edit"));
 			}
 		).add(
-			() -> RedirectEntryPermission.contains(
+			() -> _modelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), redirectEntry,
 				ActionKeys.DELETE),
 			dropdownItem -> {
@@ -150,7 +152,7 @@ public class RedirectEntriesDisplayContext {
 	public String getAvailableActions(RedirectEntry redirectEntry)
 		throws PortalException {
 
-		if (RedirectEntryPermission.contains(
+		if (_modelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), redirectEntry,
 				ActionKeys.DELETE)) {
 
@@ -383,6 +385,8 @@ public class RedirectEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final ModelResourcePermission<RedirectEntry>
+		_modelResourcePermission;
 	private final RedirectEntryLocalService _redirectEntryLocalService;
 	private RedirectEntrySearch _redirectEntrySearch;
 	private final RedirectEntryService _redirectEntryService;

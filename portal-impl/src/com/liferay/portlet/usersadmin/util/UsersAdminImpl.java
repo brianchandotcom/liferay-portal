@@ -739,7 +739,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 		for (int orgLaborsIndex : orgLaborsIndexes) {
 			long listTypeId = ParamUtil.getLong(
-				actionRequest, "orgLaborTypeId" + orgLaborsIndex, -1);
+				actionRequest, "orgLaborListTypeId" + orgLaborsIndex, -1);
 
 			if (listTypeId == -1) {
 				continue;

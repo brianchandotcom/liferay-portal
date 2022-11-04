@@ -17,42 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
-
-RedirectEntry redirectEntry = (RedirectEntry)request.getAttribute(RedirectEntry.class.getName());
-
-String destinationURL = (redirectEntry != null) ? redirectEntry.getDestinationURL() : ParamUtil.getString(request, "destinationURL");
-String sourceURL = (redirectEntry != null) ? redirectEntry.getSourceURL() : ParamUtil.getString(request, "sourceURL");
-
-RedirectEntriesDisplayContext redirectEntriesDisplayContext = (RedirectEntriesDisplayContext)request.getAttribute(RedirectEntriesDisplayContext.class.getName());
+EditRedirectEntryDisplayContext editRedirectEntryDisplayContext = (EditRedirectEntryDisplayContext)request.getAttribute(EditRedirectEntryDisplayContext.class.getName());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(editRedirectEntryDisplayContext.getRedirect());
 
-if (redirectEntry == null) {
-	renderResponse.setTitle(LanguageUtil.get(request, "new-redirect"));
-}
-else {
-	renderResponse.setTitle(LanguageUtil.get(request, "edit-redirect"));
-}
+renderResponse.setTitle(editRedirectEntryDisplayContext.getTitle());
 %>
 
-<portlet:actionURL name="/redirect/edit_redirect_entry" var="editRedirectEntryURL" />
-
 <liferay-frontend:edit-form
-	action="<%= editRedirectEntryURL %>"
+	action="<%= editRedirectEntryDisplayContext.getEditRedirectEntryURL() %>"
 	method="post"
 	name="fm"
 	onSubmit="event.preventDefault();"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editRedirectEntryDisplayContext.getRedirect() %>" />
+	<aui:input name="backURL" type="hidden" value="<%= editRedirectEntryDisplayContext.getBackURL() %>" />
 	<aui:input name="updateChainedRedirectEntries" type="hidden" value="" />
 
-	<c:if test="<%= redirectEntry != null %>">
-		<aui:input name="redirectEntryId" type="hidden" value="<%= redirectEntry.getRedirectEntryId() %>" />
+	<c:if test="<%= editRedirectEntryDisplayContext.getRedirectEntryId() != 0 %>">
+		<aui:input name="redirectEntryId" type="hidden" value="<%= editRedirectEntryDisplayContext.getRedirectEntryId() %>" />
 	</c:if>
 
 	<liferay-frontend:edit-form-body>
@@ -107,25 +92,21 @@ else {
 				</div>
 
 				<div class="input-group-item">
-					<aui:input autoFocus="<%= Validator.isNull(sourceURL) || Validator.isNotNull(destinationURL) %>" label="" name="sourceURL" required="<%= true %>" type="text" value="<%= URLCodec.decodeURL(sourceURL) %>" />
+					<aui:input autoFocus="<%= editRedirectEntryDisplayContext.isAutoFocusSourceURL() %>" label="" name="sourceURL" required="<%= true %>" type="text" value="<%= URLCodec.decodeURL(editRedirectEntryDisplayContext.getSourceURL()) %>" />
 				</div>
 			</div>
 		</aui:field-wrapper>
 
-		<%
-		boolean autoFocusDestination = Validator.isNotNull(sourceURL) && Validator.isNull(destinationURL);
-		%>
-
 		<div class="destination-url">
-			<aui:input name="destinationURL" value="<%= destinationURL %>" />
+			<aui:input name="destinationURL" value="<%= editRedirectEntryDisplayContext.getDestinationURL() %>" />
 
 			<react:component
 				module="js/DestinationUrlInput"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"autofocus", autoFocusDestination
+						"autofocus", editRedirectEntryDisplayContext.isAutoFocusDestinationURL()
 					).put(
-						"initialDestinationUrl", (redirectEntry != null) ? redirectEntry.getDestinationURL() : ParamUtil.getString(request, "destinationURL")
+						"initialDestinationUrl", editRedirectEntryDisplayContext.getDestinationURL()
 					).put(
 						"namespace", liferayPortletResponse.getNamespace()
 					).build()
@@ -134,18 +115,18 @@ else {
 		</div>
 
 		<aui:select helpMessage="the-redirect-type-affects-how-search-engines-and-users-browsers-cache-treat-it" label="type" name="permanent">
-			<aui:option selected="<%= (redirectEntry != null) ? redirectEntry.isPermanent() : false %>" value="<%= true %>">
+			<aui:option selected="<%= editRedirectEntryDisplayContext.isRedirectEntryPermanent() %>" value="<%= true %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_MOVED_PERMANENTLY %>" key="permanent-x" />
 			</aui:option>
 
-			<aui:option selected="<%= (redirectEntry != null) ? !redirectEntry.isPermanent() : true %>" value="<%= false %>">
+			<aui:option selected="<%= editRedirectEntryDisplayContext.isRedirectEntryTemporary() %>" value="<%= false %>">
 				<liferay-ui:message arguments="<%= HttpServletResponse.SC_FOUND %>" key="temporary-x" />
 			</aui:option>
 		</aui:select>
 
-		<aui:input helpMessage="the-redirect-will-be-active-until-the-chosen-date.-leave-it-empty-to-avoid-expiration" name="expirationDate" type="date" value="<%= redirectEntriesDisplayContext.getExpirationDateInputValue(redirectEntry) %>" />
+		<aui:input helpMessage="the-redirect-will-be-active-until-the-chosen-date.-leave-it-empty-to-avoid-expiration" name="expirationDate" type="date" value="<%= editRedirectEntryDisplayContext.getExpirationDateInputValue() %>" />
 
-		<c:if test="<%= redirectEntry != null %>">
+		<c:if test="<%= editRedirectEntryDisplayContext.isShowAlertMessage() %>">
 			<clay:alert
 				cssClass="hide"
 				id='<%= liferayPortletResponse.getNamespace() + "typeInfoAlert" %>'
@@ -156,8 +137,8 @@ else {
 
 	<liferay-frontend:edit-form-footer>
 		<liferay-frontend:edit-form-buttons
-			redirect="<%= redirect %>"
-			submitLabel='<%= LanguageUtil.get(request, (redirectEntry == null) ? "create" : "save") %>'
+			redirect="<%= editRedirectEntryDisplayContext.getRedirect() %>"
+			submitLabel="<%= editRedirectEntryDisplayContext.getSubmitButtonLabel() %>"
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
@@ -167,22 +148,20 @@ else {
 		module="js/ChainedRedirections"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"saveButtonLabel", LanguageUtil.get(request, (redirectEntry == null) ? "create" : "save")
+				"saveButtonLabel", editRedirectEntryDisplayContext.getSubmitButtonLabel()
 			).build()
 		%>'
 	/>
 </div>
 
-<portlet:resourceURL id="/redirect/get_redirect_entry_chain_cause" var="getRedirectEntryChainCauseURL" />
-
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"getRedirectEntryChainCauseURL", getRedirectEntryChainCauseURL
+			"getRedirectEntryChainCauseURL", editRedirectEntryDisplayContext.getRedirectEntryChainCauseURL()
 		).put(
-			"initialDestinationURL", destinationURL
+			"initialDestinationURL", editRedirectEntryDisplayContext.getDestinationURL()
 		).put(
-			"initialIsPermanent", (redirectEntry != null) ? redirectEntry.isPermanent() : false
+			"initialIsPermanent", editRedirectEntryDisplayContext.isRedirectEntryPermanent()
 		).build()
 	%>'
 	module="js/editRedirectEntry"

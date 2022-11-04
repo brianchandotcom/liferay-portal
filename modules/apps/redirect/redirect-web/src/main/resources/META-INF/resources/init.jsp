@@ -49,6 +49,7 @@ page import="com.liferay.redirect.exception.RequiredRedirectEntrySourceURLExcept
 page import="com.liferay.redirect.model.RedirectEntry" %><%@
 page import="com.liferay.redirect.service.RedirectEntryLocalServiceUtil" %><%@
 page import="com.liferay.redirect.web.internal.constants.RedirectWebKeys" %><%@
+page import="com.liferay.redirect.web.internal.display.context.EditRedirectEntryDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectEntriesDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext" %><%@

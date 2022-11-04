@@ -80,18 +80,24 @@ const PolicyDetails = () => {
 	return (
 		<div className="policy-details-container">
 			<div className="d-flex policy-detail-content">
-				<div className="mb-3 mr-3 summary-policy-content">
-					{policy && (
-						<PolicySummary
-							application={application}
-							policy={policy}
-						/>
-					)}
-				</div>
+				{policy && (
+					<>
+						<div className="mb-3 mr-3 summary-policy-content">
+							<PolicySummary
+								application={application}
+								policy={policy}
+							/>
+						</div>
 
-				<div className="w-100">
-					<PolicyDetail />
-				</div>
+						<div className="w-100">
+							<PolicyDetail
+								dataJSON={application?.dataJSON}
+								email={application?.email}
+								phone={application?.phone}
+							/>
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

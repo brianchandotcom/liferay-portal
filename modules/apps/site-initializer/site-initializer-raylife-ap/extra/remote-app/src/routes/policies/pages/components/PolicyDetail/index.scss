@@ -9,6 +9,12 @@
 		width: 25px;
 	}
 
+	.policy-detail-border:last-child {
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+		padding-bottom: 50px;
+	}
+
 	.border-link-active::after {
 		background-color: #4c84ff;
 		bottom: -1px;

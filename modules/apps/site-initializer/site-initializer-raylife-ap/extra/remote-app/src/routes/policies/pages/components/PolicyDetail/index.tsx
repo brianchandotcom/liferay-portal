@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/empty-line-between-elements */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -14,19 +15,62 @@
 
 import './index.scss';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import NavigationBar from '../../../../../common/components/navigation-bar';
 import {getWebDavUrl} from '../../../../../common/utils/webdav';
 
-const PolicyDetail = () => {
+type ApplicationPolicyDetailsType = {
+	dataJSON: string;
+	email: string;
+	phone: string;
+};
+
+type PolicyDetailsType = {
+	annualMileage: number;
+	creditRating: string;
+	features: string;
+	firstName: string;
+	gender: string;
+	highestEducation: string;
+	maritalStatus: string;
+	model: string;
+	occupation: string;
+	ownership: string;
+	primaryUsage: string;
+};
+
+const PolicyDetail = ({
+	dataJSON,
+	email,
+	phone,
+}: ApplicationPolicyDetailsType) => {
 	enum navBarLabels {
 		Vehicles = 'Vehicles',
 		Drives = 'Drives',
 	}
-	const amountOfPolicyDetail = [0];
 	const navbarLabel = [navBarLabels.Vehicles, navBarLabels.Drives];
 	const [active, setActive] = useState(navbarLabel[0]);
+	const [applicationData, setApplicationData] = useState<any>();
+
+	function calculatedAge(dateOfBirth: string) {
+		return Math.floor(
+			Math.ceil(
+				Math.abs(Date.parse(dateOfBirth) - Date.now()) /
+					(1000 * 3600 * 24)
+			) / 365.25
+		);
+	}
+
+	useEffect(() => {
+		try {
+			const newDataJSON = JSON.parse(dataJSON);
+			setApplicationData(newDataJSON);
+		}
+		catch (error) {
+			console.warn(error);
+		}
+	}, [dataJSON]);
 
 	return (
 		<div className="policy-detail-container">
@@ -42,74 +86,118 @@ const PolicyDetail = () => {
 				/>
 			</div>
 
-			{amountOfPolicyDetail.map(
-				(curentPolicyDetail, indexPolicyDetail) => (
-					<div className="bg-neutral-0 p-6" key={indexPolicyDetail}>
-						{active === navBarLabels.Vehicles && (
-							<>
-								<div className="d-flex flex-row flex-wrap justify-content-between mb-3">
-									{indexPolicyDetail !== 0 && (
-										<div className="align-self-start col-12 layout-line mb-6 mt-1"></div>
-									)}
-
-									<div className="align-self-start w-50">
-										<h5>2016 Ford Edge</h5>
-
-										<img
-											className="policy-detail-img w-75"
-											src={`${getWebDavUrl()}/ford-edge_icon.svg`}
-										/>
-									</div>
-
-									<div className="align-self-start">
-										<p className="text-neutral-7">
-											Primary Use
-										</p>
-
-										<div>Commuting</div>
-									</div>
-
-									<div className="align-self-start">
-										<p className="text-neutral-7 w-100">
-											Est. Annual Mileage
-										</p>
-
-										<div>10,328</div>
-									</div>
-
-									<div className="align-self-start">
-										<p className="text-neutral-7 w-100">
-											Ownership Status
-										</p>
-
-										<div>Own</div>
-									</div>
-								</div>
-								<div>
-									<div className="align-self-start">
-										<p className="text-neutral-7 w-100">
-											Features
-										</p>
-
-										<div>
-											Lane-Departure Warning and
-											Lane-Keeping Assist Forward-C
-											ollision Warning Blind-Spot
-											Monitoring
-										</div>
-									</div>
-								</div>
-							</>
-						)}
-
-						{active === navBarLabels.Drives && (
+			{active === navBarLabels.Vehicles &&
+				applicationData?.vehicleInfo?.form.map(
+					(
+						curentVehicle: PolicyDetailsType,
+						indexVehicle: number
+					) => (
+						<div
+							className="bg-neutral-0 pl-6 policy-detail-border pr-6 pt-6"
+							key={indexVehicle}
+						>
 							<div className="d-flex flex-row flex-wrap justify-content-between">
-								{indexPolicyDetail !== 0 && (
+								{indexVehicle !== 0 && (
+									<div className="align-self-start col-12 layout-line mb-6 mt-1"></div>
+								)}
+
+								<div className="align-self-start w-25">
+									<h5>
+										{curentVehicle?.model
+											? curentVehicle?.model
+											: 'No data'}
+									</h5>
+
+									<img
+										className="w-75"
+										src={`${getWebDavUrl()}/${curentVehicle?.model
+											.replace(/ /g, '')
+											.toLocaleLowerCase()}.svg`}
+									/>
+								</div>
+
+								<div className="align-self-start">
+									<p className="mb-1 text-neutral-7">
+										Primary Use
+									</p>
+
+									<div>
+										{curentVehicle?.primaryUsage
+											? curentVehicle?.primaryUsage
+											: 'No data'}
+									</div>
+								</div>
+
+								<div className="align-self-start">
+									<p className="mb-1 text-neutral-7 w-100">
+										Est. Annual Mileage
+									</p>
+
+									<div>
+										{curentVehicle?.annualMileage
+											? curentVehicle?.annualMileage
+											: 'No data'}
+									</div>
+								</div>
+
+								<div className="align-self-start">
+									<p className="mb-1 text-neutral-7 w-100">
+										Ownership Status
+									</p>
+
+									<div>
+										{curentVehicle?.ownership
+											? curentVehicle?.ownership
+											: 'No data'}
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<div className="align-self-start mt-3">
+									<p className="mb-1 text-neutral-7 w-100">
+										Features
+									</p>
+
+									<div>
+										{curentVehicle?.features
+											? curentVehicle?.features
+											: 'No data'}
+									</div>
+								</div>
+							</div>
+						</div>
+					)
+				)}
+
+			{active === navBarLabels.Drives &&
+				applicationData?.driverInfo?.form.map(
+					(curentDriver: PolicyDetailsType, indexDriver: number) => (
+						<div
+							className="bg-neutral-0 pl-6 policy-detail-border pr-6 pt-6"
+							key={indexDriver}
+						>
+							<div className="d-flex flex-row flex-wrap justify-content-between">
+								{indexDriver !== 0 && (
 									<div className="align-self-start col-12 layout-line mb-6 mt-1"></div>
 								)}
 
 								<div className="align-self-start">
-									<h5>Lee Harris, 51 </h5>
+									<h5>
+										{curentDriver?.firstName
+											? curentDriver?.firstName
+											: 'No data'}
+										,{' '}
+										{calculatedAge(
+											applicationData?.contactInfo
+												?.dateOfBirth
+										)
+											? calculatedAge(
+													applicationData?.contactInfo
+														?.dateOfBirth
+											  )
+											: 'No data'}
+									</h5>
 								</div>
 
 								<div className="align-self-start">
@@ -117,23 +205,30 @@ const PolicyDetail = () => {
 										DOB
 									</p>
 
-									<div className="mb-3">09/19/1971</div>
+									<div className="mb-3">
+										{applicationData?.contactInfo
+											?.dateOfBirth
+											? applicationData?.contactInfo
+													?.dateOfBirth
+											: 'No data'}
+									</div>
 
 									<p className="mb-1 text-neutral-7 w-100">
 										Education
 									</p>
 
-									<div className="mb-3">High School</div>
+									<div className="mb-3">
+										{curentDriver?.highestEducation
+											? curentDriver?.highestEducation
+											: 'No data'}
+									</div>
 
 									<p className="mb-1 text-neutral-7 w-100">
 										Email
 									</p>
 
-									<a
-										className="mb-3 text-break"
-										href="mailto:lee.insured@mailinator.com"
-									>
-										lee.insured@mailinator.com
+									<a className="mb-3 text-break" href={email}>
+										{email ? email : 'No data'}
 									</a>
 								</div>
 
@@ -142,19 +237,29 @@ const PolicyDetail = () => {
 										Gender
 									</p>
 
-									<div className="mb-3">Male</div>
+									<div className="mb-3">
+										{curentDriver?.gender
+											? curentDriver?.gender
+											: 'No data'}
+									</div>
 
 									<p className="mb-1 text-neutral-7 w-100">
 										Occupation
 									</p>
 
-									<div className="mb-3">Home Health Aid</div>
+									<div className="mb-3">
+										{curentDriver?.occupation
+											? curentDriver?.occupation
+											: 'No data'}
+									</div>
 
 									<p className="mb-1 text-neutral-7 w-100">
 										Phone
 									</p>
 
-									<div className="mb-3">208.802.6545</div>
+									<div className="mb-3">
+										{phone ? phone : 'No data'}
+									</div>
 								</div>
 
 								<div className="align-self-start">
@@ -162,19 +267,26 @@ const PolicyDetail = () => {
 										Marital Status
 									</p>
 
-									<div className="mb-3">Married</div>
+									<div className="mb-3">
+										{curentDriver?.maritalStatus
+											? curentDriver?.maritalStatus
+											: 'No data'}
+									</div>
 
 									<p className="mb-1 text-neutral-7 w-100">
 										Credit rating
 									</p>
 
-									<div className="mb-3">Good</div>
+									<div className="mb-3">
+										{curentDriver?.creditRating
+											? curentDriver?.creditRating
+											: 'No data'}
+									</div>
 								</div>
 							</div>
-						)}
-					</div>
-				)
-			)}
+						</div>
+					)
+				)}
 		</div>
 	);
 };

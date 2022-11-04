@@ -316,7 +316,13 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationBeanManagedService.getConfigurationPid(),
 			configurationBeanClass);
 
+		_settingsFactoryImpl.registerConfigurationBeanClass(
+			configurationBeanClass);
+
 		return () -> {
+			_settingsFactoryImpl.unregisterConfigurationBeanClass(
+				configurationBeanClass);
+
 			_configurationBeanClasses.remove(configurationPid);
 
 			_scopedConfigurationManagedServiceFactories.remove(
@@ -550,5 +556,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private final Map<String, ScopedConfigurationManagedServiceFactory>
 		_scopedConfigurationManagedServiceFactories = new ConcurrentHashMap<>();
+
+	@Reference
+	private SettingsFactoryImpl _settingsFactoryImpl;
 
 }

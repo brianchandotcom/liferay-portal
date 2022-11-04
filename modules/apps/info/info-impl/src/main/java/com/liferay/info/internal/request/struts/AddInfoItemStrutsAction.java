@@ -20,6 +20,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
@@ -35,6 +37,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.layout.page.template.util.LayoutStructureUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -57,12 +60,15 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -269,6 +275,78 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
 	}
 
+	private List<String> _getRequiredUniqueFieldIds(
+			HttpServletRequest httpServletRequest)
+		throws InfoFormException {
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				ParamUtil.getLong(httpServletRequest, "plid"),
+				ParamUtil.getLong(httpServletRequest, "segmentsExperienceId"));
+
+		if (layoutStructure == null) {
+			throw new InfoFormException();
+		}
+
+		String formItemId = ParamUtil.getString(
+			httpServletRequest, "formItemId");
+
+		LayoutStructureItem formLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(formItemId);
+
+		if (formLayoutStructureItem == null) {
+			throw new InfoFormException();
+		}
+
+		List<String> requiredUniqueFieldIds = new ArrayList<>();
+
+		List<String> childrenItemIds =
+			formLayoutStructureItem.getChildrenItemIds();
+
+		for (String childrenItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!Objects.equals(
+					LayoutDataItemTypeConstants.TYPE_FRAGMENT,
+					layoutStructureItem.getItemType())) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			if (GetterUtil.getBoolean(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						fragmentEntryLink.getEditableValues(),
+						new FragmentConfigurationField(
+							"inputRequired", "boolean", "false", false,
+							"checkbox"),
+						LocaleUtil.getMostRelevantLocale()))) {
+
+				requiredUniqueFieldIds.add(
+					GetterUtil.getString(
+						_fragmentEntryConfigurationParser.getFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							new FragmentConfigurationField(
+								"inputFieldId", "string", "", false, "text"),
+							LocaleUtil.getMostRelevantLocale())));
+			}
+		}
+
+		return requiredUniqueFieldIds;
+	}
+
 	private String _getValue(InfoFieldValue<?> infoFieldValue) {
 		if (infoFieldValue == null) {
 			return null;
@@ -407,6 +485,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

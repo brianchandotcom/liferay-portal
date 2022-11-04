@@ -44,18 +44,20 @@ public class DBResourceUtil {
 
 	public static String getPortalIndexesSQL() throws IOException {
 		return _getPortalResource(
-			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+			"/com/liferay/portal/tools/sql/dependencies/indexes.sql");
 	}
 
 	public static String getPortalTablesSQL() throws IOException {
 		return _getPortalResource(
-			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 	}
 
 	private static String _getPortalResource(String name) throws IOException {
-		Thread currentThread = Thread.currentThread();
+		try (InputStream inputStream = DBResourceUtil.class.getResourceAsStream(
+				name)) {
 
-		return StringUtil.read(currentThread.getContextClassLoader(), name);
+			return StringUtil.read(inputStream);
+		}
 	}
 
 	private static String _getSQLTemplateString(

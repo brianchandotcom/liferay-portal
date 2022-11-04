@@ -72,17 +72,13 @@ definition {
 	macro emptyCP {
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-		if (IsElementPresent(locator1 = "RecycleBin#EMPTY_RECYCLE_BIN")) {
-			AssertClickNoError(
-				locator1 = "RecycleBin#EMPTY_RECYCLE_BIN",
-				value1 = "Empty the Recycle Bin");
+		MenuItem.clickNoError(menuItem = "Empty Trash");
 
-			AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to empty the Recycle Bin?");
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to empty the Recycle Bin?");
 
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "The Recycle Bin is empty.");
-		}
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "The Recycle Bin is empty.");
 	}
 
 	macro gotoEntryViaSuccessMessage {

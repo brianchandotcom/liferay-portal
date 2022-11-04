@@ -369,6 +369,50 @@ definition {
 		FormPortlet.submitSuccessfully();
 	}
 
+	@description = "LPS-167565 - Verify that the Help Text property is not vulnerable to Cross Site Scripting."
+	@priority = "5"
+	test CheckHelpTextCrossSiteScripting {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "<script>alert(123)</script>");
+
+		Form.gotoAdvancedTab();
+
+		var textFieldName = FormFields.getFieldName();
+
+		Form.publishForm();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm(formTitle = "Form");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "<script>alert(123)</script>",
+			fieldName = "${textFieldName}");
+	}
+
 	@description = "LPS-167564 - Verify that the Label property is not vulnerable to Cross Site Scripting."
 	@priority = "5"
 	test CheckLabelCrossSiteScripting {

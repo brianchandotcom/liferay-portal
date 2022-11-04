@@ -24,11 +24,14 @@ import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 import com.liferay.redirect.web.internal.display.context.RedirectDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectEntriesDisplayContext;
+import com.liferay.redirect.web.internal.display.context.RedirectEntryInfoPanelDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext;
 import com.liferay.redirect.web.internal.display.context.RedirectPatternConfigurationDisplayContext;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.io.IOException;
+
+import java.util.Collections;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -93,6 +96,11 @@ public class RedirectPortlet extends MVCPortlet {
 					_portal.getLiferayPortletResponse(renderResponse),
 					_redirectEntryLocalService, _redirectEntryService,
 					_stagingGroupHelper));
+			renderRequest.setAttribute(
+				RedirectEntryInfoPanelDisplayContext.class.getName(),
+				new RedirectEntryInfoPanelDisplayContext(
+					_portal.getLiferayPortletRequest(renderRequest),
+					Collections.emptyList()));
 		}
 		else {
 			renderRequest.setAttribute(

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(request.getAttribute(RedirectWebKeys.REDIRECT_ENTRIES), Collections.emptyList());
+RedirectEntryInfoPanelDisplayContext redirectEntryInfoPanelDisplayContext = (RedirectEntryInfoPanelDisplayContext)request.getAttribute(RedirectEntryInfoPanelDisplayContext.class.getName());
 %>
 
 <div class="sidebar-header">
@@ -27,36 +27,21 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 </div>
 
 <clay:navigation-bar
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "details"));
-					});
-			}
-		}
-	%>'
+	navigationItems="<%= redirectEntryInfoPanelDisplayContext.getNavigationItems() %>"
 />
 
 <div class="sidebar-body">
 	<c:choose>
-		<c:when test="<%= redirectEntries.size() == 0 %>">
+		<c:when test="<%= redirectEntryInfoPanelDisplayContext.isEmptyRedirectEntries() %>">
 			<p class="h5">
 				<liferay-ui:message key="num-of-items" />
 			</p>
 
 			<p>
-				<%= RedirectEntryLocalServiceUtil.getRedirectEntriesCount(themeDisplay.getScopeGroupId()) %>
+				<%= redirectEntryInfoPanelDisplayContext.getRedirectEntriesCount() %>
 			</p>
 		</c:when>
-		<c:when test="<%= redirectEntries.size() == 1 %>">
-
-			<%
-			RedirectEntry redirectEntry = redirectEntries.get(0);
-			%>
-
+		<c:when test="<%= redirectEntryInfoPanelDisplayContext.isSingletonRedirectEntry() %>">
 			<dl class="sidebar-dl sidebar-section">
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="created-by" />
@@ -65,22 +50,17 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 					<clay:content-row
 						cssClass="sidebar-panel widget-metadata"
 					>
-
-						<%
-						User owner = UserLocalServiceUtil.fetchUser(redirectEntry.getUserId());
-						%>
-
 						<clay:content-col
 							cssClass="inline-item-before"
 						>
 							<liferay-ui:user-portrait
 								size="sm"
-								user="<%= owner %>"
+								user="<%= redirectEntryInfoPanelDisplayContext.getRedirectEntryUser() %>"
 							/>
 						</clay:content-col>
 
 						<div class="username">
-							<%= HtmlUtil.escape(owner.getFullName()) %>
+							<%= HtmlUtil.escape(redirectEntryInfoPanelDisplayContext.getRedirectEntryUserFullName()) %>
 						</div>
 					</clay:content-row>
 				</dd>
@@ -88,36 +68,31 @@ List<RedirectEntry> redirectEntries = (List<RedirectEntry>)GetterUtil.getObject(
 					<liferay-ui:message key="type" />
 				</dt>
 				<dd class="sidebar-dd">
-					<liferay-ui:message key='<%= redirectEntry.isPermanent() ? "permanent" : "temporary" %>' />
+					<liferay-ui:message key="<%= redirectEntryInfoPanelDisplayContext.getRedirectEntryTypeLabel() %>" />
 				</dd>
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="create-date" />
 				</dt>
-
-				<%
-				DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, locale);
-				%>
-
 				<dd class="sidebar-dd">
-					<%= dateFormat.format(redirectEntry.getCreateDate()) %>
+					<%= redirectEntryInfoPanelDisplayContext.getFormattedRedirectEntryCreateDate() %>
 				</dd>
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="latest-occurrence" />
 				</dt>
 				<dd class="sidebar-dd">
-					<%= (redirectEntry.getLastOccurrenceDate() != null) ? dateFormat.format(redirectEntry.getLastOccurrenceDate()) : LanguageUtil.get(request, "never") %>
+					<%= redirectEntryInfoPanelDisplayContext.getFormattedRedirectEntryLastOccurrenceDate() %>
 				</dd>
 				<dt class="sidebar-dt">
 					<liferay-ui:message key="expiration-date" />
 				</dt>
 				<dd class="sidebar-dd">
-					<%= (redirectEntry.getExpirationDate() != null) ? dateFormat.format(redirectEntry.getExpirationDate()) : LanguageUtil.get(request, "never") %>
+					<%= redirectEntryInfoPanelDisplayContext.getFormattedRedirectEntryExpirationDate() %>
 				</dd>
 			</dl>
 		</c:when>
 		<c:otherwise>
 			<p class="h5">
-				<liferay-ui:message arguments="<%= redirectEntries.size() %>" key="x-items-are-selected" />
+				<liferay-ui:message arguments="<%= redirectEntryInfoPanelDisplayContext.getRedirectEntriesCount() %>" key="x-items-are-selected" />
 			</p>
 		</c:otherwise>
 	</c:choose>

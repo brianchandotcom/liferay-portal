@@ -17,9 +17,10 @@ package com.liferay.redirect.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
-import com.liferay.redirect.web.internal.constants.RedirectWebKeys;
+import com.liferay.redirect.web.internal.display.context.RedirectEntryInfoPanelDisplayContext;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -53,15 +54,20 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			ParamUtil.getLongValues(resourceRequest, "rowIds"));
 
 		resourceRequest.setAttribute(
-			RedirectWebKeys.REDIRECT_ENTRIES,
-			longStream.mapToObj(
-				_redirectEntryLocalService::fetchRedirectEntry
-			).collect(
-				Collectors.toList()
-			));
+			RedirectEntryInfoPanelDisplayContext.class.getName(),
+			new RedirectEntryInfoPanelDisplayContext(
+				_portal.getLiferayPortletRequest(resourceRequest),
+				longStream.mapToObj(
+					_redirectEntryLocalService::fetchRedirectEntry
+				).collect(
+					Collectors.toList()
+				)));
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RedirectEntryLocalService _redirectEntryLocalService;

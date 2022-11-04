@@ -927,6 +927,22 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 				</then>
 			</if>
+
+			<if>
+				<equals arg1="${suite.search.engine}" arg2="solr" />
+				<then>
+					<ant antfile="build-test-solr.xml" target="start-solr" />
+
+					<property name="test.batch.name" unless:set="test.batch.name" value="${env.TEST_BATCH_NAME}" />
+
+					<if>
+						<contains string="${test.batch.name}" substring="unit" />
+						<then>
+							<property name="run.solr.unit.tests" value="true" />
+						</then>
+					</if>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -3060,6 +3076,13 @@ log.sanitizer.enabled=false</echo>
 				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
 				<then>
 					<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="${suite.search.engine}" arg2="solr" />
+				<then>
+					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 				</then>
 			</if>
 		</sequential>
@@ -6362,6 +6385,7 @@ log.sanitizer.enabled=false</echo>
 				<gradle-execute dir="modules" task="test">
 					<arg value="--continue" />
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
@@ -6372,6 +6396,8 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<setup-test-environment />
+
+				<prepare-suite-search-engine />
 
 				<if>
 					<isset property="TEST_CLASS_GROUP_${axis.variable}" />

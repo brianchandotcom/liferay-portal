@@ -845,7 +845,7 @@ definition {
 		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
-	@description = "LPS-146871 - Verify that it's possible to create an Action with Groovy Script"
+	@description = "LPS-156569 - Verify that it's possible to create an Action with Groovy Script"
 	@priority = "5"
 	test CanCreateActionWithGroovyScript {
 		property portal.acceptance = "true";
@@ -923,6 +923,59 @@ definition {
 			ObjectPortlet.viewEntry(entry = "Entry Test");
 
 			ObjectPortlet.viewEntry(entry = "Action Test Works");
+		}
+	}
+
+	@description = "LPS-161904 - Verify that it's possible to create an object entry using Actions"
+	@priority = "4"
+	test CanCreateEntryWithActions {
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("When the action is added") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Custom Action",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Object entry using Action",
+				objectLabel = "Custom Object",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+
+			
+		}
+
+		task ("Then the object entry is created when the condition is met") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+							fieldName = "customObjectField",
+							objectName = "CustomObject",
+							value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+
+			ObjectPortlet.viewEntry(entry = "Object entry using Action");
 		}
 	}
 

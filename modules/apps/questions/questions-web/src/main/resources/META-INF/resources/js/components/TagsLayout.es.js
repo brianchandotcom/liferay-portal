@@ -21,6 +21,7 @@ import {
 	subscribeTagQuery,
 	unsubscribeTagQuery,
 } from '../utils/client.es';
+import {ALL_SECTIONS_ID} from '../utils/contants.es';
 import lang from '../utils/lang.es';
 import {dateToInternationalHuman, deleteCacheKey} from '../utils/utils.es';
 import SubscriptionButton from './SubscriptionButton.es';
@@ -56,7 +57,7 @@ export default function TagsLayout({
 					}
 				}}
 				title={tag.name}
-				to={`/questions/tag/${tag.name}`}
+				to={`/questions/${ALL_SECTIONS_ID}?taggedwith=some-specific-tag&selectedtags=${tag.name}`}
 			>
 				<div className="align-items-center card card-interactive card-interactive-primary card-type-template d-flex justify-content-between template-card-horizontal">
 					<div>

@@ -54,8 +54,10 @@ export default withRouter(({history, location, match: {params}}) => {
 	} = urlParams;
 
 	const context = useContext(AppContext);
-	const [getThreadsFiltered] = useManualQuery(getSectionThreadsQuery);
-	const [getThreads] = useManualQuery(getThreadsQuery);
+	const [getThreadsFiltered] = useManualQuery(getSectionThreadsQuery, {
+		useCache: false,
+	});
+	const [getThreads] = useManualQuery(getThreadsQuery, {useCache: false});
 
 	const siteKey = context.siteKey;
 
@@ -138,7 +140,7 @@ export default withRouter(({history, location, match: {params}}) => {
 						page,
 						pageSize,
 						search: _search,
-						sort: filteredValues.sortBy,
+						sort: filteredValues.sortBy || 'dateCreated:desc',
 					},
 				});
 

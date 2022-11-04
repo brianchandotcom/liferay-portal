@@ -141,7 +141,9 @@ const getFilterValues = (form, tags) => {
 			query.filterBy += ' and ';
 		}
 
-		query.filterBy = `${query.filterBy} (keywords/any(x:${filterKeyword}))`;
+		query.filterBy = `${
+			query.filterBy ?? ''
+		} (keywords/any(x:${filterKeyword}))`;
 	}
 
 	return query;

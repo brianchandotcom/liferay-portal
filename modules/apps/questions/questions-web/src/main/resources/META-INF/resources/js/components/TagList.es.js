@@ -30,7 +30,7 @@ export default withRouter(({tags = [], sectionTitle = ''}) => {
 					<ClayLabel displayType="secondary">
 						<Link
 							key={tag}
-							to={`/questions/${sectionTitle}/tag/${tag}`}
+							to={`/questions/${sectionTitle}?taggedwith=some-specific-tag&selectedtags=${tag}`}
 						>
 							{tag}
 						</Link>

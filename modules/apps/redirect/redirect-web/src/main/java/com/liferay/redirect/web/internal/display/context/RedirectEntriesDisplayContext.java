@@ -147,7 +147,7 @@ public class RedirectEntriesDisplayContext {
 	}
 
 	public String getActionURL() throws Exception {
-		SearchContainer<RedirectEntry> searchContainer = searchContainer();
+		SearchContainer<RedirectEntry> searchContainer = getSearchContainer();
 
 		return String.valueOf(searchContainer.getIteratorURL());
 	}
@@ -189,7 +189,28 @@ public class RedirectEntriesDisplayContext {
 		return new RedirectEntriesManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
 			_liferayPortletResponse, _portletResourcePermission,
-			searchContainer());
+			getSearchContainer());
+	}
+
+	public SearchContainer<RedirectEntry> getSearchContainer()
+		throws Exception {
+
+		if (_redirectEntrySearch != null) {
+			return _redirectEntrySearch;
+		}
+
+		_redirectEntrySearch = new RedirectEntrySearch(
+			_liferayPortletRequest, _liferayPortletResponse, _getPortletURL(),
+			getSearchContainerId());
+
+		if (_redirectEntrySearch.isSearch()) {
+			_populateWithSearchIndex(_redirectEntrySearch);
+		}
+		else {
+			_populateWithDatabase(_redirectEntrySearch);
+		}
+
+		return _redirectEntrySearch;
 	}
 
 	public String getSearchContainerId() {
@@ -227,25 +248,6 @@ public class RedirectEntriesDisplayContext {
 		_stagingGroup = stagingGroup;
 
 		return _stagingGroup;
-	}
-
-	public SearchContainer<RedirectEntry> searchContainer() throws Exception {
-		if (_redirectEntrySearch != null) {
-			return _redirectEntrySearch;
-		}
-
-		_redirectEntrySearch = new RedirectEntrySearch(
-			_liferayPortletRequest, _liferayPortletResponse, _getPortletURL(),
-			getSearchContainerId());
-
-		if (_redirectEntrySearch.isSearch()) {
-			_populateWithSearchIndex(_redirectEntrySearch);
-		}
-		else {
-			_populateWithDatabase(_redirectEntrySearch);
-		}
-
-		return _redirectEntrySearch;
 	}
 
 	private OrderByComparator<RedirectEntry> _getOrderByComparator() {

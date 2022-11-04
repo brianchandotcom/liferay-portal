@@ -33,7 +33,7 @@ RedirectNotFoundEntriesDisplayContext redirectNotFoundEntriesDisplayContext = (R
 
 			<liferay-ui:search-container
 				id="<%= redirectNotFoundEntriesDisplayContext.getSearchContainerId() %>"
-				searchContainer="<%= redirectNotFoundEntriesDisplayContext.searchContainer() %>"
+				searchContainer="<%= redirectNotFoundEntriesDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.redirect.model.RedirectNotFoundEntry"

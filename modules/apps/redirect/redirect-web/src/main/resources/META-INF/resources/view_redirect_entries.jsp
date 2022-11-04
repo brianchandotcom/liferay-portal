@@ -52,7 +52,7 @@ RedirectEntriesDisplayContext redirectEntriesDisplayContext = (RedirectEntriesDi
 
 			<liferay-ui:search-container
 				id="<%= redirectEntriesDisplayContext.getSearchContainerId() %>"
-				searchContainer="<%= redirectEntriesDisplayContext.searchContainer() %>"
+				searchContainer="<%= redirectEntriesDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.redirect.model.RedirectEntry"

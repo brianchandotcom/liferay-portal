@@ -144,7 +144,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 	public String getActionURL() throws Exception {
 		SearchContainer<RedirectNotFoundEntry> searchContainer =
-			searchContainer();
+			getSearchContainer();
 
 		return String.valueOf(searchContainer.getIteratorURL());
 	}
@@ -161,7 +161,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 
 	public String getEmptyResultsMessage() throws Exception {
 		SearchContainer<RedirectNotFoundEntry> searchContainer =
-			searchContainer();
+			getSearchContainer();
 
 		return searchContainer.getEmptyResultsMessage();
 	}
@@ -173,30 +173,10 @@ public class RedirectNotFoundEntriesDisplayContext {
 		return new RedirectNotFoundEntriesManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
 			_liferayPortletResponse, _redirectNotFoundEntryLocalService,
-			searchContainer());
+			getSearchContainer());
 	}
 
-	public String getSearchContainerId() {
-		return "redirectNotFoundEntries";
-	}
-
-	public String getURL(RedirectNotFoundEntry redirectNotFoundEntry) {
-		return RedirectUtil.getGroupBaseURL(_themeDisplay) + StringPool.SLASH +
-			redirectNotFoundEntry.getUrl();
-	}
-
-	public boolean hasResults() throws Exception {
-		SearchContainer<RedirectNotFoundEntry> searchContainer =
-			searchContainer();
-
-		if (searchContainer.getTotal() == 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public SearchContainer<RedirectNotFoundEntry> searchContainer()
+	public SearchContainer<RedirectNotFoundEntry> getSearchContainer()
 		throws Exception {
 
 		if (_redirectNotFoundEntrySearch != null) {
@@ -210,6 +190,26 @@ public class RedirectNotFoundEntriesDisplayContext {
 		_populateWithSearchIndex(_redirectNotFoundEntrySearch);
 
 		return _redirectNotFoundEntrySearch;
+	}
+
+	public String getSearchContainerId() {
+		return "redirectNotFoundEntries";
+	}
+
+	public String getURL(RedirectNotFoundEntry redirectNotFoundEntry) {
+		return RedirectUtil.getGroupBaseURL(_themeDisplay) + StringPool.SLASH +
+			redirectNotFoundEntry.getUrl();
+	}
+
+	public boolean hasResults() throws Exception {
+		SearchContainer<RedirectNotFoundEntry> searchContainer =
+			getSearchContainer();
+
+		if (searchContainer.getTotal() == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private Boolean _getIgnored() {

@@ -187,10 +187,19 @@ definition {
 		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = "${portalURL}");
 
 		var userId = JSONUserSetter.setUserId(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
 			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${portalURL}",
 			userEmailAddress = "${userEmailAddress}");
 
-		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
+		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${portalURL}",
+			userEmailAddress = "${userEmailAddress}",
+			userId = "${userId}");
 	}
 
 	macro agreeToTermsAndAnswerReminderQueryByScreenName {

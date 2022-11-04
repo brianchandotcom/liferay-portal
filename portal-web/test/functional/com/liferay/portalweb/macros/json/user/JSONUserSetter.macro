@@ -96,6 +96,7 @@ definition {
 			creatorEmailAddress = "${creatorEmailAddress}",
 			creatorPassword = "${creatorPassword}",
 			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${specificURL}",
 			userEmailAddress = "${userEmailAddress}");
 
 		return "${userId}";

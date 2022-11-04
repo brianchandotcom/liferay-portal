@@ -95,16 +95,32 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		if (!(isSet(creatorEmailAddress))) {
+			if (isSet(specificURL)) {
+				var creatorEmailAddress = "${userEmailAddress}";
+			}
+			else {
+				var creatorEmailAddress = "test@liferay.com";
+			}
+		}
+		else {
+			var creatorEmailAddress = "${creatorEmailAddress}";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
-				-u test@liferay.com:test
+				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
-				-u test@liferay.com:test
+				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
@@ -221,7 +237,15 @@ definition {
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			if (isSet(specificURL)) {
+				var creatorEmailAddress = "${userEmailAddress}";
+			}
+			else {
+				var creatorEmailAddress = "test@liferay.com";
+			}
+		}
+		else {
+			var creatorEmailAddress = "${creatorEmailAddress}";
 		}
 
 		if (!(isSet(creatorPassword))) {

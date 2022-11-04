@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.notifications;
+package com.liferay.object.web.internal.notification;
 
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.notifications;
+package com.liferay.object.web.internal.notification;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.object.model.ObjectDefinition;

@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.exception.DuplicateOAuth2ApplicationClientIdException;
-import com.liferay.oauth2.provider.exception.DuplicateOAuth2ApplicationExternalReferenceCodeException;
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationClientGrantTypeException;
 import com.liferay.oauth2.provider.exception.OAuth2ApplicationHomePageURLException;
@@ -519,9 +518,6 @@ public class OAuth2ApplicationLocalServiceImpl
 			return oAuth2Application;
 		}
 
-		_validateExternalReferenceCode(
-			oAuth2Application.getOAuth2ApplicationId(), externalReferenceCode);
-
 		oAuth2Application.setExternalReferenceCode(externalReferenceCode);
 
 		return updateOAuth2Application(oAuth2Application);
@@ -909,29 +905,6 @@ public class OAuth2ApplicationLocalServiceImpl
 				throw new OAuth2ApplicationRedirectURIException(
 					redirectURI, uriSyntaxException);
 			}
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			long oAuthApplicationId, String externalReferenceCode)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		OAuth2Application oAuth2Application = getOAuth2Application(
-			oAuthApplicationId);
-
-		oAuth2Application = fetchOAuth2ApplicationByExternalReferenceCode(
-			externalReferenceCode, oAuth2Application.getCompanyId());
-
-		if (oAuth2Application == null) {
-			return;
-		}
-
-		if (oAuth2Application.getOAuth2ApplicationId() != oAuthApplicationId) {
-			throw new DuplicateOAuth2ApplicationExternalReferenceCodeException();
 		}
 	}
 

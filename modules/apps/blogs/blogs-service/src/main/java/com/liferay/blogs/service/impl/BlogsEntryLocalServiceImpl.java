@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.exception.DuplicateEntryExternalReferenceCodeException;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryCoverImageCropException;
 import com.liferay.blogs.exception.EntryDisplayDateException;
@@ -300,8 +299,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		_validate(title, urlTitle, content, status);
 
 		long entryId = counterLocalService.increment();
-
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		if (Validator.isNotNull(urlTitle)) {
 			urlTitle = _validateURLTitle(groupId, urlTitle, serviceContext);
@@ -2350,25 +2347,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (content.length() > contentMaxLength) {
 			throw new EntryContentException(
 				"Content has more than " + contentMaxLength + " characters");
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		BlogsEntry entry = blogsEntryPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
-
-		if (entry != null) {
-			throw new DuplicateEntryExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate blogs entry external reference code ",
-					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

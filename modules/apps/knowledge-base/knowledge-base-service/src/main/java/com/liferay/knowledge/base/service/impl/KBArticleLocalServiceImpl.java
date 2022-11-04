@@ -29,7 +29,6 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
@@ -188,8 +187,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		double priority = _getPriority(groupId, parentResourcePrimKey);
 
 		long kbArticleId = counterLocalService.increment();
-
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		_validate(expirationDate, content, reviewDate, sourceURL, title);
 		_validateParent(parentResourceClassNameId, parentResourcePrimKey);
@@ -2090,25 +2087,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if ((reviewDate != null) && reviewDate.before(now)) {
 			throw new KBArticleReviewDateException(
 				"Review date is " + reviewDate + " in the past");
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		KBArticle kbArticle = fetchLatestKBArticleByExternalReferenceCode(
-			groupId, externalReferenceCode);
-
-		if (kbArticle != null) {
-			throw new DuplicateKBArticleExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate knowledge base article external reference code ",
-					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

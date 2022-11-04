@@ -14,11 +14,9 @@
 
 package com.liferay.layout.utility.page.service.impl;
 
-import com.liferay.layout.utility.page.exception.DuplicateLayoutUtilityPageEntryExternalReferenceCodeException;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryLocalServiceBaseImpl;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,7 +71,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			String name, int type, long masterLayoutPlid)
 		throws PortalException {
 
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 		_validateName(groupId, name);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -381,26 +378,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 
 		return name;
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			layoutUtilityPageEntryPersistence.fetchByG_ERC(
-				groupId, externalReferenceCode);
-
-		if (layoutUtilityPageEntry != null) {
-			throw new DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate layout utility page entry external reference ",
-					"code ", externalReferenceCode, " in group ", groupId));
-		}
 	}
 
 	private void _validateName(long groupId, String name)

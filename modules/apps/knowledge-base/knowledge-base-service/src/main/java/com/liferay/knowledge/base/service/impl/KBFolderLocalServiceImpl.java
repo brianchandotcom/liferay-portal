@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.service.impl;
 
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
-import com.liferay.knowledge.base.exception.DuplicateKBFolderExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.DuplicateKBFolderNameException;
 import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
 import com.liferay.knowledge.base.exception.KBFolderParentException;
@@ -26,7 +25,6 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.base.KBFolderLocalServiceBaseImpl;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -76,8 +74,6 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		_validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
 		long kbFolderId = counterLocalService.increment();
-
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		KBFolder kbFolder = kbFolderPersistence.create(kbFolderId);
 
@@ -343,25 +339,6 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		}
 
 		return uniqueUrlTitle;
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		KBFolder kbFolder = kbFolderPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
-
-		if (kbFolder != null) {
-			throw new DuplicateKBFolderExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate knowledge base folder external reference code ",
-					externalReferenceCode, " in group ", groupId));
-		}
 	}
 
 	private void _validateName(long groupId, long parentKBFolderId, String name)

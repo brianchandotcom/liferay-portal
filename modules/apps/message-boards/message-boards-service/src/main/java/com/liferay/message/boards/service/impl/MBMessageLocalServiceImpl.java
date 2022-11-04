@@ -31,7 +31,6 @@ import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
-import com.liferay.message.boards.exception.DuplicateMessageExternalReferenceCodeException;
 import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
@@ -433,8 +432,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Date modifiedDate = serviceContext.getModifiedDate(date);
 
 		long messageId = counterLocalService.increment();
-
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		subject = _getSubject(subject, body);
 
@@ -2891,25 +2888,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int max = PropsValues.DISCUSSION_MAX_COMMENTS - 1;
 
 			throw new DiscussionMaxCommentsException(count + " exceeds " + max);
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		MBMessage message = mbMessagePersistence.fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (message != null) {
-			throw new DuplicateMessageExternalReferenceCodeException(
-				StringBundler.concat(
-					"Duplicate message external reference code ",
-					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

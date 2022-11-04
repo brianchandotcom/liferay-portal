@@ -24,7 +24,6 @@ import com.liferay.commerce.pricing.exception.CommercePriceModifierExpirationDat
 import com.liferay.commerce.pricing.exception.CommercePriceModifierTargetException;
 import com.liferay.commerce.pricing.exception.CommercePriceModifierTitleException;
 import com.liferay.commerce.pricing.exception.CommercePriceModifierTypeException;
-import com.liferay.commerce.pricing.exception.DuplicateCommercePriceModifierException;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService;
@@ -134,9 +133,6 @@ public class CommercePriceModifierLocalServiceImpl
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
-
-		_validateExternalReferenceCode(
-			externalReferenceCode, serviceContext.getCompanyId());
 
 		// Commerce price modifier
 
@@ -657,25 +653,6 @@ public class CommercePriceModifierLocalServiceImpl
 
 		if (modifierAmount == null) {
 			throw new CommercePriceModifierAmountException();
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		CommercePriceModifier commercePriceModifier =
-			commercePriceModifierPersistence.fetchByERC_C(
-				externalReferenceCode, companyId);
-
-		if (commercePriceModifier != null) {
-			throw new DuplicateCommercePriceModifierException(
-				"There is another commerce price modifier with external " +
-					"reference code " + externalReferenceCode);
 		}
 	}
 

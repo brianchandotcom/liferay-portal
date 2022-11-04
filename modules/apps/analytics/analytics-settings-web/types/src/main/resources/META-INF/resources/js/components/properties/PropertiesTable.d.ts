@@ -13,18 +13,11 @@
  */
 
 import React from 'react';
-export declare type TDataSource = {
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
-export declare type TProperty = {
-	channelId: string;
-	commerceSyncEnabled?: boolean;
-	dataSources: Array<TDataSource>;
-	name: string;
-};
+import {TProperty} from './Properties';
 interface IPropertiesTable {
-	properties: Array<TProperty>;
+	onAssignModalButtonClick: (index: number) => void;
+	onCommerceSwitchChange: (index: number) => void;
+	properties: TProperty[];
 }
 declare const PropertiesTable: React.FC<IPropertiesTable>;
 export default PropertiesTable;

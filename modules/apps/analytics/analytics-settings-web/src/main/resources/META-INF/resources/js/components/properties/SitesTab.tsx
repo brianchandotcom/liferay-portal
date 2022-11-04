@@ -14,9 +14,9 @@
 
 import React from 'react';
 
-import {TProperty} from '../../pages/wizard/PropertyStep';
 import {fetchSites} from '../../utils/api';
 import {TItem} from '../table/Table';
+import {TProperty} from './Properties';
 import Tab from './Tab';
 
 interface ISiteTabProps {

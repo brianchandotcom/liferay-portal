@@ -17,12 +17,12 @@ import {ClayToggle} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {Fragment} from 'react';
 
-import {TProperty} from '../../pages/wizard/PropertyStep';
+import {TProperty} from './Properties';
 
 interface IPropertiesTable {
 	onAssignModalButtonClick: (index: number) => void;
 	onCommerceSwitchChange: (index: number) => void;
-	properties: Array<TProperty>;
+	properties: TProperty[];
 }
 
 const PropertiesTable: React.FC<IPropertiesTable> = ({
@@ -64,7 +64,7 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({
 								className="mr-2"
 								columnTextAlignment="end"
 							>
-								{property?.commerceEnabled ||
+								{property?.commerceSyncEnabled ||
 								property.dataSources[0]?.commerceChannelIds
 									? property.dataSources[0]
 											?.commerceChannelIds?.length
@@ -88,7 +88,7 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({
 									onToggle={() =>
 										onCommerceSwitchChange(index)
 									}
-									toggled={!!property?.commerceEnabled}
+									toggled={!!property?.commerceSyncEnabled}
 									value="toggle"
 								/>
 							</ClayTable.Cell>

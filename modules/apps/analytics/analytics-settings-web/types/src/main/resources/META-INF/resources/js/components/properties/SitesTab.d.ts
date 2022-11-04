@@ -13,11 +13,11 @@
  */
 
 import React from 'react';
-
-import Connect from '../../components/Connect';
-
-const WorkspaceConnection: React.FC = () => (
-	<Connect title={Liferay.Language.get('workspace-connection')} />
-);
-
-export default WorkspaceConnection;
+import {TItem} from '../table/Table';
+import {TProperty} from './Properties';
+interface ISiteTabProps {
+	onSitesChange: (items: TItem[]) => void;
+	property: TProperty;
+}
+declare const SitesTab: React.FC<ISiteTabProps>;
+export default SitesTab;

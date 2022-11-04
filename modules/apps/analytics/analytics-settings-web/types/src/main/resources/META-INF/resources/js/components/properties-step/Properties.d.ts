@@ -13,18 +13,16 @@
  */
 
 import React from 'react';
-export declare type TDataSource = {
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
 export declare type TProperty = {
 	channelId: string;
 	commerceSyncEnabled?: boolean;
 	dataSources: Array<TDataSource>;
 	name: string;
 };
-interface IPropertiesTable {
-	properties: Array<TProperty>;
-}
-declare const PropertiesTable: React.FC<IPropertiesTable>;
-export default PropertiesTable;
+declare type TDataSource = {
+	commerceChannelIds: Array<number>;
+	dataSourceId: string;
+	siteIds: Array<number>;
+};
+declare const Properties: React.FC;
+export default Properties;

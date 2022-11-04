@@ -13,18 +13,17 @@
  */
 
 import React from 'react';
-export declare type TDataSource = {
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
-export declare type TProperty = {
-	channelId: string;
-	commerceSyncEnabled?: boolean;
-	dataSources: Array<TDataSource>;
-	name: string;
-};
-interface IPropertiesTable {
-	properties: Array<TProperty>;
-}
-declare const PropertiesTable: React.FC<IPropertiesTable>;
-export default PropertiesTable;
+
+import BasePage from '../../components/BasePage';
+import Properties from '../../components/properties/Properties';
+
+const PropertiesPage: React.FC = () => (
+	<BasePage
+		description={Liferay.Language.get('property-description')}
+		title={Liferay.Language.get('properties')}
+	>
+		<Properties />
+	</BasePage>
+);
+
+export default PropertiesPage;

@@ -649,6 +649,8 @@ public class LayoutsTreeDisplayContext {
 			JSONUtil.put(
 				"children", layoutsJSONArray
 			).put(
+				"hasChildren", true
+			).put(
 				"id", LayoutConstants.DEFAULT_PARENT_LAYOUT_ID
 			).put(
 				"name", _language.get(_themeDisplay.getLocale(), "pages")

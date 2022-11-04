@@ -71,6 +71,9 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "resourceClassNameId");
 			long resourcePrimKey = ParamUtil.getLong(
 				actionRequest, "resourcePrimKey");
+			long parentResourceClassNameId = ParamUtil.getLong(
+				actionRequest, "parentResourceClassNameId",
+				_portal.getClassNameId(KBFolderConstants.getClassName()));
 			long parentResourcePrimKey = ParamUtil.getLong(
 				actionRequest, "parentResourcePrimKey",
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -79,10 +82,6 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				KBArticleConstants.getClassName());
 
 			if (resourceClassNameId == kbArticleClassNameId) {
-				long parentResourceClassNameId = ParamUtil.getLong(
-					actionRequest, "parentResourceClassNameId",
-					_portal.getClassNameId(KBFolderConstants.getClassName()));
-
 				double priority = ParamUtil.getDouble(
 					actionRequest, "priority");
 
@@ -98,6 +97,18 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 					parentResourcePrimKey, priority);
 			}
 			else {
+				if (_isDragAndDrop(dragAndDrop) &&
+					(parentResourceClassNameId == kbArticleClassNameId)) {
+
+					_errorMessage(
+						actionRequest, actionResponse,
+						_language.get(
+							_portal.getHttpServletRequest(actionRequest),
+							"your-request-failed-to-complete"));
+
+					return;
+				}
+
 				_kbFolderService.moveKBFolder(
 					resourcePrimKey, parentResourcePrimKey);
 			}

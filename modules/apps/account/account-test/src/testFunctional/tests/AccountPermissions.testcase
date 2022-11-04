@@ -1802,6 +1802,67 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "user2");
 	}
 
+	@description = "This test asserts that the User's available views accounts within the page with view permission of share account role."
+	@priority = "5"
+	test CanViewAccountWithViewShareAccountRole {
+		task ("Given add account a new user and account role with view permission") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn userln");
+
+			JSONRole.addSharedAccountRole(roleTitle = "View Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "View role",
+				roleType = "account");
+		}
+
+		task ("When assign the user to account with view permission of role") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "View Role",
+				accountUserName = "userfn userln");
+		}
+
+		task ("Then in the accounts table Account Name can be viewed") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+			AssertElementNotPresent(
+				key_rowEntry = "Account Name",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	@description = "This test filters Accounts by status."
 	@priority = "4"
 	@refactorneeded

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
-import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemTracker;
+import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 
 import java.io.IOException;
 
@@ -136,7 +136,7 @@ public class SharedAssetsFilterItemItemSelectorView
 							portletURL, null, null);
 
 					List<SharedAssetsFilterItem> sharedAssetsFilterItems =
-						_sharedAssetsFilterItemTracker.
+						_sharedAssetsFilterItemRegistry.
 							getSharedAssetsFilterItems();
 
 					entriesSearchContainer.setResultsAndTotal(
@@ -172,6 +172,6 @@ public class SharedAssetsFilterItemItemSelectorView
 	private Language _language;
 
 	@Reference
-	private SharedAssetsFilterItemTracker _sharedAssetsFilterItemTracker;
+	private SharedAssetsFilterItemRegistry _sharedAssetsFilterItemRegistry;
 
 }

@@ -53,7 +53,7 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemTracker;
+import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.item.selector.SharedAssetsFilterItemItemSelectorCriterion;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
 
@@ -77,7 +77,7 @@ public class ViewSharedAssetsDisplayContext {
 		GroupLocalService groupLocalService, ItemSelector itemSelector,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SharedAssetsFilterItemTracker sharedAssetsFilterItemTracker,
+		SharedAssetsFilterItemRegistry sharedAssetsFilterItemRegistry,
 		SharingConfigurationFactory sharingConfigurationFactory,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
@@ -91,7 +91,7 @@ public class ViewSharedAssetsDisplayContext {
 		_itemSelector = itemSelector;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_sharedAssetsFilterItemTracker = sharedAssetsFilterItemTracker;
+		_sharedAssetsFilterItemRegistry = sharedAssetsFilterItemRegistry;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharingEntryLocalService = sharingEntryLocalService;
@@ -365,7 +365,7 @@ public class ViewSharedAssetsDisplayContext {
 	private String _getClassNameLabel(String className) {
 		if (Validator.isNotNull(className)) {
 			SharedAssetsFilterItem sharedAssetsFilterItem =
-				_sharedAssetsFilterItemTracker.getSharedAssetsFilterItem(
+				_sharedAssetsFilterItemRegistry.getSharedAssetsFilterItem(
 					className);
 
 			if (sharedAssetsFilterItem != null) {
@@ -477,7 +477,8 @@ public class ViewSharedAssetsDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
-	private final SharedAssetsFilterItemTracker _sharedAssetsFilterItemTracker;
+	private final SharedAssetsFilterItemRegistry
+		_sharedAssetsFilterItemRegistry;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;

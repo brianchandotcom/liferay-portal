@@ -1208,8 +1208,9 @@ AUI.add(
 					// LPS-159994
 
 					if (
-						event.details[0].currentTarget !==
-						instance._entriesContainer
+						!instance._entriesContainer.contains(
+							event.details[0].currentTarget
+						)
 					) {
 						return;
 					}

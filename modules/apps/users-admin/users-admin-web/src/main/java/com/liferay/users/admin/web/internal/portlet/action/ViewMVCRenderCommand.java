@@ -19,7 +19,7 @@ import com.liferay.users.admin.constants.UsersAdminManagementToolbarKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
-import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorTracker;
+import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorRegistry;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -52,7 +52,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS,
-			_filterContributorTracker.getFilterContributors(
+			_filterContributorRegistry.getFilterContributors(
 				UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS));
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS,
@@ -79,7 +79,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private FilterContributorTracker _filterContributorTracker;
+	private FilterContributorRegistry _filterContributorRegistry;
 
 	private final List<UserActionContributor> _userActionContributors =
 		new CopyOnWriteArrayList<>();

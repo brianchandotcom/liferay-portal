@@ -82,6 +82,9 @@
 
 		<column name="className" type="String" />
 		<column name="classPK" type="long" />
+
+		<!-- Finder methods -->
+
 		<finder name="ClassPK" return-type="NotificationRecipient">
 			<finder-column name="classPK" />
 		</finder>
@@ -105,6 +108,9 @@
 		<column name="notificationRecipientId" type="long" />
 		<column name="name" type="String" />
 		<column localized="true" name="value" type="String" />
+
+		<!-- Other fields -->
+
 		<finder name="NotificationRecipientId" return-type="Collection">
 			<finder-column name="notificationRecipientId" />
 		</finder>

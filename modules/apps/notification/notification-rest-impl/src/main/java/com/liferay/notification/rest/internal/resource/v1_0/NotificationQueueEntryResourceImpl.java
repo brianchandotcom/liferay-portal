@@ -125,7 +125,6 @@ public class NotificationQueueEntryResourceImpl
 			_notificationHandlerTracker.getNotificationHandler(
 				_portal.getClassName(
 					serviceBuilderNotificationQueueEntry.getClassNameId()));
-
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(
 				serviceBuilderNotificationQueueEntry.getType());

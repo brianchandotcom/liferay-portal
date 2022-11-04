@@ -117,18 +117,19 @@ const Properties: React.FC = () => {
 							onAssignModalOpenChange(true);
 						}}
 						onCommerceSwitchChange={(index: number) => {
-							const newProperties = properties;
+							const newProperties = [...properties];
 
 							if (newProperties[index].commerceSyncEnabled) {
 								delete newProperties[index].commerceSyncEnabled;
-							} else {
+							}
+							else {
 								newProperties[
 									index
 								].commerceSyncEnabled = !newProperties[index]
 									.commerceSyncEnabled;
 							}
 
-							setProperties([...newProperties]);
+							setProperties(newProperties);
 						}}
 						properties={properties}
 					/>

@@ -700,9 +700,8 @@ public class UpgradeClient {
 	}
 
 	private void _verifyPortalUpgradeExtProperties() throws IOException {
-		String userHome = System.getProperty("user.home");
-
-		File userHomePropsFile = new File(userHome + "/portal-ext.properties");
+		File userHomePropsFile = new File(
+			System.getProperty("user.home") + "/portal-ext.properties");
 
 		if (userHomePropsFile.exists()) {
 			System.err.println(

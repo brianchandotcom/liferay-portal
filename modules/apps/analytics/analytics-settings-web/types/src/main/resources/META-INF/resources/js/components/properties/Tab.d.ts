@@ -12,20 +12,16 @@
  * details.
  */
 
-import {Text} from '@clayui/core';
 import React from 'react';
-
-import {TProperty} from '../../pages/wizard/PropertyStep';
-import ComposedTable, {TColumn, TItem} from '../table/Table';
-
-type TRawItem = {
+import {TColumn, TItem} from '../table/Table';
+import {TProperty} from './Properties';
+declare type TRawItem = {
 	channelName?: string;
 	friendlyURL?: string;
 	id: string;
 	name: string;
 	siteName: string;
 };
-
 interface ITabProps {
 	columns: Array<keyof TRawItem>;
 	description?: string;
@@ -37,44 +33,5 @@ interface ITabProps {
 	onItemsChange: (items: TItem[]) => void;
 	property: TProperty;
 }
-
-const Tab: React.FC<ITabProps> = ({
-	columns,
-	description,
-	emptyStateTitle,
-	enableCheckboxs = true,
-	fetchFn,
-	header,
-	noResultsTitle,
-	onItemsChange,
-	property,
-}) => (
-	<>
-		{description && (
-			<div className="my-3 text-secondary">
-				<Text size={3}>{description}</Text>
-			</div>
-		)}
-
-		<ComposedTable
-			columns={header}
-			disabled={!enableCheckboxs}
-			emptyStateTitle={emptyStateTitle}
-			fetchFn={fetchFn}
-			mapperItems={(items: TRawItem[]) => {
-				return items.map((item) => ({
-					checked: !!item.channelName,
-					columns: columns.map((column) => item?.[column] ?? ''),
-					disabled: !!(
-						item.channelName && item.channelName !== property.name
-					),
-					id: item.id,
-				}));
-			}}
-			noResultsTitle={noResultsTitle}
-			onItemsChange={onItemsChange}
-		/>
-	</>
-);
-
+declare const Tab: React.FC<ITabProps>;
 export default Tab;

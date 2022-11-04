@@ -15,6 +15,25 @@
 export declare function fetchConnection(token: string): Promise<Response>;
 export declare function deleteConnection(): Promise<Response>;
 export declare function fetchProperties(): Promise<any>;
+<<<<<<< HEAD
 export declare function createProperty(name: string): Promise<Response>;
 export declare function fetchChannels(): Promise<any>;
 export declare function fetchSites(): Promise<any>;
+=======
+export declare function createProperty(name: string): Promise<any>;
+export declare function updateProperty({
+	channelId,
+	commerceChannelIds,
+	commerceSyncEnabled,
+	dataSourceId,
+	siteIds,
+}: {
+	channelId: string;
+	commerceChannelIds: number[];
+	commerceSyncEnabled?: boolean;
+	dataSourceId: string;
+	siteIds: number[];
+}): Promise<any>;
+export declare function fetchChannels(queryString?: string): Promise<any>;
+export declare function fetchSites(queryString?: string): Promise<any>;
+>>>>>>> 2c7b608 (LRAC-12185 Adapt Properties to be used in pages and wizard modes)

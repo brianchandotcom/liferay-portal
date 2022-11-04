@@ -12,37 +12,18 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import React from 'react';
 
 import BasePage from '../../components/BasePage';
 import Properties from '../../components/properties/Properties';
-import {ESteps, TGenericComponent} from './WizardPage';
 
-interface IStepProps extends TGenericComponent {}
-
-const Step: React.FC<IStepProps> = ({onChangeStep}) => (
+const PropertiesPage: React.FC = () => (
 	<BasePage
 		description={Liferay.Language.get('property-description')}
-		title={Liferay.Language.get('property-assignment')}
+		title={Liferay.Language.get('properties')}
 	>
 		<Properties />
-
-		<BasePage.Footer>
-			<ClayButton.Group spaced>
-				<ClayButton onClick={() => onChangeStep(ESteps.People)}>
-					{Liferay.Language.get('next')}
-				</ClayButton>
-
-				<ClayButton
-					displayType="secondary"
-					onClick={() => window.location.reload()}
-				>
-					{Liferay.Language.get('cancel')}
-				</ClayButton>
-			</ClayButton.Group>
-		</BasePage.Footer>
 	</BasePage>
 );
 
-export default Step;
+export default PropertiesPage;

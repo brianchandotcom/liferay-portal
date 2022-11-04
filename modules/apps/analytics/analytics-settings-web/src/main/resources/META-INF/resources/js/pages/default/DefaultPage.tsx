@@ -16,7 +16,8 @@ import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
 import React, {useState} from 'react';
 
-import WorkspaceConnection from './WorkspaceConnection';
+import ConnectPage from './ConnectPage';
+import PropertiesPage from './PropertiesPage';
 
 enum EPages {
 	Attributes = 'attributes',
@@ -27,12 +28,12 @@ enum EPages {
 
 const PAGES = [
 	{
-		Component: () => <WorkspaceConnection />,
+		Component: () => <ConnectPage />,
 		key: EPages.WorkspaceConnection,
 		label: Liferay.Language.get('workspace-connection'),
 	},
 	{
-		Component: () => <div>properties</div>,
+		Component: () => <PropertiesPage />,
 		key: EPages.Properties,
 		label: Liferay.Language.get('properties'),
 	},

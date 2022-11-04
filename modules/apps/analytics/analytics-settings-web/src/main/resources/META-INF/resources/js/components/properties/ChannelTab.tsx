@@ -14,9 +14,9 @@
 
 import React from 'react';
 
-import {TProperty} from '../../pages/wizard/PropertyStep';
 import {fetchChannels} from '../../utils/api';
 import {TItem} from '../table/Table';
+import {TProperty} from './Properties';
 import Tab from './Tab';
 
 interface IChannelTabProps {
@@ -34,7 +34,7 @@ const ChannelTab: React.FC<IChannelTabProps> = ({
 			'analytics-cloud-assign-commerce-channel-help'
 		)}
 		emptyStateTitle={Liferay.Language.get('there-are-no-channels')}
-		enableCheckboxs={!!property.commerceEnabled}
+		enableCheckboxs={!!property.commerceSyncEnabled}
 		fetchFn={fetchChannels}
 		header={[
 			{

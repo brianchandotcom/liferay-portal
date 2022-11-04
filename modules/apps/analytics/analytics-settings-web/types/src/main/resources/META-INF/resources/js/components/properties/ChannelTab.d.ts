@@ -13,19 +13,11 @@
  */
 
 import React from 'react';
-export declare type TDataSource = {
-	commerceChannelIds: Array<number>;
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
-export declare type TProperty = {
-	channelId: string;
-	commerceSyncEnabled?: boolean;
-	dataSources: Array<TDataSource>;
-	name: string;
-};
-interface IPropertiesTable {
-	properties: Array<TProperty>;
+import {TItem} from '../table/Table';
+import {TProperty} from './Properties';
+interface IChannelTabProps {
+	onChannelsChange: (items: TItem[]) => void;
+	property: TProperty;
 }
-declare const PropertiesTable: React.FC<IPropertiesTable>;
-export default PropertiesTable;
+declare const ChannelTab: React.FC<IChannelTabProps>;
+export default ChannelTab;

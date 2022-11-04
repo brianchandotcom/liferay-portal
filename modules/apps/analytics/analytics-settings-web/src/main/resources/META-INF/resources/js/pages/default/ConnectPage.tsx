@@ -13,19 +13,11 @@
  */
 
 import React from 'react';
-export declare type TDataSource = {
-	commerceChannelIds: Array<number>;
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
-export declare type TProperty = {
-	channelId: string;
-	commerceSyncEnabled?: boolean;
-	dataSources: Array<TDataSource>;
-	name: string;
-};
-interface IPropertiesTable {
-	properties: Array<TProperty>;
-}
-declare const PropertiesTable: React.FC<IPropertiesTable>;
-export default PropertiesTable;
+
+import Connect from '../../components/Connect';
+
+const ConnectPage = () => (
+	<Connect title={Liferay.Language.get('workspace-connection')} />
+);
+
+export default ConnectPage;

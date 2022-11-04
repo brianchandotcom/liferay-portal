@@ -17,12 +17,12 @@ import ClayModal from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
-import {TProperty} from '../../pages/wizard/PropertyStep';
 import {updateProperty} from '../../utils/api';
 import {SUCCESS_MESSAGE} from '../../utils/constants';
 import Loading from '../Loading';
-import ChannelTab from '../properties-step/ChannelTab';
-import SitesTab from '../properties-step/SitesTab';
+import ChannelTab from '../properties/ChannelTab';
+import {TProperty} from '../properties/Properties';
+import SitesTab from '../properties/SitesTab';
 import {TItem} from '../table/Table';
 
 interface IAssignModalProps {
@@ -58,10 +58,13 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 		setSubmitting(true);
 
 		const request = async () => {
+			const {channelId, commerceSyncEnabled, dataSources} = property;
+
 			const {ok} = await updateProperty({
-				channelId: property.channelId,
+				channelId,
 				commerceChannelIds,
-				dataSourceId: property.dataSources[0]?.dataSourceId,
+				commerceSyncEnabled,
+				dataSourceId: dataSources[0]?.dataSourceId,
 				siteIds,
 			});
 
@@ -140,11 +143,7 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 						</ClayButton>
 
 						<ClayButton
-							disabled={
-								(!siteIds.length &&
-									!commerceChannelIds.length) ||
-								submitting
-							}
+							disabled={submitting}
 							displayType="primary"
 							onClick={handleSubmit}
 							type="submit"

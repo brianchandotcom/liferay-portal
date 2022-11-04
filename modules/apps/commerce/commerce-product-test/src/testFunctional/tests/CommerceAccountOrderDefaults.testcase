@@ -2224,6 +2224,99 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9925. Default currency rules works on the storefront"
+	@priority = "4"
+	test DefaultCurrencyRulesCanWorkOnStoreFront {
+		task ("Given a second account (first one is created at setup)") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer2@liferay.com",
+				userFirstName = "Buyer2",
+				userLastName = "User2",
+				userRole = "Buyer",
+				userScreenName = "buyeruser2",
+				userSiteMembership = "Minium");
+		}
+
+		task ("and the first account's default currency is set to Euro") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+
+			ScrollWebElementIntoView(
+				key_settingHeader = "Currencies",
+				locator1 = "Account#DEFAULT_SETTINGS_HEADER");
+
+			Accounts.setDefaultCurrency(
+				channelEntry = "Minium Portal",
+				currencyName = "Euro");
+		}
+
+		task ("When the admin views the Minium site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
+
+		task ("Then the currency should be displayed in Euros") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "€");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$");
+		}
+
+		task ("And when the buyer user views the Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the currency should be displayed in Euros") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "€");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$");
+		}
+
+		task ("And when the second buyer user views the Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer2@liferay.com");
+		}
+
+		task ("then the currency should show US Dollar instead of Euro") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "€");
+		}
+	}
+
 	@description = "COMMERCE-9782. Default delivery set to override should be default regardless of other eligibility criteria."
 	@priority = "4"
 	test DefaultDeliveryTermCanOverrideOtherEligibilities {

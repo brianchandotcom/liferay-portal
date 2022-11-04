@@ -76,7 +76,10 @@ const Subtasks = () => {
 				subtask={testraySubtask}
 			/>
 
-			<Container className="pb-6" title={i18n.translate('subtasks')}>
+			<Container
+				className="pb-6"
+				title={i18n.translate('subtask-details')}
+			>
 				<div className="d-flex flex-wrap">
 					<div className="col-4 col-lg-4 col-md-12">
 						<QATable
@@ -114,11 +117,11 @@ const Subtasks = () => {
 								{
 									title: i18n.translate('updated'),
 									value: getTimeFromNow(
-										testraySubtask?.statusUpdateDate
+										testraySubtask?.dateModified
 									),
 								},
 								{
-									title: i18n.translate('issue'),
+									title: i18n.translate('issues'),
 									value: '-',
 								},
 								{

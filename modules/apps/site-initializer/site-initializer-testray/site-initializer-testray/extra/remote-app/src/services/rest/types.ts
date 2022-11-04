@@ -217,6 +217,7 @@ export type TestrayRun = {
 };
 
 export type TestraySubTask = {
+	dateModified: string;
 	dueStatus: PickList;
 	errors: string;
 	id: number;

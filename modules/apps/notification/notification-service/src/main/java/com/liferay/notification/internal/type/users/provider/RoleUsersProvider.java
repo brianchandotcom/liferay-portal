@@ -47,13 +47,13 @@ public class RoleUsersProvider implements UsersProvider {
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException {
 
+		Set<Long> userIds = new HashSet<>();
+
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
-
-		Set<Long> userIds = new HashSet<>();
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationRecipient.getNotificationRecipientSettings()) {

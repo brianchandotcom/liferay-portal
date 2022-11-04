@@ -35,7 +35,7 @@ create table ObjectDefinition (
 	active_ BOOLEAN,
 	dbTableName VARCHAR(75) null,
 	label STRING null,
-	className VARCHAR(75) null,
+	className VARCHAR(255) null,
 	enableCategorization BOOLEAN,
 	enableComments BOOLEAN,
 	enableObjectEntryHistory BOOLEAN,

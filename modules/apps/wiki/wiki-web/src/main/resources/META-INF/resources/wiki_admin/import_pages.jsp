@@ -28,9 +28,9 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 
-WikiImporterTracker wikiImporterTracker = (WikiImporterTracker)request.getAttribute(WikiWebKeys.WIKI_IMPORTER_TRACKER);
+WikiImporterRegistry wikiImporterRegistry = (WikiImporterRegistry)request.getAttribute(WikiWebKeys.WIKI_IMPORTER_REGISTRY);
 
-String[] importers = ArrayUtil.toStringArray(wikiImporterTracker.getImporters());
+String[] importers = ArrayUtil.toStringArray(wikiImporterRegistry.getImporters());
 
 if (Validator.isNull(tabs2)) {
 	tabs2 = importers[0];
@@ -79,7 +79,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 			<liferay-ui:error exception="<%= ImportFilesException.class %>" message="please-provide-all-mandatory-files-and-make-sure-the-file-types-are-valid" />
 			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-			<liferay-util:include page='<%= wikiImporterTracker.getProperty(tabs2, "page") %>' servletContext="<%= application %>" />
+			<liferay-util:include page='<%= wikiImporterRegistry.getProperty(tabs2, "page") %>' servletContext="<%= application %>" />
 
 			<div class="sheet-footer">
 				<aui:button type="submit" value="import" />

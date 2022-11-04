@@ -46,6 +46,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-159575 Automation Test Creation - Allow users to delete their custom viewsLPS"
+	@priority = "5"
+	test CanBeDeleted {
+		task ("A custom view is created") {
+			FDSCustomView.createNewView(key_nameView = "New View");
+		}
+
+		task ("Deleting the custom view") {
+			FDSCustomView.deleteView();
+		}
+
+		task ("Assert the custom view no longer exists") {
+			FDSCustomView.verifyCustomView(key_nameCustomView = "New View");
+		}
+	}
+
 	@description = "LPS-164617. Assert that it's possible to make changes in the FDS "
 	@priority = "4"
 	test CanBeEditted {
@@ -241,24 +257,6 @@ definition {
 				locator1 = "FrontendDataSet#RESET_FILTERS",
 				reset_filter = "Restablecer filtros");
 		}
-	}
-
-	@description = "LPS-159575 Automation Test Creation - Allow users to delete their custom viewsLPS"
-	@priority = "5"
-	test CanBeDeleted {
-
-		task("A custom view is created"){
-			FDSCustomView.createNewView(key_nameView = "New View");
-		}
-
-		task("Deleting the custom view"){
-			FDSCustomView.deleteView();
-		}
-
-		task("Assert the custom view no longer exists"){
-			FDSCustomView.verifyCustomView(key_nameCustomView = "New View");
-		}
-
 	}
 
 }

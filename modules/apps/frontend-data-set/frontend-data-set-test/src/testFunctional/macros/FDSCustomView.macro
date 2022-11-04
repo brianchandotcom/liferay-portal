@@ -43,6 +43,14 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
+	macro deleteView {
+		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+
+		Click(locator1 = "FrontendDataSet#DELETE_VIEW_BUTTON");
+
+		Click(locator1 = "FrontendDataSet#DELETE_BUTTON");
+	}
+
 	macro getValueByPosition {
 		var key_columnIndex = "${columnIndex}";
 		var key_valueIndex = "${valueIndex}";
@@ -113,14 +121,6 @@ definition {
 		AssertElementNotPresent(
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
-	}
-
-	macro deleteView {
-		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
-
-		Click(locator1 = "FrontendDataSet#DELETE_VIEW_BUTTON");
-
-		Click(locator1 = "FrontendDataSet#DELETE_BUTTON");
 	}
 
 }

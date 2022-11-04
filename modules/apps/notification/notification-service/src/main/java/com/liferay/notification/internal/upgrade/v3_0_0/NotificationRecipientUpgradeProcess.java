@@ -46,14 +46,14 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement selectPreparedStatement1 =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"SELECT notificationQueueEntryId, companyId, userId, ",
+						"select notificationQueueEntryId, companyId, userId, ",
 						"userName, createDate, modifiedDate, bcc, cc, from_, ",
 						"fromName, to_, toName FROM NotificationQueueEntry"));
 			ResultSet resultSet1 = selectPreparedStatement1.executeQuery();
 			PreparedStatement selectPreparedStatement2 =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"SELECT notificationTemplateId, companyId, userId, ",
+						"select notificationTemplateId, companyId, userId, ",
 						"userName, createDate, modifiedDate, bcc, cc, from_, ",
 						"fromName, to_ FROM NotificationTemplate"));
 			ResultSet resultSet2 = selectPreparedStatement2.executeQuery();
@@ -61,7 +61,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					StringBundler.concat(
-						"INSERT INTO NotificationRecipient (uuid_, ",
+						"insert into NotificationRecipient (uuid_, ",
 						"notificationRecipientId, companyId, userId, ",
 						"userName, createDate, modifiedDate, className, ",
 						"classPK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
@@ -69,7 +69,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					StringBundler.concat(
-						"INSERT INTO NotificationRecipientSetting (uuid_, ",
+						"insert into NotificationRecipientSetting (uuid_, ",
 						"notificationRecipientSettingId, companyId, userId, ",
 						"userName, createDate, modifiedDate, ",
 						"notificationRecipientId, name, value) VALUES (?, ?, ",

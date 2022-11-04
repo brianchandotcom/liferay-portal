@@ -14,15 +14,25 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutUtilityPageEntryPermission;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -41,6 +51,29 @@ public class LayoutUtilityPageEntryDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getAvailableActions(
+			LayoutUtilityPageEntry layoutUtilityPageEntry)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (LayoutUtilityPageEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), layoutUtilityPageEntry,
+				ActionKeys.DELETE)) {
+
+			availableActions.add("deleteSelectedLayoutUtilityPageEntries");
+		}
+
+		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		if (!draftLayout.isDraft()) {
+			availableActions.add("exportLayoutUtilityPageEntries");
+		}
+
+		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
 	public SearchContainer<LayoutUtilityPageEntry>

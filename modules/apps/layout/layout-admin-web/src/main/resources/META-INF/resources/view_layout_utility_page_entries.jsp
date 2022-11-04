@@ -37,6 +37,14 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 			keyProperty="layoutUtilityPageEntryId"
 			modelVar="layoutUtilityPageEntry"
 		>
+
+			<%
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"actions", layoutUtilityPageEntryDisplayContext.getAvailableActions(layoutUtilityPageEntry)
+				).build());
+			%>
+
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
 					propsTransformer="js/LayoutUtilityPageEntryDropdownPropsTransformer"

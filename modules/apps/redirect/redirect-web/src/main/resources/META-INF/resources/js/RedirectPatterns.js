@@ -26,13 +26,14 @@ import '../css/redirect_pattern.scss';
 const REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
 const PatternField = ({
-	destinationURL = '',
+	destinationURL: initialDestinationUrl,
 	handleAddClick,
 	handleRemoveClick,
 	index,
 	pattern = '',
 	portletNamespace,
 }) => {
+	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 	const [urlError, setUrlError] = useState(false);
 
 	const isAbsoluteUrl = (url) => {
@@ -61,7 +62,10 @@ const PatternField = ({
 				/>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col className={urlError ? 'has-error' : ''} md="6">
+			<ClayLayout.Col
+				className={destinationUrl && urlError ? 'has-error' : ''}
+				md="6"
+			>
 				<label htmlFor="destinationURL">
 					{Liferay.Language.get('destination-url')}
 
@@ -76,13 +80,16 @@ const PatternField = ({
 				</label>
 
 				<ClayInput
-					defaultValue={destinationURL}
 					id="destinationURL"
 					name={`${portletNamespace}destinationURL_${index}`}
 					onBlur={({currentTarget}) => {
 						setUrlError(!isAbsoluteUrl(currentTarget.value));
 					}}
+					onChange={({currentTarget}) =>
+						setDestinationUrl(currentTarget.value)
+					}
 					type="text"
+					value={destinationUrl}
 				/>
 
 				{index > 0 && (
@@ -108,7 +115,7 @@ const PatternField = ({
 					<ClayIcon symbol="plus" />
 				</ClayButton>
 
-				{urlError && (
+				{destinationUrl && urlError && (
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />

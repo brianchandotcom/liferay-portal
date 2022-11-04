@@ -54,6 +54,14 @@
 		"cssVariableMapping": "color-neutral-10",
 		"value": "#282934"
 	},
+	"colorNeutral2": {
+		"cssVariableMapping": "color-neutral-2",
+		"value": "#E2E2E4"
+	},
+	"colorNeutral8": {
+		"cssVariableMapping": "color-neutral-8",
+		"value": "#54555F"
+	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",
 		"value": "2rem"

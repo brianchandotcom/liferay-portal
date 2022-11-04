@@ -21,14 +21,6 @@ html#{$cadmin-selector} {
 						background-color: transparent;
 					}
 				}
-
-				.dropdown-toggle {
-					opacity: 0;
-				}
-
-				&:hover .dropdown-toggle {
-					opacity: 1;
-				}
 			}
 
 			&__item-name {

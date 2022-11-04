@@ -55,7 +55,9 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-			Testray.addNewComponent(componentName = "Components_1 Project");
+			Testray.addNewComponent(
+				componentName = "Components_1 Project",
+				teamName = "Teams_1 Team");
 
 			TestrayManage.closeModalInOptions();
 		}
@@ -411,6 +413,12 @@ definition {
 		task ("Then the user view resullts by component") {
 			Testray.projectTabNavigator(navTabName = "Components");
 
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.clickOnPageNumber(pageNumber = "2");
+
 			Testray.assertItemName(key_name = "Components_1 Project");
 		}
 	}
@@ -428,6 +436,10 @@ definition {
 
 		task ("Then the user view resullts by team") {
 			Testray.projectTabNavigator(navTabName = "Teams");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
 
 			Testray.assertItemName(key_name = "Teams_1 Team");
 		}

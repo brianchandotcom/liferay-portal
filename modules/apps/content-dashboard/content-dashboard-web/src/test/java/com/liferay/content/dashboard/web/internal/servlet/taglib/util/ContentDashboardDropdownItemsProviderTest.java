@@ -300,8 +300,10 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public Map<String, Object> getSpecificInformation(Locale locale) {
-				return Collections.emptyMap();
+			public List<SpecificInformation<?>> getSpecificInformation(
+				Locale locale) {
+
+				return Collections.emptyList();
 			}
 
 			@Override

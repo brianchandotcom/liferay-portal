@@ -19,11 +19,19 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,7 +72,7 @@ public interface ContentDashboardItem<T> {
 
 	public String getScopeName(Locale locale);
 
-	public Map<String, Object> getSpecificInformation(Locale locale);
+	public List<SpecificInformation<?>> getSpecificInformation(Locale locale);
 
 	public String getTitle(Locale locale);
 
@@ -111,28 +119,42 @@ public interface ContentDashboardItem<T> {
 			return _value;
 		}
 
-		public enum Type {
-
-			DATE, STRING, URL
-
-		}
-
 		public JSONObject toJSONObject(Language language, Locale locale) {
 			return JSONUtil.put(
 				"help", language.get(locale, getHelp())
 			).put(
 				"title", language.get(locale, getKey())
 			).put(
-				"type", getType()
+				"type", String.valueOf(getType())
 			).put(
 				"value", _toString(getValue())
 			);
 		}
 
+		public enum Type {
+
+			DATE {
+
+				public String toString() {
+					return "Date";
+				}
+
+			},
+			STRING {
+
+				public String toString() {
+					return "String";
+				}
+
+			}, URL
+
+		}
+
 		private String _toString(Date date) {
 			Instant instant = date.toInstant();
 
-			ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+			ZonedDateTime zonedDateTime = instant.atZone(
+				ZoneId.systemDefault());
 
 			LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
 

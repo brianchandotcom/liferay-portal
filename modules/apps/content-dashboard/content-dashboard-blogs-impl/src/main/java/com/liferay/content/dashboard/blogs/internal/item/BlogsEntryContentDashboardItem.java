@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,7 +41,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -294,10 +292,11 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
-	public Map<String, Object> getSpecificInformation(Locale locale) {
-		return HashMapBuilder.<String, Object>put(
-			"display-date", _blogsEntry.getDisplayDate()
-		).build();
+	public List<SpecificInformation<?>> getSpecificInformation(Locale locale) {
+		return Collections.singletonList(
+			new SpecificInformation<>(
+				"display-date", SpecificInformation.Type.DATE,
+				_blogsEntry.getDisplayDate()));
 	}
 
 	@Override

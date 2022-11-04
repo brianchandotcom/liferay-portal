@@ -6959,6 +6959,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<start-docker-container image="${browser.docker.image}" name="${browser.host}" options="${browser.docker.browser.options}">\
 				${browser.docker.run.options} \
 				--add-host ${env.HOSTNAME}:${ip.address} \
+				--add-host ${env.NODE_NAME}:${ip.address} \
 				--add-host www.able.com:${ip.address} \
 				--add-host www.baker.com:${ip.address} \
 				--add-host www.charlie.com:${ip.address} \

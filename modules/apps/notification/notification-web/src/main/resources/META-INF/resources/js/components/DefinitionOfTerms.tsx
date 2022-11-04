@@ -81,14 +81,14 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 			showCollapseIcon={true}
 		>
 			<ClayPanel.Body>
-				<AutoComplete
+				<AutoComplete<ObjectDefinition>
 					emptyStateMessage={Liferay.Language.get(
 						'no-entities-were-found'
 					)}
 					items={filteredObjectDefinitions ?? []}
 					label={Liferay.Language.get('entity')}
 					onChangeQuery={setQuery}
-					onSelectItem={(item: ObjectDefinition) => {
+					onSelectItem={(item) => {
 						getEntityFields(item);
 						setSelectedEntity(item);
 					}}

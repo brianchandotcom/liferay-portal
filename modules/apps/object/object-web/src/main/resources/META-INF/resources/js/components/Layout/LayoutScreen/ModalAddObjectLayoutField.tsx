@@ -157,7 +157,7 @@ export default function ModalAddObjectLayoutField({
 				</ClayModal.Header>
 
 				<ClayModal.Body>
-					<AutoComplete
+					<AutoComplete<TObjectField>
 						contentRight={
 							<>
 								<ClayLabel
@@ -224,7 +224,7 @@ export default function ModalAddObjectLayoutField({
 											: Liferay.Language.get('optional')}
 									</ClayLabel>
 
-									{objectFieldSettings.find(
+									{objectFieldSettings?.find(
 										(fieldSetting: ObjectFieldSetting) =>
 											fieldSetting.value === 'true' ||
 											fieldSetting.value === 'conditional'

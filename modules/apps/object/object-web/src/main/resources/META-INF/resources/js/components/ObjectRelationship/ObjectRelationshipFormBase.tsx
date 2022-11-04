@@ -187,7 +187,7 @@ export function ObjectRelationshipFormBase({
 				value={selectedType}
 			/>
 
-			<AutoComplete
+			<AutoComplete<ObjectDefinition>
 				disabled={readonly}
 				emptyStateMessage={Liferay.Language.get(
 					'no-objects-were-found'
@@ -196,7 +196,7 @@ export function ObjectRelationshipFormBase({
 				items={filteredRelationships}
 				label={Liferay.Language.get('object')}
 				onChangeQuery={setQuery}
-				onSelectItem={(item: ObjectDefinition) => {
+				onSelectItem={(item) => {
 					setValues({
 						objectDefinitionId2: item.id,
 						objectDefinitionName2: item.name,

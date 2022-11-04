@@ -131,7 +131,7 @@ export function ModalAddDefaultSortColumn({
 
 				<ClayModal.Body>
 					{!isEditingSort && (
-						<AutoComplete
+						<AutoComplete<TObjectViewColumn>
 							emptyStateMessage={Liferay.Language.get(
 								'there-are-no-columns-added-in-this-view-yet'
 							)}

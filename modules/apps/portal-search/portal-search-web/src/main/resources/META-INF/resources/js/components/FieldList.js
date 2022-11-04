@@ -64,7 +64,7 @@ function DropZone({index, move}) {
 }
 
 function Field({children, index, onDelete, showDeleteButton, showDragButton}) {
-	const [{isDragging}, drag] = useDrag({
+	const [{isDragging}, drag, dragPreview] = useDrag({
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
@@ -72,47 +72,46 @@ function Field({children, index, onDelete, showDeleteButton, showDragButton}) {
 	});
 
 	return (
-		<div
-			ref={drag}
-			style={{
-				cursor: 'move',
-				opacity: isDragging ? 0.5 : 1,
-			}}
-		>
-			<ClayForm.Group className="field-item">
-				<ClayInput.Group>
-					<ClayInput.GroupItem shrink>
-						{showDragButton && (
-							<ClayButton
-								borderless
-								className="drag-handle"
-								displayType="secondary"
-								monospaced
-								small
-							>
-								<ClayIcon symbol="drag" />
-							</ClayButton>
-						)}
-					</ClayInput.GroupItem>
-
-					{children}
-
-					{showDeleteButton && (
-						<ClayInput.GroupItem shrink>
-							<ClayButton
-								borderless
-								displayType="secondary"
-								monospaced
-								onClick={onDelete}
-								small
-							>
-								<ClayIcon symbol="trash" />
-							</ClayButton>
-						</ClayInput.GroupItem>
+		<ClayForm.Group className="field-item" ref={dragPreview}>
+			<ClayInput.Group>
+				<ClayInput.GroupItem
+					ref={drag}
+					shrink
+					style={{
+						cursor: 'move',
+						opacity: isDragging ? 0.5 : 1,
+					}}
+				>
+					{showDragButton && (
+						<ClayButton
+							borderless
+							className="drag-handle"
+							displayType="secondary"
+							monospaced
+							small
+						>
+							<ClayIcon symbol="drag" />
+						</ClayButton>
 					)}
-				</ClayInput.Group>
-			</ClayForm.Group>
-		</div>
+				</ClayInput.GroupItem>
+
+				{children}
+
+				{showDeleteButton && (
+					<ClayInput.GroupItem shrink>
+						<ClayButton
+							borderless
+							displayType="secondary"
+							monospaced
+							onClick={onDelete}
+							small
+						>
+							<ClayIcon symbol="trash" />
+						</ClayButton>
+					</ClayInput.GroupItem>
+				)}
+			</ClayInput.Group>
+		</ClayForm.Group>
 	);
 }
 

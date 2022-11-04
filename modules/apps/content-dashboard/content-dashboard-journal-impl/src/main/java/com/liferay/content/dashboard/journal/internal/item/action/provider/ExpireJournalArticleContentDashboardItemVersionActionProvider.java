@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=400",
 	service = ContentDashboardItemVersionActionProvider.class
 )
 public class ExpireJournalArticleContentDashboardItemVersionActionProvider

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	property = "service.ranking:Integer=300",
+	property = "service.ranking:Integer=600",
 	service = ContentDashboardItemVersionActionProvider.class
 )
 public class PreviewJournalArticleContentDashboardItemVersionActionProvider

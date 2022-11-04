@@ -102,7 +102,6 @@ public class EmailNotificationType extends BaseNotificationType {
 			notificationRecipientSetting.setCompanyId(user.getCompanyId());
 			notificationRecipientSetting.setUserId(user.getUserId());
 			notificationRecipientSetting.setUserName(user.getFullName());
-
 			notificationRecipientSetting.setNotificationRecipientId(
 				notificationRecipientId);
 			notificationRecipientSetting.setName(entry.getKey());

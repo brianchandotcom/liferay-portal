@@ -14,8 +14,8 @@
 
 import * as vscode from 'vscode';
 
-import { isSourceFormatterEnabled } from '../configurationProvider';
-import { getSourceFormatterOutput } from '../sourceFormatter';
+import {isSourceFormatterEnabled} from '../configurationProvider';
+import {getSourceFormatterOutput} from '../sourceFormatter';
 
 export class DocumentFormattingEditProviderImpl
 	implements vscode.DocumentFormattingEditProvider
@@ -23,7 +23,7 @@ export class DocumentFormattingEditProviderImpl
 	async provideDocumentFormattingEdits(
 		document: vscode.TextDocument,
 		_options: vscode.FormattingOptions,
-		_token: vscode.CancellationToken,
+		_token: vscode.CancellationToken
 	): Promise<vscode.TextEdit[] | undefined> {
 		if (!isSourceFormatterEnabled()) {
 			return;
@@ -47,16 +47,16 @@ export class DocumentFormattingEditProviderImpl
 				vscode.TextEdit.delete(
 					new vscode.Range(
 						new vscode.Position(deletedLine - 1, 0),
-						new vscode.Position(deletedLine, 0),
-					),
-				),
+						new vscode.Position(deletedLine, 0)
+					)
+				)
 			);
 		}
 
 		// lines 39-40 were deleted
 
 		const linesRemovedRegex = new RegExp(
-			/.* lines (\d+)-(\d+) were deleted/g,
+			/.* lines (\d+)-(\d+) were deleted/g
 		);
 		for (const match of sfOutput.matchAll(linesRemovedRegex)) {
 			const firstDeletedLine = Number(match[1]);
@@ -66,9 +66,9 @@ export class DocumentFormattingEditProviderImpl
 				vscode.TextEdit.delete(
 					new vscode.Range(
 						new vscode.Position(firstDeletedLine - 1, 0),
-						new vscode.Position(lastDeletedLine, 0),
-					),
-				),
+						new vscode.Position(lastDeletedLine, 0)
+					)
+				)
 			);
 		}
 
@@ -81,8 +81,8 @@ export class DocumentFormattingEditProviderImpl
 			textEdits.push(
 				vscode.TextEdit.insert(
 					new vscode.Position(addedLine - 1, 0),
-					'\n',
-				),
+					'\n'
+				)
 			);
 		}
 
@@ -98,13 +98,13 @@ export class DocumentFormattingEditProviderImpl
 			textEdits.push(
 				vscode.TextEdit.insert(
 					new vscode.Position(firstAddedLine - 1, 0),
-					'\n'.repeat(totalLinesAdded),
-				),
+					'\n'.repeat(totalLinesAdded)
+				)
 			);
 		}
 
 		const lineChangedRegex = new RegExp(
-			/^.* line (\d+) changed:\nbefore:((?:\n^\[.*\]$)+)\nafter:((?:\n^\[.*\]$)+)/gm,
+			/^.* line (\d+) changed:\nbefore:((?:\n^\[.*\]$)+)\nafter:((?:\n^\[.*\]$)+)/gm
 		);
 		for (const match of sfOutput.matchAll(lineChangedRegex)) {
 			const changedLine = Number(match[1]);
@@ -119,11 +119,11 @@ export class DocumentFormattingEditProviderImpl
 						new vscode.Position(changedLine - 1, 0),
 						new vscode.Position(
 							changedLine - 1 + numberOfChangedLines,
-							0,
-						),
+							0
+						)
 					),
-					`${newText}\n`,
-				),
+					`${newText}\n`
+				)
 			);
 		}
 

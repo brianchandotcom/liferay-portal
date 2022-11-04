@@ -12,25 +12,23 @@
  * details.
  */
 
-import { chain as _chain } from 'lodash';
+import {chain as _chain} from 'lodash';
 import * as vscode from 'vscode';
 
-import { isCompletionEnabled } from '../configurationProvider';
-import { RipgrepMatch, ripgrep, ripgrepMatches } from '../ripgrep';
+import {isCompletionEnabled} from '../configurationProvider';
+import {RipgrepMatch, ripgrep, ripgrepMatches} from '../ripgrep';
 
 const classNamePattern = /\b([A-Z][A-Za-z]+)/g;
 const pathNamePattern = /"([A-Z][A-Za-z]+)/g;
 
-function isCompleteProperty(
-	lineText: vscode.TextLine,
-) {
+function isCompleteProperty(lineText: vscode.TextLine) {
 	return lineText.text.trimLeft().startsWith('property');
 }
 
 function getPatternMatch(
 	lineText: vscode.TextLine,
 	position: vscode.Position,
-	pattern: RegExp,
+	pattern: RegExp
 ) {
 	const matches = lineText.text.matchAll(new RegExp(pattern));
 
@@ -53,7 +51,7 @@ function getPatternMatch(
 const getFunctionCompletionItem = (label: string) => {
 	const completionItem = new vscode.CompletionItem(
 		label,
-		vscode.CompletionItemKind.Function,
+		vscode.CompletionItemKind.Function
 	);
 
 	const snippetString = new vscode.SnippetString();
@@ -71,7 +69,7 @@ const getFunctionCompletionItem = (label: string) => {
 const getLocatorCompletionItem = (label: string) => {
 	const completionItem = new vscode.CompletionItem(
 		label,
-		vscode.CompletionItemKind.Field,
+		vscode.CompletionItemKind.Field
 	);
 
 	const snippetString = new vscode.SnippetString();
@@ -86,7 +84,7 @@ const getLocatorCompletionItem = (label: string) => {
 const getPropertyCompletionItem = (label: string) => {
 	const completionItem = new vscode.CompletionItem(
 		label,
-		vscode.CompletionItemKind.Property,
+		vscode.CompletionItemKind.Property
 	);
 
 	const snippetString = new vscode.SnippetString();
@@ -114,7 +112,7 @@ export class CompletionItemProviderImpl
 		document: vscode.TextDocument,
 		position: vscode.Position,
 		_token: vscode.CancellationToken,
-		context: vscode.CompletionContext,
+		context: vscode.CompletionContext
 	): Promise<vscode.CompletionList | undefined> {
 		if (!isCompletionEnabled()) {
 			return;
@@ -132,22 +130,22 @@ export class CompletionItemProviderImpl
 				completionList.items.push(
 					new vscode.CompletionItem(
 						'definition',
-						vscode.CompletionItemKind.Keyword,
-					),
+						vscode.CompletionItemKind.Keyword
+					)
 				);
 			} else if (position.character > 0) {
 				return new vscode.CompletionList(
 					[
 						new vscode.CompletionItem(
 							'property',
-							vscode.CompletionItemKind.Keyword,
+							vscode.CompletionItemKind.Keyword
 						),
 						new vscode.CompletionItem(
 							'setUp',
-							vscode.CompletionItemKind.Keyword,
+							vscode.CompletionItemKind.Keyword
 						),
 					],
-					false,
+					false
 				);
 			}
 		}
@@ -156,18 +154,18 @@ export class CompletionItemProviderImpl
 			const functionOrMacroFileBaseName = getPatternMatch(
 				line,
 				position,
-				classNamePattern,
+				classNamePattern
 			);
 
 			if (functionOrMacroFileBaseName) {
 				const functionOrMacroNames = await this._getItems(
 					`**/${functionOrMacroFileBaseName}.{function,macro}`,
-					'(?:macro|function) ([_a-zA-Z]+)',
+					'(?:macro|function) ([_a-zA-Z]+)'
 				);
 
 				return new vscode.CompletionList(
 					functionOrMacroNames.map(getFunctionCompletionItem),
-					false,
+					false
 				);
 			}
 		}
@@ -178,29 +176,26 @@ export class CompletionItemProviderImpl
 			if (pathName) {
 				const locatorNames = await this._getItems(
 					`**/${pathName}.path`,
-					'<td>([A-Z][A-Z_-]+)</td>',
+					'<td>([A-Z][A-Z_-]+)</td>'
 				);
 
 				return new vscode.CompletionList(
 					locatorNames.map(getLocatorCompletionItem),
-					false,
+					false
 				);
 			}
 		}
 
-		if (
-			context.triggerCharacter === ' ' &&
-			isCompleteProperty(line)
-		) {
+		if (context.triggerCharacter === ' ' && isCompleteProperty(line)) {
 			const workspaceFolder = vscode.workspace.getWorkspaceFolder(
-				document.uri,
+				document.uri
 			);
 
 			if (workspaceFolder) {
 				const props = await this._getProps(workspaceFolder.uri);
 
 				return new vscode.CompletionList(
-					props.map(getPropertyCompletionItem),
+					props.map(getPropertyCompletionItem)
 				);
 			}
 		}

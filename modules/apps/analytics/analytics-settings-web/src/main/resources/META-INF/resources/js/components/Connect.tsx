@@ -24,8 +24,8 @@ import {AppContext, Events} from '../App';
 import {ESteps} from '../pages/wizard/WizardPage';
 import {fetchConnection} from '../utils/api';
 import BasePage from './BasePage';
-import DisconnectModal from './DisconnectModal';
-import LoadingInline from './LoadingInline';
+import Loading from './Loading';
+import DisconnectModal from './modals/DisconnectModal';
 
 interface IConnectProps {
 	onChangeStep?: (step: ESteps) => void;
@@ -47,11 +47,11 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 		const request = async () => {
 			setSubmitting(true);
 
-			const result = await fetchConnection(token);
+			const {ok} = await fetchConnection(token);
 
 			setSubmitting(false);
 
-			if (result?.ok) {
+			if (ok) {
 				dispatch({
 					payload: {
 						connected: true,
@@ -61,14 +61,6 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 				});
 
 				onChangeStep && onChangeStep(ESteps.Property);
-			}
-			else {
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-system-error-occurred'
-					),
-					type: 'danger',
-				});
 			}
 		};
 
@@ -148,7 +140,7 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 							disabled={!token || submitting}
 							type="submit"
 						>
-							{submitting && <LoadingInline />}
+							{submitting && <Loading inline />}
 
 							{Liferay.Language.get('connect')}
 						</ClayButton>

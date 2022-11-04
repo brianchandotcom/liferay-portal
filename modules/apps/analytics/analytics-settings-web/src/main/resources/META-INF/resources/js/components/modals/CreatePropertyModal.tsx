@@ -17,12 +17,13 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
-import {createProperty} from '../utils/api';
-import LoadingInline from './LoadingInline';
+import {createProperty} from '../../utils/api';
+import {SUCCESS_MESSAGE} from '../../utils/constants';
+import Loading from '../Loading';
 
 interface IModalProps {
 	observer: any;
-	onCloseModal: () => void;
+	onCloseModal: (updateProperty: boolean) => void;
 }
 
 const CreatePropertyModal: React.FC<IModalProps> = ({
@@ -38,24 +39,16 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 		const request = async () => {
 			setSubmitting(true);
 
-			const result: any = await createProperty(propertyName);
+			const {ok} = await createProperty(propertyName);
 
 			setSubmitting(false);
 
-			if (result.ok) {
+			if (ok) {
 				Liferay.Util.openToast({
-					message: Liferay.Language.get('saved-successfully'),
+					message: SUCCESS_MESSAGE,
 				});
 
-				onCloseModal();
-			}
-			else {
-				Liferay.Util.openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-system-error-occurred'
-					),
-					type: 'danger',
-				});
+				onCloseModal(true);
 			}
 		};
 
@@ -91,7 +84,7 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 						<ClayButton.Group spaced>
 							<ClayButton
 								displayType="secondary"
-								onClick={onCloseModal}
+								onClick={() => onCloseModal(false)}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
@@ -100,7 +93,7 @@ const CreatePropertyModal: React.FC<IModalProps> = ({
 								disabled={!propertyName || submitting}
 								type="submit"
 							>
-								{submitting && <LoadingInline />}
+								{submitting && <Loading inline />}
 
 								{Liferay.Language.get('create')}
 							</ClayButton>

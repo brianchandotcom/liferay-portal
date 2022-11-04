@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -88,7 +89,7 @@ public class SpringExtenderDependencyManagerTest {
 			_configurationAdmin.getConfiguration(
 				"com.liferay.portal.osgi.debug.spring.extender.internal." +
 					"configuration.UnavailableComponentScannerConfiguration",
-				null);
+				StringPool.QUESTION);
 
 		_properties = _unavailableComponentScannerConfiguration.getProperties();
 
@@ -242,7 +243,9 @@ public class SpringExtenderDependencyManagerTest {
 				"unavailableComponentScanningInterval", "1"
 			).build());
 
-		countDownLatch.await();
+		Assert.assertTrue(
+			"Scanning thread did not send a response",
+			countDownLatch.await(30, TimeUnit.SECONDS));
 
 		Thread scanningThread = scanningThreadReference.get();
 

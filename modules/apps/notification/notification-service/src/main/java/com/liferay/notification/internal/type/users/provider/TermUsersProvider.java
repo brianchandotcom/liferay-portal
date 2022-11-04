@@ -48,14 +48,15 @@ public class TermUsersProvider implements UsersProvider {
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException {
 
+		List<String> screenNames = new ArrayList<>();
+		List<String> terms = new ArrayList<>();
+		List<User> users = new ArrayList<>();
+
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
-
-		List<String> screenNames = new ArrayList<>();
-		List<String> terms = new ArrayList<>();
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationRecipient.getNotificationRecipientSettings()) {
@@ -70,8 +71,6 @@ public class TermUsersProvider implements UsersProvider {
 				screenNames.add(notificationRecipientSetting.getValue());
 			}
 		}
-
-		List<User> users = new ArrayList<>();
 
 		for (String screenName : screenNames) {
 			users.add(

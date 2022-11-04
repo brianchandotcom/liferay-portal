@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Drew Brokke
  */
-@Component(service = FilterContributorTracker.class)
-public class FilterContributorTracker {
+@Component(service = FilterContributorRegistry.class)
+public class FilterContributorRegistry {
 
 	public FilterContributor[] getFilterContributors(String id) {
 		List<FilterContributor> filterContributors =
@@ -66,7 +66,7 @@ public class FilterContributorTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FilterContributorTracker.class);
+		FilterContributorRegistry.class);
 
 	private ServiceTrackerMap<String, List<FilterContributor>>
 		_serviceTrackerMap;

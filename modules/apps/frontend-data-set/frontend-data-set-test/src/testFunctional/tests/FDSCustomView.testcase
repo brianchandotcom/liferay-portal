@@ -243,4 +243,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-159575 Automation Test Creation - Allow users to delete their custom viewsLPS"
+	@priority = "5"
+	test CanBeDeleted {
+
+		task("A custom view is created"){
+			FDSCustomView.createNewView(key_nameView = "New View");
+		}
+
+		task("Deleting the custom view"){
+			FDSCustomView.deleteView();
+		}
+
+		task("Assert the custom view no longer exists"){
+			FDSCustomView.verifyCustomView(key_nameCustomView = "New View");
+		}
+
+	}
+
 }

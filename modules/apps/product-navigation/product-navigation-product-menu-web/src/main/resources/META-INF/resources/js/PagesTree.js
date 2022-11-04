@@ -157,12 +157,16 @@ export default function PagesTree({
 
 									<div className="align-items-center d-flex pl-2">
 										<div className="pages-tree__item-name">
-											<a
-												href={item.regularURL}
-												title={item.name}
-											>
-												{item.name}
-											</a>
+											{item.regularURL ? (
+												<a
+													href={item.regularURL}
+													title={item.name}
+												>
+													{item.name}
+												</a>
+											) : (
+												<span>{item.name}</span>
+											)}
 										</div>
 
 										{item.actions && (

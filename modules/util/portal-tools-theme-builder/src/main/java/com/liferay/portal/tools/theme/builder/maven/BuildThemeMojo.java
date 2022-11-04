@@ -195,7 +195,7 @@ public class BuildThemeMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	public void setThumbnailWidth(int thumbnailWidth) {
-		_themeBuilderArgs.setThumbnailHeight(thumbnailWidth);
+		_themeBuilderArgs.setThumbnailWidth(thumbnailWidth);
 	}
 
 	/**

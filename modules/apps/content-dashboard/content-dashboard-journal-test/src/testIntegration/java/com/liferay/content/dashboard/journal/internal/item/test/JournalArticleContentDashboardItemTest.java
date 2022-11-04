@@ -84,8 +84,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -640,20 +641,59 @@ public class JournalArticleContentDashboardItemTest {
 			_contentDashboardItemFactory.create(
 				journalArticle.getResourcePrimKey());
 
-		Map<String, Object> specificInformation =
-			contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList =
+				contentDashboardItem.getSpecificInformation(LocaleUtil.US);
 
 		Assert.assertEquals(
-			specificInformation.toString(), 3, specificInformation.size());
+			specificInformationList.toString(), 3,
+			specificInformationList.size());
+
+		Stream<ContentDashboardItem.SpecificInformation<?>> stream =
+			specificInformationList.stream();
+
+		ContentDashboardItem.SpecificInformation<?>
+			displayDateSpecificInformation = stream.filter(
+				specificInformation -> Objects.equals(
+					specificInformation.getKey(), "display-date")
+			).findFirst(
+			).orElseThrow(
+				() -> new AssertionError("display-date not found")
+			);
+
 		Assert.assertEquals(
-			specificInformation.get("display-date"),
-			journalArticle.getDisplayDate());
+			journalArticle.getDisplayDate(),
+			displayDateSpecificInformation.getValue());
+
+		stream = specificInformationList.stream();
+
+		ContentDashboardItem.SpecificInformation<?>
+			expirationDateSpecificInformation = stream.filter(
+				specificInformation -> Objects.equals(
+					specificInformation.getKey(), "expiration-date")
+			).findFirst(
+			).orElseThrow(
+				() -> new AssertionError("expiration-date not found")
+			);
+
 		Assert.assertEquals(
-			specificInformation.get("expiration-date"),
-			journalArticle.getExpirationDate());
+			journalArticle.getExpirationDate(),
+			expirationDateSpecificInformation.getValue());
+
+		stream = specificInformationList.stream();
+
+		ContentDashboardItem.SpecificInformation<?>
+			reviewDateSpecificInformation = stream.filter(
+				specificInformation -> Objects.equals(
+					specificInformation.getKey(), "review-date")
+			).findFirst(
+			).orElseThrow(
+				() -> new AssertionError("review-date not found")
+			);
+
 		Assert.assertEquals(
-			specificInformation.get("review-date"),
-			journalArticle.getReviewDate());
+			journalArticle.getReviewDate(),
+			reviewDateSpecificInformation.getValue());
 	}
 
 	@Test

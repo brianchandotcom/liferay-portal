@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,12 +66,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -405,18 +404,19 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public Map<String, Object> getSpecificInformation(Locale locale) {
-		return HashMapBuilder.<String, Object>put(
-			"extension", _getExtension()
-		).put(
-			"file-name", _getFileName()
-		).put(
-			"latest-version-url", _getLatestVersionURL()
-		).put(
-			"size", _getSize(locale)
-		).put(
-			"web-dav-url", _getWebDAVURL()
-		).build();
+	public List<SpecificInformation<?>> getSpecificInformation(Locale locale) {
+		return Arrays.asList(
+			new SpecificInformation<>(
+				"extension", SpecificInformation.Type.STRING, _getExtension()),
+			new SpecificInformation<>(
+				"file-name", SpecificInformation.Type.STRING, _getFileName()),
+			new SpecificInformation<>(
+				"latest-version-url", SpecificInformation.Type.URL,
+				_getLatestVersionURL()),
+			new SpecificInformation<>(
+				"size", SpecificInformation.Type.STRING, _getSize(locale)),
+			new SpecificInformation<>(
+				"web-dav-url", SpecificInformation.Type.URL, _getWebDAVURL()));
 	}
 
 	@Override

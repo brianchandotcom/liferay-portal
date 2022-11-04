@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -57,12 +56,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -385,14 +384,17 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public Map<String, Object> getSpecificInformation(Locale locale) {
-		return HashMapBuilder.<String, Object>put(
-			"display-date", _journalArticle.getDisplayDate()
-		).put(
-			"expiration-date", _journalArticle.getExpirationDate()
-		).put(
-			"review-date", _journalArticle.getReviewDate()
-		).build();
+	public List<SpecificInformation<?>> getSpecificInformation(Locale locale) {
+		return Arrays.asList(
+			new SpecificInformation<>(
+				"display-date", SpecificInformation.Type.DATE,
+				_journalArticle.getDisplayDate()),
+			new SpecificInformation<>(
+				"expiration-date", SpecificInformation.Type.DATE,
+				_journalArticle.getExpirationDate()),
+			new SpecificInformation<>(
+				"review-date", SpecificInformation.Type.DATE,
+				_journalArticle.getReviewDate()));
 	}
 
 	@Override

@@ -39,10 +39,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
@@ -364,8 +364,10 @@ public class GetContentDashboardItemVersionsResourceCommandTest {
 		}
 
 		@Override
-		public Map<String, Object> getSpecificInformation(Locale locale) {
-			return null;
+		public List<SpecificInformation<?>> getSpecificInformation(
+			Locale locale) {
+
+			return Collections.emptyList();
 		}
 
 		@Override

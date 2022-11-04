@@ -183,17 +183,18 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			contentDashboardItem.getDescription(locale)
 		);
 
-		Map<String, Object> specificInformation =
-			contentDashboardItem.getSpecificInformation(locale);
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList =
+				contentDashboardItem.getSpecificInformation(locale);
 
-		workbookBuilder.cell(_toString(specificInformation, "extension"));
+		workbookBuilder.cell(_toString(specificInformationList, "extension"));
 
-		workbookBuilder.cell(_toString(specificInformation, "file-name"));
+		workbookBuilder.cell(_toString(specificInformationList, "file-name"));
 
 		workbookBuilder.cell(
-			_toString(specificInformation, "size")
+			_toString(specificInformationList, "size")
 		).cell(
-			_toString(specificInformation, "display-date")
+			_toString(specificInformationList, "display-date")
 		).cell(
 			_toString(contentDashboardItem.getCreateDate())
 		);
@@ -337,19 +338,23 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private String _toString(
-		Map<String, Object> specificInformation, String fieldName) {
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList,
+		String fieldName) {
 
-		return Optional.ofNullable(
-			specificInformation
-		).map(
-			safeSpecificInformation -> safeSpecificInformation.get(fieldName)
-		).filter(
-			Objects::nonNull
-		).map(
-			field -> _toString(field)
-		).orElse(
-			StringPool.BLANK
-		);
+		if (specificInformationList == null) {
+			return StringPool.BLANK;
+		}
+
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
+			if (Objects.equals(specificInformation.getKey(), fieldName)) {
+				return _toString(specificInformation.getValue());
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _toString(Object value) {

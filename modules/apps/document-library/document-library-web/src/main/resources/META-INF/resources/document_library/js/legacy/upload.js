@@ -1204,6 +1204,7 @@ AUI.add(
 
 				_onFileSelect(event) {
 					const instance = this;
+					const target = event.details[0].target;
 
 					// LPS-159994
 
@@ -1212,10 +1213,12 @@ AUI.add(
 							event.details[0].currentTarget
 						)
 					) {
+						instance
+							._getFolderEntryNode(target)
+							?.removeClass(CSS_ACTIVE_AREA);
+
 						return;
 					}
-
-					const target = event.details[0].target;
 
 					const filesPartition = instance._validateFiles(
 						event.fileList

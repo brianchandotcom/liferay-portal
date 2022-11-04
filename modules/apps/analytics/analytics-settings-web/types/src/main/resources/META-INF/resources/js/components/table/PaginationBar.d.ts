@@ -13,11 +13,8 @@
  */
 
 import React from 'react';
-import {TProperty} from './PropertiesTable';
-interface IChannelTabProps {
-	description?: string;
-	displayChannels?: boolean;
-	property: TProperty;
+interface IPaginationBarProps {
+	disabled: boolean;
 }
-declare const ChannelTab: React.FC<IChannelTabProps>;
-export default ChannelTab;
+declare const PaginationBar: React.FC<IPaginationBarProps>;
+export default PaginationBar;

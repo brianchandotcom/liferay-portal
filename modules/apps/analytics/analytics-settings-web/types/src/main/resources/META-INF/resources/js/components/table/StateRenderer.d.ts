@@ -13,9 +13,16 @@
  */
 
 import React from 'react';
-interface IModalProps {
-	observer: any;
-	onCloseModal: () => void;
+import {TUseFecthDataResult} from '../../utils/useFecthData';
+import {TColumn} from './Table';
+interface ITableStateRendererProps
+	extends TUseFecthDataResult,
+		React.HTMLAttributes<HTMLElement> {
+	columns: TColumn[];
+	disabled: boolean;
+	empty: boolean;
+	emptyStateTitle: string;
+	noResultsTitle: string;
 }
-declare const CreatePropertyModal: React.FC<IModalProps>;
-export default CreatePropertyModal;
+declare const TableStateRenderer: React.FC<ITableStateRendererProps>;
+export default TableStateRenderer;

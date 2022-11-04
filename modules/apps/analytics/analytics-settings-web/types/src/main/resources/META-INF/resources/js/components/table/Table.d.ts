@@ -13,5 +13,26 @@
  */
 
 import React from 'react';
-declare const WorkspaceConnection: React.FC;
-export default WorkspaceConnection;
+export declare type TColumn = {
+	expanded: boolean;
+	label: string;
+	sortable?: boolean;
+	value: string;
+};
+export declare type TItem = {
+	checked: boolean;
+	columns: string[];
+	disabled: boolean;
+	id: string;
+};
+interface ITableProps {
+	columns: TColumn[];
+	disabled?: boolean;
+	emptyStateTitle: string;
+	fetchFn: (queryString?: string) => Promise<any>;
+	mapperItems: (items: any) => TItem[];
+	noResultsTitle: string;
+	onItemsChange?: (items: TItem[]) => void;
+}
+declare const TableWrapper: React.FC<ITableProps>;
+export default TableWrapper;

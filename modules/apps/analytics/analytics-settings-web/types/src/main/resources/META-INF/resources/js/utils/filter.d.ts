@@ -12,7 +12,17 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const ConnectPage: () => JSX.Element;
-export default ConnectPage;
+export declare type TFilter = {
+	type: OrderBy;
+	value: string;
+};
+export declare enum OrderBy {
+	Asc = 'asc',
+	Desc = 'desc',
+}
+export declare function DEFAULT_FILTER(
+	value: string
+): {
+	type: OrderBy;
+	value: string;
+};

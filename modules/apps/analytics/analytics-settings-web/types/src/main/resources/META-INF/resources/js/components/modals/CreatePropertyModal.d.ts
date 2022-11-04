@@ -12,7 +12,10 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const ConnectPage: () => JSX.Element;
-export default ConnectPage;
+import React from 'react';
+interface IModalProps {
+	observer: any;
+	onCloseModal: (updateProperty: boolean) => void;
+}
+declare const CreatePropertyModal: React.FC<IModalProps>;
+export default CreatePropertyModal;

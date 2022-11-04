@@ -12,12 +12,8 @@
  * details.
  */
 
-import React from 'react';
-import {TProperty} from './PropertiesTable';
-interface ISiteTabProps {
-	description?: string;
-	displayChannels: boolean;
-	property: TProperty;
-}
-declare const SitesTab: React.FC<ISiteTabProps>;
-export default SitesTab;
+export declare const SPRITEMAP: string;
+export declare const NOT_FOUND_GIF: string;
+export declare const EMPTY_STATE_GIF: string;
+export declare const SUCCESS_MESSAGE: string;
+export declare const ERROR_MESSAGE: string;

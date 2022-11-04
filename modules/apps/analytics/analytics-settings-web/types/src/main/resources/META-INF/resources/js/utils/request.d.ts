@@ -12,17 +12,5 @@
  * details.
  */
 
-import React from 'react';
-export declare type TProperty = {
-	channelId: string;
-	commerceSyncEnabled?: boolean;
-	dataSources: Array<TDataSource>;
-	name: string;
-};
-declare type TDataSource = {
-	commerceChannelIds: Array<number>;
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
-declare const Properties: React.FC;
-export default Properties;
+declare function request(path: string, config: RequestInit): Promise<any>;
+export default request;

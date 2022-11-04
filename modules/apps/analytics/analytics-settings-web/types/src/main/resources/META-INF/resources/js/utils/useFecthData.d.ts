@@ -12,16 +12,15 @@
  * details.
  */
 
-import React from 'react';
-import {TProperty} from '../components/PropertiesTable';
-interface IAssignModalProps {
-	observer: any;
-	onCloseModal: () => void;
-	property: TProperty;
-}
-export declare enum ETabs {
-	Channel = 0,
-	Sites = 1,
-}
-declare const AssignModal: React.FC<IAssignModalProps>;
-export default AssignModal;
+export declare type TUseFecthDataResult = {
+	data?: any;
+	error: boolean;
+	loading: boolean;
+	refetch: () => void;
+	refetching: boolean;
+};
+declare function useFetchData(
+	fetchFn: (queryString?: string) => Promise<any>,
+	queryString?: string
+): TUseFecthDataResult;
+export default useFetchData;

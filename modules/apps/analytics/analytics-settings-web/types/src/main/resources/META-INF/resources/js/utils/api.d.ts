@@ -12,14 +12,9 @@
  * details.
  */
 
-export declare function fetchConnection(token: string): Promise<Response>;
-export declare function deleteConnection(): Promise<Response>;
+export declare function fetchConnection(token: string): Promise<any>;
+export declare function deleteConnection(): Promise<any>;
 export declare function fetchProperties(): Promise<any>;
-<<<<<<< HEAD
-export declare function createProperty(name: string): Promise<Response>;
-export declare function fetchChannels(): Promise<any>;
-export declare function fetchSites(): Promise<any>;
-=======
 export declare function createProperty(name: string): Promise<any>;
 export declare function updateProperty({
 	channelId,
@@ -36,4 +31,3 @@ export declare function updateProperty({
 }): Promise<any>;
 export declare function fetchChannels(queryString?: string): Promise<any>;
 export declare function fetchSites(queryString?: string): Promise<any>;
->>>>>>> 2c7b608 (LRAC-12185 Adapt Properties to be used in pages and wizard modes)

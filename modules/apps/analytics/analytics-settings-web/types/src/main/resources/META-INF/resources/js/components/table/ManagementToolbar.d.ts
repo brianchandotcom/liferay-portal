@@ -13,5 +13,10 @@
  */
 
 import React from 'react';
-declare const LoadingInline: React.FC;
-export default LoadingInline;
+import {TColumn} from './Table';
+interface IManagementToolbarProps {
+	columns: TColumn[];
+	disabled: boolean;
+}
+declare const ManagementToolbar: React.FC<IManagementToolbarProps>;
+export default ManagementToolbar;

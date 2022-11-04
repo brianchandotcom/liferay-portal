@@ -13,24 +13,15 @@
  */
 
 import React from 'react';
-import {TProperty} from './PropertiesTable';
-export declare type TData = {
-	channelName?: string;
-	friendlyURL?: string;
-	id: string;
-	name: string;
-	siteName: string;
-}[];
-interface ITabsTemplate {
-	channelTab?: boolean;
-	checked?: boolean;
-	displayChannels?: boolean;
-	handleCheckboxChange: Function;
-	handleSelectAll: Function;
-	items: TData;
+import {TProperty} from '../properties/Properties';
+interface IAssignModalProps {
+	observer: any;
+	onCloseModal: () => void;
 	property: TProperty;
-	selectedAllDisabled?: boolean;
-	siteTab?: boolean;
 }
-declare const TabsTemplate: React.FC<ITabsTemplate>;
-export default TabsTemplate;
+export declare enum ETabs {
+	Channel = 0,
+	Sites = 1,
+}
+declare const AssignModal: React.FC<IAssignModalProps>;
+export default AssignModal;

@@ -12,7 +12,14 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const ConnectPage: () => JSX.Element;
-export default ConnectPage;
+export declare type TPagination = {
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+export declare const DEFAULT_PAGINATION: {
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+export declare const DELTAS: number[];

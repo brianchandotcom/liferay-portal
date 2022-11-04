@@ -74,6 +74,13 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate = notificationTemplatePersistence.update(
 			notificationTemplate);
 
+		_resourceLocalService.addResources(
+			notificationTemplate.getCompanyId(), 0,
+			notificationTemplate.getUserId(),
+			NotificationTemplate.class.getName(),
+			notificationTemplate.getNotificationTemplateId(), false, true,
+			true);
+
 		NotificationRecipient notificationRecipient =
 			notificationContext.getNotificationRecipient();
 
@@ -97,13 +104,6 @@ public class NotificationTemplateLocalServiceImpl
 				updateNotificationRecipientSetting(
 					notificationRecipientSetting);
 		}
-
-		_resourceLocalService.addResources(
-			notificationTemplate.getCompanyId(), 0,
-			notificationTemplate.getUserId(),
-			NotificationTemplate.class.getName(),
-			notificationTemplate.getNotificationTemplateId(), false, true,
-			true);
 
 		for (long attachmentObjectFieldId :
 				notificationContext.getAttachmentObjectFieldIds()) {

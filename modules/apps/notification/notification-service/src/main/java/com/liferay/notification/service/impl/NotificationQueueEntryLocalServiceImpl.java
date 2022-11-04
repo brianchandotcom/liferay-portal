@@ -71,13 +71,11 @@ public class NotificationQueueEntryLocalServiceImpl
 			notificationQueueEntry.getNotificationQueueEntryId(), false, true,
 			true);
 
-		if (notificationContext.getFileEntryIds() == null) {
-			for (long fileEntryId : notificationContext.getFileEntryIds()) {
-				_notificationQueueEntryAttachmentLocalService.
-					addNotificationQueueEntryAttachment(
-						notificationQueueEntry.getCompanyId(), fileEntryId,
-						notificationQueueEntry.getNotificationQueueEntryId());
-			}
+		for (long fileEntryId : notificationContext.getFileEntryIds()) {
+			_notificationQueueEntryAttachmentLocalService.
+				addNotificationQueueEntryAttachment(
+					notificationQueueEntry.getCompanyId(), fileEntryId,
+					notificationQueueEntry.getNotificationQueueEntryId());
 		}
 
 		NotificationRecipient notificationRecipient =

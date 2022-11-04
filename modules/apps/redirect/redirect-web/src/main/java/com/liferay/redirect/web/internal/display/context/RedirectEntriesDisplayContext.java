@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -78,6 +79,7 @@ public class RedirectEntriesDisplayContext {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		ModelResourcePermission<RedirectEntry> modelResourcePermission,
+		PortletResourcePermission portletResourcePermission,
 		RedirectEntryLocalService redirectEntryLocalService,
 		RedirectEntryService redirectEntryService,
 		StagingGroupHelper stagingGroupHelper) {
@@ -86,6 +88,7 @@ public class RedirectEntriesDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_modelResourcePermission = modelResourcePermission;
+		_portletResourcePermission = portletResourcePermission;
 		_redirectEntryLocalService = redirectEntryLocalService;
 		_redirectEntryService = redirectEntryService;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -185,7 +188,8 @@ public class RedirectEntriesDisplayContext {
 
 		return new RedirectEntriesManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse, searchContainer());
+			_liferayPortletResponse, _portletResourcePermission,
+			searchContainer());
 	}
 
 	public String getSearchContainerId() {
@@ -387,6 +391,7 @@ public class RedirectEntriesDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ModelResourcePermission<RedirectEntry>
 		_modelResourcePermission;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RedirectEntryLocalService _redirectEntryLocalService;
 	private RedirectEntrySearch _redirectEntrySearch;
 	private final RedirectEntryService _redirectEntryService;

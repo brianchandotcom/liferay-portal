@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
-import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 import com.liferay.redirect.web.internal.util.RedirectUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -70,11 +70,13 @@ public class RedirectNotFoundEntriesDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		PortletResourcePermission portletResourcePermission,
 		RedirectNotFoundEntryLocalService redirectNotFoundEntryLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_portletResourcePermission = portletResourcePermission;
 		_redirectNotFoundEntryLocalService = redirectNotFoundEntryLocalService;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -114,7 +116,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 				StagingGroupHelper stagingGroupHelper =
 					StagingGroupHelperUtil.getStagingGroupHelper();
 
-				return RedirectPermission.contains(
+				return _portletResourcePermission.contains(
 					_themeDisplay.getPermissionChecker(),
 					_themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY) &&
 					   !(stagingGroupHelper.isLocalStagingGroup(
@@ -298,6 +300,7 @@ public class RedirectNotFoundEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
 	private RedirectNotFoundEntrySearch _redirectNotFoundEntrySearch;

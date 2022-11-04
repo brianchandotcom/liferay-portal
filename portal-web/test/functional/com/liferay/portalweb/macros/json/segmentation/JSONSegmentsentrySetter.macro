@@ -202,6 +202,12 @@ definition {
 				groupName = "Global",
 				tagName = "${selectedOption}");
 		}
+		else if ("${fieldName}" == "teamIds") {
+			var text = JSONTeam.getTeamId(
+				site = "False",
+				siteName = "${groupName}",
+				teamName = "${selectedOption}");
+		}
 
 		return "${text}";
 	}

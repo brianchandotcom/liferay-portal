@@ -2954,32 +2954,25 @@ definition {
 				userEmailAddress = "userea1@liferay.com");
 		}
 
-		task ("Create a Team") {
-			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
-
-			Team.addCP(
+		task ("Add team and assign to the user") {
+			JSONTeam.addTeam(
+				siteName = "Test Site Name",
 				teamDescription = "Site Team Description",
 				teamName = "Site Team Name");
-		}
 
-		task ("Assign user to team") {
-			Team.assignMembersCP(
+			JSONTeam.addUserToTeam(
+				siteName = "Test Site Name",
 				teamName = "Site Team Name",
-				userScreenName = "usersn1");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Create an user segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Team");
-
-			Segmentation.fillProperty(selectLink = "Site Team Name");
-
-			Segmentation.fillTitle(titleField = "UserTeamSegment Name");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				fieldName = "Team",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "UserTeamSegment Name",
+				selectedOption = "Site Team Name");
 		}
 
 		task ("Naviagte to edit page") {

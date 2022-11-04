@@ -15,6 +15,8 @@
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,7 +55,9 @@ public class MBMessageSentenceEmbeddingModelDocumentContributor
 			mbMessage.getCompanyId(), document,
 			getSentenceEmbedding(
 				_sentenceEmbeddingRetriever::getSentenceEmbedding,
-				mbMessage.getBody()));
+				StringBundler.concat(
+					mbMessage.getSubject(), StringPool.SPACE,
+					mbMessage.getBody())));
 	}
 
 	@Activate

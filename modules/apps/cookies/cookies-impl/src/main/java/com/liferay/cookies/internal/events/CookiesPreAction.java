@@ -94,6 +94,20 @@ public class CookiesPreAction extends Action {
 		}
 	}
 
+  private CookiesPreferenceHandlingConfiguration _getConfigurationByDomain(
+      HttpServletRequest httpServletRequest) throws Exception {
+
+    ThemeDisplay themeDisplay =
+      (ThemeDisplay) httpServletRequest.getAttribute(
+        WebKeys.THEME_DISPLAY);
+
+    long groupId = themeDisplay.getScopeGroupId();
+
+    return _configurationProvider.getGroupConfiguration(
+      CookiesPreferenceHandlingConfiguration.class,
+      groupId);
+  }
+
 	private Map<String, String> _getCookieValues(Cookie[] cookies) {
 		Map<String, String> cookieValues = new HashMap<>();
 
@@ -120,15 +134,9 @@ public class CookiesPreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
-				_configurationProvider.getGroupConfiguration(
-					CookiesPreferenceHandlingConfiguration.class,
-					themeDisplay.getScopeGroupId());
+      _getConfigurationByDomain(httpServletRequest);
 
 		Map<String, String> cookieValues = _getCookieValues(
 			httpServletRequest.getCookies());

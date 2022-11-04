@@ -124,6 +124,28 @@ definition {
 		}
 	}
 
+	@summary = "Helper function to get the 'uuid' for the folder '${folderName}'"
+	macro _getFolderUuidByFolderName {
+		Variables.assertDefined(parameterList = "${groupId},${folderName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalfolder/get-folders \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var folderUuid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['uuid']");
+
+		if ("${folderUuid}" == "") {
+			fail("FAIL. Cannot find folder.");
+		}
+		else {
+			return "${folderUuid}";
+		}
+	}
+
 	macro _getResourcePrimKeyByURLTitle {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 

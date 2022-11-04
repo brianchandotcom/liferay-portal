@@ -240,9 +240,7 @@ definition {
 	}
 
 	macro assertExternalReferenceCodeWithCorrectValue {
-		if (!(isSet(expectedExternalReferenceCodeValue))) {
-			var expectedExternalReferenceCodeValue = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${responseToParse}");
-		}
+		Variables.assertDefined(parameterList = "${expectedExternalReferenceCodeValue}");
 
 		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
 
@@ -423,22 +421,6 @@ definition {
 			parameterValue = "${parameterValue}");
 
 		return "${response}";
-	}
-
-	macro getUuidOfCreatedStructuredContentFolder {
-		Variables.assertDefined(parameterList = "${responseToParse}");
-
-		var folderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
-
-		var mysqlStatement = "SELECT uuid_ FROM JournalFolder WHERE folderid = '${folderId}';";
-
-		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
-
-		var uuidResult = StringUtil.regexReplaceAll("${sqlResults}", "[\r\n]", "");
-
-		var structuredContentUuid = StringUtil.extractLast("${uuidResult}", "uuid_");
-
-		return "${structuredContentUuid}";
 	}
 
 	macro updateStructureContentFolderByErcInAssetLibrary {

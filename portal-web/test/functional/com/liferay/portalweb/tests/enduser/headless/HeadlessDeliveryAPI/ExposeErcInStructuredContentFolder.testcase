@@ -56,10 +56,12 @@ definition {
 		}
 
 		task ("Then a new folder is created with the erc value equals to the uuid in the body response") {
-			var structuredContentUUId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${response}");
+			var folderUuid = JSONWebcontent.getFolderUuidByFolderName(
+				folderName = "Test Folder",
+				groupName = "Site Name");
 
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${structuredContentUUId}",
+				expectedExternalReferenceCodeValue = "${folderUuid}",
 				responseToParse = "${response}");
 		}
 	}

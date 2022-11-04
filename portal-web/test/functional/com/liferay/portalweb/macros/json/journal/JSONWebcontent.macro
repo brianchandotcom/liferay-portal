@@ -115,6 +115,21 @@ definition {
 		return "${folderId}";
 	}
 
+	@summary = "Get the 'uuid' for the folder '${folderName}' that is part of the Site '${groupName}' via JSON"
+	macro getFolderUuidByFolderName {
+		Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
+
+		var folderUuid = JSONWebcontentAPI._getFolderUuidByFolderName(
+			folderName = "${folderName}",
+			groupId = "${groupId}");
+
+		return "${folderUuid}";
+	}
+
 	@summary = "Get the 'resourcePrimKey' via JSON"
 	macro getResourcePrimKeyByURLTitle {
 		Variables.assertDefined(parameterList = "${groupName},${title}");

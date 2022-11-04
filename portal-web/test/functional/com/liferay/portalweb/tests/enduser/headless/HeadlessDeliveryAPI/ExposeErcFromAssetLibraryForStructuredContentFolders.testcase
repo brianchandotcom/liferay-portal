@@ -68,11 +68,14 @@ definition {
 		}
 
 		task ("When I make a DELETE request by uuid as the erc") {
-			var structuredContentUuid = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${response}");
+			var folderUuid = JSONWebcontent.getFolderUuidByFolderName(
+				folderName = "Test Folder",
+				groupName = "Test Depot Name",
+				site = "false");
 
 			var response = HeadlessWebcontentFolderAPI.deleteStructuredContentFolderByErcInAssetLibrary(
 				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${structuredContentUuid}");
+				externalReferenceCode = "${folderUuid}");
 		}
 
 		task ("Then the structured content folder is correctly deleted") {
@@ -162,16 +165,19 @@ definition {
 		}
 
 		task ("WWhen I make a GET request by erc and set erc value to the uuid of previous created structured content folder") {
-			var structuredContentId = HeadlessWebcontentFolderAPI.getUuidOfCreatedStructuredContentFolder(responseToParse = "${response}");
+			var folderUuid = JSONWebcontent.getFolderUuidByFolderName(
+				folderName = "Test Folder",
+				groupName = "Test Depot Name",
+				site = "false");
 
 			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
 				assetLibraryId = "${assetLibraryId}",
-				externalReferenceCode = "${structuredContentId}");
+				externalReferenceCode = "${folderUuid}");
 		}
 
 		task ("Then I receive a correct body response") {
 			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
-				expectedExternalReferenceCodeValue = "${structuredContentId}",
+				expectedExternalReferenceCodeValue = "${folderUuid}",
 				responseToParse = "${response}");
 		}
 	}
@@ -534,7 +540,14 @@ definition {
 		}
 
 		task ("Then a new folder is being created with the erc value equals to the uuid in the body response") {
-			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = "${response}");
+			var folderUuid = JSONWebcontent.getFolderUuidByFolderName(
+				folderName = "Test Folder",
+				groupName = "Test Depot Name",
+				site = "false");
+
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "${folderUuid}",
+				responseToParse = "${response}");
 		}
 	}
 
@@ -644,8 +657,15 @@ definition {
 				parentStructuredContentFolderId = "${folderId}");
 		}
 
-		task ("Then I can see the custom erc in the body response") {
-			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = "${response}");
+		task ("Then I can see the erc equals to uuid in the body response") {
+			var folderUuid = JSONWebcontent.getFolderUuidByFolderName(
+				folderName = "Sub Folder",
+				groupName = "Test Depot Name",
+				site = "false");
+
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "${folderUuid}",
+				responseToParse = "${response}");
 		}
 
 		task ("And Then a child folder is being created properly") {

@@ -187,39 +187,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public Page<ObjectEntry> getCurrentObjectEntriesObjectRelationshipNamePage(
-			Long currentObjectEntryId, String objectRelationshipName,
-			Pagination pagination)
-		throws Exception {
-
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		Page<ObjectEntry> page =
-			objectEntryManager.getObjectEntryRelatedObjectEntries(
-				_getDTOConverterContext(currentObjectEntryId),
-				_objectDefinition, currentObjectEntryId, objectRelationshipName,
-				pagination);
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
-				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
-
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2());
-
-		return Page.of(
-			page.getActions(),
-			transform(
-				page.getItems(),
-				objectEntry -> _getRelatedObjectEntry(
-					objectDefinition2, objectEntry)));
-	}
-
-	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return new ObjectEntryEntityModel(
 			_objectFieldLocalService.getObjectFields(
@@ -366,30 +333,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			objectEntryManager.addObjectRelationshipMappingTableValues(
 				_getDTOConverterContext(primaryKey1), _objectDefinition,
 				objectRelationshipName, primaryKey1, primaryKey2));
-	}
-
-	@Override
-	public ObjectEntry putCurrentObjectEntry(
-			Long currentObjectEntryId, String objectRelationshipName,
-			Long relatedObjectEntryId)
-		throws Exception {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
-				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
-
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		return _getRelatedObjectEntry(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2()),
-			objectEntryManager.addObjectRelationshipMappingTableValues(
-				_getDTOConverterContext(currentObjectEntryId),
-				_objectDefinition, objectRelationshipName, currentObjectEntryId,
-				relatedObjectEntryId));
 	}
 
 	@Override

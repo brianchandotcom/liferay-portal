@@ -43,6 +43,45 @@
 			"name": "projectNeed",
 			"required": false,
 			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "Project_Solution_Categories__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Solution Categories"
+			},
+			"name": "projectCategories",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "Project_Need__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Need"
+			},
+			"name": "projectNeed",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "MDF_Request_Activity__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Activity External Reference Code SF"
+			},
+			"name": "mdfActivityExternalReferenceCodeSF",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

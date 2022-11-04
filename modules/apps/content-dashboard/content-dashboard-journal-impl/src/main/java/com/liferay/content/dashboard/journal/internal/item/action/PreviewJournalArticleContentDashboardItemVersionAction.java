@@ -136,6 +136,8 @@ public class PreviewJournalArticleContentDashboardItemVersionAction
 		).setParameter(
 			"groupId", _journalArticle.getGroupId()
 		).setParameter(
+			"showTitle", true
+		).setParameter(
 			"version", _journalArticle.getVersion()
 		).setWindowState(
 			LiferayWindowState.POP_UP

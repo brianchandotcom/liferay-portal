@@ -79,6 +79,77 @@ export default function ({
 	const _handleFormikValidate = (values) => {
 		const errors = {};
 
+		// Validate "Asset Entry Class Names" field.
+
+		if (!values.assetEntryClassNames?.length) {
+			errors.assetEntryClassNames = sub(
+				Liferay.Language.get('the-x-field-is-required'),
+				[Liferay.Language.get('asset-entry-class-names')]
+			);
+		}
+
+		// Validate "Cache Timeout" field.
+
+		if (values.cacheTimeout === '') {
+			errors.cacheTimeout = Liferay.Language.get(
+				'this-field-is-required'
+			);
+		}
+		else {
+			if (values.cacheTimeout < 0) {
+				errors.cacheTimeout = sub(
+					Liferay.Language.get(
+						'please-enter-a-value-greater-than-or-equal-to-x'
+					),
+					['0']
+				);
+			}
+		}
+
+		// Validate "Hugging Face Access Token" field.
+
+		if (values.huggingFaceAccessToken === '') {
+			errors.huggingFaceAccessToken = Liferay.Language.get(
+				'this-field-is-required'
+			);
+		}
+
+		// Validate "Language IDs" field.
+
+		if (!values.languageIds?.length) {
+			errors.languageIds = sub(
+				Liferay.Language.get('the-x-field-is-required'),
+				[Liferay.Language.get('language-ids')]
+			);
+		}
+
+		// Validate "Max Character Count" field.
+
+		if (!values.maxCharacterCount === '') {
+			errors.maxCharacterCount = Liferay.Language.get(
+				'this-field-is-required'
+			);
+		}
+		else {
+			if (values.maxCharacterCount < 50) {
+				errors.maxCharacterCount = sub(
+					Liferay.Language.get(
+						'please-enter-a-value-greater-than-or-equal-to-x'
+					),
+					['50']
+				);
+			}
+
+			if (values.maxCharacterCount > 10000) {
+				errors.maxCharacterCount = sub(
+					Liferay.Language.get(
+						'please-enter-a-value-less-than-or-equal-to-x'
+					),
+					['10000']
+				);
+			}
+		}
+
 		// Validate "Model" field.
 
 		if (values.model === '') {
@@ -112,69 +183,6 @@ export default function ({
 						'please-enter-a-value-less-than-or-equal-to-x'
 					),
 					['60']
-				);
-			}
-		}
-
-		// Validate "Max Character Count" field.
-
-		if (!values.maxCharacterCount === '') {
-			errors.maxCharacterCount = Liferay.Language.get(
-				'this-field-is-required'
-			);
-		}
-		else {
-			if (values.maxCharacterCount < 50) {
-				errors.maxCharacterCount = sub(
-					Liferay.Language.get(
-						'please-enter-a-value-greater-than-or-equal-to-x'
-					),
-					['50']
-				);
-			}
-
-			if (values.maxCharacterCount > 10000) {
-				errors.maxCharacterCount = sub(
-					Liferay.Language.get(
-						'please-enter-a-value-less-than-or-equal-to-x'
-					),
-					['10000']
-				);
-			}
-		}
-
-		// Validate "Asset Entry Class Names" field.
-
-		if (!values.assetEntryClassNames?.length) {
-			errors.assetEntryClassNames = sub(
-				Liferay.Language.get('the-x-field-is-required'),
-				[Liferay.Language.get('asset-entry-class-names')]
-			);
-		}
-
-		// Validate "Language IDs" field.
-
-		if (!values.languageIds?.length) {
-			errors.languageIds = sub(
-				Liferay.Language.get('the-x-field-is-required'),
-				[Liferay.Language.get('language-ids')]
-			);
-		}
-
-		// Validate "Cache Timeout" field.
-
-		if (values.cacheTimeout === '') {
-			errors.cacheTimeout = Liferay.Language.get(
-				'this-field-is-required'
-			);
-		}
-		else {
-			if (values.cacheTimeout < 0) {
-				errors.cacheTimeout = sub(
-					Liferay.Language.get(
-						'please-enter-a-value-greater-than-or-equal-to-x'
-					),
-					['0']
 				);
 			}
 		}
@@ -278,6 +286,8 @@ export default function ({
 							onChange={_handleInputChange(
 								'huggingFaceAccessToken'
 							)}
+							required
+							touched={formik.touched.huggingFaceAccessToken}
 							value={formik.values.huggingFaceAccessToken}
 						/>
 

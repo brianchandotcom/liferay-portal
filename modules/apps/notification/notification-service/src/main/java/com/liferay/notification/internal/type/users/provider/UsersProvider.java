@@ -28,6 +28,6 @@ public interface UsersProvider {
 	public List<User> provide(NotificationContext notificationContext)
 		throws PortalException;
 
-	public String recipientType();
+	public String getRecipientType();
 
 }

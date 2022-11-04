@@ -57,7 +57,7 @@ public class DefaultUsersProvider implements UsersProvider {
 	}
 
 	@Override
-	public String recipientType() {
+	public String getRecipientType() {
 		return NotificationRecipientConstants.TYPE_USER;
 	}
 

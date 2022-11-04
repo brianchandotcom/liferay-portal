@@ -74,7 +74,7 @@ public class RoleUsersProvider implements UsersProvider {
 	}
 
 	@Override
-	public String recipientType() {
+	public String getRecipientType() {
 		return NotificationRecipientConstants.TYPE_ROLE;
 	}
 

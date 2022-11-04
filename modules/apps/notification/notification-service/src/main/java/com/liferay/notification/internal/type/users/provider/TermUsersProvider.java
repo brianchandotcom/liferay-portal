@@ -101,7 +101,7 @@ public class TermUsersProvider implements UsersProvider {
 	}
 
 	@Override
-	public String recipientType() {
+	public String getRecipientType() {
 		return NotificationRecipientConstants.TYPE_TERM;
 	}
 

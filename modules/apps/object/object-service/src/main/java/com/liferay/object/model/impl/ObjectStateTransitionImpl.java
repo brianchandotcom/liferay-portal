@@ -18,4 +18,17 @@ package com.liferay.object.model.impl;
  * @author Marco Leo
  */
 public class ObjectStateTransitionImpl extends ObjectStateTransitionBaseImpl {
+
+	public long getTargetObjectStateListTypeEntryId() {
+		return _targetObjectStateListTypeEntryId;
+	}
+
+	public void setTargetObjectStateListTypeEntryId(
+		long targetObjectStateListTypeEntryId) {
+
+		_targetObjectStateListTypeEntryId = targetObjectStateListTypeEntryId;
+	}
+
+	private long _targetObjectStateListTypeEntryId;
+
 }

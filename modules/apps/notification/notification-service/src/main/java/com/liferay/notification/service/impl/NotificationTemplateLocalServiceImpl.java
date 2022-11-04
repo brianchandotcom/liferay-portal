@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,8 @@ public class NotificationTemplateLocalServiceImpl
 
 		notificationRecipient.setNotificationRecipientId(
 			counterLocalService.increment());
+		notificationRecipient.setClassNameId(
+			_portal.getClassNameId(NotificationTemplate.class));
 		notificationRecipient.setClassPK(
 			notificationTemplate.getNotificationTemplateId());
 
@@ -292,6 +295,9 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Reference
 	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

@@ -51,7 +51,7 @@ public class NotificationUtil {
 	}
 
 	public static NotificationRecipient toNotificationRecipient(
-		User user, String className, long classPK) {
+		User user, long classPK) {
 
 		NotificationRecipient notificationRecipient =
 			NotificationRecipientLocalServiceUtil.
@@ -69,7 +69,6 @@ public class NotificationUtil {
 		notificationRecipient.setUserId(user.getUserId());
 		notificationRecipient.setUserName(user.getFullName());
 
-		notificationRecipient.setClassName(className);
 		notificationRecipient.setClassPK(classPK);
 
 		return notificationRecipient;

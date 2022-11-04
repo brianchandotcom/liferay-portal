@@ -137,8 +137,6 @@ public class NotificationTemplateResourceImpl
 		NotificationRecipient notificationRecipient =
 			NotificationUtil.toNotificationRecipient(
 				contextUser,
-				com.liferay.notification.model.NotificationTemplate.class.
-					getName(),
 				serviceBuilderNotificationTemplate.getNotificationTemplateId());
 
 		notificationContext.setNotificationRecipient(notificationRecipient);
@@ -182,6 +180,7 @@ public class NotificationTemplateResourceImpl
 				notificationTemplate.getName(), "copy"));
 
 		notificationContext.setNotificationTemplate(notificationTemplate);
+		notificationContext.setType(notificationTemplate.getType());
 
 		return _toNotificationTemplate(
 			_notificationTemplateService.addNotificationTemplate(
@@ -199,10 +198,7 @@ public class NotificationTemplateResourceImpl
 
 		NotificationRecipient notificationRecipient =
 			NotificationUtil.toNotificationRecipient(
-				contextUser,
-				com.liferay.notification.model.NotificationTemplate.class.
-					getName(),
-				notificationTemplateId);
+				contextUser, notificationTemplateId);
 
 		notificationContext.setNotificationRecipient(notificationRecipient);
 		notificationContext.setNotificationRecipientSettings(

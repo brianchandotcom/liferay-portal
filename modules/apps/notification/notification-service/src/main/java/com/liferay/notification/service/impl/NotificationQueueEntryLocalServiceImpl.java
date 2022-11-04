@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Date;
 import java.util.List;
@@ -83,6 +84,8 @@ public class NotificationQueueEntryLocalServiceImpl
 
 		notificationRecipient.setNotificationRecipientId(
 			counterLocalService.increment());
+		notificationRecipient.setClassNameId(
+			_portal.getClassNameId(NotificationQueueEntry.class));
 		notificationRecipient.setClassPK(
 			notificationQueueEntry.getNotificationQueueEntryId());
 
@@ -225,6 +228,9 @@ public class NotificationQueueEntryLocalServiceImpl
 	@Reference
 	private NotificationRecipientSettingLocalService
 		_notificationRecipientSettingLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

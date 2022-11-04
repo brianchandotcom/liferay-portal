@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -43,19 +44,17 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 =
-				connection.prepareStatement(
-					StringBundler.concat(
-						"select notificationQueueEntryId, companyId, userId, ",
-						"userName, createDate, modifiedDate, bcc, cc, from_, ",
-						"fromName, to_, toName FROM NotificationQueueEntry"));
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select notificationQueueEntryId, companyId, userId, ",
+					"userName, createDate, modifiedDate, bcc, cc, from_, ",
+					"fromName, to_, toName FROM NotificationQueueEntry"));
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
-			PreparedStatement preparedStatement2 =
-				connection.prepareStatement(
-					StringBundler.concat(
-						"select notificationTemplateId, companyId, userId, ",
-						"userName, createDate, modifiedDate, bcc, cc, from_, ",
-						"fromName, to_ FROM NotificationTemplate"));
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				StringBundler.concat(
+					"select notificationTemplateId, companyId, userId, ",
+					"userName, createDate, modifiedDate, bcc, cc, from_, ",
+					"fromName, to_ FROM NotificationTemplate"));
 			ResultSet resultSet2 = preparedStatement2.executeQuery();
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -63,7 +62,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					StringBundler.concat(
 						"insert into NotificationRecipient (uuid_, ",
 						"notificationRecipientId, companyId, userId, ",
-						"userName, createDate, modifiedDate, className, ",
+						"userName, createDate, modifiedDate, classNameId, ",
 						"classPK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -82,12 +81,11 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					resultSet1.getString("userName"),
 					resultSet1.getTimestamp("createDate"),
 					resultSet1.getTimestamp("modifiedDate"),
-					NotificationQueueEntry.class.getName(),
+					PortalUtil.getClassNameId(NotificationQueueEntry.class),
 					resultSet1.getLong("notificationQueueEntryId"),
 					Arrays.asList(
 						"bcc", "cc", "from_", "fromName", "to_", "toName"),
-					preparedStatement3, preparedStatement4,
-					resultSet1);
+					preparedStatement3, preparedStatement4, resultSet1);
 			}
 
 			while (resultSet2.next()) {
@@ -97,11 +95,10 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					resultSet2.getString("userName"),
 					resultSet2.getTimestamp("createDate"),
 					resultSet2.getTimestamp("modifiedDate"),
-					NotificationTemplate.class.getName(),
+					PortalUtil.getClassNameId(NotificationTemplate.class),
 					resultSet2.getLong("notificationTemplateId"),
 					Arrays.asList("bcc", "cc", "from_", "fromName", "to_"),
-					preparedStatement3, preparedStatement4,
-					resultSet2);
+					preparedStatement3, preparedStatement4, resultSet2);
 			}
 
 			preparedStatement3.executeBatch();
@@ -135,7 +132,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 	private void _insert(
 			long notificationRecipientId, long companyId, long userId,
 			String userName, Timestamp createDate, Timestamp modifiedDate,
-			String recipientClassName, long recipientClassPK,
+			long recipientClassNameId, long recipientClassPK,
 			List<String> notificationRecipientSettingsName,
 			PreparedStatement preparedStatement3,
 			PreparedStatement preparedStatement4, ResultSet resultSet)
@@ -148,7 +145,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 		preparedStatement3.setString(5, userName);
 		preparedStatement3.setTimestamp(6, createDate);
 		preparedStatement3.setTimestamp(7, modifiedDate);
-		preparedStatement3.setString(8, recipientClassName);
+		preparedStatement3.setLong(8, recipientClassNameId);
 		preparedStatement3.setLong(9, recipientClassPK);
 
 		preparedStatement3.addBatch();
@@ -156,8 +153,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 		for (String notificationRecipientSettingName :
 				notificationRecipientSettingsName) {
 
-			preparedStatement4.setString(
-				1, PortalUUIDUtil.generate());
+			preparedStatement4.setString(1, PortalUUIDUtil.generate());
 			preparedStatement4.setLong(2, increment());
 			preparedStatement4.setLong(3, companyId);
 			preparedStatement4.setLong(4, userId);

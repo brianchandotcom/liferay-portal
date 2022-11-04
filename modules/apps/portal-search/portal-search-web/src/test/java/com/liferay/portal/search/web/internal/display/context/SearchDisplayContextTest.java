@@ -40,7 +40,7 @@ import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
-import com.liferay.portal.search.web.internal.facet.SearchFacetTracker;
+import com.liferay.portal.search.web.internal.facet.SearchFacetRegistry;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
 
@@ -257,7 +257,7 @@ public class SearchDisplayContextTest {
 			Mockito.mock(Html.class), Mockito.mock(Language.class), searcher,
 			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
 			Mockito.mock(SummaryBuilderFactory.class), searchContextFactory,
-			searchRequestBuilderFactory, new SearchFacetTracker());
+			searchRequestBuilderFactory, new SearchFacetRegistry());
 	}
 
 	private ThemeDisplay _createThemeDisplay() throws Exception {

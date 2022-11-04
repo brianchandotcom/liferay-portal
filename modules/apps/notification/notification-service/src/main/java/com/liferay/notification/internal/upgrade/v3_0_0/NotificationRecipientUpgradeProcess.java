@@ -43,21 +43,21 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement selectPreparedStatement1 =
+		try (PreparedStatement preparedStatement1 =
 				connection.prepareStatement(
 					StringBundler.concat(
 						"select notificationQueueEntryId, companyId, userId, ",
 						"userName, createDate, modifiedDate, bcc, cc, from_, ",
 						"fromName, to_, toName FROM NotificationQueueEntry"));
-			ResultSet resultSet1 = selectPreparedStatement1.executeQuery();
-			PreparedStatement selectPreparedStatement2 =
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 =
 				connection.prepareStatement(
 					StringBundler.concat(
 						"select notificationTemplateId, companyId, userId, ",
 						"userName, createDate, modifiedDate, bcc, cc, from_, ",
 						"fromName, to_ FROM NotificationTemplate"));
-			ResultSet resultSet2 = selectPreparedStatement2.executeQuery();
-			PreparedStatement insertIntoPreparedStatement1 =
+			ResultSet resultSet2 = preparedStatement2.executeQuery();
+			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					StringBundler.concat(
@@ -65,7 +65,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 						"notificationRecipientId, companyId, userId, ",
 						"userName, createDate, modifiedDate, className, ",
 						"classPK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"));
-			PreparedStatement insertIntoPreparedStatement2 =
+			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					StringBundler.concat(
@@ -76,7 +76,7 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 						"?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			while (resultSet1.next()) {
-				_prepareInsertIntoStatements(
+				_insert(
 					increment(), resultSet1.getLong("companyId"),
 					resultSet1.getLong("userId"),
 					resultSet1.getString("userName"),
@@ -86,12 +86,12 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					resultSet1.getLong("notificationQueueEntryId"),
 					Arrays.asList(
 						"bcc", "cc", "from_", "fromName", "to_", "toName"),
-					insertIntoPreparedStatement1, insertIntoPreparedStatement2,
+					preparedStatement3, preparedStatement4,
 					resultSet1);
 			}
 
 			while (resultSet2.next()) {
-				_prepareInsertIntoStatements(
+				_insert(
 					increment(), resultSet2.getLong("companyId"),
 					resultSet2.getLong("userId"),
 					resultSet2.getString("userName"),
@@ -100,12 +100,13 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 					NotificationTemplate.class.getName(),
 					resultSet2.getLong("notificationTemplateId"),
 					Arrays.asList("bcc", "cc", "from_", "fromName", "to_"),
-					insertIntoPreparedStatement1, insertIntoPreparedStatement2,
+					preparedStatement3, preparedStatement4,
 					resultSet2);
 			}
 
-			insertIntoPreparedStatement1.executeBatch();
-			insertIntoPreparedStatement2.executeBatch();
+			preparedStatement3.executeBatch();
+
+			preparedStatement4.executeBatch();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -131,47 +132,47 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 		};
 	}
 
-	private void _prepareInsertIntoStatements(
+	private void _insert(
 			long notificationRecipientId, long companyId, long userId,
 			String userName, Timestamp createDate, Timestamp modifiedDate,
 			String recipientClassName, long recipientClassPK,
 			List<String> notificationRecipientSettingsName,
-			PreparedStatement insertIntoPreparedStatement1,
-			PreparedStatement insertIntoPreparedStatement2, ResultSet resultSet)
+			PreparedStatement preparedStatement3,
+			PreparedStatement preparedStatement4, ResultSet resultSet)
 		throws SQLException {
 
-		insertIntoPreparedStatement1.setString(1, PortalUUIDUtil.generate());
-		insertIntoPreparedStatement1.setLong(2, notificationRecipientId);
-		insertIntoPreparedStatement1.setLong(3, companyId);
-		insertIntoPreparedStatement1.setLong(4, userId);
-		insertIntoPreparedStatement1.setString(5, userName);
-		insertIntoPreparedStatement1.setTimestamp(6, createDate);
-		insertIntoPreparedStatement1.setTimestamp(7, modifiedDate);
-		insertIntoPreparedStatement1.setString(8, recipientClassName);
-		insertIntoPreparedStatement1.setLong(9, recipientClassPK);
+		preparedStatement3.setString(1, PortalUUIDUtil.generate());
+		preparedStatement3.setLong(2, notificationRecipientId);
+		preparedStatement3.setLong(3, companyId);
+		preparedStatement3.setLong(4, userId);
+		preparedStatement3.setString(5, userName);
+		preparedStatement3.setTimestamp(6, createDate);
+		preparedStatement3.setTimestamp(7, modifiedDate);
+		preparedStatement3.setString(8, recipientClassName);
+		preparedStatement3.setLong(9, recipientClassPK);
 
-		insertIntoPreparedStatement1.addBatch();
+		preparedStatement3.addBatch();
 
 		for (String notificationRecipientSettingName :
 				notificationRecipientSettingsName) {
 
-			insertIntoPreparedStatement2.setString(
+			preparedStatement4.setString(
 				1, PortalUUIDUtil.generate());
-			insertIntoPreparedStatement2.setLong(2, increment());
-			insertIntoPreparedStatement2.setLong(3, companyId);
-			insertIntoPreparedStatement2.setLong(4, userId);
-			insertIntoPreparedStatement2.setString(5, userName);
-			insertIntoPreparedStatement2.setTimestamp(6, createDate);
-			insertIntoPreparedStatement2.setTimestamp(7, modifiedDate);
-			insertIntoPreparedStatement2.setLong(8, notificationRecipientId);
-			insertIntoPreparedStatement2.setString(
+			preparedStatement4.setLong(2, increment());
+			preparedStatement4.setLong(3, companyId);
+			preparedStatement4.setLong(4, userId);
+			preparedStatement4.setString(5, userName);
+			preparedStatement4.setTimestamp(6, createDate);
+			preparedStatement4.setTimestamp(7, modifiedDate);
+			preparedStatement4.setLong(8, notificationRecipientId);
+			preparedStatement4.setString(
 				9,
 				StringUtil.removeSubstring(
 					notificationRecipientSettingName, "_"));
-			insertIntoPreparedStatement2.setString(
+			preparedStatement4.setString(
 				10, resultSet.getString(notificationRecipientSettingName));
 
-			insertIntoPreparedStatement2.addBatch();
+			preparedStatement4.addBatch();
 		}
 	}
 

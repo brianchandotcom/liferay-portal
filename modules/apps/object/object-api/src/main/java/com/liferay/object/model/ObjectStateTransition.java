@@ -60,4 +60,9 @@ public interface ObjectStateTransition
 
 			};
 
+	public long getTargetObjectStateListTypeEntryId();
+
+	public void setTargetObjectStateListTypeEntryId(
+		long targetObjectStateListTypeEntryId);
+
 }

@@ -12,29 +12,24 @@ definition {
 
 		task ("Given a created Remote App > Custom Element with Use ES modules checked") {
 			JSONRemoteApp.addCustomElementRemoteAppEntry(
-				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
-				customElementHtmlName = "app-element",
-				customElementName = "ES module Remote App",
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
 				customElementURL = "https://localhost:8081/runtime.js",
 				customElementUseESM = "true");
 		}
 
 		task ("And Given a Remote App portlet added to widget page") {
+			var remoteAppEntryId = RemoteApps.getRemoteAppEntryId(remoteAppName = "Vanilla Counter");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "My Widget Page");
 
-			Navigator.gotoPage(pageName = "My Widget Page");
-
-			Click(locator1 = "ControlMenu#ADD");
-
-			Type(
-				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
-				value1 = "ES module Remote App");
-
-			Portlet._clickAddPortlet(portletName = "ES module Remote App");
-
-			WaitForElementPresent(locator1 = "Message#SUCCESS");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "My Widget Page",
+				remoteAppEntryId = "${remoteAppEntryId}",
+				widgetName = "Vanilla Counter");
 		}
 	}
 
@@ -66,8 +61,12 @@ definition {
 	@description = "LPS-165438. When add a remote app in the html <script> tag with src is rendered as a module type"
 	@priority = "5"
 	test CanRenderCustomElementAsModuleType {
-		task ("When Navigate to remote app portlet page Then in the html <script> tag with src 'https://localhost:8081/runtime.js' is rendered as a module type") {
-			AssertElementPresent(locator1 = "//script[@src='https://localhost:8081/runtime.js']");
+		task ("When Navigate to remote app portlet page") {
+			Navigator.gotoPage(pageName = "My Widget Page");
+		}
+
+		task ("Then in the html <script> tag with src 'https://localhost:8081/runtime.js' is rendered as a module type") {
+			AssertElementPresent(locator1 = "//script[@src='https://localhost:8081/runtime.js' and contains(@type,'module')]");
 		}
 	}
 

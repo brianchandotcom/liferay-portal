@@ -56,7 +56,7 @@ public class BlogsEntrySentenceEmbeddingModelDocumentContributor
 			getSentenceEmbedding(
 				_sentenceEmbeddingRetriever::getSentenceEmbedding,
 				StringBundler.concat(
-					blogsEntry.getTitle(), StringPool.BLANK,
+					blogsEntry.getTitle(), StringPool.SPACE,
 					blogsEntry.getContent())));
 	}
 

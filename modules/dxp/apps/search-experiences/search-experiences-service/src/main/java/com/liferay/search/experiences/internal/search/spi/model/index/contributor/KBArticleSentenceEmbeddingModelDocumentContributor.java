@@ -56,7 +56,7 @@ public class KBArticleSentenceEmbeddingModelDocumentContributor
 			getSentenceEmbedding(
 				_sentenceEmbeddingRetriever::getSentenceEmbedding,
 				StringBundler.concat(
-					kbArticle.getTitle(), StringPool.BLANK,
+					kbArticle.getTitle(), StringPool.SPACE,
 					kbArticle.getContent())));
 	}
 

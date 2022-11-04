@@ -53,7 +53,7 @@ public class WikiPageSentenceEmbeddingModelDocumentContributor
 			getSentenceEmbedding(
 				_sentenceEmbeddingRetriever::getSentenceEmbedding,
 				StringBundler.concat(
-					wikiPage.getTitle(), StringPool.BLANK,
+					wikiPage.getTitle(), StringPool.SPACE,
 					wikiPage.getContent())));
 	}
 

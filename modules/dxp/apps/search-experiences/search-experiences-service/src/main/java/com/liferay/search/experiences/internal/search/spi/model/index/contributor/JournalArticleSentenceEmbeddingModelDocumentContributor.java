@@ -81,7 +81,7 @@ public class JournalArticleSentenceEmbeddingModelDocumentContributor
 					_sentenceEmbeddingRetriever::getSentenceEmbedding,
 					StringBundler.concat(
 						journalArticle.getTitle(languageId, true),
-						StringPool.BLANK,
+						StringPool.SPACE,
 						_getArticleContent(journalArticle, languageId))));
 		}
 	}

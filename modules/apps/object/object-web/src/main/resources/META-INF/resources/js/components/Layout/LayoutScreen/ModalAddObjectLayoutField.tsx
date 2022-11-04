@@ -150,7 +150,7 @@ export default function ModalAddObjectLayoutField({
 				</ClayModal.Header>
 
 				<ClayModal.Body>
-					<AutoComplete
+					<AutoComplete<TObjectField>
 						contentRight={
 							<RequiredLabel
 								className="label-inside-custom-select"

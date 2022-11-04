@@ -343,7 +343,7 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-				<AutoComplete
+				<AutoComplete<Partial<PickList>>
 					disabled={disabled}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}
@@ -413,7 +413,7 @@ export default function ObjectFieldFormBase({
 			</ClayForm.Group>
 
 			{values.state && (
-				<AutoComplete
+				<AutoComplete<PickListItem>
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.defaultValue}
 					items={filteredPicklistItems}

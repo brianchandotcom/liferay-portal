@@ -49,7 +49,7 @@ interface ObjectRelationship {
 	readonly objectDefinitionName2: string;
 	objectRelationshipId: number;
 	parameterObjectFieldId?: number;
-	reverse?: boolean;
+	reverse: boolean;
 	type: ObjectRelationshipType;
 }
 interface PickListItem {

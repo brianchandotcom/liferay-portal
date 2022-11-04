@@ -126,7 +126,7 @@ export function Attachments({setValues, values}: IProps) {
 			<ClayPanel.Body>
 				<div className="lfr__notification-template-attachments">
 					<div className="lfr__notification-template-attachments-fields">
-						<AutoComplete
+						<AutoComplete<ObjectDefinition>
 							emptyStateMessage={Liferay.Language.get(
 								'no-data-sources-were-found'
 							)}
@@ -134,7 +134,18 @@ export function Attachments({setValues, values}: IProps) {
 							items={filteredObjectDefinitions ?? []}
 							label={Liferay.Language.get('data-source')}
 							onChangeQuery={setQuery}
-							onSelectItem={(item: ObjectDefinition) => {
+							onSelectEmptyStateItem={(emptyStateItem) => {
+								setAttachmentsFields([]);
+								setSelectedEntity(null);
+
+								setValues({
+									...values,
+									objectDefinitionId: Number(
+										emptyStateItem.id
+									),
+								});
+							}}
+							onSelectItem={(item) => {
 								if (item.id) {
 									getAttachmentFields(item.id);
 									setSelectedEntity(item);

@@ -28,7 +28,6 @@ import {
 import classNames from 'classnames';
 import React, {useMemo, useState} from 'react';
 
-import {separateCamelCase} from '../../../utils/string';
 import {TYPES as EVENT_TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectLayoutTab, TObjectRelationship} from '../types';
 
@@ -253,7 +252,7 @@ export function ModalAddObjectLayoutTab({
 					</ClayForm.Group>
 
 					{selectedType === TYPES.RELATIONSHIPS && (
-						<AutoComplete
+						<AutoComplete<TObjectRelationship>
 							contentRight={
 								<ClayLabel
 									className="label-inside-custom-select"
@@ -272,15 +271,9 @@ export function ModalAddObjectLayoutTab({
 							label={Liferay.Language.get('relationship')}
 							onChangeQuery={setQuery}
 							onSelectItem={(item) => {
-								const {type} = item;
-								const selectedItem = {
-									...item,
-									type: separateCamelCase(type),
-								};
-
-								setSelectedRelationship(selectedItem);
+								setSelectedRelationship(item);
 								setValues({
-									objectRelationshipId: selectedItem.id,
+									objectRelationshipId: item.id,
 								});
 							}}
 							query={query}

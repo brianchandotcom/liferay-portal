@@ -31,7 +31,7 @@ export default interface DealRegistrationDTO
 	additionalContacts?: string;
 	additionalInformationAboutTheOpportunity?: string;
 	leadExternalReferenceCode?: string;
-	mdfActivityAssociatedExternalReferenceCodeSF?: string;
+	mdfActivityExternalReferenceCodeSF?: string;
 	primaryProspectBusinessUnit?: string;
 	primaryProspectDepartment?: LiferayPicklist;
 	primaryProspectEmailAddress?: string;

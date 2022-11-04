@@ -14,13 +14,13 @@
 
 package com.liferay.layout.utility.page.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DuplicateLayoutUtilityPageEntryExternalReferenceCodeException
-	extends PortalException {
+	extends SystemException {
 
 	public DuplicateLayoutUtilityPageEntryExternalReferenceCodeException() {
 	}

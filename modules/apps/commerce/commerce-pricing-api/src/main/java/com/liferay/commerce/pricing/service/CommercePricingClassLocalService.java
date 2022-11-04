@@ -249,25 +249,10 @@ public interface CommercePricingClassLocalService
 	public CommercePricingClass fetchCommercePricingClass(
 		long commercePricingClassId);
 
-	/**
-	 * Returns the commerce pricing class with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce pricing class's external reference code
-	 * @return the matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePricingClass
 		fetchCommercePricingClassByExternalReferenceCode(
-			long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommercePricingClassByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePricingClass fetchCommercePricingClassByReferenceCode(
-		long companyId, String externalReferenceCode);
+			String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the commerce pricing class with the matching UUID and company.
@@ -298,17 +283,9 @@ public interface CommercePricingClassLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCommercePricingClassByCPDefinition(long cpDefinitionId);
 
-	/**
-	 * Returns the commerce pricing class with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce pricing class's external reference code
-	 * @return the matching commerce pricing class
-	 * @throws PortalException if a matching commerce pricing class could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePricingClass getCommercePricingClassByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

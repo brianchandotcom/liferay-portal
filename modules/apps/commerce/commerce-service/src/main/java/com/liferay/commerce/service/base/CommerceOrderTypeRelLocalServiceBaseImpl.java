@@ -282,49 +282,22 @@ public abstract class CommerceOrderTypeRelLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the commerce order type rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type rel's external reference code
-	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
 	@Override
 	public CommerceOrderTypeRel
 		fetchCommerceOrderTypeRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
-		return commerceOrderTypeRelPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderTypeRelPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderTypeRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceOrderTypeRel fetchCommerceOrderTypeRelByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchCommerceOrderTypeRelByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce order type rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type rel's external reference code
-	 * @return the matching commerce order type rel
-	 * @throws PortalException if a matching commerce order type rel could not be found
-	 */
 	@Override
 	public CommerceOrderTypeRel getCommerceOrderTypeRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return commerceOrderTypeRelPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderTypeRelPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

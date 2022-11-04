@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.exception.DuplicateCommerceShipmentExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
@@ -231,6 +232,28 @@ public class CommerceShipmentPersistenceTest {
 			newCommerceShipment.getStatus());
 	}
 
+	@Test(
+		expected = DuplicateCommerceShipmentExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommerceShipment commerceShipment = addCommerceShipment();
+
+		CommerceShipment newCommerceShipment = addCommerceShipment();
+
+		newCommerceShipment.setCompanyId(commerceShipment.getCompanyId());
+
+		newCommerceShipment = _persistence.update(newCommerceShipment);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommerceShipment);
+
+		newCommerceShipment.setExternalReferenceCode(
+			commerceShipment.getExternalReferenceCode());
+
+		_persistence.update(newCommerceShipment);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -301,12 +324,12 @@ public class CommerceShipmentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -624,15 +647,15 @@ public class CommerceShipmentPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(commerceShipment.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				commerceShipment, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			commerceShipment.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commerceShipment, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commerceShipment.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceShipment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommerceShipment addCommerceShipment() throws Exception {

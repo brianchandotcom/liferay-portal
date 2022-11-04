@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.exception.DuplicateCommerceOrderTypeExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchOrderTypeException;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeLocalServiceUtil;
@@ -233,6 +234,28 @@ public class CommerceOrderTypePersistenceTest {
 			Time.getShortTimestamp(newCommerceOrderType.getStatusDate()));
 	}
 
+	@Test(
+		expected = DuplicateCommerceOrderTypeExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommerceOrderType commerceOrderType = addCommerceOrderType();
+
+		CommerceOrderType newCommerceOrderType = addCommerceOrderType();
+
+		newCommerceOrderType.setCompanyId(commerceOrderType.getCompanyId());
+
+		newCommerceOrderType = _persistence.update(newCommerceOrderType);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommerceOrderType);
+
+		newCommerceOrderType.setExternalReferenceCode(
+			commerceOrderType.getExternalReferenceCode());
+
+		_persistence.update(newCommerceOrderType);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -283,12 +306,12 @@ public class CommerceOrderTypePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -600,15 +623,15 @@ public class CommerceOrderTypePersistenceTest {
 
 	private void _assertOriginalValues(CommerceOrderType commerceOrderType) {
 		Assert.assertEquals(
-			Long.valueOf(commerceOrderType.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				commerceOrderType, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			commerceOrderType.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commerceOrderType, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commerceOrderType.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceOrderType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommerceOrderType addCommerceOrderType() throws Exception {

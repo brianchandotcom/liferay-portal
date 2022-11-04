@@ -14,6 +14,7 @@
 
 package com.liferay.layout.utility.page.service.persistence.impl;
 
+import com.liferay.layout.utility.page.exception.DuplicateLayoutUtilityPageEntryExternalReferenceCodeException;
 import com.liferay.layout.utility.page.exception.NoSuchLayoutUtilityPageEntryException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntryTable;
@@ -4739,35 +4740,35 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_G_N_T_TYPE_2 =
 		"layoutUtilityPageEntry.type = ?";
 
-	private FinderPath _finderPathFetchByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching layout utility page entry
 	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry findByG_ERC(
-			long groupId, String externalReferenceCode)
+	public LayoutUtilityPageEntry findByERC_G(
+			String externalReferenceCode, long groupId)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_ERC(
-			groupId, externalReferenceCode);
+		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByERC_G(
+			externalReferenceCode, groupId);
 
 		if (layoutUtilityPageEntry == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
 
 			sb.append("}");
 
@@ -4782,30 +4783,30 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry fetchByG_ERC(
-		long groupId, String externalReferenceCode) {
+	public LayoutUtilityPageEntry fetchByERC_G(
+		String externalReferenceCode, long groupId) {
 
-		return fetchByG_ERC(groupId, externalReferenceCode, true);
+		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
 	@Override
-	public LayoutUtilityPageEntry fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
+	public LayoutUtilityPageEntry fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
@@ -4815,24 +4816,24 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {groupId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, groupId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_ERC, finderArgs, this);
+				_finderPathFetchByERC_G, finderArgs, this);
 		}
 
 		if (result instanceof LayoutUtilityPageEntry) {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
 				(LayoutUtilityPageEntry)result;
 
-			if ((groupId != layoutUtilityPageEntry.getGroupId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					layoutUtilityPageEntry.getExternalReferenceCode())) {
+					layoutUtilityPageEntry.getExternalReferenceCode()) ||
+				(groupId != layoutUtilityPageEntry.getGroupId())) {
 
 				result = null;
 			}
@@ -4843,18 +4844,18 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -4867,18 +4868,18 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				List<LayoutUtilityPageEntry> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByG_ERC, finderArgs, list);
+							_finderPathFetchByERC_G, finderArgs, list);
 					}
 				}
 				else {
@@ -4906,32 +4907,32 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the layout utility page entry that was removed
 	 */
 	@Override
-	public LayoutUtilityPageEntry removeByG_ERC(
-			long groupId, String externalReferenceCode)
+	public LayoutUtilityPageEntry removeByERC_G(
+			String externalReferenceCode, long groupId)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = findByG_ERC(
-			groupId, externalReferenceCode);
+		LayoutUtilityPageEntry layoutUtilityPageEntry = findByERC_G(
+			externalReferenceCode, groupId);
 
 		return remove(layoutUtilityPageEntry);
 	}
 
 	/**
-	 * Returns the number of layout utility page entries where groupId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of layout utility page entries where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the number of matching layout utility page entries
 	 */
 	@Override
-	public int countByG_ERC(long groupId, String externalReferenceCode) {
+	public int countByERC_G(String externalReferenceCode, long groupId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -4943,9 +4944,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByG_ERC;
+			finderPath = _finderPathCountByERC_G;
 
-			finderArgs = new Object[] {groupId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, groupId};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
@@ -4955,18 +4956,18 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -4979,11 +4980,11 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				count = (Long)query.uniqueResult();
 
@@ -5002,14 +5003,14 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
-		"layoutUtilityPageEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"layoutUtilityPageEntry.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
-		"layoutUtilityPageEntry.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(layoutUtilityPageEntry.externalReferenceCode IS NULL OR layoutUtilityPageEntry.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
-		"(layoutUtilityPageEntry.externalReferenceCode IS NULL OR layoutUtilityPageEntry.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"layoutUtilityPageEntry.groupId = ?";
 
 	public LayoutUtilityPageEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -5060,10 +5061,10 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			layoutUtilityPageEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByG_ERC,
+			_finderPathFetchByERC_G,
 			new Object[] {
-				layoutUtilityPageEntry.getGroupId(),
-				layoutUtilityPageEntry.getExternalReferenceCode()
+				layoutUtilityPageEntry.getExternalReferenceCode(),
+				layoutUtilityPageEntry.getGroupId()
 			},
 			layoutUtilityPageEntry);
 	}
@@ -5175,13 +5176,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			_finderPathFetchByG_N_T, args, layoutUtilityPageEntryModelImpl);
 
 		args = new Object[] {
-			layoutUtilityPageEntryModelImpl.getGroupId(),
-			layoutUtilityPageEntryModelImpl.getExternalReferenceCode()
+			layoutUtilityPageEntryModelImpl.getExternalReferenceCode(),
+			layoutUtilityPageEntryModelImpl.getGroupId()
 		};
 
-		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_G, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByG_ERC, args, layoutUtilityPageEntryModelImpl);
+			_finderPathFetchByERC_G, args, layoutUtilityPageEntryModelImpl);
 	}
 
 	/**
@@ -5337,6 +5338,30 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 			layoutUtilityPageEntry.setExternalReferenceCode(
 				layoutUtilityPageEntry.getUuid());
+		}
+		else {
+			LayoutUtilityPageEntry ercLayoutUtilityPageEntry = fetchByERC_G(
+				layoutUtilityPageEntry.getExternalReferenceCode(),
+				layoutUtilityPageEntry.getGroupId());
+
+			if (isNew) {
+				if (ercLayoutUtilityPageEntry != null) {
+					throw new DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
+						"Duplicate LayoutUtilityPageEntry with external reference code " +
+							layoutUtilityPageEntry.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercLayoutUtilityPageEntry != null) &&
+					(layoutUtilityPageEntry.getLayoutUtilityPageEntryId() !=
+						ercLayoutUtilityPageEntry.
+							getLayoutUtilityPageEntryId())) {
+
+					throw new DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
+						"Duplicate LayoutUtilityPageEntry with external reference code " +
+							layoutUtilityPageEntry.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -5892,7 +5917,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "name", "type_"});
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"groupId", "externalReferenceCode"});
+			new String[] {"externalReferenceCode", "groupId"});
 	}
 
 	/**
@@ -6043,15 +6068,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			},
 			new String[] {"groupId", "name", "type_"}, false);
 
-		_finderPathFetchByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
 
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		_setLayoutUtilityPageEntryUtilPersistence(this);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.service.persistence.impl;
 
+import com.liferay.dispatch.exception.DuplicateDispatchTriggerExternalReferenceCodeException;
 import com.liferay.dispatch.exception.NoSuchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.model.DispatchTriggerTable;
@@ -6680,35 +6681,35 @@ public class DispatchTriggerPersistenceImpl
 		_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7 =
 			"dispatchTrigger.dispatchTaskClusterMode IN (";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
+	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching dispatch trigger
 	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public DispatchTrigger findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		DispatchTrigger dispatchTrigger = fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (dispatchTrigger == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -6723,53 +6724,53 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public DispatchTrigger fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public DispatchTrigger fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof DispatchTrigger) {
 			DispatchTrigger dispatchTrigger = (DispatchTrigger)result;
 
-			if ((companyId != dispatchTrigger.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					dispatchTrigger.getExternalReferenceCode())) {
+					dispatchTrigger.getExternalReferenceCode()) ||
+				(companyId != dispatchTrigger.getCompanyId())) {
 
 				result = null;
 			}
@@ -6780,18 +6781,18 @@ public class DispatchTriggerPersistenceImpl
 
 			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -6804,18 +6805,18 @@ public class DispatchTriggerPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<DispatchTrigger> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -6843,37 +6844,37 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Removes the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the dispatch trigger that was removed
 	 */
 	@Override
-	public DispatchTrigger removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public DispatchTrigger removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = findByC_ERC(
-			companyId, externalReferenceCode);
+		DispatchTrigger dispatchTrigger = findByERC_C(
+			externalReferenceCode, companyId);
 
 		return remove(dispatchTrigger);
 	}
 
 	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of dispatch triggers where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching dispatch triggers
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		FinderPath finderPath = _finderPathCountByERC_C;
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6882,18 +6883,18 @@ public class DispatchTriggerPersistenceImpl
 
 			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -6906,11 +6907,11 @@ public class DispatchTriggerPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -6927,14 +6928,14 @@ public class DispatchTriggerPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"dispatchTrigger.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"dispatchTrigger.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"dispatchTrigger.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(dispatchTrigger.externalReferenceCode IS NULL OR dispatchTrigger.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(dispatchTrigger.externalReferenceCode IS NULL OR dispatchTrigger.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"dispatchTrigger.companyId = ?";
 
 	public DispatchTriggerPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -6972,10 +6973,10 @@ public class DispatchTriggerPersistenceImpl
 			dispatchTrigger);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				dispatchTrigger.getCompanyId(),
-				dispatchTrigger.getExternalReferenceCode()
+				dispatchTrigger.getExternalReferenceCode(),
+				dispatchTrigger.getCompanyId()
 			},
 			dispatchTrigger);
 	}
@@ -7063,13 +7064,13 @@ public class DispatchTriggerPersistenceImpl
 			_finderPathFetchByC_N, args, dispatchTriggerModelImpl);
 
 		args = new Object[] {
-			dispatchTriggerModelImpl.getCompanyId(),
-			dispatchTriggerModelImpl.getExternalReferenceCode()
+			dispatchTriggerModelImpl.getExternalReferenceCode(),
+			dispatchTriggerModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, dispatchTriggerModelImpl);
+			_finderPathFetchByERC_C, args, dispatchTriggerModelImpl);
 	}
 
 	/**
@@ -7212,6 +7213,29 @@ public class DispatchTriggerPersistenceImpl
 
 		if (Validator.isNull(dispatchTrigger.getExternalReferenceCode())) {
 			dispatchTrigger.setExternalReferenceCode(dispatchTrigger.getUuid());
+		}
+		else {
+			DispatchTrigger ercDispatchTrigger = fetchByERC_C(
+				dispatchTrigger.getExternalReferenceCode(),
+				dispatchTrigger.getCompanyId());
+
+			if (isNew) {
+				if (ercDispatchTrigger != null) {
+					throw new DuplicateDispatchTriggerExternalReferenceCodeException(
+						"Duplicate DispatchTrigger with external reference code " +
+							dispatchTrigger.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercDispatchTrigger != null) &&
+					(dispatchTrigger.getDispatchTriggerId() !=
+						ercDispatchTrigger.getDispatchTriggerId())) {
+
+					throw new DuplicateDispatchTriggerExternalReferenceCodeException(
+						"Duplicate DispatchTrigger with external reference code " +
+							dispatchTrigger.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -7676,15 +7700,15 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
 			new String[] {"active_", "dispatchTaskClusterMode"}, false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setDispatchTriggerUtilPersistence(this);
 	}

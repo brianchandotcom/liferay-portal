@@ -217,25 +217,10 @@ public interface BatchEngineExportTaskLocalService
 	public BatchEngineExportTask fetchBatchEngineExportTask(
 		long batchEngineExportTaskId);
 
-	/**
-	 * Returns the batch engine export task with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the batch engine export task's external reference code
-	 * @return the matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchEngineExportTask
 		fetchBatchEngineExportTaskByExternalReferenceCode(
-			long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchEngineExportTaskByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BatchEngineExportTask fetchBatchEngineExportTaskByReferenceCode(
-		long companyId, String externalReferenceCode);
+			String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the batch engine export task with the matching UUID and company.
@@ -263,18 +248,10 @@ public interface BatchEngineExportTaskLocalService
 			long batchEngineExportTaskId)
 		throws PortalException;
 
-	/**
-	 * Returns the batch engine export task with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the batch engine export task's external reference code
-	 * @return the matching batch engine export task
-	 * @throws PortalException if a matching batch engine export task could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchEngineExportTask
 			getBatchEngineExportTaskByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

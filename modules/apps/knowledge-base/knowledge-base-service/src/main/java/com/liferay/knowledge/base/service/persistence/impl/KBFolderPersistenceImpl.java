@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.service.persistence.impl;
 
+import com.liferay.knowledge.base.exception.DuplicateKBFolderExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBFolderTable;
@@ -3461,33 +3462,33 @@ public class KBFolderPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_UT_URLTITLE_3 =
 		"(kbFolder.urlTitle IS NULL OR kbFolder.urlTitle = '')";
 
-	private FinderPath _finderPathFetchByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
+	 * Returns the kb folder where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching kb folder
 	 * @throws NoSuchFolderException if a matching kb folder could not be found
 	 */
 	@Override
-	public KBFolder findByG_ERC(long groupId, String externalReferenceCode)
+	public KBFolder findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchFolderException {
 
-		KBFolder kbFolder = fetchByG_ERC(groupId, externalReferenceCode);
+		KBFolder kbFolder = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (kbFolder == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
 
 			sb.append("}");
 
@@ -3502,51 +3503,51 @@ public class KBFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the kb folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	@Override
-	public KBFolder fetchByG_ERC(long groupId, String externalReferenceCode) {
-		return fetchByG_ERC(groupId, externalReferenceCode, true);
+	public KBFolder fetchByERC_G(String externalReferenceCode, long groupId) {
+		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kb folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	@Override
-	public KBFolder fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
+	public KBFolder fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, groupId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_ERC, finderArgs, this);
+				_finderPathFetchByERC_G, finderArgs, this);
 		}
 
 		if (result instanceof KBFolder) {
 			KBFolder kbFolder = (KBFolder)result;
 
-			if ((groupId != kbFolder.getGroupId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					kbFolder.getExternalReferenceCode())) {
+					kbFolder.getExternalReferenceCode()) ||
+				(groupId != kbFolder.getGroupId())) {
 
 				result = null;
 			}
@@ -3557,18 +3558,18 @@ public class KBFolderPersistenceImpl
 
 			sb.append(_SQL_SELECT_KBFOLDER_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -3581,18 +3582,18 @@ public class KBFolderPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				List<KBFolder> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByG_ERC, finderArgs, list);
+							_finderPathFetchByERC_G, finderArgs, list);
 					}
 				}
 				else {
@@ -3620,35 +3621,35 @@ public class KBFolderPersistenceImpl
 	}
 
 	/**
-	 * Removes the kb folder where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the kb folder where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the kb folder that was removed
 	 */
 	@Override
-	public KBFolder removeByG_ERC(long groupId, String externalReferenceCode)
+	public KBFolder removeByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchFolderException {
 
-		KBFolder kbFolder = findByG_ERC(groupId, externalReferenceCode);
+		KBFolder kbFolder = findByERC_G(externalReferenceCode, groupId);
 
 		return remove(kbFolder);
 	}
 
 	/**
-	 * Returns the number of kb folders where groupId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of kb folders where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the number of matching kb folders
 	 */
 	@Override
-	public int countByG_ERC(long groupId, String externalReferenceCode) {
+	public int countByERC_G(String externalReferenceCode, long groupId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByG_ERC;
+		FinderPath finderPath = _finderPathCountByERC_G;
 
-		Object[] finderArgs = new Object[] {groupId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -3657,18 +3658,18 @@ public class KBFolderPersistenceImpl
 
 			sb.append(_SQL_COUNT_KBFOLDER_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -3681,11 +3682,11 @@ public class KBFolderPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				count = (Long)query.uniqueResult();
 
@@ -3702,14 +3703,14 @@ public class KBFolderPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
-		"kbFolder.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"kbFolder.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
-		"kbFolder.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(kbFolder.externalReferenceCode IS NULL OR kbFolder.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
-		"(kbFolder.externalReferenceCode IS NULL OR kbFolder.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"kbFolder.groupId = ?";
 
 	public KBFolderPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3757,9 +3758,9 @@ public class KBFolderPersistenceImpl
 			kbFolder);
 
 		finderCache.putResult(
-			_finderPathFetchByG_ERC,
+			_finderPathFetchByERC_G,
 			new Object[] {
-				kbFolder.getGroupId(), kbFolder.getExternalReferenceCode()
+				kbFolder.getExternalReferenceCode(), kbFolder.getGroupId()
 			},
 			kbFolder);
 	}
@@ -3861,12 +3862,12 @@ public class KBFolderPersistenceImpl
 			_finderPathFetchByG_P_UT, args, kbFolderModelImpl);
 
 		args = new Object[] {
-			kbFolderModelImpl.getGroupId(),
-			kbFolderModelImpl.getExternalReferenceCode()
+			kbFolderModelImpl.getExternalReferenceCode(),
+			kbFolderModelImpl.getGroupId()
 		};
 
-		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
-		finderCache.putResult(_finderPathFetchByG_ERC, args, kbFolderModelImpl);
+		finderCache.putResult(_finderPathCountByERC_G, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathFetchByERC_G, args, kbFolderModelImpl);
 	}
 
 	/**
@@ -4004,6 +4005,27 @@ public class KBFolderPersistenceImpl
 
 		if (Validator.isNull(kbFolder.getExternalReferenceCode())) {
 			kbFolder.setExternalReferenceCode(kbFolder.getUuid());
+		}
+		else {
+			KBFolder ercKBFolder = fetchByERC_G(
+				kbFolder.getExternalReferenceCode(), kbFolder.getGroupId());
+
+			if (isNew) {
+				if (ercKBFolder != null) {
+					throw new DuplicateKBFolderExternalReferenceCodeException(
+						"Duplicate KBFolder with external reference code " +
+							kbFolder.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercKBFolder != null) &&
+					(kbFolder.getKbFolderId() != ercKBFolder.getKbFolderId())) {
+
+					throw new DuplicateKBFolderExternalReferenceCodeException(
+						"Duplicate KBFolder with external reference code " +
+							kbFolder.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -4452,15 +4474,15 @@ public class KBFolderPersistenceImpl
 			},
 			new String[] {"groupId", "parentKBFolderId", "urlTitle"}, false);
 
-		_finderPathFetchByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
 
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		_setKBFolderUtilPersistence(this);
 	}

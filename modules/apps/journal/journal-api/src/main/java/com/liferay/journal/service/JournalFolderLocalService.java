@@ -255,24 +255,9 @@ public interface JournalFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder fetchJournalFolder(long folderId);
 
-	/**
-	 * Returns the journal folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the journal folder's external reference code
-	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder fetchJournalFolderByExternalReferenceCode(
-		long groupId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchJournalFolderByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchJournalFolderByReferenceCode(
-		long groupId, String externalReferenceCode);
+		String externalReferenceCode, long groupId);
 
 	/**
 	 * Returns the journal folder matching the UUID and group.
@@ -382,17 +367,9 @@ public interface JournalFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder getJournalFolder(long folderId) throws PortalException;
 
-	/**
-	 * Returns the journal folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the journal folder's external reference code
-	 * @return the matching journal folder
-	 * @throws PortalException if a matching journal folder could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder getJournalFolderByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

@@ -6683,71 +6683,71 @@ public class MBMessageUtil {
 	}
 
 	/**
-	 * Returns the message-boards message where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
-	public static MBMessage findByG_ERC(
-			long groupId, String externalReferenceCode)
+	public static MBMessage findByERC_G(
+			String externalReferenceCode, long groupId)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
+		return getPersistence().findByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**
-	 * Returns the message-boards message where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public static MBMessage fetchByG_ERC(
-		long groupId, String externalReferenceCode) {
+	public static MBMessage fetchByERC_G(
+		String externalReferenceCode, long groupId) {
 
-		return getPersistence().fetchByG_ERC(groupId, externalReferenceCode);
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**
-	 * Returns the message-boards message where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
-	public static MBMessage fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
+	public static MBMessage fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_ERC(
-			groupId, externalReferenceCode, useFinderCache);
+		return getPersistence().fetchByERC_G(
+			externalReferenceCode, groupId, useFinderCache);
 	}
 
 	/**
-	 * Removes the message-boards message where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the message-boards message where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the message-boards message that was removed
 	 */
-	public static MBMessage removeByG_ERC(
-			long groupId, String externalReferenceCode)
+	public static MBMessage removeByERC_G(
+			String externalReferenceCode, long groupId)
 		throws com.liferay.message.boards.exception.NoSuchMessageException {
 
-		return getPersistence().removeByG_ERC(groupId, externalReferenceCode);
+		return getPersistence().removeByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**
-	 * Returns the number of message-boards messages where groupId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of message-boards messages where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the number of matching message-boards messages
 	 */
-	public static int countByG_ERC(long groupId, String externalReferenceCode) {
-		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
+	public static int countByERC_G(String externalReferenceCode, long groupId) {
+		return getPersistence().countByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**

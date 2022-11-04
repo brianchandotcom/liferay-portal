@@ -286,50 +286,23 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 		return layoutUtilityPageEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the layout utility page entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the layout utility page entry's external reference code
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
 	@Override
 	public LayoutUtilityPageEntry
 		fetchLayoutUtilityPageEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode) {
+			String externalReferenceCode, long groupId) {
 
-		return layoutUtilityPageEntryPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
+		return layoutUtilityPageEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchLayoutUtilityPageEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return fetchLayoutUtilityPageEntryByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the layout utility page entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the layout utility page entry's external reference code
-	 * @return the matching layout utility page entry
-	 * @throws PortalException if a matching layout utility page entry could not be found
-	 */
 	@Override
 	public LayoutUtilityPageEntry
 			getLayoutUtilityPageEntryByExternalReferenceCode(
-				long groupId, String externalReferenceCode)
+				String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		return layoutUtilityPageEntryPersistence.findByG_ERC(
-			groupId, externalReferenceCode);
+		return layoutUtilityPageEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
 	}
 
 	/**

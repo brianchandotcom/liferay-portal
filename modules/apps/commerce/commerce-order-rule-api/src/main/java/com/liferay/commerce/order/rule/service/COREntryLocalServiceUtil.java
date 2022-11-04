@@ -235,29 +235,11 @@ public class COREntryLocalServiceUtil {
 		return getService().fetchCOREntry(COREntryId);
 	}
 
-	/**
-	 * Returns the cor entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the cor entry's external reference code
-	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
 	public static COREntry fetchCOREntryByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		return getService().fetchCOREntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCOREntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static COREntry fetchCOREntryByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return getService().fetchCOREntryByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -418,20 +400,12 @@ public class COREntryLocalServiceUtil {
 		return getService().getCOREntry(COREntryId);
 	}
 
-	/**
-	 * Returns the cor entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the cor entry's external reference code
-	 * @return the matching cor entry
-	 * @throws PortalException if a matching cor entry could not be found
-	 */
 	public static COREntry getCOREntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getCOREntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

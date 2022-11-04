@@ -344,35 +344,14 @@ public class CommerceOrderItemLocalServiceWrapper
 			fetchCommerceOrderItemByBookedQuantityId(bookedQuantityId);
 	}
 
-	/**
-	 * Returns the commerce order item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order item's external reference code
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 		fetchCommerceOrderItemByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _commerceOrderItemLocalService.
 			fetchCommerceOrderItemByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderItemByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceOrderItem
-		fetchCommerceOrderItemByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _commerceOrderItemLocalService.
-			fetchCommerceOrderItemByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -439,23 +418,15 @@ public class CommerceOrderItemLocalServiceWrapper
 			commerceOrderItemId);
 	}
 
-	/**
-	 * Returns the commerce order item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order item's external reference code
-	 * @return the matching commerce order item
-	 * @throws PortalException if a matching commerce order item could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 			getCommerceOrderItemByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemLocalService.
 			getCommerceOrderItemByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

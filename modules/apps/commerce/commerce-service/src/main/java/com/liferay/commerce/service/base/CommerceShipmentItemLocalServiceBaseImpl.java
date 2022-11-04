@@ -280,49 +280,22 @@ public abstract class CommerceShipmentItemLocalServiceBaseImpl
 		return commerceShipmentItemPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the commerce shipment item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce shipment item's external reference code
-	 * @return the matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
-	 */
 	@Override
 	public CommerceShipmentItem
 		fetchCommerceShipmentItemByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
-		return commerceShipmentItemPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceShipmentItemPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceShipmentItemByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceShipmentItem fetchCommerceShipmentItemByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchCommerceShipmentItemByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce shipment item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce shipment item's external reference code
-	 * @return the matching commerce shipment item
-	 * @throws PortalException if a matching commerce shipment item could not be found
-	 */
 	@Override
 	public CommerceShipmentItem getCommerceShipmentItemByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return commerceShipmentItemPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceShipmentItemPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

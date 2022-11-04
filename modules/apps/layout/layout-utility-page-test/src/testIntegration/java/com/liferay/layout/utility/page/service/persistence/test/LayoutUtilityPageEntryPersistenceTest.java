@@ -15,6 +15,7 @@
 package com.liferay.layout.utility.page.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.utility.page.exception.DuplicateLayoutUtilityPageEntryExternalReferenceCodeException;
 import com.liferay.layout.utility.page.exception.NoSuchLayoutUtilityPageEntryException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
@@ -229,6 +230,32 @@ public class LayoutUtilityPageEntryPersistenceTest {
 				newLayoutUtilityPageEntry.getLastPublishDate()));
 	}
 
+	@Test(
+		expected = DuplicateLayoutUtilityPageEntryExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			addLayoutUtilityPageEntry();
+
+		LayoutUtilityPageEntry newLayoutUtilityPageEntry =
+			addLayoutUtilityPageEntry();
+
+		newLayoutUtilityPageEntry.setGroupId(
+			layoutUtilityPageEntry.getGroupId());
+
+		newLayoutUtilityPageEntry = _persistence.update(
+			newLayoutUtilityPageEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newLayoutUtilityPageEntry);
+
+		newLayoutUtilityPageEntry.setExternalReferenceCode(
+			layoutUtilityPageEntry.getExternalReferenceCode());
+
+		_persistence.update(newLayoutUtilityPageEntry);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -291,12 +318,12 @@ public class LayoutUtilityPageEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_ERC() throws Exception {
-		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByG_ERC(0L, "null");
+		_persistence.countByERC_G("null", 0L);
 
-		_persistence.countByG_ERC(0L, (String)null);
+		_persistence.countByERC_G((String)null, 0L);
 	}
 
 	@Test
@@ -663,15 +690,15 @@ public class LayoutUtilityPageEntryPersistenceTest {
 				new Class<?>[] {String.class}, "type_"));
 
 		Assert.assertEquals(
-			Long.valueOf(layoutUtilityPageEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				layoutUtilityPageEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
 			layoutUtilityPageEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				layoutUtilityPageEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(layoutUtilityPageEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutUtilityPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected LayoutUtilityPageEntry addLayoutUtilityPageEntry()

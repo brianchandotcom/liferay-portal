@@ -275,48 +275,21 @@ public abstract class OAuth2ApplicationLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the o auth2 application with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the o auth2 application's external reference code
-	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
 	@Override
 	public OAuth2Application fetchOAuth2ApplicationByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
-		return oAuth2ApplicationPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return oAuth2ApplicationPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchOAuth2ApplicationByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application fetchOAuth2ApplicationByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchOAuth2ApplicationByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the o auth2 application with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the o auth2 application's external reference code
-	 * @return the matching o auth2 application
-	 * @throws PortalException if a matching o auth2 application could not be found
-	 */
 	@Override
 	public OAuth2Application getOAuth2ApplicationByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return oAuth2ApplicationPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return oAuth2ApplicationPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

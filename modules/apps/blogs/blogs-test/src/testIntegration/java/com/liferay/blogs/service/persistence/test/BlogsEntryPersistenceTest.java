@@ -15,6 +15,7 @@
 package com.liferay.blogs.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.exception.DuplicateBlogsEntryExternalReferenceCodeException;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
@@ -276,6 +277,26 @@ public class BlogsEntryPersistenceTest {
 			Time.getShortTimestamp(newBlogsEntry.getStatusDate()));
 	}
 
+	@Test(expected = DuplicateBlogsEntryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		BlogsEntry blogsEntry = addBlogsEntry();
+
+		BlogsEntry newBlogsEntry = addBlogsEntry();
+
+		newBlogsEntry.setGroupId(blogsEntry.getGroupId());
+
+		newBlogsEntry = _persistence.update(newBlogsEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newBlogsEntry);
+
+		newBlogsEntry.setExternalReferenceCode(
+			blogsEntry.getExternalReferenceCode());
+
+		_persistence.update(newBlogsEntry);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -515,12 +536,12 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_ERC() throws Exception {
-		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByG_ERC(0L, "null");
+		_persistence.countByERC_G("null", 0L);
 
-		_persistence.countByG_ERC(0L, (String)null);
+		_persistence.countByERC_G((String)null, 0L);
 	}
 
 	@Test
@@ -844,15 +865,15 @@ public class BlogsEntryPersistenceTest {
 				new Class<?>[] {String.class}, "urlTitle"));
 
 		Assert.assertEquals(
-			Long.valueOf(blogsEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				blogsEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
 			blogsEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				blogsEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(blogsEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				blogsEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected BlogsEntry addBlogsEntry() throws Exception {

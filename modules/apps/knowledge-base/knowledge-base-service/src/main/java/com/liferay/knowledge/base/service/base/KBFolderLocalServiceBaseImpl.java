@@ -263,46 +263,19 @@ public abstract class KBFolderLocalServiceBaseImpl
 		return kbFolderPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the kb folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb folder's external reference code
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
 	@Override
 	public KBFolder fetchKBFolderByExternalReferenceCode(
-		long groupId, String externalReferenceCode) {
+		String externalReferenceCode, long groupId) {
 
-		return kbFolderPersistence.fetchByG_ERC(groupId, externalReferenceCode);
+		return kbFolderPersistence.fetchByERC_G(externalReferenceCode, groupId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBFolderByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public KBFolder fetchKBFolderByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return fetchKBFolderByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the kb folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb folder's external reference code
-	 * @return the matching kb folder
-	 * @throws PortalException if a matching kb folder could not be found
-	 */
 	@Override
 	public KBFolder getKBFolderByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		return kbFolderPersistence.findByG_ERC(groupId, externalReferenceCode);
+		return kbFolderPersistence.findByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**

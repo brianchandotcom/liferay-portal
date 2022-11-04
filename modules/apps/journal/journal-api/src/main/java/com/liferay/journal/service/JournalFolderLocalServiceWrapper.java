@@ -298,32 +298,13 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.fetchJournalFolder(folderId);
 	}
 
-	/**
-	 * Returns the journal folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the journal folder's external reference code
-	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
 	@Override
 	public JournalFolder fetchJournalFolderByExternalReferenceCode(
-		long groupId, String externalReferenceCode) {
+		String externalReferenceCode, long groupId) {
 
 		return _journalFolderLocalService.
 			fetchJournalFolderByExternalReferenceCode(
-				groupId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchJournalFolderByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public JournalFolder fetchJournalFolderByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return _journalFolderLocalService.fetchJournalFolderByReferenceCode(
-			groupId, externalReferenceCode);
+				externalReferenceCode, groupId);
 	}
 
 	/**
@@ -534,22 +515,14 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.getJournalFolder(folderId);
 	}
 
-	/**
-	 * Returns the journal folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the journal folder's external reference code
-	 * @return the matching journal folder
-	 * @throws PortalException if a matching journal folder could not be found
-	 */
 	@Override
 	public JournalFolder getJournalFolderByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalFolderLocalService.
 			getJournalFolderByExternalReferenceCode(
-				groupId, externalReferenceCode);
+				externalReferenceCode, groupId);
 	}
 
 	/**

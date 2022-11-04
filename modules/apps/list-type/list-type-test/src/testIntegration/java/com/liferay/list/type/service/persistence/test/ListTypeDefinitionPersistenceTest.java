@@ -15,6 +15,7 @@
 package com.liferay.list.type.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.exception.DuplicateListTypeDefinitionExternalReferenceCodeException;
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
@@ -183,6 +184,28 @@ public class ListTypeDefinitionPersistenceTest {
 			newListTypeDefinition.getName());
 	}
 
+	@Test(
+		expected = DuplicateListTypeDefinitionExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		ListTypeDefinition listTypeDefinition = addListTypeDefinition();
+
+		ListTypeDefinition newListTypeDefinition = addListTypeDefinition();
+
+		newListTypeDefinition.setCompanyId(listTypeDefinition.getCompanyId());
+
+		newListTypeDefinition = _persistence.update(newListTypeDefinition);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newListTypeDefinition);
+
+		newListTypeDefinition.setExternalReferenceCode(
+			listTypeDefinition.getExternalReferenceCode());
+
+		_persistence.update(newListTypeDefinition);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -202,12 +225,12 @@ public class ListTypeDefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -519,15 +542,15 @@ public class ListTypeDefinitionPersistenceTest {
 
 	private void _assertOriginalValues(ListTypeDefinition listTypeDefinition) {
 		Assert.assertEquals(
-			Long.valueOf(listTypeDefinition.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				listTypeDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			listTypeDefinition.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				listTypeDefinition, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(listTypeDefinition.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				listTypeDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected ListTypeDefinition addListTypeDefinition() throws Exception {

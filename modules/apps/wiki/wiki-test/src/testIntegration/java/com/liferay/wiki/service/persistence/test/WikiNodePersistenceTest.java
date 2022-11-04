@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.wiki.exception.DuplicateWikiNodeExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -207,6 +208,26 @@ public class WikiNodePersistenceTest {
 			Time.getShortTimestamp(newWikiNode.getStatusDate()));
 	}
 
+	@Test(expected = DuplicateWikiNodeExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		WikiNode wikiNode = addWikiNode();
+
+		WikiNode newWikiNode = addWikiNode();
+
+		newWikiNode.setGroupId(wikiNode.getGroupId());
+
+		newWikiNode = _persistence.update(newWikiNode);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newWikiNode);
+
+		newWikiNode.setExternalReferenceCode(
+			wikiNode.getExternalReferenceCode());
+
+		_persistence.update(newWikiNode);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -274,12 +295,12 @@ public class WikiNodePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_ERC() throws Exception {
-		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByG_ERC(0L, "null");
+		_persistence.countByERC_G("null", 0L);
 
-		_persistence.countByG_ERC(0L, (String)null);
+		_persistence.countByERC_G((String)null, 0L);
 	}
 
 	@Test
@@ -596,15 +617,15 @@ public class WikiNodePersistenceTest {
 				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
-			Long.valueOf(wikiNode.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				wikiNode, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
 			wikiNode.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				wikiNode, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(wikiNode.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				wikiNode, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected WikiNode addWikiNode() throws Exception {

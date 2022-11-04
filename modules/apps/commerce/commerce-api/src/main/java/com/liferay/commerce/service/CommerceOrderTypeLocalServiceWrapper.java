@@ -281,35 +281,14 @@ public class CommerceOrderTypeLocalServiceWrapper
 			commerceOrderTypeId);
 	}
 
-	/**
-	 * Returns the commerce order type with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type's external reference code
-	 * @return the matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderType
 		fetchCommerceOrderTypeByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _commerceOrderTypeLocalService.
 			fetchCommerceOrderTypeByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderTypeByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceOrderType
-		fetchCommerceOrderTypeByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _commerceOrderTypeLocalService.
-			fetchCommerceOrderTypeByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -350,23 +329,15 @@ public class CommerceOrderTypeLocalServiceWrapper
 			commerceOrderTypeId);
 	}
 
-	/**
-	 * Returns the commerce order type with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type's external reference code
-	 * @return the matching commerce order type
-	 * @throws PortalException if a matching commerce order type could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderType
 			getCommerceOrderTypeByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderTypeLocalService.
 			getCommerceOrderTypeByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

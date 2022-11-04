@@ -262,33 +262,13 @@ public class COREntryLocalServiceWrapper
 		return _corEntryLocalService.fetchCOREntry(COREntryId);
 	}
 
-	/**
-	 * Returns the cor entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the cor entry's external reference code
-	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
 	@Override
 	public com.liferay.commerce.order.rule.model.COREntry
 		fetchCOREntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _corEntryLocalService.fetchCOREntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCOREntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.order.rule.model.COREntry
-		fetchCOREntryByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _corEntryLocalService.fetchCOREntryByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -487,22 +467,14 @@ public class COREntryLocalServiceWrapper
 		return _corEntryLocalService.getCOREntry(COREntryId);
 	}
 
-	/**
-	 * Returns the cor entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the cor entry's external reference code
-	 * @return the matching cor entry
-	 * @throws PortalException if a matching cor entry could not be found
-	 */
 	@Override
 	public com.liferay.commerce.order.rule.model.COREntry
 			getCOREntryByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _corEntryLocalService.getCOREntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

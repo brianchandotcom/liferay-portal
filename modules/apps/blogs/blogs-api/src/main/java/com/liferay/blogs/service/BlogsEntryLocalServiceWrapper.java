@@ -457,31 +457,12 @@ public class BlogsEntryLocalServiceWrapper
 		return _blogsEntryLocalService.fetchBlogsEntry(entryId);
 	}
 
-	/**
-	 * Returns the blogs entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the blogs entry's external reference code
-	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
 	@Override
 	public BlogsEntry fetchBlogsEntryByExternalReferenceCode(
-		long groupId, String externalReferenceCode) {
+		String externalReferenceCode, long groupId) {
 
 		return _blogsEntryLocalService.fetchBlogsEntryByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBlogsEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public BlogsEntry fetchBlogsEntryByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return _blogsEntryLocalService.fetchBlogsEntryByReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 	}
 
 	/**
@@ -586,21 +567,13 @@ public class BlogsEntryLocalServiceWrapper
 		return _blogsEntryLocalService.getBlogsEntry(entryId);
 	}
 
-	/**
-	 * Returns the blogs entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the blogs entry's external reference code
-	 * @return the matching blogs entry
-	 * @throws PortalException if a matching blogs entry could not be found
-	 */
 	@Override
 	public BlogsEntry getBlogsEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _blogsEntryLocalService.getBlogsEntryByExternalReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 	}
 
 	/**

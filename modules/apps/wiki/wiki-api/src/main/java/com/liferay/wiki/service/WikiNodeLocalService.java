@@ -256,24 +256,9 @@ public interface WikiNodeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode fetchWikiNode(long nodeId);
 
-	/**
-	 * Returns the wiki node with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the wiki node's external reference code
-	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode fetchWikiNodeByExternalReferenceCode(
-		long groupId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchWikiNodeByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiNode fetchWikiNodeByReferenceCode(
-		long groupId, String externalReferenceCode);
+		String externalReferenceCode, long groupId);
 
 	/**
 	 * Returns the wiki node matching the UUID and group.
@@ -361,17 +346,9 @@ public interface WikiNodeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getWikiNode(long nodeId) throws PortalException;
 
-	/**
-	 * Returns the wiki node with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the wiki node's external reference code
-	 * @return the matching wiki node
-	 * @throws PortalException if a matching wiki node could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getWikiNodeByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

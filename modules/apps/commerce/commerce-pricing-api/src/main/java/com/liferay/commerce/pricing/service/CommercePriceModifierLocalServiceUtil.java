@@ -332,31 +332,12 @@ public class CommercePriceModifierLocalServiceUtil {
 		return getService().fetchCommercePriceModifier(commercePriceModifierId);
 	}
 
-	/**
-	 * Returns the commerce price modifier with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce price modifier's external reference code
-	 * @return the matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
-	 */
 	public static CommercePriceModifier
 		fetchCommercePriceModifierByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return getService().fetchCommercePriceModifierByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommercePriceModifierByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static CommercePriceModifier
-		fetchCommercePriceModifierByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return getService().fetchCommercePriceModifierByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -393,21 +374,13 @@ public class CommercePriceModifierLocalServiceUtil {
 		return getService().getCommercePriceModifier(commercePriceModifierId);
 	}
 
-	/**
-	 * Returns the commerce price modifier with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce price modifier's external reference code
-	 * @return the matching commerce price modifier
-	 * @throws PortalException if a matching commerce price modifier could not be found
-	 */
 	public static CommercePriceModifier
 			getCommercePriceModifierByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getCommercePriceModifierByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

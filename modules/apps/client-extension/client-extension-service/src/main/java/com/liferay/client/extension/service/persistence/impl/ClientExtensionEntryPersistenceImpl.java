@@ -4666,7 +4666,9 @@ public class ClientExtensionEntryPersistenceImpl
 
 			if (isNew) {
 				if (ercClientExtensionEntry != null) {
-					throw new DuplicateClientExtensionEntryExternalReferenceCodeException();
+					throw new DuplicateClientExtensionEntryExternalReferenceCodeException(
+						"Duplicate ClientExtensionEntry with external reference code " +
+							clientExtensionEntry.getExternalReferenceCode());
 				}
 			}
 			else {
@@ -4674,7 +4676,9 @@ public class ClientExtensionEntryPersistenceImpl
 					(clientExtensionEntry.getClientExtensionEntryId() !=
 						ercClientExtensionEntry.getClientExtensionEntryId())) {
 
-					throw new DuplicateClientExtensionEntryExternalReferenceCodeException();
+					throw new DuplicateClientExtensionEntryExternalReferenceCodeException(
+						"Duplicate ClientExtensionEntry with external reference code " +
+							clientExtensionEntry.getExternalReferenceCode());
 				}
 			}
 		}

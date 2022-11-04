@@ -15,6 +15,7 @@
 package com.liferay.commerce.pricing.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.pricing.exception.DuplicateCommercePriceModifierExternalReferenceCodeException;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil;
@@ -275,6 +276,32 @@ public class CommercePriceModifierPersistenceTest {
 			Time.getShortTimestamp(newCommercePriceModifier.getStatusDate()));
 	}
 
+	@Test(
+		expected = DuplicateCommercePriceModifierExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommercePriceModifier commercePriceModifier =
+			addCommercePriceModifier();
+
+		CommercePriceModifier newCommercePriceModifier =
+			addCommercePriceModifier();
+
+		newCommercePriceModifier.setCompanyId(
+			commercePriceModifier.getCompanyId());
+
+		newCommercePriceModifier = _persistence.update(
+			newCommercePriceModifier);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommercePriceModifier);
+
+		newCommercePriceModifier.setExternalReferenceCode(
+			commercePriceModifier.getExternalReferenceCode());
+
+		_persistence.update(newCommercePriceModifier);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -374,12 +401,12 @@ public class CommercePriceModifierPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -727,15 +754,15 @@ public class CommercePriceModifierPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(commercePriceModifier.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				commercePriceModifier, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			commercePriceModifier.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commercePriceModifier, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commercePriceModifier.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commercePriceModifier, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommercePriceModifier addCommercePriceModifier()

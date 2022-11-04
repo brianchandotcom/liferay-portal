@@ -277,48 +277,21 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 		return blogsEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the blogs entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the blogs entry's external reference code
-	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
 	@Override
 	public BlogsEntry fetchBlogsEntryByExternalReferenceCode(
-		long groupId, String externalReferenceCode) {
+		String externalReferenceCode, long groupId) {
 
-		return blogsEntryPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
+		return blogsEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBlogsEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public BlogsEntry fetchBlogsEntryByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return fetchBlogsEntryByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the blogs entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the blogs entry's external reference code
-	 * @return the matching blogs entry
-	 * @throws PortalException if a matching blogs entry could not be found
-	 */
 	@Override
 	public BlogsEntry getBlogsEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		return blogsEntryPersistence.findByG_ERC(
-			groupId, externalReferenceCode);
+		return blogsEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
 	}
 
 	/**

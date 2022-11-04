@@ -700,57 +700,57 @@ public interface CommerceOrderTypeRelPersistence
 		long classNameId, long classPK, long commerceOrderTypeId);
 
 	/**
-	 * Returns the commerce order type rel where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.
+	 * Returns the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderTypeRelException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce order type rel
 	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
 	 */
-	public CommerceOrderTypeRel findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceOrderTypeRel findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchOrderTypeRelException;
 
 	/**
-	 * Returns the commerce order type rel where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
 	 */
-	public CommerceOrderTypeRel fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public CommerceOrderTypeRel fetchByERC_C(
+		String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the commerce order type rel where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
 	 */
-	public CommerceOrderTypeRel fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public CommerceOrderTypeRel fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the commerce order type rel where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the commerce order type rel where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the commerce order type rel that was removed
 	 */
-	public CommerceOrderTypeRel removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceOrderTypeRel removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchOrderTypeRelException;
 
 	/**
-	 * Returns the number of commerce order type rels where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of commerce order type rels where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching commerce order type rels
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the commerce order type rel in the entity cache if it is enabled.

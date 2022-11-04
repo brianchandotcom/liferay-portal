@@ -283,48 +283,21 @@ public abstract class CommerceOrderTypeLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the commerce order type with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type's external reference code
-	 * @return the matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
 	@Override
 	public CommerceOrderType fetchCommerceOrderTypeByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
-		return commerceOrderTypePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderTypePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderTypeByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceOrderType fetchCommerceOrderTypeByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchCommerceOrderTypeByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce order type with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type's external reference code
-	 * @return the matching commerce order type
-	 * @throws PortalException if a matching commerce order type could not be found
-	 */
 	@Override
 	public CommerceOrderType getCommerceOrderTypeByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return commerceOrderTypePersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderTypePersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

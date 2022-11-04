@@ -275,48 +275,21 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 		return commerceOrderItemPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the commerce order item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order item's external reference code
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
 	@Override
 	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
-		return commerceOrderItemPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderItemPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderItemByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceOrderItem fetchCommerceOrderItemByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchCommerceOrderItemByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce order item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order item's external reference code
-	 * @return the matching commerce order item
-	 * @throws PortalException if a matching commerce order item could not be found
-	 */
 	@Override
 	public CommerceOrderItem getCommerceOrderItemByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return commerceOrderItemPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderItemPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

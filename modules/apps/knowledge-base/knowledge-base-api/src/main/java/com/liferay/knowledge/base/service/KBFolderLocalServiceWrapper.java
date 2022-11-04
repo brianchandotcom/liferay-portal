@@ -280,33 +280,13 @@ public class KBFolderLocalServiceWrapper
 		return _kbFolderLocalService.fetchKBFolder(uuid, groupId);
 	}
 
-	/**
-	 * Returns the kb folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb folder's external reference code
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder
 		fetchKBFolderByExternalReferenceCode(
-			long groupId, String externalReferenceCode) {
+			String externalReferenceCode, long groupId) {
 
 		return _kbFolderLocalService.fetchKBFolderByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBFolderByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.knowledge.base.model.KBFolder
-		fetchKBFolderByReferenceCode(
-			long groupId, String externalReferenceCode) {
-
-		return _kbFolderLocalService.fetchKBFolderByReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 	}
 
 	@Override
@@ -372,22 +352,14 @@ public class KBFolderLocalServiceWrapper
 		return _kbFolderLocalService.getKBFolder(kbFolderId);
 	}
 
-	/**
-	 * Returns the kb folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb folder's external reference code
-	 * @return the matching kb folder
-	 * @throws PortalException if a matching kb folder could not be found
-	 */
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder
 			getKBFolderByExternalReferenceCode(
-				long groupId, String externalReferenceCode)
+				String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbFolderLocalService.getKBFolderByExternalReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 	}
 
 	@Override

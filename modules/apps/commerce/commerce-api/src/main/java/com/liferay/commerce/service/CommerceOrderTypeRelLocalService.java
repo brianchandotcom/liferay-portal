@@ -220,25 +220,10 @@ public interface CommerceOrderTypeRelLocalService
 	public CommerceOrderTypeRel fetchCommerceOrderTypeRel(
 		long commerceOrderTypeRelId);
 
-	/**
-	 * Returns the commerce order type rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type rel's external reference code
-	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderTypeRel
 		fetchCommerceOrderTypeRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderTypeRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderTypeRel fetchCommerceOrderTypeRelByReferenceCode(
-		long companyId, String externalReferenceCode);
+			String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the commerce order type rel with the matching UUID and company.
@@ -276,17 +261,9 @@ public interface CommerceOrderTypeRelLocalService
 			long commerceOrderTypeRelId)
 		throws PortalException;
 
-	/**
-	 * Returns the commerce order type rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type rel's external reference code
-	 * @return the matching commerce order type rel
-	 * @throws PortalException if a matching commerce order type rel could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderTypeRel getCommerceOrderTypeRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

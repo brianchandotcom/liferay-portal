@@ -262,35 +262,14 @@ public class BatchEngineExportTaskLocalServiceWrapper
 			batchEngineExportTaskId);
 	}
 
-	/**
-	 * Returns the batch engine export task with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the batch engine export task's external reference code
-	 * @return the matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
 	@Override
 	public com.liferay.batch.engine.model.BatchEngineExportTask
 		fetchBatchEngineExportTaskByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _batchEngineExportTaskLocalService.
 			fetchBatchEngineExportTaskByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchEngineExportTaskByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.batch.engine.model.BatchEngineExportTask
-		fetchBatchEngineExportTaskByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _batchEngineExportTaskLocalService.
-			fetchBatchEngineExportTaskByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -332,23 +311,15 @@ public class BatchEngineExportTaskLocalServiceWrapper
 			batchEngineExportTaskId);
 	}
 
-	/**
-	 * Returns the batch engine export task with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the batch engine export task's external reference code
-	 * @return the matching batch engine export task
-	 * @throws PortalException if a matching batch engine export task could not be found
-	 */
 	@Override
 	public com.liferay.batch.engine.model.BatchEngineExportTask
 			getBatchEngineExportTaskByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchEngineExportTaskLocalService.
 			getBatchEngineExportTaskByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

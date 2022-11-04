@@ -1134,57 +1134,57 @@ public interface LayoutUtilityPageEntryPersistence
 	public int countByG_N_T(long groupId, String name, int type);
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching layout utility page entry
 	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
-	public LayoutUtilityPageEntry findByG_ERC(
-			long groupId, String externalReferenceCode)
+	public LayoutUtilityPageEntry findByERC_G(
+			String externalReferenceCode, long groupId)
 		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
-	public LayoutUtilityPageEntry fetchByG_ERC(
-		long groupId, String externalReferenceCode);
+	public LayoutUtilityPageEntry fetchByERC_G(
+		String externalReferenceCode, long groupId);
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
 	 */
-	public LayoutUtilityPageEntry fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache);
+	public LayoutUtilityPageEntry fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache);
 
 	/**
-	 * Removes the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the layout utility page entry that was removed
 	 */
-	public LayoutUtilityPageEntry removeByG_ERC(
-			long groupId, String externalReferenceCode)
+	public LayoutUtilityPageEntry removeByERC_G(
+			String externalReferenceCode, long groupId)
 		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
-	 * Returns the number of layout utility page entries where groupId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of layout utility page entries where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the number of matching layout utility page entries
 	 */
-	public int countByG_ERC(long groupId, String externalReferenceCode);
+	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
 	 * Caches the layout utility page entry in the entity cache if it is enabled.

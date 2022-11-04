@@ -1729,57 +1729,57 @@ public interface CommerceTermEntryPersistence
 	public int countByC_P_T(long companyId, double priority, String type);
 
 	/**
-	 * Returns the commerce term entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.
+	 * Returns the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTermEntryException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce term entry
 	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
 	 */
-	public CommerceTermEntry findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceTermEntry findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchTermEntryException;
 
 	/**
-	 * Returns the commerce term entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
 	 */
-	public CommerceTermEntry fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public CommerceTermEntry fetchByERC_C(
+		String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the commerce term entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
 	 */
-	public CommerceTermEntry fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public CommerceTermEntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the commerce term entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the commerce term entry that was removed
 	 */
-	public CommerceTermEntry removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceTermEntry removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchTermEntryException;
 
 	/**
-	 * Returns the number of commerce term entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of commerce term entries where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching commerce term entries
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the commerce term entry in the entity cache if it is enabled.

@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.knowledge.base.exception.DuplicateKBFolderExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
@@ -192,6 +193,26 @@ public class KBFolderPersistenceTest {
 			Time.getShortTimestamp(newKBFolder.getLastPublishDate()));
 	}
 
+	@Test(expected = DuplicateKBFolderExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		KBFolder kbFolder = addKBFolder();
+
+		KBFolder newKBFolder = addKBFolder();
+
+		newKBFolder.setGroupId(kbFolder.getGroupId());
+
+		newKBFolder = _persistence.update(newKBFolder);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newKBFolder);
+
+		newKBFolder.setExternalReferenceCode(
+			kbFolder.getExternalReferenceCode());
+
+		_persistence.update(newKBFolder);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -255,12 +276,12 @@ public class KBFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_ERC() throws Exception {
-		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
-		_persistence.countByG_ERC(0L, "null");
+		_persistence.countByERC_G("null", 0L);
 
-		_persistence.countByG_ERC(0L, (String)null);
+		_persistence.countByERC_G((String)null, 0L);
 	}
 
 	@Test
@@ -596,15 +617,15 @@ public class KBFolderPersistenceTest {
 				new Class<?>[] {String.class}, "urlTitle"));
 
 		Assert.assertEquals(
-			Long.valueOf(kbFolder.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				kbFolder, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
 			kbFolder.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				kbFolder, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(kbFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				kbFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected KBFolder addKBFolder() throws Exception {

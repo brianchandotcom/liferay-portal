@@ -1947,73 +1947,73 @@ public class DispatchTriggerUtil {
 	}
 
 	/**
-	 * Returns the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
+	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching dispatch trigger
 	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
 	 */
-	public static DispatchTrigger findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public static DispatchTrigger findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws com.liferay.dispatch.exception.NoSuchTriggerException {
 
-		return getPersistence().findByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
-	 * Returns the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
-	public static DispatchTrigger fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public static DispatchTrigger fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
-	 * Returns the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
-	public static DispatchTrigger fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public static DispatchTrigger fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_ERC(
-			companyId, externalReferenceCode, useFinderCache);
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
 	}
 
 	/**
-	 * Removes the dispatch trigger where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the dispatch trigger where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the dispatch trigger that was removed
 	 */
-	public static DispatchTrigger removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public static DispatchTrigger removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws com.liferay.dispatch.exception.NoSuchTriggerException {
 
-		return getPersistence().removeByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of dispatch triggers where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching dispatch triggers
 	 */
-	public static int countByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return getPersistence().countByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**

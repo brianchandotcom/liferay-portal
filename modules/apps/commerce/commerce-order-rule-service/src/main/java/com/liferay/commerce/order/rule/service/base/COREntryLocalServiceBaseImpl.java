@@ -273,48 +273,21 @@ public abstract class COREntryLocalServiceBaseImpl
 		return corEntryPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the cor entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the cor entry's external reference code
-	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
-	 */
 	@Override
 	public COREntry fetchCOREntryByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
-		return corEntryPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return corEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCOREntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public COREntry fetchCOREntryByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchCOREntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the cor entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the cor entry's external reference code
-	 * @return the matching cor entry
-	 * @throws PortalException if a matching cor entry could not be found
-	 */
 	@Override
 	public COREntry getCOREntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return corEntryPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return corEntryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

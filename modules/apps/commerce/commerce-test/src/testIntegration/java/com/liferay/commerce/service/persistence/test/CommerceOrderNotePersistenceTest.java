@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.exception.DuplicateCommerceOrderNoteExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchOrderNoteException;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteLocalServiceUtil;
@@ -196,6 +197,28 @@ public class CommerceOrderNotePersistenceTest {
 			newCommerceOrderNote.isRestricted());
 	}
 
+	@Test(
+		expected = DuplicateCommerceOrderNoteExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommerceOrderNote commerceOrderNote = addCommerceOrderNote();
+
+		CommerceOrderNote newCommerceOrderNote = addCommerceOrderNote();
+
+		newCommerceOrderNote.setCompanyId(commerceOrderNote.getCompanyId());
+
+		newCommerceOrderNote = _persistence.update(newCommerceOrderNote);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommerceOrderNote);
+
+		newCommerceOrderNote.setExternalReferenceCode(
+			commerceOrderNote.getExternalReferenceCode());
+
+		_persistence.update(newCommerceOrderNote);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -239,12 +262,12 @@ public class CommerceOrderNotePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -564,15 +587,15 @@ public class CommerceOrderNotePersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(commerceOrderNote.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				commerceOrderNote, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			commerceOrderNote.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commerceOrderNote, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commerceOrderNote.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceOrderNote, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommerceOrderNote addCommerceOrderNote() throws Exception {

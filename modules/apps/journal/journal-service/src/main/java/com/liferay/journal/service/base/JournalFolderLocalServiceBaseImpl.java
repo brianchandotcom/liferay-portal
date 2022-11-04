@@ -279,48 +279,21 @@ public abstract class JournalFolderLocalServiceBaseImpl
 		return journalFolderPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
-	/**
-	 * Returns the journal folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the journal folder's external reference code
-	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 */
 	@Override
 	public JournalFolder fetchJournalFolderByExternalReferenceCode(
-		long groupId, String externalReferenceCode) {
+		String externalReferenceCode, long groupId) {
 
-		return journalFolderPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
+		return journalFolderPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchJournalFolderByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public JournalFolder fetchJournalFolderByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return fetchJournalFolderByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the journal folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the journal folder's external reference code
-	 * @return the matching journal folder
-	 * @throws PortalException if a matching journal folder could not be found
-	 */
 	@Override
 	public JournalFolder getJournalFolderByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		return journalFolderPersistence.findByG_ERC(
-			groupId, externalReferenceCode);
+		return journalFolderPersistence.findByERC_G(
+			externalReferenceCode, groupId);
 	}
 
 	/**

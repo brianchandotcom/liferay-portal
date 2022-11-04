@@ -271,29 +271,11 @@ public class CommerceShipmentLocalServiceUtil {
 		return getService().fetchCommerceShipment(commerceShipmentId);
 	}
 
-	/**
-	 * Returns the commerce shipment with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce shipment's external reference code
-	 * @return the matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
-	 */
 	public static CommerceShipment fetchCommerceShipmentByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
 		return getService().fetchCommerceShipmentByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceShipmentByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static CommerceShipment fetchCommerceShipmentByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return getService().fetchCommerceShipmentByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -329,20 +311,12 @@ public class CommerceShipmentLocalServiceUtil {
 		return getService().getCommerceShipment(commerceShipmentId);
 	}
 
-	/**
-	 * Returns the commerce shipment with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce shipment's external reference code
-	 * @return the matching commerce shipment
-	 * @throws PortalException if a matching commerce shipment could not be found
-	 */
 	public static CommerceShipment getCommerceShipmentByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getCommerceShipmentByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

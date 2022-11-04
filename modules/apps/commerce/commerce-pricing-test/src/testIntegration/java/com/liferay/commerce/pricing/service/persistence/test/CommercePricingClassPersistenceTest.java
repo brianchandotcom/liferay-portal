@@ -15,6 +15,7 @@
 package com.liferay.commerce.pricing.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.pricing.exception.DuplicateCommercePricingClassExternalReferenceCodeException;
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalServiceUtil;
@@ -204,6 +205,30 @@ public class CommercePricingClassPersistenceTest {
 				newCommercePricingClass.getLastPublishDate()));
 	}
 
+	@Test(
+		expected = DuplicateCommercePricingClassExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommercePricingClass commercePricingClass = addCommercePricingClass();
+
+		CommercePricingClass newCommercePricingClass =
+			addCommercePricingClass();
+
+		newCommercePricingClass.setCompanyId(
+			commercePricingClass.getCompanyId());
+
+		newCommercePricingClass = _persistence.update(newCommercePricingClass);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommercePricingClass);
+
+		newCommercePricingClass.setExternalReferenceCode(
+			commercePricingClass.getExternalReferenceCode());
+
+		_persistence.update(newCommercePricingClass);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -230,12 +255,12 @@ public class CommercePricingClassPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -567,15 +592,15 @@ public class CommercePricingClassPersistenceTest {
 		CommercePricingClass commercePricingClass) {
 
 		Assert.assertEquals(
-			Long.valueOf(commercePricingClass.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				commercePricingClass, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			commercePricingClass.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commercePricingClass, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commercePricingClass.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commercePricingClass, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommercePricingClass addCommercePricingClass() throws Exception {

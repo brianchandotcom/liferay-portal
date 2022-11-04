@@ -227,24 +227,9 @@ public interface CommerceOrderNoteLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderNote fetchCommerceOrderNote(long commerceOrderNoteId);
 
-	/**
-	 * Returns the commerce order note with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order note's external reference code
-	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderNote fetchCommerceOrderNoteByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderNoteByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderNote fetchCommerceOrderNoteByReferenceCode(
-		long companyId, String externalReferenceCode);
+		String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the commerce order note matching the UUID and group.
@@ -271,17 +256,9 @@ public interface CommerceOrderNoteLocalService
 	public CommerceOrderNote getCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException;
 
-	/**
-	 * Returns the commerce order note with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order note's external reference code
-	 * @return the matching commerce order note
-	 * @throws PortalException if a matching commerce order note could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderNote getCommerceOrderNoteByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

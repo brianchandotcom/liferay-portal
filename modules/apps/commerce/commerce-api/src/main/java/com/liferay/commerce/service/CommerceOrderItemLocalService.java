@@ -260,24 +260,9 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem fetchCommerceOrderItemByBookedQuantityId(
 		long bookedQuantityId);
 
-	/**
-	 * Returns the commerce order item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order item's external reference code
-	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderItemByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderItem fetchCommerceOrderItemByReferenceCode(
-		long companyId, String externalReferenceCode);
+		String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the commerce order item matching the UUID and group.
@@ -317,17 +302,9 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem getCommerceOrderItem(long commerceOrderItemId)
 		throws PortalException;
 
-	/**
-	 * Returns the commerce order item with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order item's external reference code
-	 * @return the matching commerce order item
-	 * @throws PortalException if a matching commerce order item could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderItem getCommerceOrderItemByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

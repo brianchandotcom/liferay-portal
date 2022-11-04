@@ -292,35 +292,14 @@ public class CommerceOrderNoteLocalServiceWrapper
 			commerceOrderNoteId);
 	}
 
-	/**
-	 * Returns the commerce order note with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order note's external reference code
-	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderNote
 		fetchCommerceOrderNoteByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _commerceOrderNoteLocalService.
 			fetchCommerceOrderNoteByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderNoteByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CommerceOrderNote
-		fetchCommerceOrderNoteByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _commerceOrderNoteLocalService.
-			fetchCommerceOrderNoteByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -361,23 +340,15 @@ public class CommerceOrderNoteLocalServiceWrapper
 			commerceOrderNoteId);
 	}
 
-	/**
-	 * Returns the commerce order note with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order note's external reference code
-	 * @return the matching commerce order note
-	 * @throws PortalException if a matching commerce order note could not be found
-	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrderNote
 			getCommerceOrderNoteByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderNoteLocalService.
 			getCommerceOrderNoteByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

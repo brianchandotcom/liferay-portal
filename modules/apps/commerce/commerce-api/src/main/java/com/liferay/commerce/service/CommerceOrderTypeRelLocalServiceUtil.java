@@ -242,30 +242,12 @@ public class CommerceOrderTypeRelLocalServiceUtil {
 		return getService().fetchCommerceOrderTypeRel(commerceOrderTypeRelId);
 	}
 
-	/**
-	 * Returns the commerce order type rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type rel's external reference code
-	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
-	 */
 	public static CommerceOrderTypeRel
 		fetchCommerceOrderTypeRelByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return getService().fetchCommerceOrderTypeRelByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderTypeRelByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static CommerceOrderTypeRel fetchCommerceOrderTypeRelByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return getService().fetchCommerceOrderTypeRelByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -320,21 +302,13 @@ public class CommerceOrderTypeRelLocalServiceUtil {
 		return getService().getCommerceOrderTypeRel(commerceOrderTypeRelId);
 	}
 
-	/**
-	 * Returns the commerce order type rel with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type rel's external reference code
-	 * @return the matching commerce order type rel
-	 * @throws PortalException if a matching commerce order type rel could not be found
-	 */
 	public static CommerceOrderTypeRel
 			getCommerceOrderTypeRelByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getCommerceOrderTypeRelByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

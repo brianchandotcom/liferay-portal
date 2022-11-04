@@ -1322,57 +1322,57 @@ public interface CommerceOrderItemPersistence
 	public int countByC_S(long commerceOrderId, boolean subscription);
 
 	/**
-	 * Returns the commerce order item where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
+	 * Returns the commerce order item where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce order item
 	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceOrderItem findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchOrderItemException;
 
 	/**
-	 * Returns the commerce order item where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce order item where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public CommerceOrderItem fetchByERC_C(
+		String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the commerce order item where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce order item where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
-	public CommerceOrderItem fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public CommerceOrderItem fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the commerce order item where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the commerce order item where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the commerce order item that was removed
 	 */
-	public CommerceOrderItem removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceOrderItem removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchOrderItemException;
 
 	/**
-	 * Returns the number of commerce order items where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of commerce order items where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching commerce order items
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the commerce order item in the entity cache if it is enabled.

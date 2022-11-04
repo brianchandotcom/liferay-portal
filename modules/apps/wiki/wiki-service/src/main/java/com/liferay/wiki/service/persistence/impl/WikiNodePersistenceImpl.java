@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.wiki.exception.DuplicateWikiNodeExternalReferenceCodeException;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeTable;
@@ -4508,33 +4509,33 @@ public class WikiNodePersistenceImpl
 	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
 		"wikiNode.status = ?";
 
-	private FinderPath _finderPathFetchByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
 
 	/**
-	 * Returns the wiki node where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchNodeException</code> if it could not be found.
+	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchNodeException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching wiki node
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	@Override
-	public WikiNode findByG_ERC(long groupId, String externalReferenceCode)
+	public WikiNode findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchNodeException {
 
-		WikiNode wikiNode = fetchByG_ERC(groupId, externalReferenceCode);
+		WikiNode wikiNode = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (wikiNode == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
 
 			sb.append("}");
 
@@ -4549,51 +4550,51 @@ public class WikiNodePersistenceImpl
 	}
 
 	/**
-	 * Returns the wiki node where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	@Override
-	public WikiNode fetchByG_ERC(long groupId, String externalReferenceCode) {
-		return fetchByG_ERC(groupId, externalReferenceCode, true);
+	public WikiNode fetchByERC_G(String externalReferenceCode, long groupId) {
+		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
-	 * Returns the wiki node where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	@Override
-	public WikiNode fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
+	public WikiNode fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, groupId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_ERC, finderArgs, this);
+				_finderPathFetchByERC_G, finderArgs, this);
 		}
 
 		if (result instanceof WikiNode) {
 			WikiNode wikiNode = (WikiNode)result;
 
-			if ((groupId != wikiNode.getGroupId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					wikiNode.getExternalReferenceCode())) {
+					wikiNode.getExternalReferenceCode()) ||
+				(groupId != wikiNode.getGroupId())) {
 
 				result = null;
 			}
@@ -4604,18 +4605,18 @@ public class WikiNodePersistenceImpl
 
 			sb.append(_SQL_SELECT_WIKINODE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -4628,18 +4629,18 @@ public class WikiNodePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				List<WikiNode> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByG_ERC, finderArgs, list);
+							_finderPathFetchByERC_G, finderArgs, list);
 					}
 				}
 				else {
@@ -4667,35 +4668,35 @@ public class WikiNodePersistenceImpl
 	}
 
 	/**
-	 * Removes the wiki node where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the wiki node where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the wiki node that was removed
 	 */
 	@Override
-	public WikiNode removeByG_ERC(long groupId, String externalReferenceCode)
+	public WikiNode removeByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchNodeException {
 
-		WikiNode wikiNode = findByG_ERC(groupId, externalReferenceCode);
+		WikiNode wikiNode = findByERC_G(externalReferenceCode, groupId);
 
 		return remove(wikiNode);
 	}
 
 	/**
-	 * Returns the number of wiki nodes where groupId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of wiki nodes where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the number of matching wiki nodes
 	 */
 	@Override
-	public int countByG_ERC(long groupId, String externalReferenceCode) {
+	public int countByERC_G(String externalReferenceCode, long groupId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByG_ERC;
+		FinderPath finderPath = _finderPathCountByERC_G;
 
-		Object[] finderArgs = new Object[] {groupId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -4704,18 +4705,18 @@ public class WikiNodePersistenceImpl
 
 			sb.append(_SQL_COUNT_WIKINODE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -4728,11 +4729,11 @@ public class WikiNodePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				count = (Long)query.uniqueResult();
 
@@ -4749,14 +4750,14 @@ public class WikiNodePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
-		"wikiNode.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"wikiNode.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
-		"wikiNode.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(wikiNode.externalReferenceCode IS NULL OR wikiNode.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
-		"(wikiNode.externalReferenceCode IS NULL OR wikiNode.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"wikiNode.groupId = ?";
 
 	public WikiNodePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -4792,9 +4793,9 @@ public class WikiNodePersistenceImpl
 			new Object[] {wikiNode.getGroupId(), wikiNode.getName()}, wikiNode);
 
 		finderCache.putResult(
-			_finderPathFetchByG_ERC,
+			_finderPathFetchByERC_G,
 			new Object[] {
-				wikiNode.getGroupId(), wikiNode.getExternalReferenceCode()
+				wikiNode.getExternalReferenceCode(), wikiNode.getGroupId()
 			},
 			wikiNode);
 	}
@@ -4885,12 +4886,12 @@ public class WikiNodePersistenceImpl
 		finderCache.putResult(_finderPathFetchByG_N, args, wikiNodeModelImpl);
 
 		args = new Object[] {
-			wikiNodeModelImpl.getGroupId(),
-			wikiNodeModelImpl.getExternalReferenceCode()
+			wikiNodeModelImpl.getExternalReferenceCode(),
+			wikiNodeModelImpl.getGroupId()
 		};
 
-		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
-		finderCache.putResult(_finderPathFetchByG_ERC, args, wikiNodeModelImpl);
+		finderCache.putResult(_finderPathCountByERC_G, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathFetchByERC_G, args, wikiNodeModelImpl);
 	}
 
 	/**
@@ -5026,6 +5027,27 @@ public class WikiNodePersistenceImpl
 
 		if (Validator.isNull(wikiNode.getExternalReferenceCode())) {
 			wikiNode.setExternalReferenceCode(wikiNode.getUuid());
+		}
+		else {
+			WikiNode ercWikiNode = fetchByERC_G(
+				wikiNode.getExternalReferenceCode(), wikiNode.getGroupId());
+
+			if (isNew) {
+				if (ercWikiNode != null) {
+					throw new DuplicateWikiNodeExternalReferenceCodeException(
+						"Duplicate WikiNode with external reference code " +
+							wikiNode.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercWikiNode != null) &&
+					(wikiNode.getNodeId() != ercWikiNode.getNodeId())) {
+
+					throw new DuplicateWikiNodeExternalReferenceCodeException(
+						"Duplicate WikiNode with external reference code " +
+							wikiNode.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -5487,15 +5509,15 @@ public class WikiNodePersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_finderPathFetchByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
 
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		_setWikiNodeUtilPersistence(this);
 	}

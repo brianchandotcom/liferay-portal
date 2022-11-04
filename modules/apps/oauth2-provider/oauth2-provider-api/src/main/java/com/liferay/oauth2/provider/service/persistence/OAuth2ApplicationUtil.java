@@ -1241,75 +1241,75 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the o auth2 application where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchOAuth2ApplicationException</code> if it could not be found.
+	 * Returns the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOAuth2ApplicationException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching o auth2 application
 	 * @throws NoSuchOAuth2ApplicationException if a matching o auth2 application could not be found
 	 */
-	public static OAuth2Application findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public static OAuth2Application findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws com.liferay.oauth2.provider.exception.
 			NoSuchOAuth2ApplicationException {
 
-		return getPersistence().findByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
-	 * Returns the o auth2 application where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
-	public static OAuth2Application fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public static OAuth2Application fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
-	 * Returns the o auth2 application where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
-	public static OAuth2Application fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public static OAuth2Application fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_ERC(
-			companyId, externalReferenceCode, useFinderCache);
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
 	}
 
 	/**
-	 * Removes the o auth2 application where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the o auth2 application that was removed
 	 */
-	public static OAuth2Application removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public static OAuth2Application removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws com.liferay.oauth2.provider.exception.
 			NoSuchOAuth2ApplicationException {
 
-		return getPersistence().removeByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
-	 * Returns the number of o auth2 applications where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of o auth2 applications where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching o auth2 applications
 	 */
-	public static int countByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return getPersistence().countByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**

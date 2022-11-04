@@ -14,13 +14,13 @@
 
 package com.liferay.oauth2.provider.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DuplicateOAuth2ApplicationExternalReferenceCodeException
-	extends PortalException {
+	extends SystemException {
 
 	public DuplicateOAuth2ApplicationExternalReferenceCodeException() {
 	}

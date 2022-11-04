@@ -288,48 +288,21 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the commerce term entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce term entry's external reference code
-	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
 	@Override
 	public CommerceTermEntry fetchCommerceTermEntryByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
-		return commerceTermEntryPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceTermEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceTermEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceTermEntry fetchCommerceTermEntryByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchCommerceTermEntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the commerce term entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce term entry's external reference code
-	 * @return the matching commerce term entry
-	 * @throws PortalException if a matching commerce term entry could not be found
-	 */
 	@Override
 	public CommerceTermEntry getCommerceTermEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return commerceTermEntryPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceTermEntryPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.pricing.service.persistence.impl;
 
+import com.liferay.commerce.pricing.exception.DuplicateCommercePriceModifierExternalReferenceCodeException;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.model.CommercePriceModifierTable;
@@ -6152,35 +6153,35 @@ public class CommercePriceModifierPersistenceImpl
 	private static final String _FINDER_COLUMN_G_C_NOTS_STATUS_2 =
 		"commercePriceModifier.status != ?";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the commerce price modifier where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchPriceModifierException</code> if it could not be found.
+	 * Returns the commerce price modifier where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceModifierException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce price modifier
 	 * @throws NoSuchPriceModifierException if a matching commerce price modifier could not be found
 	 */
 	@Override
-	public CommercePriceModifier findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommercePriceModifier findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchPriceModifierException {
 
-		CommercePriceModifier commercePriceModifier = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		CommercePriceModifier commercePriceModifier = fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (commercePriceModifier == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -6195,30 +6196,30 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Returns the commerce price modifier where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce price modifier where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
 	 */
 	@Override
-	public CommercePriceModifier fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public CommercePriceModifier fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the commerce price modifier where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce price modifier where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
 	 */
 	@Override
-	public CommercePriceModifier fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public CommercePriceModifier fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
@@ -6228,24 +6229,24 @@ public class CommercePriceModifierPersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof CommercePriceModifier) {
 			CommercePriceModifier commercePriceModifier =
 				(CommercePriceModifier)result;
 
-			if ((companyId != commercePriceModifier.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					commercePriceModifier.getExternalReferenceCode())) {
+					commercePriceModifier.getExternalReferenceCode()) ||
+				(companyId != commercePriceModifier.getCompanyId())) {
 
 				result = null;
 			}
@@ -6256,18 +6257,18 @@ public class CommercePriceModifierPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEPRICEMODIFIER_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -6280,18 +6281,18 @@ public class CommercePriceModifierPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<CommercePriceModifier> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -6319,32 +6320,32 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Removes the commerce price modifier where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the commerce price modifier where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the commerce price modifier that was removed
 	 */
 	@Override
-	public CommercePriceModifier removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommercePriceModifier removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchPriceModifierException {
 
-		CommercePriceModifier commercePriceModifier = findByC_ERC(
-			companyId, externalReferenceCode);
+		CommercePriceModifier commercePriceModifier = findByERC_C(
+			externalReferenceCode, companyId);
 
 		return remove(commercePriceModifier);
 	}
 
 	/**
-	 * Returns the number of commerce price modifiers where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of commerce price modifiers where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching commerce price modifiers
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -6356,9 +6357,9 @@ public class CommercePriceModifierPersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByC_ERC;
+			finderPath = _finderPathCountByERC_C;
 
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
@@ -6368,18 +6369,18 @@ public class CommercePriceModifierPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEPRICEMODIFIER_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -6392,11 +6393,11 @@ public class CommercePriceModifierPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -6415,14 +6416,14 @@ public class CommercePriceModifierPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"commercePriceModifier.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"commercePriceModifier.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"commercePriceModifier.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(commercePriceModifier.externalReferenceCode IS NULL OR commercePriceModifier.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(commercePriceModifier.externalReferenceCode IS NULL OR commercePriceModifier.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"commercePriceModifier.companyId = ?";
 
 	public CommercePriceModifierPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -6464,10 +6465,10 @@ public class CommercePriceModifierPersistenceImpl
 			commercePriceModifier);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				commercePriceModifier.getCompanyId(),
-				commercePriceModifier.getExternalReferenceCode()
+				commercePriceModifier.getExternalReferenceCode(),
+				commercePriceModifier.getCompanyId()
 			},
 			commercePriceModifier);
 	}
@@ -6567,13 +6568,13 @@ public class CommercePriceModifierPersistenceImpl
 			_finderPathFetchByUUID_G, args, commercePriceModifierModelImpl);
 
 		args = new Object[] {
-			commercePriceModifierModelImpl.getCompanyId(),
-			commercePriceModifierModelImpl.getExternalReferenceCode()
+			commercePriceModifierModelImpl.getExternalReferenceCode(),
+			commercePriceModifierModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, commercePriceModifierModelImpl);
+			_finderPathFetchByERC_C, args, commercePriceModifierModelImpl);
 	}
 
 	/**
@@ -6729,6 +6730,30 @@ public class CommercePriceModifierPersistenceImpl
 
 			commercePriceModifier.setExternalReferenceCode(
 				commercePriceModifier.getUuid());
+		}
+		else {
+			CommercePriceModifier ercCommercePriceModifier = fetchByERC_C(
+				commercePriceModifier.getExternalReferenceCode(),
+				commercePriceModifier.getCompanyId());
+
+			if (isNew) {
+				if (ercCommercePriceModifier != null) {
+					throw new DuplicateCommercePriceModifierExternalReferenceCodeException(
+						"Duplicate CommercePriceModifier with external reference code " +
+							commercePriceModifier.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercCommercePriceModifier != null) &&
+					(commercePriceModifier.getCommercePriceModifierId() !=
+						ercCommercePriceModifier.
+							getCommercePriceModifierId())) {
+
+					throw new DuplicateCommercePriceModifierExternalReferenceCodeException(
+						"Duplicate CommercePriceModifier with external reference code " +
+							commercePriceModifier.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -7287,7 +7312,7 @@ public class CommercePriceModifierPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"companyId", "externalReferenceCode"});
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -7490,15 +7515,15 @@ public class CommercePriceModifierPersistenceImpl
 			},
 			new String[] {"groupId", "companyId", "status"}, false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setCommercePriceModifierUtilPersistence(this);
 	}

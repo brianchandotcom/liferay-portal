@@ -234,31 +234,12 @@ public class BatchEngineExportTaskLocalServiceUtil {
 		return getService().fetchBatchEngineExportTask(batchEngineExportTaskId);
 	}
 
-	/**
-	 * Returns the batch engine export task with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the batch engine export task's external reference code
-	 * @return the matching batch engine export task, or <code>null</code> if a matching batch engine export task could not be found
-	 */
 	public static BatchEngineExportTask
 		fetchBatchEngineExportTaskByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return getService().fetchBatchEngineExportTaskByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBatchEngineExportTaskByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static BatchEngineExportTask
-		fetchBatchEngineExportTaskByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return getService().fetchBatchEngineExportTaskByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -296,21 +277,13 @@ public class BatchEngineExportTaskLocalServiceUtil {
 		return getService().getBatchEngineExportTask(batchEngineExportTaskId);
 	}
 
-	/**
-	 * Returns the batch engine export task with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the batch engine export task's external reference code
-	 * @return the matching batch engine export task
-	 * @throws PortalException if a matching batch engine export task could not be found
-	 */
 	public static BatchEngineExportTask
 			getBatchEngineExportTaskByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getBatchEngineExportTaskByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

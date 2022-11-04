@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service.persistence.impl;
 
+import com.liferay.message.boards.exception.DuplicateMBMessageExternalReferenceCodeException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageTable;
@@ -21126,33 +21127,33 @@ public class MBMessagePersistenceImpl
 	private static final String _FINDER_COLUMN_U_C_C_S_STATUS_2 =
 		"mbMessage.status = ?";
 
-	private FinderPath _finderPathFetchByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
+	private FinderPath _finderPathFetchByERC_G;
+	private FinderPath _finderPathCountByERC_G;
 
 	/**
-	 * Returns the message-boards message where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching message-boards message
 	 * @throws NoSuchMessageException if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage findByG_ERC(long groupId, String externalReferenceCode)
+	public MBMessage findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_ERC(groupId, externalReferenceCode);
+		MBMessage mbMessage = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (mbMessage == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
 
 			sb.append("}");
 
@@ -21167,28 +21168,28 @@ public class MBMessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the message-boards message where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage fetchByG_ERC(long groupId, String externalReferenceCode) {
-		return fetchByG_ERC(groupId, externalReferenceCode, true);
+	public MBMessage fetchByERC_G(String externalReferenceCode, long groupId) {
+		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
-	 * Returns the message-boards message where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	 */
 	@Override
-	public MBMessage fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
+	public MBMessage fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
@@ -21198,23 +21199,23 @@ public class MBMessagePersistenceImpl
 		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
-			finderArgs = new Object[] {groupId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, groupId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
-				_finderPathFetchByG_ERC, finderArgs, this);
+				_finderPathFetchByERC_G, finderArgs, this);
 		}
 
 		if (result instanceof MBMessage) {
 			MBMessage mbMessage = (MBMessage)result;
 
-			if ((groupId != mbMessage.getGroupId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					mbMessage.getExternalReferenceCode())) {
+					mbMessage.getExternalReferenceCode()) ||
+				(groupId != mbMessage.getGroupId())) {
 
 				result = null;
 			}
@@ -21225,18 +21226,18 @@ public class MBMessagePersistenceImpl
 
 			sb.append(_SQL_SELECT_MBMESSAGE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -21249,18 +21250,18 @@ public class MBMessagePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				List<MBMessage> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByG_ERC, finderArgs, list);
+							_finderPathFetchByERC_G, finderArgs, list);
 					}
 				}
 				else {
@@ -21288,30 +21289,30 @@ public class MBMessagePersistenceImpl
 	}
 
 	/**
-	 * Removes the message-boards message where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the message-boards message where externalReferenceCode = &#63; and groupId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the message-boards message that was removed
 	 */
 	@Override
-	public MBMessage removeByG_ERC(long groupId, String externalReferenceCode)
+	public MBMessage removeByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = findByG_ERC(groupId, externalReferenceCode);
+		MBMessage mbMessage = findByERC_G(externalReferenceCode, groupId);
 
 		return remove(mbMessage);
 	}
 
 	/**
-	 * Returns the number of message-boards messages where groupId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of message-boards messages where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
-	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
 	 * @return the number of matching message-boards messages
 	 */
 	@Override
-	public int countByG_ERC(long groupId, String externalReferenceCode) {
+	public int countByERC_G(String externalReferenceCode, long groupId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -21323,9 +21324,9 @@ public class MBMessagePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByG_ERC;
+			finderPath = _finderPathCountByERC_G;
 
-			finderArgs = new Object[] {groupId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, groupId};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
@@ -21335,18 +21336,18 @@ public class MBMessagePersistenceImpl
 
 			sb.append(_SQL_COUNT_MBMESSAGE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
 
 			String sql = sb.toString();
 
@@ -21359,11 +21360,11 @@ public class MBMessagePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(groupId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(groupId);
 
 				count = (Long)query.uniqueResult();
 
@@ -21382,14 +21383,14 @@ public class MBMessagePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
-		"mbMessage.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"mbMessage.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
-		"mbMessage.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(mbMessage.externalReferenceCode IS NULL OR mbMessage.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
-		"(mbMessage.externalReferenceCode IS NULL OR mbMessage.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"mbMessage.groupId = ?";
 
 	public MBMessagePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -21431,9 +21432,9 @@ public class MBMessagePersistenceImpl
 			mbMessage);
 
 		finderCache.putResult(
-			_finderPathFetchByG_ERC,
+			_finderPathFetchByERC_G,
 			new Object[] {
-				mbMessage.getGroupId(), mbMessage.getExternalReferenceCode()
+				mbMessage.getExternalReferenceCode(), mbMessage.getGroupId()
 			},
 			mbMessage);
 	}
@@ -21528,13 +21529,13 @@ public class MBMessagePersistenceImpl
 		finderCache.putResult(_finderPathFetchByG_US, args, mbMessageModelImpl);
 
 		args = new Object[] {
-			mbMessageModelImpl.getGroupId(),
-			mbMessageModelImpl.getExternalReferenceCode()
+			mbMessageModelImpl.getExternalReferenceCode(),
+			mbMessageModelImpl.getGroupId()
 		};
 
-		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_G, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByG_ERC, args, mbMessageModelImpl);
+			_finderPathFetchByERC_G, args, mbMessageModelImpl);
 	}
 
 	/**
@@ -21674,6 +21675,27 @@ public class MBMessagePersistenceImpl
 
 		if (Validator.isNull(mbMessage.getExternalReferenceCode())) {
 			mbMessage.setExternalReferenceCode(mbMessage.getUuid());
+		}
+		else {
+			MBMessage ercMBMessage = fetchByERC_G(
+				mbMessage.getExternalReferenceCode(), mbMessage.getGroupId());
+
+			if (isNew) {
+				if (ercMBMessage != null) {
+					throw new DuplicateMBMessageExternalReferenceCodeException(
+						"Duplicate MBMessage with external reference code " +
+							mbMessage.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercMBMessage != null) &&
+					(mbMessage.getMessageId() != ercMBMessage.getMessageId())) {
+
+					throw new DuplicateMBMessageExternalReferenceCodeException(
+						"Duplicate MBMessage with external reference code " +
+							mbMessage.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -22245,7 +22267,7 @@ public class MBMessagePersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "urlSubject"});
 
 		_uniqueIndexColumnNames.add(
-			new String[] {"groupId", "externalReferenceCode"});
+			new String[] {"externalReferenceCode", "groupId"});
 	}
 
 	/**
@@ -22894,15 +22916,15 @@ public class MBMessagePersistenceImpl
 			},
 			new String[] {"userId", "classNameId", "classPK", "status"}, false);
 
-		_finderPathFetchByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
 
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, false);
 
 		_setMBMessageUtilPersistence(this);
 	}

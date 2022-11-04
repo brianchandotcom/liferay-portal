@@ -1073,57 +1073,57 @@ public interface CommerceShipmentPersistence
 	public int countByG_S(long[] groupIds, int status);
 
 	/**
-	 * Returns the commerce shipment where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchShipmentException</code> if it could not be found.
+	 * Returns the commerce shipment where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchShipmentException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce shipment
 	 * @throws NoSuchShipmentException if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceShipment findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchShipmentException;
 
 	/**
-	 * Returns the commerce shipment where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce shipment where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment fetchByC_ERC(
-		long companyId, String externalReferenceCode);
+	public CommerceShipment fetchByERC_C(
+		String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the commerce shipment where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce shipment where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
 	 */
-	public CommerceShipment fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public CommerceShipment fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the commerce shipment where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the commerce shipment where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the commerce shipment that was removed
 	 */
-	public CommerceShipment removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceShipment removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchShipmentException;
 
 	/**
-	 * Returns the number of commerce shipments where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of commerce shipments where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching commerce shipments
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the commerce shipment in the entity cache if it is enabled.

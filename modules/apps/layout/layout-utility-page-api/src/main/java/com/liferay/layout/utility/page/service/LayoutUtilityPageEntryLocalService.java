@@ -233,25 +233,10 @@ public interface LayoutUtilityPageEntryLocalService
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
 		long LayoutUtilityPageEntryId);
 
-	/**
-	 * Returns the layout utility page entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the layout utility page entry's external reference code
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry
 		fetchLayoutUtilityPageEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchLayoutUtilityPageEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntryByReferenceCode(
-		long groupId, String externalReferenceCode);
+			String externalReferenceCode, long groupId);
 
 	/**
 	 * Returns the layout utility page entry matching the UUID and group.
@@ -359,18 +344,10 @@ public interface LayoutUtilityPageEntryLocalService
 			long LayoutUtilityPageEntryId)
 		throws PortalException;
 
-	/**
-	 * Returns the layout utility page entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the layout utility page entry's external reference code
-	 * @return the matching layout utility page entry
-	 * @throws PortalException if a matching layout utility page entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry
 			getLayoutUtilityPageEntryByExternalReferenceCode(
-				long groupId, String externalReferenceCode)
+				String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

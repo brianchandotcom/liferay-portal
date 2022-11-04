@@ -321,24 +321,9 @@ public interface BlogsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry fetchBlogsEntry(long entryId);
 
-	/**
-	 * Returns the blogs entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the blogs entry's external reference code
-	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry fetchBlogsEntryByExternalReferenceCode(
-		long groupId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchBlogsEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry fetchBlogsEntryByReferenceCode(
-		long groupId, String externalReferenceCode);
+		String externalReferenceCode, long groupId);
 
 	/**
 	 * Returns the blogs entry matching the UUID and group.
@@ -415,17 +400,9 @@ public interface BlogsEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getBlogsEntry(long entryId) throws PortalException;
 
-	/**
-	 * Returns the blogs entry with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the blogs entry's external reference code
-	 * @return the matching blogs entry
-	 * @throws PortalException if a matching blogs entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getBlogsEntryByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

@@ -232,24 +232,9 @@ public interface CommerceTermEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTermEntry fetchCommerceTermEntry(long commerceTermEntryId);
 
-	/**
-	 * Returns the commerce term entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce term entry's external reference code
-	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTermEntry fetchCommerceTermEntryByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceTermEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTermEntry fetchCommerceTermEntryByReferenceCode(
-		long companyId, String externalReferenceCode);
+		String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the commerce term entry with the matching UUID and company.
@@ -306,17 +291,9 @@ public interface CommerceTermEntryLocalService
 	public CommerceTermEntry getCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException;
 
-	/**
-	 * Returns the commerce term entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce term entry's external reference code
-	 * @return the matching commerce term entry
-	 * @throws PortalException if a matching commerce term entry could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTermEntry getCommerceTermEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

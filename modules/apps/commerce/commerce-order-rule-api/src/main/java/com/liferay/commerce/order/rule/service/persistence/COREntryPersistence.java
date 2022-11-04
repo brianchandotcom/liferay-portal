@@ -1614,54 +1614,54 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 		long companyId, boolean active, String type);
 
 	/**
-	 * Returns the cor entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchCOREntryException</code> if it could not be found.
+	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCOREntryException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching cor entry
 	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
 	 */
-	public COREntry findByC_ERC(long companyId, String externalReferenceCode)
+	public COREntry findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCOREntryException;
 
 	/**
-	 * Returns the cor entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
 	 */
-	public COREntry fetchByC_ERC(long companyId, String externalReferenceCode);
+	public COREntry fetchByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Returns the cor entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
 	 */
-	public COREntry fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public COREntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
 
 	/**
-	 * Removes the cor entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the cor entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the cor entry that was removed
 	 */
-	public COREntry removeByC_ERC(long companyId, String externalReferenceCode)
+	public COREntry removeByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCOREntryException;
 
 	/**
-	 * Returns the number of cor entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of cor entries where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching cor entries
 	 */
-	public int countByC_ERC(long companyId, String externalReferenceCode);
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the cor entry in the entity cache if it is enabled.

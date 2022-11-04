@@ -267,24 +267,9 @@ public interface OAuth2ApplicationLocalService
 	public OAuth2Application fetchOAuth2Application(
 		long companyId, String clientId);
 
-	/**
-	 * Returns the o auth2 application with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the o auth2 application's external reference code
-	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application fetchOAuth2ApplicationByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchOAuth2ApplicationByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OAuth2Application fetchOAuth2ApplicationByReferenceCode(
-		long companyId, String externalReferenceCode);
+		String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the o auth2 application with the matching UUID and company.
@@ -323,17 +308,9 @@ public interface OAuth2ApplicationLocalService
 			long companyId, String clientId)
 		throws NoSuchOAuth2ApplicationException;
 
-	/**
-	 * Returns the o auth2 application with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the o auth2 application's external reference code
-	 * @return the matching o auth2 application
-	 * @throws PortalException if a matching o auth2 application could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Application getOAuth2ApplicationByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**

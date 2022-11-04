@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.persistence.impl;
 
+import com.liferay.commerce.exception.DuplicateCommerceOrderExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderTable;
@@ -7499,35 +7500,35 @@ public class CommerceOrderPersistenceImpl
 	private static final String _FINDER_COLUMN_C_LTC_O_ORDERSTATUS_2 =
 		"commerceOrder.orderStatus = ?";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the commerce order where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.
+	 * Returns the commerce order where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce order
 	 * @throws NoSuchOrderException if a matching commerce order could not be found
 	 */
 	@Override
-	public CommerceOrder findByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceOrder findByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchOrderException {
 
-		CommerceOrder commerceOrder = fetchByC_ERC(
-			companyId, externalReferenceCode);
+		CommerceOrder commerceOrder = fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (commerceOrder == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -7542,53 +7543,53 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Returns the commerce order where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce order where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	 */
 	@Override
-	public CommerceOrder fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+	public CommerceOrder fetchByERC_C(
+		String externalReferenceCode, long companyId) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the commerce order where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce order where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	 */
 	@Override
-	public CommerceOrder fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public CommerceOrder fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof CommerceOrder) {
 			CommerceOrder commerceOrder = (CommerceOrder)result;
 
-			if ((companyId != commerceOrder.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					commerceOrder.getExternalReferenceCode())) {
+					commerceOrder.getExternalReferenceCode()) ||
+				(companyId != commerceOrder.getCompanyId())) {
 
 				result = null;
 			}
@@ -7599,18 +7600,18 @@ public class CommerceOrderPersistenceImpl
 
 			sb.append(_SQL_SELECT_COMMERCEORDER_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -7623,18 +7624,18 @@ public class CommerceOrderPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<CommerceOrder> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -7662,37 +7663,37 @@ public class CommerceOrderPersistenceImpl
 	}
 
 	/**
-	 * Removes the commerce order where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the commerce order where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the commerce order that was removed
 	 */
 	@Override
-	public CommerceOrder removeByC_ERC(
-			long companyId, String externalReferenceCode)
+	public CommerceOrder removeByERC_C(
+			String externalReferenceCode, long companyId)
 		throws NoSuchOrderException {
 
-		CommerceOrder commerceOrder = findByC_ERC(
-			companyId, externalReferenceCode);
+		CommerceOrder commerceOrder = findByERC_C(
+			externalReferenceCode, companyId);
 
 		return remove(commerceOrder);
 	}
 
 	/**
-	 * Returns the number of commerce orders where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of commerce orders where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching commerce orders
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		FinderPath finderPath = _finderPathCountByERC_C;
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -7701,18 +7702,18 @@ public class CommerceOrderPersistenceImpl
 
 			sb.append(_SQL_COUNT_COMMERCEORDER_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -7725,11 +7726,11 @@ public class CommerceOrderPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -7746,14 +7747,14 @@ public class CommerceOrderPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"commerceOrder.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"commerceOrder.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"commerceOrder.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(commerceOrder.externalReferenceCode IS NULL OR commerceOrder.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(commerceOrder.externalReferenceCode IS NULL OR commerceOrder.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"commerceOrder.companyId = ?";
 
 	public CommerceOrderPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -7853,10 +7854,10 @@ public class CommerceOrderPersistenceImpl
 			commerceOrder);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				commerceOrder.getCompanyId(),
-				commerceOrder.getExternalReferenceCode()
+				commerceOrder.getExternalReferenceCode(),
+				commerceOrder.getCompanyId()
 			},
 			commerceOrder);
 	}
@@ -7942,13 +7943,13 @@ public class CommerceOrderPersistenceImpl
 			_finderPathFetchByUUID_G, args, commerceOrderModelImpl);
 
 		args = new Object[] {
-			commerceOrderModelImpl.getCompanyId(),
-			commerceOrderModelImpl.getExternalReferenceCode()
+			commerceOrderModelImpl.getExternalReferenceCode(),
+			commerceOrderModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, commerceOrderModelImpl);
+			_finderPathFetchByERC_C, args, commerceOrderModelImpl);
 	}
 
 	/**
@@ -8090,6 +8091,29 @@ public class CommerceOrderPersistenceImpl
 
 		if (Validator.isNull(commerceOrder.getExternalReferenceCode())) {
 			commerceOrder.setExternalReferenceCode(commerceOrder.getUuid());
+		}
+		else {
+			CommerceOrder ercCommerceOrder = fetchByERC_C(
+				commerceOrder.getExternalReferenceCode(),
+				commerceOrder.getCompanyId());
+
+			if (isNew) {
+				if (ercCommerceOrder != null) {
+					throw new DuplicateCommerceOrderExternalReferenceCodeException(
+						"Duplicate CommerceOrder with external reference code " +
+							commerceOrder.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercCommerceOrder != null) &&
+					(commerceOrder.getCommerceOrderId() !=
+						ercCommerceOrder.getCommerceOrderId())) {
+
+					throw new DuplicateCommerceOrderExternalReferenceCodeException(
+						"Duplicate CommerceOrder with external reference code " +
+							commerceOrder.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -8720,15 +8744,15 @@ public class CommerceOrderPersistenceImpl
 			new String[] {"createDate", "commerceAccountId", "orderStatus"},
 			false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setCommerceOrderUtilPersistence(this);
 	}

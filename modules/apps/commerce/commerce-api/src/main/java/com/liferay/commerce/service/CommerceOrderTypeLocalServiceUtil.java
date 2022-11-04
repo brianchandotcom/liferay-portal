@@ -252,30 +252,12 @@ public class CommerceOrderTypeLocalServiceUtil {
 		return getService().fetchCommerceOrderType(commerceOrderTypeId);
 	}
 
-	/**
-	 * Returns the commerce order type with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type's external reference code
-	 * @return the matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
-	 */
 	public static CommerceOrderType
 		fetchCommerceOrderTypeByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return getService().fetchCommerceOrderTypeByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderTypeByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static CommerceOrderType fetchCommerceOrderTypeByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return getService().fetchCommerceOrderTypeByReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -312,20 +294,12 @@ public class CommerceOrderTypeLocalServiceUtil {
 		return getService().getCommerceOrderType(commerceOrderTypeId);
 	}
 
-	/**
-	 * Returns the commerce order type with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce order type's external reference code
-	 * @return the matching commerce order type
-	 * @throws PortalException if a matching commerce order type could not be found
-	 */
 	public static CommerceOrderType getCommerceOrderTypeByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getCommerceOrderTypeByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	/**

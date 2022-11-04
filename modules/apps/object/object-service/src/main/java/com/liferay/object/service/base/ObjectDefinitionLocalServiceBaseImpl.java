@@ -275,48 +275,21 @@ public abstract class ObjectDefinitionLocalServiceBaseImpl
 			uuid, companyId, null);
 	}
 
-	/**
-	 * Returns the object definition with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the object definition's external reference code
-	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
-	 */
 	@Override
 	public ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+		String externalReferenceCode, long companyId) {
 
-		return objectDefinitionPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return objectDefinitionPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchObjectDefinitionByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public ObjectDefinition fetchObjectDefinitionByReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return fetchObjectDefinitionByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the object definition with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the object definition's external reference code
-	 * @return the matching object definition
-	 * @throws PortalException if a matching object definition could not be found
-	 */
 	@Override
 	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		return objectDefinitionPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return objectDefinitionPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**

@@ -245,29 +245,11 @@ public class KBFolderLocalServiceUtil {
 		return getService().fetchKBFolder(uuid, groupId);
 	}
 
-	/**
-	 * Returns the kb folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb folder's external reference code
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
 	public static KBFolder fetchKBFolderByExternalReferenceCode(
-		long groupId, String externalReferenceCode) {
+		String externalReferenceCode, long groupId) {
 
 		return getService().fetchKBFolderByExternalReferenceCode(
-			groupId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBFolderByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	public static KBFolder fetchKBFolderByReferenceCode(
-		long groupId, String externalReferenceCode) {
-
-		return getService().fetchKBFolderByReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 	}
 
 	public static KBFolder fetchKBFolderByUrlTitle(
@@ -323,20 +305,12 @@ public class KBFolderLocalServiceUtil {
 		return getService().getKBFolder(kbFolderId);
 	}
 
-	/**
-	 * Returns the kb folder with the matching external reference code and group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb folder's external reference code
-	 * @return the matching kb folder
-	 * @throws PortalException if a matching kb folder could not be found
-	 */
 	public static KBFolder getKBFolderByExternalReferenceCode(
-			long groupId, String externalReferenceCode)
+			String externalReferenceCode, long groupId)
 		throws PortalException {
 
 		return getService().getKBFolderByExternalReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 	}
 
 	public static KBFolder getKBFolderByUrlTitle(

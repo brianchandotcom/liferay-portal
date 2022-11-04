@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.rule.service.persistence.impl;
 
+import com.liferay.commerce.order.rule.exception.DuplicateCOREntryExternalReferenceCodeException;
 import com.liferay.commerce.order.rule.exception.NoSuchCOREntryException;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryTable;
@@ -7032,33 +7033,33 @@ public class COREntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_LIKETYPE_TYPE_3_SQL =
 		"(corEntry.type_ IS NULL OR corEntry.type_ LIKE '')";
 
-	private FinderPath _finderPathFetchByC_ERC;
-	private FinderPath _finderPathCountByC_ERC;
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
 
 	/**
-	 * Returns the cor entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchCOREntryException</code> if it could not be found.
+	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCOREntryException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching cor entry
 	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
 	 */
 	@Override
-	public COREntry findByC_ERC(long companyId, String externalReferenceCode)
+	public COREntry findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = fetchByC_ERC(companyId, externalReferenceCode);
+		COREntry corEntry = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (corEntry == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", externalReferenceCode=");
+			sb.append("externalReferenceCode=");
 			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
 
 			sb.append("}");
 
@@ -7073,51 +7074,51 @@ public class COREntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the cor entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
 	 */
 	@Override
-	public COREntry fetchByC_ERC(long companyId, String externalReferenceCode) {
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+	public COREntry fetchByERC_C(String externalReferenceCode, long companyId) {
+		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
-	 * Returns the cor entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cor entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
 	 */
 	@Override
-	public COREntry fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+	public COREntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
+			finderArgs = new Object[] {externalReferenceCode, companyId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
+				_finderPathFetchByERC_C, finderArgs, this);
 		}
 
 		if (result instanceof COREntry) {
 			COREntry corEntry = (COREntry)result;
 
-			if ((companyId != corEntry.getCompanyId()) ||
-				!Objects.equals(
+			if (!Objects.equals(
 					externalReferenceCode,
-					corEntry.getExternalReferenceCode())) {
+					corEntry.getExternalReferenceCode()) ||
+				(companyId != corEntry.getCompanyId())) {
 
 				result = null;
 			}
@@ -7128,18 +7129,18 @@ public class COREntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_CORENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -7152,18 +7153,18 @@ public class COREntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				List<COREntry> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
+							_finderPathFetchByERC_C, finderArgs, list);
 					}
 				}
 				else {
@@ -7191,35 +7192,35 @@ public class COREntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the cor entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the cor entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the cor entry that was removed
 	 */
 	@Override
-	public COREntry removeByC_ERC(long companyId, String externalReferenceCode)
+	public COREntry removeByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCOREntryException {
 
-		COREntry corEntry = findByC_ERC(companyId, externalReferenceCode);
+		COREntry corEntry = findByERC_C(externalReferenceCode, companyId);
 
 		return remove(corEntry);
 	}
 
 	/**
-	 * Returns the number of cor entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of cor entries where externalReferenceCode = &#63; and companyId = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
 	 * @return the number of matching cor entries
 	 */
 	@Override
-	public int countByC_ERC(long companyId, String externalReferenceCode) {
+	public int countByERC_C(String externalReferenceCode, long companyId) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByC_ERC;
+		FinderPath finderPath = _finderPathCountByERC_C;
 
-		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -7228,18 +7229,18 @@ public class COREntryPersistenceImpl
 
 			sb.append(_SQL_COUNT_CORENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_ERC_COMPANYID_2);
-
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
 			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
 
 			String sql = sb.toString();
 
@@ -7252,11 +7253,11 @@ public class COREntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
-				queryPos.add(companyId);
-
 				if (bindExternalReferenceCode) {
 					queryPos.add(externalReferenceCode);
 				}
+
+				queryPos.add(companyId);
 
 				count = (Long)query.uniqueResult();
 
@@ -7273,14 +7274,14 @@ public class COREntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"corEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"corEntry.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"corEntry.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(corEntry.externalReferenceCode IS NULL OR corEntry.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(corEntry.externalReferenceCode IS NULL OR corEntry.externalReferenceCode = '')";
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"corEntry.companyId = ?";
 
 	public COREntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -7310,9 +7311,9 @@ public class COREntryPersistenceImpl
 			COREntryImpl.class, corEntry.getPrimaryKey(), corEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByC_ERC,
+			_finderPathFetchByERC_C,
 			new Object[] {
-				corEntry.getCompanyId(), corEntry.getExternalReferenceCode()
+				corEntry.getExternalReferenceCode(), corEntry.getCompanyId()
 			},
 			corEntry);
 	}
@@ -7388,12 +7389,12 @@ public class COREntryPersistenceImpl
 		COREntryModelImpl corEntryModelImpl) {
 
 		Object[] args = new Object[] {
-			corEntryModelImpl.getCompanyId(),
-			corEntryModelImpl.getExternalReferenceCode()
+			corEntryModelImpl.getExternalReferenceCode(),
+			corEntryModelImpl.getCompanyId()
 		};
 
-		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
-		finderCache.putResult(_finderPathFetchByC_ERC, args, corEntryModelImpl);
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathFetchByERC_C, args, corEntryModelImpl);
 	}
 
 	/**
@@ -7531,6 +7532,27 @@ public class COREntryPersistenceImpl
 
 		if (Validator.isNull(corEntry.getExternalReferenceCode())) {
 			corEntry.setExternalReferenceCode(corEntry.getUuid());
+		}
+		else {
+			COREntry ercCOREntry = fetchByERC_C(
+				corEntry.getExternalReferenceCode(), corEntry.getCompanyId());
+
+			if (isNew) {
+				if (ercCOREntry != null) {
+					throw new DuplicateCOREntryExternalReferenceCodeException(
+						"Duplicate COREntry with external reference code " +
+							corEntry.getExternalReferenceCode());
+				}
+			}
+			else {
+				if ((ercCOREntry != null) &&
+					(corEntry.getCOREntryId() != ercCOREntry.getCOREntryId())) {
+
+					throw new DuplicateCOREntryExternalReferenceCodeException(
+						"Duplicate COREntry with external reference code " +
+							corEntry.getExternalReferenceCode());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -7978,15 +8000,15 @@ public class COREntryPersistenceImpl
 			},
 			new String[] {"companyId", "active_", "type_"}, false);
 
-		_finderPathFetchByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, true);
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "externalReferenceCode"}, false);
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setCOREntryUtilPersistence(this);
 	}

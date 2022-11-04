@@ -14,13 +14,13 @@
 
 package com.liferay.message.boards.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class DuplicateMessageExternalReferenceCodeException
-	extends PortalException {
+	extends SystemException {
 
 	public DuplicateMessageExternalReferenceCodeException() {
 	}

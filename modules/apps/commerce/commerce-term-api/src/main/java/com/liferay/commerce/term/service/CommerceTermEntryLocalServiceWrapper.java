@@ -279,35 +279,14 @@ public class CommerceTermEntryLocalServiceWrapper
 			commerceTermEntryId);
 	}
 
-	/**
-	 * Returns the commerce term entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce term entry's external reference code
-	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
 	@Override
 	public com.liferay.commerce.term.model.CommerceTermEntry
 		fetchCommerceTermEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+			String externalReferenceCode, long companyId) {
 
 		return _commerceTermEntryLocalService.
 			fetchCommerceTermEntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceTermEntryByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.term.model.CommerceTermEntry
-		fetchCommerceTermEntryByReferenceCode(
-			long companyId, String externalReferenceCode) {
-
-		return _commerceTermEntryLocalService.
-			fetchCommerceTermEntryByReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**
@@ -394,23 +373,15 @@ public class CommerceTermEntryLocalServiceWrapper
 			commerceTermEntryId);
 	}
 
-	/**
-	 * Returns the commerce term entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce term entry's external reference code
-	 * @return the matching commerce term entry
-	 * @throws PortalException if a matching commerce term entry could not be found
-	 */
 	@Override
 	public com.liferay.commerce.term.model.CommerceTermEntry
 			getCommerceTermEntryByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
+				String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTermEntryLocalService.
 			getCommerceTermEntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	/**

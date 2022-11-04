@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.source.formatter.checks;
+package com.liferay.source.formatter.check;
 
-import com.liferay.source.formatter.checks.comparator.ElementComparator;
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.check.comparator.ElementComparator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

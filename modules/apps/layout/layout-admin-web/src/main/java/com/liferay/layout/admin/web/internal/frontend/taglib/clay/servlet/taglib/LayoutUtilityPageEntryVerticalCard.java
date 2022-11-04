@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
-import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
@@ -40,8 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class LayoutUtilityPageEntryVerticalCard
-	extends BaseVerticalCard implements VerticalCard {
+public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 
 	public LayoutUtilityPageEntryVerticalCard(
 		LayoutUtilityPageEntry layoutUtilityPageEntry,

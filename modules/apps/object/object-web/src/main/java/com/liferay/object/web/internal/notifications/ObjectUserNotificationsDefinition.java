@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.notification;
+package com.liferay.object.web.internal.notifications;
 
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectUserNotificationDefinition
+public class ObjectUserNotificationsDefinition
 	extends UserNotificationDefinition {
 
-	public ObjectUserNotificationDefinition(
+	public ObjectUserNotificationsDefinition(
 		String portletId, long classNameId, int notificationType) {
 
 		super(portletId, classNameId, notificationType, "description");

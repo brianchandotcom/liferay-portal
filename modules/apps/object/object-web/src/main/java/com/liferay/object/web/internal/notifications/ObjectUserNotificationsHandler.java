@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.notification;
+package com.liferay.object.web.internal.notifications;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.object.model.ObjectDefinition;
@@ -31,10 +31,10 @@ import javax.portlet.WindowState;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectUserNotificationHandler
+public class ObjectUserNotificationsHandler
 	extends BaseModelUserNotificationHandler {
 
-	public ObjectUserNotificationHandler(
+	public ObjectUserNotificationsHandler(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		ObjectDefinition objectDefinition) {
 

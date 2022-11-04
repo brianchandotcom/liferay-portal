@@ -65,8 +65,8 @@ import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoLi
 import com.liferay.object.web.internal.info.permission.provider.ObjectEntryInfoPermissionProvider;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
 import com.liferay.object.web.internal.layout.display.page.ObjectEntryLayoutDisplayPageProvider;
-import com.liferay.object.web.internal.notification.ObjectUserNotificationDefinition;
-import com.liferay.object.web.internal.notification.ObjectUserNotificationHandler;
+import com.liferay.object.web.internal.notifications.ObjectUserNotificationsDefinition;
+import com.liferay.object.web.internal.notifications.ObjectUserNotificationsHandler;
 import com.liferay.object.web.internal.object.entries.application.list.ObjectEntriesPanelApp;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.filter.factory.ObjectFieldFDSFilterFactoryTracker;
@@ -362,7 +362,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				UserNotificationDefinition.class,
-				new ObjectUserNotificationDefinition(
+				new ObjectUserNotificationsDefinition(
 					objectDefinition.getPortletId(),
 					_portal.getClassNameId(objectDefinition.getClassName()),
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY),
@@ -371,7 +371,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				UserNotificationHandler.class,
-				new ObjectUserNotificationHandler(
+				new ObjectUserNotificationsHandler(
 					_assetDisplayPageFriendlyURLProvider, objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"javax.portlet.name", objectDefinition.getPortletId()

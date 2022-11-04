@@ -118,6 +118,7 @@ export default function PagesTree({
 									{item.regularURL ? (
 										<a
 											href={item.regularURL}
+											tabIndex="-1"
 											title={item.name}
 										>
 											{item.name}
@@ -170,6 +171,7 @@ export default function PagesTree({
 											{item.regularURL ? (
 												<a
 													href={item.regularURL}
+													tabIndex="-1"
 													title={item.name}
 												>
 													{item.name}

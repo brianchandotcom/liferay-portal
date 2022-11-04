@@ -84,5 +84,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "12.1.11"
+	"version": "13.0.0"
 }

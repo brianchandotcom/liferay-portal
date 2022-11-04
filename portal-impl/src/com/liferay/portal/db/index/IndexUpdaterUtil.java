@@ -40,7 +40,12 @@ public class IndexUpdaterUtil {
 	public static void updateAllIndexes() {
 		updatePortalIndexes();
 
-		updateModulesIndexes(true);
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				_updateModulesIndexes();
+
+				return null;
+			});
 	}
 
 	public static void updateIndexes(Bundle bundle) throws Exception {
@@ -68,21 +73,6 @@ public class IndexUpdaterUtil {
 
 					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 				}
-			});
-	}
-
-	public static void updateModulesIndexes(boolean onStartup) {
-		if (!onStartup) {
-			_updateModulesIndexes();
-
-			return;
-		}
-
-		DependencyManagerSyncUtil.registerSyncCallable(
-			() -> {
-				_updateModulesIndexes();
-
-				return null;
 			});
 	}
 

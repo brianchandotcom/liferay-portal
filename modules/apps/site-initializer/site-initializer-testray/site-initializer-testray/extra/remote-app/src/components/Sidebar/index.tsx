@@ -67,30 +67,33 @@ const Sidebar = () => {
 		{
 			className: 'mt-3',
 			element: (
-				<ClayPopover
-					alignPosition="right"
-					closeOnClickOutside
-					disableScroll
-					header={i18n.translate('compare-runs')}
-					size="lg"
-					trigger={
-						<div>
-							{expanded ? (
-								<Tooltip
-									position="right"
-									ref={tooltipRef}
-									title={i18n.translate('compare-runs')}
-								>
-									{CompareRunsContent}
-								</Tooltip>
-							) : (
-								CompareRunsContent
-							)}
-						</div>
-					}
-				>
-					<CompareRun />
-				</ClayPopover>
+				<div className="pt-3">
+					<ClayPopover
+						alignPosition="right"
+						className="compare-runs-popover"
+						closeOnClickOutside
+						disableScroll
+						header={i18n.translate('compare-runs')}
+						size="lg"
+						trigger={
+							<div>
+								{expanded ? (
+									<Tooltip
+										position="right"
+										ref={tooltipRef}
+										title={i18n.translate('compare-runs')}
+									>
+										{CompareRunsContent}
+									</Tooltip>
+								) : (
+									CompareRunsContent
+								)}
+							</div>
+						}
+					>
+						<CompareRun />
+					</ClayPopover>
+				</div>
 			),
 		},
 	];

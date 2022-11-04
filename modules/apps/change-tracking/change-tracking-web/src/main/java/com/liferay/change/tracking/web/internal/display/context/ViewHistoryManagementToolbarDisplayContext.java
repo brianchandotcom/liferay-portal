@@ -84,13 +84,6 @@ public class ViewHistoryManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	@Override
 	public Boolean isSelectable() {
 		return false;
 	}

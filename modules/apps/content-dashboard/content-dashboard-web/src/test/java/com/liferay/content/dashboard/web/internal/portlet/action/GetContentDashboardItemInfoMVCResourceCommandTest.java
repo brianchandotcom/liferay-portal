@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,7 +59,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -360,23 +358,30 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
 
-		Map<String, Object> specificInformation =
-			contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList =
+				contentDashboardItem.getSpecificInformation(LocaleUtil.US);
 
 		Assert.assertEquals(
-			String.valueOf(specificInformation), 2, specificInformation.size());
+			String.valueOf(specificInformationList), 2,
+			specificInformationList.size());
 
 		JSONObject specificFieldsJSONObject = jsonObject.getJSONObject(
 			"specificFields");
 
-		for (Map.Entry<String, Object> entry : specificInformation.entrySet()) {
+		for (ContentDashboardItem.SpecificInformation<?> specificInformation :
+				specificInformationList) {
+
 			JSONObject specificFieldJSONObject =
-				specificFieldsJSONObject.getJSONObject(entry.getKey());
+				specificFieldsJSONObject.getJSONObject(
+					specificInformation.getKey());
 
 			Assert.assertEquals(
-				specificFieldJSONObject.getString("title"), entry.getKey());
+				specificFieldJSONObject.getString("title"),
+				specificInformation.getKey());
 			Assert.assertEquals(
-				specificFieldJSONObject.getString("value"), entry.getValue());
+				specificFieldJSONObject.getString("value"),
+				specificInformation.getValue());
 		}
 
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
@@ -835,14 +840,15 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public Map<String, Object> getSpecificInformation(
+				public List<SpecificInformation<?>> getSpecificInformation(
 					Locale locale) {
 
-					return HashMapBuilder.<String, Object>put(
-						"extension", ".pdf"
-					).put(
-						"size", "5"
-					).build();
+					return Arrays.asList(
+						new SpecificInformation<>(
+							"extension", SpecificInformation.Type.STRING,
+							".pdf"),
+						new SpecificInformation<>(
+							"size", SpecificInformation.Type.STRING, ".5"));
 				}
 
 				@Override

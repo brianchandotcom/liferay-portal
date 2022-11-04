@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.net.URL;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -68,8 +66,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -468,36 +464,19 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		Map<String, Object> specificInformation =
-			contentDashboardItem.getSpecificInformation(locale);
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList =
+				contentDashboardItem.getSpecificInformation(locale);
 
-		SortedSet<String> keys = new TreeSet<>(specificInformation.keySet());
+		for (ContentDashboardItem.SpecificInformation specificInformation :
+				specificInformationList) {
 
-		for (String key : keys) {
 			jsonObject.put(
-				key,
-				JSONUtil.put(
-					"title", _language.get(locale, key)
-				).put(
-					"type",
-					_getSpecificInformationType(specificInformation.get(key))
-				).put(
-					"value", _toString(specificInformation.get(key))
-				));
+				specificInformation.getKey(),
+				specificInformation.toJSONObject(_language, locale));
 		}
 
 		return jsonObject;
-	}
-
-	private String _getSpecificInformationType(Object object) {
-		if (object instanceof Date) {
-			return "Date";
-		}
-		else if (object instanceof URL) {
-			return "URL";
-		}
-
-		return "String";
 	}
 
 	private JSONObject _getSubscribeContentDashboardItemActionJSONObject(
@@ -654,18 +633,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
 
 		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-	}
-
-	private String _toString(Object object) {
-		if (object == null) {
-			return null;
-		}
-
-		if (object instanceof Date) {
-			return _toString((Date)object);
-		}
-
-		return String.valueOf(object);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

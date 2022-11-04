@@ -55,7 +55,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -358,15 +357,19 @@ public class BlogsEntryContentDashboardItemTest {
 		ContentDashboardItem contentDashboardItem =
 			_contentDashboardItemFactory.create(blogsEntry.getEntryId());
 
-		Map<String, Object> specificInformation =
-			contentDashboardItem.getSpecificInformation(LocaleUtil.US);
+		List<ContentDashboardItem.SpecificInformation<?>>
+			specificInformationList =
+				contentDashboardItem.getSpecificInformation(LocaleUtil.US);
 
 		Assert.assertEquals(
-			specificInformation.toString(), 1, specificInformation.size());
+			specificInformationList.toString(), 1,
+			specificInformationList.size());
+
+		ContentDashboardItem.SpecificInformation<?> specificInformation =
+			specificInformationList.get(0);
 
 		Assert.assertEquals(
-			specificInformation.get("display-date"),
-			blogsEntry.getDisplayDate());
+			specificInformation.getValue(), blogsEntry.getDisplayDate());
 	}
 
 	@Test

@@ -22,6 +22,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -44,6 +45,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -140,6 +142,74 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 
 		_assertExpectedLayoutStructureItem(
 			containerItemId, rowItemId, layoutStructure);
+	}
+
+	@Test
+	public void testUnmarkItemsForDeletionRowColumns() throws Exception {
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), _layout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		String containerItemId = _addItemToLayout(
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			layoutStructure.getMainItemId());
+
+		String rowItemId = _addItemToLayout(
+			LayoutDataItemTypeConstants.TYPE_ROW, containerItemId);
+
+		layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(rowItemId);
+
+		List<String> childrenItemIds =
+			rowStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 3, childrenItemIds.size());
+
+		String[] originalChildrenItemIds = childrenItemIds.toArray(
+			new String[0]);
+
+		layoutStructure.updateRowColumnsLayoutStructureItem(rowItemId, 1);
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		Assert.assertEquals(originalChildrenItemIds[0], childrenItemIds.get(0));
+
+		JSONObject unmarkItemsForDeletionJSONObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_unmarkItemsForDeletion",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				JSONUtil.putAll(
+					originalChildrenItemIds[1], originalChildrenItemIds[2]
+				).toString()),
+			new MockLiferayPortletActionResponse());
+
+		layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		Assert.assertTrue(
+			JSONUtil.equals(
+				layoutStructure.toJSONObject(),
+				unmarkItemsForDeletionJSONObject.getJSONObject("layoutData")));
+
+		rowStyledLayoutStructureItem =
+			(RowStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					rowStyledLayoutStructureItem.getItemId());
+
+		childrenItemIds = rowStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertArrayEquals(
+			originalChildrenItemIds, childrenItemIds.toArray(new String[0]));
 	}
 
 	private String _addItemToLayout(String itemType, String parentItemId)

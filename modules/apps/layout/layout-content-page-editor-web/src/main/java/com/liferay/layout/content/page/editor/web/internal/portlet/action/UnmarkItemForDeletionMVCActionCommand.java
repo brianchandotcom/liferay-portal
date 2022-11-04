@@ -17,6 +17,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -54,16 +56,22 @@ public class UnmarkItemForDeletionMVCActionCommand
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
+
+		String itemIds = ParamUtil.getString(actionRequest, "itemIds");
+
+		JSONArray itemIdsJSONArray = _jsonFactory.createJSONArray(itemIds);
 
 		return JSONUtil.put(
 			"layoutData",
 			LayoutStructureUtil.updateLayoutPageTemplateData(
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
-				layoutStructure ->
-					layoutStructure.unmarkLayoutStructureItemForDeletion(
-						itemId))
+				layoutStructure -> {
+					for (int i = 0; i < itemIdsJSONArray.length(); i++) {
+						layoutStructure.unmarkLayoutStructureItemForDeletion(
+							itemIdsJSONArray.getString(i));
+					}
+				})
 		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
@@ -72,6 +80,9 @@ public class UnmarkItemForDeletionMVCActionCommand
 				themeDisplay.getPlid(), segmentsExperienceId)
 		);
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

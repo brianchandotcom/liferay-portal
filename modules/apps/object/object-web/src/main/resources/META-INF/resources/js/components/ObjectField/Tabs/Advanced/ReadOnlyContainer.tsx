@@ -128,7 +128,9 @@ export function ReadOnlyContainer({
 						parentWindow.Liferay.fire(
 							'openExpressionBuilderModal',
 							{
-								header: Liferay.Language.get('formula-builder'),
+								header: Liferay.Language.get(
+									'expression-builder'
+								),
 								onSave: (script: string) => {
 									setValues({
 										objectFieldSettings: updateReadOnlyScriptSetting(
@@ -137,11 +139,8 @@ export function ReadOnlyContainer({
 										),
 									});
 								},
-								placeholder: `<#-- ${Liferay.Util.sub(
-									Liferay.Language.get(
-										'add-formulas-to-calculate-values-based-on-other-fields-type-x-to-use-the-autocomplete-feature'
-									),
-									['"${"']
+								placeholder: `<#-- ${Liferay.Language.get(
+									'create-the-condition-of-the-read-only-state-using-expression-builder'
 								)} -->`,
 								required: false,
 								source: readOnlyScriptSetting?.value ?? '',

@@ -3067,6 +3067,82 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return structuredContentFolder.getId();
 	}
 
+	private Map<String, String> _addOrUpdateTaxonomyCategories(
+			String parentResourcePath, String parentTaxonomyCategoryId,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder,
+			TaxonomyCategoryResource taxonomyCategoryResource,
+			long taxonomyVocabularyId)
+		throws Exception {
+
+		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues =
+			new HashMap<>();
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			parentResourcePath);
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return taxonomyCategoryIdsStringUtilReplaceValues;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith("/")) {
+				continue;
+			}
+
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(json);
+
+			if (taxonomyCategory == null) {
+				_log.error(
+					"Unable to transform taxonomy category from JSON: " + json);
+
+				continue;
+			}
+
+			if (parentTaxonomyCategoryId == null) {
+				taxonomyCategory =
+					_addOrUpdateTaxonomyVocabularyTaxonomyCategory(
+						taxonomyCategory, taxonomyCategoryResource,
+						taxonomyVocabularyId);
+			}
+			else {
+				taxonomyCategory = _addOrUpdateTaxonomyCategoryTaxonomyCategory(
+					parentTaxonomyCategoryId, taxonomyCategory,
+					taxonomyCategoryResource);
+			}
+
+			TaxonomyCategory finalTaxonomyCategory = taxonomyCategory;
+
+			String key = resourcePath;
+
+			taxonomyCategoryIdsStringUtilReplaceValues.put(
+				"TAXONOMY_CATEGORY_ID:" + key,
+				String.valueOf(finalTaxonomyCategory.getId()));
+
+			siteNavigationMenuItemSettingsBuilder.put(
+				resourcePath,
+				new SiteNavigationMenuItemSetting() {
+					{
+						className = AssetCategory.class.getName();
+						classPK = finalTaxonomyCategory.getId();
+						title = finalTaxonomyCategory.getName();
+					}
+				});
+
+			taxonomyCategoryIdsStringUtilReplaceValues.putAll(
+				_addOrUpdateTaxonomyCategories(
+					StringUtil.replaceLast(resourcePath, ".json", "/"),
+					taxonomyCategory.getId(),
+					siteNavigationMenuItemSettingsBuilder,
+					taxonomyCategoryResource, taxonomyVocabularyId));
+		}
+
+		return taxonomyCategoryIdsStringUtilReplaceValues;
+	}
+
 	private TaxonomyCategory _addOrUpdateTaxonomyCategoryTaxonomyCategory(
 			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory,
 			TaxonomyCategoryResource taxonomyCategoryResource)
@@ -3612,82 +3688,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_styleBookEntryZipProcessor.importStyleBookEntries(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			zipWriter.getFile(), true);
-	}
-
-	private Map<String, String> _addOrUpdateTaxonomyCategories(
-			String parentResourcePath, String parentTaxonomyCategoryId,
-			SiteNavigationMenuItemSettingsBuilder
-				siteNavigationMenuItemSettingsBuilder,
-			TaxonomyCategoryResource taxonomyCategoryResource,
-			long taxonomyVocabularyId)
-		throws Exception {
-
-		Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues =
-			new HashMap<>();
-
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			parentResourcePath);
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return taxonomyCategoryIdsStringUtilReplaceValues;
-		}
-
-		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith("/")) {
-				continue;
-			}
-
-			String json = SiteInitializerUtil.read(
-				resourcePath, _servletContext);
-
-			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(json);
-
-			if (taxonomyCategory == null) {
-				_log.error(
-					"Unable to transform taxonomy category from JSON: " + json);
-
-				continue;
-			}
-
-			if (parentTaxonomyCategoryId == null) {
-				taxonomyCategory =
-					_addOrUpdateTaxonomyVocabularyTaxonomyCategory(
-						taxonomyCategory, taxonomyCategoryResource,
-						taxonomyVocabularyId);
-			}
-			else {
-				taxonomyCategory = _addOrUpdateTaxonomyCategoryTaxonomyCategory(
-					parentTaxonomyCategoryId, taxonomyCategory,
-					taxonomyCategoryResource);
-			}
-
-			TaxonomyCategory finalTaxonomyCategory = taxonomyCategory;
-
-			String key = resourcePath;
-
-			taxonomyCategoryIdsStringUtilReplaceValues.put(
-				"TAXONOMY_CATEGORY_ID:" + key,
-				String.valueOf(finalTaxonomyCategory.getId()));
-
-			siteNavigationMenuItemSettingsBuilder.put(
-				resourcePath,
-				new SiteNavigationMenuItemSetting() {
-					{
-						className = AssetCategory.class.getName();
-						classPK = finalTaxonomyCategory.getId();
-						title = finalTaxonomyCategory.getName();
-					}
-				});
-
-			taxonomyCategoryIdsStringUtilReplaceValues.putAll(
-				_addOrUpdateTaxonomyCategories(
-					StringUtil.replaceLast(resourcePath, ".json", "/"),
-					taxonomyCategory.getId(),
-					siteNavigationMenuItemSettingsBuilder,
-					taxonomyCategoryResource, taxonomyVocabularyId));
-		}
-
-		return taxonomyCategoryIdsStringUtilReplaceValues;
 	}
 
 	private void _addUserAccounts(ServiceContext serviceContext)

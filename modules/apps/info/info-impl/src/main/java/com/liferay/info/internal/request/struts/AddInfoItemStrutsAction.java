@@ -147,6 +147,30 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				throw new InfoFormInvalidGroupException();
 			}
 
+			for (String requiredUniqueFieldId :
+					_getRequiredUniqueFieldIds(httpServletRequest)) {
+
+				boolean requiredFieldAvailable = false;
+
+				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					if (Objects.equals(
+							requiredUniqueFieldId, infoField.getUniqueId()) &&
+						Validator.isNotNull(infoFieldValue.getValue())) {
+
+						requiredFieldAvailable = true;
+
+						break;
+					}
+				}
+
+				if (!requiredFieldAvailable) {
+					throw new InfoFormValidationException.RequiredInfoField(
+						requiredUniqueFieldId);
+				}
+			}
+
 			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
 				CaptchaUtil.check(httpServletRequest);
 			}

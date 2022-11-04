@@ -825,14 +825,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					if (isNew) {
 						if (erc${entity.name} != null) {
-							throw new ${duplicateEntityExternalReferenceCode}Exception();
+								throw new ${duplicateEntityExternalReferenceCode}Exception("Duplicate ${entity.name} with external reference code " + ${entity.variableName}.getExternalReferenceCode());
 						}
 					}
 					else {
 						if ((erc${entity.name} != null) &&
 							(${entity.variableName}.get${entity.PKMethodName}() != erc${entity.name}.get${entity.PKMethodName}())) {
-
-							throw new ${duplicateEntityExternalReferenceCode}Exception();
+								throw new ${duplicateEntityExternalReferenceCode}Exception("Duplicate ${entity.name} with external reference code " + ${entity.variableName}.getExternalReferenceCode());
 						}
 					}
 				}

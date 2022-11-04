@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.web.internal.portlet.action;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -80,8 +82,16 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				long parentResourceClassNameId = ParamUtil.getLong(
 					actionRequest, "parentResourceClassNameId",
 					_portal.getClassNameId(KBFolderConstants.getClassName()));
+
 				double priority = ParamUtil.getDouble(
 					actionRequest, "priority");
+
+				if (_isDragAndDrop(dragAndDrop)) {
+					KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+						resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+					priority = kbArticle.getPriority();
+				}
 
 				_kbArticleService.moveKBArticle(
 					resourcePrimKey, parentResourceClassNameId,

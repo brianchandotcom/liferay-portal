@@ -17,6 +17,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
@@ -56,7 +57,7 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		_rankingPortletDisplayBuilder = new RankingPortletDisplayBuilder(
 			_documentToRankingTranslator, _httpServletRequest, language, portal,
 			queries, rankingIndexNameBuilder, _sorts, _renderRequest,
-			_renderResponse, searchEngineAdapter);
+			_renderResponse, searchEngineAdapter, _searchEngineInformation);
 	}
 
 	@Test
@@ -128,6 +129,8 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		RenderRequest.class);
 	private final RenderResponse _renderResponse = Mockito.mock(
 		RenderResponse.class);
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 	private final Sorts _sorts = Mockito.mock(Sorts.class);
 
 }

@@ -77,8 +77,7 @@ public class RankingSearchRequestContributor
 	}
 
 	protected boolean isSearchEngine(String engine) {
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineHelper.getDefaultSearchEngineId());
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
 
 		String vendor = searchEngine.getVendor();
 

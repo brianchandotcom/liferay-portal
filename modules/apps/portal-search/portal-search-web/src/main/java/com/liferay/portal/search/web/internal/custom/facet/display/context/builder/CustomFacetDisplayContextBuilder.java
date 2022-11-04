@@ -204,12 +204,8 @@ public class CustomFacetDisplayContextBuilder {
 		bucketDisplayContext.setBucketText(term);
 		bucketDisplayContext.setFilterValue(term);
 
-		int frequency = termCollector.getFrequency();
-
-		bucketDisplayContext.setFrequency(frequency);
-
+		bucketDisplayContext.setFrequency(termCollector.getFrequency());
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
-
 		bucketDisplayContext.setSelected(isSelected(term));
 
 		return bucketDisplayContext;

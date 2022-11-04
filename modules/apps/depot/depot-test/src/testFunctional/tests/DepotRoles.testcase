@@ -505,14 +505,11 @@ definition {
 
 		Role.add(roleTitle = "AL Role Name");
 
-		Role.openRolesAdmin();
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			permissionNavigationValue = "Documents and Media",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "AL Role Name",
-			roleType = "Asset Library");
+			roleType = "asset library");
 
 		Role.openRolesAdmin();
 
@@ -539,12 +536,11 @@ definition {
 
 		Role.openRolesAdmin();
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
-			permissionNavigationValue = "Documents and Media",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "AL Role Name",
-			roleType = "Asset Library");
+			roleType = "asset library");
 
 		Role.openRolesAdmin();
 

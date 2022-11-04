@@ -13,14 +13,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import uuidv4 from 'uuid/v4';
 
 import '../css/redirect_pattern.scss';
+
+const REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
 const PatternField = ({
 	destinationURL = '',
@@ -30,6 +33,12 @@ const PatternField = ({
 	pattern = '',
 	portletNamespace,
 }) => {
+	const [urlError, setUrlError] = useState(false);
+
+	const isAbsoluteUrl = (url) => {
+		return REGEX_URL && REGEX_URL.test(url);
+	};
+
 	return (
 		<ClayLayout.Row className="redirect-pattern-row">
 			<ClayLayout.Col md="6">
@@ -52,7 +61,7 @@ const PatternField = ({
 				/>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col md="6">
+			<ClayLayout.Col className={urlError ? 'has-error' : ''} md="6">
 				<label htmlFor="destinationURL">
 					{Liferay.Language.get('destination-url')}
 
@@ -70,6 +79,9 @@ const PatternField = ({
 					defaultValue={destinationURL}
 					id="destinationURL"
 					name={`${portletNamespace}destinationURL_${index}`}
+					onBlur={({currentTarget}) => {
+						setUrlError(!isAbsoluteUrl(currentTarget.value));
+					}}
 					type="text"
 				/>
 
@@ -95,6 +107,29 @@ const PatternField = ({
 				>
 					<ClayIcon symbol="plus" />
 				</ClayButton>
+
+				{urlError && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{Liferay.Language.get('this-url-is-not-supported')}
+						</ClayForm.FeedbackItem>
+
+						<div
+							className="small"
+							dangerouslySetInnerHTML={{
+								__html: sub(
+									Liferay.Language.get(
+										'enter-an-absolute-url'
+									),
+									'<em>',
+									'</em>'
+								),
+							}}
+						/>
+					</ClayForm.FeedbackGroup>
+				)}
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);

@@ -91,7 +91,7 @@ definition {
 			}
 		}
 
-		task ("Create an experience for each segment in the Content Page") {
+		task ("Edit the default experience") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
 			ContentPages.gotoPageEditor();
@@ -104,7 +104,9 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "Default");
+		}
 
+		task ("Create and edit the first experience") {
 			PageEditor.addExperience(
 				experienceName = "Experience User 1",
 				segmentName = "Segment With User1");
@@ -115,20 +117,12 @@ definition {
 				text = "User 1");
 
 			PageEditor.prioritizeExperience(experienceName = "Experience User 1");
+		}
 
-			PageEditor.publish();
-
-			ContentPages.gotoPageEditor();
-
+		task ("Create and edit the second experience") {
 			PageEditor.addExperience(
 				experienceName = "Experience User 2",
 				segmentName = "Segment With User2");
-
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "Experience User 2");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -136,11 +130,9 @@ definition {
 				text = "User 2");
 
 			PageEditor.prioritizeExperience(experienceName = "Experience User 2");
+		}
 
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
+		task ("Create and edit the third experience") {
 			PageEditor.addExperience(
 				experienceName = "Experience User 3",
 				segmentName = "Segment With User3");

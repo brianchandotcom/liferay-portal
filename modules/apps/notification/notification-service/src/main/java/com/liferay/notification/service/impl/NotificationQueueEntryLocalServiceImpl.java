@@ -64,6 +64,22 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationQueueEntry = notificationQueueEntryPersistence.update(
 			notificationQueueEntry);
 
+		_resourceLocalService.addResources(
+			notificationQueueEntry.getCompanyId(), 0,
+			notificationQueueEntry.getUserId(),
+			NotificationQueueEntry.class.getName(),
+			notificationQueueEntry.getNotificationQueueEntryId(), false, true,
+			true);
+
+		if (notificationContext.getFileEntryIds() == null) {
+			for (long fileEntryId : notificationContext.getFileEntryIds()) {
+				_notificationQueueEntryAttachmentLocalService.
+					addNotificationQueueEntryAttachment(
+						notificationQueueEntry.getCompanyId(), fileEntryId,
+						notificationQueueEntry.getNotificationQueueEntryId());
+			}
+		}
+
 		NotificationRecipient notificationRecipient =
 			notificationContext.getNotificationRecipient();
 
@@ -86,24 +102,6 @@ public class NotificationQueueEntryLocalServiceImpl
 			_notificationRecipientSettingLocalService.
 				updateNotificationRecipientSetting(
 					notificationRecipientSetting);
-		}
-
-		_resourceLocalService.addResources(
-			notificationQueueEntry.getCompanyId(), 0,
-			notificationQueueEntry.getUserId(),
-			NotificationQueueEntry.class.getName(),
-			notificationQueueEntry.getNotificationQueueEntryId(), false, true,
-			true);
-
-		if (notificationContext.getFileEntryIds() == null) {
-			return notificationQueueEntry;
-		}
-
-		for (long fileEntryId : notificationContext.getFileEntryIds()) {
-			_notificationQueueEntryAttachmentLocalService.
-				addNotificationQueueEntryAttachment(
-					notificationQueueEntry.getCompanyId(), fileEntryId,
-					notificationQueueEntry.getNotificationQueueEntryId());
 		}
 
 		return notificationQueueEntry;
@@ -166,9 +164,6 @@ public class NotificationQueueEntryLocalServiceImpl
 				deleteNotificationRecipientSetting(
 					notificationRecipientSetting);
 		}
-
-		_notificationRecipientLocalService.deleteNotificationRecipient(
-			notificationRecipient);
 
 		return notificationQueueEntry;
 	}

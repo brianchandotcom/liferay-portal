@@ -20,7 +20,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
-import com.liferay.template.internal.info.field.transformer.TemplateNodeTransformerTracker;
+import com.liferay.template.internal.info.field.transformer.TemplateNodeTransformerRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,13 +41,13 @@ public class TemplateNodeFactory {
 		Class<?> infoFieldTypeClass = infoFieldType.getClass();
 
 		TemplateNodeTransformer templateNodeTransformer =
-			_templateNodeTransformerTracker.getTemplateNodeTransformer(
+			_templateNodeTransformerRegistry.getTemplateNodeTransformer(
 				infoFieldTypeClass.getName());
 
 		return templateNodeTransformer.transform(infoFieldValue, themeDisplay);
 	}
 
 	@Reference
-	private TemplateNodeTransformerTracker _templateNodeTransformerTracker;
+	private TemplateNodeTransformerRegistry _templateNodeTransformerRegistry;
 
 }

@@ -115,4 +115,12 @@ definition {
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
 
+	macro deleteView {
+		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+
+		Click(locator1 = "FrontendDataSet#DELETE_VIEW_BUTTON");
+
+		Click(locator1 = "FrontendDataSet#DELETE_BUTTON");
+	}
+
 }

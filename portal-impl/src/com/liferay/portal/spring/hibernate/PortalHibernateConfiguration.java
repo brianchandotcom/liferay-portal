@@ -307,7 +307,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 		return bundle.getDataFile(
 			StringUtil.replace(
-				url.getPath(),
+				StringUtil.replace(
+					url.getPath(), PropsValues.LIFERAY_HOME, "_liferay_home_"),
 				new char[] {
 					CharPool.COLON, CharPool.EXCLAMATION, CharPool.SLASH
 				},

@@ -19,10 +19,19 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,31 +61,74 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long resourceClassNameId = ParamUtil.getLong(
-			actionRequest, "resourceClassNameId");
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-		long parentResourcePrimKey = ParamUtil.getLong(
-			actionRequest, "parentResourcePrimKey",
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		boolean dragAndDrop = ParamUtil.getBoolean(
+			actionRequest, "dragAndDrop");
 
-		long kbArticleClassNameId = _portal.getClassNameId(
-			KBArticleConstants.getClassName());
+		try {
+			long resourceClassNameId = ParamUtil.getLong(
+				actionRequest, "resourceClassNameId");
+			long resourcePrimKey = ParamUtil.getLong(
+				actionRequest, "resourcePrimKey");
+			long parentResourcePrimKey = ParamUtil.getLong(
+				actionRequest, "parentResourcePrimKey",
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		if (resourceClassNameId == kbArticleClassNameId) {
-			long parentResourceClassNameId = ParamUtil.getLong(
-				actionRequest, "parentResourceClassNameId",
-				_portal.getClassNameId(KBFolderConstants.getClassName()));
-			double priority = ParamUtil.getDouble(actionRequest, "priority");
+			long kbArticleClassNameId = _portal.getClassNameId(
+				KBArticleConstants.getClassName());
 
-			_kbArticleService.moveKBArticle(
-				resourcePrimKey, parentResourceClassNameId,
-				parentResourcePrimKey, priority);
+			if (resourceClassNameId == kbArticleClassNameId) {
+				long parentResourceClassNameId = ParamUtil.getLong(
+					actionRequest, "parentResourceClassNameId",
+					_portal.getClassNameId(KBFolderConstants.getClassName()));
+				double priority = ParamUtil.getDouble(
+					actionRequest, "priority");
+
+				_kbArticleService.moveKBArticle(
+					resourcePrimKey, parentResourceClassNameId,
+					parentResourcePrimKey, priority);
+			}
+			else {
+				_kbFolderService.moveKBFolder(
+					resourcePrimKey, parentResourcePrimKey);
+			}
 		}
-		else {
-			_kbFolderService.moveKBFolder(
-				resourcePrimKey, parentResourcePrimKey);
+		catch (PortalException portalException) {
+			if (!_isDragAndDrop(dragAndDrop)) {
+				throw portalException;
+			}
+
+			_errorMessage(
+				actionRequest, actionResponse,
+				_language.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"your-request-failed-to-complete"));
 		}
+
+		if (_isDragAndDrop(dragAndDrop)) {
+			JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
+	}
+
+	private void _errorMessage(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String message)
+		throws IOException {
+
+		JSONObject jsonObject = JSONUtil.put("errorMessage", message);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private boolean _isDragAndDrop(boolean dragAndDrop) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421"))) {
+			return dragAndDrop;
+		}
+
+		return false;
 	}
 
 	@Reference
@@ -84,6 +136,9 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private KBFolderService _kbFolderService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

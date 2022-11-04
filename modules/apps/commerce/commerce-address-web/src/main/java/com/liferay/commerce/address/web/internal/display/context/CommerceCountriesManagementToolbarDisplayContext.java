@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -120,13 +118,6 @@ public class CommerceCountriesManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, getNavigation()));
 			}
 		).build();
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

@@ -157,7 +157,7 @@ export default function ModalAddObjectLayoutField({
 				</ClayModal.Header>
 
 				<ClayModal.Body>
-					<AutoComplete
+					<AutoComplete<TObjectField>
 						contentRight={
 							<>
 								<ClayLabel

@@ -399,7 +399,7 @@ export function ModalAddFilter({
 
 			<ClayModal.Body>
 				{!editingFilter && (
-					<AutoComplete
+					<AutoComplete<ObjectField>
 						emptyStateMessage={Liferay.Language.get(
 							'there-are-no-columns-available'
 						)}

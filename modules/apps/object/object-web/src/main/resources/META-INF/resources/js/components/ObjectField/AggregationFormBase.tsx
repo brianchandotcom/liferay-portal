@@ -323,7 +323,7 @@ export function AggregationFormBase({
 
 	return (
 		<>
-			<AutoComplete
+			<AutoComplete<TObjectRelationship>
 				emptyStateMessage={Liferay.Language.get(
 					'no-relationships-were-found'
 				)}
@@ -331,7 +331,7 @@ export function AggregationFormBase({
 				items={filteredObjectRelationships ?? []}
 				label={Liferay.Language.get('relationship')}
 				onChangeQuery={setRelationshipsQuery}
-				onSelectItem={(item: TObjectRelationship) => {
+				onSelectItem={(item) => {
 					handleChangeRelatedObjectRelationship(item);
 				}}
 				query={relationshipsQuery}
@@ -358,7 +358,7 @@ export function AggregationFormBase({
 			/>
 
 			{selectedAggregationFunction?.value !== 'COUNT' && (
-				<AutoComplete
+				<AutoComplete<ObjectField>
 					emptyStateMessage={Liferay.Language.get(
 						'no-fields-were-found'
 					)}
@@ -366,7 +366,7 @@ export function AggregationFormBase({
 					items={filteredObjectRelationshipFields ?? []}
 					label={Liferay.Language.get('field')}
 					onChangeQuery={setRelationshipFieldsQuery}
-					onSelectItem={(item: ObjectField) => {
+					onSelectItem={(item) => {
 						handleSummarizeFieldChange(item);
 					}}
 					query={relationshipFieldsQuery}

@@ -979,4 +979,99 @@ definition {
 		}
 	}
 
+	@description = "LPS-156560 - Verify that it's possible to edit an Action with Groovy Script"
+	@priority = "5"
+	test CanEditActionWithGroovyScript {
+		property portal.acceptance = "true";
+
+		task ("Given a Groovy Script") {
+			var groovyScript = '''
+			import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+			import com.liferay.object.model.ObjectEntry;
+			import com.liferay.portal.kernel.service.ServiceContext;
+
+			import java.io.Serializable;
+			import java.util.Map;
+
+			ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(objectEntryId);
+
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			values.put("customObjectFieldActionTest", "Action Test Works")
+
+			System.out.println(objectEntry);
+
+			ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), objectEntryId, values, new ServiceContext());
+			''';
+		}
+
+		task ("And given an object with two fields and an object entry are created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field Action Test",
+				fieldName = "customObjectFieldActionTest",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject",
+				value = "Entry Test");
+		}
+
+		task ("And given an action using a Groovy Script is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Custom Action",
+				active = "true",
+				objectLabel = "Custom Object",
+				scriptValidation = "${groovyScript}",
+				thenAction = "Groovy Script",
+				whenAction = "On After Add");
+		}
+
+		task ("When the Action is edited") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.editObjectAction(
+				actionName = "New Action Update",
+				viewEntry = "Custom Action",
+				whenAction = "On After Update");
+		}
+
+		task("Then the object entry name is updated when the condition is met") {
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectAdmin.editEntryName(newEntryValue = "New Entry Update");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntry(entry = "Action Test Works");
+		}
+	}
+
 }

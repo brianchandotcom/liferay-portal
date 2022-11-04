@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -131,13 +129,6 @@ public class CPSpecificationOptionManagementToolbarDisplayContext
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

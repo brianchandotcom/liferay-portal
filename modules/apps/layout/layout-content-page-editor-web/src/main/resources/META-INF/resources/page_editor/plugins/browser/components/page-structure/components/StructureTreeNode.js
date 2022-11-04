@@ -420,6 +420,7 @@ function StructureTreeNodeContent({
 				isWidget={isWidget}
 				node={node}
 				nodeRef={nodeRef}
+				onKeyDown={handleButtonsKeyDown}
 				selectedViewportSize={selectedViewportSize}
 			/>
 
@@ -602,6 +603,7 @@ const MoveButton = ({
 	isWidget,
 	node,
 	nodeRef,
+	onKeyDown,
 	selectedViewportSize,
 }) => {
 	const setMovementSource = useSetMovementSource();
@@ -650,7 +652,7 @@ const MoveButton = ({
 				})
 			}
 			onFocus={(event) => event.stopPropagation()}
-			onKeyDown={(event) => event.stopPropagation()}
+			onKeyDown={onKeyDown}
 			ref={buttonRef}
 			title={sub(Liferay.Language.get('move-x'), [node.name])}
 		>

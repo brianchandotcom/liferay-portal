@@ -382,6 +382,7 @@ export default function Sidebar() {
 				style={{'--sidebar-content-width': `${sidebarWidth}px`}}
 			>
 				<div
+					aria-orientation="vertical"
 					className={classNames('page-editor__sidebar__buttons', {
 						'light': true,
 						'page-editor__sidebar__buttons--hidden': sidebarHidden,

@@ -19,7 +19,6 @@ import com.liferay.commerce.pricing.web.internal.display.context.CPDefinitionPri
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -98,9 +97,6 @@ public class EditCPDefinitionPricingClassMVCRenderCommand
 
 	@Reference
 	private CommercePricingClassService _commercePricingClassService;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
 
 	@Reference
 	private Portal _portal;

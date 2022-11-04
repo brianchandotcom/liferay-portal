@@ -7,6 +7,12 @@
 		"Testing"
 	],
 	"contributes": {
+		"commands": [
+			{
+				"command": "poshi.run.test.case.under.cursor",
+				"title": "Poshi: Run test case under cursor"
+			}
+		],
 		"configuration": {
 			"properties": {
 				"poshi.completion.enabled": {

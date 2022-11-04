@@ -58,19 +58,6 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"externalReferenceCode": "Project_Need__c",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Project Need"
-			},
-			"name": "projectNeed",
-			"required": false,
-			"type": "Clob"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "MDF_Request_Activity__c",
@@ -80,6 +67,19 @@
 				"en_US": "MDF Activity External Reference Code SF"
 			},
 			"name": "mdfActivityExternalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Project_Roadmap__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Timeline"
+			},
+			"name": "projectTimeline",
 			"required": false,
 			"type": "String"
 		}

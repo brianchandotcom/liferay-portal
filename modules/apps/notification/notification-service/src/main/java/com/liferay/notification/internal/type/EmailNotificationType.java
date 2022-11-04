@@ -89,12 +89,12 @@ public class EmailNotificationType extends BaseNotificationType {
 		createNotificationRecipientSettings(
 			long notificationRecipientId, Object[] recipients, User user) {
 
-		Map<String, Object> recipientMap = (Map<String, Object>)recipients[0];
-
 		List<NotificationRecipientSetting> notificationRecipientSettings =
 			new ArrayList<>();
 
-		for (Map.Entry<String, Object> entry : recipientMap.entrySet()) {
+		Map<String, Object> recipientsMap = (Map<String, Object>)recipients[0];
+
+		for (Map.Entry<String, Object> entry : recipientsMap.entrySet()) {
 			NotificationRecipientSetting notificationRecipientSetting =
 				notificationRecipientSettingLocalService.
 					createNotificationRecipientSetting(0L);

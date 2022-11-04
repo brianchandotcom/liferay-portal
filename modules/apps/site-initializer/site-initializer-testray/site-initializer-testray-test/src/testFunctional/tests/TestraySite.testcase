@@ -59,7 +59,7 @@ definition {
 	@priority = "5"
 	test RemoteAppsAreCreatedForTestray {
 		task ("Create Testray") {
-			Testray.createTestraySite(siteName = "Testray 2");
+			Testray.addTestraySite();
 
 			Refresh();
 		}
@@ -79,7 +79,7 @@ definition {
 	@priority = "5"
 	test StyleBooksAreCreatedForTestray {
 		task ("Create and Go to Testray") {
-			Testray.createTestraySite(siteName = "Testray 2");
+			Testray.addTestraySite();
 
 			Refresh();
 

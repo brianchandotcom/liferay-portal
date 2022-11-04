@@ -35,6 +35,14 @@ definition {
 		}
 	}
 
+	macro addTestraySite {
+		Site.openSitesAdmin();
+
+		TeamExtranet.addSiteTemplateCP(
+			siteName = "Testray 2",
+			siteTemplateName = "Liferay Site Initializer Testray");
+	}
+
 	macro assertItemName {
 		AssertElementPresent(
 			key_projectName = "${key_name}",
@@ -153,27 +161,6 @@ definition {
 			value1 = "${description}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-	}
-
-	macro createTestraySite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Liferay Site Initializer Testray");
-
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
-
-		PortletEntry.inputName(name = "${siteName}");
-
-		Button.click(button = "Add");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro createTestrayTasks {

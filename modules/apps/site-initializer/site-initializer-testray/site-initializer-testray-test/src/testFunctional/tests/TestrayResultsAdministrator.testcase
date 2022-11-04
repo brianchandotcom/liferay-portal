@@ -14,7 +14,7 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.createTestraySite(siteName = "Testray 2");
+			Testray.addTestraySite();
 
 			Refresh();
 		}

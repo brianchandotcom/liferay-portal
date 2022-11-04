@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = SearchFacetTracker.class)
-public class SearchFacetTracker {
+@Component(immediate = true, service = SearchFacetRegistry.class)
+public class SearchFacetRegistry {
 
 	public List<SearchFacet> getSearchFacets() {
 		return _searchFacets;

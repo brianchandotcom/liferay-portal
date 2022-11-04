@@ -66,50 +66,29 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create 2 more users") {
-			JSONUser.addUser(
-				userEmailAddress = "userea2@liferay.com",
-				userFirstName = "userfn2",
-				userLastName = "userln2",
-				userScreenName = "usersn2");
+			for (var userNumb : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${userNumb}@liferay.com",
+					userFirstName = "userfn${userNumb}",
+					userLastName = "userln${userNumb}",
+					userScreenName = "usersn${userNumb}");
 
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea2@liferay.com");
-
-			JSONUser.addUser(
-				userEmailAddress = "userea3@liferay.com",
-				userFirstName = "userfn3",
-				userLastName = "userln3",
-				userScreenName = "usersn3");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea3@liferay.com");
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea${userNumb}@liferay.com");
+			}
 		}
 
 		task ("Create a segment for each user") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User1",
-				text = "userfn1");
-
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User2",
-				text = "userfn2");
-
-			JSONSegmentsentry.addSegment(
-				fieldName = "First Name",
-				groupName = "Test Site Name",
-				operator = "equals",
-				segmentName = "Segment With User3",
-				text = "userfn3");
+			for (var sgementNumb : list "1,2,3") {
+				JSONSegmentsentry.addSegment(
+					fieldName = "First Name",
+					groupName = "Test Site Name",
+					operator = "equals",
+					segmentName = "Segment With User${sgementNumb}",
+					text = "userfn${sgementNumb}");
+			}
 		}
 
 		task ("Create an experience for each segment in the Content Page") {
@@ -129,12 +108,6 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience User 1",
 				segmentName = "Segment With User1");
-
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "Experience User 1");
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -172,12 +145,6 @@ definition {
 				experienceName = "Experience User 3",
 				segmentName = "Segment With User3");
 
-			Button.clickPublish();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "Experience User 3");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -189,38 +156,18 @@ definition {
 		}
 
 		task ("Login with each user and check the correct experiece is shown") {
-			User.logoutAndLoginPG(
-				freeLogin = "true",
-				userLoginEmailAddress = "userea1@liferay.com",
-				userLoginFullName = "userfn1 userln1");
+			for (var userNumb : list "1,2,3") {
+				User.logoutAndLoginPG(
+					freeLogin = "true",
+					userLoginEmailAddress = "userea${userNumb}@liferay.com",
+					userLoginFullName = "userfn${userNumb} userln${userNumb}");
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "User 1");
-
-			User.logoutAndLoginPG(
-				freeLogin = "true",
-				userLoginEmailAddress = "userea2@liferay.com",
-				userLoginFullName = "userfn2 userln2");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "User 2");
-
-			User.logoutAndLoginPG(
-				freeLogin = "true",
-				userLoginEmailAddress = "userea3@liferay.com",
-				userLoginFullName = "userfn3 userln3");
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
-			AssertTextEquals(
-				locator1 = "Experience#FRAGMENT_HEADING",
-				value1 = "User 3");
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "User ${userNumb}");
+			}
 		}
 	}
 
@@ -244,15 +191,9 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "Default");
-
-			PageEditor.publish();
 		}
 
 		task ("Add an Experience for that page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
 			PageEditor.addExperience(
 				experienceName = "NewAnyoneExperience",
 				segmentName = "Anyone");
@@ -325,12 +266,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "PageEditor#EXPERIENCE_NAME",
 				value1 = "");
-
-			AssertClick(
-				locator1 = "Button#CANCEL",
-				value1 = "Cancel");
-
-			PageEditor.publish();
 		}
 	}
 
@@ -485,17 +420,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Country",
 				segmentName = "Org with Country");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Country");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -571,17 +498,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Modified Date",
 				segmentName = "Org with Date Modified");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Modified Date");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -659,17 +578,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Hierarchy Path",
 				segmentName = "Org with Hierarchy Path");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Hierarchy Path");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -747,17 +658,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Name",
 				segmentName = "Org with Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Name");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -835,17 +738,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Users In A Specific Org",
 				segmentName = "Users In A Specific Org");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Users In A Specific Org");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -936,17 +831,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Parent Organization",
 				segmentName = "Org with Parent");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Parent Organization");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1028,17 +915,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Region",
 				segmentName = "Org with Region");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Region");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1131,17 +1010,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Tag",
 				segmentName = "Org with Tag");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Tag");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1248,17 +1119,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Experience For Org with Type",
 				segmentName = "Org with Type");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Experience For Org with Type");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1329,17 +1192,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "NewBrowserExperience",
 				segmentName = "Session Browser Segment");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "NewBrowserExperience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1415,17 +1270,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionCookiesSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1484,17 +1331,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionDeviceBrandSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1553,17 +1392,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionDeviceModelSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1622,17 +1453,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionDeviceScreenResolutionHeightSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1691,17 +1514,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionDeviceScreenResolutionWidthSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1801,19 +1616,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "HostnameSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-			Navigator._gotoPage(pageName = "Experience Content Page");
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1899,17 +1704,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "IP Geocoder Country Experience",
 				segmentName = "IP Geocoder Country Segment");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "IP Geocoder Country Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -1964,17 +1761,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "LastSignInDateSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2035,17 +1824,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "LocalDateSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2104,17 +1885,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "ReferrerURLSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2181,17 +1954,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionRequestParametersSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2261,17 +2026,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "NewSignedInExperience",
 				segmentName = "Session Signed In Segment");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "NewSignedInExperience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2328,17 +2085,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionURLSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2397,17 +2146,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "SessionUserAgentSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2591,17 +2332,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Segment Title");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2659,17 +2392,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Segment Title");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2727,17 +2452,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Segment Title");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2795,17 +2512,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Segment Title");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2929,17 +2638,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Segment Title");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -2997,17 +2698,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Segment Title");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3085,17 +2778,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "UserSiteOrganizationRoleSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3159,17 +2844,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "UserSiteSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3236,17 +2913,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "UserTagSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3329,17 +2998,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "UserTeamSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3412,17 +3073,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "UserUserGroupSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3480,17 +3133,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "UserUserSegment Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3554,44 +3199,22 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Screen Name Experience",
 				segmentName = "Segment Screen Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Edit the experience created and leave it below the Default experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Screen Name Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "This is a new Screen Name experience for you");
-
-			PageEditor.publish();
 		}
 
 		task ("Go to the Content Page and add a new experience for the second segment") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
 			PageEditor.addExperience(
 				experienceName = "Email Address Experience",
 				segmentName = "Segment Email Address");
-
-			Button.clickPublish();
 		}
 
 		task ("Edit the experience created and leave it below the Default experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Email Address Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3649,46 +3272,24 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "Screen Name Experience",
 				segmentName = "Segment Screen Name");
-
-			Button.clickPublish();
 		}
 
 		task ("Edit the experience created and prioritize it over the Default experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Screen Name Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "This is a new Screen Name experience for you");
 
 			PageEditor.prioritizeExperience(experienceName = "Screen Name Experience");
-
-			PageEditor.publish();
 		}
 
 		task ("Go to the Content Page and add a new experience for the second segment") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
 			PageEditor.addExperience(
 				experienceName = "Email Address Experience",
 				segmentName = "Segment Email Address");
-
-			Button.clickPublish();
 		}
 
 		task ("Edit the experience created and prioritize it over the Default experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "Email Address Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3762,16 +3363,12 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Danger",
 				panel = "Styles");
-
-			PageEditor.publish();
 		}
 
 		task ("Create an experience") {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
-
-			PageEditor.publish();
 		}
 
 		task ("Change the background color of the default experience") {
@@ -3933,8 +3530,6 @@ definition {
 			PageEditor.deleteExperience(experienceName = "Name Experience");
 
 			AssertElementNotPresent(locator1 = "PageEditor#EXPERIENCE_DELETE_BUTTON");
-
-			PageEditor.publish();
 		}
 	}
 
@@ -4271,17 +3866,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
-
-			PageEditor.publish();
 		}
 
 		task ("Edit the fragment recently added without publishing the changes") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "New Experience");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -4387,17 +3974,9 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "NewExp1",
 				segmentName = "Anyone");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the first experience created") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "NewExp1");
-
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -4406,27 +3985,13 @@ definition {
 
 		task ("Priotitize the first experience created") {
 			PageEditor.prioritizeExperience(experienceName = "NewExp1");
-
-			Button.clickPublish();
 		}
 
 		task ("Duplicate the first experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.changeExperience(newExperience = "NewExp1");
-
 			PageEditor.duplicateExperience(experienceName = "NewExp1");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the second experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
 			PageEditor.changeExperience(newExperience = "Copy of NewExp1");
 
 			AssertTextEquals(
@@ -4447,6 +4012,22 @@ definition {
 				value1 = "Exp1");
 
 			PageEditor.publish();
+		}
+
+		task ("Check that the duplicated experience is bellow default experience") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			AssertTextEquals(
+				index = "2",
+				locator1 = "PageEditor#EXPERIENCE_TITLE_INDEX",
+				value1 = "Default");
+
+			AssertTextEquals(
+				index = "3",
+				locator1 = "PageEditor#EXPERIENCE_TITLE_INDEX",
+				value1 = "Copy of NewExp1");
 		}
 	}
 
@@ -5650,12 +5231,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
-
-			PageEditor.publish();
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",

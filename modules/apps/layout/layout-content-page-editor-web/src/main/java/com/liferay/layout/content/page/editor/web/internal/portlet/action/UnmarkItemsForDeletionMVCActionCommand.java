@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/unmark_item_for_deletion"
+		"mvc.command.name=/layout_content_page_editor/unmark_items_for_deletion"
 	},
 	service = MVCActionCommand.class
 )
-public class UnmarkItemForDeletionMVCActionCommand
+public class UnmarkItemsForDeletionMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override

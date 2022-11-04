@@ -608,9 +608,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
-				"unmarkItemForDeletionURL",
+				"unmarkItemsForDeletionURL",
 				getFragmentEntryActionURL(
-					"/layout_content_page_editor/unmark_item_for_deletion")
+					"/layout_content_page_editor/unmark_items_for_deletion")
 			).put(
 				"updateCollectionDisplayConfigURL",
 				getFragmentEntryActionURL(

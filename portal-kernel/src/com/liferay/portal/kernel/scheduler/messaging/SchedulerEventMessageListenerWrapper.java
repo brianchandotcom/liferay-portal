@@ -28,13 +28,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Shuyang Zhou
@@ -64,39 +59,7 @@ public class SchedulerEventMessageListenerWrapper
 			}
 		}
 
-		if (_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT <= 0) {
-			_lock.lock();
-		}
-		else {
-			try {
-				if (!_lock.tryLock(
-						_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT,
-						TimeUnit.MILLISECONDS)) {
-
-					MessageBusUtil.sendMessage(destinationName, message);
-
-					return;
-				}
-			}
-			catch (InterruptedException interruptedException) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to wait " +
-							_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT +
-								" milliseconds before retry",
-						interruptedException);
-				}
-
-				return;
-			}
-		}
-
-		try {
-			_processMessage(message, destinationName);
-		}
-		finally {
-			_lock.unlock();
-		}
+		_processMessage(message, destinationName);
 	}
 
 	public void setMessageListener(MessageListener messageListener) {
@@ -159,15 +122,9 @@ public class SchedulerEventMessageListenerWrapper
 		}
 	}
 
-	private static final int _SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT));
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
 
-	private final Lock _lock = new ReentrantLock();
 	private MessageListener _messageListener;
 	private SchedulerEntry _schedulerEntry;
 

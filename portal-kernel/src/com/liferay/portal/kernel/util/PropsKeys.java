@@ -2305,9 +2305,6 @@ public interface PropsKeys {
 
 	public static final String SCHEDULER_ENABLED = "scheduler.enabled";
 
-	public static final String SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT =
-		"scheduler.event.message.listener.lock.timeout";
-
 	public static final String SCHEDULER_GROUP_NAME_MAX_LENGTH =
 		"scheduler.group.name.max.length";
 

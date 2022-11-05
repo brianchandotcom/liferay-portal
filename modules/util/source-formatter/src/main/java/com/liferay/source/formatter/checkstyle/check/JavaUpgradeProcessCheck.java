@@ -131,29 +131,6 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _isUpgradeProcess(DetailAST detailAST) {
-		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
-			TokenTypes.EXTENDS_CLAUSE);
-
-		if (extendsClauseDetailAST == null) {
-			return false;
-		}
-
-		DetailAST firstChildDetailAST = extendsClauseDetailAST.getFirstChild();
-
-		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
-			return false;
-		}
-
-		String extendsClassName = getName(extendsClauseDetailAST);
-
-		if (!extendsClassName.equals("UpgradeProcess")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private boolean _checkIfDeleted(
 		DetailAST detailAST, DetailAST methodDefDetailAST) {
 
@@ -527,6 +504,29 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 
 		return alterMethodParameters;
+	}
+
+	private boolean _isUpgradeProcess(DetailAST detailAST) {
+		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
+			TokenTypes.EXTENDS_CLAUSE);
+
+		if (extendsClauseDetailAST == null) {
+			return false;
+		}
+
+		DetailAST firstChildDetailAST = extendsClauseDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
+			return false;
+		}
+
+		String extendsClassName = getName(extendsClauseDetailAST);
+
+		if (!extendsClassName.equals("UpgradeProcess")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _MSG_DELETE_CLASS = "delete.class";

@@ -57,6 +57,8 @@ definition {
 				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 		}
 
+		WaitForSPARefresh();
+
 		if (IsElementPresent(key_closedOrOpen = "closed", locator1 = "CreateObject#VIEW_COLLAPSE_ICON")) {
 			Click(locator1 = "CreateObject#COLLAPSE_EXPAND_OBJECT_PORTLET_ENTRY_FIELD");
 

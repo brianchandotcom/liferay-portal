@@ -70,7 +70,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 
 		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
-			detailAST, true, TokenTypes.METHOD_DEF);
+			detailAST, false, TokenTypes.METHOD_DEF);
 
 		DetailAST methodDefDetailAST = null;
 

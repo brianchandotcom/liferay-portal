@@ -47,8 +47,7 @@ public class AddSalesforceConnectorPortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addDispatchTrigger(
 			company, "etl-salesforce-account-connector-0.4.zip");
-		_addDispatchTrigger(
-			company, "etl-salesforce-order-connector-0.7.zip");
+		_addDispatchTrigger(company, "etl-salesforce-order-connector-0.7.zip");
 		_addDispatchTrigger(
 			company, "etl-salesforce-price-list-connector-0.7.zip");
 		_addDispatchTrigger(

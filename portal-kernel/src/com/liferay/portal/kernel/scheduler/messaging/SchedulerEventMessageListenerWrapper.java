@@ -59,33 +59,16 @@ public class SchedulerEventMessageListenerWrapper
 			}
 		}
 
-		_processMessage(message, destinationName);
-	}
-
-	public void setMessageListener(MessageListener messageListener) {
-		_messageListener = messageListener;
-	}
-
-	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
-		_schedulerEntry = schedulerEntry;
-	}
-
-	protected void handleException(Message message, Exception exception) {
-		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
-
-		if (jobState != null) {
-			jobState.addException(exception, new Date());
-		}
-	}
-
-	private void _processMessage(Message message, String destinationName)
-		throws MessageListenerException {
-
 		try {
 			_messageListener.receive(message);
 		}
 		catch (Exception exception) {
-			handleException(message, exception);
+			JobState jobState = (JobState)message.get(
+				SchedulerEngine.JOB_STATE);
+
+			if (jobState != null) {
+				jobState.addException(exception, new Date());
+			}
 
 			if (exception instanceof MessageListenerException) {
 				throw (MessageListenerException)exception;
@@ -120,6 +103,14 @@ public class SchedulerEventMessageListenerWrapper
 				}
 			}
 		}
+	}
+
+	public void setMessageListener(MessageListener messageListener) {
+		_messageListener = messageListener;
+	}
+
+	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
+		_schedulerEntry = schedulerEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -33,7 +33,10 @@ export default async function submitForm(
 
 	Liferay.FeatureFlags['LPS-164528']
 		? await createDealRegistrationProxyAPI(values)
-		: createDealRegistration(ResourceName.DEAL_REGISTRATION_DXP, values);
+		: await createDealRegistration(
+				ResourceName.DEAL_REGISTRATION_DXP,
+				values
+		  );
 
 	Liferay.Util.navigate(
 		`${siteURL}/${PRMPageRoute.DEAL_REGISTRATION_LISTING}`

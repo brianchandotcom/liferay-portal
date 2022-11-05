@@ -93,6 +93,10 @@ definition {
 	}
 
 	macro editADTScript {
+		Type.sendKeys(
+			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
+			value1 = "keys=CONTROL,m");
+
 		Type.sendKeysAceEditor(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 			value1 = "${adtScript}");

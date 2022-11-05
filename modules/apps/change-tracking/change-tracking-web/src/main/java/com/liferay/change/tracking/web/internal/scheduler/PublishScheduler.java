@@ -194,7 +194,7 @@ public class PublishScheduler {
 				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH, startDate,
 				null, 0, null),
 			StorageType.PERSISTED, String.valueOf(ctCollectionId),
-			CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH, message, 0);
+			CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH, message);
 
 		return null;
 	}

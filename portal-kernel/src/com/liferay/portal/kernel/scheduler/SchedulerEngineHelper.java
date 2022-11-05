@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.scheduler;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,7 +31,7 @@ public interface SchedulerEngineHelper {
 
 	public void addScriptingJob(
 			Trigger trigger, StorageType storageType, String description,
-			String language, String script, int exceptionsMaxSize)
+			String language, String script)
 		throws SchedulerException;
 
 	public void auditSchedulerJobs(Message message, TriggerState triggerState)
@@ -63,13 +62,6 @@ public interface SchedulerEngineHelper {
 	public Date getFinalFireTime(SchedulerResponse schedulerResponse);
 
 	public Date getFinalFireTime(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
-
-	public ObjectValuePair<Exception, Date>[] getJobExceptions(
-		SchedulerResponse schedulerResponse);
-
-	public ObjectValuePair<Exception, Date>[] getJobExceptions(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
@@ -129,21 +121,17 @@ public interface SchedulerEngineHelper {
 
 	public void schedule(
 			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Message message, int exceptionsMaxSize)
+			String destinationName, Message message)
 		throws SchedulerException;
 
 	public void schedule(
 			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Object payload, int exceptionsMaxSize)
+			String destinationName, Object payload)
 		throws SchedulerException;
 
 	public void shutdown() throws SchedulerException;
 
 	public void start() throws SchedulerException;
-
-	public void suppressError(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
 
 	public void unregister(MessageListener messageListener);
 
@@ -160,8 +148,7 @@ public interface SchedulerEngineHelper {
 
 	public void update(
 			String jobName, String groupName, StorageType storageType,
-			String description, String language, String script,
-			int exceptionsMaxSize)
+			String description, String language, String script)
 		throws SchedulerException;
 
 	public void update(Trigger trigger, StorageType storageType)

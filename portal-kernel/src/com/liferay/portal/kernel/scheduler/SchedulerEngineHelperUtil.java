@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.scheduler;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Calendar;
@@ -33,12 +32,11 @@ public class SchedulerEngineHelperUtil {
 
 	public static void addScriptingJob(
 			Trigger trigger, StorageType storageType, String description,
-			String language, String script, int exceptionsMaxSize)
+			String language, String script)
 		throws SchedulerException {
 
 		_schedulerEngineHelper.addScriptingJob(
-			trigger, storageType, description, language, script,
-			exceptionsMaxSize);
+			trigger, storageType, description, language, script);
 	}
 
 	public static void auditSchedulerJobs(
@@ -103,20 +101,6 @@ public class SchedulerEngineHelperUtil {
 		throws SchedulerException {
 
 		return _schedulerEngineHelper.getFinalFireTime(
-			jobName, groupName, storageType);
-	}
-
-	public static ObjectValuePair<Exception, Date>[] getJobExceptions(
-		SchedulerResponse schedulerResponse) {
-
-		return _schedulerEngineHelper.getJobExceptions(schedulerResponse);
-	}
-
-	public static ObjectValuePair<Exception, Date>[] getJobExceptions(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		return _schedulerEngineHelper.getJobExceptions(
 			jobName, groupName, storageType);
 	}
 
@@ -236,22 +220,20 @@ public class SchedulerEngineHelperUtil {
 
 	public static void schedule(
 			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Message message, int exceptionsMaxSize)
+			String destinationName, Message message)
 		throws SchedulerException {
 
 		_schedulerEngineHelper.schedule(
-			trigger, storageType, description, destinationName, message,
-			exceptionsMaxSize);
+			trigger, storageType, description, destinationName, message);
 	}
 
 	public static void schedule(
 			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Object payload, int exceptionsMaxSize)
+			String destinationName, Object payload)
 		throws SchedulerException {
 
 		_schedulerEngineHelper.schedule(
-			trigger, storageType, description, destinationName, payload,
-			exceptionsMaxSize);
+			trigger, storageType, description, destinationName, payload);
 	}
 
 	public static void shutdown() throws SchedulerException {
@@ -260,13 +242,6 @@ public class SchedulerEngineHelperUtil {
 
 	public static void start() throws SchedulerException {
 		_schedulerEngineHelper.start();
-	}
-
-	public static void suppressError(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngineHelper.suppressError(jobName, groupName, storageType);
 	}
 
 	public static void unregister(MessageListener messageListener) {
@@ -295,13 +270,11 @@ public class SchedulerEngineHelperUtil {
 
 	public static void update(
 			String jobName, String groupName, StorageType storageType,
-			String description, String language, String script,
-			int exceptionsMaxSize)
+			String description, String language, String script)
 		throws SchedulerException {
 
 		_schedulerEngineHelper.update(
-			jobName, groupName, storageType, description, language, script,
-			exceptionsMaxSize);
+			jobName, groupName, storageType, description, language, script);
 	}
 
 	public static void update(Trigger trigger, StorageType storageType)

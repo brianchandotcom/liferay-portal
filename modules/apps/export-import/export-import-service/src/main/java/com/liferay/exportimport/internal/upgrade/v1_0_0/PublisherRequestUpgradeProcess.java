@@ -111,7 +111,7 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 			schedulerResponse.getTrigger(), StorageType.PERSISTED,
 			schedulerResponse.getDescription(),
 			DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
-			exportImportConfiguration.getExportImportConfigurationId(), 0);
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 	private void _updateScheduledPublications(Group group) throws Exception {
@@ -177,7 +177,7 @@ public class PublisherRequestUpgradeProcess extends UpgradeProcess {
 			schedulerResponse.getTrigger(), StorageType.PERSISTED,
 			schedulerResponse.getDescription(),
 			DestinationNames.LAYOUTS_REMOTE_PUBLISHER,
-			exportImportConfiguration.getExportImportConfigurationId(), 0);
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 	private final ExportImportConfigurationLocalService

@@ -14,11 +14,9 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -70,69 +68,30 @@ public class JobStateSerializeUtil {
 				illegalArgumentException);
 		}
 
-		int exceptionsMaxSize = (Integer)jobStateMap.get(
-			_EXCEPTIONS_MAX_SIZE_FIELD);
 		Map<String, Date> triggerDates = (Map<String, Date>)jobStateMap.get(
 			_TRIGGER_DATES_FIELD);
 
 		JobState jobState = null;
 
 		if (triggerDates != null) {
-			jobState = new JobState(
-				triggerState, exceptionsMaxSize, triggerDates);
+			jobState = new JobState(triggerState, triggerDates);
 		}
 		else {
-			jobState = new JobState(triggerState, exceptionsMaxSize);
-		}
-
-		ArrayList<Object[]> exceptionsList =
-			(ArrayList<Object[]>)jobStateMap.get(_EXCEPTIONS_FIELD);
-
-		if (exceptionsList != null) {
-			for (Object[] exceptions : exceptionsList) {
-				jobState.addException(
-					(Exception)exceptions[0], (Date)exceptions[1]);
-			}
+			jobState = new JobState(triggerState);
 		}
 
 		return jobState;
 	}
 
 	private static Map<String, Object> _serialize_1(JobState jobState) {
-		Map<String, Object> jobStateMap = new HashMap<>();
-
-		ObjectValuePair<Exception, Date>[] exceptions =
-			jobState.getExceptions();
-
-		if (exceptions != null) {
-			ArrayList<Object[]> exceptionsList = new ArrayList<>();
-
-			for (ObjectValuePair<Exception, Date> exception : exceptions) {
-				exceptionsList.add(
-					new Object[] {exception.getKey(), exception.getValue()});
-			}
-
-			exceptionsList.trimToSize();
-
-			jobStateMap.put(_EXCEPTIONS_FIELD, exceptionsList);
-		}
-
-		jobStateMap.put(
-			_EXCEPTIONS_MAX_SIZE_FIELD, jobState.getExceptionsMaxSize());
-		jobStateMap.put(_TRIGGER_DATES_FIELD, jobState.getTriggerDates());
-
-		jobStateMap.put(
-			_TRIGGER_STATE_FIELD, String.valueOf(jobState.getTriggerState()));
-
-		jobStateMap.put(_VERSION_FIELD, JobState.VERSION);
-
-		return jobStateMap;
+		return HashMapBuilder.<String, Object>put(
+			_TRIGGER_DATES_FIELD, jobState.getTriggerDates()
+		).put(
+			_TRIGGER_STATE_FIELD, String.valueOf(jobState.getTriggerState())
+		).put(
+			_VERSION_FIELD, JobState.VERSION
+		).build();
 	}
-
-	private static final String _EXCEPTIONS_FIELD = "exceptions";
-
-	private static final String _EXCEPTIONS_MAX_SIZE_FIELD =
-		"exceptionsMaxSize";
 
 	private static final String _TRIGGER_DATES_FIELD = "triggerDates";
 

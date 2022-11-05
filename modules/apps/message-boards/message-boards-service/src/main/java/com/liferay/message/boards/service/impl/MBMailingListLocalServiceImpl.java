@@ -272,7 +272,7 @@ public class MBMailingListLocalServiceImpl
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, null,
-			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, message, 0);
+			DestinationNames.MESSAGE_BOARDS_MAILING_LIST, message);
 	}
 
 	private void _unscheduleMailingList(MBMailingList mailingList)

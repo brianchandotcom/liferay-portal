@@ -36,8 +36,6 @@ public interface SchedulerEngine {
 
 	public static final String END_TIME = "END_TIME";
 
-	public static final String EXCEPTIONS_MAX_SIZE = "EXCEPTIONS_MAX_SIZE";
-
 	public static final String FINAL_FIRE_TIME = "FINAL_FIRE_TIME";
 
 	public static final String GROUP_NAME = "GROUP_NAME";
@@ -106,10 +104,6 @@ public interface SchedulerEngine {
 	public void shutdown() throws SchedulerException;
 
 	public void start() throws SchedulerException;
-
-	public void suppressError(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
 
 	public void unschedule(String groupName, StorageType storageType)
 		throws SchedulerException;

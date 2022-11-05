@@ -562,7 +562,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		_schedulerEngineHelper.schedule(
 			trigger, StorageType.PERSISTED, null,
-			ReportsEngineDestinationNames.REPORTS_SCHEDULER_EVENT, message, 0);
+			ReportsEngineDestinationNames.REPORTS_SCHEDULER_EVENT, message);
 	}
 
 	private void _validate(

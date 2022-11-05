@@ -926,7 +926,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			if (enableScheduler) {
 				SchedulerEngineHelperUtil.schedule(
 					getSchedulerTrigger(), getSchedulerStorageType(), null,
-					destinationName, null, 0);
+					destinationName, null);
 			}
 		}
 		catch (Exception exception) {

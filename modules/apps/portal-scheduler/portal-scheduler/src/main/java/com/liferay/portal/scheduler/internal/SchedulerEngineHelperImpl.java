@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.InetAddressUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,7 +97,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Override
 	public void addScriptingJob(
 			Trigger trigger, StorageType storageType, String description,
-			String language, String script, int exceptionsMaxSize)
+			String language, String script)
 		throws SchedulerException {
 
 		Message message = new Message();
@@ -108,7 +107,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		schedule(
 			trigger, storageType, description,
-			DestinationNames.SCHEDULER_SCRIPTING, message, exceptionsMaxSize);
+			DestinationNames.SCHEDULER_SCRIPTING, message);
 	}
 
 	@Override
@@ -370,32 +369,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public ObjectValuePair<Exception, Date>[] getJobExceptions(
-		SchedulerResponse schedulerResponse) {
-
-		Message message = schedulerResponse.getMessage();
-
-		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
-
-		return jobState.getExceptions();
-	}
-
-	@Override
-	public ObjectValuePair<Exception, Date>[] getJobExceptions(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		SchedulerResponse schedulerResponse = getScheduledJob(
-			jobName, groupName, storageType);
-
-		if (schedulerResponse != null) {
-			return getJobExceptions(schedulerResponse);
-		}
-
-		return null;
-	}
-
-	@Override
 	public TriggerState getJobState(SchedulerResponse schedulerResponse) {
 		Message message = schedulerResponse.getMessage();
 
@@ -608,7 +581,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Override
 	public void schedule(
 			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Message message, int exceptionsMaxSize)
+			String destinationName, Message message)
 		throws SchedulerException {
 
 		_schedulerEngine.validateTrigger(trigger, storageType);
@@ -617,8 +590,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			message = new Message();
 		}
 
-		message.put(SchedulerEngine.EXCEPTIONS_MAX_SIZE, exceptionsMaxSize);
-
 		_schedulerEngine.schedule(
 			trigger, description, destinationName, message, storageType);
 	}
@@ -626,16 +597,14 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Override
 	public void schedule(
 			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Object payload, int exceptionsMaxSize)
+			String destinationName, Object payload)
 		throws SchedulerException {
 
 		Message message = new Message();
 
 		message.setPayload(payload);
 
-		schedule(
-			trigger, storageType, description, destinationName, message,
-			exceptionsMaxSize);
+		schedule(trigger, storageType, description, destinationName, message);
 	}
 
 	@Override
@@ -646,14 +615,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Override
 	public void start() throws SchedulerException {
 		_schedulerEngine.start();
-	}
-
-	@Override
-	public void suppressError(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngine.suppressError(jobName, groupName, storageType);
 	}
 
 	@Override
@@ -696,8 +657,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Override
 	public void update(
 			String jobName, String groupName, StorageType storageType,
-			String description, String language, String script,
-			int exceptionsMaxSize)
+			String description, String language, String script)
 		throws SchedulerException {
 
 		SchedulerResponse schedulerResponse = getScheduledJob(
@@ -719,9 +679,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			return;
 		}
 
-		addScriptingJob(
-			trigger, storageType, description, language, script,
-			exceptionsMaxSize);
+		addScriptingJob(trigger, storageType, description, language, script);
 	}
 
 	@Override
@@ -937,7 +895,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			try {
 				schedule(
 					schedulerEntry.getTrigger(), storageType,
-					schedulerEntry.getDescription(), destinationName, null, 0);
+					schedulerEntry.getDescription(), destinationName, null);
 
 				_messageListenerServiceRegistrations.put(
 					schedulerEntry.getEventListenerClass(),

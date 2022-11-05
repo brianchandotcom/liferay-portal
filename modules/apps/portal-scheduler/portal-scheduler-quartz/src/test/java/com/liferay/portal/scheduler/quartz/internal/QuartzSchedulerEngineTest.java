@@ -428,31 +428,6 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testSuppressError() throws Exception {
-		SchedulerResponse schedulerResponse =
-			_quartzSchedulerEngine.getScheduledJob(
-				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		Message message = schedulerResponse.getMessage();
-
-		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
-
-		Assert.assertNotNull(jobState.getExceptions());
-
-		_quartzSchedulerEngine.suppressError(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		message = schedulerResponse.getMessage();
-
-		jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
-
-		Assert.assertNull(jobState.getExceptions());
-	}
-
-	@Test
 	public void testUnschedule1() throws Exception {
 
 		// Unschedule memory job
@@ -831,8 +806,6 @@ public class QuartzSchedulerEngineTest {
 				SchedulerEngine.STORAGE_TYPE, storageType.toString());
 
 			JobState jobState = new JobState(TriggerState.NORMAL);
-
-			jobState.addException(new Exception(), new Date());
 
 			jobDataMap.put(
 				SchedulerEngine.JOB_STATE,

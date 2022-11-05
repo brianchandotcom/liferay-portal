@@ -996,7 +996,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
 			DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
-			exportImportConfiguration.getExportImportConfigurationId(), 0);
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 	/**
@@ -1068,7 +1068,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
 			DestinationNames.LAYOUTS_REMOTE_PUBLISHER,
-			exportImportConfiguration.getExportImportConfigurationId(), 0);
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 	/**

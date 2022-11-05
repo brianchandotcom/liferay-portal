@@ -13,7 +13,7 @@ String script = "System.out.println(\"Memory job 2 is triggered at \" + System.c
 
 try {
 	SchedulerEngineHelperUtil.addScriptingJob(
-		trigger, StorageType.MEMORY, "memory job", "groovy", script, 0);
+		trigger, StorageType.MEMORY, "memory job", "groovy", script);
 
 	out.println("Memory job 2 is added");
 }

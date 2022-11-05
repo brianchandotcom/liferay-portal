@@ -13,7 +13,7 @@ String script = "System.out.println(\"Memory clustered job 1 is triggered at \" 
 
 try {
 	SchedulerEngineHelperUtil.addScriptingJob(
-		trigger, StorageType.MEMORY_CLUSTERED, "memory clustered job", "groovy", script, 0);
+		trigger, StorageType.MEMORY_CLUSTERED, "memory clustered job", "groovy", script);
 
 	out.println("Memory clustered job 1 is added");
 }

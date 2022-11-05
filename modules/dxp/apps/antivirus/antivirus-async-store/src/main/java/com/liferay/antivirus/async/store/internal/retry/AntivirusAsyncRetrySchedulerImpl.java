@@ -116,7 +116,7 @@ public class AntivirusAsyncRetrySchedulerImpl
 
 		_schedulerEngineHelper.schedule(
 			trigger, StorageType.PERSISTED, trigger.getJobName(),
-			AntivirusAsyncDestinationNames.ANTIVIRUS, message, 0);
+			AntivirusAsyncDestinationNames.ANTIVIRUS, message);
 	}
 
 	private volatile int _retryInterval;

@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.Date;
 
 /**
  * @author Shuyang Zhou
@@ -62,13 +59,6 @@ public class SchedulerEventMessageListenerWrapper
 			_messageListener.receive(message);
 		}
 		catch (Exception exception) {
-			JobState jobState = (JobState)message.get(
-				SchedulerEngine.JOB_STATE);
-
-			if (jobState != null) {
-				jobState.addException(exception, new Date());
-			}
-
 			if (exception instanceof MessageListenerException) {
 				throw (MessageListenerException)exception;
 			}

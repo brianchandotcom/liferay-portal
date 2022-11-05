@@ -51,7 +51,7 @@ public class DispatchTriggerHelper {
 			_schedulerEngineHelper.schedule(
 				trigger, storageType, null,
 				DispatchConstants.EXECUTOR_DESTINATION_NAME,
-				_getPayload(dispatchTriggerId), 1000);
+				_getPayload(dispatchTriggerId));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

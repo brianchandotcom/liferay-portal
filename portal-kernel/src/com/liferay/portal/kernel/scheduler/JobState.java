@@ -15,16 +15,13 @@
 package com.liferay.portal.kernel.scheduler;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 
 /**
  * @author Tina Tian
@@ -34,57 +31,18 @@ public class JobState implements Cloneable, Serializable {
 	public static final int VERSION = 1;
 
 	public JobState(TriggerState triggerState) {
-		this(triggerState, _EXCEPTIONS_MAX_SIZE);
-	}
-
-	public JobState(TriggerState triggerState, int exceptionsMaxSize) {
-		if (exceptionsMaxSize <= 0) {
-			exceptionsMaxSize = _EXCEPTIONS_MAX_SIZE;
-		}
-
 		_triggerState = triggerState;
-		_exceptionsMaxSize = exceptionsMaxSize;
 	}
 
-	public JobState(
-		TriggerState triggerState, int exceptionsMaxSize,
-		Map<String, Date> triggerDates) {
-
-		this(triggerState, exceptionsMaxSize);
+	public JobState(TriggerState triggerState, Map<String, Date> triggerDates) {
+		this(triggerState);
 
 		_triggerDates = new HashMap<>(triggerDates);
 	}
 
-	public void addException(Exception exception, Date date) {
-		if (_exceptions == null) {
-			_exceptions = new LinkedList<>();
-		}
-
-		_exceptions.add(new ObjectValuePair<Exception, Date>(exception, date));
-
-		while (_exceptions.size() > _exceptionsMaxSize) {
-			_exceptions.poll();
-		}
-	}
-
-	public void clearExceptions() {
-		if ((_exceptions != null) && !_exceptions.isEmpty()) {
-			_exceptions.clear();
-		}
-	}
-
 	@Override
 	public Object clone() {
-		JobState jobState = new JobState(_triggerState, _exceptionsMaxSize);
-
-		if (_exceptions != null) {
-			Queue<ObjectValuePair<Exception, Date>> exceptions =
-				new LinkedList<>();
-
-			exceptions.addAll(_exceptions);
-
-			jobState._exceptions = exceptions;
-		}
+		JobState jobState = new JobState(_triggerState);
 
 		if (_triggerDates != null) {
 			jobState._triggerDates = HashMapBuilder.<String, Date>putAll(
@@ -93,18 +51,6 @@ public class JobState implements Cloneable, Serializable {
 		}
 
 		return jobState;
-	}
-
-	public ObjectValuePair<Exception, Date>[] getExceptions() {
-		if (_exceptions == null) {
-			return null;
-		}
-
-		return _exceptions.toArray(new ObjectValuePair[0]);
-	}
-
-	public int getExceptionsMaxSize() {
-		return _exceptionsMaxSize;
 	}
 
 	public Date getTriggerDate(String key) {
@@ -139,12 +85,8 @@ public class JobState implements Cloneable, Serializable {
 		_triggerState = triggerState;
 	}
 
-	private static final int _EXCEPTIONS_MAX_SIZE = 10;
-
 	private static final long serialVersionUID = 5747422831990881126L;
 
-	private Queue<ObjectValuePair<Exception, Date>> _exceptions;
-	private final int _exceptionsMaxSize;
 	private Map<String, Date> _triggerDates;
 	private TriggerState _triggerState;
 

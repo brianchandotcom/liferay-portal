@@ -335,7 +335,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 		_schedulerEngineHelper.schedule(
 			trigger, StorageType.PERSISTED, null,
-			KaleoRuntimeDestinationNames.WORKFLOW_TIMER, message, 0);
+			KaleoRuntimeDestinationNames.WORKFLOW_TIMER, message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

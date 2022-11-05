@@ -426,29 +426,6 @@ public class ClusterSchedulerEngine
 
 	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
 	@Override
-	public void suppressError(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		boolean memoryClusteredSlaveJob = _isMemoryClusteredSlaveJob(
-			storageType);
-
-		if (!memoryClusteredSlaveJob) {
-			_readLock.lock();
-
-			try {
-				_schedulerEngine.suppressError(jobName, groupName, storageType);
-			}
-			finally {
-				_readLock.unlock();
-			}
-		}
-
-		setClusterableThreadLocal(storageType);
-	}
-
-	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
-	@Override
 	public void unschedule(String groupName, StorageType storageType)
 		throws SchedulerException {
 

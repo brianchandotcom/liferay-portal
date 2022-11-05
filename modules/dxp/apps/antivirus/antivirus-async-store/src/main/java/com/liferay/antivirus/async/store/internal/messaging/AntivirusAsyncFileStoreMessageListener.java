@@ -165,7 +165,7 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 		_schedulerEngineHelper.schedule(
 			trigger, StorageType.PERSISTED, null,
 			AntivirusAsyncDestinationNames.ANTIVIRUS_BATCH,
-			rootDir.getAbsolutePath(), 0);
+			rootDir.getAbsolutePath());
 	}
 
 	private void _scan(String rootDirAbsolutePathString) throws IOException {

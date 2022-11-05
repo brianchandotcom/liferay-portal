@@ -103,8 +103,6 @@ public class MessageSenderJob implements Job {
 			jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
 
 		if (jobExecutionContext.getNextFireTime() == null) {
-			message.put(SchedulerEngine.DISABLE, true);
-
 			JobKey jobKey = jobDetail.getKey();
 
 			if (GetterUtil.getBoolean(

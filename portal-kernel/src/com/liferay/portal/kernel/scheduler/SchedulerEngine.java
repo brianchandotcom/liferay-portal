@@ -34,8 +34,6 @@ public interface SchedulerEngine {
 
 	public static final String DESTINATION_NAME = "DESTINATION_NAME";
 
-	public static final String DISABLE = "DISABLE";
-
 	public static final String END_TIME = "END_TIME";
 
 	public static final String EXCEPTIONS_MAX_SIZE = "EXCEPTIONS_MAX_SIZE";

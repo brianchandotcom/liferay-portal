@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.JobState;
@@ -77,25 +76,9 @@ public class SchedulerEventMessageListenerWrapper
 			throw new MessageListenerException(exception);
 		}
 		finally {
-			TriggerState triggerState = null;
-
-			if (message.getBoolean(SchedulerEngine.DISABLE)) {
-				triggerState = TriggerState.COMPLETE;
-
-				if (destinationName.equals(
-						DestinationNames.SCHEDULER_DISPATCH)) {
-
-					MessageBusUtil.unregisterMessageListener(
-						destinationName, this);
-				}
-			}
-			else {
-				triggerState = TriggerState.NORMAL;
-			}
-
 			try {
 				SchedulerEngineHelperUtil.auditSchedulerJobs(
-					message, triggerState);
+					message, TriggerState.NORMAL);
 			}
 			catch (Exception exception) {
 				if (_log.isInfoEnabled()) {

@@ -44,11 +44,11 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 
 		boolean continueFlag = true;
-		List<DetailAST> ifDetailASTs = getAllChildTokens(
+		List<DetailAST> literalIfDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.LITERAL_IF);
 
-		for (DetailAST curDetailAST : ifDetailASTs) {
-			if (!_checkUnnecessaryJudgement(curDetailAST)) {
+		for (DetailAST literalIfDetailAST : literalIfDetailASTList) {
+			if (!_checkUnnecessaryJudgement(literalIfDetailAST)) {
 				continueFlag = false;
 			}
 		}

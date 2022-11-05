@@ -21,6 +21,20 @@ definition {
 		}
 	}
 
+	@description = "LPS-165439. I'm able to see references to import map by default on DOM"
+	@priority = "5"
+	test CanGenerateTheAMDToESMBridge {
+		task ("When navigate to home page") {
+			Navigator.gotoPage(pageName = "Home");
+		}
+
+		task ("Then import maps is referenced in the HTML of the page.") {
+			AssertElementPresent(locator1 = "//script[@type='importmap' and contains(.,'react-dom')]");
+
+			AssertElementPresent(locator1 = "//script[@type='importmap' and contains(.,'react')]");
+		}
+	}
+
 	@description = "Verify user can configure AMD loader log level"
 	@priority = "5"
 	@refactordone
@@ -47,20 +61,6 @@ definition {
 			AMDLoader.setLogLevelOption(selectOption = "${logLevelOption}");
 
 			AMDLoader.confirmLogLevelOptionSetCorrectly(selectOption = "${logLevelOption}");
-		}
-	}
-
-	@description = "LPS-165439. I'm able to see references to import map by default on DOM"
-	@priority = "5"
-	test CanGenerateTheAMDToESMBridge {
-		task ("When navigate to home page") {
-			Navigator.gotoPage(pageName = "Home");
-		}
-
-		task ("Then import maps is referenced in the HTML of the page.") {
-			AssertElementPresent(locator1 = "//script[@type='importmap' and contains(.,'react-dom')]");
-
-			AssertElementPresent(locator1 = "//script[@type='importmap' and contains(.,'react')]");
 		}
 	}
 

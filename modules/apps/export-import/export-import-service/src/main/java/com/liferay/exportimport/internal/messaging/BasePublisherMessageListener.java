@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,35 +32,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 
 /**
  * @author Levente Hudák
  */
 public abstract class BasePublisherMessageListener implements MessageListener {
-
-	protected void initialize(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
-
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
-
-		SchedulerEventMessageListenerWrapper
-			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper();
-
-		schedulerEventMessageListenerWrapper.setMessageListener(this);
-
-		serviceRegistration = bundleContext.registerService(
-			MessageListener.class, schedulerEventMessageListenerWrapper,
-			properties);
-	}
 
 	protected void initThreadLocals(
 			long userId, Map<String, String[]> parameterMap)
@@ -124,7 +101,5 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 		PrincipalThreadLocal.setName(null);
 		ServiceContextThreadLocal.popServiceContext();
 	}
-
-	protected ServiceRegistration<MessageListener> serviceRegistration;
 
 }

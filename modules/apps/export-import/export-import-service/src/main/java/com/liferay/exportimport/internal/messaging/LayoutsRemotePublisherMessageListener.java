@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.User;
@@ -34,10 +35,7 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -45,9 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.LAYOUTS_REMOTE_PUBLISHER,
-	service = LayoutsRemotePublisherMessageListener.class
+	service = MessageListener.class
 )
 public class LayoutsRemotePublisherMessageListener
 	extends BasePublisherMessageListener {
@@ -110,18 +107,6 @@ public class LayoutsRemotePublisherMessageListener
 		}
 		finally {
 			resetThreadLocals();
-		}
-	}
-
-	@Activate
-	protected void activate(ComponentContext componentContext) {
-		initialize(componentContext);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
 		}
 	}
 

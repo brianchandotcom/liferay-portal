@@ -39,7 +39,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentDetailAST != null) || !_checkExtends(detailAST)) {
+		if ((parentDetailAST != null) || !_isUpgradeProcess(detailAST)) {
 			return;
 		}
 
@@ -131,7 +131,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _checkExtends(DetailAST detailAST) {
+	private boolean _isUpgradeProcess(DetailAST detailAST) {
 		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
 			TokenTypes.EXTENDS_CLAUSE);
 

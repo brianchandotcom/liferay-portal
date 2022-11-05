@@ -24,7 +24,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Qi Zhang
@@ -38,7 +37,9 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (!_checkExtends(detailAST)) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if ((parentDetailAST != null) || !_checkExtends(detailAST)) {
 			return;
 		}
 
@@ -131,30 +132,26 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _checkExtends(DetailAST detailAST) {
-		DetailAST classDefDetailAST;
-
-		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
-			classDefDetailAST = detailAST;
-		}
-		else {
-			classDefDetailAST = getParentWithTokenType(
-				detailAST, TokenTypes.CLASS_DEF);
-		}
-
-		DetailAST extendsDetailAST = classDefDetailAST.findFirstToken(
+		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
 			TokenTypes.EXTENDS_CLAUSE);
 
-		if (extendsDetailAST == null) {
+		if (extendsClauseDetailAST == null) {
 			return false;
 		}
 
-		List<DetailAST> extendsDetailASTs = getAllChildTokens(
-			extendsDetailAST, false, TokenTypes.IDENT);
+		DetailAST firstChildDetailAST = extendsClauseDetailAST.getFirstChild();
 
-		Stream<DetailAST> extendsDetailASTsStream = extendsDetailASTs.stream();
+		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
+			return false;
+		}
 
-		return extendsDetailASTsStream.anyMatch(
-			e -> StringUtil.equals(e.getText(), "UpgradeProcess"));
+		String extendsClassName = getName(extendsClauseDetailAST);
+
+		if (!extendsClassName.equals("UpgradeProcess")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _checkIfDeleted(

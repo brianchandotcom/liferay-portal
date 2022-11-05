@@ -166,6 +166,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_BACK_BUTTON</td>
+	<td>//li[contains(@class,'control-menu-nav-item')]//span[a//*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_PORTLET_HEADER</td>
+	<td>//h1[contains(@data-qa-id, 'headerTitle') and contains(text(), '${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

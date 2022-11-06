@@ -446,11 +446,10 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = extendsClauseDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
-			return false;
-		}
+		if ((firstChildDetailAST.getType() != TokenTypes.IDENT) ||
+			!StringUtil.equals(
+				getName(extendsClauseDetailAST), "UpgradeProcess")) {
 
-		if (!StringUtil.equals(getName(extendsClauseDetailAST), "UpgradeProcess")) {
 			return false;
 		}
 

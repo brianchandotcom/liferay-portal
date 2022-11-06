@@ -66,12 +66,12 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> methodDefDetailASTs = getAllChildTokens(
+		List<DetailAST> methodDefDetailASTList = getAllChildTokens(
 			detailAST, false, TokenTypes.METHOD_DEF);
 
 		DetailAST methodDefDetailAST = null;
 
-		for (DetailAST curDetailAST : methodDefDetailASTs) {
+		for (DetailAST curDetailAST : methodDefDetailASTList) {
 			DetailAST iDentDetailAST = curDetailAST.findFirstToken(
 				TokenTypes.IDENT);
 
@@ -83,7 +83,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 
 		if ((methodDefDetailAST == null) ||
-			((methodDefDetailASTs.size() == 1) &&
+			((methodDefDetailASTList.size() == 1) &&
 			 !_checkIfDeleted(detailAST, methodDefDetailAST))) {
 
 			return;

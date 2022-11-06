@@ -14,12 +14,18 @@
 
 package com.liferay.layout.display.page;
 
+import com.liferay.portal.kernel.util.PortalUtil;
+
 import java.util.Locale;
 
 /**
  * @author Jorge Ferrer
  */
 public interface LayoutDisplayPageObjectProvider<T> {
+
+	public default String getClassName() {
+		return PortalUtil.getClassName(getClassNameId());
+	}
 
 	public long getClassNameId();
 

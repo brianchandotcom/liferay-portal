@@ -51,6 +51,11 @@ public class FileEntryLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getClassName() {
+		return FileEntry.class.getName();
+	}
+
+	@Override
 	public long getClassNameId() {
 		return PortalUtil.getClassNameId(FileEntry.class.getName());
 	}

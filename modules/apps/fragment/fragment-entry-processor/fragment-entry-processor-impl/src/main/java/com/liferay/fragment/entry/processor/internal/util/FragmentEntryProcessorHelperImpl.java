@@ -17,7 +17,6 @@ package com.liferay.fragment.entry.processor.internal.util;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
@@ -32,6 +31,8 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -104,16 +105,21 @@ public class FragmentEntryProcessorHelperImpl
 			String mappedField = editableValueJSONObject.getString(
 				"mappedField");
 
-			Object infoItem = httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
+			InfoItemFieldValuesProvider<?> infoItemFieldValuesProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class,
+					layoutDisplayPageObjectProvider.getClassName());
 
 			return getMappedInfoItemFieldValue(
 				mappedField, infoItemFieldValuesProvider,
-				fragmentEntryProcessorContext.getLocale(), infoItem);
+				fragmentEntryProcessorContext.getLocale(),
+				layoutDisplayPageObjectProvider.getDisplayObject());
 		}
 		else if (isMapped(editableValueJSONObject)) {
 			return getMappedInfoItemFieldValue(

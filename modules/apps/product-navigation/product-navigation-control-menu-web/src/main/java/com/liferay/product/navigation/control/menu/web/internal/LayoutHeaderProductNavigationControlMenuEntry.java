@@ -15,10 +15,12 @@
 package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -189,17 +191,21 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		}
 
 		if (layout.isTypeAssetDisplay()) {
-			Object infoItem = httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
+			if (layoutDisplayPageObjectProvider != null) {
+				InfoItemFieldValuesProvider infoItemFieldValuesProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						layoutDisplayPageObjectProvider.getClassName());
 
-			if ((infoItem != null) && (infoItemFieldValuesProvider != null)) {
 				InfoItemFieldValues infoItemFieldValues =
 					infoItemFieldValuesProvider.getInfoItemFieldValues(
-						infoItem);
+						layoutDisplayPageObjectProvider.getDisplayObject());
 
 				InfoFieldValue<Object> titleInfoFieldValue =
 					infoItemFieldValues.getInfoFieldValue("title");
@@ -311,6 +317,9 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutHeaderProductNavigationControlMenuEntry.class);
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

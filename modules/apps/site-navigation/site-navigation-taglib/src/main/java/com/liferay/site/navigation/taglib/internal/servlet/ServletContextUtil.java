@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.taglib.internal.servlet;
 
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
@@ -32,6 +33,10 @@ public class ServletContextUtil {
 		return _servletContext.getContextPath();
 	}
 
+	public static InfoItemServiceRegistry getInfoItemServiceRegistry() {
+		return _infoItemServiceRegistry;
+	}
+
 	public static ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -41,6 +46,13 @@ public class ServletContextUtil {
 
 		return _siteNavigationMenuItemTypeRegistry.
 			getSiteNavigationMenuItemType(type);
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoItemServiceRegistry(
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
 	@Reference(
@@ -59,6 +71,7 @@ public class ServletContextUtil {
 			siteNavigationMenuItemTypeRegistry;
 	}
 
+	private static InfoItemServiceRegistry _infoItemServiceRegistry;
 	private static ServletContext _servletContext;
 	private static SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;

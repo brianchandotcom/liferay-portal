@@ -431,8 +431,8 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			return false;
 		}
 
-		String talbeName = _getParameterName(exprDetailASTList.get(0));
 		String columnName = _getParameterName(exprDetailASTList.get(1));
+		String talbeName = _getParameterName(exprDetailASTList.get(0));
 
 		if (Validator.isNull(columnName) || Validator.isNull(talbeName)) {
 			return false;

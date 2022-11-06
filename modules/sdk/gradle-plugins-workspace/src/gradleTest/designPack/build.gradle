@@ -12,13 +12,13 @@ gradle.liferayWorkspace {
 gradle.taskGraph.afterTask {
 	Task task, TaskState taskState ->
 
-	if ((task.name.contains("buildClientExtension"))) {
+	if ((task.name.contains("buildClientExtensionZip"))) {
 		outputPaths.add(task.archivePath)
 	}
 }
 
 runGradleTest {
-	dependsOn ":design-packs:fire:buildClientExtension"
+	dependsOn ":design-packs:fire:buildClientExtensionZip"
 
 	doLast {
 		outputPaths.each{

@@ -47,7 +47,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			detailAST, true, TokenTypes.LITERAL_IF);
 
 		for (DetailAST literalIfDetailAST : literalIfDetailASTList) {
-			if (_hasUnnecessaryIfStatement(literalIfDetailAST)) {
+			if (_isUnnecessaryIfStatement(literalIfDetailAST)) {
 				log(detailAST, _MSG_REMOVE_UNNECESSARY_METHOD);
 
 				return;
@@ -400,7 +400,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		return true;
 	}
 
-	private boolean _hasUnnecessaryIfStatement(DetailAST detailAST) {
+	private boolean _isUnnecessaryIfStatement(DetailAST detailAST) {
 		DetailAST exprDetailAST = detailAST.findFirstToken(TokenTypes.EXPR);
 
 		if (exprDetailAST.getChildCount() != 1) {

@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -23,7 +22,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,157 +71,89 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		List<DetailAST> methodDefDetailASTList = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
 
-		if (_isUnnecessaryUpgradeProcessClass(methodDefDetailASTList)) {
+		if (methodDefDetailASTList.size() != 1) {
+			return;
+		}
+
+		DetailAST methodDefDetailAST = methodDefDetailASTList.get(0);
+
+		if (_isUnnecessaryUpgradeProcessClass(methodDefDetailAST)) {
 			log(detailAST, _MSG_DELETE_CLASS);
 
 			return;
 		}
 
-		DetailAST methodDefDetailAST = null;
-
-		for (DetailAST curDetailAST : methodDefDetailASTList) {
-			DetailAST iDentDetailAST = curDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			if (StringUtil.equals(iDentDetailAST.getText(), "doUpgrade")) {
-				methodDefDetailAST = curDetailAST;
-
-				break;
-			}
-		}
-
-		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
+		DetailAST slistDetailAST = methodDefDetailAST.findFirstToken(
 			TokenTypes.SLIST);
 
-		if (sListDetailAST.getChildCount() == 1) {
+		_checkPostUpgradeSteps(slistDetailAST);
+		_checkPreUpgradeSteps(slistDetailAST);
+	}
+
+	private void _checkPostUpgradeSteps(DetailAST detailAST) {
+		DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() != TokenTypes.RCURLY) {
 			return;
 		}
 
-		DetailAST firstChildDetailAST = sListDetailAST.getFirstChild();
+		DetailAST previousSiblingDetailAST =
+			lastChildDetailAST.getPreviousSibling();
 
-		DetailAST nextDetailAST = firstChildDetailAST;
+		if ((previousSiblingDetailAST == null) ||
+			(previousSiblingDetailAST.getType() != TokenTypes.SEMI)) {
 
-		if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
-			nextDetailAST = _checkMethod(firstChildDetailAST, false);
-		}
-
-		if (nextDetailAST == null) {
 			return;
 		}
 
-		while (nextDetailAST != null) {
-			firstChildDetailAST = nextDetailAST;
-			nextDetailAST = nextDetailAST.getNextSibling();
+		previousSiblingDetailAST =
+			previousSiblingDetailAST.getPreviousSibling();
+
+		if ((previousSiblingDetailAST == null) ||
+			(previousSiblingDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
 		}
 
-		int tokenType = firstChildDetailAST.getType();
+		DetailAST firstChildDetailAST =
+			previousSiblingDetailAST.getFirstChild();
 
-		while ((tokenType == TokenTypes.SEMI) ||
-			   (tokenType == TokenTypes.RCURLY)) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
 
-			firstChildDetailAST = firstChildDetailAST.getPreviousSibling();
-
-			tokenType = firstChildDetailAST.getType();
+			return;
 		}
 
-		if (tokenType == TokenTypes.EXPR) {
-			_checkMethod(firstChildDetailAST, true);
+		if (ArrayUtil.contains(
+				_ALTER_METHOD_NAMES, getMethodName(firstChildDetailAST)) &&
+			(previousSiblingDetailAST.getPreviousSibling() != null)) {
+
+			log(firstChildDetailAST, _MSG_REPLACE_METHOD, null, null, null);
 		}
 	}
 
-	private DetailAST _checkMethod(DetailAST detailAST, boolean lastLine) {
+	private void _checkPreUpgradeSteps(DetailAST detailAST) {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
-			return detailAST;
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
 		}
 
-		String methodName = getMethodName(firstChildDetailAST);
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if ((!StringUtil.equals(methodName, "alterColumnName") &&
-			 !StringUtil.equals(methodName, "alterColumnType") &&
-			 !StringUtil.equals(methodName, "alterTableAddColumn") &&
-			 !StringUtil.equals(methodName, "alterTableDropColumn")) ||
-			!_checkParameters(firstChildDetailAST)) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
 
-			return detailAST;
+			return;
 		}
 
-		int startLine = getStartLineNumber(detailAST);
-		int endLine = getEndLineNumber(detailAST);
+		if (ArrayUtil.contains(
+				_ALTER_METHOD_NAMES, getMethodName(firstChildDetailAST))) {
 
-		DetailAST nextDetailAST = _getDetailAST(detailAST, lastLine);
-
-		boolean alertMessage = false;
-
-		while (nextDetailAST != null) {
-			int tokenType = nextDetailAST.getType();
-
-			if ((tokenType == TokenTypes.SEMI) ||
-				(tokenType == TokenTypes.RCURLY)) {
-
-				nextDetailAST = _getDetailAST(nextDetailAST, lastLine);
-
-				continue;
-			}
-
-			if (tokenType != TokenTypes.EXPR) {
-				alertMessage = true;
-
-				break;
-			}
-
-			DetailAST childDetailAST = nextDetailAST.getFirstChild();
-
-			if (childDetailAST.getType() != TokenTypes.METHOD_CALL) {
-				alertMessage = true;
-
-				break;
-			}
-
-			String currentMethodName = getMethodName(childDetailAST);
-
-			if ((!StringUtil.equals(currentMethodName, "alterColumnName") &&
-				 !StringUtil.equals(currentMethodName, "alterColumnType") &&
-				 !StringUtil.equals(currentMethodName, "alterTableAddColumn") &&
-				 !StringUtil.equals(
-					 currentMethodName, "alterTableDropColumn")) ||
-				!_checkParameters(childDetailAST)) {
-
-				alertMessage = true;
-
-				break;
-			}
-
-			if (lastLine) {
-				startLine = getStartLineNumber(nextDetailAST);
-			}
-			else {
-				endLine = getEndLineNumber(nextDetailAST);
-			}
-
-			nextDetailAST = _getDetailAST(nextDetailAST, lastLine);
+			log(firstChildDetailAST, _MSG_REPLACE_METHOD, null, null, null);
 		}
-
-		String errorMessageMethod = "getPreUpgradeSteps";
-
-		if (lastLine) {
-			errorMessageMethod = "getPostUpgradeSteps";
-		}
-
-		if (alertMessage) {
-			log(
-				detailAST, _MSG_REPLACE_METHOD, startLine, endLine,
-				errorMessageMethod);
-		}
-
-		return nextDetailAST;
-	}
-
-	private boolean _checkParameters(DetailAST detailAST) {
-		List<String> parameters = _getParameterList(detailAST);
-
-		return ListUtil.isNotEmpty(parameters);
 	}
 
 	private boolean _containsOnlyAlterMethodCalls(
@@ -275,46 +205,6 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		}
 
 		return true;
-	}
-
-	private DetailAST _getDetailAST(DetailAST detailAST, boolean lastLine) {
-		if (lastLine) {
-			return detailAST.getPreviousSibling();
-		}
-
-		return detailAST.getNextSibling();
-	}
-
-	private List<String> _getParameterList(DetailAST detailAST) {
-		DetailAST eListDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
-
-		DetailAST firstChildDetailAST = eListDetailAST.getFirstChild();
-
-		List<String> parameters = new ArrayList<>();
-
-		while (firstChildDetailAST != null) {
-			int tokenType = firstChildDetailAST.getType();
-
-			if ((tokenType != TokenTypes.EXPR) &&
-				(tokenType != TokenTypes.COMMA)) {
-
-				return null;
-			}
-
-			if (tokenType == TokenTypes.EXPR) {
-				DetailAST childDetailAST = firstChildDetailAST.getFirstChild();
-
-				if (childDetailAST.getType() != TokenTypes.STRING_LITERAL) {
-					return null;
-				}
-
-				parameters.add(childDetailAST.getText());
-			}
-
-			firstChildDetailAST = firstChildDetailAST.getNextSibling();
-		}
-
-		return parameters;
 	}
 
 	private String _getParameterName(DetailAST detailAST) {
@@ -415,15 +305,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			detailAST.findFirstToken(TokenTypes.SLIST), talbeName, columnName);
 	}
 
-	private boolean _isUnnecessaryUpgradeProcessClass(
-		List<DetailAST> detailASTList) {
-
-		if (detailASTList.size() != 1) {
-			return false;
-		}
-
-		DetailAST detailAST = detailASTList.get(0);
-
+	private boolean _isUnnecessaryUpgradeProcessClass(DetailAST detailAST) {
 		String methodName = getName(detailAST);
 
 		if (!StringUtil.equals(methodName, "doUpgrade") ||

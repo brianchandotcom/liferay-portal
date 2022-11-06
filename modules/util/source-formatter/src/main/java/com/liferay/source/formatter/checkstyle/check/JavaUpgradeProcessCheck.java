@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,17 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
 		List<DetailAST> methodDefDetailASTList = getAllChildTokens(
-			detailAST, false, TokenTypes.METHOD_DEF);
+			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
+		if (_isUnnecessaryUpgradeProcessClass(methodDefDetailASTList)) {
+			log(detailAST, _MSG_DELETE_CLASS);
+
+			return;
+		}
 
 		DetailAST methodDefDetailAST = null;
 
@@ -80,13 +90,6 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 
 				break;
 			}
-		}
-
-		if ((methodDefDetailAST == null) ||
-			((methodDefDetailASTList.size() == 1) &&
-			 !_checkIfDeleted(detailAST, methodDefDetailAST))) {
-
-			return;
 		}
 
 		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
@@ -126,87 +129,6 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		if (tokenType == TokenTypes.EXPR) {
 			_checkMethod(firstChildDetailAST, true);
 		}
-	}
-
-	private boolean _checkIfDeleted(
-		DetailAST detailAST, DetailAST methodDefDetailAST) {
-
-		DetailAST objBlockDetailAST = detailAST.findFirstToken(
-			TokenTypes.OBJBLOCK);
-
-		DetailAST childDetailAST = objBlockDetailAST.getFirstChild();
-
-		int objCount = 0;
-
-		while (childDetailAST != null) {
-			int tokenType = childDetailAST.getType();
-
-			if ((tokenType != TokenTypes.LCURLY) &&
-				(tokenType != TokenTypes.RCURLY)) {
-
-				objCount++;
-			}
-
-			childDetailAST = childDetailAST.getNextSibling();
-		}
-
-		if (objCount != 1) {
-			return true;
-		}
-
-		DetailAST sListDetailAST = methodDefDetailAST.findFirstToken(
-			TokenTypes.SLIST);
-
-		childDetailAST = sListDetailAST.getFirstChild();
-
-		int methodCount = 0;
-
-		while (childDetailAST != null) {
-			int tokenType = childDetailAST.getType();
-
-			if ((tokenType != TokenTypes.EXPR) &&
-				(tokenType != TokenTypes.SEMI) &&
-				(tokenType != TokenTypes.RCURLY)) {
-
-				return true;
-			}
-
-			if ((tokenType == TokenTypes.SEMI) ||
-				(tokenType == TokenTypes.RCURLY)) {
-
-				childDetailAST = childDetailAST.getNextSibling();
-
-				continue;
-			}
-
-			methodCount++;
-
-			DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
-
-			if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
-				return true;
-			}
-
-			String methodName = getMethodName(firstChildDetailAST);
-
-			if (!StringUtil.equals(methodName, "alterColumnName") &&
-				!StringUtil.equals(methodName, "alterColumnType") &&
-				!StringUtil.equals(methodName, "alterTableAddColumn") &&
-				!StringUtil.equals(methodName, "alterTableDropColumn")) {
-
-				return true;
-			}
-
-			childDetailAST = childDetailAST.getNextSibling();
-		}
-
-		if (methodCount != 0) {
-			log(detailAST, _MSG_DELETE_CLASS);
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private DetailAST _checkMethod(DetailAST detailAST, boolean lastLine) {
@@ -302,6 +224,57 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		List<String> parameters = _getParameterList(detailAST);
 
 		return ListUtil.isNotEmpty(parameters);
+	}
+
+	private boolean _containsOnlyAlterMethodCalls(
+		DetailAST detailAST, String talbeName, String columnName) {
+
+		if (detailAST == null) {
+			return false;
+		}
+
+		DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() != TokenTypes.RCURLY) {
+			return false;
+		}
+
+		DetailAST previousSiblingDetailAST =
+			lastChildDetailAST.getPreviousSibling();
+
+		while (previousSiblingDetailAST != null) {
+			if ((previousSiblingDetailAST.getType() != TokenTypes.EXPR) &&
+				(previousSiblingDetailAST.getType() != TokenTypes.SEMI)) {
+
+				return false;
+			}
+
+			if (previousSiblingDetailAST.getType() == TokenTypes.EXPR) {
+				DetailAST firstChildDetailAST =
+					previousSiblingDetailAST.getFirstChild();
+
+				if ((firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) ||
+					!ArrayUtil.contains(
+						_ALTER_METHOD_NAMES,
+						getMethodName(firstChildDetailAST))) {
+
+					return false;
+				}
+
+				if (Validator.isNotNull(columnName) &&
+					Validator.isNotNull(talbeName) &&
+					!_hasSameTableNameAndColumnName(
+						firstChildDetailAST, talbeName, columnName)) {
+
+					return false;
+				}
+			}
+
+			previousSiblingDetailAST =
+				previousSiblingDetailAST.getPreviousSibling();
+		}
+
+		return true;
 	}
 
 	private DetailAST _getDetailAST(DetailAST detailAST, boolean lastLine) {
@@ -438,47 +411,29 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
+		return _containsOnlyAlterMethodCalls(
+			detailAST.findFirstToken(TokenTypes.SLIST), talbeName, columnName);
+	}
 
-		if (slistDetailAST == null) {
+	private boolean _isUnnecessaryUpgradeProcessClass(
+		List<DetailAST> detailASTList) {
+
+		if (detailASTList.size() != 1) {
 			return false;
 		}
 
-		DetailAST lastChildDetailAST = slistDetailAST.getLastChild();
+		DetailAST detailAST = detailASTList.get(0);
 
-		if (lastChildDetailAST.getType() != TokenTypes.RCURLY) {
+		String methodName = getName(detailAST);
+
+		if (!StringUtil.equals(methodName, "doUpgrade") ||
+			!AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+
 			return false;
 		}
 
-		DetailAST previousSiblingDetailAST =
-			lastChildDetailAST.getPreviousSibling();
-
-		while (previousSiblingDetailAST != null) {
-			if ((previousSiblingDetailAST.getType() != TokenTypes.EXPR) &&
-				(previousSiblingDetailAST.getType() != TokenTypes.SEMI)) {
-
-				return false;
-			}
-
-			if (previousSiblingDetailAST.getType() == TokenTypes.EXPR) {
-				firstChildDetailAST = previousSiblingDetailAST.getFirstChild();
-
-				if ((firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) ||
-					!ArrayUtil.contains(
-						_ALTER_METHOD_NAMES,
-						getMethodName(firstChildDetailAST)) ||
-					!_hasSameTableNameAndColumnName(
-						firstChildDetailAST, talbeName, columnName)) {
-
-					return false;
-				}
-			}
-
-			previousSiblingDetailAST =
-				previousSiblingDetailAST.getPreviousSibling();
-		}
-
-		return true;
+		return _containsOnlyAlterMethodCalls(
+			detailAST.findFirstToken(TokenTypes.SLIST), null, null);
 	}
 
 	private boolean _isUpgradeProcess(DetailAST detailAST) {

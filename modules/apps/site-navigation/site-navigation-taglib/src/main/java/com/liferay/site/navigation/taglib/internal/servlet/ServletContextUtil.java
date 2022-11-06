@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.taglib.internal.servlet;
 
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
@@ -32,6 +33,10 @@ public class ServletContextUtil {
 		return _servletContext.getContextPath();
 	}
 
+	public static InfoItemServiceTracker getInfoItemServiceTracker() {
+		return _infoItemServiceTracker;
+	}
+
 	public static ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -41,6 +46,13 @@ public class ServletContextUtil {
 
 		return _siteNavigationMenuItemTypeRegistry.
 			getSiteNavigationMenuItemType(type);
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoItemServiceTracker(
+		InfoItemServiceTracker infoItemServiceTracker) {
+
+		_infoItemServiceTracker = infoItemServiceTracker;
 	}
 
 	@Reference(
@@ -59,6 +71,7 @@ public class ServletContextUtil {
 			siteNavigationMenuItemTypeRegistry;
 	}
 
+	private static InfoItemServiceTracker _infoItemServiceTracker;
 	private static ServletContext _servletContext;
 	private static SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;

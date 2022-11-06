@@ -15,10 +15,12 @@
 package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -376,16 +379,22 @@ public class BreadcrumbUtil {
 	private static String _getInfoItemName(
 		HttpServletRequest httpServletRequest, Locale locale) {
 
-		Object infoItem = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
+		if (layoutDisplayPageObjectProvider != null) {
+			InfoItemServiceTracker infoItemServiceTracker =
+				ServletContextUtil.getInfoItemServiceTracker();
 
-		if ((infoItem != null) && (infoItemFieldValuesProvider != null)) {
+			InfoItemFieldValuesProvider infoItemFieldValuesProvider =
+				infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class,
+					layoutDisplayPageObjectProvider.getClassName());
+
 			InfoItemFieldValues infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(infoItem);
+				infoItemFieldValuesProvider.getInfoItemFieldValues(
+					layoutDisplayPageObjectProvider.getDisplayObject());
 
 			InfoFieldValue<Object> titleInfoFieldValue =
 				infoItemFieldValues.getInfoFieldValue("title");

@@ -450,9 +450,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			return false;
 		}
 
-		String extendsClassName = getName(extendsClauseDetailAST);
-
-		if (!extendsClassName.equals("UpgradeProcess")) {
+		if (!StringUtil.equals(getName(extendsClauseDetailAST), "UpgradeProcess")) {
 			return false;
 		}
 

@@ -47,6 +47,11 @@ public class KBArticleLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getClassName() {
+		return KBArticle.class.getName();
+	}
+
+	@Override
 	public long getClassNameId() {
 		return _kbArticle.getClassNameId();
 	}

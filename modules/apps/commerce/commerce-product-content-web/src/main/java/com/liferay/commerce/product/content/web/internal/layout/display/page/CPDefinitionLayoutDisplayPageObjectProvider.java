@@ -37,6 +37,11 @@ public class CPDefinitionLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getClassName() {
+		return CPDefinition.class.getName();
+	}
+
+	@Override
 	public long getClassNameId() {
 		return PortalUtil.getClassNameId(CPDefinition.class);
 	}

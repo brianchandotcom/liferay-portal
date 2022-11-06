@@ -43,6 +43,11 @@ public class BlogsLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getClassName() {
+		return BlogsEntry.class.getName();
+	}
+
+	@Override
 	public long getClassNameId() {
 		return _assetEntry.getClassNameId();
 	}

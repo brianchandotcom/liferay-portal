@@ -43,6 +43,11 @@ public class JournalArticleLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getClassName() {
+		return JournalArticle.class.getName();
+	}
+
+	@Override
 	public long getClassNameId() {
 		return _assetEntry.getClassNameId();
 	}

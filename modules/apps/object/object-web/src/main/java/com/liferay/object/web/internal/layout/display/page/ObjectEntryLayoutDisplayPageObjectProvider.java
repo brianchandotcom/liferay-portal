@@ -39,6 +39,11 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getClassName() {
+		return _objectDefinition.getClassName();
+	}
+
+	@Override
 	public long getClassNameId() {
 		return PortalUtil.getClassNameId(_objectDefinition.getClassName());
 	}

@@ -47,8 +47,6 @@ definition {
 
 	macro openFormSettings {
 		Click(locator1 = "PopulateObjectFormsConfiguration#OPEN_FORM_SETTINGS");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_STORAGE_TYPE");
 	}
 
 	macro publishFormObject {
@@ -62,6 +60,8 @@ definition {
 	}
 
 	macro selectCustomObject {
+		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
+
 		Click(
 			key_label = "${label}",
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
@@ -70,11 +70,11 @@ definition {
 	}
 
 	macro selectObject {
+		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_STORAGE_TYPE");
+
 		Click(
 			key_label = "${label}",
 			locator1 = "PopulateObjectFormsConfiguration#DISPLAY_SELECT_OBJECT");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#DEFAULT_SELECT_OBJECT");
 	}
 
 	macro selectObjectOnly {

@@ -67,6 +67,12 @@
 					"command": "poshi.run.test.case.under.cursor",
 					"when": "resourceExtname == .testcase"
 				}
+			],
+			"editor/context": [
+				{
+					"command": "poshi.run.test.case.under.cursor",
+					"when": "resourceExtname == .testcase"
+				}
 			]
 		}
 	},

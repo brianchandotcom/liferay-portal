@@ -60,7 +60,15 @@
 				],
 				"id": "poshi"
 			}
-		]
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "poshi.run.test.case.under.cursor",
+					"when": "resourceExtname == .testcase"
+				}
+			]
+		}
 	},
 	"dependencies": {
 		"@vscode/ripgrep": "^1.14.2",

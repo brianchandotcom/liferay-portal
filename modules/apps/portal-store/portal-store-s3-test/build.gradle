@@ -49,13 +49,11 @@ compileJava {
 }
 
 dependencies {
-	testCompile group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.12.262"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile project(":apps:portal-store:portal-store-s3")
-
+	testIntegrationCompile group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.12.262"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":apps:portal-store:portal-store-s3")
 	testIntegrationCompile project(":apps:portal-store:portal-store-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

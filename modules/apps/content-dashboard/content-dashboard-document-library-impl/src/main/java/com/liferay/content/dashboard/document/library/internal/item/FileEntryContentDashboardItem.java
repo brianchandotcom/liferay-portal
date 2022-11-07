@@ -416,7 +416,8 @@ public class FileEntryContentDashboardItem
 			new SpecificInformation<>(
 				"size", SpecificInformation.Type.STRING, _getSize(locale)),
 			new SpecificInformation<>(
-				"web-dav-url", SpecificInformation.Type.URL, _getWebDAVURL()));
+				"webdav-help", "web-dav-url", SpecificInformation.Type.URL,
+				_getWebDAVURL()));
 	}
 
 	@Override

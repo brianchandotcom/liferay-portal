@@ -3649,6 +3649,7 @@ definition {
 	@description = "Verify that the user can see the Timers Recurrence tooltip with the value 'Repeat the action at a given duration until the workflow task is completed.'"
 	@priority = "2"
 	test CanViewTimerRecurrenceFieldTooltip {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimerRecurrenceFieldTooltip";
 
 		Workflow.openWorkflowListView();

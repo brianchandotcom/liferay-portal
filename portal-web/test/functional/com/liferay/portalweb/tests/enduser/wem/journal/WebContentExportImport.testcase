@@ -1164,8 +1164,7 @@ definition {
 
 			RelatedAssets.selectAsset(
 				assetTitle = "Blogs Entry Title",
-				assetType = "Blogs Entry",
-				scopeSite = "Current Site");
+				assetType = "Blogs Entry");
 		}
 
 		task ("Cancel reset the default values") {

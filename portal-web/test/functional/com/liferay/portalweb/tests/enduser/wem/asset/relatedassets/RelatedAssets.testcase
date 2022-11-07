@@ -405,7 +405,7 @@ definition {
 			WebContent.addExistingRelatedAssetCP(
 				assetTitle = "Web Content Title 1",
 				assetType = "Basic Web Content",
-				scopeSite = "Everywhere",
+				scopeSite = "Global",
 				siteName = "Global",
 				webContentTitle = "Web Content Title 2");
 		}

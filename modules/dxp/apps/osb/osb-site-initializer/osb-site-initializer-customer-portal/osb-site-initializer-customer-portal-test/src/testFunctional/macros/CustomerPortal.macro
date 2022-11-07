@@ -347,7 +347,7 @@ definition {
 	}
 
 	macro customerPortalTearDown {
-		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-");
 
 		CustomerPortal.customerPortalApisTearDown();
 	}

@@ -16,7 +16,6 @@ package com.liferay.layout.page.template.admin.web.internal.portlet;
 
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryService;
 import com.liferay.asset.kernel.service.AssetEntryService;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -145,8 +144,7 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER,
-			_infoItemServiceTracker);
+			InfoItemServiceTracker.class.getName(), _infoItemServiceTracker);
 		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebKeys.
 				ASSET_DISPLAY_PAGE_USAGES_DISPLAY_CONTEXT,

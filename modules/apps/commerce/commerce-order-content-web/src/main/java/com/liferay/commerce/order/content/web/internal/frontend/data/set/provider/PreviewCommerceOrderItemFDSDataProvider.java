@@ -18,7 +18,6 @@ import com.liferay.commerce.configuration.CommerceOrderImporterDateFormatConfigu
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.model.PreviewOrderItem;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
@@ -342,9 +341,6 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

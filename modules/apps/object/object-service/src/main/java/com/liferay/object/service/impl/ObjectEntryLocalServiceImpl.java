@@ -1544,6 +1544,42 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private Predicate _fillObjectFieldPredicate(
+		Column<?, Object> column, ObjectField objectField, String search) {
+
+		Predicate objectFieldPredicate = null;
+		String dbType = objectField.getDBType();
+
+		if (StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING) ||
+			StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB)) {
+
+			objectFieldPredicate = column.like("%" + search + "%");
+		}
+		else if (StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_LONG) ||
+				 StringUtil.equals(
+					 dbType, ObjectFieldConstants.DB_TYPE_INTEGER)) {
+
+			long searchLong = GetterUtil.getLong(search);
+
+			if (searchLong != 0L) {
+				objectFieldPredicate = column.eq(searchLong);
+			}
+		}
+		else if (StringUtil.equals(
+					dbType, ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+				 dbType.equals(ObjectFieldConstants.DB_TYPE_DOUBLE)) {
+
+			BigDecimal searchDecimal = BigDecimal.valueOf(
+				GetterUtil.getDouble(search));
+
+			if (searchDecimal.compareTo(BigDecimal.ZERO) != 0) {
+				objectFieldPredicate = column.eq(searchDecimal);
+			}
+		}
+
+		return objectFieldPredicate;
+	}
+
 	private Predicate _fillPredicate(
 			long objectDefinitionId, Predicate predicate, String search)
 		throws PortalException {
@@ -1552,9 +1588,8 @@ public class ObjectEntryLocalServiceImpl
 			return predicate;
 		}
 
-		List<ObjectField> objectFields =
-			_objectFieldPersistence.findByODI_DBT_I(
-				objectDefinitionId, "String", true);
+		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_S(
+			objectDefinitionId, false);
 
 		if (objectFields.isEmpty()) {
 			return predicate;
@@ -1573,13 +1608,14 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			Predicate likePredicate = column.like("%" + search + "%");
+			Predicate objectFieldPredicate = _fillObjectFieldPredicate(
+				(Column<?, Object>)column, objectField, search);
 
 			if (searchPredicate == null) {
-				searchPredicate = likePredicate;
+				searchPredicate = objectFieldPredicate;
 			}
 			else {
-				searchPredicate = searchPredicate.or(likePredicate);
+				searchPredicate = searchPredicate.or(objectFieldPredicate);
 			}
 		}
 

@@ -10,7 +10,6 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import i18n from '../../../../../../common/I18n';
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.ArrayList;
@@ -43,7 +42,8 @@ public class ObjectFieldSettingUtil {
 
 	public static com.liferay.object.model.ObjectFieldSetting
 			toObjectFieldSetting(
-				String businessType, ObjectFieldSetting objectFieldSetting,
+				String businessType, long listTypeDefinitionId,
+				ObjectFieldSetting objectFieldSetting,
 				ObjectFieldSettingLocalService objectFieldSettingLocalService,
 				ObjectFilterLocalService objectFilterLocalService)
 		throws PortalException {
@@ -54,15 +54,14 @@ public class ObjectFieldSettingUtil {
 
 		serviceBuilderObjectFieldSetting.setName(objectFieldSetting.getName());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) &&
-			Objects.equals(
+		if (Objects.equals(
 				ObjectFieldSettingConstants.NAME_STATE_FLOW,
 				objectFieldSetting.getName())) {
 
 			serviceBuilderObjectFieldSetting.setObjectStateFlow(
 				com.liferay.object.admin.rest.internal.dto.v1_0.util.
 					ObjectStateFlowUtil.toObjectStateFlow(
-						objectFieldSetting.getObjectFieldId(),
+						listTypeDefinitionId,
 						ObjectMapperUtil.readValue(
 							ObjectStateFlow.class,
 							objectFieldSetting.getValue())));

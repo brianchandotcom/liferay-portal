@@ -348,13 +348,14 @@ public class ObjectDefinitionResourceImpl
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
 		for (ObjectField objectField : objectDefinition.getObjectFields()) {
+			long listTypeDefinitionId = ObjectFieldUtil.getListTypeDefinitionId(
+				serviceBuilderObjectDefinition.getCompanyId(),
+				_listTypeDefinitionLocalService, objectField);
+
 			_objectFieldLocalService.updateObjectField(
 				objectField.getExternalReferenceCode(),
 				GetterUtil.getLong(objectField.getId()),
-				contextUser.getUserId(),
-				ObjectFieldUtil.getListTypeDefinitionId(
-					serviceBuilderObjectDefinition.getCompanyId(),
-					_listTypeDefinitionLocalService, objectField),
+				contextUser.getUserId(), listTypeDefinitionId,
 				objectDefinitionId, objectField.getBusinessTypeAsString(), null,
 				null, objectField.getDBTypeAsString(),
 				objectField.getDefaultValue(), objectField.getIndexed(),
@@ -370,7 +371,8 @@ public class ObjectDefinitionResourceImpl
 					objectFieldSetting ->
 						ObjectFieldSettingUtil.toObjectFieldSetting(
 							objectField.getBusinessTypeAsString(),
-							objectFieldSetting, _objectFieldSettingLocalService,
+							listTypeDefinitionId, objectFieldSetting,
+							_objectFieldSettingLocalService,
 							_objectFilterLocalService)));
 
 			serviceBuilderObjectFields.removeIf(

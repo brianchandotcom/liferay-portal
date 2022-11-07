@@ -153,12 +153,13 @@ public class ObjectFieldUtil {
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);
 
+		long listTypeDefinitionId = getListTypeDefinitionId(
+			serviceBuilderObjectField.getCompanyId(),
+			listTypeDefinitionLocalService, objectField);
+
 		serviceBuilderObjectField.setExternalReferenceCode(
 			objectField.getExternalReferenceCode());
-		serviceBuilderObjectField.setListTypeDefinitionId(
-			getListTypeDefinitionId(
-				serviceBuilderObjectField.getCompanyId(),
-				listTypeDefinitionLocalService, objectField));
+		serviceBuilderObjectField.setListTypeDefinitionId(listTypeDefinitionId);
 		serviceBuilderObjectField.setBusinessType(
 			objectField.getBusinessTypeAsString());
 		serviceBuilderObjectField.setDBType(
@@ -186,7 +187,8 @@ public class ObjectFieldUtil {
 				objectFieldSetting ->
 					ObjectFieldSettingUtil.toObjectFieldSetting(
 						objectField.getBusinessTypeAsString(),
-						objectFieldSetting, objectFieldSettingLocalService,
+						listTypeDefinitionId, objectFieldSetting,
+						objectFieldSettingLocalService,
 						objectFilterLocalService)));
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));

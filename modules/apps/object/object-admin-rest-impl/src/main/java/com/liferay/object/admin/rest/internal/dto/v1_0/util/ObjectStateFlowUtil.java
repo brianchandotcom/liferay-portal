@@ -16,16 +16,15 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectStateFlowLocalServiceUtil;
 import com.liferay.object.service.ObjectStateLocalServiceUtil;
 import com.liferay.object.service.ObjectStateTransitionLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Feliphe Marinho
@@ -33,7 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ObjectStateFlowUtil {
 
 	public static ObjectStateFlow toObjectStateFlow(
-			long objectFieldId,
+			long listTypeDefinitionId,
 			com.liferay.object.admin.rest.dto.v1_0.ObjectStateFlow
 				objectStateFlow)
 		throws PortalException {
@@ -46,18 +45,14 @@ public class ObjectStateFlowUtil {
 			ObjectStateFlowLocalServiceUtil.createObjectStateFlow(0L);
 
 		serviceBuilderObjectStateFlow.setObjectStateFlowId(
-			objectStateFlow.getId());
-		serviceBuilderObjectStateFlow.setObjectFieldId(objectFieldId);
-
-		ObjectField objectField = ObjectFieldLocalServiceUtil.getObjectField(
-			objectFieldId);
+			GetterUtil.getLong(objectStateFlow.getId()));
 
 		serviceBuilderObjectStateFlow.setObjectStates(
 			TransformUtil.transformToList(
 				objectStateFlow.getObjectStates(),
 				objectState -> _toObjectState(
-					objectField.getListTypeDefinitionId(), objectState,
-					objectStateFlow.getId())));
+					listTypeDefinitionId, objectState,
+					GetterUtil.getLong(objectStateFlow.getId()))));
 
 		return serviceBuilderObjectStateFlow;
 	}
@@ -71,7 +66,8 @@ public class ObjectStateFlowUtil {
 		ObjectState serviceBuilderObjectState =
 			ObjectStateLocalServiceUtil.createObjectState(0L);
 
-		serviceBuilderObjectState.setObjectStateId(objectState.getId());
+		serviceBuilderObjectState.setObjectStateId(
+			GetterUtil.getLong(objectState.getId()));
 
 		ListTypeEntry listTypeEntry =
 			ListTypeEntryLocalServiceUtil.getListTypeEntry(
@@ -86,7 +82,7 @@ public class ObjectStateFlowUtil {
 				objectState.getObjectStateTransitions(),
 				nextObjectState -> _toObjectStateTransition(
 					listTypeDefinitionId, nextObjectState, objectStateFlowId,
-					objectState.getId())));
+					GetterUtil.getLong(objectState.getId()))));
 
 		return serviceBuilderObjectState;
 	}
@@ -110,6 +106,14 @@ public class ObjectStateFlowUtil {
 		ListTypeEntry listTypeEntry =
 			ListTypeEntryLocalServiceUtil.fetchListTypeEntry(
 				listTypeDefinitionId, objectStateTransition.getKey());
+
+		if ((objectStateFlowId == 0) && (sourceObjectStateId == 0)) {
+			serviceBuilderObjectStateTransition.
+				setTargetObjectStateListTypeEntryId(
+					listTypeEntry.getListTypeEntryId());
+
+			return serviceBuilderObjectStateTransition;
+		}
 
 		ObjectState targetObjectState =
 			ObjectStateLocalServiceUtil.getObjectStateFlowObjectState(

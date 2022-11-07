@@ -156,10 +156,6 @@ public class ObjectFieldResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectFieldUtil.addListTypeDefinition(
-			contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-			_listTypeEntryLocalService, objectField, contextUser.getUserId());
-
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
@@ -181,6 +177,11 @@ public class ObjectFieldResourceImpl
 					objectFieldSetting ->
 						ObjectFieldSettingUtil.toObjectFieldSetting(
 							objectField.getBusinessTypeAsString(),
+							ObjectFieldUtil.addListTypeDefinition(
+								contextUser.getCompanyId(),
+								_listTypeDefinitionLocalService,
+								_listTypeEntryLocalService, objectField,
+								contextUser.getUserId()),
 							objectFieldSetting, _objectFieldSettingLocalService,
 							_objectFilterLocalService))));
 	}
@@ -207,10 +208,16 @@ public class ObjectFieldResourceImpl
 					serviceBuilderObjectField.getObjectDefinitionId());
 
 		if (!serviceBuilderObjectDefinition.isApproved()) {
-			ObjectFieldUtil.addListTypeDefinition(
-				contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-				_listTypeEntryLocalService, objectField,
-				contextUser.getUserId());
+			objectField.setListTypeDefinitionId(
+				ObjectFieldUtil.addListTypeDefinition(
+					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
+					_listTypeEntryLocalService, objectField,
+					contextUser.getUserId()));
+		}
+
+		if (Validator.isNull(objectField.getListTypeDefinitionId())) {
+			objectField.setListTypeDefinitionId(
+				serviceBuilderObjectField.getListTypeDefinitionId());
 		}
 
 		return _toObjectField(
@@ -234,6 +241,7 @@ public class ObjectFieldResourceImpl
 					objectFieldSetting ->
 						ObjectFieldSettingUtil.toObjectFieldSetting(
 							objectField.getBusinessTypeAsString(),
+							objectField.getListTypeDefinitionId(),
 							objectFieldSetting, _objectFieldSettingLocalService,
 							_objectFilterLocalService))));
 	}

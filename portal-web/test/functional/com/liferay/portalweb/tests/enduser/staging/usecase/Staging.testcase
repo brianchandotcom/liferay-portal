@@ -2507,6 +2507,7 @@ definition {
 	@description = "This is a use case for LPS-79092. Specific for Bookmarks"
 	@priority = "4"
 	test ViewLastPublishDateBehaviourAfterInitialPublication {
+		property portal.release = "quarantine";
 		property test.name.skip.portal.instance = "Staging#ViewLastPublishDateBehaviourAfterInitialPublication";
 
 		JSONWebcontent.addWebContent(

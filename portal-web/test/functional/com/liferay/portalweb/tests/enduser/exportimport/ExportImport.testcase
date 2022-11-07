@@ -2273,6 +2273,7 @@ definition {
 	@priority = "5"
 	test ImportCorruptedFile {
 		property portal.acceptance = "true";
+		property portal.release = "quarantine";
 
 		task ("When: User tries to import corrupted LAR file in Bookmarks") {
 			Navigator.openURL();

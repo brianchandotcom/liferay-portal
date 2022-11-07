@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class AdminPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return KBPortletKeys.KNOWLEDGE_BASE_ADMIN;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN + ")"
+		target = "(javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

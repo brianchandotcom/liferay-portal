@@ -38,18 +38,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceSubscriptionPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return CPPortletKeys.COMMERCE_SUBSCRIPTION_ENTRY;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_SUBSCRIPTION_ENTRY + ")"
+		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_SUBSCRIPTION_ENTRY + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

@@ -45,11 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return ExportImportPortletKeys.EXPORT;
 	}
@@ -78,9 +73,13 @@ public class ExportPanelApp extends BasePanelApp {
 		return portletURL;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT + ")"
+		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

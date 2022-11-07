@@ -42,13 +42,17 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectDefinitionsPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
+	public String getPortletId() {
+		return ObjectPortletKeys.OBJECT_DEFINITIONS;
 	}
 
 	@Override
-	public String getPortletId() {
-		return ObjectPortletKeys.OBJECT_DEFINITIONS;
+	@Reference(
+		target = "(javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS + ")",
+		unbind = "-"
+	)
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
 	}
 
 	@Override
@@ -59,10 +63,5 @@ public class ObjectDefinitionsPanelApp extends BasePanelApp {
 
 		return themeDisplay.getControlPanelGroup();
 	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS + ")"
-	)
-	private Portlet _portlet;
 
 }

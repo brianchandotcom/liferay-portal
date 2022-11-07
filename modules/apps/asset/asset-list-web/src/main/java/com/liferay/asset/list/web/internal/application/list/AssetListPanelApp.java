@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetListPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return AssetListPortletKeys.ASSET_LIST;
 	}
@@ -56,9 +51,13 @@ public class AssetListPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST + ")"
+		target = "(javax.portlet.name=" + AssetListPortletKeys.ASSET_LIST + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

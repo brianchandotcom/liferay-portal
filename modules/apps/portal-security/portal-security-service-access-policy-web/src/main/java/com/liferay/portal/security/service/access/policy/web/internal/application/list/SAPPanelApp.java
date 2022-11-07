@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class SAPPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return SAPPortletKeys.SERVICE_ACCESS_POLICY;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SAPPortletKeys.SERVICE_ACCESS_POLICY + ")"
+		target = "(javax.portlet.name=" + SAPPortletKeys.SERVICE_ACCESS_POLICY + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

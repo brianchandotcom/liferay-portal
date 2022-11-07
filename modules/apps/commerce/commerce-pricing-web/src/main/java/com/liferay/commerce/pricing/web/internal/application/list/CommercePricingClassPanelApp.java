@@ -38,18 +38,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePricingClassPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES + ")"
+		target = "(javax.portlet.name=" + CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

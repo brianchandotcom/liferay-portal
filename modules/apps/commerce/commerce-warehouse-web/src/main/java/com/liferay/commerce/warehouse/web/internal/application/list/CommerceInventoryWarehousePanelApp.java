@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceInventoryWarehousePanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE + ")"
+		target = "(javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

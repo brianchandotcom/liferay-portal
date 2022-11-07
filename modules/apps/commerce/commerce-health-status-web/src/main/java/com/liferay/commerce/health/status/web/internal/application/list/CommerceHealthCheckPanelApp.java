@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceHealthCheckPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return CommercePortletKeys.COMMERCE_HEALTH_CHECK;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommercePortletKeys.COMMERCE_HEALTH_CHECK + ")"
+		target = "(javax.portlet.name=" + CommercePortletKeys.COMMERCE_HEALTH_CHECK + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

@@ -36,18 +36,17 @@ import org.osgi.service.component.annotations.Reference;
 public class MonitoringPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return MonitoringPortletKeys.MONITORING;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + MonitoringPortletKeys.MONITORING + ")"
+		target = "(javax.portlet.name=" + MonitoringPortletKeys.MONITORING + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

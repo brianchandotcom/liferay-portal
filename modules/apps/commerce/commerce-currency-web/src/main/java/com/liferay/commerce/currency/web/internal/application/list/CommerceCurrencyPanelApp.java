@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCurrencyPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return CommerceCurrencyPortletKeys.COMMERCE_CURRENCY;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CommerceCurrencyPortletKeys.COMMERCE_CURRENCY + ")"
+		target = "(javax.portlet.name=" + CommerceCurrencyPortletKeys.COMMERCE_CURRENCY + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

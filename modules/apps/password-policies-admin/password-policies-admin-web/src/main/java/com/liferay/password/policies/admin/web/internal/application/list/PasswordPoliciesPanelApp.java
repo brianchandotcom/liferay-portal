@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class PasswordPoliciesPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN + ")"
+		target = "(javax.portlet.name=" + PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

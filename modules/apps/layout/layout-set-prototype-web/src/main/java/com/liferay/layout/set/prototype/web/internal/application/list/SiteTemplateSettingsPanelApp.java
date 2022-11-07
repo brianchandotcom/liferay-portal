@@ -36,18 +36,17 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteTemplateSettingsPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + ")"
+		target = "(javax.portlet.name=" + LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

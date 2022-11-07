@@ -39,11 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class NotificationTemplatesPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return NotificationPortletKeys.NOTIFICATION_TEMPLATES;
 	}
@@ -55,9 +50,13 @@ public class NotificationTemplatesPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_TEMPLATES + ")"
+		target = "(javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_TEMPLATES + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

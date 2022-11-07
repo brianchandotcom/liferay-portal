@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceMeasurementUnitPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return CPPortletKeys.CP_MEASUREMENT_UNIT;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CPPortletKeys.CP_MEASUREMENT_UNIT + ")"
+		target = "(javax.portlet.name=" + CPPortletKeys.CP_MEASUREMENT_UNIT + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

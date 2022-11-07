@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class RedirectPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return RedirectPortletKeys.REDIRECT;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + RedirectPortletKeys.REDIRECT + ")"
+		target = "(javax.portlet.name=" + RedirectPortletKeys.REDIRECT + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

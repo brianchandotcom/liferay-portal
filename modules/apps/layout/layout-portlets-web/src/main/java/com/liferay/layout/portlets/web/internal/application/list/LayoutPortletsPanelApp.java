@@ -36,18 +36,17 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPortletsPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return LayoutsPortletsPortletKeys.LAYOUT_PORTLETS;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + LayoutsPortletsPortletKeys.LAYOUT_PORTLETS + ")"
+		target = "(javax.portlet.name=" + LayoutsPortletsPortletKeys.LAYOUT_PORTLETS + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

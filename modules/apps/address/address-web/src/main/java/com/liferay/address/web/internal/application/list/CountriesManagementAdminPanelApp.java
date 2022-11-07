@@ -36,18 +36,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CountriesManagementAdminPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return AddressPortletKeys.COUNTRIES_MANAGEMENT_ADMIN;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + AddressPortletKeys.COUNTRIES_MANAGEMENT_ADMIN + ")"
+		target = "(javax.portlet.name=" + AddressPortletKeys.COUNTRIES_MANAGEMENT_ADMIN + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

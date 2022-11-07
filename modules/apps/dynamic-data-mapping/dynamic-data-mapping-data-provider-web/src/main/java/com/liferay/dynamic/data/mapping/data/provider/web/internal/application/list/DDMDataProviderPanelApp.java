@@ -39,11 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMDataProviderPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER;
 	}
@@ -55,9 +50,13 @@ public class DDMDataProviderPanelApp extends BasePanelApp {
 		return false;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER + ")"
+		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

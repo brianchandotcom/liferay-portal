@@ -37,18 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletDisplayTemplatePanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return PortletKeys.PORTLET_DISPLAY_TEMPLATE;
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE + ")"
+		target = "(javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotSettingsPanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return DepotPortletKeys.DEPOT_SETTINGS;
 	}
@@ -60,9 +55,13 @@ public class DepotSettingsPanelApp extends BasePanelApp {
 		return super.isShow(permissionChecker, group);
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + DepotPortletKeys.DEPOT_SETTINGS + ")"
+		target = "(javax.portlet.name=" + DepotPortletKeys.DEPOT_SETTINGS + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

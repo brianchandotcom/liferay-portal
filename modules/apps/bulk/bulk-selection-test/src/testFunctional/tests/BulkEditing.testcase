@@ -298,8 +298,6 @@ definition {
 	@description = "This ensures that the files permissions can be edited via bulk editing."
 	@priority = "5"
 	test CanEditFilesPermissions {
-		property custom.properties = "feature.flag.LPS-87806=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",
@@ -411,8 +409,6 @@ definition {
 	@description = "This ensures that the permissions option in the bulk editing is disabled when editing file and folder simultaneously."
 	@priority = "4"
 	test CannotEditFileAndFolderPermissionsSimultaneously {
-		property custom.properties = "feature.flag.LPS-87806=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",
@@ -437,8 +433,6 @@ definition {
 	@description = "This ensures that the files permissions can be removed via bulk editing."
 	@priority = "5"
 	test CanRemoveFilesPermissions {
-		property custom.properties = "feature.flag.LPS-87806=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",

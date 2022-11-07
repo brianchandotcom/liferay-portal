@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -57,8 +55,6 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 				null)) {
 
 			if (!tableResultSet.next()) {
-				_log.error("Table " + tableName + " does not exist");
-
 				return;
 			}
 
@@ -145,8 +141,5 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 		upgradeMVCCVersion(databaseMetaData, tableName);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeMVCCVersion.class);
 
 }

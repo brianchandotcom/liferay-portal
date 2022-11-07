@@ -36,7 +36,6 @@ import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Tomas Polesovsky
@@ -126,15 +125,6 @@ public class AntiSamySanitizerPublisherManagedServiceFactory
 
 			_sanitizerServiceRegistration = null;
 		}
-	}
-
-	@Modified
-	protected void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		deactivate();
-
-		activate(bundleContext, properties);
 	}
 
 	private AntiSamySanitizerImpl _antiSamySanitizerImpl;

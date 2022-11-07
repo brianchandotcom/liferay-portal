@@ -30,7 +30,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -76,15 +75,6 @@ public class AMMessagingConfigurator {
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
-	}
-
-	@Modified
-	protected void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		deactivate();
-
-		activate(bundleContext, properties);
 	}
 
 	private volatile AMConfiguration _amConfiguration;

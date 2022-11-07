@@ -39,7 +39,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Michael C. Han
@@ -163,15 +162,6 @@ public class HttpClientFactory {
 		if (_log.isDebugEnabled()) {
 			_log.debug(toString() + " was shut down");
 		}
-	}
-
-	@Modified
-	protected void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		deactivate();
-
-		activate(bundleContext, properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
@@ -66,15 +65,6 @@ public class SoapExtender {
 	@Deactivate
 	protected void deactivate() {
 		_dependencyManager.clear();
-	}
-
-	@Modified
-	protected void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		deactivate();
-
-		activate(bundleContext, properties);
 	}
 
 	@Reference(

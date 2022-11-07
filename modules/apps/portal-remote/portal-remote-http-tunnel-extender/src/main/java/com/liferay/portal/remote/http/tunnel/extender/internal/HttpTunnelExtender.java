@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.BundleTracker;
@@ -211,15 +210,6 @@ public class HttpTunnelExtender
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
-	}
-
-	@Modified
-	protected void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		deactivate();
-
-		activate(bundleContext, properties);
 	}
 
 	private BundleTracker<?> _bundleTracker;

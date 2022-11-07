@@ -130,7 +130,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			String tabs1Names = "properties,usages";
 
 			if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161038"))) {
-				tabs1Names += ",history";
+				tabs1Names += ",timeline";
 			}
 
 			if ((article == null) || (journalEditArticleDisplayContext.getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {

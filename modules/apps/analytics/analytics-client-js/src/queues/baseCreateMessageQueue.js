@@ -76,12 +76,16 @@ class BaseCreateMessageQueue extends BaseQueue {
 
 		delete context.channelId;
 
-		const {dataSourceId} = this.analyticsInstance.config;
+		const {
+			dataSourceId,
+			identity: {emailAddressHashed},
+		} = this.analyticsInstance.config;
 
 		return {
 			channelId,
 			context,
 			dataSourceId,
+			emailAddressHashed,
 			events,
 			id: uuidv4(),
 			userId,

@@ -444,19 +444,36 @@ class Analytics {
 	 * @protected
 	 */
 	_setCookie(key, data) {
+		const Liferay = window.Liferay;
 		const expires = new Date();
 
 		expires.setDate(expires.getDate() + 365);
 
-		return Liferay.Util.Cookie.set(
-			key,
-			data,
-			Liferay.Util.Cookie.TYPES.PERSONALIZATION,
-			{
-				expires,
-				secure: true,
-			}
-		);
+		// Checks if the client is being loaded with the Liferay global
+		// variable and if there is a Cookie method because the client
+		// is Liferay Portal agnostic and may have versions that do not
+		// yet have the Cookie method.
+
+		if (Liferay?.Util?.Cookie) {
+			Liferay.Util.Cookie.set(
+				key,
+				data,
+				Liferay.Util.Cookie.TYPES.PERSONALIZATION,
+				{
+					expires,
+					secure: true,
+				}
+			);
+		}
+		else {
+			const expirationDate = new Date();
+
+			expirationDate.setDate(expirationDate.getDate() + 365);
+
+			document.cookie = `${key}=${data}; expires=${expirationDate.toUTCString()}; path=/; Secure`;
+		}
+
+		return;
 	}
 
 	/**

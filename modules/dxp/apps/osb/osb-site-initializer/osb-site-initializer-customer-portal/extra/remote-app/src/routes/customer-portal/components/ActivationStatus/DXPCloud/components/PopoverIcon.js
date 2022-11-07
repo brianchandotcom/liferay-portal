@@ -10,30 +10,26 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayPopover from '@clayui/popover';
+
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import i18n from '../../../../../../common/I18n';
 
-const PopoverIcon = ({alignPosition = 'right'}) => {
+const PopoverIcon = () => {
 	return (
-		<ClayPopover
-			alignPosition={alignPosition}
-			className="cp-team-members-popover"
-			closeOnClickOutside
-			trigger={
+		<ClayTooltipProvider>
+			<span>
 				<ClayButtonWithIcon
 					className="text-brand-primary-darken-2"
+					data-tooltip-align="right"
 					displayType={null}
 					size="sm"
 					symbol="info-circle"
-				/>
-			}
-		>
-			<p className="m-0 text-neutral-10">
-				{i18n.translate(
-					'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
-				)}
-			</p>
-		</ClayPopover>
+					title={i18n.translate(
+						'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
+					)}
+				></ClayButtonWithIcon>
+			</span>
+		</ClayTooltipProvider>
 	);
 };
 

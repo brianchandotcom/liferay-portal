@@ -24,6 +24,7 @@ import groovy.lang.Closure;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
@@ -482,6 +483,24 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_configureTaskRunPoshiBinResultsDir(test);
 		_configureTaskRunPoshiReports(test);
+
+		Properties environmentVariables = new Properties();
+
+		Project project = test.getProject();
+
+		File envFile = project.file(".env");
+
+		try {
+			if (envFile.exists()) {
+				environmentVariables.load(new FileInputStream(envFile));
+			}
+		}
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
+		}
+
+		test.environment((Map)environmentVariables);
+
 		_populateSystemProperties(
 			test.getSystemProperties(), poshiProperties, test.getProject(),
 			poshiRunnerExtension);

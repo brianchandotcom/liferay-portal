@@ -408,6 +408,64 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			formLayoutStructureItem.getChildrenItemIds(), layoutStructure);
 	}
 
+	private void _validateRequiredField(
+			List<InfoFieldValue<Object>> infoFieldValues,
+			LayoutStructureItem layoutStructureItem)
+		throws InfoFormValidationException.RequiredInfoField {
+
+		if (!Objects.equals(
+				LayoutDataItemTypeConstants.TYPE_FRAGMENT,
+				layoutStructureItem.getItemType())) {
+
+			return;
+		}
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		if (fragmentEntryLink == null) {
+			return;
+		}
+
+		if (GetterUtil.getBoolean(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValues(),
+					new FragmentConfigurationField(
+						"inputRequired", "boolean", "false", false, "checkbox"),
+					LocaleUtil.getMostRelevantLocale()))) {
+
+			String inputFieldId = GetterUtil.getString(
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValues(),
+					new FragmentConfigurationField(
+						"inputFieldId", "string", "", false, "text"),
+					LocaleUtil.getMostRelevantLocale()));
+
+			boolean requiredFieldAvailable = false;
+
+			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+				InfoField infoField = infoFieldValue.getInfoField();
+
+				if (Objects.equals(inputFieldId, infoField.getUniqueId()) &&
+					Validator.isNotNull(infoFieldValue.getValue())) {
+
+					requiredFieldAvailable = true;
+
+					break;
+				}
+			}
+
+			if (!requiredFieldAvailable) {
+				throw new InfoFormValidationException.RequiredInfoField(
+					inputFieldId);
+			}
+		}
+	}
+
 	private void _validateRequiredFields(
 			HttpServletRequest httpServletRequest,
 			List<InfoFieldValue<Object>> infoFieldValues)
@@ -446,59 +504,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(itemId);
 
-			if (!Objects.equals(
-					LayoutDataItemTypeConstants.TYPE_FRAGMENT,
-					layoutStructureItem.getItemType())) {
-
-				continue;
-			}
-
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-			if (fragmentEntryLink == null) {
-				continue;
-			}
-
-			if (GetterUtil.getBoolean(
-					_fragmentEntryConfigurationParser.getFieldValue(
-						fragmentEntryLink.getEditableValues(),
-						new FragmentConfigurationField(
-							"inputRequired", "boolean", "false", false,
-							"checkbox"),
-						LocaleUtil.getMostRelevantLocale()))) {
-
-				String inputFieldId = GetterUtil.getString(
-					_fragmentEntryConfigurationParser.getFieldValue(
-						fragmentEntryLink.getEditableValues(),
-						new FragmentConfigurationField(
-							"inputFieldId", "string", "", false, "text"),
-						LocaleUtil.getMostRelevantLocale()));
-
-				boolean requiredFieldAvailable = false;
-
-				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-					InfoField infoField = infoFieldValue.getInfoField();
-
-					if (Objects.equals(inputFieldId, infoField.getUniqueId()) &&
-						Validator.isNotNull(infoFieldValue.getValue())) {
-
-						requiredFieldAvailable = true;
-
-						break;
-					}
-				}
-
-				if (!requiredFieldAvailable) {
-					throw new InfoFormValidationException.RequiredInfoField(
-						inputFieldId);
-				}
-			}
+			_validateRequiredField(infoFieldValues, layoutStructureItem);
 		}
 	}
 

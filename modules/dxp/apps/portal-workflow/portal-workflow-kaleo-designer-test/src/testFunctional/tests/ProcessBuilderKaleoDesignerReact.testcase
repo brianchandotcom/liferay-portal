@@ -73,6 +73,7 @@ definition {
 	@description = "Verify that Action can be added"
 	@priority = "4"
 	test CanAddAction {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAction";
 
 		Workflow.openWorkflowListView();
@@ -201,6 +202,7 @@ definition {
 	@description = "Verify that the user can add Multiple Actions to the same node"
 	@priority = "4"
 	test CanAddMultipleActions {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleActions";
 
 		Workflow.openWorkflowListView();
@@ -256,6 +258,7 @@ definition {
 	@description = "Verify that the user can add multiple Timers to a task node"
 	@priority = "4"
 	test CanAddMultipleTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleTimers";
 
 		Workflow.openWorkflowListView();
@@ -340,6 +343,7 @@ definition {
 	@description = "Verify that the user is able to add a Script to define the Action"
 	@priority = "3"
 	test CanAddScriptToDefineAction {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddScriptToDefineAction";
 
 		Workflow.openWorkflowListView();
@@ -415,6 +419,7 @@ definition {
 	@description = "Verify that Timers can be added"
 	@priority = "4"
 	test CanAddTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTimers";
 
 		Workflow.openWorkflowListView();
@@ -744,6 +749,7 @@ definition {
 	@description = "Verify that the user can select and define an Action to be conducted once the timer expires"
 	@priority = "3"
 	test CanConfigureActionAtTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureActionAtTimers";
 
 		Workflow.openWorkflowListView();
@@ -776,6 +782,7 @@ definition {
 	@description = "Verify that the user can add multiple Actions to Timers at task node"
 	@priority = "3"
 	test CanConfigureMultipleActionsAtTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureMultipleActionsAtTimers";
 
 		Workflow.openWorkflowListView();
@@ -822,6 +829,7 @@ definition {
 	@description = "Verify that the user can select and define an Reassignment to be conducted once the timer expires"
 	@priority = "3"
 	test CanConfigureReassignmentAtTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureReassignmentAtTimers";
 
 		Workflow.openWorkflowListView();
@@ -990,6 +998,7 @@ definition {
 	@description = "Verify that the user can delete action with the trash icon at the bottom right corner"
 	@priority = "4"
 	test CanDeleteAction {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAction";
 
 		Workflow.openWorkflowListView();
@@ -1019,6 +1028,7 @@ definition {
 	@description = "Verify that the user can delete actions inside Timers"
 	@priority = "3"
 	test CanDeleteActionsAtTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteActionsAtTimers";
 
 		Workflow.openWorkflowListView();
@@ -1069,6 +1079,7 @@ definition {
 	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
 	@priority = "3"
 	test CanDeleteAllActionsAtOnce {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllActionsAtOnce";
 
 		Workflow.openWorkflowListView();
@@ -1101,6 +1112,7 @@ definition {
 	@description = "Verify that the user can delete all Timers at once"
 	@priority = "3"
 	test CanDeleteAllTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllTimers";
 
 		Workflow.openWorkflowListView();
@@ -1468,6 +1480,7 @@ definition {
 	@description = "Verify that the user can delete the Timers"
 	@priority = "4"
 	test CanDeleteTimers {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimers";
 
 		Workflow.openWorkflowListView();
@@ -1496,6 +1509,7 @@ definition {
 	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"
 	@priority = "3"
 	test CanDeleteTimersBySidebarCard {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimersBySidebarCard";
 
 		Workflow.openWorkflowListView();
@@ -1599,6 +1613,7 @@ definition {
 	@description = "Verify that the user can edit the Action fields"
 	@priority = "4"
 	test CanEditActionFields {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditActionFields";
 
 		Workflow.openWorkflowListView();
@@ -1903,6 +1918,7 @@ definition {
 	@description = "Verify that the user can edit the Description of the Timer"
 	@priority = "3"
 	test CanEditTimerDescription {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDescription";
 
 		Workflow.openWorkflowListView();
@@ -1944,6 +1960,7 @@ definition {
 	@description = "Verify that the user can edit the Duration of the Timer"
 	@priority = "4"
 	test CanEditTimerDuration {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerDuration";
 
 		Workflow.openWorkflowListView();
@@ -1997,6 +2014,7 @@ definition {
 	@description = "Verify that the user can edit the Name of the Timer"
 	@priority = "4"
 	test CanEditTimerName {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerName";
 
 		Workflow.openWorkflowListView();
@@ -2039,6 +2057,7 @@ definition {
 	@description = "Verify that the user can edit the Timers recurrence field"
 	@priority = "3"
 	test CanEditTimerRecurrenceFields {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerRecurrenceFields";
 
 		Workflow.openWorkflowListView();
@@ -2683,6 +2702,7 @@ definition {
 	@description = "Verify that the user can publish a workflow with Timer configured"
 	@priority = "5"
 	test CanPublishWorkflowWithTimerConfigured {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanPublishWorkflowWithTimerConfigured";
 
 		Workflow.openWorkflowListView();
@@ -2897,6 +2917,7 @@ definition {
 	@description = "Verify that the user can select On Assignment as Execution Type"
 	@priority = "4"
 	test CanSelectOnAssignmentAsExecutionTypeAtActions {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtActions";
 
 		Workflow.openWorkflowListView();
@@ -2979,6 +3000,7 @@ definition {
 	@description = "Verify that the user can select On Entry as Execution Type"
 	@priority = "4"
 	test CanSelectOnEntryExecutionTypeAtActions {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryExecutionTypeAtActions";
 
 		Workflow.openWorkflowListView();
@@ -3007,6 +3029,7 @@ definition {
 	@description = "Verify that the user can select On Exit as Execution Type"
 	@priority = "4"
 	test CanSelectOnExitAsExecutionTypeAtActions {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtActions";
 
 		Workflow.openWorkflowListView();
@@ -3199,6 +3222,7 @@ definition {
 	@description = "Verify that the user can set the Priority for the Action"
 	@priority = "3"
 	test CanSetActionsPriority {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetActionsPriority";
 
 		Workflow.openWorkflowListView();
@@ -3288,6 +3312,7 @@ definition {
 	@description = "Verify that the user can turn on the Timers recurrence mode"
 	@priority = "4"
 	test CanTurnOnTimerRecurrenceMode {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanTurnOnTimerRecurrenceMode";
 
 		Workflow.openWorkflowListView();
@@ -3665,6 +3690,7 @@ definition {
 	@description = "Verify that the user can view the Timer required fields"
 	@priority = "3"
 	test CanViewTimersRequiredFields {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimersRequiredFields";
 
 		Workflow.openWorkflowListView();
@@ -4066,6 +4092,7 @@ definition {
 	@description = "Verify that each type of Node has Actions property"
 	@priority = "4"
 	test HasActionsProperty {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#HasActionsProperty";
 
 		Workflow.openWorkflowListView();

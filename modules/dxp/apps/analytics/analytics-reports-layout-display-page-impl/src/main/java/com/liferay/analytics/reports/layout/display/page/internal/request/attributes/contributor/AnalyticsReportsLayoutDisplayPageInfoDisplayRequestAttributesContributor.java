@@ -21,8 +21,6 @@ import com.liferay.info.display.request.attributes.contributor.InfoDisplayReques
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.Optional;
 
@@ -49,31 +47,25 @@ public class
 			return;
 		}
 
-		ClassName className = _classNameLocalService.fetchClassName(
-			layoutDisplayPageObjectProvider.getClassNameId());
-
 		httpServletRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_INFO_ITEM_REFERENCE,
 			Optional.ofNullable(
 				_analyticsReportsInfoItemRegistry.getAnalyticsReportsInfoItem(
-					className.getClassName())
+					layoutDisplayPageObjectProvider.getClassName())
 			).map(
 				analyticsReportsInfoItem -> new InfoItemReference(
-					className.getClassName(),
+					layoutDisplayPageObjectProvider.getClassName(),
 					layoutDisplayPageObjectProvider.getClassPK())
 			).orElseGet(
 				() -> new InfoItemReference(
 					LayoutDisplayPageObjectProvider.class.getName(),
 					new ClassNameClassPKInfoItemIdentifier(
-						className.getClassName(),
+						layoutDisplayPageObjectProvider.getClassName(),
 						layoutDisplayPageObjectProvider.getClassPK()))
 			));
 	}
 
 	@Reference
 	private AnalyticsReportsInfoItemRegistry _analyticsReportsInfoItemRegistry;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 }

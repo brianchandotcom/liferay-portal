@@ -142,8 +142,7 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		Assert.assertEquals(
-			_portal.getClassName(
-				layoutDisplayPageObjectProvider.getClassNameId()),
+			layoutDisplayPageObjectProvider.getClassName(),
 			HttpComponentsUtil.getParameter(
 				contentDashboardItemAction.getURL(),
 				"_com_liferay_analytics_reports_web_internal_portlet_" +

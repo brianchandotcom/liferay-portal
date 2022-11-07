@@ -24,9 +24,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -49,8 +47,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -183,90 +179,37 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject mappedValueConfigJSONObject =
 				_jsonFactory.createJSONObject();
 
-			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
+			if ((_fragmentEntryProcessorHelper.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode()) &&
-				editableValueJSONObject.has("mappedField")) {
+				 editableValueJSONObject.has("mappedField")) ||
+				_fragmentEntryProcessorHelper.isMapped(
+					editableValueJSONObject) ||
+				_fragmentEntryProcessorHelper.isMappedCollection(
+					editableValueJSONObject)) {
 
-				String mappedField = editableValueJSONObject.getString(
-					"mappedField");
+				Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
+					editableValueJSONObject, infoDisplaysFieldValues,
+					fragmentEntryProcessorContext);
 
-				if (Validator.isNotNull(mappedField)) {
-					HttpServletRequest httpServletRequest =
-						fragmentEntryProcessorContext.getHttpServletRequest();
+				if (fieldValue != null) {
+					String fieldId = StringPool.BLANK;
 
-					Object infoItem = httpServletRequest.getAttribute(
-						InfoDisplayWebKeys.INFO_ITEM);
+					if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
+							fragmentEntryProcessorContext.getMode()) &&
+						editableValueJSONObject.has("mappedField")) {
 
-					InfoItemFieldValuesProvider<Object>
-						infoItemFieldValuesProvider =
-							(InfoItemFieldValuesProvider)
-								httpServletRequest.getAttribute(
-									InfoDisplayWebKeys.
-										INFO_ITEM_FIELD_VALUES_PROVIDER);
+						fieldId = editableValueJSONObject.getString(
+							"mappedField");
+					}
+					else if (_fragmentEntryProcessorHelper.isMapped(
+								editableValueJSONObject)) {
 
-					Object fieldValue =
-						_fragmentEntryProcessorHelper.
-							getMappedInfoItemFieldValue(
-								mappedField, infoItemFieldValuesProvider,
-								fragmentEntryProcessorContext.getLocale(),
-								infoItem);
-
-					if (fieldValue != null) {
-						mappedValueConfigJSONObject =
-							editableElementParser.
-								getFieldTemplateConfigJSONObject(
-									mappedField,
-									fragmentEntryProcessorContext.getLocale(),
-									fieldValue);
-
-						value = editableElementParser.parseFieldValue(
-							fieldValue);
+						fieldId = editableValueJSONObject.getString("fieldId");
 					}
 					else {
-						value = editableValueJSONObject.getString(
-							"defaultValue");
+						fieldId = editableValueJSONObject.getString(
+							"collectionFieldId");
 					}
-				}
-			}
-			else if (_fragmentEntryProcessorHelper.isMapped(
-						editableValueJSONObject)) {
-
-				Object fieldValue =
-					_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
-						editableValueJSONObject, infoDisplaysFieldValues,
-						fragmentEntryProcessorContext.getLocale(),
-						fragmentEntryProcessorContext.getMode(),
-						fragmentEntryProcessorContext.getPreviewClassPK(),
-						fragmentEntryProcessorContext.getPreviewVersion());
-
-				if (fieldValue != null) {
-					String fieldId = editableValueJSONObject.getString(
-						"fieldId");
-
-					mappedValueConfigJSONObject =
-						editableElementParser.getFieldTemplateConfigJSONObject(
-							fieldId, fragmentEntryProcessorContext.getLocale(),
-							fieldValue);
-
-					value = editableElementParser.parseFieldValue(fieldValue);
-				}
-				else {
-					value = editableValueJSONObject.getString("defaultValue");
-				}
-			}
-			else if (_fragmentEntryProcessorHelper.isMappedCollection(
-						editableValueJSONObject)) {
-
-				Object fieldValue =
-					_fragmentEntryProcessorHelper.getMappedCollectionValue(
-						fragmentEntryProcessorContext.
-							getContextInfoItemReferenceOptional(),
-						editableValueJSONObject,
-						fragmentEntryProcessorContext.getLocale());
-
-				if (fieldValue != null) {
-					String fieldId = editableValueJSONObject.getString(
-						"collectionFieldId");
 
 					mappedValueConfigJSONObject =
 						editableElementParser.getFieldTemplateConfigJSONObject(

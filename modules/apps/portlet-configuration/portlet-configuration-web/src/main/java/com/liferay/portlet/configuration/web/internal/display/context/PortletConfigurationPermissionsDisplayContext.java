@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -328,10 +327,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		if (ArrayUtil.isEmpty(_resourcePrimKeys)) {
 			throw new ResourcePrimKeyException();
-		}
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-			_resourcePrimKeys = new String[] {_resourcePrimKeys[0]};
 		}
 
 		return _resourcePrimKeys;

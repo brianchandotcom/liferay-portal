@@ -144,9 +144,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), _getActionLabel(request, resourceName, action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
 
-							if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-								disabled = true;
-							}
+							disabled = true;
 						}
 
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
@@ -163,64 +161,56 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 								<input name="<%= inputName %>" type="hidden" value="<%= true %>" />
 							</c:if>
 
-							<c:choose>
-								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) %>'>
+							<%
+							List<String> resourcePrimKeys = actionIdResourcePrimKeysMap.getOrDefault(action, Collections.emptyList());
 
-									<%
-									List<String> resourcePrimKeys = actionIdResourcePrimKeysMap.getOrDefault(action, Collections.emptyList());
+							if (resourcePrimKeys.size() < resources.size()) {
+								checked = false;
+							}
 
-									if (resourcePrimKeys.size() < resources.size()) {
-										checked = false;
-									}
+							boolean indeterminate = false;
 
-									boolean indeterminate = false;
+							if (!checked && ListUtil.isNotEmpty(resourcePrimKeys)) {
+								indeterminate = true;
+							}
+							%>
 
-									if (!checked && ListUtil.isNotEmpty(resourcePrimKeys)) {
-										indeterminate = true;
-									}
-									%>
+							<div>
+								<div class="custom-checkbox custom-control custom-control-inline">
+									<label>
+										<input
+											<%= (checked || indeterminate) ? "checked" : StringPool.BLANK %>
+											<%= disabled ? "disabled" : StringPool.BLANK %>
+											<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
+											class="custom-control-input <%= Validator.isNotNull(preselectedMsg) ? "lfr-portal-tooltip" : StringPool.BLANK %>"
+											id="<%= inputId %>"
+											name="<%= inputName %>"
+											type="checkbox"
+											title="<%= dataMessage %>"
+										/><span class="custom-control-label"></span
+									>
+									</label>
+								</div>
 
-									<div>
-										<div class="custom-checkbox custom-control custom-control-inline">
-											<label>
-												<input
-													<%= (checked || indeterminate) ? "checked" : StringPool.BLANK %>
-													<%= disabled ? "disabled" : StringPool.BLANK %>
-													<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
-													class="custom-control-input <%= Validator.isNotNull(preselectedMsg) ? "lfr-portal-tooltip" : StringPool.BLANK %>"
-													id="<%= inputId %>"
-													name="<%= inputName %>"
-													type="checkbox"
-													title="<%= dataMessage %>"
-												/><span class="custom-control-label"></span
-											>
-											</label>
-										</div>
-
-										<react:component
-											module="js/PermissionsCheckbox"
-											props='<%=
-												HashMapBuilder.<String, Object>put(
-													"checked", checked
-												).put(
-													"disabled", disabled
-												).put(
-													"id", inputId
-												).put(
-													"indeterminate", indeterminate
-												).put(
-													"name", inputName
-												).put(
-													"title", dataMessage
-												).build()
-											%>'
-										/>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected lfr-portal-tooltip" : StringPool.BLANK %>" title="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= inputId %>" name="<%= inputName %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
-								</c:otherwise>
-							</c:choose>
+								<react:component
+									module="js/PermissionsCheckbox"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"checked", checked
+										).put(
+											"disabled", disabled
+										).put(
+											"id", inputId
+										).put(
+											"indeterminate", indeterminate
+										).put(
+											"name", inputName
+										).put(
+											"title", dataMessage
+										).build()
+									%>'
+								/>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 					<%

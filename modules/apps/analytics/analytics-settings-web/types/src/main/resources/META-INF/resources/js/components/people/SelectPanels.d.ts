@@ -13,8 +13,11 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
+interface IPanelProps {
+	onSyncAllAccountsChange: () => void;
+	onSyncAllContactsChange: () => void;
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare const SelectPanels: React.FC<IPanelProps>;
+export default SelectPanels;

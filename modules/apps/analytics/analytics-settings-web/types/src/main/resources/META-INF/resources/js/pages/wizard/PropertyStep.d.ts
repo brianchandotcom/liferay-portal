@@ -13,7 +13,6 @@
  */
 
 import React from 'react';
-import {TGenericComponent} from './WizardPage';
-interface IStepProps extends TGenericComponent {}
-declare const Step: React.FC<IStepProps>;
+import {IGenericStepProps} from './WizardPage';
+declare const Step: React.FC<IGenericStepProps>;
 export default Step;

@@ -13,13 +13,25 @@
  */
 
 import React from 'react';
-export declare const AppContext: React.Context<any>;
+declare type TData = {
+	connected: boolean;
+	liferayAnalyticsURL: string;
+	pageView: EPageView;
+	token: string;
+};
+declare type TView = {
+	[key in EPageView]: React.FC;
+};
 export declare enum EPageView {
 	Wizard = 'VIEW_WIZARD_MODE',
 	Default = 'VIEW_DEFAULT_MODE',
 }
+export declare const View: TView;
+declare const useData: () => TData;
+declare const useDispatch: () => any;
 export declare enum Events {
-	Connected = 'CONNECTED',
+	Connect = 'CONNECT',
+	ChangePageView = 'CHANGE_PAGE_VIEW',
 }
 interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	connected: boolean;
@@ -27,4 +39,5 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	token: string;
 }
 declare const App: React.FC<IAppProps>;
+export {useData, useDispatch};
 export default App;

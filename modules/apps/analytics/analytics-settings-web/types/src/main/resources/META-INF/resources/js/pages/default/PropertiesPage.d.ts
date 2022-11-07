@@ -13,5 +13,6 @@
  */
 
 import React from 'react';
-declare const PropertiesPage: React.FC;
+import {IGenericPageProps} from './DefaultPage';
+declare const PropertiesPage: React.FC<IGenericPageProps>;
 export default PropertiesPage;

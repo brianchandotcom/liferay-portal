@@ -13,8 +13,6 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
-}
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+import {IGenericPageProps} from './DefaultPage';
+declare const PeopleDataPage: React.FC<IGenericPageProps>;
+export default PeopleDataPage;

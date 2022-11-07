@@ -20,9 +20,7 @@ export declare enum OrderBy {
 	Asc = 'asc',
 	Desc = 'desc',
 }
-export declare function DEFAULT_FILTER(
-	value: string
-): {
+export declare const DEFAULT_FILTER: {
 	type: OrderBy;
 	value: string;
 };

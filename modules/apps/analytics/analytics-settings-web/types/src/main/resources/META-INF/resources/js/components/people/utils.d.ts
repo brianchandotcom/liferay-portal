@@ -12,16 +12,17 @@
  * details.
  */
 
-import React from 'react';
-import {TProperty} from '../properties/Properties';
-interface IAssignModalProps {
-	observer: any;
+import {TItem} from '../table/Table';
+interface IUseAddItemsProps {
+	name: string;
 	onCloseModal: () => void;
-	property: TProperty;
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
 }
-export declare enum ETabs {
-	Channel = 0,
-	Sites = 1,
-}
-declare const AssignModal: React.FC<IAssignModalProps>;
-export default AssignModal;
+export declare function useAddItems({
+	name,
+	onCloseModal,
+	syncAllAccounts,
+	syncAllContacts,
+}: IUseAddItemsProps): (items: TItem[]) => Promise<void>;
+export {};

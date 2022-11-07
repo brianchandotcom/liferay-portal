@@ -12,10 +12,20 @@
  * details.
  */
 
-export declare function fetchConnection(token: string): Promise<any>;
-export declare function deleteConnection(): Promise<any>;
-export declare function fetchProperties(): Promise<any>;
 export declare function createProperty(name: string): Promise<any>;
+export declare function deleteConnection(): Promise<any>;
+export declare function fetchAccountGroups(queryString?: string): Promise<any>;
+export declare function fetchChannels(queryString?: string): Promise<any>;
+export declare function fetchConnection(token: string): Promise<any>;
+export declare function fetchContactsOrganization(
+	queryString?: string
+): Promise<any>;
+export declare function fetchContactsUsersGroup(
+	queryString?: string
+): Promise<any>;
+export declare function fetchPeopleData(): Promise<any>;
+export declare function fetchProperties(): Promise<any>;
+export declare function fetchSites(queryString?: string): Promise<any>;
 export declare function updateProperty({
 	channelId,
 	commerceChannelIds,
@@ -29,5 +39,16 @@ export declare function updateProperty({
 	dataSourceId: string;
 	siteIds: number[];
 }): Promise<any>;
-export declare function fetchChannels(queryString?: string): Promise<any>;
-export declare function fetchSites(queryString?: string): Promise<any>;
+export declare function updatePeopleData({
+	syncAllAccounts,
+	syncAllContacts,
+	syncedAccountGroupIds,
+	syncedOrganizationIds,
+	syncedUserGroupIds,
+}: {
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
+	syncedAccountGroupIds?: string[];
+	syncedOrganizationIds?: string[];
+	syncedUserGroupIds?: string[];
+}): Promise<any>;

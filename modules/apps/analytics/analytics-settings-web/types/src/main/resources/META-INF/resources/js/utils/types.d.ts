@@ -12,10 +12,10 @@
  * details.
  */
 
-import React from 'react';
-interface IModalUserGroups {
-	observer: any;
-	onCloseModal: () => void;
+/// <reference types="react" />
+
+export interface IPages<T, K> {
+	Component: React.FC<T>;
+	key: K;
+	title: string;
 }
-declare const ModalUserGroups: React.FC<IModalUserGroups>;
-export default ModalUserGroups;

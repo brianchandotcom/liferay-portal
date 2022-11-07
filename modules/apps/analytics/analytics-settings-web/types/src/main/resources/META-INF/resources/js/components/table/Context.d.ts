@@ -34,9 +34,6 @@ declare type TState = {
 };
 declare const useData: () => TState;
 declare const useDispatch: () => any;
-interface ITableContext {
-	firstColumn: string;
-}
-declare const TableContext: React.FC<ITableContext>;
+declare const TableContext: React.FC;
 export {useData, useDispatch};
 export default TableContext;

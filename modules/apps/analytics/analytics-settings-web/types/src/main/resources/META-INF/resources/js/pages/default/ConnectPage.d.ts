@@ -12,7 +12,7 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const ConnectPage: () => JSX.Element;
+import React from 'react';
+import {IGenericPageProps} from './DefaultPage';
+declare const ConnectPage: React.FC<IGenericPageProps>;
 export default ConnectPage;

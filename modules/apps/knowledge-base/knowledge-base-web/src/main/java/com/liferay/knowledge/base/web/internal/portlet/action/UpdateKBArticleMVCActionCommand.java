@@ -95,13 +95,27 @@ public class UpdateKBArticleMVCActionCommand
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
+		KBArticle kbArticle = null;
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			KBArticle.class.getName(), actionRequest);
+
+		if (cmd.equals(Constants.REVERT)) {
+			int version = ParamUtil.getInteger(
+				actionRequest, "version", KBArticleConstants.DEFAULT_VERSION);
+
+			kbArticle = _kbArticleService.revertKBArticle(
+				resourcePrimKey, version, serviceContext);
+		}
+
+		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {
+			return;
+		}
+
 		String title = ParamUtil.getString(actionRequest, "title");
 		String content = ParamUtil.getString(actionRequest, "content");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
-		String[] sections = actionRequest.getParameterValues("sections");
-		String[] selectedFileNames = ParamUtil.getParameterValues(
-			actionRequest, "selectedFileName");
 
 		Date expirationDate = null;
 		Date reviewDate = null;
@@ -118,10 +132,9 @@ public class UpdateKBArticleMVCActionCommand
 				actionRequest, true, user.getTimeZone());
 		}
 
-		KBArticle kbArticle = null;
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KBArticle.class.getName(), actionRequest);
+		String[] sections = actionRequest.getParameterValues("sections");
+		String[] selectedFileNames = ParamUtil.getParameterValues(
+			actionRequest, "selectedFileName");
 
 		if (cmd.equals(Constants.ADD)) {
 			long parentResourceClassNameId = ParamUtil.getLong(
@@ -138,13 +151,6 @@ public class UpdateKBArticleMVCActionCommand
 				urlTitle, content, description, sections, sourceURL,
 				expirationDate, reviewDate, selectedFileNames, serviceContext);
 		}
-		else if (cmd.equals(Constants.REVERT)) {
-			int version = ParamUtil.getInteger(
-				actionRequest, "version", KBArticleConstants.DEFAULT_VERSION);
-
-			kbArticle = _kbArticleService.revertKBArticle(
-				resourcePrimKey, version, serviceContext);
-		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			long[] removeFileEntryIds = ParamUtil.getLongValues(
 				actionRequest, "removeFileEntryIds");
@@ -153,10 +159,6 @@ public class UpdateKBArticleMVCActionCommand
 				resourcePrimKey, title, content, description, sections,
 				sourceURL, expirationDate, reviewDate, selectedFileNames,
 				removeFileEntryIds, serviceContext);
-		}
-
-		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {
-			return;
 		}
 
 		_assetDisplayPageEntryFormProcessor.process(

@@ -38,8 +38,12 @@
 		<field name="sourceURL" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="expirationDate" type="Date" />
-		<field name="reviewDate" type="Date" />
+		<field name="expirationDate" type="Date">
+			<hint name="default-year-delta">1</hint>
+		</field>
+		<field name="reviewDate" type="Date">
+			<hint name="default-month-delta">9</hint>
+		</field>
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

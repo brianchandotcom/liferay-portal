@@ -25,7 +25,7 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.form.InfoForm;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -408,13 +408,14 @@ public class GetCollectionFieldMVCResourceCommand
 
 		JSONObject displayObjectJSONObject = _jsonFactorys.createJSONObject();
 
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFormProvider.class, itemType);
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm();
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
 
-		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
+			InfoField<?> infoField = infoFieldValue.getInfoField();
+
 			Object value =
 				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 					infoField.getName(), infoItemFieldValuesProvider, locale,
@@ -426,9 +427,6 @@ public class GetCollectionFieldMVCResourceCommand
 				infoField.getUniqueId(), value
 			);
 		}
-
-		InfoItemFieldValues infoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
 		InfoItemReference infoItemReference =
 			infoItemFieldValues.getInfoItemReference();

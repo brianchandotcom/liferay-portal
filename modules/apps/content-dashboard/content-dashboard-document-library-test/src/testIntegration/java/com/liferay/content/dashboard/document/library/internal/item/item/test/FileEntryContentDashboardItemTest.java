@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.net.URL;
 import java.net.URLEncoder;
 
 import java.util.List;
@@ -423,8 +425,25 @@ public class FileEntryContentDashboardItemTest {
 
 	@Test
 	public void testGetSpecificInformation() throws Exception {
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest();
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, new ThemeDisplay());
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST,
+			mockLiferayPortletRenderRequest);
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		VersionableContentDashboardItem<FileEntry>
 			versionableContentDashboardItem =
@@ -477,6 +496,24 @@ public class FileEntryContentDashboardItemTest {
 			);
 
 		Assert.assertNotNull(fileNameSpecificInformation.getValue());
+
+		stream = specificInformationList.stream();
+
+		ContentDashboardItem.SpecificInformation<URL>
+			webDAVSpecificInformation =
+				(ContentDashboardItem.SpecificInformation<URL>)stream.filter(
+					specificInformation -> Objects.equals(
+						specificInformation.getKey(), "web-dav-url")
+				).findFirst(
+				).orElseThrow(
+					() -> new AssertionError("web-dav-url not found")
+				);
+
+		String url = String.valueOf(webDAVSpecificInformation.getValue());
+
+		Assert.assertTrue(url.contains("webdav"));
+
+		Assert.assertEquals("webdav-help", webDAVSpecificInformation.getHelp());
 	}
 
 	@Test

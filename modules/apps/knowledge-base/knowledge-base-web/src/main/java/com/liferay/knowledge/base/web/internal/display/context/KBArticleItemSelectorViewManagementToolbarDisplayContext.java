@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -58,13 +56,6 @@ public class KBArticleItemSelectorViewManagementToolbarDisplayContext
 		).setParameter(
 			"scope", StringPool.BLANK
 		).buildString();
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

@@ -20,7 +20,6 @@ interface TableProps<T> {
 	noWrap?: boolean;
 	responsive?: boolean;
 	rows: T[];
-	tableVerticalAlignment?: string;
 }
 
 const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (

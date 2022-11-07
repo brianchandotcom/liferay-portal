@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -58,13 +56,6 @@ public class SiteBrowserManagementToolbarDisplayContext
 	@Override
 	public String getComponentId() {
 		return "siteBrowserWebManagementToolbar";
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

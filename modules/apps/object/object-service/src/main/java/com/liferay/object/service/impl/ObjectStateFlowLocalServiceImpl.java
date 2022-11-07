@@ -109,6 +109,13 @@ public class ObjectStateFlowLocalServiceImpl
 		return objectStateFlow;
 	}
 
+	public ObjectStateFlow addObjectStateFlow(
+			long userId, long objectFieldId, List<ObjectState> objectStates)
+		throws PortalException {
+
+		return null;
+	}
+
 	@Override
 	public void deleteObjectFieldObjectStateFlow(long objectFieldId)
 		throws PortalException {

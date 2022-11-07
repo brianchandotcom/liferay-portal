@@ -369,6 +369,30 @@ definition {
 		FormPortlet.submitSuccessfully();
 	}
 
+	@description = "LPS-167567 - Verify that the Field Reference property is not vulnerable to Cross Site Scripting"
+	@priority = "5"
+	test CheckFieldReferenceCrossSiteScripting {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form");
+
+		Form.addTextFieldReference(
+			fieldPositionNumber = "0",
+			key_fieldReferenceText = "<script>alert(123)</script>");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form");
+
+		FormFields.viewFieldReference(
+			fieldName = "Text",
+			key_fieldReferenceValue = "scriptalert123script");
+	}
+
 	@description = "LPS-167565 - Verify that the Help Text property is not vulnerable to Cross Site Scripting."
 	@priority = "5"
 	test CheckHelpTextCrossSiteScripting {

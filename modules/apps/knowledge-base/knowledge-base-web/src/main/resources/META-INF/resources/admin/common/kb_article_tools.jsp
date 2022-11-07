@@ -34,7 +34,8 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 	<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
 
 		<%
-		KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, kbGroupServiceConfiguration);
+		KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(
+			kbGroupServiceConfiguration, liferayPortletRequest, liferayPortletResponse);
 		%>
 
 		<clay:dropdown-actions

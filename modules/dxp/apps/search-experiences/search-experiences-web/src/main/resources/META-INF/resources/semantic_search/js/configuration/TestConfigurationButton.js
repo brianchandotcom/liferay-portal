@@ -32,7 +32,6 @@ function TestConfigurationButton({
 	model,
 	modelTimeout,
 	sentenceTransformProvider,
-	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
 }) {
@@ -49,7 +48,6 @@ function TestConfigurationButton({
 		cacheTimeout,
 		embeddingVectorDimensions,
 		enableGPU,
-		sentenceTransformerEnabled,
 		huggingFaceAccessToken,
 		languageIds,
 		maxCharacterCount,
@@ -98,7 +96,7 @@ function TestConfigurationButton({
 
 		const generalSettings = {
 			cacheTimeout,
-			sentenceTransformerEnabled,
+			sentenceTransformerEnabled: true, // Always set as `true`. LPS-167506
 		};
 
 		const generalTransformProviderSettings = {

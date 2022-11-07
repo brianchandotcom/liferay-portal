@@ -14,21 +14,17 @@
 
 package com.liferay.portal.reports.engine.console.jasper.internal.exporter;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.reports.engine.ReportFormat;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
 import com.liferay.portal.reports.engine.ReportFormatExporterRegistry;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Brian Greenwald
@@ -41,8 +37,8 @@ public class JasperReportFormatExporterRegistry
 	public ReportFormatExporter getReportFormatExporter(
 		ReportFormat reportFormat) {
 
-		ReportFormatExporter reportFormatExporter = _reportFormatExporters.get(
-			reportFormat);
+		ReportFormatExporter reportFormatExporter =
+			_serviceTrackerMap.getService(reportFormat);
 
 		if (reportFormatExporter == null) {
 			throw new IllegalArgumentException(
@@ -52,48 +48,24 @@ public class JasperReportFormatExporterRegistry
 		return reportFormatExporter;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setReportFormatExporter(
-		ReportFormatExporter reportFormatExporter,
-		Map<String, Object> properties) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ReportFormatExporter.class, null,
+			(serviceReference, emitter) -> {
+				String reportFormatString = GetterUtil.getString(
+					serviceReference.getProperty("reportFormat"));
 
-		String reportFormatString = GetterUtil.getString(
-			properties.get("reportFormat"));
-
-		ReportFormat reportFormat = ReportFormat.parse(reportFormatString);
-
-		_reportFormatExporters.put(reportFormat, reportFormatExporter);
+				emitter.emit(ReportFormat.parse(reportFormatString));
+			});
 	}
 
-	protected void unsetReportFormatExporter(
-		ReportFormatExporter reportFormatExporter,
-		Map<String, Object> properties) {
-
-		String reportFormatString = GetterUtil.getString(
-			properties.get("reportFormat"));
-
-		ReportFormat reportFormat = ReportFormat.parse(reportFormatString);
-
-		if (reportFormat == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No report format specified for " + reportFormatExporter);
-			}
-
-			return;
-		}
-
-		_reportFormatExporters.remove(reportFormat);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JasperReportFormatExporterRegistry.class);
-
-	private final Map<ReportFormat, ReportFormatExporter>
-		_reportFormatExporters = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<ReportFormat, ReportFormatExporter>
+		_serviceTrackerMap;
 
 }

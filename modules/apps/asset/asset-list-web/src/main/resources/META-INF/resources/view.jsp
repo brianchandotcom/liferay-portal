@@ -70,6 +70,32 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						HashMapBuilder.<String, Object>put(
 							"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
 						).build());
+
+					String assetEntryTypeLabel = StringPool.BLANK;
+
+					if (Validator.isNotNull(assetListEntry.getAssetEntryType())) {
+						assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
+					}
+
+					String classTypeLabel = StringPool.BLANK;
+
+					long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype(), -1);
+
+					if (classTypeId >= 0) {
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
+
+						if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {
+							ClassType classType = assetListDisplayContext.getClassType(assetRendererFactory.getClassTypeReader(), classTypeId);
+
+							if (classType != null) {
+								classTypeLabel = classType.getName();
+							}
+						}
+					}
+
+					Date statusDate = assetListEntry.getCreateDate();
+
+					AssetEntryListActionDropdownItems assetEntryListActionDropdownItems = new AssetEntryListActionDropdownItems(assetListEntry, liferayPortletRequest, liferayPortletResponse);
 					%>
 
 					<c:choose>
@@ -91,41 +117,12 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 									<liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" />
 								</h6>
 
-								<c:if test="<%= Validator.isNotNull(assetListEntry.getAssetEntryType()) %>">
-
-									<%
-									String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
-
-									long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype(), -1);
-
-									if (classTypeId >= 0) {
-										AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
-
-										if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {
-											ClassType classType = assetListDisplayContext.getClassType(assetRendererFactory.getClassTypeReader(), classTypeId);
-
-											if (classType != null) {
-												assetEntryTypeLabel = assetEntryTypeLabel + " - " + classType.getName();
-											}
-										}
-									}
-									%>
-
-									<h6 class="text-default">
-										<%= HtmlUtil.escape(assetEntryTypeLabel) %>
-									</h6>
-								</c:if>
-
-								<%
-								Date statusDate = assetListEntry.getCreateDate();
-								%>
+								<h6 class="text-default">
+									<%= HtmlUtil.escape(assetEntryTypeLabel + " - " + classTypeLabel) %>
+								</h6>
 
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-ui:search-container-column-text>
-
-							<%
-							AssetEntryListActionDropdownItems assetEntryListActionDropdownItems = new AssetEntryListActionDropdownItems(assetListEntry, liferayPortletRequest, liferayPortletResponse);
-							%>
 
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
@@ -142,6 +139,55 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand text-truncate"
+								name="name"
+							>
+								<clay:icon
+									cssClass="mr-2 text-secondary"
+									symbol="list"
+								/>
+
+								<aui:a href="<%= editURL %>">
+									<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+								</aui:a>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand text-truncate"
+								name="type"
+							>
+								<liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" />
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand text-truncate"
+								name="item-type"
+								value="<%= assetEntryTypeLabel %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand text-truncate"
+								name="subtype"
+								value="<%= classTypeLabel %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand text-truncate"
+								name="modified"
+							>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+									dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>"
+									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-row>
 

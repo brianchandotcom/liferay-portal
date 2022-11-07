@@ -1166,14 +1166,6 @@ AUI.add(
 					}
 				},
 
-				_onDataRequest(event) {
-					const instance = this;
-
-					if (instance._isUploading()) {
-						event.halt();
-					}
-				},
-
 				_onFileSelect(event) {
 					const instance = this;
 

@@ -59,3 +59,12 @@ LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new 
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<portlet:actionURL name="/layout_admin/update_layout_utility_page_entry_preview" var="updateLayoutUtilityPageEntryPreviewURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= updateLayoutUtilityPageEntryPreviewURL %>" name="layoutUtilityPageEntryPreviewFm">
+	<aui:input name="layoutUtilityPageEntryId" type="hidden" />
+	<aui:input name="fileEntryId" type="hidden" />
+</aui:form>

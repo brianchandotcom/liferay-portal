@@ -22,12 +22,18 @@ definition {
 				text = "${text}",
 				value = "${value}");
 		}
-
-		if ("${conditionType}" == "Segments") {
+		else if ("${conditionType}" == "Segments") {
 			var criteria = JSONSegmentsentrySetter.setSegmentCriteria(
 				conjunctionOperator = "${operator}",
 				firstSegmentId = "${firstSegmentId}",
 				secondSegmentId = "${secondSegmentId}");
+		}
+		else if ("${conditionType}" == "Organization") {
+			var criteria = JSONSegmentsentrySetter.setOrganizationCriteria(
+				date = "${date}",
+				field = "${field}",
+				operator = "${operator}",
+				text = "${text}");
 		}
 		else if (!(isSet(conditionType)) || ("${conditionType}" == "User")) {
 			var criteria = JSONSegmentsentrySetter.setCriteria(

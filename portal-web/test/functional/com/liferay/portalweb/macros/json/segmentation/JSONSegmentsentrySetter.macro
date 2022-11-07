@@ -91,6 +91,9 @@ definition {
 		else if ("${fieldName}" == "IP Geocoder Country") {
 			var field = "customContext\/ipGeocoderCountry";
 		}
+		else if ("${fieldName}" == "Hierarchy Path") {
+			var field = "nameTreePath";
+		}
 		else if ("${fieldName}" == "Hostname") {
 			var field = "hostname";
 		}
@@ -110,10 +113,19 @@ definition {
 			var field = "localDate";
 		}
 		else if ("${fieldName}" == "Name") {
-			var field = "userName";
+			var field = "name";
+		}
+		else if ("${fieldName}" == "Organization") {
+			var field = "organizationId";
+		}
+		else if ("${fieldName}" == "Parent Organization") {
+			var field = "parentOrganizationId";
 		}
 		else if ("${fieldName}" == "Referrer URL") {
 			var field = "referrerURL";
+		}
+		else if ("${fieldName}" == "Region") {
+			var field = "region";
 		}
 		else if ("${fieldName}" == "Regular Role") {
 			var field = "roleIds";
@@ -138,6 +150,9 @@ definition {
 		}
 		else if ("${fieldName}" == "Team") {
 			var field = "teamIds";
+		}
+		else if ("${fieldName}" == "Type") {
+			var field = "type";
 		}
 		else if ("${fieldName}" == "URL") {
 			var field = "url";
@@ -164,6 +179,33 @@ definition {
 		var nameMap = '''{"en_US":"${name}"}''';
 
 		return "${nameMap}";
+	}
+
+	@summary = "Sets the criteria when the criteria type is Session"
+	macro setOrganizationCriteria {
+		Variables.assertDefined(parameterList = "${field},${operator}");
+
+		if ("${operator}" == "equals") {
+			if (isSet(text)) {
+				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"(${field} eq %27${text}%27)","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
+			}
+			else if (isSet(date)) {
+				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"(${field} eq ${date})","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
+			}
+		}
+		else if ("${operator}" == "not equals") {
+			if (isSet(text)) {
+				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"((not (${field} eq %27${text}%27)))","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
+			}
+			else if (isSet(date)) {
+				var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"((not (${field} eq ${date})))","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
+			}
+		}
+		else if ("${operator}" == "contains") {
+			var criteria = '''{"criteria":{"user-organization":{"conjunction":"and","filterString":"(contains(${field}, %27${text}%27))","typeValue":"model"}},"filterStrings":{"model":"(userId eq %270%27)"}}''';
+		}
+
+		return "${criteria}";
 	}
 
 	macro setSegmentCriteria {
@@ -207,6 +249,12 @@ definition {
 				site = "False",
 				siteName = "${groupName}",
 				teamName = "${selectedOption}");
+		}
+		else if (("${fieldName}" == "organizationId") || ("${fieldName}" == "parentOrganizationId")) {
+			var text = JSONOrganization.getOrganizationIdByName(organizationName = "${selectedOption}");
+		}
+		else if (("${fieldName}" == "country") || ("${fieldName}" == "region")) {
+			var text = StringUtil.lowerCase("${selectedOption}");
 		}
 
 		return "${text}";

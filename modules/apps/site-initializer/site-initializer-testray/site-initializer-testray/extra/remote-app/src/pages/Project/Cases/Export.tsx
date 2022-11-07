@@ -32,6 +32,7 @@ import {
 	testrayCaseRest,
 } from '../../../services/rest';
 import {STORAGE_KEYS} from '../../../util/constants';
+import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
 
 type CaseWithRequirement = {
@@ -117,7 +118,7 @@ const CaseItems: React.FC<CaseItemsProps> = ({caseWithRequirements, cases}) => {
 										value: Case?.caseType?.name,
 									},
 									{
-										title: i18n.translate('piority'),
+										title: i18n.translate('priority'),
 										value: Case?.priority,
 									},
 									{
@@ -148,13 +149,15 @@ const CaseItems: React.FC<CaseItemsProps> = ({caseWithRequirements, cases}) => {
 									},
 									{
 										title: i18n.translate(
-											'data-last-modified'
+											'date-last-modified'
 										),
-										value: Case?.dateModified,
+										value: dayjs(Case?.dateModified).format(
+											'lll'
+										),
 									},
 									{
 										title: i18n.translate(
-											'all-issue-found'
+											'all-issues-found'
 										),
 										value: Case?.name,
 									},
@@ -218,8 +221,8 @@ const ExportCaseContainer: React.FC<CaseItemsProps> = ({
 									value: requirement?.component?.name,
 								},
 								{
-									title: i18n.translate('jira-component'),
-									value: Case?.component?.team?.name,
+									title: i18n.translate('jira-components'),
+									value: requirement?.component?.team?.name,
 								},
 								{
 									title: i18n.translate('summary'),
@@ -305,7 +308,7 @@ const Export = () => {
 					cases={cases}
 				/>
 
-				{!!cases.length && (
+				{cases?.length && (
 					<ExportCaseContainer
 						caseWithRequirements={casesWithRequirements}
 						cases={cases}

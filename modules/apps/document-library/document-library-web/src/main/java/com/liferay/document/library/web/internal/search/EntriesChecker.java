@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.web.internal.search;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -23,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -64,66 +61,17 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String primaryKey) {
 
-		FileEntry fileEntry = null;
-		FileShortcut fileShortcut = null;
-		Folder folder = null;
+		String name = _getName(_getResult(primaryKey));
 
-		long entryId = GetterUtil.getLong(primaryKey);
-
-		try {
-			fileEntry = DLAppServiceUtil.getFileEntry(entryId);
+		if (name == null) {
+			return StringPool.BLANK;
 		}
-		catch (Exception exception1) {
-			if (exception1 instanceof NoSuchFileEntryException ||
-				exception1 instanceof NoSuchRepositoryEntryException) {
-
-				try {
-					fileShortcut = DLAppServiceUtil.getFileShortcut(entryId);
-				}
-				catch (Exception exception2) {
-					if (exception2 instanceof NoSuchFileShortcutException) {
-						try {
-							folder = DLAppServiceUtil.getFolder(entryId);
-						}
-						catch (Exception exception3) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(exception3);
-							}
-
-							return StringPool.BLANK;
-						}
-					}
-					else {
-						return StringPool.BLANK;
-					}
-				}
-			}
-			else {
-				return StringPool.BLANK;
-			}
-		}
-
-		String name = null;
-
-		if (fileEntry != null) {
-			name = _SIMPLE_NAME_FILE_ENTRY;
-		}
-		else if (fileShortcut != null) {
-			name = _SIMPLE_NAME_DL_FILE_SHORTCUT;
-		}
-		else if (folder != null) {
-			name = _SIMPLE_NAME_FOLDER;
-		}
-
-		String checkBoxRowIds = _getEntryRowIds();
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-		String checkBoxPostOnClick =
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
 
 		return getRowCheckBox(
 			httpServletRequest, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
+			primaryKey, _getEntryRowIds(), "'#" + getAllRowIds() + "'",
+			_liferayPortletResponse.getNamespace() + "toggleActionsButton();");
 	}
 
 	@Override
@@ -132,31 +80,9 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 		Object result = resultRow.getObject();
 
-		String name = null;
-
-		if (result instanceof FileEntry) {
-			name = _SIMPLE_NAME_FILE_ENTRY;
-		}
-		else if (result instanceof FileShortcut) {
-			name = _SIMPLE_NAME_DL_FILE_SHORTCUT;
-		}
-		else if (result instanceof Folder) {
-			name = _SIMPLE_NAME_FOLDER;
-		}
-		else {
-			return StringPool.BLANK;
-		}
-
-		String checkBoxRowIds = _getEntryRowIds();
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-		String checkBoxPostOnClick =
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
-
 		return getRowCheckBox(
 			httpServletRequest, isChecked(result), isDisabled(result),
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			resultRow.getPrimaryKey(), checkBoxRowIds, checkBoxAllRowIds,
-			checkBoxPostOnClick);
+			resultRow.getPrimaryKey());
 	}
 
 	private String _getEntryRowIds() {
@@ -166,6 +92,53 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			RowChecker.ROW_IDS, _SIMPLE_NAME_DL_FILE_SHORTCUT, "', '",
 			_liferayPortletResponse.getNamespace(), RowChecker.ROW_IDS,
 			_SIMPLE_NAME_FILE_ENTRY, "']");
+	}
+
+	private String _getName(Object result) {
+		if (result instanceof FileEntry) {
+			return _SIMPLE_NAME_FILE_ENTRY;
+		}
+		else if (result instanceof FileShortcut) {
+			return _SIMPLE_NAME_DL_FILE_SHORTCUT;
+		}
+		else if (result instanceof Folder) {
+			return _SIMPLE_NAME_FOLDER;
+		}
+
+		return null;
+	}
+
+	private Object _getResult(String primaryKey) {
+		long entryId = GetterUtil.getLong(primaryKey);
+
+		try {
+			return DLAppServiceUtil.getFileEntry(entryId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		try {
+			return DLAppServiceUtil.getFileShortcut(entryId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		try {
+			return DLAppServiceUtil.getFolder(entryId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private static final String _SIMPLE_NAME_DL_FILE_SHORTCUT =

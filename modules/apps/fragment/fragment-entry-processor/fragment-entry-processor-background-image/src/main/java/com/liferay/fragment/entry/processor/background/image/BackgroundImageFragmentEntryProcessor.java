@@ -20,10 +20,8 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,8 +40,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -119,7 +115,7 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
-			Object fieldValue = _getFieldValue(
+			Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
 				editableValueJSONObject, infoDisplaysFieldValues,
 				fragmentEntryProcessorContext);
 
@@ -253,60 +249,6 @@ public class BackgroundImageFragmentEntryProcessor
 		document.outputSettings(outputSettings);
 
 		return document;
-	}
-
-	private Object _getFieldValue(
-			JSONObject editableValueJSONObject,
-			Map<Long, InfoItemFieldValues> infoDisplaysFieldValues,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
-				fragmentEntryProcessorContext.getMode()) &&
-			editableValueJSONObject.has("mappedField")) {
-
-			HttpServletRequest httpServletRequest =
-				fragmentEntryProcessorContext.getHttpServletRequest();
-
-			if (httpServletRequest == null) {
-				return null;
-			}
-
-			String mappedField = editableValueJSONObject.getString(
-				"mappedField");
-
-			Object infoItem = httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM);
-
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
-
-			return _fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
-				mappedField, infoItemFieldValuesProvider,
-				fragmentEntryProcessorContext.getLocale(), infoItem);
-		}
-		else if (_fragmentEntryProcessorHelper.isMapped(
-					editableValueJSONObject)) {
-
-			return _fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
-				editableValueJSONObject, infoDisplaysFieldValues,
-				fragmentEntryProcessorContext.getLocale(),
-				fragmentEntryProcessorContext.getMode(),
-				fragmentEntryProcessorContext.getPreviewClassPK(),
-				fragmentEntryProcessorContext.getPreviewVersion());
-		}
-		else if (_fragmentEntryProcessorHelper.isMappedCollection(
-					editableValueJSONObject)) {
-
-			return _fragmentEntryProcessorHelper.getMappedCollectionValue(
-				fragmentEntryProcessorContext.
-					getContextInfoItemReferenceOptional(),
-				editableValueJSONObject,
-				fragmentEntryProcessorContext.getLocale());
-		}
-
-		return null;
 	}
 
 	private String _getImageURL(Object fieldValue) {

@@ -16,6 +16,8 @@ package com.liferay.fragment.entry.processor.internal.util;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
@@ -51,6 +53,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -78,6 +82,56 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return value;
+	}
+
+	@Override
+	public Object getFieldValue(
+			JSONObject editableValueJSONObject,
+			Map<Long, InfoItemFieldValues> infoDisplaysFieldValues,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		if (isAssetDisplayPage(fragmentEntryProcessorContext.getMode()) &&
+			editableValueJSONObject.has("mappedField")) {
+
+			HttpServletRequest httpServletRequest =
+				fragmentEntryProcessorContext.getHttpServletRequest();
+
+			if (httpServletRequest == null) {
+				return null;
+			}
+
+			String mappedField = editableValueJSONObject.getString(
+				"mappedField");
+
+			Object infoItem = httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
+
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
+
+			return getMappedInfoItemFieldValue(
+				mappedField, infoItemFieldValuesProvider,
+				fragmentEntryProcessorContext.getLocale(), infoItem);
+		}
+		else if (isMapped(editableValueJSONObject)) {
+			return getMappedInfoItemFieldValue(
+				editableValueJSONObject, infoDisplaysFieldValues,
+				fragmentEntryProcessorContext.getLocale(),
+				fragmentEntryProcessorContext.getMode(),
+				fragmentEntryProcessorContext.getPreviewClassPK(),
+				fragmentEntryProcessorContext.getPreviewVersion());
+		}
+		else if (isMappedCollection(editableValueJSONObject)) {
+			return getMappedCollectionValue(
+				fragmentEntryProcessorContext.
+					getContextInfoItemReferenceOptional(),
+				editableValueJSONObject,
+				fragmentEntryProcessorContext.getLocale());
+		}
+
+		return null;
 	}
 
 	@Override

@@ -1,0 +1,37 @@
+definition {
+
+	macro accessAddAnnouncements {
+		Click(locator1 = "Icon#PLUS");
+	}
+
+	macro addAnnouncement {
+		Type(
+			locator1 = "TextInput#TITLE",
+			value1 = "Announcement Title");
+
+		CKEditor.addContentInWebContent(
+			content = "Web Content Content",
+			fieldLabel = "Content");
+
+		Button.clickSave();
+	}
+
+	macro viewAnnouncementEntry {
+		AssertElementPresent(
+			key_entryTitle = "${announcementTitle}",
+			locator1 = "Announcements#ANNOUNCEMENT_TITLE");
+
+		LexiconTable.clickTableEntryColumnLink(
+			columnName = "title",
+			tableEntry = "${announcementTitle}");
+
+		AssertTextEquals(
+			locator1 = "Announcements#ANNOUNCEMENT_ENTRY_TITLE",
+			value1 = "Announcement Title");
+
+		AssertTextEquals(
+			locator1 = "Announcements#ANNOUNCEMENT_ENTRY_CONTENT",
+			value1 = "Web Content Content");
+	}
+
+}

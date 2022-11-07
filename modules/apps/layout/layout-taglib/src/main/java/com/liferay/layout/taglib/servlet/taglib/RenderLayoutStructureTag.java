@@ -29,6 +29,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
@@ -273,6 +274,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			jspWriter.write(unsyncStringWriter.toString());
 		}
 		else {
+			InfoItemReference currentInfoItemReference =
+				(InfoItemReference)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+
 			LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =
 				(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
@@ -415,8 +420,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				containerTag.doEndTag();
 			}
 			finally {
-				httpServletRequest.removeAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+				httpServletRequest.setAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
+					currentInfoItemReference);
 
 				httpServletRequest.setAttribute(
 					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,

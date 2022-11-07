@@ -146,11 +146,11 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				throw new InfoFormInvalidGroupException();
 			}
 
-			_validateRequiredFields(httpServletRequest, infoFieldValues);
-
 			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
 				CaptchaUtil.check(httpServletRequest);
 			}
+
+			_validateRequiredFields(httpServletRequest, infoFieldValues);
 
 			String className = _portal.getClassName(
 				ParamUtil.getLong(httpServletRequest, "classNameId"));

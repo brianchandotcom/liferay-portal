@@ -454,13 +454,6 @@
 			<message key="javadoc.incorrect.last.line" value="Javadoc should end with ''*/''" />
 			<message key="javadoc.multiple" value="''{0}'' has multiple javadocs" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.JavaUpgradeProcessCheck">
-			<property name="category" value="Performance" />
-			<property name="description" value="Simply registry parameter when it's a simple add column." />
-			<message key="delete.class" value="Delete this class and replace it by inline calls to the UpgradeProcessFactory class in the registry class." />
-			<message key="remove.unnecessary.method" value="Remove unnecessary usages of hasColumn or hasColumnType." />
-			<message key="replace.method" value="Drop {0} to {1} line and make that operation from the ''{2}'' method by using the UpgradeProcessFactory class." />
-		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.JSONNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks if variable names follow naming conventions." />
@@ -848,6 +841,13 @@
 			<message key="field.call.deprecated" value="Field ''{0}'' has been deprecated in version ''{1}''" />
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated in version ''{1}''" />
 			<message key="type.call.deprecated" value="Type ''{0}'' has been deprecated in version ''{1}''" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeProcessCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Performs several checks on `*UpgradeProcess` classes." />
+			<message key="delete.class" value="Delete this class and replace it by inline calls to the UpgradeProcessFactory class in the registry class." />
+			<message key="remove.unnecessary.method" value="Remove unnecessary usages of hasColumn or hasColumnType." />
+			<message key="replace.method" value="Drop {0} to {1} line and make that operation from the ''{2}'' method by using the UpgradeProcessFactory class." />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeRemovedAPICheck">
 			<property name="category" value="Upgrade" />

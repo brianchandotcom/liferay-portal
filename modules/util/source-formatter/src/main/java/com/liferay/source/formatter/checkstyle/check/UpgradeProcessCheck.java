@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Qi Zhang
  */
-public class JavaUpgradeProcessCheck extends BaseCheck {
+public class UpgradeProcessCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

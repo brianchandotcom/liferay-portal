@@ -47,7 +47,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 				getAllChildTokens(detailAST, true, TokenTypes.LITERAL_IF)) {
 
 			if (_isUnnecessaryIfStatement(literalIfDetailAST)) {
-				log(detailAST, _MSG_UNNECESSARY_IF_STATEMENT);
+				log(literalIfDetailAST, _MSG_UNNECESSARY_IF_STATEMENT);
 
 				return;
 			}

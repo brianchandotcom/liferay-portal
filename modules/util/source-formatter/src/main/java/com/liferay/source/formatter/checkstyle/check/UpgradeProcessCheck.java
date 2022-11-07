@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -46,7 +47,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 				getAllChildTokens(detailAST, true, TokenTypes.LITERAL_IF)) {
 
 			if (_isUnnecessaryIfStatement(literalIfDetailAST)) {
-				log(detailAST, _MSG_REMOVE_UNNECESSARY_METHOD);
+				log(detailAST, _MSG_UNNECESSARY_IF_STATEMENT);
 
 				return;
 			}
@@ -97,7 +98,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 		if ((methodDefDetailASTList.size() == 1) &&
 			_isUnnecessaryUpgradeProcessClass(slistDetailAST)) {
 
-			log(detailAST, _MSG_DELETE_CLASS);
+			log(
+				detailAST, _MSG_UNNECESSARY_CLASS,
+				JavaSourceUtil.getClassName(absolutePath));
 
 			return;
 		}
@@ -144,7 +147,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 				_ALTER_METHOD_NAMES, getMethodName(firstChildDetailAST)) &&
 			(previousSiblingDetailAST.getPreviousSibling() != null)) {
 
-			log(firstChildDetailAST, _MSG_REPLACE_METHOD, null, null, null);
+			log(
+				firstChildDetailAST,
+				_MSG_MOVE_UPGRADE_STEPS_INSIDE_POST_UPGRADE_STEPS);
 		}
 	}
 
@@ -168,7 +173,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 		if (ArrayUtil.contains(
 				_ALTER_METHOD_NAMES, getMethodName(firstChildDetailAST))) {
 
-			log(firstChildDetailAST, _MSG_REPLACE_METHOD, null, null, null);
+			log(
+				firstChildDetailAST,
+				_MSG_MOVE_UPGRADE_STEPS_INSIDE_PRE_UPGRADE_STEPS);
 		}
 	}
 
@@ -350,11 +357,17 @@ public class UpgradeProcessCheck extends BaseCheck {
 		"alterTableDropColumn"
 	};
 
-	private static final String _MSG_DELETE_CLASS = "delete.class";
+	private static final String
+		_MSG_MOVE_UPGRADE_STEPS_INSIDE_POST_UPGRADE_STEPS =
+			"upgrade.steps.move.inside.post.upgrade.steps";
 
-	private static final String _MSG_REMOVE_UNNECESSARY_METHOD =
-		"remove.unnecessary.method";
+	private static final String
+		_MSG_MOVE_UPGRADE_STEPS_INSIDE_PRE_UPGRADE_STEPS =
+			"upgrade.steps.move.inside.pre.upgrade.steps";
 
-	private static final String _MSG_REPLACE_METHOD = "replace.method";
+	private static final String _MSG_UNNECESSARY_CLASS = "class.unnecessary";
+
+	private static final String _MSG_UNNECESSARY_IF_STATEMENT =
+		"if.statement.unnecessary";
 
 }

@@ -845,9 +845,10 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeProcessCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Performs several checks on `*UpgradeProcess` classes." />
-			<message key="delete.class" value="Delete this class and replace it by inline calls to the UpgradeProcessFactory class in the registry class." />
-			<message key="remove.unnecessary.method" value="Remove unnecessary usages of hasColumn or hasColumnType." />
-			<message key="replace.method" value="Drop {0} to {1} line and make that operation from the ''{2}'' method by using the UpgradeProcessFactory class." />
+			<message key="class.unnecessary" value="No need to create ''{0}'' class. Replace it by inline calls to the ''UpgradeProcessFactory'' class in the registry class" />
+			<message key="if.statement.unnecessary" value="No need to use if-statement to wrap ''alterColumn*'' and ''alterTable*'' calls" />
+			<message key="upgrade.steps.move.inside.post.upgrade.steps" value="Move ''alterColumn*'' and ''alterTable*'' calls inside ''getPostUpgradeSteps'' method" />
+			<message key="upgrade.steps.move.inside.pre.upgrade.steps" value="Move ''alterColumn*'' and ''alterTable*'' calls inside ''getPreUpgradeSteps'' method" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.UpgradeRemovedAPICheck">
 			<property name="category" value="Upgrade" />

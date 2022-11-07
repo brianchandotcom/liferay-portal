@@ -80,7 +80,8 @@ public interface ObjectFieldBusinessType {
 	}
 
 	public default void predefineObjectFieldSettings(
-			ObjectField newObjectField, ObjectField oldObjectField)
+			ObjectField newObjectField, ObjectField oldObjectField,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 	}
 

@@ -67,6 +67,8 @@ public class AnalyticsRenderFragmentLayoutUtil {
 	private static final Map<String, String> _analyticsCloudAssetTypes =
 		HashMapBuilder.put(
 			"com.liferay.blogs.model.BlogsEntry", "blog"
+		).put(
+			"com.liferay.journal.model.JournalArticle", "web-content"
 		).build();
 
 }

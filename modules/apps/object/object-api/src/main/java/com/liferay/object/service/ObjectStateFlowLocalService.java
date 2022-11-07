@@ -16,6 +16,7 @@ package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -65,6 +66,10 @@ public interface ObjectStateFlowLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectStateFlowLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object state flow local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectStateFlowLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectStateFlow addDefaultObjectStateFlow(ObjectField objectField)
+		throws PortalException;
+
+	public ObjectStateFlow addObjectStateFlow(
+			long userId, long objectFieldId, List<ObjectState> objectStates)
 		throws PortalException;
 
 	/**

@@ -14,14 +14,17 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -65,6 +68,34 @@ public class FragmentCollectionResourcesDisplayContext {
 		_folderId = fragmentCollection.getResourcesFolderId();
 
 		return _folderId;
+	}
+
+	public long getRepositoryId() throws PortalException {
+		if (_repositoryId != null) {
+			return _repositoryId;
+		}
+
+		FragmentCollection fragmentCollection =
+			_fragmentDisplayContext.getFragmentCollection();
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				fragmentCollection.getGroupId(), FragmentPortletKeys.FRAGMENT);
+
+		if (repository == null) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				fragmentCollection.getGroupId(), FragmentPortletKeys.FRAGMENT,
+				serviceContext);
+		}
+
+		_repositoryId = repository.getRepositoryId();
+
+		return _repositoryId;
 	}
 
 	public SearchContainer<FileEntry> getSearchContainer()
@@ -117,6 +148,7 @@ public class FragmentCollectionResourcesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private Long _repositoryId;
 	private SearchContainer<FileEntry> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

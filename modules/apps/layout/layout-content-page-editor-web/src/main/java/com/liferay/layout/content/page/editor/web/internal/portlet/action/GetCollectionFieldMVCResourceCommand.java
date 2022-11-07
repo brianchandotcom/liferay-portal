@@ -283,7 +283,7 @@ public class GetCollectionFieldMVCResourceCommand
 		for (Object object : list) {
 			jsonArray.put(
 				_getDisplayObjectJSONObject(
-					infoItemFieldValuesProvider, itemType, object,
+					infoItemFieldValuesProvider, object,
 					LocaleUtil.fromLanguageId(languageId)));
 		}
 
@@ -404,7 +404,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private JSONObject _getDisplayObjectJSONObject(
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		String itemType, Object object, Locale locale) {
+		Object object, Locale locale) {
 
 		JSONObject displayObjectJSONObject = _jsonFactorys.createJSONObject();
 

@@ -14,13 +14,14 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ViewTemplatesDisplayContext;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.Portal;
@@ -50,13 +51,11 @@ public class ViewTemplatesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			_portletPermission.check(
+		if (!CTPermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
-				CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
-		}
-		catch (Exception exception) {
-			throw new PortletException(exception);
+				CTActionKeys.ADD_TEMPLATE)) {
+
+			return null;
 		}
 
 		ViewTemplatesDisplayContext viewTemplatesDisplayContext =

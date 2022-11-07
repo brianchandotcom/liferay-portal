@@ -16,11 +16,15 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionTemplatePermission;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -60,7 +64,8 @@ public class ViewTemplatesDisplayContext
 	}
 
 	public Map<String, Object> getDropdownReactData(
-		CTCollectionTemplate ctCollectionTemplate) {
+			CTCollectionTemplate ctCollectionTemplate)
+		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
 			"deleteURL",
@@ -69,17 +74,34 @@ public class ViewTemplatesDisplayContext
 		).put(
 			"editURL",
 			getEditTemplateURL(ctCollectionTemplate.getCtCollectionTemplateId())
+		).put(
+			"isPublicationTemplate", true
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"spritemap", FrontendIconsUtil.getSpritemap(_themeDisplay)
 		).build();
 	}
 
-	public String getEditTemplateURL(long ctCollectionTemplateId) {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCRenderCommandName(
-			"/change_tracking/edit_template"
-		).setParameter(
-			"ctCollectionTemplateId", ctCollectionTemplateId
-		).buildString();
+	public String getEditTemplateURL(long ctCollectionTemplateId)
+		throws PortalException {
+
+		if (CTCollectionTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ctCollectionTemplateId,
+				ActionKeys.UPDATE)) {
+
+			return PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				"/change_tracking/edit_template"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"ctCollectionTemplateId", ctCollectionTemplateId
+			).buildString();
+		}
+
+		return null;
 	}
 
 	public SearchContainer<CTCollectionTemplate> getSearchContainer() {
@@ -138,16 +160,25 @@ public class ViewTemplatesDisplayContext
 		return "templates";
 	}
 
-	private String _getDeleteTemplateURL(long ctCollectionTemplateId) {
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/change_tracking/delete_template"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"ctCollectionTemplateId", ctCollectionTemplateId
-		).buildString();
+	private String _getDeleteTemplateURL(long ctCollectionTemplateId)
+		throws PortalException {
+
+		if (CTCollectionTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), ctCollectionTemplateId,
+				ActionKeys.UPDATE)) {
+
+			return PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/change_tracking/delete_template"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"ctCollectionTemplateId", ctCollectionTemplateId
+			).buildString();
+		}
+
+		return null;
 	}
 
 	private final CTCollectionTemplateService _ctCollectionTemplateService;

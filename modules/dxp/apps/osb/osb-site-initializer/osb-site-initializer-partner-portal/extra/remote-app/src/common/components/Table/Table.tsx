@@ -11,39 +11,54 @@
 
 import ClayTable from '@clayui/table';
 
-import TableItem from '../../interfaces/tableItem';
+import TableColumn from '../../interfaces/tableColumn';
 
-interface IProps {
-	items: TableItem[];
-	title: string;
+interface TableProps<T> {
+	borderless?: boolean;
+	className?: string;
+	columns: TableColumn<T>[];
+	noWrap?: boolean;
+	responsive?: boolean;
+	rows: T[];
+	tableVerticalAlignment?: string;
 }
 
-const Table = ({items, title}: IProps) => (
-	<ClayTable className="bg-brand-primary-lighten-6 border-0 table-striped">
+const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
+	<ClayTable {...props} tableVerticalAlignment="middle">
 		<ClayTable.Head>
 			<ClayTable.Row>
-				<ClayTable.Cell
-					className="border-neutral-2 border-top rounded-0 w-50"
-					expanded
-					headingCell
-				>
-					<p className="mt-4 text-neutral-10">{title}</p>
-				</ClayTable.Cell>
-
-				<ClayTable.Cell className="border-neutral-2 border-top rounded-0 w-50"></ClayTable.Cell>
+				{columns.map((column: TableColumn<T>, index: number) => (
+					<ClayTable.Cell
+						align="left"
+						className="border-neutral-2 rounded-0 w-50"
+						headingCell
+						key={index}
+					>
+						<p className="mt-4 text-neutral-10">{column.label}</p>
+					</ClayTable.Cell>
+				))}
 			</ClayTable.Row>
 		</ClayTable.Head>
 
 		<ClayTable.Body>
-			{items?.map((item: TableItem, index: number) => (
+			{rows.map((row, index) => (
 				<ClayTable.Row key={index}>
-					<ClayTable.Cell className="border-0 w-50">
-						<p className="text-neutral-10">{item.title}</p>
-					</ClayTable.Cell>
+					{columns.map((column, index) => {
+						const data = row[column.columnKey as keyof T];
 
-					<ClayTable.Cell className="border-0 w-50">
-						<p className="text-neutral-10">{item.value}</p>
-					</ClayTable.Cell>
+						return (
+							<ClayTable.Cell
+								align="left"
+								className="border-0 font-weight-normal py-4 text-neutral-10 w-50"
+								headingCell
+								key={index}
+							>
+								{column.render
+									? column.render(data, row)
+									: data}
+							</ClayTable.Cell>
+						);
+					})}
 				</ClayTable.Row>
 			))}
 		</ClayTable.Body>

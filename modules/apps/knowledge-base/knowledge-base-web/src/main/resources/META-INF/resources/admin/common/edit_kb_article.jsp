@@ -157,6 +157,27 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						/>
 					</aui:fieldset>
 
+					<c:if test='<%= GetterUtil.getBoolean(com.liferay.portal.kernel.util.PropsUtil.get("feature.flag.LPS-165476")) %>'>
+						<liferay-frontend:fieldset
+							collapsed="<%= true %>"
+							collapsible="<%= true %>"
+							label="expiration-date"
+						>
+							<aui:model-context bean="<%= editKBArticleDisplayContext.getKBArticle() %>" model="<%= KBArticle.class %>" />
+
+							<liferay-ui:error exception="<%= KBArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+							<liferay-ui:error exception="<%= KBArticleReviewDateException.class %>" message="please-enter-a-valid-review-date" />
+
+							<p class="text-secondary">
+								<liferay-ui:message key="including-an-expiration-date-will-allow-your-articles-to-expire-automatically-and-become-unpublished" />
+							</p>
+
+							<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= editKBArticleDisplayContext.isNeverExpire() %>" formName="fm" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+
+							<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= editKBArticleDisplayContext.isNeverReview() %>" formName="fm" name="reviewDate" wrapperCssClass="mb-3 review-date" />
+						</liferay-frontend:fieldset>
+					</c:if>
+
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-asset:input-asset-links
 							className="<%= KBArticle.class.getName() %>"

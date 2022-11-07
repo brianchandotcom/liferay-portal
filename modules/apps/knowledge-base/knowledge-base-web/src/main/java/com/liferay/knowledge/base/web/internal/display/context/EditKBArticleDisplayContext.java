@@ -381,6 +381,14 @@ public class EditKBArticleDisplayContext {
 		return false;
 	}
 
+	public boolean isNeverExpire() {
+		return true;
+	}
+
+	public boolean isNeverReview() {
+		return true;
+	}
+
 	public boolean isPending() {
 		KBArticle kbArticle = getKBArticle();
 

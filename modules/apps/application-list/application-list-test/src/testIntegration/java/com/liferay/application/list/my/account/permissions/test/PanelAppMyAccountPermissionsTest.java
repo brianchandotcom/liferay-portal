@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.WebAppPool;
 
@@ -110,7 +108,7 @@ public class PanelAppMyAccountPermissionsTest {
 		Assert.assertFalse(
 			_hasMyAccountPermission(testCompanyId, _testPortletId));
 
-		_registerTestPanelApp();
+		_registerTestPanelApp(_testPortletId);
 
 		Assert.assertTrue(
 			_hasMyAccountPermission(defaultCompanyId, _testPortletId));
@@ -124,7 +122,7 @@ public class PanelAppMyAccountPermissionsTest {
 
 		_registerTestPortlet(_testPortletId);
 
-		_registerTestPanelApp();
+		_registerTestPanelApp(_testPortletId);
 
 		_testCompany = addCompany();
 
@@ -155,12 +153,10 @@ public class PanelAppMyAccountPermissionsTest {
 			ActionKeys.ACCESS_IN_CONTROL_PANEL);
 	}
 
-	private void _registerTestPanelApp() {
+	private void _registerTestPanelApp(String portletId) {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				PanelApp.class,
-				new TestPanelApp(
-					_portletLocalService.getPortletById(_testPortletId)),
+				PanelApp.class, new TestPanelApp(portletId),
 				HashMapDictionaryBuilder.put(
 					"panel.category.key", PanelCategoryKeys.USER_MY_ACCOUNT
 				).build()));
@@ -189,9 +185,6 @@ public class PanelAppMyAccountPermissionsTest {
 		}
 	}
 
-	@Inject
-	private PortletLocalService _portletLocalService;
-
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 
@@ -202,20 +195,15 @@ public class PanelAppMyAccountPermissionsTest {
 
 	private class TestPanelApp extends BasePanelApp {
 
-		public TestPanelApp(com.liferay.portal.kernel.model.Portlet portlet) {
-			_portlet = portlet;
-		}
-
-		@Override
-		public com.liferay.portal.kernel.model.Portlet getPortlet() {
-			return _portlet;
+		public TestPanelApp(String portletId) {
+			_portletId = portletId;
 		}
 
 		public String getPortletId() {
-			return _portlet.getPortletId();
+			return _portletId;
 		}
 
-		private final com.liferay.portal.kernel.model.Portlet _portlet;
+		private final String _portletId;
 
 	}
 

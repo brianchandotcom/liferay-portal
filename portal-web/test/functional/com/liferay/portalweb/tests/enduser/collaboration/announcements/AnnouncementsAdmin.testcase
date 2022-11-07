@@ -1,0 +1,29 @@
+definition {
+
+	property testray.main.component.name = "Announcements";
+
+	setUp {
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		JSONAnnouncement.deleteAnnouncement(
+			groupName = "Guest",
+			siteURLKey = "guest");
+	}
+
+	@description = "Checks if user can access, create and add announcement"
+	@priority = "5"
+	test CanAddEntry {
+		AnnouncementsNavigator.opentoAdmin(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Announcements.accessAddAnnouncements();
+
+		Announcements.addAnnouncement();
+
+		Announcements.viewAnnouncementEntry(announcementTitle = "Announcement Title");
+	}
+
+}

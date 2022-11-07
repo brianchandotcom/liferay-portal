@@ -279,7 +279,9 @@ public class ObjectRelationshipLocalServiceImpl
 					objectRelationship.getType(),
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-			runSQL("drop table " + objectRelationship.getDBTableName());
+			if (Validator.isNotNull(objectRelationship.getDBTableName())) {
+				runSQL("drop table " + objectRelationship.getDBTableName());
+			}
 
 			ObjectRelationship reverseObjectRelationship =
 				fetchReverseObjectRelationship(objectRelationship, true);

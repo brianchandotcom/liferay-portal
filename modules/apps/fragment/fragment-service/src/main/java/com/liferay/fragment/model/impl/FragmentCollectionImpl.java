@@ -124,9 +124,12 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public boolean hasResources() throws PortalException {
+		Repository repository = _getRepository();
+
 		int fileEntriesCount =
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				getGroupId(), getResourcesFolderId());
+			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
+				repository.getRepositoryId(), getResourcesFolderId(),
+				WorkflowConstants.STATUS_APPROVED, false);
 
 		if (fileEntriesCount <= 0) {
 			return false;

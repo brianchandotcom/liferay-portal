@@ -12,15 +12,17 @@
  * details.
  */
 
-export const LAYOUT_DATA_ITEM_TYPES = {
-	collection: 'collection',
-	collectionItem: 'collection-item',
-	column: 'column',
-	container: 'container',
-	dropZone: 'drop-zone',
-	form: 'form',
-	fragment: 'fragment',
-	fragmentDropZone: 'fragment-drop-zone',
-	root: 'root',
-	row: 'row',
-};
+import {ILayoutData} from '../../types/LayoutData';
+import {UPDATE_ROW_COLUMNS} from './types';
+
+export default function updateRowColumns(payload: {
+	itemId: string;
+	layoutData: ILayoutData;
+	numberOfColumns: number;
+	pageContents: Array<Record<string, unknown>>;
+}) {
+	return {
+		...payload,
+		type: UPDATE_ROW_COLUMNS,
+	};
+}

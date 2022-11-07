@@ -15,7 +15,13 @@
 import updateRowColumnsAction from '../actions/updateRowColumns';
 import LayoutService from '../services/LayoutService';
 
-export default function updateRowColumns({itemId, numberOfColumns}) {
+export default function updateRowColumns({
+	itemId,
+	numberOfColumns,
+}: {
+	itemId: string;
+	numberOfColumns: number;
+}) {
 	return (dispatch, getState) =>
 		LayoutService.updateRowColumns({
 			itemId,

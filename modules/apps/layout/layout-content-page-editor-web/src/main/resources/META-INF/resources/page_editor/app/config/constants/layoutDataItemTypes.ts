@@ -12,19 +12,17 @@
  * details.
  */
 
-import {UPDATE_ROW_COLUMNS} from './types';
+export const LAYOUT_DATA_ITEM_TYPES = {
+	collection: 'collection',
+	collectionItem: 'collection-item',
+	column: 'column',
+	container: 'container',
+	dropZone: 'drop-zone',
+	form: 'form',
+	fragment: 'fragment',
+	fragmentDropZone: 'fragment-drop-zone',
+	root: 'root',
+	row: 'row',
+} as const;
 
-export default function updateRowColumns({
-	itemId,
-	layoutData,
-	numberOfColumns,
-	pageContents,
-}) {
-	return {
-		itemId,
-		layoutData,
-		numberOfColumns,
-		pageContents,
-		type: UPDATE_ROW_COLUMNS,
-	};
-}
+export type ILayoutDataItemType = typeof LAYOUT_DATA_ITEM_TYPES[keyof typeof LAYOUT_DATA_ITEM_TYPES];

@@ -427,43 +427,39 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
-		if (fragmentEntryLink == null) {
-			return;
-		}
-
-		if (GetterUtil.getBoolean(
+		if ((fragmentEntryLink == null) ||
+			!GetterUtil.getBoolean(
 				_fragmentEntryConfigurationParser.getFieldValue(
 					fragmentEntryLink.getEditableValues(),
 					new FragmentConfigurationField(
 						"inputRequired", "boolean", "false", false, "checkbox"),
 					LocaleUtil.getMostRelevantLocale()))) {
 
-			String inputFieldId = GetterUtil.getString(
-				_fragmentEntryConfigurationParser.getFieldValue(
-					fragmentEntryLink.getEditableValues(),
-					new FragmentConfigurationField(
-						"inputFieldId", "string", "", false, "text"),
-					LocaleUtil.getMostRelevantLocale()));
-
-			boolean requiredFieldAvailable = false;
-
-			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-				InfoField infoField = infoFieldValue.getInfoField();
-
-				if (Objects.equals(inputFieldId, infoField.getUniqueId()) &&
-					Validator.isNotNull(infoFieldValue.getValue())) {
-
-					requiredFieldAvailable = true;
-
-					break;
-				}
-			}
-
-			if (!requiredFieldAvailable) {
-				throw new InfoFormValidationException.RequiredInfoField(
-					inputFieldId);
-			}
+			return;
 		}
+
+		String inputFieldId = GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getEditableValues(),
+				new FragmentConfigurationField(
+					"inputFieldId", "string", "", false, "text"),
+				LocaleUtil.getMostRelevantLocale()));
+
+		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			if (!Objects.equals(inputFieldId, infoField.getUniqueId())) {
+				continue;
+			}
+
+			if (Validator.isNotNull(infoFieldValue.getValue())) {
+				return;
+			}
+
+			break;
+		}
+
+		throw new InfoFormValidationException.RequiredInfoField(inputFieldId);
 	}
 
 	private void _validateRequiredFields(

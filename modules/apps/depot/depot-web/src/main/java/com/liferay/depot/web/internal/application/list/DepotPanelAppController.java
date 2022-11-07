@@ -237,6 +237,11 @@ public class DepotPanelAppController {
 			_panelApp.setGroupProvider(groupProvider);
 		}
 
+		@Override
+		public void setPortlet(Portlet portlet) {
+			_panelApp.setPortlet(portlet);
+		}
+
 		private PanelAppWrapper(PanelApp panelApp) {
 			_panelApp = panelApp;
 		}

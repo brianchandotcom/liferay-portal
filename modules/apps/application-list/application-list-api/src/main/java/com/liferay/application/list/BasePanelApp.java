@@ -173,6 +173,11 @@ public abstract class BasePanelApp implements PanelApp {
 		this.groupProvider = groupProvider;
 	}
 
+	@Override
+	public void setPortlet(Portlet portlet) {
+		_portlet = portlet;
+	}
+
 	protected ControlPanelEntry getControlPanelEntry() {
 		Portlet portlet = getPortlet();
 

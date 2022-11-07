@@ -135,6 +135,13 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
+						<c:when test='<%= Objects.equals(assetListDisplayContext.getDisplayStyle(), "icon") %>'>
+							<liferay-ui:search-container-column-text>
+								<clay:vertical-card
+									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
 					</c:choose>
 				</liferay-ui:search-container-row>
 

@@ -15,23 +15,19 @@
 import updateRowColumnsAction from '../actions/updateRowColumns';
 import LayoutService from '../services/LayoutService';
 
-export default function updateRowColumns({
-	itemId,
-	numberOfColumns,
-}: {
+export default function updateRowColumns(payload: {
 	itemId: string;
 	numberOfColumns: number;
 }) {
 	return (dispatch, getState) =>
 		LayoutService.updateRowColumns({
-			itemId,
-			numberOfColumns,
+			...payload,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then(({layoutData, pageContents}) => {
 			dispatch(
 				updateRowColumnsAction({
-					itemId,
+					...payload,
 					layoutData,
 					pageContents,
 				})

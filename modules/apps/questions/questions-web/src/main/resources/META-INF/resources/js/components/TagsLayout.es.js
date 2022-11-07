@@ -57,7 +57,7 @@ export default function TagsLayout({
 					}
 				}}
 				title={tag.name}
-				to={`/questions/${ALL_SECTIONS_ID}?taggedwith=some-specific-tag&selectedtags=${tag.name}`}
+				to={`/questions/${ALL_SECTIONS_ID}?selectedtags=${tag.name}&taggedwith=some-specific-tag`}
 			>
 				<div className="align-items-center card card-interactive card-interactive-primary card-type-template d-flex justify-content-between template-card-horizontal">
 					<div>

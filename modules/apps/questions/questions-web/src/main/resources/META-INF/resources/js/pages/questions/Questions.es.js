@@ -142,7 +142,7 @@ export default withRouter(
 		const [getSectionThreads] = useManualQuery(getSectionThreadsQuery, {
 			useCache: false,
 		});
-		const [getThreads] = useManualQuery(getThreadsQuery);
+		const [getThreads] = useManualQuery(getThreadsQuery, {useCache: false});
 
 		useEffect(() => {
 			setCurrentTag(tag ? slugToText(tag) : '');

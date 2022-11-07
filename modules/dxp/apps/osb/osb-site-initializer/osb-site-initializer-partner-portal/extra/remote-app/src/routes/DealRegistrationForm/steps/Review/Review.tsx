@@ -37,7 +37,19 @@ const Review = ({
 				title="Review Deal Registration"
 			>
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'General Details',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'Partner Account Name',
 							value: values.partnerAccount.name,
@@ -47,11 +59,22 @@ const Review = ({
 							value: values.mdfActivityAssociated.name,
 						},
 					]}
-					title="General Details"
 				/>
 
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'Prospect Information',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'Account Name',
 							value: values.prospect?.accountName,
@@ -81,11 +104,22 @@ const Review = ({
 							value: values.prospect?.country?.name,
 						},
 					]}
-					title="Prospect Information"
 				/>
 
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'Primary Prospect Contact',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'First Name',
 							value: values.primaryProspect?.firstName,
@@ -111,11 +145,22 @@ const Review = ({
 							value: values.primaryProspect?.jobRole?.name,
 						},
 					]}
-					title="Primary Prospect Contact"
 				/>
 
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'Additional Contacts',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'First Name',
 							value: values.additionalContact?.firstName,
@@ -129,22 +174,44 @@ const Review = ({
 							value: values.additionalContact?.emailAddress,
 						},
 					]}
-					title="Additional Contacts"
 				/>
 
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'Deal Information',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'Additional Information',
 							value:
 								values.additionalInformationAboutTheOpportunity,
 						},
 					]}
-					title="Deal Information"
 				/>
 
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'Project Information',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'Project Need',
 							value: values.projectNeed.join(', '),
@@ -154,17 +221,27 @@ const Review = ({
 							value: values.projectCategories.join(', '),
 						},
 					]}
-					title="Project Information"
 				/>
 
 				<Table
-					items={[
+					borderless
+					className="bg-brand-primary-lighten-6 border-top table-striped"
+					columns={[
+						{
+							columnKey: 'title',
+							label: 'Business Objectives',
+						},
+						{
+							columnKey: 'value',
+							label: '',
+						},
+					]}
+					rows={[
 						{
 							title: 'Project Timeline',
 							value: values.projectTimeline,
 						},
 					]}
-					title="Business Objectives"
 				/>
 
 				<PRMForm.Footer>

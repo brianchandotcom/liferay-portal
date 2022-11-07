@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -75,11 +76,19 @@ const CollapsablePanel = ({
 								<span className="panel-title">{title}</span>
 
 								{helpTooltip && (
-									<ClayIcon
-										className="ml-1 text-secondary"
-										symbol="question-circle-full"
-										title={helpTooltip}
-									/>
+									<>
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="top"
+												title={helpTooltip}
+											>
+												<ClayIcon
+													className="ml-1 text-secondary"
+													symbol="question-circle-full"
+												/>
+											</span>
+										</ClayTooltipProvider>
+									</>
 								)}
 
 								<span

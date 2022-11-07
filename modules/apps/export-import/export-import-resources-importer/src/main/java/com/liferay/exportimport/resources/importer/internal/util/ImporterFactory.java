@@ -170,6 +170,8 @@ public class ImporterFactory {
 		if (Validator.isNotNull(rootPortletId)) {
 			_portletPreferencesTranslators.put(
 				rootPortletId, portletPreferencesTranslator);
+
+			return;
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -184,13 +186,13 @@ public class ImporterFactory {
 		Map<String, Object> properties) {
 
 		String rootPortletId = GetterUtil.getString(
-			properties.get("rootPortletId"));
+			properties.get("portlet.preferences.translator.portlet.id"));
 
 		if (Validator.isNull(rootPortletId)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"No rootPortletId defined for service: " +
-						portletPreferencesTranslator);
+					"No portlet.preferences.translator.portlet.id defined " +
+						"for service: " + portletPreferencesTranslator);
 			}
 
 			return;

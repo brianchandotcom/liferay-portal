@@ -23,7 +23,7 @@ import uuidv4 from 'uuid/v4';
 
 import '../css/redirect_pattern.scss';
 
-const REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
+const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
 const PatternField = ({
 	destinationURL: initialDestinationUrl,
@@ -36,8 +36,8 @@ const PatternField = ({
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 	const [urlError, setUrlError] = useState(false);
 
-	const isAbsoluteUrl = (url) => {
-		return REGEX_URL && REGEX_URL.test(url);
+	const urlAllowRelative = (url) => {
+		return REGEX_URL_ALLOW_RELATIVE && REGEX_URL_ALLOW_RELATIVE.test(url);
 	};
 
 	return (
@@ -83,7 +83,7 @@ const PatternField = ({
 					id="destinationURL"
 					name={`${portletNamespace}destinationURL_${index}`}
 					onBlur={({currentTarget}) => {
-						setUrlError(!isAbsoluteUrl(currentTarget.value));
+						setUrlError(!urlAllowRelative(currentTarget.value));
 					}}
 					onChange={({currentTarget}) =>
 						setDestinationUrl(currentTarget.value)
@@ -128,7 +128,7 @@ const PatternField = ({
 							dangerouslySetInnerHTML={{
 								__html: sub(
 									Liferay.Language.get(
-										'enter-an-absolute-url'
+										'please-enter-a-valid-url'
 									),
 									'<em>',
 									'</em>'

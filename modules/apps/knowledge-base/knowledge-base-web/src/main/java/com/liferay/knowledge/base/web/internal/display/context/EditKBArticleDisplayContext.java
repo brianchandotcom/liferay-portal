@@ -55,6 +55,8 @@ import java.util.Map;
 
 import javax.portlet.PortletConfig;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Adolfo Pérez
  */
@@ -80,6 +82,9 @@ public class EditKBArticleDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 	}
 
 	public Map<String, String> getAvailableKBArticleSections()
@@ -382,11 +387,37 @@ public class EditKBArticleDisplayContext {
 	}
 
 	public boolean isNeverExpire() {
-		return true;
+		if (_neverExpire != null) {
+			return _neverExpire;
+		}
+
+		_neverExpire = ParamUtil.getBoolean(
+			_httpServletRequest, "neverExpire", true);
+
+		KBArticle kbArticle = getKBArticle();
+
+		if ((kbArticle != null) && (kbArticle.getExpirationDate() != null)) {
+			_neverExpire = false;
+		}
+
+		return _neverExpire;
 	}
 
 	public boolean isNeverReview() {
-		return true;
+		if (_neverReview != null) {
+			return _neverReview;
+		}
+
+		_neverReview = ParamUtil.getBoolean(
+			_httpServletRequest, "neverReview", true);
+
+		KBArticle kbArticle = getKBArticle();
+
+		if ((kbArticle != null) && (kbArticle.getReviewDate() != null)) {
+			_neverReview = false;
+		}
+
+		return _neverReview;
 	}
 
 	public boolean isPending() {
@@ -473,6 +504,7 @@ public class EditKBArticleDisplayContext {
 		return _kbTemplate;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private KBArticle _kbArticle;
 	private final KBGroupServiceConfiguration _kbGroupServiceConfiguration;
 	private KBSectionPortletInstanceConfiguration
@@ -480,6 +512,8 @@ public class EditKBArticleDisplayContext {
 	private KBTemplate _kbTemplate;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Boolean _neverExpire;
+	private Boolean _neverReview;
 	private Long _parentResourceClassNameId;
 	private Long _parentResourcePrimKey;
 	private final PortletConfig _portletConfig;

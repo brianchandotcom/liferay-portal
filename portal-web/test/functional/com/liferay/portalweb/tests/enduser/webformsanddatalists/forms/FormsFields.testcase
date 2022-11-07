@@ -483,6 +483,50 @@ definition {
 			fieldName = "${textFieldName}");
 	}
 
+	@description = "LPS-167568 - Verify that the Placeholder Text property is not vulnerable to Cross Site Scripting"
+	@priority = "5"
+	test CheckPlaceholderTextCrossSiteScripting {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "<script>alert(123)</script>");
+
+		Form.gotoAdvancedTab();
+
+		var textFieldName = FormFields.getFieldName();
+
+		Form.publishForm();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Form Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm(formTitle = "Form");
+
+		PortletEntry.save();
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		FormFields.viewFieldPlaceholderText(
+			fieldName = "${textFieldName}",
+			placeHolder = "<script>alert(123)</script>");
+	}
+
 	@description = "LPS-167566 - Verify that the Predefined Value property is not vulnerable to Cross Site Scripting."
 	@priority = "5"
 	test CheckPredefinedValueCrossSiteScripting {

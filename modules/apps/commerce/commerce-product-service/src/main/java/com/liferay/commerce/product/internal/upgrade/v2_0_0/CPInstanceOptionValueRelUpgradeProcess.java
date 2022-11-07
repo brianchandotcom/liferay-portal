@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.sql.Date;
@@ -49,8 +51,14 @@ public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_importContentFromCPInstanceJsonField();
+	}
 
-		alterTableDropColumn(CPInstanceModelImpl.TABLE_NAME, "json");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				CPInstanceModelImpl.TABLE_NAME, "json")
+		};
 	}
 
 	private PreparedStatement _cpDefinitionOptionRelIdPreparedStatement()

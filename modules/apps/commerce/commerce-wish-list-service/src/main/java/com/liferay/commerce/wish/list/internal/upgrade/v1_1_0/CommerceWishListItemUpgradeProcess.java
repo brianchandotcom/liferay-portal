@@ -68,11 +68,15 @@ public class CommerceWishListItemUpgradeProcess extends UpgradeProcess {
 				preparedStatement.execute();
 			}
 		}
+	}
 
-		alterTableDropColumn(
-			CommerceWishListItemModelImpl.TABLE_NAME, "CPDefinitionId");
-		alterTableDropColumn(
-			CommerceWishListItemModelImpl.TABLE_NAME, "CPInstanceId");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				CommerceWishListItemModelImpl.TABLE_NAME, "CPDefinitionId",
+				"CPInstanceId")
+		};
 	}
 
 	@Override

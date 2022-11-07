@@ -49,10 +49,15 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 				preparedStatement.execute();
 			}
 		}
+	}
 
-		alterTableDropColumn(
-			CPDefinitionGroupedEntryModelImpl.TABLE_NAME,
-			"entryCPDefinitionId");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				CPDefinitionGroupedEntryModelImpl.TABLE_NAME,
+				"entryCPDefinitionId")
+		};
 	}
 
 	@Override

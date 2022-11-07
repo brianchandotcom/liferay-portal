@@ -46,9 +46,14 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 				preparedStatement.execute();
 			}
 		}
+	}
 
-		alterTableDropColumn(
-			CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId2");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				CPDefinitionLinkModelImpl.TABLE_NAME, "CPDefinitionId2")
+		};
 	}
 
 	@Override

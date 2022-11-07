@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,11 +46,16 @@ public abstract class BaseUpgradeResourceBlock extends UpgradeProcess {
 		_upgradeIndividualScopePermissions(className);
 
 		_removeResourceBlocks(className);
-
-		alterTableDropColumn(getTableName(), "resourceBlockId");
 	}
 
 	protected abstract String getClassName();
+
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(getTableName(), "resourceBlockId")
+		};
+	}
 
 	protected abstract String getPrimaryKeyName();
 

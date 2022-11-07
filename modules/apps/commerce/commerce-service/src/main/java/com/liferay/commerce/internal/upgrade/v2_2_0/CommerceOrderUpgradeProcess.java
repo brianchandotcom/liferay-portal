@@ -128,10 +128,15 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 			preparedStatement1.executeBatch();
 			preparedStatement2.executeBatch();
 		}
+	}
 
-		alterTableDropColumn(
-			CommerceOrderModelImpl.TABLE_NAME, "orderOrganizationId");
-		alterTableDropColumn(CommerceOrderModelImpl.TABLE_NAME, "orderUserId");
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns(
+				CommerceOrderModelImpl.TABLE_NAME, "orderOrganizationId",
+				"orderUserId")
+		};
 	}
 
 	@Override

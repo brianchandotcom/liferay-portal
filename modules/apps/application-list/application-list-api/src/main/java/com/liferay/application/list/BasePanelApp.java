@@ -99,12 +99,15 @@ public abstract class BasePanelApp implements PanelApp {
 			return 0;
 		}
 
-		Portlet portlet = getPortlet();
-
 		return _userNotificationEventLocalService.
 			getUserNotificationEventsCount(
-				user.getUserId(), portlet.getPortletId(),
+				user.getUserId(), _portlet.getPortletId(),
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
+	}
+
+	@Override
+	public Portlet getPortlet() {
+		return _portlet;
 	}
 
 	@Override
@@ -223,6 +226,7 @@ public abstract class BasePanelApp implements PanelApp {
 
 	private static final Log _log = LogFactoryUtil.getLog(BasePanelApp.class);
 
+	private Portlet _portlet;
 	private PortletLocalService _portletLocalService;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

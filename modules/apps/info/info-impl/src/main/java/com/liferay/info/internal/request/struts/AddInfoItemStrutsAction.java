@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,29 +146,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				throw new InfoFormInvalidGroupException();
 			}
 
-			for (String requiredUniqueFieldId :
-					_getRequiredUniqueFieldIds(httpServletRequest)) {
-
-				boolean requiredFieldAvailable = false;
-
-				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-					InfoField infoField = infoFieldValue.getInfoField();
-
-					if (Objects.equals(
-							requiredUniqueFieldId, infoField.getUniqueId()) &&
-						Validator.isNotNull(infoFieldValue.getValue())) {
-
-						requiredFieldAvailable = true;
-
-						break;
-					}
-				}
-
-				if (!requiredFieldAvailable) {
-					throw new InfoFormValidationException.RequiredInfoField(
-						requiredUniqueFieldId);
-				}
-			}
+			_getRequiredUniqueFieldIds(httpServletRequest, infoFieldValues);
 
 			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
 				CaptchaUtil.check(httpServletRequest);
@@ -299,8 +276,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
 	}
 
-	private List<String> _getRequiredUniqueFieldIds(
-			HttpServletRequest httpServletRequest)
+	private void _getRequiredUniqueFieldIds(
+			HttpServletRequest httpServletRequest,
+			List<InfoFieldValue<Object>> infoFieldValues)
 		throws InfoFormException {
 
 		LayoutStructure layoutStructure =
@@ -321,8 +299,6 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		if (formLayoutStructureItem == null) {
 			throw new InfoFormException();
 		}
-
-		List<String> requiredUniqueFieldIds = new ArrayList<>();
 
 		List<String> childrenItemIds =
 			formLayoutStructureItem.getChildrenItemIds();
@@ -358,17 +334,33 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 							"checkbox"),
 						LocaleUtil.getMostRelevantLocale()))) {
 
-				requiredUniqueFieldIds.add(
-					GetterUtil.getString(
-						_fragmentEntryConfigurationParser.getFieldValue(
-							fragmentEntryLink.getEditableValues(),
-							new FragmentConfigurationField(
-								"inputFieldId", "string", "", false, "text"),
-							LocaleUtil.getMostRelevantLocale())));
+				String inputFieldId = GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						fragmentEntryLink.getEditableValues(),
+						new FragmentConfigurationField(
+							"inputFieldId", "string", "", false, "text"),
+						LocaleUtil.getMostRelevantLocale()));
+
+				boolean requiredFieldAvailable = false;
+
+				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					if (Objects.equals(inputFieldId, infoField.getUniqueId()) &&
+						Validator.isNotNull(infoFieldValue.getValue())) {
+
+						requiredFieldAvailable = true;
+
+						break;
+					}
+				}
+
+				if (!requiredFieldAvailable) {
+					throw new InfoFormValidationException.RequiredInfoField(
+						inputFieldId);
+				}
 			}
 		}
-
-		return requiredUniqueFieldIds;
 	}
 
 	private String _getValue(InfoFieldValue<?> infoFieldValue) {

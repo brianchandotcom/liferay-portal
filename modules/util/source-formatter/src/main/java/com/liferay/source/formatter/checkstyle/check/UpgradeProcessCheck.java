@@ -56,11 +56,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 		String absolutePath = getAbsolutePath();
 
 		if (absolutePath.contains(
-				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade" +
-					"/v6_") ||
+				"/portal-impl/src/com/liferay/portal/upgrade/v6_") ||
 			absolutePath.contains(
-				"liferay-portal/portal-impl/src/com/liferay/portal/upgrade" +
-					"/v7_0_")) {
+				"/portal-impl/src/com/liferay/portal/upgrade/v7_0_")) {
 
 			return;
 		}

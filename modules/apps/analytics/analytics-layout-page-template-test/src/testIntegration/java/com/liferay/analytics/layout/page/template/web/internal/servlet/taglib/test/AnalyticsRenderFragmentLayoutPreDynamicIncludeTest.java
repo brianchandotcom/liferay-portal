@@ -19,14 +19,21 @@ import com.liferay.analytics.layout.page.template.web.internal.layout.display.pa
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -35,7 +42,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
 
+import java.util.Collections;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,21 +65,26 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
+	}
+
 	@Test
 	public void testIncludeWithBlog() throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId()));
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				TestPropsValues.getGroupId(), blogsEntry.getUrlTitle()));
+			_blogsLayoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				_group.getGroupId(), blogsEntry.getUrlTitle()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -83,6 +98,41 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 				"<div data-analytics-asset-id=\"", blogsEntry.getEntryId(),
 				"\" data-analytics-asset-title=\"", blogsEntry.getTitle(),
 				"\" data-analytics-asset-type=\"blog\" ",
+				"data-analytics-asset-viewed=\"true\" >"),
+			mockHttpServletResponse.getContentAsString());
+	}
+
+	@Test
+	public void testIncludeWithJournalArticle() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Collections.emptyMap());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			_journalArticlesLayoutDisplayPageProvider.
+				getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey())));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			mockHttpServletRequest, mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"<div data-analytics-asset-id=\"",
+				journalArticle.getResourcePrimKey(),
+				"\" data-analytics-asset-title=\"", journalArticle.getTitle(),
+				"\" data-analytics-asset-type=\"web-content\" ",
 				"data-analytics-asset-viewed=\"true\" >"),
 			mockHttpServletResponse.getContentAsString());
 	}
@@ -132,6 +182,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
+	@Inject(filter = "component.name=*.BlogsLayoutDisplayPageProvider")
+	private LayoutDisplayPageProvider _blogsLayoutDisplayPageProvider;
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -140,7 +193,10 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 	)
 	private DynamicInclude _dynamicInclude;
 
-	@Inject(filter = "component.name=*.BlogsLayoutDisplayPageProvider")
-	private LayoutDisplayPageProvider _layoutDisplayPageProvider;
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
+	private LayoutDisplayPageProvider _journalArticlesLayoutDisplayPageProvider;
 
 }

@@ -262,7 +262,8 @@ public class BackgroundImageFragmentEntryProcessor
 		throws PortalException {
 
 		if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
-				fragmentEntryProcessorContext.getMode())) {
+				fragmentEntryProcessorContext.getMode()) &&
+			editableValueJSONObject.has("mappedField")) {
 
 			HttpServletRequest httpServletRequest =
 				fragmentEntryProcessorContext.getHttpServletRequest();

@@ -46,7 +46,7 @@ import java.util.Objects;
  */
 public class ObjectFieldUtil {
 
-	public static void addListTypeDefinition(
+	public static long addListTypeDefinition(
 			long companyId,
 			ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 			ListTypeEntryLocalService listTypeEntryLocalService,
@@ -57,7 +57,7 @@ public class ObjectFieldUtil {
 			Validator.isNull(
 				objectField.getListTypeDefinitionExternalReferenceCode())) {
 
-			return;
+			return 0;
 		}
 
 		ListTypeDefinition listTypeDefinition =
@@ -78,6 +78,8 @@ public class ObjectFieldUtil {
 				listTypeDefinition, listTypeEntryLocalService, objectField,
 				userId);
 		}
+
+		return listTypeDefinition.getListTypeDefinitionId();
 	}
 
 	public static String getDBType(String dbType, String type) {

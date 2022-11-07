@@ -22,17 +22,21 @@ function undoAction({action}) {
 	return async (dispatch, getState) => {
 		const {segmentsExperienceId} = getState();
 
-		// LPS-164654 We need to restore all deleted columns in reversed orders
-		// so the backend can recover each column children correctly.
+		if (deletedColumnIds.length) {
 
-		await LayoutService.unmarkItemsForDeletion({
-			itemIds: deletedColumnIds.reverse(),
-			onNetworkStatus: dispatch,
-			segmentsExperienceId,
-		});
+			// LPS-164654 We need to restore all deleted columns in reversed orders
+			// so the backend can recover each column children correctly.
 
-		const {layoutData, pageContents} = await LayoutService.updateItemConfig(
-			{
+			await LayoutService.unmarkItemsForDeletion({
+				itemIds: deletedColumnIds.reverse(),
+				onNetworkStatus: dispatch,
+				segmentsExperienceId,
+			});
+
+			const {
+				layoutData,
+				pageContents,
+			} = await LayoutService.updateItemConfig({
 				itemConfig: setIn(
 					layoutDataItem.config,
 					'numberOfColumns',
@@ -41,17 +45,37 @@ function undoAction({action}) {
 				itemId: layoutDataItem.itemId,
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
-			}
-		);
+			});
 
-		dispatch(
-			updateRowColumns({
-				itemId: layoutDataItem.itemId,
+			dispatch(
+				updateRowColumns({
+					itemId: layoutDataItem.itemId,
+					layoutData,
+					numberOfColumns: previousNumberOfColumns,
+					pageContents,
+				})
+			);
+		}
+		else {
+			const {
 				layoutData,
-				numberOfColumns: previousNumberOfColumns,
 				pageContents,
-			})
-		);
+			} = await LayoutService.updateRowColumns({
+				itemId: layoutDataItem.itemId,
+				numberOfColumns: previousNumberOfColumns,
+				onNetworkStatus: dispatch,
+				segmentsExperienceId,
+			});
+
+			dispatch(
+				updateRowColumns({
+					itemId: layoutDataItem.itemId,
+					layoutData,
+					numberOfColumns: previousNumberOfColumns,
+					pageContents,
+				})
+			);
+		}
 	};
 }
 

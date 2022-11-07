@@ -339,7 +339,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 		<liferay-frontend:edit-form-buttons
 			redirect="<%= redirect %>"
-			submitDisabled="<%= hasSavePermission %>"
+			submitDisabled="<%= !hasSavePermission %>"
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

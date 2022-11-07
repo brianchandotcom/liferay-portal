@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -96,12 +97,17 @@ public class RenderStructureFieldMVCResourceCommand
 
 		String mode = ParamUtil.getString(httpServletRequest, "mode");
 		String namespace = ParamUtil.getString(httpServletRequest, "namespace");
+		String portletId = ParamUtil.getString(httpServletRequest, "portletId");
 		String portletNamespace = ParamUtil.getString(
 			httpServletRequest, "portletNamespace");
 		boolean readOnly = ParamUtil.getBoolean(httpServletRequest, "readOnly");
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
+
+		if (Validator.isNotNull(portletId)) {
+			httpServletRequest.setAttribute(WebKeys.PORTLET_ID, portletId);
+		}
 
 		httpServletRequest.setAttribute(
 			"aui:form:portletNamespace", portletNamespace);

@@ -163,6 +163,7 @@
 					isPrivateLayoutsEnabled: <%= group.isPrivateLayoutsEnabled() %>,
 					mode: '<%= HtmlUtil.escapeJS(mode) %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
+					portletId: '<%= themeDisplay.getPpid() %>',
 					portletNamespace: '<portlet:namespace />',
 					repeatable: <%= repeatable %>,
 					requestedLocale:

@@ -354,7 +354,7 @@ const ManageCollaborators = ({
 			userIds.push(updatedRolesKeys[i]);
 		}
 
-		if (isPublicationTemplate) {
+		if (isPublicationTemplate && !!userIds.length) {
 			setCollaboratorData({
 				[`publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
 					','

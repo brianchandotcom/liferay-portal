@@ -283,7 +283,7 @@ public class ViewChangesDisplayContext {
 		).put(
 			"collaboratorsData",
 			_publicationsDisplayContext.getCollaboratorsReactData(
-				_ctCollection.getCtCollectionId())
+				_ctCollection.getCtCollectionId(), false)
 		).put(
 			"columnFromURL", ParamUtil.getString(_renderRequest, "column")
 		).put(

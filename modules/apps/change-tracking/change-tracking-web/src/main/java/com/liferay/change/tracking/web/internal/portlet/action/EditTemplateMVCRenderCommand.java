@@ -47,7 +47,7 @@ public class EditTemplateMVCRenderCommand implements MVCRenderCommand {
 
 		if (ctCollectionTemplateId > 0) {
 			renderRequest.setAttribute(
-				"ctCollection",
+				"ctCollectionTemplate",
 				_ctCollectionTemplateLocalService.fetchCTCollectionTemplate(
 					ctCollectionTemplateId));
 		}

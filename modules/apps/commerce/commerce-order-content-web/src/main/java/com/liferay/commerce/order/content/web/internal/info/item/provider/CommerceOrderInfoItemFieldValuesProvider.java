@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.order.content.web.internal.info.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
@@ -687,14 +685,6 @@ public class CommerceOrderInfoItemFieldValuesProvider
 
 		return false;
 	}
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
-	private AssetEntryInfoItemFieldSetProvider
-		_assetEntryInfoItemFieldSetProvider;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

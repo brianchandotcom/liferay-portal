@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.odata.entity.v1_0;
+package com.liferay.object.rest.internal.odata.entity.v1_0;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;

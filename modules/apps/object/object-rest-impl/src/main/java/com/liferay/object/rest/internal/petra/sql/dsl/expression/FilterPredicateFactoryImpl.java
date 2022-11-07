@@ -15,8 +15,8 @@
 package com.liferay.object.rest.internal.petra.sql.dsl.expression;
 
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionVisitorImpl;
-import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;

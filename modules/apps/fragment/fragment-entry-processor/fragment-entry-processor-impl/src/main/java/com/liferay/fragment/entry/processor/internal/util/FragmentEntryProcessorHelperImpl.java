@@ -122,7 +122,6 @@ public class FragmentEntryProcessorHelperImpl
 			return _getMappedInfoItemFieldValue(
 				editableValueJSONObject, infoDisplaysFieldValues,
 				fragmentEntryProcessorContext.getLocale(),
-				fragmentEntryProcessorContext.getMode(),
 				fragmentEntryProcessorContext.getPreviewClassPK(),
 				fragmentEntryProcessorContext.getPreviewVersion());
 		}
@@ -210,17 +209,6 @@ public class FragmentEntryProcessorHelperImpl
 			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
 
 		return classPKInfoItemIdentifier.getClassPK();
-	}
-
-	@Override
-	public boolean isAssetDisplayPage(String mode) {
-		if (Objects.equals(
-				mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -371,11 +359,10 @@ public class FragmentEntryProcessorHelperImpl
 	private Object _getMappedInfoItemFieldValue(
 			JSONObject jsonObject,
 			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap,
-			Locale locale, String mode, long previewClassPK,
-			String previewVersion)
+			Locale locale, long previewClassPK, String previewVersion)
 		throws PortalException {
 
-		if (!isMapped(jsonObject) && !isAssetDisplayPage(mode)) {
+		if (!isMapped(jsonObject)) {
 			return _jsonFactory.createJSONObject();
 		}
 

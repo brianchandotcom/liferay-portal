@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -91,28 +92,11 @@ public class KBDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
-		return getKBArticleDropdownItems(kbArticle, null, true, true, true);
-	}
-
-	public List<DropdownItem> getKBArticleDropdownItems(
-		KBArticle kbArticle, boolean historyEnabled, boolean printEnabled,
-		boolean subscriptionEnabled) {
-
-		return getKBArticleDropdownItems(
-			kbArticle, null, historyEnabled, printEnabled, subscriptionEnabled);
+		return getKBArticleDropdownItems(kbArticle, null);
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(
 		KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
-
-		return getKBArticleDropdownItems(
-			kbArticle, selectedItemAncestorIds, true, true, true);
-	}
-
-	public List<DropdownItem> getKBArticleDropdownItems(
-		KBArticle kbArticle, List<Long> selectedItemAncestorIds,
-		boolean historyEnabled, boolean printEnabled,
-		boolean subscriptionEnabled) {
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
@@ -123,18 +107,18 @@ public class KBDropdownItemsProvider {
 					this::_hasAddPermission, _getAddChildDropdownItem(kbArticle)
 				).add(
 					() ->
-						subscriptionEnabled &&
+						_isSubscriptionEnabled() &&
 						_hasSubscriptionPermission(kbArticle) &&
 						_hasSubscription(kbArticle),
 					_getUnsubscribeDropdownItem(kbArticle)
 				).add(
 					() ->
-						subscriptionEnabled &&
+						_isSubscriptionEnabled() &&
 						_hasSubscriptionPermission(kbArticle) &&
 						!_hasSubscription(kbArticle),
 					_getSubscribeDropdownItem(kbArticle)
 				).add(
-					() -> historyEnabled && _hasHistoryPermission(kbArticle),
+					() -> _isHistoryEnabled() && _hasHistoryPermission(kbArticle),
 					_getHistoryDropdownItem(kbArticle)
 				).build())
 		).addGroup(
@@ -144,7 +128,7 @@ public class KBDropdownItemsProvider {
 						() -> _hasRSSPermission(kbArticle),
 						_getRSSDropdownItem(kbArticle)
 					).add(
-						() -> printEnabled && _hasPrintPermission(),
+						() -> _isPrintEnabled() && _hasPrintPermission(),
 						_getPrintDropdownItem(kbArticle)
 					).add(
 						() -> _hasMovePermission(kbArticle),
@@ -168,6 +152,18 @@ public class KBDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private Boolean _isPrintEnabled() {
+		return GetterUtil.getBoolean(_liferayPortletRequest.getAttribute("init.jsp-enableKBArticlePrint"), true);
+	}
+
+	private Boolean _isSubscriptionEnabled() {
+		return GetterUtil.getBoolean(_liferayPortletRequest.getAttribute("init.jsp-enableKBArticleSubscriptions"), true);
+	}
+
+	private Boolean _isHistoryEnabled() {
+		return GetterUtil.getBoolean(_liferayPortletRequest.getAttribute("init.jsp-enableKBArticleHistory"), true);
 	}
 
 	public List<DropdownItem> getKBCommentDropdownItems(

@@ -42,10 +42,9 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> literalIfDetailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.LITERAL_IF);
+		for (DetailAST literalIfDetailAST :
+				getAllChildTokens(detailAST, true, TokenTypes.LITERAL_IF)) {
 
-		for (DetailAST literalIfDetailAST : literalIfDetailASTList) {
 			if (_isUnnecessaryIfStatement(literalIfDetailAST)) {
 				log(detailAST, _MSG_REMOVE_UNNECESSARY_METHOD);
 

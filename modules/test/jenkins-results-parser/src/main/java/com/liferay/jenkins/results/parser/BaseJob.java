@@ -996,11 +996,11 @@ public abstract class BaseJob implements Job {
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
 	private final List<BatchTestClassGroup> _batchTestClassGroups =
-		new ArrayList<>();
+		Collections.synchronizedList(new ArrayList<BatchTestClassGroup>());
 	private final BuildProfile _buildProfile;
 	private String _companyDefaultLocale;
 	private final List<BatchTestClassGroup> _dependentBatchTestClassGroups =
-		new ArrayList<>();
+		Collections.synchronizedList(new ArrayList<BatchTestClassGroup>());
 	private boolean _initializeJobProperties;
 	private JobHistory _jobHistory;
 	private final String _jobName;

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -77,9 +76,9 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionT
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -224,27 +223,12 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public JSONArray getFunctionActionExecutorsJSONArray() throws Exception {
-		return JSONUtil.toJSONArray(
+		Set<String> functionActionExecutorKeys =
 			_functionActionExecutorServiceWrapperTracker.
-				getFunctionActionExecutorServiceWrappers(),
-			functionActionExecutorServiceWrapper -> {
-				Map<String, Object> properties =
-					functionActionExecutorServiceWrapper.getProperties();
+				getFunctionActionExecutorKeys();
 
-				String key = MapUtil.getString(
-					properties,
-					FunctionActionExecutorServiceWrapperTracker.KEY);
-
-				// TODO Is "client.extension.description" actually set?
-
-				return JSONUtil.put(
-					"description",
-					MapUtil.getString(
-						properties, "client.extension.description", key)
-				).put(
-					"key", key
-				);
-			});
+		return JSONUtil.putAll(
+			functionActionExecutorKeys.toArray(new String[0]));
 	}
 
 	public KaleoDefinition getKaleoDefinition(

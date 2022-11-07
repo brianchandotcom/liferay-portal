@@ -20,7 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
 
-import java.util.Collection;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -36,10 +36,8 @@ public class FunctionActionExecutorServiceWrapperTracker {
 	public static final String KEY =
 		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language";
 
-	public Collection<ServiceWrapper<ActionExecutor>>
-		getFunctionActionExecutorServiceWrappers() {
-
-		return _serviceTrackerMap.values();
+	public Set<String> getFunctionActionExecutorKeys() {
+		return _serviceTrackerMap.keySet();
 	}
 
 	@Activate

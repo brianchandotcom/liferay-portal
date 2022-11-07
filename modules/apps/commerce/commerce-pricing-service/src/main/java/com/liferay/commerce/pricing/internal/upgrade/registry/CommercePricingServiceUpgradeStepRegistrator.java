@@ -65,7 +65,7 @@ public class CommercePricingServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CPricingClassCPDefinitionRel", "CommercePriceModifier",
 						"CommercePriceModifierRel", "CommercePricingClass"

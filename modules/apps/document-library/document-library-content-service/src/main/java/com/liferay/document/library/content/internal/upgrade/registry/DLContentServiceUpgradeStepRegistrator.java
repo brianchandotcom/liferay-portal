@@ -37,7 +37,7 @@ public class DLContentServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"DLContent"};
 				}
 

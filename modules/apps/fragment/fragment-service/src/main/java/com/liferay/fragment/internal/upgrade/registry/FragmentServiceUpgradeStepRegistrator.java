@@ -92,7 +92,7 @@ public class FragmentServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"FragmentCollection", "FragmentEntry",
 						"FragmentEntryLink"
@@ -137,7 +137,7 @@ public class FragmentServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"FragmentEntryVersion"};
 				}
 

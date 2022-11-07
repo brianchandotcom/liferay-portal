@@ -298,7 +298,7 @@ public class CommerceServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CPDAvailabilityEstimate", "CPDefinitionInventory",
 						"CommerceAddressRestriction",

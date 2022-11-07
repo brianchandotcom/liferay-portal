@@ -46,7 +46,7 @@ public class SegmentsServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"SegmentsEntry", "SegmentsEntryRel",
 						"SegmentsExperience", "SegmentsExperiment",

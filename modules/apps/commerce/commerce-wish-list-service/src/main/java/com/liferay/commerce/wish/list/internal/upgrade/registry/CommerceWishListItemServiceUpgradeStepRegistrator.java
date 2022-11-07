@@ -48,7 +48,7 @@ public class CommerceWishListItemServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CommerceWishList", "CommerceWishListItem"
 					};

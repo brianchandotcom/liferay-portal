@@ -237,7 +237,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CPAttachmentFileEntry", "CPDSpecificationOptionValue",
 						"CPDefinition", "CPDefinitionLink",

@@ -149,7 +149,7 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"KBArticle", "KBComment", "KBFolder", "KBTemplate"
 					};

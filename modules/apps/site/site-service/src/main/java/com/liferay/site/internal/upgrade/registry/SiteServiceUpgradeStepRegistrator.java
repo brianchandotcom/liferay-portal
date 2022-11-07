@@ -41,7 +41,7 @@ public class SiteServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"SiteFriendlyURL"};
 				}
 

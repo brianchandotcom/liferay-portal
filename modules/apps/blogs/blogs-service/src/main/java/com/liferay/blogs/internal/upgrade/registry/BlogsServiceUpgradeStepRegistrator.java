@@ -96,7 +96,7 @@ public class BlogsServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"BlogsEntry", "BlogsStatsUser"};
 				}
 

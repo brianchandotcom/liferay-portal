@@ -63,7 +63,7 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CIAudit", "CIBookedQuantity", "CIReplenishmentItem",
 						"CIWarehouse", "CIWarehouseGroupRel", "CIWarehouseItem"

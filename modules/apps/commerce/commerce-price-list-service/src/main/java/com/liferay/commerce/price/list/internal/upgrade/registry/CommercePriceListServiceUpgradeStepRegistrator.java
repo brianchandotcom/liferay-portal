@@ -104,7 +104,7 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CPLCommerceGroupAccountRel", "CommercePriceEntry",
 						"CommercePriceList", "CommercePriceListAccountRel",

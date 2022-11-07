@@ -42,7 +42,7 @@ public class DLFileRankServiceUpgrade implements UpgradeStepRegistrator {
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"DLFileRank"};
 				}
 

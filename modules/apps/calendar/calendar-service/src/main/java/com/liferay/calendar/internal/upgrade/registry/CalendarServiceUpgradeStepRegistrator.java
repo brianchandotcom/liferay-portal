@@ -130,7 +130,7 @@ public class CalendarServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"Calendar", "CalendarBooking",
 						"CalendarNotificationTemplate", "CalendarResource"

@@ -98,7 +98,7 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CDiscountCAccountGroupRel", "CommerceDiscount",
 						"CommerceDiscountAccountRel",

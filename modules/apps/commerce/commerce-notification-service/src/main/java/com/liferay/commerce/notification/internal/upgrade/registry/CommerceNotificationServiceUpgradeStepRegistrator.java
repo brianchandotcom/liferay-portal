@@ -69,7 +69,7 @@ public class CommerceNotificationServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CNTemplateCAccountGroupRel", "CNotificationAttachment",
 						"CommerceNotificationQueueEntry",

@@ -78,7 +78,7 @@ public class WikiServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"WikiNode", "WikiPage", "WikiPageResource"
 					};

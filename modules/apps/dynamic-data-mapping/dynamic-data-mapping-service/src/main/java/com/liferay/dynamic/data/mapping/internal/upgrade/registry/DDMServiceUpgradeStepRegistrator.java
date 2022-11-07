@@ -281,7 +281,7 @@ public class DDMServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"DDMContent", "DDMDataProviderInstance",
 						"DDMDataProviderInstanceLink", "DDMFormInstance",

@@ -250,7 +250,7 @@ public class JournalServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"JournalArticle", "JournalArticleLocalization",
 						"JournalArticleResource", "JournalContentSearch",

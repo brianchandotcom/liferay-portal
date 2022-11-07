@@ -46,7 +46,7 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"SiteNavigationMenu", "SiteNavigationMenuItem"
 					};

@@ -95,7 +95,7 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"DLFileVersionPreview"};
 				}
 

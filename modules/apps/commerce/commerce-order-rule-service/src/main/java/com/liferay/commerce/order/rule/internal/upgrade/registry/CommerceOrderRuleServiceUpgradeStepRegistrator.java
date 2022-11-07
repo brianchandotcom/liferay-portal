@@ -35,7 +35,7 @@ public class CommerceOrderRuleServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"COREntry", "COREntryRel"};
 				}
 

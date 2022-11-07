@@ -60,7 +60,7 @@ public class CommerceShippingEngineFixedServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CShippingFixedOptionRel", "CommerceShippingFixedOption"
 					};

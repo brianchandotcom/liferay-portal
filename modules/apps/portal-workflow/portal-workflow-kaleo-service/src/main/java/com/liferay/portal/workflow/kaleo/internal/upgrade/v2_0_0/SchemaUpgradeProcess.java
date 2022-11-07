@@ -29,7 +29,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"KaleoAction", "KaleoCondition", "KaleoDefinition",
 						"KaleoDefinitionVersion", "KaleoInstance",

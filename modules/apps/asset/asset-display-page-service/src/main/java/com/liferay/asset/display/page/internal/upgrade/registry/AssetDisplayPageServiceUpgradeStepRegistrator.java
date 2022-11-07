@@ -65,7 +65,7 @@ public class AssetDisplayPageServiceUpgradeStepRegistrator
 			new MVCCVersionUpgradeProcess() {
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {"AssetDisplayPageEntry"};
 				}
 

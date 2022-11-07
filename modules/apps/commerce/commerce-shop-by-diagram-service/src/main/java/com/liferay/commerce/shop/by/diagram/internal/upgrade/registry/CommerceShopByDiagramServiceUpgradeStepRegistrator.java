@@ -44,7 +44,7 @@ public class CommerceShopByDiagramServiceUpgradeStepRegistrator
 				}
 
 				@Override
-				protected String[] getModuleTableNames() {
+				protected String[] getTableNames() {
 					return new String[] {
 						"CSDiagramEntry", "CSDiagramPin", "CSDiagramSetting"
 					};

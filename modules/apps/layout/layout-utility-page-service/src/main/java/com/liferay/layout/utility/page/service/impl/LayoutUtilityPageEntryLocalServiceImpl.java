@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -247,6 +248,20 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 
 		layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(true);
+
+		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+		long layoutUtilityPageEntryId, long previewFileEntryId) {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			layoutUtilityPageEntryPersistence.fetchByPrimaryKey(
+				layoutUtilityPageEntryId);
+
+		layoutUtilityPageEntry.setModifiedDate(new Date());
+		layoutUtilityPageEntry.setPreviewFileEntryId(previewFileEntryId);
 
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
 	}

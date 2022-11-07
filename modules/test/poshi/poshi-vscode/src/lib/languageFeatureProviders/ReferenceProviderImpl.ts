@@ -58,7 +58,7 @@ export class ReferenceProviderImpl implements vscode.ReferenceProvider {
 		switch (token.type) {
 			case 'methodDefinition': {
 				const fileName = path.parse(document.fileName).name;
-				const methodName = token.matches[1];
+				const methodName = token.match.captures[1];
 
 				return await findUsageLocations(
 					fileName,
@@ -67,8 +67,8 @@ export class ReferenceProviderImpl implements vscode.ReferenceProvider {
 				);
 			}
 			case 'methodInvocation': {
-				const fileName = token.matches[1];
-				const methodName = token.matches[2];
+				const fileName = token.match.captures[1];
+				const methodName = token.match.captures[2];
 
 				return await findUsageLocations(
 					fileName,

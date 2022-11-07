@@ -74,10 +74,10 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 		switch (token.type) {
 			case 'className':
 				return getFileLocations(
-					`**/${token.matches[1]}.{function,macro}`
+					`**/${token.match.captures[1]}.{function,macro}`
 				);
 			case 'methodInvocation': {
-				const [, className, methodName] = token.matches;
+				const [, className, methodName] = token.match.captures;
 
 				return getMethodLocations(
 					`**/${className}.{function,macro}`,
@@ -85,9 +85,9 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 				);
 			}
 			case 'pathFileName':
-				return getFileLocations(`**/${token.matches[1]}.path`);
+				return getFileLocations(`**/${token.match.captures[1]}.path`);
 			case 'pathLocator': {
-				const [, fileName, locatorName] = token.matches;
+				const [, fileName, locatorName] = token.match.captures;
 
 				return getMethodLocations(
 					`**/${fileName}.path`,
@@ -95,7 +95,7 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 				);
 			}
 			case 'variable': {
-				const [, variableName] = token.matches;
+				const [, variableName] = token.match.captures;
 
 				const variableLocations = await getFileMethodLocations(
 					[document.uri],
@@ -115,12 +115,14 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 			case 'liferaySeleniumMethod':
 				return getMethodLocations(
 					`**/poshi-runner/**/selenium/BaseWebDriverImpl.java`,
-					`public .* (${token.matches[2]})\\(`
+					`public .* (${token.match.captures[2]})\\(`
 				);
 			case 'utilClass':
-				return getFileLocations(`**/poshi/**/${token.matches[1]}.java`);
+				return getFileLocations(
+					`**/poshi/**/${token.match.captures[1]}.java`
+				);
 			case 'utilClassMethod': {
-				const [, utilFileName, utilMethodName] = token.matches;
+				const [, utilFileName, utilMethodName] = token.match.captures;
 
 				return getMethodLocations(
 					`**/poshi/**/${utilFileName}.java`,

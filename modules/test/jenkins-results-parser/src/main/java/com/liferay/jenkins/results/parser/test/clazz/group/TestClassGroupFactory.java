@@ -25,8 +25,8 @@ import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONObject;
 
@@ -472,6 +472,6 @@ public class TestClassGroupFactory {
 	}
 
 	private static final Map<String, BatchTestClassGroup>
-		_batchTestClassGroups = new HashMap<>();
+		_batchTestClassGroups = new ConcurrentHashMap<>();
 
 }

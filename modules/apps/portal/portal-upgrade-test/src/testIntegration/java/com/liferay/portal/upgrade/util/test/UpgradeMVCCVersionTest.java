@@ -16,18 +16,12 @@ package com.liferay.portal.upgrade.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.test.util.DBAssertionUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.upgrade.PortalMVCCVersionUpgradeProcess;
-
-import java.io.InputStream;
-
-import java.util.List;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +31,7 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class UpgradeMVCCVersionTest extends PortalMVCCVersionUpgradeProcess {
+public class UpgradeMVCCVersionTest extends MVCCVersionUpgradeProcess {
 
 	@Before
 	public void setUp() throws Exception {
@@ -56,51 +50,23 @@ public class UpgradeMVCCVersionTest extends PortalMVCCVersionUpgradeProcess {
 	}
 
 	@Test
-	public void testUpgradeModuleMVCCVersionByHibernateMapping()
-		throws Exception {
-
-		doUpgrade();
-
-		DBAssertionUtil.assertColumns(
-			_HIBERNATE_MAPPING_TABLE_NAME, "id", "userId", "mvccVersion");
-	}
-
-	@Test
 	public void testUpgradePortalMVCCVersionByTableName() throws Exception {
-		_excludedTableNames = new String[] {_HIBERNATE_MAPPING_TABLE_NAME};
-
-		_moduleTableNames = new String[] {_TABLE_NAME};
+		_tableNames = new String[] {_TABLE_NAME};
 
 		doUpgrade();
 
-		DBAssertionUtil.assertColumns(
-			_TABLE_NAME, "id", "userId", "mvccversion");
+		DBInspector dbInspector = new DBInspector(connection);
+
+		Assert.assertFalse(
+			dbInspector.hasColumn(
+				_HIBERNATE_MAPPING_TABLE_NAME, "mvccversion"));
+
+		Assert.assertTrue(dbInspector.hasColumn(_TABLE_NAME, "mvccversion"));
 	}
 
 	@Override
-	protected List<Element> getClassElements() throws Exception {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"META-INF/test-portal-hbm.xml");
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream);
-
-		Element rootElement = document.getRootElement();
-
-		return rootElement.elements("class");
-	}
-
-	@Override
-	protected String[] getExcludedTableNames() {
-		return _excludedTableNames;
-	}
-
-	@Override
-	protected String[] getModuleTableNames() {
-		return _moduleTableNames;
+	protected String[] getTableNames() {
+		return _tableNames;
 	}
 
 	private void _createTable(String tableName) throws Exception {
@@ -119,7 +85,6 @@ public class UpgradeMVCCVersionTest extends PortalMVCCVersionUpgradeProcess {
 
 	private static final String _TABLE_NAME = "UpgradeMVCCVersionTest";
 
-	private String[] _excludedTableNames = new String[0];
-	private String[] _moduleTableNames = new String[0];
+	private String[] _tableNames = new String[0];
 
 }

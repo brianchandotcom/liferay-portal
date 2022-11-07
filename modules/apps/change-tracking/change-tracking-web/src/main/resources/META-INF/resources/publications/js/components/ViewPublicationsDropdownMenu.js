@@ -22,6 +22,7 @@ export default function ViewPublicationsDropdownMenu({
 	checkoutURL,
 	deleteURL,
 	editURL,
+	isPublicationTemplate,
 	namespace,
 	permissionsURL,
 	publishURL,
@@ -74,11 +75,13 @@ export default function ViewPublicationsDropdownMenu({
 		});
 	}
 
-	dropdownItems.push({
-		href: reviewURL,
-		label: Liferay.Language.get('review-changes'),
-		symbolLeft: 'list-ul',
-	});
+	if (!isPublicationTemplate) {
+		dropdownItems.push({
+			href: reviewURL,
+			label: Liferay.Language.get('review-changes'),
+			symbolLeft: 'list-ul',
+		});
+	}
 
 	if (permissionsURL) {
 		dropdownItems.push({
@@ -125,26 +128,30 @@ export default function ViewPublicationsDropdownMenu({
 		});
 	}
 
-	return (
+	const dropDownWithItemsComponent = (
+		<ClayDropDownWithItems
+			alignmentPosition={Align.BottomLeft}
+			items={dropdownItems}
+			spritemap={spritemap}
+			trigger={
+				<ClayButtonWithIcon
+					displayType="unstyled"
+					small
+					spritemap={spritemap}
+					symbol="ellipsis-v"
+				/>
+			}
+		/>
+	);
+
+	return isPublicationTemplate ? (
+		dropDownWithItemsComponent
+	) : (
 		<ManageCollaborators
 			namespace={namespace}
 			setShowModal={setShowModal}
 			showModal={showModal}
-			trigger={
-				<ClayDropDownWithItems
-					alignmentPosition={Align.BottomLeft}
-					items={dropdownItems}
-					spritemap={spritemap}
-					trigger={
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							small
-							spritemap={spritemap}
-							symbol="ellipsis-v"
-						/>
-					}
-				/>
-			}
+			trigger={dropDownWithItemsComponent}
 			{...props}
 		/>
 	);

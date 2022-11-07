@@ -20,7 +20,6 @@ import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -176,10 +175,6 @@ public class DisplayPageRendererUtil {
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS, infoItemDetails);
 
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, itemClassName));
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_getLayoutDisplayPageObjectProvider(

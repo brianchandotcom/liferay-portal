@@ -18,7 +18,6 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringBundler;
@@ -228,11 +227,6 @@ public class GetPagePreviewMVCResourceCommand extends BaseMVCResourceCommand {
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
 			infoItemDetailsProvider.getInfoItemDetails(infoItem));
-
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className));
 	}
 
 	@Reference

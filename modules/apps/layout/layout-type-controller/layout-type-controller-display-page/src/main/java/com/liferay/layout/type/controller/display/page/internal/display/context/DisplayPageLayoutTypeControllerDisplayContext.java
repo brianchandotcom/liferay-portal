@@ -27,7 +27,6 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
@@ -96,10 +95,6 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 
 			_httpServletRequest.setAttribute(
 				InfoDisplayWebKeys.INFO_ITEM, infoItem);
-			_httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
-				infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class, className));
 			_httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 

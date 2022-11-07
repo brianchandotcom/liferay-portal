@@ -114,11 +114,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			infoItemDetailsProvider.getInfoItemDetails(infoItem));
 
 		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				layoutDisplayPageObjectProvider.getClassName()));
-		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			layoutDisplayPageObjectProvider);
 		httpServletRequest.setAttribute(

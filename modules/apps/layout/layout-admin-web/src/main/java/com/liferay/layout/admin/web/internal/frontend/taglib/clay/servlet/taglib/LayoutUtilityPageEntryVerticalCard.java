@@ -104,6 +104,14 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
+	public String getImageSrc() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _layoutUtilityPageEntry.getImagePreviewURL(themeDisplay);
+	}
+
+	@Override
 	public List<LabelItem> getLabels() {
 		if (_draftLayout == null) {
 			return Collections.emptyList();

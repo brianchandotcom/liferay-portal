@@ -501,6 +501,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				layoutStructure.getLayoutStructureItem(itemId);
 
 			_validateRequiredField(infoFieldValues, layoutStructureItem);
+
+			_validateRequiredFields(
+				infoFieldValues, layoutStructureItem.getChildrenItemIds(),
+				layoutStructure);
 		}
 	}
 

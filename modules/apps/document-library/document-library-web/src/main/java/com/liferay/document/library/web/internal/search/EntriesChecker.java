@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -43,10 +42,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class EntriesChecker extends RowChecker {
 
-	public EntriesChecker(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
+	public EntriesChecker(LiferayPortletResponse liferayPortletResponse) {
 		super(liferayPortletResponse);
 
 		_liferayPortletResponse = liferayPortletResponse;

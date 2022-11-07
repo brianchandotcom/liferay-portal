@@ -235,7 +235,7 @@ public class DLViewEntriesDisplayContext {
 			_dlAdminDisplayContext.getSearchContainer();
 
 		EntriesChecker entriesChecker = new EntriesChecker(
-			_liferayPortletRequest, _liferayPortletResponse);
+			_liferayPortletResponse);
 
 		entriesChecker.setCssClass("entry-selector");
 		entriesChecker.setRememberCheckBoxStateURLRegex(

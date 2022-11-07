@@ -105,6 +105,10 @@ const useBreadcrumbFinder = () => {
 	}, []);
 
 	const onKeyDown = useCallback(() => {
+		if (!listItemRef.length) {
+			return;
+		}
+
 		setIndex((prevIndex) => {
 			let currentIndex = prevIndex + 1;
 
@@ -119,6 +123,10 @@ const useBreadcrumbFinder = () => {
 	}, [itemsLength, scrollIntoView, listItemRef]);
 
 	const onKeyUp = useCallback(() => {
+		if (!listItemRef.length) {
+			return;
+		}
+
 		setIndex((prevIndex) => {
 			let currentIndex = prevIndex - 1;
 

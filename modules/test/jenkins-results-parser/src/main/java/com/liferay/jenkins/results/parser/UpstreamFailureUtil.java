@@ -286,7 +286,7 @@ public class UpstreamFailureUtil {
 		return jobVariant.replaceAll("_stable$", "");
 	}
 
-	private static List<String> _getUpstreamJobFailures(
+	private static synchronized List<String> _getUpstreamJobFailures(
 		String type, TopLevelBuild topLevelBuild) {
 
 		if (_upstreamFailures.containsKey(type)) {

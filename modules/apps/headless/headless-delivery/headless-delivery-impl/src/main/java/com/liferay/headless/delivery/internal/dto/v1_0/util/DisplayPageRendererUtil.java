@@ -180,6 +180,7 @@ public class DisplayPageRendererUtil {
 			_getLayoutDisplayPageObjectProvider(
 				infoItemDetails.getInfoItemReference(),
 				layoutDisplayPageProviderTracker));
+
 		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(httpServletRequest, layout));

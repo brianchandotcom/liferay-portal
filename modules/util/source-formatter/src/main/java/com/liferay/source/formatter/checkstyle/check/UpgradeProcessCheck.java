@@ -149,7 +149,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 
 			log(
 				firstChildDetailAST,
-				_MSG_MOVE_UPGRADE_STEPS_INSIDE_POST_UPGRADE_STEPS);
+				_MSG_MOVE_UPGRADE_STEP_INSIDE_POST_UPGRADE_STEPS);
 		}
 	}
 
@@ -175,7 +175,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 
 			log(
 				firstChildDetailAST,
-				_MSG_MOVE_UPGRADE_STEPS_INSIDE_PRE_UPGRADE_STEPS);
+				_MSG_MOVE_UPGRADE_STEP_INSIDE_PRE_UPGRADE_STEPS);
 		}
 	}
 
@@ -358,12 +358,12 @@ public class UpgradeProcessCheck extends BaseCheck {
 	};
 
 	private static final String
-		_MSG_MOVE_UPGRADE_STEPS_INSIDE_POST_UPGRADE_STEPS =
-			"upgrade.steps.move.inside.post.upgrade.steps";
+		_MSG_MOVE_UPGRADE_STEP_INSIDE_POST_UPGRADE_STEPS =
+			"upgrade.step.move.inside.post.upgrade.steps";
 
 	private static final String
-		_MSG_MOVE_UPGRADE_STEPS_INSIDE_PRE_UPGRADE_STEPS =
-			"upgrade.steps.move.inside.pre.upgrade.steps";
+		_MSG_MOVE_UPGRADE_STEP_INSIDE_PRE_UPGRADE_STEPS =
+			"upgrade.step.move.inside.pre.upgrade.steps";
 
 	private static final String _MSG_UNNECESSARY_CLASS = "class.unnecessary";
 

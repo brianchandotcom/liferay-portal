@@ -34,6 +34,7 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -425,13 +427,7 @@ public class EditFragmentEntryDisplayContext {
 			FragmentCollectionServiceUtil.fetchFragmentCollection(
 				getFragmentCollectionId());
 
-		List<String> resources = new ArrayList<>();
-
-		if (fragmentCollection != null) {
-			for (FileEntry fileEntry : fragmentCollection.getResources()) {
-				resources.add(fileEntry.getFileName());
-			}
-		}
+		List<String> resources = _getResources(fragmentCollection);
 
 		return HashMapBuilder.<String, Object>put(
 			"allowedStatus",
@@ -558,6 +554,40 @@ public class EditFragmentEntryDisplayContext {
 		).setParameter(
 			"fragmentEntryId", getFragmentEntryId()
 		).buildString();
+	}
+
+	private List<String> _getResources(FragmentCollection fragmentCollection)
+		throws Exception {
+
+		List<String> resources = new ArrayList<>();
+
+		if (fragmentCollection == null) {
+			return resources;
+		}
+
+		long resourcesFolderId = fragmentCollection.getResourcesFolderId(true);
+
+		for (FileEntry fileEntry : fragmentCollection.getResources()) {
+			String path = fileEntry.getTitle();
+
+			if (fileEntry.getFolderId() != resourcesFolderId) {
+				Folder folder = fileEntry.getFolder();
+
+				path = folder.getName() + StringPool.SLASH + path;
+
+				for (Folder ancestorFolder : folder.getAncestors()) {
+					if (ancestorFolder.getFolderId() == resourcesFolderId) {
+						break;
+					}
+
+					path = folder.getName() + StringPool.SLASH + path;
+				}
+			}
+
+			resources.add(path);
+		}
+
+		return resources;
 	}
 
 	private boolean _isCacheableEnabled() {

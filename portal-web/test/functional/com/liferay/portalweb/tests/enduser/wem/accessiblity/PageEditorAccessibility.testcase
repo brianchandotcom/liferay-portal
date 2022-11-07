@@ -80,7 +80,7 @@ definition {
 				locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//button[@aria-label='Experience']");
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
 		}
 	}
 
@@ -412,15 +412,13 @@ definition {
 
 		task ("Then the Experience selector should have correct accessibility") {
 			AssertAttributeValue(
-				ariaLabel = "Experience",
 				attribute1 = "aria-expanded",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "false");
 
 			AssertAttributeValue(
-				ariaLabel = "Experience",
 				attribute1 = "aria-haspopup",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "true");
 
 			KeyPress(
@@ -428,37 +426,32 @@ definition {
 				value1 = "\TAB");
 
 			KeyPress(
-				ariaLabel = "Experience",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "\ENTER");
 
 			AssertAttributeValue(
-				ariaLabel = "Experience",
 				attribute1 = "aria-expanded",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "true");
 
-			TestUtils.assertElementFocused(element = "//button[@aria-label='Experience']");
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
 
 			KeyPress(
-				ariaLabel = "Experience",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "\TAB");
 
 			TestUtils.assertElementFocused(element = "//button[@aria-label='New Experience']");
 
 			KeyPress(
-				ariaLabel = "Experience",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "\ENTER");
 
 			AssertAttributeValue(
-				ariaLabel = "Experience",
 				attribute1 = "aria-expanded",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "false");
 
-			TestUtils.assertElementFocused(element = "//button[@aria-label='Experience']");
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
 		}
 	}
 

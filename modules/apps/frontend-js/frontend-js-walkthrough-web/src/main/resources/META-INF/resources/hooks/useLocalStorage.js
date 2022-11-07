@@ -12,6 +12,7 @@
  * details.
  */
 
+import {localStorage} from 'frontend-js-web';
 import {useCallback, useState} from 'react';
 
 export function useLocalStorage(key, initialValue) {
@@ -20,7 +21,10 @@ export function useLocalStorage(key, initialValue) {
 			typeof initialValue === 'function' ? initialValue() : initialValue;
 
 		try {
-			const item = window.localStorage.getItem(key);
+			const item = localStorage.getItem(
+				key,
+				localStorage.TYPES.NECESSARY
+			);
 
 			return item ? JSON.parse(item) : value;
 		}
@@ -39,12 +43,11 @@ export function useLocalStorage(key, initialValue) {
 
 				setStoredValue(valueToStore);
 
-				if (typeof window !== 'undefined') {
-					window.localStorage.setItem(
-						key,
-						JSON.stringify(valueToStore)
-					);
-				}
+				localStorage.setItem(
+					key,
+					JSON.stringify(valueToStore),
+					localStorage.TYPES.NECESSARY
+				);
 			}
 			catch (error) {
 				console.error(error);

@@ -19,7 +19,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
 import {ReactPortal, usePrevious} from '@liferay/frontend-js-react-web';
-import {navigate} from 'frontend-js-web';
+import {localStorage, navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
@@ -350,7 +350,10 @@ const Step = ({
 		<>
 			{!popoverVisible &&
 				currentStep !== steps.length &&
-				!localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE) && (
+				!localStorage.getItem(
+					LOCAL_STORAGE_KEYS.SKIPPABLE,
+					localStorage.TYPES.NECESSARY
+				) && (
 					<Hotspot
 						onHotspotClick={() => onPopoverVisible(true)}
 						ref={hotspotRef}
@@ -424,7 +427,8 @@ const Step = ({
 
 											localStorage.setItem(
 												LOCAL_STORAGE_KEYS.SKIPPABLE,
-												!checkboxValue
+												!checkboxValue,
+												localStorage.TYPES.NECESSARY
 											);
 										}}
 									/>

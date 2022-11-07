@@ -13,6 +13,7 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
+import {localStorage} from 'frontend-js-web';
 import React from 'react';
 
 import Walkthrough from './components/Walkthrough';
@@ -33,7 +34,12 @@ const getDefaultContainer = () => {
 };
 
 function Root(props) {
-	if (!localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE)) {
+	if (
+		!localStorage.getItem(
+			LOCAL_STORAGE_KEYS.SKIPPABLE,
+			localStorage.TYPES.NECESSARY
+		)
+	) {
 		return <Walkthrough {...props} />;
 	}
 

@@ -78,6 +78,13 @@
 							}
 						]
 					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "truncate-text",
+					"name": "truncateText",
+					"type": "checkbox"
 				}
 			]
 		}

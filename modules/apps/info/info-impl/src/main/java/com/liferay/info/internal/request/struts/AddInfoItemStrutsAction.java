@@ -432,12 +432,19 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			throw new InfoFormException();
 		}
 
-		List<String> childrenItemIds =
-			formLayoutStructureItem.getChildrenItemIds();
+		_validateRequiredFields(
+			infoFieldValues, formLayoutStructureItem.getChildrenItemIds(),
+			layoutStructure);
+	}
 
-		for (String childrenItemId : childrenItemIds) {
+	private void _validateRequiredFields(
+			List<InfoFieldValue<Object>> infoFieldValues, List<String> itemIds,
+			LayoutStructure layoutStructure)
+		throws InfoFormValidationException.RequiredInfoField {
+
+		for (String itemId : itemIds) {
 			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childrenItemId);
+				layoutStructure.getLayoutStructureItem(itemId);
 
 			if (!Objects.equals(
 					LayoutDataItemTypeConstants.TYPE_FRAGMENT,

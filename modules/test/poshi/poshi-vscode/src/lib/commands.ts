@@ -15,47 +15,38 @@
 
 import * as notifications from './notifications';
 import * as vscode from 'vscode';
+import {getDocumentTokens, getTokens} from './tokens';
 
-export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
-	const workspaceFolder = vscode.workspace.getWorkspaceFolder(
-		textEditor.document.uri
-	);
+export async function runTestCaseInFile(textEditor: vscode.TextEditor) {
+	const document = textEditor.document;
 
-	if (!workspaceFolder) {
+	const fileName = getFileName(document);
+
+	const tokens = getDocumentTokens(document);
+
+	const testCaseNames = tokens
+		.filter((token) => token.type === 'testCaseName')
+		.map((token) => token.match.captures[1]);
+
+	console.log(testCaseNames);
+
+	const testName = await vscode.window.showQuickPick(testCaseNames);
+	if (!testName) {
 		return;
 	}
 
-	const filePath = textEditor.document.fileName;
+	runTestCase(document, fileName, testName);
+}
 
-	if (!filePath.endsWith('.testcase')) {
-		notifications.warning(
-			'Cannot run test case: not in a `.testcase` file.'
-		);
-		return;
-	}
+export async function runTestCaseUnderCursor(textEditor: vscode.TextEditor) {
+	const document = textEditor.document;
 
-	const fileName = filePath.substring(
-		filePath.lastIndexOf('/') + 1,
-		filePath.lastIndexOf('.testcase')
-	);
-
-	const regex = new RegExp(/^\W*test ([A-Z][A-Za-z]+)/g);
-
-	const getName = (n: number) => {
-		const line = textEditor.document.lineAt(n);
-
-		for (const match of line.text.matchAll(regex)) {
-			const {index} = match;
-
-			if (index === undefined) {
-				continue;
+	const getTestName = (n: number) => {
+		const line = document.lineAt(n);
+		for (const token of getTokens(line.text)) {
+			if (token.type === 'testCaseName') {
+				return token.match.captures[1];
 			}
-
-			if (index === -1) {
-				continue;
-			}
-
-			return match[1];
 		}
 
 		return null;
@@ -68,7 +59,7 @@ export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
 		lineNumber >= 0;
 		lineNumber--
 	) {
-		const name = getName(lineNumber);
+		const name = getTestName(lineNumber);
 
 		if (name) {
 			testName = name;
@@ -81,23 +72,7 @@ export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
 		return;
 	}
 
-	const testCase = `${fileName}#${testName}`;
-
-	const command = await getCommand(workspaceFolder, testCase);
-	if (!command) {
-		notifications.warning(
-			`Unable to run the test case: ${testCase}. No Ant or Gradle task runner was found.`
-		);
-		return;
-	}
-
-	notifications.info(`Running Poshi testcase: ${testCase}`);
-
-	const terminal = vscode.window.createTerminal(`Run: ${testCase}`);
-
-	terminal.show();
-
-	terminal.sendText(command);
+	runTestCase(document, getFileName(document), testName);
 }
 
 async function getCommand(
@@ -129,4 +104,42 @@ async function getCommand(
 	} catch (error) {
 		console.log('Not in a gradle project.');
 	}
+}
+
+function getFileName(document: vscode.TextDocument) {
+	const filePath = document.fileName;
+
+	return filePath.substring(
+		filePath.lastIndexOf('/') + 1,
+		filePath.lastIndexOf('.testcase')
+	);
+}
+
+async function runTestCase(
+	document: vscode.TextDocument,
+	fileName: string,
+	testName: string
+) {
+	const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
+	if (!workspaceFolder) {
+		return;
+	}
+
+	const testCase = `${fileName}#${testName}`;
+
+	const command = await getCommand(workspaceFolder, testCase);
+	if (!command) {
+		notifications.warning(
+			`Unable to run the test case: ${testCase}. No Ant or Gradle task runner was found.`
+		);
+		return;
+	}
+
+	notifications.info(`Running Poshi testcase: ${testCase}`);
+
+	const terminal = vscode.window.createTerminal(`Run: ${testCase}`);
+
+	terminal.show();
+
+	terminal.sendText(command);
 }

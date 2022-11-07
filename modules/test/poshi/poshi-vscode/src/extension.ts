@@ -15,7 +15,7 @@
 
 import * as vscode from 'vscode';
 
-import {runTestCaseFromTextEditor} from './lib/commands';
+import {runTestCaseInFile, runTestCaseUnderCursor} from './lib/commands';
 import {CompletionItemProviderImpl} from './lib/languageFeatureProviders/CompletionItemProviderImpl';
 import {DefinitionProviderImpl} from './lib/languageFeatureProviders/DefinitionProviderImpl';
 import {DocumentFormattingEditProviderImpl} from './lib/languageFeatureProviders/DocumentFormattingEditProviderImpl';
@@ -58,9 +58,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerTextEditorCommand(
+			'poshi.run.test.case.in.file',
+			async (textEditor: vscode.TextEditor) =>
+				runTestCaseInFile(textEditor)
+		)
+	);
+	context.subscriptions.push(
+		vscode.commands.registerTextEditorCommand(
 			'poshi.run.test.case.under.cursor',
 			async (textEditor: vscode.TextEditor) =>
-				runTestCaseFromTextEditor(textEditor)
+				runTestCaseUnderCursor(textEditor)
 		)
 	);
 

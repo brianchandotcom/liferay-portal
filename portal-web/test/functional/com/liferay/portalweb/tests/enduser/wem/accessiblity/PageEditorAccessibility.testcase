@@ -304,6 +304,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-167116. The page creator could go back to the times icon on the Browser panel via shift + tab shortcuts."
+	@priority = 3
+	test ViewAccessibilityOfBrowserPanel {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("When the page creator accesses to the treeview modes on the Browser panel") {
+			PageEditor.gotoTab(tabName = "Browser");
+
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Button'][@aria-selected]",
+				locator2 = "background-color",
+				value1 = "rgba(240, 245, 255, 1)");
+		}
+
+		task ("Then the page creator could go back to the times icon vis shift + tab shortcuts") {
+			Type.sendKeys(
+				key_nodeName = "Button",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED",
+				value1 = "keys=SHIFT,TAB");
+
+			TestUtils.assertElementFocused(element = "//*[*[name()='svg'][contains(@class,'lexicon-icon-times')]]");
+		}
+	}
+
 	@description = "This is a test for LPS-165288. The Comments panel should have correct accessibility."
 	@priority = 3
 	test ViewAccessibilityOfCommentsPanel {

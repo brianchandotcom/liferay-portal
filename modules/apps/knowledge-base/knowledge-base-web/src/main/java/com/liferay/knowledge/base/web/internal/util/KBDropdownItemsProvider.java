@@ -70,13 +70,13 @@ public class KBDropdownItemsProvider {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		this(liferayPortletRequest, liferayPortletResponse, null);
+		this(null, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public KBDropdownItemsProvider(
+		KBGroupServiceConfiguration kbGroupServiceConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		KBGroupServiceConfiguration kbGroupServiceConfiguration) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;

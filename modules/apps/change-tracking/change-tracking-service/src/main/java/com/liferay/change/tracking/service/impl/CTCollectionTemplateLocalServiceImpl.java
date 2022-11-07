@@ -21,16 +21,28 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.base.CTCollectionTemplateLocalServiceBaseImpl;
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.time.Instant;
+import java.time.LocalDate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,6 +111,44 @@ public class CTCollectionTemplateLocalServiceImpl
 			companyId, start, end);
 	}
 
+	public Set<String> getTemplateStringTokens() {
+		Map<String, String> templateMap = _getTemplateMap(0);
+
+		return templateMap.keySet();
+	}
+
+	@Override
+	public String parseTemplateString(long ctCollectionTemplateId, String s) {
+		if (s.contains(StringPool.DOLLAR_AND_OPEN_CURLY_BRACE)) {
+			StringBundler sb = new StringBundler();
+
+			int current = 0;
+
+			Map<String, String> templateMap = _getTemplateMap(
+				ctCollectionTemplateId);
+
+			while (current < s.length()) {
+				int openBrace = s.indexOf(
+					StringPool.DOLLAR_AND_OPEN_CURLY_BRACE, current);
+
+				int closeBrace = s.indexOf(
+					StringPool.CLOSE_CURLY_BRACE, openBrace);
+
+				sb.append(s.substring(current, openBrace));
+
+				String template = s.substring(openBrace, closeBrace + 1);
+
+				sb.append(templateMap.get(template));
+
+				current = closeBrace + 1;
+			}
+
+			return sb.toString();
+		}
+
+		return s;
+	}
+
 	@Override
 	public CTCollectionTemplate updateCTCollectionTemplate(
 			long ctCollectionTemplateId, String name, String description,
@@ -122,6 +172,43 @@ public class CTCollectionTemplateLocalServiceImpl
 			ctCollectionTemplateId, json);
 
 		return ctCollectionTemplatePersistence.update(ctCollectionTemplate);
+	}
+
+	private Map<String, String> _getTemplateMap(long ctCollectionTemplateId) {
+		return HashMapBuilder.put(
+			"${CURRENT_USERNAME}",
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+				User user = themeDisplay.getUser();
+
+				return user.getScreenName();
+			}
+		).put(
+			"${RANDOM_NUMBER}",
+			() -> {
+				Instant now = Instant.now();
+
+				return String.valueOf(now.getEpochSecond());
+			}
+		).put(
+			"${TEMPLATE_CREATOR}",
+			() -> {
+				if (ctCollectionTemplateId == 0) {
+					return StringPool.BLANK;
+				}
+
+				CTCollectionTemplate ctCollectionTemplate =
+					getCTCollectionTemplate(ctCollectionTemplateId);
+
+				return ctCollectionTemplate.getUserName();
+			}
+		).put(
+			"${TODAY_DATE}", String.valueOf(LocalDate.now())
+		).build();
 	}
 
 	private void _validate(String name, String description)

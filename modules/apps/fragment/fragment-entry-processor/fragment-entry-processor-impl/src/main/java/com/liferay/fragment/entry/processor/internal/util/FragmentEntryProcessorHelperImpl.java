@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.internal.util;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.exception.NoSuchInfoItemException;
@@ -92,9 +91,7 @@ public class FragmentEntryProcessorHelperImpl
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		if (isAssetDisplayPage(fragmentEntryProcessorContext.getMode()) &&
-			editableValueJSONObject.has("mappedField")) {
-
+		if (isMappedDisplayPage(editableValueJSONObject)) {
 			HttpServletRequest httpServletRequest =
 				fragmentEntryProcessorContext.getHttpServletRequest();
 
@@ -244,6 +241,15 @@ public class FragmentEntryProcessorHelperImpl
 	@Override
 	public boolean isMappedCollection(JSONObject jsonObject) {
 		if (jsonObject.has("collectionFieldId")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isMappedDisplayPage(JSONObject jsonObject) {
+		if (jsonObject.has("mappedField")) {
 			return true;
 		}
 

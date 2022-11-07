@@ -179,9 +179,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject mappedValueConfigJSONObject =
 				_jsonFactory.createJSONObject();
 
-			if ((_fragmentEntryProcessorHelper.isAssetDisplayPage(
-					fragmentEntryProcessorContext.getMode()) &&
-				 editableValueJSONObject.has("mappedField")) ||
+			if (_fragmentEntryProcessorHelper.isMappedDisplayPage(
+					editableValueJSONObject) ||
 				_fragmentEntryProcessorHelper.isMapped(
 					editableValueJSONObject) ||
 				_fragmentEntryProcessorHelper.isMappedCollection(
@@ -194,9 +193,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				if (fieldValue != null) {
 					String fieldId = StringPool.BLANK;
 
-					if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
-							fragmentEntryProcessorContext.getMode()) &&
-						editableValueJSONObject.has("mappedField")) {
+					if (_fragmentEntryProcessorHelper.isMappedDisplayPage(
+							editableValueJSONObject)) {
 
 						fieldId = editableValueJSONObject.getString(
 							"mappedField");

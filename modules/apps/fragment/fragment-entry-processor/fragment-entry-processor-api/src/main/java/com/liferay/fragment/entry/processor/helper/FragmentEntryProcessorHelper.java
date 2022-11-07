@@ -51,10 +51,10 @@ public interface FragmentEntryProcessorHelper {
 
 	public long getFileEntryId(WebImage webImage);
 
-	public boolean isAssetDisplayPage(String mode);
-
 	public boolean isMapped(JSONObject jsonObject);
 
 	public boolean isMappedCollection(JSONObject jsonObject);
+
+	public boolean isMappedDisplayPage(JSONObject jsonObject);
 
 }

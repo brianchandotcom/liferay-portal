@@ -454,6 +454,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_SELECTOR</td>
+	<td>//div[contains(@class,'page-editor__toolbar-experience')]//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_TITLE_INDEX</td>
 	<td>xpath=(//*[contains(@class, 'list-group-item')] //span[@title])[${index}]</td>
 	<td></td>

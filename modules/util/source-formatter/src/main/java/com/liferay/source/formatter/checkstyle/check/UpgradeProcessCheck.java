@@ -143,13 +143,14 @@ public class UpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
-		if (ArrayUtil.contains(
-				_ALTER_METHOD_NAMES, getMethodName(firstChildDetailAST)) &&
+		String methodName = getMethodName(firstChildDetailAST);
+
+		if (ArrayUtil.contains(_ALTER_METHOD_NAMES, methodName) &&
 			(previousSiblingDetailAST.getPreviousSibling() != null)) {
 
 			log(
 				firstChildDetailAST,
-				_MSG_MOVE_UPGRADE_STEP_INSIDE_POST_UPGRADE_STEPS);
+				_MSG_MOVE_UPGRADE_STEP_INSIDE_POST_UPGRADE_STEPS, methodName);
 		}
 	}
 
@@ -170,12 +171,12 @@ public class UpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
-		if (ArrayUtil.contains(
-				_ALTER_METHOD_NAMES, getMethodName(firstChildDetailAST))) {
+		String methodName = getMethodName(firstChildDetailAST);
 
+		if (ArrayUtil.contains(_ALTER_METHOD_NAMES, methodName)) {
 			log(
 				firstChildDetailAST,
-				_MSG_MOVE_UPGRADE_STEP_INSIDE_PRE_UPGRADE_STEPS);
+				_MSG_MOVE_UPGRADE_STEP_INSIDE_PRE_UPGRADE_STEPS, methodName);
 		}
 	}
 

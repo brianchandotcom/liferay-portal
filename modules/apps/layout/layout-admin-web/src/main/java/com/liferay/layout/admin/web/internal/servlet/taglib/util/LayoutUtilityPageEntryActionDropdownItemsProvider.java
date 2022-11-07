@@ -391,7 +391,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData(
-				"action", "updateLayoutPageTemplateEntryPreview");
+				"action", "updateLayoutUtilityPageEntryPreview");
 			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
 			dropdownItem.putData(
 				"layoutUtilityPageEntryId",

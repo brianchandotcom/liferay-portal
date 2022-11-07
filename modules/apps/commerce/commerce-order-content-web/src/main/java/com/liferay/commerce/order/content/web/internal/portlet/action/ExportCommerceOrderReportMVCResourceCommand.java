@@ -21,7 +21,6 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderType;
-import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
@@ -445,9 +444,6 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 		return _portal.getPortalURL(themeDisplay) + logoURL;
 	}
-
-	@Reference
-	private CommerceChannelService _commerceChannelService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

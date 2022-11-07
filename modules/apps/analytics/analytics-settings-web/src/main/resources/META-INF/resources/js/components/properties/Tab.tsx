@@ -15,7 +15,7 @@
 import {Text} from '@clayui/core';
 import React from 'react';
 
-import ComposedTable, {TColumn, TItem} from '../table/Table';
+import Table, {TColumn, TItem} from '../table/Table';
 import {TProperty} from './Properties';
 
 type TRawItem = {
@@ -56,7 +56,7 @@ const Tab: React.FC<ITabProps> = ({
 			</div>
 		)}
 
-		<ComposedTable
+		<Table
 			columns={header}
 			disabled={!enableCheckboxs}
 			emptyStateTitle={emptyStateTitle}

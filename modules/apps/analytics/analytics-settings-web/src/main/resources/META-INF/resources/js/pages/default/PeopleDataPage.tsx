@@ -13,9 +13,14 @@
  */
 
 import React from 'react';
-interface IModalAccountGroups {
-	observer: any;
-	onCloseModal: () => void;
-}
-declare const ModalAccountGroups: React.FC<IModalAccountGroups>;
-export default ModalAccountGroups;
+
+import BasePage from '../../components/BasePage';
+import {IGenericPageProps} from './DefaultPage';
+
+const PeopleDataPage: React.FC<IGenericPageProps> = ({title}) => (
+	<BasePage title={title}>
+		<div>{title}</div>
+	</BasePage>
+);
+
+export default PeopleDataPage;

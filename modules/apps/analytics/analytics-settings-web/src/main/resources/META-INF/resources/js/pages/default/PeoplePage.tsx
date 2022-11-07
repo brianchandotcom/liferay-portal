@@ -13,11 +13,18 @@
  */
 
 import React from 'react';
-interface IPanelProps {
-	groupLabel: string;
-	groupSection: string;
-	icon: string;
-	title: string;
-}
-declare const Panel: React.FC<IPanelProps>;
-export default Panel;
+
+import BasePage from '../../components/BasePage';
+import People from '../../components/people/People';
+import {IGenericPageProps} from './DefaultPage';
+
+const PeoplePage: React.FC<IGenericPageProps> = ({title}) => (
+	<BasePage
+		description={Liferay.Language.get('sync-people-description')}
+		title={title}
+	>
+		<People />
+	</BasePage>
+);
+
+export default PeoplePage;

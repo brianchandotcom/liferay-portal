@@ -49,39 +49,32 @@ const STATUS: TStatus = {
 	[Status.MultipleChoices]: error(Message.Error),
 };
 
-function request(path: string, config: RequestInit) {
+async function request(path: string, config: RequestInit) {
 	const endpoint = `/o/analytics-settings-rest/v1.0${path}`;
 
-	const _request = async () => {
-		const response = await fetch(endpoint, {
-			...config,
-			headers: {'Content-Type': 'application/json'},
+	const response = await fetch(endpoint, {
+		...config,
+		headers: {'Content-Type': 'application/json'},
+	});
+
+	const status = STATUS[response.status as Status];
+
+	if (response.status === Status.Forbidden) {
+		window.location.reload();
+	} else if (response.status === Status.NoContent) {
+		return status;
+	} else if (response.status >= Status.MultipleChoices || status) {
+		Liferay.Util.openToast({
+			message: ERROR_MESSAGE,
+			type: 'danger',
 		});
 
-		const status = STATUS[response.status as Status];
+		return status;
+	} else if (config.method === 'GET') {
+		return response.json();
+	}
 
-		if (response.status === Status.Forbidden) {
-			window.location.reload();
-		}
-		else if (response.status === Status.NoContent) {
-			return status;
-		}
-		else if (response.status >= Status.MultipleChoices || status) {
-			Liferay.Util.openToast({
-				message: ERROR_MESSAGE,
-				type: 'danger',
-			});
-
-			return status;
-		}
-		else if (config.method === 'GET') {
-			return response.json();
-		}
-
-		return response;
-	};
-
-	return _request();
+	return response;
 }
 
 export default request;

@@ -12,10 +12,8 @@
  * details.
  */
 
-import React from 'react';
-interface IModalOrganizations {
-	observer: any;
-	onCloseModal: () => void;
+export interface IPages<T, K> {
+	Component: React.FC<T>;
+	key: K;
+	title: string;
 }
-declare const ModalOrganizations: React.FC<IModalOrganizations>;
-export default ModalOrganizations;

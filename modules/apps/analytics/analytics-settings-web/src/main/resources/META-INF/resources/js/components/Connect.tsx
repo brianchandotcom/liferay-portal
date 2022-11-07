@@ -18,14 +18,14 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import React, {useContext, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {AppContext, Events} from '../App';
+import {Events, useDispatch, useData} from '../App';
 import {ESteps} from '../pages/wizard/WizardPage';
 import {fetchConnection} from '../utils/api';
 import BasePage from './BasePage';
 import Loading from './Loading';
-import DisconnectModal from './modals/DisconnectModal';
+import DisconnectModal from './connect/DisconnectModal';
 
 interface IConnectProps {
 	onChangeStep?: (step: ESteps) => void;
@@ -33,10 +33,9 @@ interface IConnectProps {
 }
 
 const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
-	const [
-		{connected, liferayAnalyticsURL, token: initialToken},
-		dispatch,
-	] = useContext(AppContext);
+	const {connected, liferayAnalyticsURL, token: initialToken} = useData();
+	const dispatch = useDispatch();
+
 	const [token, setToken] = useState(initialToken);
 	const {observer, onOpenChange, open} = useModal();
 	const [submitting, setSubmitting] = useState(false);
@@ -57,7 +56,7 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 						connected: true,
 						token,
 					},
-					type: Events.Connected,
+					type: Events.Connect,
 				});
 
 				onChangeStep && onChangeStep(ESteps.Property);
@@ -66,6 +65,10 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 
 		request();
 	};
+
+	useEffect(() => {
+		setToken(initialToken);
+	}, [initialToken]);
 
 	return (
 		<BasePage

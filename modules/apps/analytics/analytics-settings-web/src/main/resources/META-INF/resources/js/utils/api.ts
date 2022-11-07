@@ -14,6 +14,31 @@
 
 import request from './request';
 
+export function createProperty(name: string) {
+	return request('/channels', {
+		body: JSON.stringify({
+			name,
+		}),
+		method: 'POST',
+	});
+}
+
+export function deleteConnection() {
+	return request('/data-sources', {method: 'DELETE'});
+}
+
+export function fetchAccountGroups(queryString?: string) {
+	return request(`/contacts/account-groups?${queryString}`, {
+		method: 'GET',
+	});
+}
+
+export function fetchChannels(queryString?: string) {
+	return request(`/commerce-channels?${queryString}`, {
+		method: 'GET',
+	});
+}
+
 export function fetchConnection(token: string) {
 	return request('/data-sources', {
 		body: JSON.stringify({
@@ -23,32 +48,31 @@ export function fetchConnection(token: string) {
 	});
 }
 
-export function fetchContactsOrganization() {
-	return request('/contacts/organizations', {
+export function fetchContactsOrganization(queryString?: string) {
+	return request(`/contacts/organizations?${queryString}`, {
 		method: 'GET',
 	});
 }
 
-export function fetchContactsUsersGroup() {
-	return request('/contacts/user-groups', {
+export function fetchContactsUsersGroup(queryString?: string) {
+	return request(`/contacts/user-groups?${queryString}`, {
 		method: 'GET',
 	});
 }
 
-export function deleteConnection() {
-	return request('/data-sources', {method: 'DELETE'});
+export function fetchPeopleData() {
+	return request('/contacts/configuration', {
+		method: 'GET',
+	});
 }
 
 export function fetchProperties() {
-	return request('/channels', {method: 'GET'});
+	return request('/channels?sort=createDate:desc', {method: 'GET'});
 }
 
-export function createProperty(name: string) {
-	return request('/channels', {
-		body: JSON.stringify({
-			name,
-		}),
-		method: 'POST',
+export function fetchSites(queryString?: string) {
+	return request(`/sites?${queryString}`, {
+		method: 'GET',
 	});
 }
 
@@ -81,25 +105,19 @@ export function updateProperty({
 	});
 }
 
-export function fetchChannels(queryString?: string) {
-	return request(`/commerce-channels?${queryString}`, {
-		method: 'GET',
-	});
-}
-
-export function fetchSites(queryString?: string) {
-	return request(`/sites?${queryString}`, {
-		method: 'GET',
-	});
-}
-
-export function updatePeopleData(
-	syncAllAccounts: boolean,
-	syncAllContacts: boolean,
-	syncedAccountGroupIds: string[],
-	syncedOrganizationIds: string[],
-	syncedUserGroupIds: string[]
-) {
+export function updatePeopleData({
+	syncAllAccounts,
+	syncAllContacts,
+	syncedAccountGroupIds,
+	syncedOrganizationIds,
+	syncedUserGroupIds,
+}: {
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
+	syncedAccountGroupIds?: string[];
+	syncedOrganizationIds?: string[];
+	syncedUserGroupIds?: string[];
+}) {
 	return request('/contacts/configuration', {
 		body: JSON.stringify({
 			syncAllAccounts,

@@ -231,12 +231,10 @@ const Table: React.FC<ITableProps> = ({
 	);
 };
 
-const TableWrapper: React.FC<ITableProps> = ({columns, ...otherProps}) => {
-	return (
-		<TableContext firstColumn={columns[0].value}>
-			<Table {...otherProps} columns={columns} />
-		</TableContext>
-	);
-};
+const TableWrapper: React.FC<ITableProps> = ({columns, ...otherProps}) => (
+	<TableContext>
+		<Table {...otherProps} columns={columns} />
+	</TableContext>
+);
 
 export default TableWrapper;

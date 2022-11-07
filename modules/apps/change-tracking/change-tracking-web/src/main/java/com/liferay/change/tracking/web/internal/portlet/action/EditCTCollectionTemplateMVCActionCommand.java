@@ -18,15 +18,13 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -43,51 +41,38 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/edit_template"
+		"mvc.command.name=/change_tracking/edit_ct_collection_template"
 	},
 	service = MVCActionCommand.class
 )
-public class EditTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class EditCTCollectionTemplateMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long ctCollectionTemplateId = ParamUtil.getLong(
 			actionRequest, "ctCollectionTemplateId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String publicationName = ParamUtil.getString(
-			actionRequest, "publicationName");
-		String publicationDescription = ParamUtil.getString(
-			actionRequest, "publicationDescription");
-
-		int[] roleValues = ParamUtil.getIntegerValues(
-			actionRequest, "roleValues");
-		long[] userIds = ParamUtil.getLongValues(actionRequest, "userIds");
-		long[] publicationsUserRoleUserIds = ParamUtil.getLongValues(
-			actionRequest, "publicationsUserRoleUserIds");
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		jsonObject.put(
-			"description", publicationDescription
+		String json = JSONUtil.put(
+			"description",
+			ParamUtil.getString(actionRequest, "publicationDescription")
 		).put(
-			"name", publicationName
+			"name", ParamUtil.getString(actionRequest, "publicationName")
 		).put(
-			"publicationsUserRoleUserIds", publicationsUserRoleUserIds
+			"publicationsUserRoleUserIds",
+			ParamUtil.getLongValues(
+				actionRequest, "publicationsUserRoleUserIds")
 		).put(
-			"roleValues", roleValues
+			"roleValues",
+			ParamUtil.getIntegerValues(actionRequest, "roleValues")
 		).put(
-			"userIds", userIds
-		);
-
-		String json = jsonObject.toString();
+			"userIds", ParamUtil.getLongValues(actionRequest, "userIds")
+		).toString();
 
 		try {
 			if (ctCollectionTemplateId > 0) {
@@ -96,8 +81,7 @@ public class EditTemplateMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				_ctCollectionTemplateService.addCTCollectionTemplate(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-					description, json);
+					name, description, json);
 			}
 		}
 		catch (PortalException portalException) {
@@ -105,7 +89,8 @@ public class EditTemplateMVCActionCommand extends BaseMVCActionCommand {
 
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 
-			actionResponse.setRenderParameter("mvcPath", "/edit_template.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/edit_ct_collection_template.jsp");
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

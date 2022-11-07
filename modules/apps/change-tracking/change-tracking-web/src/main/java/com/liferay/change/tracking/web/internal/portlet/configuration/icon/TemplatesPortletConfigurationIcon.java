@@ -14,18 +14,18 @@
 
 package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -58,28 +58,20 @@ public class TemplatesPortletConfigurationIcon
 				portletRequest, CTPortletKeys.PUBLICATIONS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/change_tracking/view_templates"
+			"/change_tracking/view_ct_collection_templates"
 		).buildString();
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			return _portletPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(),
-				CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-161313"))) {
 			return false;
 		}
-	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		TemplatesPortletConfigurationIcon.class);
+		return CTPermission.contains(
+			PermissionThreadLocal.getPermissionChecker(),
+			CTActionKeys.ADD_TEMPLATE);
+	}
 
 	@Reference
 	private Language _language;

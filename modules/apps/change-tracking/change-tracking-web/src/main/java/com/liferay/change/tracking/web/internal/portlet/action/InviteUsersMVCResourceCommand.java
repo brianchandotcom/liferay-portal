@@ -63,6 +63,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -171,7 +172,7 @@ public class InviteUsersMVCResourceCommand
 			return;
 		}
 
-		Group group;
+		Group group = null;
 
 		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			group = _groupLocalService.fetchUserGroup(
@@ -185,10 +186,10 @@ public class InviteUsersMVCResourceCommand
 		}
 
 		if (group == null) {
-			String className;
-			long classPK;
-			long userId;
-			HashMap<Locale, String> nameMap;
+			long userId = 0;
+			String className = null;
+			long classPK = 0;
+			Map<Locale, String> nameMap = null;
 
 			if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 				className = null;

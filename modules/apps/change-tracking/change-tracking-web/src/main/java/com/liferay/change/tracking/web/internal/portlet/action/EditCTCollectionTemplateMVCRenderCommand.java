@@ -15,53 +15,46 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Cheryl Tang
+ * @author Máté Thurzó
  */
 @Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/delete_template"
+		"mvc.command.name=/change_tracking/edit_ct_collection_template"
 	},
-	service = MVCActionCommand.class
+	service = MVCRenderCommand.class
 )
-public class DeleteTemplateMVCActionCommand extends BaseMVCActionCommand {
+public class EditCTCollectionTemplateMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		long ctCollectionTemplateId = ParamUtil.getLong(
-			actionRequest, "ctCollectionTemplateId");
+			renderRequest, "ctCollectionTemplateId");
 
-		CTCollectionTemplate ctCollectionTemplate =
-			_ctCollectionTemplateLocalService.fetchCTCollectionTemplate(
-				ctCollectionTemplateId);
-
-		if (ctCollectionTemplate != null) {
-			_ctCollectionTemplateLocalService.deleteCTCollectionTemplate(
-				ctCollectionTemplate);
+		if (ctCollectionTemplateId > 0) {
+			renderRequest.setAttribute(
+				CTWebKeys.CT_COLLECTION_TEMPLATE,
+				_ctCollectionTemplateLocalService.fetchCTCollectionTemplate(
+					ctCollectionTemplateId));
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
+		return "/publications/edit_ct_collection_template.jsp";
 	}
 
 	@Reference

@@ -21,12 +21,12 @@
 <%
 ViewTemplatesDisplayContext viewTemplatesDisplayContext = (ViewTemplatesDisplayContext)request.getAttribute(CTWebKeys.VIEW_TEMPLATES_DISPLAY_CONTEXT);
 
+SearchContainer<CTCollectionTemplate> searchContainer = viewTemplatesDisplayContext.getSearchContainer();
+
 renderResponse.setTitle(LanguageUtil.get(request, "publication-templates"));
 
 portletDisplay.setURLBack(backURL);
 portletDisplay.setShowBackIcon(true);
-
-SearchContainer<CTCollectionTemplate> searchContainer = viewTemplatesDisplayContext.getSearchContainer();
 %>
 
 <clay:management-toolbar
@@ -125,7 +125,7 @@ SearchContainer<CTCollectionTemplate> searchContainer = viewTemplatesDisplayCont
 					<div class="dropdown">
 						<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
 							<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
-								<use xlink:href="<%= FrontendIconsUtil.getSpritemap(themeDisplay) %>#ellipsis-v" />
+								<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#ellipsis-v" />
 							</svg>
 						</button>
 					</div>

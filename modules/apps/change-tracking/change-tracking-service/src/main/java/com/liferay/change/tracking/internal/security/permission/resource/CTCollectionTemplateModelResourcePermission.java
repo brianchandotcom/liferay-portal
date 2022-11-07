@@ -49,7 +49,7 @@ public class CTCollectionTemplateModelResourcePermission
 
 		if (!contains(permissionChecker, ctCollectionTemplate, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CTCollection.class.getName(),
+				permissionChecker, CTCollectionTemplate.class.getName(),
 				ctCollectionTemplate.getCtCollectionTemplateId(), actionId);
 		}
 	}
@@ -74,7 +74,7 @@ public class CTCollectionTemplateModelResourcePermission
 
 		if (permissionChecker.hasOwnerPermission(
 				ctCollectionTemplate.getCompanyId(),
-				CTCollection.class.getName(),
+				CTCollectionTemplate.class.getName(),
 				ctCollectionTemplate.getCtCollectionTemplateId(),
 				ctCollectionTemplate.getUserId(), actionId)) {
 
@@ -83,11 +83,11 @@ public class CTCollectionTemplateModelResourcePermission
 
 		Group group = _groupLocalService.fetchGroup(
 			ctCollectionTemplate.getCompanyId(),
-			_classNameLocalService.getClassNameId(CTCollection.class),
+			_classNameLocalService.getClassNameId(CTCollectionTemplate.class),
 			ctCollectionTemplate.getCtCollectionTemplateId());
 
 		return permissionChecker.hasPermission(
-			group, CTCollection.class.getName(),
+			group, CTCollectionTemplate.class.getName(),
 			ctCollectionTemplate.getCtCollectionTemplateId(), actionId);
 	}
 

@@ -21,17 +21,21 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-CTCollectionTemplate ctCollectionTemplate = (CTCollectionTemplate)request.getAttribute("ctCollectionTemplate");
+CTCollectionTemplate ctCollectionTemplate = (CTCollectionTemplate)request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATE);
 
 long ctCollectionTemplateId = 0;
 String description = StringPool.BLANK;
 String name = StringPool.BLANK;
+String publicationDescription = StringPool.BLANK;
+String publicationName = StringPool.BLANK;
 String saveButtonLabel = "create";
 
 if (ctCollectionTemplate != null) {
 	ctCollectionTemplateId = ctCollectionTemplate.getCtCollectionTemplateId();
 	description = ctCollectionTemplate.getDescription();
 	name = ctCollectionTemplate.getName();
+	publicationDescription = ctCollectionTemplate.getPublicationDescription();
+	publicationName = ctCollectionTemplate.getPublicationName();
 	saveButtonLabel = "save";
 
 	renderResponse.setTitle(StringBundler.concat(LanguageUtil.format(resourceBundle, "edit-x", new Object[] {ctCollectionTemplate.getName()})));
@@ -47,7 +51,7 @@ portletDisplay.setShowBackIcon(true);
 <clay:container-fluid
 	cssClass="container-form-lg edit-publication-template-container"
 >
-	<liferay-portlet:actionURL name="/change_tracking/edit_template" var="actionURL">
+	<liferay-portlet:actionURL name="/change_tracking/edit_ct_collection_template" var="actionURL">
 		<liferay-portlet:param name="redirect" value="<%= redirect %>" />
 	</liferay-portlet:actionURL>
 
@@ -57,7 +61,7 @@ portletDisplay.setShowBackIcon(true);
 			HashMapBuilder.<String, Object>put(
 				"actionUrl", actionURL
 			).put(
-				"collaboratorsProps", publicationsDisplayContext.getCollaboratorsReactData(ctCollectionTemplateId)
+				"collaboratorsProps", publicationsDisplayContext.getCollaboratorsReactData(ctCollectionTemplateId, true)
 			).put(
 				"ctCollectionTemplateId", ctCollectionTemplateId
 			).put(
@@ -67,13 +71,15 @@ portletDisplay.setShowBackIcon(true);
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"publicationDescription", description
+				"publicationDescription", publicationDescription
 			).put(
-				"publicationName", name
+				"publicationName", publicationName
 			).put(
 				"redirect", redirect
 			).put(
 				"saveButtonLabel", LanguageUtil.get(request, saveButtonLabel)
+			).put(
+				"tokens", CTCollectionTemplateLocalServiceUtil.getTokens()
 			).build()
 		%>'
 	/>

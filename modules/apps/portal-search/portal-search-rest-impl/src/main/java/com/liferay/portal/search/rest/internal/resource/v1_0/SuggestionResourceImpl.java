@@ -45,7 +45,9 @@ import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.LongStream;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
@@ -193,7 +195,18 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 			keywordsParameterName);
 		searchContext.setCompanyId(contextCompany.getCompanyId());
 
-		if (!StringUtil.equals(scope, "everything")) {
+		if (StringUtil.equals(scope, "everything")) {
+			List<Long> groupIds = groupLocalService.getGroupIds(
+				contextCompany.getCompanyId(), true);
+
+			LongStream longStream = groupIds.stream(
+			).mapToLong(
+				l -> l
+			);
+
+			searchContext.setGroupIds(longStream.toArray());
+		}
+		else {
 			searchContext.setGroupIds(new long[] {groupId});
 		}
 

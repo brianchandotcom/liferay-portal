@@ -96,7 +96,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		printWriter.print(HtmlUtil.escapeAttribute(title));
 		printWriter.print("\" data-analytics-asset-type=\"");
 		printWriter.print(analyticsAssetType);
-		printWriter.print("\" data-analytics-asset-viewed=\"true\" >");
+		printWriter.print("\" >");
 	}
 
 	@Reference

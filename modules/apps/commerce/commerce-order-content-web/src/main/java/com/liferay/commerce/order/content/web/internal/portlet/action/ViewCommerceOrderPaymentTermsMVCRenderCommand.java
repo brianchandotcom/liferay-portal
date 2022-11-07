@@ -19,7 +19,6 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
@@ -138,9 +137,6 @@ public class ViewCommerceOrderPaymentTermsMVCRenderCommand
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
-
-	@Reference
-	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService

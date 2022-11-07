@@ -370,21 +370,13 @@ definition {
 		}
 
 		task ("Create a segment with a country criteria") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Country");
-
-			Segmentation.fillTitle(titleField = "Org with Country");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(optionsValue = "China");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Country",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Name Segment Country",
+				text = "china");
 		}
 
 		task ("Navigate to page editor") {
@@ -450,19 +442,15 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+			var todayUTCtime = DateUtil.getFormattedCurrentDate("yyyy-MM-dd'T'HH:mm:ss.mmm'Z'");
 
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Date Modified");
-
-			Segmentation.fillTitle(titleField = "Org with Date Modified");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				date = "${todayUTCtime}",
+				fieldName = "Date Modified",
+				groupName = "Test Site Name",
+				operator = "not equals",
+				segmentName = "Org with Date Modified");
 		}
 
 		task ("Naviagte to edit page") {
@@ -528,21 +516,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Hierarchy Path");
-
-			Segmentation.fillTitle(titleField = "Org with Hierarchy Path");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(criterionValue = "organization Name");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Hierarchy Path",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Org with Hierarchy Path",
+				text = "organization Name");
 		}
 
 		task ("Naviagte to edit page") {
@@ -608,21 +588,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Name");
-
-			Segmentation.fillTitle(titleField = "Org with Name");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(criterionValue = "organization Name");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Org with Name",
+				text = "organization Name");
 		}
 
 		task ("Naviagte to edit page") {
@@ -688,21 +660,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Organization");
-
-			Segmentation.fillTitle(titleField = "Users In A Specific Org");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(selectCheckbox = "organization Name");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Organization",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Users In A Specific Org",
+				selectedOption = "organization Name");
 		}
 
 		task ("Naviagte to edit page") {
@@ -781,21 +745,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Parent Organization");
-
-			Segmentation.fillTitle(titleField = "Org with Parent");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(selectCheckbox = "organization Name");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Parent Organization",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Org with Parent",
+				selectedOption = "organization Name");
 		}
 
 		task ("Naviagte to edit page") {
@@ -865,21 +821,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Region");
-
-			Segmentation.fillTitle(titleField = "Org with Region");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(optionsValue = "United States - Utah");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Region",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Org with Region",
+				text = "utah");
 		}
 
 		task ("Naviagte to edit page") {
@@ -960,21 +908,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Tag");
-
-			Segmentation.fillTitle(titleField = "Org with Tag");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-			Segmentation.fillProperty(selectLink = "tagname");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Tag",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Org with Tag",
+				selectedOption = "tagname");
 		}
 
 		task ("Naviagte to edit page") {
@@ -1069,21 +1009,13 @@ definition {
 		}
 
 		task ("Add an organization Segment") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Type");
-
-			Segmentation.fillTitle(titleField = "Org with Type");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "t");
-
-			Button.clickSave();
+			JSONSegmentsentry.addSegment(
+				conditionType = "Organization",
+				fieldName = "Type",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Org with Type",
+				text = "t");
 		}
 
 		task ("Naviagte to edit page") {

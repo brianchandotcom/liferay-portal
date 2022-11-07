@@ -104,12 +104,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
 
-		String infoItemClassName = portal.getClassName(
-			layoutDisplayPageObjectProvider.getClassNameId());
-
 		InfoItemDetailsProvider infoItemDetailsProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, infoItemClassName);
+				InfoItemDetailsProvider.class,
+				layoutDisplayPageObjectProvider.getClassName());
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
@@ -118,7 +116,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
 			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, infoItemClassName));
+				InfoItemFieldValuesProvider.class,
+				layoutDisplayPageObjectProvider.getClassName()));
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			layoutDisplayPageObjectProvider);
@@ -143,8 +142,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				portal.getClassName(
-					layoutDisplayPageObjectProvider.getClassNameId()));
+				layoutDisplayPageObjectProvider.getClassName());
 
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(
@@ -271,8 +269,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
 		String className = infoSearchClassMapperTracker.getSearchClassName(
-			portal.getClassName(
-				layoutDisplayPageObjectProvider.getClassNameId()));
+			layoutDisplayPageObjectProvider.getClassName());
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -327,8 +324,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			(InfoItemObjectProvider<Object>)
 				infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()),
+					layoutDisplayPageObjectProvider.getClassName(),
 					infoItemIdentifier.getInfoItemServiceFilter());
 
 		infoItemIdentifier.setVersion(version);
@@ -374,8 +370,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					AssetDisplayPageConstants.TYPE_INHERITED)) {
 
 				InfoItemReference infoItemReference = new InfoItemReference(
-					portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()),
+					layoutDisplayPageObjectProvider.getClassName(),
 					layoutDisplayPageObjectProvider.getClassPK());
 
 				LayoutDisplayPageObjectProvider<?>

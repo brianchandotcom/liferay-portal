@@ -17,7 +17,6 @@ package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib;
 import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util.AnalyticsRenderFragmentLayoutUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -28,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -48,7 +46,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (!AnalyticsRenderFragmentLayoutUtil.isTrackeable(
-				_classNameLocalService, layoutDisplayPageObjectProvider)) {
+				layoutDisplayPageObjectProvider)) {
 
 			return;
 		}
@@ -63,8 +61,5 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 		dynamicIncludeRegistry.register(
 			"com.liferay.layout,taglib#/render_fragment_layout/page.jsp#post");
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 }

@@ -1501,8 +1501,7 @@ public class ContentPageEditorDisplayContext {
 					String.valueOf(
 						layoutDisplayPageObjectProvider.getClassTypeId()),
 					themeDisplay.getScopeGroupId(), infoItemServiceRegistry,
-					PortalUtil.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()),
+					layoutDisplayPageObjectProvider.getClassName(),
 					themeDisplay.getLocale()));
 		}
 

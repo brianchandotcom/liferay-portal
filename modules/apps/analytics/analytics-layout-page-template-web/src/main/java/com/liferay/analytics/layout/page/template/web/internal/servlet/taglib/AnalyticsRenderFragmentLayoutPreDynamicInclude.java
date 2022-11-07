@@ -17,9 +17,6 @@ package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib;
 import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util.AnalyticsRenderFragmentLayoutUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -53,25 +50,17 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (!AnalyticsRenderFragmentLayoutUtil.isTrackeable(
-				_classNameLocalService, layoutDisplayPageObjectProvider)) {
+				layoutDisplayPageObjectProvider)) {
 
 			return;
 		}
 
-		try {
-			ClassName className = _classNameLocalService.getClassName(
-				layoutDisplayPageObjectProvider.getClassNameId());
-
-			_printAnalyticsCloudAssetTracker(
-				className.getClassName(),
-				layoutDisplayPageObjectProvider.getClassPK(),
-				httpServletResponse.getWriter(),
-				layoutDisplayPageObjectProvider.getTitle(
-					_portal.getLocale(httpServletRequest)));
-		}
-		catch (PortalException portalException) {
-			throw new IOException(portalException);
-		}
+		_printAnalyticsCloudAssetTracker(
+			layoutDisplayPageObjectProvider.getClassName(),
+			layoutDisplayPageObjectProvider.getClassPK(),
+			httpServletResponse.getWriter(),
+			layoutDisplayPageObjectProvider.getTitle(
+				_portal.getLocale(httpServletRequest)));
 	}
 
 	@Override
@@ -98,9 +87,6 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		printWriter.print(analyticsAssetType);
 		printWriter.print("\">");
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private Portal _portal;

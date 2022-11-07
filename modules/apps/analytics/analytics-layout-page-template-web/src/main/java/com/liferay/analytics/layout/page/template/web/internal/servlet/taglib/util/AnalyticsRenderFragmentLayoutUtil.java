@@ -15,11 +15,6 @@
 package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util;
 
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -35,34 +30,18 @@ public class AnalyticsRenderFragmentLayoutUtil {
 	}
 
 	public static boolean isTrackeable(
-		ClassNameLocalService classNameLocalService,
 		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider) {
 
-		if (layoutDisplayPageObjectProvider == null) {
-			return false;
-		}
-
-		try {
-			ClassName className = classNameLocalService.getClassName(
-				layoutDisplayPageObjectProvider.getClassNameId());
-
-			if (Validator.isNull(
-					_analyticsCloudAssetTypes.get(className.getClassName()))) {
-
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		if ((layoutDisplayPageObjectProvider == null) ||
+			Validator.isNull(
+				_analyticsCloudAssetTypes.get(
+					layoutDisplayPageObjectProvider.getClassName()))) {
 
 			return false;
 		}
+
+		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsRenderFragmentLayoutUtil.class);
 
 	private static final Map<String, String> _analyticsCloudAssetTypes =
 		HashMapBuilder.put(

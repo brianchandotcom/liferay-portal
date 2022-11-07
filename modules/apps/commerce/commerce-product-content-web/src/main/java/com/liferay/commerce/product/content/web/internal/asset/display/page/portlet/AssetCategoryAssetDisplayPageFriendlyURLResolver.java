@@ -121,8 +121,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 			String assetFriendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					_portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()),
+					layoutDisplayPageObjectProvider.getClassName(),
 					layoutDisplayPageObjectProvider.getClassPK(),
 					_portal.getLocale(
 						(HttpServletRequest)requestContext.get("request")),

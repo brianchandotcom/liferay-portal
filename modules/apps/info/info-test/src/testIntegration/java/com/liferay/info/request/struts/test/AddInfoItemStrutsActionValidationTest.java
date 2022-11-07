@@ -16,6 +16,12 @@ package com.liferay.info.request.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
@@ -29,8 +35,11 @@ import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.info.item.creator.MockInfoItemCreator;
 import com.liferay.info.test.util.model.MockObject;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -157,6 +166,79 @@ public class AddInfoItemStrutsActionValidationTest {
 			Assert.assertTrue(
 				infoFormException instanceof
 					InfoFormValidationException.InvalidCaptcha);
+
+			Assert.assertFalse(
+				SessionMessages.contains(mockHttpServletRequest, formItemId));
+		}
+	}
+
+	@Test
+	public void testAddInfoItemStrutsActionFormRequiredFieldValidation()
+		throws Exception {
+
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, false,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, formItemId);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertFalse(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertFalse(
+				SessionErrors.contains(
+					mockHttpServletRequest, infoField.getUniqueId()));
+			Assert.assertTrue(
+				SessionMessages.contains(mockHttpServletRequest, formItemId));
+
+			_markInputFragmentEntryLinkAsRequired(layout);
+
+			mockHttpServletRequest = _getMockHttpServletRequest(
+				layout, formItemId);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertTrue(
+				SessionErrors.contains(
+					mockHttpServletRequest, infoField.getUniqueId()));
+
+			Assert.assertTrue(
+				SessionErrors.get(mockHttpServletRequest, formItemId) instanceof
+					InfoFormValidationException.RequiredInfoField);
+
+			InfoFormValidationException.RequiredInfoField requiredInfoField =
+				(InfoFormValidationException.RequiredInfoField)
+					SessionErrors.get(mockHttpServletRequest, formItemId);
+
+			Assert.assertEquals(
+				infoField.getUniqueId(),
+				requiredInfoField.getInfoFieldUniqueId());
+
+			Assert.assertEquals(
+				requiredInfoField,
+				SessionErrors.get(
+					mockHttpServletRequest, infoField.getUniqueId()));
 
 			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
@@ -449,6 +531,48 @@ public class AddInfoItemStrutsActionValidationTest {
 		return mockHttpServletRequest;
 	}
 
+	private void _markInputFragmentEntryLinkAsRequired(Layout layout)
+		throws PortalException {
+
+		FragmentEntryLink inputFragmentEntryLink = null;
+
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					layout.getGroupId(), layout.getPlid())) {
+
+			if (fragmentEntryLink.getType() == FragmentConstants.TYPE_INPUT) {
+				inputFragmentEntryLink = fragmentEntryLink;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(inputFragmentEntryLink);
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			inputFragmentEntryLink.getEditableValues());
+
+		JSONObject freemarkerEntryProcessorJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		freemarkerEntryProcessorJSONObject.put("inputRequired", true);
+
+		inputFragmentEntryLink =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				inputFragmentEntryLink.getFragmentEntryLinkId(),
+				editableValuesJSONObject.toString());
+
+		for (FragmentEntryLinkListener fragmentEntryLinkListener :
+				_fragmentEntryLinkListenerTracker.
+					getFragmentEntryLinkListeners()) {
+
+			fragmentEntryLinkListener.onUpdateFragmentEntryLink(
+				inputFragmentEntryLink);
+		}
+	}
+
 	@Inject(filter = "path=/portal/add_info_item")
 	private StrutsAction _addInfoItemStrutsAction;
 
@@ -458,11 +582,21 @@ public class AddInfoItemStrutsActionValidationTest {
 	@Inject
 	private EditPageInfoItemCapability _editPageInfoItemCapability;
 
+	@Inject
+	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject
 	private Portal _portal;

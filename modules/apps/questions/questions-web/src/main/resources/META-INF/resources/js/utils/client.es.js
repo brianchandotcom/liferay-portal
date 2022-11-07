@@ -77,6 +77,7 @@ export const createCommentQuery = `
 			friendlyUrlPath
 			hasCompanyMx
 			id
+			status
 		}
 	}
 `;

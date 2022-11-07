@@ -166,6 +166,10 @@ export function formatItemChanges(itemChanges) {
 }
 
 export function formatActionURL(url, item) {
+	if (!url) {
+		return '';
+	}
+
 	const replacedURL = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
 		getValueFromItem(
 			item,

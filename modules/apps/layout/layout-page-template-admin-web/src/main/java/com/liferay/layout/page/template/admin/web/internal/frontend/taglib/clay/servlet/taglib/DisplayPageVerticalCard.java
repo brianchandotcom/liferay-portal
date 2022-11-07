@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -64,7 +63,7 @@ public class DisplayPageVerticalCard
 
 		_infoItemServiceRegistry =
 			(InfoItemServiceRegistry)renderRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
+				InfoItemServiceRegistry.class.getName());
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

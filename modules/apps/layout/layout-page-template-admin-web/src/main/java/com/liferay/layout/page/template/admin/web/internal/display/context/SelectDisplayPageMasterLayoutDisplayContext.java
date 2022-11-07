@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -53,7 +52,7 @@ public class SelectDisplayPageMasterLayoutDisplayContext {
 
 		_infoItemServiceRegistry =
 			(InfoItemServiceRegistry)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
+				InfoItemServiceRegistry.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

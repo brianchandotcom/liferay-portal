@@ -25,7 +25,4 @@ public class InfoDisplayWebKeys {
 
 	public static final String INFO_ITEM_REFERENCE = "INFO_ITEM_REFERENCE";
 
-	public static final String INFO_ITEM_SERVICE_TRACKER =
-		"INFO_ITEM_SERVICE_TRACKER";
-
 }

@@ -20,7 +20,10 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryModel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.exception.NoSuchInfoItemException;
@@ -57,6 +60,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,6 +78,7 @@ import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -283,6 +288,7 @@ public class GetCollectionFieldMVCResourceCommand
 		for (Object object : list) {
 			jsonArray.put(
 				_getDisplayObjectJSONObject(
+					httpServletRequest, httpServletResponse,
 					infoItemFieldValuesProvider, object,
 					LocaleUtil.fromLanguageId(languageId)));
 		}
@@ -403,43 +409,58 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
 		Object object, Locale locale) {
 
-		JSONObject displayObjectJSONObject = _jsonFactorys.createJSONObject();
-
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
+
+		InfoItemReference infoItemReference =
+			infoItemFieldValues.getInfoItemReference();
+
+		if (infoItemReference == null) {
+			return _jsonFactorys.createJSONObject();
+		}
+
+		JSONObject displayObjectJSONObject = JSONUtil.put(
+			"className", infoItemReference.getClassName()
+		).put(
+			"classNameId",
+			_portal.getClassNameId(infoItemReference.getClassName())
+		).put(
+			"classPK", infoItemReference.getClassPK()
+		);
+
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				httpServletRequest, httpServletResponse,
+				FragmentEntryLinkConstants.EDIT, locale);
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {
 
 			InfoField<?> infoField = infoFieldValue.getInfoField();
 
-			Object value =
-				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
-					infoField.getName(), infoItemFieldValuesProvider, locale,
-					object);
+			displayObjectJSONObject.put("fieldId", infoField.getUniqueId());
 
-			displayObjectJSONObject.put(
-				infoField.getName(), value
-			).put(
-				infoField.getUniqueId(), value
-			);
-		}
+			try {
+				Object value = _fragmentEntryProcessorHelper.getFieldValue(
+					displayObjectJSONObject, new HashMap<>(),
+					fragmentEntryProcessorContext);
 
-		InfoItemReference infoItemReference =
-			infoItemFieldValues.getInfoItemReference();
-
-		if (infoItemReference != null) {
-			displayObjectJSONObject.put(
-				"className", infoItemReference.getClassName()
-			).put(
-				"classNameId",
-				_portal.getClassNameId(infoItemReference.getClassName())
-			).put(
-				"classPK", infoItemReference.getClassPK()
-			);
+				displayObjectJSONObject.put(
+					infoField.getName(), value
+				).put(
+					infoField.getUniqueId(), value
+				);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
 		}
 
 		return displayObjectJSONObject;

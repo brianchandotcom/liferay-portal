@@ -48,12 +48,10 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			InfoSearchClassMapperTracker infoSearchClassMapperTracker)
 		throws Exception {
 
-		_httpServletRequest = httpServletRequest;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
-		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
 
 		long assetEntryId = ParamUtil.getLong(
-			_httpServletRequest, "assetEntryId");
+			httpServletRequest, "assetEntryId");
 
 		Object infoItem = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
@@ -67,7 +65,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				assetEntryId);
 
-			String className = _infoSearchClassMapperTracker.getClassName(
+			String className = infoSearchClassMapperTracker.getClassName(
 				assetEntry.getClassName());
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
@@ -93,13 +91,13 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 					assetRenderer.getAssetObject());
 			}
 
-			_httpServletRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				InfoDisplayWebKeys.INFO_ITEM, infoItem);
-			_httpServletRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 			LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(
-				_httpServletRequest, assetEntry.getEntryId());
+				httpServletRequest, assetEntry.getEntryId());
 		}
 
 		_infoItem = infoItem;
@@ -148,10 +146,8 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return true;
 	}
 
-	private final HttpServletRequest _httpServletRequest;
 	private final Object _infoItem;
 	private final InfoItemDetails _infoItemDetails;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
-	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
 
 }

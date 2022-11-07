@@ -20,6 +20,8 @@ definition {
 	@description = "This is a test for COMMERCE-7025. AddANewPin"
 	@priority = "3"
 	test AddANewPin {
+		property portal.acceptance = "true";
+
 		task ("Given a diagram product with an image") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -61,6 +63,8 @@ definition {
 	@description = "This is a test for COMMERCE-7019. AddDiagramProduct"
 	@priority = "3"
 	test AddDiagramProduct {
+		property portal.acceptance = "true";
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -183,7 +187,7 @@ definition {
 	@description = "COMMERCE-7024 A diagram product cannot be published without an image."
 	@priority = "3"
 	test CannotPublishADiagramProductWithoutAnImage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a diagram product is created") {
 			CommerceJSONProductsAPI._addCommerceProduct(
@@ -271,6 +275,8 @@ definition {
 	@description = "This is a test for COMMERCE-7100. Verify user can change a diagram product type to SVG."
 	@priority = "3"
 	test ChangeDiagramType {
+		property portal.acceptance = "true";
+
 		task ("Given a diagram product with an svg diagram image") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -405,6 +411,8 @@ definition {
 	@description = "This is a test for COMMERCE-7126. RemoveDiagramProduct"
 	@priority = "3"
 	test RemoveDiagramProduct {
+		property portal.acceptance = "true";
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -705,6 +713,8 @@ definition {
 	@description = "This test asserts that the Mapped Products Table saves all info from pins"
 	@priority = "3"
 	test VerifyMappedProductsTableSavesAllPins {
+		property portal.acceptance = "true";
+
 		task ("Given a minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}

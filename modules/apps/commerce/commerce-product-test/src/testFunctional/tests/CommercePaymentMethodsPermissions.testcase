@@ -33,7 +33,7 @@ definition {
 	@description = "COMMERCE-9506. As a user of the storefront, I should have access only to payment methods that are assigned to my role"
 	@priority = "4"
 	test CanSFUsersSelectPaymentMethodsDuringCheckoutBasedOnViewPermissionForEachPaymentMethod {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given Power User role is given to the buyer user") {
 			JSONRole.assignRoleToUser(
@@ -244,7 +244,7 @@ definition {
 	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can edit the payment method of an order"
 	@priority = "3"
 	test UsersWithManagePaymentMethodsPermissionCanEditSelectedPaymentMethod {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given multiple active payment methods") {
 			CommerceChannels.openChannelsAdmin();

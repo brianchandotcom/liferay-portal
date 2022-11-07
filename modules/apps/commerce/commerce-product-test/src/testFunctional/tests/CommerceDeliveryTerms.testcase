@@ -122,6 +122,8 @@ definition {
 	@description = "COMMERCE-9318. User can not add Delivery Terms with same priority"
 	@priority = "3"
 	test DeliveryTermMustBeUnique {
+		property portal.acceptance = "false";
+
 		task ("Given an existing Delivery Terms entry with priority set as '1.0'") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",

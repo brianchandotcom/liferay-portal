@@ -56,6 +56,8 @@ definition {
 	@description = "This is a test for COMMERCE-7950. Verify user can select, change, and remove a Default Product Display page"
 	@priority = "5"
 	test CanSelectChangeAndRemoveDefaultProductDisplayPage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -115,6 +117,8 @@ definition {
 	@description = "This is a test for COMMERCE-7951. Verify user can select, change, and remove a default product display page override"
 	@priority = "5"
 	test CanSelectChangeAndRemoveOverrideDefaultProductDisplayPage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -739,6 +743,8 @@ definition {
 	@description = "Verify user is redirected to private content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
 	@priority = "3"
 	test ViewDefaultProductDisplayPageWithPrivateContentAndWidgetPages {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -842,6 +848,8 @@ definition {
 	@description = "Verify user is redirected to public content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
 	@priority = "3"
 	test ViewDefaultProductDisplayPageWithPublicContentAndWidgetPages {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}

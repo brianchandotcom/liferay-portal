@@ -89,7 +89,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -188,6 +188,7 @@ definition {
 	@priority = "3"
 	test ANewBillingAddressCanBeWrittenDuringCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -251,6 +252,8 @@ definition {
 	@description = "Verify guests can set a new billing address during the checkout process."
 	@priority = "3"
 	test ANewBillingAddressCanBeWrittenDuringCheckoutByGuestUser {
+		property portal.acceptance = "true";
+
 		task ("Given a Speedwell site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 		}
@@ -303,6 +306,7 @@ definition {
 	@priority = "3"
 	test AssertBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -403,6 +407,7 @@ definition {
 	@priority = "3"
 	test AssertBillingAddressIsVisibleToBuyerUserWithPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -462,6 +467,7 @@ definition {
 	@priority = "3"
 	test AssertDefaultBillingAddressIsNotVisibleToBuyerUserWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -548,6 +554,7 @@ definition {
 	@priority = "3"
 	test AssertErrorMessageWhenAnOrderIsPlacedByBuyerWithoutPermissionToViewBillingAddress {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -612,6 +619,8 @@ definition {
 	@description = "Verify guests can view the billing address of an order at the order summary."
 	@priority = "3"
 	test AssertGuestCanViewBillingAddressDuringCheckout {
+		property portal.acceptance = "true";
+
 		task ("Given a Speedwell site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 		}
@@ -659,6 +668,7 @@ definition {
 	@priority = "3"
 	test AssertPermissionToViewBillingAddressIsPresent {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -736,7 +746,7 @@ definition {
 	@priority = "3"
 	test CanButtonRetryPaymentDisappearIfThePaymentMethodIsDisabled {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -986,7 +996,7 @@ definition {
 	@description = "COMMERCE-7982. A system admin can edit order measurement unit."
 	@priority = "3"
 	test CanEditOrderMeasurementUnit {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a minium site created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1111,7 +1121,7 @@ definition {
 	@priority = "3"
 	test CanReorderAFailedPayment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1244,7 +1254,7 @@ definition {
 	@priority = "3"
 	test CanRetryAnIncompletePayment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1342,7 +1352,7 @@ definition {
 	@priority = "3"
 	test CanRetryAnIncompletePaymentWithAnOpenOrder {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the Admin already created a Minium Site and a buyer account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1659,7 +1669,7 @@ definition {
 	}
 
 	test EditOrder {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -2064,7 +2074,7 @@ definition {
 	@description = "This is a test for COMMERCE-6213. Buyer Order Approval Workflow"
 	@priority = "3"
 	test FulfillOrderWithBuyerOrderApprovalWorkflowActive {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithBuyerOrderApprovalWorkflowActive";
 
 		// TODO Review
@@ -2197,7 +2207,7 @@ definition {
 	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
 	@priority = "3"
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithSellerOrderAcceptanceWorkflowActive";
 
 		// TODO Review

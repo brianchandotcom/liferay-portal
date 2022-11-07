@@ -389,7 +389,7 @@ definition {
 	@description = "Verify users can import an existing order into a new order"
 	@priority = "4"
 	test ImportFromOrder {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
@@ -436,7 +436,7 @@ definition {
 	@description = "Verify orders can be searched when importing an order"
 	@priority = "3"
 	test ImportFromOrderUseSearchBar {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given 2 completed orders") {
 			for (var product : list "U-Joint:24,Torque Converters:34") {

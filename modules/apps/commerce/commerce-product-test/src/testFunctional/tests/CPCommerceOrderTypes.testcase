@@ -33,7 +33,7 @@ definition {
 	@description = "Verify active order type is automatically assigned to an order created via the account selector."
 	@priority = "3"
 	test AssertActiveOrderTypeAutomaticallyAssignedToOrderCreatedViaAccountSelector {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given active and inactive order types") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -103,7 +103,7 @@ definition {
 	@description = "Verify inactive order type is not assigned to an order created via the account selector."
 	@priority = "3"
 	test AssertInactiveOrderTypeNotAssignedToOrderViaAccountSelector {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an inactive order type") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -163,7 +163,7 @@ definition {
 	@description = "Verify single active order type is automatically assigned to orders created via the account selector."
 	@priority = "3"
 	test AssertSingleOrderTypeAutomaticallyAssignedToOrderCreatedViaAccountSelector {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an active order type") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -247,6 +247,8 @@ definition {
 	@description = "Verify a new order type can be deleted"
 	@priority = "3"
 	test DeleteOrderType {
+		property portal.acceptance = "true";
+
 		task ("Given an order type is created through the Order Types Page") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
@@ -270,7 +272,7 @@ definition {
 	@description = "Verify users can edit an order type."
 	@priority = "3"
 	test EditOrderType {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an order type") {
 			CommerceJSONOrdersAPI._addOrderType(
@@ -439,7 +441,7 @@ definition {
 	@description = "Verify user can select order type when creating a new order via the account selector."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaAccountSelector {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given two active order types") {
 			CommerceJSONOrdersAPI._addOrderType(

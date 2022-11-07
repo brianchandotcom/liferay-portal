@@ -35,6 +35,8 @@ definition {
 	@description = "COMMERCE-9723. The default Delivery Terms and Conditions should persist at checkout."
 	@priority = "4"
 	test CanAddDefaultDeliveryTermWithCheckout {
+		property portal.acceptance = "true";
+
 		task ("Given two delivery terms with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = "2",
@@ -111,6 +113,8 @@ definition {
 	@description = "COMMERCE-9854. The default discount for the account should persist when viewing an item."
 	@priority = "5"
 	test CanAddDefaultDiscount {
+		property portal.acceptance = "true";
+
 		task ("Given 2 different discounts for the same product") {
 			CommerceJSONDiscountsAPI._addDiscount(
 				active = "true",
@@ -166,6 +170,8 @@ definition {
 	@description = "COMMERCE-9724. The default Payment Terms and Conditions should persist at checkout."
 	@priority = "4"
 	test CanAddDefaultPaymentTermWithCheckout {
+		property portal.acceptance = "true";
+
 		task ("Given two payment terms with different priorities") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = "2",
@@ -295,7 +301,7 @@ definition {
 	@description = "This is a test for COMMERCE-9704. We can edit and delete a default price list entry"
 	@priority = "3"
 	test CanEditAndDeleteDefaultPriceList {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given 2 new Price Lists") {
 			for (var priceLists : list "Test Price List 1,Test Price List 2") {

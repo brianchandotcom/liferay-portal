@@ -154,7 +154,7 @@ definition {
 	@description = "This is a test for COMMERCE-8308. SearchProductRelations"
 	@priority = "4"
 	test SearchProductRelations {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

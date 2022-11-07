@@ -37,7 +37,7 @@ definition {
 	@description = "[Please Update]"
 	@priority = "4"
 	test AssertCheckoutStepsNotShownWithoutPermissions {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
@@ -137,7 +137,7 @@ definition {
 	@description = "[Please Update]"
 	@priority = "4"
 	test AssertDeliveryTermsNotEditableWithoutPermissions {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
@@ -273,7 +273,7 @@ definition {
 	@description = "[Please Update]"
 	@priority = "4"
 	test AssertPaymentTermsNotEditableWithoutPermissions {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
@@ -880,7 +880,7 @@ definition {
 	@description = "[Please Update]"
 	@priority = "4"
 	test ViewAvailableDeliveryTerms {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 
@@ -989,7 +989,7 @@ definition {
 	@description = "[Please Update]"
 	@priority = "4"
 	test ViewAvailablePaymentTerms {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 

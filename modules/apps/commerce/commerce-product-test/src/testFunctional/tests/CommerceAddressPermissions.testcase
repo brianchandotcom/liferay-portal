@@ -53,6 +53,8 @@ definition {
 	@description = "Verify buyers without the View Addresses permission cannot view addresses on the addresses list."
 	@priority = "3"
 	test CanBuyerRoleViewAddressesWithPermission {
+		property portal.acceptance = "true";
+
 		task ("Given the buyer role doesn't have permission to view addresses") {
 			Permissions.removePermissionViaAPI(
 				groupName = "Minium",
@@ -125,6 +127,8 @@ definition {
 	@description = "Verify buyers without the Manage Addresses permission cannot add a shipping and billing address at checkout, only select existing ones."
 	@priority = "3"
 	test CanOnlySelectPreDefinedShippingAndBillingAddressesWhithouPermission {
+		property portal.acceptance = "true";
+
 		task ("Given the buyer role doesn't have permission to manage addresses") {
 			Permissions.removePermissionViaAPI(
 				groupName = "Minium",

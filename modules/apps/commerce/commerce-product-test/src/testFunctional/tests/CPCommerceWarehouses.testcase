@@ -18,7 +18,7 @@ definition {
 	@description = "This is a test for COMMERCE-6207. UI inventory items lifecycle"
 	@priority = "3"
 	test AddEditAndRemoveItemToWarehouse {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -133,7 +133,7 @@ definition {
 	@description = "This is a test for COMMERCE-6206. Add income items"
 	@priority = "3"
 	test AddIncomeItems {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -678,7 +678,7 @@ definition {
 	@description = "This is a test for COMMERCE-5706. As a system admin i want to be able to create / update and delete a new warehouse"
 	@priority = "3"
 	test CreateEditAndDeleteWarehouseEntry {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -908,7 +908,7 @@ definition {
 	@description = "This is a test for COMMERCE-6204. Get stock quantity of a SKU for specific channel"
 	@priority = "3"
 	test GetChannelSKUStockQuantity {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1011,7 +1011,7 @@ definition {
 	@description = "This is a test for COMMERCE-6203. Get stock quantity of a SKU"
 	@priority = "3"
 	test GetSKUStockQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1063,7 +1063,7 @@ definition {
 	@description = "This is a test for COMMERCE-6205. Get warehouse names given a SKU"
 	@priority = "3"
 	test GetWarehouseNameGivenChannel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1128,7 +1128,7 @@ definition {
 	@description = "This is a test for COMMERCE-6202. It should be possible to limit the warehouse stock quantity by channel"
 	@priority = "3"
 	test LimitWarehouseStockQuantityByChannel {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

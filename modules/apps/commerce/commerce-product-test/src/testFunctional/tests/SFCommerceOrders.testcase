@@ -214,7 +214,7 @@ definition {
 	@priority = "3"
 	test AssertNameOfTheShippingAndBillingAddressInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(
@@ -309,7 +309,7 @@ definition {
 	@priority = "3"
 	test AssertOrderStatusInPlacedOrderDetails {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(
@@ -365,7 +365,7 @@ definition {
 	@priority = "3"
 	test AssertOrderTypeInOpenCartsWidgetList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(
@@ -419,7 +419,7 @@ definition {
 	@priority = "3"
 	test AssertOrderTypeInPlacedOrdersList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(
@@ -494,7 +494,7 @@ definition {
 	@priority = "3"
 	test CanReturnOrdersBySearchForAccountName {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given 2 accounts associated with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -588,7 +588,7 @@ definition {
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
 	@priority = "3"
 	test CreateNewOrderFromPendingOrdersPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -640,7 +640,7 @@ definition {
 	@description = "COMMERCE-6379. As a buyer, I want to be able to edit the order in Pending Order details page and I want to view the changes I made applied to order"
 	@priority = "3"
 	test EditOrderFromPendingOrderDetailsPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		Accounts.openAccountsAdmin();
 
@@ -1061,7 +1061,7 @@ definition {
 	@description = "COMMERCE-6375. As a buyer, I want to be able to search for one pending order using the search bar"
 	@priority = "3"
 	test SearchOrderInPendingOrdersPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1103,7 +1103,7 @@ definition {
 	@description = "COMMERCE-6381. As a buyer, I want to be able to search for one placed order using the search bar"
 	@priority = "3"
 	test SearchOrderInPlacedOrdersPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 

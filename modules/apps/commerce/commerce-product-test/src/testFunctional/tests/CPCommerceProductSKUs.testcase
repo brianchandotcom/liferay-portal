@@ -198,7 +198,7 @@ definition {
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
 	@priority = "3"
 	test CanNotUseTheSameSKUERCForDifferentSKU {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -334,7 +334,7 @@ definition {
 	@description = "This is a test for COMMERCE-6023. RemoveASKU"
 	@priority = "3"
 	test RemoveASKU {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

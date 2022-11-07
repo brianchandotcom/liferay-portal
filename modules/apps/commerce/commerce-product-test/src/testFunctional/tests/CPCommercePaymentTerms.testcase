@@ -254,7 +254,7 @@ definition {
 	@description = "COMMERCE-8281. Delete a new payment term to Terms and Conditions."
 	@priority = "3"
 	test CanDeleteAPaymentTerm {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new entry into the Terms and Conditions with the status to Active") {
 			CommerceNavigator.gotoPortlet(
@@ -290,7 +290,7 @@ definition {
 	@description = "This is a test for COMMERCE-8282. Verify can edit payment term"
 	@priority = "4"
 	test CanEditAPaymentTerm {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new entry into the Terms and Conditions") {
 			CommerceNavigator.gotoPortlet(
@@ -418,7 +418,7 @@ definition {
 	@description = "Verify the sales manager is able to change the status of payment terms."
 	@priority = "3"
 	test ChangeTheStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an active payment term") {
 			CommerceOrders.openTermsAndConditionsAdmin();

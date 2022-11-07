@@ -103,6 +103,8 @@ definition {
 	@description = "COMMERCE-9880 | As a Sales Agent, I want to be able to checkout orders"
 	@priority = "4"
 	test CanCheckoutOrdersAsSalesAgent {
+		property portal.acceptance = "true";
+
 		task ("Given 2 accounts are created") {
 			for (var account : list "A,B") {
 				JSONAccountEntry.addAccountEntry(
@@ -210,6 +212,8 @@ definition {
 	@description = "COMMERCE-9882 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in the organization to which the same Sales Agent belongs"
 	@priority = "4"
 	test CanEditAccountDetailsAsSalesAgent {
+		property portal.acceptance = "true";
+
 		task ("And the admin creates an account called Commerce Account") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Commerce Account",
@@ -321,6 +325,8 @@ definition {
 	@description = "COMMERCE-9872 | As a Sales Agent, I want to not be able to see accounts that are outside the organization I'm part of"
 	@priority = "4"
 	test CannotViewAccountsOutsideOrganizationAsSalesAgent {
+		property portal.acceptance = "true";
+
 		task ("Given an account is created") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Commerce Account",
@@ -385,6 +391,8 @@ definition {
 	@description = "COMMERCE-9871 |  As a Sales Agent, I want to be able to see all the accounts and orders that are present in the organization to which the Sales Agent belongs"
 	@priority = "4"
 	test CanViewAccountsAndOrdersAsSalesAgent {
+		property portal.acceptance = "true";
+
 		task ("Given 4 accounts are created") {
 			for (var account : list "A,B,C,D") {
 				JSONAccountEntry.addAccountEntry(

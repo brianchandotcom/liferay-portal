@@ -153,7 +153,7 @@ definition {
 	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
 	@priority = "3"
 	test AddVirtualProduct {
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "false";
 
 		// TODO Review
 
@@ -345,7 +345,7 @@ definition {
 	@description = "This is a test for COMMERCE-6912. Bulk delete Products"
 	@priority = "3"
 	test BulkDeleteProducts {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -666,7 +666,7 @@ definition {
 	@description = "This is a test for COMMERCE-9179. CanCheckDraftProductStatus"
 	@priority = "3"
 	test CanCheckDraftProductStatus {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -2092,7 +2092,7 @@ definition {
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
 	@priority = "3"
 	test UseFilters {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

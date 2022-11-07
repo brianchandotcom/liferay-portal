@@ -99,7 +99,7 @@ definition {
 	@description = "Verify the shipping method selection step is skipped when a buyer without the 'Manage Commerce Order Shipping Options' permission checks out an order."
 	@priority = "3"
 	test UsersWithoutManagePermissionSkipsShippingOptionStepDuringCheckout {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new Flat Rate shipping option with amount set to 50") {
 			CommerceChannels.openChannelsAdmin();

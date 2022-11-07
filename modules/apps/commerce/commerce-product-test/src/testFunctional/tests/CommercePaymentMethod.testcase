@@ -124,7 +124,7 @@ definition {
 	@description = "Verify an activated offline payment method can be used for an order."
 	@priority = "3"
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CommercePaymentMethod#AnOfflinePaymentMethodCanBeUsedForAnOrder";
 
 		task ("Given a Minium site with a buyer user") {

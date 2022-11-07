@@ -17,7 +17,7 @@ definition {
 	@description = "This is a test for COMMERCE-6231. Discount lifecycle"
 	@priority = "3"
 	test AddEditAndDeleteDiscountEntry {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceDiscounts#AddEditAndDeleteDiscountEntry";
 
 		// TODO Review
@@ -231,7 +231,7 @@ definition {
 	@priority = "4"
 	test CanApplySpecificAccountGroupCouponCodeDiscount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -369,7 +369,7 @@ definition {
 	@priority = "4"
 	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -461,7 +461,7 @@ definition {
 	@priority = "3"
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

@@ -33,6 +33,8 @@ definition {
 	@description = "COMMERCE-9509 Verify that the Collection Display fragment with the product specifications can be deployed and that the buyer can see the specifications inside the Collection Display on the storefront"
 	@priority = "4"
 	test CanAddProductSpecificationsCollectionDisplay {
+		property portal.acceptance = "true";
+
 		task ("When a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
@@ -95,6 +97,8 @@ definition {
 	@description = "Verify a product's availability can be viewed via an availability fragment deployed on a default Commerce Product Display Page Template."
 	@priority = "3"
 	test CanAssertProductAvailabilityUsingAvailabilityFragment {
+		property portal.acceptance = "false";
+
 		task ("Given a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
@@ -257,6 +261,8 @@ definition {
 	@description = "Verify a Commerce Product Display Page Template marked as default overrides the Default Product Display Page."
 	@priority = "4"
 	test CanDefaultCommerceProductDPTOverrideDefaultProductDisplayPageSet {
+		property portal.acceptance = "false";
+
 		task ("Given a new Commerce Product type display page template marked as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
@@ -341,7 +347,7 @@ definition {
 	@description = "This is a test for COMMERCE-7277 Verify mapped Basic Information fields to fragments are visible in Store Front"
 	@priority = "3"
 	test CanMapBasicInformationFieldsToFragments {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Basic Information fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
@@ -914,6 +920,8 @@ definition {
 	@description = "Verify users can mark and unmark a commerce product display page template as the Default page so that the template can become the default page for the Product Details page."
 	@priority = "4"
 	test CanMarkAndUnmarkCommerceProductDPTAsDefault {
+		property portal.acceptance = "false";
+
 		task ("Given a new Commerce Product type display page template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",

@@ -67,6 +67,8 @@ definition {
 	@description = "This is a test for COMMERCE-7952. Verify user can select, change, and remove a default category display page"
 	@priority = "5"
 	test CanSelectChangeAndRemoveDefaultCategoryDisplayPage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -149,6 +151,8 @@ definition {
 	@description = "This is a test for COMMERCE-7953. Verify user can select, change, and remove a default category display page override"
 	@priority = "3"
 	test CanSelectChangeAndRemoveOverrideDefaultCategoryDisplayPage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -814,6 +818,8 @@ definition {
 	@description = "This is a test for COMMERCE-7849. Verify user can override a public default category display page with a public page"
 	@priority = "3"
 	test OverridePublicDefaultCategoryDisplayPageWithAPublicPage {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
@@ -1058,6 +1064,8 @@ definition {
 	@description = "This is a test for COMMERCE-7844. Create a public widget page and a public content page with a Category Content widget and define it as the default category display page, and then try if it works on the front"
 	@priority = "3"
 	test ViewDefaultCategoryDisplayPageWithPublicWidgetAndContentPages {
+		property portal.acceptance = "false";
+
 		task ("Given a Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}

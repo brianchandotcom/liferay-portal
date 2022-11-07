@@ -69,7 +69,7 @@ definition {
 	@description = "COMMERCE-8165. The existing replacement product can be edited"
 	@priority = "4"
 	test CanEditReplacementProduct {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a site created using Minium") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -124,6 +124,8 @@ definition {
 	@description = "COMMERCE-8160. Verify a product can be marked as 'discontinued' when adding a new SKU"
 	@priority = "3"
 	test CreateNewSKUWithReplacement {
+		property portal.acceptance = "true";
+
 		task ("Given a simple replacement product with a SKU") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -197,6 +199,8 @@ definition {
 	@description = "Verify a replacement product can be removed"
 	@priority = "3"
 	test RemoveReplacementProduct {
+		property portal.acceptance = "true";
+
 		task ("Given a simple product with a SKU") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -242,6 +246,8 @@ definition {
 	@description = "Verify a replacement product can be set between different catalogs"
 	@priority = "3"
 	test ReplacementCanBeSetBetweenDifferentCatalogs {
+		property portal.acceptance = "true";
+
 		task ("Given a Test Catalog") {
 			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
 		}

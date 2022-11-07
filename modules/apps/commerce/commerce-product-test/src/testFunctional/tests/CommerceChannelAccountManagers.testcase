@@ -24,6 +24,8 @@ definition {
 	@description = "COMMERCE-10000 | Multiple users can be set as Channel Account Manager for the account"
 	@priority = "4"
 	test CanAccountHaveChannelAccountManagers {
+		property portal.acceptance = "false";
+
 		task ("Given 2 business accounts are created") {
 			for (var account : list "A,B") {
 				JSONAccountEntry.addAccountEntry(
@@ -128,6 +130,8 @@ definition {
 	@description = "COMMERCE-9988 | Can add a Channel Account Managers entry"
 	@priority = "4"
 	test CanAddChannelAccountManagersEntry {
+		property portal.acceptance = "false";
+
 		task ("Given a business account is created") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Commerce Account",
@@ -257,6 +261,8 @@ definition {
 	@description = "COMMERCE-9993 | Can assert eligibles accounts list as Channel Account Manager"
 	@priority = "4"
 	test CanAssertEligibleAccountsListAsChannelAccountManager {
+		property portal.acceptance = "true";
+
 		task ("Given 3 business accounts are created") {
 			for (var account : list "A,B,C") {
 				JSONAccountEntry.addAccountEntry(
@@ -352,6 +358,8 @@ definition {
 	@description = "COMMERCE-9996 | Can assert that accounts valid for both permissions(Manage Available Accounts and Manage Available Account Via User Channel Rel) are not duplicated"
 	@priority = "4"
 	test CanAssertEligibleAccountsNotDuplicated {
+		property portal.acceptance = "true";
+
 		task ("Given 3 business accounts are created") {
 			for (var account : list "A,B,C") {
 				JSONAccountEntry.addAccountEntry(
@@ -433,6 +441,8 @@ definition {
 	@description = "COMMERCE-9992 | Can assert ineligible accounts are not present as Channel Account Manager"
 	@priority = "4"
 	test CanAssertIneligibleAccountsNotPresentAsChannelAccountManager {
+		property portal.acceptance = "true";
+
 		task ("Given 2 business accounts are created") {
 			for (var account : list "A,B") {
 				JSONAccountEntry.addAccountEntry(
@@ -486,6 +496,8 @@ definition {
 	@description = "COMMERCE-10005 | Can edit account details as Channel Account Manager"
 	@priority = "4"
 	test CanEditAccountDetailsAsChannelAccountManager {
+		property portal.acceptance = "true";
+
 		task ("Given a business account is created") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Commerce Account",

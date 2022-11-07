@@ -64,6 +64,8 @@ definition {
 	@description = "COMMERCE-7706 Verify user can not upload a CSV with invalid quantity"
 	@priority = "3"
 	test CannotUploadInvalidCSVOrderFile {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 
@@ -311,6 +313,8 @@ definition {
 	@description = "COMMERCE-7699 Verify user can upload a valid CSV Order File"
 	@priority = "3"
 	test CanUploadValidCSVOrderFile {
+		property portal.acceptance = "true";
+
 		task ("Given the warehouse quantity for ABS Sensor is set to 0") {
 			CommerceProducts.openProductsAdmin();
 

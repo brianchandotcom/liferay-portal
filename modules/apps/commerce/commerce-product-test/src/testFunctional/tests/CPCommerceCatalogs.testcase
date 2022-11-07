@@ -395,7 +395,7 @@ definition {
 	@priority = "3"
 	test UserWithoutPermissionCannotAddEditOrDeleteCatalogs {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a user") {
 			JSONUser.addUser(
@@ -474,7 +474,7 @@ definition {
 	@priority = "3"
 	test UserWithPermissionCanEditAPermissionOnACatalog {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a user") {
 			JSONUser.addUser(

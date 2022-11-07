@@ -206,7 +206,7 @@ definition {
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9540"
 	@priority = "3"
 	test CanCheckVersionableProductVisibilityOnMiniumCatalogPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the admin already created a Minium") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -334,7 +334,7 @@ definition {
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9537"
 	@priority = "3"
 	test CanCreateNewVersionableProductDraftVersion {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product") {
 			CommerceNavigator.gotoPortlet(
@@ -379,7 +379,7 @@ definition {
 	@description = "This is a test for the ticket COMMERCE-9941"
 	@priority = "3"
 	test CanDeleteVersionableProducts {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
 			CommerceNavigator.gotoPortlet(

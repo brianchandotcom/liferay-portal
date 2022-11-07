@@ -23,7 +23,7 @@ definition {
 	@description = "Verify a default shipping option can be set, edited, and removed for an account."
 	@priority = "3"
 	test AddEditAndRemoveNewDefaultShippingOption {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given the Sales Manager is on the Channel Defaults tab in the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
@@ -581,7 +581,7 @@ definition {
 	@priority = "3"
 	test UseDefaultShippingOptionIntoTheCheckout {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a buyer user associated with the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(

@@ -18,6 +18,7 @@ definition {
 	@description = "This is a test for COMMERCE-6238. Add shipment items to a shipment"
 	@priority = "3"
 	test AddItemsToShipment {
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1749,7 +1750,7 @@ definition {
 	@description = "COMMERCE-9917 | Add 2 items from different orders with different shipping methods selected to the same shipment and assert an info message is shown"
 	@priority = "3"
 	test CanViewShipmentItemsDifferentShippingMethodsInfoMessage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with an account") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1963,7 +1964,7 @@ definition {
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
 	@priority = "3"
 	test CreateMultipleShipmentsForOneOrder {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -2242,6 +2243,7 @@ definition {
 	@description = "This is a test for COMMERCE-6241. Execute the shipment workflow"
 	@priority = "3"
 	test ExecuteShipmentWorkflow {
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -2647,7 +2649,7 @@ definition {
 	@description = "This is a test for COMMERCE-6242. Update address"
 	@priority = "3"
 	test UpdateShipmentAddress {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -2804,7 +2806,7 @@ definition {
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
 	@priority = "3"
 	test UpdateShipmentItems {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceShipments#UpdateShipmentItems";
 
 		// TODO Review
@@ -3079,7 +3081,7 @@ definition {
 	@description = "This is a test for COMMERCE-6245. Check that shipping amount is correctly calculated in the order"
 	@priority = "3"
 	test ViewOrderShipmentAmountIsCorrect {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

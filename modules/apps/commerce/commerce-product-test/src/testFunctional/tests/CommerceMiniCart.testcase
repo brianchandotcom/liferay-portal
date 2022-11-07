@@ -173,7 +173,7 @@ definition {
 	@description = "COMMERCE-6345. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"
 	@priority = "3"
 	test AssertQuantityInMiniCartItemCanBeSelectedUpToAMaximumQuantitySet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -516,7 +516,7 @@ definition {
 	@description = "COMMERCE-7695. As a buyer, I want to verify if I will be redirected to the product details when I click on the item in the minicart"
 	@priority = "3"
 	test ClickOnCartItemRedirectToProductDetails {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce Minium site") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

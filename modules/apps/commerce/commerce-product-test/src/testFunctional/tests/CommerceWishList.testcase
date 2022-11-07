@@ -759,6 +759,8 @@ definition {
 	@description = "Verify user can import wish list order in another order and do checkout"
 	@priority = "3"
 	test CheckoutAfterImportFromWishList {
+		property portal.acceptance = "true";
+
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();
 

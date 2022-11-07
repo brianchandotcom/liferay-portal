@@ -36,6 +36,8 @@ definition {
 	@description = "COMMERCE-10075 | Can import existing orders based on the product's Maximum and Multiple Order Quantity set(maximum > multiple)"
 	@priority = "4"
 	test CanAssertInvalidQuantityNotImportedWhenMaximumIsHigherThanMultiple {
+		property portal.acceptance = "true";
+
 		var maxOrderQuantity = "10";
 		var multipleOrderQuantity = "4";
 		var orderIds = ListUtil.newList();

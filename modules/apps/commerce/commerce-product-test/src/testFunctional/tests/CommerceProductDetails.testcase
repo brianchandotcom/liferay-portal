@@ -123,7 +123,7 @@ definition {
 	@description = "COMMERCE-6363. As a buyer, I want to be able to select the quantity of a product in Product Details by multiple value, if set"
 	@priority = "3"
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -394,7 +394,7 @@ definition {
 	@description = "COMMERCE-6360. As a buyer, I want to be able to select the quantity of a product in Product Details starting from a minimum quantity, if set"
 	@priority = "3"
 	test AssertSelectableQuantitiesInProductDetailsStartFromMinimumQuantitySet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -743,7 +743,7 @@ definition {
 	@description = "COMMERCE-10197. Users cannot view and download owner limited products' attachments"
 	@priority = "3"
 	test CanAssertOwnerLimitedFileAttacchmentNotVisibleForBuyer {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var fileName1 = "commerce.pdf";
 		var fileName2 = "Minium_InstallationGuide.pdf";
@@ -950,7 +950,7 @@ definition {
 	@description = "COMMERCE-9674 | As a buyer, I want to be able to view the incoming dates/quantities for a multiple SKUs product"
 	@priority = "3"
 	test CanViewMultipleSkusProductIncomingQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1090,7 +1090,7 @@ definition {
 	@description = "COMMERCE-9676 | As a buyer, I want to be able to view a grouped product Detail page"
 	@priority = "3"
 	test CanViewSingleSkuGroupedProductDetailPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var groupedProductEntryNames = "ABS Sensor,Brake Pads,Cams";
 
@@ -1306,7 +1306,7 @@ definition {
 	@description = "COMMERCE-9677 | As a buyer, I want to be able to view a virtual product Detail page"
 	@priority = "3"
 	test CanViewSingleSkuVirtualProductDetailPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		var sampleFileName = "Commerce_White.jpg";
 
@@ -2087,7 +2087,7 @@ definition {
 	@description = "COMMERCE-6358. As a buyer, I want to see the barred list price and a promo price of a product in Product Details, if a promotion is set"
 	@priority = "3"
 	test ViewProductDetailsPriceWithPromotion {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

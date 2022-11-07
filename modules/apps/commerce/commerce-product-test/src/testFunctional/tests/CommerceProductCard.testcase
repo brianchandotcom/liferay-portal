@@ -18,7 +18,7 @@ definition {
 	@priority = "3"
 	test AddProductToWishListFromProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -69,7 +69,7 @@ definition {
 	@priority = "3"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -654,7 +654,7 @@ definition {
 	@priority = "3"
 	test AssertProductCardImageRedirectsToProductDetailsPage {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "Intern Test";
+		property portal.acceptance = "false";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -1209,7 +1209,7 @@ definition {
 	@priority = "3"
 	test CompareProductFromProductCard {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -1559,7 +1559,7 @@ definition {
 	@priority = "3"
 	test ViewProductCardPrice {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -1609,7 +1609,7 @@ definition {
 	@priority = "3"
 	test ViewProductCardPriceWithDiscount {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 
@@ -1685,7 +1685,7 @@ definition {
 	@priority = "3"
 	test ViewProductCardPriceWithPromotion {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		// TODO Review
 

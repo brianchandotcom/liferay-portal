@@ -662,7 +662,7 @@ definition {
 	@priority = "3"
 	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -779,6 +779,8 @@ definition {
 	@description = "Verify users can set and edit delivery term eligibility for shipping options."
 	@priority = "3"
 	test CanSetAndEditDeliveryTermsEligibility {
+		property portal.acceptance = "true";
+
 		task ("Given an active delivery term") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
 				termsCount = "2",
@@ -1477,7 +1479,7 @@ definition {
 	@priority = "3"
 	test PaymentMethodEligibleForSpecificPaymentTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -2139,7 +2141,7 @@ definition {
 	@description = "Verify users can set and edit payment term eligibility for payment methods."
 	@priority = "3"
 	test SetAndEditPaymentMethodTermElgibility {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an active payment term") {
 			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(termsType = "Payment");
@@ -2303,6 +2305,7 @@ definition {
 	@priority = "3"
 	test ShippingOptionEligibleForSpecificDeliveryTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -2394,7 +2397,7 @@ definition {
 	@priority = "3"
 	test ShippingOptionEligibleForSpecificOrderType {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -2768,7 +2771,7 @@ definition {
 	@priority = "3"
 	test ViewOrderPreviewWithJasperTemplate {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a channel with a Print Order Template jasper file ") {
 			CommerceNavigator.gotoPortlet(

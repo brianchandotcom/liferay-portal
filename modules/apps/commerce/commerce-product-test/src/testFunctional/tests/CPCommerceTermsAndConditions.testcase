@@ -17,7 +17,7 @@ definition {
 	@description = "This is a test for COMMERCE-8332. Assert default delivery term can be added"
 	@priority = "4"
 	test AddADefaultDeliveryTerm {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given I create two accounts") {
 			for (var entryNumber : list "1,2") {
@@ -115,7 +115,7 @@ definition {
 	@description = "This is a test for COMMERCE-8319. Assert default payment term can be added"
 	@priority = "4"
 	test CanAddADefaultPaymentTerm {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given I create two accounts") {
 			for (var entryNumber : list "1,2") {
@@ -214,7 +214,7 @@ definition {
 	@priority = "4"
 	test CanCompleteCheckoutWithRichTextTermDescription {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer users") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

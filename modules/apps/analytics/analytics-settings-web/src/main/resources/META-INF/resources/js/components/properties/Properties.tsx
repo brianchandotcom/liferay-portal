@@ -23,8 +23,8 @@ import StateRenderer, {
 	EmptyStateComponent,
 	ErrorStateComponent,
 } from '../StateRenderer';
-import AssignModal from '../modals/AssignModal';
-import CreatePropertyModal from '../modals/CreatePropertyModal';
+import AssignModal from './AssignModal';
+import CreatePropertyModal from './CreatePropertyModal';
 import PropertiesTable from './PropertiesTable';
 
 export type TProperty = {

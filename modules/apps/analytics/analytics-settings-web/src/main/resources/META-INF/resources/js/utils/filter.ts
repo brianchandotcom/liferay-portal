@@ -22,9 +22,7 @@ export enum OrderBy {
 	Desc = 'desc',
 }
 
-export function DEFAULT_FILTER(value: string) {
-	return {
-		type: OrderBy.Asc,
-		value,
-	};
-}
+export const DEFAULT_FILTER = {
+	type: OrderBy.Asc,
+	value: 'name',
+};

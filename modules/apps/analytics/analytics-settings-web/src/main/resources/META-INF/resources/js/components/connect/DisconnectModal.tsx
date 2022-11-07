@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
+import {EPageView, Events, useDispatch} from '../../App';
 import {deleteConnection} from '../../utils/api';
 import Loading from '../Loading';
 
@@ -30,6 +31,8 @@ const DisconnectModal: React.FC<IDisconnectModalProps> = ({
 }) => {
 	const [submitting, setSubmitting] = useState(false);
 
+	const dispatch = useDispatch();
+
 	return (
 		<ClayModal center observer={observer} status="warning">
 			<ClayModal.Header>
@@ -37,11 +40,13 @@ const DisconnectModal: React.FC<IDisconnectModalProps> = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<h4 className="modal-description">
-					{Liferay.Language.get(
-						'are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance'
-					)}
-				</h4>
+				<p>
+					<strong>
+						{Liferay.Language.get(
+							'are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance'
+						)}
+					</strong>
+				</p>
 
 				<p className="text-secondary">
 					{Liferay.Language.get(
@@ -73,7 +78,18 @@ const DisconnectModal: React.FC<IDisconnectModalProps> = ({
 								if (ok) {
 									onOpenChange(false);
 
-									window.location.reload();
+									dispatch({
+										payload: {
+											connected: false,
+											token: '',
+										},
+										type: Events.Connect,
+									});
+
+									dispatch({
+										payload: EPageView.Wizard,
+										type: Events.ChangePageView,
+									});
 								}
 							}}
 						>

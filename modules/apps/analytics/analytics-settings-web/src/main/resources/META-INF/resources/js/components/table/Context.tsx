@@ -27,14 +27,14 @@ export enum Events {
 	ToggleCheckbox = 'TOGGLE_CHECKBOX',
 }
 
-const initialState = (columnName: string) => ({
+const initialState = {
 	checked: false,
-	filter: DEFAULT_FILTER(columnName),
+	filter: DEFAULT_FILTER,
 	internalKeywords: '',
 	items: [],
 	keywords: '',
 	pagination: DEFAULT_PAGINATION,
-});
+};
 
 type TState = {
 	checked: boolean;
@@ -45,11 +45,11 @@ type TState = {
 	pagination: TPagination;
 };
 
-const TableContextData = createContext<TState>(initialState(''));
-const TableContextAction = createContext<any>(null);
+const TableContextData = createContext<TState>(initialState);
+const TableContextDispatch = createContext<any>(null);
 
 const useData = () => useContext(TableContextData);
-const useDispatch = () => useContext(TableContextAction);
+const useDispatch = () => useContext(TableContextDispatch);
 
 function reducer(state: TState, action: {payload: any; type: Events}) {
 	switch (action.type) {
@@ -109,18 +109,14 @@ function reducer(state: TState, action: {payload: any; type: Events}) {
 	}
 }
 
-interface ITableContext {
-	firstColumn: string;
-}
-
-const TableContext: React.FC<ITableContext> = ({children, firstColumn}) => {
-	const [state, dispatch] = useReducer(reducer, initialState(firstColumn));
+const TableContext: React.FC = ({children}) => {
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
 		<TableContextData.Provider value={state}>
-			<TableContextAction.Provider value={dispatch}>
+			<TableContextDispatch.Provider value={dispatch}>
 				{children}
-			</TableContextAction.Provider>
+			</TableContextDispatch.Provider>
 		</TableContextData.Provider>
 	);
 };

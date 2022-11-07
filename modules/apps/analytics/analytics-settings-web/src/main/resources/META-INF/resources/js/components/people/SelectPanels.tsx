@@ -12,36 +12,35 @@
  * details.
  */
 
+import {Text} from '@clayui/core';
 import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {useData} from './Context';
 import ModalAccountGroups from './ModalAccountGroups';
 import ModalOrganizations from './ModalOrganizations';
 import ModalUserGroups from './ModalUserGroups';
 
 interface IPanelProps {
-	accountsCount: number;
 	onSyncAllAccountsChange: () => void;
 	onSyncAllContactsChange: () => void;
-	organizationsCount: number;
 	syncAllAccounts: boolean;
 	syncAllContacts: boolean;
-	usersCount: number;
 }
 
 const SelectPanels: React.FC<IPanelProps> = ({
-	accountsCount,
 	onSyncAllAccountsChange,
 	onSyncAllContactsChange,
-	organizationsCount,
 	syncAllAccounts,
 	syncAllContacts,
-	usersCount,
 }) => {
+	const {accountsCount, organizationsCount, usersCount} = useData();
+
 	const {
 		observer: observerAccountGroups,
 		onOpenChange: onOpenChangeAccount,
@@ -80,58 +79,58 @@ const SelectPanels: React.FC<IPanelProps> = ({
 				collapsable
 				displayTitle={Liferay.Language.get('select-contacts')}
 				displayType="secondary"
-				showCollapseIcon={true}
+				showCollapseIcon
 			>
 				<ClayPanel.Body>
-					<div className="panel-toggle">
+					<div className="mb-4 mt-3">
 						<ClayToggle
 							label={Liferay.Language.get('sync-all-contacts')}
-							onToggle={() => {
-								onSyncAllContactsChange();
-							}}
+							onToggle={onSyncAllContactsChange}
 							toggled={syncAllContacts}
 						/>
 					</div>
 
-					<p className="panel-description">
+					<Text size={3}>
 						{Liferay.Language.get(
 							'sync-contacts-label-description'
 						)}
-					</p>
+					</Text>
 
-					{userOrganizationList.map((item) => (
-						<ClayList
-							className="mb-0"
-							key={item.title}
-							showQuickActionsOnHover
-						>
-							<ClayList.Item
-								action
-								className="align-items-center"
-								disabled={syncAllContacts}
-								flex
-								onClick={() => {
-									!syncAllContacts ? item.onOpenChange() : '';
-								}}
-							>
-								<ClayList.ItemField>
-									<ClayIcon symbol={item.icon} />
-								</ClayList.ItemField>
+					<ClayList className="mt-3" showQuickActionsOnHover>
+						{userOrganizationList.map(
+							({count, icon, onOpenChange, title}) => (
+								<ClayList.Item
+									action
+									className="align-items-center"
+									disabled={syncAllContacts}
+									flex
+									key={title}
+									onClick={() =>
+										!syncAllContacts && onOpenChange()
+									}
+								>
+									<ClayList.ItemField>
+										<ClayIcon symbol={icon} />
+									</ClayList.ItemField>
 
-								<ClayList.ItemField expand>
-									<ClayList.ItemTitle className="hover-title">
-										{item.title}
-									</ClayList.ItemTitle>
+									<ClayList.ItemField expand>
+										<ClayList.ItemTitle className="hover-title">
+											{title}
+										</ClayList.ItemTitle>
 
-									<ClayList.ItemTitle className="font-weight-lighter mt-1 text-secondary">
-										{`${item.count} ${Liferay.Language.get(
-											'selected'
-										)}`}
-									</ClayList.ItemTitle>
-								</ClayList.ItemField>
-							</ClayList.Item>
-						</ClayList>
-					))}
+										<ClayList.ItemTitle className="font-weight-lighter mt-1 text-secondary">
+											{sub(
+												Liferay.Language.get(
+													'x-selected'
+												),
+												count
+											)}
+										</ClayList.ItemTitle>
+									</ClayList.ItemField>
+								</ClayList.Item>
+							)
+						)}
+					</ClayList>
 				</ClayPanel.Body>
 			</ClayPanel>
 
@@ -143,32 +142,28 @@ const SelectPanels: React.FC<IPanelProps> = ({
 				showCollapseIcon={true}
 			>
 				<ClayPanel.Body>
-					<div className="panel-toggle">
+					<div className="mb-4 mt-3">
 						<ClayToggle
 							label={Liferay.Language.get('sync-all-accounts')}
-							onToggle={() => {
-								onSyncAllAccountsChange();
-							}}
+							onToggle={onSyncAllAccountsChange}
 							toggled={syncAllAccounts}
 						/>
 					</div>
 
-					<p className="panel-description">
+					<Text size={3}>
 						{Liferay.Language.get(
 							'sync-accounts-label-description'
 						)}
-					</p>
+					</Text>
 
-					<ClayList showQuickActionsOnHover>
+					<ClayList className="mt-3" showQuickActionsOnHover>
 						<ClayList.Item
 							action
 							className="align-items-center"
 							disabled={syncAllAccounts}
 							flex
 							onClick={() =>
-								!syncAllAccounts
-									? onOpenChangeAccount(true)
-									: ''
+								!syncAllAccounts && onOpenChangeAccount(true)
 							}
 						>
 							<ClayList.ItemField>
@@ -183,31 +178,41 @@ const SelectPanels: React.FC<IPanelProps> = ({
 								</ClayList.ItemTitle>
 
 								<ClayList.ItemTitle className="font-weight-lighter mt-1 text-secondary">
-									{`${accountsCount} ${Liferay.Language.get(
-										'selected'
-									)}`}
+									{sub(
+										Liferay.Language.get('x-selected'),
+										accountsCount
+									)}
 								</ClayList.ItemTitle>
 							</ClayList.ItemField>
 						</ClayList.Item>
 					</ClayList>
 				</ClayPanel.Body>
 			</ClayPanel>
-			{openUser && (
-				<ModalUserGroups
-					observer={observerUserGroups}
-					onCloseModal={() => onOpenChangeUser(false)}
-				/>
-			)}
-			{openOrganizations && (
-				<ModalOrganizations
-					observer={observerOrganizations}
-					onCloseModal={() => onOpenChangeOrganizations(false)}
-				/>
-			)}
+
 			{openAccount && (
 				<ModalAccountGroups
 					observer={observerAccountGroups}
 					onCloseModal={() => onOpenChangeAccount(false)}
+					syncAllAccounts={syncAllAccounts}
+					syncAllContacts={syncAllContacts}
+				/>
+			)}
+
+			{openOrganizations && (
+				<ModalOrganizations
+					observer={observerOrganizations}
+					onCloseModal={() => onOpenChangeOrganizations(false)}
+					syncAllAccounts={syncAllAccounts}
+					syncAllContacts={syncAllContacts}
+				/>
+			)}
+
+			{openUser && (
+				<ModalUserGroups
+					observer={observerUserGroups}
+					onCloseModal={() => onOpenChangeUser(false)}
+					syncAllAccounts={syncAllAccounts}
+					syncAllContacts={syncAllContacts}
 				/>
 			)}
 		</>

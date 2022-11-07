@@ -15,9 +15,10 @@
 import React from 'react';
 
 import Connect from '../../components/Connect';
+import {IGenericPageProps} from './DefaultPage';
 
-const ConnectPage = () => (
-	<Connect title={Liferay.Language.get('workspace-connection')} />
+const ConnectPage: React.FC<IGenericPageProps> = ({title}) => (
+	<Connect title={title} />
 );
 
 export default ConnectPage;

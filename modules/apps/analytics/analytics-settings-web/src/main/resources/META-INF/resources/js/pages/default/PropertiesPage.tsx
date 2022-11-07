@@ -16,11 +16,12 @@ import React from 'react';
 
 import BasePage from '../../components/BasePage';
 import Properties from '../../components/properties/Properties';
+import {IGenericPageProps} from './DefaultPage';
 
-const PropertiesPage: React.FC = () => (
+const PropertiesPage: React.FC<IGenericPageProps> = ({title}) => (
 	<BasePage
 		description={Liferay.Language.get('property-description')}
-		title={Liferay.Language.get('properties')}
+		title={title}
 	>
 		<Properties />
 	</BasePage>

@@ -13,35 +13,50 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import React, {useReducer} from 'react';
+import React, {useContext, useReducer} from 'react';
 
 import DefaultPage from './pages/default/DefaultPage';
 import WizardPage from './pages/wizard/WizardPage';
 import {SPRITEMAP} from './utils/constants';
 
-export const AppContext = React.createContext({
-	connected: false,
-	liferayAnalyticsURL: '',
-	token: '',
-} as any);
+type TData = {
+	connected: boolean;
+	liferayAnalyticsURL: string;
+	pageView: EPageView;
+	token: string;
+};
+
+type TView = {
+	[key in EPageView]: React.FC;
+};
 
 export enum EPageView {
 	Wizard = 'VIEW_WIZARD_MODE',
 	Default = 'VIEW_DEFAULT_MODE',
 }
 
-export enum Events {
-	Connected = 'CONNECTED',
-}
-
-type TView = {
-	[key in EPageView]: React.FC;
-};
-
-const View: TView = {
+export const View: TView = {
 	[EPageView.Wizard]: WizardPage,
 	[EPageView.Default]: DefaultPage,
 };
+
+const initialState = {
+	connected: false,
+	liferayAnalyticsURL: '',
+	pageView: EPageView.Wizard,
+	token: '',
+};
+
+const AppContextData = React.createContext<TData>(initialState);
+const AppContextDispatch = React.createContext<any>(null);
+
+const useData = () => useContext(AppContextData);
+const useDispatch = () => useContext(AppContextDispatch);
+
+export enum Events {
+	Connect = 'CONNECT',
+	ChangePageView = 'CHANGE_PAGE_VIEW',
+}
 
 interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	connected: boolean;
@@ -49,38 +64,53 @@ interface IAppProps extends React.HTMLAttributes<HTMLElement> {
 	token: string;
 }
 
+const AppContent = () => {
+	const {pageView} = useData();
+
+	const PageView = View[pageView];
+
+	return <PageView />;
+};
+
 const App: React.FC<IAppProps> = ({connected, liferayAnalyticsURL, token}) => {
-	const initialState = {
+	const [state, dispatch] = useReducer(reducer, {
 		connected,
 		liferayAnalyticsURL,
+		pageView: connected ? EPageView.Default : EPageView.Wizard,
 		token,
-	};
-
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const PageView: React.FC =
-		View[connected ? EPageView.Default : EPageView.Wizard];
+	});
 
 	return (
 		<ClayIconSpriteContext.Provider value={SPRITEMAP}>
-			<AppContext.Provider value={[state, dispatch]}>
-				<div className="analytics-settings-web mt-5">
-					<PageView />
-				</div>
-			</AppContext.Provider>
+			<AppContextData.Provider value={state}>
+				<AppContextDispatch.Provider value={dispatch}>
+					<div className="analytics-settings-web mt-5">
+						<AppContent />
+					</div>
+				</AppContextDispatch.Provider>
+			</AppContextData.Provider>
 		</ClayIconSpriteContext.Provider>
 	);
 };
 
-function reducer(state: any, action: any) {
+function reducer(state: TData, action: {payload: any; type: Events}) {
 	switch (action.type) {
-		case Events.Connected:
+		case Events.Connect: {
 			return {
 				...state,
 				...action.payload,
 			};
+		}
+		case Events.ChangePageView: {
+			return {
+				...state,
+				pageView: action.payload,
+			};
+		}
 		default:
 			throw new Error();
 	}
 }
 
+export {useData, useDispatch};
 export default App;

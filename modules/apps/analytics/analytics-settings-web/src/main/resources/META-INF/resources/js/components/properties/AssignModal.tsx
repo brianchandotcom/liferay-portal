@@ -15,15 +15,16 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {updateProperty} from '../../utils/api';
 import {SUCCESS_MESSAGE} from '../../utils/constants';
 import Loading from '../Loading';
-import ChannelTab from '../properties/ChannelTab';
-import {TProperty} from '../properties/Properties';
-import SitesTab from '../properties/SitesTab';
 import {TItem} from '../table/Table';
+import ChannelTab from './ChannelTab';
+import {TProperty} from './Properties';
+import SitesTab from './SitesTab';
 
 interface IAssignModalProps {
 	observer: any;
@@ -85,7 +86,7 @@ const AssignModal: React.FC<IAssignModalProps> = ({
 	return (
 		<ClayModal center observer={observer} size="lg">
 			<ClayModal.Header>
-				{Liferay.Language.get('assign-to')} {property.name}
+				{sub(Liferay.Language.get('assign-to-x'), property.name)}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

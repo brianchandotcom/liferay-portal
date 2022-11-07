@@ -71,20 +71,37 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 		List<DetailAST> methodDefDetailASTList = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
 
-		if (methodDefDetailASTList.size() != 1) {
+		DetailAST doUpgradeMethodDefDetailAST = null;
+
+		for (DetailAST methodDefDetailAST : methodDefDetailASTList) {
+			if (StringUtil.equals(getName(methodDefDetailAST), "doUpgrade") &&
+				AnnotationUtil.containsAnnotation(
+					methodDefDetailAST, "Override")) {
+
+				doUpgradeMethodDefDetailAST = methodDefDetailAST;
+
+				break;
+			}
+		}
+
+		if (doUpgradeMethodDefDetailAST == null) {
 			return;
 		}
 
-		DetailAST methodDefDetailAST = methodDefDetailASTList.get(0);
+		DetailAST slistDetailAST = doUpgradeMethodDefDetailAST.findFirstToken(
+			TokenTypes.SLIST);
 
-		if (_isUnnecessaryUpgradeProcessClass(methodDefDetailAST)) {
+		if (slistDetailAST.getChildCount() == 1) {
+			return;
+		}
+
+		if ((methodDefDetailASTList.size() == 1) &&
+			_isUnnecessaryUpgradeProcessClass(slistDetailAST)) {
+
 			log(detailAST, _MSG_DELETE_CLASS);
 
 			return;
 		}
-
-		DetailAST slistDetailAST = methodDefDetailAST.findFirstToken(
-			TokenTypes.SLIST);
 
 		_checkPostUpgradeSteps(slistDetailAST);
 		_checkPreUpgradeSteps(slistDetailAST);
@@ -306,16 +323,7 @@ public class JavaUpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _isUnnecessaryUpgradeProcessClass(DetailAST detailAST) {
-		String methodName = getName(detailAST);
-
-		if (!StringUtil.equals(methodName, "doUpgrade") ||
-			!AnnotationUtil.containsAnnotation(detailAST, "Override")) {
-
-			return false;
-		}
-
-		return _containsOnlyAlterMethodCalls(
-			detailAST.findFirstToken(TokenTypes.SLIST), null, null);
+		return _containsOnlyAlterMethodCalls(detailAST, null, null);
 	}
 
 	private boolean _isUpgradeProcess(DetailAST detailAST) {

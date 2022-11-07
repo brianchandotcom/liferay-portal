@@ -16,8 +16,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -69,11 +71,15 @@ public class GetInfoItemFieldValueMVCResourceCommand
 		String languageId = ParamUtil.getString(
 			resourceRequest, "languageId", themeDisplay.getLanguageId());
 
-		Object value =
-			_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
-				jsonObject, new HashMap<>(),
-				LocaleUtil.fromLanguageId(languageId),
-				FragmentEntryLinkConstants.EDIT, 0, StringPool.BLANK);
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				_portal.getHttpServletRequest(resourceRequest),
+				_portal.getHttpServletResponse(resourceResponse),
+				FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.fromLanguageId(languageId));
+
+		Object value = _fragmentEntryProcessorHelper.getFieldValue(
+			jsonObject, new HashMap<>(), fragmentEntryProcessorContext);
 
 		jsonObject.put("fieldValue", value);
 
@@ -94,5 +100,8 @@ public class GetInfoItemFieldValueMVCResourceCommand
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

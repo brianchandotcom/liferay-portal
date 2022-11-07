@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.service;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.rss.util.RSSUtil;
 
 import java.io.InputStream;
 
@@ -168,12 +167,13 @@ public class KBArticleServiceUtil {
 	}
 
 	public static String getGroupKBArticlesRSS(
-			int status, int rssDelta, String rssDisplayStyle, String rssFormat,
+			int status, int max, String type, double version,
+			String displayStyle,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return getService().getGroupKBArticlesRSS(
-			status, rssDelta, RSSUtil.getFormatType(rssFormat), RSSUtil.getFormatVersion(rssFormat), rssDisplayStyle, themeDisplay);
+			status, max, type, version, displayStyle, themeDisplay);
 	}
 
 	public static KBArticle getKBArticle(long resourcePrimKey, int version)
@@ -192,14 +192,14 @@ public class KBArticleServiceUtil {
 	}
 
 	public static String getKBArticleRSS(
-			long resourcePrimKey, int status, int rssDelta,
-			String rssDisplayStyle, String rssFormat,
+			long resourcePrimKey, int status, int max, String type,
+			double version, String displayStyle,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return getService().getKBArticleRSS(
-			resourcePrimKey, status, rssDelta, RSSUtil.getFormatType(rssFormat), RSSUtil.getFormatVersion(rssFormat),
-			rssDisplayStyle, themeDisplay);
+			resourcePrimKey, status, max, type, version, displayStyle,
+			themeDisplay);
 	}
 
 	public static List<KBArticle> getKBArticles(

@@ -15,7 +15,6 @@
 package com.liferay.knowledge.base.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * Provides a wrapper for {@link KBArticleService}.
@@ -187,8 +186,9 @@ public class KBArticleServiceWrapper
 
 	@Override
 	public String getGroupKBArticlesRSS(
-		int status, int max, String type, double version, String displayStyle,
-		ThemeDisplay themeDisplay)
+			int status, int max, String type, double version,
+			String displayStyle,
+			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.getGroupKBArticlesRSS(
@@ -218,14 +218,14 @@ public class KBArticleServiceWrapper
 
 	@Override
 	public String getKBArticleRSS(
-		long resourcePrimKey, int status, int max,
-		String type, double version, String displayStyle,
-		ThemeDisplay themeDisplay)
+			long resourcePrimKey, int status, int max, String type,
+			double version, String displayStyle,
+			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.getKBArticleRSS(
-			resourcePrimKey, status, max, type, version,
-			displayStyle, themeDisplay);
+			resourcePrimKey, status, max, type, version, displayStyle,
+			themeDisplay);
 	}
 
 	@Override

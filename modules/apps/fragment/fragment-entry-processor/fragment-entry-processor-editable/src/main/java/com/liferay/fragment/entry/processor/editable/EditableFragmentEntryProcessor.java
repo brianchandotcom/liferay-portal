@@ -267,9 +267,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (Objects.equals(
 				fragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
-			Objects.equals(
-				fragmentEntryProcessorContext.getMode(),
 				FragmentEntryLinkConstants.VIEW)) {
 
 			for (Element element : document.select("lfr-editable")) {

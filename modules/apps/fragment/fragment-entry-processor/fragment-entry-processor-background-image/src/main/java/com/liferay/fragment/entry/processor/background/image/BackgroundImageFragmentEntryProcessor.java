@@ -196,9 +196,6 @@ public class BackgroundImageFragmentEntryProcessor
 
 		if (Objects.equals(
 				fragmentEntryProcessorContext.getMode(),
-				FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
-			Objects.equals(
-				fragmentEntryProcessorContext.getMode(),
 				FragmentEntryLinkConstants.VIEW)) {
 
 			for (Element element :

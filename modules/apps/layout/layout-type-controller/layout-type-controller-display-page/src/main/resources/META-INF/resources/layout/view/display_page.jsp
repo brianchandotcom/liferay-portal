@@ -75,9 +75,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 			</c:when>
 			<c:otherwise>
 				<div class="layout-content portlet-layout" id="main-content" role="main">
-					<liferay-layout:render-fragment-layout
-						mode="<%= FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE %>"
-					/>
+					<liferay-layout:render-fragment-layout />
 				<div>
 			</c:otherwise>
 		</c:choose>

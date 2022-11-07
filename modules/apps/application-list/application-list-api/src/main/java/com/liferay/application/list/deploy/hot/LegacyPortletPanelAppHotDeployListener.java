@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -75,10 +74,7 @@ public class LegacyPortletPanelAppHotDeployListener
 
 				ServiceRegistration<PanelApp> serviceRegistration =
 					_bundleContext.registerService(
-						PanelApp.class,
-						new PortletPanelAppAdapter(
-							portletId,
-							_portletLocalService.getPortletById(portletId)),
+						PanelApp.class, new PortletPanelAppAdapter(portletId),
 						properties);
 
 				_serviceRegistrations.put(portletId, serviceRegistration);
@@ -197,9 +193,6 @@ public class LegacyPortletPanelAppHotDeployListener
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	private final Map<String, ServiceRegistration<PanelApp>>
 		_serviceRegistrations = new ConcurrentHashMap<>();

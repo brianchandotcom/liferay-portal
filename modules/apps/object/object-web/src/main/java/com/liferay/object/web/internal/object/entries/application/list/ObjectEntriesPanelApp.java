@@ -20,7 +20,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,15 +38,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ObjectEntriesPanelApp extends BasePanelApp {
 
-	public ObjectEntriesPanelApp(
-		ObjectDefinition objectDefinition, Portlet portlet) {
-
-		if (portlet == null) {
-			throw new IllegalArgumentException("Portlet is null");
-		}
-
+	public ObjectEntriesPanelApp(ObjectDefinition objectDefinition) {
 		_objectDefinition = objectDefinition;
-		_portlet = portlet;
 	}
 
 	@Override
@@ -59,11 +51,6 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 	@Override
 	public String getLabel(Locale locale) {
 		return _objectDefinition.getPluralLabel(locale);
-	}
-
-	@Override
-	public Portlet getPortlet() {
-		return _portlet;
 	}
 
 	@Override
@@ -112,6 +99,5 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 	}
 
 	private final ObjectDefinition _objectDefinition;
-	private final Portlet _portlet;
 
 }

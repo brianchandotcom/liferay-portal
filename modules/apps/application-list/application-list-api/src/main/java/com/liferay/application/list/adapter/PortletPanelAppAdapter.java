@@ -31,13 +31,8 @@ import javax.portlet.PortletConfig;
  */
 public class PortletPanelAppAdapter extends BasePanelApp {
 
-	public PortletPanelAppAdapter(String portletId, Portlet portlet) {
-		if (portlet == null) {
-			throw new IllegalArgumentException("Portlet is null");
-		}
-
+	public PortletPanelAppAdapter(String portletId) {
 		_portletId = portletId;
-		_portlet = portlet;
 	}
 
 	@Override
@@ -80,16 +75,10 @@ public class PortletPanelAppAdapter extends BasePanelApp {
 	}
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return _portletId;
 	}
 
-	private final Portlet _portlet;
 	private final String _portletId;
 
 }

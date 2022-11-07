@@ -24,6 +24,7 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 	<c:when test="<%= fragmentCollectionResourcesDisplayContext.isShowRepositoryBrowser() %>">
 		<liferay-document-library:repository-browser
 			folderId="<%= fragmentCollectionResourcesDisplayContext.getFolderId() %>"
+			repositoryId="<%= fragmentCollectionResourcesDisplayContext.getRepositoryId() %>"
 		/>
 	</c:when>
 	<c:otherwise>

@@ -87,11 +87,11 @@ const useBreadcrumb = (entities: Entity[]) => {
 
 			setTimeout(() => {
 				setSearch(lastBreadcrumb.label);
-			}, 10);
 
-			setTimeout(() => {
-				inputRef.current?.select();
-			}, 20);
+				setTimeout(() => {
+					inputRef.current?.select();
+				}, 10);
+			}, 10);
 		}
 	}, [breadCrumb]);
 

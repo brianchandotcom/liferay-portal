@@ -152,11 +152,13 @@ public abstract class LayoutUtilityPageEntryLocalServiceBaseImpl
 	 *
 	 * @param layoutUtilityPageEntry the layout utility page entry
 	 * @return the layout utility page entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
-		LayoutUtilityPageEntry layoutUtilityPageEntry) {
+			LayoutUtilityPageEntry layoutUtilityPageEntry)
+		throws PortalException {
 
 		return layoutUtilityPageEntryPersistence.remove(layoutUtilityPageEntry);
 	}

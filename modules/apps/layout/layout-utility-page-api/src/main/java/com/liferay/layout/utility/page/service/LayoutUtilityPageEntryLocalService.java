@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -120,10 +122,13 @@ public interface LayoutUtilityPageEntryLocalService
 	 *
 	 * @param layoutUtilityPageEntry the layout utility page entry
 	 * @return the layout utility page entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
-		LayoutUtilityPageEntry layoutUtilityPageEntry);
+			LayoutUtilityPageEntry layoutUtilityPageEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the layout utility page entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -413,6 +418,9 @@ public interface LayoutUtilityPageEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
+
+	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+		long layoutUtilityPageEntryId, long previewFileEntryId);
 
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 			long layoutUtilityPageEntryId, String name)

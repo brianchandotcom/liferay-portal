@@ -243,6 +243,13 @@ public class LayoutUtilityPageEntryWrapper
 		return model.getGroupId();
 	}
 
+	@Override
+	public String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+
+		return model.getImagePreviewURL(themeDisplay);
+	}
+
 	/**
 	 * Returns the last publish date of this layout utility page entry.
 	 *

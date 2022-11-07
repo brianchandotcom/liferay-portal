@@ -112,9 +112,11 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	 *
 	 * @param layoutUtilityPageEntry the layout utility page entry
 	 * @return the layout utility page entry that was removed
+	 * @throws PortalException
 	 */
 	public static LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
-		LayoutUtilityPageEntry layoutUtilityPageEntry) {
+			LayoutUtilityPageEntry layoutUtilityPageEntry)
+		throws PortalException {
 
 		return getService().deleteLayoutUtilityPageEntry(
 			layoutUtilityPageEntry);
@@ -490,6 +492,13 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 
 		return getService().updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntry);
+	}
+
+	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+		long layoutUtilityPageEntryId, long previewFileEntryId) {
+
+		return getService().updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId, previewFileEntryId);
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(

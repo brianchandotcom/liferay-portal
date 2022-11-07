@@ -60,4 +60,7 @@ public interface LayoutUtilityPageEntry
 
 			};
 
+	public String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
+
 }

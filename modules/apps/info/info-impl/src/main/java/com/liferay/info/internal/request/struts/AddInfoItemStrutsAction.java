@@ -146,7 +146,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				throw new InfoFormInvalidGroupException();
 			}
 
-			_getRequiredUniqueFieldIds(httpServletRequest, infoFieldValues);
+			_validateRequiredFields(httpServletRequest, infoFieldValues);
 
 			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
 				CaptchaUtil.check(httpServletRequest);
@@ -274,93 +274,6 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 	protected void activate() {
 		_infoRequestFieldValuesProviderHelper =
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
-	}
-
-	private void _getRequiredUniqueFieldIds(
-			HttpServletRequest httpServletRequest,
-			List<InfoFieldValue<Object>> infoFieldValues)
-		throws InfoFormException {
-
-		LayoutStructure layoutStructure =
-			LayoutStructureUtil.getLayoutStructure(
-				ParamUtil.getLong(httpServletRequest, "plid"),
-				ParamUtil.getLong(httpServletRequest, "segmentsExperienceId"));
-
-		if (layoutStructure == null) {
-			throw new InfoFormException();
-		}
-
-		String formItemId = ParamUtil.getString(
-			httpServletRequest, "formItemId");
-
-		LayoutStructureItem formLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(formItemId);
-
-		if (formLayoutStructureItem == null) {
-			throw new InfoFormException();
-		}
-
-		List<String> childrenItemIds =
-			formLayoutStructureItem.getChildrenItemIds();
-
-		for (String childrenItemId : childrenItemIds) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childrenItemId);
-
-			if (!Objects.equals(
-					LayoutDataItemTypeConstants.TYPE_FRAGMENT,
-					layoutStructureItem.getItemType())) {
-
-				continue;
-			}
-
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-			if (fragmentEntryLink == null) {
-				continue;
-			}
-
-			if (GetterUtil.getBoolean(
-					_fragmentEntryConfigurationParser.getFieldValue(
-						fragmentEntryLink.getEditableValues(),
-						new FragmentConfigurationField(
-							"inputRequired", "boolean", "false", false,
-							"checkbox"),
-						LocaleUtil.getMostRelevantLocale()))) {
-
-				String inputFieldId = GetterUtil.getString(
-					_fragmentEntryConfigurationParser.getFieldValue(
-						fragmentEntryLink.getEditableValues(),
-						new FragmentConfigurationField(
-							"inputFieldId", "string", "", false, "text"),
-						LocaleUtil.getMostRelevantLocale()));
-
-				boolean requiredFieldAvailable = false;
-
-				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-					InfoField infoField = infoFieldValue.getInfoField();
-
-					if (Objects.equals(inputFieldId, infoField.getUniqueId()) &&
-						Validator.isNotNull(infoFieldValue.getValue())) {
-
-						requiredFieldAvailable = true;
-
-						break;
-					}
-				}
-
-				if (!requiredFieldAvailable) {
-					throw new InfoFormValidationException.RequiredInfoField(
-						inputFieldId);
-				}
-			}
-		}
 	}
 
 	private String _getValue(InfoFieldValue<?> infoFieldValue) {
@@ -493,6 +406,93 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 		return _hasCaptcha(
 			formLayoutStructureItem.getChildrenItemIds(), layoutStructure);
+	}
+
+	private void _validateRequiredFields(
+			HttpServletRequest httpServletRequest,
+			List<InfoFieldValue<Object>> infoFieldValues)
+		throws InfoFormException {
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				ParamUtil.getLong(httpServletRequest, "plid"),
+				ParamUtil.getLong(httpServletRequest, "segmentsExperienceId"));
+
+		if (layoutStructure == null) {
+			throw new InfoFormException();
+		}
+
+		String formItemId = ParamUtil.getString(
+			httpServletRequest, "formItemId");
+
+		LayoutStructureItem formLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(formItemId);
+
+		if (formLayoutStructureItem == null) {
+			throw new InfoFormException();
+		}
+
+		List<String> childrenItemIds =
+			formLayoutStructureItem.getChildrenItemIds();
+
+		for (String childrenItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!Objects.equals(
+					LayoutDataItemTypeConstants.TYPE_FRAGMENT,
+					layoutStructureItem.getItemType())) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			if (GetterUtil.getBoolean(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						fragmentEntryLink.getEditableValues(),
+						new FragmentConfigurationField(
+							"inputRequired", "boolean", "false", false,
+							"checkbox"),
+						LocaleUtil.getMostRelevantLocale()))) {
+
+				String inputFieldId = GetterUtil.getString(
+					_fragmentEntryConfigurationParser.getFieldValue(
+						fragmentEntryLink.getEditableValues(),
+						new FragmentConfigurationField(
+							"inputFieldId", "string", "", false, "text"),
+						LocaleUtil.getMostRelevantLocale()));
+
+				boolean requiredFieldAvailable = false;
+
+				for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+					InfoField infoField = infoFieldValue.getInfoField();
+
+					if (Objects.equals(inputFieldId, infoField.getUniqueId()) &&
+						Validator.isNotNull(infoFieldValue.getValue())) {
+
+						requiredFieldAvailable = true;
+
+						break;
+					}
+				}
+
+				if (!requiredFieldAvailable) {
+					throw new InfoFormValidationException.RequiredInfoField(
+						inputFieldId);
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

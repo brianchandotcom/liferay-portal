@@ -68,20 +68,14 @@ import javax.portlet.PortletRequest;
 public class KBDropdownItemsProvider {
 
 	public KBDropdownItemsProvider(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		this(null, liferayPortletRequest, liferayPortletResponse);
-	}
-
-	public KBDropdownItemsProvider(
 		KBGroupServiceConfiguration kbGroupServiceConfiguration,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
+
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
 
 		_currentURL = String.valueOf(
 			PortletURLUtil.getCurrent(
@@ -89,6 +83,13 @@ public class KBDropdownItemsProvider {
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public KBDropdownItemsProvider(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		this(null, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public List<DropdownItem> getKBArticleDropdownItems(KBArticle kbArticle) {
@@ -118,7 +119,8 @@ public class KBDropdownItemsProvider {
 						!_hasSubscription(kbArticle),
 					_getSubscribeDropdownItem(kbArticle)
 				).add(
-					() -> _isHistoryEnabled() && _hasHistoryPermission(kbArticle),
+					() ->
+						_isHistoryEnabled() && _hasHistoryPermission(kbArticle),
 					_getHistoryDropdownItem(kbArticle)
 				).build())
 		).addGroup(
@@ -152,18 +154,6 @@ public class KBDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
-	}
-
-	private Boolean _isPrintEnabled() {
-		return GetterUtil.getBoolean(_liferayPortletRequest.getAttribute("init.jsp-enableKBArticlePrint"), true);
-	}
-
-	private Boolean _isSubscriptionEnabled() {
-		return GetterUtil.getBoolean(_liferayPortletRequest.getAttribute("init.jsp-enableKBArticleSubscriptions"), true);
-	}
-
-	private Boolean _isHistoryEnabled() {
-		return GetterUtil.getBoolean(_liferayPortletRequest.getAttribute("init.jsp-enableKBArticleHistory"), true);
 	}
 
 	public List<DropdownItem> getKBCommentDropdownItems(
@@ -1228,6 +1218,13 @@ public class KBDropdownItemsProvider {
 		return false;
 	}
 
+	private Boolean _isHistoryEnabled() {
+		return GetterUtil.getBoolean(
+			_liferayPortletRequest.getAttribute(
+				"init.jsp-enableKBArticleHistory"),
+			true);
+	}
+
 	private boolean _isKBArticleSelected(KBArticle kbArticle) {
 		long resourceClassNameId = ParamUtil.getLong(
 			_liferayPortletRequest, "resourceClassNameId");
@@ -1275,6 +1272,20 @@ public class KBDropdownItemsProvider {
 		}
 
 		return false;
+	}
+
+	private Boolean _isPrintEnabled() {
+		return GetterUtil.getBoolean(
+			_liferayPortletRequest.getAttribute(
+				"init.jsp-enableKBArticlePrint"),
+			true);
+	}
+
+	private Boolean _isSubscriptionEnabled() {
+		return GetterUtil.getBoolean(
+			_liferayPortletRequest.getAttribute(
+				"init.jsp-enableKBArticleSubscriptions"),
+			true);
 	}
 
 	private final String _currentURL;

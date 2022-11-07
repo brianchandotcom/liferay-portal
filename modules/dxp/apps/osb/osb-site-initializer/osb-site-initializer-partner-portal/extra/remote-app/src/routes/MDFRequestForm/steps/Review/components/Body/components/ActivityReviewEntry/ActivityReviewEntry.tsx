@@ -12,7 +12,6 @@
 import Table from '../../../../../../../../common/components/Table';
 import {TypeActivityKey} from '../../../../../../../../common/enums/TypeActivityKey';
 import MDFRequestActivity from '../../../../../../../../common/interfaces/mdfRequestActivity';
-import TableItem from '../../../../../../../../common/interfaces/tableItem';
 import {Liferay} from '../../../../../../../../common/services/liferay';
 import ActivityContent from './components/ActivityContent';
 import getContentMarketFields from './utils/getContentMarketFields';
@@ -24,8 +23,12 @@ interface IProps {
 	mdfRequestActivity: MDFRequestActivity;
 }
 
+interface Item {
+	[key: string]: string | undefined;
+}
+
 type TypeOfActivityComponent = {
-	[key in TypeActivityKey]: TableItem[];
+	[key in TypeActivityKey]: Item[];
 };
 
 const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
@@ -44,8 +47,20 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 
 	return (
 		<>
-			<Table
-				items={[
+			<Table<Item>
+				borderless
+				className="bg-brand-primary-lighten-6 border-top table-striped"
+				columns={[
+					{
+						columnKey: 'title',
+						label: 'Campaign Activity',
+					},
+					{
+						columnKey: 'value',
+						label: '',
+					},
+				]}
+				rows={[
 					{
 						title: 'Activity name',
 						value: mdfRequestActivity.name,
@@ -82,7 +97,6 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 							),
 					},
 				]}
-				title="Campaign Activity"
 			/>
 
 			<ActivityContent mdfRequestActivity={mdfRequestActivity} />

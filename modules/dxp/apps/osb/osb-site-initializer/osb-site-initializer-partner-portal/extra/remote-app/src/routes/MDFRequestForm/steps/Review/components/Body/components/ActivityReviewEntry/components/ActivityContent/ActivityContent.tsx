@@ -21,15 +21,38 @@ interface IProps {
 const ActivityContent = ({mdfRequestActivity}: IProps) => (
 	<>
 		<Table
-			items={mdfRequestActivity.budgets.map((budget) => ({
+			borderless
+			className="bg-brand-primary-lighten-6 border-top table-striped"
+			columns={[
+				{
+					columnKey: 'title',
+					label: 'Budget Breakdown',
+				},
+				{
+					columnKey: 'value',
+					label: '',
+				},
+			]}
+			rows={mdfRequestActivity.budgets.map((budget) => ({
 				title: budget.expense.name,
 				value: getIntlNumberFormat().format(budget.cost),
 			}))}
-			title="Budget Breakdown"
 		/>
 
 		<Table
-			items={[
+			borderless
+			className="bg-brand-primary-lighten-6 border-top table-striped"
+			columns={[
+				{
+					columnKey: 'title',
+					label: 'Lead List',
+				},
+				{
+					columnKey: 'value',
+					label: '',
+				},
+			]}
+			rows={[
 				{
 					title: 'Is a lead list an outcome of this activity?',
 					value: getBooleanValue(mdfRequestActivity.leadGenerated),
@@ -47,7 +70,6 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => (
 					value: mdfRequestActivity.detailsLeadFollowUp,
 				},
 			]}
-			title="Lead List"
 		/>
 	</>
 );

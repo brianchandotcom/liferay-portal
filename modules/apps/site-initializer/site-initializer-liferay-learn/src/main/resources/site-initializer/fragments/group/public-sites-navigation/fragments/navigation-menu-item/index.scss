@@ -3,11 +3,11 @@
 
 	.arrow-hover-icon {
 		display: none;
-		transform: rotate(-45deg);
 	}
 
 	.menu-item {
 		border-radius: 4px;
+		padding: 0.75rem;
 		width: 100%;
 
 		&:hover,
@@ -19,6 +19,10 @@
 			.arrow-hover-icon {
 				display: block;
 			}
+		}
+
+		.menu-item-text {
+			color: var(--color-neutral-10);
 		}
 	}
 

@@ -163,7 +163,7 @@ public class DLViewDisplayContext {
 		return _dlAdminDisplayContext.getFolderId();
 	}
 
-	public String getPermissionURL() throws Exception {
+	public String getPermissionURL(String className) throws Exception {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -173,8 +173,7 @@ public class DLViewDisplayContext {
 		}
 
 		return PermissionsURLTag.doTag(
-			null, DLFileEntryConstants.getClassName(),
-			themeDisplay.getScopeGroupId(),
+			null, className, themeDisplay.getScopeGroupId(),
 			LiferayWindowState.POP_UP.toString(), _httpServletRequest);
 	}
 

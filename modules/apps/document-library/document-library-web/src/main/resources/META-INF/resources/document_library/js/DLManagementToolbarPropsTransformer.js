@@ -25,12 +25,16 @@ import {collectDigitalSignature} from './digital-signature/DigitalSignatureUtil'
 
 export default function propsTransformer({
 	additionalProps: {
+		bulkPermissionsConfiguration: {
+			defaultModelClassName,
+			permissionsURLs,
+			prioritizedModelClassNames,
+		},
 		collectDigitalSignaturePortlet,
 		downloadEntryURL,
 		editEntryURL,
 		folderConfiguration,
 		openViewMoreFileEntryTypesURL,
-		permissionsURL,
 		selectFileEntryTypeURL,
 		selectFolderURL,
 		trashEnabled,
@@ -234,7 +238,24 @@ export default function propsTransformer({
 	};
 
 	const permissions = () => {
-		const keys = getAllSelectedElements().get('value');
+		const map = new Map();
+
+		getAllSelectedElements().each((element) => {
+			const modelClassName =
+				element.getData('modelclassname') ?? defaultModelClassName;
+
+			const previousValue = map.get(element.get(modelClassName)) ?? [];
+
+			previousValue.push(element.get('value'));
+
+			map.set(modelClassName, previousValue);
+		});
+
+		const selectedModelClassName = prioritizedModelClassNames.find(
+			(modelClassName) => map.has(modelClassName)
+		);
+
+		const permissionsURL = permissionsURLs[selectedModelClassName];
 
 		const url = new URL(permissionsURL);
 
@@ -244,7 +265,9 @@ export default function propsTransformer({
 				{
 					[`_${url.searchParams.get(
 						'p_p_id'
-					)}_resourcePrimKey`]: keys.join(','),
+					)}_resourcePrimKey`]: map
+						.get(selectedModelClassName)
+						.join(','),
 				},
 				permissionsURL
 			),

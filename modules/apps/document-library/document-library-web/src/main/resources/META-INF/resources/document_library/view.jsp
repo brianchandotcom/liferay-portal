@@ -70,7 +70,21 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				).put(
 					"openViewMoreFileEntryTypesURL", dlViewDisplayContext.getViewMoreFileEntryTypesURL()
 				).put(
-					"permissionsURL", dlViewDisplayContext.getPermissionURL()
+					"bulkPermissionsConfiguration",
+					HashMapBuilder.<String, Object>put(
+						"permissionsURLs",
+						HashMapBuilder.<String, Object>put(
+							DLFileShortcut.class.getSimpleName(), dlViewDisplayContext.getPermissionURL(DLFileShortcutConstants.getClassName())
+						).put(
+							FileEntry.class.getSimpleName(), dlViewDisplayContext.getPermissionURL(DLFileEntryConstants.getClassName())
+						).put(
+							Folder.class.getSimpleName(), dlViewDisplayContext.getPermissionURL(DLFolderConstants.getClassName())
+						).build()
+					).put(
+						"defaultModelClassName", Folder.class.getSimpleName()
+					).put(
+						"prioritizedModelClassNames", Arrays.asList(FileEntry.class.getSimpleName(), DLFileShortcut.class.getSimpleName(), Folder.class.getSimpleName())
+					).build()
 				).put(
 					"selectFileEntryTypeURL", dlViewDisplayContext.getSelectFileEntryTypeURL()
 				).put(

@@ -180,6 +180,12 @@ public class DLViewEntriesDisplayContext {
 			availableActions.add("download");
 		}
 
+		if (DLFolderPermission.contains(
+				permissionChecker, folder, ActionKeys.PERMISSIONS)) {
+
+			availableActions.add("permissions");
+		}
+
 		return availableActions;
 	}
 

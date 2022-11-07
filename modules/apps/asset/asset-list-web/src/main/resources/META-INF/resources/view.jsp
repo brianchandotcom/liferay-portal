@@ -83,12 +83,12 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							>
 								<h5>
 									<aui:a href="<%= editURL %>">
-										<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+										<strong><%= HtmlUtil.escape(assetListEntry.getTitle()) %></strong>
 									</aui:a>
 								</h5>
 
 								<h6 class="text-default">
-									<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
+									<liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" />
 								</h6>
 
 								<c:if test="<%= Validator.isNotNull(assetListEntry.getAssetEntryType()) %>">
@@ -112,7 +112,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 									%>
 
 									<h6 class="text-default">
-										<strong><%= HtmlUtil.escape(assetEntryTypeLabel) %></strong>
+										<%= HtmlUtil.escape(assetEntryTypeLabel) %>
 									</h6>
 								</c:if>
 

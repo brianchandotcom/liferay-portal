@@ -13,6 +13,7 @@
  * details.
  */
 
+import * as notifications from './notifications';
 import * as vscode from 'vscode';
 
 export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
@@ -27,6 +28,9 @@ export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
 	const filePath = textEditor.document.fileName;
 
 	if (!filePath.endsWith('.testcase')) {
+		notifications.warning(
+			'Cannot run test case: not in a `.testcase` file.'
+		);
 		return;
 	}
 
@@ -34,8 +38,6 @@ export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
 		filePath.lastIndexOf('/') + 1,
 		filePath.lastIndexOf('.testcase')
 	);
-
-	let lineNumber = textEditor.selection.start.line;
 
 	const regex = new RegExp(/^\W*test ([A-Z][A-Za-z]+)/g);
 
@@ -61,30 +63,41 @@ export async function runTestCaseFromTextEditor(textEditor: vscode.TextEditor) {
 
 	let testName;
 
-	while (lineNumber >= 0) {
+	for (
+		let lineNumber = textEditor.selection.start.line;
+		lineNumber >= 0;
+		lineNumber--
+	) {
 		const name = getName(lineNumber);
 
 		if (name) {
 			testName = name;
 			break;
 		}
-
-		lineNumber--;
 	}
 
-	if (testName) {
-		const testCase = `${fileName}#${testName}`;
-
-		const command = await getCommand(workspaceFolder, testCase);
-
-		if (command) {
-			const terminal = vscode.window.createTerminal(`Run: ${testCase}`);
-
-			terminal.show();
-
-			terminal.sendText(command);
-		}
+	if (!testName) {
+		notifications.warning('No test case found under the cursor.');
+		return;
 	}
+
+	const testCase = `${fileName}#${testName}`;
+
+	const command = await getCommand(workspaceFolder, testCase);
+	if (!command) {
+		notifications.warning(
+			`Unable to run the test case: ${testCase}. No Ant or Gradle task runner was found.`
+		);
+		return;
+	}
+
+	notifications.info(`Running Poshi testcase: ${testCase}`);
+
+	const terminal = vscode.window.createTerminal(`Run: ${testCase}`);
+
+	terminal.show();
+
+	terminal.sendText(command);
 }
 
 async function getCommand(

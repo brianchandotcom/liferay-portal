@@ -14,13 +14,13 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
+import Table from '../../common/components/Table';
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
-import Table from './components/Table';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
 import getMDFListColumns from './utils/getMDFListColumns';
@@ -64,6 +64,7 @@ const MDFRequestList = () => {
 					<Table<MDFRequestListItem>
 						borderless
 						columns={columns}
+						noWrap
 						responsive
 						rows={items}
 					/>

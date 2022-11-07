@@ -14,20 +14,27 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
+import com.liferay.headless.admin.workflow.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.dto.v1_0.Transition;
 import com.liferay.headless.admin.workflow.resource.v1_0.TransitionResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,13 +50,17 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -506,6 +517,101 @@ public abstract class BaseTransitionResourceImpl
 	protected SortParserProvider sortParserProvider;
 	protected VulcanBatchEngineImportTaskResource
 		vulcanBatchEngineImportTaskResource;
+
+	private static void _checkResources(
+			long companyId, long resourceId, String resourceName,
+			ResourcePermissionLocalService resourcePermissionLocalService)
+		throws PortalException {
+
+		int count = resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(resourceId));
+
+		if (count == 0) {
+			ResourceLocalServiceUtil.addResources(
+				companyId, resourceId, 0, resourceName,
+				String.valueOf(resourceId), false, true, true);
+		}
+	}
+
+	private List<Permission> _getResourcePermissionsByResourceName(
+			long companyId, List<ResourceAction> resourceActions,
+			long resourceId, String resourceName, String[] roleNames)
+		throws PortalException {
+
+		_checkResources(
+			companyId, resourceId, resourceName,
+			resourcePermissionLocalService);
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourcePermissions(resourceName);
+
+		List<Permission> permissions = new ArrayList<>();
+
+		Map<String, Permission> permissionMap = new HashMap<>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if ((resourcePermission.getPrimKeyId() == 0L) ||
+				(resourcePermission.getPrimKeyId() == resourceId)) {
+
+				com.liferay.portal.kernel.model.Role role =
+					roleLocalService.getRole(resourcePermission.getRoleId());
+
+				if ((roleNames == null) ||
+					((roleNames != null) &&
+					 ArrayUtil.contains(roleNames, role.getName()))) {
+
+					Permission existingPermission = permissionMap.get(
+						role.getName());
+					Permission newPermission = _toPermission(
+						resourceActions, resourcePermission, role);
+
+					if (existingPermission == null) {
+						permissionMap.put(role.getName(), newPermission);
+						permissions.add(newPermission);
+					}
+					else {
+						Set<String> actions = new HashSet<>();
+
+						Collections.addAll(
+							actions, existingPermission.getActionIds());
+						Collections.addAll(
+							actions, newPermission.getActionIds());
+
+						existingPermission.setActionIds(
+							actions.toArray(new String[0]));
+					}
+				}
+			}
+		}
+
+		return permissions;
+	}
+
+	private Permission _toPermission(
+		List<ResourceAction> resourceActions,
+		ResourcePermission resourcePermission,
+		com.liferay.portal.kernel.model.Role role) {
+
+		Set<String> actionsIdsSet = new HashSet<>();
+
+		long actionIds = resourcePermission.getActionIds();
+
+		for (ResourceAction resourceAction : resourceActions) {
+			long bitwiseValue = resourceAction.getBitwiseValue();
+
+			if ((actionIds & bitwiseValue) == bitwiseValue) {
+				actionsIdsSet.add(resourceAction.getActionId());
+			}
+		}
+
+		return new Permission() {
+			{
+				actionIds = actionsIdsSet.toArray(new String[0]);
+				roleName = role.getName();
+			}
+		};
+	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseTransitionResourceImpl.class);

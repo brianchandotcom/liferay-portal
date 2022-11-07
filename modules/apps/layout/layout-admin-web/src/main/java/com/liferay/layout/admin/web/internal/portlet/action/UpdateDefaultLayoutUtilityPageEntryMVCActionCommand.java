@@ -63,6 +63,20 @@ public class UpdateDefaultLayoutUtilityPageEntryMVCActionCommand
 			return;
 		}
 
+		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					layoutUtilityPageEntry.getGroupId(),
+					layoutUtilityPageEntry.getType());
+
+		if (defaultLayoutUtilityPageEntry != null) {
+			defaultLayoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
+				false);
+
+			_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+				defaultLayoutUtilityPageEntry);
+		}
+
 		layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(true);
 
 		_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(

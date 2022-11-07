@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -456,9 +455,6 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 	@Reference
 	private CommerceReportExporter _commerceReportExporter;
-
-	@Reference
-	private CompanyService _companyService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

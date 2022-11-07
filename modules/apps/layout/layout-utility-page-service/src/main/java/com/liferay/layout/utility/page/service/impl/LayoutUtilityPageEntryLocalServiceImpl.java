@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -99,6 +100,16 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setType(type);
+
+		// Resources
+
+		_resourceLocalService.addResources(
+			layoutUtilityPageEntry.getCompanyId(),
+			layoutUtilityPageEntry.getGroupId(),
+			layoutUtilityPageEntry.getUserId(),
+			LayoutUtilityPageEntry.class.getName(),
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(), false, true,
+			true);
 
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
 	}
@@ -357,6 +368,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

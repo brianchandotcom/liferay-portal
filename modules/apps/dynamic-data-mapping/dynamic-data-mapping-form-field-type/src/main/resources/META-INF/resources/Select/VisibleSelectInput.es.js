@@ -112,7 +112,7 @@ const VisibleSelectInput = forwardRef(
 							label={selectedLabel()}
 						/>
 					) : (
-						<ul className="ddm-multiple-select-list">
+						<>
 							{value.map((item) => {
 								const option = options.find(
 									(option) => option.value === item
@@ -133,12 +133,14 @@ const VisibleSelectInput = forwardRef(
 									</>
 								);
 							})}
-						</ul>
+						</>
 					)}
 
-					<a className="select-arrow-down-container">
-						<ClayIcon symbol="caret-double" />
-					</a>
+					<div className="lfr__ddm-form-field-type-select-arrow-down">
+						<a className="select-arrow-down-container">
+							<ClayIcon symbol="caret-double" />
+						</a>
+					</div>
 				</div>
 			</div>
 		);

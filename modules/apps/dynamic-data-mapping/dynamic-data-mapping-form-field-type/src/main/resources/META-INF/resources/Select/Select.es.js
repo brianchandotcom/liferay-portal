@@ -430,7 +430,6 @@ const Select = ({
 				active={expand}
 				alignElementRef={triggerElementRef}
 				alignmentPosition={0}
-				autoBestAlign={false}
 				className="ddm-btn-full ddm-select-dropdown"
 				onKeyDown={(event) => {
 					switch (event.keyCode) {

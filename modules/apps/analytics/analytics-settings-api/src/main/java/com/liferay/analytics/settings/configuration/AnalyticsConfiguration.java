@@ -79,6 +79,9 @@ public interface AnalyticsConfiguration {
 	public boolean syncAllContacts();
 
 	@Meta.AD(required = false)
+	public String[] syncedAccountFieldNames();
+
+	@Meta.AD(required = false)
 	public String[] syncedAccountGroupIds();
 
 	@Meta.AD(required = false)
@@ -89,6 +92,12 @@ public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)
 	public String[] syncedGroupIds();
+
+	@Meta.AD(required = false)
+	public String[] syncedOrderFieldNames();
+
+	@Meta.AD(required = false)
+	public String[] syncedProductFieldNames();
 
 	@Meta.AD(required = false)
 	public String[] syncedOrganizationIds();

@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.petra.string.StringPool;
@@ -82,8 +84,20 @@ public class AssetEntryItemDescriptor
 			"assetEntryId", String.valueOf(_assetEntry.getEntryId())
 		).put(
 			"assetType",
-			_assetRendererFactory.getTypeName(
-				themeDisplay.getLocale(), _assetEntry.getClassTypeId())
+			() -> {
+				if (!_assetRendererFactory.isSupportsClassTypes()) {
+					return _assetRendererFactory.getTypeName(
+						themeDisplay.getLocale(), _assetEntry.getClassTypeId());
+				}
+
+				ClassTypeReader classTypeReader =
+					_assetRendererFactory.getClassTypeReader();
+
+				ClassType classType = classTypeReader.getClassType(
+					_assetEntry.getClassTypeId(), themeDisplay.getLocale());
+
+				return classType.getName();
+			}
 		).put(
 			"className", _assetEntry.getClassName()
 		).put(

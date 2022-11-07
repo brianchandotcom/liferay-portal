@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -51,13 +49,6 @@ public class UserGroupManagementToolbarDisplayContext
 		).setKeywords(
 			StringPool.BLANK
 		).buildString();
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

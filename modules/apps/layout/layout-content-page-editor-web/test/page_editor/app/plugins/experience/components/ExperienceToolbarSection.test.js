@@ -535,6 +535,10 @@ describe('ExperienceToolbarSection', () => {
 
 		userEvent.click(getByText('save').parentElement);
 
+		await waitForElementToBeRemoved(modal).then(() =>
+			expect(modal).not.toBeInTheDocument()
+		);
+
 		await waitFor(() => expect(serviceFetch).toHaveBeenCalledTimes(2));
 
 		expect(serviceFetch).toHaveBeenCalledWith(
@@ -552,10 +556,6 @@ describe('ExperienceToolbarSection', () => {
 			expect.objectContaining({
 				type: CREATE_SEGMENTS_EXPERIENCE,
 			})
-		);
-
-		await waitForElementToBeRemoved(modal).then(() =>
-			expect(modal).not.toBeInTheDocument()
 		);
 
 		await findByRole('list');

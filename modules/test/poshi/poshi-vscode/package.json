@@ -98,7 +98,7 @@
 		"poshi"
 	],
 	"main": "./out/extension.js",
-	"name": "@liferay/poshi-language-support",
+	"name": "poshi-language-support",
 	"publisher": "LiferayInc",
 	"repository": {
 		"type": "git",

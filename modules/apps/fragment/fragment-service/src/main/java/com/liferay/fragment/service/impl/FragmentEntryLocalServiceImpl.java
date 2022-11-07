@@ -808,11 +808,8 @@ public class FragmentEntryLocalServiceImpl
 		Matcher matcher = _pattern.matcher(fragmentEntry.getHtml());
 
 		while (matcher.find()) {
-			FileEntry fileEntry =
-				PortletFileRepositoryUtil.fetchPortletFileEntry(
-					fragmentEntry.getGroupId(),
-					fragmentCollection.getResourcesFolderId(),
-					matcher.group(1));
+			FileEntry fileEntry = fragmentCollection.getResource(
+				matcher.group(1));
 
 			if (fileEntry != null) {
 				fileEntries.add(fileEntry);

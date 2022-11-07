@@ -24,7 +24,6 @@ import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -87,11 +86,8 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			FileEntry fileEntry =
-				PortletFileRepositoryUtil.fetchPortletFileEntry(
-					fragmentEntry.getGroupId(),
-					fragmentCollection.getResourcesFolderId(),
-					matcher.group(1));
+			FileEntry fileEntry = fragmentCollection.getResource(
+				matcher.group(1));
 
 			String fileEntryURL = StringPool.BLANK;
 

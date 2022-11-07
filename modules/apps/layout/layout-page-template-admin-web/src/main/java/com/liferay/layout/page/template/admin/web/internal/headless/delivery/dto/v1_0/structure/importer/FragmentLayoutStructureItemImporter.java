@@ -861,9 +861,8 @@ public class FragmentLayoutStructureItemImporter
 		Matcher matcher = _pattern.matcher(html);
 
 		while (matcher.find()) {
-			FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
-				fragmentCollection.getGroupId(),
-				fragmentCollection.getResourcesFolderId(), matcher.group(1));
+			FileEntry fileEntry = fragmentCollection.getResource(
+				matcher.group(1));
 
 			String fileEntryURL = StringPool.BLANK;
 

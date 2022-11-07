@@ -353,6 +353,10 @@ public class FragmentEntryProcessorHelperImpl
 
 		Object value = infoFieldValue.getValue(locale);
 
+		if (value == null) {
+			return null;
+		}
+
 		if (value instanceof WebImage) {
 			WebImage webImage = (WebImage)value;
 
@@ -367,7 +371,47 @@ public class FragmentEntryProcessorHelperImpl
 			return valueJSONObject;
 		}
 
-		return _formatMappedValue(value, locale);
+		if (value instanceof Collection) {
+			Collection<Object> collection = (Collection<Object>)value;
+
+			if (collection.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			Iterator<Object> iterator = collection.iterator();
+
+			Object firstItem = iterator.next();
+
+			Class<?> firstItemClass = firstItem.getClass();
+
+			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
+				_getInfoCollectionTextFormatter(firstItemClass.getName());
+
+			return infoCollectionTextFormatter.format(collection, locale);
+		}
+
+		if (value instanceof String) {
+			return (String)value;
+		}
+
+		if (value instanceof Labeled) {
+			Labeled labeledFieldValue = (Labeled)value;
+
+			return labeledFieldValue.getLabel(locale);
+		}
+
+		Class<?> fieldValueClass = value.getClass();
+
+		InfoTextFormatter<Object> infoTextFormatter =
+			(InfoTextFormatter<Object>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoTextFormatter.class, fieldValueClass.getName());
+
+		if (infoTextFormatter != null) {
+			return infoTextFormatter.format(value, locale);
+		}
+
+		return value.toString();
 	}
 
 	@Override
@@ -403,54 +447,6 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return false;
-	}
-
-	private String _formatMappedValue(Object fieldValue, Locale locale) {
-		if (fieldValue == null) {
-			return null;
-		}
-
-		if (fieldValue instanceof Collection) {
-			Collection<Object> collection = (Collection<Object>)fieldValue;
-
-			if (collection.isEmpty()) {
-				return StringPool.BLANK;
-			}
-
-			Iterator<Object> iterator = collection.iterator();
-
-			Object firstItem = iterator.next();
-
-			Class<?> firstItemClass = firstItem.getClass();
-
-			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
-				_getInfoCollectionTextFormatter(firstItemClass.getName());
-
-			return infoCollectionTextFormatter.format(collection, locale);
-		}
-
-		if (fieldValue instanceof String) {
-			return (String)fieldValue;
-		}
-
-		if (fieldValue instanceof Labeled) {
-			Labeled labeledFieldValue = (Labeled)fieldValue;
-
-			return labeledFieldValue.getLabel(locale);
-		}
-
-		Class<?> fieldValueClass = fieldValue.getClass();
-
-		InfoTextFormatter<Object> infoTextFormatter =
-			(InfoTextFormatter<Object>)
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoTextFormatter.class, fieldValueClass.getName());
-
-		if (infoTextFormatter != null) {
-			return infoTextFormatter.format(fieldValue, locale);
-		}
-
-		return fieldValue.toString();
 	}
 
 	private long _getFileEntryId(

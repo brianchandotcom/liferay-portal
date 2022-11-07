@@ -116,13 +116,13 @@ public class FragmentEntryProcessorHelperImpl
 					InfoItemFieldValuesProvider.class,
 					layoutDisplayPageObjectProvider.getClassName());
 
-			return getMappedInfoItemFieldValue(
+			return _getMappedInfoItemFieldValue(
 				mappedField, infoItemFieldValuesProvider,
 				fragmentEntryProcessorContext.getLocale(),
 				layoutDisplayPageObjectProvider.getDisplayObject());
 		}
 		else if (isMapped(editableValueJSONObject)) {
-			return getMappedInfoItemFieldValue(
+			return _getMappedInfoItemFieldValue(
 				editableValueJSONObject, infoDisplaysFieldValues,
 				fragmentEntryProcessorContext.getLocale(),
 				fragmentEntryProcessorContext.getMode(),
@@ -130,7 +130,7 @@ public class FragmentEntryProcessorHelperImpl
 				fragmentEntryProcessorContext.getPreviewVersion());
 		}
 		else if (isMappedCollection(editableValueJSONObject)) {
-			return getMappedCollectionValue(
+			return _getMappedCollectionValue(
 				fragmentEntryProcessorContext.
 					getContextInfoItemReferenceOptional(),
 				editableValueJSONObject,
@@ -213,205 +213,6 @@ public class FragmentEntryProcessorHelperImpl
 			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
 
 		return classPKInfoItemIdentifier.getClassPK();
-	}
-
-	@Override
-	public Object getMappedCollectionValue(
-		Optional<InfoItemReference> infoItemReferenceOptional,
-		JSONObject jsonObject, Locale locale) {
-
-		if (!isMappedCollection(jsonObject)) {
-			return _jsonFactory.createJSONObject();
-		}
-
-		if (!infoItemReferenceOptional.isPresent()) {
-			return null;
-		}
-
-		InfoItemReference infoItemReference = infoItemReferenceOptional.get();
-
-		String className = _infoSearchClassMapperTracker.getClassName(
-			infoItemReference.getClassName());
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, className);
-
-		if (infoItemFieldValuesProvider == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get info item form provider for class " +
-						className);
-			}
-
-			return null;
-		}
-
-		return getMappedInfoItemFieldValue(
-			jsonObject.getString("collectionFieldId"),
-			infoItemFieldValuesProvider, locale,
-			_getInfoItem(infoItemReference));
-	}
-
-	@Override
-	public Object getMappedInfoItemFieldValue(
-			JSONObject jsonObject,
-			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap,
-			Locale locale, String mode, long previewClassPK,
-			String previewVersion)
-		throws PortalException {
-
-		if (!isMapped(jsonObject) && !isAssetDisplayPage(mode)) {
-			return _jsonFactory.createJSONObject();
-		}
-
-		long classNameId = jsonObject.getLong("classNameId");
-
-		String className = _portal.getClassName(classNameId);
-
-		long classPK = jsonObject.getLong("classPK");
-
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				infoItemIdentifier.getInfoItemServiceFilter());
-
-		if (infoItemObjectProvider == null) {
-			return null;
-		}
-
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
-
-		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
-			return null;
-		}
-
-		if (previewClassPK > 0) {
-			infoItemIdentifier = new ClassPKInfoItemIdentifier(previewClassPK);
-
-			if (Validator.isNotNull(previewVersion)) {
-				infoItemIdentifier.setVersion(previewVersion);
-			}
-		}
-
-		Object object = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
-
-		if (object == null) {
-			return null;
-		}
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			(InfoItemFieldValuesProvider<Object>)
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class, className);
-
-		if (infoItemFieldValuesProvider == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get info item form provider for class " +
-						className);
-			}
-
-			return null;
-		}
-
-		InfoItemFieldValues infoItemFieldValues = infoItemFieldValuesMap.get(
-			classPK);
-
-		if (infoItemFieldValues == null) {
-			infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(object);
-
-			infoItemFieldValuesMap.put(classPK, infoItemFieldValues);
-		}
-
-		return getMappedInfoItemFieldValue(
-			jsonObject.getString("fieldId"), infoItemFieldValuesProvider,
-			locale, object);
-	}
-
-	@Override
-	public Object getMappedInfoItemFieldValue(
-		String fieldName,
-		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
-		Object object) {
-
-		if (infoItemFieldValuesProvider == null) {
-			return null;
-		}
-
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldName);
-
-		if (infoFieldValue == null) {
-			return null;
-		}
-
-		Object value = infoFieldValue.getValue(locale);
-
-		if (value == null) {
-			return null;
-		}
-
-		if (value instanceof WebImage) {
-			WebImage webImage = (WebImage)value;
-
-			JSONObject valueJSONObject = webImage.toJSONObject();
-
-			long fileEntryId = getFileEntryId(webImage);
-
-			if (fileEntryId != 0) {
-				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
-			}
-
-			return valueJSONObject;
-		}
-
-		if (value instanceof Collection) {
-			Collection<Object> collection = (Collection<Object>)value;
-
-			if (collection.isEmpty()) {
-				return StringPool.BLANK;
-			}
-
-			Iterator<Object> iterator = collection.iterator();
-
-			Object firstItem = iterator.next();
-
-			Class<?> firstItemClass = firstItem.getClass();
-
-			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
-				_getInfoCollectionTextFormatter(firstItemClass.getName());
-
-			return infoCollectionTextFormatter.format(collection, locale);
-		}
-
-		if (value instanceof String) {
-			return (String)value;
-		}
-
-		if (value instanceof Labeled) {
-			Labeled labeledFieldValue = (Labeled)value;
-
-			return labeledFieldValue.getLabel(locale);
-		}
-
-		Class<?> fieldValueClass = value.getClass();
-
-		InfoTextFormatter<Object> infoTextFormatter =
-			(InfoTextFormatter<Object>)
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoTextFormatter.class, fieldValueClass.getName());
-
-		if (infoTextFormatter != null) {
-			return infoTextFormatter.format(value, locale);
-		}
-
-		return value.toString();
 	}
 
 	@Override
@@ -522,6 +323,202 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return null;
+	}
+
+	private Object _getMappedCollectionValue(
+		Optional<InfoItemReference> infoItemReferenceOptional,
+		JSONObject jsonObject, Locale locale) {
+
+		if (!isMappedCollection(jsonObject)) {
+			return _jsonFactory.createJSONObject();
+		}
+
+		if (!infoItemReferenceOptional.isPresent()) {
+			return null;
+		}
+
+		InfoItemReference infoItemReference = infoItemReferenceOptional.get();
+
+		String className = _infoSearchClassMapperTracker.getClassName(
+			infoItemReference.getClassName());
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						className);
+			}
+
+			return null;
+		}
+
+		return _getMappedInfoItemFieldValue(
+			jsonObject.getString("collectionFieldId"),
+			infoItemFieldValuesProvider, locale,
+			_getInfoItem(infoItemReference));
+	}
+
+	private Object _getMappedInfoItemFieldValue(
+			JSONObject jsonObject,
+			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap,
+			Locale locale, String mode, long previewClassPK,
+			String previewVersion)
+		throws PortalException {
+
+		if (!isMapped(jsonObject) && !isAssetDisplayPage(mode)) {
+			return _jsonFactory.createJSONObject();
+		}
+
+		long classNameId = jsonObject.getLong("classNameId");
+
+		String className = _portal.getClassName(classNameId);
+
+		long classPK = jsonObject.getLong("classPK");
+
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
+			return null;
+		}
+
+		if (previewClassPK > 0) {
+			infoItemIdentifier = new ClassPKInfoItemIdentifier(previewClassPK);
+
+			if (Validator.isNotNull(previewVersion)) {
+				infoItemIdentifier.setVersion(previewVersion);
+			}
+		}
+
+		Object object = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+
+		if (object == null) {
+			return null;
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			(InfoItemFieldValuesProvider<Object>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						className);
+			}
+
+			return null;
+		}
+
+		InfoItemFieldValues infoItemFieldValues = infoItemFieldValuesMap.get(
+			classPK);
+
+		if (infoItemFieldValues == null) {
+			infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(object);
+
+			infoItemFieldValuesMap.put(classPK, infoItemFieldValues);
+		}
+
+		return _getMappedInfoItemFieldValue(
+			jsonObject.getString("fieldId"), infoItemFieldValuesProvider,
+			locale, object);
+	}
+
+	private Object _getMappedInfoItemFieldValue(
+		String fieldName,
+		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
+		Object object) {
+
+		if (infoItemFieldValuesProvider == null) {
+			return null;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoFieldValue(object, fieldName);
+
+		if (infoFieldValue == null) {
+			return null;
+		}
+
+		Object value = infoFieldValue.getValue(locale);
+
+		if (value == null) {
+			return null;
+		}
+
+		if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			JSONObject valueJSONObject = webImage.toJSONObject();
+
+			long fileEntryId = getFileEntryId(webImage);
+
+			if (fileEntryId != 0) {
+				valueJSONObject.put("fileEntryId", String.valueOf(fileEntryId));
+			}
+
+			return valueJSONObject;
+		}
+
+		if (value instanceof Collection) {
+			Collection<Object> collection = (Collection<Object>)value;
+
+			if (collection.isEmpty()) {
+				return StringPool.BLANK;
+			}
+
+			Iterator<Object> iterator = collection.iterator();
+
+			Object firstItem = iterator.next();
+
+			Class<?> firstItemClass = firstItem.getClass();
+
+			InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
+				_getInfoCollectionTextFormatter(firstItemClass.getName());
+
+			return infoCollectionTextFormatter.format(collection, locale);
+		}
+
+		if (value instanceof String) {
+			return (String)value;
+		}
+
+		if (value instanceof Labeled) {
+			Labeled labeledFieldValue = (Labeled)value;
+
+			return labeledFieldValue.getLabel(locale);
+		}
+
+		Class<?> fieldValueClass = value.getClass();
+
+		InfoTextFormatter<Object> infoTextFormatter =
+			(InfoTextFormatter<Object>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoTextFormatter.class, fieldValueClass.getName());
+
+		if (infoTextFormatter != null) {
+			return infoTextFormatter.format(value, locale);
+		}
+
+		return value.toString();
 	}
 
 	private static final InfoCollectionTextFormatter<Object>

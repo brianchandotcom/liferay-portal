@@ -1,216 +1,219 @@
-const combobox = fragmentElement.querySelector('.combobox-list');
-const inputNode = combobox.querySelector('.combobox-input');
-const buttonNode = combobox.querySelector('.combobox-button');
-const optionList = combobox.querySelector('.combobox-optionList');
+const buttonElement = fragmentElement.querySelector('.btn');
+const optionListElement = fragmentElement.querySelector('.dropdown-menu');
 
-buttonNode.addEventListener("click", toggleCombobox);
-buttonNode.addEventListener("blur", handleComboboxBlur);
-inputNode.addEventListener("click", toggleCombobox);
-inputNode.addEventListener("input", handleInputChange);
-inputNode.addEventListener("blur", handleComboboxBlur);
-inputNode.addEventListener("keydown", handleComboboxKeyDown);
-optionList.addEventListener("click", handleClickOptionList);
+const labelInputElement = document.getElementById(
+	// eslint-disable-next-line no-undef
+	`${fragmentEntryLinkNamespace}-label-input`
+);
+const uiInputElement = document.getElementById(
+	// eslint-disable-next-line no-undef
+	`${fragmentEntryLinkNamespace}-ui-input`
+);
+const valueInputElement = document.getElementById(
+	// eslint-disable-next-line no-undef
+	`${fragmentEntryLinkNamespace}-value-input`
+);
 
-const allOptions = Array.from(optionList.getElementsByTagName("LI")).map((option) => {
-	return { id: option.id, textContent: option.textContent, textValue: option.textContent.toLowerCase() };
-});
+buttonElement.addEventListener('click', toggleResultList);
+buttonElement.addEventListener('blur', handleResultListBlur);
+uiInputElement.addEventListener('click', toggleResultList);
+uiInputElement.addEventListener('input', handleInputChange);
+uiInputElement.addEventListener('blur', handleResultListBlur);
+uiInputElement.addEventListener('keydown', handleInputKeyDown);
+optionListElement.addEventListener('click', handleOptionListClick);
 
-function checkIsOpenCombobox() {
-	return (
-		inputNode.getAttribute("aria-expanded") === "true" &&
-		buttonNode.getAttribute("aria-expanded") === "true"
-	);
-}
+const KEYS = {
+	ArrowDown: 'ArrowDown',
+	ArrowUp: 'ArrowUp',
+	End: 'End',
+	Enter: 'Enter',
+	Home: 'Home',
+};
 
-function closeCombobox() {
-	const currentFocusedOption =
-		document.getElementById(optionList.getAttribute(
-			"aria-activedescendant"
-		));
+const optionList = Array.from(optionListElement.getElementsByTagName('LI')).map(
+	(option) => ({
+		id: option.id,
+		textContent: option.textContent,
+		textValue: option.textContent.toLowerCase(),
+	})
+);
 
-	optionList.setAttribute("aria-activedescendant", "");
-
-	if (currentFocusedOption) {
-		currentFocusedOption.removeAttribute("aria-selected");
-	}
-
-	optionList.style.display = "none";
-
-	inputNode.setAttribute("aria-expanded", "false");
-	buttonNode.setAttribute("aria-expanded", "false");
-}
-
-function createOptionElement(option) {
-	const optionElement = document.createElement('li');
-	optionElement.id = option.id;
-	optionElement.classList.add('dropdown-item');
-	optionElement.setAttribute('role', 'option');
-	optionElement.textContent = option.textContent;
-	return optionElement;
-}
-
-function handleClickOptionList(event){
-	let optionSelected = null;
+function handleOptionListClick(event) {
+	let selectedOption = null;
 
 	if (event.target.matches('.dropdown-item')) {
-		optionSelected = event.target;
+		selectedOption = event.target;
 	}
 	else if (event.target.closest('.dropdown-item')) {
-		optionSelected = event.target.closest('.dropdown-item');
+		selectedOption = event.target.closest('.dropdown-item');
 	}
 
-	if (optionSelected) {
-		setSelectedOption(optionSelected);
-	}
-}
-
-function handleComboboxBlur() {
-	if (checkIsOpenCombobox()) {
-		setTimeout(() => closeCombobox(),500);
+	if (selectedOption) {
+		setSelectedOption(selectedOption);
 	}
 }
 
-function handleComboboxKeyDown(event) {
-	if (!optionList.firstElementChild) {
+function handleResultListBlur() {
+	if (checkIsOpenResultList()) {
+		setTimeout(() => closeResultList(), 500);
+	}
+}
+
+function handleInputKeyDown(event) {
+	if (!optionListElement.firstElementChild) {
 		return;
 	}
 
-	const keyOptions = [
-		"ArrowDown", "ArrowUp", "Home", "End"
-	]
+	const currentFocusedOption = document.getElementById(
+		optionListElement.getAttribute('aria-activedescendant')
+	);
 
-	const currentFocusedOption =
-		document.getElementById(optionList.getAttribute(
-			"aria-activedescendant"
-		));
-
-	if (keyOptions.includes(event.key)) {
-		if (!checkIsOpenCombobox()) {
-			openCombobox();
-		}
-
+	if (KEYS[event.key]) {
+		openResultList();
 		event.preventDefault();
 	}
 
-	switch (event.key) {
-		case "ArrowDown":
-			if (event.altKey) {
-				break;
-			}
-
-			if (currentFocusedOption) {
-				setActiveDescendantCombobox(currentFocusedOption.nextElementSibling || optionList.firstElementChild);
-			}
-			else {
-				setActiveDescendantCombobox(optionList.firstElementChild);
-			}
-			break;
-		case "ArrowUp":
-			if (currentFocusedOption) {
-				setActiveDescendantCombobox(currentFocusedOption.previousElementSibling || optionList.lastElementChild);
-			}
-			else {
-				setActiveDescendantCombobox(optionList.lastElementChild);
-			}
-			break;
-
-		case "Home":
-			setActiveDescendantCombobox(optionList.firstElementChild);
-			break;
-		case "End":
-			setActiveDescendantCombobox(optionList.lastElementChild);
-			break;
-		case "Enter":
-			if (!currentFocusedOption) {
-				break;
-			}
-
-			setSelectedOption(currentFocusedOption);
+	if (event.key === KEYS.ArrowDown && event.altKey) {
+		if (currentFocusedOption) {
+			setFocusedOption(
+				currentFocusedOption.nextElementSibling ||
+					optionListElement.firstElementChild
+			);
+		}
+		else {
+			setFocusedOption(optionListElement.firstElementChild);
+		}
+	}
+	else if (event.key === KEYS.ArrowUp) {
+		if (currentFocusedOption) {
+			setFocusedOption(
+				currentFocusedOption.previousElementSibling ||
+					optionListElement.lastElementChild
+			);
+		}
+		else {
+			setFocusedOption(optionListElement.lastElementChild);
+		}
+	}
+	else if (event.key === KEYS.Home) {
+		setFocusedOption(optionListElement.firstElementChild);
+	}
+	else if (event.key === KEYS.End) {
+		setFocusedOption(optionListElement.lastElementChild);
+	}
+	else if (event.key === KEYS.Enter && currentFocusedOption) {
+		setSelectedOption(currentFocusedOption);
 	}
 }
 
 function handleInputChange() {
-	if (!checkIsOpenCombobox()) {
-		openCombobox();
-	}
+	openResultList();
 
-	optionList.setAttribute("aria-activedescendant", "");
+	const filterValue = uiInputElement.value.toLowerCase();
 
-	const filterValue = inputNode.value.toLowerCase();
-
-	optionList.innerHTML = "";
+	optionListElement.innerHTML = '';
 
 	if (filterValue) {
-		allOptions.forEach((option) => {
-			if (
-				option.textValue.startsWith(filterValue)
-			) {
-				optionList.appendChild(createOptionElement(option));
+		optionList.forEach((option) => {
+			if (option.textValue.startsWith(filterValue)) {
+				optionListElement.appendChild(createOptionElement(option));
 			}
-
 		});
 
-		allOptions.forEach((option) => {
-			if (
-				option.textValue.includes(filterValue)
-			) {
+		optionList.forEach((option) => {
+			if (option.textValue.includes(filterValue)) {
 				if (!document.getElementById(option.id)) {
-					optionList.appendChild(createOptionElement(option));
+					optionListElement.appendChild(createOptionElement(option));
 				}
 			}
 		});
 	}
 	else {
-		allOptions.forEach((option) => optionList.appendChild(createOptionElement(option)));
+		optionList.forEach((option) => {
+			optionListElement.appendChild(createOptionElement(option));
+		});
 	}
+
+	setFocusedOption(optionListElement.firstElementChild);
 }
 
-function openCombobox() {
-	optionList.style.display = "block";
-
-	inputNode.setAttribute("aria-expanded", "true");
-	buttonNode.setAttribute("aria-expanded", "true");
-
-	handleInputChange();
-}
-
-function setActiveDescendantCombobox(option) {
-	const currentFocusedOption =
-		document.getElementById(optionList.getAttribute(
-			"aria-activedescendant"
-		));
+function setFocusedOption(optionElement) {
+	const currentFocusedOption = document.getElementById(
+		optionListElement.getAttribute('aria-activedescendant')
+	);
 
 	if (currentFocusedOption) {
-		currentFocusedOption.removeAttribute("aria-selected");
+		currentFocusedOption.removeAttribute('aria-selected');
 	}
 
-	optionList.setAttribute("aria-activedescendant", option.id);
-	option.setAttribute("aria-selected", "true");
+	if (optionElement) {
+		optionListElement.setAttribute(
+			'aria-activedescendant',
+			optionElement.id
+		);
 
-	option.scrollIntoView({ block: "end" });
+		optionElement.setAttribute('aria-selected', 'true');
+		optionElement.scrollIntoView({block: 'center'});
+	}
 }
 
-function setSelectedOption (option) {
-	const hiddenInput = document.getElementById("hiddenInput");
-	const selectedOption = document.getElementById(hiddenInput.id);
+function createOptionElement(option) {
+	const optionElement = document.createElement('li');
+
+	optionElement.id = option.id;
+	optionElement.textContent = option.textContent;
+
+	optionElement.classList.add('dropdown-item');
+	optionElement.setAttribute('role', 'option');
+
+	return optionElement;
+}
+
+function setSelectedOption(option) {
+	const selectedOption = document.getElementById(valueInputElement.id);
 
 	if (selectedOption) {
-		selectedOption.classList.remove("active");
+		selectedOption.classList.remove('active');
 	}
 
-	option.classList.add("active");
+	option.classList.add('active');
 
-	inputNode.value = option.textContent;
-	hiddenInput.value = option.id;
+	uiInputElement.value = option.textContent;
 
-	closeCombobox();
+	labelInputElement.value = option.textContent;
+	valueInputElement.value = option.id;
+
+	closeResultList();
 }
 
-function toggleCombobox() {
-	if (checkIsOpenCombobox()) {
-		closeCombobox();
+function checkIsOpenResultList() {
+	return (
+		uiInputElement.getAttribute('aria-expanded') === 'true' &&
+		buttonElement.getAttribute('aria-expanded') === 'true'
+	);
+}
+
+function openResultList() {
+	optionListElement.style.display = 'block';
+
+	uiInputElement.setAttribute('aria-expanded', 'true');
+	buttonElement.setAttribute('aria-expanded', 'true');
+}
+
+function closeResultList() {
+	setFocusedOption(null);
+
+	optionListElement.style.display = 'none';
+
+	uiInputElement.setAttribute('aria-expanded', 'false');
+	buttonElement.setAttribute('aria-expanded', 'false');
+}
+
+function toggleResultList() {
+	if (checkIsOpenResultList()) {
+		closeResultList();
 	}
 	else {
-		openCombobox();
+		openResultList();
 	}
 }

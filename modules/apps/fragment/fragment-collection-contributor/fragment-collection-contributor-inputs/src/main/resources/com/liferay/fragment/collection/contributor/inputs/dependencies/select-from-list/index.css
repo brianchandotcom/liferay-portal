@@ -1,9 +1,9 @@
-.combobox-optionList {
+.select-from-list .dropdown-menu {
 	display: none;
 	width: 100%;
 }
 
-[aria-selected="true"] {
+.select-from-list .dropdown-item[aria-selected="true"] {
 	background-color: #f0f5ff;
 	color: #272833;
 }

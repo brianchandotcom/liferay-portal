@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Leonardo Barros
  */
 @Component(service = KaleoTaskAssignmentSelectorRegistry.class)
-public class KaleoTaskAssignmentSelectorTracker
+public class KaleoTaskAssignmentSelectorRegistryImpl
 	implements KaleoTaskAssignmentSelectorRegistry {
 
 	@Override

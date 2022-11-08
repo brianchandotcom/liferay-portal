@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.renderer.react.internal.renderer;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -117,6 +118,7 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 				_renderFragmentEntry(
 					fragmentEntryLink,
 					fragmentRendererContext.getFragmentElementId(),
+					fragmentRendererContext,
 					HashMapBuilder.<String, Object>put(
 						"configuration", configurationJSONObject
 					).build(),
@@ -163,6 +165,7 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 
 	private String _renderFragmentEntry(
 			FragmentEntryLink fragmentEntryLink, String fragmentElementId,
+			FragmentRendererContext fragmentRendererContext,
 			Map<String, Object> data, HttpServletRequest httpServletRequest)
 		throws IOException {
 
@@ -190,43 +193,55 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		sb.append("</div>");
 
 		if (Validator.isNotNull(fragmentEntryLink.getCss())) {
-			String outputKey = fragmentEntryLink.getFragmentEntryId() + "_CSS";
+			if (Objects.equals(
+					fragmentRendererContext.getMode(),
+					FragmentEntryLinkConstants.EDIT)) {
 
-			OutputData outputData = (OutputData)httpServletRequest.getAttribute(
-				WebKeys.OUTPUT_DATA);
-
-			boolean cssLoaded = false;
-
-			if (outputData != null) {
-				Set<String> outputKeys = outputData.getOutputKeys();
-
-				cssLoaded = outputKeys.contains(outputKey);
-
-				StringBundler cssSB = outputData.getDataSB(
-					outputKey, StringPool.BLANK);
-
-				if (cssSB != null) {
-					cssLoaded = Objects.equals(
-						cssSB.toString(), fragmentEntryLink.getCss());
-				}
-			}
-			else {
-				outputData = new OutputData();
-			}
-
-			if (!cssLoaded) {
 				sb.append("<style>");
 				sb.append(fragmentEntryLink.getCss());
 				sb.append("</style>");
+			}
+			else {
+				String outputKey =
+					fragmentEntryLink.getFragmentEntryId() + "_CSS";
 
-				outputData.addOutputKey(outputKey);
+				OutputData outputData =
+					(OutputData)httpServletRequest.getAttribute(
+						WebKeys.OUTPUT_DATA);
 
-				outputData.setDataSB(
-					outputKey, StringPool.BLANK,
-					new StringBundler(fragmentEntryLink.getCss()));
+				boolean cssLoaded = false;
 
-				httpServletRequest.setAttribute(
-					WebKeys.OUTPUT_DATA, outputData);
+				if (outputData != null) {
+					Set<String> outputKeys = outputData.getOutputKeys();
+
+					cssLoaded = outputKeys.contains(outputKey);
+
+					StringBundler cssSB = outputData.getDataSB(
+						outputKey, StringPool.BLANK);
+
+					if (cssSB != null) {
+						cssLoaded = Objects.equals(
+							cssSB.toString(), fragmentEntryLink.getCss());
+					}
+				}
+				else {
+					outputData = new OutputData();
+				}
+
+				if (!cssLoaded) {
+					sb.append("<style>");
+					sb.append(fragmentEntryLink.getCss());
+					sb.append("</style>");
+
+					outputData.addOutputKey(outputKey);
+
+					outputData.setDataSB(
+						outputKey, StringPool.BLANK,
+						new StringBundler(fragmentEntryLink.getCss()));
+
+					httpServletRequest.setAttribute(
+						WebKeys.OUTPUT_DATA, outputData);
+				}
 			}
 		}
 

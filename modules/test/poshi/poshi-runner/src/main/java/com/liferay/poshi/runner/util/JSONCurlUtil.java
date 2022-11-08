@@ -152,8 +152,9 @@ public class JSONCurlUtil {
 			sb.append(_requestMethod);
 			sb.append(" ");
 			sb.append(_getRequestOptionsString());
-			sb.append(" ");
-			sb.append(_quote(_requestURL));
+			sb.append(" '");
+			sb.append(_requestURL);
+			sb.append("'");
 
 			Process process = ExecUtil.executeCommands(
 				true, new File("."), 1000 * 60 * 15, sb.toString());
@@ -230,16 +231,6 @@ public class JSONCurlUtil {
 			}
 
 			System.out.println(message);
-		}
-
-		private String _quote(String value) {
-			char quoteChar = '\'';
-
-			if (OSDetector.isWindows()) {
-				quoteChar = '\"';
-			}
-
-			return quoteChar + value + quoteChar;
 		}
 
 		private void _setRequestOptions(List<String> tokens) {

@@ -18,8 +18,6 @@ import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Daniel Sanz
  */
@@ -32,8 +30,7 @@ public interface CookiesConfigurationHelper {
     ThemeDisplay themeDisplay) throws Exception;
 
 	public CookiesPreferenceHandlingConfiguration
-			getCookiesPreferenceHandlingConfiguration(
-				HttpServletRequest httpServletRequest)
+			getCookiesPreferenceHandlingConfiguration(ThemeDisplay themeDisplay)
 		throws Exception;
 
 }

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -119,11 +121,14 @@ public class CookiesPreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
 				_cookiesConfigurationHelper.
-					getCookiesPreferenceHandlingConfiguration(
-						httpServletRequest);
+					getCookiesPreferenceHandlingConfiguration(themeDisplay);
 
 		Map<String, String> cookieValues = _getCookieValues(
 			httpServletRequest.getCookies());

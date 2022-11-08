@@ -17,8 +17,8 @@ package com.liferay.object.rest.odata.entity.v1_0;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -111,10 +111,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 					PropsUtil.get("feature.flag.LPS-164801"))) {
 
 				String objectRelationshipERCFieldName =
-					ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-						objectField,
+					ObjectFieldSettingUtil.getValue(
 						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+							NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+						objectField);
 
 				_entityFieldsMap.put(
 					objectRelationshipERCFieldName,

@@ -38,6 +38,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
 import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceTracker;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -64,7 +65,6 @@ import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.Column;
@@ -1362,10 +1362,10 @@ public class ObjectEntryLocalServiceImpl
 					objectRelationship.getObjectDefinitionId1());
 
 			String objectRelationshipERCFieldName =
-				ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-					objectField,
+				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+					objectField);
 
 			if (objectDefinition.isSystem()) {
 				SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =

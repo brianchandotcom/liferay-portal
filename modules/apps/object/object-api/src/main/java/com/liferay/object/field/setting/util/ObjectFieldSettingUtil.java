@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.util;
+package com.liferay.object.field.setting.util;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -22,17 +22,13 @@ import java.util.Objects;
 /**
  * @author Carolina Barbosa
  */
-public class ObjectFieldSettingValueUtil {
+public class ObjectFieldSettingUtil {
 
-	public static String getObjectFieldSettingValue(
-		ObjectField objectField, String objectFieldSettingName) {
-
+	public static String getValue(String name, ObjectField objectField) {
 		for (ObjectFieldSetting objectFieldSetting :
 				objectField.getObjectFieldSettings()) {
 
-			if (Objects.equals(
-					objectFieldSetting.getName(), objectFieldSettingName)) {
-
+			if (Objects.equals(objectFieldSetting.getName(), name)) {
 				return objectFieldSetting.getValue();
 			}
 		}

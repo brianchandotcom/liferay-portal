@@ -671,6 +671,7 @@ function computeHover({
 	targetItem,
 	targetRefs,
 }) {
+
 	// Not dragging over direct child
 	// We do not want to alter state here,
 	// as dnd generate extra hover events when

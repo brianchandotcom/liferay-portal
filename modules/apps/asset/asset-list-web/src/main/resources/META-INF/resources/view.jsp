@@ -100,6 +100,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
+									verticalCard="<%= new AssetListEntryVerticalCard(assetListDisplayContext, assetListEntry, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>

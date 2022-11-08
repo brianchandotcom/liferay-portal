@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -147,13 +147,13 @@ function PageTypeSelector({
 						}}
 						onActiveChange={setAddPageDropdownActive}
 						trigger={
-							<ClayButton
-								aria-haspopup="true"
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('add-page')}
 								className="add-page-button"
 								displayType="unstyled"
-							>
-								<ClayIcon symbol="plus" />
-							</ClayButton>
+								size="sm"
+								symbol="plus"
+							/>
 						}
 					>
 						<ClayDropDown.ItemList>

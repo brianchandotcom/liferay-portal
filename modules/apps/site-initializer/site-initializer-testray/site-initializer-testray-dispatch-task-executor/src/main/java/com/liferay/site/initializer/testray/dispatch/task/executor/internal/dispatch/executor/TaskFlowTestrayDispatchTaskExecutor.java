@@ -331,6 +331,48 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 				testrayCaseResultGroups.addAll(
 					testrayCaseResultIssuesMap.values());
 			}
+
+			Collections.sort(
+				testrayCaseResultGroups,
+				new Comparator<List<ObjectEntry>>() {
+
+					public int compare(
+						List<ObjectEntry> testrayCaseResultObjectEntries1,
+						List<ObjectEntry> testrayCaseResultObjectEntries2) {
+
+						int score1 = 0;
+						int score2 = 0;
+
+						try {
+							for (ObjectEntry objectEntry :
+									testrayCaseResultObjectEntries1) {
+
+								score1 += (int)_getProperty(
+									"priority", objectEntry);
+							}
+
+							for (ObjectEntry objectEntry :
+									testrayCaseResultObjectEntries2) {
+
+								score2 += (int)_getProperty(
+									"priority", objectEntry);
+							}
+						}
+						catch (Exception exception) {
+							throw new RuntimeException(exception);
+						}
+
+						if (score1 > score2) {
+							return -1;
+						}
+						else if (score1 < score2) {
+							return 1;
+						}
+
+						return 0;
+					}
+
+				});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

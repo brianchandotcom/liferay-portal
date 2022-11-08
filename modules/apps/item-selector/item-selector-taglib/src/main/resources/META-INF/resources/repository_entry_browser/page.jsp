@@ -123,8 +123,6 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			<div>
 		</c:otherwise>
 	</c:choose>
-		<c:choose>
-			<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160919")) %>'>
 				<react:component
 					data='<%=
 						HashMapBuilder.<String, Object>put(
@@ -165,46 +163,6 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 					%>'
 					module="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser"
 				/>
-			</c:when>
-			<c:when test="<%= showDragAndDropZone && !showSearchInfo %>">
-				<react:component
-					data='<%=
-						HashMapBuilder.<String, Object>put(
-							"closeCaption", LanguageUtil.get(request, tabName)
-						).put(
-							"editImageURL",
-							() -> {
-								if (editImageURL != null) {
-									return editImageURL.toString();
-								}
-
-								return null;
-							}
-						).put(
-							"itemSelectedEventName", itemSelectedEventName
-						).put(
-							"maxFileSize", maxFileSize
-						).put(
-							"mimeTypeRestriction", mimeTypeRestriction
-						).put(
-							"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
-						).put(
-							"uploadItemURL",
-							() -> {
-								if (uploadURL != null) {
-									return uploadURL.toString();
-								}
-
-								return null;
-							}
-						).put(
-							"validExtensions", StringUtil.merge(extensions)
-						).build()
-					%>'
-					module="item_selector_uploader/js/SingleFileUploader"
-				/>
-			</c:when>
-		</c:choose>
 	</div>
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">
@@ -668,36 +626,3 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 
 	<div class="item-selector-preview-container"></div>
 </clay:container-fluid>
-
-<c:if test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160919")) %>'>
-	<aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
-		var itemSelector = new ItemSelectorRepositoryEntryBrowser.default({
-			closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
-
-			<c:if test="<%= editImageURL != null %>">
-				editImageURL: '<%= editImageURL.toString() %>',
-			</c:if>
-
-			itemSelectorSingleFileUploaderEnabled: <%= true %>,
-
-			maxFileSize: '<%= maxFileSize %>',
-
-			rootNode: '#<%= randomNamespace %>ItemSelectorContainer',
-
-			validExtensions:
-				'<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>',
-
-			<c:if test="<%= uploadURL != null %>">
-				uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
-				uploadItemURL: '<%= uploadURL.toString() %>',
-			</c:if>
-		});
-
-		itemSelector.on('selectedItem', (event) => {
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= itemSelectedEventName %>',
-				event
-			);
-		});
-	</aui:script>
-	</c:if>

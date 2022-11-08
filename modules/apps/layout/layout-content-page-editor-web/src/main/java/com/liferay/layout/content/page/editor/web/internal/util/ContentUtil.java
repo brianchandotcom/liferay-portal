@@ -233,20 +233,32 @@ public class ContentUtil {
 
 		return jsonObject.put(
 			"viewUsagesURL",
-			PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					httpServletRequest,
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/view_layout_classed_model_usages.jsp"
-			).setParameter(
-				"className", layoutClassedModelUsage.getClassName()
-			).setParameter(
-				"classPK", layoutClassedModelUsage.getClassPK()
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString());
+			() -> {
+				if (!ModelResourcePermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						layoutClassedModelUsage.getClassName(),
+						layoutClassedModelUsage.getClassPK(),
+						ActionKeys.VIEW)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						httpServletRequest,
+						ContentPageEditorPortletKeys.
+							CONTENT_PAGE_EDITOR_PORTLET,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/view_layout_classed_model_usages.jsp"
+				).setParameter(
+					"className", layoutClassedModelUsage.getClassName()
+				).setParameter(
+					"classPK", layoutClassedModelUsage.getClassPK()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString();
+			});
 	}
 
 	private static AssetRendererFactory<?> _getAssetRendererFactory(

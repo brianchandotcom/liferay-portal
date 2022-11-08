@@ -49,6 +49,7 @@ import com.liferay.knowledge.base.internal.util.KBCommentUtil;
 import com.liferay.knowledge.base.internal.util.KBSectionEscapeUtil;
 import com.liferay.knowledge.base.internal.util.constants.KnowledgeBaseConstants;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBArticleTable;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
@@ -56,6 +57,7 @@ import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -79,8 +81,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -91,9 +95,13 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -342,6 +350,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void checkKBArticles() throws PortalException {
+		_checkKBArticlesByExpirationDate(new Date());
 	}
 
 	@Override
@@ -1543,6 +1552,20 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
+	private void _checkKBArticlesByExpirationDate(Date expirationDate)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Expiring file entries with expiration date previous to " +
+					expirationDate);
+		}
+
+		_companyLocalService.forEachCompanyId(
+			companyId -> _expireKBArticlesByCompanyId(
+				companyId, expirationDate, new ServiceContext()));
+	}
+
 	private void _deleteAssets(KBArticle kbArticle) throws PortalException {
 		_assetEntryLocalService.deleteEntry(
 			KBArticle.class.getName(), kbArticle.getClassPK());
@@ -1565,6 +1588,92 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			unsubscribeKBArticle(
 				subscription.getUserId(), subscription.getClassPK());
 		}
+	}
+
+	private void _expireKBArticlesByCompanyId(
+			long companyId, Date expirationDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		long userId = _getActiveCompanyAdminUserId(companyId);
+
+		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
+			companyId, expirationDate);
+
+		for (KBArticle kbArticle : kbArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Expiring KB Article ", kbArticle.getKbArticleId(),
+						" with expiration date ",
+						kbArticle.getExpirationDate()));
+			}
+
+			updateStatus(
+				userId, kbArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_EXPIRED, serviceContext);
+		}
+	}
+
+	private long _getActiveCompanyAdminUserId(long companyId)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		Long userId = _getActiveUser(
+			_userLocalService.getRoleUserIds(role.getRoleId()));
+
+		if (userId != null) {
+			return userId;
+		}
+
+		List<Group> groups = _groupLocalService.getRoleGroups(role.getRoleId());
+
+		for (Group group : groups) {
+			if (group.isDepot() || group.isRegularSite()) {
+				userId = _getActiveUser(
+					_groupLocalService.getUserPrimaryKeys(group.getGroupId()));
+
+				if (userId != null) {
+					return userId;
+				}
+			}
+			else if (group.isOrganization()) {
+				userId = _getActiveUser(
+					_organizationLocalService.getUserPrimaryKeys(
+						group.getClassPK()));
+
+				if (userId != null) {
+					return userId;
+				}
+			}
+			else if (group.isUserGroup()) {
+				userId = _getActiveUser(
+					_userGroupLocalService.getUserPrimaryKeys(
+						group.getClassPK()));
+
+				if (userId != null) {
+					return userId;
+				}
+			}
+		}
+
+		throw new PortalException(
+			"Unable to find an administrator user in company " + companyId);
+	}
+
+	private Long _getActiveUser(long[] userIds) {
+		if (!ArrayUtil.isEmpty(userIds)) {
+			for (long userId : userIds) {
+				User user = _userLocalService.fetchUser(userId);
+
+				if ((user != null) && user.isActive()) {
+					return userId;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private void _getAllDescendantKBArticles(
@@ -1666,6 +1775,23 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		).setParameter(
 			"selectedItemId", kbArticle.getResourcePrimKey()
 		).buildString();
+	}
+
+	private List<KBArticle> _getKBArticlesByCompanyIdAndExpirationDate(
+		long companyId, Date expirationDate) {
+
+		return kbArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				KBArticleTable.INSTANCE
+			).from(
+				KBArticleTable.INSTANCE
+			).where(
+				KBArticleTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					KBArticleTable.INSTANCE.expirationDate.lte(expirationDate)
+				)
+			));
 	}
 
 	private KBGroupServiceConfiguration _getKBGroupServiceConfiguration(
@@ -2181,6 +2307,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
@@ -2214,6 +2343,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private KBFolderPersistence _kbFolderPersistence;
 
 	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference
@@ -2226,10 +2358,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private ResourceLocalService _resourceLocalService;
 
 	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

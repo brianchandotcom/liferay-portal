@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -91,13 +89,6 @@ public class SitesManagementToolbarDisplayContext
 		).setKeywords(
 			StringPool.BLANK
 		).buildString();
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

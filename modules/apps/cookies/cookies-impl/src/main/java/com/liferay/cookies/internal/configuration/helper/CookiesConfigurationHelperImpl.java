@@ -18,16 +18,14 @@ import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Daniel Sanz
@@ -36,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CookiesConfigurationHelperImpl
 	implements CookiesConfigurationHelper {
 
-	@Override
+  @Override
 	public CookiesPreferenceHandlingConfiguration
 			getCookiesPreferenceHandlingConfiguration(
 				HttpServletRequest httpServletRequest)
@@ -46,13 +44,10 @@ public class CookiesConfigurationHelperImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
-			themeDisplay.getServerName());
+    LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
+      themeDisplay.getServerName());
 
-		if ((virtualHost != null) && (virtualHost.getLayoutSetId() != 0)) {
-			LayoutSet layoutSet = (LayoutSet)httpServletRequest.getAttribute(
-				WebKeys.VIRTUAL_HOST_LAYOUT_SET);
-
+    if (layoutSet != null) {
 			Group group = layoutSet.getGroup();
 
 			return _configurationProvider.getGroupConfiguration(
@@ -68,7 +63,7 @@ public class CookiesConfigurationHelperImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@Reference
-	private VirtualHostLocalService _virtualHostLocalService;
+  @Reference
+  private LayoutSetLocalService _LayoutSetLocalService;
 
 }

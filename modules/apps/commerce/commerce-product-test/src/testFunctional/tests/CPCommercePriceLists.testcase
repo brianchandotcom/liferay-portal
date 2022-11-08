@@ -44,16 +44,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-		Type(
-			key_title = "Add SKUs",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "'MIN55861'");
-
-		WaitForElementPresent(
-			key_text = "Select",
-			locator1 = "Button#ANY");
-
-		Button.clickSelect();
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "MIN55861",
+			title = "Add SKUs");
 
 		Refresh();
 
@@ -928,16 +921,11 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-		var priceListEntryProduct = '''"MIN55861"''';
+		var priceListEntryProduct = "MIN55861";
 
-		Type(
-			key_title = "Add SKUs",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "${priceListEntryProduct}");
-
-		AssertElementPresent(locator1 = "Button#SELECT");
-
-		Button.clickSelect();
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "${priceListEntryProduct}",
+			title = "Add SKUs");
 
 		Refresh();
 
@@ -953,14 +941,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-		Type(
-			key_title = "Add SKUs",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "${priceListEntryProduct}");
-
-		AssertElementPresent(locator1 = "Button#SELECT");
-
-		Button.clickSelect();
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "${priceListEntryProduct}",
+			title = "Add SKUs");
 
 		Refresh();
 
@@ -2048,12 +2031,9 @@ definition {
 
 		var sku = "MIN55861";
 
-		Type(
-			key_title = "Add SKUs",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "'MIN55861'");
-
-		Button.clickSelect();
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "${sku}",
+			title = "Add SKUs");
 
 		Refresh();
 
@@ -2394,16 +2374,9 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 		for (var sku : list "MIN55861,MIN93015") {
-			var quotedSku = '''"${sku}"''';
-
-			Type(
-				key_title = "Add SKUs",
-				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-				value1 = "${quotedSku}");
-
-			AssertElementPresent(locator1 = "Button#SELECT");
-
-			Button.clickSelect();
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "${sku}",
+				title = "Add SKUs");
 
 			Refresh();
 

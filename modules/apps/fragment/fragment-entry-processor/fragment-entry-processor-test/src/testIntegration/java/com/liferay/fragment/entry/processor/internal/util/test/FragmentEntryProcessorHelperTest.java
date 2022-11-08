@@ -15,7 +15,6 @@
 package com.liferay.fragment.entry.processor.internal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -27,20 +26,12 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.type.CategoriesInfoFieldType;
-import com.liferay.info.field.type.ImageInfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.formatter.InfoTextFormatter;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.type.KeyLocalizedLabelPair;
-import com.liferay.info.type.WebImage;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -66,7 +57,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -79,9 +69,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -92,11 +82,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Rubén Pulido
@@ -117,6 +102,110 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
+	public void testGetFieldValueFromCollectionValue() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			"one, two, three",
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "AssetTag_tagNames"
+				)));
+	}
+
+	@Test
+	public void testGetFieldValueFromEmptyCollectionValue() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "AssetCategory_categories"
+				)));
+	}
+
+	@Test
+	public void testGetFieldValueFromLabeledValue() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName", "Custom Title");
+
+		Assert.assertEquals(
+			"Custom Title",
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "title"
+				)));
+	}
+
+	@Test
+	public void testGetFieldValueFromNullValue() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
+
+		Assert.assertNull(
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "NoExistingFieldId"
+				)));
+	}
+
+	@Test
+	public void testGetFieldValueFromWebImage() throws Exception {
+		String fieldId = "ImageFieldName";
+
+		JournalArticle journalArticle = _addJournalArticle(
+			_addImageFileEntry(), fieldId, RandomTestUtil.randomString());
+
+		Object actual = _getFieldValue(
+			JSONUtil.put(
+				"className", JournalArticle.class.getName()
+			).put(
+				"classNameId",
+				_portal.getClassNameId(JournalArticle.class.getName())
+			).put(
+				"classPK", journalArticle.getResourcePrimKey()
+			).put(
+				"fieldId", fieldId
+			));
+
+		Assert.assertTrue(actual instanceof JSONObject);
+	}
+
+	@Test
 	public void testGetFileEntryIdClassNameClassPKDLImage() throws Exception {
 		FileEntry fileEntry = _addImageFileEntry();
 
@@ -131,7 +220,8 @@ public class FragmentEntryProcessorHelperTest {
 		throws Exception {
 
 		JournalArticle journalArticle = _addJournalArticle(
-			_addImageFileEntry(), "ImageFieldName");
+			_addImageFileEntry(), "ImageFieldName",
+			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			0L,
@@ -158,7 +248,8 @@ public class FragmentEntryProcessorHelperTest {
 
 		String fieldId = "ImageFieldName";
 
-		JournalArticle journalArticle = _addJournalArticle(fileEntry, fieldId);
+		JournalArticle journalArticle = _addJournalArticle(
+			fileEntry, fieldId, RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
@@ -176,7 +267,8 @@ public class FragmentEntryProcessorHelperTest {
 
 		String fieldId = "ImageFieldName";
 
-		JournalArticle journalArticle = _addJournalArticle(fileEntry, fieldId);
+		JournalArticle journalArticle = _addJournalArticle(
+			fileEntry, fieldId, RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(),
@@ -186,188 +278,6 @@ public class FragmentEntryProcessorHelperTest {
 					new ClassPKInfoItemIdentifier(
 						journalArticle.getResourcePrimKey())),
 				fieldId, LocaleUtil.getSiteDefault()));
-	}
-
-	@Test
-	public void testGetMappedInfoItemFieldValueFromCollectionValue() {
-		String localizedCategoryName1 = RandomTestUtil.randomString();
-		String localizedCategoryName2 = RandomTestUtil.randomString();
-
-		_assertGetMappedInfoItemFieldValue(
-			localizedCategoryName1 + StringPool.COMMA_AND_SPACE +
-				localizedCategoryName2,
-			InfoField.builder(
-			).infoFieldType(
-				CategoriesInfoFieldType.INSTANCE
-			).namespace(
-				AssetCategory.class.getSimpleName()
-			).name(
-				RandomTestUtil.randomString()
-			).labelInfoLocalizedValue(
-				null
-			).build(),
-			LocaleUtil.SPAIN,
-			Arrays.asList(
-				new KeyLocalizedLabelPair(
-					RandomTestUtil.randomString(),
-					InfoLocalizedValue.<String>builder(
-					).defaultLocale(
-						LocaleUtil.US
-					).values(
-						HashMapBuilder.put(
-							LocaleUtil.GERMANY, RandomTestUtil.randomString()
-						).put(
-							LocaleUtil.SPAIN, localizedCategoryName1
-						).put(
-							LocaleUtil.US, RandomTestUtil.randomString()
-						).build()
-					).build()),
-				new KeyLocalizedLabelPair(
-					RandomTestUtil.randomString(),
-					InfoLocalizedValue.<String>builder(
-					).defaultLocale(
-						LocaleUtil.US
-					).values(
-						HashMapBuilder.put(
-							LocaleUtil.GERMANY, RandomTestUtil.randomString()
-						).put(
-							LocaleUtil.SPAIN, localizedCategoryName2
-						).put(
-							LocaleUtil.US, RandomTestUtil.randomString()
-						).build()
-					).build())));
-	}
-
-	@Test
-	public void testGetMappedInfoItemFieldValueFromEmptyCollectionValue() {
-		_assertGetMappedInfoItemFieldValue(
-			StringPool.BLANK,
-			InfoField.builder(
-			).infoFieldType(
-				CategoriesInfoFieldType.INSTANCE
-			).namespace(
-				AssetCategory.class.getSimpleName()
-			).name(
-				RandomTestUtil.randomString()
-			).labelInfoLocalizedValue(
-				null
-			).build(),
-			LocaleUtil.SPAIN, Collections.emptyList());
-	}
-
-	@Test
-	public void testGetMappedInfoItemFieldValueFromLabeledValue() {
-		String expected = RandomTestUtil.randomString();
-
-		_assertGetMappedInfoItemFieldValue(
-			expected,
-			InfoField.builder(
-			).infoFieldType(
-				CategoriesInfoFieldType.INSTANCE
-			).namespace(
-				AssetCategory.class.getSimpleName()
-			).name(
-				RandomTestUtil.randomString()
-			).labelInfoLocalizedValue(
-				null
-			).build(),
-			LocaleUtil.SPAIN,
-			new KeyLocalizedLabelPair(
-				RandomTestUtil.randomString(),
-				InfoLocalizedValue.<String>builder(
-				).defaultLocale(
-					LocaleUtil.US
-				).values(
-					HashMapBuilder.put(
-						LocaleUtil.GERMANY, RandomTestUtil.randomString()
-					).put(
-						LocaleUtil.SPAIN, expected
-					).put(
-						LocaleUtil.US, RandomTestUtil.randomString()
-					).build()
-				).build()));
-	}
-
-	@Test
-	public void testGetMappedInfoItemFieldValueFromNullValue() {
-		_assertGetMappedInfoItemFieldValue(
-			null,
-			InfoField.builder(
-			).infoFieldType(
-				CategoriesInfoFieldType.INSTANCE
-			).namespace(
-				AssetCategory.class.getSimpleName()
-			).name(
-				RandomTestUtil.randomString()
-			).labelInfoLocalizedValue(
-				null
-			).build(),
-			LocaleUtil.SPAIN, null);
-	}
-
-	@Test
-	public void testGetMappedInfoItemFieldValueFromOtherClassValue() {
-		DummyClass testDummyClass = new DummyClass();
-
-		InfoField<TextInfoFieldType> infoField = InfoField.builder(
-		).infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).namespace(
-			AssetCategory.class.getSimpleName()
-		).name(
-			RandomTestUtil.randomString()
-		).labelInfoLocalizedValue(
-			null
-		).build();
-
-		_assertGetMappedInfoItemFieldValue(
-			testDummyClass.toString(), infoField, LocaleUtil.SPAIN,
-			testDummyClass);
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			FragmentEntryProcessorHelperTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		InfoTextFormatter<DummyClass> infoTextFormatter =
-			(dummyClass, locale) -> dummyClass.toString() + locale.toString();
-
-		ServiceRegistration<InfoTextFormatter> serviceRegistration =
-			bundleContext.registerService(
-				InfoTextFormatter.class, infoTextFormatter,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"item.class.name", DummyClass.class.getName()
-				).build());
-
-		try {
-			_assertGetMappedInfoItemFieldValue(
-				infoTextFormatter.format(testDummyClass, LocaleUtil.SPAIN),
-				infoField, LocaleUtil.SPAIN, testDummyClass);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
-	}
-
-	@Test
-	public void testGetMappedInfoItemFieldValueFromWebImage() {
-		WebImage webImage = new WebImage(RandomTestUtil.randomString());
-
-		Object actual = _getMappedInfoItemFieldValue(
-			InfoField.builder(
-			).infoFieldType(
-				ImageInfoFieldType.INSTANCE
-			).namespace(
-				StringPool.BLANK
-			).name(
-				RandomTestUtil.randomString()
-			).build(),
-			LocaleUtil.SPAIN, webImage);
-
-		Assert.assertTrue(actual instanceof JSONObject);
-
-		Assert.assertTrue(
-			JSONUtil.equals(webImage.toJSONObject(), (JSONObject)actual));
 	}
 
 	private DDMStructure _addDDMStructure(Group group, String content)
@@ -408,7 +318,8 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	private JournalArticle _addJournalArticle(
-			DDMStructure ddmStructure, String fieldId, FileEntry fileEntry)
+			DDMStructure ddmStructure, String fieldId, FileEntry fileEntry,
+			String title)
 		throws Exception {
 
 		User user = TestPropsValues.getUser();
@@ -436,12 +347,17 @@ public class FragmentEntryProcessorHelperTest {
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAssetTagNames(new String[] {"one", "two", "three"});
+
 		return _journalArticleLocalService.addArticle(
 			null, user.getUserId(), _group.getGroupId(), 0,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
 			true, JournalArticleConstants.VERSION_DEFAULT,
 			HashMapBuilder.put(
-				defaultLocale, RandomTestUtil.randomString()
+				defaultLocale, title
 			).build(),
 			HashMapBuilder.put(
 				defaultLocale, defaultLocale.toString()
@@ -462,12 +378,11 @@ public class FragmentEntryProcessorHelperTest {
 			displayCalendar.get(Calendar.YEAR),
 			displayCalendar.get(Calendar.HOUR_OF_DAY),
 			displayCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-			0, 0, true, true, false, null, null, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			0, 0, true, true, false, null, null, null, null, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(
-			FileEntry fileEntry, String fieldId)
+			FileEntry fileEntry, String fieldId, String title)
 		throws Exception {
 
 		String ddmStructureContent = _readJSONFileToString(
@@ -479,14 +394,7 @@ public class FragmentEntryProcessorHelperTest {
 		DDMStructure ddmStructure = _addDDMStructure(
 			_group, ddmStructureContent);
 
-		return _addJournalArticle(ddmStructure, fieldId, fileEntry);
-	}
-
-	private <T> void _assertGetMappedInfoItemFieldValue(
-		Object expected, InfoField infoField, Locale locale, T value) {
-
-		Assert.assertEquals(
-			expected, _getMappedInfoItemFieldValue(infoField, locale, value));
+		return _addJournalArticle(ddmStructure, fieldId, fileEntry, title);
 	}
 
 	private Document _createDocument(
@@ -512,6 +420,18 @@ public class FragmentEntryProcessorHelperTest {
 				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	private Object _getFieldValue(JSONObject editableValuesJSONObject)
+		throws Exception {
+
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				null, null, FragmentEntryLinkConstants.EDIT, LocaleUtil.SPAIN);
+
+		return _fragmentEntryProcessorHelper.getFieldValue(
+			editableValuesJSONObject, new HashMap<>(),
+			fragmentEntryProcessorContext);
 	}
 
 	private String _getJournalArticleStructuredContent(
@@ -553,20 +473,6 @@ public class FragmentEntryProcessorHelperTest {
 		return document.asXML();
 	}
 
-	private <T> Object _getMappedInfoItemFieldValue(
-		InfoField infoField, Locale locale, T value) {
-
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			object -> InfoItemFieldValues.builder(
-			).infoFieldValue(
-				new InfoFieldValue<>(infoField, value)
-			).build();
-
-		return _fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
-			infoField.getName(), infoItemFieldValuesProvider, locale,
-			new Object());
-	}
-
 	private String _readFileToString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -597,8 +503,5 @@ public class FragmentEntryProcessorHelperTest {
 
 	@Inject
 	private Portal _portal;
-
-	private static class DummyClass {
-	}
 
 }

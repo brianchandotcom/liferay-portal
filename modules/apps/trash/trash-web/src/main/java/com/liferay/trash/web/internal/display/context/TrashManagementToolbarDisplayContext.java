@@ -42,8 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -173,13 +171,6 @@ public class TrashManagementToolbarDisplayContext
 	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

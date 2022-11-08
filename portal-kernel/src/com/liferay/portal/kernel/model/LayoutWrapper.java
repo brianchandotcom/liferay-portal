@@ -1629,6 +1629,11 @@ public class LayoutWrapper
 		return model.isDraftLayout();
 	}
 
+	@Override
+	public boolean isEmbeddedPersonalApplication() {
+		return model.isEmbeddedPersonalApplication();
+	}
+
 	/**
 	 * Returns <code>true</code> if this layout is expired.
 	 *

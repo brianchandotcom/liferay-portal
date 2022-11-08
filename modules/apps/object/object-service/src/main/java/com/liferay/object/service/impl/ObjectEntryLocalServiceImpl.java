@@ -41,7 +41,7 @@ import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
-import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceTracker;
+import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceRegistry;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
@@ -2224,8 +2224,8 @@ public class ObjectEntryLocalServiceImpl
 				(List<ObjectFilter>)objectFieldSettingsValues.get("filters"),
 				objectFilter -> {
 					ObjectFilterParser objectFilterParser =
-						_objectFilterParserServiceTracker.getObjectFilterParser(
-							objectFilter.getFilterType());
+						_objectFilterParserServiceRegistry.
+							getObjectFilterParser(objectFilter.getFilterType());
 
 					return objectFilterParser.parse(objectFilter);
 				});
@@ -3385,7 +3385,8 @@ public class ObjectEntryLocalServiceImpl
 	private ObjectFieldSettingPersistence _objectFieldSettingPersistence;
 
 	@Reference
-	private ObjectFilterParserServiceTracker _objectFilterParserServiceTracker;
+	private ObjectFilterParserServiceRegistry
+		_objectFilterParserServiceRegistry;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

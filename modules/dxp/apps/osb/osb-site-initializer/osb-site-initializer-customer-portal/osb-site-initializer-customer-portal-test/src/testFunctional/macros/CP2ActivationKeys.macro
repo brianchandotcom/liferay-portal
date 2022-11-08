@@ -1,5 +1,9 @@
 definition {
 
+	macro assertThatPaginationDoesNotAppear {
+		AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
+	}
+
 	macro _formatCamelCase {
 		var camelCase = StringUtil.replace("${camelCase}", " ", "");
 

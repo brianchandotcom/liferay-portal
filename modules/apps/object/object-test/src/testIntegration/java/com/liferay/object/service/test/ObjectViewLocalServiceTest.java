@@ -390,7 +390,7 @@ public class ObjectViewLocalServiceTest {
 	private ObjectView _addObjectView() throws Exception {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				externalReferenceCode, TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, "Countries"));
 
 		_listTypeEntryLocalService.addListTypeEntry(

@@ -144,11 +144,25 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		}
 	}
 
-	private void _process(long companyId, UnicodeProperties unicodeProperties) throws Exception{
+	@Override
+	public String getName() {
+		return "testray";
+	}
+	private Page<ObjectEntry> _getObjectEntries(
+			long companyId, String objectDefinitionName,
+			Aggregation aggregation, String filter)
+		throws Exception {
 
-		long testrayBuildId = Long.valueOf(unicodeProperties.getProperty("testrayBuildId"));
-		long testrayTaskId = Long.valueOf(unicodeProperties.getProperty("testrayTaskId"));
-		String testrayCaseTypeIds = unicodeProperties.getProperty("testrayCaseTypeIds");
+		return _objectEntryManager.getObjectEntries(
+			companyId, _objectDefinitions.get(objectDefinitionName), null,
+			aggregation, _defaultDTOConverterContext, filter, null, null, null);
+	}
+
+	private Object _getProperty(String key, ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		return properties.get(key);
+	}
 
 	private void _loadObjectDefinitions(long companyId) {
 		List<ObjectDefinition> objectDefinitions =
@@ -165,8 +179,40 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		}
 	}
 
+	private void _process(long companyId, UnicodeProperties unicodeProperties)
+		throws Exception {
 
-		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<List<ObjectEntry>>();
+		long testrayBuildId = Long.valueOf(
+			unicodeProperties.getProperty("testrayBuildId"));
+		long testrayTaskId = Long.valueOf(
+			unicodeProperties.getProperty("testrayTaskId"));
+		String[] testrayCaseTypeIds = StringUtil.split(
+			unicodeProperties.getProperty("testrayCaseTypeIds"));
+
+		// TODO
+
+		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
+		Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
+			new HashMap<>();
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i <= (testrayCaseTypeIds.length - 1); i++) {
+			sb.append("caseTypeId eq '");
+			sb.append(testrayCaseTypeIds[i]);
+
+			if (i != (testrayCaseTypeIds.length - 1)) {
+				sb.append("' or ");
+			}
+			else {
+				sb.append("'");
+			}
+		}
+
+		String filter = sb.toString();
+
+		Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
+			companyId, "Case", null, filter);
 
 
 

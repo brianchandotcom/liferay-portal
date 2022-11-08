@@ -14,17 +14,19 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
+import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
-import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -47,28 +49,43 @@ public class BaseCookiesBannerDisplayContext {
 		cookiesConsentConfiguration = _getCookiesConfiguration(renderRequest);
 	}
 
-	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId)
+	public List<ConsentCookieType> getOptionalConsentCookieTypes()
 		throws Exception {
 
 		if (_optionalConsentCookieTypes != null) {
 			return _optionalConsentCookieTypes;
 		}
 
-		_optionalConsentCookieTypes =
-			CookiesManagerUtil.getOptionalConsentCookieTypes(groupId);
+    _optionalConsentCookieTypes = ListUtil.fromArray(
+      new ConsentCookieType(
+        cookiesConsentConfiguration.functionalCookiesDescription(),
+        CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+        cookiesConsentConfiguration.functionalCookiesPrechecked()),
+      new ConsentCookieType(
+        cookiesConsentConfiguration.performanceCookiesDescription(),
+        CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+        cookiesConsentConfiguration.performanceCookiesPrechecked()),
+      new ConsentCookieType(
+        cookiesConsentConfiguration.personalizationCookiesDescription(),
+        CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
+        cookiesConsentConfiguration.
+          personalizationCookiesPrechecked()));
 
-		return _optionalConsentCookieTypes;
+    return _optionalConsentCookieTypes;
 	}
 
-	public List<ConsentCookieType> getRequiredConsentCookieTypes(long groupId)
+	public List<ConsentCookieType> getRequiredConsentCookieTypes()
 		throws Exception {
 
 		if (_requiredConsentCookieTypes != null) {
 			return _requiredConsentCookieTypes;
 		}
 
-		_requiredConsentCookieTypes =
-			CookiesManagerUtil.getRequiredConsentCookieTypes(groupId);
+    _requiredConsentCookieTypes = ListUtil.fromArray(
+      new ConsentCookieType(
+        cookiesConsentConfiguration.
+          strictlyNecessaryCookiesDescription(),
+        CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
 
 		return _requiredConsentCookieTypes;
 	}
@@ -102,9 +119,8 @@ public class BaseCookiesBannerDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			return ConfigurationProviderUtil.getGroupConfiguration(
-				CookiesBannerConfiguration.class,
-				themeDisplay.getScopeGroupId());
+			return _cookiesConfigurationHelper.getCookiesBannerConfiguration(
+			  themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get cookies banner configuration", exception);
@@ -120,9 +136,8 @@ public class BaseCookiesBannerDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			return ConfigurationProviderUtil.getGroupConfiguration(
-				CookiesConsentConfiguration.class,
-				themeDisplay.getScopeGroupId());
+			return _cookiesConfigurationHelper.getCookiesConsentConfiguration(
+			  themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -131,6 +146,9 @@ public class BaseCookiesBannerDisplayContext {
 
 		return null;
 	}
+
+  @Reference
+  private CookiesConfigurationHelper _cookiesConfigurationHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCookiesBannerDisplayContext.class);

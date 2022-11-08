@@ -45,7 +45,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 		>
 
 			<%
-			for (ConsentCookieType requiredConsentCookieType : cookiesBannerConfigurationDisplayContext.getRequiredConsentCookieTypes(scopeGroupId)) {
+			for (ConsentCookieType requiredConsentCookieType : cookiesBannerConfigurationDisplayContext.getRequiredConsentCookieTypes()) {
 			%>
 
 				<clay:content-row
@@ -72,7 +72,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			<%
 			}
 
-			for (ConsentCookieType optionalConsentCookieType : cookiesBannerConfigurationDisplayContext.getOptionalConsentCookieTypes(scopeGroupId)) {
+			for (ConsentCookieType optionalConsentCookieType : cookiesBannerConfigurationDisplayContext.getOptionalConsentCookieTypes()) {
 			%>
 
 				<clay:content-row
@@ -154,6 +154,6 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 
 <liferay-frontend:component
 	componentId="CookiesBannerConfiguration"
-	context="<%= cookiesBannerConfigurationDisplayContext.getContext(scopeGroupId) %>"
+	context="<%= cookiesBannerConfigurationDisplayContext.getContext() %>"
 	module="cookies_banner_configuration/js/CookiesBannerConfiguration"
 />

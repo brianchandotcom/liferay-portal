@@ -75,6 +75,6 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 <liferay-frontend:component
 	componentId="CookiesBanner"
-	context="<%= cookiesBannerDisplayContext.getContext(locale, scopeGroupId) %>"
+	context="<%= cookiesBannerDisplayContext.getContext(locale) %>"
 	module="cookies_banner/js/CookiesBanner"
 />

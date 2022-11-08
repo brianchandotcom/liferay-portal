@@ -65,7 +65,7 @@ public class CookiesBannerDisplayContext
 		return contentLocalizedValuesMap.get(locale);
 	}
 
-	public Map<String, Object> getContext(Locale locale, long groupId)
+	public Map<String, Object> getContext(Locale locale)
 		throws Exception {
 
 		LocalizedValuesMap titleLocalizedValuesMap =
@@ -78,11 +78,11 @@ public class CookiesBannerDisplayContext
 		).put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(
-				getOptionalConsentCookieTypes(groupId))
+				getOptionalConsentCookieTypes())
 		).put(
 			"requiredConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(
-				getRequiredConsentCookieTypes(groupId))
+				getRequiredConsentCookieTypes())
 		).put(
 			"title", titleLocalizedValuesMap.get(locale)
 		).build();

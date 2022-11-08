@@ -42,15 +42,15 @@ public class CookiesBannerConfigurationDisplayContext
 		super(renderRequest, renderResponse);
 	}
 
-	public Map<String, Object> getContext(long groupId) throws Exception {
+	public Map<String, Object> getContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(
-				getOptionalConsentCookieTypes(groupId))
+				getOptionalConsentCookieTypes())
 		).put(
 			"requiredConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(
-				getRequiredConsentCookieTypes(groupId))
+				getRequiredConsentCookieTypes())
 		).put(
 			"showButtons", isShowButtons()
 		).build();

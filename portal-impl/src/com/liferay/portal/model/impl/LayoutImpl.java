@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1050,6 +1051,23 @@ public class LayoutImpl extends LayoutBaseImpl {
 		if ((getClassPK() > 0) &&
 			(getClassNameId() == PortalUtil.getClassNameId(
 				Layout.class.getName()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isEmbeddedPersonalApplication() {
+		if (isTypeControlPanel()) {
+			return false;
+		}
+
+		if (isSystem() &&
+			Objects.equals(
+				getFriendlyURL(),
+				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
 
 			return true;
 		}

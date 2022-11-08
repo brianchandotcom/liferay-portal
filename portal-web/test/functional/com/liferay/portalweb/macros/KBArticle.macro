@@ -231,7 +231,9 @@ definition {
 		}
 
 		if ("${kbArticleInvalidContent}" == "true") {
-			Alert.viewRequiredField();
+			AssertTextEquals.assertPartialText(
+				locator1 = "TextInput#REQUIRED_ALERT",
+				value1 = "The Content field is required.");
 		}
 		else if ("${kbArticleDuplicateFriendlyURL}" == "true") {
 			Alert.viewRequestFailedToComplete();

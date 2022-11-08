@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.util;
+package com.liferay.object.filter.util;
 
 import com.liferay.object.model.ObjectFilter;
 import com.liferay.portal.kernel.json.JSONArray;

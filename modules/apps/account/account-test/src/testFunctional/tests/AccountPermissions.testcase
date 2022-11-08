@@ -1806,17 +1806,6 @@ definition {
 	@priority = "5"
 	test CanViewAccountWithViewPermissions {
 		task ("Given add account a new user and account role with view permission") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
@@ -1830,8 +1819,16 @@ definition {
 				resourceName = "com.liferay.account.model.AccountEntry",
 				roleTitle = "View Account Role");
 
-			JSONRole.assignRoleToUser(
+			JSONUser.addUserWithRole(
 				roleTitle = "View Account Role",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+			
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 		}
 

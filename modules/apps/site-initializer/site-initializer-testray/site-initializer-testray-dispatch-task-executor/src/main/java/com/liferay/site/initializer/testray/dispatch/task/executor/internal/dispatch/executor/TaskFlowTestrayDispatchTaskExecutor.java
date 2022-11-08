@@ -267,14 +267,21 @@ public class TaskFlowTestrayDispatchTaskExecutor
 				continue;
 			}
 
+			String escapeErrors = StringUtil.removeChar(
+				StringUtil.replace(
+					testrayCaseResultFacetValue.getTerm(), '\'', "''"),
+				'\\');
+
+			System.out.println(escapeErrors);
+
 			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
-				_getObjectEntries(
-					companyId, "CaseResult", null,
+				_objectEntryManager.getObjectEntries(
+					companyId, _objectDefinitions.get("CaseResult"), null, null,
+					_defaultDTOConverterContext,
 					StringBundler.concat(
-						"buildId eq '", testrayBuildId,
-						"' and errors eq '",
-						testrayCaseResultFacetValue.getTerm(), "' and ",
-						filterString));
+						"buildId eq '", testrayBuildId, "' and errors eq '",
+						escapeErrors, "'"),
+					null, null, null);
 
 			List<ObjectEntry> testrayCaseResultObjectEntries =
 				(List<ObjectEntry>)

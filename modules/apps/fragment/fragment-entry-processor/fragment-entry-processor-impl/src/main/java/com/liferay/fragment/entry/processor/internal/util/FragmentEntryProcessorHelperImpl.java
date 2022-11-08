@@ -105,14 +105,10 @@ public class FragmentEntryProcessorHelperImpl
 						LayoutDisplayPageWebKeys.
 							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-			InfoItemFieldValuesProvider<?> infoItemFieldValuesProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					layoutDisplayPageObjectProvider.getClassName());
-
 			return _getMappedInfoItemFieldValue(
 				editableValueJSONObject.getString("mappedField"),
-				infoItemFieldValuesProvider,
+				_getInfoItemFieldValuesProvider(
+					layoutDisplayPageObjectProvider.getClassName()),
 				fragmentEntryProcessorContext.getLocale(),
 				layoutDisplayPageObjectProvider.getDisplayObject());
 		}
@@ -162,19 +158,7 @@ public class FragmentEntryProcessorHelperImpl
 			}
 
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				(InfoItemFieldValuesProvider<Object>)
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemFieldValuesProvider.class, className);
-
-			if (infoItemFieldValuesProvider == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get info item form provider for class " +
-							className);
-				}
-
-				return null;
-			}
+				_getInfoItemFieldValuesProvider(className);
 
 			InfoItemFieldValues infoItemFieldValues =
 				infoDisplaysFieldValues.get(classPK);
@@ -203,26 +187,10 @@ public class FragmentEntryProcessorHelperImpl
 			InfoItemReference infoItemReference =
 				infoItemReferenceOptional.get();
 
-			String className = _infoSearchClassMapperTracker.getClassName(
-				infoItemReference.getClassName());
-
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class, className);
-
-			if (infoItemFieldValuesProvider == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get info item form provider for class " +
-							className);
-				}
-
-				return null;
-			}
-
 			return _getMappedInfoItemFieldValue(
 				editableValueJSONObject.getString("collectionFieldId"),
-				infoItemFieldValuesProvider,
+				_getInfoItemFieldValuesProvider(
+					infoItemReference.getClassName()),
 				fragmentEntryProcessorContext.getLocale(),
 				_getInfoItem(infoItemReference));
 		}
@@ -411,6 +379,28 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return null;
+	}
+
+	private InfoItemFieldValuesProvider<Object> _getInfoItemFieldValuesProvider(
+		String className) {
+
+		className = _infoSearchClassMapperTracker.getClassName(className);
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						className);
+			}
+
+			return null;
+		}
+
+		return infoItemFieldValuesProvider;
 	}
 
 	private Object _getMappedInfoItemFieldValue(

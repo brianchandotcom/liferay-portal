@@ -863,16 +863,16 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				groupId, FragmentPortletKeys.FRAGMENT);
 
 		if (repository != null) {
+			FragmentServiceConfiguration fragmentServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					FragmentServiceConfiguration.class,
+					fragmentCollection.getCompanyId());
+
 			for (FileEntry fileEntry :
 					PortletFileRepositoryUtil.getPortletFileEntries(
 						groupId, fragmentCollection.getResourcesFolderId())) {
 
 				if (zipEntryNames.containsKey(fileEntry.getFileName())) {
-					FragmentServiceConfiguration fragmentServiceConfiguration =
-						_configurationProvider.getCompanyConfiguration(
-							FragmentServiceConfiguration.class,
-							fileEntry.getCompanyId());
-
 					if (fragmentServiceConfiguration.propagateChanges()) {
 						PortletFileRepositoryUtil.deletePortletFileEntry(
 							fileEntry.getFileEntryId());

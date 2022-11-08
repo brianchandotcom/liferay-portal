@@ -780,6 +780,48 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
+	@description = "LPS-167481. Verify if with 'Limit to one submission per user' enabled, visiting users must log in before viewing the form"
+	@priority = "4"
+	test CanTranslateOneSubmissionPerUserMessage {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Click(
+			key_checkboxOption = "Limit to One Submission per User",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+
+		Button.clickDone();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+
+		Navigator.openURL();
+
+		UserBar.signOut();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+
+		User.firstLoginPG();
+	}
+
 	@description = "Verify if with 'Limit to one submit per user' enabled, the translation options are the same as those present in the Form Builder"
 	@priority = "3"
 	test CheckTranslationOptionsOneSubmissionPerUserMessage {

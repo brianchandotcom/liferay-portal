@@ -62,7 +62,7 @@ public class ListTypeEntryServiceTest {
 			TestPropsValues.getCompanyId());
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()));
 		_originalName = PrincipalThreadLocal.getName();

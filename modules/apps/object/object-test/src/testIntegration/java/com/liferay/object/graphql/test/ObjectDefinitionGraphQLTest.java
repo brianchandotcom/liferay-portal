@@ -80,7 +80,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		ListTypeDefinition listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(_listFieldName));
 
 		_addListTypeEntry(listTypeDefinition, StringUtil.randomId());

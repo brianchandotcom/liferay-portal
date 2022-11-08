@@ -147,6 +147,7 @@ definition {
 		RelatedAssets.selectAsset(
 			assetTitle = "${assetTitle}",
 			assetType = "${assetType}",
+			otherSite = "${otherSite}",
 			scopeSite = "${scopeSite}");
 
 		SelectFrame(value1 = "relative=top");

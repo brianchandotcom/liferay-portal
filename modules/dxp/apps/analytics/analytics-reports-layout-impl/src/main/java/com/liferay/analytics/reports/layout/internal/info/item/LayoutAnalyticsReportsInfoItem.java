@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -146,7 +144,7 @@ public class LayoutAnalyticsReportsInfoItem
 	@Override
 	public boolean isShow(Layout layout) {
 		if ((!layout.isTypeContent() && !layout.isTypePortlet()) ||
-			_isEmbeddedPersonalApplicationLayout(layout)) {
+			layout.isEmbeddedPersonalApplication()) {
 
 			return false;
 		}
@@ -197,23 +195,6 @@ public class LayoutAnalyticsReportsInfoItem
 		}
 
 		return true;
-	}
-
-	private boolean _isEmbeddedPersonalApplicationLayout(Layout layout) {
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		String layoutFriendlyURL = layout.getFriendlyURL();
-
-		if (layout.isSystem() &&
-			layoutFriendlyURL.equals(
-				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

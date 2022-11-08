@@ -162,7 +162,7 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel() ||
-			isEmbeddedPersonalApplicationLayout(layout)) {
+			layout.isEmbeddedPersonalApplication()) {
 
 			return false;
 		}

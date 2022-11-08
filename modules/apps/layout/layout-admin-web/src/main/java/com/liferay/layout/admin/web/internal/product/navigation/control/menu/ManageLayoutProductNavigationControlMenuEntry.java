@@ -184,7 +184,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		if (layout.isTypeControlPanel() ||
 			_isMasterLayout(layout, layoutPageTemplateEntry) ||
-			isEmbeddedPersonalApplicationLayout(layout) ||
+			layout.isEmbeddedPersonalApplication() ||
 			!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
 

@@ -843,13 +843,11 @@ function Treeview({
 		});
 	};
 
-	const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+	const handleFocus = () => {
 		cancelTimer();
 		setShouldBeFocusable(false);
 
-		if (!event.target.closest('.lfr-treeview-node-list-item')) {
-			dispatch({type: 'ACTIVATE'});
-		}
+		dispatch({type: 'ACTIVATE'});
 	};
 
 	const handleBlur = () => {

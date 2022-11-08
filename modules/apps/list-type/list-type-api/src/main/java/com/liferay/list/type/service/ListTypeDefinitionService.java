@@ -53,7 +53,8 @@ public interface ListTypeDefinitionService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the list type definition remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ListTypeDefinitionServiceUtil} if injection and service tracking are not available.
 	 */
-	public ListTypeDefinition addListTypeDefinition(Map<Locale, String> nameMap)
+	public ListTypeDefinition addListTypeDefinition(
+			String externalReferenceCode, Map<Locale, String> nameMap)
 		throws PortalException;
 
 	public ListTypeDefinition deleteListTypeDefinition(

@@ -15,6 +15,7 @@
 package com.liferay.cookies.banner.web.internal.display.context;
 
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
+import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -38,9 +39,10 @@ public class CookiesBannerDisplayContext
 	extends BaseCookiesBannerDisplayContext {
 
 	public CookiesBannerDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+    CookiesConfigurationHelper cookiesConfigurationHelper,
+    RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(renderRequest, renderResponse);
+		super(cookiesConfigurationHelper, renderRequest, renderResponse);
 	}
 
 	public Object getConfigurationURL() {

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -38,11 +37,13 @@ import javax.portlet.RenderResponse;
  */
 public class BaseCookiesBannerDisplayContext {
 
-	public BaseCookiesBannerDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+  public BaseCookiesBannerDisplayContext(
+    CookiesConfigurationHelper cookiesConfigurationHelper,
+    RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		this.renderRequest = renderRequest;
-		this.renderResponse = renderResponse;
+    this.renderRequest = renderRequest;
+    this.renderResponse = renderResponse;
+    this._cookiesConfigurationHelper = cookiesConfigurationHelper;
 
 		cookiesBannerConfiguration = _getCookiesBannerConfiguration(
 			renderRequest);
@@ -147,7 +148,6 @@ public class BaseCookiesBannerDisplayContext {
 		return null;
 	}
 
-  @Reference
   private CookiesConfigurationHelper _cookiesConfigurationHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(

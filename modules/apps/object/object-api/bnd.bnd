@@ -1,12 +1,13 @@
 Bundle-Name: Liferay Object API
 Bundle-SymbolicName: com.liferay.object.api
-Bundle-Version: 45.2.0
+Bundle-Version: 46.0.0
 Export-Package:\
 	com.liferay.object.action.engine,\
 	com.liferay.object.action.executor,\
 	com.liferay.object.action.trigger,\
 	com.liferay.object.configuration,\
 	com.liferay.object.constants,\
+	com.liferay.object.definition.notification.term.util,\
 	com.liferay.object.deployer,\
 	com.liferay.object.entry.permission.util,\
 	com.liferay.object.entry.util,\
@@ -16,9 +17,12 @@ Export-Package:\
 	com.liferay.object.field.filter.parser,\
 	com.liferay.object.field.frontend.data.set.filter,\
 	com.liferay.object.field.render,\
+	com.liferay.object.field.setting.util,\
+	com.liferay.object.field.util,\
+	com.liferay.object.filter.util,\
 	com.liferay.object.model,\
-	com.liferay.object.notification.term.util,\
 	com.liferay.object.related.models,\
+	com.liferay.object.relationship.util,\
 	com.liferay.object.rest.context.path,\
 	com.liferay.object.scope,\
 	com.liferay.object.service,\

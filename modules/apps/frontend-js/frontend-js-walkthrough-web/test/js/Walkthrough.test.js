@@ -56,8 +56,11 @@ function renderWalkthrough(props) {
 }
 
 jest.mock('frontend-js-web', () => ({
-	navigate: jest.fn((url) => url),
+	...jest.requireActual('frontend-js-web'),
+	navigate: jest.fn(),
 }));
+
+navigate.mockImplementation(jest.fn((url) => url));
 
 /**
  * List of tuples containing as the first member

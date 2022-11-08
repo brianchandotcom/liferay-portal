@@ -32,6 +32,7 @@ export function AdvancedTab({setValues, values}: AdvancedTabProps) {
 			objectFieldSettings={
 				values.objectFieldSettings as ObjectFieldSetting[]
 			}
+			requiredField={values.required as boolean}
 			setValues={setValues}
 		/>
 	);

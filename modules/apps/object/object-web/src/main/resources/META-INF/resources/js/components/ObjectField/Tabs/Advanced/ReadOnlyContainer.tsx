@@ -19,6 +19,7 @@ import React from 'react';
 interface ReadOnlyContainerProps {
 	disabled?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
+	requiredField: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
 }
 
@@ -49,6 +50,7 @@ const findObjectFieldSetting = (
 export function ReadOnlyContainer({
 	disabled,
 	objectFieldSettings,
+	requiredField,
 	setValues,
 }: ReadOnlyContainerProps) {
 	const readOnlySetting = findObjectFieldSetting(
@@ -74,6 +76,10 @@ export function ReadOnlyContainer({
 					value,
 				},
 			],
+			required:
+				value === 'true' || value === 'conditional'
+					? false
+					: requiredField,
 		});
 	};
 

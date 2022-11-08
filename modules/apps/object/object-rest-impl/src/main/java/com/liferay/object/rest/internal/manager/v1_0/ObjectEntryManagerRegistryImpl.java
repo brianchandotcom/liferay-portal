@@ -15,7 +15,7 @@
 package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -31,9 +31,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Guilherme Camacho
  */
-@Component(service = ObjectEntryManagerTracker.class)
-public class ObjectEntryManagerTrackerImpl
-	implements ObjectEntryManagerTracker {
+@Component(service = ObjectEntryManagerRegistry.class)
+public class ObjectEntryManagerRegistryImpl
+	implements ObjectEntryManagerRegistry {
 
 	@Override
 	public ObjectEntryManager getObjectEntryManager(String storageType) {

@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * @author Guilherme Camacho
  */
-public interface ObjectEntryManagerTracker {
+public interface ObjectEntryManagerRegistry {
 
 	public ObjectEntryManager getObjectEntryManager(String storageType);
 

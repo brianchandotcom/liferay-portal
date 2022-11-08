@@ -148,7 +148,8 @@
 														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
-														"textType": "h1"
+														"textType": "h1",
+														"truncateText": false
 													},
 													"fragmentFields": [
 														{
@@ -219,7 +220,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "text-paragraph"
+																"textType": "text-paragraph",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -264,7 +266,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "text-paragraph"
+																"textType": "text-paragraph",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -300,7 +303,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "text-paragraph"
+																"textType": "text-paragraph",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -345,7 +349,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "text-paragraph"
+																"textType": "text-paragraph",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -387,6 +392,8 @@
 								"definition": {
 									"fragment": {
 										"key": "mdf-request-details-status-display"
+									},
+									"fragmentConfig": {
 									},
 									"fragmentFields": [
 									],
@@ -453,7 +460,8 @@
 										"key": "DIALECT-dialect-text"
 									},
 									"fragmentConfig": {
-										"textType": "h5"
+										"textType": "h5",
+										"truncateText": false
 									},
 									"fragmentFields": [
 										{
@@ -651,7 +659,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h5"
+																"textType": "h5",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -715,7 +724,10 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0"
+																"borderRadius": "",
+																"borderWidth": "0",
+																"shadow": "",
+																"textAlign": ""
 															},
 															"indexed": true,
 															"layout": {
@@ -738,7 +750,10 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderRadius": "",
+																		"borderWidth": "0",
+																		"shadow": "",
+																		"textAlign": ""
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -762,7 +777,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "h6"
+																				"textType": "h6",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -808,7 +824,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "h6"
+																				"textType": "h6",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -929,7 +946,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h6"
+																"textType": "h6",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -975,7 +993,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h5"
+																"textType": "h5",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -1114,7 +1133,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h6"
+																		"textType": "h6",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -1160,7 +1180,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h5"
+																		"textType": "h5",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -1375,18 +1396,74 @@
 																"key": "detail-view-table"
 															},
 															"fragmentConfig": {
-																"numberOfRows": 2
+																"numberOfRows": 3
 															},
 															"fragmentFields": [
 																{
 																	"id": "rowValue-1",
 																	"value": {
 																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectField_overallCampaignName",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
 																		}
 																	}
 																},
 																{
 																	"id": "rowTitle-2",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Short description of the overall campaign",
+																				"ca_ES": "Short description of the overall campaign",
+																				"de_DE": "Short description of the overall campaign",
+																				"en_US": "Short description of the overall campaign",
+																				"es_ES": "Short description of the overall campaign",
+																				"fi_FI": "Short description of the overall campaign",
+																				"fr_FR": "Short description of the overall campaign",
+																				"hu_HU": "Short description of the overall campaign",
+																				"ja_JP": "Short description of the overall campaign",
+																				"nl_NL": "Short description of the overall campaign",
+																				"pt_BR": "Short description of the overall campaign",
+																				"sv_SE": "Short description of the overall campaign",
+																				"zh_CN": "Short description of the overall campaign"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "rowTitle-1",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Name of the overall campaign",
+																				"ca_ES": "Name of the overall campaign",
+																				"de_DE": "Name of the overall campaign",
+																				"en_US": "Name of the overall campaign",
+																				"es_ES": "Name of the overall campaign",
+																				"fi_FI": "Name of the overall campaign",
+																				"fr_FR": "Name of the overall campaign",
+																				"hu_HU": "Name of the overall campaign",
+																				"ja_JP": "Name of the overall campaign",
+																				"nl_NL": "Name of the overall campaign",
+																				"pt_BR": "Name of the overall campaign",
+																				"sv_SE": "Name of the overall campaign",
+																				"zh_CN": "Name of the overall campaign"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "rowTitle-3",
 																	"value": {
 																		"fragmentLink": {
 																		},
@@ -1410,56 +1487,25 @@
 																	}
 																},
 																{
-																	"id": "rowTitle-1",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Provide a name and short description of the overall campaign",
-																				"ca_ES": "Provide a name and short description of the overall campaign",
-																				"de_DE": "Provide a name and short description of the overall campaign",
-																				"en_US": "Provide a name and short description of the overall campaign",
-																				"es_ES": "Provide a name and short description of the overall campaign",
-																				"fi_FI": "Provide a name and short description of the overall campaign",
-																				"fr_FR": "Provide a name and short description of the overall campaign",
-																				"hu_HU": "Provide a name and short description of the overall campaign",
-																				"ja_JP": "Provide a name and short description of the overall campaign",
-																				"nl_NL": "Provide a name and short description of the overall campaign",
-																				"pt_BR": "Provide a name and short description of the overall campaign",
-																				"sv_SE": "Provide a name and short description of the overall campaign",
-																				"zh_CN": "Provide a name and short description of the overall campaign"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "rowTitle-3",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																},
-																{
 																	"id": "tableTitle",
 																	"value": {
 																		"fragmentLink": {
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": "Activity Summay",
-																				"ca_ES": "Activity Summay",
-																				"de_DE": "Activity Summay",
-																				"en_US": "Activity Summay",
-																				"es_ES": "Activity Summay",
-																				"fi_FI": "Activity Summay",
-																				"fr_FR": "Activity Summay",
-																				"hu_HU": "Activity Summay",
-																				"ja_JP": "Activity Summay",
-																				"nl_NL": "Activity Summay",
-																				"pt_BR": "Activity Summay",
-																				"sv_SE": "Activity Summay",
-																				"zh_CN": "Activity Summay"
+																				"ar_SA": "Activity Summary",
+																				"ca_ES": "Activity Summary",
+																				"de_DE": "Activity Summary",
+																				"en_US": "Activity Summary",
+																				"es_ES": "Activity Summary",
+																				"fi_FI": "Activity Summary",
+																				"fr_FR": "Activity Summary",
+																				"hu_HU": "Activity Summary",
+																				"ja_JP": "Activity Summary",
+																				"nl_NL": "Activity Summary",
+																				"pt_BR": "Activity Summary",
+																				"sv_SE": "Activity Summary",
+																				"zh_CN": "Activity Summary"
 																			}
 																		}
 																	}
@@ -1471,7 +1517,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ObjectField_liferayBusinessSalesGoals",
+																				"fieldKey": "ObjectField_overallCampaignDescription",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}
@@ -1483,6 +1529,14 @@
 																	"id": "rowValue-3",
 																	"value": {
 																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectField_liferayBusinessSalesGoals",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
 																		}
 																	}
 																}
@@ -1755,7 +1809,8 @@
 																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h5"
+																"textType": "h5",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{

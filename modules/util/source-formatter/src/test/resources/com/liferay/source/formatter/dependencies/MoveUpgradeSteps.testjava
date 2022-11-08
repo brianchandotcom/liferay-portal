@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 public class MoveUpgradeSteps extends UpgradeProcess {
 
 	@Override
-    protected void doUpgrade() throws Exception {
+	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("testTable", "testCol1", "LONG");
 
 		runSQL("select count(0)");
 
 		alterTableAddColumn("testTable", "testCol2", "LONG");
-    }
+	}
 
 }

@@ -23,6 +23,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
@@ -565,6 +566,16 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_registerTransactionCallbackForCluster(
 			_deployObjectDefinitionMethodKey, objectDefinition);
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinition.getObjectDefinitionId(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			_objectRelationshipLocalService.
+				createManyToManyObjectRelationshipTable(
+					userId, objectRelationship);
+		}
 
 		return objectDefinition;
 	}

@@ -58,7 +58,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -68,6 +70,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -164,6 +167,69 @@ public class ObjectRelationshipLocalServiceImpl
 				).build(),
 				serviceContext);
 		}
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectRelationship createManyToManyObjectRelationshipTable(
+			long userId, ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		if (Validator.isNotNull(objectRelationship.getDBTableName())) {
+			return objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship);
+		}
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId1());
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
+		if (!objectDefinition1.isApproved() ||
+			!objectDefinition2.isApproved()) {
+
+			return objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship);
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		objectRelationship.setDBTableName(
+			StringBundler.concat(
+				"R_", user.getCompanyId(), objectDefinition1.getShortName(),
+				"_", objectDefinition2.getShortName(), "_",
+				objectRelationship.getName()));
+
+		Map<String, String> pkObjectFieldDBColumnNames =
+			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
+				objectDefinition1, objectDefinition2, false);
+
+		String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
+			"pkObjectFieldDBColumnName1");
+		String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
+			"pkObjectFieldDBColumnName2");
+
+		runSQL(
+			StringBundler.concat(
+				"create table ", objectRelationship.getDBTableName(), " (",
+				pkObjectFieldDBColumnName1, " LONG not null,",
+				pkObjectFieldDBColumnName2, " LONG not null, primary key (",
+				pkObjectFieldDBColumnName1, ", ", pkObjectFieldDBColumnName2,
+				"))"));
+
+		ObjectRelationship reverseObjectRelationship =
+			fetchReverseObjectRelationship(objectRelationship, true);
+
+		reverseObjectRelationship.setDBTableName(
+			objectRelationship.getDBTableName());
+
+		objectRelationshipLocalService.updateObjectRelationship(
+			reverseObjectRelationship);
+
+		return objectRelationshipLocalService.updateObjectRelationship(
+			objectRelationship);
 	}
 
 	@Override
@@ -426,6 +492,21 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId, String type) {
+
+		Set<ObjectRelationship> objectRelationships = SetUtil.fromList(
+			objectRelationshipPersistence.findByODI1_R_T(
+				objectDefinitionId, false, type));
+
+		objectRelationships.addAll(
+			objectRelationshipPersistence.findByODI2_R_T(
+				objectDefinitionId, false, type));
+
+		return ListUtil.fromCollection(objectRelationships);
+	}
+
+	@Override
+	public List<ObjectRelationship> getObjectRelationships(
 		long objectDefinitionId1, String deletionType, boolean reverse) {
 
 		return objectRelationshipPersistence.findByODI1_DT_R(
@@ -608,46 +689,14 @@ public class ObjectRelationshipLocalServiceImpl
 					type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
 				 !reverse) {
 
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectDefinitionId1);
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectDefinitionId2);
+			_addObjectRelationship(
+				userId, objectDefinitionId2, objectDefinitionId1,
+				parameterObjectFieldId, deletionType, labelMap, name, true,
+				type);
 
-			objectRelationship.setDBTableName(
-				StringBundler.concat(
-					"R_", user.getCompanyId(), objectDefinition1.getShortName(),
-					"_", objectDefinition2.getShortName(), "_", name));
-
-			Map<String, String> pkObjectFieldDBColumnNames =
-				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-					objectDefinition1, objectDefinition2, false);
-
-			String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
-				"pkObjectFieldDBColumnName1");
-			String pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnNames.get(
-				"pkObjectFieldDBColumnName2");
-
-			runSQL(
-				StringBundler.concat(
-					"create table ", objectRelationship.getDBTableName(), " (",
-					pkObjectFieldDBColumnName1, " LONG not null,",
-					pkObjectFieldDBColumnName2, " LONG not null, primary key (",
-					pkObjectFieldDBColumnName1, ", ",
-					pkObjectFieldDBColumnName2, "))"));
-
-			ObjectRelationship reverseObjectRelationship =
-				_addObjectRelationship(
-					userId, objectDefinitionId2, objectDefinitionId1,
-					parameterObjectFieldId, deletionType, labelMap, name, true,
-					type);
-
-			reverseObjectRelationship.setDBTableName(
-				objectRelationship.getDBTableName());
-
-			objectRelationshipLocalService.updateObjectRelationship(
-				reverseObjectRelationship);
+			return objectRelationshipLocalService.
+				createManyToManyObjectRelationshipTable(
+					userId, objectRelationship);
 		}
 
 		return objectRelationshipLocalService.updateObjectRelationship(

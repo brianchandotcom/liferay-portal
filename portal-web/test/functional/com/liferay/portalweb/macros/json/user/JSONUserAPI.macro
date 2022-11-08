@@ -103,9 +103,6 @@ definition {
 				var creatorEmailAddress = "test@liferay.com";
 			}
 		}
-		else {
-			var creatorEmailAddress = "${creatorEmailAddress}";
-		}
 
 		if (!(isSet(creatorPassword))) {
 			var creatorPassword = "test";
@@ -243,9 +240,6 @@ definition {
 			else {
 				var creatorEmailAddress = "test@liferay.com";
 			}
-		}
-		else {
-			var creatorEmailAddress = "${creatorEmailAddress}";
 		}
 
 		if (!(isSet(creatorPassword))) {

@@ -91,6 +91,17 @@ public class FragmentEntryProcessorHelperImpl
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
+		if (!isMappedDisplayPage(editableValueJSONObject) &&
+			!isMapped(editableValueJSONObject) &&
+			!isMappedCollection(editableValueJSONObject)) {
+
+			return null;
+		}
+
+		String fieldName = StringPool.BLANK;
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider = null;
+		Object object = null;
+
 		if (isMappedDisplayPage(editableValueJSONObject)) {
 			HttpServletRequest httpServletRequest =
 				fragmentEntryProcessorContext.getHttpServletRequest();
@@ -99,18 +110,17 @@ public class FragmentEntryProcessorHelperImpl
 				return null;
 			}
 
+			fieldName = editableValueJSONObject.getString("mappedField");
+
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				(LayoutDisplayPageObjectProvider<?>)
 					httpServletRequest.getAttribute(
 						LayoutDisplayPageWebKeys.
 							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-			return _getMappedInfoItemFieldValue(
-				editableValueJSONObject.getString("mappedField"),
-				_getInfoItemFieldValuesProvider(
-					layoutDisplayPageObjectProvider.getClassName()),
-				fragmentEntryProcessorContext.getLocale(),
-				layoutDisplayPageObjectProvider.getDisplayObject());
+			infoItemFieldValuesProvider = _getInfoItemFieldValuesProvider(
+				layoutDisplayPageObjectProvider.getClassName());
+			object = layoutDisplayPageObjectProvider.getDisplayObject();
 		}
 		else if (isMapped(editableValueJSONObject)) {
 			long classNameId = editableValueJSONObject.getLong("classNameId");
@@ -125,6 +135,11 @@ public class FragmentEntryProcessorHelperImpl
 			if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
 				return null;
 			}
+
+			fieldName = editableValueJSONObject.getString("fieldId");
+
+			infoItemFieldValuesProvider = _getInfoItemFieldValuesProvider(
+				className);
 
 			InfoItemIdentifier infoItemIdentifier =
 				new ClassPKInfoItemIdentifier(classPK);
@@ -141,10 +156,7 @@ public class FragmentEntryProcessorHelperImpl
 				}
 			}
 
-			Object object = _getInfoItem(className, infoItemIdentifier);
-
-			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-				_getInfoItemFieldValuesProvider(className);
+			object = _getInfoItem(className, infoItemIdentifier);
 
 			InfoItemFieldValues infoItemFieldValues =
 				infoDisplaysFieldValues.get(classPK);
@@ -155,13 +167,8 @@ public class FragmentEntryProcessorHelperImpl
 
 				infoDisplaysFieldValues.put(classPK, infoItemFieldValues);
 			}
-
-			return _getMappedInfoItemFieldValue(
-				editableValueJSONObject.getString("fieldId"),
-				infoItemFieldValuesProvider,
-				fragmentEntryProcessorContext.getLocale(), object);
 		}
-		else if (isMappedCollection(editableValueJSONObject)) {
+		else {
 			Optional<InfoItemReference> infoItemReferenceOptional =
 				fragmentEntryProcessorContext.
 					getContextInfoItemReferenceOptional();
@@ -170,18 +177,19 @@ public class FragmentEntryProcessorHelperImpl
 				return null;
 			}
 
+			fieldName = editableValueJSONObject.getString("collectionFieldId");
+
 			InfoItemReference infoItemReference =
 				infoItemReferenceOptional.get();
 
-			return _getMappedInfoItemFieldValue(
-				editableValueJSONObject.getString("collectionFieldId"),
-				_getInfoItemFieldValuesProvider(
-					infoItemReference.getClassName()),
-				fragmentEntryProcessorContext.getLocale(),
-				_getInfoItem(infoItemReference));
+			infoItemFieldValuesProvider = _getInfoItemFieldValuesProvider(
+				infoItemReference.getClassName());
+			object = _getInfoItem(infoItemReference);
 		}
 
-		return null;
+		return _getMappedInfoItemFieldValue(
+			fieldName, infoItemFieldValuesProvider,
+			fragmentEntryProcessorContext.getLocale(), object);
 	}
 
 	@Override

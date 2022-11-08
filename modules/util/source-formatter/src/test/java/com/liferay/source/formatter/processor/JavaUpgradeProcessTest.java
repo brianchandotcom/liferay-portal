@@ -22,12 +22,16 @@ import org.junit.Test;
 public class JavaUpgradeProcessTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testUpgradeProcessUnnecessaryIfStatement() throws Exception {
+	public void testMoveUpgradeSteps() throws Exception {
 		test(
-			"UpgradeProcessUnnecessaryIfStatement.testjava",
-			"No need to use if-statement to wrap 'alterColumn*' and " +
-				"'alterTable*' calls",
-			26);
+			"MoveUpgradeSteps.testjava",
+			new String[] {
+				"Move 'alterTableAddColumn' call inside 'getPreUpgradeSteps' " +
+					"method",
+				"Move 'alterTableAddColumn' call inside " +
+					"'getPostUpgradeSteps' method"
+			},
+			new Integer[] {26, 30});
 	}
 
 	@Test
@@ -41,16 +45,12 @@ public class JavaUpgradeProcessTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testMoveUpgradeSteps() throws Exception {
+	public void testUpgradeProcessUnnecessaryIfStatement() throws Exception {
 		test(
-			"MoveUpgradeSteps.testjava",
-			new String[] {
-				"Move 'alterTableAddColumn' call inside 'getPreUpgradeSteps' " +
-					"method",
-				"Move 'alterTableAddColumn' call inside " +
-					"'getPostUpgradeSteps' method"
-			},
-			new Integer[] {26, 30});
+			"UpgradeProcessUnnecessaryIfStatement.testjava",
+			"No need to use if-statement to wrap 'alterColumn*' and " +
+				"'alterTable*' calls",
+			26);
 	}
 
 }

@@ -121,6 +121,7 @@ export default function PagesTree({
 								{item.regularURL ? (
 									<a
 										className="flex-grow-1 text-decoration-none text-truncate w-100"
+										data-tooltip-floating="true"
 										href={item.regularURL}
 										tabIndex="-1"
 										title={item.name}
@@ -176,6 +177,7 @@ export default function PagesTree({
 										{item.regularURL ? (
 											<a
 												className="flex-grow-1 text-decoration-none text-truncate w-100"
+												data-tooltip-floating="true"
 												href={item.regularURL}
 												tabIndex="-1"
 												title={item.name}

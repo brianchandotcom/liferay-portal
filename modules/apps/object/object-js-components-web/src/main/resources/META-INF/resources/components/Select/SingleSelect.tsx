@@ -13,7 +13,8 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import React, {Children, ReactNode, useState} from 'react';
+import ClayPopover from '@clayui/popover';
+import React, {Children, ReactNode, useEffect, useState} from 'react';
 
 import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
 
@@ -31,6 +32,13 @@ export function SingleSelect<
 >({onChange = () => {}, options, children, ...otherProps}: IProps<T>) {
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 	const arrayChildren = Children.toArray(children);
+	const [showPopover, setShowPopover] = useState(false);
+
+	useEffect(() => {
+		if (!dropdownActive) {
+			setShowPopover(false);
+		}
+	}, [dropdownActive]);
 
 	return (
 		<BaseSelect
@@ -38,28 +46,55 @@ export function SingleSelect<
 			setDropdownActive={setDropdownActive}
 			{...otherProps}
 		>
-			{options.map((option, index) => (
-				<ClayDropDown.Item
-					className={
-						option.type
-							? 'lfr-object__single-select--with-label'
-							: ''
-					}
-					key={index}
-					onClick={() => {
-						setDropdownActive(false);
-						onChange(option);
-					}}
-				>
-					<div>{option.label}</div>
+			{options.map((option, index) => {
+				let events = {};
+				if (option.popover) {
+					events = {
+						onMouseOut: () => setShowPopover(false),
+						onMouseOver: () => setShowPopover(true),
+					};
+				}
 
-					{option.description && (
-						<span className="text-small">{option.description}</span>
-					)}
+				return (
+					<>
+						<ClayPopover
+							alignPosition="right"
+							disableScroll={false}
+							header={option.popover?.header}
+							onShowChange={setShowPopover}
+							show={showPopover && !!Object.keys(events).length}
+							trigger={
+								<ClayDropDown.Item
+									{...events}
+									className={
+										option.type
+											? 'lfr-object__single-select--with-label'
+											: ''
+									}
+									disabled={option.disabled}
+									key={index}
+									onClick={() => {
+										setDropdownActive(false);
+										onChange(option);
+									}}
+								>
+									<div>{option.label}</div>
 
-					{arrayChildren?.[index]}
-				</ClayDropDown.Item>
-			))}
+									{option.description && (
+										<span className="text-small">
+											{option.description}
+										</span>
+									)}
+
+									{arrayChildren?.[index]}
+								</ClayDropDown.Item>
+							}
+						>
+							{option.popover?.body}
+						</ClayPopover>
+					</>
+				);
+			})}
 		</BaseSelect>
 	);
 }

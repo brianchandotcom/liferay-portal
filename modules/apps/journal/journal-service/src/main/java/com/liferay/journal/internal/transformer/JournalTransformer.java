@@ -515,8 +515,7 @@ public class JournalTransformer {
 			}
 		}
 
-		if ((Objects.equals(type, DDMFormFieldTypeConstants.SELECT) &&
-			 !ddmFormField.isMultiple()) ||
+		if (Objects.equals(type, DDMFormFieldTypeConstants.SELECT) ||
 			Objects.equals(type, DDMFormFieldTypeConstants.RADIO)) {
 
 			return optionsReferences.getOrDefault(data, data);

@@ -195,10 +195,13 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			return;
 		}
 
-		for (FileEntry fileEntry : getResources()) {
+		Map<String, FileEntry> resourcesMap = getResourcesMap();
+
+		for (Map.Entry<String, FileEntry> entry : resourcesMap.entrySet()) {
+			FileEntry fileEntry = entry.getValue();
+
 			zipWriter.addEntry(
-				StringBundler.concat(
-					path, "/resources/", fileEntry.getFileName()),
+				StringBundler.concat(path, "/resources/", entry.getKey()),
 				fileEntry.getContentStream());
 		}
 	}

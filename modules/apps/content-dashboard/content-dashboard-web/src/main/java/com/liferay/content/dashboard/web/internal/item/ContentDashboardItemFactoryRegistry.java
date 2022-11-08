@@ -66,7 +66,7 @@ public class ContentDashboardItemFactoryRegistry {
 					(contentDashboardItemFactory, emitter) -> emitter.emit(
 						GenericUtil.getGenericClassName(
 							contentDashboardItemFactory))),
-				new ContentDashboardItemFactoryRegistryCustomizer(
+				new ContentDashboardItemFactoryServiceTrackerCustomizer(
 					bundleContext));
 	}
 
@@ -93,11 +93,11 @@ public class ContentDashboardItemFactoryRegistry {
 	private volatile ServiceTrackerMap<String, ContentDashboardItemFactory<?>>
 		_serviceTrackerMap;
 
-	private class ContentDashboardItemFactoryRegistryCustomizer
+	private class ContentDashboardItemFactoryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
 			<ContentDashboardItemFactory, ContentDashboardItemFactory> {
 
-		public ContentDashboardItemFactoryRegistryCustomizer(
+		public ContentDashboardItemFactoryServiceTrackerCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;

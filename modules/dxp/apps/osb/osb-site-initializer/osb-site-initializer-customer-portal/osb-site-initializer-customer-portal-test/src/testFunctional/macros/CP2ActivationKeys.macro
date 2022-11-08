@@ -4,6 +4,10 @@ definition {
 		AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
 	}
 
+	macro assertTableIsNotVisible {
+		AssertElementNotPresent(locator1 = "CP2ActivationKeys#TABLE");
+	}
+
 	macro _formatCamelCase {
 		var camelCase = StringUtil.replace("${camelCase}", " ", "");
 

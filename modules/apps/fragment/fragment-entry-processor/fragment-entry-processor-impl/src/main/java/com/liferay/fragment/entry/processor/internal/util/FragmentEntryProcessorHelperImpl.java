@@ -123,24 +123,15 @@ public class FragmentEntryProcessorHelperImpl
 
 			long classPK = editableValueJSONObject.getLong("classPK");
 
-			InfoItemIdentifier infoItemIdentifier =
-				new ClassPKInfoItemIdentifier(classPK);
-
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className,
-					infoItemIdentifier.getInfoItemServiceFilter());
-
-			if (infoItemObjectProvider == null) {
-				return null;
-			}
-
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(className);
 
 			if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
 				return null;
 			}
+
+			InfoItemIdentifier infoItemIdentifier =
+				new ClassPKInfoItemIdentifier(classPK);
 
 			if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
 				infoItemIdentifier = new ClassPKInfoItemIdentifier(
@@ -152,6 +143,15 @@ public class FragmentEntryProcessorHelperImpl
 					infoItemIdentifier.setVersion(
 						fragmentEntryProcessorContext.getPreviewVersion());
 				}
+			}
+
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className,
+					infoItemIdentifier.getInfoItemServiceFilter());
+
+			if (infoItemObjectProvider == null) {
+				return null;
 			}
 
 			Object object = infoItemObjectProvider.getInfoItem(

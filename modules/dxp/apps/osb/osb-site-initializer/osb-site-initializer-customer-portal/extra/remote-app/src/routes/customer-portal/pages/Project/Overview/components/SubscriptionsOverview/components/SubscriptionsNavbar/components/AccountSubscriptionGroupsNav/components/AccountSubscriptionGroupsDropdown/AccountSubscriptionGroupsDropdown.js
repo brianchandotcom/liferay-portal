@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {Button, DropDown} from '@clayui/core';
+import {Button} from '@clayui/core';
+import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import Skeleton from '../../../../../../../../../../../../../common/components/Skeleton';

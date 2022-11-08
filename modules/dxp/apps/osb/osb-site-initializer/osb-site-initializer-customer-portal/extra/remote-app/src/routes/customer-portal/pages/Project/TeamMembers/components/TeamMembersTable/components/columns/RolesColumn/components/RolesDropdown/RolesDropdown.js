@@ -8,7 +8,8 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {Button, DropDown} from '@clayui/core';
+import {Button} from '@clayui/core';
+import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useMemo, useState} from 'react';
 import i18n from '../../../../../../../../../../../../common/I18n';

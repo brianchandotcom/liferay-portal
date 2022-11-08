@@ -113,7 +113,6 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2145,16 +2144,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			Date expirationDate, Date reviewDate)
 		throws PortalException {
 
-		if ((expirationDate != null) &&
-			expirationDate.before(DateUtil.newDate())) {
+		Date now = new Date();
 
+		if ((expirationDate != null) && expirationDate.before(now)) {
 			throw new KBArticleExpirationDateException(
-				"Expiration date is in the past");
+				"Expiration date " + expirationDate + " is in the past");
 		}
 
-		if ((reviewDate != null) && reviewDate.before(DateUtil.newDate())) {
+		if ((reviewDate != null) && reviewDate.before(now)) {
 			throw new KBArticleReviewDateException(
-				"Review date is in the past");
+				"Review date is " + reviewDate + " in the past");
 		}
 	}
 

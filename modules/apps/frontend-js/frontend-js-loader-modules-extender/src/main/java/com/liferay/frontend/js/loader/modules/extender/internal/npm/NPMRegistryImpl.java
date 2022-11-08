@@ -85,7 +85,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
-	immediate = true, service = NPMRegistry.class
+	service = NPMRegistry.class
 )
 public class NPMRegistryImpl implements NPMRegistry {
 

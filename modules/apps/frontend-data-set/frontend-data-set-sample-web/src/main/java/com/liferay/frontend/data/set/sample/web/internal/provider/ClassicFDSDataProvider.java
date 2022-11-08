@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + FDSSampleFDSNames.CLASSIC,
 	service = FDSDataProvider.class
 )

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Patrick Yeo
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override

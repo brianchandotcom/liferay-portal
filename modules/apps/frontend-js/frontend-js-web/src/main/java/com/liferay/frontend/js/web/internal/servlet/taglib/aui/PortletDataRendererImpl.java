@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = PortletDataRenderer.class)
+@Component(service = PortletDataRenderer.class)
 public class PortletDataRendererImpl implements PortletDataRenderer {
 
 	@Override

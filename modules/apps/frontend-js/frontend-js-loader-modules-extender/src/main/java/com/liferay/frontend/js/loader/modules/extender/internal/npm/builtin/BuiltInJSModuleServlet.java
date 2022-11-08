@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=Serve Package Servlet",
 		"osgi.http.whiteboard.servlet.pattern=/js/module/*",

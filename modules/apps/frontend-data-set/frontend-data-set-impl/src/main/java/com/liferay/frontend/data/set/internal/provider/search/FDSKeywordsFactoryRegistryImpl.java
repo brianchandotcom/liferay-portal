@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = FDSKeywordsFactoryRegistry.class)
+@Component(service = FDSKeywordsFactoryRegistry.class)
 public class FDSKeywordsFactoryRegistryImpl
 	implements FDSKeywordsFactoryRegistry {
 

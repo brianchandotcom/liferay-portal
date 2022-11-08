@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Allegrini
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"javax.portlet.display-name=Classic Theme Style Guide Sample",

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = PaginationContextProvider.class)
+@Component(service = PaginationContextProvider.class)
 @Provider
 public class PaginationContextProvider
 	implements ContextProvider<FDSPagination> {

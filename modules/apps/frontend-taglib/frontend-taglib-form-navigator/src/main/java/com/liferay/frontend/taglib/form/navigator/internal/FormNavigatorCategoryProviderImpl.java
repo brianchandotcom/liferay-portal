@@ -39,7 +39,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = FormNavigatorCategoryProvider.class)
+@Component(service = FormNavigatorCategoryProvider.class)
 public class FormNavigatorCategoryProviderImpl
 	implements FormNavigatorCategoryProvider {
 

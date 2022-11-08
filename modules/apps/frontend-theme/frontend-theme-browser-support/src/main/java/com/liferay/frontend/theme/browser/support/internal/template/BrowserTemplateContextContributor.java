@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Chema Balsas
  */
 @Component(
-	immediate = true,
 	property = "type=" + TemplateContextContributor.TYPE_THEME,
 	service = TemplateContextContributor.class
 )

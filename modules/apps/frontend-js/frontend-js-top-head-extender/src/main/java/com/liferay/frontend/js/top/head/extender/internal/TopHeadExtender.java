@@ -44,7 +44,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class TopHeadExtender
 	implements ServiceTrackerCustomizer
 		<ServletContext, ServiceRegistration<TopHeadResources>> {

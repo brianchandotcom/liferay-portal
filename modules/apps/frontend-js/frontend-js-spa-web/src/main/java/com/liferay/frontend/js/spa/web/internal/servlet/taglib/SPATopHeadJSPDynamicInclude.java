@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

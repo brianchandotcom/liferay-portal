@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Tambara
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class DynamicSectionUtil {
 
 	public static DynamicSectionReplace getReplace(String name) {

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = ScreenNavigationRegistry.class)
+@Component(service = ScreenNavigationRegistry.class)
 public class ScreenNavigationRegistry {
 
 	public <T> List<ScreenNavigationCategory> getScreenNavigationCategories(

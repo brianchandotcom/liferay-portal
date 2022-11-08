@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.theme.font.awesome.web.internal.configuration.CSSFontAwesomeConfiguration",
-	immediate = true, service = DynamicInclude.class
+	service = DynamicInclude.class
 )
 public class FontAwesomeTopHeadDynamicInclude extends BaseDynamicInclude {
 

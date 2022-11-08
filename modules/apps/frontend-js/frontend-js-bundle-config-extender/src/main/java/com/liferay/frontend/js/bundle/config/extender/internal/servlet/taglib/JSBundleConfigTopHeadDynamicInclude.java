@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Chema Balsas
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MIN_VALUE,
+	property = "service.ranking:Integer=" + Integer.MIN_VALUE,
 	service = DynamicInclude.class
 )
 public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {

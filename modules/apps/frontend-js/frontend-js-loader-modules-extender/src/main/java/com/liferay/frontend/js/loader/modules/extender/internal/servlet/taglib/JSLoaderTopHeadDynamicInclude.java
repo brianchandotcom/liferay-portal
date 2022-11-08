@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = DynamicInclude.class
 )
 public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {

@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = FDSDataProviderRegistry.class)
+@Component(service = FDSDataProviderRegistry.class)
 public class FDSDataProviderRegistryImpl implements FDSDataProviderRegistry {
 
 	@Override

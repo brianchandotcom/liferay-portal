@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = SortContextProvider.class)
+@Component(service = SortContextProvider.class)
 @Provider
 public class SortContextProvider implements ContextProvider<Sort> {
 

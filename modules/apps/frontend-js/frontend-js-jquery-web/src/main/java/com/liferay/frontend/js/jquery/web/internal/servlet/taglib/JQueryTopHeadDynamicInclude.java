@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.jquery.web.internal.configuration.JSJQueryConfiguration",
-	immediate = true, service = DynamicInclude.class
+	service = DynamicInclude.class
 )
 public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 

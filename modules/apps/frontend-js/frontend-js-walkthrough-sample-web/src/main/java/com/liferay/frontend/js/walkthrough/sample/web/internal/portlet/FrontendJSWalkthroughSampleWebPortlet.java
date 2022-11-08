@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Susan Chen
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"javax.portlet.display-name=JS Walkthrough Sample",

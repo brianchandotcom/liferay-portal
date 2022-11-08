@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = ServiceFactory.class)
+@Component(service = ServiceFactory.class)
 public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 
 	@Override

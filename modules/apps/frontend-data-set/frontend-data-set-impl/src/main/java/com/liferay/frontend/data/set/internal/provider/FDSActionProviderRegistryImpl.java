@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = FDSActionProviderRegistry.class)
+@Component(service = FDSActionProviderRegistry.class)
 public class FDSActionProviderRegistryImpl
 	implements FDSActionProviderRegistry {
 

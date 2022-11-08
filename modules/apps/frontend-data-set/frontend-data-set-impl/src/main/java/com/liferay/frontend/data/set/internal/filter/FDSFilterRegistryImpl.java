@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = FDSFilterRegistry.class)
+@Component(service = FDSFilterRegistry.class)
 public class FDSFilterRegistryImpl implements FDSFilterRegistry {
 
 	@Override

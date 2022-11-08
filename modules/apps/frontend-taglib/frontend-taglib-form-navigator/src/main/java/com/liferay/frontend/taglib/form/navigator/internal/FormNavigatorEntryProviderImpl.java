@@ -50,7 +50,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = FormNavigatorEntryProvider.class)
+@Component(service = FormNavigatorEntryProvider.class)
 public class FormNavigatorEntryProviderImpl
 	implements FormNavigatorEntryProvider {
 

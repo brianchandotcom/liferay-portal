@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class SoyComponentRendererProvider {
 
 	public static SoyComponentRenderer getSoyComponentRenderer() {

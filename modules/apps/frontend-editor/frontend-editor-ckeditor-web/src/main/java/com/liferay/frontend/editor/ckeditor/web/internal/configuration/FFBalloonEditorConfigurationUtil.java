@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.editor.ckeditor.web.internal.configuration.FFBalloonEditorConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class FFBalloonEditorConfigurationUtil {
 

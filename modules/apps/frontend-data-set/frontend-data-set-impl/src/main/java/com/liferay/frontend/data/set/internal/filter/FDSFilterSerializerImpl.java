@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = FDSFilterSerializer.class)
+@Component(service = FDSFilterSerializer.class)
 public class FDSFilterSerializerImpl implements FDSFilterSerializer {
 
 	@Override

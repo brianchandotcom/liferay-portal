@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.lodash.web.internal.configuration.JSLodashConfiguration",
-	immediate = true, service = DynamicInclude.class
+	service = DynamicInclude.class
 )
 public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 

@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/favicon",
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.theme.favicon.servlet.internal.FaviconServlet",

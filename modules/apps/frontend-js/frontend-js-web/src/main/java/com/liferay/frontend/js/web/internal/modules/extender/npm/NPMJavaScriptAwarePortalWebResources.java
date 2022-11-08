@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
 	service = {
 		JavaScriptAwarePortalWebResources.class, PortalWebResources.class
 	}

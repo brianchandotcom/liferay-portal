@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSResolveModulesServlet",
 		"osgi.http.whiteboard.servlet.pattern=/js_resolve_modules",

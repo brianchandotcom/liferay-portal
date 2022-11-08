@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = JSPRenderer.class)
+@Component(service = JSPRenderer.class)
 public class JSPRenderer {
 
 	public void renderJSP(

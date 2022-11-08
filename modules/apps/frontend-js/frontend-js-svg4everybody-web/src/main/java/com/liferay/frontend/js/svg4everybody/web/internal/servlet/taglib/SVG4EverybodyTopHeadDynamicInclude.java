@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryce Osterhaus
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = DynamicInclude.class
 )
 public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {

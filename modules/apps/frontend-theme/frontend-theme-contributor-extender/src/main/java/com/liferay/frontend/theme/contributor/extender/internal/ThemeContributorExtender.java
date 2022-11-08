@@ -47,7 +47,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael Bradford
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ThemeContributorExtender
 	implements ServiceTrackerCustomizer
 		<ServletContext, Collection<ServiceRegistration<?>>> {

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Chema Balsas
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class CKEditorCreoleOnEditorCreateDynamicInclude
 	implements DynamicInclude {
 

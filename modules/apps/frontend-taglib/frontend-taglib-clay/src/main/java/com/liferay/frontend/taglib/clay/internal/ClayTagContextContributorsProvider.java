@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rodolfo Roza Miranda
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ClayTagContextContributorsProvider {
 
 	public static List<ClayTagContextContributor> getClayTagContextContributors(

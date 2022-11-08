@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Chema Balsas
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-chart-sample",
 		"com.liferay.portlet.display-category=category.sample",

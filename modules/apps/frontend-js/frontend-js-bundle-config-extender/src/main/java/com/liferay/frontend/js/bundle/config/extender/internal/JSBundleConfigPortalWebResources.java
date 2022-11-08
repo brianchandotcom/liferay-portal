@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Chema Balsas
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(enabled = false, service = {})
 public class JSBundleConfigPortalWebResources {
 
 	@Activate

@@ -50,7 +50,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Chema Balsas
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigServlet",
 		"osgi.http.whiteboard.servlet.pattern=/js_bundle_config",

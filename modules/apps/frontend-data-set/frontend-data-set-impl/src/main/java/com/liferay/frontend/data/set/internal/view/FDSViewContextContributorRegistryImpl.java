@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = FDSViewContextContributorRegistry.class)
+@Component(service = FDSViewContextContributorRegistry.class)
 public class FDSViewContextContributorRegistryImpl
 	implements FDSViewContextContributorRegistry {
 

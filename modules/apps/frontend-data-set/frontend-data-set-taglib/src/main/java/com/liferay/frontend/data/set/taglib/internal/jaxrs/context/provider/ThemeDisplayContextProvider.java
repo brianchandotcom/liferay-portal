@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = ThemeDisplayContextProvider.class)
+@Component(service = ThemeDisplayContextProvider.class)
 @Provider
 public class ThemeDisplayContextProvider
 	implements ContextProvider<ThemeDisplay> {

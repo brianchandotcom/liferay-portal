@@ -20,7 +20,7 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {Events, useDispatch, useData} from '../App';
+import {Events, useData, useDispatch} from '../App';
 import {ESteps} from '../pages/wizard/WizardPage';
 import {fetchConnection} from '../utils/api';
 import BasePage from './BasePage';

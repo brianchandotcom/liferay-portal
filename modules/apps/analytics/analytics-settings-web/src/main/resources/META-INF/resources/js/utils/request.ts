@@ -61,16 +61,19 @@ async function request(path: string, config: RequestInit) {
 
 	if (response.status === Status.Forbidden) {
 		window.location.reload();
-	} else if (response.status === Status.NoContent) {
+	}
+	else if (response.status === Status.NoContent) {
 		return status;
-	} else if (response.status >= Status.MultipleChoices || status) {
+	}
+	else if (response.status >= Status.MultipleChoices || status) {
 		Liferay.Util.openToast({
 			message: ERROR_MESSAGE,
 			type: 'danger',
 		});
 
 		return status;
-	} else if (config.method === 'GET') {
+	}
+	else if (config.method === 'GET') {
 		return response.json();
 	}
 

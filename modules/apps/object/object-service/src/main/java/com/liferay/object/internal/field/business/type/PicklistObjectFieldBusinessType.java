@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -125,23 +126,26 @@ public class PicklistObjectFieldBusinessType
 			return;
 		}
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (!StringUtil.equals(
-					objectFieldSetting.getName(),
-					ObjectFieldSettingConstants.NAME_STATE_FLOW) ||
-				(objectFieldSetting.getObjectStateFlow() == null)) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166838"))) {
+			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+				if (!StringUtil.equals(
+						objectFieldSetting.getName(),
+						ObjectFieldSettingConstants.NAME_STATE_FLOW) ||
+					(objectFieldSetting.getObjectStateFlow() == null)) {
 
-				continue;
+					continue;
+				}
+
+				ObjectStateFlow objectStateFlow =
+					objectFieldSetting.getObjectStateFlow();
+
+				_objectStateFlowLocalService.addObjectStateFlow(
+					newObjectField.getUserId(),
+					newObjectField.getObjectFieldId(),
+					objectStateFlow.getObjectStates());
+
+				return;
 			}
-
-			ObjectStateFlow objectStateFlow =
-				objectFieldSetting.getObjectStateFlow();
-
-			_objectStateFlowLocalService.addObjectStateFlow(
-				newObjectField.getUserId(), newObjectField.getObjectFieldId(),
-				objectStateFlow.getObjectStates());
-
-			return;
 		}
 
 		_objectStateFlowLocalService.addDefaultObjectStateFlow(newObjectField);

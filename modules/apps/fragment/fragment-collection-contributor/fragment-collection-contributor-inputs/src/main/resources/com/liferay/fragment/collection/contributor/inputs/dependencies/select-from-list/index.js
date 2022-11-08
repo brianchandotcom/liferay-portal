@@ -18,7 +18,7 @@ buttonElement.addEventListener('click', toggleResultList);
 buttonElement.addEventListener('blur', handleResultListBlur);
 uiInputElement.addEventListener('click', toggleResultList);
 uiInputElement.addEventListener('input', handleInputChange);
-uiInputElement.addEventListener('blur', handleResultListBlur);
+uiInputElement.addEventListener('blur', handleInputBlur);
 uiInputElement.addEventListener('keydown', handleInputKeyDown);
 optionListElement.addEventListener('click', handleOptionListClick);
 
@@ -50,6 +50,14 @@ function handleOptionListClick(event) {
 
 	if (selectedOption) {
 		setSelectedOption(selectedOption);
+	}
+}
+
+function handleInputBlur() {
+	uiInputElement.value = labelInputElement.value;
+
+	if (checkIsOpenResultList()) {
+		setTimeout(() => closeResultList(), 500);
 	}
 }
 

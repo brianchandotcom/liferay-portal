@@ -710,8 +710,11 @@ public class EditAssetListDisplayContext {
 
 		long[] classNameIds = GetterUtil.getLongValues(
 			StringUtil.split(
-				unicodeProperties.getProperty("classNameIds", null)),
-			_getDefaultClassNameIds());
+				unicodeProperties.getProperty("classNameIds", null)));
+
+		if (classNameIds.length == 0) {
+			classNameIds = _getDefaultClassNameIds();
+		}
 
 		for (long classNameId : classNameIds) {
 			AssetRendererFactory<?> assetRendererFactory =

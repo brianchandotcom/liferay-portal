@@ -36,7 +36,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -174,13 +173,6 @@ public class StyleBookManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "add"));
 			}
 		).build();
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

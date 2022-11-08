@@ -1018,6 +1018,7 @@ definition {
 	@priority = "5"
 	test AddNewExperienceOrganizationRegionSegment {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceOrganizationRegionSegment";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(
@@ -1914,6 +1915,7 @@ definition {
 	@priority = "4"
 	test AddNewExperienceSessionIPGeocoderCountry {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceSessionIPGeocoderCountry";
 
 		task ("Add a session IP Geocoder Country segment") {
 			JSONSegmentsentry.addSegment(

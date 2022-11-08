@@ -381,6 +381,7 @@ definition {
 	@uitest
 	test AddSegmentByOrganizationRegion {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentByOrganizationRegion";
 
 		task ("Add user") {
 			JSONUser.addUser(

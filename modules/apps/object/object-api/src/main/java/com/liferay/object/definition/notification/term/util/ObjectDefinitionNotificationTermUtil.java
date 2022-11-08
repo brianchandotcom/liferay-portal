@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.notification.term.util;
+package com.liferay.object.definition.notification.term.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;

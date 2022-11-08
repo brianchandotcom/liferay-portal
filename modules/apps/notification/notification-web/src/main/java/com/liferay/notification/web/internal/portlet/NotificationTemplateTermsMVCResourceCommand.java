@@ -15,8 +15,8 @@
 package com.liferay.notification.web.internal.portlet;
 
 import com.liferay.notification.constants.NotificationPortletKeys;
+import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;

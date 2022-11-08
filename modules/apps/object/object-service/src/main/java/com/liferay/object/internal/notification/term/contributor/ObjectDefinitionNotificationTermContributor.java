@@ -15,9 +15,9 @@
 package com.liferay.object.internal.notification.term.contributor;
 
 import com.liferay.notification.term.contributor.NotificationTermContributor;
+import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

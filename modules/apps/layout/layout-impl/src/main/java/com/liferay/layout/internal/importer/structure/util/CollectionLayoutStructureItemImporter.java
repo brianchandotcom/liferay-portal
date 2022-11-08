@@ -25,9 +25,9 @@ import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionPro
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
-import com.liferay.layout.page.template.util.AlignConverter;
-import com.liferay.layout.page.template.util.FlexWrapConverter;
-import com.liferay.layout.page.template.util.JustifyConverter;
+import com.liferay.layout.util.converter.AlignConverter;
+import com.liferay.layout.util.converter.FlexWrapConverter;
+import com.liferay.layout.util.converter.JustifyConverter;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;

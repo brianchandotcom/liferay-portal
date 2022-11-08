@@ -63,7 +63,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 					<c:choose>
 						<c:when test='<%= Objects.equals(assetListDisplayContext.getDisplayStyle(), "descriptive") %>'>
 							<liferay-ui:search-container-column-icon
-								icon="list"
+								icon='<%= (assetListEntry.getType() == 0) ? "bolt" : "list" %>'
 							/>
 
 							<liferay-ui:search-container-column-text
@@ -103,7 +103,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							>
 								<clay:icon
 									cssClass="mr-2 text-secondary"
-									symbol="list"
+									symbol='<%= (assetListEntry.getType() == 0) ? "bolt" : "list" %>'
 								/>
 
 								<aui:a href="<%= assetListDisplayContext.getEditURL(assetListEntry) %>">

@@ -71,6 +71,10 @@ public class AssetListEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getIcon() {
+		if (_assetListEntry.getType() == 0) {
+			return "bolt";
+		}
+
 		return "list";
 	}
 

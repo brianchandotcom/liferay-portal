@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE</td>
+	<td>//*[contains(@class, 'cp-activation-key-table')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIPS_TEXT</td>
 	<td>//*[@role='tooltip']//*[text()='${key_text}']</td>
 	<td></td>

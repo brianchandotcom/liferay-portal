@@ -177,11 +177,16 @@ function setFocusedOption(optionElement) {
 function createOptionElement(option) {
 	const optionElement = document.createElement('li');
 
+	optionElement.dataset.optionValue = option.value;
 	optionElement.id = option.id;
 	optionElement.textContent = option.textContent;
 
 	optionElement.classList.add('dropdown-item');
 	optionElement.setAttribute('role', 'option');
+
+	if (valueInputElement.value === option.value) {
+		optionElement.classList.add('active');
+	}
 
 	return optionElement;
 }
@@ -196,7 +201,9 @@ function setSelectedOption(optionElement) {
 		selectedOption.classList.remove('active');
 	}
 
-	optionElement.classList.add('active');
+	if (optionElement.dataset.optionValue) {
+		optionElement.classList.add('active');
+	}
 
 	labelInputElement.value = optionElement.dataset.optionValue
 		? optionElement.textContent

@@ -269,7 +269,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 											<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 										</span>
 										<span class="text-default">
-											<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+											<aui:workflow-status helpMessage='<%= kbArticle.isExpired() ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 
 											<%
 											int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);

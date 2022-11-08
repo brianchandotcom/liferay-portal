@@ -141,8 +141,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 	}
 
 	protected boolean isNumberSortableImplementedAsDoubleForSearchEngine() {
-		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
-			searchEngineHelper.getDefaultSearchEngineId());
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine();
 
 		String vendor = searchEngine.getVendor();
 

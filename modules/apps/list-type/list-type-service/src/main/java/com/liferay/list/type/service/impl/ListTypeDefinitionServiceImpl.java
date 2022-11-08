@@ -45,7 +45,8 @@ public class ListTypeDefinitionServiceImpl
 	extends ListTypeDefinitionServiceBaseImpl {
 
 	@Override
-	public ListTypeDefinition addListTypeDefinition(Map<Locale, String> nameMap)
+	public ListTypeDefinition addListTypeDefinition(
+			String externalReferenceCode, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		_portletResourcePermission.check(

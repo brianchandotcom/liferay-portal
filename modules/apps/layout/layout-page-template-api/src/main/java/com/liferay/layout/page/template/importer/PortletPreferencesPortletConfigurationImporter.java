@@ -16,12 +16,9 @@ package com.liferay.layout.page.template.importer;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Jürgen Kappler
  */
-@ProviderType
 public interface PortletPreferencesPortletConfigurationImporter {
 
 	public void importPortletConfiguration(

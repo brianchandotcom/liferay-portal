@@ -18,12 +18,12 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -120,10 +120,10 @@ public class ObjectEntryExtensionProvider extends BaseObjectExtensionProvider {
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 				String objectRelationshipERCFieldName =
-					ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-						objectField,
+					ObjectFieldSettingUtil.getValue(
 						ObjectFieldSettingConstants.
-							NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+							NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+						objectField);
 
 				extendedPropertyDefinitions.put(
 					objectRelationshipERCFieldName,

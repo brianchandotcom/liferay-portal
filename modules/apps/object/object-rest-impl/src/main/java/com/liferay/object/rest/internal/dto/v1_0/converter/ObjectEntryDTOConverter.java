@@ -23,6 +23,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -39,7 +40,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.ObjectEntryFieldValueUtil;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -522,10 +522,10 @@ public class ObjectEntryDTOConverter
 				}
 				else {
 					String objectRelationshipERCFieldName =
-						ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-							objectField,
+						ObjectFieldSettingUtil.getValue(
 							ObjectFieldSettingConstants.
-								NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+								NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+							objectField);
 
 					map.put(
 						objectRelationshipERCFieldName,

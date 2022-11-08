@@ -39,6 +39,7 @@ import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -56,7 +57,6 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -316,11 +316,9 @@ public class DefaultObjectEntryManagerImplTest {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		_objectRelationshipERCFieldName =
-			ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-				objectField,
-				ObjectFieldSettingConstants.
-					NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME);
+		_objectRelationshipERCFieldName = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+			objectField);
 		_objectRelationshipFieldName = objectField.getName();
 	}
 

@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -29,7 +30,6 @@ import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -109,10 +109,10 @@ public class RelationshipObjectFieldBusinessType
 
 		String externalReferenceCode = GetterUtil.getString(
 			values.get(
-				ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-					objectField,
+				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME)));
+						NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+					objectField)));
 
 		if (Validator.isNull(externalReferenceCode)) {
 			return null;

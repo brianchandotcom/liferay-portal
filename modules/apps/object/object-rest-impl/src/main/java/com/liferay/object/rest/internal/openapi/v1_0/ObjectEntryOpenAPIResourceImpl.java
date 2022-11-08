@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.openapi.v1_0;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
@@ -28,7 +29,6 @@ import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.util.ObjectFieldSettingValueUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -227,10 +227,10 @@ public class ObjectEntryOpenAPIResourceImpl
 				dtoProperties.add(
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),
-						ObjectFieldSettingValueUtil.getObjectFieldSettingValue(
-							objectField,
+						ObjectFieldSettingUtil.getValue(
 							ObjectFieldSettingConstants.
-								NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME),
+								NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
+							objectField),
 						String.class.getSimpleName()) {
 
 						{

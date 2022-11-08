@@ -14,12 +14,22 @@
 
 package com.liferay.cookies.configuration;
 
+import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Daniel Sanz
  */
 public interface CookiesConfigurationHelper {
+
+  public CookiesBannerConfiguration getCookiesBannerConfiguration(
+    ThemeDisplay themeDisplay) throws Exception;
+
+  public CookiesConsentConfiguration getCookiesConsentConfiguration(
+    ThemeDisplay themeDisplay) throws Exception;
 
 	public CookiesPreferenceHandlingConfiguration
 			getCookiesPreferenceHandlingConfiguration(

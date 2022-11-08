@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -274,23 +272,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		return true;
 	}
 
-	private boolean _isEmbeddedPersonalApplicationLayout(Layout layout) {
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		String layoutFriendlyURL = layout.getFriendlyURL();
-
-		if (layout.isSystem() &&
-			layoutFriendlyURL.equals(
-				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isShow(ThemeDisplay themeDisplay) {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
@@ -302,7 +283,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 				layout.isTypeAssetDisplay() || layout.isTypeContent() ||
 				layout.isTypePortlet()
 		).filter(
-			layout -> !_isEmbeddedPersonalApplicationLayout(layout)
+			layout -> !layout.isEmbeddedPersonalApplication()
 		).filter(
 			layout -> {
 				try {

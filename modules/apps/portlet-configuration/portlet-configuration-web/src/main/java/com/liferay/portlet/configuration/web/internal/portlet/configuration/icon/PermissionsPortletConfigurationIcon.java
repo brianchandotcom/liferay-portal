@@ -140,7 +140,7 @@ public class PermissionsPortletConfigurationIcon
 						ActionKeys.PERMISSIONS) &&
 					!layout.isLayoutPrototypeLinkActive() &&
 					!layout.isTypeControlPanel() &&
-					!isEmbeddedPersonalApplicationLayout(layout)) {
+					!layout.isEmbeddedPersonalApplication()) {
 
 					return true;
 				}

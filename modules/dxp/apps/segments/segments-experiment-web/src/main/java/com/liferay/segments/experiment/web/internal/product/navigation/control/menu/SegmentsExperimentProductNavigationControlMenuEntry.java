@@ -227,8 +227,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel() ||
-			isEmbeddedPersonalApplicationLayout(layout) ||
-			!layout.isTypeContent() ||
+			layout.isEmbeddedPersonalApplication() || !layout.isTypeContent() ||
 			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), layout,
 				ActionKeys.UPDATE)) {

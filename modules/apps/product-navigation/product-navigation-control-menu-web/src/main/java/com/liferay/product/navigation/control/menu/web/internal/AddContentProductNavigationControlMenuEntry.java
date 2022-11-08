@@ -15,6 +15,7 @@
 package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
@@ -67,7 +68,9 @@ public class AddContentProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (isEmbeddedPersonalApplicationLayout(themeDisplay.getLayout())) {
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isEmbeddedPersonalApplication()) {
 			return false;
 		}
 

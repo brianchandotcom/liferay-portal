@@ -102,7 +102,7 @@ public class LayoutActionsProductNavigationControlMenuEntry
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (!layoutMode.equals(Constants.EDIT) || layout.isTypeControlPanel() ||
-			isEmbeddedPersonalApplicationLayout(layout) ||
+			layout.isEmbeddedPersonalApplication() ||
 			!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
 

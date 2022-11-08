@@ -54,8 +54,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -301,7 +299,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 		return layoutOptional.filter(
 			Layout::isTypeAssetDisplay
 		).filter(
-			layout -> !_isEmbeddedPersonalApplicationLayout(layout)
+			layout -> !layout.isEmbeddedPersonalApplication()
 		).filter(
 			layout -> {
 				try {
@@ -374,23 +372,6 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 		}
 
 		return true;
-	}
-
-	private boolean _isEmbeddedPersonalApplicationLayout(Layout layout) {
-		if (layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		String layoutFriendlyURL = layout.getFriendlyURL();
-
-		if (layout.isSystem() &&
-			layoutFriendlyURL.equals(
-				PropsUtil.get(PropsKeys.CONTROL_PANEL_LAYOUT_FRIENDLY_URL))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

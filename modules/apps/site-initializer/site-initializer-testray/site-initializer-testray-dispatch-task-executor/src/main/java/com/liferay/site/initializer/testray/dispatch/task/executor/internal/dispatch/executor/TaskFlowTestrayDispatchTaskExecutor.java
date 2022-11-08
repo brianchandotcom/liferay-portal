@@ -21,8 +21,10 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,7 +48,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -82,9 +83,9 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
 		if (Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
-			Validator.isNull(unicodeProperties.getProperty("testrayTaskId")) ||
 			Validator.isNull(
-				unicodeProperties.getProperty("testrayCaseTypeIds"))) {
+				unicodeProperties.getProperty("testrayCaseTypeIds")) ||
+			Validator.isNull(unicodeProperties.getProperty("testrayTaskId"))) {
 
 			_log.error("The required properties are not set");
 
@@ -237,7 +238,7 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			_objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get(objectDefinitionShortName),
 				null, null, _defaultDTOConverterContext, filterString, null,
-				null, new Sort[] {new Sort("createDate" + fieldName, true)});
+				null, new Sort[] {new Sort("createDate", true)});
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -280,22 +281,17 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayTaskId"));
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
-		Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
-			new HashMap<>();
 
 		StringBundler sb = new StringBundler();
 
 		for (int i = 0; i <= (testrayCaseTypeIds.length - 1); i++) {
 			sb.append("caseTypeId eq '");
 			sb.append(testrayCaseTypeIds[i]);
-
-			if (i != (testrayCaseTypeIds.length - 1)) {
-				sb.append("' or ");
-			}
-			else {
-				sb.append("'");
-			}
+			sb.append("'");
+			sb.append(" or ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		String filter = sb.toString();
 
@@ -455,6 +451,10 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		TaskFlowTestrayDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private final Map<String, ObjectDefinition> _objectDefinitions =
 		new HashMap<>();
 

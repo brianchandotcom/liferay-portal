@@ -1888,6 +1888,8 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
+
+			User.editPassword(newPassword = "test");
 		}
 
 		task ("Login with userea user") {

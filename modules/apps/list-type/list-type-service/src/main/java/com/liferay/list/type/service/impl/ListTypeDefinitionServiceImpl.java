@@ -53,7 +53,7 @@ public class ListTypeDefinitionServiceImpl
 			ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION);
 
 		return listTypeDefinitionLocalService.addListTypeDefinition(
-			getUserId(), nameMap);
+			externalReferenceCode, getUserId(), nameMap);
 	}
 
 	@Override

@@ -56,21 +56,6 @@ public class ListTypeDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeDefinition addListTypeDefinition(
-			long userId, Map<Locale, String> nameMap)
-		throws PortalException {
-
-		_validateName(nameMap, LocaleUtil.getSiteDefault());
-
-		ListTypeDefinition listTypeDefinition =
-			listTypeDefinitionPersistence.create(
-				counterLocalService.increment());
-
-		return _addListTypeDefinition(userId, listTypeDefinition, nameMap);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, long userId)
 		throws PortalException {
 
@@ -94,6 +79,22 @@ public class ListTypeDefinitionLocalServiceImpl
 			userId, listTypeDefinition,
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), externalReferenceCode));
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ListTypeDefinition addListTypeDefinition(
+			String externalReferenceCode, long userId,
+			Map<Locale, String> nameMap)
+		throws PortalException {
+
+		_validateName(nameMap, LocaleUtil.getSiteDefault());
+
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionPersistence.create(
+				counterLocalService.increment());
+
+		return _addListTypeDefinition(userId, listTypeDefinition, nameMap);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

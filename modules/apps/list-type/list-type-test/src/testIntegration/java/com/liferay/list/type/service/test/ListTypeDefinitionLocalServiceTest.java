@@ -91,7 +91,7 @@ public class ListTypeDefinitionLocalServiceTest {
 
 		try {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, ""));
 
 			Assert.fail();
@@ -109,7 +109,7 @@ public class ListTypeDefinitionLocalServiceTest {
 	public void testDeleteListTypeDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
@@ -196,7 +196,7 @@ public class ListTypeDefinitionLocalServiceTest {
 
 	private ListTypeDefinition _addListTypeDefinition() throws Exception {
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
-			TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 	}

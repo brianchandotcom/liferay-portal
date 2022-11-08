@@ -161,6 +161,53 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		return properties.get(key);
 	}
 
+
+	private String _getTestrayIssueNames(
+			long companyId, ObjectEntry testrayCaseResultObjectEntry)
+		throws Exception {
+
+		Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
+			_getObjectEntries(
+				companyId, "CaseResultsIssues", null,
+				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
+					"'");
+
+		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
+			(List<ObjectEntry>)
+				testrayCaseResultsIssuesObjectEntriesPage1.getItems();
+
+		if (testrayCaseResultsIssuesObjectEntries.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
+				testrayCaseResultsIssuesObjectEntries) {
+
+			long issueId = (long)_getProperty(
+				"r_issueToCaseResultsIssues_c_issueId",
+				testrayCaseResultsIssuesObjectEntry);
+
+			Page<ObjectEntry> testrayIssueObejctEntriesPage = _getObjectEntries(
+				companyId, "Issue", null, "id eq '" + issueId + "'");
+
+			ObjectEntry testrayIssueObjectEntry =
+				testrayIssueObejctEntriesPage.fetchFirstItem();
+
+			sb.append(
+				StringUtil.removeSubstring(
+					(String)_getProperty("name", testrayIssueObjectEntry),
+					StringPool.DASH));
+
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	private long _increment(
 			long companyId, String fieldName, String filterString,
 			String objectDefinitionShortName)
@@ -286,100 +333,69 @@ public class TaskFlowTestrayDispatchTaskExecutor
 					testrayCaseResultObjectEntriesPage2.getItems();
 
 			testrayCaseResultObjectEntries.removeIf(
-				objectEntry -> testrayCaseObjectEntriesIds.contains(
-					(Long)_getProperty("caseId", objectEntry)));
+				objectEntry -> !testrayCaseObjectEntriesIds.contains(
+					(Long)_getProperty(
+						"r_caseToCaseResult_c_caseId", objectEntry)));
+
+			Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
+				new HashMap<>();
 
 			for (ObjectEntry testrayCaseResultObjectEntry :
 					testrayCaseResultObjectEntries) {
 
-				Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
-					_getObjectEntries(
-						companyId, "CaseResultsIssues", null,
-						"caseResultId eq '" +
-							testrayCaseResultObjectEntry.getId() + "'");
+				String testrayIssueNames = _getTestrayIssueNames(
+					companyId, testrayCaseResultObjectEntry);
 
-				List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
-					(List<ObjectEntry>)
-						testrayCaseResultsIssuesObjectEntriesPage1.getItems();
+				List<ObjectEntry> matchingTestrayCaseResults =
+					testrayCaseResultIssuesMap.get(testrayIssueNames);
 
-				for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
-						testrayCaseResultsIssuesObjectEntries) {
+				if (matchingTestrayCaseResults == null) {
+					matchingTestrayCaseResults = new ArrayList<>();
 
-					long issueId = (long)_getProperty(
-						"issueId", testrayCaseResultsIssuesObjectEntry);
-
-					Page<ObjectEntry> testrayIssueObejctEntriesPage =
-						_getObjectEntries(
-							companyId, "Issues", null,
-							"id eq '" + issueId + "'");
-
-					ObjectEntry testrayIssueObjectEntry =
-						testrayIssueObejctEntriesPage.fetchFirstItem();
-
-					if (testrayIssueObjectEntry != null) {
-						String name = (String)_getProperty(
-							"name", testrayIssueObjectEntry);
-
-						List<ObjectEntry> matchingTestrayCaseResults =
-							testrayCaseResultIssuesMap.get(name);
-
-						if (matchingTestrayCaseResults == null) {
-							matchingTestrayCaseResults = new ArrayList<>();
-
-							testrayCaseResultIssuesMap.put(
-								name, matchingTestrayCaseResults);
-						}
-
-						matchingTestrayCaseResults.add(
-							testrayCaseResultsIssuesObjectEntry);
-					}
+					testrayCaseResultIssuesMap.put(
+						testrayIssueNames, matchingTestrayCaseResults);
 				}
 
-				testrayCaseResultGroups.addAll(
-					testrayCaseResultIssuesMap.values());
+				matchingTestrayCaseResults.add(testrayCaseResultObjectEntry);
 			}
 
-			Collections.sort(
-				testrayCaseResultGroups,
-				new Comparator<List<ObjectEntry>>() {
+			testrayCaseResultGroups.addAll(testrayCaseResultIssuesMap.values());
+		}
 
-					public int compare(
-						List<ObjectEntry> testrayCaseResultObjectEntries1,
-						List<ObjectEntry> testrayCaseResultObjectEntries2) {
+		ListUtil.sort(
+			testrayCaseResultGroups,
+			new Comparator<List<ObjectEntry>>() {
 
-						int score1 = 0;
-						int score2 = 0;
+				@Override
+				public int compare(
+					List<ObjectEntry> testrayCaseResultObjectEntries1,
+					List<ObjectEntry> testrayCaseResultObjectEntries2) {
 
-						try {
-							for (ObjectEntry objectEntry :
-									testrayCaseResultObjectEntries1) {
+					int score1 = 0;
+					int score2 = 0;
 
-								score1 += (int)_getProperty(
-									"priority", objectEntry);
-							}
+					try {
+						score1 = _getScore(
+							companyId, testrayCaseResultObjectEntries1);
 
-							for (ObjectEntry objectEntry :
-									testrayCaseResultObjectEntries2) {
-
-								score2 += (int)_getProperty(
-									"priority", objectEntry);
-							}
-						}
-						catch (Exception exception) {
-							throw new RuntimeException(exception);
-						}
-
-						if (score1 > score2) {
-							return -1;
-						}
-						else if (score1 < score2) {
-							return 1;
-						}
-
-						return 0;
+						score2 = _getScore(
+							companyId, testrayCaseResultObjectEntries2);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
 					}
 
-				});
+					if (score1 > score2) {
+						return -1;
+					}
+					else if (score1 < score2) {
+						return 1;
+					}
+
+					return 0;
+				}
+
+			});
 
 			for (List<ObjectEntry> testrayCaseResultObjectEntry :
 					testrayCaseResultGroups) {

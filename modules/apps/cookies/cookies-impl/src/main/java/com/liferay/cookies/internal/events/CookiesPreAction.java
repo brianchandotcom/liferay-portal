@@ -14,6 +14,7 @@
 
 package com.liferay.cookies.internal.events;
 
+import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -22,9 +23,7 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,20 +93,6 @@ public class CookiesPreAction extends Action {
 		}
 	}
 
-  private CookiesPreferenceHandlingConfiguration _getConfigurationByDomain(
-      HttpServletRequest httpServletRequest) throws Exception {
-
-    ThemeDisplay themeDisplay =
-      (ThemeDisplay) httpServletRequest.getAttribute(
-        WebKeys.THEME_DISPLAY);
-
-    long groupId = themeDisplay.getScopeGroupId();
-
-    return _configurationProvider.getGroupConfiguration(
-      CookiesPreferenceHandlingConfiguration.class,
-      groupId);
-  }
-
 	private Map<String, String> _getCookieValues(Cookie[] cookies) {
 		Map<String, String> cookieValues = new HashMap<>();
 
@@ -136,7 +121,9 @@ public class CookiesPreAction extends Action {
 
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
-      _getConfigurationByDomain(httpServletRequest);
+				_cookiesConfigurationHelper.
+					getCookiesPreferenceHandlingConfiguration(
+						httpServletRequest);
 
 		Map<String, String> cookieValues = _getCookieValues(
 			httpServletRequest.getCookies());
@@ -212,5 +199,8 @@ public class CookiesPreAction extends Action {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CookiesConfigurationHelper _cookiesConfigurationHelper;
 
 }

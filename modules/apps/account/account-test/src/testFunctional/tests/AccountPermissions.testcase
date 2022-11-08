@@ -1802,9 +1802,9 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "user2");
 	}
 
-	@description = "This test asserts that the User's available views accounts within the page with view permission of share account role."
+	@description = "This test asserts that a user with View permission for account entries can only view them"
 	@priority = "5"
-	test CanViewAccountWithViewShareAccountRole {
+	test CanViewAccountWithViewPermissions {
 		task ("Given add account a new user and account role with view permission") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

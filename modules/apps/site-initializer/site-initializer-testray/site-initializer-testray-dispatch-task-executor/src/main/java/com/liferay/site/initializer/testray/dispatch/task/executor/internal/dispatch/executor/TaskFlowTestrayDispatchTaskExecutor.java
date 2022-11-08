@@ -161,6 +161,26 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		return properties.get(key);
 	}
 
+	private int _getScore(long companyId, List<ObjectEntry> objectEntries)
+		throws Exception {
+
+		int score = 0;
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			Long testrayCaseId = (Long)_getProperty(
+				"r_caseToCaseResult_c_caseId", objectEntry);
+
+			Page<ObjectEntry> testrayCaseObjectEntriesPage2 = _getObjectEntries(
+				companyId, "Case", null, "id eq '" + testrayCaseId + "'");
+
+			ObjectEntry testrayCaseObjectEntry =
+				testrayCaseObjectEntriesPage2.fetchFirstItem();
+
+			score += (int)_getProperty("priority", testrayCaseObjectEntry);
+		}
+
+		return score;
+	}
 
 	private String _getTestrayIssueNames(
 			long companyId, ObjectEntry testrayCaseResultObjectEntry)
@@ -279,11 +299,11 @@ public class TaskFlowTestrayDispatchTaskExecutor
 
 		String filter = sb.toString();
 
-		Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
+		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntries(
 			companyId, "Case", null, filter);
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			testrayCaseObjectEntriesPage.getItems(),
+			testrayCaseObjectEntriesPage1.getItems(),
 			objectEntry -> objectEntry.getId());
 
 		Map<String, String> map = HashMapBuilder.put(
@@ -397,39 +417,36 @@ public class TaskFlowTestrayDispatchTaskExecutor
 
 			});
 
-			for (List<ObjectEntry> testrayCaseResultObjectEntry :
-					testrayCaseResultGroups) {
+		for (List<ObjectEntry> testrayCaseResultObjectEntry :
+				testrayCaseResultGroups) {
 
-				int score = 0;
+			int score = _getScore(companyId, testrayCaseResultObjectEntry);
 
-				for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
-					score += (int)_getProperty("priority", objectEntry);
-				}
+			long increment = _increment(
+				companyId, "name", "taskId eq '" + testrayTaskId + "'",
+				"Subtask");
 
-				long increment = _increment(
-					companyId, "name", "taskId eq '" + testrayTaskId + "'",
-					"Case");
+			ObjectEntry testraySubtaskObjectEntry = _addObjectEntry(
+				"Subtask",
+				HashMapBuilder.<String, Object>put(
+					"dueStatus", "OPEN"
+				).put(
+					"name", "ST-" + increment
+				).put(
+					"r_taskToSubtasks_c_taskId", testrayTaskId
+				).put(
+					"score", score
+				).build());
 
-				ObjectEntry testraySubtaskObjectEntry = _addObjectEntry(
-					"Subtasks",
+			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
+				_addObjectEntry(
+					"SubtasksCasesResults",
 					HashMapBuilder.<String, Object>put(
-						"name", "ST-" + increment
+						"caseResultId", objectEntry.getId()
 					).put(
-						"score", score
-					).put(
-						"taskId", testrayTaskId
+						"subtaskId",
+						String.valueOf(testraySubtaskObjectEntry.getId())
 					).build());
-
-				for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
-					_addObjectEntry(
-						"SubtasksCasesResults",
-						HashMapBuilder.<String, Object>put(
-							"caseResultId", objectEntry.getId()
-						).put(
-							"subtaskId",
-							String.valueOf(testraySubtaskObjectEntry.getId())
-						).build());
-				}
 			}
 		}
 	}

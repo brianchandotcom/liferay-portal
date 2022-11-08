@@ -38,6 +38,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
 import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceTracker;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -264,6 +265,8 @@ public class ObjectEntryLocalServiceImpl
 		_startWorkflowInstance(userId, objectEntry, serviceContext);
 
 		_reindex(objectEntry);
+
+		ObjectActionThreadLocal.clearObjectActionIds();
 
 		return objectEntry;
 	}

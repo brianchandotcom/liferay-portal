@@ -75,8 +75,8 @@ definition {
 	test RequestKeywordsUsingDisplayLanguageId {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingDisplayLanguageId";
 
-		var parametersDisplay1 = "size=10&displayLanguageId=${displayLanguageId1}&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
-		var parametersDisplay2 = "size=10&displayLanguageId=${displayLanguageId2}&page=0&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersDisplay1 = "size=10&displayLanguageId=${displayLanguageId1}&page=0&sort=counts,desc,lastModifiedDate,desc";
+		var parametersDisplay2 = "size=10&displayLanguageId=${displayLanguageId2}&page=0&sort=counts,desc,lastModifiedDate,desc";
 		var displayLanguageId1 = "en-US";
 		var displayLanguageId2 = "pt-BR";
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
@@ -163,9 +163,8 @@ definition {
 	test RequestKeywordsUsingPage {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingPage";
 
-		var parametersFirstPage = "size=${size}&displayLanguageId=en-US&page=${firstPage}&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
-		var parametersSecondPage = "size=${size}&displayLanguageId=en-US&page=${secondPage}&groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
-		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+		var parametersFirstPage = "size=${size}&page=${firstPage}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersSecondPage = "size=${size}&page=${secondPage}&sort=counts,desc,lastModifiedDate,desc";
 		var firstKeyword = "workspace";
 		var secondKeyword = "analytics";
 		var size = "1";

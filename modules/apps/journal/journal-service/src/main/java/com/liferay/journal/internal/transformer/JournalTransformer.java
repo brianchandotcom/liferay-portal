@@ -454,13 +454,6 @@ public class JournalTransformer {
 
 		String type = ddmFormField.getType();
 
-		if ((Objects.equals(type, DDMFormFieldTypeConstants.SELECT) &&
-			 !ddmFormField.isMultiple()) ||
-			Objects.equals(type, DDMFormFieldTypeConstants.RADIO)) {
-
-			return optionsReferences.getOrDefault(data, data);
-		}
-
 		if (Objects.equals(type, DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
 			(Objects.equals(type, DDMFormFieldTypeConstants.SELECT) &&
 			 ddmFormField.isMultiple())) {
@@ -520,6 +513,13 @@ public class JournalTransformer {
 					_log.debug(exception);
 				}
 			}
+		}
+
+		if ((Objects.equals(type, DDMFormFieldTypeConstants.SELECT) &&
+			 !ddmFormField.isMultiple()) ||
+			Objects.equals(type, DDMFormFieldTypeConstants.RADIO)) {
+
+			return optionsReferences.getOrDefault(data, data);
 		}
 
 		return data;

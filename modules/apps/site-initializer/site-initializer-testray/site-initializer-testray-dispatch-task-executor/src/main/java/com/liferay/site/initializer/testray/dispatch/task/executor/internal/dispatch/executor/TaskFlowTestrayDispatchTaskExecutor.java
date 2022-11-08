@@ -23,6 +23,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -128,8 +129,14 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			String objectDefinitionShortName, Map<String, Object> properties)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
+		ObjectDefinition objectDefinition = _objectDefinitions.get(
 			objectDefinitionShortName);
+
+		if (objectDefinition == null) {
+			throw new PortalException(
+				"No object definition found with short name " +
+				objectDefinitionShortName);
+		}
 
 		ObjectEntry objectEntry = new ObjectEntry();
 
@@ -190,10 +197,7 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			_objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get(objectDefinitionShortName),
 				null, null, _defaultDTOConverterContext, filterString, null,
-				null,
-				new Sort[] {
-					new Sort("nestedFieldArray.value_long#" + fieldName, true)
-				});
+				null, new Sort[] {new Sort("createDate" + fieldName, true)});
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -201,13 +205,13 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			return 1;
 		}
 
-		String fieldValue = (String)_getProperty(fieldName, objectEntry); //TODO fix get last number
+		String fieldValue = (String)_getProperty(fieldName, objectEntry);
 
 		if (fieldValue == null) {
 			return 1;
 		}
 
-		return fieldValue.longValue() + 1;
+		return Long.valueOf(StringUtil.extractDigits(fieldValue)) + 1;
 	}
 
 	private void _loadObjectDefinitions(long companyId) {
@@ -234,8 +238,6 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayTaskId"));
 		String[] testrayCaseTypeIds = StringUtil.split(
 			unicodeProperties.getProperty("testrayCaseTypeIds"));
-
-		// TODO
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 		Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
@@ -293,7 +295,7 @@ public class TaskFlowTestrayDispatchTaskExecutor
 				_getObjectEntries(
 					companyId, "CaseResult", null,
 					StringBundler.concat(
-						"testrayBuild id eq '", testrayBuildId,
+						"buildId eq '", testrayBuildId,
 						"' and errors eq '",
 						testrayCaseResultFacetValue.getTerm(), "' and ",
 						filterString));
@@ -403,17 +405,30 @@ public class TaskFlowTestrayDispatchTaskExecutor
 					score += (int)_getProperty("priority", objectEntry);
 				}
 
-				_addObjectEntry(
+				long increment = _increment(
+					companyId, "name", "taskId eq '" + testrayTaskId + "'",
+					"Case");
+
+				ObjectEntry testraySubtaskObjectEntry = _addObjectEntry(
 					"Subtasks",
 					HashMapBuilder.<String, Object>put(
-						"name",
-						"ST-" +
-							_increment(
-								companyId, "name",
-								"taskId eq '" + testrayTaskId + "'", "Case")//TODO fix increment
+						"name", "ST-" + increment
 					).put(
 						"score", score
+					).put(
+						"taskId", testrayTaskId
 					).build());
+
+				for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
+					_addObjectEntry(
+						"SubtasksCasesResults",
+						HashMapBuilder.<String, Object>put(
+							"caseResultId", objectEntry.getId()
+						).put(
+							"subtaskId",
+							String.valueOf(testraySubtaskObjectEntry.getId())
+						).build());
+				}
 			}
 		}
 	}

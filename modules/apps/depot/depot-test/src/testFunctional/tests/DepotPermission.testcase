@@ -1266,7 +1266,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
-			resourceName = "com.liferay.journal",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 			roleTitle = "Depot Regrole Name");
 
 		Role.openRolesAdmin();

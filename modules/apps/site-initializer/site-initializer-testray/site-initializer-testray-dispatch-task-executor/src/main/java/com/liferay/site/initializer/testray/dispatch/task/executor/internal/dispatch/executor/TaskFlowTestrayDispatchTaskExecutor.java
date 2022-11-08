@@ -21,7 +21,7 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +46,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -146,32 +145,6 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
-	private String _getFilterString(
-		Collection<ObjectEntry> objectEntriesCollection, String fieldName) {
-
-		List<ObjectEntry> objectEntries =
-			(List<ObjectEntry>)objectEntriesCollection;
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i <= (objectEntries.size() - 1); i++) {
-			ObjectEntry objectEntry = objectEntries.get(i);
-
-			sb.append(fieldName);
-			sb.append(" eq '");
-			sb.append(objectEntry.getId());
-
-			if (i != (objectEntries.size() - 1)) {
-				sb.append("' or ");
-			}
-			else {
-				sb.append("'");
-			}
-		}
-
-		return sb.toString();
-	}
-
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, String objectDefinitionName,
 			Aggregation aggregation, String filter)
@@ -262,8 +235,9 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
 			companyId, "Case", null, filter);
 
-		String filterString = _getFilterString(
-			testrayCaseObjectEntriesPage.getItems(), "caseId");
+		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
+			testrayCaseObjectEntriesPage.getItems(),
+			objectEntry -> objectEntry.getId());
 
 		Map<String, String> map = HashMapBuilder.put(
 			"errors", "errors"
@@ -274,7 +248,9 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		aggregation.setAggregationTerms(map);
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			_getObjectEntries(companyId, "CaseResult", aggregation, null);
+			_getObjectEntries(
+				companyId, "CaseResult", aggregation,
+				"buildId eq '" + testrayBuildId + "'");
 
 		List<Facet> testrayCaseResultFacets =
 			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
@@ -303,6 +279,10 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			List<ObjectEntry> testrayCaseResultObjectEntries =
 				(List<ObjectEntry>)
 					testrayCaseResultObjectEntriesPage2.getItems();
+
+			testrayCaseResultObjectEntries.removeIf(
+				objectEntry -> testrayCaseObjectEntriesIds.contains(
+					(Long)_getProperty("caseId", objectEntry)));
 
 			for (ObjectEntry testrayCaseResultObjectEntry :
 					testrayCaseResultObjectEntries) {
@@ -437,10 +417,6 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		TaskFlowTestrayDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
 	private final Map<String, ObjectDefinition> _objectDefinitions =
 		new HashMap<>();
 

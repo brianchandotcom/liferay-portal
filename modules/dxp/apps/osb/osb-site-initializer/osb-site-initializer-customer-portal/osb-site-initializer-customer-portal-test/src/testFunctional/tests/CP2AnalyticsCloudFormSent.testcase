@@ -42,10 +42,17 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-150681 | Test Summary: Verify if when the first customer admin logs in and goes through the onboarding flow, and an staff already made the set up the form should be already submitted."
+	@description = "Automation ID: LPS-150680 | Test Summary: Verify if the same user submits the setup page in two different tabs or diferrent user submits the setup at the same project displays a message to the user that the form was sent"
+	@priority = "3"
+	test MessageConfirmingFormHasAlreadyBeenSent {
+
+		// TODO LPS-150680 MessageConfirmingFormHasAlreadyBeenSent pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150681 | Test Summary: Verify if when the first customer admin logs in and goes through the onboarding flow, and an staff already made the set up the form should be already submitted."
 	@priority = "3"
 	test UserDoesNotGoThroughOnboarding {
-
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -63,7 +70,7 @@ definition {
 				status = "Expired",
 				title = "Test Account Analytics Cloud");
 
-            CustomerPortal.fullOnboardingFlow();
+			CustomerPortal.fullOnboardingFlow();
 		}
 
 		task ("Go to the product activation page and assert the subtitle") {
@@ -71,25 +78,23 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 
-            AssertElementPresent(
+			AssertElementPresent(
 				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
 				title = "Almost there! Setup Analytics Cloud by finishing the activation form.");
 		}
 
-
 		task ("Open the Setup Analytics Cloud modal and Fill out the activation form and submit") {
-            CustomerPortal.clickOnFinishActivationButton();
+			CustomerPortal.clickOnFinishActivationButton();
 
 			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
 
 			Button.click(button = "Submit");
 
 			Button.click(button = "Done");
-
 		}
 
 		task ("Delete account flag and go to CP2.0 and join a project") {
-            CustomerPortal.deleteEntryAccountFlag(entry = "ERC-");
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-");
 
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
@@ -104,7 +109,6 @@ definition {
 			CustomerPortal.clickOnStartProjectSetup();
 
 			CustomerPortal.clickOnSkipForNowButton();
-
 		}
 
 		task ("Assert that the activation card link has changed") {
@@ -115,15 +119,7 @@ definition {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
 				title = "Your Analytics Cloud workspace is being set up and will be available soon.");
-
 		}
-		
 	}
 
-    @description = "Automation ID: LPS-150680 | Test Summary: Verify if the same user submits the setup page in two different tabs or diferrent user submits the setup at the same project displays a message to the user that the form was sent"
-	@priority = "3"
-	test MessageConfirmingFormHasAlreadyBeenSent {
-
-        // TODO LPS-150680 MessageConfirmingFormHasAlreadyBeenSent pending implementation
-    }
 }

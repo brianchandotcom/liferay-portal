@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.constants.KaleoInstanceTokenConstants;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
@@ -35,8 +36,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(property = "node.type=STATE", service = NodeExecutor.class)
+@Component(service = NodeExecutor.class)
 public class StateNodeExecutor extends BaseNodeExecutor {
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.STATE;
+	}
 
 	@Override
 	protected boolean doEnter(

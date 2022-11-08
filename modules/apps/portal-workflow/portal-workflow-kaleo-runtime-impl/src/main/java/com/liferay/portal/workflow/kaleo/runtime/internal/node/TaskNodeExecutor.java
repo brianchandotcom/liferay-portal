@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -54,10 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "node.type=TASK",
-	service = {NodeExecutor.class, TaskNodeExecutor.class}
-)
+@Component(service = {NodeExecutor.class, TaskNodeExecutor.class})
 public class TaskNodeExecutor extends BaseNodeExecutor {
 
 	public void executeTimer(ExecutionContext executionContext)
@@ -89,6 +87,11 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 				kaleoTimerInstanceToken.getKaleoTimerInstanceTokenId(),
 				executionContext.getServiceContext());
 		}
+	}
+
+	@Override
+	public NodeType getNodeType() {
+		return NodeType.TASK;
 	}
 
 	@Override

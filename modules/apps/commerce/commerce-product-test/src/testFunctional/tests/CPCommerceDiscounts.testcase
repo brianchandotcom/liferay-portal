@@ -937,12 +937,9 @@ definition {
 			key_radioOption = "Specific Accounts",
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
-		Type(
-			key_fieldLabel = "Add Accounts",
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "account1");
-
-		Button.clickSelect();
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "account1",
+			title = "Add Accounts");
 
 		Button.clickPublish();
 

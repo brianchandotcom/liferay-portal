@@ -341,6 +341,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void checkKBArticles() throws PortalException {
+	}
+
+	@Override
 	public void deleteGroupKBArticles(long groupId) throws PortalException {
 
 		// KB articles

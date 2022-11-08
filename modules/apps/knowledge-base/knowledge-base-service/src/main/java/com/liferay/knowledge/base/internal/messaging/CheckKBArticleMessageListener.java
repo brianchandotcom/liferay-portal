@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.internal.messaging;
 
 import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -72,7 +73,11 @@ public class CheckKBArticleMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		_kbArticleLocalService.checkKBArticles();
 	}
+
+	@Reference
+	private KBArticleLocalService _kbArticleLocalService;
 
 	private volatile KBServiceConfiguration _kbServiceConfiguration;
 

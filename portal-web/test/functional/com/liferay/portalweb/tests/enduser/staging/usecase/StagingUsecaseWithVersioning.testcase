@@ -1090,15 +1090,9 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Portlet.addPG(portletName = "Bookmarks");
-
 		Staging.undoStagingPageVersioningPG();
 
-		Portlet.viewNoSpecificPG(portletName = "Bookmarks");
+		Portlet.viewNoSpecificPG(portletName = "Documents and Media");
 
 		Staging.gotoPublishToLive();
 
@@ -1108,7 +1102,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		for (var publishedPortlet : list "Calendar,Wiki,Documents and Media") {
+		for (var publishedPortlet : list "Calendar,Wiki") {
 			Portlet.viewPG(portletName = "${publishedPortlet}");
 		}
 	}

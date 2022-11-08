@@ -2402,15 +2402,6 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("And: Add new Bookmark to the staging site") {
-			JSONBookmarks.addBookmarks(
-				description = "This is a test bookmark",
-				groupName = "Site Name (Staging)",
-				name = "Test Bookmark",
-				site = "false",
-				url = "https://www.liferay.com");
-		}
-
 		task ("And: Add new Document file to the staging site") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -2427,12 +2418,6 @@ definition {
 				confirmMessage = "Are you sure you want to publish the selected web content?",
 				entry = "Web Content Title");
 
-			Bookmark.openBookmarksAdmin(siteURLKey = "site-name-staging");
-
-			Staging.publishViaSAP(
-				confirmMessage = "Are you sure you want to publish to live?",
-				entry = "Test Bookmark");
-
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 			Staging.publishViaSAP(
@@ -2446,12 +2431,6 @@ definition {
 			WebContent.viewTitle(
 				onLive = "true",
 				webContentTitle = "Web Content Title");
-
-			Bookmark.openBookmarksAdmin(siteURLKey = "site-name");
-
-			Bookmark.viewBookmark(
-				bookmarkName = "Test Bookmark",
-				bookmarkURL = "https://www.liferay.com");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 

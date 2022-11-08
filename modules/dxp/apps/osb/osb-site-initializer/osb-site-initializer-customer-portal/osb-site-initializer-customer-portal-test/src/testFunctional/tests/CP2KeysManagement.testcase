@@ -636,10 +636,37 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147577 | Test Summary: Make sure that when you hover the mouse over 'DNE' a tooltip appears with a message This key does not expire"
+	@ignore = "true"
 	@priority = "3"
 	test YouMaySeeAMessageAsATooltip {
-		
-		// TODO LPS-147577 YouMaySeeAMessageAsATooltip pending implementation
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
+
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("When I put the mouse over the Enviroment Name of a key at the table") {
+			CP2ActivationKeys.putMouseOverElementAtTable(text = "DNE");
+		}
+
+		task ("Then I should see a tooltip with the 'This key does not expire' text") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "This key does not expire");
+		}
 
 	}
 

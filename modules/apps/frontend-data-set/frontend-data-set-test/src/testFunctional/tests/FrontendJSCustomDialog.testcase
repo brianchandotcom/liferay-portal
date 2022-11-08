@@ -1,0 +1,58 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "upgrade.database.auto.run=false";
+	property osgi.modules.includes = "frontend-data-set-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given: Enabled custom Dialog") {
+			PortalSettings.openInstanceSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Custom Dialogs",
+				configurationName = "Custom Dialogs",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Enabled");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Enabled");
+		}
+	}
+
+	@description = "LPS-165262"
+	@priority = "3"
+	test CanRenderOpenAlertModal {
+		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {
+			RunScript(locator1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
+		}
+
+		task ("Then: text 'Test Alert Modal' is present in the modal") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Test Alert Modal");
+		}
+	}
+
+}

@@ -583,11 +583,56 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147575 | Test Summary: Verify activation keys contain: Environment Name - Key Type - Environment Type - Exp. Date - Status - Download"
+	@ignore = "true"
 	@priority = "3"
 	test AssertAllColumnsInTheTable {
-		
-		// TODO LPS-147575 AssertAllColumnsInTheTable pending implementation
 
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
+
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then I assert all the values from the table") {
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "2",
+				linePosition = "2",
+				text = "Redacted");
+
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "3",
+				linePosition = "2",
+				text = "On-Premise");
+
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "4",
+				linePosition = "2",
+				text = "Non-Prod");
+				
+			CP2DataUtil.generateStaticFullStartAndEndDate();
+	
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "5",
+				linePosition = "1",
+				text = "${staticFullEndDate}");
+
+			CP2ActivationKeys.putMouseOverStatusElementAtTable(
+				linePosition = "1",
+				status = "Activated");
+	
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Activated");
+
+		}
 	}
 
 	@description = "Automation ID: LPS-147577 | Test Summary: Make sure that when you hover the mouse over 'DNE' a tooltip appears with a message This key does not expire"

@@ -79,7 +79,6 @@ definition {
 		var parametersDisplay2 = "size=10&displayLanguageId=${displayLanguageId2}&page=0&sort=counts,desc,lastModifiedDate,desc";
 		var displayLanguageId1 = "en-US";
 		var displayLanguageId2 = "pt-BR";
-		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var keyword = "cloud";
 
 		task ("Go to DXP and get analytics configuration") {
@@ -201,6 +200,12 @@ definition {
 			ACApi.assertSearchResponse(expected = "${secondKeyword}");
 		}
 
+		task ("Assert response do not return the first keyword") {
+			ACApi.assertSearchKeywordNotPresent(
+				expected = "${firstKeyword}",
+				keywordPosition = "1");
+		}
+
 		task ("Run curl command to get keyword results using page = 1") {
 			ACApi.getSearchKeywords(parameters = "${parametersSecondPage}");
 		}
@@ -213,6 +218,12 @@ definition {
 
 		task ("Assert response returns first keyword") {
 			ACApi.assertSearchResponse(expected = "${firstKeyword}");
+		}
+
+		task ("Assert response do not return the second keyword") {
+			ACApi.assertSearchKeywordNotPresent(
+				expected = "${secondKeyword}",
+				keywordPosition = "1");
 		}
 	}
 

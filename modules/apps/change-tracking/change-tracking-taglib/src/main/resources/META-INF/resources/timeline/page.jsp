@@ -36,7 +36,7 @@ TimelineDisplayContext timelineDisplayContext = new TimelineDisplayContext(rende
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<strong><liferay-ui:message key="timeline" /></strong>
+				<strong><liferay-ui:message key="publications" /></strong>
 			</clay:content-col>
 		</clay:content-row>
 
@@ -64,6 +64,10 @@ TimelineDisplayContext timelineDisplayContext = new TimelineDisplayContext(rende
 
 				<div class="text-secondary">
 					<%= (currentCTCollection != null) ? currentCTCollection.getDescription() : "" %>
+				</div>
+
+				<div class="text-secondary">
+					<%= timelineDisplayContext.getStatusMessage(currentCTCollection) %>
 				</div>
 			</clay:content-col>
 		</clay:content-row>
@@ -94,12 +98,15 @@ TimelineDisplayContext timelineDisplayContext = new TimelineDisplayContext(rende
 						<%= ctCollection.getDescription() %>
 					</div>
 
-					<%
-					Date modifiedDate = ctCollection.getModifiedDate();
-					%>
+					<div class="text-secondary">
+						<%= timelineDisplayContext.getStatusMessage(ctCollection) %>
+					</div>
 
 					<div class="text-secondary">
-						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(ctCollection.getUserName()), LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true)} %>" key="x-was-published-x-ago" translateArguments="<%= false %>" />
+						<clay:label
+							displayType="<%= timelineDisplayContext.getStatusStyle(ctCollection.getStatus()) %>"
+							label="<%= timelineDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
+						/>
 					</div>
 				</clay:content-col>
 

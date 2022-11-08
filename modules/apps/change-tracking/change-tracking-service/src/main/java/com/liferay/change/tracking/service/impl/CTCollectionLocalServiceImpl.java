@@ -763,9 +763,14 @@ public class CTCollectionLocalServiceImpl
 					)
 				)
 			).where(
-				CTCollectionTable.INSTANCE.status.eq(
-					WorkflowConstants.STATUS_APPROVED)
+				CTCollectionTable.INSTANCE.ctCollectionId.neq(
+					CTCollectionThreadLocal.getCTCollectionId()
+				).and(
+					CTCollectionTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_EXPIRED)
+				)
 			).orderBy(
+				CTCollectionTable.INSTANCE.status.descending(),
 				CTCollectionTable.INSTANCE.statusDate.ascending()
 			));
 	}

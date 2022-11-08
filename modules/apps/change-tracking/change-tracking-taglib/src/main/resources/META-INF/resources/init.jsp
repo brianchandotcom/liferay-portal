@@ -27,10 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.change.tracking.taglib.internal.display.context.TimelineDisplayContext" %><%@
 page import="com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-
-<%@ page import="java.util.Date" %>
+page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <liferay-theme:defineObjects />
 

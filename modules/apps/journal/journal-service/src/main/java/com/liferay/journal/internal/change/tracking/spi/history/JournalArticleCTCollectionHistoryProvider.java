@@ -15,16 +15,20 @@
 package com.liferay.journal.internal.change.tracking.spi.history;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTable;
+import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleTable;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,28 +45,44 @@ public class JournalArticleCTCollectionHistoryProvider
 	public List<CTCollection> getCTCollections(long classNameId, long classPK)
 		throws PortalException {
 
-		List<CTCollection> ctCollections = new ArrayList<>();
-
 		JournalArticle journalArticle =
 			JournalArticleLocalServiceUtil.getJournalArticle(classPK);
 
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
-				journalArticle.getResourcePrimKey());
-
-		for (JournalArticle article : articles) {
-			ctCollections.addAll(
-				_ctCollectionLocalService.getExclusivePublishedCTCollections(
-					classNameId, article.getPrimaryKey()));
-		}
-
-		OrderByComparator<CTCollection> orderByComparator =
-			OrderByComparatorFactoryUtil.create(
-				"CTCollection", "statusDate", false);
-
-		ctCollections.sort(orderByComparator);
-
-		return ctCollections;
+		return _ctCollectionLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				CTCollectionTable.INSTANCE
+			).from(
+				CTCollectionTable.INSTANCE
+			).innerJoinON(
+				CTEntryTable.INSTANCE,
+				CTEntryTable.INSTANCE.ctCollectionId.eq(
+					CTCollectionTable.INSTANCE.ctCollectionId
+				).and(
+					CTEntryTable.INSTANCE.modelClassNameId.eq(
+						classNameId
+					).and(
+						CTEntryTable.INSTANCE.modelClassPK.in(
+							DSLQueryFactoryUtil.select(
+								JournalArticleTable.INSTANCE.id
+							).from(
+								JournalArticleTable.INSTANCE
+							).where(
+								JournalArticleTable.INSTANCE.resourcePrimKey.eq(
+									journalArticle.getResourcePrimKey())
+							))
+					)
+				)
+			).where(
+				CTCollectionTable.INSTANCE.ctCollectionId.neq(
+					CTCollectionThreadLocal.getCTCollectionId()
+				).and(
+					CTCollectionTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_EXPIRED)
+				)
+			).orderBy(
+				CTCollectionTable.INSTANCE.status.descending(),
+				CTCollectionTable.INSTANCE.statusDate.ascending()
+			));
 	}
 
 	@Override
@@ -75,5 +95,8 @@ public class JournalArticleCTCollectionHistoryProvider
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

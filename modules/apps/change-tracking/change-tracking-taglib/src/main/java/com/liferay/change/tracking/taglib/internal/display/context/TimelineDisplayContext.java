@@ -22,6 +22,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.taglib.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,13 +30,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,7 +157,8 @@ public class TimelineDisplayContext {
 				"ctCollectionId", ctCollection.getCtCollectionId()
 			).buildString());
 
-		if (CTCollectionPermission.contains(
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			CTCollectionPermission.contains(
 				permissionChecker, ctCollection, ActionKeys.DELETE)) {
 
 			data.put(
@@ -162,6 +170,104 @@ public class TimelineDisplayContext {
 		}
 
 		return data;
+	}
+
+	public String getStatusLabel(int status) {
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "published";
+		}
+		else if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return "out-of-date";
+		}
+		else if (status == WorkflowConstants.STATUS_DRAFT) {
+			return "in-progress";
+		}
+		else if (status == WorkflowConstants.STATUS_DENIED) {
+			return "failed";
+		}
+		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
+			return "scheduled";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public String getStatusMessage(CTCollection ctCollection) {
+		if (ctCollection == null) {
+			return StringPool.BLANK;
+		}
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_renderRequest);
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			Date modifiedDate = ctCollection.getStatusDate();
+
+			return LanguageUtil.format(
+				httpServletRequest, "published-x-ago-by-x",
+				new String[] {
+					LanguageUtil.getTimeDescription(
+						httpServletRequest,
+						System.currentTimeMillis() - modifiedDate.getTime(),
+						true),
+					HtmlUtil.escape(ctCollection.getUserName())
+				});
+		}
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			Date modifiedDate = ctCollection.getModifiedDate();
+
+			return LanguageUtil.format(
+				httpServletRequest, "modified-x-ago-by-x",
+				new String[] {
+					LanguageUtil.getTimeDescription(
+						httpServletRequest,
+						System.currentTimeMillis() - modifiedDate.getTime(),
+						true),
+					HtmlUtil.escape(ctCollection.getUserName())
+				});
+		}
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			try {
+				SchedulerResponse schedulerResponse =
+					SchedulerEngineHelperUtil.getScheduledJob(
+						String.valueOf(ctCollection.getCtCollectionId()),
+						_CT_COLLECTION_SCHEDULED_PUBLISH,
+						StorageType.PERSISTED);
+
+				if (schedulerResponse == null) {
+					return null;
+				}
+
+				Date scheduledDate = SchedulerEngineHelperUtil.getStartTime(
+					schedulerResponse);
+
+				return LanguageUtil.format(
+					httpServletRequest, "schedule-to-publish-in-x-by-x",
+					new String[] {
+						LanguageUtil.getTimeDescription(
+							httpServletRequest,
+							scheduledDate.getTime() -
+								System.currentTimeMillis(),
+							true),
+						HtmlUtil.escape(ctCollection.getUserName())
+					});
+			}
+			catch (SchedulerException schedulerException) {
+				_log.error(schedulerException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public String getStatusStyle(int status) {
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return "warning";
+		}
+
+		return WorkflowConstants.getStatusStyle(status);
 	}
 
 	public boolean isPublicationsEnabled() {
@@ -183,7 +289,7 @@ public class TimelineDisplayContext {
 	}
 
 	private String _getDeleteHref(
-		HttpServletRequest httpServletRequest, String backURL,
+		HttpServletRequest httpServletRequest, String redirect,
 		long ctCollectionId) {
 
 		return StringBundler.concat(
@@ -197,16 +303,19 @@ public class TimelineDisplayContext {
 				PortalUtil.getControlPanelPortletURL(
 					httpServletRequest, _themeDisplay.getScopeGroup(),
 					CTPortletKeys.PUBLICATIONS, 0, 0,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
 				"/change_tracking/delete_ct_collection"
 			).setRedirect(
-				backURL
+				redirect
 			).setParameter(
 				"ctCollectionId", ctCollectionId
 			).buildString(),
 			"');} else {self.focus();}}});");
 	}
+
+	private static final String _CT_COLLECTION_SCHEDULED_PUBLISH =
+		"liferay/ct_collection_scheduled_publish";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TimelineDisplayContext.class);

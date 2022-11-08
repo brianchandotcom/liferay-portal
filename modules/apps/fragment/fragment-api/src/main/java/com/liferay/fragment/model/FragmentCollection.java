@@ -73,6 +73,11 @@ public interface FragmentCollection
 	public long getResourcesFolderId(boolean createIfAbsent)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.Map
+		<String, com.liferay.portal.kernel.repository.model.FileEntry>
+				getResourcesMap()
+			throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean hasResources()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

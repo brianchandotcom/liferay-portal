@@ -129,13 +129,6 @@ public class FragmentEntryProcessorHelperImpl
 				editableValueJSONObject.getLong("classNameId"));
 			classPK = editableValueJSONObject.getLong("classPK");
 
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(className);
-
-			if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
-				return null;
-			}
-
 			fieldName = editableValueJSONObject.getString("fieldId");
 
 			InfoItemIdentifier infoItemIdentifier =
@@ -173,6 +166,13 @@ public class FragmentEntryProcessorHelperImpl
 			fieldName = editableValueJSONObject.getString("collectionFieldId");
 
 			object = _getInfoItem(infoItemReference);
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
+
+		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
+			return null;
 		}
 
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider =

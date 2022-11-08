@@ -38,7 +38,7 @@ export default function PagesTree({
 			if (!item.hasChildren) {
 				return Promise.resolve({
 					cursor: null,
-					items: [],
+					items: null,
 				});
 			}
 

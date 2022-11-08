@@ -1821,31 +1821,18 @@ definition {
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.assignUsers(
-				accountName = "Account Name",
-				assigneeName = "userfn userln");
-
-			JSONRole.addSharedAccountRole(roleTitle = "View Role");
+			JSONRole.addRegularRole(
+				roleKey = "View Account Role",
+				roleTitle = "View Account Role");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.account.model.AccountEntry",
-				roleTitle = "View role",
-				roleType = "account");
-		}
+				roleTitle = "View Account Role");
 
-		task ("When assign the user to account with view permission of role") {
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "View Role",
-				accountUserName = "userfn userln");
+			JSONRole.assignRoleToUser(
+				roleTitle = "View Account Role",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Then in the accounts table Account Name can be viewed") {

@@ -1806,14 +1806,10 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "user2");
 	}
 
-	@description = "This test asserts that a user with View permission for account entries can only view them"
+	@description = "This test asserts that a user with View permission for account entries can view, but not be able to perform any other actions"
 	@priority = "5"
 	test CanViewAccountWithViewPermissions {
-		task ("Given add account a new user and account role with view permission") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Account Name",
-				accountEntryType = "Business");
-
+		task ("Given a user with View permissions for AccountEntry and a business account") {
 			JSONRole.addRegularRole(
 				roleKey = "View Account Role",
 				roleTitle = "View Account Role");
@@ -1829,25 +1825,35 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-			
+
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 		}
 
-		task ("Then in the accounts table Account Name can be viewed") {
+		task ("When the user logs in and views the page with Account Management widget") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
 			Navigator.gotoPage(pageName = "2B Account Page");
+		}
 
-			LexiconEntry.viewEntryName(rowEntry = "Account Name");
-
-			AssertElementNotPresent(
+		task ("Then the user can view the account entry and the only available action for the account is Select Account") {
+			Click(
 				key_rowEntry = "Account Name",
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Select Account");
+
+			for (var menuItem : list "Edit,Manage Users,Manage Organizations,Deactivate,Delete") {
+				MenuItem.viewNotPresent(menuItem = "${menuItem}");
+			}
 		}
 	}
 

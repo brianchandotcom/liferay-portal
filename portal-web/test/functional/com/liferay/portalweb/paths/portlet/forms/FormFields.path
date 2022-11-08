@@ -235,7 +235,7 @@
 
 <tr>
 	<td>BOOLEAN_NAME</td>
-	<td>//span[text()='${fieldValue}']</td>
+	<td>//*[@class='ddm-field']//span[text()='${fieldValue}']</td>
 	<td></td>
 </tr>
 <tr>

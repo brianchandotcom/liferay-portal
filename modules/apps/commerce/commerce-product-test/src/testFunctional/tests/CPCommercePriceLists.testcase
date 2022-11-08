@@ -1607,6 +1607,80 @@ definition {
 			value1 = "50.00");
 	}
 
+	@description = "This is a test for COMMERCE-7597. We cannot delete base price lists and base promotions."
+	@priority = "3"
+	test CanNotDeleteBasePriceListsAndPromotions {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When admin goes to the Price Lists section") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				panel = "Commerce",
+				portlet = "Price Lists");
+		}
+
+		task ("Then verifies that there is no Delete button for Master and Minium Base Price Lists") {
+			for (var basePriceListName : list "Master Base Price List,Minium Base Price List") {
+				CommercePriceLists.assertDeleteButtonNotPresent(baseName = "${basePriceListName}");
+			}
+		}
+
+		task ("When admin adds a new Price List") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+
+			Refresh();
+		}
+
+		task ("Then verifies that there is a Delete button for the new price list") {
+			Click(
+				key_value = "Test Price List",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementPresent(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+
+		task ("When admin goes to the Promotions section") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				panel = "Commerce",
+				portlet = "Promotions");
+		}
+
+		task ("Then verifies that there is no Delete button for Master and Minium Base Promotions") {
+			for (var basePromotionName : list "Master Base Promotion,Minium Base Promotion") {
+				CommercePriceLists.assertDeleteButtonNotPresent(baseName = "${basePromotionName}");
+			}
+		}
+
+		task ("When admin adds a new Promotion") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+
+			Refresh();
+		}
+
+		task ("Then verifies that there is a Delete button for the new promotion") {
+			Click(
+				key_value = "Test Promotion",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementPresent(
+				key_menuItem = "Delete",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6220. When creating a price list only catalogs for which the user has permission should be visible in the drop down"
 	@ignore = "true"
 	@priority = "3"

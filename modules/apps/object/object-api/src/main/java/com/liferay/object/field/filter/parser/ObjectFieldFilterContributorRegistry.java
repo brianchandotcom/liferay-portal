@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Feliphe Marinho
  */
-public interface ObjectFieldFilterContributorTracker {
+public interface ObjectFieldFilterContributorRegistry {
 
 	public ObjectFieldFilterContributor getObjectFieldFilterContributor(
 			ObjectFieldFilterContext objectFieldFilterContext)

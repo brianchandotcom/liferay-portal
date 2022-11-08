@@ -17,7 +17,7 @@ package com.liferay.object.internal.field.filter.parser;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Feliphe Marinho
  */
-@Component(service = ObjectFieldFilterContributorTracker.class)
-public class ObjectFieldFilterContributorTrackerImpl
-	implements ObjectFieldFilterContributorTracker {
+@Component(service = ObjectFieldFilterContributorRegistry.class)
+public class ObjectFieldFilterContributorRegistryImpl
+	implements ObjectFieldFilterContributorRegistry {
 
 	@Override
 	public ObjectFieldFilterContributor getObjectFieldFilterContributor(

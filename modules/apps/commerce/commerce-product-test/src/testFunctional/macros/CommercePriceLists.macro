@@ -23,6 +23,16 @@ definition {
 		Button.clickSubmitButton();
 	}
 
+	macro assertDeleteButtonNotPresent {
+		Click(
+			key_value = "${baseName}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		AssertElementNotPresent(
+			key_menuItem = "Delete",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 	macro createPriceListPriceTiers {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

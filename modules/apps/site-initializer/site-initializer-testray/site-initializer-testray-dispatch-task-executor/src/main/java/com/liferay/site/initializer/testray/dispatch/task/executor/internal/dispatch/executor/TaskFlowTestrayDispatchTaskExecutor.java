@@ -133,6 +133,7 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
+			_loadObjectDefinitions(dispatchTrigger.getCompanyId());
 			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 		}
 		finally {
@@ -149,6 +150,7 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		long testrayTaskId = Long.valueOf(unicodeProperties.getProperty("testrayTaskId"));
 		String testrayCaseTypeIds = unicodeProperties.getProperty("testrayCaseTypeIds");
 
+	private void _loadObjectDefinitions(long companyId) {
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				companyId, true, WorkflowConstants.STATUS_APPROVED);
@@ -161,6 +163,8 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 			_objectDefinitions.put(
 				objectDefinition.getShortName(), objectDefinition);
 		}
+	}
+
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<List<ObjectEntry>>();
 
@@ -172,13 +176,13 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 	private static final Log _log = LogFactoryUtil.getLog(
 		TaskFlowTestrayDispatchTaskExecutor.class);
 
-	private final Map<String, ObjectDefinition> _objectDefinitions =
-		new HashMap<>();
-
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private final Map<String, ObjectDefinition> _objectDefinitions =
+		new HashMap<>();
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;

@@ -124,6 +124,7 @@ public class ListTypeDefinitionResourceImpl
 
 		return _toListTypeDefinition(
 			_listTypeDefinitionService.addListTypeDefinition(
+				listTypeDefinition.getExternalReferenceCode(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeDefinition.getName_i18n())));
 	}

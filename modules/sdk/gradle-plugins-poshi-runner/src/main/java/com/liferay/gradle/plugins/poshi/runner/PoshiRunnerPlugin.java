@@ -484,22 +484,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		_configureTaskRunPoshiBinResultsDir(test);
 		_configureTaskRunPoshiReports(test);
 
-		Properties environmentVariables = new Properties();
-
 		Project project = test.getProject();
 
-		File envFile = project.file(".env");
+		if (FileUtil.exists(project, ".env")) {
+			try {
+				Properties properties = new Properties();
 
-		try {
-			if (envFile.exists()) {
-				environmentVariables.load(new FileInputStream(envFile));
+				properties.load(new FileInputStream(project.file(".env")));
+
+				test.environment((Map)properties);
+			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
 			}
 		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
-
-		test.environment((Map)environmentVariables);
 
 		_populateSystemProperties(
 			test.getSystemProperties(), poshiProperties, test.getProject(),

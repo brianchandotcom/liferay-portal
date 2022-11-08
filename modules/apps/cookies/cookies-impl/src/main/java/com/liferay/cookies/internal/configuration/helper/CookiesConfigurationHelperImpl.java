@@ -82,25 +82,27 @@ public class CookiesConfigurationHelperImpl
 				HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+    return _getCookiesConfiguration(CookiesPreferenceHandlingConfiguration.class,
+      themeDisplay);
+  }
+
+  private <T> T _getCookiesConfiguration(Class<T> clazz,
+      ThemeDisplay themeDisplay)
+    throws Exception {
 
     LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
       themeDisplay.getServerName());
 
     if (layoutSet != null) {
-			Group group = layoutSet.getGroup();
+      Group group = layoutSet.getGroup();
 
-			return _configurationProvider.getGroupConfiguration(
-				CookiesPreferenceHandlingConfiguration.class,
-				group.getGroupId());
-		}
+      return _configurationProvider.getGroupConfiguration(
+        clazz, group.getGroupId());
+    }
 
-		return _configurationProvider.getCompanyConfiguration(
-			CookiesPreferenceHandlingConfiguration.class,
-			themeDisplay.getCompanyId());
-	}
+    return _configurationProvider.getCompanyConfiguration(
+      clazz, themeDisplay.getCompanyId());
+  }
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

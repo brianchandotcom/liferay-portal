@@ -195,7 +195,10 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 		if (Validator.isNotNull(fragmentEntryLink.getCss())) {
 			if (Objects.equals(
 					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.EDIT)) {
+					FragmentEntryLinkConstants.EDIT) ||
+				Objects.equals(
+					fragmentRendererContext.getMode(),
+					FragmentEntryLinkConstants.INDEX)) {
 
 				sb.append("<style>");
 				sb.append(fragmentEntryLink.getCss());

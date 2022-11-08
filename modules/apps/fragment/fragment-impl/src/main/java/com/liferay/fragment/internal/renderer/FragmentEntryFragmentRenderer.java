@@ -257,7 +257,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		if (Validator.isNotNull(css)) {
 			if (Objects.equals(
 					fragmentRendererContext.getMode(),
-					FragmentEntryLinkConstants.EDIT)) {
+					FragmentEntryLinkConstants.EDIT) ||
+				Objects.equals(
+					fragmentRendererContext.getMode(),
+					FragmentEntryLinkConstants.INDEX)) {
 
 				sb.append("<style>");
 				sb.append(css);

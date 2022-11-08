@@ -129,7 +129,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 								_fragmentRendererController, httpServletRequest,
 								httpServletResponse,
 								layoutPageTemplateStructure,
-								FragmentEntryLinkConstants.VIEW, locale,
+								FragmentEntryLinkConstants.INDEX, locale,
 								segmentsExperienceId);
 				}
 				catch (Exception exception) {

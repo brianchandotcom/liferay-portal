@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/text-localizer" prefix="liferay-text-localizer" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -52,6 +53,7 @@ page import="com.liferay.account.admin.web.internal.display.AddressDisplay" %><%
 page import="com.liferay.account.admin.web.internal.display.context.AccountEntryAccountGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.AccountUsersAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.EditAccountEntryAccountUserDisplayContext" %><%@
+page import="com.liferay.account.admin.web.internal.display.context.InviteUsersDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.InvitedAccountUserDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntryAddressManagementToolbarDisplayContext" %><%@

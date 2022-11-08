@@ -27,9 +27,7 @@ const FiltersDropdown = () => {
 	const [activeFilter, setActiveFilter] = useState(null);
 	const [filters, setFilters] = useState(initialFilters);
 
-	const onSearch = (event) => {
-		const query = event.target.value;
-
+	const onSearch = (query) => {
 		setFilters(
 			query
 				? initialFilters.filter(({label}) =>

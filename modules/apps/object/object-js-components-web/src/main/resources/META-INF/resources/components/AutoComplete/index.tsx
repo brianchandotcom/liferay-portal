@@ -97,7 +97,7 @@ export default function AutoComplete({
 				}
 			>
 				<ClayDropDown.Search
-					onChange={({target: {value}}) => onChangeQuery(value)}
+					onChange={onChangeQuery}
 					placeholder={Liferay.Language.get('search')}
 					value={query}
 				/>

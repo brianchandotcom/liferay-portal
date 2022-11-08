@@ -31,7 +31,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
               class="clay-color-btn dropdown-toggle btn"
               disabled=""
               style="background: rgb(0, 0, 0);"
-              title="000000"
+              title="#000000"
               type="button"
             />
           </div>
@@ -94,7 +94,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
               aria-label="Select a color"
               class="clay-color-btn dropdown-toggle btn"
               style="background: rgb(0, 0, 0);"
-              title="000000"
+              title="#000000"
               type="button"
             />
           </div>
@@ -174,7 +174,7 @@ exports[`Field Color Picker renders field with label 1`] = `
               aria-label="Select a color"
               class="clay-color-btn dropdown-toggle btn"
               style="background: rgb(0, 0, 0);"
-              title="000000"
+              title="#000000"
               type="button"
             />
           </div>

@@ -404,7 +404,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Form#EXPIRATION_DATE_DISABLED");
 
-		Click(locator1 = "Form#NEVER_EXPIRE");
+		Click(
+			key_checkboxOption = "Never Expire",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
 
 		FormViewBuilder.editDate(
 			fieldName = "Date",

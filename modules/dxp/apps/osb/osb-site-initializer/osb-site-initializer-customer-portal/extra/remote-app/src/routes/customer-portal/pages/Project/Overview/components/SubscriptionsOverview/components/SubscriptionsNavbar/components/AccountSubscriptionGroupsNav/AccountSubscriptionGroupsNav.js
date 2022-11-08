@@ -11,7 +11,6 @@
 
 import {useState} from 'react';
 import NavSegment from '../../../../../../../../../../../common/components/NavSegment/NavSegment';
-import {PRODUCT_TYPES} from '../../../../../../../../../utils/constants';
 import AccountSubscriptionGroupsDropdown from './components/AccountSubscriptionGroupsDropdown/AccountSubscriptionGroupsDropdown';
 import useIsTablet from './hooks/useIsTablet';
 
@@ -62,7 +61,6 @@ const AccountSubscriptionGroupsNav = ({
 				disabled={disabled}
 				loading={loading}
 				onSelect={handleOnSelect}
-				productType={PRODUCT_TYPES}
 				selectedIndex={selectedItemIndex}
 			/>
 		);

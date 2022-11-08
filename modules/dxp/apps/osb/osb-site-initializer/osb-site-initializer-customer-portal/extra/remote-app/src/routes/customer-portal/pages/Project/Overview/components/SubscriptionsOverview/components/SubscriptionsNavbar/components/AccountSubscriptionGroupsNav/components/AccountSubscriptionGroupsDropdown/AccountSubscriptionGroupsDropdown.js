@@ -14,12 +14,12 @@ import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import Skeleton from '../../../../../../../../../../../../../common/components/Skeleton';
 import PopoverIcon from '../../../../../../../../../../../components/ActivationStatus/DXPCloud/components/PopoverIcon';
+import {PRODUCT_TYPES} from '../../../../../../../../../../../utils/constants';
 const AccountSubscriptionGroupsDropdown = ({
 	accountSubscriptionGroups,
 	disabled,
 	loading,
 	onSelect,
-	productType,
 	selectedIndex,
 }) => {
 	const [active, setActive] = useState(false);
@@ -32,7 +32,7 @@ const AccountSubscriptionGroupsDropdown = ({
 				onClick={() => onSelect(index)}
 				symbolRight={index === selectedIndex && 'check'}
 			>
-				{accountSubscriptionGroup.name === productType.dxpCloud ? (
+				{accountSubscriptionGroup.name === PRODUCT_TYPES.dxpCloud ? (
 					<>
 						{accountSubscriptionGroup.name}
 						<PopoverIcon />
@@ -60,7 +60,7 @@ const AccountSubscriptionGroupsDropdown = ({
 					{loading ? (
 						<Skeleton height={16} width={80} />
 					) : accountSubscriptionGroups[selectedIndex]?.name ===
-					  productType.dxpCloud ? (
+					  PRODUCT_TYPES.dxpCloud ? (
 						<>
 							{accountSubscriptionGroups[selectedIndex]?.name}
 							<PopoverIcon />

@@ -38,6 +38,7 @@ UnprocessedExceptionCheck | .java | Finds cases where an `Exception` is swallowe
 UnusedMethodCheck | .java | Finds private methods that are not used. |
 UnusedParameterCheck | .java | Finds parameters in private methods that are not used. |
 UnusedVariableCheck | .java | Finds variables that are declared, but not used. |
+[UpgradeProcessCheck](check/upgrade_process_check.markdown#upgradeprocesscheck) | .java | Performs several checks on `*UpgradeProcess` classes. |
 [ValidatorEqualsCheck](check/validator_equals_check.markdown#validatorequalscheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there are no calls to `Validator.equals(Object, Object)`. |
 VariableDeclarationAsUsedCheck | .java | Finds cases where a variable declaration can be inlined or moved closer to where it is used. |
 XMLSpringExtenderServiceCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds cases where Spring extender service is used as a dependency injection. |

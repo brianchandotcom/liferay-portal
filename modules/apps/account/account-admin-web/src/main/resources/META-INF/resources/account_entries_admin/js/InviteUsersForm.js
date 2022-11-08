@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayMultiSelect from '@clayui/multi-select';
 import {getOpener} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 function InviteUsersForm({
 	accountEntryId,
@@ -26,12 +26,20 @@ function InviteUsersForm({
 	portletNamespace,
 	redirectURL,
 }) {
-	const InviteUserFormGroup = () => {
+	const [count, setCount] = useState(1);
+
+	const closeModal = () => {
+		const openerWindow = getOpener();
+
+		openerWindow.Liferay.fire('closeModal');
+	};
+
+	const InviteUserFormGroup = ({index}) => {
 		return (
 			<ClayLayout.Sheet size="lg">
 				<ClayForm.Group>
 					<label
-						htmlFor={`${portletNamespace}inviteUserEmailAddresses`}
+						htmlFor={`${portletNamespace}emailAddressesMultiSelect${index}`}
 					>
 						{Liferay.Language.get('emails')}
 
@@ -44,7 +52,7 @@ function InviteUsersForm({
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
-								id={`${portletNamespace}inviteUserEmailAddresses`}
+								id={`${portletNamespace}emailAddressesMultiSelect${index}`}
 							/>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
@@ -52,7 +60,7 @@ function InviteUsersForm({
 
 				<ClayForm.Group>
 					<label
-						htmlFor={`${portletNamespace}inviteUserAccountRoles`}
+						htmlFor={`${portletNamespace}accountRolesMultiSelect${index}`}
 					>
 						{Liferay.Language.get('roles')}
 					</label>
@@ -60,7 +68,7 @@ function InviteUsersForm({
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
-								id={`${portletNamespace}inviteUserAccountRoles`}
+								id={`${portletNamespace}accountRolesMultiSelect${index}`}
 								sourceItems={availableAccountRoles}
 							/>
 
@@ -78,12 +86,6 @@ function InviteUsersForm({
 		);
 	};
 
-	const closeModal = () => {
-		const openerWindow = getOpener();
-
-		openerWindow.Liferay.fire('closeModal');
-	};
-
 	const submitForm = () => {
 		const openerWindow = getOpener();
 
@@ -95,7 +97,22 @@ function InviteUsersForm({
 
 	return (
 		<ClayForm className="lfr-form-content">
-			<InviteUserFormGroup />
+			{[...Array(count)].map((_, index) => (
+				<InviteUserFormGroup index={index} key={index} />
+			))}
+
+			<ClayLayout.SheetFooter>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => setCount(count + 1)}
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="plus" />
+					</span>
+
+					{Liferay.Language.get('add-entry')}
+				</ClayButton>
+			</ClayLayout.SheetFooter>
 
 			<ClayLayout.SheetFooter className="dialog-footer">
 				<ClayButton

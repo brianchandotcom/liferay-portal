@@ -28,6 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
@@ -551,6 +552,22 @@ public class JournalTransformer {
 
 				attributes.put(key, value);
 			}
+		}
+		else if (type.equals(DDMFormFieldTypeConstants.SELECT) &&
+				 ddmFormField.isMultiple()) {
+
+			JSONArray dataJSONArray = JSONFactoryUtil.createJSONArray();
+
+			Iterator<Element> iterator = dynamicContentElement.elementIterator(
+				"option");
+
+			while (iterator.hasNext()) {
+				Element option = iterator.next();
+
+				dataJSONArray.put(option.getData());
+			}
+
+			data = JSONUtil.toString(dataJSONArray);
 		}
 
 		if (dynamicContentElement != null) {

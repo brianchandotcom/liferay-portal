@@ -384,7 +384,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-167115. Cannot add a category without title."
+	@description = "This is a test for LPS-167115. View warning message when creating a category without title."
 	@priority = "3"
 	test CannotAddCategoryWithNullTitle {
 		task ("View cannot add a category without title") {

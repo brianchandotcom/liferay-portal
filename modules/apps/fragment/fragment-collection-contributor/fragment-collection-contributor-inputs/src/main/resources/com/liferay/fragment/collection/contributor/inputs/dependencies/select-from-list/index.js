@@ -73,7 +73,7 @@ function handleInputKeyDown(event) {
 		event.preventDefault();
 	}
 
-	if (event.key === KEYS.ArrowDown && event.altKey) {
+	if (event.key === KEYS.ArrowDown && !event.altKey) {
 		if (currentFocusedOption) {
 			setFocusedOption(
 				currentFocusedOption.nextElementSibling ||

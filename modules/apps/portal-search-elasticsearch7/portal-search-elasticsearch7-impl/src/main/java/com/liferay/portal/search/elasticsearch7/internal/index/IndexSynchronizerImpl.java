@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,30 +31,17 @@ import java.util.function.Consumer;
 
 import org.elasticsearch.ElasticsearchStatusException;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author André de Oliveira
  */
 @Component(service = IndexSynchronizer.class)
 public class IndexSynchronizerImpl implements IndexSynchronizer {
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void addIndexRegistrar(IndexRegistrar indexRegistrar) {
-		_indexRegistrarContributors.add(indexRegistrar);
-	}
-
-	public void removeIndexRegistrar(IndexRegistrar indexRegistrar) {
-		_indexRegistrarContributors.remove(indexRegistrar);
-	}
 
 	@Reference(unbind = "-")
 	public void setIndexDefinitionsHolder(
@@ -86,7 +75,7 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 
 		list.forEach(this::synchronizeIndexDefinition);
 
-		_indexRegistrarContributors.forEach(this::synchronizeIndexRegistrar);
+		_serviceTrackerList.forEach(this::synchronizeIndexRegistrar);
 	}
 
 	@Override
@@ -113,6 +102,12 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 						}
 
 					})));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, IndexRegistrar.class);
 	}
 
 	protected void createIndex(
@@ -150,6 +145,11 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 		}
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	@Reference(unbind = "-")
 	protected void setCreateIndexRequestExecutor(
 		CreateIndexRequestExecutor createIndexRequestExecutor) {
@@ -162,7 +162,6 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private IndexDefinitionsRegistry _indexDefinitionsRegistry;
-	private final ArrayList<IndexRegistrar> _indexRegistrarContributors =
-		new ArrayList<>();
+	private ServiceTrackerList<IndexRegistrar> _serviceTrackerList;
 
 }

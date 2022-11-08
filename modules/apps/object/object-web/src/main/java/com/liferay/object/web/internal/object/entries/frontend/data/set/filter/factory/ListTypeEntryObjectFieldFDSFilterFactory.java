@@ -19,7 +19,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -49,7 +49,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 		throws PortalException {
 
 		ObjectFieldFilterContributor objectFieldFilterContributor =
-			_objectFieldFilterContributorTracker.
+			_objectFieldFilterContributorRegistry.
 				getObjectFieldFilterContributor(
 					new ObjectFieldFilterContext(
 						locale, objectDefinitionId, objectViewFilterColumn));
@@ -58,7 +58,7 @@ public class ListTypeEntryObjectFieldFDSFilterFactory
 	}
 
 	@Reference
-	private ObjectFieldFilterContributorTracker
-		_objectFieldFilterContributorTracker;
+	private ObjectFieldFilterContributorRegistry
+		_objectFieldFilterContributorRegistry;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContext;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
-import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorTracker;
+import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewFilterColumn;
@@ -154,7 +154,7 @@ public class ObjectViewFilterColumnLocalServiceImpl
 			}
 
 			ObjectFieldFilterContributor objectFieldFilterContributor =
-				_objectFieldFilterContributorTracker.
+				_objectFieldFilterContributorRegistry.
 					getObjectFieldFilterContributor(
 						new ObjectFieldFilterContext(
 							null, objectField.getObjectDefinitionId(),
@@ -175,8 +175,8 @@ public class ObjectViewFilterColumnLocalServiceImpl
 			SetUtil.fromArray("status", "createDate", "modifiedDate"));
 
 	@Reference
-	private ObjectFieldFilterContributorTracker
-		_objectFieldFilterContributorTracker;
+	private ObjectFieldFilterContributorRegistry
+		_objectFieldFilterContributorRegistry;
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;

@@ -30,7 +30,7 @@
 
 <tr>
 	<td>NAVIGATION_NOTIFICATION_TEMPLATES_TAB</td>
-	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'Notification Templates')]</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link') and (contains(.,'Notification Templates'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,22 +48,22 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE</td>
-	<td>//ul[contains(@class,'nav navbar-nav')]//a[contains(@class,'active')]//span[contains(.,'Invite Email')]</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link active') and (contains(.,'Invite Email'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_INACTIVE</td>
-	<td>//ul[contains(@class,'nav navbar-nav')]//a[not(contains(@class,'active'))]//span[contains(.,'Invite Email')]</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link') and (contains(.,'Invite Email'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE</td>
-	<td>//ul[contains(@class,'nav navbar-nav')]//a[contains(@class,'active')]//span[contains(.,'Reminder Email')]</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link active') and (contains(.,'Reminder Email'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE</td>
-	<td>//ul[contains(@class,'nav navbar-nav')]//a[not(contains(@class,'active'))]//span[contains(.,'Reminder Email')]</td>
+	<td>xpath=(//li)[contains(@class,'nav-item')]//a[contains(@class,'nav-link') and (contains(.,'Reminder Email'))]</td>
 	<td></td>
 </tr>
 <tr>

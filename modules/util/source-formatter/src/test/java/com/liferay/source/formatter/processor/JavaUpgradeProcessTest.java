@@ -22,28 +22,28 @@ import org.junit.Test;
 public class JavaUpgradeProcessTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testCheckExtraJudgement() throws Exception {
+	public void testUpgradeProcessUnnecessaryIfStatement() throws Exception {
 		test(
-			"CheckUnnecessaryIfStatementUpgradeProcess.testjava",
+			"UpgradeProcessUnnecessaryIfStatement.testjava",
 			"No need to use if-statement to wrap 'alterColumn*' and " +
 				"'alterTable*' calls",
 			26);
 	}
 
 	@Test
-	public void testCheckIfDelete() throws Exception {
+	public void testUnnecessaryUpgradeProcessClass() throws Exception {
 		test(
-			"CheckUnnecessaryUpgradeProcess.testjava",
-			"No need to create 'CheckUnnecessaryUpgradeProcess' class. " +
+			"UnnecessaryUpgradeProcessClass.testjava",
+			"No need to create 'UnnecessaryUpgradeProcessClass' class. " +
 				"Replace it by inline calls to the 'UpgradeProcessFactory' " +
 					"class in the registry class",
 			22);
 	}
 
 	@Test
-	public void testMoveLogicToPreOrPostMethod() throws Exception {
+	public void testMoveUpgradeSteps() throws Exception {
 		test(
-			"MoveLogicToPreOrPostMethodUpgradeProcess.testjava",
+			"MoveUpgradeSteps.testjava",
 			new String[] {
 				"Move 'alterTableAddColumn' call inside 'getPreUpgradeSteps' " +
 					"method",

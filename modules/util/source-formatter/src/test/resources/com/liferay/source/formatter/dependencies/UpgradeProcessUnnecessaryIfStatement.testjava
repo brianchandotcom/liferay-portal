@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Qi Zhang
  */
-public class CheckUnnecessaryUpgradeProcess extends UpgradeProcess {
+public class UpgradeProcessUnnecessaryIfStatement extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterTableAddColumn("testTable", "testCol1", "LONG");
-		alterTableAddColumn("testTable", "testCol2", "LONG");
+		if (hasColumn("testTable", "testCol")) {
+			alterColumnType("testTable", "testCol", "TEXT null");
+		}
+
+		alterTableAddColumn("testTable", "testCol1");
 	}
 
 }

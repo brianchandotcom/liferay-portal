@@ -40,7 +40,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -70,8 +72,18 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public List<FileEntry> getResources() throws PortalException {
-		return _getResources(
-			PortletFileRepositoryUtil.getPortletFolder(getResourcesFolderId()));
+		Map<String, FileEntry> resources = _getResourcesAsMap(
+			PortletFileRepositoryUtil.getPortletFolder(getResourcesFolderId()),
+			null);
+
+		return new ArrayList<>(resources.values());
+	}
+
+	@Override
+	public Map<String, FileEntry> getResourcesAsMap() throws PortalException {
+		return _getResourcesAsMap(
+			PortletFileRepositoryUtil.getPortletFolder(getResourcesFolderId()),
+			null);
 	}
 
 	@Override
@@ -242,10 +254,11 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 		return _repository;
 	}
 
-	private List<FileEntry> _getResources(Folder folder)
+	private Map<String, FileEntry> _getResourcesAsMap(
+			Folder folder, String parentPath)
 		throws PortalException {
 
-		List<FileEntry> resources = new ArrayList<>();
+		Map<String, FileEntry> resources = new HashMap<>();
 
 		Repository repository = _getRepository();
 
@@ -259,10 +272,27 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			if (object instanceof Folder) {
 				Folder childFolder = (Folder)object;
 
-				resources.addAll(_getResources(childFolder));
+				String childFolderPath = childFolder.getName();
+
+				if (!Validator.isBlank(parentPath)) {
+					childFolderPath =
+						parentPath + StringPool.SLASH + childFolderPath;
+				}
+
+				resources.putAll(
+					_getResourcesAsMap(childFolder, childFolderPath));
 			}
 			else if (object instanceof FileEntry) {
-				resources.add((FileEntry)object);
+				FileEntry fileEntry = (FileEntry)object;
+
+				String fileEntryPath = fileEntry.getTitle();
+
+				if (!Validator.isBlank(parentPath)) {
+					fileEntryPath =
+						parentPath + StringPool.SLASH + fileEntryPath;
+				}
+
+				resources.put(fileEntryPath, fileEntry);
 			}
 		}
 

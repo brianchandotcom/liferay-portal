@@ -63,6 +63,10 @@ definition {
 	test CanRenderCustomElementAsModuleType {
 		task ("When Navigate to remote app portlet page") {
 			Navigator.gotoPage(pageName = "My Widget Page");
+
+			// Workaround for page to render script tag when using json to setup the test
+
+			Refresh();
 		}
 
 		task ("Then in the html <script> tag with src 'https://localhost:8081/runtime.js' is rendered as a module type") {

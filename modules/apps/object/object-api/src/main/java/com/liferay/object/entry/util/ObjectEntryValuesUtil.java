@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.util;
+package com.liferay.object.entry.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectEntryFieldValueUtil {
+public class ObjectEntryValuesUtil {
 
 	public static String getValueString(
 		ObjectField objectField, Map<String, Serializable> values) {
@@ -72,6 +72,6 @@ public class ObjectEntryFieldValueUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryFieldValueUtil.class);
+		ObjectEntryValuesUtil.class);
 
 }

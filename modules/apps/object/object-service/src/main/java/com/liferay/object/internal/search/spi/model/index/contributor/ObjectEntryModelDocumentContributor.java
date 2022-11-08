@@ -15,13 +15,13 @@
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.util.ObjectEntryFieldValueUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -191,8 +191,7 @@ public class ObjectEntryModelDocumentContributor
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
-			value = ObjectEntryFieldValueUtil.getValueString(
-				objectField, values);
+			value = ObjectEntryValuesUtil.getValueString(objectField, values);
 		}
 
 		String valueString = String.valueOf(value);

@@ -30,7 +30,35 @@ Disabled by default. Can be enabled with the **Poshi > Completion: Enabled** set
 
 ![Function/Macro completion](images/gifs/POHSI_VSCODE_COMPLETION_01_METHOD.gif)
 
-### Formatting
+## Commands
+
+### Run test case under cursor
+
+Run the current testcase under the cursor. If inside the test case body, the extension will check each line above the cursor and run the first test case name it finds. It can be invoked via the Command Palette or the Context Menu under the command:
+
+```
+Poshi: Run test case under cursor
+```
+
+#### Run from the command palette
+
+![Run from the command palette](images/gifs/POHSI_VSCODE_COMMAND_RUN_TEST_CASE_UNDER_CURSOR_01_COMMAND_PALETTE.gif)
+
+#### Run from the context menu
+
+![Run from the context menu](images/gifs/POHSI_VSCODE_COMMAND_RUN_TEST_CASE_UNDER_CURSOR_02_CONTEXT_MENU.gif)
+
+### Run test case in file
+
+Choose a test case in the current file and run it. It can be invoked via the Command Palette under the command:
+
+```
+Poshi: Run test case in file
+```
+
+![Run test case in file](images/gifs/POHSI_VSCODE_COMMAND_RUN_TEST_CASE_IN_FILE_01_COMMAND_PALETTE.gif)
+
+## Formatting
 
 Source formatting powered by Liferay's Source Formatter.
 

@@ -16,14 +16,12 @@ package com.liferay.notification.term.evaluator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Locale;
-
 /**
  * @author Gustavo Lima
  */
 public interface NotificationTermEvaluator {
 
-	public String evaluate(Locale locale, Object object, String termName)
+	public String evaluate(Object object, String termName)
 		throws PortalException;
 
 }

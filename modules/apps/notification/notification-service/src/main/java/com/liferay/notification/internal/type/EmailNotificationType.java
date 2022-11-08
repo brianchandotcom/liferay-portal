@@ -63,7 +63,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -222,7 +221,7 @@ public class EmailNotificationType extends BaseNotificationType {
 
 					String to = _formatTo(
 						notificationRecipientSetting.getValue(user.getLocale()),
-						user.getLocale(), notificationContext);
+						notificationContext);
 
 					if (Validator.isNotNull(to)) {
 						return to;
@@ -231,7 +230,6 @@ public class EmailNotificationType extends BaseNotificationType {
 					return formatLocalizedContent(
 						notificationRecipientSetting.getValue(
 							siteDefaultLocale),
-						siteDefaultLocale,
 						NotificationTermEvaluatorConstants.RECIPIENT,
 						notificationContext);
 				}
@@ -395,8 +393,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 	}
 
-	private String _formatTo(
-			String to, Locale locale, NotificationContext notificationContext)
+	private String _formatTo(String to, NotificationContext notificationContext)
 		throws PortalException {
 
 		if (Validator.isNull(to)) {
@@ -412,7 +409,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 
 		return formatLocalizedContent(
-			StringUtil.merge(emailAddresses), locale,
+			StringUtil.merge(emailAddresses),
 			NotificationTermEvaluatorConstants.RECIPIENT, notificationContext);
 	}
 

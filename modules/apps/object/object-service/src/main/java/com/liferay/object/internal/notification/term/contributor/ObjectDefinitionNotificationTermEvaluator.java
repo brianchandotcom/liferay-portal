@@ -22,10 +22,10 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -45,7 +45,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 	}
 
 	@Override
-	public String evaluate(Locale locale, Object object, String termName)
+	public String evaluate(Object object, String termName)
 		throws PortalException {
 
 		if (!(object instanceof Map)) {
@@ -54,9 +54,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Map<String, Object> termValues = (Map<String, Object>)object;
 
-		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
+		if (termName.contains("_CREATOR_FULL_NAME")) {
 			User user = _userLocalService.getUser(
-				(long)termValues.get("currentUserId"));
+				GetterUtil.getLong(termValues.get("currentUserId")));
 
 			return user.getFullName(true, true);
 		}

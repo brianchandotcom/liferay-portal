@@ -75,6 +75,13 @@ export async function runTestCaseUnderCursor(textEditor: vscode.TextEditor) {
 	runTestCase(document, testName);
 }
 
+function buildAntCommand(antBuildFilePath: string, testCase: string) {
+	return `ant -f "${antBuildFilePath}" run-selenium-test -Dtest.class="${testCase}"`;
+}
+function buildGradleCommand(gradleExecutablePath: string, testCase: string) {
+	return `${gradleExecutablePath} runPoshi -Dtest.name="${testCase}"`;
+}
+
 async function getCommand(
 	workspaceFolder: vscode.WorkspaceFolder,
 	testCase: string
@@ -87,28 +94,13 @@ async function getCommand(
 
 		await vscode.workspace.fs.stat(buildFileUri);
 
-		return `ant -f "${buildFileUri.fsPath}" run-selenium-test -Dtest.class="${testCase}"`;
-	} catch (error) {
-		console.log('Not in liferay-portal.');
-	}
-
-	try {
-		const gitRevParse: child_process.SpawnSyncReturns<string> =
-			child_process.spawnSync('git', ['rev-parse', '--show-toplevel'], {
-				cwd: process.cwd(),
-				encoding: 'utf8',
-			});
-
-		const buildFilePath = path.join(
-			gitRevParse.stdout.trim(),
-			'build-test.xml'
+		console.log(
+			`Found ant build file in workspace: ${buildFileUri.fsPath}`
 		);
 
-		await fs.stat(buildFilePath);
-
-		return `ant -f "${buildFilePath}" run-selenium-test -Dtest.class="${testCase}"`;
+		return buildAntCommand(buildFileUri.fsPath, testCase);
 	} catch (error) {
-		console.log('Not in liferay-portal sub-dir.');
+		console.log('No ant build file found in workspace.');
 	}
 
 	try {
@@ -119,9 +111,51 @@ async function getCommand(
 
 		await vscode.workspace.fs.stat(gradleExecutableUri);
 
-		return `./gradlew runPoshi -Dtest.name="${testCase}"`;
+		console.log(
+			`Found gradle build file in workspace: ${gradleExecutableUri.fsPath}`
+		);
+
+		return buildGradleCommand(gradleExecutableUri.fsPath, testCase);
 	} catch (error) {
-		console.log('Not in a gradle project.');
+		console.log('No gradle build file found in workspace.');
+	}
+
+	const gitRevParse: child_process.SpawnSyncReturns<string> =
+		child_process.spawnSync('git', ['rev-parse', '--show-toplevel'], {
+			cwd: workspaceFolder.uri.fsPath,
+			encoding: 'utf8',
+		});
+
+	const gitTopLevelDirectory = gitRevParse.stdout.trim();
+
+	try {
+		const buildFilePath = path.join(gitTopLevelDirectory, 'build-test.xml');
+
+		await fs.stat(buildFilePath);
+
+		console.log(
+			`Found ant build file at the git top-level directory: ${buildFilePath}`
+		);
+
+		return buildAntCommand(buildFilePath, testCase);
+	} catch (error) {
+		console.log('No ant build file found at the Git top-level directory.');
+	}
+
+	try {
+		const gradleExecutablePath = path.join(gitTopLevelDirectory, 'gradlew');
+
+		await fs.stat(gradleExecutablePath);
+
+		console.log(
+			`Found gradle executable at the git top-level directory: ${gradleExecutablePath}`
+		);
+
+		return buildGradleCommand(gradleExecutablePath, testCase);
+	} catch (error) {
+		console.log(
+			'No gradle build file found at the Git top-level directory.'
+		);
 	}
 }
 

@@ -149,6 +149,21 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		return "testray";
 	}
 
+	private ObjectEntry _addObjectEntry(
+			String objectDefinitionShortName, Map<String, Object> properties)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _getObjectDefinition(
+			objectDefinitionShortName);
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(properties);
+
+		return _objectEntryManager.addObjectEntry(
+			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
+	}
+
 	private String _getFilterString(
 		Collection<ObjectEntry> objectEntriesCollection, String fieldName) {
 
@@ -174,6 +189,7 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 
 		return sb.toString();
 	}
+
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, String objectDefinitionName,
 			Aggregation aggregation, String filter)
@@ -188,6 +204,35 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return properties.get(key);
+	}
+
+	private long _increment(
+			long companyId, String fieldName, String filterString,
+			String objectDefinitionShortName)
+		throws Exception {
+
+		Page<ObjectEntry> objectEntriesPage =
+			_objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get(objectDefinitionShortName),
+				null, null, _defaultDTOConverterContext, filterString, null,
+				null,
+				new Sort[] {
+					new Sort("nestedFieldArray.value_long#" + fieldName, true)
+				});
+
+		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+
+		if (objectEntry == null) {
+			return 1;
+		}
+
+		String fieldValue = (String)_getProperty(fieldName, objectEntry); //TODO fix get last number
+
+		if (fieldValue == null) {
+			return 1;
+		}
+
+		return fieldValue.longValue() + 1;
 	}
 
 	private void _loadObjectDefinitions(long companyId) {
@@ -373,6 +418,29 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 					}
 
 				});
+
+			for (List<ObjectEntry> testrayCaseResultObjectEntry :
+					testrayCaseResultGroups) {
+
+				int score = 0;
+
+				for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
+					score += (int)_getProperty("priority", objectEntry);
+				}
+
+				_addObjectEntry(
+					"Subtasks",
+					HashMapBuilder.<String, Object>put(
+						"name",
+						"ST-" +
+							_increment(
+								companyId, "name",
+								"taskId eq '" + testrayTaskId + "'", "Case")//TODO fix increment
+					).put(
+						"score", score
+					).build());
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

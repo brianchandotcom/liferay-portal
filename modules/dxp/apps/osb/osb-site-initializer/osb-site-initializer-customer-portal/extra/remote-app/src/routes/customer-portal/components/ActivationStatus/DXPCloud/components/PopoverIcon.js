@@ -13,23 +13,21 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import i18n from '../../../../../../common/I18n';
 
-const PopoverIcon = () => {
-	return (
-		<ClayTooltipProvider>
-			<span>
-				<ClayButtonWithIcon
-					className="text-brand-primary-darken-2"
-					data-tooltip-align="right"
-					displayType={null}
-					size="sm"
-					symbol="info-circle"
-					title={i18n.translate(
-						'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
-					)}
-				></ClayButtonWithIcon>
-			</span>
-		</ClayTooltipProvider>
-	);
-};
+const PopoverIcon = () => (
+	<ClayTooltipProvider>
+		<span>
+			<ClayButtonWithIcon
+				className="text-brand-primary-darken-2"
+				data-tooltip-align="right"
+				displayType={null}
+				size="sm"
+				symbol="info-circle"
+				title={i18n.translate(
+					'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
+				)}
+			></ClayButtonWithIcon>
+		</span>
+	</ClayTooltipProvider>
+);
 
 export default PopoverIcon;

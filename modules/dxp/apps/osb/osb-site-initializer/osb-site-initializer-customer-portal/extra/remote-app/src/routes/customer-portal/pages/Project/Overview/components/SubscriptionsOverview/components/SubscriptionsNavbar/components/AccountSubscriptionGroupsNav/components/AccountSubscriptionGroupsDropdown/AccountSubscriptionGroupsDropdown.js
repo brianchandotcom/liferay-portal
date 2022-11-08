@@ -19,6 +19,7 @@ const AccountSubscriptionGroupsDropdown = ({
 	disabled,
 	loading,
 	onSelect,
+	productType,
 	selectedIndex,
 }) => {
 	const [active, setActive] = useState(false);
@@ -31,7 +32,7 @@ const AccountSubscriptionGroupsDropdown = ({
 				onClick={() => onSelect(index)}
 				symbolRight={index === selectedIndex && 'check'}
 			>
-				{accountSubscriptionGroup.name === 'LXC - SM' ? (
+				{accountSubscriptionGroup.name === productType.dxpCloud ? (
 					<>
 						{accountSubscriptionGroup.name}
 						<PopoverIcon />
@@ -59,7 +60,7 @@ const AccountSubscriptionGroupsDropdown = ({
 					{loading ? (
 						<Skeleton height={16} width={80} />
 					) : accountSubscriptionGroups[selectedIndex]?.name ===
-					  'LXC - SM' ? (
+					  productType.dxpCloud ? (
 						<>
 							{accountSubscriptionGroups[selectedIndex]?.name}
 							<PopoverIcon />

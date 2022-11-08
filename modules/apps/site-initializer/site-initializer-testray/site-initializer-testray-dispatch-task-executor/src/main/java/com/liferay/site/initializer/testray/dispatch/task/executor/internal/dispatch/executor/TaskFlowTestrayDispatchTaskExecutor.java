@@ -14,12 +14,6 @@
 
 package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor;
 
-import com.google.api.gax.paging.Page;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
-
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
@@ -27,60 +21,40 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.rauschig.jarchivelib.Archiver;
-import org.rauschig.jarchivelib.ArchiverFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author Nilton Vieira
@@ -95,12 +69,13 @@ import org.w3c.dom.NodeList;
 	},
 	service = DispatchTaskExecutor.class
 )
-public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor{
+public class TaskFlowTestrayDispatchTaskExecutor
+	extends BaseDispatchTaskExecutor {
 
 	@Override
 	public void doExecute(
-		DispatchTrigger dispatchTrigger,
-		DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
+			DispatchTrigger dispatchTrigger,
+			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties =
@@ -153,8 +128,14 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 			String objectDefinitionShortName, Map<String, Object> properties)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
+		ObjectDefinition objectDefinition = _objectDefinitions.get(
 			objectDefinitionShortName);
+
+		if (objectDefinition == null) {
+			throw new PortalException(
+				"No object definition found with short name " +
+					objectDefinitionShortName);
+		}
 
 		ObjectEntry objectEntry = new ObjectEntry();
 
@@ -162,32 +143,6 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 
 		return _objectEntryManager.addObjectEntry(
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
-	}
-
-	private String _getFilterString(
-		Collection<ObjectEntry> objectEntriesCollection, String fieldName) {
-
-		List<ObjectEntry> objectEntries =
-			(List<ObjectEntry>)objectEntriesCollection;
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i <= (objectEntries.size() - 1); i++) {
-			ObjectEntry objectEntry = objectEntries.get(i);
-
-			sb.append(fieldName);
-			sb.append(" eq '");
-			sb.append(objectEntry.getId());
-
-			if (i != (objectEntries.size() - 1)) {
-				sb.append("' or ");
-			}
-			else {
-				sb.append("'");
-			}
-		}
-
-		return sb.toString();
 	}
 
 	private Page<ObjectEntry> _getObjectEntries(
@@ -215,10 +170,7 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 			_objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get(objectDefinitionShortName),
 				null, null, _defaultDTOConverterContext, filterString, null,
-				null,
-				new Sort[] {
-					new Sort("nestedFieldArray.value_long#" + fieldName, true)
-				});
+				null, new Sort[] {new Sort("createDate" + fieldName, true)});
 
 		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
 
@@ -226,13 +178,13 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 			return 1;
 		}
 
-		String fieldValue = (String)_getProperty(fieldName, objectEntry); //TODO fix get last number
+		String fieldValue = (String)_getProperty(fieldName, objectEntry);
 
 		if (fieldValue == null) {
 			return 1;
 		}
 
-		return fieldValue.longValue() + 1;
+		return Long.valueOf(StringUtil.extractDigits(fieldValue)) + 1;
 	}
 
 	private void _loadObjectDefinitions(long companyId) {
@@ -255,12 +207,10 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 
 		long testrayBuildId = Long.valueOf(
 			unicodeProperties.getProperty("testrayBuildId"));
-		long testrayTaskId = Long.valueOf(
-			unicodeProperties.getProperty("testrayTaskId"));
 		String[] testrayCaseTypeIds = StringUtil.split(
 			unicodeProperties.getProperty("testrayCaseTypeIds"));
-
-		// TODO
+		long testrayTaskId = Long.valueOf(
+			unicodeProperties.getProperty("testrayTaskId"));
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 		Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
@@ -285,8 +235,9 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
 			companyId, "Case", null, filter);
 
-		String filterString = _getFilterString(
-			testrayCaseObjectEntriesPage.getItems(), "caseId");
+		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
+			testrayCaseObjectEntriesPage.getItems(),
+			objectEntry -> objectEntry.getId());
 
 		Map<String, String> map = HashMapBuilder.put(
 			"errors", "errors"
@@ -297,7 +248,9 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		aggregation.setAggregationTerms(map);
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			_getObjectEntries(companyId, "CaseResult", aggregation, null);
+			_getObjectEntries(
+				companyId, "CaseResult", aggregation,
+				"buildId eq '" + testrayBuildId + "'");
 
 		List<Facet> testrayCaseResultFacets =
 			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
@@ -314,18 +267,27 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 				continue;
 			}
 
+			String escapeErrors = StringUtil.removeChar(
+				StringUtil.replace(
+					testrayCaseResultFacetValue.getTerm(), '\'', "''"),
+				'\\');
+
 			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
-				_getObjectEntries(
-					companyId, "CaseResult", null,
+				_objectEntryManager.getObjectEntries(
+					companyId, _objectDefinitions.get("CaseResult"), null, null,
+					_defaultDTOConverterContext,
 					StringBundler.concat(
-						"testrayBuild id eq '", testrayBuildId,
-						"' and errors eq '",
-						testrayCaseResultFacetValue.getTerm(), "' and ",
-						filterString));
+						"buildId eq '", testrayBuildId, "' and errors eq '",
+						escapeErrors, "'"),
+					null, null, null);
 
 			List<ObjectEntry> testrayCaseResultObjectEntries =
 				(List<ObjectEntry>)
 					testrayCaseResultObjectEntriesPage2.getItems();
+
+			testrayCaseResultObjectEntries.removeIf(
+				objectEntry -> testrayCaseObjectEntriesIds.contains(
+					(Long)_getProperty("caseId", objectEntry)));
 
 			for (ObjectEntry testrayCaseResultObjectEntry :
 					testrayCaseResultObjectEntries) {
@@ -428,17 +390,30 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 					score += (int)_getProperty("priority", objectEntry);
 				}
 
-				_addObjectEntry(
+				long increment = _increment(
+					companyId, "name", "taskId eq '" + testrayTaskId + "'",
+					"Case");
+
+				ObjectEntry testraySubtaskObjectEntry = _addObjectEntry(
 					"Subtasks",
 					HashMapBuilder.<String, Object>put(
-						"name",
-						"ST-" +
-							_increment(
-								companyId, "name",
-								"taskId eq '" + testrayTaskId + "'", "Case")//TODO fix increment
+						"name", "ST-" + increment
 					).put(
 						"score", score
+					).put(
+						"taskId", testrayTaskId
 					).build());
+
+				for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
+					_addObjectEntry(
+						"SubtasksCasesResults",
+						HashMapBuilder.<String, Object>put(
+							"caseResultId", objectEntry.getId()
+						).put(
+							"subtaskId",
+							String.valueOf(testraySubtaskObjectEntry.getId())
+						).build());
+				}
 			}
 		}
 	}
@@ -447,10 +422,6 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		TaskFlowTestrayDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
 	private final Map<String, ObjectDefinition> _objectDefinitions =
 		new HashMap<>();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.util.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -21,19 +21,17 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Pablo Molina
+ * @author Eudaldo Alonso
  */
-public class BorderRadiusConverter {
+public class ContentDisplayConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Circle", "rounded-circle"
+			"Block", "block"
 		).put(
-			"Large", "rounded-lg"
+			"FlexColumn", "flex-column"
 		).put(
-			"Pill", "rounded-pill"
-		).put(
-			"Regular", "rounded"
+			"FlexRow", "flex-row"
 		).build();
 
 	public static String convertToExternalValue(String value) {

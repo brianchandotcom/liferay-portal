@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.util.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -21,13 +21,25 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Jürgen Kappler
+ * @author Pablo Molina
  */
-public class ContentVisibilityConverter {
+public class MarginConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Auto", "auto"
+			"0", "0"
+		).put(
+			"1", "3"
+		).put(
+			"2", "4"
+		).put(
+			"4", "5"
+		).put(
+			"6", "6"
+		).put(
+			"8", "7"
+		).put(
+			"10", "8"
 		).build();
 
 	public static String convertToExternalValue(String value) {

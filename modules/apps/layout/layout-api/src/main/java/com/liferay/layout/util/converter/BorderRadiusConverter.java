@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.util.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -23,19 +23,17 @@ import java.util.Set;
 /**
  * @author Pablo Molina
  */
-public class AlignConverter {
+public class BorderRadiusConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Baseline", "align-items-baseline"
+			"Circle", "rounded-circle"
 		).put(
-			"Center", "align-items-center"
+			"Large", "rounded-lg"
 		).put(
-			"End", "align-items-end"
+			"Pill", "rounded-pill"
 		).put(
-			"Start", "align-items-start"
-		).put(
-			"Stretch", "align-items-stretch"
+			"Regular", "rounded"
 		).build();
 
 	public static String convertToExternalValue(String value) {

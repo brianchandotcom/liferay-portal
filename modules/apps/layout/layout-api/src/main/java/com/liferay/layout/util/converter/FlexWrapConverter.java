@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.util.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -21,21 +21,17 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Pablo Molina
+ * @author Sandro Chinea
  */
-public class JustifyConverter {
+public class FlexWrapConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Center", "justify-content-center"
+			"NoWrap", "flex-nowrap"
 		).put(
-			"End", "justify-content-end"
+			"Wrap", "flex-wrap"
 		).put(
-			"SpaceAround", "justify-content-around"
-		).put(
-			"SpaceBetween", "justify-content-between"
-		).put(
-			"Start", "justify-content-start"
+			"WrapReverse", "flex-wrap-reverse"
 		).build();
 
 	public static String convertToExternalValue(String value) {

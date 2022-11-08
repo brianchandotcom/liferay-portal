@@ -72,8 +72,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 			CookiesPreferenceHandlingConfiguration
 				cookiesPreferenceHandlingConfiguration =
 					_cookiesConfigurationHelper.
-						getCookiesPreferenceHandlingConfiguration(
-							httpServletRequest);
+						getCookiesPreferenceHandlingConfiguration(themeDisplay);
 
 			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
 				return;

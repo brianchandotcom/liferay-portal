@@ -61,6 +61,9 @@ export default function ActionBuilder({
 	>([]);
 
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
+	const [newObjectActionExecutors, setNewObjectActionExecutors] = useState<
+		CustomItem[]
+	>(objectActionExecutors);
 
 	const notificationTemplateLabel = useMemo(() => {
 		return notificationTemplates.find(
@@ -153,6 +156,36 @@ export default function ActionBuilder({
 
 		return fields;
 	}, [currentObjectDefinitionFields]);
+
+	useEffect(() => {
+		if (values.objectActionTriggerKey === 'onAfterDelete') {
+			newObjectActionExecutors.map((action) => {
+				if (action.value === 'update-current-entry') {
+					action.disabled = true;
+					action.popover = {
+						body: Liferay.Language.get(
+							'it-is-not-allowed-to-create-an-update-action-on-after-delete-trigger'
+						),
+						header: Liferay.Language.get('action-not-allowed'),
+					};
+				}
+			});
+			setNewObjectActionExecutors(newObjectActionExecutors);
+		}
+		else if (
+			values.objectActionTriggerKey === 'onAfterAdd' ||
+			values.objectActionTriggerKey === 'onAfterUpdate'
+		) {
+			newObjectActionExecutors.map((action) => {
+				if (action.value === 'update-current-entry') {
+					delete action.disabled;
+					delete action.popover;
+				}
+			});
+			setNewObjectActionExecutors(newObjectActionExecutors);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.objectActionTriggerKey]);
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
@@ -454,7 +487,11 @@ export default function ActionBuilder({
 									parameters: {},
 								});
 							}}
-							options={objectActionExecutors}
+							options={
+								Liferay.FeatureFlags['LPS-153714']
+									? newObjectActionExecutors
+									: objectActionExecutors
+							}
 							placeholder={Liferay.Language.get(
 								'choose-an-action'
 							)}

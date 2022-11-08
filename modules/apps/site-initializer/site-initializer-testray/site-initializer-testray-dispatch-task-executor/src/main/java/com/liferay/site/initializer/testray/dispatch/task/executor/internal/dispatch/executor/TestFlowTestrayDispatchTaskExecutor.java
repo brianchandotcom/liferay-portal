@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = DispatchTaskExecutor.class
 )
-public class TaskFlowTestrayDispatchTaskExecutor
+public class TestFlowTestrayDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
 	@Override
@@ -122,7 +122,7 @@ public class TaskFlowTestrayDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray";
+		return "testflow-testray";
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -448,7 +448,7 @@ public class TaskFlowTestrayDispatchTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TaskFlowTestrayDispatchTaskExecutor.class);
+		TestFlowTestrayDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
 

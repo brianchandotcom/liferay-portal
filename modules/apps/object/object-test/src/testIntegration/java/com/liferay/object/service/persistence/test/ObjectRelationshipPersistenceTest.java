@@ -272,6 +272,22 @@ public class ObjectRelationshipPersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI1_R() throws Exception {
+		_persistence.countByODI1_R(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI1_R(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByODI2_R() throws Exception {
+		_persistence.countByODI2_R(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByODI2_R(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByODI1_ODI2_T() throws Exception {
 		_persistence.countByODI1_ODI2_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");
@@ -291,6 +307,30 @@ public class ObjectRelationshipPersistenceTest {
 
 		_persistence.countByODI1_DT_R(
 			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByODI1_R_T() throws Exception {
+		_persistence.countByODI1_R_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+
+		_persistence.countByODI1_R_T(
+			0L, RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByODI1_R_T(
+			0L, RandomTestUtil.randomBoolean(), (String)null);
+	}
+
+	@Test
+	public void testCountByODI2_R_T() throws Exception {
+		_persistence.countByODI2_R_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+
+		_persistence.countByODI2_R_T(
+			0L, RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByODI2_R_T(
+			0L, RandomTestUtil.randomBoolean(), (String)null);
 	}
 
 	@Test

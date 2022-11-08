@@ -123,46 +123,46 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			<div>
 		</c:otherwise>
 	</c:choose>
-				<react:component
-					data='<%=
-						HashMapBuilder.<String, Object>put(
-							"closeCaption", LanguageUtil.get(request, tabName)
-						).put(
-							"editImageURL",
-							() -> {
-								if (editImageURL != null) {
-									return editImageURL.toString();
-								}
+		<react:component
+			data='<%=
+				HashMapBuilder.<String, Object>put(
+					"closeCaption", LanguageUtil.get(request, tabName)
+				).put(
+					"editImageURL",
+					() -> {
+						if (editImageURL != null) {
+							return editImageURL.toString();
+						}
 
-								return null;
-							}
-						).put(
-							"itemSelectedEventName", itemSelectedEventName
-						).put(
-							"maxFileSize", maxFileSize
-						).put(
-							"mimeTypeRestriction", mimeTypeRestriction
-						).put(
-							"rootNode", "#" + randomNamespace + "ItemSelectorContainer"
-						).put(
-							"uploaderEnabled", showDragAndDropZone && !showSearchInfo
-						).put(
-							"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
-						).put(
-							"uploadItemURL",
-							() -> {
-								if (uploadURL != null) {
-									return uploadURL.toString();
-								}
+						return null;
+					}
+				).put(
+					"itemSelectedEventName", itemSelectedEventName
+				).put(
+					"maxFileSize", maxFileSize
+				).put(
+					"mimeTypeRestriction", mimeTypeRestriction
+				).put(
+					"rootNode", "#" + randomNamespace + "ItemSelectorContainer"
+				).put(
+					"uploaderEnabled", showDragAndDropZone && !showSearchInfo
+				).put(
+					"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
+				).put(
+					"uploadItemURL",
+					() -> {
+						if (uploadURL != null) {
+							return uploadURL.toString();
+						}
 
-								return null;
-							}
-						).put(
-							"validExtensions", StringUtil.merge(extensions)
-						).build()
-					%>'
-					module="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser"
-				/>
+						return null;
+					}
+				).put(
+					"validExtensions", StringUtil.merge(extensions)
+				).build()
+			%>'
+			module="repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser"
+		/>
 	</div>
 
 	<c:if test="<%= (existingFileEntryReturnType != null) || (itemSelectorReturnTypeResolver != null) %>">

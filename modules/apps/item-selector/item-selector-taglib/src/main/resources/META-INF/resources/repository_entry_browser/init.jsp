@@ -20,5 +20,4 @@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.taglib.internal.display.context.ItemSelectorRepositoryEntryManagementToolbarDisplayContext" %><%@
 page import="com.liferay.item.selector.taglib.internal.display.context.RepositoryEntryBrowserDisplayContext" %><%@
 page import="com.liferay.item.selector.taglib.internal.util.EntryURLUtil" %><%@
-page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>

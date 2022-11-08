@@ -36,38 +36,38 @@ if (Validator.isNotNull(namespace)) {
 	cssClass="lfr-item-viewer"
 	id="itemSelectorUploadContainer"
 >
-			<liferay-util:html-top
-				outputKey="item_selector_repository_entry_browser"
-			>
-				<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/item-selector-taglib/repository_entry_browser/css/main.css") %>" rel="stylesheet" />
-			</liferay-util:html-top>
+	<liferay-util:html-top
+		outputKey="item_selector_repository_entry_browser"
+	>
+		<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/item-selector-taglib/repository_entry_browser/css/main.css") %>" rel="stylesheet" />
+	</liferay-util:html-top>
 
-			<div class="dropzone-wrapper dropzone-wrapper-search-container-empty">
-				<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
+	<div class="dropzone-wrapper dropzone-wrapper-search-container-empty">
+		<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
-				<react:component
-					module="js/ItemSelectorRepositoryEntryBrowser"
-					props='<%=
-						HashMapBuilder.<String, Object>put(
-							"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
-						).put(
-							"editImageURL", uploadURL
-						).put(
-							"itemSelectedEventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
-						).put(
-							"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
-						).put(
-							"mimeTypeRestriction", itemSelectorUploadViewDisplayContext.getMimeTypeRestriction()
-						).put(
-							"rootNode", "#itemSelectorUploadContainer"
-						).put(
-							"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())
-						).put(
-							"uploadItemURL", uploadURL
-						).put(
-							"validExtensions", StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
-						).build()
-					%>'
-				/>
-			</div>
+		<react:component
+			module="js/ItemSelectorRepositoryEntryBrowser"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
+				).put(
+					"editImageURL", uploadURL
+				).put(
+					"itemSelectedEventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
+				).put(
+					"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
+				).put(
+					"mimeTypeRestriction", itemSelectorUploadViewDisplayContext.getMimeTypeRestriction()
+				).put(
+					"rootNode", "#itemSelectorUploadContainer"
+				).put(
+					"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())
+				).put(
+					"uploadItemURL", uploadURL
+				).put(
+					"validExtensions", StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
+				).build()
+			%>'
+		/>
+	</div>
 </clay:container-fluid>

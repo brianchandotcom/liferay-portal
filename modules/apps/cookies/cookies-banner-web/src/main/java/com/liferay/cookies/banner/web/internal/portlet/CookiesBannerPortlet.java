@@ -65,8 +65,8 @@ public class CookiesBannerPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		CookiesBannerDisplayContext cookiesBannerDisplayContext =
-			new CookiesBannerDisplayContext(_cookiesConfigurationHelper,
-        renderRequest, renderResponse);
+			new CookiesBannerDisplayContext(
+				_cookiesConfigurationHelper, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT,
@@ -75,7 +75,7 @@ public class CookiesBannerPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-  @Reference
- 	private CookiesConfigurationHelper _cookiesConfigurationHelper;
+	@Reference
+	private CookiesConfigurationHelper _cookiesConfigurationHelper;
 
 }

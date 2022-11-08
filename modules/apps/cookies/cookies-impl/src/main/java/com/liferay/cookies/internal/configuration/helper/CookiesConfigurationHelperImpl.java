@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Daniel Sanz
@@ -36,78 +34,55 @@ import javax.servlet.http.HttpServletRequest;
 public class CookiesConfigurationHelperImpl
 	implements CookiesConfigurationHelper {
 
-  @Override
-  public CookiesBannerConfiguration getCookiesBannerConfiguration(
-    ThemeDisplay themeDisplay) throws Exception {
-
-    LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
-      themeDisplay.getServerName());
-
-    if (layoutSet != null) {
-      Group group = layoutSet.getGroup();
-
-      return _configurationProvider.getGroupConfiguration(
-        CookiesBannerConfiguration.class,
-        group.getGroupId());
-    }
-
-    return _configurationProvider.getCompanyConfiguration(
-      CookiesBannerConfiguration.class,
-      themeDisplay.getCompanyId());
-  }
-
-  @Override
-  public CookiesConsentConfiguration getCookiesConsentConfiguration(
-    ThemeDisplay themeDisplay) throws Exception {
-
-    LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
-      themeDisplay.getServerName());
-
-    if (layoutSet != null) {
-      Group group = layoutSet.getGroup();
-
-      return _configurationProvider.getGroupConfiguration(
-        CookiesConsentConfiguration.class,
-        group.getGroupId());
-    }
-
-    return _configurationProvider.getCompanyConfiguration(
-      CookiesConsentConfiguration.class,
-      themeDisplay.getCompanyId());
-  }
-
-  @Override
-	public CookiesPreferenceHandlingConfiguration
-			getCookiesPreferenceHandlingConfiguration(
-				HttpServletRequest httpServletRequest)
+	@Override
+	public CookiesBannerConfiguration getCookiesBannerConfiguration(
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
-    return _getCookiesConfiguration(CookiesPreferenceHandlingConfiguration.class,
-      themeDisplay);
-  }
+		return _getCookiesConfiguration(
+			CookiesBannerConfiguration.class, themeDisplay);
+	}
 
-  private <T> T _getCookiesConfiguration(Class<T> clazz,
-      ThemeDisplay themeDisplay)
-    throws Exception {
+	@Override
+	public CookiesConsentConfiguration getCookiesConsentConfiguration(
+			ThemeDisplay themeDisplay)
+		throws Exception {
 
-    LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
-      themeDisplay.getServerName());
+		return _getCookiesConfiguration(
+			CookiesConsentConfiguration.class, themeDisplay);
+	}
 
-    if (layoutSet != null) {
-      Group group = layoutSet.getGroup();
+	@Override
+	public CookiesPreferenceHandlingConfiguration
+			getCookiesPreferenceHandlingConfiguration(ThemeDisplay themeDisplay)
+		throws Exception {
 
-      return _configurationProvider.getGroupConfiguration(
-        clazz, group.getGroupId());
-    }
+		return _getCookiesConfiguration(
+			CookiesPreferenceHandlingConfiguration.class, themeDisplay);
+	}
 
-    return _configurationProvider.getCompanyConfiguration(
-      clazz, themeDisplay.getCompanyId());
-  }
+	private <T> T _getCookiesConfiguration(
+			Class<T> clazz, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			themeDisplay.getServerName());
+
+		if (layoutSet != null) {
+			Group group = layoutSet.getGroup();
+
+			return _configurationProvider.getGroupConfiguration(
+				clazz, group.getGroupId());
+		}
+
+		return _configurationProvider.getCompanyConfiguration(
+			clazz, themeDisplay.getCompanyId());
+	}
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-  @Reference
-  private LayoutSetLocalService _LayoutSetLocalService;
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

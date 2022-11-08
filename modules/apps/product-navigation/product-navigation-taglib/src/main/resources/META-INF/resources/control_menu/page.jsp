@@ -27,12 +27,12 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 
 boolean hasControlMenuEntries = false;
 
-Map<ProductNavigationControlMenuCategory, List<ProductNavigationControlMenuEntry>> productNavigationControlMenuEntriesMap = new LinkedHashMap<>();
+Map<String, List<ProductNavigationControlMenuEntry>> productNavigationControlMenuEntriesMap = new LinkedHashMap<>();
 
 for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
 	List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntryRegistry.getProductNavigationControlMenuEntries(productNavigationControlMenuCategory, request);
 
-	productNavigationControlMenuEntriesMap.put(productNavigationControlMenuCategory, productNavigationControlMenuEntries);
+	productNavigationControlMenuEntriesMap.put(productNavigationControlMenuCategory.getKey(), productNavigationControlMenuEntries);
 
 	if (!productNavigationControlMenuEntries.isEmpty()) {
 		for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
@@ -55,12 +55,11 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 				<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 					<%
-					for (Map.Entry<ProductNavigationControlMenuCategory, List<ProductNavigationControlMenuEntry>> entry : productNavigationControlMenuEntriesMap.entrySet()) {
-						ProductNavigationControlMenuCategory productNavigationControlMenuCategory = entry.getKey();
+					for (Map.Entry<String, List<ProductNavigationControlMenuEntry>> entry : productNavigationControlMenuEntriesMap.entrySet()) {
 						List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = entry.getValue();
 					%>
 
-						<li class="control-menu-nav-category <%= productNavigationControlMenuCategory.getKey() %>-control-group">
+						<li class="control-menu-nav-category <%= entry.getKey() %>-control-group">
 							<ul class="control-menu-nav" role="<%= (productNavigationControlMenuEntries.size() == 1) ? "presentation" : "menu" %>">
 
 								<%
@@ -101,7 +100,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 				<%
 				for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
-					List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory);
+					List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory.getKey());
 
 					for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
 						productNavigationControlMenuEntry.includeBody(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));

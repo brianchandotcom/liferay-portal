@@ -78,6 +78,10 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								<h6 class="text-default">
 									<%= assetListDisplayContext.getAssetEntrySubtypeLabel(assetListEntry) %>
 								</h6>
+
+								<h6 class="text-default">
+									<liferay-ui:message arguments="<%= assetListDisplayContext.getAssetListEntryUsageCount(assetListEntry) %>" key="x-usages" translateArguments="<%= false %>" />
+								</h6>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>
@@ -128,6 +132,12 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								cssClass="table-cell-expand text-truncate"
 								name="subtype"
 								value="<%= assetListDisplayContext.getClassTypeLabel(assetListEntry) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="text-truncate"
+								name="usages"
+								value="<%= String.valueOf(assetListDisplayContext.getAssetListEntryUsageCount(assetListEntry)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

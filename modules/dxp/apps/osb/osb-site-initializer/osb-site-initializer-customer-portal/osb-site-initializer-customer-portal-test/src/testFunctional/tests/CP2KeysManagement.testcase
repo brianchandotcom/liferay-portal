@@ -671,11 +671,42 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-147582 | Test Summary: Verify that when the user clicks on the download icon a key is downloaded"
+	@ignore = "true"
 	@priority = "4"
 	test CanViewTheActivationKeyDownload {
-		
-		// TODO LPS-147582 CanViewTheActivationKeyDownload pending implementation
 
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
+
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("And I get the formated name for the activation key file") {
+			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				fileType = "xml",
+				licenseName = "${testAccount}",
+				licenseType = "activation-key",
+				product = "DXP",
+				version = "7.0");
+		}
+
+		task ("When I click on the download button at the Activation Keys Table") {
+			CP2ActivationKeys.clickAtDownloadButton(entitlementName = "NASA ICE");
+		}
+
+		task ("Then I should see the downloaded file") {
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${expectedDownloadedFileName}");
+		}
 	}
 
 }

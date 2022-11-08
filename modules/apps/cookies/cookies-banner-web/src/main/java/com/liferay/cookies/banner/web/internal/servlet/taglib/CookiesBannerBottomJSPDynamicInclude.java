@@ -14,11 +14,11 @@
 
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
+import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -71,9 +71,9 @@ public class CookiesBannerBottomJSPDynamicInclude
 		try {
 			CookiesPreferenceHandlingConfiguration
 				cookiesPreferenceHandlingConfiguration =
-					_configurationProvider.getGroupConfiguration(
-						CookiesPreferenceHandlingConfiguration.class,
-						group.getGroupId());
+					_cookiesConfigurationHelper.
+						getCookiesPreferenceHandlingConfiguration(
+							httpServletRequest);
 
 			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
 				return;
@@ -107,7 +107,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 		CookiesBannerBottomJSPDynamicInclude.class);
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private CookiesConfigurationHelper _cookiesConfigurationHelper;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"

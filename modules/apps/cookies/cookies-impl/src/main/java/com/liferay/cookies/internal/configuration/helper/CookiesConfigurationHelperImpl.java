@@ -16,7 +16,6 @@ package com.liferay.cookies.internal.configuration.helper;
 
 import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
-import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.VirtualHost;
@@ -43,9 +42,9 @@ public class CookiesConfigurationHelperImpl
 				HttpServletRequest httpServletRequest)
 		throws Exception {
 
-    ThemeDisplay themeDisplay =
-    			(ThemeDisplay)httpServletRequest.getAttribute(
-    				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
 			themeDisplay.getServerName());

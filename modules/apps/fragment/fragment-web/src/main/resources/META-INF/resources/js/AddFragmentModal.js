@@ -163,7 +163,8 @@ function FragmentTypeCard({active, fragmentType, onSelect}) {
 							</ClayCard.Description>
 
 							<ClayCard.Description
-								displayType="text"
+								className="text-dark"
+								displayType="subtitle"
 								truncate={false}
 							>
 								{description}

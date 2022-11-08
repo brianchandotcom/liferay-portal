@@ -538,12 +538,48 @@ definition {
 	}
 
 
-	@description = "Automation ID: LPS-147571 | Test Summary: Verify that the pagination is only displayed when the table contains more than 5 activation keys"
+	@description = "Automation ID: LPS-147571 | Test Summary: Assert that paging is only displayed when the table contains at least one key"
+	@ignore = "true"
 	@priority = "3"
-	test AssertTheListOfOptionsWhenPagingIsAvailable {
-		
-		// TODO LPS-147571 AssertTheListOfOptionsWhenPagingIsAvailable pending implementation
+	test AssertThatThePageIsNotShownWhenThereAreNoKeys {
 
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "Test Account DXP");
+
+			CustomerPortal.enterOnProject(title = "Test Account DXP");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+		
+		task ("When I enter a project that has no table/keys available, then I shouldn't see the pagination") {
+			CP2ActivationKeys.assertTableIsNotVisible();
+
+			CP2ActivationKeys.assertThatPaginationDoesNotAppear();
+		}
+
+		task ("Then I go to another project") {
+			CP2Utils.clickBreadcrumb(project = "NASA ICE");
+		}
+
+		task ("And I click at the All tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
+		}
+
+		task ("When I select 5 Items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "5");
+		}
+
+		task ("Then I should be able to see the pagination button with the text Show 5 Items") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
+		}
 	}
 
 	@description = "Automation ID: LPS-147575 | Test Summary: Verify activation keys contain: Environment Name - Key Type - Environment Type - Exp. Date - Status - Download"

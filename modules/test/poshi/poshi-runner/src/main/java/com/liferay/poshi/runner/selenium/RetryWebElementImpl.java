@@ -97,63 +97,58 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		}
 	}
 
-	@Override
 	public WebElement findElementByClassName(String using) {
 		try {
-			return _remoteWebElement.findElementByClassName(using);
+			return _remoteWebElement.findElement(By.className(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementByClassName(using);
+			return _remoteWebElement.findElement(By.className(using));
 		}
 	}
 
-	@Override
 	public WebElement findElementByCssSelector(String using) {
 		try {
-			return _remoteWebElement.findElementByCssSelector(using);
+			return _remoteWebElement.findElement(By.cssSelector(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementByCssSelector(using);
+			return _remoteWebElement.findElement(By.cssSelector(using));
 		}
 	}
 
-	@Override
 	public WebElement findElementByPartialLinkText(String using) {
 		try {
-			return _remoteWebElement.findElementByPartialLinkText(using);
+			return _remoteWebElement.findElement(By.partialLinkText(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementByPartialLinkText(using);
+			return _remoteWebElement.findElement(By.partialLinkText(using));
 		}
 	}
 
-	@Override
 	public WebElement findElementByTagName(String using) {
 		try {
-			return _remoteWebElement.findElementByTagName(using);
+			return _remoteWebElement.findElement(By.tagName(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementByTagName(using);
+			return _remoteWebElement.findElement(By.tagName(using));
 		}
 	}
 
-	@Override
 	public WebElement findElementByXPath(String using) {
 		try {
-			return _remoteWebElement.findElementByXPath(using);
+			return _remoteWebElement.findElement(By.xpath(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementByXPath(using);
+			return _remoteWebElement.findElement(By.xpath(using));
 		}
 	}
 
@@ -169,63 +164,58 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		}
 	}
 
-	@Override
 	public List<WebElement> findElementsByClassName(String using) {
 		try {
-			return _remoteWebElement.findElementsByClassName(using);
+			return _remoteWebElement.findElements(By.className(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementsByClassName(using);
+			return _remoteWebElement.findElements(By.className(using));
 		}
 	}
 
-	@Override
 	public List<WebElement> findElementsByCssSelector(String using) {
 		try {
-			return _remoteWebElement.findElementsByCssSelector(using);
+			return _remoteWebElement.findElements(By.cssSelector(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementsByCssSelector(using);
+			return _remoteWebElement.findElements(By.cssSelector(using));
 		}
 	}
 
-	@Override
 	public List<WebElement> findElementsByPartialLinkText(String using) {
 		try {
-			return _remoteWebElement.findElementsByPartialLinkText(using);
+			return _remoteWebElement.findElements(By.partialLinkText(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementsByPartialLinkText(using);
+			return _remoteWebElement.findElements(By.partialLinkText(using));
 		}
 	}
 
-	@Override
 	public List<WebElement> findElementsByTagName(String using) {
 		try {
-			return _remoteWebElement.findElementsByTagName(using);
+			return _remoteWebElement.findElements(By.tagName(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementsByTagName(using);
+			return _remoteWebElement.findElements(By.tagName(using));
 		}
 	}
 
-	@Override
 	public List<WebElement> findElementsByXPath(String using) {
 		try {
-			return _remoteWebElement.findElementsByXPath(using);
+			return _remoteWebElement.findElements(By.xpath(using));
 		}
 		catch (StaleElementReferenceException staleElementReferenceException) {
 			_refreshWebElement(staleElementReferenceException);
 
-			return _remoteWebElement.findElementsByXPath(using);
+			return _remoteWebElement.findElements(By.xpath(using));
 		}
 	}
 

@@ -42,9 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class AssetEntryListActionDropdownItems {
+public class AssetListEntryActionDropdownItemsProvider {
 
-	public AssetEntryListActionDropdownItems(
+	public AssetListEntryActionDropdownItemsProvider(
 		AssetListEntry assetListEntry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
@@ -58,7 +58,7 @@ public class AssetEntryListActionDropdownItems {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() throws Exception {
+	public List<DropdownItem> getActionDropdownItems() {
 		boolean liveGroup = _isLiveGroup();
 
 		return DropdownItemListBuilder.addGroup(

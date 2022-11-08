@@ -141,21 +141,7 @@ public class FragmentEntryProcessorHelperImpl
 				}
 			}
 
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className,
-					infoItemIdentifier.getInfoItemServiceFilter());
-
-			if (infoItemObjectProvider == null) {
-				return null;
-			}
-
-			Object object = infoItemObjectProvider.getInfoItem(
-				infoItemIdentifier);
-
-			if (object == null) {
-				return null;
-			}
+			Object object = _getInfoItem(className, infoItemIdentifier);
 
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_getInfoItemFieldValuesProvider(className);
@@ -361,12 +347,17 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
+		return _getInfoItem(
+			infoItemReference.getClassName(),
+			infoItemReference.getInfoItemIdentifier());
+	}
+
+	private Object _getInfoItem(
+		String className, InfoItemIdentifier infoItemIdentifier) {
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				InfoItemObjectProvider.class, className,
 				infoItemIdentifier.getInfoItemServiceFilter());
 
 		try {

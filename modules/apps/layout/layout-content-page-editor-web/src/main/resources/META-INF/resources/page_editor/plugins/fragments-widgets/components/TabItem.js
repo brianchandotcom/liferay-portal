@@ -242,14 +242,13 @@ const HighlightButton = ({item, onToggleHighlighted}) => {
 	}
 
 	const {highlighted} = item;
+	const title = highlighted
+		? sub(Liferay.Language.get('unmark-x-as-favorite'), item.label)
+		: sub(Liferay.Language.get('mark-x-as-favorite'), item.label);
 
 	return (
 		<ClayButtonWithIcon
-			aria-label={
-				highlighted
-					? Liferay.Language.get('unmark-favorite')
-					: Liferay.Language.get('mark-favorite')
-			}
+			aria-label={title}
 			borderless
 			className={classNames(
 				'page-editor__fragments-widgets__tab__highlight-button',
@@ -258,11 +257,7 @@ const HighlightButton = ({item, onToggleHighlighted}) => {
 			displayType="secondary"
 			onClick={onToggleHighlighted}
 			symbol={highlighted ? 'star' : 'star-o'}
-			title={
-				highlighted
-					? Liferay.Language.get('unmark-favorite')
-					: Liferay.Language.get('mark-favorite')
-			}
+			title={title}
 		/>
 	);
 };

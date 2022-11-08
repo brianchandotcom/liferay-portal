@@ -63,11 +63,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST objBlockDetailAST = detailAST.findFirstToken(
-			TokenTypes.OBJBLOCK);
-
 		List<DetailAST> methodDefDetailASTList = getAllChildTokens(
-			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+			detailAST.findFirstToken(TokenTypes.OBJBLOCK), false,
+			TokenTypes.METHOD_DEF);
 
 		DetailAST doUpgradeMethodDefDetailAST = null;
 

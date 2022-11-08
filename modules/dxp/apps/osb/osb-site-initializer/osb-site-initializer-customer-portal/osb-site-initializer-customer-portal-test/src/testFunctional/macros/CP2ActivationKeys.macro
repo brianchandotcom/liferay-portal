@@ -505,6 +505,13 @@ definition {
 		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
 	}
 
+	macro putMouseOverStatusElementAtTable {
+		var key_linePosition = "${linePosition}";
+		var key_status = "${status}";
+
+		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_STATUS");
+	}
+
 	macro selectAllKeysOnPage {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_ALL");
 	}

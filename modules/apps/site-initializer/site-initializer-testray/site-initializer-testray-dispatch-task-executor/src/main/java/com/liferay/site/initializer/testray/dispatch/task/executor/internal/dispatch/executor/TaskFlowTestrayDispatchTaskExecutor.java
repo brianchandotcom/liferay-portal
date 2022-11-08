@@ -61,6 +61,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,14 +106,12 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (Validator.isNull(unicodeProperties.getProperty("s3APIKey")) ||
-			Validator.isNull(unicodeProperties.getProperty("s3BucketName")) ||
+		if (Validator.isNull(unicodeProperties.getProperty("testrayBuildId")) ||
+			Validator.isNull(unicodeProperties.getProperty("testrayTaskId")) ||
 			Validator.isNull(
-				unicodeProperties.getProperty("s3ErroredFolderName")) ||
-			Validator.isNull(
-				unicodeProperties.getProperty("s3InboxFolderName")) ||
-			Validator.isNull(
-				unicodeProperties.getProperty("s3ProcessedFolderName"))) {
+				unicodeProperties.getProperty("testrayCaseTypeIds"))) {
+
+			_log.error("The required properties are not set");
 
 			return;
 		}
@@ -134,7 +133,7 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
-			_process();
+			_process(dispatchTrigger.getCompanyId(), unicodeProperties);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -144,13 +143,45 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		}
 	}
 
-	private void _process(){
+	private void _process(long companyId, UnicodeProperties unicodeProperties) throws Exception{
+
+		long testrayBuildId = Long.valueOf(unicodeProperties.getProperty("testrayBuildId"));
+		long testrayTaskId = Long.valueOf(unicodeProperties.getProperty("testrayTaskId"));
+		String testrayCaseTypeIds = unicodeProperties.getProperty("testrayCaseTypeIds");
+
+		List<ObjectDefinition> objectDefinitions =
+			_objectDefinitionLocalService.getObjectDefinitions(
+				companyId, true, WorkflowConstants.STATUS_APPROVED);
+
+		if (ListUtil.isEmpty(objectDefinitions)) {
+			return;
+		}
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			_objectDefinitions.put(
+				objectDefinition.getShortName(), objectDefinition);
+		}
+
+		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<List<ObjectEntry>>();
+
+
+
 
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		TaskFlowTestrayDispatchTaskExecutor.class);
+
+	private final Map<String, ObjectDefinition> _objectDefinitions =
+		new HashMap<>();
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
 
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -29,6 +29,11 @@ window.addEventListener('scroll', handleWindowResizeOrScroll, {
 	passive: true,
 });
 
+const MAX_ITEMS = 10;
+
+let lastSearchAbortController = new AbortController();
+let lastSearchQuery = null;
+
 const KEYS = {
 	ArrowDown: 'ArrowDown',
 	ArrowUp: 'ArrowUp',
@@ -37,14 +42,13 @@ const KEYS = {
 	Home: 'Home',
 };
 
-const optionList = Array.from(optionListElement.getElementsByTagName('LI')).map(
-	(option) => ({
-		id: option.id,
-		textContent: option.textContent,
-		textValue: option.textContent.toLowerCase(),
-		value: option.dataset.optionValue,
-	})
-);
+const optionList = (input.attributes.options || [])
+	.slice(0, MAX_ITEMS)
+	.map((option) => ({
+		textContent: option.label,
+		textValue: option.label.toLowerCase(),
+		value: option.value,
+	}));
 
 function handleResultListClick(event) {
 	let selectedOption = null;
@@ -127,38 +131,110 @@ function handleInputChange() {
 
 	const filterValue = uiInputElement.value.toLowerCase();
 
-	optionListElement.innerHTML = '';
+	if (filterValue !== lastSearchQuery) {
+		lastSearchQuery = filterValue;
 
-	if (filterValue) {
-		optionList.forEach((option) => {
-			if (!option.value) {
-				return;
-			}
-
-			if (option.textValue.startsWith(filterValue)) {
-				optionListElement.appendChild(createOptionElement(option));
-			}
+		filterOptions(filterValue).then(() => {
+			setFocusedOption(optionListElement.firstElementChild);
 		});
+	}
+}
 
-		optionList.forEach((option) => {
-			if (!option.value) {
-				return;
-			}
+function filterOptions(query) {
+	return new Promise((resolve) => {
+		if (input.attributes.relationshipURL) {
+			lastSearchAbortController.abort();
+			lastSearchAbortController = new AbortController();
 
-			if (option.textValue.includes(filterValue)) {
-				if (!document.getElementById(option.id)) {
-					optionListElement.appendChild(createOptionElement(option));
+			filterRemoteOptions(query, lastSearchAbortController).then(
+				(options) => {
+					optionListElement.innerHTML = '';
+
+					options.forEach((option) => {
+						optionListElement.appendChild(
+							createOptionElement(option)
+						);
+					});
+
+					resolve();
 				}
-			}
-		});
-	}
-	else {
-		optionList.forEach((option) => {
-			optionListElement.appendChild(createOptionElement(option));
-		});
+			);
+		}
+		else if (query) {
+			optionListElement.innerHTML = '';
+
+			filterLocalOptions(query).forEach((option) => {
+				optionListElement.appendChild(createOptionElement(option));
+			});
+
+			resolve();
+		}
+		else {
+			optionListElement.innerHTML = '';
+
+			optionList.forEach((option) => {
+				optionListElement.appendChild(createOptionElement(option));
+			});
+
+			resolve();
+		}
+	});
+}
+
+function filterLocalOptions(query) {
+	const options = [];
+
+	optionList.forEach((option) => {
+		if (!option.value) {
+			return;
+		}
+
+		if (option.textValue.startsWith(query)) {
+			options.push(option);
+		}
+	});
+
+	optionList.forEach((option) => {
+		if (!option.value) {
+			return;
+		}
+
+		if (option.textValue.includes(query) && !options.includes(option)) {
+			options.push(option);
+		}
+	});
+
+	return options;
+}
+
+function filterRemoteOptions(query, abortController) {
+	if (
+		!input.attributes.relationshipLabelFieldName ||
+		!input.attributes.relationshipURL ||
+		!input.attributes.relationshipValueFieldName
+	) {
+		return Promise.resolve({items: []});
 	}
 
-	setFocusedOption(optionListElement.firstElementChild);
+	const url = new URL(input.attributes.relationshipURL);
+	url.searchParams.set('search', query);
+
+	return Liferay.Util.fetch(url, {
+		headers: new Headers({
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		}),
+		method: 'GET',
+		signal: abortController.signal,
+	})
+		.then((response) => response.json())
+		.then((result) => {
+			return result.items.map((entry) => ({
+				textContent: entry[input.attributes.relationshipLabelFieldName],
+				textValue: entry[input.attributes.relationshipLabelFieldName],
+				value: entry[input.attributes.relationshipValueFieldName],
+			}));
+		});
 }
 
 function handleWindowResizeOrScroll() {
@@ -202,7 +278,8 @@ function createOptionElement(option) {
 	const optionElement = document.createElement('li');
 
 	optionElement.dataset.optionValue = option.value;
-	optionElement.id = option.id;
+	// eslint-disable-next-line no-undef
+	optionElement.id = `${fragmentEntryLinkNamespace}-option-${option.value}`;
 	optionElement.textContent = option.textContent;
 
 	optionElement.classList.add('dropdown-item');
@@ -250,12 +327,19 @@ function checkIsOpenResultList() {
 }
 
 function openResultList() {
+	const canFetchOptions = input.attributes.relationshipURL;
+
+	if (!canFetchOptions && !optionList.length) {
+		return;
+	}
+
 	optionListElement.style.display = 'block';
 
 	uiInputElement.setAttribute('aria-expanded', 'true');
 	buttonElement.setAttribute('aria-expanded', 'true');
 
 	requestAnimationFrame(() => {
+		filterOptions(uiInputElement.value);
 		repositionResultListElement();
 	});
 }

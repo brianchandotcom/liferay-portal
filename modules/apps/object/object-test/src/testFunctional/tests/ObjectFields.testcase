@@ -1018,6 +1018,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-165995 - Verify that a message is displayed when the user tries to add more than 16 digits to a long integer field"
+	@priority = "4"
+	test CanNotAddMoreThan16DigitsToLongIntField {
+		task ("Given an object with an attachment field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 165995",
+				objectName = "CustomObject165995",
+				pluralLabelName = "Custom Objects 165995");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongInteger",
+				fieldLabelName = "Custom Long Int Field",
+				fieldName = "customLongIntField",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = "CustomObject165995");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject165995");
+		}
+
+		task ("When a entry more than 16 digits is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject165995");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "11111111111111111");
+		}
+
+		task ("Then the error message is displayed on the page") {
+			AssertElementPresent(
+				locator1 = "Message#ERROR",
+				value1 = "Object entry value exceeds long field allowed size");
+		}
+	}
+
 	@description = "LPS-161887 - Verify that it's not possible to create an Object without adding a field."
 	@priority = "5"
 	test CannotCreateEmptyObject {

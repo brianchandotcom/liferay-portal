@@ -20,7 +20,7 @@
 SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContext = (SegmentsExperienceSelectorDisplayContext)request.getAttribute(SegmentsExperienceSelectorDisplayContext.class.getName());
 %>
 
-<li class="border-left border-secondary control-menu-nav-item ml-3 pl-3">
+<div class="border-left border-secondary control-menu-nav-item ml-3 pl-3">
 	<div class="dropdown">
 		<button aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-unstyled dropdown-toggle" id="<portlet:namespace />dropdownToggle" type="button">
 			<span class="align-items-center c-inner d-flex" tabindex="-1">
@@ -85,7 +85,7 @@ SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContex
 
 		</ul>
 	</div>
-</li>
+</div>
 
 <liferay-frontend:component
 	module="js/ExperienceSelector"

@@ -88,9 +88,9 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(18);
 
-		sb.append("<li class=\"");
+		sb.append("<div class=\"");
 		sb.append(_getCssClass(httpServletRequest));
 		sb.append("\"><span class=\"align-items-center ");
 		sb.append("control-menu-level-1-heading d-flex mr-1\" ");
@@ -121,6 +121,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			sb.append(_language.get(httpServletRequest, "draft"));
 			sb.append("</span></span>");
 		}
+
+		sb.append("</div>");
 
 		writer.write(sb.toString());
 

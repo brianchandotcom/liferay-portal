@@ -135,9 +135,12 @@ html#{$cadmin-selector} {
 				flex-wrap: nowrap;
 			}
 
-			> li > .control-menu-nav > .control-menu-nav-item {
-				margin-left: 4px;
-				margin-right: 4px;
+			> div,
+			> li {
+				> .control-menu-nav > .control-menu-nav-item {
+					margin-left: 4px;
+					margin-right: 4px;
+				}
 			}
 
 			> .control-menu-nav-item {

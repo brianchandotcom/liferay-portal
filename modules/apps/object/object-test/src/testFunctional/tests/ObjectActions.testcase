@@ -240,7 +240,7 @@ definition {
 	@description = "LPS-156569 - Verify that it's possible to create an Action with Groovy Script"
 	@priority = "5"
 	test CanCreateActionWithGroovyScript {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
@@ -436,7 +436,7 @@ definition {
 	@description = "LPS-156560 - Verify that it's possible to edit an Action with Groovy Script"
 	@priority = "5"
 	test CanEditActionWithGroovyScript {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Given a Groovy Script") {
 			var groovyScript = '''

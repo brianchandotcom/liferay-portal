@@ -20,7 +20,14 @@ uiInputElement.addEventListener('click', toggleResultList);
 uiInputElement.addEventListener('input', handleInputChange);
 uiInputElement.addEventListener('blur', handleInputBlur);
 uiInputElement.addEventListener('keydown', handleInputKeyDown);
-optionListElement.addEventListener('click', handleOptionListClick);
+optionListElement.addEventListener('click', handleResultListClick);
+
+window.addEventListener('resize', handleWindowResizeOrScroll, {
+	passive: true,
+});
+window.addEventListener('scroll', handleWindowResizeOrScroll, {
+	passive: true,
+});
 
 const KEYS = {
 	ArrowDown: 'ArrowDown',
@@ -39,7 +46,7 @@ const optionList = Array.from(optionListElement.getElementsByTagName('LI')).map(
 	})
 );
 
-function handleOptionListClick(event) {
+function handleResultListClick(event) {
 	let selectedOption = null;
 
 	if (event.target.matches('.dropdown-item')) {
@@ -154,6 +161,23 @@ function handleInputChange() {
 	setFocusedOption(optionListElement.firstElementChild);
 }
 
+function handleWindowResizeOrScroll() {
+	if (!document.body.contains(fragmentElement)) {
+		window.removeEventListener('resize', handleWindowResizeOrScroll);
+		window.removeEventListener('scroll', handleWindowResizeOrScroll);
+
+		if (document.body.contains(optionListElement)) {
+			optionListElement.parentElement.removeChild(optionListElement);
+		}
+
+		return;
+	}
+
+	if (checkIsOpenResultList()) {
+		repositionResultListElement();
+	}
+}
+
 function setFocusedOption(optionElement) {
 	const currentFocusedOption = document.getElementById(
 		optionListElement.getAttribute('aria-activedescendant')
@@ -230,6 +254,10 @@ function openResultList() {
 
 	uiInputElement.setAttribute('aria-expanded', 'true');
 	buttonElement.setAttribute('aria-expanded', 'true');
+
+	requestAnimationFrame(() => {
+		repositionResultListElement();
+	});
 }
 
 function closeResultList() {
@@ -248,4 +276,22 @@ function toggleResultList() {
 	else {
 		openResultList();
 	}
+}
+
+function repositionResultListElement() {
+	const uiInputRect = uiInputElement.getBoundingClientRect();
+
+	if (document.body.contains(fragmentElement)) {
+		if (fragmentElement.contains(optionListElement)) {
+			document.body.appendChild(optionListElement);
+		}
+	}
+	else if (document.body.contains(optionListElement)) {
+		optionListElement.parentNode.removeChild(optionListElement);
+	}
+
+	optionListElement.style.transform = `
+		translateX(${uiInputRect.left + window.scrollX}px)
+		translateY(${uiInputRect.bottom + window.scrollY}px)
+	`;
 }

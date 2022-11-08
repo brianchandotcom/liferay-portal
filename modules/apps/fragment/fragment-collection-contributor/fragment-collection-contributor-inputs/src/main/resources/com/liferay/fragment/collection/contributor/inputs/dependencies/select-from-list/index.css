@@ -1,9 +1,11 @@
-.select-from-list .dropdown-menu {
+.select-from-list__dropdown-menu {
 	display: none;
-	width: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
 }
 
-.select-from-list .dropdown-item[aria-selected="true"] {
+.select-from-list__dropdown-menu .dropdown-item[aria-selected="true"] {
 	background-color: #f0f5ff;
 	color: #272833;
 }

@@ -19,7 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
-import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
+import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,11 +49,12 @@ public class ObjectDefinitionsValidationsDisplayContext
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectValidationRuleEngineTracker objectValidationRuleEngineTracker) {
+		ObjectValidationRuleEngineRegistry objectValidationRuleEngineRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
-		_objectValidationRuleEngineTracker = objectValidationRuleEngineTracker;
+		_objectValidationRuleEngineRegistry =
+			objectValidationRuleEngineRegistry;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -82,7 +83,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 	public List<Map<String, String>> getObjectValidationRuleEngines() {
 		return Stream.of(
-			_objectValidationRuleEngineTracker.getObjectValidationRuleEngines()
+			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngines()
 		).flatMap(
 			List::stream
 		).map(
@@ -172,7 +173,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 			objectRequestHelper.getLocale(), getObjectDefinitionId());
 	}
 
-	private final ObjectValidationRuleEngineTracker
-		_objectValidationRuleEngineTracker;
+	private final ObjectValidationRuleEngineRegistry
+		_objectValidationRuleEngineRegistry;
 
 }

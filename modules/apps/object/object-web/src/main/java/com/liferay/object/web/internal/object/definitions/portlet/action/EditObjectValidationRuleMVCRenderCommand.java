@@ -19,7 +19,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
-import com.liferay.object.validation.rule.ObjectValidationRuleEngineTracker;
+import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsValidationsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,7 +72,7 @@ public class EditObjectValidationRuleMVCRenderCommand
 				new ObjectDefinitionsValidationsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
-					_objectValidationRuleEngineTracker));
+					_objectValidationRuleEngineRegistry));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -91,8 +91,8 @@ public class EditObjectValidationRuleMVCRenderCommand
 		_objectDefinitionModelResourcePermission;
 
 	@Reference
-	private ObjectValidationRuleEngineTracker
-		_objectValidationRuleEngineTracker;
+	private ObjectValidationRuleEngineRegistry
+		_objectValidationRuleEngineRegistry;
 
 	@Reference
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;

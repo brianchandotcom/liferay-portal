@@ -46,7 +46,9 @@ export default function propsTransformer({
 
 		const listener = (event) => {
 			if (!event.target.closest(`.${dropdownClass}`)) {
-				portlet.classList.remove('focus');
+				if (portlet) {
+					portlet.classList.remove('focus');
+				}
 
 				document.removeEventListener('mousedown', listener);
 				document.removeEventListener('touchstart', listener);

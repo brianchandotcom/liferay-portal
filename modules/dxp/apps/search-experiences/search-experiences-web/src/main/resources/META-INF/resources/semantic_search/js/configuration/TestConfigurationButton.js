@@ -23,6 +23,7 @@ import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
  */
 function TestConfigurationButton({
 	assetEntryClassNames,
+	availableSentenceTransformProviders,
 	cacheTimeout,
 	embeddingVectorDimensions,
 	enableGPU,
@@ -132,22 +133,64 @@ function TestConfigurationButton({
 			.then((responseData) => {
 
 				// If there is an error with the connection.
-				// Example `errorMessage` string: '{"error": "Authorization header is correct, but the token seems invalid"}'
+				//
+				// Example `errorMessage` string (Can vary based on sentence
+				//  transformer provider):
+				// '{"error": "Authorization header is correct, but the token seems invalid"}'
+				// '[{\"generated_text":\"com.liferay.portal.kernel.util.Http$Body@7e13...\"}]'
 
 				if (responseData.errorMessage) {
 					try {
-						const errorMessage = JSON.parse(
-							responseData.errorMessage
-						);
+						const errorMessage =
+							typeof responseData.errorMessage === 'string'
+								? JSON.parse(responseData.errorMessage)
+								: responseData.errorMessage;
+
+						// If `errorMessage` has `error` property that is a string.
+
+						if (
+							errorMessage?.error &&
+							typeof errorMessage?.error === 'string'
+						) {
+							return setTestResultsMessage({
+								message: errorMessage?.error,
+								type: 'warning',
+							});
+						}
+
+						// If `errorMessage` value is an object or array.
 
 						return setTestResultsMessage({
-							message: errorMessage?.error,
+							message: sub(
+								Liferay.Language.get(
+									'unable-to-connect-to-x.connection-failed-with-x'
+								),
+								[
+									availableSentenceTransformProviders[
+										sentenceTransformProvider
+									],
+									JSON.stringify(errorMessage),
+								]
+							),
 							type: 'warning',
 						});
 					}
 					catch {
+
+						// If `errorMessage` is a string.
+
 						return setTestResultsMessage({
-							message: responseData.errorMessage,
+							message: sub(
+								Liferay.Language.get(
+									'unable-to-connect-to-x.connection-failed-with-x'
+								),
+								[
+									availableSentenceTransformProviders[
+										sentenceTransformProvider
+									],
+									responseData.errorMessage,
+								]
+							),
 							type: 'warning',
 						});
 					}

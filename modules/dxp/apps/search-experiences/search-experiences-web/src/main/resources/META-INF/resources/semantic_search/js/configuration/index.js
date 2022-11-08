@@ -364,6 +364,9 @@ export default function ({
 
 				<TestConfigurationButton
 					assetEntryClassNames={formik.values.assetEntryClassNames}
+					availableSentenceTransformProviders={
+						availableSentenceTransformProviders
+					}
 					cacheTimeout={formik.values.cacheTimeout}
 					embeddingVectorDimensions={
 						formik.values.embeddingVectorDimensions

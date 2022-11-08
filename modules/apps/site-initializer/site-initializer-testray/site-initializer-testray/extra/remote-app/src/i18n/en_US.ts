@@ -304,6 +304,7 @@ export default {
 	'subtask': 'Subtask',
 	'subtask-details': 'Subtask Details',
 	'subtask-name': 'Subtask Name',
+	'subtasks': 'Subtasks',
 	'suite': 'Suite',
 	'suite-name': 'Suite Name',
 	'suites': 'Suites',
@@ -377,6 +378,7 @@ export default {
 	'x-items-cannot-be-deleted': '{0} items cannot be deleted',
 	'x-minutes': '{0} Minutes',
 	'x-results-for-x': '{0} Results for {1}',
+	'you-are-not-the-assigned-user': 'You are not the assigned user.',
 	'you-do-not-have-permissions-to-access-this-app-contact-the-app-administrator-to-request-the-access':
 		'You do not have permissions to access this app. Contact the app administrator to request the access.',
 	'you-must-have-at-least-one-column-selected':

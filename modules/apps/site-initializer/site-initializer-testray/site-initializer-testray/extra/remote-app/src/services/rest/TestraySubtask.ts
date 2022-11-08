@@ -13,10 +13,12 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {searchUtil} from '../../util/search';
 import {SubTaskStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import Rest from './Rest';
 import {testrayCaseResultImpl} from './TestrayCaseResult';
+import {testraySubtaskCaseResultImpl} from './TestraySubtaskCaseResults';
 import {TestraySubTask} from './types';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType & {
@@ -53,29 +55,73 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 		});
 	}
 
-	public assignTo(subTask: TestraySubTask, userId: number) {
-		return this.update(subTask.id, {
+	private async getCaseResultsFromSubtask(subTaskId: number) {
+		const subTaskCaseResultResponse = await testraySubtaskCaseResultImpl.getAll(
+			searchUtil.eq('subtaskId', subTaskId)
+		);
+
+		if (!subTaskCaseResultResponse) {
+			return [];
+		}
+
+		const subTaskCaseResults =
+			testraySubtaskCaseResultImpl.transformDataFromList(
+				subTaskCaseResultResponse
+			)?.items || [];
+
+		return subTaskCaseResults;
+	}
+
+	public async assignTo(subTask: TestraySubTask, userId: number) {
+		const caseResults = await this.getCaseResultsFromSubtask(subTask.id);
+
+		const caseResultIds = caseResults.map((caseResult) =>
+			Number(caseResult.caseResult?.id)
+		);
+
+		await this.update(subTask.id, {
 			dueStatus: SubTaskStatuses.IN_ANALYSIS,
 			userId,
 		});
+
+		await testrayCaseResultImpl.updateBatch(
+			caseResultIds,
+			caseResultIds.map(() => ({
+				userId,
+			}))
+		);
 	}
 
-	public assignToMe(subTask: TestraySubTask) {
-		return this.update(subTask.id, {
+	public async assignToMe(subTask: TestraySubTask) {
+		await this.update(subTask.id, {
 			dueStatus: SubTaskStatuses.IN_ANALYSIS,
 			userId: Number(Liferay.ThemeDisplay.getUserId()),
 		});
+
+		const caseResults = await this.getCaseResultsFromSubtask(subTask.id);
+
+		const caseResultIds = caseResults.map((caseResult) =>
+			Number(caseResult.caseResult?.id)
+		);
+
+		const userId = Number(Liferay.ThemeDisplay.getUserId());
+
+		await testrayCaseResultImpl.updateBatch(
+			caseResultIds,
+			caseResultIds.map(() => ({userId}))
+		);
 	}
 
-	public async complete(
-		subtaskId: number,
-		caseResultIds: number[],
-		dueStatus: string
-	) {
-		await this.update(subtaskId, {
+	public async complete(subTaskId: number, dueStatus: string) {
+		await this.update(subTaskId, {
 			dueStatus: SubTaskStatuses.COMPLETE,
-			userId: Number(Liferay.ThemeDisplay.getUserId()),
 		});
+
+		const caseResults = await this.getCaseResultsFromSubtask(subTaskId);
+
+		const caseResultIds = caseResults.map((caseResult) =>
+			Number(caseResult.caseResult?.id)
+		);
 
 		await testrayCaseResultImpl.updateBatch(
 			caseResultIds,

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useCallback, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {KeyedMutator} from 'swr';
 
@@ -20,18 +19,10 @@ import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
 import Modal from '../../../components/Modal';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
-import {useFetch} from '../../../hooks/useFetch';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {
-	APIResponse,
-	TestraySubTask,
-	TestraySubTaskCaseResult,
-	testraySubTaskImpl,
-	testraySubtaskCaseResultImpl,
-} from '../../../services/rest';
-import {searchUtil} from '../../../util/search';
+import {TestraySubTask, testraySubTaskImpl} from '../../../services/rest';
 import {CaseResultStatuses} from '../../../util/statuses';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType;
@@ -47,43 +38,20 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 	mutate,
 	subtask,
 }) => {
-	const {
-		data: testraySubTaskCaseResultData,
-		mutate: mutateCaseResult,
-	} = useFetch<APIResponse<TestraySubTaskCaseResult>>(
-		`${testraySubtaskCaseResultImpl.resource}&filter=${searchUtil.eq(
-			'subtaskId',
-			subtask.id
-		)}&pageSize=100`,
-		(response) =>
-			testraySubtaskCaseResultImpl.transformDataFromList(response)
-	);
-	const testraySubTaskCaseResults = testraySubTaskCaseResultData?.items || [];
+	const {register, watch} = useForm<SubtaskForm>({
+		defaultValues: {dueStatus: CaseResultStatuses.FAILED},
 
-	const status = testraySubTaskCaseResults[0]?.caseResult?.dueStatus;
-
-	const caseResultIds = testraySubTaskCaseResults.map((caseResult) =>
-		Number(caseResult.caseResult?.id)
-	);
-	const {register, setValue, watch} = useForm<SubtaskForm>({
 		resolver: yupResolver(yupSchema.subtask),
 	});
+
 	const dueStatus = watch('dueStatus');
+
 	const issue = watch('issue');
-
-	const setDueStatus = useCallback(() => {
-		setValue('dueStatus', status?.key);
-	}, [setValue, status]);
-
-	useEffect(() => {
-		setDueStatus();
-	}, [setDueStatus]);
 
 	const _onSubmit = () => {
 		testraySubTaskImpl
-			.complete(subtask.id, caseResultIds, dueStatus as string)
+			.complete(subtask.id, dueStatus as string)
 			.then(mutate)
-			.then(mutateCaseResult)
 			.then(() => onSave())
 			.catch(() => onError);
 	};
@@ -103,9 +71,9 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 					label={i18n.translate('case-results-status')}
 					name="dueStatus"
 					options={[
-						{label: 'Passed', value: CaseResultStatuses.PASSED},
-						{label: 'Failed', value: CaseResultStatuses.FAILED},
 						{label: 'Blocked', value: CaseResultStatuses.BLOCKED},
+						{label: 'Failed', value: CaseResultStatuses.FAILED},
+						{label: 'Passed', value: CaseResultStatuses.PASSED},
 						{label: 'Test Fix', value: CaseResultStatuses.TEST_FIX},
 					]}
 					register={register}

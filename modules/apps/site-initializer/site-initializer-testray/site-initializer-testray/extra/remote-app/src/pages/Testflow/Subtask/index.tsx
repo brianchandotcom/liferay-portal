@@ -109,7 +109,7 @@ const Subtasks = () => {
 											onClick={() =>
 												testraySubTaskImpl
 													.assignToMe(testraySubtask)
-													.then(mutateSubtask)
+													.then(mutateSubtask as any)
 											}
 										/>
 									),

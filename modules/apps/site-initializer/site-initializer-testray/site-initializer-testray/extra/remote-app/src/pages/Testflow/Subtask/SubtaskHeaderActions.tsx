@@ -18,6 +18,7 @@ import {KeyedMutator} from 'swr';
 import AssignModal from '../../../components/AssignModal';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import {Liferay} from '../../../services/liferay';
 import {TestraySubTask, UserAccount} from '../../../services/rest';
 import {testraySubTaskImpl} from '../../../services/rest/TestraySubtask';
 import {SubTaskStatuses} from '../../../util/statuses';
@@ -43,6 +44,8 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 		SubTaskStatuses.OPEN,
 		SubTaskStatuses.COMPLETE,
 	].includes(subtask.dueStatus.key as SubTaskStatuses);
+
+	const userId = Number(Liferay.ThemeDisplay.getUserId());
 
 	return (
 		<>
@@ -80,7 +83,20 @@ const SubtaskHeaderActions: React.FC<SubTaskHeaderActionsProps> = ({
 							{i18n.translate('assign')}
 						</ClayButton>
 
-						<ClayButton onClick={() => completeModal.open()}>
+						<ClayButton
+							onClick={() => {
+								if (subtask.user.id === userId) {
+									return completeModal.open();
+								}
+
+								Liferay.Util.openToast({
+									message: i18n.translate(
+										'you-are-not-the-assigned-user'
+									),
+									type: 'danger',
+								});
+							}}
+						>
 							{i18n.translate('complete')}
 						</ClayButton>
 

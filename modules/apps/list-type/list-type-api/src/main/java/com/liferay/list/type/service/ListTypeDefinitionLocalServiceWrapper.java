@@ -16,6 +16,9 @@ package com.liferay.list.type.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides a wrapper for {@link ListTypeDefinitionLocalService}.
  *
@@ -57,11 +60,11 @@ public class ListTypeDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.list.type.model.ListTypeDefinition addListTypeDefinition(
-			long userId, java.util.Map<java.util.Locale, String> nameMap)
+		String externalReferenceCode, long userId, Map<Locale, String> nameMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _listTypeDefinitionLocalService.addListTypeDefinition(
-			userId, nameMap);
+			externalReferenceCode, userId, nameMap);
 	}
 
 	@Override

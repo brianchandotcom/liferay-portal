@@ -74,7 +74,7 @@ public class ObjectStateFlowLocalServiceTest {
 	public void setUp() throws Exception {
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString()));
 
@@ -280,7 +280,7 @@ public class ObjectStateFlowLocalServiceTest {
 
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString()));
 

@@ -1857,9 +1857,9 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that the User's available updates accounts within the page with update permission of share account role."
+	@description = "This test asserts that a user with Update permission for account entries can successfully update an account entry"
 	@priority = "5"
-	test CanUpdateAccountWithUpdateShareAccountRole {
+	test CanUpdateAccountWithUpdatePermissions {
 		task ("Given add account a new user and account role with view permission") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

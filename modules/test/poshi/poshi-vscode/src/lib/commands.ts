@@ -13,7 +13,10 @@
  * details.
  */
 
+import * as child_process from 'node:child_process';
+import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
+
 import * as notifications from './notifications';
 import * as vscode from 'vscode';
 import {getDocumentTokens, getTokens} from './tokens';
@@ -87,6 +90,25 @@ async function getCommand(
 		return `ant -f "${buildFileUri.fsPath}" run-selenium-test -Dtest.class="${testCase}"`;
 	} catch (error) {
 		console.log('Not in liferay-portal.');
+	}
+
+	try {
+		const gitRevParse: child_process.SpawnSyncReturns<string> =
+			child_process.spawnSync('git', ['rev-parse', '--show-toplevel'], {
+				cwd: process.cwd(),
+				encoding: 'utf8',
+			});
+
+		const buildFilePath = path.join(
+			gitRevParse.stdout.trim(),
+			'build-test.xml'
+		);
+
+		await fs.stat(buildFilePath);
+
+		return `ant -f "${buildFilePath}" run-selenium-test -Dtest.class="${testCase}"`;
+	} catch (error) {
+		console.log('Not in liferay-portal sub-dir.');
 	}
 
 	try {

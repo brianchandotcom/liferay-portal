@@ -106,6 +106,7 @@ export default function PagesTree({
 							active={
 								selectedLayoutId === item.id ? 'true' : null
 							}
+							draggable={item.id !== ROOT_ITEM_ID}
 							onKeyDown={(event) => {
 								if (
 									event.keyCode === ENTER_KEYCODE &&

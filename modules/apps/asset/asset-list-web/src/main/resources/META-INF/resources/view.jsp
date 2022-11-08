@@ -52,46 +52,10 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 				>
 
 					<%
-					String editURL = StringPool.BLANK;
-
-					if (AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE) || AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.VIEW)) {
-						editURL = PortletURLBuilder.createRenderURL(
-							liferayPortletResponse
-						).setMVCPath(
-							"/edit_asset_list_entry.jsp"
-						).setRedirect(
-							currentURL
-						).setParameter(
-							"assetListEntryId", assetListEntry.getAssetListEntryId()
-						).buildString();
-					}
-
 					row.setData(
 						HashMapBuilder.<String, Object>put(
 							"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
 						).build());
-
-					String assetEntryTypeLabel = StringPool.BLANK;
-
-					if (Validator.isNotNull(assetListEntry.getAssetEntryType())) {
-						assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
-					}
-
-					String classTypeLabel = StringPool.BLANK;
-
-					long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype(), -1);
-
-					if (classTypeId >= 0) {
-						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
-
-						if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {
-							ClassType classType = assetListDisplayContext.getClassType(assetRendererFactory.getClassTypeReader(), classTypeId);
-
-							if (classType != null) {
-								classTypeLabel = classType.getName();
-							}
-						}
-					}
 
 					Date statusDate = assetListEntry.getCreateDate();
 
@@ -108,7 +72,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								colspan="<%= 2 %>"
 							>
 								<h5>
-									<aui:a href="<%= editURL %>">
+									<aui:a href="<%= assetListDisplayContext.getEditURL(assetListEntry) %>">
 										<strong><%= HtmlUtil.escape(assetListEntry.getTitle()) %></strong>
 									</aui:a>
 								</h5>
@@ -118,7 +82,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								</h6>
 
 								<h6 class="text-default">
-									<%= HtmlUtil.escape(assetEntryTypeLabel + " - " + classTypeLabel) %>
+									<%= assetListDisplayContext.getAssetEntrySubtypeLabel(assetListEntry) %>
 								</h6>
 
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
@@ -149,7 +113,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 									symbol="list"
 								/>
 
-								<aui:a href="<%= editURL %>">
+								<aui:a href="<%= assetListDisplayContext.getEditURL(assetListEntry) %>">
 									<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
 								</aui:a>
 							</liferay-ui:search-container-column-text>
@@ -164,13 +128,13 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand text-truncate"
 								name="item-type"
-								value="<%= assetEntryTypeLabel %>"
+								value="<%= assetListDisplayContext.getAssetEntryTypeLabel(assetListEntry) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand text-truncate"
 								name="subtype"
-								value="<%= classTypeLabel %>"
+								value="<%= assetListDisplayContext.getClassTypeLabel(assetListEntry) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

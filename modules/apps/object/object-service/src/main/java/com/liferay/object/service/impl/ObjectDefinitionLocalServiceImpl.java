@@ -358,16 +358,16 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.getObjectDefinitionId());
 
 		for (ObjectRelationship objectRelationship :
-				_objectRelationshipPersistence.findByObjectDefinitionId1(
-					objectDefinition.getObjectDefinitionId())) {
+				_objectRelationshipPersistence.findByODI1_R(
+					objectDefinition.getObjectDefinitionId(), false)) {
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
 		}
 
 		for (ObjectRelationship objectRelationship :
-				_objectRelationshipPersistence.findByObjectDefinitionId2(
-					objectDefinition.getObjectDefinitionId())) {
+				_objectRelationshipPersistence.findByODI2_R(
+					objectDefinition.getObjectDefinitionId(), false)) {
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);

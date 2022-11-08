@@ -27,8 +27,6 @@ export async function runTestCaseInFile(textEditor: vscode.TextEditor) {
 		.filter((token) => token.type === 'testCaseName')
 		.map((token) => token.match.captures[1]);
 
-	console.log(testCaseNames);
-
 	const testName = await vscode.window.showQuickPick(testCaseNames);
 	if (!testName) {
 		return;
@@ -123,7 +121,7 @@ async function runTestCase(document: vscode.TextDocument, testName: string) {
 		return;
 	}
 
-	notifications.info(`Running Poshi testcase: ${testCase}`);
+	notifications.info(`Running testcase: ${testCase}`);
 
 	const terminal = vscode.window.createTerminal(`Run: ${testCase}`);
 

@@ -134,7 +134,7 @@ public class TaskFlowTestrayDispatchTaskExecutor
 		if (objectDefinition == null) {
 			throw new PortalException(
 				"No object definition found with short name " +
-				objectDefinitionShortName);
+					objectDefinitionShortName);
 		}
 
 		ObjectEntry objectEntry = new ObjectEntry();
@@ -207,10 +207,10 @@ public class TaskFlowTestrayDispatchTaskExecutor
 
 		long testrayBuildId = Long.valueOf(
 			unicodeProperties.getProperty("testrayBuildId"));
-		long testrayTaskId = Long.valueOf(
-			unicodeProperties.getProperty("testrayTaskId"));
 		String[] testrayCaseTypeIds = StringUtil.split(
 			unicodeProperties.getProperty("testrayCaseTypeIds"));
+		long testrayTaskId = Long.valueOf(
+			unicodeProperties.getProperty("testrayTaskId"));
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 		Map<String, List<ObjectEntry>> testrayCaseResultIssuesMap =
@@ -271,8 +271,6 @@ public class TaskFlowTestrayDispatchTaskExecutor
 				StringUtil.replace(
 					testrayCaseResultFacetValue.getTerm(), '\'', "''"),
 				'\\');
-
-			System.out.println(escapeErrors);
 
 			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
 				_objectEntryManager.getObjectEntries(

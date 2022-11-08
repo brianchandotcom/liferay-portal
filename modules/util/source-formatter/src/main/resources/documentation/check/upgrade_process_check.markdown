@@ -66,6 +66,8 @@ Move `alterColumnName`, `alterColumnType`, `alterTableAddColumn` and/or
 `alterTableDropColumn` inside `getPostUpgradeSteps` and `getPreUpgradeSteps`
 when possible.
 
+### Examples
+
 Incorrect:
 
 ```java

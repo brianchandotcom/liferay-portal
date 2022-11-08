@@ -19,6 +19,54 @@ definition {
 		}
 	}
 
+	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via jvm argument."
+	@priority = "3"
+	test ConfigurePortalExtPropertyViaJVM {
+		property test.name.skip.portal.instance = "EnvironmentVariables#ConfigurePortalExtPropertyViaJVM";
+
+		task ("Given a feature flag is disabled") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			AssertElementNotPresent(
+				key_category = "Import / Export",
+				key_portlet = "Import/Export Center",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			Refresh();
+		}
+
+		task ("When the feature flag is enabled via environment variable and company-id-properties=true is set via jvm argument") {
+			var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+
+			var setenvFile = "${tomcatBinDir}/setenv.sh";
+
+			var fileContent = FileUtil.read("${setenvFile}");
+
+			var newFileContent = '''${fileContent}
+export LIFERAY_PROPS_BY_COMPANY_20097=feature.flag.COMMERCE-8087=true
+
+CATALINA_OPTS="$CATALINA_OPTS -Dcompany-id-properties=true"
+''';
+
+			FileUtil.write("${setenvFile}", "${newFileContent}");
+		}
+
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the feature flag is enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Import / Export",
+				panel = "Applications",
+				portlet = "Import/Export Center");
+
+			ImportExport.gotoImport();
+		}
+	}
+
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
 	@priority = "3"
 	test ConfigurePortalExtPropertyViaSystemExt {

@@ -14,8 +14,12 @@ definition {
 			groupName = "Guest",
 			layoutName = "Account Page");
 
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Account Page",
+			layoutTemplate = "1 Column");
+
 		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
 			groupName = "Guest",
 			layoutName = "Account Page",
 			widgetName = "Account Management");

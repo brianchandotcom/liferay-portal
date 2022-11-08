@@ -627,7 +627,7 @@ public class PoshiContext {
 						testName);
 
 				Collections.addAll(
-					poshiFileIncludes, "**/" + className + ".testcase");
+					poshiFileIncludes, "**/" + className + ".{prose,testcase}");
 			}
 		}
 

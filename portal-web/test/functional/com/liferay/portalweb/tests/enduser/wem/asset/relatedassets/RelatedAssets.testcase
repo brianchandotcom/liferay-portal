@@ -402,10 +402,19 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
+			// Comment until LPS-159228 implemented
+
+			//WebContent.addExistingRelatedAssetCP(
+			//	assetTitle = "Web Content Title 1",
+			//	assetType = "Basic Web Content",
+			//	scopeSite = "Everywhere",
+			//	siteName = "Global",
+			//	webContentTitle = "Web Content Title 2");
+
 			WebContent.addExistingRelatedAssetCP(
 				assetTitle = "Web Content Title 1",
 				assetType = "Basic Web Content",
-				scopeSite = "Global",
+				otherSite = "Global",
 				siteName = "Global",
 				webContentTitle = "Web Content Title 2");
 		}

@@ -67,6 +67,11 @@ public interface FragmentCollection
 			getResources()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.Map
+		<String, com.liferay.portal.kernel.repository.model.FileEntry>
+				getResourcesAsMap()
+			throws com.liferay.portal.kernel.exception.PortalException;
+
 	public long getResourcesFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

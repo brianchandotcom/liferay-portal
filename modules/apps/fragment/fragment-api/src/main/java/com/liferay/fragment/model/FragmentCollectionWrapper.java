@@ -293,6 +293,14 @@ public class FragmentCollectionWrapper
 	}
 
 	@Override
+	public Map<String, com.liferay.portal.kernel.repository.model.FileEntry>
+			getResourcesAsMap()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getResourcesAsMap();
+	}
+
+	@Override
 	public long getResourcesFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

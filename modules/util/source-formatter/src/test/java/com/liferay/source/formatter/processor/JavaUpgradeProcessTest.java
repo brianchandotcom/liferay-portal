@@ -24,16 +24,19 @@ public class JavaUpgradeProcessTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testCheckExtraJudgement() throws Exception {
 		test(
-			"CheckUnnecessaryMethodUpgradeProcess.testjava",
-			"Remove unnecessary usages of hasColumn or hasColumnType.", 26);
+			"CheckUnnecessaryIfStatementUpgradeProcess.testjava",
+			"No need to use if-statement to wrap 'alterColumn*' and " +
+				"'alterTable*' calls",
+			26);
 	}
 
 	@Test
 	public void testCheckIfDelete() throws Exception {
 		test(
-			"CheckIfDeleteUpgradeProcess.testjava",
-			"Delete this class and replace it by inline calls to the " +
-				"UpgradeProcessFactory class in the registry class.",
+			"CheckUnnecessaryUpgradeProcess.testjava",
+			"No need to create 'CheckUnnecessaryUpgradeProcess' class. " +
+				"Replace it by inline calls to the 'UpgradeProcessFactory' " +
+					"class in the registry class",
 			22);
 	}
 
@@ -42,12 +45,10 @@ public class JavaUpgradeProcessTest extends BaseSourceProcessorTestCase {
 		test(
 			"MoveLogicToPreOrPostMethodUpgradeProcess.testjava",
 			new String[] {
-				"Drop 26 to 26 line and make that operation from the " +
-					"'getPreUpgradeSteps' method by using the " +
-						"UpgradeProcessFactory class.",
-				"Drop 30 to 30 line and make that operation from the " +
-					"'getPostUpgradeSteps' method by using the " +
-						"UpgradeProcessFactory class."
+				"Move 'alterTableAddColumn' call inside 'getPreUpgradeSteps' " +
+					"method",
+				"Move 'alterTableAddColumn' call inside " +
+					"'getPostUpgradeSteps' method"
 			},
 			new Integer[] {26, 30});
 	}

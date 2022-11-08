@@ -1,0 +1,47 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "User Interface";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		task ("Given Custom view enabled for a dataset display instance") {
+			User.firstLoginPG();
+
+			PortalSettings.openInstanceSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Custom Dialogs",
+				configurationName = "Custom Dialogs",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Enabled");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Enabled");
+		}
+	}
+
+	@description = "LPS-165262"
+	@priority = "3"
+	test CanRenderOpenConfirmModal {
+		RunScript(locator1 = "Liferay.Util.openConfirmModal({message: 'Test Confirm Modal', onConfirm: ()=>{}})");
+	}
+
+}

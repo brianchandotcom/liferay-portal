@@ -53,6 +53,149 @@ definition {
 		}
 	}
 
+	@description = "Automation ID: LPS-147575 | Test Summary: Verify activation keys contain: Environment Name - Key Type - Environment Type - Exp. Date - Status - Download"
+	@ignore = "true"
+	@priority = "3"
+	test AssertAllColumnsInTheTable {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
+
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then I assert all the values from the table") {
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "2",
+				linePosition = "2",
+				text = "Redacted");
+
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "3",
+				linePosition = "2",
+				text = "On-Premise");
+
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "4",
+				linePosition = "2",
+				text = "Non-Prod");
+
+			CP2DataUtil.generateStaticFullStartAndEndDate();
+
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "5",
+				linePosition = "1",
+				text = "${staticFullEndDate}");
+
+			CP2ActivationKeys.putMouseOverStatusElementAtTable(
+				linePosition = "1",
+				status = "Activated");
+
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Activated");
+		}
+	}
+
+	@description = "Automation ID: LPS-147571 | Test Summary: Assert that paging is only displayed when the table contains at least one key"
+	@ignore = "true"
+	@priority = "3"
+	test AssertThatThePageIsNotShownWhenThereAreNoKeys {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "Test Account DXP");
+
+			CustomerPortal.enterOnProject(title = "Test Account DXP");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("When I enter a project that has no table/keys available, then I shouldn't see the pagination") {
+			CP2ActivationKeys.assertTableIsNotVisible();
+
+			CP2ActivationKeys.assertThatPaginationDoesNotAppear();
+		}
+
+		task ("Then I go to another project") {
+			CP2Utils.clickBreadcrumb(project = "NASA ICE");
+		}
+
+		task ("And I click at the All tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
+		}
+
+		task ("When I select 5 Items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "5");
+		}
+
+		task ("Then I should be able to see the pagination button with the text Show 5 Items") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
+		}
+	}
+
+	@description = "Automation ID: LPS-147568 | Test Summary: Assert that the tab statuses reflect with the amount of keys displayed in the table"
+	@priority = "4"
+	test AssertThatTheTabDisplaysTheFollowingStatuses {
+
+		// TODO LPS-147568 AssertThatTheTabDisplaysTheFollowingStatuses pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-147582 | Test Summary: Verify that when the user clicks on the download icon a key is downloaded"
+	@ignore = "true"
+	@priority = "4"
+	test CanViewTheActivationKeyDownload {
+
+		// Needs refactor since it depends on example NASA ICE account
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "NASA ICE");
+
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("And I get the formated name for the activation key file") {
+			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				fileType = "xml",
+				licenseName = "${testAccount}",
+				licenseType = "activation-key",
+				product = "DXP",
+				version = "7.0");
+		}
+
+		task ("When I click on the download button at the Activation Keys Table") {
+			CP2ActivationKeys.clickAtDownloadButton(entitlementName = "NASA ICE");
+		}
+
+		task ("Then I should see the downloaded file") {
+			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${expectedDownloadedFileName}");
+		}
+	}
+
 	@description = "LPS-150784 - Verify if the 'Activated' tab displays the number of keys for it"
 	@ignore = "true"
 	@priority = "4"
@@ -529,112 +672,6 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-147568 | Test Summary: Assert that the tab statuses reflect with the amount of keys displayed in the table"
-	@priority = "4"
-	test AssertThatTheTabDisplaysTheFollowingStatuses {
-
-		// TODO LPS-147568 AssertThatTheTabDisplaysTheFollowingStatuses pending implementation
-
-	}
-
-
-	@description = "Automation ID: LPS-147571 | Test Summary: Assert that paging is only displayed when the table contains at least one key"
-	@ignore = "true"
-	@priority = "3"
-	test AssertThatThePageIsNotShownWhenThereAreNoKeys {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "Test Account DXP");
-
-			CustomerPortal.enterOnProject(title = "Test Account DXP");
-		}
-
-		task ("And I click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-		}
-		
-		task ("When I enter a project that has no table/keys available, then I shouldn't see the pagination") {
-			CP2ActivationKeys.assertTableIsNotVisible();
-
-			CP2ActivationKeys.assertThatPaginationDoesNotAppear();
-		}
-
-		task ("Then I go to another project") {
-			CP2Utils.clickBreadcrumb(project = "NASA ICE");
-		}
-
-		task ("And I click at the All tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
-		}
-
-		task ("When I select 5 Items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "5");
-		}
-
-		task ("Then I should be able to see the pagination button with the text Show 5 Items") {
-			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
-		}
-	}
-
-	@description = "Automation ID: LPS-147575 | Test Summary: Verify activation keys contain: Environment Name - Key Type - Environment Type - Exp. Date - Status - Download"
-	@ignore = "true"
-	@priority = "3"
-	test AssertAllColumnsInTheTable {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "NASA ICE");
-
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-		}
-
-		task ("And I click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-		}
-
-		task ("Then I assert all the values from the table") {
-			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "2",
-				linePosition = "2",
-				text = "Redacted");
-
-			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "3",
-				linePosition = "2",
-				text = "On-Premise");
-
-			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "4",
-				linePosition = "2",
-				text = "Non-Prod");
-				
-			CP2DataUtil.generateStaticFullStartAndEndDate();
-	
-			CP2ActivationKeys.assertTextAtTable(
-				lineColunm = "5",
-				linePosition = "1",
-				text = "${staticFullEndDate}");
-
-			CP2ActivationKeys.putMouseOverStatusElementAtTable(
-				linePosition = "1",
-				status = "Activated");
-	
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Activated");
-
-		}
-	}
-
 	@description = "Automation ID: LPS-147577 | Test Summary: Make sure that when you hover the mouse over 'DNE' a tooltip appears with a message This key does not expire"
 	@ignore = "true"
 	@priority = "3"
@@ -666,46 +703,6 @@ definition {
 
 		task ("Then I should see a tooltip with the 'This key does not expire' text") {
 			CP2ActivationKeys.assertTooltipIsVisible(text = "This key does not expire");
-		}
-
-	}
-
-	@description = "Automation ID: LPS-147582 | Test Summary: Verify that when the user clicks on the download icon a key is downloaded"
-	@ignore = "true"
-	@priority = "4"
-	test CanViewTheActivationKeyDownload {
-
-		// Needs refactor since it depends on example NASA ICE account
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "NASA ICE");
-
-			CustomerPortal.enterOnProject(title = "NASA ICE");
-		}
-
-		task ("And I click on DXP product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-		}
-
-		task ("And I get the formated name for the activation key file") {
-			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
-				fileType = "xml",
-				licenseName = "${testAccount}",
-				licenseType = "activation-key",
-				product = "DXP",
-				version = "7.0");
-		}
-
-		task ("When I click on the download button at the Activation Keys Table") {
-			CP2ActivationKeys.clickAtDownloadButton(entitlementName = "NASA ICE");
-		}
-
-		task ("Then I should see the downloaded file") {
-			CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${expectedDownloadedFileName}");
 		}
 	}
 

@@ -1,13 +1,5 @@
 definition {
 
-	macro assertThatPaginationDoesNotAppear {
-		AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
-	}
-
-	macro assertTableIsNotVisible {
-		AssertElementNotPresent(locator1 = "CP2ActivationKeys#TABLE");
-	}
-
 	macro _formatCamelCase {
 		var camelCase = StringUtil.replace("${camelCase}", " ", "");
 
@@ -214,6 +206,10 @@ definition {
 		AssertVisible(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED");
 	}
 
+	macro assertTableIsNotVisible {
+		AssertElementNotPresent(locator1 = "CP2ActivationKeys#TABLE");
+	}
+
 	macro assertTextAtTable {
 		var key_linePosition = "${linePosition}";
 		var key_colunmPosition = "${lineColunm}";
@@ -228,6 +224,10 @@ definition {
 		var key_text = "${text}";
 
 		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
+	}
+
+	macro assertThatPaginationDoesNotAppear {
+		AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
 	}
 
 	macro assertTooltipIsVisible {

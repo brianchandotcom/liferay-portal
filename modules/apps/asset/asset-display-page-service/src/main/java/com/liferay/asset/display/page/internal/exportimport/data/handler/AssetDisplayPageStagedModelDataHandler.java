@@ -16,8 +16,13 @@ package com.liferay.asset.display.page.internal.exportimport.data.handler;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -27,8 +32,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Map;
 
@@ -75,6 +82,8 @@ public class AssetDisplayPageStagedModelDataHandler
 				layoutPageTemplateEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
+
+		_exportAssetObject(portletDataContext, assetDisplayPageEntry);
 	}
 
 	@Override
@@ -180,12 +189,55 @@ public class AssetDisplayPageStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
+	private boolean _exportAssetObject(
+			PortletDataContext portletDataContext,
+			AssetDisplayPageEntry assetDisplayPageEntry)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetDisplayPageEntry.getClassName());
+
+		if (assetRendererFactory == null) {
+			return false;
+		}
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetDisplayPageEntry.getClassPK());
+
+		if ((assetRenderer == null) ||
+			(assetRenderer.getAssetObject() == null) ||
+			!(assetRenderer.getAssetObject() instanceof StagedModel)) {
+
+			return false;
+		}
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!_stagingGroupHelper.isStagedPortlet(
+				assetRenderer.getGroupId(),
+				assetRendererFactory.getPortletId())) {
+
+			return false;
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, assetDisplayPageEntry,
+			(StagedModel)assetRenderer.getAssetObject(),
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+			portletDataContext.getPortletId());
+
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetDisplayPageStagedModelDataHandler.class);
 
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService
@@ -195,5 +247,8 @@ public class AssetDisplayPageStagedModelDataHandler
 		target = "(model.class.name=com.liferay.asset.display.page.model.AssetDisplayPageEntry)"
 	)
 	private StagedModelRepository<AssetDisplayPageEntry> _stagedModelRepository;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

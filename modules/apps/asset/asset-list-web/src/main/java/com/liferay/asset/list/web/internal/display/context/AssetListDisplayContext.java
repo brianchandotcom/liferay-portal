@@ -14,6 +14,7 @@
 
 package com.liferay.asset.list.web.internal.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
@@ -24,6 +25,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
+import com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -39,12 +41,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,7 +60,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -76,8 +80,9 @@ public class AssetListDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			_httpServletRequest);
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			renderResponse);
+
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -92,6 +97,26 @@ public class AssetListDisplayContext {
 				AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
 				"dynamic-collection", AssetListEntryTypeConstants.TYPE_DYNAMIC)
 		).build();
+	}
+
+	public String getAssetEntrySubtypeLabel(AssetListEntry assetListEntry) {
+		String assetEntryTypeLabel = getAssetEntryTypeLabel(assetListEntry);
+		String classTypeLabel = getClassTypeLabel(assetListEntry);
+
+		if (Validator.isNull(classTypeLabel)) {
+			return HtmlUtil.escape(assetEntryTypeLabel);
+		}
+
+		return HtmlUtil.escape(assetEntryTypeLabel + " - " + classTypeLabel);
+	}
+
+	public String getAssetEntryTypeLabel(AssetListEntry assetListEntry) {
+		if (Validator.isNotNull(assetListEntry.getAssetEntryType())) {
+			return ResourceActionsUtil.getModelResource(
+				_themeDisplay.getLocale(), assetListEntry.getAssetEntryType());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public int getAssetListEntriesCount() {
@@ -242,6 +267,34 @@ public class AssetListDisplayContext {
 		return null;
 	}
 
+	public String getClassTypeLabel(AssetListEntry assetListEntry) {
+		long classTypeId = GetterUtil.getLong(
+			assetListEntry.getAssetEntrySubtype(), -1);
+
+		if (classTypeId < 0) {
+			return StringPool.BLANK;
+		}
+
+		String classTypeLabel = StringPool.BLANK;
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetListEntry.getAssetEntryType());
+
+		if ((assetRendererFactory != null) &&
+			assetRendererFactory.isSupportsClassTypes()) {
+
+			ClassType classType = getClassType(
+				assetRendererFactory.getClassTypeReader(), classTypeId);
+
+			if (classType != null) {
+				classTypeLabel = classType.getName();
+			}
+		}
+
+		return classTypeLabel;
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -251,6 +304,30 @@ public class AssetListDisplayContext {
 			_httpServletRequest, AssetListPortletKeys.ASSET_LIST, "list");
 
 		return _displayStyle;
+	}
+
+	public String getEditURL(AssetListEntry assetListEntry)
+		throws PortalException {
+
+		if (AssetListEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), assetListEntry,
+				ActionKeys.UPDATE) ||
+			AssetListEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), assetListEntry,
+				ActionKeys.VIEW)) {
+
+			return PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCPath(
+				"/edit_asset_list_entry.jsp"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setParameter(
+				"assetListEntryId", assetListEntry.getAssetListEntryId()
+			).buildString();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public String getEmptyResultMessageDescription() {
@@ -298,30 +375,6 @@ public class AssetListDisplayContext {
 			_httpServletRequest, AssetListPortletKeys.ASSET_LIST, "asc");
 
 		return _orderByType;
-	}
-
-	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		String keywords = _getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
-		}
-
-		String orderByCol = getOrderByCol();
-
-		if (Validator.isNotNull(orderByCol)) {
-			portletURL.setParameter("orderByCol", orderByCol);
-		}
-
-		String orderByType = getOrderByType();
-
-		if (Validator.isNotNull(orderByType)) {
-			portletURL.setParameter("orderByType", orderByType);
-		}
-
-		return portletURL;
 	}
 
 	public long getSegmentsEntryId() {
@@ -430,9 +483,9 @@ public class AssetListDisplayContext {
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortalPreferences _portalPreferences;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Long _segmentsEntryId;

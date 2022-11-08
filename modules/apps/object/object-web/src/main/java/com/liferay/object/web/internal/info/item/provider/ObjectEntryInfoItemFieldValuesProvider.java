@@ -325,6 +325,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					objectField.getListTypeDefinitionId(),
 					(String)values.get(objectField.getName()));
 
+			if (listTypeEntry == null) {
+				return StringPool.BLANK;
+			}
+
 			return listTypeEntry.getName(serviceContext.getLocale());
 		}
 		else if (Validator.isNotNull(objectField.getRelationshipType()) &&

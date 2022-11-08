@@ -57,7 +57,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -125,7 +125,7 @@ public class ObjectEntryDisplayContext {
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectEntryManagerTracker objectEntryManagerTracker,
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectEntryService objectEntryService,
 		ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -137,7 +137,7 @@ public class ObjectEntryDisplayContext {
 		_ddmFormRenderer = ddmFormRenderer;
 		_itemSelector = itemSelector;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectEntryManagerTracker = objectEntryManagerTracker;
+		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectEntryService = objectEntryService;
 		_objectFieldBusinessTypeTracker = objectFieldBusinessTypeTracker;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -240,7 +240,7 @@ public class ObjectEntryDisplayContext {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerTracker.getObjectEntryManager(
+			_objectEntryManagerRegistry.getObjectEntryManager(
 				objectDefinition.getStorageType());
 
 		try {
@@ -1131,7 +1131,7 @@ public class ObjectEntryDisplayContext {
 	private final ItemSelector _itemSelector;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntry _objectEntry;
-	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldBusinessTypeTracker
 		_objectFieldBusinessTypeTracker;

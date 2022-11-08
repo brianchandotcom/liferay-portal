@@ -26,7 +26,7 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRel
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -129,7 +129,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
 					_filterPredicateFactory, objectDefinition,
-					_objectEntryManagerTracker.getObjectEntryManager(
+					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					objectScopeProvider),
@@ -202,7 +202,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl() {
 		return new ObjectEntryResourceImpl(
 			_filterPredicateFactory, _objectDefinitionLocalService,
-			_objectEntryLocalService, _objectEntryManagerTracker,
+			_objectEntryLocalService, _objectEntryManagerRegistry,
 			_objectFieldLocalService, _objectRelationshipService,
 			_objectScopeProviderRegistry,
 			_systemObjectDefinitionMetadataTracker);
@@ -494,7 +494,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
-	private ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

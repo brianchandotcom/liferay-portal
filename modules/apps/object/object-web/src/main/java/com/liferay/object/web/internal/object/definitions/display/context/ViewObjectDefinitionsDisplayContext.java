@@ -18,7 +18,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,11 +52,11 @@ public class ViewObjectDefinitionsDisplayContext {
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectEntryManagerTracker objectEntryManagerTracker) {
+		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
 
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
-		_objectEntryManagerTracker = objectEntryManagerTracker;
+		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -132,7 +132,7 @@ public class ViewObjectDefinitionsDisplayContext {
 
 	public List<String> getStorageTypes() {
 		List<String> storageTypes = TransformUtil.transform(
-			_objectEntryManagerTracker.getStorageTypes(),
+			_objectEntryManagerRegistry.getStorageTypes(),
 			objectEntryManagerStorageType -> LanguageUtil.get(
 				_objectRequestHelper.getLocale(),
 				objectEntryManagerStorageType));
@@ -183,7 +183,7 @@ public class ViewObjectDefinitionsDisplayContext {
 
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
-	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

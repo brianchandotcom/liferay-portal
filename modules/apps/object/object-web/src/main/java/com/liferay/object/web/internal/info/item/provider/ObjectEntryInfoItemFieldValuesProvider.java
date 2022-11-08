@@ -31,7 +31,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
@@ -78,7 +78,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectEntryManagerTracker objectEntryManagerTracker,
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider,
 		UserLocalService userLocalService) {
@@ -91,7 +91,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
-		_objectEntryManagerTracker = objectEntryManagerTracker;
+		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
 		_userLocalService = userLocalService;
@@ -225,7 +225,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		List<InfoFieldValue<Object>> objectEntryFieldValues = new ArrayList<>();
 
 		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerTracker.getObjectEntryManager(
+			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
@@ -383,7 +383,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
-	private final ObjectEntryManagerTracker _objectEntryManagerTracker;
+	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final TemplateInfoItemFieldSetProvider
 		_templateInfoItemFieldSetProvider;

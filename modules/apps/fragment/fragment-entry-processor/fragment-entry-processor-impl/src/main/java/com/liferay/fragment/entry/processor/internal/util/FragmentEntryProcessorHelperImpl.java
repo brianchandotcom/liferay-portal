@@ -117,6 +117,10 @@ public class FragmentEntryProcessorHelperImpl
 						LayoutDisplayPageWebKeys.
 							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
+			if (layoutDisplayPageObjectProvider == null) {
+				return null;
+			}
+
 			className = layoutDisplayPageObjectProvider.getClassName();
 			classPK = layoutDisplayPageObjectProvider.getClassPK();
 

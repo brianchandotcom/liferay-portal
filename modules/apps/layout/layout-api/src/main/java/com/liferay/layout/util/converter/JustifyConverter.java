@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.util;
+package com.liferay.layout.util.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -23,23 +23,19 @@ import java.util.Set;
 /**
  * @author Pablo Molina
  */
-public class MarginConverter {
+public class JustifyConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"0", "0"
+			"Center", "justify-content-center"
 		).put(
-			"1", "3"
+			"End", "justify-content-end"
 		).put(
-			"2", "4"
+			"SpaceAround", "justify-content-around"
 		).put(
-			"4", "5"
+			"SpaceBetween", "justify-content-between"
 		).put(
-			"6", "6"
-		).put(
-			"8", "7"
-		).put(
-			"10", "8"
+			"Start", "justify-content-start"
 		).build();
 
 	public static String convertToExternalValue(String value) {

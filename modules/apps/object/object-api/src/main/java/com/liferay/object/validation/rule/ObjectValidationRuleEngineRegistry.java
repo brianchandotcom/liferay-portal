@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Marco Leo
  */
-public interface ObjectValidationRuleEngineTracker {
+public interface ObjectValidationRuleEngineRegistry {
 
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
 		String name);

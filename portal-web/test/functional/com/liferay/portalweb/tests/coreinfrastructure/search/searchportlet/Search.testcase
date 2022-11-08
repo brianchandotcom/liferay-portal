@@ -3820,4 +3820,92 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-167195. Facet selection and search results should match after using browser back button"
+	@priority = "3"
+	test FacetSelectionAndSearchResultsMatchWhenUsingBrowserBackButton {
+		task("Create two Categories and two Tags") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "cat1",
+				vocabularyName = "Topic");
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "cat2",
+				vocabularyName = "Topic");
+			
+			for (var tagList : list "tag1,tag2") {
+				JSONAssettag.addTag(
+					groupName = "Guest",
+					tagName = "${tagList}");
+			}
+		}
+
+		task("Create six Web Contents") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "wc1");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag1",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "wc2");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag2",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "wc3");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1}",
+				assetTagNames = "tag1",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "wc4");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId2}",
+				assetTagNames = "tag2",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "wc5");
+
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag1",
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				content = "WC Content",
+				groupName = "Guest",
+				title = "wc6");
+		}
+		
+		SearchPortlets.searchEmbedded(searchTerm = "wc");
+
+		task("Assert the search results after 'wc' search and after applying any search filter") {
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "wc1/Web Content Article,wc2/Web Content Article,wc3/Web Content Article,wc4/Web Content Article,wc5/Web Content Article,wc6/Web Content Article",
+				searchTerm = "wc");
+
+			SearchFacetPortlet.checkFacet(facetValueName = "tag1");
+
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "wc2/Web Content Article,wc4/Web Content Article,wc6/Web Content Article",
+				searchTerm = "wc");
+
+			SearchFacetPortlet.checkFacet(facetValueName = "cat1");
+
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "wc4/Web Content Article,wc6/Web Content Article",
+				searchTerm = "wc");
+
+			GoBack();
+			FormFields.viewCheckboxChecked(fieldName = "tag1");
+			FormFields.viewCheckboxNotChecked(fieldName = "cat1");
+
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "wc2/Web Content Article,wc4/Web Content Article,wc6/Web Content Article",
+				searchTerm = "wc");
+		}
+	}
 }

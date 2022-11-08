@@ -552,7 +552,7 @@ definition {
 
 			while ("${i}" != "121") {
 				AssertTextEquals.assertPartialText(
-					locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
+					locator1 = "//div[@class='portlet-body']/div[contains(@class,'max')]",
 					value1 = "text${i}");
 
 				var i = ${i} + 1;

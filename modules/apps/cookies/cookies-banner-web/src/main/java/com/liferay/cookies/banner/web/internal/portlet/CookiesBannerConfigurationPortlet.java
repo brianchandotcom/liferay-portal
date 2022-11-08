@@ -75,6 +75,7 @@ public class CookiesBannerConfigurationPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-  @Reference
- 	private CookiesConfigurationHelper _cookiesConfigurationHelper;
+	@Reference
+	private CookiesConfigurationHelper _cookiesConfigurationHelper;
+
 }

@@ -38,8 +38,8 @@ public class CookiesBannerConfigurationDisplayContext
 	extends BaseCookiesBannerDisplayContext {
 
 	public CookiesBannerConfigurationDisplayContext(
-    CookiesConfigurationHelper cookiesConfigurationHelper,
-    RenderRequest renderRequest, RenderResponse renderResponse) {
+		CookiesConfigurationHelper cookiesConfigurationHelper,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(cookiesConfigurationHelper, renderRequest, renderResponse);
 	}
@@ -47,12 +47,10 @@ public class CookiesBannerConfigurationDisplayContext
 	public Map<String, Object> getContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"optionalConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(
-				getOptionalConsentCookieTypes())
+			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
 		).put(
 			"requiredConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(
-				getRequiredConsentCookieTypes())
+			getConsentCookieTypeNamesJSONArray(getRequiredConsentCookieTypes())
 		).put(
 			"showButtons", isShowButtons()
 		).build();

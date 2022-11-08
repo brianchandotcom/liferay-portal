@@ -39,8 +39,8 @@ public class CookiesBannerDisplayContext
 	extends BaseCookiesBannerDisplayContext {
 
 	public CookiesBannerDisplayContext(
-    CookiesConfigurationHelper cookiesConfigurationHelper,
-    RenderRequest renderRequest, RenderResponse renderResponse) {
+		CookiesConfigurationHelper cookiesConfigurationHelper,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(cookiesConfigurationHelper, renderRequest, renderResponse);
 	}
@@ -67,9 +67,7 @@ public class CookiesBannerDisplayContext
 		return contentLocalizedValuesMap.get(locale);
 	}
 
-	public Map<String, Object> getContext(Locale locale)
-		throws Exception {
-
+	public Map<String, Object> getContext(Locale locale) throws Exception {
 		LocalizedValuesMap titleLocalizedValuesMap =
 			cookiesConsentConfiguration.title();
 
@@ -79,12 +77,10 @@ public class CookiesBannerDisplayContext
 			"includeDeclineAllButton", isIncludeDeclineAllButton()
 		).put(
 			"optionalConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(
-				getOptionalConsentCookieTypes())
+			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
 		).put(
 			"requiredConsentCookieTypeNames",
-			getConsentCookieTypeNamesJSONArray(
-				getRequiredConsentCookieTypes())
+			getConsentCookieTypeNamesJSONArray(getRequiredConsentCookieTypes())
 		).put(
 			"title", titleLocalizedValuesMap.get(locale)
 		).build();

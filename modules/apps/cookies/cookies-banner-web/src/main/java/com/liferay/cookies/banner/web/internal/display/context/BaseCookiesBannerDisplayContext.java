@@ -37,13 +37,14 @@ import javax.portlet.RenderResponse;
  */
 public class BaseCookiesBannerDisplayContext {
 
-  public BaseCookiesBannerDisplayContext(
-    CookiesConfigurationHelper cookiesConfigurationHelper,
-    RenderRequest renderRequest, RenderResponse renderResponse) {
+	public BaseCookiesBannerDisplayContext(
+		CookiesConfigurationHelper cookiesConfigurationHelper,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-    this.renderRequest = renderRequest;
-    this.renderResponse = renderResponse;
-    this._cookiesConfigurationHelper = cookiesConfigurationHelper;
+		this.renderRequest = renderRequest;
+		this.renderResponse = renderResponse;
+
+		_cookiesConfigurationHelper = cookiesConfigurationHelper;
 
 		cookiesBannerConfiguration = _getCookiesBannerConfiguration(
 			renderRequest);
@@ -57,22 +58,22 @@ public class BaseCookiesBannerDisplayContext {
 			return _optionalConsentCookieTypes;
 		}
 
-    _optionalConsentCookieTypes = ListUtil.fromArray(
-      new ConsentCookieType(
-        cookiesConsentConfiguration.functionalCookiesDescription(),
-        CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-        cookiesConsentConfiguration.functionalCookiesPrechecked()),
-      new ConsentCookieType(
-        cookiesConsentConfiguration.performanceCookiesDescription(),
-        CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-        cookiesConsentConfiguration.performanceCookiesPrechecked()),
-      new ConsentCookieType(
-        cookiesConsentConfiguration.personalizationCookiesDescription(),
-        CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-        cookiesConsentConfiguration.
-          personalizationCookiesPrechecked()));
+		_optionalConsentCookieTypes = ListUtil.fromArray(
+			new ConsentCookieType(
+				cookiesConsentConfiguration.functionalCookiesDescription(),
+				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+				cookiesConsentConfiguration.functionalCookiesPrechecked()),
+			new ConsentCookieType(
+				cookiesConsentConfiguration.performanceCookiesDescription(),
+				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+				cookiesConsentConfiguration.performanceCookiesPrechecked()),
+			new ConsentCookieType(
+				cookiesConsentConfiguration.personalizationCookiesDescription(),
+				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
+				cookiesConsentConfiguration.
+					personalizationCookiesPrechecked()));
 
-    return _optionalConsentCookieTypes;
+		return _optionalConsentCookieTypes;
 	}
 
 	public List<ConsentCookieType> getRequiredConsentCookieTypes()
@@ -82,11 +83,11 @@ public class BaseCookiesBannerDisplayContext {
 			return _requiredConsentCookieTypes;
 		}
 
-    _requiredConsentCookieTypes = ListUtil.fromArray(
-      new ConsentCookieType(
-        cookiesConsentConfiguration.
-          strictlyNecessaryCookiesDescription(),
-        CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
+		_requiredConsentCookieTypes = ListUtil.fromArray(
+			new ConsentCookieType(
+				cookiesConsentConfiguration.
+					strictlyNecessaryCookiesDescription(),
+				CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
 
 		return _requiredConsentCookieTypes;
 	}
@@ -121,7 +122,7 @@ public class BaseCookiesBannerDisplayContext {
 
 		try {
 			return _cookiesConfigurationHelper.getCookiesBannerConfiguration(
-			  themeDisplay);
+				themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get cookies banner configuration", exception);
@@ -138,7 +139,7 @@ public class BaseCookiesBannerDisplayContext {
 
 		try {
 			return _cookiesConfigurationHelper.getCookiesConsentConfiguration(
-			  themeDisplay);
+				themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -148,11 +149,10 @@ public class BaseCookiesBannerDisplayContext {
 		return null;
 	}
 
-  private CookiesConfigurationHelper _cookiesConfigurationHelper;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCookiesBannerDisplayContext.class);
 
+	private final CookiesConfigurationHelper _cookiesConfigurationHelper;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 

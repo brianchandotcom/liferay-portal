@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
  */
 public interface CookiesConfigurationHelper {
 
-  public CookiesBannerConfiguration getCookiesBannerConfiguration(
-    ThemeDisplay themeDisplay) throws Exception;
+	public CookiesBannerConfiguration getCookiesBannerConfiguration(
+			ThemeDisplay themeDisplay)
+		throws Exception;
 
-  public CookiesConsentConfiguration getCookiesConsentConfiguration(
-    ThemeDisplay themeDisplay) throws Exception;
+	public CookiesConsentConfiguration getCookiesConsentConfiguration(
+			ThemeDisplay themeDisplay)
+		throws Exception;
 
 	public CookiesPreferenceHandlingConfiguration
 			getCookiesPreferenceHandlingConfiguration(ThemeDisplay themeDisplay)

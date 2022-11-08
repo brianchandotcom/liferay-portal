@@ -11,7 +11,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
-	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:staging:staging-api")

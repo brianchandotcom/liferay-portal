@@ -118,19 +118,18 @@ export default function PagesTree({
 							{item.icon && <ClayIcon symbol={item.icon} />}
 
 							<div className="align-items-center d-flex pl-2">
-								<div className="pages-tree__item-name">
-									{item.regularURL ? (
-										<a
-											href={item.regularURL}
-											tabIndex="-1"
-											title={item.name}
-										>
-											{item.name}
-										</a>
-									) : (
-										<span>{item.name}</span>
-									)}
-								</div>
+								{item.regularURL ? (
+									<a
+										className="flex-grow-1 text-decoration-none text-truncate w-100"
+										href={item.regularURL}
+										tabIndex="-1"
+										title={item.name}
+									>
+										{item.name}
+									</a>
+								) : (
+									<span>{item.name}</span>
+								)}
 							</div>
 						</ClayTreeView.ItemStack>
 
@@ -174,19 +173,18 @@ export default function PagesTree({
 									)}
 
 									<div className="align-items-center d-flex pl-2">
-										<div className="pages-tree__item-name">
-											{item.regularURL ? (
-												<a
-													href={item.regularURL}
-													tabIndex="-1"
-													title={item.name}
-												>
-													{item.name}
-												</a>
-											) : (
-												<span>{item.name}</span>
-											)}
-										</div>
+										{item.regularURL ? (
+											<a
+												className="flex-grow-1 text-decoration-none text-truncate w-100"
+												href={item.regularURL}
+												tabIndex="-1"
+												title={item.name}
+											>
+												{item.name}
+											</a>
+										) : (
+											<span>{item.name}</span>
+										)}
 									</div>
 								</ClayTreeView.Item>
 							)}

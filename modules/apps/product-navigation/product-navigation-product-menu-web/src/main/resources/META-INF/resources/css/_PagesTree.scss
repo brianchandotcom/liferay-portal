@@ -12,13 +12,6 @@ html#{$cadmin-selector} {
 			.treeview-dropping-middle {
 				background-color: rgba($white, 0.06);
 			}
-
-			&__item-name {
-				flex-grow: 1;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
 		}
 	}
 }

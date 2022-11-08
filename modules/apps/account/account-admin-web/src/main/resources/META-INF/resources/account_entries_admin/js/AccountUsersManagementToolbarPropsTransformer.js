@@ -120,7 +120,7 @@ export default function propsTransformer({
 			if (action === 'inviteAccountUsers') {
 				openModal({
 					containerProps: {
-						className: 'modal-height-md',
+						className: 'modal-height-xl',
 					},
 					customEvents: [
 						{

@@ -22,7 +22,7 @@ const DEFAULT_FILTER = "not (userGroupRoleNames/any(s:s eq 'Provisioning'))";
 
 const getFilter = (searchTerm) => {
 	if (searchTerm) {
-		return `${DEFAULT_FILTER} and (contains(name, '${searchTerm}') or userGroupRoleNames/any(s:contains(s, '${searchTerm}')))`;
+		return `${DEFAULT_FILTER} and (contains(name, '${searchTerm}') or contains(emailAddress, '${searchTerm}') or userGroupRoleNames/any(s:contains(s, '${searchTerm}')))`;
 	}
 
 	return DEFAULT_FILTER;

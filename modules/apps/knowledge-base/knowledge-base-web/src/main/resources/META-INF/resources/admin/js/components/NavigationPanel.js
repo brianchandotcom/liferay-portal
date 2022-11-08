@@ -73,14 +73,23 @@ export default function NavigationPanel({
 
 				return response.json();
 			})
-			.catch(() => {
-				openToast({
-					message: Liferay.Language.get(
+			.then((response) => {
+				if (!response.success) {
+					throw new Error(response.errorMessage);
+				}
+			})
+			.catch(
+				({
+					message = Liferay.Language.get(
 						'an-unexpected-error-occurred'
 					),
-					type: 'danger',
-				});
-			});
+				}) => {
+					openToast({
+						message,
+						type: 'danger',
+					});
+				}
+			);
 
 		return true;
 	};

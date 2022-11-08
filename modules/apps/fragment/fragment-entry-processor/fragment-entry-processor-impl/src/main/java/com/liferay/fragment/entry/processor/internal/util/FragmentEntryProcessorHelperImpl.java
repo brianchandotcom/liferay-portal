@@ -117,10 +117,6 @@ public class FragmentEntryProcessorHelperImpl
 				layoutDisplayPageObjectProvider.getDisplayObject());
 		}
 		else if (isMapped(editableValueJSONObject)) {
-			if (!isMapped(editableValueJSONObject)) {
-				return _jsonFactory.createJSONObject();
-			}
-
 			long classNameId = editableValueJSONObject.getLong("classNameId");
 
 			String className = _portal.getClassName(classNameId);
@@ -196,10 +192,6 @@ public class FragmentEntryProcessorHelperImpl
 				fragmentEntryProcessorContext.getLocale(), object);
 		}
 		else if (isMappedCollection(editableValueJSONObject)) {
-			if (!isMappedCollection(editableValueJSONObject)) {
-				return _jsonFactory.createJSONObject();
-			}
-
 			Optional<InfoItemReference> infoItemReferenceOptional =
 				fragmentEntryProcessorContext.
 					getContextInfoItemReferenceOptional();

@@ -14,8 +14,6 @@
 
 package com.liferay.object.entry.util;
 
-import com.liferay.petra.string.StringPool;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

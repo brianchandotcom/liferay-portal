@@ -1,20 +1,18 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "upgrade.database.auto.run=false";
-	property osgi.modules.includes = "frontend-data-set-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "Frontend Dataset";
+	property testray.component.names = "Frontend Custom Dialog";
+	property testray.main.component.name = "Frontend JS API";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		task ("Given: Enabled custom Dialog") {
+		task ("Given: Enabled Custom Dialog") {
 			PortalSettings.openInstanceSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
@@ -41,7 +39,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-165262"
+	@description = "LPS-165263: This test validates that the liferay custom alert modal dialog can render."
 	@priority = "3"
 	test CanRenderOpenAlertModal {
 		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {

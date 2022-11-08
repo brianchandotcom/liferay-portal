@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.util;
+package com.liferay.object.relationship.util;
 
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;

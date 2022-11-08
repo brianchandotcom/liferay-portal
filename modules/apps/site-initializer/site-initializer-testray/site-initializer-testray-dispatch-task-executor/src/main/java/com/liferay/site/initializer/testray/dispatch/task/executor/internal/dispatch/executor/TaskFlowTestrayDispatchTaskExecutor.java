@@ -148,6 +148,48 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 	public String getName() {
 		return "testray";
 	}
+
+	private ObjectEntry _addObjectEntry(
+			String objectDefinitionShortName, Map<String, Object> properties)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _getObjectDefinition(
+			objectDefinitionShortName);
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(properties);
+
+		return _objectEntryManager.addObjectEntry(
+			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
+	}
+
+	private String _getFilterString(
+		Collection<ObjectEntry> objectEntriesCollection, String fieldName) {
+
+		List<ObjectEntry> objectEntries =
+			(List<ObjectEntry>)objectEntriesCollection;
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i <= (objectEntries.size() - 1); i++) {
+			ObjectEntry objectEntry = objectEntries.get(i);
+
+			sb.append(fieldName);
+			sb.append(" eq '");
+			sb.append(objectEntry.getId());
+
+			if (i != (objectEntries.size() - 1)) {
+				sb.append("' or ");
+			}
+			else {
+				sb.append("'");
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, String objectDefinitionName,
 			Aggregation aggregation, String filter)
@@ -162,6 +204,35 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return properties.get(key);
+	}
+
+	private long _increment(
+			long companyId, String fieldName, String filterString,
+			String objectDefinitionShortName)
+		throws Exception {
+
+		Page<ObjectEntry> objectEntriesPage =
+			_objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get(objectDefinitionShortName),
+				null, null, _defaultDTOConverterContext, filterString, null,
+				null,
+				new Sort[] {
+					new Sort("nestedFieldArray.value_long#" + fieldName, true)
+				});
+
+		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+
+		if (objectEntry == null) {
+			return 1;
+		}
+
+		String fieldValue = (String)_getProperty(fieldName, objectEntry); //TODO fix get last number
+
+		if (fieldValue == null) {
+			return 1;
+		}
+
+		return fieldValue.longValue() + 1;
 	}
 
 	private void _loadObjectDefinitions(long companyId) {
@@ -214,9 +285,162 @@ public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecuto
 		Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
 			companyId, "Case", null, filter);
 
+		String filterString = _getFilterString(
+			testrayCaseObjectEntriesPage.getItems(), "caseId");
 
+		Map<String, String> map = HashMapBuilder.put(
+			"errors", "errors"
+		).build();
 
+		Aggregation aggregation = new Aggregation();
 
+		aggregation.setAggregationTerms(map);
+
+		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
+			_getObjectEntries(companyId, "CaseResult", aggregation, null);
+
+		List<Facet> testrayCaseResultFacets =
+			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
+
+		Facet testrayCaseResultFacet = testrayCaseResultFacets.get(0);
+
+		List<Facet.FacetValue> testrayCaseResultFacetValues =
+			testrayCaseResultFacet.getFacetValues();
+
+		for (Facet.FacetValue testrayCaseResultFacetValue :
+				testrayCaseResultFacetValues) {
+
+			if (Objects.equals(testrayCaseResultFacetValue.getTerm(), "null")) {
+				continue;
+			}
+
+			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
+				_getObjectEntries(
+					companyId, "CaseResult", null,
+					StringBundler.concat(
+						"testrayBuild id eq '", testrayBuildId,
+						"' and errors eq '",
+						testrayCaseResultFacetValue.getTerm(), "' and ",
+						filterString));
+
+			List<ObjectEntry> testrayCaseResultObjectEntries =
+				(List<ObjectEntry>)
+					testrayCaseResultObjectEntriesPage2.getItems();
+
+			for (ObjectEntry testrayCaseResultObjectEntry :
+					testrayCaseResultObjectEntries) {
+
+				Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
+					_getObjectEntries(
+						companyId, "CaseResultsIssues", null,
+						"caseResultId eq '" +
+							testrayCaseResultObjectEntry.getId() + "'");
+
+				List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
+					(List<ObjectEntry>)
+						testrayCaseResultsIssuesObjectEntriesPage1.getItems();
+
+				for (ObjectEntry testrayCaseResultsIssuesObjectEntry :
+						testrayCaseResultsIssuesObjectEntries) {
+
+					long issueId = (long)_getProperty(
+						"issueId", testrayCaseResultsIssuesObjectEntry);
+
+					Page<ObjectEntry> testrayIssueObejctEntriesPage =
+						_getObjectEntries(
+							companyId, "Issues", null,
+							"id eq '" + issueId + "'");
+
+					ObjectEntry testrayIssueObjectEntry =
+						testrayIssueObejctEntriesPage.fetchFirstItem();
+
+					if (testrayIssueObjectEntry != null) {
+						String name = (String)_getProperty(
+							"name", testrayIssueObjectEntry);
+
+						List<ObjectEntry> matchingTestrayCaseResults =
+							testrayCaseResultIssuesMap.get(name);
+
+						if (matchingTestrayCaseResults == null) {
+							matchingTestrayCaseResults = new ArrayList<>();
+
+							testrayCaseResultIssuesMap.put(
+								name, matchingTestrayCaseResults);
+						}
+
+						matchingTestrayCaseResults.add(
+							testrayCaseResultsIssuesObjectEntry);
+					}
+				}
+
+				testrayCaseResultGroups.addAll(
+					testrayCaseResultIssuesMap.values());
+			}
+
+			Collections.sort(
+				testrayCaseResultGroups,
+				new Comparator<List<ObjectEntry>>() {
+
+					public int compare(
+						List<ObjectEntry> testrayCaseResultObjectEntries1,
+						List<ObjectEntry> testrayCaseResultObjectEntries2) {
+
+						int score1 = 0;
+						int score2 = 0;
+
+						try {
+							for (ObjectEntry objectEntry :
+									testrayCaseResultObjectEntries1) {
+
+								score1 += (int)_getProperty(
+									"priority", objectEntry);
+							}
+
+							for (ObjectEntry objectEntry :
+									testrayCaseResultObjectEntries2) {
+
+								score2 += (int)_getProperty(
+									"priority", objectEntry);
+							}
+						}
+						catch (Exception exception) {
+							throw new RuntimeException(exception);
+						}
+
+						if (score1 > score2) {
+							return -1;
+						}
+						else if (score1 < score2) {
+							return 1;
+						}
+
+						return 0;
+					}
+
+				});
+
+			for (List<ObjectEntry> testrayCaseResultObjectEntry :
+					testrayCaseResultGroups) {
+
+				int score = 0;
+
+				for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {
+					score += (int)_getProperty("priority", objectEntry);
+				}
+
+				_addObjectEntry(
+					"Subtasks",
+					HashMapBuilder.<String, Object>put(
+						"name",
+						"ST-" +
+							_increment(
+								companyId, "name",
+								"taskId eq '" + testrayTaskId + "'", "Case")//TODO fix increment
+					).put(
+						"score", score
+					).build());
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -145,7 +145,13 @@ async function runTestCase(document: vscode.TextDocument, testName: string) {
 
 	notifications.info(`Running testcase: ${testCase}`);
 
-	const terminal = vscode.window.createTerminal(`Run: ${testCase}`);
+	const opts: vscode.TerminalOptions = {
+		name: `Poshi: Run ${testCase}`,
+		cwd: workspaceFolder.uri,
+		message: `Running Poshi testcase: ${testCase}`,
+	};
+
+	const terminal = vscode.window.createTerminal(opts);
 
 	terminal.show();
 

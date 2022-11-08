@@ -83,6 +83,14 @@ public class ObjectRelationshipLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static ObjectRelationship createManyToManyObjectRelationshipTable(
+			long userId, ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		return getService().createManyToManyObjectRelationshipTable(
+			userId, objectRelationship);
+	}
+
 	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *
@@ -402,6 +410,12 @@ public class ObjectRelationshipLocalServiceUtil {
 
 		return getService().getObjectRelationships(
 			objectDefinitionId1, objectDefinition2, type);
+	}
+
+	public static List<ObjectRelationship> getObjectRelationships(
+		long objectDefinitionId, String type) {
+
+		return getService().getObjectRelationships(objectDefinitionId, type);
 	}
 
 	public static List<ObjectRelationship> getObjectRelationships(

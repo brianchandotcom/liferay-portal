@@ -80,6 +80,17 @@ public class ObjectRelationshipLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectRelationship
+			createManyToManyObjectRelationshipTable(
+				long userId,
+				com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipLocalService.
+			createManyToManyObjectRelationshipTable(userId, objectRelationship);
+	}
+
 	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *
@@ -461,6 +472,14 @@ public class ObjectRelationshipLocalServiceWrapper
 
 		return _objectRelationshipLocalService.getObjectRelationships(
 			objectDefinitionId1, objectDefinition2, type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectRelationship>
+		getObjectRelationships(long objectDefinitionId, String type) {
+
+		return _objectRelationshipLocalService.getObjectRelationships(
+			objectDefinitionId, type);
 	}
 
 	@Override

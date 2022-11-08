@@ -154,8 +154,14 @@ const ActivationStatusDXPCloud = ({
 				</a>
 			),
 			id: STATUS_TAG_TYPES.active,
-			subtitle: i18n.translate(
-				'your-lxc-sm-environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details'
+			subtitle: (
+				<>
+					{i18n.translate('your-lxc-sm')}
+					<PopoverIcon />
+					{i18n.translate(
+						'environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details'
+					)}
+				</>
 			),
 			title: i18n.translate('activation-status'),
 		},
@@ -183,8 +189,14 @@ const ActivationStatusDXPCloud = ({
 				/>
 			),
 			id: STATUS_TAG_TYPES.inProgress,
-			subtitle: i18n.translate(
-				'your-lxc-sm-environments-are-being-set-up-and-will-be-available-soon'
+			subtitle: (
+				<>
+					{i18n.translate('your-lxc-sm')}
+					<PopoverIcon />
+					{i18n.translate(
+						'environments-are-being-set-up-and-will-be-available-soon'
+					)}
+				</>
 			),
 			title: i18n.translate('activation-status'),
 		},
@@ -203,9 +215,7 @@ const ActivationStatusDXPCloud = ({
 			subtitle: (
 				<>
 					{i18n.translate('almost-there-setup-lxc-sm')}
-
 					<PopoverIcon />
-
 					{i18n.translate('by-finishing-the-activation-form')}
 				</>
 			),

@@ -384,5 +384,8 @@
 	"your-lxc-sm-environments-are-being-set-up-and-will-be-available-soon": "Your LXC - SM environments are being set up and will be available soon.",
 	"your-lxc-sm-environments-are-ready": "Your LXC - SM environments are ready.",
 	"your-lxc-sm-environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details": "Your LXC - SM environments are ready. Go to the Product Console to view DXP Cloud details.",
+	"your-lxc-sm": "Your LXC - SM",
+	"environments-are-being-set-up-and-will-be-available-soon": "environments are ready. Go to the Product Console to view DXP Cloud details.",
+	"environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details": "environments are ready. Go to the Product Console to view DXP Cloud details.",
 	"your-request-completed-successfully": "Your request completed successfully."
 }

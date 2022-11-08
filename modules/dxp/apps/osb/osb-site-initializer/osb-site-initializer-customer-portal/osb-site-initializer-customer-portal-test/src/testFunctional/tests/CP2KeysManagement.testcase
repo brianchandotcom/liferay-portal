@@ -10,9 +10,8 @@ definition {
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
 	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
-	var testAccount = "Test Account QA 7.4";
+	var testAccount = "Test Account QA 7.4,Test Account QA 7.1";
 	var testUserFirstName = "Test";
-	var testProduct = "Portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -65,15 +64,15 @@ definition {
 		var keyStatus = "Activated";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -106,15 +105,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -143,15 +142,15 @@ definition {
 		property portal.upstream = "quarantine";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("When I click at the All tab") {
@@ -174,15 +173,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -212,15 +211,15 @@ definition {
 		var keyStatus = "Expired";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal}");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -253,15 +252,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -288,15 +287,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -327,15 +326,15 @@ definition {
 		var keyStatus = "Not Activated";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -364,15 +363,15 @@ definition {
 		property portal.upstream = "quarantine";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I click at the All tab") {
@@ -423,15 +422,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -462,15 +461,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I select the pagination quantity to 50 items per page") {
@@ -501,15 +500,15 @@ definition {
 		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "Test Account QA 7.4");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
 		task ("And I click on Portal product") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 		}
 
 		task ("And I get the formated name for the activation key file") {
@@ -517,12 +516,12 @@ definition {
 				fileType = "xml",
 				licenseName = "${testAccount}",
 				licenseType = "activation-key",
-				product = "${testProduct}",
+				product = "Portal",
 				version = "6.2");
 		}
 
 		task ("When I click on the download button at the Activation Keys Table") {
-			CP2ActivationKeys.clickAtDownloadButton(entitlementName = "${testAccount}");
+			CP2ActivationKeys.clickAtDownloadButton(entitlementName = "Test Account QA 7.4");
 		}
 
 		task ("Then I should see the downloaded file") {

@@ -27,6 +27,7 @@ import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListPermission;
+import com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListEntryActionDropdownItemsProvider;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -80,6 +82,8 @@ public class AssetListDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			renderResponse);
 
@@ -186,6 +190,19 @@ public class AssetListDisplayContext {
 			getAssetListEntryId());
 
 		return _assetListEntry;
+	}
+
+	public List<DropdownItem> getAssetListEntryActionDropdownItemsProvider(
+		AssetListEntry assetListEntry) {
+
+		AssetListEntryActionDropdownItemsProvider
+			assetListEntryActionDropdownItemsProvider =
+				new AssetListEntryActionDropdownItemsProvider(
+					assetListEntry, _liferayPortletRequest,
+					_liferayPortletResponse);
+
+		return assetListEntryActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	public long getAssetListEntryId() {
@@ -483,6 +500,7 @@ public class AssetListDisplayContext {
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;

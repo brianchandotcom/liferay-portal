@@ -58,8 +58,6 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						).build());
 
 					Date statusDate = assetListEntry.getCreateDate();
-
-					AssetEntryListActionDropdownItems assetEntryListActionDropdownItems = new AssetEntryListActionDropdownItems(assetListEntry, liferayPortletRequest, liferayPortletResponse);
 					%>
 
 					<c:choose>
@@ -91,7 +89,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-									dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>"
+									dropdownItems="<%= assetListDisplayContext.getAssetListEntryActionDropdownItemsProvider(assetListEntry) %>"
 									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
@@ -148,7 +146,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-									dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>"
+									dropdownItems="<%= assetListDisplayContext.getAssetListEntryActionDropdownItemsProvider(assetListEntry) %>"
 									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>

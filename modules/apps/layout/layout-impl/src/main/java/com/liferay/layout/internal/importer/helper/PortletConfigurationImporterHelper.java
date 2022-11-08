@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.helper;
+package com.liferay.layout.internal.importer.helper;
 
 import com.liferay.layout.page.template.importer.PortletPreferencesPortletConfigurationImporter;
 import com.liferay.portal.kernel.model.Layout;

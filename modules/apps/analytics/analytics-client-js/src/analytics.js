@@ -466,11 +466,7 @@ class Analytics {
 			);
 		}
 		else {
-			const expirationDate = new Date();
-
-			expirationDate.setDate(expirationDate.getDate() + 365);
-
-			document.cookie = `${key}=${data}; expires=${expirationDate.toUTCString()}; path=/; Secure`;
+			document.cookie = `${key}=${data}; expires=${expires.toUTCString()}; path=/; Secure`;
 		}
 
 		return;

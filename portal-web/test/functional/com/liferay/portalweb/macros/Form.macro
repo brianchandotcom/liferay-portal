@@ -186,6 +186,18 @@ definition {
 		Button.clickDone();
 	}
 
+	macro configureOneSubmissionPerUser {
+		AssertClick(
+			locator1 = "Form#SETTINGS_TAB_SUBMISSIONS",
+			value1 = "Submissions");
+
+		Click.javaScriptClick(
+			checkboxName = "Limit to One Submission per User",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickDone();
+	}
+
 	macro configureRedirectURL {
 		AssertClick(
 			locator1 = "Form#SETTINGS_TAB_PERSONALIZATION",

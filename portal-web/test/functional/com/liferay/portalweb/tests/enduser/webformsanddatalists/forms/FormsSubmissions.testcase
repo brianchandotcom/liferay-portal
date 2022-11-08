@@ -780,6 +780,50 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
+	@description = "Verify that with the option Limit to one submission per user activated, the user cannot send more than one submission."
+	@priority = "4"
+	test CheckCantSendMoreThanOneSubmitPerUser {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdmin.addForm();
+
+		Form.addTextField();
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureOneSubmissionPerUser();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "Test text");
+
+		FormPortlet.submitSuccessfully();
+
+		Refresh();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "You can fill out this form only once. Contact the owner of the form if you think this is a mistake.",
+			successPageTitle = "You have already responded.");
+	}
+
 	@description = "Verify that a Form's Success Page can be restored"
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {

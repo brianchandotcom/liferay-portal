@@ -482,7 +482,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 					}
 
 					&::after {
-						background: #004ad7;
+						background: var(--btn-link-hover-color);
 						border-radius: 2px;
 						bottom: -5px;
 						content: '';
@@ -540,7 +540,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	&:hover,
 	&:focus {
 		.adt-nav-text {
-			background-color: #EDF3FE;
+			background-color: var(--color-action-primary-hover-lighten);
 
 			.adt-nav-title {
 				color: var(--color-action-primary-hover);
@@ -589,8 +589,8 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 	.adt-submenu {
 		background-clip: padding-box;
-		background-color: #fff;
-		border-color: #e7e7ed;
+		background-color: var(--white);
+		border-color: var(--hr-border-color);
 		border-style: solid;
 		border-width: 0;
 		box-shadow: 0px 7.4px 11.4px -7.59px rgb(0 0 0 / 14%), 0px 24px 36px 3.45px rgb(0 0 0 / 8%);
@@ -656,9 +656,9 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 
 			&:hover,
 			&:focus {
-				background-color: #edf3fe;
+				background-color: var(--color-action-primary-hover-lighten);
 				border-radius: var(--border-radius-xs);
-				box-shadow: 0 0 0 8px #edf3fe;
+				box-shadow: 0 0 0 8px var(--color-action-primary-hover-lighten);
 				outline: none;
 				text-decoration: none;
 

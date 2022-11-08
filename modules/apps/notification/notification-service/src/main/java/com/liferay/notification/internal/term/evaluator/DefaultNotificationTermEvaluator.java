@@ -17,7 +17,6 @@ package com.liferay.notification.internal.term.evaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +29,7 @@ public class DefaultNotificationTermEvaluator
 	implements NotificationTermEvaluator {
 
 	@Override
-	public String evaluate(Locale locale, Object object, String termName)
+	public String evaluate(Object object, String termName)
 		throws PortalException {
 
 		if (!(object instanceof Map)) {

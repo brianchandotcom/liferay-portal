@@ -135,9 +135,9 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 
 				if (uploadImageButton) {
 					uploadImageButton.addEventListener('keydown', (event) => {
-						event.preventDefault();
-
 						if (event.key == 'Enter' || event.key == ' ') {
+							event.preventDefault();
+
 							uploadImageButton.click();
 						}
 					});

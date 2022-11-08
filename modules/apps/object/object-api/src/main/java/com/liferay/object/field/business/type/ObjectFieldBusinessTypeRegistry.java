@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * @author Marcela Cunha
  */
-public interface ObjectFieldBusinessTypeTracker {
+public interface ObjectFieldBusinessTypeRegistry {
 
 	public ObjectFieldBusinessType getObjectFieldBusinessType(String name);
 

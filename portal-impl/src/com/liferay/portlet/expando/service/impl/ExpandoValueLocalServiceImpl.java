@@ -753,6 +753,8 @@ public class ExpandoValueLocalServiceImpl
 		List<ExpandoColumn> columns = expandoColumnLocalService.getColumns(
 			table.getTableId(), attributes.keySet());
 
+		Map<String, String> data = new HashMap<>();
+
 		for (ExpandoColumn column : columns) {
 			ExpandoValue value = new ExpandoValueImpl();
 
@@ -842,10 +844,11 @@ public class ExpandoValueLocalServiceImpl
 				value.setString((String)attributeValue);
 			}
 
-			doAddValue(
-				companyId, classNameId, table.getTableId(),
-				column.getColumnId(), classPK, value.getData());
+			data.put(column.getName(), value.getData());
 		}
+
+		addValues(
+			table.getClassNameId(), table.getTableId(), columns, classPK, data);
 	}
 
 	@Override

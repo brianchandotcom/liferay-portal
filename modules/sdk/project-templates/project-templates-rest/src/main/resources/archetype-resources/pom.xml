@@ -71,16 +71,16 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>release.${product}.api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+#if (!${liferayVersion.startsWith("7.0")})
+		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.service.component.annotations</artifactId>
-			<scope>provided</scope>
-		</dependency>
-#if (!${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.jaxrs</artifactId>

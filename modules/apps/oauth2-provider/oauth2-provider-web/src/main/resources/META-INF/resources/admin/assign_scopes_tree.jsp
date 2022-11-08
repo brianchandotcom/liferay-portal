@@ -187,13 +187,13 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 
 		<portlet:namespace />checkNewScopesInCheckedParents = function () {
 			A.all('input[data-has-childrens="true"]').each(function () {
-				if (this.attr('checked')) {
-					var parentValue = this.attr('value');
+				if (this._node.checked) {
+					var parentValue = this._node.value;
 					A.all('input[data-parent=' + parentValue + ']').each(
 						function () {
-							if (!this.attr('checked')) {
-								this.attr('checked', true);
-								var elementId = this.attr('value');
+							if (!this._node.checked) {
+								this._node.checked = true;
+								var elementId = this._node.value;
 
 								var container = document.getElementById(
 									elementId + '-container'

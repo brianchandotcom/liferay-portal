@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -338,7 +339,8 @@ public class SingleLogoutProfileImpl
 
 			samlSpSessionLocalService.deleteSamlSpSession(samlSpSession);
 
-			deleteCookie(
+			CookiesManagerUtil.deleteCookies(
+				CookiesManagerUtil.getDomain(httpServletRequest),
 				httpServletRequest, httpServletResponse,
 				SamlWebKeys.SAML_SP_SESSION_KEY);
 		}
@@ -391,7 +393,8 @@ public class SingleLogoutProfileImpl
 			}
 		}
 
-		deleteCookie(
+		CookiesManagerUtil.deleteCookies(
+			CookiesManagerUtil.getDomain(httpServletRequest),
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SSO_SESSION_ID);
 	}

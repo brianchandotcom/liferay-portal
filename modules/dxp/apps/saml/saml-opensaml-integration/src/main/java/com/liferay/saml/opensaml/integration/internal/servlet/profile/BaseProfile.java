@@ -392,21 +392,27 @@ public abstract class BaseProfile {
 			CookiesManagerUtil.getCookieValue(
 				CookiesConstants.NAME_REMEMBER_ME, httpServletRequest));
 
-		deleteCookie(
-			httpServletRequest, httpServletResponse,
+		String domain = CookiesManagerUtil.getDomain(httpServletRequest);
+
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
 			CookiesConstants.NAME_COMPANY_ID);
-		deleteCookie(
-			httpServletRequest, httpServletResponse, CookiesConstants.NAME_ID);
-		deleteCookie(
-			httpServletRequest, httpServletResponse,
+
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
+			CookiesConstants.NAME_ID);
+
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
 			CookiesConstants.NAME_PASSWORD);
-		deleteCookie(
-			httpServletRequest, httpServletResponse,
+
+		CookiesManagerUtil.deleteCookies(
+			domain, httpServletRequest, httpServletResponse,
 			CookiesConstants.NAME_REMEMBER_ME);
 
 		if (!rememberMe) {
-			deleteCookie(
-				httpServletRequest, httpServletResponse,
+			CookiesManagerUtil.deleteCookies(
+				domain, httpServletRequest, httpServletResponse,
 				CookiesConstants.NAME_LOGIN);
 		}
 
@@ -495,7 +501,7 @@ public abstract class BaseProfile {
 		}
 	}
 
-	protected void addCookie(
+	protected void addNonpersistentCookie(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String cookieName,
 		String cookieValue) {
@@ -519,15 +525,6 @@ public abstract class BaseProfile {
 
 	protected void addSamlBinding(SamlBinding samlBinding) {
 		_samlBindings.add(samlBinding);
-	}
-
-	protected void deleteCookie(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String cookieName) {
-
-		CookiesManagerUtil.deleteCookies(
-			CookiesManagerUtil.getDomain(httpServletRequest),
-			httpServletRequest, httpServletResponse, cookieName);
 	}
 
 	protected void removeSamlBinding(SamlBinding samlBinding) {

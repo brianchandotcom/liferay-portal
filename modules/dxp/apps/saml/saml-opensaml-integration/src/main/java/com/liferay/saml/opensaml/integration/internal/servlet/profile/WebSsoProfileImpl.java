@@ -16,6 +16,7 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -1017,7 +1018,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlPeerEntityContext.getEntityId(), nameID.getFormat(),
 			nameID.getValue(), serviceContext);
 
-		addCookie(
+		addNonpersistentCookie(
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SSO_SESSION_ID,
 			samlSsoRequestContext.getSamlSsoSessionId());
@@ -1491,7 +1492,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 
 			if (sessionExpired || Validator.isNull(samlSsoSessionId)) {
-				deleteCookie(
+				CookiesManagerUtil.deleteCookies(
+					CookiesManagerUtil.getDomain(httpServletRequest),
 					httpServletRequest, httpServletResponse,
 					SamlWebKeys.SAML_SSO_SESSION_ID);
 
@@ -1650,7 +1652,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlWebKeys.SAML_SP_SESSION_KEY,
 			samlSpSession.getSamlSpSessionKey());
 
-		addCookie(
+		addNonpersistentCookie(
 			httpServletRequest, httpServletResponse,
 			SamlWebKeys.SAML_SP_SESSION_KEY,
 			samlSpSession.getSamlSpSessionKey());

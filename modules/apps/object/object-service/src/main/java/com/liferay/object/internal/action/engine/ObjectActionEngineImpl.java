@@ -21,13 +21,13 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
+import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -119,7 +118,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			"userName", user.getFullName()
 		);
 
-		Set<Long> objectActionIds = _objectActionIdsThreadLocal.get();
+		Set<Long> objectActionIds =
+			ObjectActionThreadLocal.getObjectActionIds();
 		Map<String, Object> variables = ObjectActionVariablesUtil.toVariables(
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 			_systemObjectDefinitionMetadataTracker);
@@ -164,12 +164,6 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectActionEngineImpl.class);
-
-	private static final ThreadLocal<Set<Long>> _objectActionIdsThreadLocal =
-		new CentralizedThreadLocal<>(
-			ObjectActionEngineImpl.class.getName() +
-				"._objectActionIdsThreadLocal",
-			HashSet::new);
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;

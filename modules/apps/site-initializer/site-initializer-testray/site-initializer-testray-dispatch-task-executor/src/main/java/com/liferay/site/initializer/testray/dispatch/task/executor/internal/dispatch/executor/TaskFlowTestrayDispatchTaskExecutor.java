@@ -362,47 +362,40 @@ public class TaskFlowTestrayDispatchTaskExecutor
 			testrayCaseResultGroups.addAll(testrayCaseResultIssuesMap.values());
 		}
 
-			Collections.sort(
-				testrayCaseResultGroups,
-				new Comparator<List<ObjectEntry>>() {
+		ListUtil.sort(
+			testrayCaseResultGroups,
+			new Comparator<List<ObjectEntry>>() {
 
-					public int compare(
-						List<ObjectEntry> testrayCaseResultObjectEntries1,
-						List<ObjectEntry> testrayCaseResultObjectEntries2) {
+				@Override
+				public int compare(
+					List<ObjectEntry> testrayCaseResultObjectEntries1,
+					List<ObjectEntry> testrayCaseResultObjectEntries2) {
 
-						int score1 = 0;
-						int score2 = 0;
+					int score1 = 0;
+					int score2 = 0;
 
-						try {
-							for (ObjectEntry objectEntry :
-									testrayCaseResultObjectEntries1) {
+					try {
+						score1 = _getScore(
+							companyId, testrayCaseResultObjectEntries1);
 
-								score1 += (int)_getProperty(
-									"priority", objectEntry);
-							}
-
-							for (ObjectEntry objectEntry :
-									testrayCaseResultObjectEntries2) {
-
-								score2 += (int)_getProperty(
-									"priority", objectEntry);
-							}
-						}
-						catch (Exception exception) {
-							throw new RuntimeException(exception);
-						}
-
-						if (score1 > score2) {
-							return -1;
-						}
-						else if (score1 < score2) {
-							return 1;
-						}
-
-						return 0;
+						score2 = _getScore(
+							companyId, testrayCaseResultObjectEntries2);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
 					}
 
-				});
+					if (score1 > score2) {
+						return -1;
+					}
+					else if (score1 < score2) {
+						return 1;
+					}
+
+					return 0;
+				}
+
+			});
 
 			for (List<ObjectEntry> testrayCaseResultObjectEntry :
 					testrayCaseResultGroups) {

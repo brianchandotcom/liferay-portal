@@ -30,31 +30,66 @@
 						[@clay["icon"] symbol="search" /]
 					</span>
 				</div>
+<div class="form-group select-from-list">
+	<div class="form-group">
+		<div class="align-items-end combobox-list input-group">
+			<div class="input-group-item input-group-prepend">
+			<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="comboboxInput" id="${fragmentEntryLinkNamespace}-label">
+					${htmlUtil.escape(input.label)}
+					[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /] [/#if]
+				</label>
+
+			<input aria-autocomplete="list" aria-controls="listbox" aria-expanded="false" class="combobox-input form-control" id="comboboxInput" name="${input.name}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.value??]value="${input.value}"[/#if] />
+
+			<input id="hiddenInput" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 			</div>
 		</div>
 
 		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0" [#if input.value??]aria-activedescendant="${fragmentEntryLinkNamespace}-option-${input.value}"[/#if]>
+			<span class="input-group-append input-group-item input-group-item-shrink">
+			<button aria-controls="listbox" aria-expanded="false" class="btn btn-secondary combobox-button" t ype="button">
+					[@clay["icon"] symbol="caret-double" /]
+				</button>
+			</span>
+
+		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="combobox-optionList list-unstyled dropdown-menu dropdown-menu-width-sm" id="${fragmentEntryLinkNamespace}-listbox" role="listbox">
 			<li class="dropdown-item text-muted" data-option-value="" id="${fragmentEntryLinkNamespace}-option--" role="option">
 				${languageUtil.get(locale, "choose-an-option")}
 			</li>
+					${languageUtil.get(locale, "choose-an-option")}
+				</li>
 
 		[#assign selectedValueFoundInOptions=false]
+				[#assign selectedValueFoundInOptions=false]
+				[#assign options=(input.attributes.options)![]]
 
 		[#list options as option]
 			[#if option?index == 10]
 				[#break]
 			[/#if]
+				[#list options as option]
+					[#if option?index == 10]
+						[#break]
+					[/#if]
 
 			[#if input.value?? && option.value == input.value]
 				[#assign selectedValueFoundInOptions=true]
 			[/#if]
+					[#if input.value?? && option.value == input.value]
+						[#assign selectedValueFoundInOptions=true]
+					[/#if]
 
 			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
 				${htmlUtil.escape(option.label)}
 			</li>
 		[/#list]
+				<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
+						${htmlUtil.escape(option.label)}
+					</li>
+				[/#list]
 
 			[#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
+				[#if !selectedValueFoundInOptions && input.value?? && input.attributes.selectedOptionLabel??]
 				<li class="dropdown-item" data-option-value="${input.value}" id="${fragmentEntryLinkNamespace}-option-${input.value}" role="option">
 					${htmlUtil.escape(input.attributes.selectedOptionLabel)}
 				</li>
@@ -70,5 +105,10 @@
 		<p aria-hidden="true" class="d-none forms-select-from-list-no-results mt-3 mx-4 text-muted">
 			${languageUtil.get(locale, "no-results-were-found")}
 		</p>
+						${htmlUtil.escape(input.attributes.selectedOptionLabel)}
+					</li>
+				[/#if]
+			</ul>
+		</div>
 	</div>
 </div>

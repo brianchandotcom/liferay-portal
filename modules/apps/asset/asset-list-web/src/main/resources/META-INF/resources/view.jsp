@@ -76,14 +76,8 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								</h5>
 
 								<h6 class="text-default">
-									<liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" />
-								</h6>
-
-								<h6 class="text-default">
 									<%= assetListDisplayContext.getAssetEntrySubtypeLabel(assetListEntry) %>
 								</h6>
-
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>

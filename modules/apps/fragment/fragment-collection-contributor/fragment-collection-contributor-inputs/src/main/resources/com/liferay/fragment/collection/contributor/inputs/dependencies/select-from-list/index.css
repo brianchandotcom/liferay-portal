@@ -1,19 +1,8 @@
-.forms-select-from-list .form-control {
-	position: relative;
 .combobox-optionList {
 	display: none;
 	width: 100%;
 }
 
-.forms-select-from-list .form-control .lexicon-icon {
-	position: absolute;
-	right: 1ch;
-	top: 50%;
-	transform: translateY(-45%);
-}
-
-.forms-select-from-list .dropdown-item {
-	cursor: pointer;
 [aria-selected="true"] {
 	background-color: #f0f5ff;
 	color: #272833;

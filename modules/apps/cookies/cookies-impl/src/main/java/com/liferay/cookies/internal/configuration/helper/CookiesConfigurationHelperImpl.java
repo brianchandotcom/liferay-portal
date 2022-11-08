@@ -16,6 +16,8 @@ package com.liferay.cookies.internal.configuration.helper;
 
 import com.liferay.cookies.configuration.CookiesConfigurationHelper;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
+import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -33,6 +35,46 @@ import javax.servlet.http.HttpServletRequest;
 @Component(immediate = true, service = CookiesConfigurationHelper.class)
 public class CookiesConfigurationHelperImpl
 	implements CookiesConfigurationHelper {
+
+  @Override
+  public CookiesBannerConfiguration getCookiesBannerConfiguration(
+    ThemeDisplay themeDisplay) throws Exception {
+
+    LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
+      themeDisplay.getServerName());
+
+    if (layoutSet != null) {
+      Group group = layoutSet.getGroup();
+
+      return _configurationProvider.getGroupConfiguration(
+        CookiesBannerConfiguration.class,
+        group.getGroupId());
+    }
+
+    return _configurationProvider.getCompanyConfiguration(
+      CookiesBannerConfiguration.class,
+      themeDisplay.getCompanyId());
+  }
+
+  @Override
+  public CookiesConsentConfiguration getCookiesConsentConfiguration(
+    ThemeDisplay themeDisplay) throws Exception {
+
+    LayoutSet layoutSet = _LayoutSetLocalService.fetchLayoutSet(
+      themeDisplay.getServerName());
+
+    if (layoutSet != null) {
+      Group group = layoutSet.getGroup();
+
+      return _configurationProvider.getGroupConfiguration(
+        CookiesConsentConfiguration.class,
+        group.getGroupId());
+    }
+
+    return _configurationProvider.getCompanyConfiguration(
+      CookiesConsentConfiguration.class,
+      themeDisplay.getCompanyId());
+  }
 
   @Override
 	public CookiesPreferenceHandlingConfiguration

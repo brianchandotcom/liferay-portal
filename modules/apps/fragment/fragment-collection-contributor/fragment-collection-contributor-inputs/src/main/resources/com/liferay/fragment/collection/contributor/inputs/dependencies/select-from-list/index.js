@@ -35,6 +35,7 @@ const optionList = Array.from(optionListElement.getElementsByTagName('LI')).map(
 		id: option.id,
 		textContent: option.textContent,
 		textValue: option.textContent.toLowerCase(),
+		value: option.dataset.optionValue,
 	})
 );
 
@@ -123,12 +124,20 @@ function handleInputChange() {
 
 	if (filterValue) {
 		optionList.forEach((option) => {
+			if (!option.value) {
+				return;
+			}
+
 			if (option.textValue.startsWith(filterValue)) {
 				optionListElement.appendChild(createOptionElement(option));
 			}
 		});
 
 		optionList.forEach((option) => {
+			if (!option.value) {
+				return;
+			}
+
 			if (option.textValue.includes(filterValue)) {
 				if (!document.getElementById(option.id)) {
 					optionListElement.appendChild(createOptionElement(option));
@@ -189,8 +198,14 @@ function setSelectedOption(optionElement) {
 
 	optionElement.classList.add('active');
 
-	labelInputElement.value = optionElement.textContent;
-	uiInputElement.value = optionElement.textContent;
+	labelInputElement.value = optionElement.dataset.optionValue
+		? optionElement.textContent
+		: '';
+
+	uiInputElement.value = optionElement.dataset.optionValue
+		? optionElement.textContent
+		: '';
+
 	valueInputElement.value = optionElement.dataset.optionValue;
 
 	closeResultList();

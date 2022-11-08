@@ -13,14 +13,13 @@
  * details.
  */
 
+import * as path from 'node:path';
 import * as notifications from './notifications';
 import * as vscode from 'vscode';
 import {getDocumentTokens, getTokens} from './tokens';
 
 export async function runTestCaseInFile(textEditor: vscode.TextEditor) {
 	const document = textEditor.document;
-
-	const fileName = getFileName(document);
 
 	const tokens = getDocumentTokens(document);
 
@@ -35,7 +34,7 @@ export async function runTestCaseInFile(textEditor: vscode.TextEditor) {
 		return;
 	}
 
-	runTestCase(document, fileName, testName);
+	runTestCase(document, testName);
 }
 
 export async function runTestCaseUnderCursor(textEditor: vscode.TextEditor) {
@@ -72,7 +71,7 @@ export async function runTestCaseUnderCursor(textEditor: vscode.TextEditor) {
 		return;
 	}
 
-	runTestCase(document, getFileName(document), testName);
+	runTestCase(document, testName);
 }
 
 async function getCommand(
@@ -106,26 +105,15 @@ async function getCommand(
 	}
 }
 
-function getFileName(document: vscode.TextDocument) {
-	const filePath = document.fileName;
-
-	return filePath.substring(
-		filePath.lastIndexOf('/') + 1,
-		filePath.lastIndexOf('.testcase')
-	);
-}
-
-async function runTestCase(
-	document: vscode.TextDocument,
-	fileName: string,
-	testName: string
-) {
+async function runTestCase(document: vscode.TextDocument, testName: string) {
 	const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
 	if (!workspaceFolder) {
 		return;
 	}
 
-	const testCase = `${fileName}#${testName}`;
+	const parsed = path.parse(document.fileName);
+
+	const testCase = `${parsed.name}#${testName}`;
 
 	const command = await getCommand(workspaceFolder, testCase);
 	if (!command) {

@@ -16,44 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:edit-form
-	action="javascript:void(0);"
-	name="inviteUsersFm"
-	onSubmit='<%= liferayPortletResponse.getNamespace() + "submit();" %>'
->
-	<liferay-frontend:edit-form-body>
-		<aui:input helpMessage="please-enter-valid-email-addresses-separated-by-commas" label="email-addresses" name="emailAddresses" required="<%= true %>" />
-	</liferay-frontend:edit-form-body>
+<%
+InviteUsersDisplayContext inviteUsersDisplayContext = new InviteUsersDisplayContext();
+%>
 
-	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:edit-form-buttons
-			submitLabel="invite"
-		/>
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
-
-<aui:script>
-	function <portlet:namespace />submit() {
-		var form = Liferay.Form.get('<portlet:namespace />inviteUsersFm');
-
-		var formValidator = form.formValidator;
-
-		formValidator.validate();
-
-		if (!formValidator.hasErrors()) {
-			var openingLiferay = Liferay.Util.getOpener().Liferay;
-
-			openingLiferay.fire(
-				'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "inviteUsers") %>',
-				{
-					accountEntryId:
-						'<%= ParamUtil.getString(request, "accountEntryId") %>',
-					emailAddresses: document.getElementById(
-						'<portlet:namespace />emailAddresses'
-					).value,
-					redirect: '<%= ParamUtil.getString(request, "redirect") %>',
-				}
-			);
-		}
-	}
-</aui:script>
+<react:component
+	module="account_entries_admin/js/InviteUsersForm"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountEntryId", ParamUtil.getLong(request, "accountEntryId")
+		).put(
+			"availableAccountRoles", inviteUsersDisplayContext.getAvailableAccountRolesMultiselectItems(ParamUtil.getLong(request, "accountEntryId"), themeDisplay.getCompanyId())
+		).put(
+			"portletNamespace", liferayPortletResponse.getNamespace()
+		).put(
+			"redirectURL", ParamUtil.getString(request, "redirect")
+		).build()
+	%>'
+/>

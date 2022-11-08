@@ -14,12 +14,6 @@
 
 package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dispatch.executor;
 
-import com.google.api.gax.paging.Page;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
-
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
@@ -28,59 +22,39 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.rauschig.jarchivelib.Archiver;
-import org.rauschig.jarchivelib.ArchiverFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author Nilton Vieira
@@ -95,12 +69,13 @@ import org.w3c.dom.NodeList;
 	},
 	service = DispatchTaskExecutor.class
 )
-public class TaskFlowTestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor{
+public class TaskFlowTestrayDispatchTaskExecutor
+	extends BaseDispatchTaskExecutor {
 
 	@Override
 	public void doExecute(
-		DispatchTrigger dispatchTrigger,
-		DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
+			DispatchTrigger dispatchTrigger,
+			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties =

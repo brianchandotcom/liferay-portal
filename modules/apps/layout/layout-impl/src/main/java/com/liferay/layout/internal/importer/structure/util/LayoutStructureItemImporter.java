@@ -12,39 +12,27 @@
  * details.
  */
 
-package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
+package com.liferay.layout.internal.importer.structure.util;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemImporter.class)
-public class FragmentDropZoneLayoutStructureItemImporter
-	implements LayoutStructureItemImporter {
+public interface LayoutStructureItemImporter {
 
-	@Override
 	public LayoutStructureItem addLayoutStructureItem(
 			LayoutStructure layoutStructure,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
 			PageElement pageElement, Set<String> warningMessages)
-		throws Exception {
+		throws Exception;
 
-		return layoutStructure.addFragmentDropZoneLayoutStructureItem(
-			layoutStructureItemImporterContext.getParentItemId(),
-			layoutStructureItemImporterContext.getPosition());
-	}
-
-	@Override
-	public PageElement.Type getPageElementType() {
-		return PageElement.Type.FRAGMENT_DROP_ZONE;
-	}
+	public PageElement.Type getPageElementType();
 
 }

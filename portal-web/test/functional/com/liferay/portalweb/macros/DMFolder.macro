@@ -426,6 +426,8 @@ definition {
 		var key_roleTitle = "${roleTitle}";
 
 		for (var permissionName : list "${permissionNameList}") {
+			ScrollWebElementIntoView(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
+
 			Uncheck(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
 		}
 

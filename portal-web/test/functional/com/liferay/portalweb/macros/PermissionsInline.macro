@@ -8,6 +8,10 @@ definition {
 
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
+			ScrollWebElementIntoView(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
+
+			takeScreenshot();
+
 			if ("${addOrRemoveViewPermission}" == "Add") {
 				Check(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
 			}
@@ -151,6 +155,10 @@ definition {
 			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
 
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+
+			ScrollWebElementIntoView(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			takeScreenshot();
 
 			if ("${addOrRemoveViewPermission}" == "Add") {
 				Check(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
@@ -405,6 +413,8 @@ definition {
 
 		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
+		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
+
 		AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
@@ -412,6 +422,8 @@ definition {
 		var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+
+		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
 		AssertNotChecked(locator1 = "Permissions#${permissionDefinitionKey}");
 	}

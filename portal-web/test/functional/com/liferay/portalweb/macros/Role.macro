@@ -114,10 +114,14 @@ definition {
 
 		if (isSet(permissionsList)) {
 			for (var permissionDefinitionKey : list "${permissionsList}") {
+				ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
+
 				Check(locator1 = "Permissions#${permissionDefinitionKey}");
 			}
 		}
 		else {
+			ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
+
 			Check(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 
@@ -437,6 +441,10 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
+
+		takeScreenshot();
 
 		Uncheck(locator1 = "Permissions#${permissionDefinitionKey}");
 

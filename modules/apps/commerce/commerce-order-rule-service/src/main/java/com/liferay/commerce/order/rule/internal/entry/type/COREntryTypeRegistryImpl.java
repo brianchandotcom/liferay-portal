@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Luca Pellizzon
  */
-@Component(immediate = true, service = COREntryTypeRegistry.class)
+@Component(service = COREntryTypeRegistry.class)
 public class COREntryTypeRegistryImpl implements COREntryTypeRegistry {
 
 	@Override

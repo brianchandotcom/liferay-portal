@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.order.validator.key=" + CORCommerceOrderValidator.KEY,
 		"commerce.order.validator.priority:Integer=50"

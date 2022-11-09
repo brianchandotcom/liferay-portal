@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER_CONTENT,
 	service = ConfigurationAction.class
 )

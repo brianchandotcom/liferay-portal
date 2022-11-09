@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + CommerceOrderFDSNames.PLACED_ORDER_ITEMS,
 	service = FDSActionProvider.class
 )

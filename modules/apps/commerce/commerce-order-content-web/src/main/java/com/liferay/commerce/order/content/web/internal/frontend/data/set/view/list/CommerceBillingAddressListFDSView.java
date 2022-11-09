@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.BILLING_ADDRESSES,
 	service = FDSView.class
 )

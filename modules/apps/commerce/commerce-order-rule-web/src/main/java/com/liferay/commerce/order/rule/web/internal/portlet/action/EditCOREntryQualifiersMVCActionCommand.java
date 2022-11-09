@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + COREntryPortletKeys.COR_ENTRY,
 		"mvc.command.name=/cor_entry/edit_cor_entry_qualifiers"

@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Alberti
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER_TYPE,
 		"mvc.command.name=/commerce_order_type/add_commerce_order_type"

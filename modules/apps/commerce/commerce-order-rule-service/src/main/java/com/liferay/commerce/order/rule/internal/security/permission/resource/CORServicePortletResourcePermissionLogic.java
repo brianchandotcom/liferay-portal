@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	immediate = true, service = CORServicePortletResourcePermissionLogic.class
-)
+@Component(service = CORServicePortletResourcePermissionLogic.class)
 public class CORServicePortletResourcePermissionLogic
 	implements PortletResourcePermissionLogic {
 

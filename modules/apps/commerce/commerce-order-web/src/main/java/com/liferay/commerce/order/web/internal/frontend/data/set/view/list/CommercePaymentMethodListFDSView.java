@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "frontend.data.set.name=" + CommerceOrderFDSNames.PAYMENT_METHODS,
 	service = FDSView.class
 )

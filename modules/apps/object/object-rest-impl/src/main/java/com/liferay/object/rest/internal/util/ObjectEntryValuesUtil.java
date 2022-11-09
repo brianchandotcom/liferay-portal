@@ -24,8 +24,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Map;
 
@@ -41,10 +39,6 @@ public class ObjectEntryValuesUtil {
 			ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
 			long userId, Map<String, Object> values)
 		throws PortalException {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
-			return values.get(objectField.getName());
-		}
 
 		try {
 			ObjectFieldBusinessType objectFieldBusinessType =

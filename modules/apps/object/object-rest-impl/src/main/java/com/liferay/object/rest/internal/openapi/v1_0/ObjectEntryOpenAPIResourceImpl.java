@@ -29,9 +29,7 @@ import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
@@ -218,9 +216,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			dtoProperties.add(_getDTOProperty(objectField));
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-164801")) &&
-				Objects.equals(
+			if (Objects.equals(
 					objectField.getRelationshipType(),
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 

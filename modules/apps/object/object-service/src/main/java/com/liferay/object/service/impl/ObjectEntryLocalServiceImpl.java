@@ -136,7 +136,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -235,9 +234,7 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
-			_setExternalReferenceCode(objectEntry, values);
-		}
+		_setExternalReferenceCode(objectEntry, values);
 
 		objectEntry.setGroupId(groupId);
 		objectEntry.setCompanyId(user.getCompanyId());
@@ -589,10 +586,8 @@ public class ObjectEntryLocalServiceImpl
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
-			_addObjectRelationshipERCFieldValue(
-				objectDefinition.getObjectDefinitionId(), values);
-		}
+		_addObjectRelationshipERCFieldValue(
+			objectDefinition.getObjectDefinitionId(), values);
 
 		return values;
 	}
@@ -886,10 +881,8 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Serializable> values = _getValues(
 			rows.get(0), selectExpressions);
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
-			_addObjectRelationshipERCFieldValue(
-				objectEntry.getObjectDefinitionId(), values);
-		}
+		_addObjectRelationshipERCFieldValue(
+			objectEntry.getObjectDefinitionId(), values);
 
 		return _putFormulaObjectFieldValues(
 			objectEntry.getObjectDefinitionId(), values);

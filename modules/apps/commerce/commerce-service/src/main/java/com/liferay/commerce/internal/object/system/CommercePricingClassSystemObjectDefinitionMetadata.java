@@ -25,10 +25,7 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -90,25 +87,13 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 	@Override
 	public List<ObjectField> getObjectFields() {
-		List<ObjectField> objectFields = new ArrayList<>(
-			Arrays.asList(
-				createObjectField(
-					"Text", "String", "description", "description", false,
-					true),
-				createObjectField(
-					"Integer", "Integer", "number-of-products", "productsCount",
-					false, true),
-				createObjectField(
-					"Text", "String", "title", "title", false, true)));
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
-			objectFields.add(
-				createObjectField(
-					"Text", "String", "external-reference-code",
-					"externalReferenceCode", false, true));
-		}
-
-		return objectFields;
+		return Arrays.asList(
+			createObjectField(
+				"Text", "String", "description", "description", false, true),
+			createObjectField(
+				"Integer", "Integer", "number-of-products", "productsCount",
+				false, true),
+			createObjectField("Text", "String", "title", "title", false, true));
 	}
 
 	@Override

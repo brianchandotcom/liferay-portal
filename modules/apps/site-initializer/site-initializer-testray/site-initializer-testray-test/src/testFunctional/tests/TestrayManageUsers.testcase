@@ -72,4 +72,28 @@ definition {
         }
 	}
 
+    @description = "This is a test for LPS-162986 - Verify if as an User can edit account information"
+	@priority = "4"
+	test CanEditAccountInformation {
+		task ("Given that the user change the account informations") {
+			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+
+            TestrayManageUser.editUserInformation(
+                userEmailAddressEdit = "testadmin@liferay.com",
+                userScreenNameEdit = "testscreen",
+                userFirstNameEdit = "changedfirstname",
+                userLastNameEdit = "Updateln");
+
+            TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+        }
+
+        task ("Then the account information is displayed") {
+			TestrayManageUser.viewUserInfomation(
+                userEmailAddress = "testadmin@liferay.com",
+                userFirstName = "changedfirstname",
+                userLastName = "Updateln",
+                userScreenName = "testscreen");
+		}
+	}
+
 }

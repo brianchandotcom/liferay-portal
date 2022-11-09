@@ -1,0 +1,330 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.addTestraySite();
+
+			Refresh();
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUserGroup.addUserGroup(
+				userGroupDescription = "UG UserGroup Name Description",
+				userGroupName = "UG UserGroup Name");
+
+			UserGroup.openUserGroupsAdmin();
+
+			UserGroup.assignAllMembersCP(userGroupName = "UG UserGroup Name");
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+		}
+
+		task ("Go to Case Types and add a new case type") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+
+			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Change pagination and create Team") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createTeam(
+				manageOption = "Manage Teams",
+				nameOptions = "Projects_1 Project",
+				version = "Teams_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to component and Add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project",
+				teamName = "Teams_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to project page and add a new routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Go to tab cases and Add a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Case_Type",
+				componentId = "Components_1 Project",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Go to Routine and Add Environments Factors") {
+			Testray.projectTabNavigator(navTabName = "Routines");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+		task ("Go to routine and add a new build") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				addVersion = "1.2",
+				caseName = "Cases_1 Case",
+				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.2",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Go to Testray 2 and change the pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayTestflow.goToTestflow();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-160724 - Verify if as an Administrator I should be able to add a task with user groups"
+	@priority = "5"
+	test AdminCanAddTaskWithUserGroups {
+		task ("Given the user add a Task with user groups") {
+			Click(locator1 = "Button#PLUS");
+
+			TestrayTestflow.editBreadcrumb(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine");
+
+			Button.click(button = "Analyze");
+
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "Task_1");
+
+			Click(
+				key_checkboxOption = "Compile",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			Button.click(button = "Assign User Groups");
+
+			Click.clickAtNotVisible(
+				key_checkboxOption = "UG UserGroup Name",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+			Button.click(button = "Select User Groups");
+
+			Testray.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("When the users appears in the list") {
+			TestrayTestflow.assertAssignTask(
+				email = "test@liferay.com",
+				nameUser = "Test Test");
+
+			TestrayTestflow.assertAssignTask(
+				email = "userea@liferay.com",
+				nameUser = "userfn userln");
+		}
+
+		task ("Then can see a task created with task details") {
+			Button.click(button = "Save");
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				nameTask = "Task_1",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis");
+		}
+	}
+
+	@description = "This is a test for LPS-166561 - Verify if as an Administrator I should not be able to add a duplicate Task"
+	@priority = "5"
+	test AdminCanNotAddDuplicateTestflow {
+		task ("Given the user try to add a duplicate Task") {
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+
+			TestrayTestflow.assertTaskDetails(
+				build = "Builds_1 Project",
+				nameTask = "Task_1",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine",
+				status = "In Analysis");
+
+			Click(locator1 = "Button#PLUS");
+
+			TestrayTestflow.editBreadcrumb(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine");
+
+			Button.click(button = "Analyze");
+		}
+
+		task ("Then the error message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "A task for this build already exists.");
+		}
+	}
+
+	@description = "This is a test for LPS-168093 - Verify that the user cannot create a task without assign users"
+	@priority = "4"
+	test AdminCanViewRequiredAssignUsers {
+		task ("Given the user try to add a Task without User") {
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1");
+		}
+
+		task ("Then the required User message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "Mark at least one user or user group for assignment.");
+		}
+	}
+
+	@description = "This is a test for LPS-164153 - Verify that the user cannot create a task without Case Type"
+	@priority = "4"
+	test AdminCanViewRequiredCaseType {
+		task ("Given the user try to add a Task without case type") {
+			TestrayTestflow.addTask(
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine",
+				taskName = "Task_1",
+				userName = "Test Test");
+		}
+
+		task ("Then the required Case Type message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "Mark at least one case type for processing.");
+		}
+	}
+
+	@description = "This is a test for LPS-163863 - Verify that As an administrator can remove users from the context menu"
+	@priority = "4"
+	test CanRemoveUser {
+		task ("Given the user add a Task") {
+			Click(locator1 = "Button#PLUS");
+
+			TestrayTestflow.editBreadcrumb(
+				build = "Builds_1 Project",
+				project = "Projects_1 Project",
+				routine = "Routines_1 Routine");
+
+			Button.click(button = "Analyze");
+
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "Task_1");
+
+			Click(
+				key_checkboxOption = "Compile",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			Button.click(button = "Assign Users");
+
+			Click.clickAtNotVisible(
+				key_checkboxOption = "Test Test",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+			Button.click(button = "Select Users");
+
+			Testray.checkSuccessAlertAppearsAndDisappears();
+
+			TestrayTestflow.assertAssignTask(
+				email = "test@liferay.com",
+				nameUser = "Test Test");
+		}
+
+		task ("When remove a user") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Test Test");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Remove");
+		}
+
+		task ("Then state that it has been removed") {
+			Testray.assertItemNotPresent(key_name = "Test Test");
+		}
+	}
+
+	@description = "This is a test for LPS-163862 - Verify that the user can not create a task without name"
+	@priority = "3"
+	test CanViewFieldNameRequired {
+		task ("Given the user try to add a Task without name") {
+			TestrayTestflow.addTask(
+				selectBuild = "Builds_1 Project",
+				selectProject = "Projects_1 Project",
+				selectRoutine = "Routines_1 Routine");
+		}
+
+		task ("Then the required field message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "Name is a required field.");
+		}
+	}
+
+}

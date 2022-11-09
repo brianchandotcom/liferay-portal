@@ -235,6 +235,8 @@ definition {
 	@description = "Verify that the user can Approve a Basic Child Article when the Parent Article is Pending"
 	@priority = "4"
 	test CanApproveBasicChildArticleWhenParentPending {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -435,6 +437,8 @@ definition {
 	@description = "Verify that the child Basic Article status is Pending after Submit for Publication"
 	@priority = "4"
 	test ChildArticleStatusIsPendingAfterSubmitForPublication {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

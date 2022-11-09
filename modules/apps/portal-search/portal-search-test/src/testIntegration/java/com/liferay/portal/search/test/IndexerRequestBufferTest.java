@@ -30,11 +30,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.module.util.BundleUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,7 +44,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -113,22 +111,11 @@ public class IndexerRequestBufferTest {
 			});
 	}
 
-	private Bundle _getBundle(String bundleName) throws Exception {
+	private int _getIndexerRequestBufferSize() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		for (Bundle curBundle : bundleContext.getBundles()) {
-			if (Objects.equals(curBundle.getSymbolicName(), bundleName)) {
-				return curBundle;
-			}
-		}
-
-		return null;
-	}
-
-	private int _getIndexerRequestBufferSize() throws Exception {
-		Bundle bundle = _getBundle("com.liferay.portal.search");
+		bundle = BundleUtil.getBundle(
+			bundle.getBundleContext(), "com.liferay.portal.search");
 
 		Class<?> indexerRequestBufferClass = bundle.loadClass(
 			"com.liferay.portal.search.internal.buffer.IndexerRequestBuffer");

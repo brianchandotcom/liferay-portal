@@ -12,11 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.cache;
+package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
+import com.liferay.portal.cache.LowLevelCache;
+import com.liferay.portal.cache.MVCCPortalCache;
+import com.liferay.portal.cache.PortalCacheListenerFactory;
+import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
+import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;

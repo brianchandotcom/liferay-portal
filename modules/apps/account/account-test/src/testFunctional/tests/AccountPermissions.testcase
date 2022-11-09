@@ -1907,8 +1907,6 @@ definition {
 			Navigator.gotoPage(pageName = "2B Account Page");
 
 			LexiconEntry.viewEntryName(rowEntry = "Edit Account Name");
-
-			LexiconEntry.viewNoEntry(rowEntry = "Account Name");
 		}
 	}
 

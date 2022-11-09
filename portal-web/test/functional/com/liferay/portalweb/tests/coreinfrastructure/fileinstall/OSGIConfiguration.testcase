@@ -107,6 +107,35 @@ definition {
 		}
 	}
 
+	@description = "Verify OSGI config files added to auto deploy directories other than osgi/configs are not read."
+	@ignore = "true"
+	@priority = "3"
+	test ConfigFilesReadOnlyFromOSGIConfigs {
+		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigFilesReadOnlyFromOSGIConfigs";
+
+		// TODO Un-ignore test when LPS-167572 is fixed
+
+		task ("When an OSGI config file is added to an auto deploy directory other than osgi/configs") {
+			var config = "checkInterval=I\"44\"";
+
+			var config = '''${config}''';
+			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			FileUtil.write("${liferayHome}/osgi/modules/${configName}.config", "${config}");
+		}
+
+		task ("Then the config should not be added to the database") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "0");
+		}
+	}
+
 	@description = "Verify if a config exists only in the database, when a OSGI config file is added, the databse entry is updated."
 	@priority = "3"
 	test OSGIConfigFileUpdatesExistingConfigInDatabase {

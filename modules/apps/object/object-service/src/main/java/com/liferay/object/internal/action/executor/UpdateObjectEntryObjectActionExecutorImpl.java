@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = ObjectActionExecutor.class)
+@Component(service = ObjectActionExecutor.class)
 public class UpdateObjectEntryObjectActionExecutorImpl
 	implements ObjectActionExecutor {
 

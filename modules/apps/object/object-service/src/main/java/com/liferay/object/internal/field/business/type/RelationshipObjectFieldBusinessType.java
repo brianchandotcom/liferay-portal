@@ -18,15 +18,13 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
-import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
-import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
@@ -138,18 +136,17 @@ public class RelationshipObjectFieldBusinessType
 			return baseModel.getPrimaryKeyObj();
 		}
 
-		try {
-			ObjectEntry objectEntry = _objectEntryPersistence.findByERC_C_ODI(
-				externalReferenceCode, objectDefinition.getCompanyId(),
-				objectDefinition.getObjectDefinitionId());
+		// TODO This is a temporary fix
+		// We need to do a deeper investigation to understand what is
+		// causing the "Lock wait timeout exceeded" error in MySQL when
+		// using the _objectEntryPersistence.findByERC_C_ODI directly
+		// We also need to avoid using localServiceUtil. We will
+		// temporarily use ObjectEntryLocalServiceUtil to avoid
+		// circular dependency
 
-			return objectEntry.getObjectEntryId();
-		}
-		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
-			throw new NoSuchObjectEntryException(
-				externalReferenceCode, objectDefinition.getObjectDefinitionId(),
-				noSuchObjectEntryException);
-		}
+		return ObjectEntryLocalServiceUtil.getObjectEntryId(
+			externalReferenceCode, objectDefinition.getCompanyId(),
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Override
@@ -162,9 +159,6 @@ public class RelationshipObjectFieldBusinessType
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
-
-	@Reference
-	private ObjectEntryPersistence _objectEntryPersistence;
 
 	@Reference
 	private ObjectRelationshipPersistence _objectRelationshipPersistence;

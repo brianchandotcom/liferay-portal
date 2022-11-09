@@ -29,10 +29,7 @@ public class NoSuchObjectEntryException extends NoSuchModelException {
 	}
 
 	public NoSuchObjectEntryException(
-		String externalReferenceCode, long objectDefinitionId,
-		Throwable throwable) {
-
-		super(throwable);
+		String externalReferenceCode, long objectDefinitionId) {
 
 		_externalReferenceCode = externalReferenceCode;
 		_objectDefinitionId = objectDefinitionId;

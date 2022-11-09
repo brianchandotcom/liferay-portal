@@ -11,8 +11,18 @@
 
 <tbody>
 <tr>
-	<td>TESTFLOW_SIDEBAR</td>
-	<td>//div[contains(@class, 'testray-sidebar')]//a[contains(@href, 'testflow')]</td>
+	<td>ASSIGN_INFORMATIONS</td>
+	<td>//td[normalize-space()='${key_nameUser}']//following::td[normalize-space()='${key_email}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_EDIT</td>
+	<td>//input[@name='breadcrumbInputEdit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_SELECT_OPTIONS</td>
+	<td>//div[@class='dropdown-menu autocomplete-dropdown-menu show']//button[@role='menuitem']</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,6 +43,16 @@
 <tr>
 	<td>STATUS_TASKS</td>
 	<td>//div[(@class='testray-content')]//div[contains(@class, 'table-responsive') and contains(., '${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_DETAILS</td>
+	<td>//td/span[contains(text(),'${key_status}')]//following::td[normalize-space()='${key_nameTask}']//following::td[normalize-space()='${key_project}']//following::td[normalize-space()='${key_routine}']//following::td[normalize-space()='${key_build}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TESTFLOW_SIDEBAR</td>
+	<td>//div[contains(@class, 'testray-sidebar')]//span[normalize-space()='Testflow']</td>
 	<td></td>
 </tr>
 </tbody>

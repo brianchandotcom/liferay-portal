@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -22,7 +23,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.ClassRule;
@@ -87,33 +87,19 @@ public class IndexerRequestBufferHandlerTest {
 			RandomTestUtil.randomLong());
 	}
 
-	private IndexerRequestBufferExecutorWatcher
-		_createIndexerRequestBufferExecutorWatcher() {
-
-		IndexerRequestBufferExecutorWatcher
-			indexerRequestBufferExecutorWatcher =
-				new IndexerRequestBufferExecutorWatcher();
-
-		indexerRequestBufferExecutorWatcher.activate(
-			Collections.<String, Object>emptyMap());
-
-		indexerRequestBufferExecutorWatcher.addIndexerRequestBufferExecutor(
-			new DefaultIndexerRequestBufferExecutor(),
-			Collections.singletonMap(
-				"buffered.execution.mode", (Object)"DEFAULT"));
-
-		return indexerRequestBufferExecutorWatcher;
-	}
-
 	private IndexerRequestBufferOverflowHandler
 		_createIndexerRequestBufferOverflowHandler() {
 
-		return new DefaultIndexerRequestBufferOverflowHandler() {
-			{
-				indexerRequestBufferExecutorWatcher =
-					_createIndexerRequestBufferExecutorWatcher();
-			}
-		};
+		IndexerRequestBufferOverflowHandler
+			indexerRequestBufferOverflowHandler =
+				new DefaultIndexerRequestBufferOverflowHandler();
+
+		ReflectionTestUtil.setFieldValue(
+			indexerRequestBufferOverflowHandler,
+			"_indexerRequestBufferExecutor",
+			new DefaultIndexerRequestBufferExecutor());
+
+		return indexerRequestBufferOverflowHandler;
 	}
 
 	private List<IndexerRequest> _createIndexerRequests(

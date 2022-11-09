@@ -207,7 +207,33 @@ definition {
 				valuePagination = "150");
 		}
 
+		task ("Go to created project and add a new team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			Testray.addNewTeam(teamName = "Components_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to created project and add a component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 1",
+				teamName = "Components_1 Team");
+
+			Refresh();
+		}
+
 		task ("Create a new Routine and a new Case") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
@@ -217,7 +243,7 @@ definition {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
 				caseTypeId = "Automated Functional Test",
-				componentId = "Analytics Cloud",
+				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "40",
 				priority = "5",

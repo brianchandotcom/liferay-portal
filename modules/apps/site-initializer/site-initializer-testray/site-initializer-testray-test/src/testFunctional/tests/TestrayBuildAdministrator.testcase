@@ -31,22 +31,28 @@ definition {
 				valuePagination = "150");
 		}
 
-		task ("Create two new Product Version") {
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = "Projects_1 Project",
-				version = "1.0");
+		task ("Go to created project and add a new team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-			Refresh();
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
+			Testray.addNewTeam(teamName = "Components_1 Team");
 
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = "Projects_1 Project",
-				version = "1.1");
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to created project and add a component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 1",
+				teamName = "Components_1 Team");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 2",
+				teamName = "Components_1 Team");
 
 			Refresh();
 		}
@@ -65,7 +71,7 @@ definition {
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
 				caseTypeId = "Automated Functional Test",
-				componentId = "Analytics Cloud",
+				componentId = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = "40",
 				priority = "5",
@@ -125,7 +131,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 
@@ -167,7 +173,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 
@@ -195,7 +201,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 
@@ -241,7 +247,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 
@@ -254,7 +260,7 @@ definition {
 				description = "Builds_1 Project Description Edited",
 				fieldName = "Builds_1 Project Edited",
 				gitHash = "12345",
-				productVersion = "1.1",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 
@@ -278,7 +284,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 
@@ -290,7 +296,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.4",
 				routine = "Routines_1 Routine");
 		}
 
@@ -332,7 +338,7 @@ definition {
 				dropdownItem = "New Build",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
-				productVersion = "1.0",
+				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 		}
 

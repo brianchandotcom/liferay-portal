@@ -1716,28 +1716,25 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, long classNameId, long tableId, long columnId,
 		long classPK, String data) {
 
+		ExpandoValue value = expandoValuePersistence.fetchByT_C_C(
+			tableId, columnId, classPK);
+
 		ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
 
-		ExpandoValue value = null;
-
-		if (row == null) {
-			long rowId = counterLocalService.increment();
-
-			row = expandoRowPersistence.create(rowId);
-
-			row.setCompanyId(companyId);
-			row.setModifiedDate(new Date());
-			row.setTableId(tableId);
-			row.setClassPK(classPK);
-
-			row = expandoRowPersistence.update(row);
-		}
-		else {
-			value = expandoValuePersistence.fetchByC_R(
-				columnId, row.getRowId());
-		}
-
 		if (value == null) {
+			if (row == null) {
+				long rowId = counterLocalService.increment();
+
+				row = expandoRowPersistence.create(rowId);
+
+				row.setCompanyId(companyId);
+				row.setModifiedDate(new Date());
+				row.setTableId(tableId);
+				row.setClassPK(classPK);
+
+				row = expandoRowPersistence.update(row);
+			}
+
 			long valueId = counterLocalService.increment();
 
 			value = expandoValuePersistence.create(valueId);

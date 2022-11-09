@@ -30,52 +30,52 @@ exports[`Select calls onChange callback when an item is selected using multisele
         class="form-control results-chosen select-field-trigger multiple-label-list"
         tabindex="0"
       >
-        <ul
-          class="ddm-multiple-select-list"
-        >
-          <li>
-            <span
-              class="label ddm-select-option-label label-dismissible label-secondary"
-              value="item7"
-            >
-              <span
-                class="label-item label-item-expand"
-              >
-                label7
-              </span>
-              <span
-                class="label-item label-item-after"
-              >
-                <button
-                  class="close"
-                  data-testid="closeButtonitem7"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-times-small"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#times-small"
-                    />
-                  </svg>
-                </button>
-              </span>
-            </span>
-          </li>
-        </ul>
-        <a
-          class="select-arrow-down-container"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+        <li>
+          <span
+            class="label ddm-select-option-label label-dismissible label-secondary"
+            value="item7"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <span
+              class="label-item label-item-expand"
+            >
+              label7
+            </span>
+            <span
+              class="label-item label-item-after"
+            >
+              <button
+                class="close"
+                data-testid="closeButtonitem7"
+                type="button"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-times-small"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#times-small"
+                  />
+                </svg>
+              </button>
+            </span>
+          </span>
+        </li>
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
+        >
+          <a
+            class="select-arrow-down-container"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -370,18 +370,22 @@ exports[`Select filters according to the input and calls onChange callback when 
         >
           choose-options
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -614,18 +618,22 @@ exports[`Select has a help text 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -714,18 +722,22 @@ exports[`Select has a key 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -806,18 +818,22 @@ exports[`Select has a label 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -898,18 +914,22 @@ exports[`Select has a placeholder 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -985,18 +1005,22 @@ exports[`Select has a predefinedValue 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1072,18 +1096,22 @@ exports[`Select has a value 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1160,18 +1188,22 @@ exports[`Select has an id 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1247,18 +1279,22 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1334,18 +1370,22 @@ exports[`Select is closed by default 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1421,18 +1461,22 @@ exports[`Select is not required 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1525,18 +1569,22 @@ exports[`Select puts an asterisk when field is required 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1624,18 +1672,22 @@ exports[`Select renders Label if showLabel is true 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1716,18 +1768,22 @@ exports[`Select renders no options when options come empty 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1803,18 +1859,22 @@ exports[`Select renders options 1`] = `
         >
           choose-an-option
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>
@@ -1904,18 +1964,22 @@ exports[`Select shows a search input when the number of options is more than the
         >
           choose-options
         </div>
-        <a
-          class="select-arrow-down-container"
+        <div
+          class="lfr__ddm-form-field-type-select-arrow-down"
         >
-          <svg
-            class="lexicon-icon lexicon-icon-caret-double"
-            role="presentation"
+          <a
+            class="select-arrow-down-container"
           >
-            <use
-              xlink:href="#caret-double"
-            />
-          </svg>
-        </a>
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div>

@@ -119,6 +119,50 @@ definition {
 		}
 	}
 
+	@description = "LPS-167997. It is possible use same JSON on different sites as long as the pages have same name. "
+	@priority = "4"
+	test SameJSONCanBeEnabledOnMultipleSites {
+		property portal.acceptance = "true";
+
+		task ("When site 1 has walkthrough enabled site-level with JSON") {
+			Walkthrough.setupWalkthroughPage(
+				filename = "walkthrough_configuration_single_page.json",
+				siteName = "Site Name");
+		}
+
+		task ("And When site 2 has walkthrough enabled site-level with JSON") {
+			task ("Create site 2") {
+				JSONGroup.addGroup(groupName = "Test Site Name");
+
+				ApplicationsMenu.gotoSite(site = "Test Site Name");
+			}
+
+			Walkthrough.setupWalkthroughPage(
+				filename = "walkthrough_configuration_single_page.json",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then hotspot element is present on first site") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("And Then hotspot element is present on second site") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
 	@description = "LPS-159826. Checked that each step corresponds to the expected Step Id."
 	@priority = "5"
 	test StepCanCorrespondToCorrectStepId {
@@ -147,50 +191,6 @@ definition {
 
 			Walkthrough.assertHighlightedSpecificObject(key_stepId = "step-2");
 		}
-	}
-
-	@description = "LPS-167997. It is possible use same JSON on different sites as long as the pages have same name. "
-	@priority = "4"
-	test SameJSONCanBeEnabledOnMultipleSites {
-		property portal.acceptance = "true";
-
-		task ("When site 1 has walkthrough enabled site-level with JSON") {
-			Walkthrough.setupWalkthroughPage(
-				filename = "walkthrough_configuration_single_page.json",
-				siteName = "Site Name");
-		}
-
-		task ("And When site 2 has walkthrough enabled site-level with JSON") {
-			task ("Create site 2"){
-				JSONGroup.addGroup(groupName = "Test Site Name");
-
-				ApplicationsMenu.gotoSite(site = "Test Site Name");
-			}
-			Walkthrough.setupWalkthroughPage(
-				filename = "walkthrough_configuration_single_page.json",
-				siteName = "Test Site Name");
-		}
-
-		task ("Then hotspot element is present on first site") {
-			Navigator.openSitePage(
-				pageName = "Walkthrough Page 1",
-				siteName = "Site Name");
-
-			AssertElementPresent(
-				key_title = "",
-				locator1 = "Walkthrough#POPOVER_TITLE");
-		}
-
-		task ("And Then hotspot element is present on second site") {
-			Navigator.openSitePage(
-				pageName = "Walkthrough Page 1",
-				siteName = "Test Site Name");
-
-			AssertElementPresent(
-				key_title = "",
-				locator1 = "Walkthrough#POPOVER_TITLE");
-		}
-	
 	}
 
 }

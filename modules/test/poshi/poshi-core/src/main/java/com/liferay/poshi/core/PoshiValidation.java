@@ -2000,6 +2000,7 @@ public class PoshiValidation {
 				put(
 					"copyValue",
 					"\"selenium.getElementValue\" (stored as a variable)");
+				put("getAttribute", "\"selenium.getWebElementAttribute\"");
 				put("getEval", "\"selenium.getJavaScriptResult\"");
 				put("paste", "a variable storing the desired value");
 				put("robotType", "\"selenium.type\"");

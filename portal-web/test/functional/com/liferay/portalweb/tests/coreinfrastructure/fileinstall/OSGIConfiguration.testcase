@@ -19,4 +19,42 @@ definition {
 		}
 	}
 
+	@description = "Verify if no osgi config file exists, when a config is updated via UI, then the config is added to the database and a config file is not created."
+	@priority = "3"
+	test ConfigAddedViaUIDoesNotCreateNewConfigFile {
+		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigAddedViaUIDoesNotCreateNewConfigFile";
+
+		task ("Given no osgi config file exists for a specific config") {
+			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
+
+			OSGiConfig.assertOSGIConfigNotExist(osgiConfigFileName = "${configName}.config");
+		}
+
+		task ("When the config is updated via UI") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Catalog",
+				configurationName = "SKUs",
+				configurationScope = "System Scope");
+
+			Type(
+				key_text = "Check Interval",
+				locator1 = "TextInput#ANY",
+				value1 = "44");
+
+			Button.clickSave();
+		}
+
+		task ("Then the config is added to the database") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "checkInterval=I\"44\"");
+		}
+
+		task ("And a new config file is not created") {
+			OSGiConfig.assertOSGIConfigNotExist(osgiConfigFileName = "${configName}.config");
+		}
+	}
+
 }

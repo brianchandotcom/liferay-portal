@@ -155,6 +155,16 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBaseTemplate#TEMPLATE_CONTENT",
 			value1 = "${kbTemplateContent}");
+
+		if (isSet(embedImage)) {
+			KBArticle.viewImageViaContentCmd();
+		}
+
+		if (isSet(viewNoCommentsPanel)) {
+			AssertElementNotPresent(
+				key_panel = "Comments",
+				locator1 = "Panel#PANEL");
+		}
 	}
 
 	macro tearDownCP {

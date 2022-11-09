@@ -43,7 +43,9 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		if (_averageDuration <= 0L) {
 			BatchHistory batchHistory = getBatchHistory();
 
-			_averageDuration = batchHistory.getAverageDuration();
+			if (batchHistory != null) {
+				_averageDuration = batchHistory.getAverageDuration();
+			}
 		}
 
 		return _averageDuration;

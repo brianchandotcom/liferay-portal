@@ -24,6 +24,12 @@ definition {
 		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
 	}
 
+	macro manageAccountSidebar {
+		Click(locator1 = "TestrayLayout#USER_SIDEBAR");
+
+		TestrayManage.selectOptionsManage(itemValue = "${valueName}");
+	}
+
 	macro clickResultsOnSidebar {
 		Click(locator1 = "Testray#RESULTS_SIDEBAR");
 	}

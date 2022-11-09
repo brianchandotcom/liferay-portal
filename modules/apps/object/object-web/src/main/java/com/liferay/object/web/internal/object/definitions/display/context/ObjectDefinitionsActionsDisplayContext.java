@@ -21,6 +21,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
@@ -36,10 +37,13 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -115,6 +119,15 @@ public class ObjectDefinitionsActionsDisplayContext
 		for (ObjectActionExecutor objectActionExecutor :
 				_objectActionExecutorRegistry.getObjectActionExecutors()) {
 
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-153714")) &&
+				Objects.equals(
+					objectActionExecutor.getKey(),
+					ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
+
+				continue;
+			}
+
 			objectActionExecutorsJSONArray.put(
 				JSONUtil.put(
 					"description",
@@ -161,6 +174,8 @@ public class ObjectDefinitionsActionsDisplayContext
 			"objectActionExecutorKey", objectAction.getObjectActionExecutorKey()
 		).put(
 			"objectActionTriggerKey", objectAction.getObjectActionTriggerKey()
+		).put(
+			"objectDefinitionId", objectAction.getObjectDefinitionId()
 		).put(
 			"parameters",
 			ObjectActionUtil.toParameters(

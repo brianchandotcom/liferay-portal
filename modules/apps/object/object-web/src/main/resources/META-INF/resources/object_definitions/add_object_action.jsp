@@ -36,6 +36,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 		).put(
 			"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
 		).put(
+			"objectDefinitionId", objectDefinitionsActionsDisplayContext.getObjectDefinitionId()
+		).put(
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
 		).put(
 			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()

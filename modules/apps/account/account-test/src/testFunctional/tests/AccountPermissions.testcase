@@ -1900,22 +1900,9 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			LexiconEntry.viewEntryName(rowEntry = "Account Name");
-
-			Accounts.goToEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Account Name");
-
-			AssertTextEquals(
-				key_portletName = "Account",
-				locator1 = "Portlet#TITLE",
-				value1 = "Edit Account Name");
-
-			PortletEntry.inputName(name = "Edit Account Name");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
+			Accounts.editPG(
+				accountName = "Account Name",
+				accountNameEdit = "Edit Account Name");
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 

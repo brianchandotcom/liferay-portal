@@ -116,13 +116,13 @@ definition {
 			for (var permissionDefinitionKey : list "${permissionsList}") {
 				ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
-				Check(locator1 = "Permissions#${permissionDefinitionKey}");
+				Check.checkNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 			}
 		}
 		else {
 			ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
-			Check(locator1 = "Permissions#${permissionDefinitionKey}");
+			Check.checkNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 
 		Button.clickSave();
@@ -131,7 +131,7 @@ definition {
 			locator1 = "Message#SUCCESS",
 			value1 = "Your request completed successfully.");
 
-		AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+		AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
 	macro editPermissionCmdCP {
@@ -446,7 +446,7 @@ definition {
 
 		takeScreenshot();
 
-		Uncheck(locator1 = "Permissions#${permissionDefinitionKey}");
+		Uncheck.uncheckNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 
 		Button.clickSave();
 
@@ -454,7 +454,7 @@ definition {
 			locator1 = "Message#SUCCESS",
 			value1 = "Your request completed successfully.");
 
-		AssertNotChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
 	macro tearDownCP {
@@ -559,10 +559,10 @@ definition {
 		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
 		if ("${permissionFlagged}" == "true") {
-			AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+			AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 		else if ("${permissionFlagged}" == "false") {
-			AssertNotChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 	}
 

@@ -13,10 +13,10 @@ definition {
 			takeScreenshot();
 
 			if ("${addOrRemoveViewPermission}" == "Add") {
-				Check(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
+				Check.checkNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
 			}
 			else if ("${addOrRemoveViewPermission}" == "Remove") {
-				Uncheck(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
+				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
 			}
 		}
 
@@ -89,7 +89,7 @@ definition {
 				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
 				var key_roleTitle = "${roleTitle}";
 
-				Uncheck(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+				Uncheck.uncheckNotVisible(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
 			}
 		}
 		else {
@@ -97,7 +97,7 @@ definition {
 				var key_permissionDefinitionKey = "${permissionDefinitionKey}";
 				var key_roleTitle = "${roleTitle}";
 
-				Check(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
+				Check.checkNotVisible(locator1 = "AssetPermissions#PERMISSIONS_CHECKBOX");
 			}
 		}
 	}
@@ -111,10 +111,10 @@ definition {
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
 			if ("${addOrRemoveViewPermission}" == "Add") {
-				Check(locator1 = "Permissions#CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX");
+				Check.checkNotVisible(locator1 = "Permissions#CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX");
 			}
 			else if ("${addOrRemoveViewPermission}" == "Remove") {
-				Uncheck(locator1 = "Permissions#CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX");
+				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONTENT_PERMISSIONS_MANAGE_PAGES_CHECKBOX");
 			}
 		}
 
@@ -134,10 +134,10 @@ definition {
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
 			if ("${addOrRemoveViewPermission}" == "Add") {
-				Check(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
+				Check.checkNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
 			}
 			else if ("${addOrRemoveViewPermission}" == "Remove") {
-				Uncheck(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
+				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX");
 			}
 		}
 
@@ -161,10 +161,10 @@ definition {
 			takeScreenshot();
 
 			if ("${addOrRemoveViewPermission}" == "Add") {
-				Check(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+				Check.checkNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
 			else if ("${addOrRemoveViewPermission}" == "Remove") {
-				Uncheck(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+				Uncheck.uncheckNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
 		}
 
@@ -415,7 +415,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
-		AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+		AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
 	macro viewPermissionsRemoved {
@@ -425,7 +425,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
-		AssertNotChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 	}
 
 }

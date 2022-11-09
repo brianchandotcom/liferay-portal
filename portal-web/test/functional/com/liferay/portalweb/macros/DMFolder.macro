@@ -428,7 +428,7 @@ definition {
 		for (var permissionName : list "${permissionNameList}") {
 			ScrollWebElementIntoView(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
 
-			Uncheck(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
+			Uncheck.uncheckNotVisible(locator1 = "Permissions#CONTENT_PERMISSIONS_${permissionName}_CHECKBOX");
 		}
 
 		PortletEntry.save();

@@ -65,7 +65,7 @@ public class ProjectTemplatesArgs {
 	}
 
 	public String getProduct() {
-		return _product;
+		return _liferayProduct;
 	}
 
 	public ProjectTemplatesArgsExt getProjectTemplatesArgsExt() {
@@ -155,7 +155,7 @@ public class ProjectTemplatesArgs {
 	}
 
 	public void setProduct(String product) {
-		_product = product;
+		_liferayProduct = product;
 	}
 
 	public void setProjectTemplatesArgsExt(
@@ -225,6 +225,12 @@ public class ProjectTemplatesArgs {
 	private boolean _help;
 
 	@Parameter(
+		description = "The option for Liferay Platform product. (portal)|(dxp)",
+		names = "--liferay-product"
+	)
+	private String _liferayProduct = "portal";
+
+	@Parameter(
 		description = "The version of Liferay to target when creating the project.",
 		names = "--liferay-version"
 	)
@@ -254,12 +260,6 @@ public class ProjectTemplatesArgs {
 		names = "--package-name"
 	)
 	private String _packageName;
-
-	@Parameter(
-		description = "The option for Liferay Platform product. (portal)|(dxp)",
-		names = "--product"
-	)
-	private String _product = "portal";
 
 	private ProjectTemplatesArgsExt _projectTemplatesArgsExt;
 

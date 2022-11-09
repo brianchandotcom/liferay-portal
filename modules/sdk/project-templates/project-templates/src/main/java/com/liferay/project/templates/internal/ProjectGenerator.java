@@ -141,7 +141,7 @@ public class ProjectGenerator {
 			String.valueOf(dependencyManagementEnabled));
 		_setProperty(properties, "liferayVersion", liferayVersion);
 		_setProperty(properties, "package", packageName);
-		_setProperty(properties, "product", product);
+		_setProperty(properties, "liferayProduct", product);
 		_setProperty(properties, "projectType", projectType);
 
 		archetypeGenerationRequest.setProperties(properties);

@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.price.modifier.type.key=" + CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT,
 		"commerce.price.modifier.type.order:Integer=20"

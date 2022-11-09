@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePricingPortletKeys.COMMERCE_DISCOUNT,
 		"mvc.command.name=/commerce_discount/edit_commerce_discount_external_reference_code"

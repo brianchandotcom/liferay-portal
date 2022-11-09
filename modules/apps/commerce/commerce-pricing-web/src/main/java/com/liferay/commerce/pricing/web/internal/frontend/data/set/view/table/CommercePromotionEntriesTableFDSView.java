@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "frontend.data.set.name=" + CommercePricingFDSNames.PROMOTION_ENTRIES,
 	service = FDSView.class
 )

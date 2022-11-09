@@ -28,10 +28,6 @@ definition {
 		Click(locator1 = "Testray#RESULTS_SIDEBAR");
 	}
 
-	macro clickTestfowOnSidebar {
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
-	}
-
 	macro clickUserOnSidebar {
 		Click(locator1 = "TestrayLayout#USER_SIDEBAR");
 	}

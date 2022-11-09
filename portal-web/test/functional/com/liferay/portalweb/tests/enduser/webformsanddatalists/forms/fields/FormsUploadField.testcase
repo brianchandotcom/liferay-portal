@@ -864,13 +864,30 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
-		// TODO LPS-133220 LabelCanBeHidden pending implementation
+		FormsAdmin.addForm();
 
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload",
+			formPageNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.clickShowLabel();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Upload");
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

@@ -141,6 +141,15 @@ export type TestrayCaseResult = {
 	warnings: number;
 };
 
+export type TestrayCaseResultIssue = {
+	caseResult?: TestrayCaseResult;
+	id: number;
+	issue?: TestrayIssue;
+	name: string;
+	r_caseResultToCaseResultsIssues_c_caseResultId?: TestrayCaseResult;
+	r_issueToCaseResultsIssues_c_issueId?: TestrayIssue;
+};
+
 export type TestrayCaseType = {
 	dateCreated: string;
 	dateModified: string;
@@ -157,6 +166,10 @@ export type TestrayFactorOption = {
 	id: number;
 	name: string;
 	r_factorCategoryToOptions_c_factorCategory: TestrayFactorCategory;
+};
+
+export type TestrayIssue = {
+	name: string;
 };
 
 export type TestrayProductVersion = {

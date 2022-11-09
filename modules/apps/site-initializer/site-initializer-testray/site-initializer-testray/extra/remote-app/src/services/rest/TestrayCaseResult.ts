@@ -12,10 +12,15 @@
  * details.
  */
 
+import TestrayError from '../../TestrayError';
+import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
+import {searchUtil} from '../../util/search';
 import {CaseResultStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import Rest from './Rest';
+import {testrayCaseResultsIssuesImpl} from './TestrayCaseresultsIssues';
+import {testraIssuesImpl} from './TestrayIssues';
 import {TestrayCaseResult} from './types';
 
 type CaseResultForm = typeof yupSchema.caseResult.__outputType;
@@ -116,6 +121,41 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			startDate: null,
 			userId: this.UNASSIGNED_USER_ID,
 		});
+	}
+
+	public async update(id: number, data: any): Promise<TestrayCaseResult> {
+		const issues =
+			data.issues.split(',').map((item: string) => item.trim()) || [];
+
+		const createdIssues = [];
+
+		for (const issue of issues) {
+			createdIssues.push(await testraIssuesImpl.createIfNotExist(issue));
+		}
+
+		const caseResultsIssuesResponse = await this.fetcher(
+			`${testrayCaseResultsIssuesImpl.resource}&filter=${searchUtil.eq(
+				'caseResultId',
+				id.toString()
+			)}&${testrayCaseResultsIssuesImpl.nestedFields}pageSize=1000`
+		);
+
+		const caseResultIssues =
+			testrayCaseResultsIssuesImpl
+				.transformDataFromList(caseResultsIssuesResponse)
+				?.items.map(({issue}: any) => issue.name) || [];
+
+		const validatedIssues = caseResultIssues.some((issue) =>
+			issues.includes(issue)
+		);
+
+		if (validatedIssues) {
+			throw new TestrayError(
+				i18n.sub('the-x-name-already-exists', 'issue')
+			);
+		}
+
+		return data;
 	}
 }
 

@@ -33,6 +33,7 @@ export * from './TestrayComponent';
 export * from './TestrayFactor';
 export * from './TestrayFactorCategory';
 export * from './TestrayFactorOptions';
+export * from './TestrayIssues';
 export * from './TestrayProductVersion';
 export * from './TestrayProject';
 export * from './TestrayRequirement';

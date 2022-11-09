@@ -521,7 +521,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
-		PopulateObjectFormsConfiguration.selectObjectOnly(labelObject = "Object");
+		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
 		Button.clickDone();
 

@@ -19,7 +19,6 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {FocusScope} from '@clayui/shared';
 import getCN from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
@@ -277,71 +276,69 @@ export default function SearchBar({
 	};
 
 	return (
-		<FocusScope>
-			<ClayAutocomplete className="search-bar-suggestions">
-				<ClayInput.Group ref={alignElementRef}>
-					{letUserChooseScope
-						? _renderSearchBarWithScope()
-						: _renderSearchBar()}
-				</ClayInput.Group>
+		<ClayAutocomplete className="search-bar-suggestions">
+			<ClayInput.Group ref={alignElementRef}>
+				{letUserChooseScope
+					? _renderSearchBarWithScope()
+					: _renderSearchBar()}
+			</ClayInput.Group>
 
-				<ClayDropDown.Menu
-					active={active && !!resource?.items?.length}
-					alignElementRef={alignElementRef}
-					autoBestAlign={false}
-					className="search-bar-suggestions-dropdown-menu"
-					closeOnClickOutside
-					onSetActive={setActive}
-					ref={dropdownRef}
-					style={{
-						width:
-							alignElementRef.current &&
-							alignElementRef.current.clientWidth + 'px',
-					}}
-				>
-					{resource?.items?.map((group, groupIndex) => (
-						<ClayDropDown.ItemList
-							className="search-bar-suggestions-results-list"
-							key={groupIndex}
-						>
-							<ClayDropDown.Group header={group.displayGroupName}>
-								{group.suggestions.map(
-									({text, attributes = {}}, index) => (
-										<ClayDropDown.Item
-											href={attributes.assetURL}
-											key={index}
-										>
-											<div className="suggestion-item-title">
-												{text}
-											</div>
+			<ClayDropDown.Menu
+				active={active && !!resource?.items?.length}
+				alignElementRef={alignElementRef}
+				autoBestAlign={false}
+				className="search-bar-suggestions-dropdown-menu"
+				closeOnClickOutside
+				onSetActive={setActive}
+				ref={dropdownRef}
+				style={{
+					width:
+						alignElementRef.current &&
+						alignElementRef.current.clientWidth + 'px',
+				}}
+			>
+				{resource?.items?.map((group, groupIndex) => (
+					<ClayDropDown.ItemList
+						className="search-bar-suggestions-results-list"
+						key={groupIndex}
+					>
+						<ClayDropDown.Group header={group.displayGroupName}>
+							{group.suggestions.map(
+								({text, attributes = {}}, index) => (
+									<ClayDropDown.Item
+										href={attributes.assetURL}
+										key={index}
+									>
+										<div className="suggestion-item-title">
+											{text}
+										</div>
 
-											{attributes.assetSearchSummary && (
-												<div className="suggestion-item-description">
-													<div className="text-truncate-inline">
-														<div className="text-truncate">
-															{attributes.assetSearchSummary ||
-																''}
-														</div>
+										{attributes.assetSearchSummary && (
+											<div className="suggestion-item-description">
+												<div className="text-truncate-inline">
+													<div className="text-truncate">
+														{attributes.assetSearchSummary ||
+															''}
 													</div>
 												</div>
-											)}
-										</ClayDropDown.Item>
-									)
-								)}
-							</ClayDropDown.Group>
-						</ClayDropDown.ItemList>
-					))}
-
-					<ClayDropDown.ItemList>
-						<ClayDropDown.Item
-							className="search-bar-suggestions-show-more"
-							onClick={_handleSubmit}
-						>
-							{Liferay.Language.get('show-more')}
-						</ClayDropDown.Item>
+											</div>
+										)}
+									</ClayDropDown.Item>
+								)
+							)}
+						</ClayDropDown.Group>
 					</ClayDropDown.ItemList>
-				</ClayDropDown.Menu>
-			</ClayAutocomplete>
-		</FocusScope>
+				))}
+
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Item
+						className="search-bar-suggestions-show-more"
+						onClick={_handleSubmit}
+					>
+						{Liferay.Language.get('show-more')}
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown.Menu>
+		</ClayAutocomplete>
 	);
 }

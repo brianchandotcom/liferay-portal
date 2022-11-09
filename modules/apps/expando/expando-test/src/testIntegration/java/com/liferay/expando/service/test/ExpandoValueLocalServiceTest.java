@@ -252,6 +252,61 @@ public class ExpandoValueLocalServiceTest {
 	}
 
 	@Test
+	public void testAddValueWithFlushInBetween() throws Throwable {
+		ExpandoColumn column1 = ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column1", ExpandoColumnConstants.STRING);
+
+		ExpandoColumn column2 = ExpandoTestUtil.addColumn(
+			_expandoTable, "Test Column2", ExpandoColumnConstants.STRING);
+
+		long classPK = CounterLocalServiceUtil.increment();
+
+		// Create initial ExpandoValue for each column
+
+		ExpandoTestUtil.addValues(
+			_expandoTable, classPK,
+			new HashMapBuilder<>().<String, Serializable>put(
+				"Test Column1", "column1-one"
+			).<String, Serializable>put(
+				"Test Column2", "column2-one"
+			).build());
+
+		// Remove cache to force  ExpandoValuePeristence find methods be
+		// executed against the database to force flush in between.
+
+		_entityCache.clearCache(ExpandoValueImpl.class);
+		_finderCache.clearCache(ExpandoValueImpl.class);
+
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+			() -> {
+
+				// Add different value so that ExpandoValue gets modified and
+				// ExpandoRow gets updated. ExpandoRow isn't persisted on the
+				// database yet because transaction hasn't finish.
+
+				ExpandoTestUtil.addValue(
+					_expandoTable, column1, classPK, "column1-two");
+
+				// Add a new different value so that both ExpandoValue and
+				// ExpandoRow are updated. Since ExpandoRow was updated in
+				// the previous addValue we must ensure that ExpandoRow
+				// isn't stale before updating it again. Right now there's
+				// a expandoValuePersistence.fetchByC_R between the moment
+				// that row is retrieved and the moment it gets updated. That
+				// fetch can cause a flush if the value isn't cached so we
+				// must ensure that row has the latest mvcc version before it
+				// gets persisted.
+
+				ExpandoTestUtil.addValue(
+					_expandoTable, column2, classPK, "column2-two");
+
+				return null;
+			});
+	}
+
+	@Test
 	public void testAddWrongValue() throws Exception {
 		ExpandoColumn column = ExpandoTestUtil.addColumn(
 			_expandoTable, "Test Column", ExpandoColumnConstants.STRING);

@@ -1018,6 +1018,8 @@ definition {
 	@description = "Verify that the component displays the entire workflow that the instance is in"
 	@priority = "5"
 	test DisplaysEntireWorkflow {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");

@@ -21,6 +21,7 @@ import com.liferay.portal.cache.ehcache.internal.event.ConfigurableEhcachePortal
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
 import com.liferay.portal.cache.ehcache.internal.management.ManagementService;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.log.Log;
@@ -60,6 +61,17 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class EhcachePortalCacheManager<K extends Serializable, V>
 	extends BasePortalCacheManager<K, V> {
+
+	@Override
+	public void clearAll() throws PortalCacheException {
+		for (String cacheName : _cacheManager.getCacheNames()) {
+			Cache cache = _cacheManager.getCache(cacheName);
+
+			if (cache != null) {
+				cache.removeAll();
+			}
+		}
+	}
 
 	public CacheManager getEhcacheManager() {
 		return _cacheManager;
@@ -102,17 +114,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 
 		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
-	}
-
-	@Override
-	protected void doClearAll() {
-		for (String cacheName : _cacheManager.getCacheNames()) {
-			Cache cache = _cacheManager.getCache(cacheName);
-
-			if (cache != null) {
-				cache.removeAll();
-			}
-		}
 	}
 
 	@Override

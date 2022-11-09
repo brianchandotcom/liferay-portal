@@ -50,11 +50,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	@Override
-	public void clearAll() throws PortalCacheException {
-		doClearAll();
-	}
-
-	@Override
 	public void destroy() {
 		_portalCaches.clear();
 
@@ -191,8 +186,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract PortalCache<K, V> createPortalCache(
 		PortalCacheConfiguration portalCacheConfiguration, boolean sharded);
-
-	protected abstract void doClearAll();
 
 	protected abstract void doDestroy();
 

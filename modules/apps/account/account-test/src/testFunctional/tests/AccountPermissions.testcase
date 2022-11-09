@@ -1861,7 +1861,12 @@ definition {
 	@priority = "5"
 	test CanUpdateAccountWithUpdatePermissions {
 		task ("Given add account a new user and account role with view permission") {
-			JSONUser.addUser(
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -1871,18 +1876,6 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Account Name",
-				accountEntryType = "Business");
-
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.assignUsers(
-				accountName = "Account Name",
-				assigneeName = "userfn userln");
 
 			JSONRole.addSharedAccountRole(roleTitle = "Update Role");
 
@@ -1894,13 +1887,10 @@ definition {
 		}
 
 		task ("When assign the user to account with update permission of role") {
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Update Role",
-				accountUserName = "userfn userln");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Update Role",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Then in the accounts table Account Name can be upated") {

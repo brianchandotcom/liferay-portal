@@ -51,7 +51,8 @@ public class PortletConfigurationImporterRegistry {
 	protected void unsetPortletConfigurationImporter(
 		PortletConfigurationImporter portletConfigurationImporter) {
 
-		_portletConfigurationImporters.remove(portletConfigurationImporter);
+		_portletConfigurationImporters.remove(
+			portletConfigurationImporter.getPortletName());
 	}
 
 	private final Map<String, PortletConfigurationImporter>

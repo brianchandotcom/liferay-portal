@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + MercanetCommercePaymentMethodConstants.SERVLET_PATH + "/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.commerce.payment.method.mercanet.internal.servlet.filter.CommercePaymentMethodMercanetAuthVerifierFilter",

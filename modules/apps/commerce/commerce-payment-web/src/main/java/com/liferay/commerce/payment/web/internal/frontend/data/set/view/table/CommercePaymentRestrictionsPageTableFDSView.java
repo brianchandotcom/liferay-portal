@@ -56,7 +56,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommercePaymentMethodGroupRelFDSNames.PAYMENT_RESTRICTIONS,
 		"frontend.data.set.name=" + CommercePaymentMethodGroupRelFDSNames.PAYMENT_RESTRICTIONS

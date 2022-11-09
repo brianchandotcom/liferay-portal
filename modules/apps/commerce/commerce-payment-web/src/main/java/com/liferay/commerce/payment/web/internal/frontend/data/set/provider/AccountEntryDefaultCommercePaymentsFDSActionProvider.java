@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Crescenzo Rega
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + CommercePaymentMethodGroupRelFDSNames.ACCOUNT_ENTRY_DEFAULT_PAYMENTS,
 	service = FDSActionProvider.class
 )

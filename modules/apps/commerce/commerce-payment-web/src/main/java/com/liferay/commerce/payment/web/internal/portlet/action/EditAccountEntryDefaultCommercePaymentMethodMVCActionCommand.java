@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Crescenzo Rega
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,

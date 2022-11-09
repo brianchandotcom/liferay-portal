@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = "commerce.payment.engine.method.key=" + AuthorizeNetCommercePaymentMethod.KEY,
 	service = CommercePaymentRequestProvider.class
 )

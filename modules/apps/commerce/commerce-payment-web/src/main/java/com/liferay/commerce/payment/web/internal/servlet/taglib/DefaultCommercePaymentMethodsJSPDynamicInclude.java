@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  * @author Crescenzo Rega
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class DefaultCommercePaymentMethodsJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

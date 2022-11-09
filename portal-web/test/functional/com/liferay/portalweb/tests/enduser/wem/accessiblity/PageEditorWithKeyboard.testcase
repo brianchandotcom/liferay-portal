@@ -193,6 +193,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-167457. The page creator shouldn't be able to add multiple Blogs widget to page via keyboard."
+	@priority = "3"
+	test CannotAddMultipleBlogsWidgetToPageViaKeyboard {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator adds a Blogs widget to page via keyboard") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+				value1 = "Blogs");
+
+			KeyPress(
+				ariaLabel = "Add Blogs",
+				key_collectionName = "Collaboration",
+				key_fragmentName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			KeyPress(
+				ariaLabel = "Add Blogs",
+				key_collectionName = "Collaboration",
+				key_fragmentName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator should not see the plus icon on Blogs widget") {
+			AssertElementNotPresent(
+				ariaLabel = "Add Blogs",
+				key_collectionName = "Collaboration",
+				key_fragmentName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
+
+			PageEditor.viewFragment(fragmentName = "Blogs");
+		}
+	}
+
 	@description = "This is a test for LPS-165776. The page creator could reorder fragments on page editor via Browser panel with keyboard."
 	@priority = "5"
 	test ReorderElements {

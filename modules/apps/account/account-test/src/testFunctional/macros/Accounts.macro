@@ -972,7 +972,7 @@ definition {
 	}
 
 	macro editPG {
-		LexiconEntry.gotoEntryMenuItem(
+		Accounts.goToEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${accountName}");
 

@@ -1526,7 +1526,8 @@ public class ObjectEntryLocalServiceImpl
 			if (Objects.equals(
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST) &&
-				!values.containsKey(objectField.getName())) {
+				!values.containsKey(objectField.getName()) &&
+				Validator.isNotNull(objectField.getDefaultValue())) {
 
 				values.put(
 					objectField.getName(), objectField.getDefaultValue());

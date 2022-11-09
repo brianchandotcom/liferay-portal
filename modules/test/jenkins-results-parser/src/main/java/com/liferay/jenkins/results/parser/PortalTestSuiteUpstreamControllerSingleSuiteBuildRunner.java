@@ -137,14 +137,9 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 		invocationParameters.put(
 			"PORTAL_GITHUB_URL", buildData.getPortalGitHubURL());
-
-		String testPortalBuildProfile = getTestPortalBuildProfile(
-			testSuiteName);
-
-		if (testPortalBuildProfile != null) {
-			invocationParameters.put(
-				"TEST_PORTAL_BUILD_PROFILE", testPortalBuildProfile);
-		}
+		invocationParameters.put(
+			"TEST_PORTAL_BUILD_PROFILE",
+			getTestPortalBuildProfile(testSuiteName));
 
 		String testrayProjectName = buildData.getTestrayProjectName();
 
@@ -157,19 +152,31 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 				"TESTRAY_ROUTINE_NAME", buildData.getTestrayRoutineName());
 		}
 
+		invocationParameters.put(
+			"TESTRAY_SLACK_CHANNELS", getTestraySlackChannels(testSuiteName));
+		invocationParameters.put(
+			"TESTRAY_SLACK_ICON_EMOJI",
+			getTestraySlackIconEmoji(testSuiteName));
+		invocationParameters.put(
+			"TESTRAY_SLACK_USERNAME", getTestraySlackUsername(testSuiteName));
+
 		invocationParameters.putAll(buildData.getBuildParameters());
 
 		for (Map.Entry<String, String> invocationParameter :
 				invocationParameters.entrySet()) {
 
-			if (invocationParameter.getValue() == null) {
+			String invocationParameterValue = invocationParameter.getValue();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					invocationParameterValue)) {
+
 				continue;
 			}
 
 			sb.append("&");
 			sb.append(invocationParameter.getKey());
 			sb.append("=");
-			sb.append(invocationParameter.getValue());
+			sb.append(invocationParameterValue);
 		}
 
 		try {

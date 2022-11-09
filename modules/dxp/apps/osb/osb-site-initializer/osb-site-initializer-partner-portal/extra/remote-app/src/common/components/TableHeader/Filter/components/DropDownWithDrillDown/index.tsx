@@ -69,7 +69,8 @@ const DropDownWithDrillDown = ({
 				);
 
 				previous?.focus();
-			} else {
+			}
+			else {
 				const itemEl = innerRef.current.querySelector<HTMLElement>(
 					'.drilldown-current a.dropdown-item, .drilldown-current button.dropdown-item'
 				);
@@ -137,7 +138,8 @@ const DropDownWithDrillDown = ({
 						onKeyDown={(event) => {
 							if (event.key !== 'Enter') {
 								isKeyboardRef.current = false;
-							} else {
+							}
+							else {
 								isKeyboardRef.current = true;
 							}
 						}}

@@ -1,0 +1,20 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "org.mvel", name: "mvel2", version: "2.1.0.drools16"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	originalLibModuleName = "mvel2"
+}

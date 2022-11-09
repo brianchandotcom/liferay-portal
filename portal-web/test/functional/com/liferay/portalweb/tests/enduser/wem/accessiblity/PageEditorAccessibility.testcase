@@ -84,6 +84,35 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166296. The sidebar buttons should be on focus after close the panel."
+	@priority = "3"
+	test FocusOnSidebarButtonAfterClosePanel {
+		task ("Given a page creator accesses the Browser panel of content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				key_tabName = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		}
+
+		task ("When the page creator closes the panel") {
+			Click(
+				key_text = "times",
+				locator1 = "Icon#ANY");
+		}
+
+		task ("Then the browser button should be on focus") {
+			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__sidebar__buttons')]//*[@*='Browser']");
+		}
+	}
+
 	@description = "This is a test for LPS-165356. The Skip to Product Menu link only be focusable when the Product Menu is open."
 	@priority = "3"
 	test FocusOnSkipToProductMenuWhenProductMenuOpen {

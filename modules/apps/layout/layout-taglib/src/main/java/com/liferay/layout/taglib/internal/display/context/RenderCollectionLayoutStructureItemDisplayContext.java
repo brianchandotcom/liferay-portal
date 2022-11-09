@@ -28,7 +28,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
@@ -213,10 +213,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		InfoListRendererTracker infoListRendererTracker =
-			ServletContextUtil.getInfoListRendererTracker();
+		InfoListRendererRegistry infoListRendererRegistry =
+			ServletContextUtil.getInfoListRendererRegistry();
 
-		return infoListRendererTracker.getInfoListRenderer(
+		return infoListRendererRegistry.getInfoListRenderer(
 			_collectionStyledLayoutStructureItem.getListStyle());
 	}
 

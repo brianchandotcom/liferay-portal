@@ -36,7 +36,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -289,7 +289,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		InfoListRenderer<Object> infoListRenderer =
 			(InfoListRenderer<Object>)
-				_infoListRendererTracker.getInfoListRenderer(listStyle);
+				_infoListRendererRegistry.getInfoListRenderer(listStyle);
 
 		if (infoListRenderer != null) {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -509,7 +509,7 @@ public class GetCollectionFieldMVCResourceCommand
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoListRendererTracker _infoListRendererTracker;
+	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

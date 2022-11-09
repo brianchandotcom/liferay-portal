@@ -52,4 +52,24 @@ definition {
 
 	}
 
+    @description = "This is a test for LPS-165997 - Verify if as an administrator can not save roles without options selected"
+	@priority = "4"
+	test CanNotSaveRolesWithoutOptions {
+		task ("Given that the user tries to save roles without options selected") {
+			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+
+			TestrayManageUser.changeRole(roleName = "Administrator");
+
+            TestrayManageUser.changeRole(roleName = "Power User");
+
+            TestrayManageUser.changeRole(roleName = "User");
+
+			Button.clickSave();
+		}
+
+        task ("Then the error message should appear") {
+            Alert.viewErrorMessage(errorMessage = "Please, select one or more roles.");
+        }
+	}
+
 }

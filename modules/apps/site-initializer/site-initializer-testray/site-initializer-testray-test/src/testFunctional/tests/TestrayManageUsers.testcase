@@ -34,25 +34,40 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-166562 - Verify if can't see the Testray users in the Testray user permission"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test PermissionTestrayUserCanNotViewUsersList {
-		
-        // TODO LPS-166562 PermissionTestrayUserCanNotViewUsersList pending implementation
-
-	}
-
 	@description = "This is a test for LPS-162987 - Verify if as an Administrador can change his Role"
-    @ignore = "Test Stub"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test CanChangeRole {
-		
-        // TODO LPS-162987 CanChangeRole pending implementation
+
+		// TODO LPS-162987 CanChangeRole pending implementation
 
 	}
 
-    @description = "This is a test for LPS-165997 - Verify if as an administrator can not save roles without options selected"
+	@description = "This is a test for LPS-162986 - Verify if as an User can edit account information"
+	@priority = "4"
+	test CanEditAccountInformation {
+		task ("Given that the user change the account informations") {
+			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+
+			TestrayManageUser.editUserInformation(
+				userEmailAddressEdit = "testadmin@liferay.com",
+				userFirstNameEdit = "changedfirstname",
+				userLastNameEdit = "Updateln",
+				userScreenNameEdit = "testscreen");
+
+			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+		}
+
+		task ("Then the account information is displayed") {
+			TestrayManageUser.viewUserInfomation(
+				userEmailAddress = "testadmin@liferay.com",
+				userFirstName = "changedfirstname",
+				userLastName = "Updateln",
+				userScreenName = "testscreen");
+		}
+	}
+
+	@description = "This is a test for LPS-165997 - Verify if as an administrator can not save roles without options selected"
 	@priority = "4"
 	test CanNotSaveRolesWithoutOptions {
 		task ("Given that the user tries to save roles without options selected") {
@@ -60,40 +75,25 @@ definition {
 
 			TestrayManageUser.changeRole(roleName = "Administrator");
 
-            TestrayManageUser.changeRole(roleName = "Power User");
+			TestrayManageUser.changeRole(roleName = "Power User");
 
-            TestrayManageUser.changeRole(roleName = "User");
+			TestrayManageUser.changeRole(roleName = "User");
 
 			Button.clickSave();
 		}
 
-        task ("Then the error message should appear") {
-            Alert.viewErrorMessage(errorMessage = "Please, select one or more roles.");
-        }
+		task ("Then the error message should appear") {
+			Alert.viewErrorMessage(errorMessage = "Please, select one or more roles.");
+		}
 	}
 
-    @description = "This is a test for LPS-162986 - Verify if as an User can edit account information"
+	@description = "This is a test for LPS-166562 - Verify if can't see the Testray users in the Testray user permission"
+	@ignore = "Test Stub"
 	@priority = "4"
-	test CanEditAccountInformation {
-		task ("Given that the user change the account informations") {
-			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+	test PermissionTestrayUserCanNotViewUsersList {
 
-            TestrayManageUser.editUserInformation(
-                userEmailAddressEdit = "testadmin@liferay.com",
-                userScreenNameEdit = "testscreen",
-                userFirstNameEdit = "changedfirstname",
-                userLastNameEdit = "Updateln");
+		// TODO LPS-166562 PermissionTestrayUserCanNotViewUsersList pending implementation
 
-            TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
-        }
-
-        task ("Then the account information is displayed") {
-			TestrayManageUser.viewUserInfomation(
-                userEmailAddress = "testadmin@liferay.com",
-                userFirstName = "changedfirstname",
-                userLastName = "Updateln",
-                userScreenName = "testscreen");
-		}
 	}
 
 }

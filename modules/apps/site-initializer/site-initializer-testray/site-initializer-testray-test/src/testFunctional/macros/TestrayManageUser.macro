@@ -1,6 +1,12 @@
 definition {
 
-    macro editUserInformation {
+	macro changeRole {
+		Click(
+			key_fieldLabel = "${roleName}",
+			locator1 = "Checkbox#CHECKBOX_LABEL");
+	}
+
+	macro editUserInformation {
 		AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
 
 		if (isSet(userFirstNameEdit)) {
@@ -15,7 +21,7 @@ definition {
 				value1 = "${userLastNameEdit}");
 		}
 
-        if (isSet(userEmailAddressEdit)) {
+		if (isSet(userEmailAddressEdit)) {
 			Type(
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 				value1 = "${userEmailAddressEdit}");
@@ -27,30 +33,25 @@ definition {
 				value1 = "${userScreenNameEdit}");
 		}
 
-        Button.clickSave();
+		Button.clickSave();
 	}
 
-    macro viewUserInfomation {
-        AssertTextEquals(
+	macro viewUserInfomation {
+		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 			value1 = "${userLastName}");
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
 			value1 = "${userEmailAddress}");
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 			value1 = "${userScreenName}");
 
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
 			value1 = "${userFirstName}");
-    }
+	}
 
-    macro changeRole {
-        Click(
-			key_fieldLabel = "${roleName}",
-			locator1 = "Checkbox#CHECKBOX_LABEL");
-    }
 }

@@ -124,6 +124,16 @@ definition {
 		}
 	}
 
+	macro openToAddTemplate {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_template.jsp");
+	}
+
 	macro previewTemplate {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(

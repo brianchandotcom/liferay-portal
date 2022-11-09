@@ -822,6 +822,48 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "Verify if with 'Limit to one submit per user' enabled, the translation options are the same as those present in the Form Builder"
+	@priority = "3"
+	test CheckTranslationOptionsOneSubmissionPerUserMessage {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Click(locator1 = "Form#LANGUAGE_ADD_BUTTON");
+
+		Click(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_FORM_SELECT");
+
+		AssertElementPresent(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_FORM_SELECTED");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Click(
+			key_checkboxOption = "Limit to One Submission per User",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+
+		Click(
+			key_fieldLabel = "Header",
+			locator1 = "Form#LANGUAGE_ICON");
+
+		AssertElementPresent(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_ICON_SELECTED");
+
+		Click(
+			key_fieldLabel = "Body",
+			locator1 = "Form#LANGUAGE_ICON");
+
+		AssertElementPresent(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_ICON_SELECTED");
+	}
+
 	@description = "Verify that a Form's Success Page can be restored"
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {

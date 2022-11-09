@@ -30,6 +30,11 @@
 	<td>//a[contains(@class, 'text-paragraph') and contains(text(),'Go to Workspace')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CLOUD_MODAL</td>
+	<td>//*[contains(@class, ' modal-dialog')]//*[contains(text(),'already submitted the Analytics Cloud')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

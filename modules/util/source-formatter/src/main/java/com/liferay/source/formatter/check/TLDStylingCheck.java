@@ -56,7 +56,7 @@ public class TLDStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String description = descriptionElement.getText();
+			String description = descriptionElement.asXML();
 
 			int x = description.indexOf("replaced by");
 

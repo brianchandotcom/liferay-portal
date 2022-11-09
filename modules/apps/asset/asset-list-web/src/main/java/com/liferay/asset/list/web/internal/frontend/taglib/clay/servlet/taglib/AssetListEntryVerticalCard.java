@@ -46,8 +46,7 @@ public class AssetListEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return _assetListDisplayContext.
-			getAssetListEntryActionDropdownItemsProvider(_assetListEntry);
+		return _assetListDisplayContext.getActionDropdownItems(_assetListEntry);
 	}
 
 	@Override

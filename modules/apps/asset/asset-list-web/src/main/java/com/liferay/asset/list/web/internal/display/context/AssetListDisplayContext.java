@@ -92,6 +92,19 @@ public class AssetListDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public List<DropdownItem> getActionDropdownItems(
+		AssetListEntry assetListEntry) {
+
+		AssetListEntryActionDropdownItemsProvider
+			assetListEntryActionDropdownItemsProvider =
+				new AssetListEntryActionDropdownItemsProvider(
+					assetListEntry, _liferayPortletRequest,
+					_liferayPortletResponse);
+
+		return assetListEntryActionDropdownItemsProvider.
+			getActionDropdownItems();
+	}
+
 	public List<DropdownItem> getAddAssetListEntryDropdownItems() {
 		return DropdownItemListBuilder.add(
 			_getAddAssetListEntryDropdownItemUnsafeConsumer(
@@ -191,19 +204,6 @@ public class AssetListDisplayContext {
 			getAssetListEntryId());
 
 		return _assetListEntry;
-	}
-
-	public List<DropdownItem> getAssetListEntryActionDropdownItemsProvider(
-		AssetListEntry assetListEntry) {
-
-		AssetListEntryActionDropdownItemsProvider
-			assetListEntryActionDropdownItemsProvider =
-				new AssetListEntryActionDropdownItemsProvider(
-					assetListEntry, _liferayPortletRequest,
-					_liferayPortletResponse);
-
-		return assetListEntryActionDropdownItemsProvider.
-			getActionDropdownItems();
 	}
 
 	public long getAssetListEntryId() {

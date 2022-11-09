@@ -87,7 +87,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-									dropdownItems="<%= assetListDisplayContext.getAssetListEntryActionDropdownItemsProvider(assetListEntry) %>"
+									dropdownItems="<%= assetListDisplayContext.getActionDropdownItems(assetListEntry) %>"
 									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
@@ -150,7 +150,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-									dropdownItems="<%= assetListDisplayContext.getAssetListEntryActionDropdownItemsProvider(assetListEntry) %>"
+									dropdownItems="<%= assetListDisplayContext.getActionDropdownItems(assetListEntry) %>"
 									propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>

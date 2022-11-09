@@ -20,6 +20,7 @@ export default function EditObjectAction({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	validateExpressionURL,
@@ -29,6 +30,7 @@ interface IProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
 	validateExpressionURL: string;

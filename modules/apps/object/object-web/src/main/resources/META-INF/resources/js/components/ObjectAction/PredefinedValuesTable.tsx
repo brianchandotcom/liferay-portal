@@ -34,9 +34,11 @@ import './PredefinedValuesTable.scss';
 
 export default function PredefinedValuesTable({
 	currentObjectDefinitionFields,
+	disableRequiredChecked,
 	errors,
 	objectFieldsMap,
 	setValues,
+	title,
 	validateExpressionURL,
 	values,
 }: IProps) {
@@ -223,6 +225,7 @@ export default function PredefinedValuesTable({
 
 			parentWindow.Liferay.fire('openModalAddColumns', {
 				disableRequired: true,
+				disableRequiredChecked,
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
 				items: currentObjectDefinitionFields,
@@ -268,6 +271,7 @@ export default function PredefinedValuesTable({
 		};
 	}, [
 		currentObjectDefinitionFields,
+		disableRequiredChecked,
 		objectFieldsMap,
 		predefinedValues,
 		setValues,
@@ -278,7 +282,7 @@ export default function PredefinedValuesTable({
 		<>
 			<Card
 				className="lfr-object-web__predefined-values-card"
-				title={Liferay.Language.get('predefined-values')}
+				title={title ?? Liferay.Language.get('predefined-values')}
 				viewMode="no-margin"
 			>
 				<div className="lfr-object-web__predefined-values-table">
@@ -348,10 +352,12 @@ export default function PredefinedValuesTable({
 
 interface IProps {
 	currentObjectDefinitionFields: ObjectField[];
+	disableRequiredChecked?: boolean;
 	errors: {[key: string]: string};
 	objectFieldsMap: Map<string, ObjectField>;
 	predefinedValues?: PredefinedValue[];
 	setValues: (params: Partial<ObjectAction>) => void;
+	title?: string;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }

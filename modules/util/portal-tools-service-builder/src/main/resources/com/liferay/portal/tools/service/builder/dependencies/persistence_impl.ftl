@@ -273,6 +273,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private FinderPath _finderPathWithPaginationGetDescendants;
 	</#if>
 
+	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		@Override
+		public FinderPath getFinderPathWithoutPaginationFindAll() {
+			return _finderPathWithoutPaginationFindAll;
+		}
+
+		@Override
+		public FinderPath getFinderPathCountAll() {
+			return _finderPathCountAll;
+		}
+	</#if>
+
 	<#list entity.entityFinders as entityFinder>
 		<#include "persistence_impl_finder_finder_path.ftl">
 

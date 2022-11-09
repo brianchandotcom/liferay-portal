@@ -14,14 +14,14 @@
 
 package com.liferay.portal.servlet.filters.password.modified;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
-import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Marta Medio
+ * @author Stian Sigvartsen
  */
 public class PasswordModifiedFilter extends BasePortalFilter {
 
@@ -43,24 +44,31 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (_isPasswordModified(httpServletRequest)) {
-			AuthenticatedSessionManagerUtil.logout(
-				httpServletRequest, httpServletResponse);
+		String requestPath = _getRequestPath(httpServletRequest);
 
-			if (StringUtil.equals(
-					httpServletRequest.getMethod(), HttpMethods.GET)) {
+		if (!requestPath.equals("/c/portal/logout") &&
+			_isPasswordModified(httpServletRequest)) {
 
-				httpServletResponse.sendRedirect(
-					PortalUtil.getCurrentCompleteURL(httpServletRequest));
-			}
-			else {
-				httpServletResponse.sendRedirect(
-					PortalUtil.getPortalURL(httpServletRequest));
-			}
+			httpServletResponse.sendRedirect(
+				PortalUtil.getPathMain() + "/portal/logout");
 		}
 		else {
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}
+	}
+
+	private String _getRequestPath(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+
+		String contextPath = httpServletRequest.getContextPath();
+
+		if (Validator.isNotNull(contextPath) &&
+			!contextPath.equals(StringPool.SLASH)) {
+
+			requestURI = requestURI.substring(contextPath.length());
+		}
+
+		return HttpComponentsUtil.removePathParameters(requestURI);
 	}
 
 	private boolean _isPasswordModified(HttpServletRequest httpServletRequest) {

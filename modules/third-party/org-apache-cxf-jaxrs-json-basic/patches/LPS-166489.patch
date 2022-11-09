@@ -1,0 +1,36 @@
+diff --git a/org/apache/cxf/jaxrs/json/basic/JsonMapObjectReaderWriter.java b/org/apache/cxf/jaxrs/json/basic/JsonMapObjectReaderWriter.java
+index 7be7b550d6eb..fb65a3b85ba5 100644
+--- a/org/apache/cxf/jaxrs/json/basic/JsonMapObjectReaderWriter.java
++++ b/org/apache/cxf/jaxrs/json/basic/JsonMapObjectReaderWriter.java
+@@ -22,6 +22,7 @@ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+ import java.util.Arrays;
++import java.io.UncheckedIOException;
+ import java.util.Collection;
+ import java.util.Iterator;
+ import java.util.LinkedHashMap;
+@@ -180,6 +181,9 @@ public class JsonMapObjectReaderWriter {
+             int from = json.charAt(i) == DQUOTE ? i + 1 : i;
+             String name = json.substring(from, closingQuote);
+             int sepIndex = json.indexOf(COLON, closingQuote + 1);
++            if (sepIndex == -1) {
++                throw new UncheckedIOException(new IOException("Error in parsing json"));
++            }
+ 
+             int j = 1;
+             while (Character.isWhitespace(json.charAt(sepIndex + j))) {
+@@ -245,7 +249,7 @@ public class JsonMapObjectReaderWriter {
+             }
+         }
+ 
+-        if (value instanceof String) {
++        if (value instanceof String && ((String)value).contains("\\/")) {
+             // Escape an encoded forward slash
+             value = ((String) value).replace("\\/", "/");
+         }
+@@ -361,3 +365,4 @@ public class JsonMapObjectReaderWriter {
+     }
+ 
+ }
++/* @generated */

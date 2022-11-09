@@ -12,7 +12,7 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 /**
  * When Hugging Face is selected as the Sentence Transform Provider, this input
@@ -36,6 +36,8 @@ function ModelAutocomplete({
 		networkStatus: 4,
 	}));
 	const [showDropDown, setShowDropDown] = useState(false);
+
+	const currentItemSelectedRef = useRef(value);
 
 	const {resource} = useResource({
 		fetchOptions: {
@@ -64,17 +66,6 @@ function ModelAutocomplete({
 		},
 	});
 
-	const _handleInputBlur = () => {
-		if (!autocompleteSearchValue) {
-			onChange('');
-		}
-		else if (value !== autocompleteSearchValue) {
-			setAutocompleteSearchValue(value);
-		}
-
-		onBlur();
-	};
-
 	const _handleInputChange = (event) => {
 
 		// Immediately show loading spinner when typing.
@@ -85,6 +76,11 @@ function ModelAutocomplete({
 				loading: true,
 				networkStatus: 4,
 			});
+		}
+
+		if (!event.target.value) {
+			currentItemSelectedRef.current = '';
+			onChange('');
 		}
 
 		setAutocompleteSearchValue(event.target.value);
@@ -106,6 +102,7 @@ function ModelAutocomplete({
 	};
 
 	const _handleItemChange = (item) => {
+		currentItemSelectedRef.current = item;
 		onChange(item);
 
 		setAutocompleteSearchValue(item);
@@ -148,13 +145,19 @@ function ModelAutocomplete({
 		}
 	};
 
+	useEffect(() => {
+		if (!showDropDown) {
+			setAutocompleteSearchValue(currentItemSelectedRef.current);
+		}
+	}, [showDropDown]);
+
 	return (
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
 				aria-label={label}
 				id={name}
 				name={name}
-				onBlur={_handleInputBlur}
+				onBlur={onBlur}
 				onChange={_handleInputChange}
 				onFocus={_handleInputFocus}
 				onKeyDown={_handleInputKeyDown}

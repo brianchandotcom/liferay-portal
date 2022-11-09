@@ -110,7 +110,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 				}
 
 				if (_transactionalPortalCacheEnabled &&
-					isTransactionalPortalCache(portalCacheName)) {
+					_isTransactionalPortalCache(portalCacheName)) {
 
 					value = new TransactionalPortalCache<>(value, mvcc);
 				}
@@ -233,19 +233,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract void initPortalCacheManager();
 
-	protected boolean isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : _transactionalPortalCacheNames) {
-			if (StringUtil.wildcardMatches(
-					portalCacheName, namePattern, CharPool.QUESTION,
-					CharPool.STAR, CharPool.PERCENT, true)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected void reconfigPortalCache(
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
@@ -312,6 +299,19 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			portalCache.registerPortalCacheListener(
 				portalCacheListener, portalCacheListenerScope);
 		}
+	}
+
+	private boolean _isTransactionalPortalCache(String portalCacheName) {
+		for (String namePattern : _transactionalPortalCacheNames) {
+			if (StringUtil.wildcardMatches(
+					portalCacheName, namePattern, CharPool.QUESTION,
+					CharPool.STAR, CharPool.PERCENT, true)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _verifyMVCCPortalCache(

@@ -109,7 +109,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 						(LowLevelCache<K, MVCCModel>)value);
 				}
 
-				if (isTransactionalPortalCacheEnabled() &&
+				if (_transactionalPortalCacheEnabled &&
 					isTransactionalPortalCache(portalCacheName)) {
 
 					value = new TransactionalPortalCache<>(value, mvcc);
@@ -128,14 +128,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	@Override
 	public String getPortalCacheManagerName() {
 		return _portalCacheManagerName;
-	}
-
-	public String[] getTransactionalPortalCacheNames() {
-		return _transactionalPortalCacheNames;
-	}
-
-	public boolean isTransactionalPortalCacheEnabled() {
-		return _transactionalPortalCacheEnabled;
 	}
 
 	@Override
@@ -242,7 +234,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected abstract void initPortalCacheManager();
 
 	protected boolean isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : getTransactionalPortalCacheNames()) {
+		for (String namePattern : _transactionalPortalCacheNames) {
 			if (StringUtil.wildcardMatches(
 					portalCacheName, namePattern, CharPool.QUESTION,
 					CharPool.STAR, CharPool.PERCENT, true)) {

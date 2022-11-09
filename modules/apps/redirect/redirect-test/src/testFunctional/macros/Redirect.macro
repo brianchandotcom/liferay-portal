@@ -145,7 +145,7 @@ definition {
 		if ("${patternIndex}" != "0") {
 			Click(
 				key_index = "${patternIndex}",
-				locator1 = "Icon#PLUS_REPEATABLE");
+				locator1 = "Button#ADD_REPEATABLE");
 		}
 
 		Type(
@@ -409,7 +409,7 @@ definition {
 	macro removePattern {
 		Click(
 			key_index = "${index}",
-			locator1 = "Icon#REMOVE_REPEATABLE");
+			locator1 = "Button#REMOVE_REPEATABLE");
 	}
 
 	macro view404URLs {

@@ -19,9 +19,9 @@ package com.liferay.portal.search.sort;
  */
 public interface SortFieldBuilder {
 
-	public String getSortField(String entityClassName, String orderByCol);
+	public String getSortField(Class<?> entityClass, String orderByCol);
 
 	public String getSortField(
-		String entityClassName, String orderByCol, int sortType);
+		Class<?> entityClass, String orderByCol, int sortType);
 
 }

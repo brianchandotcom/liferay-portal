@@ -1007,9 +1007,9 @@ definition {
 
 			Button.clickPublish();
 
-			AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
-
 			Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+			AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
 		}
 
 		task ("Assert could delete fragment upgrading from 7.2") {

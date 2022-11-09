@@ -76,9 +76,10 @@ processResources {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {
+			File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")
 			File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
 
-			if (!viteConfigTSFile.exists()) {
+			if (!viteConfigJSFile.exists() && !viteConfigTSFile.exists()) {
 				from(new File(projectDir, "extra/remote-app/build/static/css")) {
 					include "*.css"
 				}
@@ -172,9 +173,10 @@ zipExtraRemoteApp {
 		destinationDir new File(buildDir, "dist")
 
 		into("remote-app/" + webContextPath) {
+			File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")
 			File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
 
-			if (!viteConfigTSFile.exists()) {
+			if (!viteConfigJSFile.exists() && !viteConfigTSFile.exists()) {
 				from(new File(projectDir, "extra/remote-app/build/static/css")) {
 					include "*.css"
 				}

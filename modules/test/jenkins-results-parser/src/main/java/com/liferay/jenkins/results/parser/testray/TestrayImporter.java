@@ -1600,10 +1600,14 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackChannels(File testBaseDir) {
-		JobProperty jobProperty = _getJobProperty(
-			"testray.slack.channels", testBaseDir);
+		String slackChannels = System.getenv("TESTRAY_SLACK_CHANNELS");
 
-		String slackChannels = jobProperty.getValue();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
+			JobProperty jobProperty = _getJobProperty(
+				"testray.slack.channels", testBaseDir);
+
+			slackChannels = jobProperty.getValue();
+		}
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
 			slackChannels = "testray-reports";
@@ -1613,10 +1617,14 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackIconEmoji(File testBaseDir) {
-		JobProperty jobProperty = _getJobProperty(
-			"testray.slack.icon.emoji", testBaseDir);
+		String slackIconEmoji = System.getenv("TESTRAY_SLACK_ICON_EMOJI");
 
-		String slackIconEmoji = jobProperty.getValue();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(slackIconEmoji)) {
+			JobProperty jobProperty = _getJobProperty(
+				"testray.slack.icon.emoji", testBaseDir);
+
+			slackIconEmoji = jobProperty.getValue();
+		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackIconEmoji)) {
 			return _replaceSlackEnvVars(slackIconEmoji, testBaseDir);
@@ -1643,10 +1651,14 @@ public class TestrayImporter {
 	}
 
 	private String _getSlackUsername(File testBaseDir) {
-		JobProperty jobProperty = _getJobProperty(
-			"testray.slack.username", testBaseDir);
+		String slackUsername = System.getenv("TESTRAY_SLACK_USERNAME");
 
-		String slackUsername = jobProperty.getValue();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(slackUsername)) {
+			JobProperty jobProperty = _getJobProperty(
+				"testray.slack.username", testBaseDir);
+
+			slackUsername = jobProperty.getValue();
+		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackUsername)) {
 			return _replaceSlackEnvVars(slackUsername, testBaseDir);

@@ -49,7 +49,7 @@ public class ImportPortletConfigurationIcon
 
 	@Override
 	public String getJspPath() {
-		return "/sxp_blueprint_admin/view_import.jsp";
+		return "/sxp_blueprint_admin/configuration/icon/import.jsp";
 	}
 
 	@Override

@@ -57,4 +57,54 @@ definition {
 		}
 	}
 
+	@description = "Verify if an osgi config file exists, when a config is updated via UI, then the config file is updated with the new values."
+	@priority = "3"
+	test ConfigAddedViaUIUpdatesExistingOSGIConfigFile {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration.config";
+		property osgi.module.configurations = "checkInterval=I\"33\"";
+		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigAddedViaUIUpdatesExistingOSGIConfigFile";
+
+		task ("Given an osgi config file exists for a specific config") {
+			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
+
+			OSGiConfig.assertTextInOSGIConfig(
+				osgiConfigFileName = "${configName}.config",
+				text = "checkInterval=I\"33\"");
+		}
+
+		task ("When the config is updated via UI") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Catalog",
+				configurationName = "SKUs",
+				configurationScope = "System Scope");
+
+			Type(
+				key_text = "Check Interval",
+				locator1 = "TextInput#ANY",
+				value1 = "44");
+
+			Button.clickUpdate();
+		}
+
+		task ("Then the config is updated in the database") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "checkInterval=I\"44\"");
+		}
+
+		task ("And a second config entry is not added to the database") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "1");
+		}
+
+		task ("And the OSGI config file is updated to match the database entry") {
+			OSGiConfig.assertTextInOSGIConfig(
+				osgiConfigFileName = "${configName}.config",
+				text = "checkInterval=I\"44\"");
+		}
+	}
+
 }

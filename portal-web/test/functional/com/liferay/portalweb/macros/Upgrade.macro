@@ -586,6 +586,8 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
+		Organization.gotoCP(orgName = "Organization1");
+
 		Organization.assignUser(
 			orgName = "Sub-organization1",
 			userFirstName = "user2",
@@ -624,6 +626,8 @@ definition {
 			orgType = "Organization");
 
 		Organization.openOrganizationsAdmin();
+
+		Organization.gotoCP(orgName = "Organization1");
 
 		Organization.gotoCP(orgName = "Sub-organization-Pre");
 

@@ -1806,6 +1806,59 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "user2");
 	}
 
+	@description = "This test asserts that a user with Update permission for account entries can successfully update an account entry"
+	@priority = "5"
+	test CanUpdateAccountWithUpdatePermissions {
+		task ("Given a user who is a member of an account and has permissions to update account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.addSharedAccountRole(roleTitle = "Update Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Update Role",
+				roleType = "account");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Update Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When the user logs in and updates the account entry") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			Accounts.editPG(
+				accountName = "Account Name",
+				accountNameEdit = "Edit Account Name");
+		}
+
+		task ("Then the edit is saved successfully") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewEntryName(rowEntry = "Edit Account Name");
+		}
+	}
+
 	@description = "This test asserts that a user with View permission for account entries can view, but not be able to perform any other actions"
 	@priority = "5"
 	test CanViewAccountWithViewPermissions {
@@ -1854,59 +1907,6 @@ definition {
 			for (var menuItem : list "Edit,Manage Users,Manage Organizations,Deactivate,Delete") {
 				MenuItem.viewNotPresent(menuItem = "${menuItem}");
 			}
-		}
-	}
-
-	@description = "This test asserts that a user with Update permission for account entries can successfully update an account entry"
-	@priority = "5"
-	test CanUpdateAccountWithUpdatePermissions {
-		task ("Given add account a new user and account role with view permission") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Account Name",
-				accountEntryType = "Business");
-
-			JSONAccountEntryUser.addAccountEntryUser(
-				accountEntryName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-
-			JSONRole.addSharedAccountRole(roleTitle = "Update Role");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.account.model.AccountEntry",
-				roleTitle = "Update role",
-				roleType = "account");
-		}
-
-		task ("When assign the user to account with update permission of role") {
-			JSONAccountRole.associateUser(
-				accountEntryName = "Account Name",
-				accountRole = "Update Role",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Then in the accounts table Account Name can be upated") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
-			Navigator.gotoPage(pageName = "2B Account Page");
-
-			Accounts.editPG(
-				accountName = "Account Name",
-				accountNameEdit = "Edit Account Name");
-
-			Navigator.gotoPage(pageName = "2B Account Page");
-
-			LexiconEntry.viewEntryName(rowEntry = "Edit Account Name");
 		}
 	}
 

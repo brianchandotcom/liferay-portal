@@ -821,14 +821,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 	}
 
-	public void clearInputWebElement(WebElement webElement) {
-		String webElementValue = webElement.getAttribute("value");
-
-		for (int i = 0; i < webElementValue.length(); i++) {
-			webElement.sendKeys(Keys.BACK_SPACE);
-		}
-	}
-
 	@Override
 	public void click(String locator) {
 		if (locator.contains("x:")) {
@@ -2875,7 +2867,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		int retryCount = 0;
 
 		while (retryCount < maxRetries) {
-			clearInputWebElement(webElement);
+			webElement.clear();
 
 			if (retryCount == 0) {
 				typeKeys(locator, value);

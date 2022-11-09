@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -98,8 +97,7 @@ public class RelationshipObjectFieldBusinessType
 
 		Object value = values.get(objectField.getName());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801")) ||
-			!Objects.equals(
+		if (!Objects.equals(
 				objectField.getRelationshipType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
 			(GetterUtil.getLong(value) > 0)) {

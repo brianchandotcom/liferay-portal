@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -344,10 +343,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				String objectRelationshipName,
 				String relatedExternalReferenceCode)
 		throws Exception {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164801"))) {
-			throw new UnsupportedOperationException();
-		}
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipService.getObjectRelationship(

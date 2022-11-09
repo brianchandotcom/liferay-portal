@@ -17,6 +17,7 @@ package com.liferay.project.templates.rest;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.File;
@@ -48,7 +49,8 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.1-1"}
+				{"7.0.10.17", "dxp"}, {"7.1.10.7", "dxp"}, {"7.2.10.7", "dxp"},
+				{"7.3.7", "portal"}, {"7.4.1-1", "portal"}
 			});
 	}
 
@@ -68,8 +70,9 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesRestTest(String liferayVersion) {
+	public ProjectTemplatesRestTest(String liferayVersion, String product) {
 		_liferayVersion = liferayVersion;
+		_product = product;
 	}
 
 	@Test
@@ -86,13 +89,19 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion);
+			_liferayVersion, "--product", _product);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api");
+		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
@@ -146,8 +155,9 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-DclassName=MyRest", "-Dpackage=my.rest",
-			"-DliferayVersion=" + _liferayVersion);
+			mavenExecutor, "-DclassName=MyRest",
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=my.rest",
+			"-Dproduct=" + _product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd",
@@ -170,5 +180,6 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 	private static URI _gradleDistribution;
 
 	private final String _liferayVersion;
+	private final String _product;
 
 }

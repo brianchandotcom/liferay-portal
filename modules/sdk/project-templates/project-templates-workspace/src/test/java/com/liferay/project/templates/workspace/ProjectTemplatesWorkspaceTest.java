@@ -108,7 +108,7 @@ public class ProjectTemplatesWorkspaceTest
 
 		File modulesProjectDir = buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "mvc-portlet",
-			"foo-portlet", "--product", "dxp");
+			"foo-portlet", "--liferay-product", "dxp");
 
 		testContains(modulesProjectDir, "build.gradle", "release.dxp.api");
 
@@ -370,8 +370,8 @@ public class ProjectTemplatesWorkspaceTest
 
 		File workspaceDir = buildTemplateWithMaven(
 			destinationDir, destinationDir, "workspace", "mavenWS", "com.test",
-			mavenExecutor, "-DliferayVersion=" + liferayVersion,
-			"-Dpackage=com.test", "-Dproduct=dxp");
+			mavenExecutor, "-DliferayProduct=dxp",
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=com.test");
 
 		Assume.assumeTrue(workspaceDir.exists());
 

@@ -71,10 +71,10 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 	}
 
 	public ProjectTemplatesWorkspaceProductKeyTest(
-		String liferayVersion, String product) {
+		String liferayProduct, String liferayVersion) {
 
+		_liferayProduct = liferayProduct;
 		_liferayVersion = liferayVersion;
-		_product = product;
 	}
 
 	@Test
@@ -87,7 +87,8 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 
 			buildTemplateWithGradle(
 				new File(workspaceProjectDir, "modules"), "mvc-portlet", name,
-				"--liferay-version", _liferayVersion, "--product", _product);
+				"--liferay-product", _liferayProduct, "--liferay-version",
+				_liferayVersion);
 
 			String gradleOutput = String.valueOf(
 				executeGradle(
@@ -127,7 +128,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

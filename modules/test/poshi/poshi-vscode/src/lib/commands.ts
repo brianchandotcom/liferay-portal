@@ -14,7 +14,8 @@
  */
 
 import * as child_process from 'node:child_process';
-import * as fs from 'node:fs/promises';
+import * as fs from 'node:fs';
+import * as fsPromises from 'node:fs/promises';
 import * as path from 'node:path';
 
 import * as notifications from './notifications';
@@ -82,10 +83,21 @@ function buildGradleCommand(gradleExecutablePath: string, testCase: string) {
 	return `${gradleExecutablePath} runPoshi -Dtest.name="${testCase}"`;
 }
 
+interface Command {
+	cwd: string;
+	command: string;
+}
+
 async function getCommand(
-	workspaceFolder: vscode.WorkspaceFolder,
+	document: vscode.TextDocument,
 	testCase: string
-): Promise<string | void> {
+): Promise<Command | void> {
+	const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
+
+	if (!workspaceFolder) {
+		return;
+	}
+
 	try {
 		const buildFileUri = vscode.Uri.joinPath(
 			workspaceFolder.uri,
@@ -98,7 +110,10 @@ async function getCommand(
 			`Found ant build file in workspace: ${buildFileUri.fsPath}`
 		);
 
-		return buildAntCommand(buildFileUri.fsPath, testCase);
+		return {
+			command: buildAntCommand(buildFileUri.fsPath, testCase),
+			cwd: workspaceFolder.uri.fsPath,
+		};
 	} catch (error) {
 		console.log('No ant build file found in workspace.');
 	}
@@ -115,7 +130,13 @@ async function getCommand(
 			`Found gradle build file in workspace: ${gradleExecutableUri.fsPath}`
 		);
 
-		return buildGradleCommand(gradleExecutableUri.fsPath, testCase);
+		return {
+			command: buildGradleCommand(gradleExecutableUri.fsPath, testCase),
+			cwd: getNearestGradleBuildFileDir(
+				document,
+				gradleExecutableUri.fsPath
+			),
+		};
 	} catch (error) {
 		console.log('No gradle build file found in workspace.');
 	}
@@ -131,13 +152,16 @@ async function getCommand(
 	try {
 		const buildFilePath = path.join(gitTopLevelDirectory, 'build-test.xml');
 
-		await fs.stat(buildFilePath);
+		await fsPromises.stat(buildFilePath);
 
 		console.log(
 			`Found ant build file at the git top-level directory: ${buildFilePath}`
 		);
 
-		return buildAntCommand(buildFilePath, testCase);
+		return {
+			command: buildAntCommand(buildFilePath, testCase),
+			cwd: workspaceFolder.uri.fsPath,
+		};
 	} catch (error) {
 		console.log('No ant build file found at the Git top-level directory.');
 	}
@@ -145,13 +169,16 @@ async function getCommand(
 	try {
 		const gradleExecutablePath = path.join(gitTopLevelDirectory, 'gradlew');
 
-		await fs.stat(gradleExecutablePath);
+		await fsPromises.stat(gradleExecutablePath);
 
 		console.log(
 			`Found gradle executable at the git top-level directory: ${gradleExecutablePath}`
 		);
 
-		return buildGradleCommand(gradleExecutablePath, testCase);
+		return {
+			command: buildGradleCommand(gradleExecutablePath, testCase),
+			cwd: getNearestGradleBuildFileDir(document, gradleExecutablePath),
+		};
 	} catch (error) {
 		console.log(
 			'No gradle build file found at the Git top-level directory.'
@@ -159,17 +186,41 @@ async function getCommand(
 	}
 }
 
-async function runTestCase(document: vscode.TextDocument, testName: string) {
-	const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
-	if (!workspaceFolder) {
-		return;
+function getNearestGradleBuildFileDir(
+	document: vscode.TextDocument,
+	gradleExecutablePath: string
+): string {
+	const workspaceFolder = vscode.workspace.getWorkspaceFolder(
+		document.uri
+	) as vscode.WorkspaceFolder;
+
+	const gradleExecutableDir = path.dirname(gradleExecutablePath);
+
+	for (
+		let dir = path.dirname(document.uri.fsPath);
+		dir !== gradleExecutableDir;
+		dir = path.resolve(dir, '..')
+	) {
+		try {
+			const files = fs.readdirSync(dir);
+
+			if (files.includes('build.gradle')) {
+				return dir;
+			}
+		} catch (error) {
+			break;
+		}
 	}
 
+	return workspaceFolder.uri.fsPath;
+}
+
+async function runTestCase(document: vscode.TextDocument, testName: string) {
 	const parsed = path.parse(document.fileName);
 
 	const testCase = `${parsed.name}#${testName}`;
 
-	const command = await getCommand(workspaceFolder, testCase);
+	const command = await getCommand(document, testCase);
 	if (!command) {
 		notifications.warning(
 			`Unable to run the test case: ${testCase}. No Ant or Gradle task runner was found.`
@@ -181,7 +232,7 @@ async function runTestCase(document: vscode.TextDocument, testName: string) {
 
 	const opts: vscode.TerminalOptions = {
 		name: `Poshi: Run ${testCase}`,
-		cwd: workspaceFolder.uri,
+		cwd: command.cwd,
 		message: `Running Poshi testcase: ${testCase}`,
 	};
 
@@ -189,5 +240,5 @@ async function runTestCase(document: vscode.TextDocument, testName: string) {
 
 	terminal.show();
 
-	terminal.sendText(command);
+	terminal.sendText(command.command);
 }

@@ -16,7 +16,7 @@ package com.liferay.info.internal.item.renderer;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 
 import java.util.List;
 
@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemRendererTracker.class)
-public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
+@Component(immediate = true, service = InfoItemRendererRegistry.class)
+public class InfoItemRendererRegistryImpl implements InfoItemRendererRegistry {
 
 	@Override
 	public InfoItemRenderer<?> getInfoItemRenderer(String key) {

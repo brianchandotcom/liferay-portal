@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoItemRendererTracker {
+public interface InfoItemRendererRegistry {
 
 	public InfoItemRenderer<?> getInfoItemRenderer(String key);
 

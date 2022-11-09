@@ -1465,6 +1465,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of attributes in `.tld` file." />
 		</check>
+		<check name="TLDStylingCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consistency in code style." />
+		</check>
 		<check name="TLDTypeCheck">
 			<category name="Bug Prevention" />
 			<description name="Ensures the fully qualified name is used for types in `.tld` file." />

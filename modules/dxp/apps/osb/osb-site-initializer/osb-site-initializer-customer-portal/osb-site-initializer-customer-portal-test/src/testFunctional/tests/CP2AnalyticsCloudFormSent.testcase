@@ -45,9 +45,69 @@ definition {
 	@description = "Automation ID: LPS-150680 | Test Summary: Verify if the same user submits the setup page in two different tabs or diferrent user submits the setup at the same project displays a message to the user that the form was sent"
 	@priority = "3"
 	test MessageConfirmingFormHasAlreadyBeenSent {
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-		// TODO LPS-150680 MessageConfirmingFormHasAlreadyBeenSent pending implementation
+			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0 and join a project and Going through onboarding") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
+
+			CustomerPortal.fullOnboardingFlow();
+		}
+
+		task ("Go to product Activation then open a new tab") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+
+			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		}
+
+		task ("Go to CP 2.0 then go to Project and the product activation page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+		}
+
+		task ("Open the Setup Analytics Cloud modal and Fill out the activation form submit and close the tab") {
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			Button.click(button = "Submit");
+
+			Button.click(button = "Done");
+
+			Navigator.closeWindow();
+		}
+
+		task ("Click in Finish Activation and fill the form and assert the message the form has already submitted") {
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+			Button.click(button = "Submit");
+
+			AssertElementPresent(locator1 = "CP2AnalyticsCloudSetup#CLOUD_MODAL");
+
+			Button.click(button = "Done");
+		}
 	}
 
 	@description = "Automation ID: LPS-150681 | Test Summary: Verify if when the first customer admin logs in and goes through the onboarding flow, and an staff already made the set up the form should be already submitted."

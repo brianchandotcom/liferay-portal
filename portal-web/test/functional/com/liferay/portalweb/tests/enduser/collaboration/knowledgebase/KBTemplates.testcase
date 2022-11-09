@@ -274,17 +274,22 @@ definition {
 	test CanPreviewTemplateViaCenterPane {
 		property custom.properties = "feature.flag.LPS-156421=true";
 
-		JSONKnowledgeBase.addkBTemplate(
+		KBTemplate.addCP(
+			embedImage = "true",
 			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
+			kbTemplateTitle = "Knowledge Base Template Title",
+			siteURLKey = "guest",
+			uploadFileName = "Document_1.jpg");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.openPageTreePanel(section = "Templates");
 
 		KBTemplate.previewTemplate(
+			embedImage = "true",
 			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = "Knowledge Base Template Title");
+			kbTemplateTitle = "Knowledge Base Template Title",
+			viewNoCommentsPanel = "true");
 	}
 
 	@description = "This test ensures that the empty message can be displayed in the pane."	

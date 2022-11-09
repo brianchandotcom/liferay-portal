@@ -1,9 +1,105 @@
 definition {
 
+	macro addTask {
+		Click(locator1 = "Button#PLUS");
+
+		TestrayTestflow.editBreadcrumb(
+			build = "${selectBuild}",
+			project = "${selectProject}",
+			routine = "${selectRoutine}");
+
+		Button.click(button = "Analyze");
+
+		if (isSet(taskName)) {
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "${taskName}");
+		}
+
+		if (isSet(checkCaseType)) {
+			Click(
+				key_checkboxOption = "${checkCaseType}",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+		}
+
+		Button.click(button = "Assign Users");
+
+		if (isSet(userName)) {
+			Click.clickAtNotVisible(
+				key_checkboxOption = "${userName}",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+
+		Button.click(button = "Select Users");
+
+		Testray.checkSuccessAlertAppearsAndDisappears();
+
+		Button.click(button = "Save");
+	}
+
+	macro assertAssignTask {
+		AssertElementPresent(
+			key_email = "${email}",
+			key_nameUser = "${nameUser}",
+			locator1 = "TestrayTestflow#ASSIGN_INFORMATIONS");
+	}
+
 	macro assertStatusTasks {
 		AssertElementPresent(
 			key_value = "${key_value}",
 			locator1 = "TestrayTestflow#STATUS_TASKS");
+	}
+
+	macro assertTaskDetails {
+		AssertElementPresent(
+			key_build = "${build}",
+			key_nameTask = "${nameTask}",
+			key_project = "${project}",
+			key_routine = "${routine}",
+			key_status = "${status}",
+			locator1 = "TestrayTestflow#TASK_DETAILS");
+	}
+
+	macro editBreadcrumb {
+		Click(locator1 = "TestrayTestflow#BREADCRUMB_EDIT");
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "${project}");
+
+		if (isSet(project)) {
+			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
+		}
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "${routine}");
+
+		if (isSet(routine)) {
+			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
+		}
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "${build}");
+
+		if (isSet(build)) {
+			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
+		}
+	}
+
+	macro goToTestflow {
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+	}
+
+	macro taskOptions {
+		if (isSet(taskName)) {
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "${taskName}");
+		}
+
+		Button.click(button = "Save");
 	}
 
 }

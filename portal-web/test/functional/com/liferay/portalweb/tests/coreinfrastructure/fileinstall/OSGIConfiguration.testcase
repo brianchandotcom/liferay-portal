@@ -107,4 +107,60 @@ definition {
 		}
 	}
 
+	@description = "Verify if a config exists only in the database, when a OSGI config file is added, the databse entry is updated."
+	@priority = "3"
+	test OSGIConfigFileUpdatesExistingConfigInDatabase {
+		property test.name.skip.portal.instance = "OSGIConfiguration#OSGIConfigFileUpdatesExistingConfigInDatabase";
+
+		task ("Given no osgi config file exists for a specific config") {
+			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
+
+			OSGiConfig.assertOSGIConfigNotExist(osgiConfigFileName = "${configName}.config");
+		}
+
+		task ("And given a config is added to the database via UI") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Catalog",
+				configurationName = "SKUs",
+				configurationScope = "System Scope");
+
+			Type(
+				key_text = "Check Interval",
+				locator1 = "TextInput#ANY",
+				value1 = "33");
+
+			Button.clickSave();
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "checkInterval=I\"33\"");
+		}
+
+		task ("When an OSGI config file is added") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "${configName}.config",
+				osgiConfigs = "checkInterval=I\"44\"");
+		}
+
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the config is updated in the database") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "checkInterval=I\"44\"");
+		}
+
+		task ("And a second config entry is not added to the database") {
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT COUNT(*) FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
+				text = "1");
+		}
+	}
+
 }

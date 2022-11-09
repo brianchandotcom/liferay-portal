@@ -85,10 +85,10 @@
 			"required": false
 		}
 	],
-	"panelCategoryKey": "site_administration.content",
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "Analytics Cloud Workspaces"
 	},
-	"scope": "site",
+	"scope": "company",
 	"system": false
 }

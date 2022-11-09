@@ -45,10 +45,10 @@
 			"required": false
 		}
 	],
-	"panelCategoryKey": "site_administration.content",
+	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
 		"en_US": "DXP Cloud Environments"
 	},
-	"scope": "site",
+	"scope": "company",
 	"system": false
 }

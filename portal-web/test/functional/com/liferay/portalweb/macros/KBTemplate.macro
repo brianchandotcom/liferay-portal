@@ -4,6 +4,9 @@ definition {
 		if (isSet(addByCenterButton)) {
 			Button.click(button = "New");
 		}
+		else if (isSet(siteURLKey)) {
+			KBTemplate.openToAddTemplate(siteURLKey = "${siteURLKey}");
+		}
 		else {
 			Navigator.gotoNavItem(navItem = "Templates");
 
@@ -13,6 +16,49 @@ definition {
 		PortletEntry.inputTitle(title = "${kbTemplateTitle}");
 
 		CKEditor.addContent(content = "${kbTemplateContent}");
+
+		if (isSet(embedImage)) {
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			if (isSet(uploadFileName)) {
+				ItemSelector.uploadFile(
+					navTab = "${navTab}",
+					uploadFileName = "${uploadFileName}");
+
+				SelectFrameTop();
+			}
+			else if (isSet(imageSourceURL)) {
+				ItemSelector.addImageFromURL(
+					imageSourceURL = "${imageSourceURL}",
+					navTab = "URL");
+			}
+			else {
+				SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+				AssertClick(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Sites and Libraries");
+
+				if (isSet(depotName)) {
+					AssertClick(
+						key_groupTab = "Asset Library",
+						locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+						value1 = "Asset Library");
+
+					LexiconCard.clickCard(card = "${depotName}");
+				}
+				else {
+					LexiconCard.clickCard(card = "${siteName}");
+				}
+
+				Click(
+					key_imageFileName = "${imageFileName}",
+					locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+			}
+
+			SelectFrameTop();
+		}
 
 		PortletEntry.publish();
 	}

@@ -51,7 +51,8 @@ public class LayoutStructureItemImporterRegistry {
 	protected void unsetLayoutStructureItemImporter(
 		LayoutStructureItemImporter layoutStructureItemImporter) {
 
-		_layoutStructureItemImporters.remove(layoutStructureItemImporter);
+		_layoutStructureItemImporters.remove(
+			layoutStructureItemImporter.getPageElementType());
 	}
 
 	private final Map<PageElement.Type, LayoutStructureItemImporter>

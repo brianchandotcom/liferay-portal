@@ -25,6 +25,7 @@ export default function Action({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
@@ -36,6 +37,7 @@ interface IProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
 	requestParams: {

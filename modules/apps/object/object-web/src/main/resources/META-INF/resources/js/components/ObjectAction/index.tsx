@@ -42,6 +42,7 @@ export default function Action({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
@@ -54,6 +55,8 @@ export default function Action({
 		if (objectAction.parameters) {
 			delete objectAction?.parameters['lineCount'];
 		}
+
+		delete objectAction.objectDefinitionId;
 
 		try {
 			await API.save(url, objectAction, method);
@@ -159,6 +162,10 @@ export default function Action({
 						}
 						objectActionExecutors={objectActionExecutors}
 						objectActionTriggers={objectActionTriggers}
+						objectDefinitionId={
+							objectDefinitionId ??
+							initialValues.objectDefinitionId
+						}
 						objectDefinitionsRelationshipsURL={
 							objectDefinitionsRelationshipsURL
 						}
@@ -217,7 +224,13 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 			if (!values.parameters?.objectDefinitionId) {
 				errors.objectDefinitionId = REQUIRED_MSG;
 			}
-			else if (values.parameters?.predefinedValues) {
+		}
+
+		if (
+			values.objectActionExecutorKey === 'add-object-entry' ||
+			values.objectActionExecutorKey === 'update-object-entry'
+		) {
+			if (values.parameters?.predefinedValues) {
 				const predefinedValues = values.parameters?.predefinedValues;
 
 				predefinedValues.forEach(({name, value}) => {
@@ -288,6 +301,7 @@ interface IProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
 	requestParams: {

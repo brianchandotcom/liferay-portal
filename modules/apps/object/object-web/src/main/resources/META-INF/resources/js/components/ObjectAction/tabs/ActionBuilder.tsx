@@ -51,19 +51,21 @@ export default function ActionBuilder({
 	objectActionCodeEditorElements,
 	objectActionExecutors,
 	objectActionTriggers,
+	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	setValues,
 	validateExpressionURL,
 	values,
 }: IProps) {
+	const [newObjectActionExecutors, setNewObjectActionExecutors] = useState<
+		CustomItem[]
+	>(objectActionExecutors);
+
 	const [notificationTemplates, setNotificationTemplates] = useState<
 		CustomItem<number>[]
 	>([]);
 
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
-	const [newObjectActionExecutors, setNewObjectActionExecutors] = useState<
-		CustomItem[]
-	>(objectActionExecutors);
 
 	const notificationTemplateLabel = useMemo(() => {
 		return notificationTemplates.find(
@@ -86,6 +88,8 @@ export default function ActionBuilder({
 		mandatoryRelationships: false,
 		requiredFields: false,
 	});
+
+	const [errorAlert, setErrorAlert] = useState(false);
 
 	const fetchObjectDefinitions = async () => {
 		const relationships = await API.fetchJSON<
@@ -130,12 +134,12 @@ export default function ActionBuilder({
 	const actionExecutors = useMemo(() => {
 		const executors = new Map<string, string>();
 
-		objectActionExecutors.forEach(({label, value}) => {
+		newObjectActionExecutors.forEach(({label, value}) => {
 			value && executors.set(value, label);
 		});
 
 		return executors;
-	}, [objectActionExecutors]);
+	}, [newObjectActionExecutors]);
 
 	const actionTriggers = useMemo(() => {
 		const triggers = new Map<string, string>();
@@ -160,7 +164,7 @@ export default function ActionBuilder({
 	useEffect(() => {
 		if (values.objectActionTriggerKey === 'onAfterDelete') {
 			newObjectActionExecutors.map((action) => {
-				if (action.value === 'update-current-entry') {
+				if (action.value === 'update-object-entry') {
 					action.disabled = true;
 					action.popover = {
 						body: Liferay.Language.get(
@@ -170,6 +174,11 @@ export default function ActionBuilder({
 					};
 				}
 			});
+
+			if (values.objectActionExecutorKey === 'update-object-entry') {
+				setErrorAlert(true);
+			}
+
 			setNewObjectActionExecutors(newObjectActionExecutors);
 		}
 		else if (
@@ -177,11 +186,16 @@ export default function ActionBuilder({
 			values.objectActionTriggerKey === 'onAfterUpdate'
 		) {
 			newObjectActionExecutors.map((action) => {
-				if (action.value === 'update-current-entry') {
+				if (action.value === 'update-object-entry') {
 					delete action.disabled;
 					delete action.popover;
 				}
 			});
+
+			if (values.objectActionExecutorKey === 'update-object-entry') {
+				setErrorAlert(false);
+			}
+
 			setNewObjectActionExecutors(newObjectActionExecutors);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,11 +227,14 @@ export default function ActionBuilder({
 
 	const fetchObjectDefinitionFields = async () => {
 		let validFields: ObjectField[] = [];
+		let definitionId = objectDefinitionId;
 
-		if (values.parameters?.objectDefinitionId) {
-			const items = await API.getObjectFields(
-				values.parameters.objectDefinitionId
-			);
+		if (values.objectActionExecutorKey === 'add-object-entry') {
+			definitionId = values?.parameters?.objectDefinitionId as number;
+		}
+
+		if (definitionId) {
+			const items = await API.getObjectFields(definitionId);
 
 			validFields = items.filter(isValidField);
 		}
@@ -242,7 +259,10 @@ export default function ActionBuilder({
 
 				newPredefinedValues.push(field as PredefinedValue);
 			}
-			else if (required) {
+			else if (
+				required &&
+				values.objectActionExecutorKey === 'add-object-entry'
+			) {
 				newPredefinedValues.push({
 					inputAsValue: false,
 					name,
@@ -253,16 +273,13 @@ export default function ActionBuilder({
 		setValues({
 			parameters: {
 				...values.parameters,
+				objectDefinitionId: definitionId,
 				predefinedValues: newPredefinedValues,
 			},
 		});
 	};
 
-	const handleSelectObject = async ({
-		target: {value},
-	}: React.ChangeEvent<HTMLSelectElement>) => {
-		const objectDefinitionId = parseInt(value, 10);
-
+	const updateParameters = async (objectDefinitionId: number) => {
 		const object = relationships.find(({id}) => id === objectDefinitionId);
 
 		const parameters: ObjectActionParameters = {
@@ -273,7 +290,6 @@ export default function ActionBuilder({
 		if (object?.related) {
 			parameters.relatedObjectEntries = false;
 		}
-
 		const items = await API.getObjectFields(objectDefinitionId);
 
 		const validFields: ObjectField[] = [];
@@ -282,7 +298,10 @@ export default function ActionBuilder({
 			if (isValidField(field)) {
 				validFields.push(field);
 
-				if (field.required) {
+				if (
+					field.required &&
+					values.objectActionExecutorKey === 'add-object-entry'
+				) {
 					(parameters.predefinedValues as PredefinedValue[]).push({
 						inputAsValue: false,
 						name: field.name,
@@ -315,13 +334,25 @@ export default function ActionBuilder({
 		}));
 	};
 
+	const handleSelectObject = async ({
+		target: {value},
+	}: React.ChangeEvent<HTMLSelectElement>) => {
+		const objectDefinitionId = parseInt(value, 10);
+
+		updateParameters(objectDefinitionId);
+	};
+
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'add-object-entry') {
 			fetchObjectDefinitions();
 			fetchObjectDefinitionFields();
 		}
+		else if (values.objectActionExecutorKey === 'update-object-entry') {
+			updateParameters(objectDefinitionId);
+			fetchObjectDefinitionFields();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [values.objectActionExecutorKey]);
 
 	useEffect(() => {
 		const predefinedValues = values.parameters?.predefinedValues;
@@ -373,6 +404,19 @@ export default function ActionBuilder({
 					>
 						{Liferay.Language.get('click-here-for-documentation')}
 					</a>
+				</ClayAlert>
+			)}
+
+			{errorAlert && (
+				<ClayAlert
+					className="lfr-objects__side-panel-content-container"
+					displayType="danger"
+					onClose={() => setErrorAlert(false)}
+					title={`${Liferay.Language.get('error')}:`}
+				>
+					{Liferay.Language.get(
+						'it-is-not-possible-to-create-an-update-action-with-on-after-delete-trigger'
+					)}
 				</ClayAlert>
 			)}
 
@@ -443,7 +487,6 @@ export default function ActionBuilder({
 					/>
 				)}
 			</Card>
-
 			{warningAlerts.requiredFields && (
 				<ClayAlert
 					className="lfr-objects__side-panel-content-container"
@@ -597,11 +640,16 @@ export default function ActionBuilder({
 					</div>
 				</Card>
 
-				{values.objectActionExecutorKey === 'add-object-entry' &&
+				{(values.objectActionExecutorKey === 'add-object-entry' ||
+					values.objectActionExecutorKey === 'update-object-entry') &&
 					values.parameters?.objectDefinitionId && (
 						<PredefinedValuesTable
 							currentObjectDefinitionFields={
 								currentObjectDefinitionFields
+							}
+							disableRequiredChecked={
+								values.objectActionExecutorKey ===
+								'update-object-entry'
 							}
 							errors={
 								errors.predefinedValues as {
@@ -610,6 +658,12 @@ export default function ActionBuilder({
 							}
 							objectFieldsMap={objectFieldsMap}
 							setValues={setValues}
+							title={
+								values.objectActionExecutorKey ===
+								'update-object-entry'
+									? Liferay.Language.get('values')
+									: ''
+							}
 							validateExpressionURL={validateExpressionURL}
 							values={values}
 						/>
@@ -678,6 +732,7 @@ interface IProps {
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
 	validateExpressionURL: string;

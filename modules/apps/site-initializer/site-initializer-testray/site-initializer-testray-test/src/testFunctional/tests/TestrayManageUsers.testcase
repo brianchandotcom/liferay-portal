@@ -1,0 +1,55 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.addTestraySite();
+
+			Refresh();
+		}
+
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "This is a test for LPS-166562 - Verify if can't see the Testray users in the Testray user permission"
+    @ignore = "Test Stub"
+	@priority = "4"
+	test PermissionTestrayUserCanNotViewUsersList {
+		
+        // TODO LPS-166562 PermissionTestrayUserCanNotViewUsersList pending implementation
+
+	}
+
+	@description = "This is a test for LPS-162987 - Verify if as an Administrador can change his Role"
+    @ignore = "Test Stub"
+	@priority = "5"
+	test CanChangeRole {
+		
+        // TODO LPS-162987 CanChangeRole pending implementation
+
+	}
+
+}

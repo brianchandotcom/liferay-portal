@@ -22,7 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoListRendererTracker {
+public interface InfoListRendererRegistry {
 
 	public InfoListRenderer<?> getInfoListRenderer(String key);
 

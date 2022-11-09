@@ -89,6 +89,30 @@ components:
             properties:
                 token:
                     type: string
+        Field:
+            properties:
+                example:
+                    type: string
+                name:
+                    type: string
+                required:
+                    type: boolean
+                selected:
+                    type: boolean
+                source:
+                    type: string
+                type:
+                    type: string
+        FieldSummary:
+            properties:
+                account:
+                    type: integer
+                order:
+                    type: integer
+                people:
+                    type: integer
+                product:
+                    type: integer
         Site:
             properties:
                 channelName:
@@ -420,6 +444,73 @@ paths:
                     description:
                         Unexpected error
             tags: ["DataSource"]
+    "/fields":
+        get:
+            operationId: getField
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/FieldSummary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/FieldSummary"
+            tags: ["FieldSummary"]
+    "/fields/people":
+        get:
+            operationId: getFieldsPeoplePage
+            parameters:
+                - in: query
+                  name: keyword
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Field"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Field"
+                                type: array
+            tags: ["Field"]
+        patch:
+            operationId: patchFieldPeople
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Field"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Field"
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Field"]
     "/sites":
         get:
             operationId: getSitesPage

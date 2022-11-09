@@ -1043,6 +1043,35 @@ definition {
 			status = "Draft");
 	}
 
+	@description = "LPS-162174 - Verify that it is not possible to edit ERC fields in Objects management."
+	@priority = "5"
+	test CannotEditERCField {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162174",
+				objectName = "CustomObject162174",
+				pluralLabelName = "Custom Objects 162174");
+		}
+
+		task ("When the user accesses the External Reference Code details on the new object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162174");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "External Reference Code");
+		}
+
+		task ("Then the Field Name and Type inputs are disabled and cannot be edited") {
+			ObjectField.assertNameDisabled();
+
+			ObjectField.assertTypeDisabled();
+		}
+	}
+
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' the user is not allowed to type any value outside the informed range on the help text"
 	@priority = "4"
 	test CannotTypeValueOutsideRange {

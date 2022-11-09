@@ -17,7 +17,7 @@ package com.liferay.asset.info.internal.list.renderer;
 import com.liferay.asset.info.internal.item.renderer.AssetEntryTitleInfoItemRenderer;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.taglib.list.renderer.BasicInfoListRenderer;
@@ -42,7 +42,7 @@ public abstract class BaseAssetEntryBasicInfoListRenderer
 
 	@Override
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
-		return infoItemRendererTracker.getInfoItemRenderers(
+		return infoItemRendererRegistry.getInfoItemRenderers(
 			AssetEntry.class.getName());
 	}
 
@@ -102,7 +102,7 @@ public abstract class BaseAssetEntryBasicInfoListRenderer
 	}
 
 	@Reference
-	protected InfoItemRendererTracker infoItemRendererTracker;
+	protected InfoItemRendererRegistry infoItemRendererRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAssetEntryBasicInfoListRenderer.class);

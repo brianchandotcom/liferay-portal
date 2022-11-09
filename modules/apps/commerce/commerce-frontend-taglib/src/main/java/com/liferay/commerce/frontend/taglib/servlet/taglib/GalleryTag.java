@@ -18,7 +18,7 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +40,7 @@ public class GalleryTag extends IncludeTag {
 		try {
 			InfoItemRenderer<CPDefinition> infoItemRenderer =
 				(InfoItemRenderer<CPDefinition>)
-					_infoItemRendererTracker.getInfoItemRenderer(
+					_infoItemRendererRegistry.getInfoItemRenderer(
 						"cpDefinition-image-gallery");
 
 			infoItemRenderer.render(
@@ -82,8 +82,8 @@ public class GalleryTag extends IncludeTag {
 
 		setServletContext(ServletContextUtil.getServletContext());
 
-		_infoItemRendererTracker =
-			ServletContextUtil.getInfoItemRendererTracker();
+		_infoItemRendererRegistry =
+			ServletContextUtil.getInfoItemRendererRegistry();
 	}
 
 	@Override
@@ -91,14 +91,14 @@ public class GalleryTag extends IncludeTag {
 		super.cleanUp();
 
 		_cpDefinitionId = 0;
-		_infoItemRendererTracker = null;
+		_infoItemRendererRegistry = null;
 		_namespace = StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(GalleryTag.class);
 
 	private long _cpDefinitionId;
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 	private String _namespace = StringPool.BLANK;
 
 }

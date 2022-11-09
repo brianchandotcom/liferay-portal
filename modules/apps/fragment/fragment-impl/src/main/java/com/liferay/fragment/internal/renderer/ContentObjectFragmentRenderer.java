@@ -28,7 +28,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
@@ -277,7 +277,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 		List<InfoItemRenderer<?>> infoItemRenderers =
 			FragmentRendererUtil.getInfoItemRenderers(
-				className, displayObjectClass, _infoItemRendererTracker);
+				className, displayObjectClass, _infoItemRendererRegistry);
 
 		if (infoItemRenderers == null) {
 			return null;
@@ -304,7 +304,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 		InfoItemRenderer<Object> infoItemRenderer =
 			(InfoItemRenderer<Object>)
-				_infoItemRendererTracker.getInfoItemRenderer(
+				_infoItemRendererRegistry.getInfoItemRenderer(
 					infoItemRendererKey);
 
 		if (infoItemRenderer != null) {
@@ -380,7 +380,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

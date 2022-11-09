@@ -20,7 +20,7 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -73,7 +73,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 		Object infoItemObject = _getInfoItemObject(className, classPK);
 
 		for (InfoItemRenderer<?> infoItemRenderer :
-				_infoItemRendererTracker.getInfoItemRenderers(className)) {
+				_infoItemRendererRegistry.getInfoItemRenderers(className)) {
 
 			if (!infoItemRenderer.isAvailable()) {
 				continue;
@@ -159,7 +159,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 	}
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

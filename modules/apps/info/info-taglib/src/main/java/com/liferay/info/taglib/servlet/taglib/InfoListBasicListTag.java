@@ -15,7 +15,7 @@
 package com.liferay.info.taglib.servlet.taglib;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.taglib.internal.list.renderer.BasicListInfoListStyle;
 import com.liferay.info.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -111,10 +111,10 @@ public class InfoListBasicListTag extends IncludeTag {
 	}
 
 	private InfoItemRenderer<?> _getInfoItemRenderer() {
-		InfoItemRendererTracker infoItemRendererTracker =
-			ServletContextUtil.getInfoItemRendererTracker();
+		InfoItemRendererRegistry infoItemRendererRegistry =
+			ServletContextUtil.getInfoItemRendererRegistry();
 
-		return infoItemRendererTracker.getInfoItemRenderer(
+		return infoItemRendererRegistry.getInfoItemRenderer(
 			getItemRendererKey());
 	}
 

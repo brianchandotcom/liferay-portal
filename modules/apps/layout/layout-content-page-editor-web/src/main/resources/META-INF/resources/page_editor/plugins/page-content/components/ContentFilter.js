@@ -39,7 +39,6 @@ export default function ContentFilter({
 						className: 'cadmin',
 					},
 				}}
-				role="listbox"
 				trigger={
 					<ClayButton
 						aria-label={Liferay.Language.get(
@@ -54,7 +53,7 @@ export default function ContentFilter({
 					</ClayButton>
 				}
 			>
-				<ClayDropDown.ItemList>
+				<ClayDropDown.ItemList role="listbox">
 					{contentTypes?.map((type) => (
 						<React.Fragment key={type}>
 							<ClayDropDown.Item

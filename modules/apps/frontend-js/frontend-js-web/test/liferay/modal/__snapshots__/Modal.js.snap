@@ -4,13 +4,17 @@ exports[`Modal renders markup based on given configuration 1`] = `
 <body
   class="modal-open"
 >
-  <div />
+  <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+  />
   <div
     class="cadmin"
   >
     <div
       aria-hidden="true"
       class="modal-backdrop fade show"
+      data-aria-hidden="true"
     />
     <div
       class="fade modal d-block liferay-modal show"

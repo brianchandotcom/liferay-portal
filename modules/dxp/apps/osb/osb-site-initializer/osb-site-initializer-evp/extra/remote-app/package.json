@@ -1,0 +1,23 @@
+{
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@types/node": "^18.6.3",
+		"@types/react": "^18.0.24",
+		"@types/react-dom": "^18.0.8",
+		"@vitejs/plugin-react": "^2.2.0",
+		"typescript": "^4.7.4",
+		"vite": "^3.2.3"
+	},
+	"name": "@liferay/osb-site-initializer-evp-remote-app",
+	"private": true,
+	"scripts": {
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "1.0.0"
+}

@@ -19,6 +19,7 @@ import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -342,14 +343,14 @@ public class BundleBlacklistTest {
 	}
 
 	private Bundle _findBundle(String symbolicName) {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (symbolicName.equals(bundle.getSymbolicName())) {
-				return bundle;
-			}
+		Bundle bundle = BundleUtil.getBundle(_bundleContext, symbolicName);
+
+		if (bundle == null) {
+			throw new IllegalArgumentException(
+				"No bundle installed with symbolic name " + symbolicName);
 		}
 
-		throw new IllegalArgumentException(
-			"No bundle installed with symbolic name " + symbolicName);
+		return bundle;
 	}
 
 	private void _updateConfiguration(Dictionary<String, Object> dictionary)

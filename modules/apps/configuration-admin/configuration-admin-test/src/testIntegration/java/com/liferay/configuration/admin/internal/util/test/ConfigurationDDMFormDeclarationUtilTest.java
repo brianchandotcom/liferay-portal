@@ -18,11 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.lang.reflect.Method;
-
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,18 +60,8 @@ public class ConfigurationDDMFormDeclarationUtilTest {
 		_serviceRegistration = _registerConfigurationDDMFormDeclaration(
 			configurationDDMFormDeclaration, _configuration.getPid());
 
-		Bundle bundle = null;
-
-		for (Bundle installedBundle : _bundleContext.getBundles()) {
-			if (Objects.equals(
-					installedBundle.getSymbolicName(),
-					"com.liferay.configuration.admin.web")) {
-
-				bundle = installedBundle;
-
-				break;
-			}
-		}
+		Bundle bundle = BundleUtil.getBundle(
+			_bundleContext, "com.liferay.configuration.admin.web");
 
 		if (bundle == null) {
 			throw new IllegalStateException(

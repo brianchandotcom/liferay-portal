@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -222,7 +223,8 @@ public class FileInstallDeployTest {
 
 			installCountDownLatch.await();
 
-			bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
+			bundle = BundleUtil.getBundle(
+				_bundleContext, _TEST_JAR_SYMBOLIC_NAME);
 
 			Assert.assertNotNull(bundle);
 
@@ -316,7 +318,8 @@ public class FileInstallDeployTest {
 
 			installCountDownLatch.await();
 
-			Bundle bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
+			Bundle bundle = BundleUtil.getBundle(
+				_bundleContext, _TEST_JAR_SYMBOLIC_NAME);
 
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
@@ -330,7 +333,8 @@ public class FileInstallDeployTest {
 
 			fragmentInstallCountDownLatch.await();
 
-			Bundle fragmentBundle = _getBundle(testFragmentSymbolicName);
+			Bundle fragmentBundle = BundleUtil.getBundle(
+				_bundleContext, testFragmentSymbolicName);
 
 			Assert.assertEquals(Bundle.RESOLVED, fragmentBundle.getState());
 
@@ -418,7 +422,8 @@ public class FileInstallDeployTest {
 
 			installCountDownLatch.await();
 
-			Bundle bundle = _getBundle(_TEST_JAR_SYMBOLIC_NAME);
+			Bundle bundle = BundleUtil.getBundle(
+				_bundleContext, _TEST_JAR_SYMBOLIC_NAME);
 
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
@@ -439,8 +444,8 @@ public class FileInstallDeployTest {
 
 			optionalProviderInstallCountDownLatch.await();
 
-			Bundle optionalProviderBundle = _getBundle(
-				testOptionalProviderSymbolicName);
+			Bundle optionalProviderBundle = BundleUtil.getBundle(
+				_bundleContext, testOptionalProviderSymbolicName);
 
 			Assert.assertEquals(
 				Bundle.ACTIVE, optionalProviderBundle.getState());
@@ -469,16 +474,6 @@ public class FileInstallDeployTest {
 
 			_uninstall(testOptionalProviderSymbolicName, optionalProviderPath);
 		}
-	}
-
-	private Bundle _getBundle(String symbolicName) {
-		for (Bundle currentBundle : _bundleContext.getBundles()) {
-			if (Objects.equals(currentBundle.getSymbolicName(), symbolicName)) {
-				return currentBundle;
-			}
-		}
-
-		return null;
 	}
 
 	private void _uninstall(String symbolicName, Path path) throws Exception {

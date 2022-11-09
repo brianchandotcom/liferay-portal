@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -77,15 +78,8 @@ public class AopServiceManagerConcurrencyTest {
 		_executorService = Executors.newFixedThreadPool(
 			runtime.availableProcessors());
 
-		for (Bundle currentBundle : _bundleContext.getBundles()) {
-			String symbolicName = currentBundle.getSymbolicName();
-
-			if (symbolicName.equals("com.liferay.portal.aop.impl")) {
-				_aopImplBundle = currentBundle;
-
-				break;
-			}
-		}
+		_aopImplBundle = BundleUtil.getBundle(
+			_bundleContext, "com.liferay.portal.aop.impl");
 
 		Assert.assertNotNull(_aopImplBundle);
 	}

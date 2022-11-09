@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -53,7 +54,6 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -66,7 +66,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -407,20 +406,8 @@ public class UpgradePortletPreferencesTest {
 		Bundle bundle = FrameworkUtil.getBundle(
 			UpgradePortletPreferencesTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		Bundle assetPublisherWebBundle = null;
-
-		for (Bundle curBundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					curBundle.getSymbolicName(),
-					"com.liferay.asset.publisher.web")) {
-
-				assetPublisherWebBundle = curBundle;
-
-				break;
-			}
-		}
+		Bundle assetPublisherWebBundle = BundleUtil.getBundle(
+			bundle.getBundleContext(), "com.liferay.asset.publisher.web");
 
 		Assert.assertNotNull(
 			"Unable to find asset-publisher-web bundle",

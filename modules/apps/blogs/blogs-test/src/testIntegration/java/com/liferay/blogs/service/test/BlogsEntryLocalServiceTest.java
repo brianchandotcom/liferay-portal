@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -95,7 +96,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -116,17 +116,8 @@ public class BlogsEntryLocalServiceTest {
 		Bundle bundle = FrameworkUtil.getBundle(
 			BlogsEntryAttachmentFileEntryHelperTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		for (Bundle installedBundle : bundleContext.getBundles()) {
-			String symbolicName = installedBundle.getSymbolicName();
-
-			if (symbolicName.equals("com.liferay.blogs.web")) {
-				bundle = installedBundle;
-
-				break;
-			}
-		}
+		bundle = BundleUtil.getBundle(
+			bundle.getBundleContext(), "com.liferay.blogs.web");
 
 		Class<?> clazz = bundle.loadClass(
 			"com.liferay.blogs.web.internal.util.BlogsUtil");

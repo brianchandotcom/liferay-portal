@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -37,7 +38,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -56,17 +56,8 @@ public class KBArticleMarkdownConverterTest {
 		Bundle bundle = FrameworkUtil.getBundle(
 			KBArticleMarkdownConverterTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		for (Bundle installedBundle : bundleContext.getBundles()) {
-			String symbolicName = installedBundle.getSymbolicName();
-
-			if (symbolicName.equals("com.liferay.knowledge.base.service")) {
-				bundle = installedBundle;
-
-				break;
-			}
-		}
+		bundle = BundleUtil.getBundle(
+			bundle.getBundleContext(), "com.liferay.knowledge.base.service");
 
 		Class<?> clazz = bundle.loadClass(
 			"com.liferay.knowledge.base.internal.importer.util." +

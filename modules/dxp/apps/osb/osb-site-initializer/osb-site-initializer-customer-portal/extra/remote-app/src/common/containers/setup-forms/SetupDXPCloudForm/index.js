@@ -126,7 +126,6 @@ const SetupDXPCloudPage = ({
 				query: getDXPCloudEnvironment,
 				variables: {
 					filter: `accountKey eq '${accountKey}'`,
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 			if (data) {
@@ -161,7 +160,6 @@ const SetupDXPCloudPage = ({
 						r_accountEntryToDXPCloudEnvironment_accountEntryId:
 							project?.id,
 					},
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 
@@ -186,7 +184,6 @@ const SetupDXPCloudPage = ({
 									r_accountEntryToDXPCloudEnvironment_accountEntryId:
 										project?.id,
 								},
-								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 							},
 						})
 					)

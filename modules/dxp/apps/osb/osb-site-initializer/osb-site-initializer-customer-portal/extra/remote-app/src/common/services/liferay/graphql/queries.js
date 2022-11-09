@@ -152,17 +152,13 @@ export const getBannedEmailDomains = gql`
 
 export const addDXPCloudEnvironment = gql`
 	mutation addDXPCloudEnvironment(
-		$scopeKey: String!
 		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
 	) {
-		createDXPCloudEnvironment(
-			scopeKey: $scopeKey
-			input: $DXPCloudEnvironment
-		)
+		createDXPCloudEnvironment(input: $DXPCloudEnvironment)
 			@rest(
 				method: "POST"
 				type: "C_DXPCloudEnvironment"
-				path: "/c/dxpcloudenvironments/scopes/{args.scopeKey}"
+				path: "/c/dxpcloudenvironments/"
 			) {
 			accountKey
 			dataCenterRegion
@@ -174,15 +170,12 @@ export const addDXPCloudEnvironment = gql`
 `;
 
 export const addAdminDXPCloud = gql`
-	mutation addAdminDXPCloud(
-		$scopeKey: String!
-		$AdminDXPCloud: InputC_AdminDXPCloud!
-	) {
-		createAdminDXPCloud(scopeKey: $scopeKey, input: $AdminDXPCloud)
+	mutation addAdminDXPCloud($AdminDXPCloud: InputC_AdminDXPCloud!) {
+		createAdminDXPCloud(input: $AdminDXPCloud)
 			@rest(
 				method: "POST"
 				type: "C_AdminDXPCloud"
-				path: "/c/admindxpclouds/scopes/{args.scopeKey}"
+				path: "/c/admindxpclouds/"
 			) {
 			emailAddress
 			firstName
@@ -213,9 +206,9 @@ export const updateDXPCloudEnvironment = gql`
 `;
 
 export const getDXPCloudEnvironment = gql`
-	query getDXPCloudEnvironment($scopeKey: String, $filter: String) {
+	query getDXPCloudEnvironment($filter: String) {
 		c {
-			dXPCloudEnvironments(filter: $filter, scopeKey: $scopeKey) {
+			dXPCloudEnvironments(filter: $filter) {
 				items {
 					dxpCloudEnvironmentId
 					projectId
@@ -227,17 +220,13 @@ export const getDXPCloudEnvironment = gql`
 
 export const addAnalyticsCloudWorkspace = gql`
 	mutation addAnalyticsCloudWorkspace(
-		$scopeKey: String!
 		$analyticsCloudWorkspace: InputC_AnalyticsCloudWorkspace!
 	) {
-		createAnalyticsCloudWorkspace(
-			scopeKey: $scopeKey
-			input: $analyticsCloudWorkspace
-		)
+		createAnalyticsCloudWorkspace(input: $analyticsCloudWorkspace)
 			@rest(
 				method: "POST"
 				type: "C_AnalyticsCloudWorkspace"
-				path: "/c/analyticscloudworkspaces/scopes/{args.scopeKey}"
+				path: "/c/analyticscloudworkspaces/"
 			) {
 			accountKey
 			dataCenterLocation
@@ -250,17 +239,15 @@ export const addAnalyticsCloudWorkspace = gql`
 
 export const addIncidentReportAnalyticsCloud = gql`
 	mutation addIncidentReportAnalyticsCloud(
-		$scopeKey: String!
 		$IncidentReportContactAnalyticsCloud: InputC_IncidentReportContactAnalyticsCloud!
 	) {
 		createIncidentReportContactAnalyticsCloud(
-			scopeKey: $scopeKey
 			input: $IncidentReportContactAnalyticsCloud
 		)
 			@rest(
 				method: "POST"
 				type: "C_IncidentReportContactAnalyticsCloud"
-				path: "/c/incidentreportcontactanalyticsclouds/scopes/{args.scopeKey}"
+				path: "/c/incidentreportcontactanalyticsclouds/"
 			) {
 			emailAddress
 			analyticsCloudWorkspaceId
@@ -269,9 +256,9 @@ export const addIncidentReportAnalyticsCloud = gql`
 `;
 
 export const getAnalyticsCloudWorkspace = gql`
-	query getAnalyticsCloudWorkspace($scopeKey: String, $filter: String) {
+	query getAnalyticsCloudWorkspace($filter: String) {
 		c {
-			analyticsCloudWorkspaces(filter: $filter, scopeKey: $scopeKey) {
+			analyticsCloudWorkspaces(filter: $filter) {
 				items {
 					analyticsCloudWorkspaceId
 					workspaceGroupId
@@ -318,17 +305,13 @@ export const getAnalyticsCloudPageInfo = gql`
 
 export const addTeamMembersInvitation = gql`
 	mutation addTeamMembersInvitation(
-		$scopeKey: String!
 		$TeamMembersInvitation: InputC_TeamMembersInvitation!
 	) {
-		createTeamMembersInvitation(
-			scopeKey: $scopeKey
-			input: $TeamMembersInvitation
-		)
+		createTeamMembersInvitation(input: $TeamMembersInvitation)
 			@rest(
 				method: "POST"
 				type: "C_TeamMembersInvitation"
-				path: "/c/teammembersinvitations/scopes/{args.scopeKey}"
+				path: "/c/teammembersinvitations/batch"
 			) {
 			email
 			role

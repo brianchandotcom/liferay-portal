@@ -113,7 +113,6 @@ const SetupAnalyticsCloudPage = ({
 				query: getAnalyticsCloudWorkspace,
 				variables: {
 					filter: `accountKey eq '${accountKey}'`,
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 
@@ -150,7 +149,6 @@ const SetupAnalyticsCloudPage = ({
 							project?.id,
 						workspaceName: analyticsCloud.workspaceName,
 					},
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
 
@@ -191,7 +189,6 @@ const SetupAnalyticsCloudPage = ({
 									r_accountEntryToDXPCloudEnvironment_accountEntryId:
 										project.id,
 								},
-								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 							},
 						});
 					})

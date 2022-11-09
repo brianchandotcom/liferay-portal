@@ -17,7 +17,6 @@ import {useEffect, useState} from 'react';
 import i18n from '../../../I18n';
 import {Badge, Button} from '../../../components';
 import {useAppPropertiesContext} from '../../../contexts/AppPropertiesContext';
-import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,
 	associateUserAccountWithAccountAndAccountRole,
@@ -162,14 +161,12 @@ const InviteTeamMembersPage = ({
 				isSelectdAdministratorOrRequestorRole
 			) {
 				setBaseButtonDisabled(true);
-			}
-			else {
+			} else {
 				setInitialError(false);
 				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -195,13 +192,11 @@ const InviteTeamMembersPage = ({
 						},
 						variables: {
 							TeamMembersInvitation: {
-								accountEntryId: project.id,
 								email,
 								r_accountEntryToDXPCloudEnvironment_accountEntryId:
 									project?.id,
 								role: role.key,
 							},
-							scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 						},
 					});
 
@@ -237,8 +232,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

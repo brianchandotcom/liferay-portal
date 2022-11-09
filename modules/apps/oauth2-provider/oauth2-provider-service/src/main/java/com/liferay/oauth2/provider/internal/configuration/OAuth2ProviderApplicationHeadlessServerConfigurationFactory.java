@@ -91,6 +91,9 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 				externalReferenceCode + ".oauth2.authorization.uri",
 				serviceAddress.concat("/o/oauth2/authorize")
 			).put(
+				externalReferenceCode + ".oauth2.headless.server.audience",
+				oAuth2Application.getHomePageURL()
+			).put(
 				externalReferenceCode + ".oauth2.headless.server.client.id",
 				oAuth2Application.getClientId()
 			).put(

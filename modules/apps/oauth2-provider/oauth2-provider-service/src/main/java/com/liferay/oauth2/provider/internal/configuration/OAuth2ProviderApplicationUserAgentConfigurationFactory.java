@@ -104,6 +104,9 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 				externalReferenceCode + ".oauth2.token.uri",
 				serviceAddress.concat("/o/oauth2/token")
 			).put(
+				externalReferenceCode + ".oauth2.user.agent.audience",
+				oAuth2Application.getHomePageURL()
+			).put(
 				externalReferenceCode + ".oauth2.user.agent.client.id",
 				oAuth2Application.getClientId()
 			).put(

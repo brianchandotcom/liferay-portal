@@ -36,7 +36,15 @@ export declare function normalizeLanguageId(languageId: string): string;
 /**
  * Normalize string in camel case pattern.
  */
-export declare function toCamelCase(str: string): string;
+export declare function toCamelCase(
+	str: string,
+	removeSpecialCharacters?: boolean
+): string;
+
+/**
+ * Verify if string contains any special characters
+ */
+export declare function specialCharactersInString(str: string): boolean;
 
 /**
  * Separate CamelCase string

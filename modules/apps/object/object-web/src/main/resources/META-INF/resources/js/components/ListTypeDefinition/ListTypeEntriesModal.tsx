@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {
@@ -23,7 +24,7 @@ import {
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {toCamelCase} from '../../utils/string';
+import {specialCharactersInString, toCamelCase} from '../../utils/string';
 import {ObjectValidationErrors} from './ListTypeFormBase';
 import {fixLocaleKeys} from './utils';
 
@@ -79,7 +80,12 @@ function ListTypeEntriesModal() {
 		}));
 	};
 
-	const [errors, setErrors] = useState<{name?: string; name_i18n?: string}>({
+	const [errors, setErrors] = useState<{
+		key?: string;
+		name?: string;
+		name_i18n?: string;
+	}>({
+		key: '',
 		name: '',
 		name_i18n: '',
 	});
@@ -137,6 +143,12 @@ function ListTypeEntriesModal() {
 			errors.name = REQUIRED_MSG;
 		}
 
+		if (specialCharactersInString(key as string)) {
+			errors.key = Liferay.Language.get(
+				'key-must-only-contain-letters-and-digits'
+			);
+		}
+
 		return errors;
 	};
 
@@ -190,6 +202,10 @@ function ListTypeEntriesModal() {
 			<ClayModal.Header>{header}</ClayModal.Header>
 
 			<ClayModal.Body>
+				{errors.key && (
+					<ClayAlert displayType="danger">{errors.key}</ClayAlert>
+				)}
+
 				<InputLocalized
 					disabled={readOnly}
 					error={errors.name_i18n}

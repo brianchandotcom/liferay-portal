@@ -44,14 +44,34 @@ export function normalizeLanguageId(languageId: string): string {
 /**
  * Normalize string in camel case pattern.
  */
-export function toCamelCase(str: string): string {
+export function toCamelCase(
+	str: string,
+	removeSpecialCharacters?: boolean
+): string {
 	const split = str.split(' ');
 	const capitalizeFirstLetters = split.map((str: string) =>
 		firstLetterUppercase(str)
 	);
 	const join = capitalizeFirstLetters.join('');
 
-	return firstLetterLowercase(removeAllSpecialCharacters(join));
+	if (removeSpecialCharacters) {
+		return firstLetterLowercase(removeAllSpecialCharacters(join));
+	}
+
+	return firstLetterLowercase(join);
+}
+
+/**
+ * Verify if string contains any special characters
+ */
+export function specialCharactersInString(str: string) {
+	const replaceString = removeAllSpecialCharacters(str);
+
+	if (replaceString.normalize() === str.normalize()) {
+		return false;
+	}
+
+	return true;
 }
 
 /**

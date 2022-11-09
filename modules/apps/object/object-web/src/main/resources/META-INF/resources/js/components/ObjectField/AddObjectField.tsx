@@ -63,7 +63,7 @@ function ModalAddObjectField({
 				...field,
 				name:
 					field.name ||
-					toCamelCase(field.label[defaultLanguageId] as string),
+					toCamelCase(field.label[defaultLanguageId] as string, true),
 			};
 
 			delete field.listTypeDefinitionId;

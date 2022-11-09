@@ -280,7 +280,7 @@ export default function ObjectFieldFormBase({
 				required
 				value={
 					values.name ??
-					toCamelCase(values.label?.[defaultLanguageId] ?? '')
+					toCamelCase(values.label?.[defaultLanguageId] ?? '', true)
 				}
 			/>
 

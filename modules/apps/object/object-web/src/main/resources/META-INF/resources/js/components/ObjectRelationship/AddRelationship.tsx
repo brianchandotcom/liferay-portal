@@ -51,7 +51,7 @@ function ModalAddObjectRelationship({
 				{
 					...others,
 					label,
-					name: name ?? toCamelCase(label[defaultLanguageId]!),
+					name: name ?? toCamelCase(label[defaultLanguageId]!, true),
 				},
 				'POST'
 			);
@@ -106,7 +106,8 @@ function ModalAddObjectRelationship({
 							name:
 								values.name ??
 								toCamelCase(
-									values.label?.[defaultLanguageId] ?? ''
+									values.label?.[defaultLanguageId] ?? '',
+									true
 								),
 						}}
 					/>

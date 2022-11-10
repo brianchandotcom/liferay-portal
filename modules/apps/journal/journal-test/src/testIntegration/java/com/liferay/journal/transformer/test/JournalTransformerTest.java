@@ -29,8 +29,8 @@ import com.liferay.journal.util.JournalTransformerListenerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -113,7 +113,7 @@ public class JournalTransformerTest {
 			).put(
 				LocaleUtil.US, "Joe Bloggs"
 			).build(),
-			LanguageUtil.getLanguageId(LocaleUtil.US));
+			_language.getLanguageId(LocaleUtil.US));
 
 		String script = "${name.getData()}";
 
@@ -149,7 +149,7 @@ public class JournalTransformerTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, "Joe Bloggs"
 			).build(),
-			LanguageUtil.getLanguageId(LocaleUtil.US));
+			_language.getLanguageId(LocaleUtil.US));
 
 		Document document = UnsecureSAXReaderUtil.read(xml);
 
@@ -307,7 +307,7 @@ public class JournalTransformerTest {
 		return HashMapBuilder.put(
 			TemplateConstants.CLASS_NAME_ID,
 			String.valueOf(
-				ClassNameLocalServiceUtil.getClassNameId(
+				_classNameLocalService.getClassNameId(
 					DDMStructure.class.getName()))
 		).put(
 			"article_group_id", String.valueOf(TestPropsValues.getGroupId())
@@ -365,7 +365,7 @@ public class JournalTransformerTest {
 				HashMapBuilder.put(
 					TemplateConstants.CLASS_NAME_ID,
 					String.valueOf(
-						ClassNameLocalServiceUtil.getClassNameId(
+						_classNameLocalService.getClassNameId(
 							DDMStructure.class.getName()))
 				).put(
 					"article_group_id",
@@ -388,6 +388,9 @@ public class JournalTransformerTest {
 	}
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@DeleteAfterTestRun
@@ -399,6 +402,9 @@ public class JournalTransformerTest {
 	@Inject
 	private JournalTransformerListenerRegistry
 		_journalTransformerListenerRegistry;
+
+	@Inject
+	private Language _language;
 
 	@Inject
 	private Portal _portal;

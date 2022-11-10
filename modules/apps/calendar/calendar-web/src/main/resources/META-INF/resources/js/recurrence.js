@@ -552,8 +552,8 @@ AUI.add(
 
 					daysOfWeekCheckboxes.each((item) => {
 						if (item.val() === dayOfWeek) {
-							item.set('checked', true);
-							item.set('disabled', true);
+							item.set('checked', false);
+							item.set('disabled', false);
 						}
 						else if (item.get('disabled')) {
 							item.set('disabled', false);

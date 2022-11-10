@@ -70,8 +70,8 @@ public class TLDStylingCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Missing '<![CDATA[' after 'replaced by' in the ",
-						"description of tag '", nameElement.getText(), "'"));
+						"Missing CDATA after 'replaced by' in the description ",
+						"of tag '", nameElement.getText(), "'"));
 			}
 		}
 	}

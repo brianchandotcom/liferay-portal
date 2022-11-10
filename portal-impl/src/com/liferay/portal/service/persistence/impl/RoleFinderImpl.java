@@ -993,6 +993,31 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		return keywordsPredicate;
 	}
 
+	private Predicate _getKeywordsPredicate(
+		Expression<String> column, String[] keywords) {
+
+		Expression<String> expression = DSLFunctionFactoryUtil.lower(column);
+
+		Predicate keywordsPredicate = null;
+
+		for (String keyword : keywords) {
+			if (keyword == null) {
+				continue;
+			}
+
+			Predicate keywordPredicate = expression.like(keyword);
+
+			if (keywordsPredicate == null) {
+				keywordsPredicate = keywordPredicate;
+			}
+			else {
+				keywordsPredicate = keywordsPredicate.or(keywordPredicate);
+			}
+		}
+
+		return keywordsPredicate;
+	}
+
 	private OrderByStep _getOrderByStep(
 		FromStep fromStep, long companyId, String keywords,
 		List<String> excludedNames, int[] types, long excludedTeamRoleId,
@@ -1023,7 +1048,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 						RoleTable.INSTANCE.title, keywordsArray)
 				).or(
 					_getKeywordsPredicate(
-						RoleTable.INSTANCE.description, keywordsArray)
+						DSLFunctionFactoryUtil.castClobText(
+							RoleTable.INSTANCE.description),
+						keywordsArray)
 				));
 
 			teamsSubqueryPredicate = teamsSubqueryPredicate.and(

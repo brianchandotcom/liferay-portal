@@ -17,6 +17,7 @@ package com.liferay.osgi.service.tracker.collections.list;
 import java.io.Closeable;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -30,5 +31,9 @@ public interface ServiceTrackerList<T> extends Closeable, Iterable<T> {
 	public Iterator<T> iterator();
 
 	public int size();
+
+	public <E> E[] toArray(E[] array);
+
+	public List<T> toList();
 
 }

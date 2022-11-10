@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = InfoListRenderer.class)
+@Component(service = InfoListRenderer.class)
 public class BorderedCPAttachmentFileEntryBasicInfoListRenderer
 	extends BaseCPAttachmentFileEntryBasicInfoListRenderer
 	implements BorderedBasicInfoListRenderer<CPAttachmentFileEntry> {

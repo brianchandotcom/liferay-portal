@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Sbarra
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CPPortletKeys.CP_OPTION_FACETS,
 	service = ConfigurationAction.class
 )

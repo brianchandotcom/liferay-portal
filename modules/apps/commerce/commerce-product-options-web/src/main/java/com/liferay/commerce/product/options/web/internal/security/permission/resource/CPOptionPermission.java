@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class CPOptionPermission {
 
 	public static boolean contains(

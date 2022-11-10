@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_ATTACHMENTS,
 		"frontend.data.set.name=" + CommerceProductFDSNames.PRODUCT_IMAGES

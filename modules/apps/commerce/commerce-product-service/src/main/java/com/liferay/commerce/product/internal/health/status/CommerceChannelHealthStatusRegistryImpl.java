@@ -39,9 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	immediate = true, service = CommerceChannelHealthStatusRegistry.class
-)
+@Component(service = CommerceChannelHealthStatusRegistry.class)
 public class CommerceChannelHealthStatusRegistryImpl
 	implements CommerceChannelHealthStatusRegistry {
 

@@ -52,7 +52,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "fds.data.provider.key=" + CommerceProductFDSNames.PRODUCT_OPTIONS,
 	service = FDSDataProvider.class
 )

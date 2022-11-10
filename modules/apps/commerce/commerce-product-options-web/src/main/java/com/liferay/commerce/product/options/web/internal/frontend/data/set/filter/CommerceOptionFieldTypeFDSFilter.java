@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = "frontend.data.set.name=" + CommerceOptionFDSNames.OPTIONS,
 	service = FDSFilter.class
 )

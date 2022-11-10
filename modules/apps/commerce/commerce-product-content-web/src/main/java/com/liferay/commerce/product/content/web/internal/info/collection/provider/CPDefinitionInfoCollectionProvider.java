@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = InfoCollectionProvider.class)
+@Component(service = InfoCollectionProvider.class)
 public class CPDefinitionInfoCollectionProvider
 	implements InfoCollectionProvider<CPDefinition> {
 

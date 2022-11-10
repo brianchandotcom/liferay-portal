@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ethan Bustad
  */
 @Component(
-	immediate = true,
 	property = "commerce.product.data.source.name=" + AssetCategoriesCPDataSourceImpl.NAME,
 	service = CPDataSource.class
 )

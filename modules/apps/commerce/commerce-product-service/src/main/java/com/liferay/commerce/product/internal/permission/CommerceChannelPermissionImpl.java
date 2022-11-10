@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = CommerceChannelPermission.class)
+@Component(service = CommerceChannelPermission.class)
 public class CommerceChannelPermissionImpl
 	implements CommerceChannelPermission {
 

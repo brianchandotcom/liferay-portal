@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	immediate = true,
 	property = {
 		"indexer.class.name=com.liferay.commerce.product.model.CPDefinition",
 		"indexer.clauses.mandatory=true"

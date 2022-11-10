@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceOptionTypeRegistry.class)
+@Component(service = CommerceOptionTypeRegistry.class)
 public class CommerceOptionTypeRegistryImpl
 	implements CommerceOptionTypeRegistry {
 

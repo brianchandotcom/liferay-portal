@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CPDefinitionLinkTypeSettings.class)
+@Component(service = CPDefinitionLinkTypeSettings.class)
 public class CPDefinitionLinkTypeSettingsImpl
 	implements CPDefinitionLinkTypeSettings {
 

@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 
 	public static final String CLASS_NAME = CPDisplayLayout.class.getName();

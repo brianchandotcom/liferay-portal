@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_CONTENT_WEB,
 		"mvc.command.name=/cp_content_web/view_cp_attachments"

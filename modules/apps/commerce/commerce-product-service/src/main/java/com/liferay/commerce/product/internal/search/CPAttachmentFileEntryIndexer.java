@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class CPAttachmentFileEntryIndexer
 	extends BaseIndexer<CPAttachmentFileEntry> {
 

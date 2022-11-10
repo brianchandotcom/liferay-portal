@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPDataSourceRegistry.class)
+@Component(service = CPDataSourceRegistry.class)
 public class CPDataSourceRegistryImpl implements CPDataSourceRegistry {
 
 	@Override

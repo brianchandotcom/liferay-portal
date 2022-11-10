@@ -107,7 +107,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPFileImporter.class)
+@Component(service = CPFileImporter.class)
 public class CPFileImporterImpl implements CPFileImporter {
 
 	public static final String GROUP_ID_PLACEHOLDER = "[$GROUP_ID$]";

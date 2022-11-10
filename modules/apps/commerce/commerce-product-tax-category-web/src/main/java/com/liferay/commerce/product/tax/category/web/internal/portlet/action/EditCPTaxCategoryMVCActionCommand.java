@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_TAX_CATEGORY,
 		"mvc.command.name=/cp_tax_category/edit_cp_tax_category"

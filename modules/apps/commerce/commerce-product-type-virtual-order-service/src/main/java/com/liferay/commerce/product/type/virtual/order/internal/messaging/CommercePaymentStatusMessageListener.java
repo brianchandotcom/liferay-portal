@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.COMMERCE_PAYMENT_STATUS,
 	service = MessageListener.class
 )

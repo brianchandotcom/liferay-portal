@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = RelatedInfoItemCollectionProvider.class)
+@Component(service = RelatedInfoItemCollectionProvider.class)
 public class
 	CPDefinitionSpecificationOptionValuesRelatedInfoItemCollectionProvider
 		implements RelatedInfoItemCollectionProvider

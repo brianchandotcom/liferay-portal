@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTIONS,
 		"mvc.command.name=/cp_specification_options/cp_specification_option_info_panel"

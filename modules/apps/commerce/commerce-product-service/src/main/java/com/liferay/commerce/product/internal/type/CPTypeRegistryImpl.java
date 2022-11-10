@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPTypeRegistry.class)
+@Component(service = CPTypeRegistry.class)
 public class CPTypeRegistryImpl implements CPTypeRegistry {
 
 	@Override

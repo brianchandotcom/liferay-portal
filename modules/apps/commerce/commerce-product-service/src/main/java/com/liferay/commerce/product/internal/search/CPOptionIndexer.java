@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 	public static final String CLASS_NAME = CPOption.class.getName();

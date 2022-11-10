@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CPAvailabilityChecker.class)
+@Component(service = CPAvailabilityChecker.class)
 public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 	@Override

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Ethan Bustad
  */
-@Component(immediate = true, service = CPVersionContributorRegistry.class)
+@Component(service = CPVersionContributorRegistry.class)
 public class CPVersionContributorRegistryImpl
 	implements CPVersionContributorRegistry {
 

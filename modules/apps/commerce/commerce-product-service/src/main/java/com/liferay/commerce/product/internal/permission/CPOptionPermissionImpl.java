@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPOptionPermission.class)
+@Component(service = CPOptionPermission.class)
 public class CPOptionPermissionImpl implements CPOptionPermission {
 
 	@Override

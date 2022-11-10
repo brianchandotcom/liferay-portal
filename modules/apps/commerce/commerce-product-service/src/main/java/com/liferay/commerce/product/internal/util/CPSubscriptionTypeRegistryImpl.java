@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CPSubscriptionTypeRegistry.class)
+@Component(service = CPSubscriptionTypeRegistry.class)
 public class CPSubscriptionTypeRegistryImpl
 	implements CPSubscriptionTypeRegistry {
 

@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.product.channel.type.key=" + CommerceChannelConstants.CHANNEL_TYPE_SITE,
 		"commerce.product.channel.type.order:Integer=10"

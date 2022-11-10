@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.option.type.display.order:Integer=300",
 		"commerce.option.type.key=" + RadioCommerceOptionTypeImpl.KEY

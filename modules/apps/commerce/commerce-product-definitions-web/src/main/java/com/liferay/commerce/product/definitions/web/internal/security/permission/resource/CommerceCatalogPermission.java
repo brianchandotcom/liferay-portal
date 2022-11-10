@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class CommerceCatalogPermission {
 
 	public static boolean contains(

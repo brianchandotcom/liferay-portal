@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=createProducts", "osgi.command.scope=commerce"
 	},

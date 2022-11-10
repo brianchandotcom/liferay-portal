@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = CommerceChannelTypeRegistry.class)
+@Component(service = CommerceChannelTypeRegistry.class)
 public class CommerceChannelTypeRegistryImpl
 	implements CommerceChannelTypeRegistry {
 

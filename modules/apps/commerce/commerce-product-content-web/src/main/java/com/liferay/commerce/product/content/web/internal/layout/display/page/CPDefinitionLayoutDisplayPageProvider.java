@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Alec Sloan
  */
-@Component(immediate = true, service = LayoutDisplayPageProvider.class)
+@Component(service = LayoutDisplayPageProvider.class)
 public class CPDefinitionLayoutDisplayPageProvider
 	implements LayoutDisplayPageProvider<CPDefinition> {
 

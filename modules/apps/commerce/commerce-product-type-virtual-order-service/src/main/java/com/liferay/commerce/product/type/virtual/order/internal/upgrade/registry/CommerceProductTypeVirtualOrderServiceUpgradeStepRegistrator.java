@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Cheryl Tang
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class CommerceProductTypeVirtualOrderServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

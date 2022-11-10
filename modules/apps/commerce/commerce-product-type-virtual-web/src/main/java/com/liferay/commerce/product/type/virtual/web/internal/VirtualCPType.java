@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.product.type.display.order:Integer=15",
 		"commerce.product.type.name=" + VirtualCPTypeConstants.NAME

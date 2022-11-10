@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPOptionCategoryPermission.class)
+@Component(service = CPOptionCategoryPermission.class)
 public class CPOptionCategoryPermissionImpl
 	implements CPOptionCategoryPermission {
 

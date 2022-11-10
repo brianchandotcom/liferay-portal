@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = CPSpecificationOptionPermission.class)
+@Component(service = CPSpecificationOptionPermission.class)
 public class CPSpecificationOptionPermissionImpl
 	implements CPSpecificationOptionPermission {
 

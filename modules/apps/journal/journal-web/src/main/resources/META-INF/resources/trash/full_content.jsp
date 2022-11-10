@@ -28,13 +28,11 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCPath(
-			"/preview.jsp"
+			"/view_content.jsp"
 		).setParameter(
 			"classNameId", assetRendererFactory.getClassNameId()
 		).setParameter(
 			"classPK", JournalArticleAssetRenderer.getClassPK(article)
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).buildPortletURL()
 	%>'
 />

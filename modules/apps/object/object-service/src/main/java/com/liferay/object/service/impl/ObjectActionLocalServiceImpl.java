@@ -143,6 +143,15 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectAction getObjectAction(
+			long objectDefinitionId, String name, String objectActionTriggerKey)
+		throws PortalException {
+
+		return objectActionPersistence.findByODI_A_N_OATK(
+			objectDefinitionId, true, name, objectActionTriggerKey);
+	}
+
+	@Override
 	public List<ObjectAction> getObjectActions(long objectDefinitionId) {
 		return objectActionPersistence.findByObjectDefinitionId(
 			objectDefinitionId);

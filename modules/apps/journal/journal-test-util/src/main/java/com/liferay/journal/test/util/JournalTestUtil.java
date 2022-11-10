@@ -879,14 +879,13 @@ public class JournalTestUtil {
 
 		User user = TestPropsValues.getUser();
 
-		Calendar displayCal = CalendarFactoryUtil.getCalendar(
-			user.getTimeZone());
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
 
-		int displayDateDay = displayCal.get(Calendar.DATE);
-		int displayDateMonth = displayCal.get(Calendar.MONTH);
-		int displayDateYear = displayCal.get(Calendar.YEAR);
-		int displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
-		int displayDateMinute = displayCal.get(Calendar.MINUTE);
+		int displayDateDay = calendar.get(Calendar.DATE);
+		int displayDateMonth = calendar.get(Calendar.MONTH);
+		int displayDateYear = calendar.get(Calendar.YEAR);
+		int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
+		int displayDateMinute = calendar.get(Calendar.MINUTE);
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			null, TestPropsValues.getUserId(), groupId,

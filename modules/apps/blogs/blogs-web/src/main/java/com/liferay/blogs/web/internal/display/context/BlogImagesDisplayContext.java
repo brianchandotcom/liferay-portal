@@ -59,6 +59,16 @@ public class BlogImagesDisplayContext {
 		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 
+	public long getFolderId() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Folder folder = _getAttachmentsFolder(themeDisplay);
+
+		return folder.getFolderId();
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -83,6 +93,16 @@ public class BlogImagesDisplayContext {
 		return _orderByType;
 	}
 
+	public long getRepositoryId() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Folder folder = _getAttachmentsFolder(themeDisplay);
+
+		return folder.getRepositoryId();
+	}
+
 	public void populateResults(SearchContainer<FileEntry> searchContainer)
 		throws PortalException {
 
@@ -90,9 +110,7 @@ public class BlogImagesDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Folder attachmentsFolder =
-			BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+		Folder attachmentsFolder = _getAttachmentsFolder(themeDisplay);
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
@@ -154,9 +172,23 @@ public class BlogImagesDisplayContext {
 		}
 	}
 
+	private Folder _getAttachmentsFolder(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (_folder != null) {
+			return _folder;
+		}
+
+		_folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+
+		return _folder;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogImagesDisplayContext.class);
 
+	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private String _orderByCol;

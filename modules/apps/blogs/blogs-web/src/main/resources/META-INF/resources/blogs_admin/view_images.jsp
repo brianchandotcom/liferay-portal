@@ -16,97 +16,113 @@
 
 <%@ include file="/blogs_admin/init.jsp" %>
 
-<%
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-168174")) %>'>
 
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/blogs/view"
-).setNavigation(
-	"images"
-).buildPortletURL();
+		<%
+		BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
+		%>
 
-if (delta > 0) {
-	portletURL.setParameter("delta", String.valueOf(delta));
-}
+		<liferay-document-library:repository-browser
+			folderId="<%= blogImagesDisplayContext.getFolderId() %>"
+			repositoryId="<%= blogImagesDisplayContext.getRepositoryId() %>"
+		/>
+	</c:when>
+	<c:otherwise>
 
-portletURL.setParameter("orderBycol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
+		<%
+		int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-request.setAttribute("view_images.jsp-portletURL", portletURL);
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/blogs/view"
+		).setNavigation(
+			"images"
+		).buildPortletURL();
 
-SearchContainer<FileEntry> blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
+		if (delta > 0) {
+			portletURL.setParameter("delta", String.valueOf(delta));
+		}
 
-blogImagesSearchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType));
+		portletURL.setParameter("orderBycol", orderByCol);
+		portletURL.setParameter("orderByType", orderByType);
 
-blogImagesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+		request.setAttribute("view_images.jsp-portletURL", portletURL);
 
-BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
+		SearchContainer<FileEntry> blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
 
-blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
+		blogImagesSearchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType));
 
-BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, blogImagesSearchContainer);
+		blogImagesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 
-String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle();
-%>
+		BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
 
-<clay:management-toolbar
-	actionDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
-	disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
-	filterDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= blogImagesSearchContainer.getTotal() %>"
-	managementToolbarDisplayContext="<%= blogImagesManagementToolbarDisplayContext %>"
-	propsTransformer="blogs_admin/js/BlogImagesManagementToolbarPropsTransformer"
-	searchActionURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
-	searchContainerId="images"
-	searchFormName="searchFm"
-	showCreationMenu="<%= false %>"
-	showInfoButton="<%= false %>"
-	sortingOrder="<%= blogImagesManagementToolbarDisplayContext.getOrderByType() %>"
-	sortingURL="<%= blogImagesManagementToolbarDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
-/>
+		blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 
-<clay:container-fluid>
-	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
+		BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, blogImagesSearchContainer);
 
-	<aui:form action="<%= editImageURL %>" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteFileEntryIds" type="hidden" />
+		String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle();
+		%>
 
-		<liferay-ui:search-container
-			id="images"
-			searchContainer="<%= blogImagesSearchContainer %>"
-		>
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.repository.model.FileEntry"
-				keyProperty="fileEntryId"
-				modelVar="fileEntry"
-			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcRenderCommandName" value="/blogs/edit_image" />
-					<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-				</liferay-portlet:renderURL>
+		<clay:management-toolbar
+			actionDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+			clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
+			disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
+			filterDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+			itemsTotal="<%= blogImagesSearchContainer.getTotal() %>"
+			managementToolbarDisplayContext="<%= blogImagesManagementToolbarDisplayContext %>"
+			propsTransformer="blogs_admin/js/BlogImagesManagementToolbarPropsTransformer"
+			searchActionURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
+			searchContainerId="images"
+			searchFormName="searchFm"
+			showCreationMenu="<%= false %>"
+			showInfoButton="<%= false %>"
+			sortingOrder="<%= blogImagesManagementToolbarDisplayContext.getOrderByType() %>"
+			sortingURL="<%= blogImagesManagementToolbarDisplayContext.getSortingURL() %>"
+			viewTypeItems="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
+		/>
 
-				<%
-				row.setData(
-					HashMapBuilder.<String, Object>put(
-						"actions", StringUtil.merge(blogImagesManagementToolbarDisplayContext.getAvailableActions(fileEntry))
-					).build());
-				%>
+		<clay:container-fluid>
+			<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
 
-				<%@ include file="/blogs_admin/image_search_columns.jspf" %>
-			</liferay-ui:search-container-row>
+			<aui:form action="<%= editImageURL %>" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="deleteFileEntryIds" type="hidden" />
 
-			<liferay-ui:search-iterator
-				displayStyle="<%= displayStyle %>"
-				markupView="lexicon"
-			/>
-		</liferay-ui:search-container>
-	</aui:form>
-</clay:container-fluid>
+				<liferay-ui:search-container
+					id="images"
+					searchContainer="<%= blogImagesSearchContainer %>"
+				>
+					<liferay-ui:search-container-row
+						className="com.liferay.portal.kernel.repository.model.FileEntry"
+						keyProperty="fileEntryId"
+						modelVar="fileEntry"
+					>
+						<liferay-portlet:renderURL varImpl="rowURL">
+							<portlet:param name="mvcRenderCommandName" value="/blogs/edit_image" />
+							<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+						</liferay-portlet:renderURL>
+
+						<%
+						row.setData(
+							HashMapBuilder.<String, Object>put(
+								"actions", StringUtil.merge(blogImagesManagementToolbarDisplayContext.getAvailableActions(fileEntry))
+							).build());
+						%>
+
+						<%@ include file="/blogs_admin/image_search_columns.jspf" %>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator
+						displayStyle="<%= displayStyle %>"
+						markupView="lexicon"
+					/>
+				</liferay-ui:search-container>
+			</aui:form>
+		</clay:container-fluid>
+	</c:otherwise>
+</c:choose>

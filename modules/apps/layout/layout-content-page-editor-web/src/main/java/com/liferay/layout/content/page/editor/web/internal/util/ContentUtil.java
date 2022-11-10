@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -166,14 +165,12 @@ public class ContentUtil {
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE)) {
 
-			String editURL = InfoEditURLProviderUtil.getURLEdit(
-				layoutClassedModelUsage.getClassName(),
-				layoutDisplayPageObjectProvider.getDisplayObject(),
-				httpServletRequest);
-
-			if (editURL != null) {
-				jsonObject.put("editURL", editURL);
-			}
+			jsonObject.put(
+				"editURL",
+				() -> InfoEditURLProviderUtil.getURLEdit(
+					layoutClassedModelUsage.getClassName(),
+					layoutDisplayPageObjectProvider.getDisplayObject(),
+					httpServletRequest));
 
 			if (Objects.equals(
 					layoutClassedModelUsage.getClassName(),
@@ -224,17 +221,16 @@ public class ContentUtil {
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.PERMISSIONS)) {
 
-			String permissionsURL = PermissionsURLTag.doTag(
-				StringPool.BLANK, layoutClassedModelUsage.getClassName(),
-				HtmlUtil.escape(
-					layoutDisplayPageObjectProvider.getTitle(
-						themeDisplay.getLocale())),
-				null, String.valueOf(layoutClassedModelUsage.getClassPK()),
-				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
-
-			if (Validator.isNotNull(permissionsURL)) {
-				jsonObject.put("permissionsURL", permissionsURL);
-			}
+			jsonObject.put(
+				"permissionsURL",
+				() -> PermissionsURLTag.doTag(
+					StringPool.BLANK, layoutClassedModelUsage.getClassName(),
+					HtmlUtil.escape(
+						layoutDisplayPageObjectProvider.getTitle(
+							themeDisplay.getLocale())),
+					null, String.valueOf(layoutClassedModelUsage.getClassPK()),
+					LiferayWindowState.POP_UP.toString(), null,
+					httpServletRequest));
 		}
 
 		if (ModelResourcePermissionUtil.contains(

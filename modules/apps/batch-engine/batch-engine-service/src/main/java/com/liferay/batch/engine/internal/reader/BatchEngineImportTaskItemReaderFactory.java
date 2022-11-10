@@ -41,7 +41,9 @@ public class BatchEngineImportTaskItemReaderFactory {
 				csvFileColumnDelimiter, inputStream, parameters);
 		}
 
-		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
+		if ((batchEngineTaskContentType == BatchEngineTaskContentType.JSON) ||
+			(batchEngineTaskContentType == BatchEngineTaskContentType.JSONT)) {
+
 			return new JSONBatchEngineImportTaskItemReaderImpl(inputStream);
 		}
 

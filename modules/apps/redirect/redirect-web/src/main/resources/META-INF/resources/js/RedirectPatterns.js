@@ -143,6 +143,7 @@ const PatternField = ({
 };
 
 const RedirectPattern = ({
+	actionUrl,
 	description = Liferay.Language.get('redirect-patterns-description'),
 	patterns: initialPatternsList,
 	portletNamespace,
@@ -168,21 +169,44 @@ const RedirectPattern = ({
 	);
 
 	return (
-		<>
-			<p className="text-muted">{description}</p>
+		<form
+			action={actionUrl}
+			className="container-fluid container-fluid-max-xl mt-4"
+			method="post"
+			name={`${portletNamespace}fm`}
+		>
+			<div className="sheet sheet-lg">
+				<div className="sheet-header">
+					<h2>
+						{Liferay.Language.get(
+							'redirect-pattern-configuration-name'
+						)}
+					</h2>
+				</div>
 
-			{patterns.map((item, index) => (
-				<PatternField
-					destinationURL={item.destinationURL}
-					handleAddClick={addRow}
-					handleRemoveClick={removeRow}
-					index={index}
-					key={item.id}
-					pattern={item.pattern}
-					portletNamespace={portletNamespace}
-				/>
-			))}
-		</>
+				<div className="sheet-section">
+					<p className="text-muted">{description}</p>
+
+					{patterns.map((item, index) => (
+						<PatternField
+							destinationURL={item.destinationURL}
+							handleAddClick={addRow}
+							handleRemoveClick={removeRow}
+							index={index}
+							key={item.id}
+							pattern={item.pattern}
+							portletNamespace={portletNamespace}
+						/>
+					))}
+				</div>
+
+				<div className="sheet-footer">
+					<ClayButton type="submit">
+						{Liferay.Language.get('save')}
+					</ClayButton>
+				</div>
+			</div>
+		</form>
 	);
 };
 

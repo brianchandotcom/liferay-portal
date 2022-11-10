@@ -44,9 +44,8 @@ components:
             properties:
                 accountEntryRestricted:
                     type: boolean
-                accountEntryRestrictedObjectFieldId:
-                    format: int64
-                    type: integer
+                accountEntryRestrictedObjectFieldName:
+                    type: string
                 actions:
                     additionalProperties:
                         additionalProperties:

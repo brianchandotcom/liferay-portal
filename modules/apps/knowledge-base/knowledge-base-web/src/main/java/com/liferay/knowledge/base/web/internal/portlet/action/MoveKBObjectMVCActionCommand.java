@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -81,6 +82,8 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			long kbArticleClassNameId = _portal.getClassNameId(
 				KBArticleConstants.getClassName());
 
+			boolean movable = true;
+
 			if (resourceClassNameId == kbArticleClassNameId) {
 				double priority = ParamUtil.getDouble(
 					actionRequest, "priority");
@@ -89,28 +92,47 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 					KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 						resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
+					if (kbArticle.getParentResourcePrimKey() ==
+							parentResourcePrimKey) {
+
+						movable = false;
+					}
+
 					priority = kbArticle.getPriority();
 				}
 
-				_kbArticleService.moveKBArticle(
-					resourcePrimKey, parentResourceClassNameId,
-					parentResourcePrimKey, priority);
+				if (movable) {
+					_kbArticleService.moveKBArticle(
+						resourcePrimKey, parentResourceClassNameId,
+						parentResourcePrimKey, priority);
+				}
 			}
 			else {
-				if (_isDragAndDrop(dragAndDrop) &&
-					(parentResourceClassNameId == kbArticleClassNameId)) {
+				if (_isDragAndDrop(dragAndDrop)) {
+					if (parentResourceClassNameId == kbArticleClassNameId) {
+						_errorMessage(
+							actionRequest, actionResponse,
+							_language.get(
+								_portal.getHttpServletRequest(actionRequest),
+								"folders-can-not-be-moved-into-articles"));
 
-					_errorMessage(
-						actionRequest, actionResponse,
-						_language.get(
-							_portal.getHttpServletRequest(actionRequest),
-							"folders-can-not-be-moved-into-articles"));
+						return;
+					}
 
-					return;
+					KBFolder kbFolder = _kbFolderService.getKBFolder(
+						resourcePrimKey);
+
+					if (kbFolder.getParentKBFolderId() ==
+							parentResourcePrimKey) {
+
+						movable = false;
+					}
 				}
 
-				_kbFolderService.moveKBFolder(
-					resourcePrimKey, parentResourcePrimKey);
+				if (movable) {
+					_kbFolderService.moveKBFolder(
+						resourcePrimKey, parentResourcePrimKey);
+				}
 			}
 		}
 		catch (PortalException portalException) {

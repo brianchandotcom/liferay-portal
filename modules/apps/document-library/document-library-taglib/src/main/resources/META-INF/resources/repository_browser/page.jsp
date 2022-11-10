@@ -83,6 +83,7 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
 							dropdownItems="<%= repositoryBrowserTagDisplayContext.getActionDropdownItems(repositoryEntry) %>"
+							propsTransformer="repository_browser/js/RepositoryBrowserDropdownPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -126,6 +127,7 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
 							dropdownItems="<%= repositoryBrowserTagDisplayContext.getActionDropdownItems(repositoryEntry) %>"
+							propsTransformer="repository_browser/js/RepositoryBrowserDropdownPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

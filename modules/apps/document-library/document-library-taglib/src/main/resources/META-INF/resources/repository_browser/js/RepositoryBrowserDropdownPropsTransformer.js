@@ -12,18 +12,32 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
 import {deleteEntry, renameEntry} from './RepositoryBrowserDropdownActions';
 
-class ElementsDefaultEventHandler extends DefaultEventHandler {
+const ACTIONS = {
 	delete({deleteURL}) {
 		deleteEntry(deleteURL);
-	}
+	},
 
 	rename({renameURL, value}) {
 		renameEntry(renameURL, value);
-	}
-}
+	},
+};
 
-export default ElementsDefaultEventHandler;
+export default function propsTransformer({items, portletNamespace, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => ({
+			...item,
+			onClick(event) {
+				const action = item.data?.action;
+
+				if (action) {
+					event.preventDefault();
+
+					ACTIONS[action](item.data, portletNamespace);
+				}
+			},
+		})),
+	};
+}

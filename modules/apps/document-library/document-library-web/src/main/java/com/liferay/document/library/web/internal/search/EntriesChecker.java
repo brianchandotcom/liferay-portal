@@ -78,7 +78,7 @@ public class EntriesChecker extends RowChecker {
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String primaryKey) {
 
-		Object result = _getResult(primaryKey);
+		Object result = _getModel(primaryKey);
 
 		String name = _getName(result);
 
@@ -136,7 +136,7 @@ public class EntriesChecker extends RowChecker {
 		return null;
 	}
 
-	private Object _getResult(String primaryKey) {
+	private Object _getModel(String primaryKey) {
 		long entryId = GetterUtil.getLong(primaryKey);
 
 		try {

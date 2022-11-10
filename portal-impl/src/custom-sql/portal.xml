@@ -831,27 +831,19 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByC_N_D_T">
 		<![CDATA[
 			SELECT
-				{Role_.*}
+				DISTINCT {Role_.*}
 			FROM
 				Role_
+			[$JOIN$]
 			WHERE
-				Role_.roleId IN
+				[$WHERE$]
+				(Role_.companyId = ?) AND
+				(Role_.classNameId = [$CLASS_NAME_ID$]) AND
 				(
-					SELECT
-						DISTINCT Role_.roleId
-					FROM
-						Role_
-					[$JOIN$]
-					WHERE
-						[$WHERE$]
-						(Role_.companyId = ?) AND
-						(Role_.classNameId = [$CLASS_NAME_ID$]) AND
-						(
-							(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
-						)
-					[$TYPE$]
+					(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
+				[$TYPE$]
 			ORDER BY
 				Role_.name ASC
 		]]>
@@ -859,28 +851,20 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByC_N_T_D_T">
 		<![CDATA[
 			SELECT
-				{Role_.*}
+				DISTINCT {Role_.*}
 			FROM
 				Role_
+			[$JOIN$]
 			WHERE
-				Role_.roleId IN
+				[$WHERE$]
+				(Role_.companyId = ?) AND
+				(Role_.classNameId = [$CLASS_NAME_ID$]) AND
 				(
-					SELECT
-						DISTINCT Role_.roleId
-					FROM
-						Role_
-					[$JOIN$]
-					WHERE
-						[$WHERE$]
-						(Role_.companyId = ?) AND
-						(Role_.classNameId = [$CLASS_NAME_ID$]) AND
-						(
-							(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(LOWER(Role_.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-							(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
-						)
-					[$TYPE$]
+					(LOWER(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(Role_.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
+				[$TYPE$]
 			ORDER BY
 				Role_.name ASC
 		]]>

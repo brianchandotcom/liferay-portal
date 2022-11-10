@@ -53,6 +53,13 @@ export default function NavigationPanel({
 			item.type === ITEM_TYPES.folder &&
 			parentItem.type === ITEM_TYPES.article
 		) {
+			openToast({
+				message: Liferay.Language.get(
+					'folders-can-not-be-moved-into-articles'
+				),
+				type: 'danger',
+			});
+
 			return false;
 		}
 

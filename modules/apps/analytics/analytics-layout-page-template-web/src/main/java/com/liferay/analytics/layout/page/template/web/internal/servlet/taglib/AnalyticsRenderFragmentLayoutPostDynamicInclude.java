@@ -53,7 +53,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print("</div >");
+		printWriter.print("</div>");
 	}
 
 	@Override

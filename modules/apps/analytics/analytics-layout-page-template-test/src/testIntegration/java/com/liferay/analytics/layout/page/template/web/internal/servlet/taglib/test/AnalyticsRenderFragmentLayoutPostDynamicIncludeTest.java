@@ -99,7 +99,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			"</div >", mockHttpServletResponse.getContentAsString());
+			"</div>", mockHttpServletResponse.getContentAsString());
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			"</div >", mockHttpServletResponse.getContentAsString());
+			"</div>", mockHttpServletResponse.getContentAsString());
 	}
 
 	@Test
@@ -161,7 +161,7 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			"</div >", mockHttpServletResponse.getContentAsString());
+			"</div>", mockHttpServletResponse.getContentAsString());
 	}
 
 	@Test

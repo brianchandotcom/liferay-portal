@@ -1,6 +1,6 @@
 {
 	"accountEntryRestricted": false,
-	"accountEntryRestrictedObjectFieldId": 0,
+	"accountEntryRestrictedObjectFieldName": "",
 	"actions": {
 		"delete": {
 		},

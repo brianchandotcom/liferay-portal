@@ -3,7 +3,7 @@
 definition {
 
 	function verifyElementPresent {
-		selenium.waitForElementPresent("", "false");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.verifyElementPresent();
 	}

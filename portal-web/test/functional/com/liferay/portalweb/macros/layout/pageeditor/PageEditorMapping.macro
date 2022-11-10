@@ -100,12 +100,9 @@ definition {
 				locator1 = "LexiconList#LIST_ENTRY",
 				value1 = "${entryTitle}");
 		}
-
-		else if (isSet(rowItem)){
-			Click(
-				locator1 = "${rowItem}");
+		else if (isSet(rowItem)) {
+			Click(locator1 = "${rowItem}");
 		}
-
 		else {
 			Click(
 				key_card = "${entryTitle}",

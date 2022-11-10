@@ -87,7 +87,6 @@
 	<td>//*[contains(@class,'${fragmentName}')]//p</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>FRAGMENT_BODY</td>
 	<td>xpath=(//div[contains(@id,'fragment-')]//*[contains(@class,'${fragmentName}')])[${index}]</td>

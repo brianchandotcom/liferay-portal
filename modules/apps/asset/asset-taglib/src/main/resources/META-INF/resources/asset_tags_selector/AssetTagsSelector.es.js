@@ -19,7 +19,7 @@ import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {objectToFormData, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const noop = () => {};
 
@@ -38,6 +38,7 @@ function AssetTagsSelector({
 	showSelectButton,
 }) {
 	const [selectionModalIsOpen, setSelectionModalIsOpen] = useState(false);
+	const selectButtonRef = useRef();
 
 	const {refetch, resource} = useResource({
 		fetchOptions: {
@@ -141,6 +142,8 @@ function AssetTagsSelector({
 			multiple: true,
 			onClose: () => {
 				setSelectionModalIsOpen(false);
+
+				selectButtonRef.current?.focus();
 			},
 			onSelect: (dialogSelectedItems) => {
 				if (!dialogSelectedItems?.length) {
@@ -254,6 +257,7 @@ function AssetTagsSelector({
 								)}
 								displayType="secondary"
 								onClick={handleSelectButtonClick}
+								ref={selectButtonRef}
 							>
 								{Liferay.Language.get('select')}
 							</ClayButton>

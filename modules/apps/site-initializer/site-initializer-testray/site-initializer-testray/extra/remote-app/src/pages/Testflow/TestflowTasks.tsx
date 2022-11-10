@@ -13,12 +13,14 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import Avatar from '../../components/Avatar';
 import AssignToMe from '../../components/Avatar/AssigneToMe';
 import Code from '../../components/Code';
+import FloatingBox from '../../components/FloatingBox/index';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView';
 import Loading from '../../components/Loading';
@@ -62,6 +64,7 @@ const TestFlowTasks = () => {
 	const {mutateTask, testrayTask} = useOutletContext<OutletContext>();
 	const {updateItemFromList} = useMutate();
 	const {actions, completeModal} = useSubtasksActions();
+	const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
 	const {data: taskUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
 		testrayTask?.id
@@ -225,6 +228,9 @@ const TestFlowTasks = () => {
 						filterFields: filters.subtasks as any,
 						title: i18n.translate('subtasks'),
 					}}
+					onContextChange={({selectedRows}) =>
+						setSelectedRows(selectedRows)
+					}
 					resource={testraySubTaskImpl.resource}
 					tableProps={{
 						actions,
@@ -324,6 +330,17 @@ const TestFlowTasks = () => {
 				modal={completeModal}
 				mutate={mutateTask}
 				subtask={completeModal.modalState}
+			/>
+
+			<FloatingBox
+				isVisible={!!selectedRows.length}
+				primaryButtonProps={{
+					title: i18n.translate('merge-subtasks'),
+				}}
+				selectedCount={selectedRows.length}
+				tooltipText={i18n.translate(
+					'merge-selected-subtasks-into-the-highest-scoring-subtask'
+				)}
 			/>
 		</>
 	);

@@ -24,41 +24,39 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 type FloatingBoxProps = {
-	alerts?: {text: string; title?: string}[];
+	alerts?: {header?: string; text: string}[];
+	clearList?: () => void;
 	isVisible: boolean;
-	onClear?: () => void;
 	onSubmit?: () => void;
 	primaryButtonProps?: ButtonProps;
-	selectdCount?: number;
+	selectedCount?: number;
 	tooltipText: string;
 };
 
 const FloatingBox: React.FC<FloatingBoxProps> = ({
-	alerts,
+	alerts = [],
+	clearList,
 	isVisible,
-	onClear,
 	onSubmit,
-	selectdCount,
+	selectedCount,
 	primaryButtonProps: {loading, ...primaryButtonProps} = {},
 	tooltipText,
 }) => {
 	return (
 		<div
-			className={classNames('testray-floating-box', {
+			className={classNames('floating-box', {
 				'box-hidden': !isVisible,
 				'box-visible': isVisible,
 			})}
 		>
 			<>
-				{alerts?.map((item, index) => {
-					const {text, title} = item;
-
+				{alerts.map(({header, text}, index) => {
 					return (
-						<div className="alert" key={index}>
+						<div className="box-alert" key={index}>
 							<ClayAlert
 								displayType="danger"
 								key={index}
-								title={title}
+								title={header}
 								variant="feedback"
 							>
 								<span className="ml-1">{text}</span>
@@ -68,9 +66,9 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 				})}
 
 				<div className="align-items d-flex justify-content-between m-3">
-					<div className="d-flex label-selected">
-						<span className="mr-2 selectdCount">
-							{selectdCount}
+					<div className="box-label-selected d-flex">
+						<span className="mr-2 selectd-count">
+							{selectedCount}
 						</span>
 
 						<span className="mb-0">
@@ -83,8 +81,8 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 							<ClayButton
 								className="mr-1"
 								displayType="secondary"
-								onClick={() => onClear}
-								title="Deselect Items"
+								onClick={clearList}
+								title={i18n.translate('deselect-items')}
 							>
 								{i18n.translate('clear')}
 							</ClayButton>

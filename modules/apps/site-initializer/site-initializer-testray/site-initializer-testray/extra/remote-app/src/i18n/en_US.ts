@@ -141,6 +141,7 @@ export default {
 	'demote': 'Demote',
 	'description': 'Description',
 	'description-type': 'Description type',
+	'deselect-items': 'Deselect Items',
 	'details': 'Details',
 	'edit': 'Edit',
 	'edit-build': 'Edit Build',
@@ -205,6 +206,9 @@ export default {
 	'mark-at-least-one-case-to-export': 'Mark at least one case to export.',
 	'mark-at-least-one-case-type-for-processing':
 		'Mark at least one case type for processing.',
+	'merge-selected-subtasks-into-the-highest-scoring-subtask':
+		'Merge selected subtasks into the highest scoring subtask.',
+	'merge-subtasks': 'Merge Subtasks',
 	'merged-with': 'Merged With',
 	'metrics': 'Metrics',
 	'minimum-x-characters': 'Minimum {0} characters.',

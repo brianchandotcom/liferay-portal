@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
-import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -59,8 +58,8 @@ public class RoleTable extends BaseTable<RoleTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RoleTable, String> title = createColumn(
 		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<RoleTable, Clob> description = createColumn(
-		"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<RoleTable, String> description = createColumn(
+		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RoleTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<RoleTable, String> subtype = createColumn(

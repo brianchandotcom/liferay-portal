@@ -85,7 +85,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.CLOB},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
 		{"type_", Types.INTEGER}, {"subtype", Types.VARCHAR}
 	};
 
@@ -106,13 +106,13 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("subtype", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description TEXT null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, ctCollectionId))";
+		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 

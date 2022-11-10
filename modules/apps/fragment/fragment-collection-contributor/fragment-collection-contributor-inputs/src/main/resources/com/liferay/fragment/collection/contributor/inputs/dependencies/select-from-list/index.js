@@ -43,12 +43,53 @@ const KEYS = {
 };
 
 const optionList = (input.attributes.options || [])
-	.slice(0, MAX_ITEMS)
 	.map((option) => ({
 		textContent: option.label,
 		textValue: option.label.toLowerCase(),
 		value: option.value,
 	}));
+
+function createLoadingResultsElement () {
+function createLoadingResultsElement() {
+	const animation = document.createElement('span');
+	const label = document.createElement('span');
+	const labelText = document.createTextNode(
+		fragmentElement.querySelector(
+			'.forms-select-from-list-loading-results-message'
+		).innerHTML
+	);
+	const loadingElement = document.createElement('p');
+
+	animation.classList.add('loading-animation');
+	label.classList.add('sr-only');
+	loadingElement.classList.add('loading-results-animation');
+
+	label.appendChild(labelText);
+
+	loadingElement.appendChild(label);
+	loadingElement.appendChild(animation);
+
+	return loadingElement;
+}
+
+function createNoResultsFoundElement() {
+	const noResultElement = document.createElement('p');
+
+	noResultElement.textContent = fragmentElement.querySelector(
+		'.forms-select-from-list-no-results-message'
+	).innerHTML;
+
+	noResultElement.classList.add(
+		'mb-0',
+		'pb-2',
+		'pl-3',
+		'pr-3',
+		'pt-2',
+		'text-muted'
+	);
+
+	return noResultElement;
+}
 
 function handleResultListClick(event) {
 	let selectedOption = null;
@@ -150,6 +191,8 @@ function filterOptions(query) {
 				(options) => {
 					optionListElement.innerHTML = '';
 
+					optionListElement.appendChild(createLoadingResultsElement());
+
 					options.forEach((option) => {
 						optionListElement.appendChild(
 							createOptionElement(option)
@@ -158,25 +201,35 @@ function filterOptions(query) {
 
 					resolve();
 				}
-			);
+			).finally(() => {
+				optionListElement.removeChild(optionListElement.querySelector('.loading-results-animation'));
+			});
 		}
 		else if (query) {
 			optionListElement.innerHTML = '';
+
+			optionListElement.appendChild(createLoadingResultsElement());
 
 			filterLocalOptions(query).forEach((option) => {
 				optionListElement.appendChild(createOptionElement(option));
 			});
 
 			resolve();
+
+			optionListElement.removeChild(optionListElement.querySelector('.loading-results-animation'));
 		}
 		else {
 			optionListElement.innerHTML = '';
+
+			optionListElement.appendChild(createLoadingResultsElement());
 
 			optionList.forEach((option) => {
 				optionListElement.appendChild(createOptionElement(option));
 			});
 
 			resolve();
+
+			optionListElement.removeChild(optionListElement.querySelector('.loading-results-animation'));
 		}
 	});
 }
@@ -203,6 +256,10 @@ function filterLocalOptions(query) {
 			options.push(option);
 		}
 	});
+
+	if (!options.length) {
+		optionListElement.appendChild(createNoResultsFoundElement());
+	}
 
 	return options;
 }

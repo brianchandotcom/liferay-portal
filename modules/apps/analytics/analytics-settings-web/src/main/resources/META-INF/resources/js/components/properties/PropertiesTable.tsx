@@ -53,60 +53,61 @@ const PropertiesTable: React.FC<IPropertiesTable> = ({
 			</ClayTable.Head>
 
 			<ClayTable.Body>
-				{properties.map((property, index) => (
-					<Fragment key={index}>
-						<ClayTable.Row>
-							<ClayTable.Cell className="table-cell-expand">
-								{property.name}
-							</ClayTable.Cell>
+				{properties.map(
+					({commerceSyncEnabled, dataSources, name}, index) => (
+						<Fragment key={index}>
+							<ClayTable.Row>
+								<ClayTable.Cell className="table-cell-expand">
+									{name}
+								</ClayTable.Cell>
 
-							<ClayTable.Cell
-								className="mr-2"
-								columnTextAlignment="end"
-							>
-								{property?.commerceSyncEnabled ||
-								property.dataSources[0]?.commerceChannelIds
-									? property.dataSources[0]
-											?.commerceChannelIds?.length
-									: '-'}
-							</ClayTable.Cell>
-
-							<ClayTable.Cell
-								className="mr-2"
-								columnTextAlignment="end"
-							>
-								{property.dataSources.length >= 1
-									? property.dataSources[0]?.siteIds.length
-									: property.dataSources.length}
-							</ClayTable.Cell>
-
-							<ClayTable.Cell
-								className="mr-2"
-								columnTextAlignment="end"
-							>
-								<ClayToggle
-									onToggle={() =>
-										onCommerceSwitchChange(index)
-									}
-									toggled={!!property?.commerceSyncEnabled}
-									value="toggle"
-								/>
-							</ClayTable.Cell>
-
-							<ClayTable.Cell columnTextAlignment="end">
-								<ClayButton
-									displayType="secondary"
-									onClick={() => {
-										onAssignModalButtonClick(index);
-									}}
-									type="button"
+								<ClayTable.Cell
+									className="mr-2"
+									columnTextAlignment="end"
 								>
-									{Liferay.Language.get('assign')}
-								</ClayButton>
-							</ClayTable.Cell>
-						</ClayTable.Row>
-					</Fragment>
-				))}
+									{commerceSyncEnabled
+										? dataSources[0].commerceChannelIds
+												.length
+										: '-'}
+								</ClayTable.Cell>
+
+								<ClayTable.Cell
+									className="mr-2"
+									columnTextAlignment="end"
+								>
+									{dataSources.length
+										? dataSources[0].siteIds.length
+										: dataSources.length}
+								</ClayTable.Cell>
+
+								<ClayTable.Cell
+									className="mr-2"
+									columnTextAlignment="end"
+								>
+									<ClayToggle
+										onToggle={() =>
+											onCommerceSwitchChange(index)
+										}
+										toggled={commerceSyncEnabled}
+										value="toggle"
+									/>
+								</ClayTable.Cell>
+
+								<ClayTable.Cell columnTextAlignment="end">
+									<ClayButton
+										displayType="secondary"
+										onClick={() => {
+											onAssignModalButtonClick(index);
+										}}
+										type="button"
+									>
+										{Liferay.Language.get('assign')}
+									</ClayButton>
+								</ClayTable.Cell>
+							</ClayTable.Row>
+						</Fragment>
+					)
+				)}
 			</ClayTable.Body>
 		</ClayTable>
 	);

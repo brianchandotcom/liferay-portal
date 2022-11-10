@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import {fetchProperties} from '../../utils/api';
+import {fetchProperties, updateProperty} from '../../utils/api';
 import {NOT_FOUND_GIF} from '../../utils/constants';
 import useFetchData from '../../utils/useFecthData';
 import StateRenderer, {
@@ -29,7 +29,7 @@ import PropertiesTable from './PropertiesTable';
 
 export type TProperty = {
 	channelId: string;
-	commerceSyncEnabled?: boolean;
+	commerceSyncEnabled: boolean;
 	dataSources: Array<TDataSource>;
 	name: string;
 };
@@ -116,20 +116,25 @@ const Properties: React.FC = () => {
 							setSelectedProperty(properties[index]);
 							onAssignModalOpenChange(true);
 						}}
-						onCommerceSwitchChange={(index: number) => {
+						onCommerceSwitchChange={async (index: number) => {
 							const newProperties = [...properties];
+							const {
+								channelId,
+								commerceSyncEnabled,
+							} = newProperties[index];
 
-							if (newProperties[index].commerceSyncEnabled) {
-								delete newProperties[index].commerceSyncEnabled;
-							}
-							else {
+							const {ok} = await updateProperty({
+								channelId,
+								commerceSyncEnabled: !commerceSyncEnabled,
+							});
+
+							if (ok) {
 								newProperties[
 									index
-								].commerceSyncEnabled = !newProperties[index]
-									.commerceSyncEnabled;
-							}
+								].commerceSyncEnabled = !commerceSyncEnabled;
 
-							setProperties(newProperties);
+								setProperties(newProperties);
+							}
 						}}
 						properties={properties}
 					/>

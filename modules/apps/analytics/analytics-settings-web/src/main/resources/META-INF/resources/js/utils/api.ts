@@ -84,22 +84,24 @@ export function updateProperty({
 	siteIds,
 }: {
 	channelId: string;
-	commerceChannelIds: number[];
+	commerceChannelIds?: number[];
 	commerceSyncEnabled?: boolean;
-	dataSourceId: string;
-	siteIds: number[];
+	dataSourceId?: string;
+	siteIds?: number[];
 }) {
 	return request('/channels', {
 		body: JSON.stringify({
 			channelId,
 			commerceSyncEnabled,
-			dataSources: [
-				{
-					commerceChannelIds,
-					dataSourceId,
-					siteIds,
-				},
-			],
+			...(dataSourceId && {
+				dataSources: [
+					{
+						commerceChannelIds,
+						dataSourceId,
+						siteIds,
+					},
+				],
+			}),
 		}),
 		method: 'PATCH',
 	});

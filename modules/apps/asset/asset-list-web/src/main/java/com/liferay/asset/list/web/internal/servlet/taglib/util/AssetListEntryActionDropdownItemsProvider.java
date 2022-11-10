@@ -16,6 +16,7 @@ package com.liferay.asset.list.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -202,7 +203,14 @@ public class AssetListEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getViewAssetListEntryUsagesActionUnsafeConsumer() {
 
+		long usagesCount =
+			AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsagesCount(
+				_themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(AssetListEntry.class),
+				String.valueOf(_assetListEntry.getAssetListEntryId()));
+
 		return dropdownItem -> {
+			dropdownItem.setDisabled(usagesCount == 0);
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/view_asset_list_entry_usages.jsp", "redirect",

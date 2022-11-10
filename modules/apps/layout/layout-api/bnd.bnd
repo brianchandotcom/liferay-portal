@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.layout.configuration,\
 	com.liferay.layout.constants,\
 	com.liferay.layout.content,\
+	com.liferay.layout.converter,\
 	com.liferay.layout.crawler,\
 	com.liferay.layout.exception,\
 	com.liferay.layout.exporter,\
@@ -15,6 +16,7 @@ Export-Package:\
 	com.liferay.layout.list.retriever,\
 	com.liferay.layout.model,\
 	com.liferay.layout.portlet.category,\
+	com.liferay.layout.provider,\
 	com.liferay.layout.responsive,\
 	com.liferay.layout.security.permission.resource,\
 	com.liferay.layout.service,\
@@ -23,7 +25,6 @@ Export-Package:\
 	com.liferay.layout.util,\
 	com.liferay.layout.util.comparator,\
 	com.liferay.layout.util.constants,\
-	com.liferay.layout.util.converter,\
 	com.liferay.layout.util.structure,\
 	com.liferay.layout.util.structure.collection,\
 	com.liferay.layout.util.template

@@ -6609,6 +6609,43 @@ go</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-up-txtai">
+		<sequential>
+			<echo file="${project.dir}/txtai/Dockerfile">FROM neuml/txtai-cpu
+
+COPY config.yml .
+
+RUN python -c "from txtai.api import API; API('config.yml', False)"
+
+ENV CONFIG "config.yml"
+ENTRYPOINT ["uvicorn", "--host", "0.0.0.0", "txtai.api:app"]</echo>
+
+			<echo file="${project.dir}/txtai/config.yml">path: /tmp/index
+writable: False
+embeddings:
+     path: sentence-transformers/msmarco-distilbert-base-dot-prod-v3</echo>
+
+			<execute dir="${project.dir}/txtai">
+				<![CDATA[
+					docker build -t txtai-api .
+				]]>
+			</execute>
+
+			<start-docker-container image="txtai-api" name="${env.HOSTNAME}_txtai">\
+				-p 8000:8000 \
+			</start-docker-container>
+
+			<exec executable="/bin/bash" outputproperty="txtai.container.ip">
+				<arg value="-c" />
+				<arg value="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${env.HOSTNAME}_txtai" />
+			</exec>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.search.experiences.configuration.SemanticSearchConfiguration.config">sentenceTransformProvider="txtai"
+sentenceTransformerEnabled="true"
+txtaiHostAddress="http://${txtai.container.ip}:8000"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-testable-jboss">
 		<sequential>
 			<setup-testable-jboss-jsp-configuration />
@@ -14714,6 +14751,15 @@ mail.send.blacklist=</echo>
 				</if>
 
 				<print-file file.name="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="txtai.enabled" />
+
+		<if>
+			<equals arg1="${txtai.enabled}" arg2="true" />
+			<then>
+				<set-up-txtai />
 			</then>
 		</if>
 

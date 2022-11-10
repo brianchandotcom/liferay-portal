@@ -16,11 +16,11 @@ package com.liferay.layout.internal.importer.structure.util;
 
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.converter.AlignConverter;
+import com.liferay.layout.converter.ContentDisplayConverter;
+import com.liferay.layout.converter.FlexWrapConverter;
+import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
-import com.liferay.layout.util.converter.AlignConverter;
-import com.liferay.layout.util.converter.ContentDisplayConverter;
-import com.liferay.layout.util.converter.FlexWrapConverter;
-import com.liferay.layout.util.converter.JustifyConverter;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;

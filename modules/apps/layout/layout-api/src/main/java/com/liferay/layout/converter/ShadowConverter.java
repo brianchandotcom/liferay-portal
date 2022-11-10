@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util.converter;
+package com.liferay.layout.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 

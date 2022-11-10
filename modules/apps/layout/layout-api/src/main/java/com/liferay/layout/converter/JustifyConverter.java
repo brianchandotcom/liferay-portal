@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util.converter;
+package com.liferay.layout.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -23,17 +23,19 @@ import java.util.Set;
 /**
  * @author Pablo Molina
  */
-public class BorderRadiusConverter {
+public class JustifyConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Circle", "rounded-circle"
+			"Center", "justify-content-center"
 		).put(
-			"Large", "rounded-lg"
+			"End", "justify-content-end"
 		).put(
-			"Pill", "rounded-pill"
+			"SpaceAround", "justify-content-around"
 		).put(
-			"Regular", "rounded"
+			"SpaceBetween", "justify-content-between"
+		).put(
+			"Start", "justify-content-start"
 		).build();
 
 	public static String convertToExternalValue(String value) {

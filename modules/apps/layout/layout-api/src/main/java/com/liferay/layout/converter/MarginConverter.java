@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util.converter;
+package com.liferay.layout.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -21,9 +21,9 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Rubén Pulido
+ * @author Pablo Molina
  */
-public class PaddingConverter {
+public class MarginConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(

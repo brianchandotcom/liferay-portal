@@ -4696,7 +4696,10 @@ definition {
 
 		WaitForPageLoad();
 
-		FormFields.viewBooleanField(fieldValue = "Boolean");
+		AssertTextEquals(
+			fieldName = "Boolean",
+			locator1 = "FormFields#CHECK_BOOLEAN_FIELD",
+			value1 = "${fieldName}");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Number",

@@ -36,7 +36,7 @@ import {
 } from './util.es';
 
 const Option = React.forwardRef(
-	({children, className, disabled, onClick, showCloseButton, style}, ref) => (
+	({children, className, disabled, style}, ref) => (
 		<div
 			className={classNames('ddm-field-options', className)}
 			style={style}
@@ -50,19 +50,7 @@ const Option = React.forwardRef(
 				<ClayIcon symbol="drag" />
 			</span>
 
-			<div className="ddm-option-entry">
-				{children}
-
-				{showCloseButton && (
-					<button
-						className="close close-modal"
-						onClick={onClick}
-						type="button"
-					>
-						<ClayIcon symbol="times" />
-					</button>
-				)}
-			</div>
+			<div className="ddm-option-entry">{children}</div>
 		</div>
 	)
 );
@@ -527,13 +515,7 @@ const Options = ({
 					onDragEnd={composedMove}
 					option={option}
 				>
-					<Option
-						disabled={disabled}
-						onClick={() => handleConfirmDelete(index, option.value)}
-						showCloseButton={
-							!(fields.length - 1 === index) && !disabled
-						}
-					>
+					<Option disabled={disabled}>
 						{children({
 							defaultOptionRef,
 							fieldError,
@@ -542,7 +524,11 @@ const Options = ({
 								? composedChange.bind(this, index)
 								: composedAdd.bind(this, index),
 							index,
+							onClick: () =>
+								handleConfirmDelete(index, option.value),
 							option,
+							showCloseButton:
+								!(fields.length - 1 === index) && !disabled,
 						})}
 					</Option>
 				</DnD>
@@ -585,7 +571,9 @@ const Main = ({
 					handleBlur,
 					handleField,
 					index,
+					onClick,
 					option,
+					showCloseButton,
 				}) =>
 					option && (
 						<KeyValue
@@ -603,6 +591,7 @@ const Main = ({
 							name={`option${index}`}
 							onBlur={handleBlur}
 							onChange={(value) => handleField('label', value)}
+							onClick={onClick}
 							onFocus={() => {
 								if (defaultOptionRef.current) {
 									handleField('label', '');
@@ -622,6 +611,7 @@ const Main = ({
 							readOnly={option.disabled}
 							reference={option.reference}
 							required={required}
+							showCloseButton={showCloseButton}
 							showKeyword={showKeyword}
 							showLabel={false}
 							value={option.label}

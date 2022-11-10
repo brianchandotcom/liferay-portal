@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import {normalizeFieldName} from 'data-engine-js-components-web';
 import React, {useRef} from 'react';
 
@@ -60,6 +61,7 @@ const Main = ({
 	name,
 	onBlur,
 	onChange,
+	onClick,
 	onFocus,
 	onKeywordBlur,
 	onKeywordChange,
@@ -69,6 +71,7 @@ const Main = ({
 	readOnly,
 	reference,
 	required,
+	showCloseButton,
 	showKeyword = false,
 	showLabel,
 	spritemap,
@@ -116,6 +119,16 @@ const Main = ({
 				value={value}
 				visible={visible}
 			/>
+
+			{showCloseButton && (
+				<button
+					className="close close-modal"
+					onClick={onClick}
+					type="button"
+				>
+					<ClayIcon symbol="times" />
+				</button>
+			)}
 
 			{showKeyword && (
 				<KeyValue

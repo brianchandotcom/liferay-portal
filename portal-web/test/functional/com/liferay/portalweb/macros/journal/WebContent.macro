@@ -474,7 +474,7 @@ definition {
 				locator1 = "WCEditWebContent#COLOR_PICKER");
 
 			Click(
-				key_colorSwatchItem = "${webContentColor}",
+				key_colorSwatchItem = "#${webContentColor}",
 				locator1 = "Button#COLOR_SWATCH_ITEM");
 		}
 

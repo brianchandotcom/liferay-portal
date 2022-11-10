@@ -20,10 +20,10 @@ import com.liferay.commerce.product.exception.CPAttachmentFileEntryCDNURLExcepti
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
 import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException;
+import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionPersistence;
 import com.liferay.commerce.product.util.JsonHelper;
@@ -169,10 +169,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		if ((classNameId == _classNameLocalService.getClassNameId(
 				CPDefinition.class)) &&
-			_cpDefinitionLocalService.isVersionable(classPK)) {
+			CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
+				classPK)) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(classPK);
+				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
+					classPK);
 
 			classPK = newCPDefinition.getCPDefinitionId();
 		}
@@ -340,11 +342,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		if ((cpAttachmentFileEntry.getClassNameId() ==
 				cpDefinitionClassNameId) &&
-			_cpDefinitionLocalService.isVersionable(
+			CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpAttachmentFileEntry.getClassPK())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
 			if (cpAttachmentFileEntry.isCDNEnabled()) {
@@ -626,11 +628,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		if ((cpAttachmentFileEntry.getClassNameId() ==
 				cpDefinitionClassNameId) &&
-			_cpDefinitionLocalService.isVersionable(
+			CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpAttachmentFileEntry.getClassPK())) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
+				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
 			if (cdnEnabled) {
@@ -1003,9 +1005,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionPersistence _cpDefinitionPersistence;

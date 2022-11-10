@@ -185,42 +185,38 @@ const InviteTeamMembersPage = ({
 
 		if (filledEmails.length) {
 			setIsLoadingUserInvitation(true);
-			const newMembersData = await Promise.all(
-				filledEmails.map(async ({email, role}) => {
-					const invitedUser = await addTeamMemberInvitation({
-						context: {
-							displaySuccess: false,
-							type: 'liferay-rest',
+			const newMembersData = filledEmails.map(async ({email, role}) => {
+				await addTeamMemberInvitation({
+					context: {
+						displaySuccess: false,
+						type: 'liferay-rest',
+					},
+					variables: {
+						TeamMembersInvitation: {
+							email,
+							r_accountEntryToDXPCloudEnvironment_accountEntryId:
+								project?.id,
+							role: role.key,
 						},
-						variables: {
-							TeamMembersInvitation: {
-								email,
-								r_accountEntryToDXPCloudEnvironment_accountEntryId:
-									project?.id,
-								role: role.key,
-							},
-						},
-					});
+					},
+				});
 
-					await associateUserAccount({
-						variables: {
-							accountKey: project.accountKey,
-							accountRoleId: role.id,
-							emailAddress: email,
-						},
-					});
+				await associateUserAccount({
+					variables: {
+						accountKey: project.accountKey,
+						accountRoleId: role.id,
+						emailAddress: email,
+					},
+				});
 
-					await associateContactRoleNameByEmailByProject(
-						project.accountKey,
-						provisioningServerAPI,
-						sessionId,
-						encodeURI(email),
-						role.raysourceName
-					);
-
-					return invitedUser;
-				})
-			);
+				await associateContactRoleNameByEmailByProject(
+					project.accountKey,
+					provisioningServerAPI,
+					sessionId,
+					encodeURI(email),
+					role.raysourceName
+				);
+			});
 
 			setIsLoadingUserInvitation(false);
 

@@ -580,6 +580,11 @@
 		<td>//div[@class='mt-1']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_SEARCHABLE_SECTION_ENABLED</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']/../..//label[contains(@class,'toggle-switch simple-toggle-switch')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

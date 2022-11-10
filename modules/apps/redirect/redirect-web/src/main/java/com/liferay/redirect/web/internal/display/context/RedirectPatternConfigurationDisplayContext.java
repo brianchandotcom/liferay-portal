@@ -58,6 +58,8 @@ public class RedirectPatternConfigurationDisplayContext {
 
 	public Map<String, Object> getRedirectPatterns() {
 		return HashMapBuilder.<String, Object>put(
+			"actionUrl", getRedirectPatternConfigurationURL()
+		).put(
 			"patterns",
 			() -> {
 				List<Map<String, Object>> list = new ArrayList<>();

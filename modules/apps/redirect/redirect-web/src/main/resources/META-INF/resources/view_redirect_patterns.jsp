@@ -20,27 +20,9 @@
 RedirectPatternConfigurationDisplayContext redirectPatternConfigurationDisplayContext = (RedirectPatternConfigurationDisplayContext)request.getAttribute(RedirectPatternConfigurationDisplayContext.class.getName());
 %>
 
-<aui:form action="<%= redirectPatternConfigurationDisplayContext.getRedirectPatternConfigurationURL() %>" cssClass="container-fluid container-fluid-max-xl mt-4" method="post" name="fm">
-	<clay:sheet>
-		<clay:sheet-header>
-			<h2>
-				<liferay-ui:message key="redirect-pattern-configuration-name" />
-			</h2>
-		</clay:sheet-header>
-
-		<clay:sheet-section>
-			<div>
-				<span aria-hidden="true" class="loading-animation"></span>
-
-				<react:component
-					module="js/RedirectPatterns"
-					props="<%= redirectPatternConfigurationDisplayContext.getRedirectPatterns() %>"
-				/>
-			</div>
-		</clay:sheet-section>
-
-		<clay:sheet-footer>
-			<aui:button primary="<%= true %>" type="submit" />
-		</clay:sheet-footer>
-	</clay:sheet>
-</aui:form>
+<div>
+	<react:component
+		module="js/RedirectPatterns"
+		props="<%= redirectPatternConfigurationDisplayContext.getRedirectPatterns() %>"
+	/>
+</div>

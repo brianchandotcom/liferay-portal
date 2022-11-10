@@ -27,7 +27,7 @@ definition {
 
 	@description = "This is the use case for LPS-161035."
 	@priority = "4"
-	test CanViewWebContentHistoryOverMultiplePublications {
+	test CanViewWebContentTimelineOverMultiplePublications {
 		property custom.properties = "feature.flag.LPS-161038=true";
 
 		task ("Add new web content on new added site") {

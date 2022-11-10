@@ -261,6 +261,22 @@ public class MessageBoardThreadSerDes {
 			sb.append("]");
 		}
 
+		if (messageBoardThread.getLastPostDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastPostDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					messageBoardThread.getLastPostDate()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardThread.getLocked() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -621,6 +637,16 @@ public class MessageBoardThreadSerDes {
 				"keywords", String.valueOf(messageBoardThread.getKeywords()));
 		}
 
+		if (messageBoardThread.getLastPostDate() == null) {
+			map.put("lastPostDate", null);
+		}
+		else {
+			map.put(
+				"lastPostDate",
+				liferayToJSONDateFormat.format(
+					messageBoardThread.getLastPostDate()));
+		}
+
 		if (messageBoardThread.getLocked() == null) {
 			map.put("locked", null);
 		}
@@ -871,6 +897,12 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "lastPostDate")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setLastPostDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "locked")) {

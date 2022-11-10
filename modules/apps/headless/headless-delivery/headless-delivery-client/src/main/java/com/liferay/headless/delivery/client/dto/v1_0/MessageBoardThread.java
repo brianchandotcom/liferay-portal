@@ -331,6 +331,27 @@ public class MessageBoardThread implements Cloneable, Serializable {
 
 	protected String[] keywords;
 
+	public Date getLastPostDate() {
+		return lastPostDate;
+	}
+
+	public void setLastPostDate(Date lastPostDate) {
+		this.lastPostDate = lastPostDate;
+	}
+
+	public void setLastPostDate(
+		UnsafeSupplier<Date, Exception> lastPostDateUnsafeSupplier) {
+
+		try {
+			lastPostDate = lastPostDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date lastPostDate;
+
 	public Boolean getLocked() {
 		return locked;
 	}

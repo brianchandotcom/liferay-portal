@@ -497,6 +497,34 @@ public class MessageBoardThread implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
+	@Schema(description = "The date the thread was posted.")
+	public Date getLastPostDate() {
+		return lastPostDate;
+	}
+
+	public void setLastPostDate(Date lastPostDate) {
+		this.lastPostDate = lastPostDate;
+	}
+
+	@JsonIgnore
+	public void setLastPostDate(
+		UnsafeSupplier<Date, Exception> lastPostDateUnsafeSupplier) {
+
+		try {
+			lastPostDate = lastPostDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The date the thread was posted.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date lastPostDate;
+
 	@Schema(
 		description = "A flag that indicates whether this thread is locked."
 	)
@@ -1215,6 +1243,20 @@ public class MessageBoardThread implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (lastPostDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastPostDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(lastPostDate));
+
+			sb.append("\"");
 		}
 
 		if (locked != null) {

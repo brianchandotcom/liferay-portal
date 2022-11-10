@@ -2240,6 +2240,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("lastPostDate", additionalAssertFieldName)) {
+				if (messageBoardThread.getLastPostDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("locked", additionalAssertFieldName)) {
 				if (messageBoardThread.getLocked() == null) {
 					valid = false;
@@ -2701,6 +2709,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getKeywords(),
 						messageBoardThread2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("lastPostDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getLastPostDate(),
+						messageBoardThread2.getLastPostDate())) {
 
 					return false;
 				}
@@ -3222,6 +3241,40 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("lastPostDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardThread.getLastPostDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(
+							messageBoardThread.getLastPostDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(
+					_dateFormat.format(messageBoardThread.getLastPostDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("locked")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3370,6 +3423,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				headline = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				lastPostDate = RandomTestUtil.nextDate();
 				locked = RandomTestUtil.randomBoolean();
 				messageBoardRootMessageId = RandomTestUtil.randomLong();
 				messageBoardSectionId = RandomTestUtil.randomLong();

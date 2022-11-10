@@ -541,6 +541,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getKeywords());
 		}
 
+		if (messageBoardThread.getLastPostDate() != null) {
+			existingMessageBoardThread.setLastPostDate(
+				messageBoardThread.getLastPostDate());
+		}
+
 		if (messageBoardThread.getLocked() != null) {
 			existingMessageBoardThread.setLocked(
 				messageBoardThread.getLocked());

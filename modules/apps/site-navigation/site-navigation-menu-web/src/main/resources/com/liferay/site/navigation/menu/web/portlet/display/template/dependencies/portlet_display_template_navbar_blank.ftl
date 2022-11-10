@@ -14,7 +14,7 @@
 	/>
 
 	<div id="${navbarId}">
-		<ul aria-label="<@liferay.language key="site-pages" />" class="navbar-blank navbar-nav navbar-site" role="menubar">
+		<ul aria-label="<@liferay.language key="site-pages" />" class="navbar-blank navbar-nav navbar-site">
 			<#assign navItems = entries />
 
 			<#list navItems as navItem>
@@ -57,8 +57,8 @@
 						/>
 					</#if>
 
-					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" role="presentation">
-						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()} role="menuitem">
+					<li class="${nav_item_css_class}" id="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}">
+						<a ${nav_item_attr_has_popup} class="${nav_item_link_css_class}" ${nav_item_href_link} ${navItem.getTarget()}>
 							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
 						</a>
 

@@ -161,11 +161,11 @@ public class HttpImpl implements Http {
 	public byte[] URLtoByteArray(Http.Options options) throws IOException {
 		return URLtoByteArray(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
-			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getFileParts(), options.getInputStreamParts(),
-			options.getParts(), options.getResponse(),
-			options.isFollowRedirects(), options.isNormalizeURI(),
-			options.getTimeout());
+			options.getCookies(), options.getCookieSpec(), options.getAuth(),
+			options.getBody(), options.getFileParts(),
+			options.getInputStreamParts(), options.getParts(),
+			options.getResponse(), options.isFollowRedirects(),
+			options.isNormalizeURI(), options.getTimeout());
 	}
 
 	@Override
@@ -195,11 +195,11 @@ public class HttpImpl implements Http {
 
 		return URLtoInputStream(
 			options.getLocation(), options.getMethod(), options.getHeaders(),
-			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getFileParts(), options.getInputStreamParts(),
-			options.getParts(), options.getResponse(),
-			options.isFollowRedirects(), options.isNormalizeURI(),
-			options.getTimeout());
+			options.getCookies(), options.getCookieSpec(), options.getAuth(),
+			options.getBody(), options.getFileParts(),
+			options.getInputStreamParts(), options.getParts(),
+			options.getResponse(), options.isFollowRedirects(),
+			options.isNormalizeURI(), options.getTimeout());
 	}
 
 	@Override
@@ -700,16 +700,16 @@ public class HttpImpl implements Http {
 
 	protected byte[] URLtoByteArray(
 			String location, Http.Method method, Map<String, String> headers,
-			Cookie[] cookies, Http.Auth auth, Http.Body body,
-			List<Http.FilePart> fileParts,
+			Cookie[] cookies, Http.CookieSpec cookieSpec, Http.Auth auth,
+			Http.Body body, List<Http.FilePart> fileParts,
 			List<Http.InputStreamPart> inputStreamParts,
 			Map<String, String> parts, Http.Response response,
 			boolean followRedirects, boolean normalizeURI, int timeout)
 		throws IOException {
 
 		try (InputStream inputStream = URLtoInputStream(
-				location, method, headers, cookies, auth, body, fileParts,
-				inputStreamParts, parts, response, followRedirects,
+				location, method, headers, cookies, cookieSpec, auth, body,
+				fileParts, inputStreamParts, parts, response, followRedirects,
 				normalizeURI, timeout)) {
 
 			if (inputStream == null) {
@@ -732,8 +732,8 @@ public class HttpImpl implements Http {
 
 	protected InputStream URLtoInputStream(
 			String location, Http.Method method, Map<String, String> headers,
-			Cookie[] cookies, Http.Auth auth, Http.Body body,
-			List<Http.FilePart> fileParts,
+			Cookie[] cookies, Http.CookieSpec cookieSpec, Http.Auth auth,
+			Http.Body body, List<Http.FilePart> fileParts,
 			List<Http.InputStreamPart> inputStreamParts,
 			Map<String, String> parts, Http.Response response,
 			boolean followRedirects, boolean normalizeURI, int timeout)
@@ -867,7 +867,28 @@ public class HttpImpl implements Http {
 				basicCookieStore.addCookies(httpCookies);
 
 				httpClientContext.setCookieStore(basicCookieStore);
+			}
 
+			if (cookieSpec != null) {
+				if (cookieSpec.equals(CookieSpec.DEFAULT)) {
+					requestConfigBuilder.setCookieSpec(CookieSpecs.DEFAULT);
+				}
+				else if (cookieSpec.equals(CookieSpec.IGNORE_COOKIES)) {
+					requestConfigBuilder.setCookieSpec(
+						CookieSpecs.IGNORE_COOKIES);
+				}
+				else if (cookieSpec.equals(CookieSpec.NETSCAPE)) {
+					requestConfigBuilder.setCookieSpec(CookieSpecs.NETSCAPE);
+				}
+				else if (cookieSpec.equals(CookieSpec.STANDARD)) {
+					requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
+				}
+				else if (cookieSpec.equals(CookieSpec.STANDARD_STRICT)) {
+					requestConfigBuilder.setCookieSpec(
+						CookieSpecs.STANDARD_STRICT);
+				}
+			}
+			else {
 				requestConfigBuilder.setCookieSpec(CookieSpecs.DEFAULT);
 			}
 
@@ -915,9 +936,9 @@ public class HttpImpl implements Http {
 
 						return URLtoInputStream(
 							locationHeaderValue, Http.Method.GET, headers,
-							cookies, auth, body, fileParts, inputStreamParts,
-							parts, response, followRedirects, normalizeURI,
-							timeout);
+							cookies, cookieSpec, auth, body, fileParts,
+							inputStreamParts, parts, response, followRedirects,
+							normalizeURI, timeout);
 					}
 
 					response.setRedirect(locationHeaderValue);

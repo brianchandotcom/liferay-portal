@@ -333,7 +333,7 @@ export default {
 	 * @param {number} options.numberOfColumns New number of columns
 	 * @param {string} options.segmentsExperienceId Segments experience id
 	 * @param {function} options.onNetworkStatus
-	 * @return {Promise<void>}
+	 * @return {Promise<object>}
 	 */
 	updateRowColumns({
 		itemId,

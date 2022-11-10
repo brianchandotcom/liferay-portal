@@ -8,7 +8,7 @@ definition {
 			expected = "${expected}");
 	}
 
-	macro assertSearchKeywordNotPresent {
+	macro assertSearchResponse{
 		if (!(isSet(keywordPosition))) {
 			var keywordPosition = "0";
 		}

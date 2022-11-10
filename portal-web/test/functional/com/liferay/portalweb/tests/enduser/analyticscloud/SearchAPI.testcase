@@ -271,4 +271,101 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12144 | Test Summary: Request search keywords using groupID"
+	@priority = "3"
+	test RequestKeywordsUsingGroupID {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+		var keyword1 = "general groupid";
+		var keyword2 = "specific groupid";
+		var parametersGroup1 = "groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersGroup2 = "sort=counts,desc,lastModifiedDate,desc";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Type keyword in search bar") {
+			SearchPortlets.searchEmbedded(searchTerm = "${keyword1}");
+		}
+
+		task ("Run curl command to get keyword results") {
+			ACApi.getSearchKeywords(parameters = "${parametersGroup1}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword2}",
+				keywordPosition = "1");
+		}
+
+		task ("Assert response does not return keyword"){
+			ACApi.assertSearchKeywordNotPresent(
+				expected = "${keyword1}",
+				keywordPosition = "2");
+		}
+
+		task ("View the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+		}
+
+		task ("Run curl command to get keyword results") {
+			ACApi.getSearchKeywords(parameters = "${parametersGroup2}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword1}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword2}",
+			keywordPosition = "1");
+		}
+	}
+
+	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12147 | Test Summary: Request search keywords using sort"
+	@priority = "3"
+	test RequestKeywordsUsingSort {
+		var keyword1 = "first key word";
+		var keyword2 = "second key word";
+		var parametersLastModifiedDate = "sort=counts,desc,lastModifiedDate,desc";
+
+		task ("Go to DXP and get analytics configuration") {
+			ACApi.getAnalyticsConfiguration();
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Type keyword in search bar") {
+			for (var keyword : list "${keyword1},${keyword1},${keyword2}") {
+				SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
+			}
+		}
+
+		task ("Run curl command to get keyword results") {
+			ACApi.getSearchKeywords(parameters = "${parametersLastModifiedDate}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword1}");
+		}
+
+		task ("Assert response returns keyword") {
+			ACApi.assertSearchResponse(expected = "${keyword2}",
+			keywordPosition = "1");
+		}
+	}
+
 }

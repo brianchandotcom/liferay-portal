@@ -40,6 +40,12 @@
 			<finder-column name="active" />
 			<finder-column name="objectActionTriggerKey" />
 		</finder>
+		<finder name="ODI_A_N_OATK" return-type="ObjectAction">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="active" />
+			<finder-column name="name" />
+			<finder-column name="objectActionTriggerKey" />
+		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" name="ObjectDefinition" remote-service="true" uuid="true">
 

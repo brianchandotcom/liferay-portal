@@ -3,12 +3,24 @@
 		"@types/warning": "^3.0.0",
 		"frontend-js-web": "*"
 	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/jest-setup.config.js"
+		],
+		"testMatch": [
+			"<rootDir>/src/**/*.spec.{ts,tsx}"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/jest-setup.config.js"
+		]
+	},
 	"main": "js/index.js",
 	"name": "@liferay/analytics-settings-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "5.0.45"
 }

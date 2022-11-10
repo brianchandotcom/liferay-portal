@@ -69,7 +69,11 @@ const AppContent = () => {
 
 	const PageView = View[pageView];
 
-	return <PageView />;
+	return (
+		<div data-testid={pageView}>
+			<PageView />
+		</div>
+	);
 };
 
 const App: React.FC<IAppProps> = ({connected, liferayAnalyticsURL, token}) => {

@@ -25,7 +25,9 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -53,7 +55,11 @@ public class ObjectEntryPermissionUtil {
 		long accountEntryId = MapUtil.getLong(
 			objectEntry.getValues(), objectField.getName());
 
-		if (accountEntryId == 0) {
+		if ((accountEntryId == 0) ||
+			RoleLocalServiceUtil.hasUserRole(
+				userId, objectDefinition.getCompanyId(),
+				RoleConstants.ADMINISTRATOR, true)) {
+
 			return;
 		}
 

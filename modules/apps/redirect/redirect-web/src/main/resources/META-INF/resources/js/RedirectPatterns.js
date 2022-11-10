@@ -123,21 +123,10 @@ const PatternField = ({
 						<ClayForm.FeedbackItem>
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-							{Liferay.Language.get('this-url-is-not-supported')}
+							{Liferay.Language.get('please-enter-a-valid-url')}
 						</ClayForm.FeedbackItem>
 
-						<div
-							className="small"
-							dangerouslySetInnerHTML={{
-								__html: sub(
-									Liferay.Language.get(
-										'please-enter-a-valid-url'
-									),
-									'<em>',
-									'</em>'
-								),
-							}}
-						/>
+						<small>{Liferay.Language.get('destination-url-error-help-message')}</small>
 					</ClayForm.FeedbackGroup>
 				)}
 			</ClayLayout.Col>

@@ -14,11 +14,9 @@
 
 package com.liferay.cookies.internal.manager;
 
-import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.UnsupportedCookieException;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -26,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -36,7 +33,6 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -264,45 +260,6 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		return domain;
-	}
-
-	@Override
-	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId)
-		throws Exception {
-
-		CookiesConsentConfiguration cookiesConsentConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				CookiesConsentConfiguration.class, groupId);
-
-		return ListUtil.fromArray(
-			new ConsentCookieType(
-				cookiesConsentConfiguration.functionalCookiesDescription(),
-				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-				cookiesConsentConfiguration.functionalCookiesPrechecked()),
-			new ConsentCookieType(
-				cookiesConsentConfiguration.performanceCookiesDescription(),
-				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-				cookiesConsentConfiguration.performanceCookiesPrechecked()),
-			new ConsentCookieType(
-				cookiesConsentConfiguration.personalizationCookiesDescription(),
-				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-				cookiesConsentConfiguration.
-					personalizationCookiesPrechecked()));
-	}
-
-	@Override
-	public List<ConsentCookieType> getRequiredConsentCookieTypes(long groupId)
-		throws Exception {
-
-		CookiesConsentConfiguration cookiesConsentConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				CookiesConsentConfiguration.class, groupId);
-
-		return ListUtil.fromArray(
-			new ConsentCookieType(
-				cookiesConsentConfiguration.
-					strictlyNecessaryCookiesDescription(),
-				CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
 	}
 
 	@Override

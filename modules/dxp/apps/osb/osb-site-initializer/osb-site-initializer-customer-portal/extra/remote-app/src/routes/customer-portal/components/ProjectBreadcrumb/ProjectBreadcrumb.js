@@ -104,6 +104,7 @@ const Dropdown = memo(
 		koroneikiAccounts,
 		onIntersecting,
 		onSearch,
+		searching,
 		selectedKoroneikiAccount,
 		totalCount,
 	}) => {
@@ -180,19 +181,29 @@ const Dropdown = memo(
 					</div>
 				)}
 
-				{!koroneikiAccounts.length && initialTotalCount > 1 && (
-					<div className="dropdown-section px-3">
+				{searching && !koroneikiAccounts && (
+					<ClayDropDown.Section className="px-3">
 						<div className="font-weight-semi-bold text-neutral-5 text-paragraph-sm">
-							{i18n.translate('no-projects-match-that-name')}
+							{i18n.translate('loading')}
 						</div>
-					</div>
+					</ClayDropDown.Section>
 				)}
 
-				{!!koroneikiAccounts.length && initialTotalCount > 1 && (
+				{!searching &&
+					!koroneikiAccounts?.length &&
+					initialTotalCount > 1 && (
+						<div className="dropdown-section px-3">
+							<div className="font-weight-semi-bold text-neutral-5 text-paragraph-sm">
+								{i18n.translate('no-projects-match-that-name')}
+							</div>
+						</div>
+					)}
+
+				{!!koroneikiAccounts?.length && initialTotalCount > 1 && (
 					<ClayDropDown.ItemList className="overflow-auto">
 						{getDropDownItems()}
 
-						{koroneikiAccounts.length < totalCount && !fetching && (
+						{koroneikiAccounts?.length < totalCount && !fetching && (
 							<ClayDropDown.Section className="px-3">
 								<div
 									className="font-weight-semi-bold text-neutral-5 text-paragraph-sm"
@@ -214,12 +225,22 @@ const Dropdown = memo(
 const ProjectBreadcrumb = () => {
 	const [initialTotalCount, setInitialTotalCount] = useState(0);
 
-	const {data: currentKoroneikiAccountData} = useCurrentKoroneikiAccount();
+	const {
+		data: currentKoroneikiAccountData,
+		loading: currentKoroneikiAccountLoading,
+	} = useCurrentKoroneikiAccount();
 
 	const selectedKoroneikiAccount =
 		currentKoroneikiAccountData?.koroneikiAccountByExternalReferenceCode;
 
-	const {data, fetchMore, fetching, search} = useKoroneikiAccounts();
+	const {
+		data,
+		fetchMore,
+		fetching,
+		loading,
+		search,
+		searching,
+	} = useKoroneikiAccounts();
 
 	useEffect(() => {
 		if (data?.c.koroneikiAccounts.totalCount > initialTotalCount) {
@@ -227,7 +248,7 @@ const ProjectBreadcrumb = () => {
 		}
 	}, [data?.c.koroneikiAccounts.totalCount, initialTotalCount]);
 
-	if (!selectedKoroneikiAccount || !data?.c.koroneikiAccounts.items) {
+	if (currentKoroneikiAccountLoading || loading) {
 		return <Skeleton height={30} width={264} />;
 	}
 
@@ -244,6 +265,7 @@ const ProjectBreadcrumb = () => {
 				})
 			}
 			onSearch={search}
+			searching={searching}
 			selectedKoroneikiAccount={selectedKoroneikiAccount}
 			totalCount={data?.c.koroneikiAccounts.totalCount}
 		/>

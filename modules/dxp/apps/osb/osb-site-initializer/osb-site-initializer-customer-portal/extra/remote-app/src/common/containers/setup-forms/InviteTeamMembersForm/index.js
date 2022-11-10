@@ -161,14 +161,12 @@ const InviteTeamMembersPage = ({
 				isSelectdAdministratorOrRequestorRole
 			) {
 				setBaseButtonDisabled(true);
-			}
-			else {
+			} else {
 				setInitialError(false);
 				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -185,22 +183,24 @@ const InviteTeamMembersPage = ({
 
 		if (filledEmails.length) {
 			setIsLoadingUserInvitation(true);
-			const newMembersData = filledEmails.map(async ({email, role}) => {
-				await addTeamMemberInvitation({
-					context: {
-						displaySuccess: false,
-						type: 'liferay-rest',
-					},
-					variables: {
-						TeamMembersInvitation: {
+			const newMembersData = await addTeamMemberInvitation({
+				context: {
+					displaySuccess: false,
+					type: 'liferay-rest',
+				},
+				variables: {
+					TeamMembersInvitation: filledEmails.map(
+						({email, role}) => ({
 							email,
 							r_accountEntryToDXPCloudEnvironment_accountEntryId:
 								project?.id,
 							role: role.key,
-						},
-					},
-				});
+						})
+					),
+				},
+			});
 
+			filledEmails.map(async ({email, role}) => {
 				await associateUserAccount({
 					variables: {
 						accountKey: project.accountKey,
@@ -230,8 +230,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

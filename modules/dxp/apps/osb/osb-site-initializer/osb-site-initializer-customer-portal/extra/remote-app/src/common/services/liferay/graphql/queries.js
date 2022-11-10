@@ -305,7 +305,7 @@ export const getAnalyticsCloudPageInfo = gql`
 
 export const addTeamMembersInvitation = gql`
 	mutation addTeamMembersInvitation(
-		$TeamMembersInvitation: InputC_TeamMembersInvitation!
+		$TeamMembersInvitation: [InputC_TeamMembersInvitation]!
 	) {
 		createTeamMembersInvitation(input: $TeamMembersInvitation)
 			@rest(

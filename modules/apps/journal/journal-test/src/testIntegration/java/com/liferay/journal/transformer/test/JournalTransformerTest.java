@@ -15,13 +15,20 @@
 package com.liferay.journal.transformer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -29,11 +36,13 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
@@ -47,6 +56,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -218,6 +228,57 @@ public class JournalTransformerTest {
 	}
 
 	@Test
+	public void testTransformSelectDDMFormFieldType() throws Exception {
+		Locale locale = _portal.getSiteDefaultLocale(
+			TestPropsValues.getGroupId());
+
+		DDMFormField ddmFormField = new DDMFormField(
+			RandomTestUtil.randomString(10), DDMFormFieldTypeConstants.SELECT);
+
+		ddmFormField.setDataType("text");
+		ddmFormField.setIndexType("text");
+		ddmFormField.setLocalizable(true);
+
+		LocalizedValue localizedValue = new LocalizedValue(locale);
+
+		localizedValue.addString(locale, RandomTestUtil.randomString(10));
+
+		ddmFormField.setLabel(localizedValue);
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		String expectedKey1 = RandomTestUtil.randomString(10);
+
+		ddmFormFieldOptions.addOptionLabel(
+			expectedKey1, locale, RandomTestUtil.randomString());
+
+		String expectedKey2 = RandomTestUtil.randomString(10);
+
+		ddmFormFieldOptions.addOptionLabel(
+			expectedKey2, locale, RandomTestUtil.randomString());
+
+		_testTransformDDMFormField(
+			ddmFormField, expectedKey1,
+			JSONUtil.put(
+				expectedKey1
+			).toString(),
+			locale);
+
+		ddmFormField.setMultiple(true);
+
+		_testTransformDDMFormField(
+			ddmFormField,
+			JSONUtil.putAll(
+				expectedKey1, expectedKey2
+			).toString(),
+			JSONUtil.putAll(
+				expectedKey1, expectedKey2
+			).toString(),
+			locale);
+	}
+
+	@Test
 	public void testViewCounterTransformerListener() throws Exception {
 		Map<String, String> tokens = getTokens();
 
@@ -288,15 +349,62 @@ public class JournalTransformerTest {
 			transformerListener, "_replacements", replacements);
 	}
 
+	private void _testTransformDDMFormField(
+			DDMFormField ddmFormField, String expected, String fieldValue,
+			Locale locale)
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			ddmFormField, _ddmFormValuesToFieldsConverter, fieldValue,
+			TestPropsValues.getGroupId(), _journalConverter);
+
+		Assert.assertEquals(
+			expected,
+			(String)_transformMethod.invoke(
+				null, null,
+				HashMapBuilder.put(
+					TemplateConstants.CLASS_NAME_ID,
+					String.valueOf(
+						ClassNameLocalServiceUtil.getClassNameId(
+							DDMStructure.class.getName()))
+				).put(
+					"article_group_id",
+					String.valueOf(journalArticle.getGroupId())
+				).put(
+					"company_id", String.valueOf(journalArticle.getCompanyId())
+				).put(
+					"ddm_structure_id",
+					() -> {
+						DDMStructure ddmStructure =
+							journalArticle.getDDMStructure();
+
+						return String.valueOf(ddmStructure.getStructureId());
+					}
+				).build(),
+				Constants.VIEW, LocaleUtil.toLanguageId(locale),
+				journalArticle.getDocument(), null,
+				"${" + ddmFormField.getName() + ".getData()}", false,
+				new HashMap<>()));
+	}
+
 	@DeleteAfterTestRun
 	private JournalArticle _article;
+
+	@Inject
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@DeleteAfterTestRun
 	private DDMStructure _ddmStructure;
 
 	@Inject
+	private JournalConverter _journalConverter;
+
+	@Inject
 	private JournalTransformerListenerRegistry
 		_journalTransformerListenerRegistry;
+
+	@Inject
+	private Portal _portal;
 
 	private Method _transformMethod;
 

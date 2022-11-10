@@ -453,6 +453,8 @@ definition {
 	macro viewEntryDetails {
 		var key_entry = "${entry}";
 
+		SelectFrameTop();
+
 		if (IsElementPresent(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
 			Click(locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 

@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.internal.ServiceReferenceSer
 import com.liferay.osgi.service.tracker.collections.internal.ServiceTrackerUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -79,6 +80,24 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<T> {
 	@Override
 	public int size() {
 		return _services.size();
+	}
+
+	@Override
+	public <E> E[] toArray(E[] array) {
+		List<T> list = toList();
+
+		return list.toArray(array);
+	}
+
+	@Override
+	public List<T> toList() {
+		List<T> list = new ArrayList<>(_services.size());
+
+		_services.forEach(
+			serviceReferenceServiceTuple -> list.add(
+				serviceReferenceServiceTuple.getService()));
+
+		return list;
 	}
 
 	private final BundleContext _bundleContext;

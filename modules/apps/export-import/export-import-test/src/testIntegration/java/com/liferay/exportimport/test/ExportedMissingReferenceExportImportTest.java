@@ -313,6 +313,16 @@ public class ExportedMissingReferenceExportImportTest
 					return portletDataHandlerInstances.size();
 				}
 
+				@Override
+				public <E> E[] toArray(E[] array) {
+					return portletDataHandlerInstances.toArray(array);
+				}
+
+				@Override
+				public List<PortletDataHandler> toList() {
+					return portletDataHandlerInstances;
+				}
+
 			});
 
 		return oldDataHandlerInstances;

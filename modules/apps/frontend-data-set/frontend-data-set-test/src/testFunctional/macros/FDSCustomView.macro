@@ -67,6 +67,7 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
+<<<<<<< HEAD
 	macro deleteView {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
@@ -81,6 +82,22 @@ definition {
 		Click(
 			key_text = "Delete",
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+=======
+	macro editView {
+		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+
+		Click(
+			key_itemName = "Rename View",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+
+		Type(
+			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
+			value1 = "Edit View Name");
+
+		Click(
+			key_name = "Save",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+>>>>>>> LPS-168120 SF
 	}
 
 	macro getValueByPosition {
@@ -154,6 +171,7 @@ definition {
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
+
 	macro editView {
 
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");

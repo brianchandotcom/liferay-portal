@@ -273,6 +273,41 @@ definition {
 		}
 	}
 
+	@description = "LPS-168120. Allow users to rename a custom view"
+	@priority = "4"
+	test CanUpdateName {
+		task ("And Given created custom view") {
+			FDSFilters.editFilters(
+				key_disableFilters = "Blue",
+				key_enableFilters = "Red",
+				key_filter = "Color");
+
+			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
+
+			Click(
+				key_itemName = "Description",
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+
+			FDSCustomView.createNewView(key_nameView = "TEST");
+
+			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+
+			Click(
+				key_itemName = "Save View",
+				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+		}
+
+		task ("When edit custom view name") {
+			FDSCustomView.editView();
+		}
+
+		task ("Then name of custom view is updated in select custom view") {
+			AssertTextPresent(
+				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+				value1 = "Edit View Name");
+		}
+	}
+
 	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
 	@priority = "4"
 	test HasOptionToEditName {
@@ -342,34 +377,5 @@ definition {
 				reset_filter = "Restablecer filtros");
 		}
 	}
-
-	@description = "LPS-168120. Allow users to rename a custom view"
-    @priority = "4"
-    test CanUpdateName {
-        task ("And Given created custom view") {
-            FDSFilters.editFilters(
-                key_disableFilters = "Blue",
-                key_enableFilters = "Red",
-                key_filter = "Color");
-            Click(locator1 = "FrontendDataSet#SELECT_FIELD");
-            Click(
-                key_itemName = "Description",
-                locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
-            FDSCustomView.createNewView(key_nameView = "TEST");
-            Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
-            Click(
-                key_itemName = "Save View",
-                locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
-        }
-        task ("When edit custom view name") {
-			FDSCustomView.editView();
-		}
-
-        task ("Then name of custom view is updated in select custom view") {
-			AssertTextPresent(
-				value1 = "Edit View Name",
-				locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
-        }
-    }
 
 }

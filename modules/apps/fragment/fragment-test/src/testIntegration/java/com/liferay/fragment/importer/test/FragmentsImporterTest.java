@@ -45,12 +45,14 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
 
@@ -214,6 +216,60 @@ public class FragmentsImporterTest {
 				fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertFalse(fragmentEntries.isEmpty());
+	}
+
+	@Test
+	public void testImportFragmentsWithFolderResources() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-158675", "true"
+			).build());
+
+		File fileWithFolderResources = _generateZipFileWithFolderResources();
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0,
+				fileWithFolderResources, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			fragmentCollections.toString(), 1, fragmentCollections.size());
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		Map<String, FileEntry> resourcesMap =
+			fragmentCollection.getResourcesMap();
+
+		Assert.assertEquals(resourcesMap.toString(), 2, resourcesMap.size());
+
+		Assert.assertNotNull(resourcesMap.get("image1.png"));
+		Assert.assertNotNull(resourcesMap.get("folder1/image2.png"));
+
+		FileEntry fileEntry = resourcesMap.get("image1.png");
+
+		Assert.assertEquals("image1.png", fileEntry.getTitle());
+
+		fileEntry = resourcesMap.get("folder1/image2.png");
+
+		Assert.assertEquals("image2.png", fileEntry.getTitle());
+
+		FileUtil.delete(fileWithFolderResources);
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-158675", "false"
+			).build());
 	}
 
 	@Test
@@ -549,6 +605,31 @@ public class FragmentsImporterTest {
 		return zipWriter.getFile();
 	}
 
+	private File _generateZipFileWithFolderResources() throws Exception {
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		URL collectionURL = _bundle.getEntry(
+			_PATH_FRAGMENTS_WITH_FOLDER_RESOURCES +
+				FragmentExportImportConstants.FILE_NAME_COLLECTION);
+
+		zipWriter.addEntry(
+			FragmentExportImportConstants.FILE_NAME_COLLECTION,
+			collectionURL.openStream());
+
+		_addZipWriterEntry(
+			zipWriter, _PATH_FRAGMENTS_WITH_FOLDER_RESOURCES + "resources",
+			"image1.png");
+		_addZipWriterEntry(
+			zipWriter,
+			_PATH_FRAGMENTS_WITH_FOLDER_RESOURCES + "resources/folder1",
+			"image2.png");
+
+		_populateZipWriter(
+			_PATH_FRAGMENTS_WITH_FOLDER_RESOURCES, zipWriter, true);
+
+		return zipWriter.getFile();
+	}
+
 	private void _importFragmentsByType(int type) throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
@@ -694,6 +775,9 @@ public class FragmentsImporterTest {
 
 	private static final String _PATH_FRAGMENTS =
 		_PATH_DEPENDENCIES + "fragments/";
+
+	private static final String _PATH_FRAGMENTS_WITH_FOLDER_RESOURCES =
+		_PATH_DEPENDENCIES + "fragments-with-folder-resources/";
 
 	private static final String _PATH_RESOURCES_COLLECTION =
 		_PATH_DEPENDENCIES + "resources-collection/";

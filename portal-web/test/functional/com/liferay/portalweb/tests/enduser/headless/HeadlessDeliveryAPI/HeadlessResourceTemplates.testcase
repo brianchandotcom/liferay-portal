@@ -24,12 +24,13 @@ definition {
 
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
-			while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO",value1 = "There are no templates.")) {
+			while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO", value1 = "There are no templates.")) {
 				ApplicationDisplayTemplates.deleteCP(widgetTemplateName = "Blogs Test ADT");
 			}
 
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
-			while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO",value1 = "There are no templates.")) {
+
+			while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO", value1 = "There are no templates.")) {
 				InformationTemplates.deleteCP(informationTemplateName = "University");
 			}
 
@@ -48,6 +49,88 @@ definition {
 			}
 
 			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@priority = "4"
+	test CanUseObjectsInsideTemplates {
+		property portal.acceptance = "true";
+
+		task ("Given a University object is created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "University",
+				en_US_plural_label = "Universities",
+				name = "University",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given University entry created") {
+			var objectDefinitionEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay University");
+		}
+
+		task ("And Given an information template with getObjectEntriesPage created") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
+
+			InformationTemplates.addCP(
+				adtFile = "adt_objects.ftl",
+				informationTemplateName = "University",
+				itemType = "University");
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "adt_objects.ftl");
+
+			UploadFile(
+				inputFieldId = "importScript",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = "${filePath}");
+
+			PortletEntry.save();
+		}
+
+		task ("When mapping the item of a fragment with the template") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blank Display Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Blank Display Page",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "University ${objectDefinitionEntryId}",
+				navItem = "Universities",
+				rowItem = "//*[contains(@data-qa-id,'rowItemContent')]//*[contains(.,'${objectDefinitionEntryId}')]");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "University");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.publish();
+		}
+
+		task ("Then getObjectEntriesPage displayed correctly on the Page with the fragment") {
+			Navigator.gotoSitePage(
+				pageName = "Blank Display Page",
+				siteName = "Guest");
+
+			AssertTextEquals.assertPartialText(
+				fragmentName = "component-paragraph",
+				locator1 = "Fragment#FRAGMENT_ANY_TEXT",
+				value1 = "\"id\": ${objectDefinitionEntryId}, \"properties\": {\"name\": \"Liferay University\"}");
 		}
 	}
 
@@ -94,86 +177,4 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test CanUseObjectsInsideTemplates {
-		property portal.acceptance = "true";
-
-		task ("Given a University object is created") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "University",
-				en_US_plural_label = "Universities",
-				name = "University",
-				requiredStringFieldName = "name");
-		}
-
-		task ("And Given University entry created") {
-			var objectDefinitionEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
-				en_US_plural_label = "universities",
-				name = "Liferay University");
-		}
-
-		task ("And Given an information template with getObjectEntriesPage created") {
-			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
-
-			InformationTemplates.addCP(
-				adtFile = "adt_objects.ftl",
-				informationTemplateName = "University",
-				itemType = "University");
-
-			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-			var filePath = TestCase.getDependenciesDirPath(fileName = "adt_objects.ftl");
-
-			UploadFile(
-				inputFieldId = "importScript",
-				locator1 = "TextInput#INPUT_ID",
-				value1 = "${filePath}");
-
-			PortletEntry.save();
-		}
-
-		task ("When mapping the item of a fragment with the template") {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			type = "content",
-			layoutName = "Blank Display Page");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Blank Display Page",
-			siteName = "Guest");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Paragraph");
-
-		PageEditorMapping.gotoEditableFieldMapping(
-			fragmentName = "Paragraph",
-			id = "element-text");
-
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "University ${objectDefinitionEntryId}",
-			rowItem = "//*[contains(@data-qa-id,'rowItemContent')]//*[contains(.,'${objectDefinitionEntryId}')]",
-			navItem = "Universities");
-
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "University");
-
-		PageEditor.waitForAutoSave();
-
-		PageEditor.publish();
-		}
-
-		task ("Then getObjectEntriesPage displayed correctly on the Page with the fragment") {
-			Navigator.gotoSitePage(
-			pageName = "Blank Display Page",
-			siteName = "Guest");
-
-			AssertTextEquals.assertPartialText(
-				fragmentName = "component-paragraph",
-				locator1 = "Fragment#FRAGMENT_ANY_TEXT",
-				value1 = "\"id\": ${objectDefinitionEntryId}, \"properties\": {\"name\": \"Liferay University\"}");
-
-		}
-	}
 }

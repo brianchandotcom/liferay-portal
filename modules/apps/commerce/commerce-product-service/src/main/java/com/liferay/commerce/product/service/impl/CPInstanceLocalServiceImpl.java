@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -1677,16 +1678,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceLocalServiceImpl.class);
 
+	private static volatile CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				CPDefinitionOptionRelLocalService.class,
+				CPInstanceLocalServiceImpl.class,
+				"_cpDefinitionOptionRelLocalService", true);
+	private static volatile CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				CPDefinitionOptionValueRelLocalService.class,
+				CPInstanceLocalServiceImpl.class,
+				"_cpDefinitionOptionValueRelLocalService", true);
+
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
-
-	@Reference
-	private CPDefinitionOptionValueRelLocalService
-		_cpDefinitionOptionValueRelLocalService;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService

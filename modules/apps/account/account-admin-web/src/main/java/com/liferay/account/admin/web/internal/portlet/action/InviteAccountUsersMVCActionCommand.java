@@ -15,10 +15,10 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -73,11 +73,8 @@ public class InviteAccountUsersMVCActionCommand
 		try {
 			long accountEntryId = ParamUtil.getLong(
 				actionRequest, "accountEntryId");
-			String[] emailAddresses = ParamUtil.getStringValues(
-				actionRequest, "emailAddresses");
 
-			AccountEntry accountEntry =
-				_accountEntryLocalService.getAccountEntry(accountEntryId);
+			_accountEntryLocalService.getAccountEntry(accountEntryId);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -85,9 +82,16 @@ public class InviteAccountUsersMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				User.class.getName(), actionRequest);
 
-			for (String emailAddress : emailAddresses) {
-				_accountEntryUserRelLocalService.inviteUser(
-					accountEntry.getAccountEntryId(), null, emailAddress,
+			int count = ParamUtil.getInteger(actionRequest, "count");
+
+			for (int index = 0; index < count; index++) {
+				long[] accountRoleIds = ParamUtil.getLongValues(
+					actionRequest, "accountRoleIds" + index);
+				String[] emailAddresses = ParamUtil.getStringValues(
+					actionRequest, "emailAddresses" + index);
+
+				_inviteUsers(
+					accountEntryId, accountRoleIds, emailAddresses,
 					themeDisplay.getUser(), serviceContext);
 			}
 
@@ -101,6 +105,18 @@ public class InviteAccountUsersMVCActionCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+	}
+
+	private void _inviteUsers(
+			long accountEntryId, long[] accountRoleIds, String[] emailAddresses,
+			User user, ServiceContext serviceContext)
+		throws PortalException {
+
+		for (String emailAddress : emailAddresses) {
+			_accountEntryUserRelLocalService.inviteUser(
+				accountEntryId, accountRoleIds, emailAddress, user,
+				serviceContext);
+		}
 	}
 
 	@Reference

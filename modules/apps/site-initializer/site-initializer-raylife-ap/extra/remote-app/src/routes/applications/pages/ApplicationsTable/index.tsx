@@ -170,6 +170,8 @@ const ApplicationsTable = () => {
 	};
 
 	const conditionalFilters = () => {
+		setPage(1);
+
 		if (
 			searchInput &&
 			!filterStatusCheck.length &&
@@ -206,6 +208,8 @@ const ApplicationsTable = () => {
 			!filterStatusCheck.length &&
 			!filterProductCheck.length
 		) {
+			setPage(1);
+
 			return setParameters(generateParameters());
 		}
 	};

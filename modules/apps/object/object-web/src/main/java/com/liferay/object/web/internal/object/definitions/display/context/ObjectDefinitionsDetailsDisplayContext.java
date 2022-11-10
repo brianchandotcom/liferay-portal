@@ -32,8 +32,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -101,14 +103,63 @@ public class ObjectDefinitionsDetailsDisplayContext
 		);
 	}
 
-	public List<KeyValuePair> getKeyValuePairs() {
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+	public List<ObjectField> getNonrelationshipObjectFields() {
+		return ListUtil.filter(
+			getObjectFields(),
+			objectField -> Validator.isNull(objectField.getRelationshipType()));
+	}
 
+	public List<Map<String, Object>> getNonrelationshipObjectFieldsInfo() {
+		List<ObjectField> objectFields = ListUtil.filter(
+			getObjectFields(),
+			objectField -> Validator.isNull(objectField.getRelationshipType()));
+
+		List<Map<String, Object>> nonrelationshipObjectFieldsInfo =
+			new ArrayList<>();
+
+		for (ObjectField objectField : objectFields) {
+			nonrelationshipObjectFieldsInfo.add(
+				HashMapBuilder.<String, Object>put(
+					"label",
+					LocalizationUtil.getLocalizationMap(objectField.getLabel())
+				).put(
+					"name", objectField.getName()
+				).build());
+		}
+
+		return nonrelationshipObjectFieldsInfo;
+	}
+
+	public ObjectDefinition getObjectDefinition() {
+		HttpServletRequest httpServletRequest =
+			objectRequestHelper.getRequest();
+
+		return (ObjectDefinition)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
+	public List<ObjectField> getObjectFields() {
+		HttpServletRequest httpServletRequest =
+			objectRequestHelper.getRequest();
+
+		return (List<ObjectField>)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_FIELDS);
+	}
+
+	public List<ObjectScopeProvider> getObjectScopeProviders() {
+		return _objectScopeProviderRegistry.getObjectScopeProviders();
+	}
+
+	public String getScope() {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
-		String scope = ParamUtil.getString(
+		return ParamUtil.getString(
 			objectRequestHelper.getRequest(), "scope",
 			objectDefinition.getScope());
+	}
+
+	public List<KeyValuePair> getScopeKeyValuePairs(String scope) {
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(scope);
@@ -141,40 +192,6 @@ public class ObjectDefinitionsDetailsDisplayContext
 		}
 
 		return keyValuePairs;
-	}
-
-	public List<ObjectField> getNonrelationshipObjectFields() {
-		return ListUtil.filter(
-			getObjectFields(),
-			objectField -> Validator.isNull(objectField.getRelationshipType()));
-	}
-
-	public ObjectDefinition getObjectDefinition() {
-		HttpServletRequest httpServletRequest =
-			objectRequestHelper.getRequest();
-
-		return (ObjectDefinition)httpServletRequest.getAttribute(
-			ObjectWebKeys.OBJECT_DEFINITION);
-	}
-
-	public List<ObjectField> getObjectFields() {
-		HttpServletRequest httpServletRequest =
-			objectRequestHelper.getRequest();
-
-		return (List<ObjectField>)httpServletRequest.getAttribute(
-			ObjectWebKeys.OBJECT_FIELDS);
-	}
-
-	public List<ObjectScopeProvider> getObjectScopeProviders() {
-		return _objectScopeProviderRegistry.getObjectScopeProviders();
-	}
-
-	public String getScope() {
-		ObjectDefinition objectDefinition = getObjectDefinition();
-
-		return ParamUtil.getString(
-			objectRequestHelper.getRequest(), "scope",
-			objectDefinition.getScope());
 	}
 
 	public boolean hasPublishObjectPermission() {

@@ -118,16 +118,14 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 							hasManageFragmentEntriesPermission &&
 							!_fragmentEntry.isReadOnly() &&
 							(_fragmentEntry.getGroupId() ==
-								_themeDisplay.getCompanyGroupId()) &&
-							(_fragmentEntry.getGlobalUsageCount() > 0),
+								_themeDisplay.getCompanyGroupId()),
 						_getViewGroupFragmentEntryUsagesActionUnsafeConsumer()
 					).add(
 						() ->
 							hasManageFragmentEntriesPermission &&
 							!_fragmentEntry.isReadOnly() &&
 							(_fragmentEntry.getGroupId() !=
-								_themeDisplay.getCompanyGroupId()) &&
-							(_fragmentEntry.getUsageCount() > 0),
+								_themeDisplay.getCompanyGroupId()),
 						_getViewFragmentEntryUsagesActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -431,6 +429,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 		_getViewFragmentEntryUsagesActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			dropdownItem.setDisabled(_fragmentEntry.getUsageCount() == 0);
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/fragment/view_fragment_entry_usages", "redirect",
@@ -447,6 +446,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 		_getViewGroupFragmentEntryUsagesActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			dropdownItem.setDisabled(_fragmentEntry.getGlobalUsageCount() == 0);
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/fragment/view_group_fragment_entry_usages", "redirect",

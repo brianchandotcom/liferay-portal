@@ -35,24 +35,9 @@ const EditedTimestamp = ({dateCreated, dateModified, operationText}) => {
 		dateToInternationalHuman(dateCreated, BCP47LanguageId)
 	);
 
-	const editedText = getTextDelimeted(
-		Liferay.Language.get('edited'),
-		dateToInternationalHuman(dateModified, BCP47LanguageId)
-	);
-
 	return (
 		<ClayTooltipProvider>
-			<span className="c-ml-1 small">
-				{dateModified === dateCreated ? (
-					selectedText
-				) : (
-					<span data-tooltip-align="top-right" title={editedText}>
-						{`${selectedText} - `}
-
-						<i>({`${Liferay.Language.get('edited')}`})</i>
-					</span>
-				)}
-			</span>
+			<span className="c-ml-1 small">{selectedText}</span>
 		</ClayTooltipProvider>
 	);
 };

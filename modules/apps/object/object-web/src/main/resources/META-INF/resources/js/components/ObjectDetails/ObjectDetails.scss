@@ -1,0 +1,17 @@
+.lfr-objects__object-definition-details {
+	margin-bottom: 25px;
+	margin-top: 25px;
+
+	&-configuration {
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+	}
+}
+
+.lfr-objects__object-definition-details-management-toolbar {
+	position: fixed;
+	top: 3.5rem;
+	width: 100%;
+	z-index: 1;
+}

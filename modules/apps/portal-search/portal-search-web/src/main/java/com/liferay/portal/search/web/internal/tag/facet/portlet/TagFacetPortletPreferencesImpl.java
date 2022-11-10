@@ -52,6 +52,12 @@ public class TagFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getOrder() {
+		return _portletPreferencesHelper.getString(
+			TagFacetPortletPreferences.PREFERENCE_KEY_ORDER, "count:desc");
+	}
+
+	@Override
 	public String getParameterName() {
 		return _portletPreferencesHelper.getString(
 			TagFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME, "tag");

@@ -52,23 +52,27 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -702,6 +706,82 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
+	private void _addFragmentCollectionResources(
+			FragmentEntry fragmentEntry, ServiceContext serviceContext,
+			Map<String, FileEntry> fileEntries,
+			FragmentCollection targetFragmentCollection)
+		throws PortalException {
+
+		for (Map.Entry<String, FileEntry> entry : fileEntries.entrySet()) {
+			FileEntry fileEntry = entry.getValue();
+
+			FileEntry existingFileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					fragmentEntry.getGroupId(),
+					targetFragmentCollection.getResourcesFolderId(),
+					fileEntry.getFileName());
+
+			if (existingFileEntry == null) {
+				PortletFileRepositoryUtil.addPortletFileEntry(
+					null, serviceContext.getScopeGroupId(),
+					serviceContext.getUserId(),
+					FragmentCollection.class.getName(),
+					targetFragmentCollection.getFragmentCollectionId(),
+					FragmentPortletKeys.FRAGMENT,
+					targetFragmentCollection.getResourcesFolderId(),
+					fileEntry.getContentStream(), fileEntry.getFileName(),
+					fileEntry.getMimeType(), false);
+			}
+		}
+	}
+
+	private void _addFragmentCollectionResourcesWithFolders(
+			FragmentEntry fragmentEntry, ServiceContext serviceContext,
+			Map<String, FileEntry> fileEntries,
+			FragmentCollection targetFragmentCollection)
+		throws Exception {
+
+		Repository repository = _getRepository(
+			targetFragmentCollection.getGroupId());
+
+		Map<String, Long> folderIdMap = HashMapBuilder.put(
+			StringPool.BLANK, targetFragmentCollection.getResourcesFolderId()
+		).build();
+
+		for (Map.Entry<String, FileEntry> entry : fileEntries.entrySet()) {
+			String fileName = entry.getKey();
+			String folderPath = StringPool.BLANK;
+
+			int index = fileName.lastIndexOf(StringPool.SLASH);
+
+			if (index != -1) {
+				folderPath = fileName.substring(0, index);
+				fileName = fileName.substring(index + 1);
+			}
+
+			long folderId = _getOrCreateFolderId(
+				folderIdMap, folderPath, repository.getRepositoryId(),
+				fragmentEntry.getUserId());
+
+			FileEntry existingFileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					fragmentEntry.getGroupId(), folderId, fileName);
+
+			if (existingFileEntry == null) {
+				FileEntry fileEntry = entry.getValue();
+
+				PortletFileRepositoryUtil.addPortletFileEntry(
+					null, serviceContext.getScopeGroupId(),
+					serviceContext.getUserId(),
+					FragmentCollection.class.getName(),
+					targetFragmentCollection.getFragmentCollectionId(),
+					FragmentPortletKeys.FRAGMENT, folderId,
+					fileEntry.getContentStream(), fileName,
+					fileEntry.getMimeType(), false);
+			}
+		}
+	}
+
 	private void _copyFragmentEntryPreviewFileEntry(
 			long userId, long groupId, FragmentEntry fragmentEntry,
 			FragmentEntry copyFragmentEntry)
@@ -745,9 +825,8 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	private void _copyFragmentEntryResources(
-			FragmentEntry fragmentEntry, long sourceFragmentCollectionId,
-			long targetFragmentCollectionId)
-		throws PortalException {
+		FragmentEntry fragmentEntry, long sourceFragmentCollectionId,
+		long targetFragmentCollectionId) {
 
 		if (sourceFragmentCollectionId == targetFragmentCollectionId) {
 			return;
@@ -756,7 +835,7 @@ public class FragmentEntryLocalServiceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Set<FileEntry> fileEntries = _getFileEntries(
+		Map<String, FileEntry> fileEntries = _getFileEntries(
 			sourceFragmentCollectionId, fragmentEntry);
 
 		if ((serviceContext == null) || fileEntries.isEmpty()) {
@@ -768,24 +847,17 @@ public class FragmentEntryLocalServiceImpl
 				targetFragmentCollectionId);
 
 		try {
-			for (FileEntry fileEntry : fileEntries) {
-				FileEntry existingFileEntry =
-					PortletFileRepositoryUtil.fetchPortletFileEntry(
-						fragmentEntry.getGroupId(),
-						targetFragmentCollection.getResourcesFolderId(),
-						fileEntry.getFileName());
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-158675"))) {
 
-				if (existingFileEntry == null) {
-					PortletFileRepositoryUtil.addPortletFileEntry(
-						null, serviceContext.getScopeGroupId(),
-						serviceContext.getUserId(),
-						FragmentCollection.class.getName(),
-						targetFragmentCollection.getFragmentCollectionId(),
-						FragmentPortletKeys.FRAGMENT,
-						targetFragmentCollection.getResourcesFolderId(),
-						fileEntry.getContentStream(), fileEntry.getFileName(),
-						fileEntry.getMimeType(), false);
-				}
+				_addFragmentCollectionResourcesWithFolders(
+					fragmentEntry, serviceContext, fileEntries,
+					targetFragmentCollection);
+			}
+			else {
+				_addFragmentCollectionResources(
+					fragmentEntry, serviceContext, fileEntries,
+					targetFragmentCollection);
 			}
 		}
 		catch (Exception exception) {
@@ -795,11 +867,10 @@ public class FragmentEntryLocalServiceImpl
 		}
 	}
 
-	private Set<FileEntry> _getFileEntries(
-			long fragmentCollectionId, FragmentEntry fragmentEntry)
-		throws PortalException {
+	private Map<String, FileEntry> _getFileEntries(
+		long fragmentCollectionId, FragmentEntry fragmentEntry) {
 
-		Set<FileEntry> fileEntries = new HashSet<>();
+		Map<String, FileEntry> fileEntries = new HashMap<>();
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionPersistence.fetchByPrimaryKey(
@@ -812,7 +883,7 @@ public class FragmentEntryLocalServiceImpl
 				matcher.group(1));
 
 			if (fileEntry != null) {
-				fileEntries.add(fileEntry);
+				fileEntries.put(matcher.group(1), fileEntry);
 			}
 		}
 
@@ -827,6 +898,56 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private long _getOrCreateFolderId(
+			Map<String, Long> folderIdMap, String folderPath, long repositoryId,
+			long userId)
+		throws Exception {
+
+		if (folderIdMap.containsKey(folderPath)) {
+			return folderIdMap.get(folderPath);
+		}
+
+		String folderName = folderPath;
+
+		String parentFolderPath = StringPool.BLANK;
+
+		int index = folderName.lastIndexOf(StringPool.SLASH);
+
+		if (index != -1) {
+			folderName = folderName.substring(index + 1);
+
+			parentFolderPath = folderPath.substring(0, index);
+		}
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repositoryId,
+			_getOrCreateFolderId(
+				folderIdMap, parentFolderPath, repositoryId, userId),
+			folderName, ServiceContextThreadLocal.getServiceContext());
+
+		folderIdMap.put(folderPath, folder.getFolderId());
+
+		return folder.getFolderId();
+	}
+
+	private Repository _getRepository(long groupId) throws Exception {
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, FragmentPortletKeys.FRAGMENT);
+
+		if (repository == null) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				groupId, FragmentPortletKeys.FRAGMENT, serviceContext);
+		}
+
+		return repository;
 	}
 
 	private void _propagateChanges(long fragmentEntryId)

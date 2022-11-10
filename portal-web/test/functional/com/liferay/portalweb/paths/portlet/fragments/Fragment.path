@@ -83,6 +83,12 @@
 <!--FRAGMENT-->
 
 <tr>
+	<td>FRAGMENT_ANY_TEXT</td>
+	<td>//*[contains(@class,'${fragmentName}')]//p</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FRAGMENT_BODY</td>
 	<td>xpath=(//div[contains(@id,'fragment-')]//*[contains(@class,'${fragmentName}')])[${index}]</td>
 	<td></td>

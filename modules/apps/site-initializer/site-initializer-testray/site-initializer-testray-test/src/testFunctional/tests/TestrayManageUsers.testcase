@@ -87,6 +87,38 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168192 - Verify that the user can not edit informations of user if all the required fields are not filled in"
+	@priority = "3"
+	test CanViewFieldRequired {
+		task ("Given that the user tries to created account without informations") {
+			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+
+			TestrayManageUser.editUserInformation(
+				userEmailAddressEdit = "",
+				userFirstNameEdit = "",
+				userLastNameEdit = "",
+				userScreenNameEdit = "");
+		}
+
+		task ("Then a warning message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "First Name",
+				warningMessage = "This field is required.");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Last Name",
+				warningMessage = "This field is required.");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Email Address",
+				warningMessage = "This field is required.");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Screen Name",
+				warningMessage = "This field is required.");
+		}
+	}
+
 	@description = "This is a test for LPS-166562 - Verify if can't see the Testray users in the Testray user permission"
 	@ignore = "Test Stub"
 	@priority = "4"

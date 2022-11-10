@@ -1293,9 +1293,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	@Override
 	public List<Role> getUserTeamRoles(long userId, long groupId) {
-		Set<Role> roles = new LinkedHashSet<>();
-
 		long classNameId = _classNameLocalService.getClassNameId(Team.class);
+
+		Set<Role> roles = new LinkedHashSet<>();
 
 		List<Role> teamRoles = rolePersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -1322,7 +1322,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				)
 			));
 
-		roles.addAll(teamRoles);
+		if (ListUtil.isNotEmpty(teamRoles)) {
+			roles.addAll(teamRoles);
+		}
 
 		List<Role> userGroupRoles = rolePersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -1354,7 +1356,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				)
 			));
 
-		roles.addAll(userGroupRoles);
+		if (ListUtil.isNotEmpty(userGroupRoles)) {
+			roles.addAll(userGroupRoles);
+		}
 
 		return new ArrayList<>(roles);
 	}

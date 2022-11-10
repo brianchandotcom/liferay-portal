@@ -19,12 +19,12 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
+import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -216,15 +217,10 @@ public class ObjectActionLocalServiceImpl
 			}
 		}
 
-		if (!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) &&
-			!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE) &&
-			!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE)) {
+		if (!ListUtil.exists(
+				ObjectActionTriggerUtil.getDefaultObjectActionTriggers(),
+				objectActionTrigger -> StringUtil.equals(
+					objectActionTrigger.getKey(), objectActionTriggerKey))) {
 
 			if (!_messageBus.hasDestination(objectActionTriggerKey)) {
 				throw new ObjectActionTriggerKeyException();

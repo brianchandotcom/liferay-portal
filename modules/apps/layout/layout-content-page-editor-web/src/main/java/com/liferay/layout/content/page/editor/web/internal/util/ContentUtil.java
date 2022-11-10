@@ -151,7 +151,7 @@ public class ContentUtil {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			LayoutDisplayPageProviderTrackerUtil.getLayoutDisplayPageProvider(
-				layoutClassedModelUsage.getClassName());
+				className);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
@@ -162,13 +162,10 @@ public class ContentUtil {
 			"editImage",
 			() -> {
 				if (!ModelResourcePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						layoutClassedModelUsage.getClassName(),
+						themeDisplay.getPermissionChecker(), className,
 						layoutClassedModelUsage.getClassPK(),
 						ActionKeys.UPDATE) ||
-					!Objects.equals(
-						layoutClassedModelUsage.getClassName(),
-						FileEntry.class.getName())) {
+					!Objects.equals(className, FileEntry.class.getName())) {
 
 					return null;
 				}
@@ -207,8 +204,7 @@ public class ContentUtil {
 			"editURL",
 			() -> {
 				if (!ModelResourcePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						layoutClassedModelUsage.getClassName(),
+						themeDisplay.getPermissionChecker(), className,
 						layoutClassedModelUsage.getClassPK(),
 						ActionKeys.UPDATE)) {
 
@@ -216,7 +212,7 @@ public class ContentUtil {
 				}
 
 				return InfoEditURLProviderUtil.getURLEdit(
-					layoutClassedModelUsage.getClassName(),
+					className,
 					layoutDisplayPageObjectProvider.getDisplayObject(),
 					httpServletRequest);
 			}
@@ -224,8 +220,7 @@ public class ContentUtil {
 			"permissionsURL",
 			() -> {
 				if (!ModelResourcePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						layoutClassedModelUsage.getClassName(),
+						themeDisplay.getPermissionChecker(), className,
 						layoutClassedModelUsage.getClassPK(),
 						ActionKeys.PERMISSIONS)) {
 
@@ -233,7 +228,7 @@ public class ContentUtil {
 				}
 
 				return PermissionsURLTag.doTag(
-					StringPool.BLANK, layoutClassedModelUsage.getClassName(),
+					StringPool.BLANK, className,
 					HtmlUtil.escape(
 						layoutDisplayPageObjectProvider.getTitle(
 							themeDisplay.getLocale())),
@@ -245,8 +240,7 @@ public class ContentUtil {
 			"viewUsagesURL",
 			() -> {
 				if (!ModelResourcePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						layoutClassedModelUsage.getClassName(),
+						themeDisplay.getPermissionChecker(), className,
 						layoutClassedModelUsage.getClassPK(),
 						ActionKeys.VIEW)) {
 
@@ -262,7 +256,7 @@ public class ContentUtil {
 				).setMVCPath(
 					"/view_layout_classed_model_usages.jsp"
 				).setParameter(
-					"className", layoutClassedModelUsage.getClassName()
+					"className", className
 				).setParameter(
 					"classPK", layoutClassedModelUsage.getClassPK()
 				).setWindowState(

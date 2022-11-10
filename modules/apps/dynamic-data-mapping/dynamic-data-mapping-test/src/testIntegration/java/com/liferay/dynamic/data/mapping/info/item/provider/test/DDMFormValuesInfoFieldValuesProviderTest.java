@@ -277,11 +277,12 @@ public class DDMFormValuesInfoFieldValuesProviderTest {
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setMultiple(multiple);
 
-		LocalizedValue label = new LocalizedValue(LocaleUtil.US);
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
-		label.addString(LocaleUtil.US, RandomTestUtil.randomString(10));
+		localizedValue.addString(
+			LocaleUtil.US, RandomTestUtil.randomString(10));
 
-		ddmFormField.setLabel(label);
+		ddmFormField.setLabel(localizedValue);
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();

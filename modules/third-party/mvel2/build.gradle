@@ -16,5 +16,7 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "mvel2/optimizers/impl/asm/ASMAccessorOptimizer.java"
+
 	originalLibModuleName = "mvel2"
 }

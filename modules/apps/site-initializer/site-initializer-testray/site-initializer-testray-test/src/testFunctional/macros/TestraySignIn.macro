@@ -28,4 +28,41 @@ definition {
 		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
 	}
 
+	macro enableChangePassword {
+		var passwordPolicyName = "Default Password Policy";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		var key_passwordPolicyName = "${passwordPolicyName}";
+
+		LexiconEntry.openEntryMenu(rowEntry = "${passwordPolicyName}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		PasswordPolicies.enableChangeable(
+			minimumAge = "None",
+			passwordPolicyName = "Default Password Policy",
+			passwordPolicyPanel = "Password Changes");
+
+		PortletEntry.save();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		Uncheck(
+			checkboxName = "Allow strangers to create accounts with a company email address?",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Uncheck(
+			checkboxName = "Require strangers to verify their email address?",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+	}
+
 }

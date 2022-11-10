@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>CONFIRM_PASSWORD</td>
+	<td>//input[@id='rePassword']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_ICON_SIDEBAR</td>
 	<td>//div[contains(@class, 'dropdown')]//span[contains(., 'Test')]</td>
 	<td></td>

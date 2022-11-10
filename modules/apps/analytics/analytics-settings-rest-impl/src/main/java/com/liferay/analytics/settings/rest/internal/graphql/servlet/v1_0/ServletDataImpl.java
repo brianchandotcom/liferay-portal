@@ -23,6 +23,8 @@ import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationRes
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactOrganizationResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactUserGroupResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.FieldSummaryResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -51,6 +53,8 @@ public class ServletDataImpl implements ServletData {
 			_contactConfigurationResourceComponentServiceObjects);
 		Mutation.setDataSourceResourceComponentServiceObjects(
 			_dataSourceResourceComponentServiceObjects);
+		Mutation.setFieldResourceComponentServiceObjects(
+			_fieldResourceComponentServiceObjects);
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
@@ -64,6 +68,10 @@ public class ServletDataImpl implements ServletData {
 			_contactOrganizationResourceComponentServiceObjects);
 		Query.setContactUserGroupResourceComponentServiceObjects(
 			_contactUserGroupResourceComponentServiceObjects);
+		Query.setFieldResourceComponentServiceObjects(
+			_fieldResourceComponentServiceObjects);
+		Query.setFieldSummaryResourceComponentServiceObjects(
+			_fieldSummaryResourceComponentServiceObjects);
 		Query.setSiteResourceComponentServiceObjects(
 			_siteResourceComponentServiceObjects);
 	}
@@ -96,6 +104,10 @@ public class ServletDataImpl implements ServletData {
 		_dataSourceResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<FieldResource>
+		_fieldResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CommerceChannelResource>
 		_commerceChannelResourceComponentServiceObjects;
 
@@ -110,6 +122,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContactUserGroupResource>
 		_contactUserGroupResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<FieldSummaryResource>
+		_fieldSummaryResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SiteResource>

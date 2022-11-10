@@ -112,6 +112,10 @@ public class OpenAPIResourceImpl {
 
 			add(DataSourceResourceImpl.class);
 
+			add(FieldResourceImpl.class);
+
+			add(FieldSummaryResourceImpl.class);
+
 			add(SiteResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

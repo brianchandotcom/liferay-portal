@@ -17,9 +17,11 @@ package com.liferay.analytics.settings.rest.internal.graphql.mutation.v1_0;
 import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.dto.v1_0.ContactConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
+import com.liferay.analytics.settings.rest.dto.v1_0.Field;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -69,6 +71,14 @@ public class Mutation {
 
 		_dataSourceResourceComponentServiceObjects =
 			dataSourceResourceComponentServiceObjects;
+	}
+
+	public static void setFieldResourceComponentServiceObjects(
+		ComponentServiceObjects<FieldResource>
+			fieldResourceComponentServiceObjects) {
+
+		_fieldResourceComponentServiceObjects =
+			fieldResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -127,6 +137,18 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataSourceResource -> dataSourceResource.postDataSource(
 				dataSourceToken));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean patchFieldPeople(@GraphQLName("fields") Field[] fields)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_fieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fieldResource -> fieldResource.patchFieldPeople(fields));
 
 		return true;
 	}
@@ -211,12 +233,27 @@ public class Mutation {
 		dataSourceResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(FieldResource fieldResource)
+		throws Exception {
+
+		fieldResource.setContextAcceptLanguage(_acceptLanguage);
+		fieldResource.setContextCompany(_company);
+		fieldResource.setContextHttpServletRequest(_httpServletRequest);
+		fieldResource.setContextHttpServletResponse(_httpServletResponse);
+		fieldResource.setContextUriInfo(_uriInfo);
+		fieldResource.setContextUser(_user);
+		fieldResource.setGroupLocalService(_groupLocalService);
+		fieldResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactConfigurationResource>
 		_contactConfigurationResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataSourceResource>
 		_dataSourceResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FieldResource>
+		_fieldResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

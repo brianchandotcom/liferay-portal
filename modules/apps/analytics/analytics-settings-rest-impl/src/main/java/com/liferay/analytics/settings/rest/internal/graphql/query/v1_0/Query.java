@@ -20,6 +20,8 @@ import com.liferay.analytics.settings.rest.dto.v1_0.ContactAccountGroup;
 import com.liferay.analytics.settings.rest.dto.v1_0.ContactConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.ContactOrganization;
 import com.liferay.analytics.settings.rest.dto.v1_0.ContactUserGroup;
+import com.liferay.analytics.settings.rest.dto.v1_0.Field;
+import com.liferay.analytics.settings.rest.dto.v1_0.FieldSummary;
 import com.liferay.analytics.settings.rest.dto.v1_0.Site;
 import com.liferay.analytics.settings.rest.resource.v1_0.ChannelResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.CommerceChannelResource;
@@ -27,6 +29,8 @@ import com.liferay.analytics.settings.rest.resource.v1_0.ContactAccountGroupReso
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactOrganizationResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactUserGroupResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
+import com.liferay.analytics.settings.rest.resource.v1_0.FieldSummaryResource;
 import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -105,6 +109,22 @@ public class Query {
 
 		_contactUserGroupResourceComponentServiceObjects =
 			contactUserGroupResourceComponentServiceObjects;
+	}
+
+	public static void setFieldResourceComponentServiceObjects(
+		ComponentServiceObjects<FieldResource>
+			fieldResourceComponentServiceObjects) {
+
+		_fieldResourceComponentServiceObjects =
+			fieldResourceComponentServiceObjects;
+	}
+
+	public static void setFieldSummaryResourceComponentServiceObjects(
+		ComponentServiceObjects<FieldSummaryResource>
+			fieldSummaryResourceComponentServiceObjects) {
+
+		_fieldSummaryResourceComponentServiceObjects =
+			fieldSummaryResourceComponentServiceObjects;
 	}
 
 	public static void setSiteResourceComponentServiceObjects(
@@ -241,6 +261,41 @@ public class Query {
 					keywords, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						contactUserGroupResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {fieldsPeople(keyword: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public FieldPage fieldsPeople(
+			@GraphQLName("keyword") String keyword,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_fieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fieldResource -> new FieldPage(
+				fieldResource.getFieldsPeoplePage(
+					keyword, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(fieldResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {field{account, order, people, product}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public FieldSummary field() throws Exception {
+		return _applyComponentServiceObjects(
+			_fieldSummaryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			fieldSummaryResource -> fieldSummaryResource.getField());
 	}
 
 	/**
@@ -463,6 +518,72 @@ public class Query {
 
 	}
 
+	@GraphQLName("FieldPage")
+	public class FieldPage {
+
+		public FieldPage(Page fieldPage) {
+			actions = fieldPage.getActions();
+
+			items = fieldPage.getItems();
+			lastPage = fieldPage.getLastPage();
+			page = fieldPage.getPage();
+			pageSize = fieldPage.getPageSize();
+			totalCount = fieldPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Field> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("FieldSummaryPage")
+	public class FieldSummaryPage {
+
+		public FieldSummaryPage(Page fieldSummaryPage) {
+			actions = fieldSummaryPage.getActions();
+
+			items = fieldSummaryPage.getItems();
+			lastPage = fieldSummaryPage.getLastPage();
+			page = fieldSummaryPage.getPage();
+			pageSize = fieldSummaryPage.getPageSize();
+			totalCount = fieldSummaryPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<FieldSummary> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("SitePage")
 	public class SitePage {
 
@@ -608,6 +729,34 @@ public class Query {
 		contactUserGroupResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(FieldResource fieldResource)
+		throws Exception {
+
+		fieldResource.setContextAcceptLanguage(_acceptLanguage);
+		fieldResource.setContextCompany(_company);
+		fieldResource.setContextHttpServletRequest(_httpServletRequest);
+		fieldResource.setContextHttpServletResponse(_httpServletResponse);
+		fieldResource.setContextUriInfo(_uriInfo);
+		fieldResource.setContextUser(_user);
+		fieldResource.setGroupLocalService(_groupLocalService);
+		fieldResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			FieldSummaryResource fieldSummaryResource)
+		throws Exception {
+
+		fieldSummaryResource.setContextAcceptLanguage(_acceptLanguage);
+		fieldSummaryResource.setContextCompany(_company);
+		fieldSummaryResource.setContextHttpServletRequest(_httpServletRequest);
+		fieldSummaryResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		fieldSummaryResource.setContextUriInfo(_uriInfo);
+		fieldSummaryResource.setContextUser(_user);
+		fieldSummaryResource.setGroupLocalService(_groupLocalService);
+		fieldSummaryResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(SiteResource siteResource)
 		throws Exception {
 
@@ -633,6 +782,10 @@ public class Query {
 		_contactOrganizationResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContactUserGroupResource>
 		_contactUserGroupResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FieldResource>
+		_fieldResourceComponentServiceObjects;
+	private static ComponentServiceObjects<FieldSummaryResource>
+		_fieldSummaryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SiteResource>
 		_siteResourceComponentServiceObjects;
 

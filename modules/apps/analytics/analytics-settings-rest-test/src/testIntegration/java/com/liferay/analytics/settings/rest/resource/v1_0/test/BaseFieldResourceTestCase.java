@@ -22,12 +22,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.analytics.settings.rest.client.dto.v1_0.ContactConfiguration;
 import com.liferay.analytics.settings.rest.client.dto.v1_0.Field;
 import com.liferay.analytics.settings.rest.client.http.HttpInvoker;
 import com.liferay.analytics.settings.rest.client.pagination.Page;
-import com.liferay.analytics.settings.rest.client.resource.v1_0.ContactConfigurationResource;
-import com.liferay.analytics.settings.rest.client.serdes.v1_0.ContactConfigurationSerDes;
+import com.liferay.analytics.settings.rest.client.pagination.Pagination;
+import com.liferay.analytics.settings.rest.client.resource.v1_0.FieldResource;
+import com.liferay.analytics.settings.rest.client.serdes.v1_0.FieldSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -55,6 +57,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -69,6 +72,8 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -82,7 +87,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseContactConfigurationResourceTestCase {
+public abstract class BaseFieldResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -103,12 +108,11 @@ public abstract class BaseContactConfigurationResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_contactConfigurationResource.setContextCompany(testCompany);
+		_fieldResource.setContextCompany(testCompany);
 
-		ContactConfigurationResource.Builder builder =
-			ContactConfigurationResource.builder();
+		FieldResource.Builder builder = FieldResource.builder();
 
-		contactConfigurationResource = builder.authentication(
+		fieldResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -139,15 +143,13 @@ public abstract class BaseContactConfigurationResourceTestCase {
 			}
 		};
 
-		ContactConfiguration contactConfiguration1 =
-			randomContactConfiguration();
+		Field field1 = randomField();
 
-		String json = objectMapper.writeValueAsString(contactConfiguration1);
+		String json = objectMapper.writeValueAsString(field1);
 
-		ContactConfiguration contactConfiguration2 =
-			ContactConfigurationSerDes.toDTO(json);
+		Field field2 = FieldSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(contactConfiguration1, contactConfiguration2));
+		Assert.assertTrue(equals(field1, field2));
 	}
 
 	@Test
@@ -167,11 +169,10 @@ public abstract class BaseContactConfigurationResourceTestCase {
 			}
 		};
 
-		ContactConfiguration contactConfiguration =
-			randomContactConfiguration();
+		Field field = randomField();
 
-		String json1 = objectMapper.writeValueAsString(contactConfiguration);
-		String json2 = ContactConfigurationSerDes.toJSON(contactConfiguration);
+		String json1 = objectMapper.writeValueAsString(field);
+		String json2 = FieldSerDes.toJSON(field);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -181,53 +182,228 @@ public abstract class BaseContactConfigurationResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		ContactConfiguration contactConfiguration =
-			randomContactConfiguration();
+		Field field = randomField();
 
-		String json = ContactConfigurationSerDes.toJSON(contactConfiguration);
+		field.setExample(regex);
+		field.setName(regex);
+		field.setSource(regex);
+		field.setType(regex);
+
+		String json = FieldSerDes.toJSON(field);
 
 		Assert.assertFalse(json.contains(regex));
 
-		contactConfiguration = ContactConfigurationSerDes.toDTO(json);
+		field = FieldSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, field.getExample());
+		Assert.assertEquals(regex, field.getName());
+		Assert.assertEquals(regex, field.getSource());
+		Assert.assertEquals(regex, field.getType());
 	}
 
 	@Test
-	public void testGetContactConfiguration() throws Exception {
+	public void testGetFieldsPeoplePage() throws Exception {
+		Page<Field> page = fieldResource.getFieldsPeoplePage(
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		Field field1 = testGetFieldsPeoplePage_addField(randomField());
+
+		Field field2 = testGetFieldsPeoplePage_addField(randomField());
+
+		page = fieldResource.getFieldsPeoplePage(
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(field1, (List<Field>)page.getItems());
+		assertContains(field2, (List<Field>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetFieldsPeoplePageWithPagination() throws Exception {
+		Page<Field> totalPage = fieldResource.getFieldsPeoplePage(
+			null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		Field field1 = testGetFieldsPeoplePage_addField(randomField());
+
+		Field field2 = testGetFieldsPeoplePage_addField(randomField());
+
+		Field field3 = testGetFieldsPeoplePage_addField(randomField());
+
+		Page<Field> page1 = fieldResource.getFieldsPeoplePage(
+			null, Pagination.of(1, totalCount + 2), null);
+
+		List<Field> fields1 = (List<Field>)page1.getItems();
+
+		Assert.assertEquals(fields1.toString(), totalCount + 2, fields1.size());
+
+		Page<Field> page2 = fieldResource.getFieldsPeoplePage(
+			null, Pagination.of(2, totalCount + 2), null);
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<Field> fields2 = (List<Field>)page2.getItems();
+
+		Assert.assertEquals(fields2.toString(), 1, fields2.size());
+
+		Page<Field> page3 = fieldResource.getFieldsPeoplePage(
+			null, Pagination.of(1, totalCount + 3), null);
+
+		assertContains(field1, (List<Field>)page3.getItems());
+		assertContains(field2, (List<Field>)page3.getItems());
+		assertContains(field3, (List<Field>)page3.getItems());
+	}
+
+	@Test
+	public void testGetFieldsPeoplePageWithSortDateTime() throws Exception {
+		testGetFieldsPeoplePageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, field1, field2) -> {
+				BeanTestUtil.setProperty(
+					field1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetFieldsPeoplePageWithSortDouble() throws Exception {
+		testGetFieldsPeoplePageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, field1, field2) -> {
+				BeanTestUtil.setProperty(field1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(field2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetFieldsPeoplePageWithSortInteger() throws Exception {
+		testGetFieldsPeoplePageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, field1, field2) -> {
+				BeanTestUtil.setProperty(field1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(field2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetFieldsPeoplePageWithSortString() throws Exception {
+		testGetFieldsPeoplePageWithSort(
+			EntityField.Type.STRING,
+			(entityField, field1, field2) -> {
+				Class<?> clazz = field1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						field1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						field2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						field1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						field2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						field1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						field2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetFieldsPeoplePageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Field, Field, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Field field1 = randomField();
+		Field field2 = randomField();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, field1, field2);
+		}
+
+		field1 = testGetFieldsPeoplePage_addField(field1);
+
+		field2 = testGetFieldsPeoplePage_addField(field2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Field> ascPage = fieldResource.getFieldsPeoplePage(
+				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(field1, field2), (List<Field>)ascPage.getItems());
+
+			Page<Field> descPage = fieldResource.getFieldsPeoplePage(
+				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(field2, field1),
+				(List<Field>)descPage.getItems());
+		}
+	}
+
+	protected Field testGetFieldsPeoplePage_addField(Field field)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchFieldPeople() throws Exception {
 		Assert.assertTrue(false);
 	}
 
-	@Test
-	public void testGraphQLGetContactConfiguration() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testGraphQLGetContactConfigurationNotFound() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
-	public void testPutContactConfiguration() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	protected void assertContains(
-		ContactConfiguration contactConfiguration,
-		List<ContactConfiguration> contactConfigurations) {
-
+	protected void assertContains(Field field, List<Field> fields) {
 		boolean contains = false;
 
-		for (ContactConfiguration item : contactConfigurations) {
-			if (equals(contactConfiguration, item)) {
+		for (Field item : fields) {
+			if (equals(field, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(
-			contactConfigurations + " does not contain " + contactConfiguration,
-			contains);
+		Assert.assertTrue(fields + " does not contain " + field, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -238,48 +414,32 @@ public abstract class BaseContactConfigurationResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		ContactConfiguration contactConfiguration1,
-		ContactConfiguration contactConfiguration2) {
-
+	protected void assertEquals(Field field1, Field field2) {
 		Assert.assertTrue(
-			contactConfiguration1 + " does not equal " + contactConfiguration2,
-			equals(contactConfiguration1, contactConfiguration2));
+			field1 + " does not equal " + field2, equals(field1, field2));
 	}
 
-	protected void assertEquals(
-		List<ContactConfiguration> contactConfigurations1,
-		List<ContactConfiguration> contactConfigurations2) {
+	protected void assertEquals(List<Field> fields1, List<Field> fields2) {
+		Assert.assertEquals(fields1.size(), fields2.size());
 
-		Assert.assertEquals(
-			contactConfigurations1.size(), contactConfigurations2.size());
+		for (int i = 0; i < fields1.size(); i++) {
+			Field field1 = fields1.get(i);
+			Field field2 = fields2.get(i);
 
-		for (int i = 0; i < contactConfigurations1.size(); i++) {
-			ContactConfiguration contactConfiguration1 =
-				contactConfigurations1.get(i);
-			ContactConfiguration contactConfiguration2 =
-				contactConfigurations2.get(i);
-
-			assertEquals(contactConfiguration1, contactConfiguration2);
+			assertEquals(field1, field2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<ContactConfiguration> contactConfigurations1,
-		List<ContactConfiguration> contactConfigurations2) {
+		List<Field> fields1, List<Field> fields2) {
 
-		Assert.assertEquals(
-			contactConfigurations1.size(), contactConfigurations2.size());
+		Assert.assertEquals(fields1.size(), fields2.size());
 
-		for (ContactConfiguration contactConfiguration1 :
-				contactConfigurations1) {
-
+		for (Field field1 : fields1) {
 			boolean contains = false;
 
-			for (ContactConfiguration contactConfiguration2 :
-					contactConfigurations2) {
-
-				if (equals(contactConfiguration1, contactConfiguration2)) {
+			for (Field field2 : fields2) {
+				if (equals(field1, field2)) {
 					contains = true;
 
 					break;
@@ -287,60 +447,58 @@ public abstract class BaseContactConfigurationResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				contactConfigurations2 + " does not contain " +
-					contactConfiguration1,
-				contains);
+				fields2 + " does not contain " + field1, contains);
 		}
 	}
 
-	protected void assertValid(ContactConfiguration contactConfiguration)
-		throws Exception {
-
+	protected void assertValid(Field field) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("syncAllAccounts", additionalAssertFieldName)) {
-				if (contactConfiguration.getSyncAllAccounts() == null) {
+			if (Objects.equals("example", additionalAssertFieldName)) {
+				if (field.getExample() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("syncAllContacts", additionalAssertFieldName)) {
-				if (contactConfiguration.getSyncAllContacts() == null) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (field.getName() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals(
-					"syncedAccountGroupIds", additionalAssertFieldName)) {
-
-				if (contactConfiguration.getSyncedAccountGroupIds() == null) {
+			if (Objects.equals("required", additionalAssertFieldName)) {
+				if (field.getRequired() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals(
-					"syncedOrganizationIds", additionalAssertFieldName)) {
-
-				if (contactConfiguration.getSyncedOrganizationIds() == null) {
+			if (Objects.equals("selected", additionalAssertFieldName)) {
+				if (field.getSelected() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals(
-					"syncedUserGroupIds", additionalAssertFieldName)) {
+			if (Objects.equals("source", additionalAssertFieldName)) {
+				if (field.getSource() == null) {
+					valid = false;
+				}
 
-				if (contactConfiguration.getSyncedUserGroupIds() == null) {
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (field.getType() == null) {
 					valid = false;
 				}
 
@@ -355,13 +513,12 @@ public abstract class BaseContactConfigurationResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ContactConfiguration> page) {
+	protected void assertValid(Page<Field> page) {
 		boolean valid = false;
 
-		java.util.Collection<ContactConfiguration> contactConfigurations =
-			page.getItems();
+		java.util.Collection<Field> fields = page.getItems();
 
-		int size = contactConfigurations.size();
+		int size = fields.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -382,8 +539,7 @@ public abstract class BaseContactConfigurationResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.analytics.settings.rest.dto.v1_0.
-						ContactConfiguration.class)) {
+					com.liferay.analytics.settings.rest.dto.v1_0.Field.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -431,21 +587,17 @@ public abstract class BaseContactConfigurationResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		ContactConfiguration contactConfiguration1,
-		ContactConfiguration contactConfiguration2) {
-
-		if (contactConfiguration1 == contactConfiguration2) {
+	protected boolean equals(Field field1, Field field2) {
+		if (field1 == field2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("syncAllAccounts", additionalAssertFieldName)) {
+			if (Objects.equals("example", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contactConfiguration1.getSyncAllAccounts(),
-						contactConfiguration2.getSyncAllAccounts())) {
+						field1.getExample(), field2.getExample())) {
 
 					return false;
 				}
@@ -453,10 +605,17 @@ public abstract class BaseContactConfigurationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("syncAllContacts", additionalAssertFieldName)) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(field1.getName(), field2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("required", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contactConfiguration1.getSyncAllContacts(),
-						contactConfiguration2.getSyncAllContacts())) {
+						field1.getRequired(), field2.getRequired())) {
 
 					return false;
 				}
@@ -464,12 +623,9 @@ public abstract class BaseContactConfigurationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"syncedAccountGroupIds", additionalAssertFieldName)) {
-
+			if (Objects.equals("selected", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contactConfiguration1.getSyncedAccountGroupIds(),
-						contactConfiguration2.getSyncedAccountGroupIds())) {
+						field1.getSelected(), field2.getSelected())) {
 
 					return false;
 				}
@@ -477,12 +633,9 @@ public abstract class BaseContactConfigurationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"syncedOrganizationIds", additionalAssertFieldName)) {
-
+			if (Objects.equals("source", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contactConfiguration1.getSyncedOrganizationIds(),
-						contactConfiguration2.getSyncedOrganizationIds())) {
+						field1.getSource(), field2.getSource())) {
 
 					return false;
 				}
@@ -490,13 +643,8 @@ public abstract class BaseContactConfigurationResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"syncedUserGroupIds", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						contactConfiguration1.getSyncedUserGroupIds(),
-						contactConfiguration2.getSyncedUserGroupIds())) {
-
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(field1.getType(), field2.getType())) {
 					return false;
 				}
 
@@ -553,13 +701,13 @@ public abstract class BaseContactConfigurationResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_contactConfigurationResource instanceof EntityModelResource)) {
+		if (!(_fieldResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_contactConfigurationResource;
+			(EntityModelResource)_fieldResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -588,8 +736,7 @@ public abstract class BaseContactConfigurationResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		ContactConfiguration contactConfiguration) {
+		EntityField entityField, String operator, Field field) {
 
 		StringBundler sb = new StringBundler();
 
@@ -601,29 +748,46 @@ public abstract class BaseContactConfigurationResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("syncAllAccounts")) {
+		if (entityFieldName.equals("example")) {
+			sb.append("'");
+			sb.append(String.valueOf(field.getExample()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(field.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("required")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("syncAllContacts")) {
+		if (entityFieldName.equals("selected")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("syncedAccountGroupIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("source")) {
+			sb.append("'");
+			sb.append(String.valueOf(field.getSource()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
-		if (entityFieldName.equals("syncedOrganizationIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+		if (entityFieldName.equals("type")) {
+			sb.append("'");
+			sb.append(String.valueOf(field.getType()));
+			sb.append("'");
 
-		if (entityFieldName.equals("syncedUserGroupIds")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -667,33 +831,30 @@ public abstract class BaseContactConfigurationResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected ContactConfiguration randomContactConfiguration()
-		throws Exception {
-
-		return new ContactConfiguration() {
+	protected Field randomField() throws Exception {
+		return new Field() {
 			{
-				syncAllAccounts = RandomTestUtil.randomBoolean();
-				syncAllContacts = RandomTestUtil.randomBoolean();
+				example = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				required = RandomTestUtil.randomBoolean();
+				selected = RandomTestUtil.randomBoolean();
+				source = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected ContactConfiguration randomIrrelevantContactConfiguration()
-		throws Exception {
+	protected Field randomIrrelevantField() throws Exception {
+		Field randomIrrelevantField = randomField();
 
-		ContactConfiguration randomIrrelevantContactConfiguration =
-			randomContactConfiguration();
-
-		return randomIrrelevantContactConfiguration;
+		return randomIrrelevantField;
 	}
 
-	protected ContactConfiguration randomPatchContactConfiguration()
-		throws Exception {
-
-		return randomContactConfiguration();
+	protected Field randomPatchField() throws Exception {
+		return randomField();
 	}
 
-	protected ContactConfigurationResource contactConfigurationResource;
+	protected FieldResource fieldResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -879,12 +1040,12 @@ public abstract class BaseContactConfigurationResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseContactConfigurationResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseFieldResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.analytics.settings.rest.resource.v1_0.
-		ContactConfigurationResource _contactConfigurationResource;
+	private com.liferay.analytics.settings.rest.resource.v1_0.FieldResource
+		_fieldResource;
 
 }

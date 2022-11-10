@@ -55,6 +55,8 @@ public class ObjectActionTriggerUtil {
 					new ObjectActionTrigger(
 						ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE),
 					new ObjectActionTrigger(
-						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE))));
+						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE),
+					new ObjectActionTrigger(
+						ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION))));
 
 }

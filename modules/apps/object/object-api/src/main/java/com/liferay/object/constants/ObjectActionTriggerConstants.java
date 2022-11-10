@@ -25,4 +25,6 @@ public class ObjectActionTriggerConstants {
 
 	public static final String KEY_ON_AFTER_UPDATE = "onAfterUpdate";
 
+	public static final String KEY_STAND_ALONE_ACTION = "standAloneAction";
+
 }

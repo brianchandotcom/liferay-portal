@@ -14,9 +14,13 @@
 
 package com.liferay.asset.list.internal.upgrade.v1_5_0;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Yurena Cabrera
@@ -26,9 +30,42 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			"update AssetListEntrySegmentsEntryRel set priority = 1 where " +
-				"segmentsEntryId = 0");
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+			"select alEntrySegmentsEntryRelId, assetListEntryId from " +
+			"AssetListEntrySegmentsEntryRel order by assetListEntryId ASC, " +
+			"createDate DESC");
+			 PreparedStatement preparedStatement2 =
+				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					 connection,
+					 "update AssetListEntrySegmentsEntryRel set priority = ? " +
+					 "where alEntrySegmentsEntryRelId = ?");
+
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			long previousAssetListEntryId = -1;
+			long priority = 0;
+
+			while (resultSet.next()) {
+				long alEntrySegmentsEntryRelId = resultSet.getLong(
+					"alEntrySegmentsEntryRelId");
+
+				long assetListEntryId = resultSet.getLong("assetListEntryId");
+
+				if (assetListEntryId != previousAssetListEntryId) {
+					priority = 0;
+				}
+
+				preparedStatement2.setLong(1, priority);
+				preparedStatement2.setLong(2, alEntrySegmentsEntryRelId);
+
+				preparedStatement2.addBatch();
+
+				previousAssetListEntryId = assetListEntryId;
+				priority++;
+			}
+
+			preparedStatement2.executeBatch();
+		}
 	}
 
 	@Override

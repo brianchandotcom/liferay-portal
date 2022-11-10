@@ -170,20 +170,8 @@ if (journalContentDisplayContext.isShowArticle()) {
 						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 							<liferay-journal:journal-article-display
 								articleDisplay="<%= articleDisplay %>"
+								paginationURL="<%= renderResponse.createRenderURL() %>"
 							/>
-
-							<c:if test="<%= articleDisplay.isPaginate() %>">
-								<liferay-ui:page-iterator
-									cur="<%= articleDisplay.getCurrentPage() %>"
-									curParam="page"
-									delta="<%= 1 %>"
-									id="articleDisplayPages"
-									maxPages="<%= 25 %>"
-									portletURL="<%= renderResponse.createRenderURL() %>"
-									total="<%= articleDisplay.getNumberOfPages() %>"
-									type="article"
-								/>
-							</c:if>
 						</div>
 					</c:when>
 				</c:choose>

@@ -53,6 +53,18 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 		PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 		%>
 
+		<c:if test="<%= articleDisplay.isPaginate() && (paginationURL != null) %>">
+			<liferay-ui:page-iterator
+				cur="<%= articleDisplay.getCurrentPage() %>"
+				curParam="page"
+				delta="<%= 1 %>"
+				id="articleDisplayPages"
+				maxPages="<%= 25 %>"
+				portletURL="<%= paginationURL %>"
+				total="<%= articleDisplay.getNumberOfPages() %>"
+				type="article"
+			/>
+		</c:if>
 	</c:otherwise>
 </c:choose>
 

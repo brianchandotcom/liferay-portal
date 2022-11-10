@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -98,6 +99,10 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				fileName, absolutePath, className, extendedClassNames,
 				implementedClassNames);
 		}
+
+		_checkIncorrectClassName(
+			javaClass, fileName, absolutePath, className, extendedClassNames,
+			implementedClassNames);
 
 		return javaTerm.getContent();
 	}
@@ -183,6 +188,37 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 		}
 	}
 
+	private void _checkIncorrectClassName(
+		JavaClass javaClass, String fileName, String absolutePath,
+		String className, List<String> extendedClassNames,
+		List<String> implementedClassNames) {
+
+		if (javaClass.isInterface() || javaClass.isAbstract()) {
+			return;
+		}
+
+		List<String> notImplementedForbidClassNames = getAttributeValues(
+			_NOT_IMPLEMENTED_FORBID_CLASS_NAMES_KEY, absolutePath);
+
+		for (String notImplementedForbidClassName :
+				notImplementedForbidClassNames) {
+
+			if (className.endsWith(notImplementedForbidClassName) &&
+				!implementedClassNames.contains(
+					notImplementedForbidClassName) &&
+				ListUtil.isEmpty(extendedClassNames)) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Name of class not implementing '",
+						notImplementedForbidClassName,
+						"' should not end with '",
+						notImplementedForbidClassName, "'"));
+			}
+		}
+	}
+
 	private void _checkTypo(
 		String fileName, String className, String packageName, int level) {
 
@@ -236,5 +272,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 
 	private static final String _EXPECTED_PACKAGE_PATH_DATA_KEY =
 		"expectedPackagePathData";
+
+	private static final String _NOT_IMPLEMENTED_FORBID_CLASS_NAMES_KEY =
+		"notImplementedForbidClassNames";
 
 }

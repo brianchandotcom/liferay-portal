@@ -44,7 +44,7 @@ public class CookiesBannerConfigurationDisplayContext
 		super(cookiesConfigurationProvider, renderRequest, renderResponse);
 	}
 
-	public Map<String, Object> getContext() throws Exception {
+	public Map<String, Object> getContext() {
 		return HashMapBuilder.<String, Object>put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())

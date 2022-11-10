@@ -51,9 +51,7 @@ public class BaseCookiesBannerDisplayContext {
 		cookiesConsentConfiguration = _getCookiesConfiguration(renderRequest);
 	}
 
-	public List<ConsentCookieType> getOptionalConsentCookieTypes()
-		throws Exception {
-
+	public List<ConsentCookieType> getOptionalConsentCookieTypes() {
 		if (_optionalConsentCookieTypes != null) {
 			return _optionalConsentCookieTypes;
 		}
@@ -76,9 +74,7 @@ public class BaseCookiesBannerDisplayContext {
 		return _optionalConsentCookieTypes;
 	}
 
-	public List<ConsentCookieType> getRequiredConsentCookieTypes()
-		throws Exception {
-
+	public List<ConsentCookieType> getRequiredConsentCookieTypes() {
 		if (_requiredConsentCookieTypes != null) {
 			return _requiredConsentCookieTypes;
 		}

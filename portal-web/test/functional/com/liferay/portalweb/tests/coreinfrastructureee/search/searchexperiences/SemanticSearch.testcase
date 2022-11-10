@@ -1,0 +1,66 @@
+@component-name = "portal-search"
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Search Experiences";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	test AssertTxtaiWordEmbeddingIndexedFieldAddedToAssets {
+		property custom.properties = "feature.flag.LPS-163688=true";
+		property txtai.enabled = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Test Web Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Blog Content",
+			entryTitle = "Test Blog",
+			groupName = "Guest");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Rescore by Text Embedding");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		for (var assetTitle : list "Test Web Content,Test Blog") {
+			SearchResultPortlet.viewDocumentDetailValue(
+				documentDetailKey = "text_embedding_768_en_US",
+				documentDetailKeyValue = "0.0",
+				searchAssetTitle = "${assetTitle}");
+		}
+	}
+
+}

@@ -91,6 +91,25 @@ definition {
 			searchTerm = "${searchTerm}");
 	}
 
+	macro viewDocumentDetailValue {
+		if (IsElementPresent(key_searchAssetTitle = "${searchAssetTitle}", locator1 = "SearchResults#ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_COLLAPSED")) {
+			Click(
+				key_searchAssetTitle = "${searchAssetTitle}",
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_BUTTON");
+		}
+
+		AssertElementPresent(
+			key_documentDetailKey = "${documentDetailKey}",
+			key_searchAssetTitle = "${searchAssetTitle}",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_KEY");
+
+		AssertTextEquals.assertPartialText(
+			key_documentDetailKey = "${documentDetailKey}",
+			key_searchAssetTitle = "${searchAssetTitle}",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_KEY_VALUE",
+			value1 = "${documentDetailKeyValue}");
+	}
+
 	macro viewMultipleSearchResults {
 		if (!(contains("${resultsList}", "/"))) {
 			fail("You must pass in a list with title and type separated by '/'.");

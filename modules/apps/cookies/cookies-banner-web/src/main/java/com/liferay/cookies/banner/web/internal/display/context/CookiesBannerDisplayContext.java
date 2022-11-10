@@ -67,7 +67,7 @@ public class CookiesBannerDisplayContext
 		return contentLocalizedValuesMap.get(locale);
 	}
 
-	public Map<String, Object> getContext(Locale locale) throws Exception {
+	public Map<String, Object> getContext(Locale locale) {
 		LocalizedValuesMap titleLocalizedValuesMap =
 			cookiesConsentConfiguration.title();
 

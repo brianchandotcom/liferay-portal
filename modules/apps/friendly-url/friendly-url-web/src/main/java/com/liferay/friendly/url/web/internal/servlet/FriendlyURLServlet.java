@@ -19,7 +19,7 @@ import com.liferay.friendly.url.info.item.updater.InfoItemFriendlyURLUpdater;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.petra.string.CharPool;
@@ -87,7 +87,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			String className = _getClassName(httpServletRequest);
 
 			InfoItemPermissionProvider infoItemPermissionProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemPermissionProvider.class, className);
 
 			if (!infoItemPermissionProvider.hasPermission(
@@ -132,7 +132,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				long classPK = _getClassPK(httpServletRequest);
 
 				InfoItemPermissionProvider<Object> infoItemPermissionProvider =
-					_infoItemServiceTracker.getFirstInfoItemService(
+					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemPermissionProvider.class, className);
 
 				if (!infoItemPermissionProvider.hasPermission(
@@ -170,7 +170,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			long classPK = _getClassPK(httpServletRequest);
 
 			InfoItemPermissionProvider<Object> infoItemPermissionProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemPermissionProvider.class, className);
 
 			if (!infoItemPermissionProvider.hasPermission(
@@ -183,7 +183,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 			else {
 				InfoItemFriendlyURLUpdater<Object> infoItemFriendlyURLUpdater =
-					_infoItemServiceTracker.getFirstInfoItemService(
+					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemFriendlyURLUpdater.class, className);
 
 				infoItemFriendlyURLUpdater.restoreFriendlyURL(
@@ -250,18 +250,18 @@ public class FriendlyURLServlet extends HttpServlet {
 			_jsonFactory.createJSONObject();
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
 		Object object = infoItemObjectProvider.getInfoItem(classPK);
 
 		InfoItemFriendlyURLProvider<Object> infoItemFriendlyURLProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFriendlyURLProvider.class, className);
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			Optional.ofNullable(
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemLanguagesProvider.class, className)
 			).orElse(
 				_defaultInfoItemLanguagesProvider
@@ -396,7 +396,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

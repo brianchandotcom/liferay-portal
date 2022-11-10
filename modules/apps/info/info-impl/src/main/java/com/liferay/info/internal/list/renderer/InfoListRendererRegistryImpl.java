@@ -14,9 +14,9 @@
 
 package com.liferay.info.internal.list.renderer;
 
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 
 import java.util.List;
 
@@ -26,19 +26,19 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoListRendererTracker.class)
-public class InfoListRendererTrackerImpl implements InfoListRendererTracker {
+@Component(immediate = true, service = InfoListRendererRegistry.class)
+public class InfoListRendererRegistryImpl implements InfoListRendererRegistry {
 
 	@Override
 	public InfoListRenderer<?> getInfoListRenderer(String key) {
-		return _infoItemServiceTracker.getInfoItemService(
+		return _infoItemServiceRegistry.getInfoItemService(
 			InfoListRenderer.class, key);
 	}
 
 	@Override
 	public List<InfoListRenderer<?>> getInfoListRenderers() {
 		return (List<InfoListRenderer<?>>)
-			(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+			(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 				InfoListRenderer.class);
 	}
 
@@ -47,11 +47,11 @@ public class InfoListRendererTrackerImpl implements InfoListRendererTracker {
 		String itemClassName) {
 
 		return (List<InfoListRenderer<?>>)
-			(List<?>)_infoItemServiceTracker.getAllInfoItemServices(
+			(List<?>)_infoItemServiceRegistry.getAllInfoItemServices(
 				InfoListRenderer.class, itemClassName);
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

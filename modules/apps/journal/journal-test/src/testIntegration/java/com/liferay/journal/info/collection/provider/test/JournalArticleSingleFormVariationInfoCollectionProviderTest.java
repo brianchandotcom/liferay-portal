@@ -21,7 +21,7 @@ import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -91,12 +91,12 @@ public class JournalArticleSingleFormVariationInfoCollectionProviderTest {
 	@Test
 	public void testGetInfoItemFormVariation() {
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				JournalArticle.class.getName());
 
 		InfoCollectionProvider<?> infoCollectionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoCollectionProvider.class, JournalArticle.class.getName());
 
 		Assert.assertTrue(
@@ -126,7 +126,7 @@ public class JournalArticleSingleFormVariationInfoCollectionProviderTest {
 	@Test
 	public void testGetInfoPage() throws Exception {
 		InfoCollectionProvider<?> infoCollectionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoCollectionProvider.class, JournalArticle.class.getName());
 
 		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
@@ -163,7 +163,7 @@ public class JournalArticleSingleFormVariationInfoCollectionProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

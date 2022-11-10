@@ -24,7 +24,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
@@ -82,7 +82,7 @@ public class KBArticleInfoItemFormProviderTest {
 
 			InfoItemFormProvider<KBArticle> infoItemFormProvider =
 				(InfoItemFormProvider<KBArticle>)
-					_infoItemServiceTracker.getFirstInfoItemService(
+					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemFormProvider.class, KBArticle.class.getName());
 
 			InfoForm infoForm = infoItemFormProvider.getInfoForm(_kbArticle);
@@ -165,7 +165,7 @@ public class KBArticleInfoItemFormProviderTest {
 
 			InfoItemFieldValuesProvider<KBArticle> infoItemFieldValuesProvider =
 				(InfoItemFieldValuesProvider<KBArticle>)
-					_infoItemServiceTracker.getFirstInfoItemService(
+					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemFieldValuesProvider.class,
 						KBArticle.class.getName());
 
@@ -220,7 +220,7 @@ public class KBArticleInfoItemFormProviderTest {
 	}
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@DeleteAfterTestRun
 	private KBArticle _kbArticle;

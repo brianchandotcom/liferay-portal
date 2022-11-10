@@ -19,7 +19,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -78,7 +78,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					_infoItemServiceTracker, actionRequest,
+					_infoItemServiceRegistry, actionRequest,
 					_segmentsExperienceLocalService);
 
 			String className = translationRequestHelper.getClassName(
@@ -90,7 +90,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				className, classPK);
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					infoItemReference.getClassName());
 
@@ -153,7 +153,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	private <T> List<InfoField<?>> _getInfoFields(String className, T object) {
 		InfoItemFormProvider<T> infoItemFormProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(object);
@@ -210,7 +210,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		String className, T object) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		return infoItemFieldValuesProvider.getInfoItemFieldValues(object);
@@ -238,7 +238,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		UpdateTranslationMVCActionCommand.class);
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

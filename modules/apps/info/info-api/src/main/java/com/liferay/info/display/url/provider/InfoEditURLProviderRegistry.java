@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.info.item.renderer;
-
-import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
+package com.liferay.info.display.url.provider;
 
 /**
- * @author Jorge Ferrer
+ * @author Jürgen Kappler
  */
-@ProviderType
-public interface InfoItemRendererTracker {
+public interface InfoEditURLProviderRegistry {
 
-	public InfoItemRenderer<?> getInfoItemRenderer(String key);
-
-	public List<InfoItemRenderer<?>> getInfoItemRenderers();
-
-	public List<InfoItemRenderer<?>> getInfoItemRenderers(String itemClassName);
+	public <T> InfoEditURLProvider<T> getInfoEditURLProvider(String className);
 
 }

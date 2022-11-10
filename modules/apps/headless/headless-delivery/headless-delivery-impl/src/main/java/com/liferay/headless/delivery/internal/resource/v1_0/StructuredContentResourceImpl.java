@@ -54,7 +54,7 @@ import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.NoSuchFolderException;
@@ -453,7 +453,7 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(), ddmStructure.getStructureId(),
 			displayPageKey, journalArticle.getGroupId(),
 			contextHttpServletRequest, contextHttpServletResponse,
-			journalArticle, _infoItemServiceTracker,
+			journalArticle, _infoItemServiceRegistry,
 			_layoutDisplayPageProviderTracker, _layoutLocalService,
 			_layoutPageTemplateEntryService);
 	}
@@ -1260,7 +1260,7 @@ public class StructuredContentResourceImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

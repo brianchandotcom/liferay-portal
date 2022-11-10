@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.journal.internal.item.action.provider;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.journal.internal.item.action.PreviewImageJournalArticleContentDashboardItemAction;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.Language;
@@ -45,7 +45,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProvider
 
 		InfoItemFieldValuesProvider<JournalArticle>
 			infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
 					JournalArticle.class.getName());
 
@@ -69,7 +69,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProvider
 
 		InfoItemFieldValuesProvider<JournalArticle>
 			infoItemFieldValuesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
 					JournalArticle.class.getName());
 
@@ -85,7 +85,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProvider
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

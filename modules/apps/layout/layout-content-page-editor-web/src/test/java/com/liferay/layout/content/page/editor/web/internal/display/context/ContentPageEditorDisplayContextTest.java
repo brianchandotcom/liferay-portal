@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -57,11 +57,11 @@ public class ContentPageEditorDisplayContextTest {
 			themeDisplay
 		);
 
-		InfoItemServiceTracker infoItemServiceTracker = Mockito.mock(
-			InfoItemServiceTracker.class);
+		InfoItemServiceRegistry infoItemServiceRegistry = Mockito.mock(
+			InfoItemServiceRegistry.class);
 
 		Mockito.when(
-			infoItemServiceTracker.getInfoItemClassNames(
+			infoItemServiceRegistry.getInfoItemClassNames(
 				InfoItemFormProvider.class)
 		).thenReturn(
 			Arrays.asList("className1", "className2")
@@ -85,7 +85,7 @@ public class ContentPageEditorDisplayContextTest {
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			new ContentPageEditorDisplayContext(
 				null, null, null, null, httpServletRequest,
-				infoItemServiceTracker, infoSearchClassMapperTracker, null,
+				infoItemServiceRegistry, infoSearchClassMapperTracker, null,
 				null, null, null, null, null, null);
 
 		List<String> infoItemClassNames = ReflectionTestUtil.invoke(

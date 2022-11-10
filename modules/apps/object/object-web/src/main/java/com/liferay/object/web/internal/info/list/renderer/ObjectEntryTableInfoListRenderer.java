@@ -15,7 +15,7 @@
 package com.liferay.object.web.internal.info.list.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
@@ -45,16 +45,16 @@ public class ObjectEntryTableInfoListRenderer
 	implements InfoListRenderer<ObjectEntry> {
 
 	public ObjectEntryTableInfoListRenderer(
-		InfoItemRendererTracker infoItemRendererTracker,
+		InfoItemRendererRegistry infoItemRendererRegistry,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		_infoItemRendererTracker = infoItemRendererTracker;
+		_infoItemRendererRegistry = infoItemRendererRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
 	}
 
 	@Override
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
-		return _infoItemRendererTracker.getInfoItemRenderers(
+		return _infoItemRendererRegistry.getInfoItemRenderers(
 			ObjectEntry.class.getName());
 	}
 
@@ -130,7 +130,7 @@ public class ObjectEntryTableInfoListRenderer
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryTableInfoListRenderer.class);
 
-	private final InfoItemRendererTracker _infoItemRendererTracker;
+	private final InfoItemRendererRegistry _infoItemRendererRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

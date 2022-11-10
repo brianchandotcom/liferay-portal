@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.info.display.url.provider;
+package com.liferay.info.item.field.reader;
+
+import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jürgen Kappler
+ * @author Jorge Ferrer
  */
-public interface InfoEditURLProviderTracker {
+@ProviderType
+public interface InfoItemFieldReaderRegistry {
 
-	public <T> InfoEditURLProvider<T> getInfoEditURLProvider(String className);
+	public List<InfoItemFieldReader> getInfoItemFieldReaders(
+		String itemClassName);
 
 }

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -106,7 +106,7 @@ public class AssetInfoListRendererTest {
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 		_infoListRenderer =
 			(InfoListRenderer<AssetEntry>)
-				_infoListRendererTracker.getInfoListRenderer(
+				_infoListRendererRegistry.getInfoListRenderer(
 					"com.liferay.asset.info.internal.list.renderer." +
 						"UnstyledAssetEntryBasicInfoListRenderer");
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
@@ -273,7 +273,7 @@ public class AssetInfoListRendererTest {
 	private InfoListRenderer<AssetEntry> _infoListRenderer;
 
 	@Inject
-	private InfoListRendererTracker _infoListRendererTracker;
+	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

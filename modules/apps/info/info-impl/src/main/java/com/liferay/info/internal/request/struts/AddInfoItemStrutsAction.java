@@ -34,7 +34,7 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.layout.page.template.util.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -156,7 +156,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				ParamUtil.getLong(httpServletRequest, "classNameId"));
 
 			InfoItemCreator<Object> infoItemCreator =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemCreator.class, className);
 
 			if (infoItemCreator == null) {
@@ -273,7 +273,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 	@Modified
 	protected void activate() {
 		_infoRequestFieldValuesProviderHelper =
-			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
+			new InfoRequestFieldValuesProviderHelper(_infoItemServiceRegistry);
 	}
 
 	private String _getValue(InfoFieldValue<?> infoFieldValue) {
@@ -528,7 +528,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private volatile InfoRequestFieldValuesProviderHelper
 		_infoRequestFieldValuesProviderHelper;

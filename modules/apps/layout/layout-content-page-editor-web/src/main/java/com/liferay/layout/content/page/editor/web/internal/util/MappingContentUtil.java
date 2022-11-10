@@ -19,7 +19,7 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,23 +38,23 @@ public class MappingContentUtil {
 
 	public static JSONArray getEditableMappingFieldsJSONArray(
 			String formVariationKey, long groupId,
-			InfoItemServiceTracker infoItemServiceTracker, String itemClassName,
-			Locale locale)
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			String itemClassName, Locale locale)
 		throws Exception {
 
 		return _getMappingFieldsJSONArray(
-			formVariationKey, groupId, true, infoItemServiceTracker,
+			formVariationKey, groupId, true, infoItemServiceRegistry,
 			itemClassName, locale);
 	}
 
 	public static JSONArray getMappingFieldsJSONArray(
 			String formVariationKey, long groupId,
-			InfoItemServiceTracker infoItemServiceTracker, String itemClassName,
-			Locale locale)
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			String itemClassName, Locale locale)
 		throws Exception {
 
 		return _getMappingFieldsJSONArray(
-			formVariationKey, groupId, false, infoItemServiceTracker,
+			formVariationKey, groupId, false, infoItemServiceRegistry,
 			itemClassName, locale);
 	}
 
@@ -82,15 +82,15 @@ public class MappingContentUtil {
 	private static JSONArray _getMappingFieldsJSONArray(
 			String formVariationKey, long groupId,
 			boolean includeEditableInfoFields,
-			InfoItemServiceTracker infoItemServiceTracker, String itemClassName,
-			Locale locale)
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			String itemClassName, Locale locale)
 		throws Exception {
 
 		String className = InfoSearchClassMapperTrackerUtil.getClassName(
 			itemClassName);
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider == null) {

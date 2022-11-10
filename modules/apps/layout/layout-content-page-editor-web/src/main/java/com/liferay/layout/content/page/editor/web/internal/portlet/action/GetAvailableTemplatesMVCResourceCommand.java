@@ -17,10 +17,10 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -73,7 +73,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 		Object infoItemObject = _getInfoItemObject(className, classPK);
 
 		for (InfoItemRenderer<?> infoItemRenderer :
-				_infoItemRendererTracker.getInfoItemRenderers(className)) {
+				_infoItemRendererRegistry.getInfoItemRenderers(className)) {
 
 			if (!infoItemRenderer.isAvailable()) {
 				continue;
@@ -141,7 +141,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 			classPK);
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className,
 				infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -159,10 +159,10 @@ public class GetAvailableTemplatesMVCResourceCommand
 	}
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

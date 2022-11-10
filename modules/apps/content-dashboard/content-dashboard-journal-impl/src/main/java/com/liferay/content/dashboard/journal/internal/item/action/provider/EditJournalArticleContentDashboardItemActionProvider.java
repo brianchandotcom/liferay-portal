@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.journal.internal.item.action.provider;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.journal.internal.item.action.EditJournalArticleContentDashboardItemAction;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -51,7 +51,7 @@ public class EditJournalArticleContentDashboardItemActionProvider
 		}
 
 		return new EditJournalArticleContentDashboardItemAction(
-			_infoEditURLProviderTracker.getInfoEditURLProvider(
+			_infoEditURLProviderRegistry.getInfoEditURLProvider(
 				JournalArticle.class.getName()),
 			httpServletRequest, journalArticle, _language, _portal,
 			_portletLocalService);
@@ -91,7 +91,7 @@ public class EditJournalArticleContentDashboardItemActionProvider
 		EditJournalArticleContentDashboardItemActionProvider.class);
 
 	@Reference
-	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
+	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 
 	@Reference
 	private Language _language;

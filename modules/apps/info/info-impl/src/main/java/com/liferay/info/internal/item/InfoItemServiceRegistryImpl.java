@@ -26,7 +26,7 @@ import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.internal.util.ItemClassNameServiceReferenceMapper;
 import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
@@ -85,8 +85,8 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemServiceTracker.class)
-public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
+@Component(immediate = true, service = InfoItemServiceRegistry.class)
+public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 
 	@Override
 	public <P> List<P> getAllInfoItemServices(Class<P> serviceClass) {
@@ -423,7 +423,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InfoItemServiceTrackerImpl.class);
+		InfoItemServiceRegistryImpl.class);
 
 	private static final Set<Class<?>> _validInfoClasses = new HashSet<>(
 		Arrays.asList(

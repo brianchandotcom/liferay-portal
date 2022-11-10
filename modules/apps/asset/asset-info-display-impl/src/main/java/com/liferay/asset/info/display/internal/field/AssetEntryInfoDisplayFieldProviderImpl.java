@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
+import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,7 +55,7 @@ public class AssetEntryInfoDisplayFieldProviderImpl
 				className, classPK);
 
 			List<InfoDisplayContributorField<?>> infoDisplayContributorFields =
-				_infoDisplayContributorFieldTracker.
+				_infoDisplayContributorFieldRegistry.
 					getInfoDisplayContributorFields(AssetEntry.class.getName());
 
 			for (InfoDisplayContributorField<?> infoDisplayContributorField :
@@ -87,7 +87,7 @@ public class AssetEntryInfoDisplayFieldProviderImpl
 		AssetEntryInfoDisplayFieldProviderImpl.class);
 
 	@Reference
-	private InfoDisplayContributorFieldTracker
-		_infoDisplayContributorFieldTracker;
+	private InfoDisplayContributorFieldRegistry
+		_infoDisplayContributorFieldRegistry;
 
 }

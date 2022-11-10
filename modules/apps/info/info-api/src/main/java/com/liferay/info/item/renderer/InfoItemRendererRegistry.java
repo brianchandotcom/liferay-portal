@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.list.renderer;
+package com.liferay.info.item.renderer;
 
 import java.util.List;
 
@@ -22,12 +22,12 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoListRendererTracker {
+public interface InfoItemRendererRegistry {
 
-	public InfoListRenderer<?> getInfoListRenderer(String key);
+	public InfoItemRenderer<?> getInfoItemRenderer(String key);
 
-	public List<InfoListRenderer<?>> getInfoListRenderers();
+	public List<InfoItemRenderer<?>> getInfoItemRenderers();
 
-	public List<InfoListRenderer<?>> getInfoListRenderers(String itemClassName);
+	public List<InfoItemRenderer<?>> getInfoItemRenderers(String itemClassName);
 
 }

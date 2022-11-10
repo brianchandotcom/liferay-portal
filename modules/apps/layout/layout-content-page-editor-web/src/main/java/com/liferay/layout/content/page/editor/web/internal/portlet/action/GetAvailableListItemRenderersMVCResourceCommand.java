@@ -18,7 +18,7 @@ import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -67,7 +67,7 @@ public class GetAvailableListItemRenderersMVCResourceCommand
 		String listStyle = ParamUtil.getString(resourceRequest, "listStyle");
 
 		InfoListRenderer<?> infoListRenderer =
-			_infoListRendererTracker.getInfoListRenderer(listStyle);
+			_infoListRendererRegistry.getInfoListRenderer(listStyle);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -139,7 +139,7 @@ public class GetAvailableListItemRenderersMVCResourceCommand
 	}
 
 	@Reference
-	private InfoListRendererTracker _infoListRendererTracker;
+	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

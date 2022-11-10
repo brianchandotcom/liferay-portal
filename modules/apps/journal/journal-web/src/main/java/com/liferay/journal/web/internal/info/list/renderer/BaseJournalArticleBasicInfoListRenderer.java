@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.info.list.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.taglib.list.renderer.BasicInfoListRenderer;
@@ -42,7 +42,7 @@ public abstract class BaseJournalArticleBasicInfoListRenderer
 
 	@Override
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
-		return infoItemRendererTracker.getInfoItemRenderers(
+		return infoItemRendererRegistry.getInfoItemRenderers(
 			JournalArticle.class.getName());
 	}
 
@@ -102,7 +102,7 @@ public abstract class BaseJournalArticleBasicInfoListRenderer
 	}
 
 	@Reference
-	protected InfoItemRendererTracker infoItemRendererTracker;
+	protected InfoItemRendererRegistry infoItemRendererRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJournalArticleBasicInfoListRenderer.class);

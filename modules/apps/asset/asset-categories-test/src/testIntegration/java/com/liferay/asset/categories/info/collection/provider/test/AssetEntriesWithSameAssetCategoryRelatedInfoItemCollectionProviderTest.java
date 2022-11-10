@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -109,7 +109,7 @@ public class
 
 			RelatedInfoItemCollectionProvider<AssetCategory, AssetEntry>
 				relatedInfoItemCollectionProvider =
-					_infoItemServiceTracker.getInfoItemService(
+					_infoItemServiceRegistry.getInfoItemService(
 						RelatedInfoItemCollectionProvider.class,
 						StringBundler.concat(
 							"com.liferay.asset.categories.admin.web.internal.",
@@ -175,6 +175,6 @@ public class
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

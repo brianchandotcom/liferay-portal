@@ -16,7 +16,7 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type.provide
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.item.selector.ItemSelector;
@@ -87,7 +87,7 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;
@@ -173,7 +173,7 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 						new DisplayPageTypeSiteNavigationMenuItemType(
 							_assetDisplayPageFriendlyURLProvider,
 							new DisplayPageTypeContext(
-								className, _infoItemServiceTracker,
+								className, _infoItemServiceRegistry,
 								_layoutDisplayPageInfoItemFieldValuesProviderTracker,
 								_layoutDisplayPageMultiSelectionProviderTracker,
 								_layoutDisplayPageProviderTracker),

@@ -15,7 +15,7 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -44,11 +44,11 @@ public class FragmentRendererUtil {
 
 	public static List<InfoItemRenderer<?>> getInfoItemRenderers(
 		String className, Class<?> clazz,
-		InfoItemRendererTracker infoItemRendererTracker) {
+		InfoItemRendererRegistry infoItemRendererRegistry) {
 
 		if (Validator.isNotNull(className)) {
 			List<InfoItemRenderer<?>> infoItemRenderers =
-				infoItemRendererTracker.getInfoItemRenderers(className);
+				infoItemRendererRegistry.getInfoItemRenderers(className);
 
 			if (!infoItemRenderers.isEmpty()) {
 				return infoItemRenderers;
@@ -60,7 +60,7 @@ public class FragmentRendererUtil {
 		if (interfaces.length != 0) {
 			for (Class<?> anInterface : interfaces) {
 				List<InfoItemRenderer<?>> infoItemRenderers =
-					infoItemRendererTracker.getInfoItemRenderers(
+					infoItemRendererRegistry.getInfoItemRenderers(
 						anInterface.getName());
 
 				if (!infoItemRenderers.isEmpty()) {
@@ -73,7 +73,7 @@ public class FragmentRendererUtil {
 
 		if (superClass != null) {
 			return getInfoItemRenderers(
-				className, superClass, infoItemRendererTracker);
+				className, superClass, infoItemRendererRegistry);
 		}
 
 		return null;

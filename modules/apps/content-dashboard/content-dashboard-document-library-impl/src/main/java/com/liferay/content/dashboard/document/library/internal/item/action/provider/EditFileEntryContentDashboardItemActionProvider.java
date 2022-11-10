@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.document.library.internal.item.action.prov
 import com.liferay.content.dashboard.document.library.internal.item.action.EditFileEntryContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -52,7 +52,7 @@ public class EditFileEntryContentDashboardItemActionProvider
 
 		return new EditFileEntryContentDashboardItemAction(
 			fileEntry, httpServletRequest,
-			_infoEditURLProviderTracker.getInfoEditURLProvider(
+			_infoEditURLProviderRegistry.getInfoEditURLProvider(
 				FileEntry.class.getName()),
 			_language, _portal, _portletLocalService);
 	}
@@ -91,7 +91,7 @@ public class EditFileEntryContentDashboardItemActionProvider
 		EditFileEntryContentDashboardItemActionProvider.class);
 
 	@Reference
-	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
+	private InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 
 	@Reference
 	private Language _language;

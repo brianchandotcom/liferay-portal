@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.web.internal.info.list.renderer;
 import com.liferay.commerce.product.content.web.internal.info.item.renderer.CPDefinitionSpecificationOptionValueInfoItemRenderer;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.taglib.list.renderer.BasicInfoListRenderer;
@@ -43,7 +43,7 @@ public abstract class
 
 	@Override
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
-		return infoItemRendererTracker.getInfoItemRenderers(
+		return infoItemRendererRegistry.getInfoItemRenderers(
 			CPDefinitionSpecificationOptionValue.class.getName());
 	}
 
@@ -99,7 +99,7 @@ public abstract class
 	}
 
 	@Reference
-	protected InfoItemRendererTracker infoItemRendererTracker;
+	protected InfoItemRendererRegistry infoItemRendererRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCPDefinitionSpecificationOptionValueBasicInfoListRenderer.class);

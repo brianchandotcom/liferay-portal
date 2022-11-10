@@ -20,7 +20,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -71,7 +71,7 @@ public class BlogsEntryAnalyticsReportsInfoItem
 	@Override
 	public WebImage getAuthorWebImage(BlogsEntry blogsEntry, Locale locale) {
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, BlogsEntry.class.getName());
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -140,7 +140,7 @@ public class BlogsEntryAnalyticsReportsInfoItem
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem

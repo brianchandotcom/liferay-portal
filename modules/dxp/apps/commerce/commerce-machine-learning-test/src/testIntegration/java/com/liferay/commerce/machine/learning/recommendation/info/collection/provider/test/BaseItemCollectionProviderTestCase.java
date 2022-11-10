@@ -22,7 +22,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -50,7 +50,7 @@ public abstract class BaseItemCollectionProviderTestCase {
 
 		RelatedInfoItemCollectionProvider<CPDefinition, CPDefinition>
 			relatedInfoItemCollectionProvider =
-				infoItemServiceTracker.getInfoItemService(
+				infoItemServiceRegistry.getInfoItemService(
 					RelatedInfoItemCollectionProvider.class,
 					getInfoItemCollectionProviderName());
 
@@ -98,7 +98,7 @@ public abstract class BaseItemCollectionProviderTestCase {
 	protected CPDefinitionLocalService cpDefinitionLocalService;
 
 	@Inject
-	protected InfoItemServiceTracker infoItemServiceTracker;
+	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	private void _testGetRelatedItemsInfoPage(
 		RelatedInfoItemCollectionProvider<CPDefinition, CPDefinition>

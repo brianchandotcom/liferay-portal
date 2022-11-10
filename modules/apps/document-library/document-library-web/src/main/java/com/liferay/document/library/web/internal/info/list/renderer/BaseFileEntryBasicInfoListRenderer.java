@@ -16,7 +16,7 @@ package com.liferay.document.library.web.internal.info.list.renderer;
 
 import com.liferay.document.library.web.internal.info.item.renderer.FileEntryTitleInfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.taglib.list.renderer.BasicInfoListRenderer;
@@ -42,7 +42,7 @@ public abstract class BaseFileEntryBasicInfoListRenderer
 
 	@Override
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
-		return infoItemRendererTracker.getInfoItemRenderers(
+		return infoItemRendererRegistry.getInfoItemRenderers(
 			FileEntry.class.getName());
 	}
 
@@ -102,7 +102,7 @@ public abstract class BaseFileEntryBasicInfoListRenderer
 	}
 
 	@Reference
-	protected InfoItemRendererTracker infoItemRendererTracker;
+	protected InfoItemRendererRegistry infoItemRendererRegistry;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFileEntryBasicInfoListRenderer.class);

@@ -16,7 +16,7 @@ package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
@@ -36,7 +36,7 @@ import java.util.Optional;
 public class DisplayPageTypeContext {
 
 	public DisplayPageTypeContext(
-		String className, InfoItemServiceTracker infoItemServiceTracker,
+		String className, InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutDisplayPageInfoItemFieldValuesProviderTracker
 			layoutDisplayPageInfoItemFieldValuesProviderTracker,
 		LayoutDisplayPageMultiSelectionProviderTracker
@@ -44,7 +44,7 @@ public class DisplayPageTypeContext {
 		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
 
 		_className = className;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layoutDisplayPageInfoItemFieldValuesProviderTracker =
 			layoutDisplayPageInfoItemFieldValuesProviderTracker;
 		_layoutDisplayPageMultiSelectionProviderTracker =
@@ -58,7 +58,7 @@ public class DisplayPageTypeContext {
 
 	public InfoItemClassDetails getInfoItemClassDetails() {
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, _className);
 
 		if (infoItemDetailsProvider == null) {
@@ -71,7 +71,7 @@ public class DisplayPageTypeContext {
 	public InfoItemFormVariationsProvider<?>
 		getInfoItemFormVariationsProvider() {
 
-		return _infoItemServiceTracker.getFirstInfoItemService(
+		return _infoItemServiceRegistry.getFirstInfoItemService(
 			InfoItemFormVariationsProvider.class, _className);
 	}
 
@@ -122,7 +122,7 @@ public class DisplayPageTypeContext {
 
 	public boolean isAvailable() {
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, _className);
 
 		if (infoItemDetailsProvider == null) {
@@ -133,7 +133,7 @@ public class DisplayPageTypeContext {
 	}
 
 	private final String _className;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutDisplayPageInfoItemFieldValuesProviderTracker
 		_layoutDisplayPageInfoItemFieldValuesProviderTracker;
 	private final LayoutDisplayPageMultiSelectionProviderTracker

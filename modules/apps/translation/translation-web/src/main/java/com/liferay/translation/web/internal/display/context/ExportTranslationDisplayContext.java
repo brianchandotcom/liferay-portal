@@ -14,7 +14,7 @@
 
 package com.liferay.translation.web.internal.display.context;
 
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,7 +67,7 @@ public class ExportTranslationDisplayContext {
 	public ExportTranslationDisplayContext(
 		long classNameId, long[] classPKs, long groupId,
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, List<Object> models,
 		String title,
@@ -78,7 +78,7 @@ public class ExportTranslationDisplayContext {
 		_classPKs = classPKs;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_liferayPortletResponse = liferayPortletResponse;
 		_models = models;
 		_title = title;
@@ -204,7 +204,7 @@ public class ExportTranslationDisplayContext {
 
 	private Set<Locale> _getAvailableSourceLocales() throws Exception {
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, _className);
 
 		List<String> languageIds = new ArrayList<>();
@@ -235,7 +235,7 @@ public class ExportTranslationDisplayContext {
 
 	private String _getDefaultSourceLanguageId() {
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, _className);
 
 		if (infoItemLanguagesProvider == null) {
@@ -377,7 +377,7 @@ public class ExportTranslationDisplayContext {
 	private final long[] _classPKs;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final List<Object> _models;
 	private String _redirect;

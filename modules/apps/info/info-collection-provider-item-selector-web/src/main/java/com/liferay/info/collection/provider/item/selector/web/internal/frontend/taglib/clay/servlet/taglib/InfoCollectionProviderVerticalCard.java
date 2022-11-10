@@ -19,7 +19,7 @@ import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -35,13 +35,13 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 
 	public InfoCollectionProviderVerticalCard(
 		InfoCollectionProvider<?> infoCollectionProvider,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		RenderRequest renderRequest, RowChecker rowChecker) {
 
 		super(null, renderRequest, rowChecker);
 
 		_infoCollectionProvider = infoCollectionProvider;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 		}
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class, className);
 
 		if (infoItemFormVariationsProvider == null) {
@@ -137,6 +137,6 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 	}
 
 	private final InfoCollectionProvider<?> _infoCollectionProvider;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

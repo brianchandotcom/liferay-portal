@@ -17,7 +17,7 @@ package com.liferay.content.dashboard.document.library.internal.item.action.prov
 import com.liferay.content.dashboard.document.library.internal.item.action.PreviewImageFileEntryContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -46,7 +46,7 @@ public class PreviewImageFileEntryContentDashboardItemActionProvider
 		}
 
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
 
 		return new PreviewImageFileEntryContentDashboardItemAction(
@@ -74,7 +74,7 @@ public class PreviewImageFileEntryContentDashboardItemActionProvider
 		}
 
 		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
 
 		ContentDashboardItemAction contentDashboardItemAction =
@@ -89,7 +89,7 @@ public class PreviewImageFileEntryContentDashboardItemActionProvider
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

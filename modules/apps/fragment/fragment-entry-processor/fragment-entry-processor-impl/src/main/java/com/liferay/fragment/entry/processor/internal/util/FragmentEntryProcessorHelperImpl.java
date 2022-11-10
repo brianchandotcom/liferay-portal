@@ -24,7 +24,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
@@ -102,7 +102,7 @@ public class FragmentEntryProcessorHelperImpl
 			classPK);
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, _portal.getClassName(classNameId),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -174,7 +174,7 @@ public class FragmentEntryProcessorHelperImpl
 			infoItemReference.getClassName());
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		if (infoItemFieldValuesProvider == null) {
@@ -215,7 +215,7 @@ public class FragmentEntryProcessorHelperImpl
 			classPK);
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className,
 				infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -246,7 +246,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			(InfoItemFieldValuesProvider<Object>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class, className);
 
 		if (infoItemFieldValuesProvider == null) {
@@ -383,7 +383,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoTextFormatter<Object> infoTextFormatter =
 			(InfoTextFormatter<Object>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoTextFormatter.class, fieldValueClass.getName());
 
 		if (infoTextFormatter != null) {
@@ -398,7 +398,7 @@ public class FragmentEntryProcessorHelperImpl
 		Locale locale) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		if (infoItemFieldValuesProvider == null) {
@@ -433,7 +433,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
 			(InfoCollectionTextFormatter<Object>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoCollectionTextFormatter.class, itemClassName);
 
 		if (infoCollectionTextFormatter == null) {
@@ -452,7 +452,7 @@ public class FragmentEntryProcessorHelperImpl
 			infoItemReference.getInfoItemIdentifier();
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, infoItemReference.getClassName(),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -476,7 +476,7 @@ public class FragmentEntryProcessorHelperImpl
 		FragmentEntryProcessorHelperImpl.class);
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

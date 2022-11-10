@@ -21,7 +21,7 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -132,7 +132,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 				InfoItemFieldValuesProvider<Object>
 					infoItemFieldValuesProvider =
-						_infoItemServiceTracker.getFirstInfoItemService(
+						_infoItemServiceRegistry.getFirstInfoItemService(
 							InfoItemFieldValuesProvider.class,
 							templateEntry.getInfoItemClassName());
 
@@ -203,7 +203,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

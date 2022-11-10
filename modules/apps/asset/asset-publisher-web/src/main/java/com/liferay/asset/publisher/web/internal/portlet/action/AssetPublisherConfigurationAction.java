@@ -36,7 +36,7 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerReg
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -152,7 +152,7 @@ public class AssetPublisherConfigurationAction
 				assetEntryActionRegistry, assetHelper,
 				assetListAssetEntryProvider, assetPublisherCustomizer,
 				assetPublisherHelper, assetPublisherWebConfiguration,
-				assetPublisherWebHelper, infoItemServiceTracker, itemSelector,
+				assetPublisherWebHelper, infoItemServiceRegistry, itemSelector,
 				renderRequest, renderResponse, renderRequest.getPreferences(),
 				requestContextMapper, segmentsEntryRetriever);
 
@@ -369,7 +369,7 @@ public class AssetPublisherConfigurationAction
 	protected GroupLocalService groupLocalService;
 
 	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
+	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
 	protected ItemSelector itemSelector;

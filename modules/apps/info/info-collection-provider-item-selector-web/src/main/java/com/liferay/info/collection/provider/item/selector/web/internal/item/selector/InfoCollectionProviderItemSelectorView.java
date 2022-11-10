@@ -16,7 +16,7 @@ package com.liferay.info.collection.provider.item.selector.web.internal.item.sel
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -87,12 +87,12 @@ public class InfoCollectionProviderItemSelectorView
 				(HttpServletRequest)servletRequest, portletURL,
 				_getInfoCollectionProviders(
 					infoCollectionProviderItemSelectorCriterion),
-				_infoItemServiceTracker));
+				_infoItemServiceRegistry));
 	}
 
 	private List<InfoCollectionProvider<?>> _getAllInfoCollectionProviders() {
 		return ListUtil.filter(
-			_infoItemServiceTracker.getAllInfoItemServices(
+			_infoItemServiceRegistry.getAllInfoItemServices(
 				(Class<InfoCollectionProvider<?>>)
 					(Class<?>)InfoCollectionProvider.class),
 			InfoCollectionProvider::isAvailable);
@@ -125,7 +125,7 @@ public class InfoCollectionProviderItemSelectorView
 		String itemType) {
 
 		return ListUtil.filter(
-			_infoItemServiceTracker.getAllInfoItemServices(
+			_infoItemServiceRegistry.getAllInfoItemServices(
 				(Class<InfoCollectionProvider<?>>)
 					(Class<?>)InfoCollectionProvider.class,
 				itemType),
@@ -137,7 +137,7 @@ public class InfoCollectionProviderItemSelectorView
 			new InfoListProviderItemSelectorReturnType());
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

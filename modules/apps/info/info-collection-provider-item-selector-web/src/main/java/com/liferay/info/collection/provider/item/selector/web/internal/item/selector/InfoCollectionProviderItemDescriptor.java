@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.InfoCollectionProviderVerticalCard;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,11 +40,11 @@ public class InfoCollectionProviderItemDescriptor
 	public InfoCollectionProviderItemDescriptor(
 		HttpServletRequest httpServletRequest,
 		InfoCollectionProvider<?> infoCollectionProvider,
-		InfoItemServiceTracker infoItemServiceTracker) {
+		InfoItemServiceRegistry infoItemServiceRegistry) {
 
 		_httpServletRequest = httpServletRequest;
 		_infoCollectionProvider = infoCollectionProvider;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
 	@Override
@@ -108,12 +108,12 @@ public class InfoCollectionProviderItemDescriptor
 		RenderRequest renderRequest, RowChecker rowChecker) {
 
 		return new InfoCollectionProviderVerticalCard(
-			_infoCollectionProvider, _infoItemServiceTracker, renderRequest,
+			_infoCollectionProvider, _infoItemServiceRegistry, renderRequest,
 			rowChecker);
 	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoCollectionProvider<?> _infoCollectionProvider;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

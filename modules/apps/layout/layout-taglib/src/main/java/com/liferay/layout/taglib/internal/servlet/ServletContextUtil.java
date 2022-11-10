@@ -19,8 +19,8 @@ import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
@@ -80,12 +80,12 @@ public class ServletContextUtil {
 		return _frontendTokenDefinitionRegistry;
 	}
 
-	public static InfoItemServiceTracker getInfoItemServiceTracker() {
-		return _infoItemServiceTracker;
+	public static InfoItemServiceRegistry getInfoItemServiceRegistry() {
+		return _infoItemServiceRegistry;
 	}
 
-	public static InfoListRendererTracker getInfoListRendererTracker() {
-		return _infoListRendererTracker;
+	public static InfoListRendererRegistry getInfoListRendererRegistry() {
+		return _infoListRendererRegistry;
 	}
 
 	public static LayoutAdaptiveMediaProcessor
@@ -211,17 +211,17 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoItemServiceTracker(
-		InfoItemServiceTracker infoItemServiceTracker) {
+	protected void setInfoItemServiceRegistry(
+		InfoItemServiceRegistry infoItemServiceRegistry) {
 
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoListRendererTracker(
-		InfoListRendererTracker infoListRendererTracker) {
+	protected void setInfoListRendererRegistry(
+		InfoListRendererRegistry infoListRendererRegistry) {
 
-		_infoListRendererTracker = infoListRendererTracker;
+		_infoListRendererRegistry = infoListRendererRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -290,8 +290,8 @@ public class ServletContextUtil {
 	private static FragmentRendererController _fragmentRendererController;
 	private static FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
-	private static InfoItemServiceTracker _infoItemServiceTracker;
-	private static InfoListRendererTracker _infoListRendererTracker;
+	private static InfoItemServiceRegistry _infoItemServiceRegistry;
+	private static InfoListRendererRegistry _infoListRendererRegistry;
 	private static LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;
 	private static final Map<String, LayoutClassedModelUsageRecorder>
 		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();

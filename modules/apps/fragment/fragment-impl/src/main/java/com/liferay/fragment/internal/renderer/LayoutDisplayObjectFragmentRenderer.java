@@ -19,7 +19,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -115,7 +115,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		String displayObjectClassName) {
 
 		List<InfoItemRenderer<?>> infoItemRenderers =
-			_infoItemRendererTracker.getInfoItemRenderers(
+			_infoItemRendererRegistry.getInfoItemRenderers(
 				displayObjectClassName);
 
 		if (infoItemRenderers == null) {
@@ -126,7 +126,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 
 	@Reference
 	private Language _language;

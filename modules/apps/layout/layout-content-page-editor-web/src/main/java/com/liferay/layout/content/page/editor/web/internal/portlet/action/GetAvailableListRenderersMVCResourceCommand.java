@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -57,7 +57,7 @@ public class GetAvailableListRenderersMVCResourceCommand
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<InfoListRenderer<?>> infoListRenderers =
-			_infoListRendererTracker.getInfoListRenderers(
+			_infoListRendererRegistry.getInfoListRenderers(
 				_infoSearchClassMapperTracker.getClassName(
 					ParamUtil.getString(resourceRequest, "className")));
 
@@ -78,7 +78,7 @@ public class GetAvailableListRenderersMVCResourceCommand
 	}
 
 	@Reference
-	private InfoListRendererTracker _infoListRendererTracker;
+	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

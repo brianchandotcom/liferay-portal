@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalContentSearch;
@@ -67,7 +67,7 @@ public class JournalArticleLayoutClassedModelUsageRecorder
 		}
 
 		InfoItemObjectProvider<JournalArticle> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class,
 				_portal.getClassName(classNameId));
 
@@ -192,7 +192,7 @@ public class JournalArticleLayoutClassedModelUsageRecorder
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;

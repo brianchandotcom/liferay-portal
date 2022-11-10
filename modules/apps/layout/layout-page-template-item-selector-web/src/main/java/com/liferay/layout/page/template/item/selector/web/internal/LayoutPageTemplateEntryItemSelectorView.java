@@ -16,7 +16,7 @@ package com.liferay.layout.page.template.item.selector.web.internal;
 
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -128,7 +128,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 			new LayoutPageTemplateEntryItemSelectorReturnType());
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer
@@ -315,7 +315,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 		private String _getSubtypeLabel() {
 			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFormVariationsProvider.class,
 					_layoutPageTemplateEntry.getClassName());
 
@@ -338,7 +338,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 		private String _getTypeLabel() {
 			InfoItemDetailsProvider<?> infoItemDetailsProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemDetailsProvider.class,
 					_layoutPageTemplateEntry.getClassName());
 

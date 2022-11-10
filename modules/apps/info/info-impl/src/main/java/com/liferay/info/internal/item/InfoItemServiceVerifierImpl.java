@@ -15,7 +15,7 @@
 package com.liferay.info.internal.item;
 
 import com.liferay.info.exception.CapabilityVerificationException;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.InfoItemServiceVerifier;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class InfoItemServiceVerifierImpl implements InfoItemServiceVerifier {
 
 		for (Class<?> serviceClass : requiredInfoItemServiceClasses) {
 			Object infoItemService =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					serviceClass, itemClassName);
 
 			if (infoItemService == null) {
@@ -51,6 +51,6 @@ public class InfoItemServiceVerifierImpl implements InfoItemServiceVerifier {
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

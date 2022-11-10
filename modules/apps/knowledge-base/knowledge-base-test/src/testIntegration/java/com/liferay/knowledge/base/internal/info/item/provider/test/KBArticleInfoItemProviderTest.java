@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -96,7 +96,7 @@ public class KBArticleInfoItemProviderTest {
 
 		InfoItemObjectProvider<KBArticle> kbArticleArticleInfoItemProvider =
 			(InfoItemObjectProvider<KBArticle>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class, KBArticle.class.getName(),
 					infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -128,7 +128,7 @@ public class KBArticleInfoItemProviderTest {
 
 		InfoItemObjectProvider<KBArticle> kbArticleArticleInfoItemProvider =
 			(InfoItemObjectProvider<KBArticle>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class, KBArticle.class.getName(),
 					infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -139,7 +139,7 @@ public class KBArticleInfoItemProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@DeleteAfterTestRun
 	private KBArticle _kbArticle;

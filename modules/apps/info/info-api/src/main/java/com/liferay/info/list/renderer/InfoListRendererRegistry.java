@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.info.display.contributor.field;
+package com.liferay.info.list.renderer;
 
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jürgen Kappler
+ * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoDisplayContributorFieldTracker {
+public interface InfoListRendererRegistry {
 
-	public List<InfoDisplayContributorField<?>> getInfoDisplayContributorFields(
-		String className);
+	public InfoListRenderer<?> getInfoListRenderer(String key);
 
-	public List<InfoDisplayContributorField<?>> getInfoDisplayContributorFields(
-		String... classNames);
+	public List<InfoListRenderer<?>> getInfoListRenderers();
+
+	public List<InfoListRenderer<?>> getInfoListRenderers(String itemClassName);
 
 }

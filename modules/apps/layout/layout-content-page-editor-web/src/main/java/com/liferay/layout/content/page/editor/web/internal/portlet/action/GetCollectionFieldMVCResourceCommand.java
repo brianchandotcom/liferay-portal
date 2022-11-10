@@ -29,14 +29,14 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -262,7 +262,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			(InfoItemFieldValuesProvider<Object>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class, itemType);
 
 		if (infoItemFieldValuesProvider == null) {
@@ -289,7 +289,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		InfoListRenderer<Object> infoListRenderer =
 			(InfoListRenderer<Object>)
-				_infoListRendererTracker.getInfoListRenderer(listStyle);
+				_infoListRendererRegistry.getInfoListRenderer(listStyle);
 
 		if (infoListRenderer != null) {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -455,7 +455,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			(InfoItemObjectProvider<Object>)
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					_portal.getClassName(classNameId));
 
@@ -483,7 +483,7 @@ public class GetCollectionFieldMVCResourceCommand
 		List<String> infoItemClassNames = new ArrayList<>();
 
 		for (String className :
-				_infoItemServiceTracker.getInfoItemClassNames(
+				_infoItemServiceRegistry.getInfoItemClassNames(
 					InfoItemFormProvider.class)) {
 
 			infoItemClassNames.add(
@@ -506,10 +506,10 @@ public class GetCollectionFieldMVCResourceCommand
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoListRendererTracker _infoListRendererTracker;
+	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

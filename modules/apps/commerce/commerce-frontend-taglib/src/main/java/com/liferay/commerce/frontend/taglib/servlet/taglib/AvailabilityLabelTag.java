@@ -19,7 +19,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,7 +42,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 		try {
 			InfoItemRenderer<CPDefinition> infoItemRenderer =
 				(InfoItemRenderer<CPDefinition>)
-					_infoItemRendererTracker.getInfoItemRenderer(
+					_infoItemRendererRegistry.getInfoItemRenderer(
 						"cpDefinition-availability-label");
 
 			infoItemRenderer.render(
@@ -92,8 +92,8 @@ public class AvailabilityLabelTag extends IncludeTag {
 
 		setServletContext(ServletContextUtil.getServletContext());
 
-		_infoItemRendererTracker =
-			ServletContextUtil.getInfoItemRendererTracker();
+		_infoItemRendererRegistry =
+			ServletContextUtil.getInfoItemRendererRegistry();
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 		super.cleanUp();
 
 		_cpCatalogEntry = null;
-		_infoItemRendererTracker = null;
+		_infoItemRendererRegistry = null;
 		_namespace = StringPool.BLANK;
 	}
 
@@ -112,7 +112,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 		AvailabilityLabelTag.class);
 
 	private CPCatalogEntry _cpCatalogEntry;
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemRendererRegistry _infoItemRendererRegistry;
 	private String _namespace = StringPool.BLANK;
 
 }

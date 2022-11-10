@@ -23,7 +23,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionActi
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -89,7 +89,7 @@ public class JournalArticleContentDashboardItemFactory
 
 		InfoItemFieldValuesProvider<JournalArticle>
 			infoItemFieldValuesProvider =
-				infoItemServiceTracker.getFirstInfoItemService(
+				infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFieldValuesProvider.class,
 					JournalArticle.class.getName());
 
@@ -119,7 +119,7 @@ public class JournalArticleContentDashboardItemFactory
 	}
 
 	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
+	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

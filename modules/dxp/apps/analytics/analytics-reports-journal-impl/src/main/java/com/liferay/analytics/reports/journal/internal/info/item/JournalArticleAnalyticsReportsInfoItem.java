@@ -19,7 +19,7 @@ import com.liferay.analytics.reports.layout.display.page.info.item.LayoutDisplay
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.journal.model.JournalArticle;
@@ -80,7 +80,7 @@ public class JournalArticleAnalyticsReportsInfoItem
 		JournalArticle journalArticle, Locale locale) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
 				JournalArticle.class.getName());
 
@@ -165,7 +165,7 @@ public class JournalArticleAnalyticsReportsInfoItem
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

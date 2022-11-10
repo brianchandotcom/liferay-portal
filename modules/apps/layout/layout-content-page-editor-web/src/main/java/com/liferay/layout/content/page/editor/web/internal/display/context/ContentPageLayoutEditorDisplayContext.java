@@ -25,7 +25,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -103,7 +103,7 @@ public class ContentPageLayoutEditorDisplayContext
 		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
@@ -115,7 +115,7 @@ public class ContentPageLayoutEditorDisplayContext
 		super(
 			contentPageEditorSidebarPanels, fragmentCollectionManager,
 			fragmentEntryLinkManager, frontendTokenDefinitionRegistry,
-			httpServletRequest, infoItemServiceTracker,
+			httpServletRequest, infoItemServiceRegistry,
 			infoSearchClassMapperTracker, itemSelector, pageEditorConfiguration,
 			portletRequest, renderResponse, segmentsConfigurationProvider,
 			segmentsExperienceManager, stagingGroupHelper);
@@ -377,7 +377,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		List<InfoCollectionProvider<?>> infoCollectionProviders =
 			(List<InfoCollectionProvider<?>>)
-				(List<?>)infoItemServiceTracker.getAllInfoItemServices(
+				(List<?>)infoItemServiceRegistry.getAllInfoItemServices(
 					InfoCollectionProvider.class);
 
 		Stream<InfoCollectionProvider<?>> stream =

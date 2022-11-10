@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.item.field.reader;
+package com.liferay.info.display.contributor.field;
 
 import java.util.List;
 
@@ -20,12 +20,14 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jürgen Kappler
- * @author Jorge Ferrer
  */
 @ProviderType
-public interface InfoItemFieldReaderTracker {
+public interface InfoDisplayContributorFieldRegistry {
 
-	public List<InfoItemFieldReader> getInfoItemFieldReaders(
-		String itemClassName);
+	public List<InfoDisplayContributorField<?>> getInfoDisplayContributorFields(
+		String className);
+
+	public List<InfoDisplayContributorField<?>> getInfoDisplayContributorFields(
+		String... classNames);
 
 }

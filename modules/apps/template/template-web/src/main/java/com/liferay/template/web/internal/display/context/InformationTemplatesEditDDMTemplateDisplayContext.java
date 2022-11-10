@@ -21,7 +21,7 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -58,13 +58,13 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 	extends EditDDMTemplateDisplayContext {
 
 	public InformationTemplatesEditDDMTemplateDisplayContext(
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -79,7 +79,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		}
 
 		return Optional.ofNullable(
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
 				templateEntry.getInfoItemClassName())
 		).map(
@@ -100,7 +100,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		TemplateEntry templateEntry = _getTemplateEntry();
 
 		return Optional.ofNullable(
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class,
 				templateEntry.getInfoItemClassName())
 		).map(
@@ -139,7 +139,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		TemplateEntry templateEntry = _getTemplateEntry();
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class,
 				templateEntry.getInfoItemClassName());
 
@@ -223,7 +223,7 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		InformationTemplatesEditDDMTemplateDisplayContext.class);
 
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private TemplateEntry _templateEntry;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(

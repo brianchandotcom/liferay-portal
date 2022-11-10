@@ -16,7 +16,7 @@ package com.liferay.info.collection.provider.item.selector.web.internal.item.sel
 
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -100,7 +100,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 		for (String itemType : itemTypes) {
 			itemRelatedItemsProviders.addAll(
 				ListUtil.filter(
-					_infoItemServiceTracker.getAllInfoItemServices(
+					_infoItemServiceRegistry.getAllInfoItemServices(
 						(Class<RelatedInfoItemCollectionProvider<?, ?>>)
 							(Class<?>)RelatedInfoItemCollectionProvider.class,
 						itemType),
@@ -115,7 +115,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorView
 			new InfoListProviderItemSelectorReturnType());
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

@@ -25,10 +25,10 @@ import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.InfoFilterProvider;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.helper.CollectionPaginationHelper;
@@ -213,10 +213,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		InfoListRendererTracker infoListRendererTracker =
-			ServletContextUtil.getInfoListRendererTracker();
+		InfoListRendererRegistry infoListRendererRegistry =
+			ServletContextUtil.getInfoListRendererRegistry();
 
-		return infoListRendererTracker.getInfoListRenderer(
+		return infoListRendererRegistry.getInfoListRenderer(
 			_collectionStyledLayoutStructureItem.getListStyle());
 	}
 
@@ -366,11 +366,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
 
-		InfoItemServiceTracker infoItemServiceTracker =
-			ServletContextUtil.getInfoItemServiceTracker();
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			ServletContextUtil.getInfoItemServiceRegistry();
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
+			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemObjectProvider.class, infoItemReference.getClassName(),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
@@ -475,8 +475,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		Map<String, InfoFilter> infoFilters = new HashMap<>();
 
-		InfoItemServiceTracker infoItemServiceTracker =
-			ServletContextUtil.getInfoItemServiceTracker();
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			ServletContextUtil.getInfoItemServiceRegistry();
 
 		Map<String, String[]> filterValues = _getFilterValues();
 
@@ -487,7 +487,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			Class<?> clazz = infoFilter.getClass();
 
 			InfoFilterProvider<?> infoFilterProvider =
-				infoItemServiceTracker.getFirstInfoItemService(
+				infoItemServiceRegistry.getFirstInfoItemService(
 					InfoFilterProvider.class, clazz.getName());
 
 			infoFilters.put(

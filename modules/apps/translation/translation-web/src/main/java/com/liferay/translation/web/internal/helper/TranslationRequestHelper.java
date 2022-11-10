@@ -16,7 +16,7 @@ package com.liferay.translation.web.internal.helper;
 
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.GroupKeyInfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.translator.InfoItemIdentifierTranslator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -43,22 +43,22 @@ public class TranslationRequestHelper {
 
 	public TranslationRequestHelper(
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_httpServletRequest = httpServletRequest;
-		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
 	public TranslationRequestHelper(
-		InfoItemServiceTracker infoItemServiceTracker,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		PortletRequest portletRequest,
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		this(
 			PortalUtil.getHttpServletRequest(portletRequest),
-			infoItemServiceTracker, segmentsExperienceLocalService);
+			infoItemServiceRegistry, segmentsExperienceLocalService);
 	}
 
 	public String getClassName(long segmentsExperienceId) {
@@ -200,7 +200,7 @@ public class TranslationRequestHelper {
 		}
 
 		InfoItemIdentifierTranslator infoItemIdentifierTranslator =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemIdentifierTranslator.class, getModelClassName());
 
 		String[] keys = ParamUtil.getStringValues(_httpServletRequest, "key");
@@ -251,7 +251,7 @@ public class TranslationRequestHelper {
 	private Long _classNameId;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoItemServiceTracker _infoItemServiceTracker;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private String _modelClassName;
 	private long[] _modelClassPKs;
 	private final SegmentsExperienceLocalService

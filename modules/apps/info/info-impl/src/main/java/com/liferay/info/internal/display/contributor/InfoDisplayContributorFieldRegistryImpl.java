@@ -15,7 +15,7 @@
 package com.liferay.info.internal.display.contributor;
 
 import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTracker;
+import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldRegistry;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -32,9 +32,11 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = InfoDisplayContributorFieldTracker.class)
-public class InfoDisplayContributorFieldTrackerImpl
-	implements InfoDisplayContributorFieldTracker {
+@Component(
+	immediate = true, service = InfoDisplayContributorFieldRegistry.class
+)
+public class InfoDisplayContributorFieldRegistryImpl
+	implements InfoDisplayContributorFieldRegistry {
 
 	@Override
 	public List<InfoDisplayContributorField<?>> getInfoDisplayContributorFields(

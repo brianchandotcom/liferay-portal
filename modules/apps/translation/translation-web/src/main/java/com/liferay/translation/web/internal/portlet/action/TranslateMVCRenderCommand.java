@@ -19,7 +19,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -91,7 +91,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					_infoItemServiceTracker, renderRequest,
+					_infoItemServiceRegistry, renderRequest,
 					_segmentsExperienceLocalService);
 
 			String className = translationRequestHelper.getClassName(
@@ -115,7 +115,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			}
 
 			InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemLanguagesProvider.class, className);
 
 			if (infoItemLanguagesProvider == null) {
@@ -136,7 +136,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					className, object, sourceLanguageId, themeDisplay);
 
 			InfoItemFormProvider<Object> infoItemFormProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemFormProvider.class, className);
 
 			if (infoItemFormProvider == null) {
@@ -191,7 +191,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		throws PortalException {
 
 		InfoItemPermissionProvider infoItemPermissionProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemPermissionProvider.class, className);
 
 		if (infoItemPermissionProvider == null) {
@@ -252,7 +252,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	private Object _getInfoItem(String className, long classPK) {
 		try {
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
+				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class, className);
 
 			if (infoItemObjectProvider == null) {
@@ -274,7 +274,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		String className, T object) {
 
 		InfoItemFieldValuesProvider<T> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
+			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);
 
 		if (infoItemFieldValuesProvider == null) {
@@ -357,7 +357,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		TranslateMVCRenderCommand.class);
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private Language _language;

@@ -14,7 +14,7 @@
 
 package com.liferay.info.taglib.internal.servlet;
 
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 
 import javax.servlet.ServletContext;
 
@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class ServletContextUtil {
 
-	public static InfoItemRendererTracker getInfoItemRendererTracker() {
-		return _infoItemRendererTracker;
+	public static InfoItemRendererRegistry getInfoItemRendererRegistry() {
+		return _infoItemRendererRegistry;
 	}
 
 	public static ServletContext getServletContext() {
@@ -36,10 +36,10 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoItemRendererTracker(
-		InfoItemRendererTracker infoItemRendererTracker) {
+	protected void setInfoItemRendererRegistry(
+		InfoItemRendererRegistry infoItemRendererRegistry) {
 
-		_infoItemRendererTracker = infoItemRendererTracker;
+		_infoItemRendererRegistry = infoItemRendererRegistry;
 	}
 
 	@Reference(
@@ -49,7 +49,7 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private static InfoItemRendererTracker _infoItemRendererTracker;
+	private static InfoItemRendererRegistry _infoItemRendererRegistry;
 	private static ServletContext _servletContext;
 
 }

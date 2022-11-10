@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.info.display.url.provider;
 
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
-import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
+import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +35,7 @@ public class InfoEditURLProviderUtil {
 
 		InfoEditURLProvider<Object> infoEditURLProvider =
 			(InfoEditURLProvider<Object>)
-				_infoEditURLProviderTracker.getInfoEditURLProvider(className);
+				_infoEditURLProviderRegistry.getInfoEditURLProvider(className);
 
 		if (infoEditURLProvider == null) {
 			return null;
@@ -45,12 +45,12 @@ public class InfoEditURLProviderUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoEditURLProviderTracker(
-		InfoEditURLProviderTracker infoEditURLProviderTracker) {
+	protected void setInfoEditURLProviderRegistry(
+		InfoEditURLProviderRegistry infoEditURLProviderRegistry) {
 
-		_infoEditURLProviderTracker = infoEditURLProviderTracker;
+		_infoEditURLProviderRegistry = infoEditURLProviderRegistry;
 	}
 
-	private static InfoEditURLProviderTracker _infoEditURLProviderTracker;
+	private static InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 
 }

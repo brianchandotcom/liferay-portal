@@ -109,7 +109,7 @@ public class RepositoryBrowserTagDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems(FileEntry fileEntry) {
+	private List<DropdownItem> _getActionDropdownItems(FileEntry fileEntry) {
 		return DropdownItemListBuilder.add(
 			() -> _fileEntryModelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), fileEntry,
@@ -117,7 +117,7 @@ public class RepositoryBrowserTagDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
 				dropdownItem.putData(
-					"renameURL", getRenameFileEntryURL(fileEntry));
+					"renameURL", _getRenameFileEntryURL(fileEntry));
 				dropdownItem.putData("value", fileEntry.getTitle());
 				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
@@ -130,7 +130,7 @@ public class RepositoryBrowserTagDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
-					"deleteURL", getDeleteFileEntryURL(fileEntry));
+					"deleteURL", _getDeleteFileEntryURL(fileEntry));
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
@@ -138,7 +138,7 @@ public class RepositoryBrowserTagDisplayContext {
 		).build();
 	}
 
-	public List<DropdownItem> getActionDropdownItems(
+	private List<DropdownItem> _getActionDropdownItems(
 		FileShortcut fileShortcut) {
 
 		return DropdownItemListBuilder.add(
@@ -148,7 +148,7 @@ public class RepositoryBrowserTagDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
-					"deleteURL", getDeleteFileShortcutURL(fileShortcut));
+					"deleteURL", _getDeleteFileShortcutURL(fileShortcut));
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
@@ -156,14 +156,14 @@ public class RepositoryBrowserTagDisplayContext {
 		).build();
 	}
 
-	public List<DropdownItem> getActionDropdownItems(Folder folder) {
+	private List<DropdownItem> _getActionDropdownItems(Folder folder) {
 		return DropdownItemListBuilder.add(
 			() -> _folderModelResourcePermission.contains(
 				_themeDisplay.getPermissionChecker(), folder,
 				ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
-				dropdownItem.putData("renameURL", getRenameFolderURL(folder));
+				dropdownItem.putData("renameURL", _getRenameFolderURL(folder));
 				dropdownItem.putData("value", folder.getName());
 				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
@@ -175,7 +175,7 @@ public class RepositoryBrowserTagDisplayContext {
 				ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
-				dropdownItem.putData("deleteURL", getDeleteFolderURL(folder));
+				dropdownItem.putData("deleteURL", _getDeleteFolderURL(folder));
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
@@ -184,19 +184,18 @@ public class RepositoryBrowserTagDisplayContext {
 	}
 
 	public List<DropdownItem> getActionDropdownItems(
-			RepositoryEntry repositoryEntry)
-		throws PortalException {
+		RepositoryEntry repositoryEntry) {
 
 		if (repositoryEntry instanceof FileEntry) {
-			return getActionDropdownItems((FileEntry)repositoryEntry);
+			return _getActionDropdownItems((FileEntry)repositoryEntry);
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
-			return getActionDropdownItems((FileShortcut)repositoryEntry);
+			return _getActionDropdownItems((FileShortcut)repositoryEntry);
 		}
 
 		if (repositoryEntry instanceof Folder) {
-			return getActionDropdownItems((Folder)repositoryEntry);
+			return _getActionDropdownItems((Folder)repositoryEntry);
 		}
 
 		throw new IllegalArgumentException(
@@ -234,19 +233,19 @@ public class RepositoryBrowserTagDisplayContext {
 		return breadcrumbEntries;
 	}
 
-	public String getDeleteFileEntryURL(FileEntry fileEntry) {
+	private String _getDeleteFileEntryURL(FileEntry fileEntry) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileEntryId",
 			fileEntry.getFileEntryId());
 	}
 
-	public String getDeleteFileShortcutURL(FileShortcut fileShortcut) {
+	private String _getDeleteFileShortcutURL(FileShortcut fileShortcut) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileShortcutId",
 			fileShortcut.getFileShortcutId());
 	}
 
-	public String getDeleteFolderURL(Folder folder) {
+	private String _getDeleteFolderURL(Folder folder) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
@@ -286,13 +285,13 @@ public class RepositoryBrowserTagDisplayContext {
 			getSearchContainer());
 	}
 
-	public String getRenameFileEntryURL(FileEntry fileEntry) {
+	private String _getRenameFileEntryURL(FileEntry fileEntry) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileEntryId",
 			fileEntry.getFileEntryId());
 	}
 
-	public String getRenameFolderURL(Folder folder) {
+	private String _getRenameFolderURL(Folder folder) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}

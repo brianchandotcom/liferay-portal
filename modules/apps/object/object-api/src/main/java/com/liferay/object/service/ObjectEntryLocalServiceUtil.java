@@ -480,6 +480,15 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getObjectEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static long getObjectEntryId(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getObjectEntryId(
+			externalReferenceCode, companyId, objectDefinitionId);
+	}
+
 	public static List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, int start, int end)

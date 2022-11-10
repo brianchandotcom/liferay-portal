@@ -15,7 +15,7 @@
 package com.liferay.object.internal.system;
 
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rodrigo Paulino
  */
-@Component(service = SystemObjectDefinitionMetadataTracker.class)
-public class SystemObjectDefinitionMetadataTrackerImpl
-	implements SystemObjectDefinitionMetadataTracker {
+@Component(service = SystemObjectDefinitionMetadataRegistry.class)
+public class SystemObjectDefinitionMetadataRegistryImpl
+	implements SystemObjectDefinitionMetadataRegistry {
 
 	@Override
 	public SystemObjectDefinitionMetadata getSystemObjectDefinitionMetadata(

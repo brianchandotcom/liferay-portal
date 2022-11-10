@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -161,23 +160,20 @@ public class ContentUtil {
 				new InfoItemReference(
 					className, layoutClassedModelUsage.getClassPK()));
 
-		if (ModelResourcePermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				layoutClassedModelUsage.getClassName(),
-				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE)) {
+		return jsonObject.put(
+			"editImage",
+			() -> {
+				if (!ModelResourcePermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						layoutClassedModelUsage.getClassName(),
+						layoutClassedModelUsage.getClassPK(),
+						ActionKeys.UPDATE) ||
+					!Objects.equals(
+						layoutClassedModelUsage.getClassName(),
+						FileEntry.class.getName())) {
 
-			String editURL = InfoEditURLProviderUtil.getURLEdit(
-				layoutClassedModelUsage.getClassName(),
-				layoutDisplayPageObjectProvider.getDisplayObject(),
-				httpServletRequest);
-
-			if (editURL != null) {
-				jsonObject.put("editURL", editURL);
-			}
-
-			if (Objects.equals(
-					layoutClassedModelUsage.getClassName(),
-					FileEntry.class.getName())) {
+					return null;
+				}
 
 				FileEntry fileEntry =
 					(FileEntry)
@@ -198,40 +194,56 @@ public class ContentUtil {
 					ActionRequest.ACTION_NAME,
 					"/document_library/edit_file_entry_image_editor");
 
-				jsonObject.put(
-					"editImage",
-					JSONUtil.put(
-						"editImageURL", portletURL.toString()
-					).put(
-						"fileEntryId", fileEntry.getFileEntryId()
-					).put(
-						"previewURL",
-						DLURLHelperUtil.getPreviewURL(
-							fileEntry, fileEntry.getFileVersion(), themeDisplay,
-							StringPool.BLANK)
-					));
+				return JSONUtil.put(
+					"editImageURL", portletURL.toString()
+				).put(
+					"fileEntryId", fileEntry.getFileEntryId()
+				).put(
+					"previewURL",
+					DLURLHelperUtil.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), themeDisplay,
+						StringPool.BLANK)
+				);
 			}
-		}
+		).put(
+			"editURL",
+			() -> {
+				if (!ModelResourcePermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						layoutClassedModelUsage.getClassName(),
+						layoutClassedModelUsage.getClassPK(),
+						ActionKeys.UPDATE)) {
 
-		if (ModelResourcePermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				layoutClassedModelUsage.getClassName(),
-				layoutClassedModelUsage.getClassPK(), ActionKeys.PERMISSIONS)) {
+					return null;
+				}
 
-			String permissionsURL = PermissionsURLTag.doTag(
-				StringPool.BLANK, layoutClassedModelUsage.getClassName(),
-				HtmlUtil.escape(
-					layoutDisplayPageObjectProvider.getTitle(
-						themeDisplay.getLocale())),
-				null, String.valueOf(layoutClassedModelUsage.getClassPK()),
-				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
-
-			if (Validator.isNotNull(permissionsURL)) {
-				jsonObject.put("permissionsURL", permissionsURL);
+				return InfoEditURLProviderUtil.getURLEdit(
+					layoutClassedModelUsage.getClassName(),
+					layoutDisplayPageObjectProvider.getDisplayObject(),
+					httpServletRequest);
 			}
-		}
+		).put(
+			"permissionsURL",
+			() -> {
+				if (!ModelResourcePermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						layoutClassedModelUsage.getClassName(),
+						layoutClassedModelUsage.getClassPK(),
+						ActionKeys.PERMISSIONS)) {
 
-		return jsonObject.put(
+					return null;
+				}
+
+				return PermissionsURLTag.doTag(
+					StringPool.BLANK, layoutClassedModelUsage.getClassName(),
+					HtmlUtil.escape(
+						layoutDisplayPageObjectProvider.getTitle(
+							themeDisplay.getLocale())),
+					null, String.valueOf(layoutClassedModelUsage.getClassPK()),
+					LiferayWindowState.POP_UP.toString(), null,
+					httpServletRequest);
+			}
+		).put(
 			"viewUsagesURL",
 			() -> {
 				if (!ModelResourcePermissionUtil.contains(
@@ -258,7 +270,8 @@ public class ContentUtil {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString();
-			});
+			}
+		);
 	}
 
 	private static AssetRendererFactory<?> _getAssetRendererFactory(

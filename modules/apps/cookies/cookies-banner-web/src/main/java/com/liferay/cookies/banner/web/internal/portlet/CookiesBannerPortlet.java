@@ -17,7 +17,7 @@ package com.liferay.cookies.banner.web.internal.portlet;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerDisplayContext;
-import com.liferay.cookies.configuration.CookiesConfigurationHelper;
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class CookiesBannerPortlet extends MVCPortlet {
 
 		CookiesBannerDisplayContext cookiesBannerDisplayContext =
 			new CookiesBannerDisplayContext(
-				_cookiesConfigurationHelper, renderRequest, renderResponse);
+				_cookiesConfigurationProvider, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT,
@@ -76,6 +76,6 @@ public class CookiesBannerPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CookiesConfigurationHelper _cookiesConfigurationHelper;
+	private CookiesConfigurationProvider _cookiesConfigurationProvider;
 
 }

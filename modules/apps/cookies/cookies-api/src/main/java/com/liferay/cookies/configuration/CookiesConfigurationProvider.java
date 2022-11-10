@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 /**
  * @author Daniel Sanz
  */
-public interface CookiesConfigurationHelper {
+public interface CookiesConfigurationProvider {
 
 	public CookiesBannerConfiguration getCookiesBannerConfiguration(
 			ThemeDisplay themeDisplay)

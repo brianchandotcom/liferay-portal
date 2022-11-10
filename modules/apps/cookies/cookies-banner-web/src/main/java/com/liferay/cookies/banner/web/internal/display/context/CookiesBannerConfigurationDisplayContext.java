@@ -14,7 +14,7 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
-import com.liferay.cookies.configuration.CookiesConfigurationHelper;
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -38,10 +38,10 @@ public class CookiesBannerConfigurationDisplayContext
 	extends BaseCookiesBannerDisplayContext {
 
 	public CookiesBannerConfigurationDisplayContext(
-		CookiesConfigurationHelper cookiesConfigurationHelper,
+		CookiesConfigurationProvider cookiesConfigurationProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(cookiesConfigurationHelper, renderRequest, renderResponse);
+		super(cookiesConfigurationProvider, renderRequest, renderResponse);
 	}
 
 	public Map<String, Object> getContext() throws Exception {

@@ -14,7 +14,7 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
-import com.liferay.cookies.configuration.CookiesConfigurationHelper;
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
@@ -38,13 +38,13 @@ import javax.portlet.RenderResponse;
 public class BaseCookiesBannerDisplayContext {
 
 	public BaseCookiesBannerDisplayContext(
-		CookiesConfigurationHelper cookiesConfigurationHelper,
+		CookiesConfigurationProvider cookiesConfigurationProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
-		_cookiesConfigurationHelper = cookiesConfigurationHelper;
+		_cookiesConfigurationProvider = cookiesConfigurationProvider;
 
 		cookiesBannerConfiguration = _getCookiesBannerConfiguration(
 			renderRequest);
@@ -121,7 +121,7 @@ public class BaseCookiesBannerDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			return _cookiesConfigurationHelper.getCookiesBannerConfiguration(
+			return _cookiesConfigurationProvider.getCookiesBannerConfiguration(
 				themeDisplay);
 		}
 		catch (Exception exception) {
@@ -138,7 +138,7 @@ public class BaseCookiesBannerDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			return _cookiesConfigurationHelper.getCookiesConsentConfiguration(
+			return _cookiesConfigurationProvider.getCookiesConsentConfiguration(
 				themeDisplay);
 		}
 		catch (Exception exception) {
@@ -152,7 +152,7 @@ public class BaseCookiesBannerDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCookiesBannerDisplayContext.class);
 
-	private final CookiesConfigurationHelper _cookiesConfigurationHelper;
+	private final CookiesConfigurationProvider _cookiesConfigurationProvider;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 

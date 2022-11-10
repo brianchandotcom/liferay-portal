@@ -14,7 +14,7 @@
 
 package com.liferay.cookies.internal.configuration.helper;
 
-import com.liferay.cookies.configuration.CookiesConfigurationHelper;
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Sanz
  */
-@Component(immediate = true, service = CookiesConfigurationHelper.class)
-public class CookiesConfigurationHelperImpl
-	implements CookiesConfigurationHelper {
+@Component(immediate = true, service = CookiesConfigurationProvider.class)
+public class CookiesConfigurationProviderImpl
+	implements CookiesConfigurationProvider {
 
 	@Override
 	public CookiesBannerConfiguration getCookiesBannerConfiguration(

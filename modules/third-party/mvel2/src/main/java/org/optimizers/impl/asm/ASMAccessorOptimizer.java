@@ -3276,3 +3276,4 @@ public class ASMAccessorOptimizer extends AbstractOptimizer implements AccessorO
 		return literal;
 	}
 }
+/* @generated */

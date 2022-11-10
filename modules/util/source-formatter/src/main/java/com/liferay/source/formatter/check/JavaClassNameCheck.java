@@ -16,7 +16,6 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -101,7 +100,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 		}
 
 		_checkIncorrectClassName(
-			javaClass, fileName, absolutePath, className, extendedClassNames,
+			javaClass, fileName, absolutePath, className,
 			implementedClassNames);
 
 		return javaTerm.getContent();
@@ -190,8 +189,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 
 	private void _checkIncorrectClassName(
 		JavaClass javaClass, String fileName, String absolutePath,
-		String className, List<String> extendedClassNames,
-		List<String> implementedClassNames) {
+		String className, List<String> implementedClassNames) {
 
 		if (javaClass.isInterface() || javaClass.isAbstract()) {
 			return;
@@ -205,8 +203,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 
 			if (className.endsWith(notImplementedForbidClassName) &&
 				!implementedClassNames.contains(
-					notImplementedForbidClassName) &&
-				ListUtil.isEmpty(extendedClassNames)) {
+					notImplementedForbidClassName)) {
 
 				addMessage(
 					fileName,

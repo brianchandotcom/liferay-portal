@@ -538,10 +538,10 @@ public class PropsValues {
 	public static final String DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(
 		PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
 
-	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID = PropsUtil.get(
+	public static String DEFAULT_REGULAR_COLOR_SCHEME_ID = PropsUtil.get(
 		PropsKeys.DEFAULT_REGULAR_COLOR_SCHEME_ID);
 
-	public static final String DEFAULT_REGULAR_THEME_ID = PropsUtil.get(
+	public static String DEFAULT_REGULAR_THEME_ID = PropsUtil.get(
 		PropsKeys.DEFAULT_REGULAR_THEME_ID);
 
 	public static final String DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL =

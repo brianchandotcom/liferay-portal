@@ -26,7 +26,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestU
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -98,7 +98,7 @@ public class RelatedObjectEntryResourceTest {
 		_user = TestPropsValues.getUser();
 
 		_userSystemObjectDefinitionMetadata =
-			_systemObjectDefinitionMetadataTracker.
+			_systemObjectDefinitionMetadataRegistry.
 				getSystemObjectDefinitionMetadata("User");
 
 		_userSystemObjectDefinition =
@@ -522,8 +522,8 @@ public class RelatedObjectEntryResourceTest {
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 	private User _user;
 	private ObjectDefinition _userSystemObjectDefinition;

@@ -21,7 +21,7 @@ import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -76,7 +76,7 @@ public class RelatedObjectEntryOpenAPIContributor
 				objectDefinition -> {
 					SystemObjectDefinitionMetadata
 						systemObjectDefinitionMetadata =
-							_systemObjectDefinitionMetadataTracker.
+							_systemObjectDefinitionMetadataRegistry.
 								getSystemObjectDefinitionMetadata(
 									objectDefinition.getName());
 
@@ -458,7 +458,7 @@ public class RelatedObjectEntryOpenAPIContributor
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

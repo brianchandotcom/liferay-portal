@@ -25,7 +25,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
@@ -298,7 +298,7 @@ public class RelatedObjectEntryResourceImpl
 				_objectDefinitionLocalService.getSystemObjectDefinitions()) {
 
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				_systemObjectDefinitionMetadataTracker.
+				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
 						systemObjectDefinition.getName());
 
@@ -339,8 +339,8 @@ public class RelatedObjectEntryResourceImpl
 		_persistedModelLocalServiceRegistry;
 
 	@Reference
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 	@Context
 	private UriInfo _uriInfo;

@@ -25,7 +25,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -61,8 +61,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
-		SystemObjectDefinitionMetadataTracker
-			systemObjectDefinitionMetadataTracker) {
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -71,8 +71,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
 		_systemObjectDefinitionMetadata = systemObjectDefinitionMetadata;
-		_systemObjectDefinitionMetadataTracker =
-			systemObjectDefinitionMetadataTracker;
+		_systemObjectDefinitionMetadataRegistry =
+			systemObjectDefinitionMetadataRegistry;
 
 		_table = systemObjectDefinitionMetadata.getTable();
 	}
@@ -100,7 +100,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				_systemObjectDefinitionMetadataTracker.
+				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
 						_objectDefinition.getName());
 
@@ -363,8 +363,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_persistedModelLocalServiceRegistry;
 	private final SystemObjectDefinitionMetadata
 		_systemObjectDefinitionMetadata;
-	private final SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private final SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 	private final Table _table;
 
 }

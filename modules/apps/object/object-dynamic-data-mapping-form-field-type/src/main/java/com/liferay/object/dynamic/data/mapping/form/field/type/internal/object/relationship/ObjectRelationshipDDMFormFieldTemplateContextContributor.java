@@ -29,7 +29,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -232,7 +232,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
 
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-			_systemObjectDefinitionMetadataTracker.
+			_systemObjectDefinitionMetadataRegistry.
 				getSystemObjectDefinitionMetadata(objectDefinition.getName());
 
 		if (systemObjectDefinitionMetadata == null) {
@@ -264,7 +264,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
 
 	@Reference
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

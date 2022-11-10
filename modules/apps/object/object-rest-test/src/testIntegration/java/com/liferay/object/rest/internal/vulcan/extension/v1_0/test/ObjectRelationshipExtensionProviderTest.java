@@ -28,7 +28,7 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -103,7 +103,7 @@ public class ObjectRelationshipExtensionProviderTest {
 		_objectEntry = _addObjectEntry(_OBJECT_FIELD_VALUE);
 
 		_userSystemObjectDefinitionMetadata =
-			_systemObjectDefinitionMetadataTracker.
+			_systemObjectDefinitionMetadataRegistry.
 				getSystemObjectDefinitionMetadata("User");
 
 		ObjectDefinition userSystemObjectDefinition =
@@ -263,8 +263,8 @@ public class ObjectRelationshipExtensionProviderTest {
 	private ObjectRelationship _objectRelationship;
 
 	@Inject
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 	private User _user;
 	private SystemObjectDefinitionMetadata _userSystemObjectDefinitionMetadata;

@@ -27,7 +27,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -61,8 +61,8 @@ public class OneToManyObjectFieldFilterStrategy
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectViewFilterColumn objectViewFilterColumn,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
-		SystemObjectDefinitionMetadataTracker
-			systemObjectDefinitionMetadataTracker) {
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		super(locale, objectViewFilterColumn);
 
@@ -74,8 +74,8 @@ public class OneToManyObjectFieldFilterStrategy
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
-		_systemObjectDefinitionMetadataTracker =
-			systemObjectDefinitionMetadataTracker;
+		_systemObjectDefinitionMetadataRegistry =
+			systemObjectDefinitionMetadataRegistry;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		if (objectDefinition1.isSystem()) {
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				_systemObjectDefinitionMetadataTracker.
+				_systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
 						objectDefinition1.getName());
 
@@ -219,7 +219,7 @@ public class OneToManyObjectFieldFilterStrategy
 		_objectRelationshipLocalService;
 	private final PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
-	private final SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private final SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

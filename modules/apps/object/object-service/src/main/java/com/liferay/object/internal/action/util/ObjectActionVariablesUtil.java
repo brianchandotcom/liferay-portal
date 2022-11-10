@@ -16,7 +16,7 @@ package com.liferay.object.internal.action.util;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -33,13 +33,13 @@ public class ObjectActionVariablesUtil {
 	public static Map<String, Object> toVariables(
 		DTOConverterRegistry dtoConverterRegistry,
 		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
-		SystemObjectDefinitionMetadataTracker
-			systemObjectDefinitionMetadataTracker) {
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		if (objectDefinition.isSystem()) {
 			String contentType = _getContentType(
 				dtoConverterRegistry, objectDefinition,
-				systemObjectDefinitionMetadataTracker);
+				systemObjectDefinitionMetadataRegistry);
 
 			Object object = payloadJSONObject.get("modelDTO" + contentType);
 
@@ -88,15 +88,15 @@ public class ObjectActionVariablesUtil {
 	private static String _getContentType(
 		DTOConverterRegistry dtoConverterRegistry,
 		ObjectDefinition objectDefinition,
-		SystemObjectDefinitionMetadataTracker
-			systemObjectDefinitionMetadataTracker) {
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		DTOConverter<?, ?> dtoConverter = dtoConverterRegistry.getDTOConverter(
 			objectDefinition.getClassName());
 
 		if (dtoConverter == null) {
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				systemObjectDefinitionMetadataTracker.
+				systemObjectDefinitionMetadataRegistry.
 					getSystemObjectDefinitionMetadata(
 						objectDefinition.getName());
 

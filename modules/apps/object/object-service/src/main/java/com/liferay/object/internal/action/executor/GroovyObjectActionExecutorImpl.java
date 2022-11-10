@@ -20,7 +20,7 @@ import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,7 +52,7 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 		Map<String, Object> results = _objectScriptingExecutor.execute(
 			ObjectActionVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataTracker),
+				_systemObjectDefinitionMetadataRegistry),
 			new HashSet<>(), parametersUnicodeProperties.get("script"));
 
 		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
@@ -75,7 +75,7 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 	private ObjectScriptingExecutor _objectScriptingExecutor;
 
 	@Reference
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

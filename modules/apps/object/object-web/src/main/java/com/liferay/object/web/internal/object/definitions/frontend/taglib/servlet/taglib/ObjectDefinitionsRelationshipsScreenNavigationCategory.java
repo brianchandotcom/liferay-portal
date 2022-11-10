@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
@@ -90,7 +90,7 @@ public class ObjectDefinitionsRelationshipsScreenNavigationCategory
 				_ffOneToOneRelationshipConfigurationActivator,
 				httpServletRequest, _objectDefinitionModelResourcePermission,
 				_objectDefinitionService,
-				_systemObjectDefinitionMetadataTracker));
+				_systemObjectDefinitionMetadataRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -112,7 +112,7 @@ public class ObjectDefinitionsRelationshipsScreenNavigationCategory
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
-	private SystemObjectDefinitionMetadataTracker
-		_systemObjectDefinitionMetadataTracker;
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 }

@@ -387,9 +387,6 @@ public class JournalTransformerTest {
 				new HashMap<>()));
 	}
 
-	@DeleteAfterTestRun
-	private JournalArticle _article;
-
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 

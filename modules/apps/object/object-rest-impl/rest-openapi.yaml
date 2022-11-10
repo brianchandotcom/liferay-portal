@@ -245,6 +245,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
+    "/by-external-reference-code/{objectEntryExternalReferenceCode}/object-actions/{objectActionName}":
+        put:
+            operationId: putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName
+            parameters:
+                - in: path
+                  name: objectEntryExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: objectActionName
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteScopeScopeKeyByExternalReferenceCode
@@ -407,6 +427,27 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
+            tags: ["ObjectEntry"]
+    "/{objectEntryId}/object-actions/{objectActionName}":
+        put:
+            operationId: putObjectEntryObjectActionObjectActionName
+            parameters:
+                - in: path
+                  name: objectEntryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: objectActionName
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
             tags: ["ObjectEntry"]
     "/{objectEntryId}/permissions":
         get:

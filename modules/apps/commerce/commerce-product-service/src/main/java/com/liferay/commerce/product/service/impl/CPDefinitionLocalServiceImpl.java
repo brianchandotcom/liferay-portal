@@ -591,7 +591,7 @@ public class CPDefinitionLocalServiceImpl
 
 		newCPDefinition.setCProductId(newCProduct.getCProductId());
 
-		_cProductPersistence.update(newCProduct);
+		newCProduct = _cProductPersistence.update(newCProduct);
 
 		newCPDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 

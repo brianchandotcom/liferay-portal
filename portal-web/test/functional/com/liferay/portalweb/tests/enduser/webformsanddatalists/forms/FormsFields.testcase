@@ -359,7 +359,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaSelectButton();
 
 		FormFields.editColor(
-			colorSwatchItem = "2BA676",
+			colorSwatchItem = "#2BA676",
 			fieldLabel = "Color");
 
 		ItemSelector.uploadFile(

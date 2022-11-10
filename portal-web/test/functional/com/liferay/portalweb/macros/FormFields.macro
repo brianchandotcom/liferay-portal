@@ -1205,7 +1205,7 @@ definition {
 			value1 = "${colorValue}");
 
 		AssertElementPresent(
-			key_colorValue = "${colorValue}",
+			key_colorValue = "#${colorValue}",
 			key_fieldLabel = "${fieldLabel}",
 			key_rowNumber = "${rowNumber}",
 			locator1 = "FormFields#COLOR_FROM_COLOR_PICKER_BY_ROW");

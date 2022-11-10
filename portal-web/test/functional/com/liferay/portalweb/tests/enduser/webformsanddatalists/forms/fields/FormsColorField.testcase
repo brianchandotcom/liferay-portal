@@ -200,7 +200,7 @@ definition {
 		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
 
 		FormFields.editColor(
-			colorSwatchItem = "FF0D0D",
+			colorSwatchItem = "#FF0D0D",
 			fieldLabel = "Color");
 
 		FormPortlet.submitSuccessfully();
@@ -249,7 +249,7 @@ definition {
 			rowNumber = "1");
 
 		FormFields.selectColorFromColorPicker(
-			colorValue = "FF0D0D",
+			colorValue = "#FF0D0D",
 			fieldLabel = "Color",
 			fieldName = "Color",
 			rowNumber = "2");
@@ -287,7 +287,7 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.editColor(
-			colorSwatchItem = "CBCBCB",
+			colorSwatchItem = "#CBCBCB",
 			fieldLabel = "Color");
 
 		FormPortlet.submitSuccessfully();
@@ -353,7 +353,7 @@ definition {
 			fieldName = "Color");
 
 		FormFields.editColor(
-			colorSwatchItem = "FF0D0D",
+			colorSwatchItem = "#FF0D0D",
 			fieldLabel = "Color");
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();

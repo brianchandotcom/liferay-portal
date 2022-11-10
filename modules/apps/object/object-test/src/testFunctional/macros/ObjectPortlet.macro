@@ -348,6 +348,10 @@ definition {
 	}
 
 	macro selectCustomObject {
+		WaitForElementPresent(
+			key_label = "${label}",
+			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
+
 		Click(
 			key_label = "${label}",
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");

@@ -157,7 +157,7 @@ export default function EditNotificationTemplate({
 		if (
 			(notificationTemplateType === 'email' &&
 				!values.recipients[0].from) ||
-			(!Liferay.FeatureFlags['LPS-162133'] && !values.from)
+			(Liferay.FeatureFlags['LPS-162133'] && !values.from)
 		) {
 			errors.from = Liferay.Language.get('required');
 		}
@@ -165,7 +165,7 @@ export default function EditNotificationTemplate({
 		if (
 			(notificationTemplateType === 'email' &&
 				!values.recipients[0].fromName[defaultLanguageId]) ||
-			(!Liferay.FeatureFlags['LPS-162133'] &&
+			(Liferay.FeatureFlags['LPS-162133'] &&
 				!values.fromName[defaultLanguageId])
 		) {
 			errors.fromName = Liferay.Language.get('required');
@@ -252,7 +252,7 @@ export default function EditNotificationTemplate({
 		objectDefinitionId: 0,
 		recipients: recipientInitialValue,
 
-		...(!Liferay.FeatureFlags['LPS-162133'] && {
+		...(Liferay.FeatureFlags['LPS-162133'] && {
 			bcc: '',
 			cc: '',
 			from: '',
@@ -648,7 +648,7 @@ export default function EditNotificationTemplate({
 											onChange={(translation) => {
 												setValues({
 													...values,
-													...(Liferay.FeatureFlags[
+													...(!Liferay.FeatureFlags[
 														'LPS-162133'
 													]
 														? {
@@ -682,7 +682,7 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															...(Liferay
+															...(!Liferay
 																.FeatureFlags[
 																'LPS-162133'
 															]
@@ -703,7 +703,7 @@ export default function EditNotificationTemplate({
 														})
 													}
 													value={
-														Liferay.FeatureFlags[
+														!Liferay.FeatureFlags[
 															'LPS-162133'
 														]
 															? (values
@@ -723,7 +723,7 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															...(Liferay
+															...(!Liferay
 																.FeatureFlags[
 																'LPS-162133'
 															]
@@ -744,7 +744,7 @@ export default function EditNotificationTemplate({
 														})
 													}
 													value={
-														Liferay.FeatureFlags[
+														!Liferay.FeatureFlags[
 															'LPS-162133'
 														]
 															? (values
@@ -767,7 +767,7 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															...(Liferay
+															...(!Liferay
 																.FeatureFlags[
 																'LPS-162133'
 															]
@@ -789,7 +789,7 @@ export default function EditNotificationTemplate({
 													}
 													required
 													value={
-														Liferay.FeatureFlags[
+														!Liferay.FeatureFlags[
 															'LPS-162133'
 														]
 															? (values
@@ -810,7 +810,7 @@ export default function EditNotificationTemplate({
 													onChange={(translation) => {
 														setValues({
 															...values,
-															...(Liferay
+															...(!Liferay
 																.FeatureFlags[
 																'LPS-162133'
 															]
@@ -834,7 +834,7 @@ export default function EditNotificationTemplate({
 														selectedLocale
 													}
 													translations={
-														Liferay.FeatureFlags[
+														!Liferay.FeatureFlags[
 															'LPS-162133'
 														]
 															? (values

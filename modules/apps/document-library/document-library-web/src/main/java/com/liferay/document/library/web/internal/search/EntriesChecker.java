@@ -122,20 +122,6 @@ public class EntriesChecker extends RowChecker {
 			_SIMPLE_NAME_FILE_ENTRY, "']");
 	}
 
-	private String _getName(Object result) {
-		if (result instanceof FileEntry) {
-			return _SIMPLE_NAME_FILE_ENTRY;
-		}
-		else if (result instanceof FileShortcut) {
-			return _SIMPLE_NAME_DL_FILE_SHORTCUT;
-		}
-		else if (result instanceof Folder) {
-			return _SIMPLE_NAME_FOLDER;
-		}
-
-		return null;
-	}
-
 	private Object _getModel(String primaryKey) {
 		long entryId = GetterUtil.getLong(primaryKey);
 
@@ -164,6 +150,20 @@ public class EntriesChecker extends RowChecker {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+		}
+
+		return null;
+	}
+
+	private String _getName(Object result) {
+		if (result instanceof FileEntry) {
+			return _SIMPLE_NAME_FILE_ENTRY;
+		}
+		else if (result instanceof FileShortcut) {
+			return _SIMPLE_NAME_DL_FILE_SHORTCUT;
+		}
+		else if (result instanceof Folder) {
+			return _SIMPLE_NAME_FOLDER;
 		}
 
 		return null;

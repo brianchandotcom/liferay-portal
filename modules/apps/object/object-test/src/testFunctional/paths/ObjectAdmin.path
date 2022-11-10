@@ -287,7 +287,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_PICKLIST</td>
-		<td>//label[contains(text(),'Picklist') or contains(text(),'Lista de seleção')]/following-sibling::select</td>
+		<td>//div[@class='form-group']//label[contains(text(),'Picklist') or contains(text(),'Lista de seleção')]//./..//div[contains(@class, 'custom-select__content')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -507,7 +507,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_PICKLIST_OPTIONS</td>
-		<td>//*[contains(@class,'form-control')]//option[contains(text(),'${key_optionName}')]</td>
+		<td>//div[@class='dropdown-menu show']//.//ul//button[contains(@class, 'dropdown-item')]//div[contains(text(), '${key_optionName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

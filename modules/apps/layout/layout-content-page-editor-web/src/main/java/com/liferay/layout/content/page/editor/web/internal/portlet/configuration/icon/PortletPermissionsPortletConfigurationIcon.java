@@ -134,9 +134,9 @@ public class PortletPermissionsPortletConfigurationIcon
 			}
 		}
 
-		if (layout.isLayoutPrototypeLinkActive() ||
-			layout.isTypeControlPanel() ||
-			layout.isEmbeddedPersonalApplication()) {
+		if (layout.isEmbeddedPersonalApplication() ||
+			layout.isLayoutPrototypeLinkActive() ||
+			layout.isTypeControlPanel()) {
 
 			showPermissionsIcon = false;
 		}

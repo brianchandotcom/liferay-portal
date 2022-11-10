@@ -143,8 +143,8 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public boolean isShow(Layout layout) {
-		if ((!layout.isTypeContent() && !layout.isTypePortlet()) ||
-			layout.isEmbeddedPersonalApplication()) {
+		if (layout.isEmbeddedPersonalApplication() ||
+			(!layout.isTypeContent() && !layout.isTypePortlet())) {
 
 			return false;
 		}

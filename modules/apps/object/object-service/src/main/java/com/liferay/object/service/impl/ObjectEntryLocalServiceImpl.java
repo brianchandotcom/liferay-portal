@@ -1328,8 +1328,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _addObjectRelationshipERCFieldValue(
-			long objectDefinitionId, Map<String, Serializable> values)
-		throws PortalException {
+		long objectDefinitionId, Map<String, Serializable> values) {
 
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
@@ -1369,16 +1368,27 @@ public class ObjectEntryLocalServiceImpl
 						getSystemObjectDefinitionMetadata(
 							objectDefinition.getName());
 
-				values.put(
-					objectRelationshipERCFieldName,
-					systemObjectDefinitionMetadata.getExternalReferenceCode(
-						primaryKey));
+				try {
+					values.put(
+						objectRelationshipERCFieldName,
+						systemObjectDefinitionMetadata.getExternalReferenceCode(
+							primaryKey));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
 
 				continue;
 			}
 
-			ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
+			ObjectEntry objectEntry = objectEntryPersistence.fetchByPrimaryKey(
 				primaryKey);
+
+			if (objectEntry == null) {
+				continue;
+			}
 
 			values.put(
 				objectRelationshipERCFieldName,

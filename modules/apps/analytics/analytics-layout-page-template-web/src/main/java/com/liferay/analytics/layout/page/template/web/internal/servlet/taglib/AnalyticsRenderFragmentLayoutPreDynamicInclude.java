@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +61,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		_printAnalyticsCloudAssetTracker(
 			layoutDisplayPageObjectProvider.getClassName(),
 			layoutDisplayPageObjectProvider.getClassPK(),
+			layoutDisplayPageObjectProvider.getDisplayObject(),
 			httpServletResponse.getWriter(),
 			layoutDisplayPageObjectProvider.getTitle(
 				_portal.getLocale(httpServletRequest)));
@@ -71,8 +73,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 			"com.liferay.layout,taglib#/render_fragment_layout/page.jsp#pre");
 	}
 
-	private void _printAnalyticsCloudAssetTracker(
-		String className, long classPK, PrintWriter printWriter, String title) {
+	private <T> void _printAnalyticsCloudAssetTracker(
+		String className, long classPK, T displayObject,
+		PrintWriter printWriter, String title) {
 
 		AnalyticsRenderFragmentLayoutUtil.AnalyticsAssetType
 			analyticsAssetType =
@@ -90,15 +93,20 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		printWriter.print("\" data-analytics-asset-type=\"");
 		printWriter.print(analyticsAssetType.getType());
 
-		Map<String, String> attributes = analyticsAssetType.getAttributes();
+		Map<String, Function<T, String>> attributes =
+			analyticsAssetType.getAttributes();
 
-		Set<Map.Entry<String, String>> entries = attributes.entrySet();
+		Set<Map.Entry<String, Function<T, String>>> entries =
+			attributes.entrySet();
 
-		for (Map.Entry<String, String> entry : entries) {
+		for (Map.Entry<String, Function<T, String>> entry : entries) {
 			printWriter.print("\" ");
 			printWriter.print(entry.getKey());
 			printWriter.print("=\"");
-			printWriter.print(entry.getValue());
+
+			Function<T, String> value = entry.getValue();
+
+			printWriter.print(value.apply(displayObject));
 		}
 
 		printWriter.print("\">");

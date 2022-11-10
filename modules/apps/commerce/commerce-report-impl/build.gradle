@@ -5,7 +5,6 @@ dependencies {
 	compileInclude group: "com.google.zxing", name: "core", version: "3.2.1"
 	compileInclude group: "com.ibm.icu", name: "icu4j", version: "57.1"
 	compileInclude group: "com.liferay", name: "com.lowagie.itext", version: "2.1.7.js10.LIFERAY-PATCHED-1"
-	compileInclude group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "commons-digester", name: "commons-digester", version: "2.1"
 	compileInclude group: "net.sf.jasperreports", name: "jasperreports", version: "6.8.1"
@@ -32,6 +31,7 @@ dependencies {
 	compileInclude group: "org.olap4j", name: "olap4j", version: "1.2.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileOnly group: "org.apache.commons", name: "commons-math3", version: "3.6.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:commerce:commerce-report-api")

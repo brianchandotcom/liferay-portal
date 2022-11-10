@@ -20,7 +20,7 @@
 JournalArticleDisplay articleDisplay = journalDisplayContext.getArticleDisplay();
 %>
 
-<c:if test="<%= renderRequest.getWindowState() != LiferayWindowState.POP_UP %>">
+<c:if test='<%= Boolean.parseBoolean(renderRequest.getParameter("showTitle")) %>'>
 	<clay:container-fluid
 		cssClass="mt-3"
 	>

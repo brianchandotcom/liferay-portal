@@ -1406,8 +1406,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		boolean system = objectDefinition.isSystem();
 
-		Assert.assertEquals(
-			objectFields.toString(), system ? 5 : 6, objectFields.size());
+		Assert.assertEquals(objectFields.toString(), 6, objectFields.size());
 
 		ListIterator<ObjectField> iterator = objectFields.listIterator();
 
@@ -1466,28 +1465,26 @@ public class ObjectDefinitionLocalServiceTest {
 			).build(),
 			iterator.next());
 
-		if (!system) {
-			Assert.assertTrue(iterator.hasNext());
+		Assert.assertTrue(iterator.hasNext());
 
-			_assertSystemObjectFields(
-				new ObjectFieldBuilder(
-				).businessType(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT
-				).dbColumnName(
-					objectEntryTable.externalReferenceCode.getName()
-				).dbTableName(
-					dbTableName
-				).dbType(
-					ObjectFieldConstants.DB_TYPE_STRING
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						LanguageUtil.get(
-							LocaleUtil.getDefault(), "external-reference-code"))
-				).name(
-					"externalReferenceCode"
-				).build(),
-				iterator.next());
-		}
+		_assertSystemObjectFields(
+			new ObjectFieldBuilder(
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			).dbColumnName(
+				objectEntryTable.externalReferenceCode.getName()
+			).dbTableName(
+				dbTableName
+			).dbType(
+				ObjectFieldConstants.DB_TYPE_STRING
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					LanguageUtil.get(
+						LocaleUtil.getDefault(), "external-reference-code"))
+			).name(
+				"externalReferenceCode"
+			).build(),
+			iterator.next());
 
 		Assert.assertTrue(iterator.hasNext());
 

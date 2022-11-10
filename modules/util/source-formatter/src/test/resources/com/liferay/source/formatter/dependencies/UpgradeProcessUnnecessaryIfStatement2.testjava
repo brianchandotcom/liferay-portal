@@ -17,13 +17,13 @@ package com.liferay.source.formatter.dependencies;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Qi Zhang
+ * @author Alan Huang
  */
-public class UpgradeProcessUnnecessaryIfStatement extends UpgradeProcess {
+public class UpgradeProcessUnnecessaryIfStatement2 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn("testTable", "testCol")) {
+		if (!hasColumn("testTable", "testCol")) {
 			alterColumnType("testTable", "testCol", "TEXT null");
 		}
 

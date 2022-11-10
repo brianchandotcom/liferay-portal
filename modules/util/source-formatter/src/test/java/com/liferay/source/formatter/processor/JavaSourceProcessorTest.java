@@ -682,7 +682,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeProcessUnnecessaryIfStatement() throws Exception {
 		test(
-			"UpgradeProcessUnnecessaryIfStatement.testjava",
+			"UpgradeProcessUnnecessaryIfStatement1.testjava",
+			"No need to use if-statement to wrap 'alterColumn*' and " +
+				"'alterTable*' calls",
+			26);
+		test(
+			"UpgradeProcessUnnecessaryIfStatement2.testjava",
 			"No need to use if-statement to wrap 'alterColumn*' and " +
 				"'alterTable*' calls",
 			26);

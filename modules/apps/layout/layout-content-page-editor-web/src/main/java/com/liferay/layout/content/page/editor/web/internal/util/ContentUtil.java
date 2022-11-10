@@ -158,13 +158,14 @@ public class ContentUtil {
 				new InfoItemReference(
 					className, layoutClassedModelUsage.getClassPK()));
 
+		boolean updatePermission = ModelResourcePermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), className,
+			layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE);
+
 		return JSONUtil.put(
 			"editImage",
 			() -> {
-				if (!ModelResourcePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), className,
-						layoutClassedModelUsage.getClassPK(),
-						ActionKeys.UPDATE) ||
+				if (!updatePermission ||
 					!Objects.equals(className, FileEntry.class.getName())) {
 
 					return null;
@@ -203,11 +204,7 @@ public class ContentUtil {
 		).put(
 			"editURL",
 			() -> {
-				if (!ModelResourcePermissionUtil.contains(
-						themeDisplay.getPermissionChecker(), className,
-						layoutClassedModelUsage.getClassPK(),
-						ActionKeys.UPDATE)) {
-
+				if (!updatePermission) {
 					return null;
 				}
 

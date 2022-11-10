@@ -318,6 +318,8 @@
 	"system-admin-s-github-username": "System Admin's Github Username",
 	"system-admin-s-last-name": "System Admin's Last Name",
 	"team-members": "Team Members",
+	"all-projects": "All projects",
+	"no-projects-match-that-name": "No projects match that name",
 	"team-members-have-access-to-this-project-in-customer-portal": "Team members have access to this project in Customer Portal.",
 	"team-members-will-receive-an-email-invitation-to-access-this-project-on-customer-portal": "Team members will receive an email invitation to access this project on Customer Portal.",
 	"thank-you-for-submitting-this-request": "Thank you for submitting this request!",

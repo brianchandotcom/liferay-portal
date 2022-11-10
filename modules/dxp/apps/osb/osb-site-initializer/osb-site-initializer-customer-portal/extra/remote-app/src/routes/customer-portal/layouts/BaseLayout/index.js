@@ -11,6 +11,7 @@
 
 import {useEffect, useRef, useState} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
+import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
 import QuickLinksPanel from '../../containers/QuickLinksPanel';
 import SideMenu from '../../containers/SideMenu';
 
@@ -28,22 +29,28 @@ const Layout = () => {
 	}, [accountKey]);
 
 	return (
-		<div className="d-flex position-relative w-100">
-			{hasSideMenu && <SideMenu />}
-
-			<div className="d-flex flex-fill pt-4">
-				<div className="mx-4 px-2 w-100">
-					<Outlet
-						context={{
-							setHasQuickLinksPanel,
-							setHasSideMenu,
-						}}
-					/>
-				</div>
-
-				{hasQuickLinksPanel && <QuickLinksPanel />}
+		<>
+			<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4">
+				<ProjectBreadcrumb />
 			</div>
-		</div>
+
+			<div className="d-flex position-relative w-100">
+				{hasSideMenu && <SideMenu />}
+
+				<div className="d-flex flex-fill pt-4">
+					<div className="mx-4 px-2 w-100">
+						<Outlet
+							context={{
+								setHasQuickLinksPanel,
+								setHasSideMenu,
+							}}
+						/>
+					</div>
+
+					{hasQuickLinksPanel && <QuickLinksPanel />}
+				</div>
+			</div>
+		</>
 	);
 };
 

@@ -22,9 +22,11 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileEntryVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileShortcutVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FolderHorizontalCard;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Hits;
@@ -60,9 +63,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
@@ -149,6 +154,17 @@ public class RepositoryBrowserTagDisplayContext {
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle", "icon");
+
+		return _displayStyle;
+	}
+
 	public String getFolderURL(Folder folder) {
 		return _getFolderURL(folder.getFolderId());
 	}
@@ -194,6 +210,83 @@ public class RepositoryBrowserTagDisplayContext {
 		).put(
 			"repositoryId", String.valueOf(_repositoryId)
 		).build();
+	}
+
+	public String getRepositoryEntryIcon(RepositoryEntry repositoryEntry) {
+		if (repositoryEntry instanceof FileEntry) {
+			return "documents-and-media";
+		}
+
+		if (repositoryEntry instanceof FileShortcut) {
+			return "shortcut";
+		}
+
+		if (repositoryEntry instanceof Folder) {
+			return "folder";
+		}
+
+		throw new IllegalArgumentException(
+			"Repository entry model not a file entry, file shortcut or folder" +
+				repositoryEntry);
+	}
+
+	public String getRepositoryEntryModifiedDateDescription(
+		RepositoryEntry repositoryEntry) {
+
+		Date modifiedDate = repositoryEntry.getModifiedDate();
+
+		return LanguageUtil.getTimeDescription(
+			_httpServletRequest,
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
+	}
+
+	public String getRepositoryEntrySizeValue(RepositoryEntry repositoryEntry)
+		throws PortalException {
+
+		if (repositoryEntry instanceof Folder) {
+			return StringPool.BLANK;
+		}
+
+		FileEntry fileEntry = _getFileEntry(repositoryEntry);
+
+		return LanguageUtil.formatStorageSize(
+			fileEntry.getSize(), _themeDisplay.getLocale());
+	}
+
+	public String getRepositoryEntryThumbnailSrc(
+			RepositoryEntry repositoryEntry)
+		throws Exception {
+
+		return DLURLHelperUtil.getThumbnailSrc(
+			(FileEntry)repositoryEntry, _themeDisplay);
+	}
+
+	public String getRepositoryEntryTitle(RepositoryEntry repositoryEntry) {
+		if (repositoryEntry instanceof FileEntry) {
+			FileEntry fileEntry = (FileEntry)repositoryEntry;
+
+			return fileEntry.getTitle();
+		}
+
+		if (repositoryEntry instanceof FileShortcut) {
+			FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
+
+			return fileShortcut.getToTitle();
+		}
+
+		if (repositoryEntry instanceof Folder) {
+			Folder folder = (Folder)repositoryEntry;
+
+			return folder.getName();
+		}
+
+		throw new IllegalArgumentException(
+			"Repository entry model not a file entry, file shortcut or folder" +
+				repositoryEntry);
+	}
+
+	public String getRepositoryEntryURL(RepositoryEntry repositoryEntry) {
+		return getFolderURL((Folder)repositoryEntry);
 	}
 
 	public ResultRowSplitter getResultRowSplitter() {
@@ -266,6 +359,43 @@ public class RepositoryBrowserTagDisplayContext {
 			"Invalid repository model " + repositoryEntry);
 	}
 
+	public boolean isDescriptiveDisplayStyle() {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isIconDisplayStyle() {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isRepositoryEntryNavigable(RepositoryEntry repositoryEntry) {
+		if (repositoryEntry instanceof Folder) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isRepositoryEntryThumbnailAvailable(
+			RepositoryEntry repositoryEntry)
+		throws Exception {
+
+		if (!(repositoryEntry instanceof FileEntry) ||
+			Validator.isNull(getRepositoryEntryThumbnailSrc(repositoryEntry))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isVerticalCard(RepositoryEntry repositoryEntry) {
 		if (repositoryEntry instanceof Folder) {
 			return false;
@@ -306,6 +436,20 @@ public class RepositoryBrowserTagDisplayContext {
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		return searchContainer;
+	}
+
+	private FileEntry _getFileEntry(RepositoryEntry repositoryEntry)
+		throws PortalException {
+
+		if (repositoryEntry instanceof FileEntry) {
+			return (FileEntry)repositoryEntry;
+		}
+
+		FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
+
+		FileVersion fileVersion = fileShortcut.getFileVersion();
+
+		return fileVersion.getFileEntry();
 	}
 
 	private String _getFolderURL(long folderId) {
@@ -410,6 +554,7 @@ public class RepositoryBrowserTagDisplayContext {
 		return searchContainer;
 	}
 
+	private String _displayStyle;
 	private final DLAppService _dlAppService;
 	private final ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;

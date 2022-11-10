@@ -129,7 +129,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 
 	@Override
 	public String[] getDisplayViews() {
-		return new String[] {"icon"};
+		return new String[] {"icon", "descriptive", "list"};
 	}
 
 	@Override

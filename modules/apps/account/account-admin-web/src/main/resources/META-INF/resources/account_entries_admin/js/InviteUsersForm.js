@@ -17,7 +17,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayMultiSelect from '@clayui/multi-select';
-import {getOpener} from 'frontend-js-web';
+import {getOpener, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 function InviteUsersForm({
@@ -35,9 +35,54 @@ function InviteUsersForm({
 	};
 
 	const InviteUserFormGroup = ({index}) => {
+		const [accountRoles, setAccountRoles] = useState([]);
+		const [emailAddresses, setEmailAddresses] = useState([]);
+		const [invalidAccountRoles, setInvalidAccountRoles] = useState([]);
+		const [invalidEmailAddresses, setInvalidEmailAddresses] = useState([]);
+
+		const isEmailAddressValid = (emailAddresses) => {
+			const emailRegex = /.+@.+\..+/i;
+
+			return emailRegex.test(emailAddresses);
+		};
+
+		const validateAccountRoles = (items) => {
+			setAccountRoles(items);
+
+			const invalidItems = [];
+
+			items.map(({label}) => {
+				if (
+					!availableAccountRoles.some(
+						(accountRole) => accountRole.label === label
+					)
+				) {
+					invalidItems.push(label);
+				}
+			});
+
+			setInvalidAccountRoles(invalidItems);
+		};
+
+		const validateEmailAddresses = (items) => {
+			setEmailAddresses(items);
+
+			const invalidItems = [];
+
+			items.map(({label}) => {
+				if (!isEmailAddressValid(label)) {
+					invalidItems.push(label);
+				}
+			});
+
+			setInvalidEmailAddresses(invalidItems);
+		};
+
 		return (
 			<ClayLayout.Sheet size="lg">
-				<ClayForm.Group>
+				<ClayForm.Group
+					className={invalidEmailAddresses.length ? 'has-error' : ''}
+				>
 					<label
 						htmlFor={`${portletNamespace}emailAddressesMultiSelect${index}`}
 					>
@@ -53,12 +98,35 @@ function InviteUsersForm({
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
 								id={`${portletNamespace}emailAddressesMultiSelect${index}`}
+								items={emailAddresses}
+								onItemsChange={validateEmailAddresses}
 							/>
+
+							{!!invalidEmailAddresses.length && (
+								<ClayForm.FeedbackGroup>
+									{invalidEmailAddresses.map(
+										(invalidEmailAddress) => (
+											<ClayForm.FeedbackItem
+												key={invalidEmailAddress}
+											>
+												{sub(
+													Liferay.Language.get(
+														'x-is-not-a-valid-email-address'
+													),
+													invalidEmailAddress
+												)}
+											</ClayForm.FeedbackItem>
+										)
+									)}
+								</ClayForm.FeedbackGroup>
+							)}
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
+				<ClayForm.Group
+					className={invalidAccountRoles.length ? 'has-error' : ''}
+				>
 					<label
 						htmlFor={`${portletNamespace}accountRolesMultiSelect${index}`}
 					>
@@ -69,6 +137,8 @@ function InviteUsersForm({
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
 								id={`${portletNamespace}accountRolesMultiSelect${index}`}
+								items={accountRoles}
+								onItemsChange={validateAccountRoles}
 								sourceItems={availableAccountRoles}
 							/>
 
@@ -79,6 +149,25 @@ function InviteUsersForm({
 									)}
 								</ClayForm.Text>
 							</ClayForm.FeedbackGroup>
+
+							{!!invalidAccountRoles.length && (
+								<ClayForm.FeedbackGroup>
+									{invalidAccountRoles.map(
+										(invalidAccountRole) => (
+											<ClayForm.FeedbackItem
+												key={invalidAccountRole}
+											>
+												{sub(
+													Liferay.Language.get(
+														'x-is-not-a-valid-role'
+													),
+													invalidAccountRole
+												)}
+											</ClayForm.FeedbackItem>
+										)
+									)}
+								</ClayForm.FeedbackGroup>
+							)}
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</ClayForm.Group>

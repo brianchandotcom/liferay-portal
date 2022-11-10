@@ -45,6 +45,25 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 			</c:if>
 
 			<%= articleDisplay.getContent() %>
+
+			<c:if test="<%= articleDisplay.isPaginate() && (paginationURL != null) %>">
+				<div>
+					<react:component
+						module="journal_article/js/JournalArticlePagination.es"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"activePage", articleDisplay.getCurrentPage()
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"paginationURL", String.valueOf(paginationURL)
+							).put(
+								"totalPages", articleDisplay.getNumberOfPages()
+							).build()
+						%>'
+					/>
+				</div>
+			</c:if>
 		</div>
 
 		<%
@@ -53,18 +72,6 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 		PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 		%>
 
-		<c:if test="<%= articleDisplay.isPaginate() && (paginationURL != null) %>">
-			<liferay-ui:page-iterator
-				cur="<%= articleDisplay.getCurrentPage() %>"
-				curParam="page"
-				delta="<%= 1 %>"
-				id="articleDisplayPages"
-				maxPages="<%= 25 %>"
-				portletURL="<%= paginationURL %>"
-				total="<%= articleDisplay.getNumberOfPages() %>"
-				type="article"
-			/>
-		</c:if>
 	</c:otherwise>
 </c:choose>
 

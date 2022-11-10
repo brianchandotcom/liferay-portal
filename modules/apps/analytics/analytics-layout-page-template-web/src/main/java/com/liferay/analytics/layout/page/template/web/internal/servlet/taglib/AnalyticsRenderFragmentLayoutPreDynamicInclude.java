@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,10 +74,12 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 	private void _printAnalyticsCloudAssetTracker(
 		String className, long classPK, PrintWriter printWriter, String title) {
 
-		String analyticsAssetType =
-			AnalyticsRenderFragmentLayoutUtil.getAnalyticsAssetType(className);
+		AnalyticsRenderFragmentLayoutUtil.AnalyticsAssetType
+			analyticsAssetType =
+				AnalyticsRenderFragmentLayoutUtil.getAnalyticsAssetType(
+					className);
 
-		if (Validator.isNull(analyticsAssetType)) {
+		if (analyticsAssetType == null) {
 			return;
 		}
 
@@ -84,7 +88,19 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		printWriter.print("\" data-analytics-asset-title=\"");
 		printWriter.print(HtmlUtil.escapeAttribute(title));
 		printWriter.print("\" data-analytics-asset-type=\"");
-		printWriter.print(analyticsAssetType);
+		printWriter.print(analyticsAssetType.getType());
+
+		Map<String, String> attributes = analyticsAssetType.getAttributes();
+
+		Set<Map.Entry<String, String>> entries = attributes.entrySet();
+
+		for (Map.Entry<String, String> entry : entries) {
+			printWriter.print("\" ");
+			printWriter.print(entry.getKey());
+			printWriter.print("=\"");
+			printWriter.print(entry.getValue());
+		}
+
 		printWriter.print("\">");
 	}
 

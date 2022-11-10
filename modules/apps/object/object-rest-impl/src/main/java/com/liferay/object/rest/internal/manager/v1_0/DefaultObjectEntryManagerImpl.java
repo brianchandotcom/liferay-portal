@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -336,16 +338,28 @@ public class DefaultObjectEntryManagerImpl
 		long[] accountEntryIds = {_NONEXISTING_ACCOUNT_ENTRY_ID};
 
 		if (objectDefinition.isAccountEntryRestricted()) {
-			List<AccountEntry> accountEntries =
-				_accountEntryLocalService.getUserAccountEntries(
-					dtoConverterContext.getUserId(),
-					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
-					new String[] {
-						AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-						AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
-					},
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+			List<AccountEntry> accountEntries = null;
+
+			if (_roleLocalService.hasUserRole(
+					dtoConverterContext.getUserId(), companyId,
+					RoleConstants.ADMINISTRATOR, true)) {
+
+				accountEntries = _accountEntryLocalService.getAccountEntries(
+					companyId, WorkflowConstants.STATUS_APPROVED,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			}
+			else {
+				accountEntries =
+					_accountEntryLocalService.getUserAccountEntries(
+						dtoConverterContext.getUserId(),
+						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+						new String[] {
+							AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+							AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
+						},
+						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS);
+			}
 
 			accountEntryIds = ListUtil.toLongArray(
 				accountEntries, AccountEntry::getAccountEntryId);
@@ -1070,6 +1084,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

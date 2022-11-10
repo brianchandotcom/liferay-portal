@@ -616,6 +616,8 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionLocalizationPersistence.findByCPDefinitionId(
 				cpDefinitionId);
 
+		Map<Locale, String> newNameMap = new HashMap<>();
+
 		for (CPDefinitionLocalization cpDefinitionLocalization :
 				cpDefinitionLocalizations) {
 
@@ -636,9 +638,30 @@ public class CPDefinitionLocalServiceImpl
 						"copy-of-x", newCPDefinitionLocalization.getName()));
 			}
 
-			cpDefinitionLocalizationPersistence.update(
-				newCPDefinitionLocalization);
+			newCPDefinitionLocalization =
+				cpDefinitionLocalizationPersistence.update(
+					newCPDefinitionLocalization);
+
+			newNameMap.put(
+				LocaleUtil.fromLanguageId(
+					newCPDefinitionLocalization.getLanguageId()),
+				newCPDefinitionLocalization.getName());
 		}
+
+		// Friendly URL
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			newCPDefinition.getCompanyId());
+
+		Map<String, String> newURLTitleMap = _getUniqueUrlTitles(
+			newCPDefinition, newNameMap);
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(CProduct.class),
+			newCProduct.getCProductId(), newURLTitleMap, serviceContext);
+
+		// Attachment
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryPersistence.findByC_C(

@@ -1,0 +1,8 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "styles.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Claims List on MDF Request Detail",
+	"type": "react"
+}

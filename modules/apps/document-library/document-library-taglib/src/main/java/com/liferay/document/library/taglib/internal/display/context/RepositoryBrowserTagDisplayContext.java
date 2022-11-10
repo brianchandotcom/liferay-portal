@@ -26,6 +26,8 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -104,6 +107,100 @@ public class RepositoryBrowserTagDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(FileEntry fileEntry) {
+		return DropdownItemListBuilder.add(
+			() -> _fileEntryModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), fileEntry,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "rename");
+				dropdownItem.putData(
+					"renameURL", getRenameFileEntryURL(fileEntry));
+				dropdownItem.putData("value", fileEntry.getTitle());
+				dropdownItem.setIcon("pencil");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "rename"));
+			}
+		).add(
+			() -> _fileEntryModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), fileEntry,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL", getDeleteFileEntryURL(fileEntry));
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
+	public List<DropdownItem> getActionDropdownItems(
+		FileShortcut fileShortcut) {
+
+		return DropdownItemListBuilder.add(
+			() -> _fileShortcutModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), fileShortcut,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL", getDeleteFileShortcutURL(fileShortcut));
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
+	public List<DropdownItem> getActionDropdownItems(Folder folder) {
+		return DropdownItemListBuilder.add(
+			() -> _folderModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "rename");
+				dropdownItem.putData("renameURL", getRenameFolderURL(folder));
+				dropdownItem.putData("value", folder.getName());
+				dropdownItem.setIcon("pencil");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "rename"));
+			}
+		).add(
+			() -> _folderModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData("deleteURL", getDeleteFolderURL(folder));
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
+	public List<DropdownItem> getActionDropdownItems(
+			RepositoryEntry repositoryEntry)
+		throws PortalException {
+
+		if (repositoryEntry instanceof FileEntry) {
+			return getActionDropdownItems((FileEntry)repositoryEntry);
+		}
+
+		if (repositoryEntry instanceof FileShortcut) {
+			return getActionDropdownItems((FileShortcut)repositoryEntry);
+		}
+
+		if (repositoryEntry instanceof Folder) {
+			return getActionDropdownItems((Folder)repositoryEntry);
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid repository model " + repositoryEntry);
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -177,9 +274,7 @@ public class RepositoryBrowserTagDisplayContext {
 				"Invalid repository model " + repositoryEntry);
 		}
 
-		return new FolderHorizontalCard(
-			(Folder)repositoryEntry, _folderModelResourcePermission,
-			_httpServletRequest, this);
+		return new FolderHorizontalCard((Folder)repositoryEntry, this);
 	}
 
 	public ManagementToolbarDisplayContext getManagementToolbarDisplayContext()
@@ -344,15 +439,12 @@ public class RepositoryBrowserTagDisplayContext {
 
 		if (repositoryEntry instanceof FileEntry) {
 			return new FileEntryVerticalCard(
-				(FileEntry)repositoryEntry, _fileEntryModelResourcePermission,
-				_httpServletRequest, this);
+				(FileEntry)repositoryEntry, _httpServletRequest, this);
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
 			return new FileShortcutVerticalCard(
-				(FileShortcut)repositoryEntry,
-				_fileShortcutModelResourcePermission, _httpServletRequest,
-				this);
+				(FileShortcut)repositoryEntry, _httpServletRequest, this);
 		}
 
 		throw new IllegalArgumentException(

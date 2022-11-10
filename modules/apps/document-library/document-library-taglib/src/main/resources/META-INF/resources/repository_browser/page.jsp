@@ -79,6 +79,12 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 							<liferay-ui:message arguments="<%= new String[] {repositoryEntry.getUserName(), repositoryBrowserTagDisplayContext.getRepositoryEntryModifiedDateDescription(repositoryEntry)} %>" key="x-modified-x-ago" />
 						</span>
 					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							dropdownItems="<%= repositoryBrowserTagDisplayContext.getActionDropdownItems(repositoryEntry) %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test="<%= repositoryBrowserTagDisplayContext.isIconDisplayStyle() %>">
 					<liferay-ui:search-container-column-text>
@@ -115,6 +121,12 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 						name="modified-date"
 					>
 						<liferay-ui:message arguments="<%= new String[] {repositoryEntry.getUserName(), repositoryBrowserTagDisplayContext.getRepositoryEntryModifiedDateDescription(repositoryEntry)} %>" key="x-modified-x-ago" />
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							dropdownItems="<%= repositoryBrowserTagDisplayContext.getActionDropdownItems(repositoryEntry) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>

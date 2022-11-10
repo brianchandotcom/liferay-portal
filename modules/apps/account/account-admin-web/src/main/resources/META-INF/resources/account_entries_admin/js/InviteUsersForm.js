@@ -39,6 +39,16 @@ function InviteUsersForm({
 		const [emailAddresses, setEmailAddresses] = useState([]);
 		const [invalidAccountRoles, setInvalidAccountRoles] = useState([]);
 		const [invalidEmailAddresses, setInvalidEmailAddresses] = useState([]);
+		const [showRequiredMessage, setShowRequiredMessage] = useState(false);
+
+		const checkInputValue = () => {
+			if (!emailAddresses.length) {
+				setShowRequiredMessage(true);
+			}
+			else {
+				setShowRequiredMessage(false);
+			}
+		};
 
 		const isEmailAddressValid = (emailAddresses) => {
 			const emailRegex = /.+@.+\..+/i;
@@ -67,6 +77,10 @@ function InviteUsersForm({
 		const validateEmailAddresses = (items) => {
 			setEmailAddresses(items);
 
+			if (items.length) {
+				setShowRequiredMessage(false);
+			}
+
 			const invalidItems = [];
 
 			items.map(({label}) => {
@@ -81,7 +95,11 @@ function InviteUsersForm({
 		return (
 			<ClayLayout.Sheet size="lg">
 				<ClayForm.Group
-					className={invalidEmailAddresses.length ? 'has-error' : ''}
+					className={
+						!!invalidEmailAddresses.length || showRequiredMessage
+							? 'has-error'
+							: ''
+					}
 				>
 					<label
 						htmlFor={`${portletNamespace}emailAddressesMultiSelect${index}`}
@@ -99,8 +117,19 @@ function InviteUsersForm({
 							<ClayMultiSelect
 								id={`${portletNamespace}emailAddressesMultiSelect${index}`}
 								items={emailAddresses}
+								onBlur={checkInputValue}
 								onItemsChange={validateEmailAddresses}
 							/>
+
+							{showRequiredMessage && (
+								<ClayForm.FeedbackGroup>
+									<ClayForm.FeedbackItem>
+										{Liferay.Language.get(
+											'this-field-is-required'
+										)}
+									</ClayForm.FeedbackItem>
+								</ClayForm.FeedbackGroup>
+							)}
 
 							{!!invalidEmailAddresses.length && (
 								<ClayForm.FeedbackGroup>

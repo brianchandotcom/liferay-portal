@@ -207,7 +207,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			Layout layout = _layoutLocalService.fetchLayout(
 				fragmentEntryLink.getPlid());
 
-			if (layout.isDraftLayout()) {
+			if (layout.isDraftLayout() || layout.isTypeAssetDisplay()) {
 				return false;
 			}
 		}

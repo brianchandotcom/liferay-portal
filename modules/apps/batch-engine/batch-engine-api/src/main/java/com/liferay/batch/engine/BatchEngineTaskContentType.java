@@ -19,6 +19,6 @@ package com.liferay.batch.engine;
  */
 public enum BatchEngineTaskContentType {
 
-	CSV, JSON, JSONL, XLS, XLSX
+	CSV, JSON, JSONL, JSONT, XLS, XLSX
 
 }

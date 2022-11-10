@@ -109,13 +109,17 @@ interface ObjectFieldView extends ObjectField {
 }
 
 interface ObjectDefinition {
+	DBTableName?: string;
 	accountEntryRestricted: boolean;
+	accountEntryRestrictedObjectFieldId: string;
 	accountEntryRestrictedObjectFieldName: string;
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
 	defaultLanguageId: Locale;
 	enableCategorization: boolean;
+	enableComments: boolean;
+	enableObjectEntryHistory: boolean;
 	externalReferenceCode: string;
 	id: number;
 	label: LocalizedValue<string>;
@@ -137,6 +141,7 @@ interface ObjectDefinition {
 	};
 	storageType?: string;
 	system: boolean;
+	titleObjectFieldId: number | string;
 	titleObjectFieldName: string;
 }
 

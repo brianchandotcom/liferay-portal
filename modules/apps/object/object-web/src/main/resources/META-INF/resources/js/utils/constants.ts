@@ -12,6 +12,8 @@
  * details.
  */
 
+export const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 export const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),

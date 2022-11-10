@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.layout.helper;
+package com.liferay.layout.provider;
 
 import com.liferay.layout.util.structure.LayoutStructure;
 
 /**
  * @author Víctor Galán
  */
-public interface LayoutStructureHelper {
+public interface LayoutStructureProvider {
 
 	public LayoutStructure getLayoutStructure(
 		long plid, long segmentsExperienceId);

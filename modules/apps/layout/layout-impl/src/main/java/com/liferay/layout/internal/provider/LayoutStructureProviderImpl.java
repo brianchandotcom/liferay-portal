@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.layout.internal.helper;
+package com.liferay.layout.internal.provider;
 
-import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Víctor Galán
  */
-@Component(service = LayoutStructureHelper.class)
-public class LayoutStructureHelperImpl implements LayoutStructureHelper {
+@Component(service = LayoutStructureProvider.class)
+public class LayoutStructureProviderImpl implements LayoutStructureProvider {
 
 	@Override
 	public LayoutStructure getLayoutStructure(
@@ -140,7 +140,7 @@ public class LayoutStructureHelperImpl implements LayoutStructureHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutStructureHelperImpl.class);
+		LayoutStructureProviderImpl.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

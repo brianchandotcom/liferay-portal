@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BulkDocumentRequestRetryConfiguration {
 
-	@Meta.AD(deflt = "1", required = false)
+	@Meta.AD(deflt = "0", required = false)
 	public int numberOfTries();
 
 	@Meta.AD(deflt = "60", required = false)

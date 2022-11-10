@@ -182,10 +182,17 @@ public class BulkDocumentRequestExecutorImpl
 			}
 			catch (Exception exception) {
 				if (i++ >= _numberOfTries) {
-					if (_numberOfTries > 1) {
+					if (_numberOfTries == 1) {
+						_log.error("The retry failed to get a bulk response");
+					}
+					else if (_numberOfTries == 2) {
+						_log.error(
+							"Both retries failed to get a bulk response");
+					}
+					else if (_numberOfTries > 2) {
 						_log.error(
 							"All " + _numberOfTries +
-								" tries failed to get a bulk response");
+								" retries failed to get a bulk response");
 					}
 
 					throw new RuntimeException(exception);
@@ -193,10 +200,10 @@ public class BulkDocumentRequestExecutorImpl
 
 				_log.error(
 					StringBundler.concat(
-						"There was an exception during getting a response to ",
-						"a request from the search server, retrying after ",
-						_waitInSeconds, " seconds (", i, "/", _numberOfTries,
-						"). ", exception));
+						"There was an exception while getting a response from ",
+						"the search engine, will retry in ", _waitInSeconds,
+						" seconds (", i, "/", _numberOfTries, "). ",
+						exception));
 
 				try {
 					Thread.sleep(_waitInSeconds * Time.SECOND);

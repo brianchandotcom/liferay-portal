@@ -172,7 +172,7 @@ definition {
 
 			ACUtils.createWCAndAddToPage(
 				layoutName = "AC Page 2",
-				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="favorite-food-poll" data-analytics-asset-category="polls"><a href="/poll-instructions.pdf" data-analytics-asset-action="download">Download the Poll Instructions </a><h1> What's your favorite food? </h1><form action="/submit.php"><div><input type="radio" id="sushi" name="food" value="Sushi"checked><label for="sushi">Sushi</label></div><div><input type="radio" id="pizza" name="food" value="Pizza"><label for="pizza">Pizza</label></div><input type="submit" value="Submit" /></form></div>''',
+				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="analytics-portal" data-analytics-asset-category="AC">%0A<h1> What'\''s your favorite portal? </h1>%0A</div>''',
 				webContentTitle = "Custom Asset Untitled");
 		}
 

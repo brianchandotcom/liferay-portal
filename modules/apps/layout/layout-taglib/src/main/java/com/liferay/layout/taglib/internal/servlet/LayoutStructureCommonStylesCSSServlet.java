@@ -18,7 +18,7 @@ import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
-import com.liferay.layout.helper.LayoutStructureHelper;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.structure.CommonStylesUtil;
@@ -110,7 +110,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		}
 
 		LayoutStructure layoutStructure =
-			_layoutStructureHelper.getLayoutStructure(
+			_layoutStructureProvider.getLayoutStructure(
 				layout.getPlid(),
 				SegmentsExperienceUtil.getSegmentsExperienceId(
 					httpServletRequest));
@@ -488,6 +488,6 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
-	private LayoutStructureHelper _layoutStructureHelper;
+	private LayoutStructureProvider _layoutStructureProvider;
 
 }

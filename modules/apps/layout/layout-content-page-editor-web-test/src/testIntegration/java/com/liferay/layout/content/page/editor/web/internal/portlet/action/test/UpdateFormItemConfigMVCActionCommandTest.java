@@ -33,10 +33,10 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
-import com.liferay.layout.helper.LayoutStructureHelper;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -173,7 +173,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
-					_layoutStructureHelper, _segmentsExperienceId);
+					_layoutStructureProvider, _segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -226,7 +226,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
-					_layoutStructureHelper, _segmentsExperienceId);
+					_layoutStructureProvider, _segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -277,7 +277,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
-					_layoutStructureHelper, _segmentsExperienceId);
+					_layoutStructureProvider, _segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -364,7 +364,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			JSONObject addItemJSONObject =
 				ContentLayoutTestUtil.addItemToLayout(
 					"{}", LayoutDataItemTypeConstants.TYPE_FORM, _layout,
-					_layoutStructureHelper, _segmentsExperienceId);
+					_layoutStructureProvider, _segmentsExperienceId);
 
 			long classNameId = _portal.getClassNameId(
 				MockObject.class.getName());
@@ -424,7 +424,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 				false, String.valueOf(classNameId), "0", _layout,
-				_layoutStructureHelper, _segmentsExperienceId, _INFO_FIELDS);
+				_layoutStructureProvider, _segmentsExperienceId, _INFO_FIELDS);
 
 			String formItemId = jsonObject.getString("addedItemId");
 
@@ -478,7 +478,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 			JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 				false, String.valueOf(classNameId), "0", _layout,
-				_layoutStructureHelper, _segmentsExperienceId, _INFO_FIELDS);
+				_layoutStructureProvider, _segmentsExperienceId, _INFO_FIELDS);
 
 			String formItemId = jsonObject.getString("addedItemId");
 
@@ -767,7 +767,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		_layoutPageTemplateStructureLocalService;
 
 	@Inject
-	private LayoutStructureHelper _layoutStructureHelper;
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/update_form_item_config"

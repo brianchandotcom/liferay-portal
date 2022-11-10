@@ -14,7 +14,7 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
-import com.liferay.layout.helper.LayoutStructureHelper;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -84,14 +84,14 @@ public class RenderLayoutUtilityPageEntryTag extends IncludeTag {
 			return null;
 		}
 
-		LayoutStructureHelper layoutStructureHelper =
+		LayoutStructureProvider layoutStructureProvider =
 			ServletContextUtil.getLayoutStructureHelper();
 
 		long defaultSegmentsExperienceId =
 			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
 				layoutUtilityPageEntry.getPlid());
 
-		return layoutStructureHelper.getLayoutStructure(
+		return layoutStructureProvider.getLayoutStructure(
 			layoutUtilityPageEntry.getPlid(), defaultSegmentsExperienceId);
 	}
 

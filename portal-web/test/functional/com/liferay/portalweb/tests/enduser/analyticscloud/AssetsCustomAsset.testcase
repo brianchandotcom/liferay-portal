@@ -164,6 +164,51 @@ definition {
 		}
 	}
 
+	@description = "Bug ID: LRAC-12040 | Automation ID: LRAC-12199 | Test Summary: Create an untitled custom asset"
+	@priority = "4"
+	test CanCreateUntitledCustomAsset {
+		task ("Add a custom asset untitled") {
+			ACUtils.addPage(layoutName = "AC Page 2");
+
+			ACUtils.createWCAndAddToPage(
+				layoutName = "AC Page 2",
+				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="favorite-food-poll" data-analytics-asset-category="polls"><a href="/poll-instructions.pdf" data-analytics-asset-action="download">Download the Poll Instructions </a><h1> What's your favorite food? </h1><form action="/submit.php"><div><input type="radio" id="sushi" name="food" value="Sushi"checked><label for="sushi">Sushi</label></div><div><input type="radio" id="pizza" name="food" value="Pizza"><label for="pizza">Pizza</label></div><input type="submit" value="Submit" /></form></div>''',
+				webContentTitle = "Custom Asset Untitled");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Navigate to Custom Asset page") {
+			ACUtils.navigateToSitePage(
+					pageName = "AC Page 2",
+					siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Go to Custom Assets") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Custom");
+		}
+
+		task ("Assert Untitled Custom Asset") {
+			ACUtils.viewGenericText(textValueList = "-");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8095 | Test Summary: Can delete a custom asset report"
 	@priority = "5"
 	test CanDeleteCustomAssetReport {

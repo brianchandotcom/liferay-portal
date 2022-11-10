@@ -99,6 +99,7 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 						disabled={connected}
 						id="inputToken"
 						onChange={({target: {value}}) => setToken(value)}
+						placeholder={Liferay.Language.get('paste-token-here')}
 						type="text"
 						value={token}
 					/>

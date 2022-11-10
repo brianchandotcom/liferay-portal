@@ -13,14 +13,10 @@
  */
 
 import {
-	fetch,
 	getCheckedCheckboxes,
-	getOpener,
-	objectToFormData,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
-	openToast,
 	postForm,
 	sub,
 } from 'frontend-js-web';
@@ -122,46 +118,6 @@ export default function propsTransformer({
 					containerProps: {
 						className: 'modal-height-xl',
 					},
-					customEvents: [
-						{
-							name: `${portletNamespace}inviteUsers`,
-							onEvent(event) {
-								fetch(data?.inviteAccountUsersURL, {
-									body: objectToFormData({
-										[`${portletNamespace}accountEntryId`]: event.accountEntryId,
-										[`${portletNamespace}emailAddresses`]: event.emailAddresses,
-									}),
-									method: 'POST',
-								})
-									.then((response) => response.json())
-									.then(({success}) => {
-										if (success) {
-											getOpener().Liferay.fire(
-												'closeModal',
-												{
-													id: `${portletNamespace}inviteUsersDialog`,
-													redirect: event.redirect,
-												}
-											);
-										}
-										else {
-											throw new Error();
-										}
-									})
-									.catch(() => {
-										openToast({
-											message: Liferay.Language.get(
-												'please-enter-only-email-addresses-with-valid-domains'
-											),
-											title: Liferay.Language.get(
-												'error'
-											),
-											type: 'danger',
-										});
-									});
-							},
-						},
-					],
 					id: `${portletNamespace}inviteUsersDialog`,
 					iframeBodyCssClass: '',
 					size: 'lg',

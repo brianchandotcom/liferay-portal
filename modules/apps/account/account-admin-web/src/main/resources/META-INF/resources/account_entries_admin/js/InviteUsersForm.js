@@ -17,12 +17,12 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayMultiSelect from '@clayui/multi-select';
-import {getOpener, sub} from 'frontend-js-web';
+import {fetch, getOpener, openToast, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 function InviteUsersForm({
-	accountEntryId,
 	availableAccountRoles,
+	inviteAccountUsersURL,
 	portletNamespace,
 	redirectURL,
 }) {
@@ -117,6 +117,7 @@ function InviteUsersForm({
 							<ClayMultiSelect
 								autoFocus={true}
 								id={`${portletNamespace}emailAddressesMultiSelect${index}`}
+								inputName={`${portletNamespace}emailAddresses${index}`}
 								items={emailAddresses}
 								onBlur={checkInputValue}
 								onItemsChange={validateEmailAddresses}
@@ -167,6 +168,7 @@ function InviteUsersForm({
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
 								id={`${portletNamespace}accountRolesMultiSelect${index}`}
+								inputName={`${portletNamespace}accountRoleIds${index}`}
 								items={accountRoles}
 								onItemsChange={validateAccountRoles}
 								sourceItems={availableAccountRoles}
@@ -215,12 +217,35 @@ function InviteUsersForm({
 		const error = form?.querySelector('.has-error');
 
 		if (!error) {
-			const openerWindow = getOpener();
+			const formData = new FormData(form);
 
-			openerWindow.Liferay.fire(`${portletNamespace}inviteUsers`, {
-				accountEntryId,
-				redirect: `${redirectURL}`,
-			});
+			formData.append(`${portletNamespace}count`, count);
+
+			fetch(inviteAccountUsersURL, {
+				body: formData,
+				method: 'POST',
+			})
+				.then((response) => response.json())
+				.then(({success}) => {
+					if (success) {
+						getOpener().Liferay.fire('closeModal', {
+							id: `${portletNamespace}inviteUsersDialog`,
+							redirect: redirectURL,
+						});
+					}
+					else {
+						throw new Error();
+					}
+				})
+				.catch(() => {
+					openToast({
+						message: Liferay.Language.get(
+							'please-enter-only-email-addresses-with-valid-domains'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
+				});
 		}
 	};
 

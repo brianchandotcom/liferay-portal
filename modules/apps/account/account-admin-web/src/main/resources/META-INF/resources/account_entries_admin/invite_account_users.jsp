@@ -20,13 +20,17 @@
 InviteUsersDisplayContext inviteUsersDisplayContext = new InviteUsersDisplayContext();
 %>
 
+<portlet:actionURL name="/account_admin/invite_account_users" var="inviteAccountUsersURL">
+	<portlet:param name="accountEntryId" value='<%= ParamUtil.getString(request, "accountEntryId") %>' />
+</portlet:actionURL>
+
 <react:component
 	module="account_entries_admin/js/InviteUsersForm"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"accountEntryId", ParamUtil.getLong(request, "accountEntryId")
-		).put(
 			"availableAccountRoles", inviteUsersDisplayContext.getAvailableAccountRolesMultiselectItems(ParamUtil.getLong(request, "accountEntryId"), themeDisplay.getCompanyId())
+		).put(
+			"inviteAccountUsersURL", inviteAccountUsersURL
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(

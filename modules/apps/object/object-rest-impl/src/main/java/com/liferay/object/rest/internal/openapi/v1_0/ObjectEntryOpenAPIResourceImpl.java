@@ -27,6 +27,7 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.ObjectEntryOpenAPIContributor;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -141,7 +142,8 @@ public class ObjectEntryOpenAPIResourceImpl
 
 		return _openAPIResource.getOpenAPI(
 			new ObjectEntryOpenAPIContributor(
-				_bundleContext, _dtoConverterRegistry, _objectDefinition,
+				_bundleContext, _dtoConverterRegistry,
+				_objectActionLocalService, _objectDefinition,
 				_objectDefinitionLocalService, this,
 				_objectRelationshipLocalService, _openAPIResource,
 				_systemObjectDefinitionMetadataRegistry),
@@ -296,6 +298,9 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ObjectActionLocalService _objectActionLocalService;
 
 	private ObjectDefinition _objectDefinition;
 

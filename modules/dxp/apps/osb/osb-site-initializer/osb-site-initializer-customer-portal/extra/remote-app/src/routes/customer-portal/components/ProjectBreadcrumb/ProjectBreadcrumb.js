@@ -19,8 +19,8 @@ import i18n from '../../../../common/I18n';
 import Skeleton from '../../../../common/components/Skeleton';
 import useCurrentKoroneikiAccount from '../../../../common/hooks/useCurrentKoroneikiAccount';
 import useDebounce from '../../../../common/hooks/useDebounce';
-import useIntersectionObserver from '../../../home/components/ProjectsList/hooks/useIntersectionObserver';
-import useKoroneikiAccounts from '../../../home/hooks/useKoroneikiAccounts';
+import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
+import useKoroneikiAccounts from '../../../../common/hooks/useKoroneikiAccounts';
 
 const DELAY_TYPING_TIME = 500;
 const MAX_ITEM_BEFORE_FILTER = 9;

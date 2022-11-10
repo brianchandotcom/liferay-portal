@@ -13,10 +13,10 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
+import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import useRouterPath from '../../../../common/hooks/useRouterPath';
 import {Liferay} from '../../../../common/services/liferay';
 import ProjectCard from './components/ProjectCard';
-import useIntersectionObserver from './hooks/useIntersectionObserver';
 
 const ProjectList = ({
 	compressed,

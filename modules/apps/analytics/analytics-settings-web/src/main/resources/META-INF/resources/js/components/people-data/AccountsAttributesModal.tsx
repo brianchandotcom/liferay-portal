@@ -40,11 +40,12 @@ const AccountsAttributesModal: React.FC<ICommonModalProps> = ({
 				value: 'sampleData',
 			},
 		]}
+		
 		// TODO: replace fetchAccountGroups with attributes request when created (waiting for backend PR with endpoint)
 
 		fetchFn={fetchAccountGroups}
 		observer={observer}
-		onAddItems={(items) => console.log(items)}
+		onAddItems={() => {}}
 		onCloseModal={onCloseModal}
 		title={Liferay.Language.get('sync-account-attributes')}
 	/>

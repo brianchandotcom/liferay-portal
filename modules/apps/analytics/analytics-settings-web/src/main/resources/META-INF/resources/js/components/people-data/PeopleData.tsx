@@ -46,6 +46,7 @@ const PeopleData: React.FC = () => {
 	} = useModal();
 
 	const attributesList = [
+
 		// TODO: Remove mocked data on "count" property
 
 		{

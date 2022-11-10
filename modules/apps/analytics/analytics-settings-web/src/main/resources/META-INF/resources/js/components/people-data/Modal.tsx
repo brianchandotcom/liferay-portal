@@ -60,6 +60,7 @@ const Modal: React.FC<IModalProps> = ({
 					)}
 					fetchFn={fetchFn}
 					mapperItems={(items: TRawItem[]) => {
+
 						// TODO: when attributes backend is done, check if the returned object on map will have changes.
 						// Check what values will be passed instead of empty strings on "columns: [name, '', '']"
 						// If changes neccessary, check if mapperItems will need to be passed on the parent component.

@@ -68,12 +68,14 @@ describe('updateRowColumns', () => {
 	it('dispatch updateRowColumns action when the promise is resolved', async () => {
 		await runThunk();
 
-		expect(updateRowColumns).toHaveBeenCalledWith({
-			itemId: '0',
-			layoutData: {
-				items: {},
-				version: 1,
-			},
-		});
+		expect(updateRowColumns).toHaveBeenCalledWith(
+			expect.objectContaining({
+				itemId: '0',
+				layoutData: {
+					items: {},
+					version: 1,
+				},
+			})
+		);
 	});
 });

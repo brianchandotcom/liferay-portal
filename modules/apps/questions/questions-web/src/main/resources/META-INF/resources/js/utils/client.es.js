@@ -342,6 +342,15 @@ export const getThreadQuery = `
 			status
 			subscribed
 			viewCount
+			withValidAnswers: messageBoardMessages(filter: "showAsAnswer eq true") {
+				totalCount
+				items {
+				  id
+				  headline
+				  articleBody
+				  showAsAnswer
+				}
+			  }
 		}
 	}
 `;
@@ -752,14 +761,14 @@ export function getThread(friendlyUrlPath, siteKey) {
 	});
 }
 
-export function getMessages(messageBoardThreadId, page, pageSize) {
+export function getMessages(messageBoardThreadId, page, pageSize, sortBy) {
 	return clientNestedFields.request({
 		query: getMessagesQuery,
 		variables: {
 			messageBoardThreadId,
 			page,
 			pageSize,
-			sort: 'dateCreated:asc',
+			sort: sortBy,
 		},
 	});
 }

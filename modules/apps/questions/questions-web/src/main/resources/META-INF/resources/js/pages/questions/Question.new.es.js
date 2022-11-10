@@ -69,6 +69,15 @@ import {
 } from '../../utils/utils.es';
 import FlagsContainer from './components/FlagsContainer';
 
+const tabs = [
+	{label: Liferay.Language.get('newest'), sortBy: 'dateCreated:desc'},
+	{label: Liferay.Language.get('oldest'), sortBy: 'dateCreated:asc'},
+	{
+		label: Liferay.Language.get('votes'),
+		sortBy: 'ratingsStatTotalScore:desc',
+	},
+];
+
 const Question = ({
 	display = {
 		actions: true,
@@ -77,7 +86,7 @@ const Question = ({
 		kebab: false,
 		rating: true,
 		styled: false,
-		tabs: false,
+		tabs: true,
 	},
 	history,
 	questionId,
@@ -97,7 +106,7 @@ const Question = ({
 
 	const [error, setError] = useState(null);
 	const [isPageScroll, setIsPageScroll] = useState(false);
-	const [active, setActive] = useState(0);
+	const [activeIndex, setActiveIndex] = useState(0);
 
 	const editorRef = useRef('');
 
@@ -116,15 +125,17 @@ const Question = ({
 	const [answers, setAnswers] = useState({});
 
 	const fetchMessages = useCallback(() => {
+		const sortBy = tabs[activeIndex].sortBy;
+
 		if (question && question.id) {
-			getMessages(question.id, page, pageSize).then(
+			getMessages(question.id, page, pageSize, sortBy).then(
 				({data: {messageBoardThreadMessageBoardMessages}}) => {
 					setAnswers(messageBoardThreadMessageBoardMessages);
 					setLoadingAnswer(false);
 				}
 			);
 		}
-	}, [question, page, pageSize]);
+	}, [activeIndex, question, page, pageSize]);
 
 	useEffect(() => {
 		getThread(questionId, context.siteKey)
@@ -171,7 +182,7 @@ const Question = ({
 
 	useEffect(() => {
 		fetchMessages();
-	}, [fetchMessages]);
+	}, [activeIndex, fetchMessages]);
 
 	const questionVisited = context?.questionsVisited?.includes(question.id);
 
@@ -664,159 +675,123 @@ const Question = ({
 									  } ${Liferay.Language.get('answers')}`}
 							</h3>
 
-							{display.tabs && (
-								<ClayTabs
-									active={active}
-									modern
-									onActiveChange={setActive}
+							<ClayTabs
+								active={activeIndex}
+								modern
+								onActiveChange={setActiveIndex}
+							>
+								{tabs.map((tab, index) => (
+									<ClayTabs.Item
+										active={activeIndex === index}
+										innerProps={{
+											'aria-controls': `tabpanel-${index}`,
+										}}
+										key={index}
+										onClick={() => setActiveIndex(index)}
+									>
+										{tab.label}
+									</ClayTabs.Item>
+								))}
+							</ClayTabs>
+
+							<ClayTabs.Content activeIndex={activeIndex} fade>
+								<div
+									className={classNames({
+										'c-mt-3': !display.styled,
+										'd-none': display.styled,
+									})}
 								>
-									<ClayTabs.Item
-										active={active === 0}
-										innerProps={{
-											'aria-controls': 'tabpanel-1',
-										}}
-										onClick={() => {
-											setActive(0);
-										}}
+									<PaginatedList
+										activeDelta={pageSize}
+										activePage={page}
+										changeDelta={setPageSize}
+										changePage={setPage}
+										data={answers}
 									>
-										{Liferay.Language.get('active')}
-									</ClayTabs.Item>
+										{(answer) => (
+											<Answer
+												answer={answer}
+												answerChange={answerChange}
+												answers={answers}
+												canMarkAsAnswer={
+													!question.locked &&
+													!!question.actions.replace
+												}
+												context={context}
+												deleteAnswer={deleteAnswer}
+												editable={!question.locked}
+												key={answer.id}
+												onSubscription={onSubscription}
+												question={question}
+											/>
+										)}
+									</PaginatedList>
+								</div>
 
-									<ClayTabs.Item
-										active={active === 1}
-										innerProps={{
-											'aria-controls': 'tabpanel-2',
-										}}
-										onClick={() => {
-											setActive(1);
-										}}
-									>
-										{Liferay.Language.get('oldest')}
-									</ClayTabs.Item>
+								{display.actions &&
+									question &&
+									question.status !== 'pending' &&
+									question.actions &&
+									question.actions['reply-to-thread'] && (
+										<div className="c-mt-5">
+											{isVisibleEditor && (
+												<>
+													<DefaultQuestionsEditor
+														label={Liferay.Language.get(
+															'your-answer'
+														)}
+														onContentLengthValid={
+															setIsPostButtonDisable
+														}
+														question={question}
+														ref={editorRef}
+													/>
 
-									<ClayTabs.Item
-										active={active === 2}
-										innerProps={{
-											'aria-controls': 'tabpanel-3',
-										}}
-										onClick={() => {
-											setActive(2);
-										}}
-									>
-										{Liferay.Language.get('votes')}
-									</ClayTabs.Item>
-								</ClayTabs>
-							)}
-
-							<ClayTabs.Content activeIndex={active} fade>
-								<ClayTabs.TabPane aria-labelledby="tab-1">
-									<div
-										className={classNames('', {
-											'c-mt-3': !display.styled,
-											'd-none': display.styled,
-										})}
-									>
-										<PaginatedList
-											activeDelta={pageSize}
-											activePage={page}
-											changeDelta={setPageSize}
-											changePage={setPage}
-											data={answers}
-										>
-											{(answer) => (
-												<Answer
-													answer={answer}
-													answerChange={answerChange}
-													answers={answers}
-													canMarkAsAnswer={
-														!question.locked &&
-														!!question.actions
-															.replace
-													}
-													context={context}
-													deleteAnswer={deleteAnswer}
-													editable={!question.locked}
-													key={answer.id}
-													onSubscription={
-														onSubscription
-													}
-													question={question}
-												/>
+													<SubscritionCheckbox
+														checked={
+															allowSubscription
+														}
+														setChecked={
+															setAllowSubscription
+														}
+													/>
+												</>
 											)}
-										</PaginatedList>
-									</div>
 
-									{display.actions &&
-										question &&
-										question.status !== 'pending' &&
-										question.actions &&
-										question.actions['reply-to-thread'] && (
-											<div className="c-mt-5">
-												{isVisibleEditor && (
-													<>
-														<DefaultQuestionsEditor
-															label={Liferay.Language.get(
-																'your-answer'
-															)}
-															onContentLengthValid={
-																setIsPostButtonDisable
-															}
-															question={question}
-															ref={editorRef}
-														/>
-
-														<SubscritionCheckbox
-															checked={
-																allowSubscription
-															}
-															setChecked={
-																setAllowSubscription
-															}
-														/>
-													</>
+											{display.addAnswer &&
+												!isVisibleEditor && (
+													<ClayButton
+														displayType="primary"
+														onClick={
+															onShowEditorAnswer
+														}
+													>
+														{Liferay.Language.get(
+															'add-answer'
+														)}
+													</ClayButton>
 												)}
 
-												{display.addAnswer &&
-													!isVisibleEditor && (
-														<ClayButton
-															displayType="primary"
-															onClick={
-																onShowEditorAnswer
-															}
-														>
-															{Liferay.Language.get(
-																'add-answer'
-															)}
-														</ClayButton>
-													)}
-
-												{!question.locked &&
-													isVisibleEditor && (
-														<ClayButton
-															disabled={
-																isPostButtonDisable
-															}
-															displayType="primary"
-															onClick={
-																onCreateAnswer
-															}
-														>
-															{context.trustedUser
-																? Liferay.Language.get(
-																		'post-answer'
-																  )
-																: Liferay.Language.get(
-																		'submit-for-publication'
-																  )}
-														</ClayButton>
-													)}
-											</div>
-										)}
-								</ClayTabs.TabPane>
-
-								<ClayTabs.TabPane aria-labelledby="tab-2"></ClayTabs.TabPane>
-
-								<ClayTabs.TabPane aria-labelledby="tab-3"></ClayTabs.TabPane>
+											{!question.locked &&
+												isVisibleEditor && (
+													<ClayButton
+														disabled={
+															isPostButtonDisable
+														}
+														displayType="primary"
+														onClick={onCreateAnswer}
+													>
+														{context.trustedUser
+															? Liferay.Language.get(
+																	'post-answer'
+															  )
+															: Liferay.Language.get(
+																	'submit-for-publication'
+															  )}
+													</ClayButton>
+												)}
+										</div>
+									)}
 							</ClayTabs.Content>
 						</div>
 					</div>

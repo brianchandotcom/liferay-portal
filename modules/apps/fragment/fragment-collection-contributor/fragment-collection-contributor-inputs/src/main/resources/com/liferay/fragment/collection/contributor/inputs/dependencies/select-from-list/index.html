@@ -47,6 +47,14 @@
 				</li>
 				[/#if]
 			</ul>
+
+			<div aria-hidden="true" class="d-none forms-select-from-list-loading-results-message">
+				${languageUtil.get(locale, "loading")}
+			</div>
+
+			<div aria-hidden="true" class="d-none forms-select-from-list-no-results-message">
+				${languageUtil.get(locale, "no-results-were-found")}
+			</div>
 		</div>
 	</div>
 </div>

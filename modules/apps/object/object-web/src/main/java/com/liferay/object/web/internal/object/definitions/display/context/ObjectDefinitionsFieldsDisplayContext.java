@@ -20,7 +20,7 @@ import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -61,13 +61,13 @@ public class ObjectDefinitionsFieldsDisplayContext
 		ListTypeDefinitionService listTypeDefinitionService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_listTypeDefinitionService = listTypeDefinitionService;
-		_objectFieldBusinessTypeTracker = objectFieldBusinessTypeTracker;
+		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 	}
 
@@ -138,7 +138,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 		boolean includeRelationshipObjectFieldBusinessType, Locale locale) {
 
 		List<ObjectFieldBusinessType> objectFieldBusinessTypes =
-			_objectFieldBusinessTypeTracker.getObjectFieldBusinessTypes();
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessTypes();
 
 		Stream<ObjectFieldBusinessType> stream =
 			objectFieldBusinessTypes.stream();
@@ -194,8 +194,8 @@ public class ObjectDefinitionsFieldsDisplayContext
 	}
 
 	private final ListTypeDefinitionService _listTypeDefinitionService;
-	private final ObjectFieldBusinessTypeTracker
-		_objectFieldBusinessTypeTracker;
+	private final ObjectFieldBusinessTypeRegistry
+		_objectFieldBusinessTypeRegistry;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 

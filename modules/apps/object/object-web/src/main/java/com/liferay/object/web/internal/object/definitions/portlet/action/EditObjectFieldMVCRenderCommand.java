@@ -16,7 +16,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -73,7 +73,7 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 					_portal.getHttpServletRequest(renderRequest),
 					_listTypeDefinitionService,
 					_objectDefinitionModelResourcePermission,
-					_objectFieldBusinessTypeTracker,
+					_objectFieldBusinessTypeRegistry,
 					_objectRelationshipLocalService));
 		}
 		catch (PortalException portalException) {
@@ -96,7 +96,7 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 		_objectDefinitionModelResourcePermission;
 
 	@Reference
-	private ObjectFieldBusinessTypeTracker _objectFieldBusinessTypeTracker;
+	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

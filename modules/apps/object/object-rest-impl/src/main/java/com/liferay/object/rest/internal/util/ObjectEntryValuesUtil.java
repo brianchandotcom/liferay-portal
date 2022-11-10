@@ -16,7 +16,7 @@ package com.liferay.object.rest.internal.util;
 
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.object.field.business.type.ObjectFieldBusinessTypeTracker;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -38,7 +38,7 @@ public class ObjectEntryValuesUtil {
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectField objectField,
-			ObjectFieldBusinessTypeTracker objectFieldBusinessTypeTracker,
+			ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 			long userId, Map<String, Object> values)
 		throws PortalException {
 
@@ -48,7 +48,7 @@ public class ObjectEntryValuesUtil {
 
 		try {
 			ObjectFieldBusinessType objectFieldBusinessType =
-				objectFieldBusinessTypeTracker.getObjectFieldBusinessType(
+				objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
 					objectField.getBusinessType());
 
 			return objectFieldBusinessType.getValue(objectField, values);

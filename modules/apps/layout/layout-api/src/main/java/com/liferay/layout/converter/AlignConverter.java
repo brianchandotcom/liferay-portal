@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util.converter;
+package com.liferay.layout.converter;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -21,27 +21,21 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Sandro Chinea
+ * @author Pablo Molina
  */
-public class HtmlTagConverter {
+public class AlignConverter {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(
-			"Article", "article"
+			"Baseline", "align-items-baseline"
 		).put(
-			"Aside", "aside"
+			"Center", "align-items-center"
 		).put(
-			"Div", "div"
+			"End", "align-items-end"
 		).put(
-			"Footer", "footer"
+			"Start", "align-items-start"
 		).put(
-			"Header", "header"
-		).put(
-			"Main", "main"
-		).put(
-			"Nav", "nav"
-		).put(
-			"Section", "section"
+			"Stretch", "align-items-stretch"
 		).build();
 
 	public static String convertToExternalValue(String value) {

@@ -97,9 +97,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Click(
-				key_tabName = "Browser",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+			PageEditor.gotoTab(tabName = "Browser");
 		}
 
 		task ("When the page creator closes the panel") {

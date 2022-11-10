@@ -239,8 +239,7 @@ public class ObjectDefinitionResourceTest
 		ObjectDefinition objectDefinition = super.randomObjectDefinition();
 
 		objectDefinition.setAccountEntryRestricted(false);
-		objectDefinition.setAccountEntryRestrictedObjectFieldId(
-			Long.valueOf(0));
+		objectDefinition.setAccountEntryRestrictedObjectFieldName("");
 		objectDefinition.setActive(false);
 		objectDefinition.setLabel(
 			Collections.singletonMap(

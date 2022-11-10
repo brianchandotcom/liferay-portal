@@ -171,7 +171,8 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 		return new ObjectDefinition() {
 			{
 				accountEntryRestricted = false;
-				accountEntryRestrictedObjectFieldId = Long.valueOf(0);
+				accountEntryRestrictedObjectFieldName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				active = false;
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();

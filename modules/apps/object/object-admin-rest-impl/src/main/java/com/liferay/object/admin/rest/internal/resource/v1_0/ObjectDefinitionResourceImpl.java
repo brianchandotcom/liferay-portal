@@ -581,8 +581,6 @@ public class ObjectDefinitionResourceImpl
 			{
 				accountEntryRestricted =
 					objectDefinition.isAccountEntryRestricted();
-				accountEntryRestrictedObjectFieldId =
-					objectDefinition.getAccountEntryRestrictedObjectFieldId();
 				actions = HashMapBuilder.put(
 					"delete",
 					() -> {
@@ -717,6 +715,21 @@ public class ObjectDefinitionResourceImpl
 				}
 
 				system = objectDefinition.isSystem();
+
+				setAccountEntryRestrictedObjectFieldName(
+					() -> {
+						com.liferay.object.model.ObjectField
+							serviceBuilderObjectField =
+								_objectFieldLocalService.fetchObjectField(
+									objectDefinition.
+										getAccountEntryRestrictedObjectFieldId());
+
+						if (serviceBuilderObjectField == null) {
+							return "";
+						}
+
+						return serviceBuilderObjectField.getName();
+					});
 
 				setTitleObjectFieldName(
 					() -> {

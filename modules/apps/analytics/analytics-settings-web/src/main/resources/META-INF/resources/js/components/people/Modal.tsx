@@ -44,6 +44,7 @@ interface IModalProps {
 
 const Modal: React.FC<IModalProps> = ({
 	columns,
+	emptyStateTitle,
 	fetchFn,
 	noResultsTitle,
 	observer,
@@ -60,9 +61,7 @@ const Modal: React.FC<IModalProps> = ({
 			<ClayModal.Body>
 				<Table
 					columns={columns}
-					emptyStateTitle={Liferay.Language.get(
-						'there-are-no-account-groups'
-					)}
+					emptyStateTitle={emptyStateTitle}
 					fetchFn={fetchFn}
 					mapperItems={(items: TRawItem[]) => {
 						return items.map(({id, name, selected}) => ({

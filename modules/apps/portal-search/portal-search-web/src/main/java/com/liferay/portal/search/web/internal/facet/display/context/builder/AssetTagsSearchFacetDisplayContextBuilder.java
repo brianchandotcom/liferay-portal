@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.tag.facet.configuration.TagFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +112,10 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
+	}
+
+	public void setOrder(String order) {
+		_order = order;
 	}
 
 	public void setPaginationStartParameterName(
@@ -238,6 +243,12 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			}
 		}
 
+		if (_order != null) {
+			bucketDisplayContexts.sort(
+				BucketDisplayContextComparatorFactoryUtil.
+					getBucketDisplayContextComparator(_order));
+		}
+
 		return bucketDisplayContexts;
 	}
 
@@ -340,6 +351,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private int _maxTerms;
+	private String _order;
 	private String _paginationStartParameterName;
 	private String _parameterName;
 	private List<String> _selectedTags = Collections.emptyList();

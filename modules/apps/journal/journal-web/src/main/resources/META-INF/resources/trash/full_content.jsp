@@ -20,38 +20,21 @@
 AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute(WebKeys.ASSET_RENDERER_FACTORY);
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
-JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 %>
 
-<div class="journal-content-article">
-	<%= articleDisplay.getContent() %>
-</div>
-
-<c:if test="<%= articleDisplay.isPaginate() %>">
-	<br />
-
-	<liferay-ui:page-iterator
-		cur="<%= articleDisplay.getCurrentPage() %>"
-		curParam="page"
-		delta="<%= 1 %>"
-		id="articleDisplayPages"
-		maxPages="<%= 25 %>"
-		portletURL='<%=
-			PortletURLBuilder.createRenderURL(
-				renderResponse
-			).setMVCPath(
-				"/preview.jsp"
-			).setParameter(
-				"classNameId", assetRendererFactory.getClassNameId()
-			).setParameter(
-				"classPK", JournalArticleAssetRenderer.getClassPK(article)
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildPortletURL()
-		%>'
-		total="<%= articleDisplay.getNumberOfPages() %>"
-		type="article"
-	/>
-
-	<br />
-</c:if>
+<liferay-journal:journal-article-display
+	articleDisplay="<%= (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY) %>"
+	paginationURL='<%=
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/preview.jsp"
+		).setParameter(
+			"classNameId", assetRendererFactory.getClassNameId()
+		).setParameter(
+			"classPK", JournalArticleAssetRenderer.getClassPK(article)
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildPortletURL()
+	%>'
+/>

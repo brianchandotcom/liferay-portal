@@ -22,54 +22,35 @@
 AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute(WebKeys.ASSET_RENDERER_FACTORY);
 
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
+
+String pageRedirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(pageRedirect)) {
+	pageRedirect = currentURL;
+}
+
+int cur = ParamUtil.getInteger(request, "cur");
 %>
 
 <liferay-journal:journal-article-display
 	articleDisplay="<%= articleDisplay %>"
+	paginationURL='<%=
+		PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/view_content.jsp"
+		).setRedirect(
+			pageRedirect
+		).setParameter(
+			"cur", cur
+		).setParameter(
+			"groupId", articleDisplay.getGroupId()
+		).setParameter(
+			"type", assetRendererFactory.getType()
+		).setParameter(
+			"urlTitle", articleDisplay.getUrlTitle()
+		).buildPortletURL()
+	%>'
 />
-
-<c:if test="<%= articleDisplay.isPaginate() %>">
-
-	<%
-	String pageRedirect = ParamUtil.getString(request, "redirect");
-
-	if (Validator.isNull(pageRedirect)) {
-		pageRedirect = currentURL;
-	}
-
-	int cur = ParamUtil.getInteger(request, "cur");
-	%>
-
-	<br />
-
-	<liferay-ui:page-iterator
-		cur="<%= articleDisplay.getCurrentPage() %>"
-		curParam="page"
-		delta="<%= 1 %>"
-		id="articleDisplayPages"
-		maxPages="<%= 25 %>"
-		portletURL='<%=
-			PortletURLBuilder.createRenderURL(
-				renderResponse
-			).setMVCPath(
-				"/view_content.jsp"
-			).setRedirect(
-				pageRedirect
-			).setParameter(
-				"cur", cur
-			).setParameter(
-				"groupId", articleDisplay.getGroupId()
-			).setParameter(
-				"type", assetRendererFactory.getType()
-			).setParameter(
-				"urlTitle", articleDisplay.getUrlTitle()
-			).buildPortletURL()
-		%>'
-		total="<%= articleDisplay.getNumberOfPages() %>"
-		type="article"
-	/>
-
-	<br />
-</c:if>
 
 <liferay-util:dynamic-include key="com.liferay.journal.web#/asset/full_content.jsp#post" />

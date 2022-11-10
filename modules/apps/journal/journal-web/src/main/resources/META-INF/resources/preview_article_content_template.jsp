@@ -56,25 +56,11 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 	</nav>
 </aui:form>
 
-<%
-JournalArticleDisplay articleDisplay = journalPreviewArticleContentTemplateDisplayContext.getArticleDisplay();
-%>
-
 <div class="m-4">
-	<%= articleDisplay.getContent() %>
-
-	<c:if test="<%= articleDisplay.isPaginate() %>">
-		<liferay-ui:page-iterator
-			cur="<%= articleDisplay.getCurrentPage() %>"
-			curParam="page"
-			delta="<%= 1 %>"
-			id="articleDisplayPages"
-			maxPages="<%= 25 %>"
-			portletURL="<%= journalPreviewArticleContentTemplateDisplayContext.getPageIteratorPortletURL() %>"
-			total="<%= articleDisplay.getNumberOfPages() %>"
-			type="article"
-		/>
-	</c:if>
+	<liferay-journal:journal-article-display
+		articleDisplay="<%= journalPreviewArticleContentTemplateDisplayContext.getArticleDisplay() %>"
+		paginationURL="<%= journalPreviewArticleContentTemplateDisplayContext.getPageIteratorPortletURL() %>"
+	/>
 </div>
 
 <script>

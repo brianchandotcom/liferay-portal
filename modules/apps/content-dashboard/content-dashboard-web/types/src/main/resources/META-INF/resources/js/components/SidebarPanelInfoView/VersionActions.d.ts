@@ -22,6 +22,7 @@ export interface IAction {
 	icon?: string;
 	label: string;
 	name: string;
+	type: string;
 	url: string;
 }
 declare global {

@@ -61,7 +61,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		return _importTaskResource.postImportTask(
 			name, callbackURL, _getQueryParameterValue("createStrategy"),
 			_getExternalReferenceCode(), fields, _getImportStrategy(),
-			_getTaskItemDelegateName(), object);
+			_getTaskItemDelegateName(), _getItemsArray(object));
 	}
 
 	@Override
@@ -109,6 +109,16 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 	private String _getImportStrategy() {
 		return _getQueryParameterValue("importStrategy");
+	}
+
+	private Object _getItemsArray(Object object) {
+		if (!(object instanceof Map)) {
+			return object;
+		}
+
+		Map<?, ?> objectMap = (Map)object;
+
+		return objectMap.get("items");
 	}
 
 	private String _getQueryParameterValue(String queryParameterName) {

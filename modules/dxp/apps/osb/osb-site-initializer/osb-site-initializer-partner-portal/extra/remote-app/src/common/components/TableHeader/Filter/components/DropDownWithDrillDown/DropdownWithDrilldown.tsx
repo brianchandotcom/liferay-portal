@@ -13,7 +13,7 @@ import ClayDropDown, {ClayDropDownWithDrilldown} from '@clayui/drop-down';
 import classNames from 'classnames';
 import {memo, useEffect, useRef, useState} from 'react';
 
-import DrilldownMenuItems from './components/DrilldownMenuItems';
+import DrilldownMenuItems from './components/DrilldownMenuItems/DrilldownMenuItems';
 
 type History = {
 	id: string;

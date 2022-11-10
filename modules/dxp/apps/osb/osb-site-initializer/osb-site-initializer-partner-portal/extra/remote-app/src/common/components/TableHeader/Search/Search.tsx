@@ -17,7 +17,7 @@ interface IProps {
 	onSearchSubmit: (term: string) => void;
 }
 
-const SearchBar = ({onSearchSubmit}: IProps) => {
+const Search = ({onSearchSubmit}: IProps) => {
 	const [term, setTerm] = useState('');
 	const [searching, setSearching] = useState(true);
 
@@ -74,4 +74,4 @@ const SearchBar = ({onSearchSubmit}: IProps) => {
 	);
 };
 
-export default memo(SearchBar);
+export default memo(Search);

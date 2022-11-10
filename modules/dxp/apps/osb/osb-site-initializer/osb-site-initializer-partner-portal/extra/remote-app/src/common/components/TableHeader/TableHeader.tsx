@@ -12,8 +12,8 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
-import DropDownWithDrillDown from './Filter/components/DropDownWithDrillDown';
-import SearchBar from './Search/SearchBar';
+import DropDownWithDrillDown from './Filter/components/DropDownWithDrillDown/DropdownWithDrilldown';
+import SearchBar from './Search/Search';
 
 interface FilterItem {
 	component: JSX.Element;
@@ -79,4 +79,5 @@ const TableHeader = ({children, filters, onSearchSubmit}: IProps) => {
 		</div>
 	);
 };
+
 export default TableHeader;

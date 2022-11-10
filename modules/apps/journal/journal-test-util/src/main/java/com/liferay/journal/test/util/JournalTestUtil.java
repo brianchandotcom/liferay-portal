@@ -15,10 +15,17 @@
 package com.liferay.journal.test.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFeedConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -28,6 +35,8 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -48,6 +57,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -840,6 +850,64 @@ public class JournalTestUtil {
 			parentFolderId, name, description, serviceContext);
 	}
 
+	public static JournalArticle addJournalArticle(
+			DDMFormField ddmFormField,
+			DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter,
+			String fieldValue, long groupId, JournalConverter journalConverter)
+		throws Exception {
+
+		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
+
+		DDMForm ddmForm = _createDDMForm(ddmFormField, locale);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			groupId, JournalArticle.class.getName(), ddmForm, locale);
+
+		Fields fields = ddmFormValuesToFieldsConverter.convert(
+			ddmStructure,
+			_createDDMFormValues(
+				ddmForm,
+				_getDDMFormFieldValue(ddmFormField, fieldValue, locale),
+				locale));
+
+		String content = journalConverter.getContent(
+			ddmStructure, fields, groupId);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			groupId, ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		User user = TestPropsValues.getUser();
+
+		Calendar displayCal = CalendarFactoryUtil.getCalendar(
+			user.getTimeZone());
+
+		int displayDateDay = displayCal.get(Calendar.DATE);
+		int displayDateMonth = displayCal.get(Calendar.MONTH);
+		int displayDateYear = displayCal.get(Calendar.YEAR);
+		int displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
+		int displayDateMinute = displayCal.get(Calendar.MINUTE);
+
+		return JournalArticleLocalServiceUtil.addArticle(
+			null, TestPropsValues.getUserId(), groupId,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0, StringPool.BLANK,
+			true, JournalArticleConstants.VERSION_DEFAULT,
+			RandomTestUtil.randomLocaleStringMap(locale),
+			RandomTestUtil.randomLocaleStringMap(locale),
+			HashMapBuilder.put(
+				locale,
+				FriendlyURLNormalizerUtil.normalize(
+					RandomTestUtil.randomString(
+						LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			).build(),
+			content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), null, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+			null, null, ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
 	public static Element addMetadataElement(
 		Element element, String locale, String label) {
 
@@ -1080,6 +1148,46 @@ public class JournalTestUtil {
 		return updateArticle(
 			article, RandomTestUtil.randomString(), article.getContent(), false,
 			approved, serviceContext);
+	}
+
+	private static DDMForm _createDDMForm(
+		DDMFormField ddmFormField, Locale locale) {
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setDefaultLocale(locale);
+		ddmForm.addAvailableLocale(locale);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		return ddmForm;
+	}
+
+	private static DDMFormValues _createDDMFormValues(
+		DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(locale);
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		return ddmFormValues;
+	}
+
+	private static DDMFormFieldValue _getDDMFormFieldValue(
+		DDMFormField ddmFormField, String fieldValue, Locale locale) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName(ddmFormField.getName());
+
+		Value value = new LocalizedValue(locale);
+
+		value.addString(locale, fieldValue);
+
+		ddmFormFieldValue.setValue(value);
+
+		return ddmFormFieldValue;
 	}
 
 	private static String _getFeedFriendlyURL(long groupId, long plid)

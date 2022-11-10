@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Map;
 
@@ -73,7 +75,9 @@ public class CheckKBArticleMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_kbArticleLocalService.checkKBArticles();
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-165476"))) {
+			_kbArticleLocalService.checkKBArticles();
+		}
 	}
 
 	@Reference

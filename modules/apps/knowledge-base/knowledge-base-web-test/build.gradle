@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-api")
+	testIntegrationCompile project(":apps:portal:portal-props-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

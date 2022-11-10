@@ -599,6 +599,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 
+	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject

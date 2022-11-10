@@ -14,9 +14,13 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.dto.v1_0.FieldSummary;
+import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldSummaryResource;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,5 +31,37 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = FieldSummaryResource.class
 )
 public class FieldSummaryResourceImpl extends BaseFieldSummaryResourceImpl {
+
+	@Override
+	public FieldSummary getField() throws Exception {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		String[] syncedAccountFieldNames =
+			analyticsConfiguration.syncedAccountFieldNames();
+		String[] syncedContactFieldNames =
+			analyticsConfiguration.syncedContactFieldNames();
+		String[] syncedOrderFieldNames =
+			analyticsConfiguration.syncedOrderFieldNames();
+		String[] syncedProductFieldNames =
+			analyticsConfiguration.syncedProductFieldNames();
+		String[] syncedUserFieldNames =
+			analyticsConfiguration.syncedUserFieldNames();
+
+		return new FieldSummary() {
+			{
+				account = syncedAccountFieldNames.length;
+				order = syncedOrderFieldNames.length;
+				people =
+					syncedContactFieldNames.length +
+						syncedUserFieldNames.length;
+				product = syncedProductFieldNames.length;
+			}
+		};
+	}
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 }

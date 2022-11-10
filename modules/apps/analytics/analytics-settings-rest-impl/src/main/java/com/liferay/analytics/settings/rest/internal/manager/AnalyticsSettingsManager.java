@@ -17,6 +17,7 @@ package com.liferay.analytics.settings.rest.internal.manager;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.internal.constants.FieldPeopleConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -34,7 +36,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -105,19 +106,16 @@ public class AnalyticsSettingsManager {
 
 		Set<String> allKeys = settingsDescriptor.getAllKeys();
 
+		for (String multiValuedKey : settingsDescriptor.getMultiValuedKeys()) {
+			configurationProperties.computeIfAbsent(
+				multiValuedKey,
+				key -> _defaults.getOrDefault(key, new String[0]));
+		}
+
 		for (Map.Entry<String, Object> entry : properties.entrySet()) {
 			if (allKeys.contains(entry.getKey())) {
 				configurationProperties.put(entry.getKey(), entry.getValue());
 			}
-		}
-
-		Set<String> multiValuedKeys = new HashSet<>(
-			settingsDescriptor.getMultiValuedKeys());
-
-		multiValuedKeys.removeAll(configurationProperties.keySet());
-
-		for (String multiValuedKey : multiValuedKeys) {
-			configurationProperties.put(multiValuedKey, new String[0]);
 		}
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -180,6 +178,13 @@ public class AnalyticsSettingsManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsSettingsManager.class);
+
+	private static final Map<String, String[]> _defaults = HashMapBuilder.put(
+		"syncedContactFieldNames",
+		FieldPeopleConstants.FIELD_CONTACT_REQUIRED_NAMES
+	).put(
+		"syncedUserFieldNames", FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES
+	).build();
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

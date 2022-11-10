@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "demo-fragment",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Demo",
+	"thumbnailPath": "thumbnail.png",
+	"type": "component"
+}

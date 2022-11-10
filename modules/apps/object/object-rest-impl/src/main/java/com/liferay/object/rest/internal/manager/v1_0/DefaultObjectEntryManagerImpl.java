@@ -361,8 +361,10 @@ public class DefaultObjectEntryManagerImpl
 						QueryUtil.ALL_POS);
 			}
 
-			accountEntryIds = ListUtil.toLongArray(
-				accountEntries, AccountEntry::getAccountEntryId);
+			if (!accountEntries.isEmpty()) {
+				accountEntryIds = ListUtil.toLongArray(
+					accountEntries, AccountEntry::getAccountEntryId);
+			}
 		}
 
 		int start = QueryUtil.ALL_POS;

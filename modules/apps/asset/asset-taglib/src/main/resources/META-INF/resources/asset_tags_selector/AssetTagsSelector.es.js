@@ -17,9 +17,9 @@ import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
-import {objectToFormData, openSelectionModal} from 'frontend-js-web';
+import {objectToFormData, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const noop = () => {};
 
@@ -29,7 +29,7 @@ function AssetTagsSelector({
 	id,
 	inputName,
 	inputValue,
-	label,
+	label = Liferay.Language.get('tags'),
 	onInputValueChange = noop,
 	onSelectedItemsChange = noop,
 	portletURL,
@@ -37,6 +37,8 @@ function AssetTagsSelector({
 	selectedItems = [],
 	showSelectButton,
 }) {
+	const [selectionModalIsOpen, setSelectionModalIsOpen] = useState(false);
+
 	const {refetch, resource} = useResource({
 		fetchOptions: {
 			'body': objectToFormData({
@@ -120,7 +122,11 @@ function AssetTagsSelector({
 		);
 	};
 
+	const selectionModalId = inputName + '_SelectionModal';
+
 	const handleSelectButtonClick = () => {
+		setSelectionModalIsOpen(true);
+
 		const sub = (str, object) =>
 			str.replace(/\{([^}]+)\}/g, (_, m) => object[m]);
 
@@ -131,7 +137,11 @@ function AssetTagsSelector({
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			getSelectedItemsOnly: false,
+			id: {selectionModalId},
 			multiple: true,
+			onClose: () => {
+				setSelectionModalIsOpen(false);
+			},
 			onSelect: (dialogSelectedItems) => {
 				if (!dialogSelectedItems?.length) {
 					return;
@@ -204,9 +214,7 @@ function AssetTagsSelector({
 	return (
 		<div className="lfr-tags-selector-content" id={id}>
 			<ClayForm.Group>
-				<label htmlFor={inputName + '_MultiSelect'}>
-					{label || Liferay.Language.get('tags')}
-				</label>
+				<label htmlFor={inputName + '_MultiSelect'}>{label}</label>
 
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
@@ -237,6 +245,13 @@ function AssetTagsSelector({
 					{showSelectButton && (
 						<ClayInput.GroupItem shrink>
 							<ClayButton
+								aria-controls={selectionModalId}
+								aria-expanded={selectionModalIsOpen}
+								aria-haspopup="dialog"
+								aria-label={sub(
+									Liferay.Language.get('select-x'),
+									label
+								)}
 								displayType="secondary"
 								onClick={handleSelectButtonClick}
 							>

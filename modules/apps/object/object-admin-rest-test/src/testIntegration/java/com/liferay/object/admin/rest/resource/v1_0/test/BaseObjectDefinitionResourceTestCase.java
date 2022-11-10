@@ -187,6 +187,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		ObjectDefinition objectDefinition = randomObjectDefinition();
 
+		objectDefinition.setAccountEntryRestrictedObjectFieldName(regex);
 		objectDefinition.setExternalReferenceCode(regex);
 		objectDefinition.setName(regex);
 		objectDefinition.setPanelAppOrder(regex);
@@ -202,6 +203,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		objectDefinition = ObjectDefinitionSerDes.toDTO(json);
 
+		Assert.assertEquals(
+			regex, objectDefinition.getAccountEntryRestrictedObjectFieldName());
 		Assert.assertEquals(regex, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getName());
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
@@ -1100,11 +1103,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"accountEntryRestrictedObjectFieldId",
+					"accountEntryRestrictedObjectFieldName",
 					additionalAssertFieldName)) {
 
-				if (objectDefinition.getAccountEntryRestrictedObjectFieldId() ==
-						null) {
+				if (objectDefinition.
+						getAccountEntryRestrictedObjectFieldName() == null) {
 
 					valid = false;
 				}
@@ -1425,14 +1428,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"accountEntryRestrictedObjectFieldId",
+					"accountEntryRestrictedObjectFieldName",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						objectDefinition1.
-							getAccountEntryRestrictedObjectFieldId(),
+							getAccountEntryRestrictedObjectFieldName(),
 						objectDefinition2.
-							getAccountEntryRestrictedObjectFieldId())) {
+							getAccountEntryRestrictedObjectFieldName())) {
 
 					return false;
 				}
@@ -1851,9 +1854,15 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("accountEntryRestrictedObjectFieldId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+		if (entityFieldName.equals("accountEntryRestrictedObjectFieldName")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					objectDefinition.
+						getAccountEntryRestrictedObjectFieldName()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("actions")) {
@@ -2120,8 +2129,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		return new ObjectDefinition() {
 			{
 				accountEntryRestricted = RandomTestUtil.randomBoolean();
-				accountEntryRestrictedObjectFieldId =
-					RandomTestUtil.randomLong();
+				accountEntryRestrictedObjectFieldName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();

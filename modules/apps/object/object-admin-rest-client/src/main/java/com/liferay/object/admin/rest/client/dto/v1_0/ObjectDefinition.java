@@ -58,31 +58,31 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean accountEntryRestricted;
 
-	public Long getAccountEntryRestrictedObjectFieldId() {
-		return accountEntryRestrictedObjectFieldId;
+	public String getAccountEntryRestrictedObjectFieldName() {
+		return accountEntryRestrictedObjectFieldName;
 	}
 
-	public void setAccountEntryRestrictedObjectFieldId(
-		Long accountEntryRestrictedObjectFieldId) {
+	public void setAccountEntryRestrictedObjectFieldName(
+		String accountEntryRestrictedObjectFieldName) {
 
-		this.accountEntryRestrictedObjectFieldId =
-			accountEntryRestrictedObjectFieldId;
+		this.accountEntryRestrictedObjectFieldName =
+			accountEntryRestrictedObjectFieldName;
 	}
 
-	public void setAccountEntryRestrictedObjectFieldId(
-		UnsafeSupplier<Long, Exception>
-			accountEntryRestrictedObjectFieldIdUnsafeSupplier) {
+	public void setAccountEntryRestrictedObjectFieldName(
+		UnsafeSupplier<String, Exception>
+			accountEntryRestrictedObjectFieldNameUnsafeSupplier) {
 
 		try {
-			accountEntryRestrictedObjectFieldId =
-				accountEntryRestrictedObjectFieldIdUnsafeSupplier.get();
+			accountEntryRestrictedObjectFieldName =
+				accountEntryRestrictedObjectFieldNameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long accountEntryRestrictedObjectFieldId;
+	protected String accountEntryRestrictedObjectFieldName;
 
 	public Map<String, Map<String, String>> getActions() {
 		return actions;

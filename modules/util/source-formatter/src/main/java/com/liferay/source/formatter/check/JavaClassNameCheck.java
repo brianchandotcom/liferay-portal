@@ -212,6 +212,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 						notImplementedForbidClassName,
 						"' should not end with '",
 						notImplementedForbidClassName, "'"));
+
+				break;
 			}
 		}
 	}

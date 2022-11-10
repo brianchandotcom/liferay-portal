@@ -191,6 +191,41 @@ definition {
 		}
 	}
 
+	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
+	@priority = "4"
+	test HasOptionToEditName {
+		task ("And Given created custom view") {
+			FDSFilters.editFilters(
+				key_disableFilters = "Blue",
+				key_enableFilters = "Red",
+				key_filter = "Color");
+
+			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
+
+			Click(
+				key_itemName = "Description",
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+
+			FDSCustomView.createNewView(key_nameView = "TEST");
+
+			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+
+			Click(
+				key_itemName = "Save View",
+				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+		}
+
+		task ("When open ellisis next to custom view") {
+			Click(locator1 = "FrontendDataSet#ELLIPSIS");
+		}
+
+		task ("Then actions to edit custom view name is available") {
+			AssertElementPresent(
+				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER",
+				value1 = "Rename View");
+		}
+	}
+
 	@description = "LPS-164602 Frontend Dataset - column labels are not localized "
 	@priority = "4"
 	test ManagementBarCanBeLocalized {
@@ -240,45 +275,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "FrontendDataSet#RESET_FILTERS",
 				reset_filter = "Restablecer filtros");
-		}
-	}
-
-	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
-	@priority = "4"
-	test HasOptionToEditName {
-
-		task("And Given created custom view"){
-
-			FDSFilters.editFilters(
-				key_disableFilters = "Blue",
-				key_enableFilters = "Red",
-				key_filter = "Color");
-
-			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
-
-			Click(
-				key_itemName = "Description",
-				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
-
-			FDSCustomView.createNewView(key_nameView = "TEST");
-
-			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
-
-			Click(
-				key_itemName = "Save View",
-				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
-		}
-
-		task("When open ellisis next to custom view"){
-
-			Click(locator1 = "FrontendDataSet#ELLIPSIS");
-		}
-
-		task("Then actions to edit custom view name is available"){
-
-			AssertElementPresent(
-				value1 = "Rename View",
-				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 		}
 	}
 

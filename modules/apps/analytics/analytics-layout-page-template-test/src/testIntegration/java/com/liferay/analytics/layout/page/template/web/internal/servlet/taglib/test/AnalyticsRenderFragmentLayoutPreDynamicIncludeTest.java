@@ -141,6 +141,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 				"<div data-analytics-asset-id=\"", fileEntry.getFileEntryId(),
 				"\" data-analytics-asset-title=\"", fileEntry.getTitle(),
 				"\" data-analytics-asset-type=\"file",
+				"\" data-analytics-asset-version=\"", fileEntry.getVersion(),
 				"\" data-analytics-asset-action=\"preview\">"),
 			mockHttpServletResponse.getContentAsString());
 	}

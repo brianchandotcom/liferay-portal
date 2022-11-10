@@ -35,4 +35,6 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.List" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <liferay-theme:defineObjects />

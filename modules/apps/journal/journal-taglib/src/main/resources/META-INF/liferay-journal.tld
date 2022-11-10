@@ -75,6 +75,11 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>paginationURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showTitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

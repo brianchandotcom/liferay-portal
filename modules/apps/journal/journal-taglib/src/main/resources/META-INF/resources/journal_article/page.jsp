@@ -22,6 +22,7 @@
 JournalArticle article = (JournalArticle)request.getAttribute("liferay-journal:journal-article:article");
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute("liferay-journal:journal-article:articleDisplay");
 boolean dataAnalyticsTrackingEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-journal:journal-article:dataAnalyticsTrackingEnabled"));
+PortletURL paginationURL = (PortletURL)request.getAttribute("liferay-journal:journal-article:paginationURL");
 String viewMode = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW);
 String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-article:wrapperCssClass");
 %>

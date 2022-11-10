@@ -18,6 +18,8 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -28,6 +30,10 @@ public class JournalArticleDisplayTag extends IncludeTag {
 
 	public JournalArticleDisplay getArticleDisplay() {
 		return _articleDisplay;
+	}
+
+	public PortletURL getPaginationURL() {
+		return _paginationURL;
 	}
 
 	public String getWrapperCssClass() {
@@ -59,6 +65,10 @@ public class JournalArticleDisplayTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setPaginationURL(PortletURL paginationURL) {
+		_paginationURL = paginationURL;
+	}
+
 	public void setShowTitle(boolean showTitle) {
 		_showTitle = showTitle;
 	}
@@ -73,6 +83,7 @@ public class JournalArticleDisplayTag extends IncludeTag {
 
 		_articleDisplay = null;
 		_dataAnalyticsTrackingEnabled = true;
+		_paginationURL = null;
 		_showTitle = false;
 		_wrapperCssClass = null;
 	}
@@ -90,6 +101,8 @@ public class JournalArticleDisplayTag extends IncludeTag {
 			"liferay-journal:journal-article:dataAnalyticsTrackingEnabled",
 			String.valueOf(_dataAnalyticsTrackingEnabled));
 		httpServletRequest.setAttribute(
+			"liferay-journal:journal-article:paginationURL", _paginationURL);
+		httpServletRequest.setAttribute(
 			"liferay-journal:journal-article:showTitle",
 			String.valueOf(_showTitle));
 		httpServletRequest.setAttribute(
@@ -101,6 +114,7 @@ public class JournalArticleDisplayTag extends IncludeTag {
 
 	private JournalArticleDisplay _articleDisplay;
 	private boolean _dataAnalyticsTrackingEnabled = true;
+	private PortletURL _paginationURL;
 	private boolean _showTitle;
 	private String _wrapperCssClass;
 

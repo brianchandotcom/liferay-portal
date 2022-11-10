@@ -147,8 +147,6 @@ public class ContentUtil {
 			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String className = layoutClassedModelUsage.getClassName();
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
@@ -160,7 +158,7 @@ public class ContentUtil {
 				new InfoItemReference(
 					className, layoutClassedModelUsage.getClassPK()));
 
-		return jsonObject.put(
+		return JSONUtil.put(
 			"editImage",
 			() -> {
 				if (!ModelResourcePermissionUtil.contains(

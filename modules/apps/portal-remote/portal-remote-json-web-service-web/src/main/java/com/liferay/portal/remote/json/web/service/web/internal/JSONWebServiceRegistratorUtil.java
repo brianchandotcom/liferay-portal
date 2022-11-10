@@ -141,7 +141,9 @@ public class JSONWebServiceRegistratorUtil {
 			String path = JSONWebServiceMappingResolverUtil.resolvePath(
 				serviceBeanClass, method);
 
-			if (!JSONWebServiceNamingUtil.isIncludedPath(contextPath, path)) {
+			if (!JSONWebServiceNamingUtil.isIncludedPath(
+					contextName, contextPath, path)) {
+
 				continue;
 			}
 

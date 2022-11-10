@@ -14,6 +14,7 @@
 
 package com.liferay.portal.remote.json.web.service.web.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -154,11 +155,15 @@ public class JSONWebServiceNamingUtil {
 		return true;
 	}
 
-	public static boolean isIncludedPath(String contextPath, String path) {
+	public static boolean isIncludedPath(
+		String contextName, String contextPath, String path) {
+
 		String portalContextPath = PortalUtil.getPathContext();
 
 		if (!contextPath.equals(portalContextPath)) {
-			path = contextPath + StringPool.PERIOD + path.substring(1);
+			path = StringBundler.concat(
+				StringPool.SLASH, contextName, StringPool.PERIOD,
+				path.substring(1));
 		}
 
 		for (String excludedPath : _EXCLUDED_PATHS) {

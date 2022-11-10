@@ -160,6 +160,12 @@ public interface Http {
 
 	}
 
+	public enum CookieSpec {
+
+		DEFAULT, IGNORE_COOKIES, NETSCAPE, STANDARD, STANDARD_STRICT
+
+	}
+
 	public class FilePart {
 
 		public FilePart(
@@ -317,6 +323,10 @@ public interface Http {
 			return _cookies;
 		}
 
+		public CookieSpec getCookieSpec() {
+			return _cookieSpec;
+		}
+
 		public List<FilePart> getFileParts() {
 			return _fileParts;
 		}
@@ -446,6 +456,12 @@ public interface Http {
 			_cookies = cookies;
 		}
 
+		public void setCookieSpec(Http.CookieSpec cookieSpec) {
+			if (cookieSpec != null) {
+				_cookieSpec = cookieSpec;
+			}
+		}
+
 		public void setDelete(boolean delete) {
 			if (delete) {
 				_method = Method.DELETE;
@@ -538,6 +554,7 @@ public interface Http {
 		private Auth _auth;
 		private Body _body;
 		private Cookie[] _cookies;
+		private CookieSpec _cookieSpec;
 		private List<FilePart> _fileParts;
 		private boolean _followRedirects = true;
 		private Map<String, String> _headers;

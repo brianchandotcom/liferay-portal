@@ -286,8 +286,7 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				batchEngineZipUnit.getZipFileName(),
-				batchEngineImportConfiguration.companyId,
+				null, batchEngineImportConfiguration.companyId,
 				batchEngineImportConfiguration.userId, 100,
 				batchEngineImportConfiguration.callbackURL,
 				batchEngineImportConfiguration.className, content,

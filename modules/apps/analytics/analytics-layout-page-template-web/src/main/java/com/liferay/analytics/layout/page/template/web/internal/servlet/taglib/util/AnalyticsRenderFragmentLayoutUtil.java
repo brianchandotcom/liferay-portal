@@ -74,6 +74,12 @@ public class AnalyticsRenderFragmentLayoutUtil {
 		).put(
 			"com.liferay.journal.model.JournalArticle",
 			new AnalyticsAssetType("web-content")
+		).put(
+			"com.liferay.portal.kernel.repository.model.FileEntry",
+			new AnalyticsAssetType(
+				Collections.singletonMap(
+					"data-analytics-asset-action", "preview"),
+				"file")
 		).build();
 
 }

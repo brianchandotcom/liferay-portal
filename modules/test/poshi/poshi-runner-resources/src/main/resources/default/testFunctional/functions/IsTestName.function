@@ -3,7 +3,7 @@
 definition {
 
 	function isTestName {
-		selenium.isTestName("");
+		selenium.isTestName(${value1});
 	}
 
 }

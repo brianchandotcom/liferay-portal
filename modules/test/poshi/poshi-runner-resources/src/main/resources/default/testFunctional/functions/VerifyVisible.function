@@ -3,7 +3,7 @@
 definition {
 
 	function verifyVisible {
-		selenium.waitForVisible("", "false");
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.verifyVisible();
 	}

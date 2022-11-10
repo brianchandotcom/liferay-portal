@@ -115,6 +115,7 @@ function InviteUsersForm({
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
+								autoFocus={true}
 								id={`${portletNamespace}emailAddressesMultiSelect${index}`}
 								items={emailAddresses}
 								onBlur={checkInputValue}
@@ -204,17 +205,30 @@ function InviteUsersForm({
 		);
 	};
 
-	const submitForm = () => {
-		const openerWindow = getOpener();
+	const submitForm = (event) => {
+		event.preventDefault();
 
-		openerWindow.Liferay.fire(`${portletNamespace}inviteUsers`, {
-			accountEntryId,
-			redirect: `${redirectURL}`,
-		});
+		const form = document.querySelector(
+			`#${portletNamespace}inviteUserForm`
+		);
+
+		const error = form?.querySelector('.has-error');
+
+		if (!error) {
+			const openerWindow = getOpener();
+
+			openerWindow.Liferay.fire(`${portletNamespace}inviteUsers`, {
+				accountEntryId,
+				redirect: `${redirectURL}`,
+			});
+		}
 	};
 
 	return (
-		<ClayForm className="lfr-form-content">
+		<ClayForm
+			className="lfr-form-content"
+			id={`${portletNamespace}inviteUserForm`}
+		>
 			{[...Array(count)].map((_, index) => (
 				<InviteUserFormGroup index={index} key={index} />
 			))}
@@ -233,11 +247,7 @@ function InviteUsersForm({
 			</ClayLayout.SheetFooter>
 
 			<ClayLayout.SheetFooter className="dialog-footer">
-				<ClayButton
-					displayType="primary"
-					onClick={submitForm}
-					type="submit"
-				>
+				<ClayButton displayType="primary" onClick={submitForm}>
 					{Liferay.Language.get('invite')}
 				</ClayButton>
 

@@ -14,6 +14,9 @@
 
 package com.liferay.object.rest.internal.manager.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -59,6 +62,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -66,6 +70,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -73,6 +79,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -103,6 +110,7 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -147,14 +155,19 @@ public class DefaultObjectEntryManagerImplTest {
 			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		_simpleDTOConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
-			LocaleUtil.getDefault(), null, _user);
+			LocaleUtil.getDefault(), null, _adminUser);
 
-		_user = TestPropsValues.getUser();
+		_adminUser = TestPropsValues.getUser();
 
 		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
+			PermissionCheckerFactoryUtil.create(_adminUser));
 
-		PrincipalThreadLocal.setName(_user.getUserId());
+		PrincipalThreadLocal.setName(_adminUser.getUserId());
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-164801", "true"
+			).build());
 	}
 
 	@AfterClass
@@ -182,7 +195,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
-				null, _user.getUserId(),
+				null, _adminUser.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
@@ -283,7 +296,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				_user.getUserId(), _objectDefinition1.getObjectDefinitionId(),
+				_adminUser.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -446,14 +460,14 @@ public class DefaultObjectEntryManagerImplTest {
 			"countAggregationObjectFieldName");
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(),
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
 			"integerObjectFieldName", ObjectFilterConstants.TYPE_EQUALS,
 			"{\"eq\": \"15\"}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(),
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
 			"integerObjectFieldName", ObjectFilterConstants.TYPE_NOT_EQUALS,
 			"{\"ne\":\"15\"}");
 
@@ -463,14 +477,14 @@ public class DefaultObjectEntryManagerImplTest {
 			objectField.getObjectFieldId());
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(),
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
 			"picklistObjectFieldName", ObjectFilterConstants.TYPE_EXCLUDES,
 			"{\"not\":{\"in\":[\"" + listTypeEntryKey + "\"]}}");
 
 		_assertCountAggregationObjectFieldValue(1, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(),
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
 			"picklistObjectFieldName", ObjectFilterConstants.TYPE_INCLUDES,
 			"{\"in\":[\"" + listTypeEntryKey + "\"]}");
 
@@ -480,14 +494,14 @@ public class DefaultObjectEntryManagerImplTest {
 			objectField.getObjectFieldId());
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(), "status",
+			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
 			ObjectFilterConstants.TYPE_INCLUDES,
 			"{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}");
 
 		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(), "status",
+			_adminUser.getUserId(), objectField.getObjectFieldId(), "status",
 			ObjectFilterConstants.TYPE_EXCLUDES,
 			"{\"not\":{\"in\": [" + WorkflowConstants.STATUS_APPROVED + "]}}");
 
@@ -502,14 +516,14 @@ public class DefaultObjectEntryManagerImplTest {
 		String currentDateString = dateFormat.format(new Date());
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(), "createDate",
-			ObjectFilterConstants.TYPE_DATE_RANGE,
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
+			"createDate", ObjectFilterConstants.TYPE_DATE_RANGE,
 			StringBundler.concat(
 				"{\"le\": \"", currentDateString, "\", \"ge\": \"",
 				currentDateString, "\"}"));
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(), "modifiedDate",
-			ObjectFilterConstants.TYPE_DATE_RANGE,
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
+			"modifiedDate", ObjectFilterConstants.TYPE_DATE_RANGE,
 			StringBundler.concat(
 				"{\"le\": \"", currentDateString, "\", \"ge\": \"",
 				currentDateString, "\"}"));
@@ -517,7 +531,7 @@ public class DefaultObjectEntryManagerImplTest {
 		_assertCountAggregationObjectFieldValue(2, parentObjectEntry1);
 
 		_objectFilterLocalService.addObjectFilter(
-			_user.getUserId(), objectField.getObjectFieldId(),
+			_adminUser.getUserId(), objectField.getObjectFieldId(),
 			"dateObjectFieldName", ObjectFilterConstants.TYPE_DATE_RANGE,
 			"{\"le\": \"2020-01-02\", \"ge\": \"2020-01-02\"}");
 
@@ -778,6 +792,89 @@ public class DefaultObjectEntryManagerImplTest {
 			childObjectEntry2, childObjectEntry1);
 	}
 
+	@Test
+	public void testGetObjectEntriesAccountRestrictions() throws Exception {
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_companyId, "AccountEntry");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				_adminUser.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"oneToManyRelationshipName",
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinition1.setAccountEntryRestrictedObjectFieldId(
+			objectRelationship.getObjectFieldId2());
+
+		_objectDefinition1.setAccountEntryRestricted(true);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		_user = UserTestUtil.addUser();
+
+		_objectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Page<ObjectEntry> objectEntryPage =
+			_objectEntryManager.getObjectEntries(
+				_companyId, _objectDefinition1, null, null,
+				new DefaultDTOConverterContext(
+					false, Collections.emptyMap(), _dtoConverterRegistry, null,
+					LocaleUtil.getDefault(), null, _user),
+				null,
+				_filterPredicateFactory.create(
+					null, _objectDefinition2.getObjectDefinitionId()),
+				null, null);
+
+		Collection<ObjectEntry> objectEntries = objectEntryPage.getItems();
+
+		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+
+		Role role = _roleLocalService.getRole(_companyId, "Administrator");
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
+
+		objectEntryPage = _objectEntryManager.getObjectEntries(
+			_companyId, _objectDefinition1, null, null,
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, _user),
+			null,
+			_filterPredicateFactory.create(
+				null, _objectDefinition2.getObjectDefinitionId()),
+			null, null);
+
+		objectEntries = objectEntryPage.getItems();
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+	}
+
 	private void _addAggregationObjectField(
 			String functionName, String objectFieldName,
 			String objectRelationshipName)
@@ -828,7 +925,7 @@ public class DefaultObjectEntryManagerImplTest {
 	private String _addListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(
-				_user.getUserId(),
+				_adminUser.getUserId(),
 				_listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
@@ -1053,7 +1150,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				_user.getUserId(),
+				_adminUser.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -1061,7 +1158,7 @@ public class DefaultObjectEntryManagerImplTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			_user.getUserId(), objectDefinition.getObjectDefinitionId());
+			_adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -1130,7 +1227,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_dtoConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
-			LocaleUtil.getDefault(), uriInfo, _user);
+			LocaleUtil.getDefault(), uriInfo, _adminUser);
 	}
 
 	private void _testGetObjectEntries(
@@ -1161,6 +1258,7 @@ public class DefaultObjectEntryManagerImplTest {
 			(List<ObjectEntry>)objectEntryPage.getItems());
 	}
 
+	private static User _adminUser;
 	private static long _companyId;
 	private static DTOConverterContext _dtoConverterContext;
 
@@ -1174,7 +1272,9 @@ public class DefaultObjectEntryManagerImplTest {
 	private static PermissionChecker _originalPermissionChecker;
 	private static DateFormat _simpleDateFormat;
 	private static DTOConverterContext _simpleDTOConverterContext;
-	private static User _user;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private DLAppService _dlAppService;
@@ -1227,5 +1327,14 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

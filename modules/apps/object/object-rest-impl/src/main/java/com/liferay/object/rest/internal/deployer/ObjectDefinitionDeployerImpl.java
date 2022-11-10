@@ -24,6 +24,7 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValues
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectValidationRuleEngineExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
 import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
@@ -36,8 +37,10 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
+import com.liferay.object.util.JaxRsApplicationDescriptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -417,6 +420,47 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
 					).put(
 						"osgi.jaxrs.resource", "true"
+					).build()),
+				_bundleContext.registerService(
+					ObjectEntryRelatedObjectsResourceImpl.class,
+					new PrototypeServiceFactory
+						<ObjectEntryRelatedObjectsResourceImpl>() {
+
+						@Override
+						public ObjectEntryRelatedObjectsResourceImpl getService(
+							Bundle bundle,
+							ServiceRegistration
+								<ObjectEntryRelatedObjectsResourceImpl>
+									serviceRegistration) {
+
+							return new ObjectEntryRelatedObjectsResourceImpl(
+								_objectDefinitionLocalService,
+								_objectEntryManagerTracker,
+								_objectRelationshipService);
+						}
+
+						@Override
+						public void ungetService(
+							Bundle bundle,
+							ServiceRegistration
+								<ObjectEntryRelatedObjectsResourceImpl>
+									serviceRegistration,
+							ObjectEntryRelatedObjectsResourceImpl
+								objectEntryRelatedObjectsResourceImpl) {
+						}
+
+					},
+					HashMapDictionaryBuilder.<String, Object>put(
+						"api.version", "v1.0"
+					).put(
+						"entity.class.name",
+						ObjectEntry.class.getName() + "#" +
+							objectDefinition.getName()
+					).put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
+					).put(
+						"osgi.jaxrs.resource", "true"
 					).build())));
 	}
 
@@ -427,8 +471,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return;
 		}
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		_componentInstancesMap.computeIfAbsent(
-			systemObjectDefinitionMetadata.getRESTContextPath(),
+			JaxRsApplicationDescriptorUtil.getRestContextPath(
+				jaxRsApplicationDescriptor),
 			key -> Arrays.asList(
 				_relatedObjectEntryResourceImplComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -436,12 +484,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.application.select",
 						() -> {
-							String jaxRsApplicationName =
-								systemObjectDefinitionMetadata.
-									getJaxRsApplicationName();
+							String applicationName =
+								jaxRsApplicationDescriptor.getApplicationName();
 
-							return "(osgi.jaxrs.name=" + jaxRsApplicationName +
-								")";
+							return "(osgi.jaxrs.name=" + applicationName + ")";
 						}
 					).put(
 						"osgi.jaxrs.resource", "true"

@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -97,8 +98,8 @@ public class SalesforceObjectEntryManagerImpl
 	@Override
 	public ObjectEntry addObjectRelationshipMappingTableValues(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, String objectRelationshipName,
-			long primaryKey1, long primaryKey2)
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long primaryKey2)
 		throws Exception {
 
 		return null;
@@ -121,6 +122,16 @@ public class SalesforceObjectEntryManagerImpl
 		return getObjectEntry(
 			dtoConverterContext, externalReferenceCode, companyId,
 			objectDefinition, scopeKey);
+	}
+
+	@Override
+	public Object addSystemObjectRelationshipMappingTableValues(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long primaryKey2)
+		throws Exception {
+
+		return null;
 	}
 
 	@Override

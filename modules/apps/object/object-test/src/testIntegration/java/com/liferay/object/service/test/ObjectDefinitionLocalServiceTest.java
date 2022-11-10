@@ -38,6 +38,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -438,8 +439,10 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
-					public String getJaxRsApplicationName() {
-						return "";
+					public JaxRsApplicationDescriptor
+						getJaxRsApplicationDescriptor() {
+
+						return null;
 					}
 
 					@Override
@@ -481,11 +484,6 @@ public class ObjectDefinitionLocalServiceTest {
 					public Column<?, Long> getPrimaryKeyColumn() {
 						return UserNotificationEventTable.INSTANCE.
 							userNotificationEventId;
-					}
-
-					@Override
-					public String getRESTContextPath() {
-						return "/";
 					}
 
 					@Override
@@ -561,8 +559,10 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
-					public String getJaxRsApplicationName() {
-						return "";
+					public JaxRsApplicationDescriptor
+						getJaxRsApplicationDescriptor() {
+
+						return null;
 					}
 
 					@Override
@@ -603,11 +603,6 @@ public class ObjectDefinitionLocalServiceTest {
 					public Column<?, Long> getPrimaryKeyColumn() {
 						return UserNotificationEventTable.INSTANCE.
 							userNotificationEventId;
-					}
-
-					@Override
-					public String getRESTContextPath() {
-						return "/";
 					}
 
 					@Override

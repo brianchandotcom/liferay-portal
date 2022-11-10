@@ -61,7 +61,7 @@ const STEPS: IStepProps<IGenericStepProps, ESteps>[] = [
 		Component: PeopleDataStep,
 		available: false,
 		key: ESteps.PeopleData,
-		title: Liferay.Language.get('people-data'),
+		title: Liferay.Language.get('attributes'),
 	},
 ];
 

@@ -12,12 +12,40 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import React from 'react';
 
+import {EPageView, Events, useDispatch} from '../../App';
 import BasePage from '../../components/BasePage';
+import PeopleData from '../../components/people-data/PeopleData';
+import {IGenericStepProps} from './WizardPage';
 
-const Step = () => {
-	return <BasePage title={Liferay.Language.get('people-data')}></BasePage>;
+interface IStepProps extends IGenericStepProps {}
+
+const Step: React.FC<IStepProps> = () => {
+	const dispatch = useDispatch();
+
+	return (
+		<BasePage
+			description={Liferay.Language.get('attributes-step-description')}
+			title={Liferay.Language.get('attributes')}
+		>
+			<PeopleData />
+
+			<BasePage.Footer>
+				<ClayButton
+					onClick={() => {
+						dispatch({
+							payload: EPageView.Default,
+							type: Events.ChangePageView,
+						});
+					}}
+				>
+					{Liferay.Language.get('finish')}
+				</ClayButton>
+			</BasePage.Footer>
+		</BasePage>
+	);
 };
 
 export default Step;

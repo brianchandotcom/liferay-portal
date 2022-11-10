@@ -60,6 +60,7 @@ function ToolbarBody({className}) {
 	const canPublish = selectCanPublish(store);
 
 	const [publishPending, setPublishPending] = useState(false);
+	const [enableDiscard, setEnableDiscard] = useState(false);
 
 	const {
 		network,
@@ -67,6 +68,14 @@ function ToolbarBody({className}) {
 		segmentsExperimentStatus,
 		selectedViewportSize,
 	} = store;
+
+	useEffect(() => {
+		setEnableDiscard(
+			network.status === SERVICE_NETWORK_STATUS_TYPES.draftSaved ||
+				config.draft ||
+				config.isConversionDraft
+		);
+	}, [network]);
 
 	const loadingRef = useRef(() => {
 		Promise.all(
@@ -123,7 +132,7 @@ function ToolbarBody({className}) {
 		}, [])
 	);
 
-	const handleDiscardVariant = (event) => {
+	const handleDiscardDraft = (event) => {
 		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
@@ -167,6 +176,15 @@ function ToolbarBody({className}) {
 			selectItem(null);
 		}
 	};
+
+	let draftButtonLabel = Liferay.Language.get('discard-draft');
+
+	if (config.isConversionDraft) {
+		draftButtonLabel = Liferay.Language.get('discard-conversion-draft');
+	}
+	else if (config.singleSegmentsExperienceMode) {
+		draftButtonLabel = Liferay.Language.get('discard-variant');
+	}
 
 	let publishButtonLabel = Liferay.Language.get('publish');
 
@@ -290,21 +308,20 @@ function ToolbarBody({className}) {
 					</ul>
 				</li>
 
-				{config.singleSegmentsExperienceMode && (
-					<li className="nav-item">
-						<form action={config.discardDraftURL} method="POST">
-							<ClayButton
-								className="btn btn-secondary"
-								displayType="secondary"
-								onClick={handleDiscardVariant}
-								small
-								type="submit"
-							>
-								{Liferay.Language.get('discard-variant')}
-							</ClayButton>
-						</form>
-					</li>
-				)}
+				<li className="nav-item">
+					<form action={config.discardDraftURL} method="POST">
+						<ClayButton
+							className="btn btn-secondary"
+							disabled={!enableDiscard}
+							displayType="secondary"
+							onClick={handleDiscardDraft}
+							small
+							type="submit"
+						>
+							{draftButtonLabel}
+						</ClayButton>
+					</form>
+				</li>
 
 				<li className="nav-item">
 					<PublishButton

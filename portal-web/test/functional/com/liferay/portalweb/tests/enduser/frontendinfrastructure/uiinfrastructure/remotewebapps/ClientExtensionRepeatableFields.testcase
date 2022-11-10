@@ -223,22 +223,22 @@ definition {
 
 		task ("And Then repeatable button + and - are present for both CSS URL fields") {
 			AssertElementPresent(
-				key_fieldLabelName = "URL",
+				key_fieldLabelName = "JS URL",
 				key_index = "1",
 				locator1 = "ClientExtensionEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
-				key_fieldLabelName = "URL",
+				key_fieldLabelName = "JS URL",
 				key_index = "1",
 				locator1 = "ClientExtensionEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
-				key_fieldLabelName = "URL",
+				key_fieldLabelName = "JS URL",
 				key_index = "2",
 				locator1 = "ClientExtensionEntry#DELETE_ROW_FIELD_LABEL_NAME_INDEX");
 
 			AssertElementPresent(
-				key_fieldLabelName = "URL",
+				key_fieldLabelName = "JS URL",
 				key_index = "2",
 				locator1 = "ClientExtensionEntry#ADD_ROW_FIELD_LABEL_NAME_INDEX");
 		}

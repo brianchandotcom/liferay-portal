@@ -648,7 +648,7 @@ definition {
 		task ("Then an error message 'field is required' appears under URL") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "This field is required.");
+				value1 = "The URL field is required");
 		}
 
 		task ("And then Remote App is not added") {

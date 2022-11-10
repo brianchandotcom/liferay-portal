@@ -183,30 +183,36 @@ public class ContentUtil {
 					(FileEntry)
 						layoutDisplayPageObjectProvider.getDisplayObject();
 
-				PortletResponse portletResponse =
-					(PortletResponse)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-				LiferayPortletResponse liferayPortletResponse =
-					PortalUtil.getLiferayPortletResponse(portletResponse);
-
-				LiferayPortletURL portletURL =
-					liferayPortletResponse.createActionURL(
-						DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
-
-				portletURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/document_library/edit_file_entry_image_editor");
-
 				jsonObject.put(
 					"editImage",
-					JSONUtil.put(
-						"editImageURL", portletURL.toString()
+					() -> JSONUtil.put(
+						"editImageURL",
+						() -> {
+							PortletResponse portletResponse =
+								(PortletResponse)
+									httpServletRequest.getAttribute(
+										JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+							LiferayPortletResponse liferayPortletResponse =
+								PortalUtil.getLiferayPortletResponse(
+									portletResponse);
+
+							LiferayPortletURL portletURL =
+								liferayPortletResponse.createActionURL(
+									DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+							portletURL.setParameter(
+								ActionRequest.ACTION_NAME,
+								"/document_library" +
+									"/edit_file_entry_image_editor");
+
+							return portletURL.toString();
+						}
 					).put(
 						"fileEntryId", fileEntry.getFileEntryId()
 					).put(
 						"previewURL",
-						DLURLHelperUtil.getPreviewURL(
+						() -> DLURLHelperUtil.getPreviewURL(
 							fileEntry, fileEntry.getFileVersion(), themeDisplay,
 							StringPool.BLANK)
 					));
@@ -238,7 +244,7 @@ public class ContentUtil {
 
 			jsonObject.put(
 				"viewUsagesURL",
-				PortletURLBuilder.create(
+				() -> PortletURLBuilder.create(
 					PortletURLFactoryUtil.create(
 						httpServletRequest,
 						ContentPageEditorPortletKeys.

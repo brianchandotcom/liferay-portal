@@ -688,6 +688,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can update the general informations. Including update the default site name, default mail domain and so."
+	@ignore = "true"
 	@priority = "4"
 	test CanUpdateGeneralInfos {
 		property portal.acceptance = "true";

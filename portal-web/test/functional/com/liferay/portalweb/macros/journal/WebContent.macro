@@ -2343,7 +2343,7 @@ definition {
 	}
 
 	macro viewPublicationTimelineEntry {
-		Click(locator1 = "WCEditWebContent#HISTORY_TAB");
+		Click(locator1 = "WCEditWebContent#TIMELINE_TAB");
 
 		AssertElementPresent(
 			key_index = "${index}",

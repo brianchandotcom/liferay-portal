@@ -292,6 +292,10 @@ public class UpgradeProcessCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
+		if (firstChildDetailAST.getType() == TokenTypes.LNOT) {
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+		}
+
 		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
 			return false;
 		}

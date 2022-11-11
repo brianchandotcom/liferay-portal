@@ -58,6 +58,8 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						).build());
 
 					Date createDate = assetListEntry.getCreateDate();
+
+					int assetListEntryVariationCount = assetListDisplayContext.getAssetListEntrySegmentsEntryRelsCount(assetListEntry);
 					%>
 
 					<c:choose>
@@ -82,6 +84,22 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								<h6 class="text-default">
 									<liferay-ui:message arguments="<%= assetListDisplayContext.getAssetListEntryUsageCount(assetListEntry) %>" key="x-usages" translateArguments="<%= false %>" />
 								</h6>
+
+								<c:choose>
+									<c:when test="<%= assetListEntryVariationCount > 0 %>">
+										<clay:label
+											cssClass="mr-auto"
+											displayType="info"
+											label='<%= LanguageUtil.format(locale, "x-variations", new String[] {String.valueOf(assetListEntryVariationCount)}) %>'
+										/>
+									</c:when>
+									<c:otherwise>
+										<clay:label
+											cssClass="mr-auto"
+											label='<%= LanguageUtil.get(request, "no-variations") %>'
+										/>
+									</c:otherwise>
+								</c:choose>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>
@@ -139,7 +157,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<liferay-ui:search-container-column-text
 								cssClass="text-truncate"
 								name="variations"
-								value="<%= String.valueOf(assetListDisplayContext.getAssetListEntrySegmentsEntryRelsCount(assetListEntry)) %>"
+								value="<%= String.valueOf(assetListEntryVariationCount) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

@@ -29,7 +29,7 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
@@ -173,7 +173,7 @@ public class ContentPageEditorDisplayContext {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceRegistry infoItemServiceRegistry,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
 		PortletRequest portletRequest, RenderResponse renderResponse,
@@ -193,7 +193,7 @@ public class ContentPageEditorDisplayContext {
 
 		this.httpServletRequest = httpServletRequest;
 		this.infoItemServiceRegistry = infoItemServiceRegistry;
-		this.infoSearchClassMapperTracker = infoSearchClassMapperTracker;
+		this.infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		this.portletRequest = portletRequest;
 		this.stagingGroupHelper = stagingGroupHelper;
 
@@ -942,7 +942,7 @@ public class ContentPageEditorDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoItemServiceRegistry infoItemServiceRegistry;
-	protected final InfoSearchClassMapperTracker infoSearchClassMapperTracker;
+	protected final InfoSearchClassMapperRegistry infoSearchClassMapperRegistry;
 	protected final PortletRequest portletRequest;
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
@@ -1317,7 +1317,7 @@ public class ContentPageEditorDisplayContext {
 
 			infoItemClassNames.add(infoItemClassName);
 			infoItemClassNames.add(
-				infoSearchClassMapperTracker.getSearchClassName(
+				infoSearchClassMapperRegistry.getSearchClassName(
 					infoItemClassName));
 		}
 

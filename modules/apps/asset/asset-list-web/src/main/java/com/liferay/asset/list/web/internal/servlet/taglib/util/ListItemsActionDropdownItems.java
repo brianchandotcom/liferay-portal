@@ -29,7 +29,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -55,7 +55,7 @@ public class ListItemsActionDropdownItems {
 		DLAppService dlAppService,
 		InfoEditURLProviderRegistry infoEditURLProviderRegistry,
 		InfoItemServiceRegistry infoItemServiceRegistry,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		HttpServletRequest httpServletRequest) {
 
 		_assetDisplayPageFriendlyURLProvider =
@@ -63,7 +63,7 @@ public class ListItemsActionDropdownItems {
 		_dlAppService = dlAppService;
 		_infoEditURLProviderRegistry = infoEditURLProviderRegistry;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
-		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 
 		_httpServletRequest = httpServletRequest;
 
@@ -110,7 +110,7 @@ public class ListItemsActionDropdownItems {
 
 		String viewDisplayPageURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_infoSearchClassMapperTracker.getClassName(className), classPK,
+				_infoSearchClassMapperRegistry.getClassName(className), classPK,
 				_themeDisplay);
 
 		return HttpComponentsUtil.setParameter(
@@ -218,7 +218,7 @@ public class ListItemsActionDropdownItems {
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoEditURLProviderRegistry _infoEditURLProviderRegistry;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
-	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private String _redirect;
 	private final ThemeDisplay _themeDisplay;
 

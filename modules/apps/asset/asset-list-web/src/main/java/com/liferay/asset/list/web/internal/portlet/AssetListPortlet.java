@@ -33,7 +33,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,7 +102,7 @@ public class AssetListPortlet extends MVCPortlet {
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider,
-				_infoSearchClassMapperTracker, _itemSelector, renderRequest,
+				_infoSearchClassMapperRegistry, _itemSelector, renderRequest,
 				renderResponse, _segmentsConfigurationProvider,
 				_getUnicodeProperties(assetListDisplayContext)));
 		renderRequest.setAttribute(
@@ -120,7 +120,7 @@ public class AssetListPortlet extends MVCPortlet {
 			new ListItemsActionDropdownItems(
 				_assetDisplayPageFriendlyURLProvider, _dlAppService,
 				_infoEditURLProviderRegistry, _infoItemServiceRegistry,
-				_infoSearchClassMapperTracker,
+				_infoSearchClassMapperRegistry,
 				_portal.getHttpServletRequest(renderRequest)));
 		renderRequest.setAttribute(
 			AssetListWebKeys.SELECT_STRUCTURE_FIELD_DISPLAY_CONTEXT,
@@ -183,7 +183,7 @@ public class AssetListPortlet extends MVCPortlet {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -18,7 +18,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -150,7 +150,7 @@ public class DisplayPageLayoutTypeController
 			displayPageLayoutTypeControllerDisplayContext =
 				new DisplayPageLayoutTypeControllerDisplayContext(
 					httpServletRequest, _infoItemServiceRegistry,
-					_infoSearchClassMapperTracker);
+					_infoSearchClassMapperRegistry);
 
 		httpServletRequest.setAttribute(
 			DisplayPageLayoutTypeControllerWebKeys.
@@ -356,7 +356,7 @@ public class DisplayPageLayoutTypeController
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

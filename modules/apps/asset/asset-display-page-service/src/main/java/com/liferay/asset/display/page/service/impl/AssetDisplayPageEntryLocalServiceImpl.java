@@ -24,7 +24,7 @@ import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -346,7 +346,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		).and(
 			() -> {
 				String searchClassName =
-					_infoSearchClassMapperTracker.getSearchClassName(
+					_infoSearchClassMapperRegistry.getSearchClassName(
 						_portal.getClassName(classNameId));
 
 				return AssetEntryTable.INSTANCE.classNameId.eq(
@@ -387,7 +387,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

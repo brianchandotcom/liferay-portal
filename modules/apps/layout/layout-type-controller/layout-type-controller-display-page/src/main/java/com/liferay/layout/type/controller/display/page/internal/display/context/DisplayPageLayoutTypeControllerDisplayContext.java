@@ -29,7 +29,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -45,7 +45,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 	public DisplayPageLayoutTypeControllerDisplayContext(
 			HttpServletRequest httpServletRequest,
 			InfoItemServiceRegistry infoItemServiceRegistry,
-			InfoSearchClassMapperTracker infoSearchClassMapperTracker)
+			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
 		throws Exception {
 
 		_infoItemServiceRegistry = infoItemServiceRegistry;
@@ -65,7 +65,7 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 				assetEntryId);
 
-			String className = infoSearchClassMapperTracker.getClassName(
+			String className = infoSearchClassMapperRegistry.getClassName(
 				assetEntry.getClassName());
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =

@@ -33,7 +33,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -243,7 +243,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	protected InfoItemServiceRegistry infoItemServiceRegistry;
 
 	@Reference
-	protected InfoSearchClassMapperTracker infoSearchClassMapperTracker;
+	protected InfoSearchClassMapperRegistry infoSearchClassMapperRegistry;
 
 	@Reference
 	protected LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker;
@@ -263,7 +263,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	private AssetEntry _getAssetEntry(
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider) {
 
-		String className = infoSearchClassMapperTracker.getSearchClassName(
+		String className = infoSearchClassMapperRegistry.getSearchClassName(
 			layoutDisplayPageObjectProvider.getClassName());
 
 		AssetRendererFactory<?> assetRendererFactory =

@@ -27,7 +27,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -391,7 +391,7 @@ public class FragmentEntryProcessorHelperImpl
 	private InfoItemFieldValuesProvider<Object> _getInfoItemFieldValuesProvider(
 		String className) {
 
-		className = _infoSearchClassMapperTracker.getClassName(className);
+		className = _infoSearchClassMapperRegistry.getClassName(className);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -496,7 +496,7 @@ public class FragmentEntryProcessorHelperImpl
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private Language _language;

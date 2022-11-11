@@ -31,7 +31,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
@@ -265,7 +265,7 @@ public class InfoCollectionProviderLayoutListRetriever
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-		String className = _infoSearchClassMapperTracker.getSearchClassName(
+		String className = _infoSearchClassMapperRegistry.getSearchClassName(
 			infoItemReference.getClassName());
 
 		return _assetEntryLocalService.fetchEntry(
@@ -289,6 +289,6 @@ public class InfoCollectionProviderLayoutListRetriever
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 }

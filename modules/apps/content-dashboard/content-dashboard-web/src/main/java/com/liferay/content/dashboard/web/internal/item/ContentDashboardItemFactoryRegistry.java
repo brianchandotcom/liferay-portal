@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.content.dashboard.web.internal.util.AssetVocabularyUtil;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -88,7 +88,7 @@ public class ContentDashboardItemFactoryRegistry {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	private volatile ServiceTrackerMap<String, ContentDashboardItemFactory<?>>
 		_serviceTrackerMap;
@@ -111,7 +111,7 @@ public class ContentDashboardItemFactoryRegistry {
 				_bundleContext.getService(serviceReference);
 
 			long classNameId = _classNameLocalService.getClassNameId(
-				_infoSearchClassMapperTracker.getSearchClassName(
+				_infoSearchClassMapperRegistry.getSearchClassName(
 					GenericUtil.getGenericClassName(
 						contentDashboardItemFactory)));
 

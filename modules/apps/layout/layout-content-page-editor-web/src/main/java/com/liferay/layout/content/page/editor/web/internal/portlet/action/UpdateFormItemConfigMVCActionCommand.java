@@ -34,7 +34,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -304,7 +304,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			long groupId)
 		throws Exception {
 
-		String itemClassName = _infoSearchClassMapperTracker.getClassName(
+		String itemClassName = _infoSearchClassMapperRegistry.getClassName(
 			_portal.getClassName(
 				formStyledLayoutStructureItem.getClassNameId()));
 
@@ -565,7 +565,7 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

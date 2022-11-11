@@ -22,7 +22,7 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -61,7 +61,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		ContentDashboardItemFactoryRegistry contentDashboardItemFactoryRegistry,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		Portal portal, PortletRequest portletRequest,
 		PortletResponse portletResponse, Searcher searcher) {
 
@@ -69,7 +69,7 @@ public class ContentDashboardItemSearchContainerFactory {
 			assetCategoryLocalService, assetVocabularyLocalService,
 			contentDashboardItemFactoryRegistry,
 			contentDashboardSearchRequestBuilderFactory,
-			infoSearchClassMapperTracker, portal, portletRequest,
+			infoSearchClassMapperRegistry, portal, portletRequest,
 			portletResponse, searcher);
 	}
 
@@ -90,7 +90,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		ContentDashboardItemFactoryRegistry contentDashboardItemFactoryRegistry,
 		ContentDashboardSearchRequestBuilderFactory
 			contentDashboardSearchRequestBuilderFactory,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		Portal portal, PortletRequest portletRequest,
 		PortletResponse portletResponse, Searcher searcher) {
 
@@ -100,7 +100,7 @@ public class ContentDashboardItemSearchContainerFactory {
 			contentDashboardItemFactoryRegistry;
 		_contentDashboardSearchRequestBuilderFactory =
 			contentDashboardSearchRequestBuilderFactory;
-		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		_portal = portal;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -243,7 +243,7 @@ public class ContentDashboardItemSearchContainerFactory {
 	private ContentDashboardItem<?> _toContentDashboardItem(Document document) {
 		ContentDashboardItemFactory<?> contentDashboardItemFactory =
 			_contentDashboardItemFactoryRegistry.getContentDashboardItemFactory(
-				_infoSearchClassMapperTracker.getClassName(
+				_infoSearchClassMapperRegistry.getClassName(
 					document.get(Field.ENTRY_CLASS_NAME)));
 
 		if (contentDashboardItemFactory == null) {
@@ -262,7 +262,7 @@ public class ContentDashboardItemSearchContainerFactory {
 		_contentDashboardItemFactoryRegistry;
 	private final ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
-	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private final Locale _locale;
 	private String _orderByCol;
 	private String _orderByType;

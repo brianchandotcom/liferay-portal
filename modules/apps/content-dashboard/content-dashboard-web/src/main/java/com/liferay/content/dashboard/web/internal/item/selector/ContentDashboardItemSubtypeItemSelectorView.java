@@ -32,7 +32,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -221,7 +221,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 
 	private String _getIcon(String className) {
 		return Optional.ofNullable(
-			_infoSearchClassMapperTracker.getSearchClassName(className)
+			_infoSearchClassMapperRegistry.getSearchClassName(className)
 		).map(
 			AssetRendererFactoryRegistryUtil::getAssetRendererFactoryByClassName
 		).map(
@@ -424,7 +424,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

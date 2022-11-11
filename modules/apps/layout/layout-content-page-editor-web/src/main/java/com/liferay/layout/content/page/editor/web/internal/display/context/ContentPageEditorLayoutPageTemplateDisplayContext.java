@@ -28,7 +28,7 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -76,7 +76,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceRegistry infoItemServiceRegistry,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector,
 		PageEditorConfiguration pageEditorConfiguration,
 		boolean pageIsDisplayPage, PortletRequest portletRequest,
@@ -89,9 +89,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			contentPageEditorSidebarPanels, fragmentCollectionManager,
 			fragmentEntryLinkManager, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceRegistry,
-			infoSearchClassMapperTracker, itemSelector, pageEditorConfiguration,
-			portletRequest, renderResponse, segmentsConfigurationProvider,
-			segmentsExperienceManager, stagingGroupHelper);
+			infoSearchClassMapperRegistry, itemSelector,
+			pageEditorConfiguration, portletRequest, renderResponse,
+			segmentsConfigurationProvider, segmentsExperienceManager,
+			stagingGroupHelper);
 
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;
@@ -169,7 +170,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				infoSearchClassMapperTracker.getSearchClassName(className));
+				infoSearchClassMapperRegistry.getSearchClassName(className));
 
 		if (assetRendererFactory != null) {
 			sourceItemTypes.add(AssetEntry.class.getName());

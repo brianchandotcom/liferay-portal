@@ -33,7 +33,7 @@ import com.liferay.content.dashboard.web.internal.search.request.ContentDashboar
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardUtil;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
@@ -122,7 +122,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					_assetCategoryLocalService, _assetVocabularyLocalService,
 					_contentDashboardItemFactoryRegistry,
 					_contentDashboardSearchRequestBuilderFactory,
-					_infoSearchClassMapperTracker, _portal, renderRequest,
+					_infoSearchClassMapperRegistry, _portal, renderRequest,
 					renderResponse, _searcher);
 
 		SearchContainer<ContentDashboardItem<?>> searchContainer =
@@ -174,7 +174,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 			new ContentDashboardAdminSharingDisplayContext(
 				_contentDashboardItemFactoryRegistry,
 				_portal.getHttpServletRequest(liferayPortletRequest),
-				_infoSearchClassMapperTracker));
+				_infoSearchClassMapperRegistry));
 
 		_sharingJavaScriptFactory.requestSharingJavascript();
 
@@ -213,7 +213,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

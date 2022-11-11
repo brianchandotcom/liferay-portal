@@ -27,7 +27,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -85,7 +85,7 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, configurationValueJSONObject);
 
-		String className = _infoSearchClassMapperTracker.getSearchClassName(
+		String className = _infoSearchClassMapperRegistry.getSearchClassName(
 			_portal.getClassName(classNameId));
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
@@ -189,7 +189,7 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_infoSearchClassMapperTracker.getSearchClassName(className));
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -261,7 +261,7 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private Portal _portal;

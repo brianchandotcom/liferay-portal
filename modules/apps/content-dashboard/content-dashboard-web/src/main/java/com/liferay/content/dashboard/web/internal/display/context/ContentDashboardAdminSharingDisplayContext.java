@@ -18,7 +18,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,16 +38,16 @@ public class ContentDashboardAdminSharingDisplayContext {
 	public ContentDashboardAdminSharingDisplayContext(
 		ContentDashboardItemFactoryRegistry contentDashboardItemFactoryRegistry,
 		HttpServletRequest httpServletRequest,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker) {
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry) {
 
 		_contentDashboardItemFactoryRegistry =
 			contentDashboardItemFactoryRegistry;
 		_httpServletRequest = httpServletRequest;
-		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 	}
 
 	public String getClassName() {
-		return _infoSearchClassMapperTracker.getSearchClassName(
+		return _infoSearchClassMapperRegistry.getSearchClassName(
 			_getClassName());
 	}
 
@@ -164,6 +164,6 @@ public class ContentDashboardAdminSharingDisplayContext {
 	private final ContentDashboardItemFactoryRegistry
 		_contentDashboardItemFactoryRegistry;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 }

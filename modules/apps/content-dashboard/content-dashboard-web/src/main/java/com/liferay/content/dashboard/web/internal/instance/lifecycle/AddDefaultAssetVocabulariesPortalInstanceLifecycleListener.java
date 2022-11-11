@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.util.AssetVocabularyUtil;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -64,7 +64,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 			searchClassNameIds.add(
 				_portal.getClassNameId(
-					_infoSearchClassMapperTracker.getSearchClassName(
+					_infoSearchClassMapperRegistry.getSearchClassName(
 						className)));
 		}
 
@@ -127,7 +127,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		_contentDashboardItemFactoryRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private Language _language;

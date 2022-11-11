@@ -40,7 +40,7 @@ import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
@@ -120,14 +120,14 @@ public class EditAssetListDisplayContext {
 
 	public EditAssetListDisplayContext(
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector, PortletRequest portletRequest,
 		PortletResponse portletResponse,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		UnicodeProperties unicodeProperties) {
 
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
-		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		_itemSelector = itemSelector;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
@@ -1024,7 +1024,7 @@ public class EditAssetListDisplayContext {
 					}
 
 					String className =
-						_infoSearchClassMapperTracker.getSearchClassName(
+						_infoSearchClassMapperRegistry.getSearchClassName(
 							PortalUtil.getClassName(classNameId));
 
 					AssetRendererFactory<?> assetRendererFactory =
@@ -1436,7 +1436,7 @@ public class EditAssetListDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private final ItemSelector _itemSelector;
 	private Boolean _liveGroup;
 	private String _orderByColumn1;

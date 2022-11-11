@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.info.search;
 
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,16 +26,16 @@ import org.osgi.service.component.annotations.Reference;
 public class InfoSearchClassMapperTrackerUtil {
 
 	public static String getSearchClassName(String className) {
-		return _infoSearchClassMapperTracker.getSearchClassName(className);
+		return _infoSearchClassMapperRegistry.getSearchClassName(className);
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoSearchClassMapperTracker(
-		InfoSearchClassMapperTracker infoSearchClassMapperTracker) {
+	protected void setInfoSearchClassMapperRegistry(
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry) {
 
-		_infoSearchClassMapperTracker = infoSearchClassMapperTracker;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 	}
 
-	private static InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private static InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 }

@@ -40,7 +40,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
@@ -262,7 +262,7 @@ public class GetCollectionFieldMVCResourceCommand
 			listObjectReference.getItemType()
 		);
 
-		String itemType = _infoSearchClassMapperTracker.getClassName(
+		String itemType = _infoSearchClassMapperRegistry.getClassName(
 			originalItemType);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
@@ -381,7 +381,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		sourceItemTypes.add(itemType);
 
-		String className = _infoSearchClassMapperTracker.getSearchClassName(
+		String className = _infoSearchClassMapperRegistry.getSearchClassName(
 			itemType);
 
 		AssetRendererFactory<?> assetRendererFactory =
@@ -508,7 +508,7 @@ public class GetCollectionFieldMVCResourceCommand
 					InfoItemFormProvider.class)) {
 
 			infoItemClassNames.add(
-				_infoSearchClassMapperTracker.getSearchClassName(className));
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
 		}
 
 		return infoItemClassNames;
@@ -533,7 +533,7 @@ public class GetCollectionFieldMVCResourceCommand
 	private InfoListRendererRegistry _infoListRendererRegistry;
 
 	@Reference
-	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

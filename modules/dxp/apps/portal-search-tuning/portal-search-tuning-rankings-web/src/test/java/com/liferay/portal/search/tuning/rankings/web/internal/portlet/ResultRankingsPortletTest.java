@@ -17,6 +17,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
@@ -70,6 +71,9 @@ public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
 			rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_resultRankingsPortlet, "searchEngineAdapter", searchEngineAdapter);
+		ReflectionTestUtil.setFieldValue(
+			_resultRankingsPortlet, "searchEngineInformation",
+			_searchEngineInformation);
 		ReflectionTestUtil.setFieldValue(
 			_resultRankingsPortlet, "searchRequestBuilderFactory",
 			_searchRequestBuilderFactory);
@@ -129,6 +133,8 @@ public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
 	private final RenderResponse _renderResponse = Mockito.mock(
 		RenderResponse.class);
 	private ResultRankingsPortlet _resultRankingsPortlet;
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory =
 		Mockito.mock(SearchRequestBuilderFactory.class);
 	private final Sorts _sorts = Mockito.mock(Sorts.class);

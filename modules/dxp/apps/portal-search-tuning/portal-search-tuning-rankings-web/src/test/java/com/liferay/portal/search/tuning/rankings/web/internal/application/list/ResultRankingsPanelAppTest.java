@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -47,6 +48,9 @@ public class ResultRankingsPanelAppTest {
 		ReflectionTestUtil.setFieldValue(
 			_resultRankingsPanelApp, "_portletLocalService",
 			_portletLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_resultRankingsPanelApp, "searchEngineInformation",
+			_searchEngineInformation);
 	}
 
 	@Test
@@ -78,6 +82,28 @@ public class ResultRankingsPanelAppTest {
 			_resultRankingsPanelApp.isShow(
 				Mockito.mock(PermissionChecker.class),
 				Mockito.mock(Group.class)));
+
+		Mockito.doReturn(
+			true
+		).when(
+			portlet
+		).isActive();
+
+		Assert.assertTrue(
+			_resultRankingsPanelApp.isShow(
+				Mockito.mock(PermissionChecker.class),
+				Mockito.mock(Group.class)));
+
+		Mockito.doReturn(
+			"Solr"
+		).when(
+			_searchEngineInformation
+		).getVendorString();
+
+		Assert.assertFalse(
+			_resultRankingsPanelApp.isShow(
+				Mockito.mock(PermissionChecker.class),
+				Mockito.mock(Group.class)));
 	}
 
 	@Test
@@ -92,5 +118,7 @@ public class ResultRankingsPanelAppTest {
 	private final PortletLocalService _portletLocalService = Mockito.mock(
 		PortletLocalService.class);
 	private ResultRankingsPanelApp _resultRankingsPanelApp;
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 
 }

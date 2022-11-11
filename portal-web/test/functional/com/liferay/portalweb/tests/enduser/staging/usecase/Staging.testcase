@@ -1351,134 +1351,210 @@ definition {
 			publishTemplateName = "Publish Template Name");
 	}
 
-	@description = "This is a use case for LPS-131578. User can configure the portal to exclude displayed contents from publishing."
+	@description = "This is a use case for LPS-131578 and LPS-149374. User can configure the portal to exclude displayed contents from publishing."
 	@priority = "4"
 	test PublishViaPortletWithoutContent {
 		property test.name.skip.portal.instance = "Staging#PublishViaPortletWithoutContent";
 
-		SystemSettings.openSystemSettingsAdmin();
+		task ("Given: Unable the publish displayed content by default function and enable local staging") {
+			SystemSettings.openSystemSettingsAdmin();
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Infrastructure",
-			configurationName = "Staging",
-			configurationScope = "Virtual Instance Scope");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Staging",
+				configurationScope = "Virtual Instance Scope");
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "false",
-			settingFieldName = "Publish Displayed Content by Default");
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Publish Displayed Content by Default");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+		task ("And: Create 1WC, 1Form, 1Wiki content and connect them to display portlets on the page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+			WebContentNavigator.gotoAddCP();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+			WebContent.addCP(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
-		FormsAdminNavigator.gotoAddForm();
+			PortletEntry.publish();
 
-		Form.editName(formName = "Test Form");
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
 
-		Form.editDescription(formDescription = "Test description");
+			FormsAdminNavigator.gotoAddForm();
 
-		Form.editPageTitle(
-			formPageName = "Test Page",
-			formTitleNumber = "1");
+			Form.editName(formName = "Test Form");
 
-		Form.editPageDescription(formPageDescriptionName = "Test page description");
+			Form.editDescription(formDescription = "Test description");
 
-		Form.addTextField(fieldPositionNumber = "0");
+			Form.editPageTitle(
+				formPageName = "Test Page",
+				formTitleNumber = "1");
 
-		Form.save();
+			Form.editPageDescription(formPageDescriptionName = "Test page description");
 
-		Form.publishForm();
+			Form.addTextField(fieldPositionNumber = "0");
 
-		PagesAdmin.addPage(
-			pageName = "Test Page",
-			sitePageType = "Widget Page");
+			Form.publishForm();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+			WikiNavigator.openWikiAdmin(siteURLKey = "site-name-staging");
 
-		Portlet.addPG(
-			pageName = "Test Page",
-			portletName = "Form");
+			WikiNode.addCP(wikiNodeName = "Wiki Node Name");
 
-		FormPortletNavigator.gotoSelectForm();
+			WikiNavigator.gotoNode(wikiNodeName = "Wiki Node Name");
 
-		FormPortletConfiguration.selectForm(formName = "Test Form");
+			WikiPage.addCP(
+				wikiPageContent = "Wiki Page Content",
+				wikiPageTitle = "Wiki Page Title");
 
-		PortletEntry.save();
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+			PagesAdmin.configurePage(
+				columnName = "1 Column",
+				pageName = "Staging Test Page",
+				sitePageType = "Widget Page");
 
-		Staging.gotoPublishToLive();
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				site = "false",
+				widgetName = "Web Content Display");
 
-		Staging.configurePublishToLive(uncheckContentNameList = "Forms");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				site = "false",
+				widgetName = "Form");
 
-		Staging.publishToLive();
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				site = "false",
+				widgetName = "Wiki Display");
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
 
-		AssertTextNotPresent(value1 = "Test Form");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+			IFrame.closeFrame();
 
-		AssertElementNotPresent(
-			key_formName = "Test Form",
-			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+			FormPortletNavigator.gotoSelectForm();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+			FormPortletConfiguration.selectForm(formName = "Test Form");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Infrastructure",
-			configurationName = "Staging",
-			configurationScope = "Virtual Instance Scope");
+			PortletEntry.save();
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Publish Displayed Content by Default");
+			IFrame.closeFrame();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+			WikiDisplayPortlet.configureSetupPG(
+				wikiNodeName = "Wiki Node Name",
+				wikiPageName = "Wiki Page Title");
 
-		Staging.gotoPublishToLive();
+			IFrame.closeFrame();
+		}
 
-		Staging.configurePublishToLive(uncheckContentNameList = "Forms");
+		task ("And: Publish staging without any content and verify that on Live the portlets are present but not the contents from them") {
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive();
+			Staging.configurePublishToLive(
+				checkPageName = "Staging Test Page",
+				contentDateRange = "All",
+				uncheckContentNameList = "Web Content,Forms,Wiki");
 
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+			Staging.publishToLive();
 
-		AssertTextPresent(value1 = "Test Form");
+			Navigator.gotoSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+			Alert.viewWarningSpecific(warningMessage = "The selected web content no longer exists.");
 
-		FormsAdmin.viewForm(
-			formDescription = "Test description",
-			formName = "Test Form");
+			Alert.viewWarningSpecific(warningMessage = "This form is not available or it was not published.");
+
+			Portlet.viewPG(
+				portletBody = "Please configure this portlet to make it visible to all users.",
+				portletName = "Wiki Display");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentAdmin.viewEntryNotPresent(entry = "Web Content Title");
+
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+
+			AssertElementNotPresent(
+				key_formName = "Test Form",
+				locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+
+			WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
+
+			WikiNode.viewNoCP(wikiNodeName = "Wiki Node Name");
+		}
+
+		task ("When: Enable the publish displayed content by default function and republish staging without any content") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Publish Displayed Content by Default");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.configurePublishToLive(
+				checkPageName = "Staging Test Page",
+				contentDateRange = "All",
+				uncheckContentNameList = "Web Content,Forms,Wiki");
+
+			Staging.publishToLive();
+		}
+
+		task ("Then: Verify that on Live the portlets are present with the contents displayed in them") {
+			Navigator.gotoSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			AssertTextPresent(value1 = "Test Form");
+
+			WikiPage.viewPG(
+				wikiPageContent = "Wiki Page Content",
+				wikiPageTitle = "Wiki Page Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentAdmin.viewEntryTitle(entry = "Web Content Title");
+
+			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+
+			FormsAdmin.viewForm(
+				formDescription = "Test description",
+				formName = "Test Form");
+
+			WikiNavigator.openToWikiPage(
+				siteURLKey = "site-name",
+				wikiNodeName = "Wiki Node Name",
+				wikiPageTitle = "Wiki Page Title");
+
+			WikiPage.viewCP(
+				wikiPageContent = "Wiki Page Content",
+				wikiPageTitle = "Wiki Page Title");
+		}
 	}
 
 	@description = "This is a use case for LPS-89981 and LPS-88298."

@@ -162,10 +162,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		doRemoveShardedPortalCache(companyId, shardedPortalCaches);
 	}
 
-	public void setClusterAware(boolean clusterAware) {
-		_clusterAware = clusterAware;
-	}
-
 	public void setPortalCacheManagerName(String portalCacheManagerName) {
 		_portalCacheManagerName = portalCacheManagerName;
 	}
@@ -392,7 +388,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		throw new IllegalStateException(sb.toString());
 	}
 
-	private boolean _clusterAware;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _portalCacheManagerName;
 	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =

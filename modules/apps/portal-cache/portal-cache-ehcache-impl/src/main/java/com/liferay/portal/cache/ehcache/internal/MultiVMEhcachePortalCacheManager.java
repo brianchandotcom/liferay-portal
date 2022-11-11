@@ -48,7 +48,6 @@ public class MultiVMEhcachePortalCacheManager
 	protected void activate(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 
-		setClusterAware(true);
 		setConfigFile(props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setPortalCacheManagerName(PortalCacheManagerNames.MULTI_VM);

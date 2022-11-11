@@ -61,7 +61,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -580,7 +579,7 @@ public class DataLayoutTaglibUtil {
 	private JSONObject _getFunctionsMetadataJSONObject(Locale locale)
 		throws JSONException {
 
-		return JSONFactoryUtil.createJSONObject(
+		return _jsonFactory.createJSONObject(
 			_ddmFormBuilderSettingsRetrieverHelper.
 				getSerializedDDMExpressionFunctionsMetadata(locale));
 	}

@@ -33,7 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -601,16 +601,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 			type.equals(DDMFormFieldTypeConstants.JOURNAL_ARTICLE) ||
 			type.equals(DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
 
 			if ((jsonObject != null) && jsonObject.has("title")) {
 				sb.append(jsonObject.getString("title"));
 			}
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.IMAGE)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				valueString);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(valueString);
 
 			if (jsonObject == null) {
 				return;
@@ -634,7 +632,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			sb.append(_htmlParser.extractText(valueString));
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(valueString);
+			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
 
 			sb.append(ArrayUtil.toStringArray(jsonArray));
 		}
@@ -749,7 +747,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			String type = field.getType();
 
 			if (type.equals(DDMFormFieldTypeConstants.GEOLOCATION)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					valueString);
 
 				double latitude = jsonObject.getDouble("lat", 0);
@@ -762,11 +760,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 				document.addKeyword(
 					_getSortableFieldName(name),
 					ArrayUtil.toStringArray(
-						JSONFactoryUtil.createJSONArray(sortableValueString)));
+						_jsonFactory.createJSONArray(sortableValueString)));
 				document.addKeyword(
 					name,
 					ArrayUtil.toStringArray(
-						JSONFactoryUtil.createJSONArray(valueString)));
+						_jsonFactory.createJSONArray(valueString)));
 			}
 			else {
 				if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
@@ -869,5 +867,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

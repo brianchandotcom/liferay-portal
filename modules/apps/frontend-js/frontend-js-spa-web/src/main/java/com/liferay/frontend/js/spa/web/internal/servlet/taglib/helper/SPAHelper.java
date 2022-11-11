@@ -19,6 +19,7 @@ import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -106,8 +107,7 @@ public class SPAHelper {
 	}
 
 	public JSONArray getPortletsBlacklistJSONArray(ThemeDisplay themeDisplay) {
-		JSONArray portletsBlacklistJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		JSONArray portletsBlacklistJSONArray = _jsonFactory.createJSONArray();
 
 		_portletLocalService.visitPortlets(
 			themeDisplay.getCompanyId(),
@@ -237,7 +237,7 @@ public class SPAHelper {
 	private JSONArray _getExcludedPathsJSONArray(
 		SPAConfiguration spaConfiguration) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (String excludedPath : _SPA_DEFAULT_EXCLUDED_PATHS) {
 			jsonArray.put(_portal.getPathContext() + excludedPath);
@@ -298,6 +298,10 @@ public class SPAHelper {
 	}
 
 	private volatile long _cacheExpirationTime;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private ServiceTracker<Object, Object> _navigationExceptionSelectorTracker;
 
 	@Reference

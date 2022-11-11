@@ -19,7 +19,7 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -258,7 +258,7 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 	}
 
 	private void _updateTypeSettingsProperties(String json) throws Exception {
-		JSONArray channelsJSONArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray channelsJSONArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < channelsJSONArray.length(); i++) {
 			JSONObject channelJSONObject = channelsJSONArray.getJSONObject(i);
@@ -306,6 +306,9 @@ public class AddChannelMVCActionCommand extends BaseAnalyticsMVCActionCommand {
 
 	@Reference
 	private CompanyService _companyService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

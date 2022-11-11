@@ -16,7 +16,7 @@ package com.liferay.portal.vulcan.internal.template;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -81,8 +82,7 @@ public class RESTClientTemplateContextContributor
 					new PipingServletResponse(
 						_httpServletResponse, unsyncStringWriter)));
 
-			return JSONFactoryUtil.looseDeserialize(
-				unsyncStringWriter.toString());
+			return _jsonFactory.looseDeserialize(unsyncStringWriter.toString());
 		}
 
 		private final HttpServletRequest _httpServletRequest;
@@ -97,6 +97,9 @@ public class RESTClientTemplateContextContributor
 
 		return _servletContext;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private ServletContext _servletContext;
 

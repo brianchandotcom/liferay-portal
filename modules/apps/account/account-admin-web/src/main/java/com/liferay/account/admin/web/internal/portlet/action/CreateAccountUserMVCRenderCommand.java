@@ -19,7 +19,7 @@ import com.liferay.account.admin.web.internal.portlet.action.util.TicketUtil;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -78,7 +78,7 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 		invitedAccountUserDisplayContext.setTicketKey(ticket.getKey());
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				ticket.getExtraInfo());
 
 			invitedAccountUserDisplayContext.setEmailAddress(
@@ -93,6 +93,9 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 
 		return "/account_user_registration/create_account_user.jsp";
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

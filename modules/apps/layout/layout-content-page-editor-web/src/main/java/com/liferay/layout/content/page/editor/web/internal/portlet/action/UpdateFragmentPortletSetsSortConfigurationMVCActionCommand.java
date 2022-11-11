@@ -23,7 +23,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -206,12 +206,12 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 
 		try {
 			if (Validator.isNotNull(fragmentCollectionKeys)) {
-				fragmentCollectionKeysJSONArray =
-					JSONFactoryUtil.createJSONArray(fragmentCollectionKeys);
+				fragmentCollectionKeysJSONArray = _jsonFactory.createJSONArray(
+					fragmentCollectionKeys);
 			}
 
 			if (Validator.isNotNull(portletCategoryKeys)) {
-				portletCategoryKeysJSONArray = JSONFactoryUtil.createJSONArray(
+				portletCategoryKeysJSONArray = _jsonFactory.createJSONArray(
 					portletCategoryKeys);
 			}
 		}
@@ -277,6 +277,9 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 
 	@Reference
 	private FragmentCollectionManager _fragmentCollectionManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

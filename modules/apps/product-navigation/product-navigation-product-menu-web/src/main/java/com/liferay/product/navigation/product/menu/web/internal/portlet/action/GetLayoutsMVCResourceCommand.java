@@ -14,7 +14,7 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -104,13 +104,16 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 				}
 			).put(
 				"items",
-				JSONFactoryUtil.createJSONArray(
+				_jsonFactory.createJSONArray(
 					LayoutsTreeUtil.getLayoutsJSON(
 						httpServletRequest, themeDisplay.getScopeGroupId(),
 						privateLayout, parentLayoutId, incomplete,
 						"productMenuPagesTree"))
 			));
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutService _layoutService;

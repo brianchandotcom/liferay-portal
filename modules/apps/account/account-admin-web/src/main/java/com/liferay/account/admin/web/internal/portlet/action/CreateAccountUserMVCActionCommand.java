@@ -21,7 +21,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
@@ -93,7 +93,7 @@ public class CreateAccountUserMVCActionCommand
 			return;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			ticket.getExtraInfo());
 
 		User user = _addUser(
@@ -200,6 +200,9 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

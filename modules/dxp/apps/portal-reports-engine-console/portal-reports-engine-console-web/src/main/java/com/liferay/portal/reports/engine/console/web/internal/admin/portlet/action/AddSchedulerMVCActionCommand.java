@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.cal.Duration;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -106,11 +106,11 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, startCalendar, true, recurrenceType);
 
 		JSONArray entryReportParametersJSONArray =
-			JSONFactoryUtil.createJSONArray();
+			_jsonFactory.createJSONArray();
 
 		Definition definition = _definitionService.getDefinition(definitionId);
 
-		JSONArray reportParametersJSONArray = JSONFactoryUtil.createJSONArray(
+		JSONArray reportParametersJSONArray = _jsonFactory.createJSONArray(
 			definition.getReportParameters());
 
 		for (int i = 0; i < reportParametersJSONArray.length(); i++) {
@@ -327,6 +327,9 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private EntryService _entryService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -130,7 +131,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 			).put(
 				"values",
 				() -> {
-					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+					JSONArray jsonArray = jsonFactory.createJSONArray();
 
 					for (String assetType : getAssetTypes(companyId)) {
 						jsonArray.put(assetType);
@@ -179,7 +180,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 					ParamUtil.getString(
 						actionRequest, getClassName() + "assetTypes"));
 
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+				JSONArray jsonArray = jsonFactory.createJSONArray();
 
 				if (ArrayUtil.isEmpty(assetTypes)) {
 					ThemeDisplay themeDisplay =
@@ -224,6 +225,9 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Reference
 	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected SearchableAssetClassNamesProvider

@@ -81,6 +81,6 @@ export function getPoliciesChartExpiringPolicies(
 	periodDay
 ) {
 	return axios.get(
-		`${DeliveryAPI}/?fields=endDate,totalCount,productName&pageSize=200&filter=endDate ge ${currentYear}-${currentMonth}-${currentDay} and endDate le ${periodYear}-${periodMonth}-${periodDay}`
+		`${DeliveryAPI}/?fields=endDate,totalCount,productName,termPremium&pageSize=200&filter=endDate ge ${currentYear}-${currentMonth}-${currentDay} and endDate le ${periodYear}-${periodMonth}-${periodDay}`
 	);
 }

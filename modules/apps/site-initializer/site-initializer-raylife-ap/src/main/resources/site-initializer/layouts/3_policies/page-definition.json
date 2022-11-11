@@ -376,11 +376,10 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "fake-content"
+																						"key": "policies-total-premium-due"
 																					},
 																					"fragmentConfig": {
-																						"fakeContentId": "fake content",
-																						"height": "257px"
+																						"textColor": ""
 																					},
 																					"fragmentFields": [
 																					],

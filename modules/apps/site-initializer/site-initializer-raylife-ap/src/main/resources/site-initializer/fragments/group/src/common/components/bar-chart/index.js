@@ -18,8 +18,11 @@ import React from 'react';
 import './index.css';
 
 const BarChart = ({
+	barRatio = 0.2,
+	barWidth = 20,
 	colors,
 	dataColumns,
+	format = false,
 	height = 200,
 	labelColumns,
 	showLegend = false,
@@ -49,10 +52,10 @@ const BarChart = ({
 				}}
 				bar={{
 					radius: {
-						ratio: 0.2,
+						ratio: barRatio,
 					},
 					width: {
-						data: 20,
+						data: barWidth,
 					},
 				}}
 				data={{
@@ -62,6 +65,18 @@ const BarChart = ({
 					columns: [labelColumns, dataColumns],
 					labels: {
 						colors: '#272833',
+						format: {
+							data: (value) => {
+								if (format) {
+									return new Intl.NumberFormat('en-us', {
+										currency: 'USD',
+										style: 'currency',
+									}).format(value);
+								}
+
+								return value;
+							},
+						},
 						position: {
 							y: -10,
 						},

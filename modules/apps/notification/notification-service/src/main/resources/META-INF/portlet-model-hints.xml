@@ -67,6 +67,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="description" type="String" />
+		<field name="editorType" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />
 		<field localized="true" name="subject" type="String" />

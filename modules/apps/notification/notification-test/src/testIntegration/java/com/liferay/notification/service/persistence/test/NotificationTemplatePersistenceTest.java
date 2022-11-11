@@ -146,6 +146,8 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setDescription(RandomTestUtil.randomString());
 
+		newNotificationTemplate.setEditorType(RandomTestUtil.randomString());
+
 		newNotificationTemplate.setName(RandomTestUtil.randomString());
 
 		newNotificationTemplate.setRecipientType(RandomTestUtil.randomString());
@@ -196,6 +198,9 @@ public class NotificationTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingNotificationTemplate.getDescription(),
 			newNotificationTemplate.getDescription());
+		Assert.assertEquals(
+			existingNotificationTemplate.getEditorType(),
+			newNotificationTemplate.getEditorType());
 		Assert.assertEquals(
 			existingNotificationTemplate.getName(),
 			newNotificationTemplate.getName());
@@ -259,8 +264,8 @@ public class NotificationTemplatePersistenceTest {
 			"NotificationTemplate", "mvccVersion", true, "uuid", true,
 			"notificationTemplateId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectDefinitionId", true, "description", true, "name", true,
-			"recipientType", true, "subject", true, "type", true);
+			"objectDefinitionId", true, "description", true, "editorType", true,
+			"name", true, "recipientType", true, "subject", true, "type", true);
 	}
 
 	@Test
@@ -521,6 +526,8 @@ public class NotificationTemplatePersistenceTest {
 		notificationTemplate.setBody(RandomTestUtil.randomString());
 
 		notificationTemplate.setDescription(RandomTestUtil.randomString());
+
+		notificationTemplate.setEditorType(RandomTestUtil.randomString());
 
 		notificationTemplate.setName(RandomTestUtil.randomString());
 

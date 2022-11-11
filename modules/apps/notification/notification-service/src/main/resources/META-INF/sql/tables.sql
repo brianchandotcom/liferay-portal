@@ -72,6 +72,7 @@ create table NotificationTemplate (
 	objectDefinitionId LONG,
 	body TEXT null,
 	description VARCHAR(75) null,
+	editorType VARCHAR(75) null,
 	name STRING null,
 	recipientType VARCHAR(75) null,
 	subject STRING null,

@@ -86,9 +86,9 @@ public class NotificationTemplateModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId", Types.BIGINT}, {"body", Types.CLOB},
-		{"description", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"recipientType", Types.VARCHAR}, {"subject", Types.VARCHAR},
-		{"type_", Types.VARCHAR}
+		{"description", Types.VARCHAR}, {"editorType", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"recipientType", Types.VARCHAR},
+		{"subject", Types.VARCHAR}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -106,6 +106,7 @@ public class NotificationTemplateModelImpl
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("editorType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("recipientType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
@@ -113,7 +114,7 @@ public class NotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(75) null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(75) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
@@ -327,6 +328,12 @@ public class NotificationTemplateModelImpl
 			"description",
 			(BiConsumer<NotificationTemplate, String>)
 				NotificationTemplate::setDescription);
+		attributeGetterFunctions.put(
+			"editorType", NotificationTemplate::getEditorType);
+		attributeSetterBiConsumers.put(
+			"editorType",
+			(BiConsumer<NotificationTemplate, String>)
+				NotificationTemplate::setEditorType);
 		attributeGetterFunctions.put("name", NotificationTemplate::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -667,6 +674,26 @@ public class NotificationTemplateModelImpl
 		}
 
 		_description = description;
+	}
+
+	@JSON
+	@Override
+	public String getEditorType() {
+		if (_editorType == null) {
+			return "";
+		}
+		else {
+			return _editorType;
+		}
+	}
+
+	@Override
+	public void setEditorType(String editorType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_editorType = editorType;
 	}
 
 	@JSON
@@ -1110,6 +1137,7 @@ public class NotificationTemplateModelImpl
 		notificationTemplateImpl.setObjectDefinitionId(getObjectDefinitionId());
 		notificationTemplateImpl.setBody(getBody());
 		notificationTemplateImpl.setDescription(getDescription());
+		notificationTemplateImpl.setEditorType(getEditorType());
 		notificationTemplateImpl.setName(getName());
 		notificationTemplateImpl.setRecipientType(getRecipientType());
 		notificationTemplateImpl.setSubject(getSubject());
@@ -1147,6 +1175,8 @@ public class NotificationTemplateModelImpl
 			this.<String>getColumnOriginalValue("body"));
 		notificationTemplateImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		notificationTemplateImpl.setEditorType(
+			this.<String>getColumnOriginalValue("editorType"));
 		notificationTemplateImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		notificationTemplateImpl.setRecipientType(
@@ -1297,6 +1327,14 @@ public class NotificationTemplateModelImpl
 			notificationTemplateCacheModel.description = null;
 		}
 
+		notificationTemplateCacheModel.editorType = getEditorType();
+
+		String editorType = notificationTemplateCacheModel.editorType;
+
+		if ((editorType != null) && (editorType.length() == 0)) {
+			notificationTemplateCacheModel.editorType = null;
+		}
+
 		notificationTemplateCacheModel.name = getName();
 
 		String name = notificationTemplateCacheModel.name;
@@ -1404,6 +1442,7 @@ public class NotificationTemplateModelImpl
 	private String _body;
 	private String _bodyCurrentLanguageId;
 	private String _description;
+	private String _editorType;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _recipientType;
@@ -1452,6 +1491,7 @@ public class NotificationTemplateModelImpl
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("body", _body);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("editorType", _editorType);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("recipientType", _recipientType);
 		_columnOriginalValues.put("subject", _subject);
@@ -1502,13 +1542,15 @@ public class NotificationTemplateModelImpl
 
 		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("editorType", 2048L);
 
-		columnBitmasks.put("recipientType", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("subject", 8192L);
+		columnBitmasks.put("recipientType", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("subject", 16384L);
+
+		columnBitmasks.put("type_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

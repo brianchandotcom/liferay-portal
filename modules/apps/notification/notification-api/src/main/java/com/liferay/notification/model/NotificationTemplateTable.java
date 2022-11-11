@@ -67,6 +67,9 @@ public class NotificationTemplateTable
 	public final Column<NotificationTemplateTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, String> editorType =
+		createColumn(
+			"editorType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> recipientType =

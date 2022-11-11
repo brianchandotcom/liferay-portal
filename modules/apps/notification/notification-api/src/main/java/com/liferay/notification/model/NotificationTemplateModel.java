@@ -337,6 +337,21 @@ public interface NotificationTemplateModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the editor type of this notification template.
+	 *
+	 * @return the editor type of this notification template
+	 */
+	@AutoEscape
+	public String getEditorType();
+
+	/**
+	 * Sets the editor type of this notification template.
+	 *
+	 * @param editorType the editor type of this notification template
+	 */
+	public void setEditorType(String editorType);
+
+	/**
 	 * Returns the name of this notification template.
 	 *
 	 * @return the name of this notification template

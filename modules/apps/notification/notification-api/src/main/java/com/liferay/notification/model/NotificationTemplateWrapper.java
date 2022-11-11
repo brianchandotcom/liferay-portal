@@ -56,6 +56,7 @@ public class NotificationTemplateWrapper
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("body", getBody());
 		attributes.put("description", getDescription());
+		attributes.put("editorType", getEditorType());
 		attributes.put("name", getName());
 		attributes.put("recipientType", getRecipientType());
 		attributes.put("subject", getSubject());
@@ -131,6 +132,12 @@ public class NotificationTemplateWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String editorType = (String)attributes.get("editorType");
+
+		if (editorType != null) {
+			setEditorType(editorType);
 		}
 
 		String name = (String)attributes.get("name");
@@ -277,6 +284,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the editor type of this notification template.
+	 *
+	 * @return the editor type of this notification template
+	 */
+	@Override
+	public String getEditorType() {
+		return model.getEditorType();
 	}
 
 	/**
@@ -657,6 +674,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the editor type of this notification template.
+	 *
+	 * @param editorType the editor type of this notification template
+	 */
+	@Override
+	public void setEditorType(String editorType) {
+		model.setEditorType(editorType);
 	}
 
 	/**

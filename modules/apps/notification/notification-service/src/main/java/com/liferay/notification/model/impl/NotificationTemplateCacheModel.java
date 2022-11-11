@@ -78,7 +78,7 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class NotificationTemplateCacheModel
 		sb.append(body);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", editorType=");
+		sb.append(editorType);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", recipientType=");
@@ -171,6 +173,13 @@ public class NotificationTemplateCacheModel
 			notificationTemplateImpl.setDescription(description);
 		}
 
+		if (editorType == null) {
+			notificationTemplateImpl.setEditorType("");
+		}
+		else {
+			notificationTemplateImpl.setEditorType(editorType);
+		}
+
 		if (name == null) {
 			notificationTemplateImpl.setName("");
 		}
@@ -223,6 +232,7 @@ public class NotificationTemplateCacheModel
 		objectDefinitionId = objectInput.readLong();
 		body = (String)objectInput.readObject();
 		description = objectInput.readUTF();
+		editorType = objectInput.readUTF();
 		name = objectInput.readUTF();
 		recipientType = objectInput.readUTF();
 		subject = objectInput.readUTF();
@@ -272,6 +282,13 @@ public class NotificationTemplateCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		if (editorType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(editorType);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -312,6 +329,7 @@ public class NotificationTemplateCacheModel
 	public long objectDefinitionId;
 	public String body;
 	public String description;
+	public String editorType;
 	public String name;
 	public String recipientType;
 	public String subject;

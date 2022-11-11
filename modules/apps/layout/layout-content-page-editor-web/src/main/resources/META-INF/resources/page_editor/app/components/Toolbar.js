@@ -22,7 +22,6 @@ import React, {useEffect, useState} from 'react';
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
-import CreateLayoutPageTemplateEntryButton from '../../plugins/create-layout-page-template-entry-modal/components/CreateLayoutPageTemplateEntryButton';
 import * as Actions from '../actions/index';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
@@ -299,12 +298,6 @@ function ToolbarBody({className}) {
 						<li className="nav-item">
 							<HideSidebarButton />
 						</li>
-
-						{config.layoutType === LAYOUT_TYPES.content && (
-							<li className="nav-item">
-								<CreateLayoutPageTemplateEntryButton />
-							</li>
-						)}
 					</ul>
 				</li>
 

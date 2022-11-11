@@ -102,19 +102,6 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							title='<%= LanguageUtil.get(request, "view") %>'
 						/>
 					</li>
-
-					<c:if test="<%= contentPageEditorDisplayContext.isContentLayout() %>">
-						<li class="nav-item">
-							<clay:button
-								disabled="<%= true %>"
-								displayType="secondary"
-								icon="page-template"
-								monospaced="<%= true %>"
-								small="<%= true %>"
-								title='<%= LanguageUtil.get(request, "create-page-template") %>'
-							/>
-						</li>
-					</c:if>
 				</ul>
 			</li>
 

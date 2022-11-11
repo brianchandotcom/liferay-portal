@@ -163,27 +163,6 @@ public class TestFlowTestrayDispatchTaskExecutor
 		return properties.get(key);
 	}
 
-	private int _getScore(long companyId, List<ObjectEntry> objectEntries)
-		throws Exception {
-
-		int score = 0;
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			Long testrayCaseId = (Long)_getProperty(
-				"r_caseToCaseResult_c_caseId", objectEntry);
-
-			Page<ObjectEntry> testrayCaseObjectEntriesPage2 = _getObjectEntries(
-				null, companyId, "id eq '" + testrayCaseId + "'", "Case");
-
-			ObjectEntry testrayCaseObjectEntry =
-				testrayCaseObjectEntriesPage2.fetchFirstItem();
-
-			score += (int)_getProperty("priority", testrayCaseObjectEntry);
-		}
-
-		return score;
-	}
-
 	private String _getTestrayIssueNames(
 			long companyId, ObjectEntry testrayCaseResultObjectEntry)
 		throws Exception {
@@ -229,6 +208,28 @@ public class TestFlowTestrayDispatchTaskExecutor
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private int _getTestraySubtaskScore(
+			long companyId, List<ObjectEntry> objectEntries)
+		throws Exception {
+
+		int score = 0;
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			Long testrayCaseId = (Long)_getProperty(
+				"r_caseToCaseResult_c_caseId", objectEntry);
+
+			Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
+				null, companyId, "id eq '" + testrayCaseId + "'", "Case");
+
+			ObjectEntry testrayCaseObjectEntry =
+				testrayCaseObjectEntriesPage.fetchFirstItem();
+
+			score += (int)_getProperty("priority", testrayCaseObjectEntry);
+		}
+
+		return score;
 	}
 
 	private long _increment(
@@ -381,24 +382,24 @@ public class TestFlowTestrayDispatchTaskExecutor
 					List<ObjectEntry> testrayCaseResultObjectEntries1,
 					List<ObjectEntry> testrayCaseResultObjectEntries2) {
 
-					int score1 = 0;
-					int score2 = 0;
+					int testraySubtaskScore1 = 0;
+					int testraySubtaskScore2 = 0;
 
 					try {
-						score1 = _getScore(
+						testraySubtaskScore1 = _getTestraySubtaskScore(
 							companyId, testrayCaseResultObjectEntries1);
 
-						score2 = _getScore(
+						testraySubtaskScore2 = _getTestraySubtaskScore(
 							companyId, testrayCaseResultObjectEntries2);
 					}
 					catch (Exception exception) {
 						throw new RuntimeException(exception);
 					}
 
-					if (score1 > score2) {
+					if (testraySubtaskScore1 > testraySubtaskScore2) {
 						return -1;
 					}
-					else if (score1 < score2) {
+					else if (testraySubtaskScore1 < testraySubtaskScore2) {
 						return 1;
 					}
 
@@ -413,7 +414,8 @@ public class TestFlowTestrayDispatchTaskExecutor
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :
 				testrayCaseResultGroups) {
 
-			int score = _getScore(companyId, testrayCaseResultObjectEntry);
+			int testraySubtaskScore = _getTestraySubtaskScore(
+				companyId, testrayCaseResultObjectEntry);
 
 			long increment = _increment(
 				companyId, "name", "taskId eq '" + testrayTaskId + "'",
@@ -428,7 +430,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 				).put(
 					"r_taskToSubtasks_c_taskId", testrayTaskId
 				).put(
-					"score", score
+					"score", testraySubtaskScore
 				).build());
 
 			for (ObjectEntry objectEntry : testrayCaseResultObjectEntry) {

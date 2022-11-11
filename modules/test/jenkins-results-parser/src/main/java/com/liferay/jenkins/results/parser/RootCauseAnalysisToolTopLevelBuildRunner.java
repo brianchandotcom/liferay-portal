@@ -14,6 +14,14 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.JUnitTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.ModulesTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
+import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -405,8 +413,33 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return list;
 		}
 
-		for (String portalBatchTest : portalBatchTestSelector.split(",")) {
-			list.add(portalBatchTest.trim());
+		BatchTestClassGroup batchTestClassGroup =
+			TestClassGroupFactory.newBatchTestClassGroup(
+				_getBatchName(), getJob());
+
+		for (TestClass testClass : batchTestClassGroup.getTestClasses()) {
+			if (testClass instanceof FunctionalTestClass) {
+				FunctionalTestClass functionalTestClass =
+					(FunctionalTestClass)testClass;
+
+				list.add(functionalTestClass.getTestClassMethodName());
+			}
+			else if (testClass instanceof JUnitTestClass) {
+				String testClassFilePath =
+					JenkinsResultsParserUtil.getCanonicalPath(
+						testClass.getTestClassFile());
+
+				list.add(
+					testClassFilePath.replaceAll(
+						".*/(com/.*)\\.java", "$1.class"));
+			}
+			else if (testClass instanceof ModulesTestClass) {
+				for (TestClassMethod testClassMethod :
+						testClass.getTestClassMethods()) {
+
+					list.add(testClassMethod.getName());
+				}
+			}
 		}
 
 		return list;

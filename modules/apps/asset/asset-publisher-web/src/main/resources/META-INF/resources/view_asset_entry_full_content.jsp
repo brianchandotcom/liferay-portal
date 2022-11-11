@@ -325,13 +325,15 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 				>
 					<c:choose>
 						<c:when test="<%= print %>">
-							<liferay-ui:icon
-								icon="print"
-								linkCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-								markupView="lexicon"
-								message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
-								url="javascript:print();"
-							/>
+							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(title)) %>">
+								<clay:button
+									cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+									displayType="secondary"
+									icon="print"
+									onClick="javascript:print();"
+									type="button"
+								/>
+							</span>
 
 							<aui:script>
 								print();
@@ -343,13 +345,15 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 							String id = assetEntry.getEntryId() + StringUtil.randomId();
 							%>
 
-							<liferay-ui:icon
-								icon="print"
-								linkCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-								markupView="lexicon"
-								message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(title)}, false) %>'
-								url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
-							/>
+							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(title)) %>">
+								<clay:button
+									cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+									displayType="secondary"
+									icon="print"
+									onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
+									type="button"
+								/>
+							</span>
 
 							<aui:script>
 								function <portlet:namespace />printPage_<%= id %>() {

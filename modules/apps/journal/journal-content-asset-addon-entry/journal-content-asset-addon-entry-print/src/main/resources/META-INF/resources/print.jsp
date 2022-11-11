@@ -39,14 +39,15 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 		<clay:content-col
 			cssClass="print-action user-tool-asset-addon-entry"
 		>
-			<liferay-ui:icon
-				icon="print"
-				label="<%= true %>"
-				linkCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-				markupView="lexicon"
-				message='<%= LanguageUtil.format(request, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle())}, false) %>'
-				url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
-			/>
+			<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(articleDisplay.getTitle())) %>">
+				<clay:button
+					cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+					displayType="secondary"
+					icon="print"
+					onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
+					type="button"
+				/>
+			</span>
 		</clay:content-col>
 
 		<aui:script>

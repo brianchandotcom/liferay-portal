@@ -105,7 +105,7 @@ definition {
 				key_arrowDirection = "Right",
 				key_parameterType = "Unassigned",
 				locator1 = "TestraySuites#SMART_SUITE_ARROW");
-			}
+		}
 
 		Button.clickSave();
 	}

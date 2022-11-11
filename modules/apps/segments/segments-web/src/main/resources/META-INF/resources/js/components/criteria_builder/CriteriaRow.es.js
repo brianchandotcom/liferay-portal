@@ -470,6 +470,7 @@ class CriteriaRow extends Component {
 				</span>
 
 				<ClaySelectWithOption
+					aria-label={Liferay.Language.get('select-option')}
 					className="criterion-input form-control operator-input"
 					disabled={disabledInput}
 					onChange={this._handleInputChange('operatorName')}

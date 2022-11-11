@@ -40,6 +40,7 @@ class CriteriaSidebarSearchBar extends Component {
 			<div className="input-group">
 				<div className="input-group-item">
 					<input
+						aria-label={Liferay.Language.get('search')}
 						className="form-control input-group-inset input-group-inset-after"
 						data-testid="search-input"
 						onChange={this._handleChange}

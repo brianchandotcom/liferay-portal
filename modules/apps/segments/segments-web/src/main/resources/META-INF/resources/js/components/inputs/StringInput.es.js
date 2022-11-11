@@ -58,6 +58,7 @@ class StringInput extends React.Component {
 
 		return !options.length ? (
 			<input
+				aria-label={Liferay.Language.get('input-a-value')}
 				className={classNames('criterion-input form-control', {
 					'criterion-input--error': !value && renderEmptyValueErrors,
 				})}
@@ -69,6 +70,7 @@ class StringInput extends React.Component {
 			/>
 		) : (
 			<ClaySelectWithOption
+				aria-label={Liferay.Language.get('select-option')}
 				className={classNames('criterion-input form-control', {
 					'criterion-input--error': !value,
 				})}

@@ -92,6 +92,7 @@ class DateTimeInput extends React.Component {
 		return (
 			<div className="criterion-input date-input">
 				<input
+					aria-label={Liferay.Language.get('select-date')}
 					className="form-control"
 					data-testid="date-input"
 					disabled={disabled}

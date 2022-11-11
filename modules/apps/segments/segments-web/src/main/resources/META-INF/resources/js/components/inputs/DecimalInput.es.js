@@ -43,6 +43,7 @@ class DecimalInput extends React.Component {
 
 		return !options.length ? (
 			<input
+				aria-label={Liferay.Language.get('decimal-number')}
 				className="criterion-input form-control"
 				data-testid="decimal-number"
 				disabled={disabled}

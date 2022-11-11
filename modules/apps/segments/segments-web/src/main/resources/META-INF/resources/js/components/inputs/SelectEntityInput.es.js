@@ -97,6 +97,7 @@ class SelectEntityInput extends React.Component {
 					/>
 
 					<input
+						aria-label={Liferay.Language.get('select-value')}
 						className={classNames('form-control', {
 							'criterion-input--error':
 								!value && renderEmptyValueErrors,

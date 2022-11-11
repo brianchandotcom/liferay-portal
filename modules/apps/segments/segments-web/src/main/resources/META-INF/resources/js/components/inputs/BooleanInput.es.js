@@ -38,6 +38,7 @@ class BooleanInput extends React.Component {
 
 		return (
 			<ClaySelectWithOption
+				aria-label={Liferay.Language.get('select-option')}
 				className={classes}
 				data-testid="options-boolean"
 				disabled={disabled}

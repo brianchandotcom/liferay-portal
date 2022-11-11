@@ -142,6 +142,7 @@ export default class LocalizedInput extends React.Component {
 
 				<div className={inputGroupItemClasses}>
 					<input
+						aria-label={placeholder}
 						className="field form-control form-control-inline language-value rounded"
 						data-testid="localized-main-input"
 						onChange={this._handleInputChange}

@@ -155,18 +155,15 @@ export default function EditNotificationTemplate({
 		}
 
 		if (
-			(notificationTemplateType === 'email' &&
-				!values.recipients[0].from) ||
-			(Liferay.FeatureFlags['LPS-162133'] && !values.from)
+			notificationTemplateType === 'email' &&
+			!values.recipients[0].from
 		) {
 			errors.from = Liferay.Language.get('required');
 		}
 
 		if (
-			(notificationTemplateType === 'email' &&
-				!values.recipients[0].fromName[defaultLanguageId]) ||
-			(Liferay.FeatureFlags['LPS-162133'] &&
-				!values.fromName[defaultLanguageId])
+			notificationTemplateType === 'email' &&
+			!values.recipients[0].fromName[defaultLanguageId]
 		) {
 			errors.fromName = Liferay.Language.get('required');
 		}
@@ -241,9 +238,6 @@ export default function EditNotificationTemplate({
 					? 'term'
 					: 'email',
 		}),
-		...(Liferay.FeatureFlags['LPS-162133'] && {
-			type: notificationTemplateType,
-		}),
 		body: {
 			[defaultLanguageId]: '',
 		},
@@ -251,18 +245,6 @@ export default function EditNotificationTemplate({
 		name: '',
 		objectDefinitionId: 0,
 		recipients: recipientInitialValue,
-
-		...(Liferay.FeatureFlags['LPS-162133'] && {
-			bcc: '',
-			cc: '',
-			from: '',
-			fromName: {
-				[defaultLanguageId]: '',
-			},
-			to: {
-				[defaultLanguageId]: '',
-			},
-		}),
 		subject: {
 			[defaultLanguageId]: '',
 		},
@@ -525,8 +507,7 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								{Liferay.FeatureFlags['LPS-162133'] &&
-								values.type === 'userNotification' ? (
+								{values.type === 'userNotification' ? (
 									<>
 										<SingleSelect
 											label={Liferay.Language.get(
@@ -648,19 +629,13 @@ export default function EditNotificationTemplate({
 											onChange={(translation) => {
 												setValues({
 													...values,
-													...(!Liferay.FeatureFlags[
-														'LPS-162133'
-													]
-														? {
-																recipients: [
-																	{
-																		...values
-																			.recipients[0],
-																		to: translation,
-																	},
-																],
-														  }
-														: {to: translation}),
+													recipients: [
+														{
+															...values
+																.recipients[0],
+															to: translation,
+														},
+													],
 												});
 											}}
 											placeholder=""
@@ -682,34 +657,21 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															...(!Liferay
-																.FeatureFlags[
-																'LPS-162133'
-															]
-																? {
-																		recipients: [
-																			{
-																				...values
-																					.recipients[0],
-																				cc:
-																					target.value,
-																			},
-																		],
-																  }
-																: {
-																		cc:
-																			target.value,
-																  }),
+
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	cc:
+																		target.value,
+																},
+															],
 														})
 													}
 													value={
-														!Liferay.FeatureFlags[
-															'LPS-162133'
-														]
-															? (values
-																	.recipients[0] as TEmailRecipients)
-																	.cc
-															: values.cc
+														(values
+															.recipients[0] as TEmailRecipients)
+															.cc
 													}
 												/>
 											</div>
@@ -723,34 +685,21 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															...(!Liferay
-																.FeatureFlags[
-																'LPS-162133'
-															]
-																? {
-																		recipients: [
-																			{
-																				...values
-																					.recipients[0],
-																				bcc:
-																					target.value,
-																			},
-																		],
-																  }
-																: {
-																		bcc:
-																			target.value,
-																  }),
+
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	bcc:
+																		target.value,
+																},
+															],
 														})
 													}
 													value={
-														!Liferay.FeatureFlags[
-															'LPS-162133'
-														]
-															? (values
-																	.recipients[0] as TEmailRecipients)
-																	.bcc
-															: values.bcc
+														(values
+															.recipients[0] as TEmailRecipients)
+															.bcc
 													}
 												/>
 											</div>
@@ -767,35 +716,21 @@ export default function EditNotificationTemplate({
 													onChange={({target}) =>
 														setValues({
 															...values,
-															...(!Liferay
-																.FeatureFlags[
-																'LPS-162133'
-															]
-																? {
-																		recipients: [
-																			{
-																				...values
-																					.recipients[0],
-																				from:
-																					target.value,
-																			},
-																		],
-																  }
-																: {
-																		from:
-																			target.value,
-																  }),
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	from:
+																		target.value,
+																},
+															],
 														})
 													}
 													required
 													value={
-														!Liferay.FeatureFlags[
-															'LPS-162133'
-														]
-															? (values
-																	.recipients[0] as TEmailRecipients)
-																	.from
-															: values.from
+														(values
+															.recipients[0] as TEmailRecipients)
+															.from
 													}
 												/>
 											</div>
@@ -810,22 +745,14 @@ export default function EditNotificationTemplate({
 													onChange={(translation) => {
 														setValues({
 															...values,
-															...(!Liferay
-																.FeatureFlags[
-																'LPS-162133'
-															]
-																? {
-																		recipients: [
-																			{
-																				...values
-																					.recipients[0],
-																				fromName: translation,
-																			},
-																		],
-																  }
-																: {
-																		fromName: translation,
-																  }),
+
+															recipients: [
+																{
+																	...values
+																		.recipients[0],
+																	fromName: translation,
+																},
+															],
 														});
 													}}
 													placeholder=""
@@ -834,13 +761,9 @@ export default function EditNotificationTemplate({
 														selectedLocale
 													}
 													translations={
-														!Liferay.FeatureFlags[
-															'LPS-162133'
-														]
-															? (values
-																	.recipients[0] as TEmailRecipients)
-																	.fromName
-															: values.fromName!
+														(values
+															.recipients[0] as TEmailRecipients)
+															.fromName
 													}
 												/>
 											</div>

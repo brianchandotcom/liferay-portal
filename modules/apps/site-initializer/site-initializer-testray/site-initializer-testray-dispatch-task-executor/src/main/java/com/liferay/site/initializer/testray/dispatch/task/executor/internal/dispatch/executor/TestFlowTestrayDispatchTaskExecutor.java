@@ -274,14 +274,8 @@ public class TestFlowTestrayDispatchTaskExecutor
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		long testrayBuildId = GetterUtil.getLong(
-			unicodeProperties.getProperty("testrayBuildId"));
 		String[] testrayCaseTypeIds = StringUtil.split(
 			unicodeProperties.getProperty("testrayCaseTypeIds"));
-		long testrayTaskId = GetterUtil.getLong(
-			unicodeProperties.getProperty("testrayTaskId"));
-
-		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -310,6 +304,9 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 		aggregation.setAggregationTerms(map);
 
+		long testrayBuildId = GetterUtil.getLong(
+			unicodeProperties.getProperty("testrayBuildId"));
+
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
 			_getObjectEntries(
 				companyId, "CaseResult", aggregation,
@@ -322,6 +319,9 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 		List<Facet.FacetValue> testrayCaseResultFacetValues =
 			testrayCaseResultFacet.getFacetValues();
+
+
+		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
 		for (Facet.FacetValue testrayCaseResultFacetValue :
 				testrayCaseResultFacetValues) {
@@ -412,6 +412,9 @@ public class TestFlowTestrayDispatchTaskExecutor
 				}
 
 			});
+
+			long testrayTaskId = GetterUtil.getLong(
+			unicodeProperties.getProperty("testrayTaskId"));
 
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :
 				testrayCaseResultGroups) {

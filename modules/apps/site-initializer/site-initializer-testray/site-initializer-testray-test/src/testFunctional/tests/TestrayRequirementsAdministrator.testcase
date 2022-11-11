@@ -198,4 +198,22 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166833 - Verify that As an administrator I cannot create requirements with a invalid URL link"
+	@priority = "4"
+	test AdminCanNotAddRequirementsWithInvalidUrl {
+		task ("Given the user tries to create a requirement with an invalid URL") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayRequirements.addRequirement(linkURL = "www.google.com");
+		}
+
+		task ("Then an invalid URL message appears") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Link URL",
+				warningMessage = "The link URL must be a valid URL.");
+		}
+	}
+
 }

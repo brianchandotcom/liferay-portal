@@ -26,6 +26,10 @@ import java.util.List;
 public class InfoCollectionProviderItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
+	public String getItemSubtype() {
+		return _itemSubtype;
+	}
+
 	public String getItemType() {
 		if (ListUtil.isEmpty(_itemTypes)) {
 			return null;
@@ -38,6 +42,10 @@ public class InfoCollectionProviderItemSelectorCriterion
 		return _itemTypes;
 	}
 
+	public void setItemSubtype(String itemSubtype) {
+		_itemSubtype = itemSubtype;
+	}
+
 	public void setItemType(String itemType) {
 		_itemTypes.add(itemType);
 	}
@@ -46,6 +54,7 @@ public class InfoCollectionProviderItemSelectorCriterion
 		_itemTypes = itemTypes;
 	}
 
+	private String _itemSubtype;
 	private List<String> _itemTypes = new ArrayList<>();
 
 }

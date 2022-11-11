@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -90,46 +89,29 @@ public class InfoCollectionProviderItemSelectorView
 				_infoItemServiceRegistry));
 	}
 
-	private List<InfoCollectionProvider<?>> _getAllInfoCollectionProviders() {
-		return ListUtil.filter(
-			_infoItemServiceRegistry.getAllInfoItemServices(
-				(Class<InfoCollectionProvider<?>>)
-					(Class<?>)InfoCollectionProvider.class),
-			InfoCollectionProvider::isAvailable);
-	}
-
 	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders(
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion) {
 
-		List<String> itemTypes =
-			infoCollectionProviderItemSelectorCriterion.getItemTypes();
+		if (infoCollectionProviderItemSelectorCriterion.getType() ==
+				InfoCollectionProviderItemSelectorCriterion.Type.
+					SUPPORTED_INFO_FRAMEWORK_COLLECTIONS) {
 
-		if (ListUtil.isEmpty(itemTypes)) {
 			return Collections.unmodifiableList(
-				_getAllInfoCollectionProviders());
+				ListUtil.filter(
+					_infoItemServiceRegistry.getAllInfoItemServices(
+						(Class<InfoCollectionProvider<?>>)
+							(Class<?>)InfoCollectionProvider.class),
+					InfoCollectionProvider::isAvailable));
 		}
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			new ArrayList<>();
-
-		for (String itemType : itemTypes) {
-			infoCollectionProviders.addAll(
-				_getInfoCollectionProviders(itemType));
-		}
-
-		return Collections.unmodifiableList(infoCollectionProviders);
-	}
-
-	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders(
-		String itemType) {
-
-		return ListUtil.filter(
-			_infoItemServiceRegistry.getAllInfoItemServices(
-				(Class<InfoCollectionProvider<?>>)
-					(Class<?>)InfoCollectionProvider.class,
-				itemType),
-			InfoCollectionProvider::isAvailable);
+		return Collections.unmodifiableList(
+			ListUtil.filter(
+				_infoItemServiceRegistry.getAllInfoItemServices(
+					(Class<InfoCollectionProvider<?>>)
+						(Class<?>)InfoCollectionProvider.class,
+					infoCollectionProviderItemSelectorCriterion.getItemType()),
+				InfoCollectionProvider::isAvailable));
 	}
 
 	private static final List<ItemSelectorReturnType>

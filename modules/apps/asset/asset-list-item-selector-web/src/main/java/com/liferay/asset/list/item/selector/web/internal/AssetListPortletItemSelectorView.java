@@ -17,6 +17,8 @@ package com.liferay.asset.list.item.selector.web.internal;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.item.selector.web.internal.display.context.AssetListEntryItemSelectorDisplayContext;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.PortletItemSelectorView;
@@ -85,7 +87,8 @@ public class AssetListPortletItemSelectorView
 		servletRequest.setAttribute(
 			AssetListEntryItemSelectorDisplayContext.class.getName(),
 			new AssetListEntryItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest, itemSelectedEventName,
+				(HttpServletRequest)servletRequest, _infoItemServiceRegistry,
+				_infoSearchClassMapperRegistry, itemSelectedEventName,
 				_language, portletURL,
 				infoCollectionProviderItemSelectorCriterion));
 
@@ -95,6 +98,12 @@ public class AssetListPortletItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new InfoListItemSelectorReturnType());
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private Language _language;

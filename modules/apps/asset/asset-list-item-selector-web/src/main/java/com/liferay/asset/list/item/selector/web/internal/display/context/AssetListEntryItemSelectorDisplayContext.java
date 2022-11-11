@@ -23,6 +23,9 @@ import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -40,18 +43,20 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -66,12 +71,16 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetListEntryItemSelectorDisplayContext {
 
 	public AssetListEntryItemSelectorDisplayContext(
-		HttpServletRequest httpServletRequest, String itemSelectedEventName,
-		Language language, PortletURL portletURL,
+		HttpServletRequest httpServletRequest,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+		String itemSelectedEventName, Language language, PortletURL portletURL,
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion) {
 
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		_itemSelectedEventName = itemSelectedEventName;
 		_language = language;
 		_portletURL = portletURL;
@@ -173,10 +182,10 @@ public class AssetListEntryItemSelectorDisplayContext {
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
-		List<String> itemTypes =
-			_infoCollectionProviderItemSelectorCriterion.getItemTypes();
+		if (_infoCollectionProviderItemSelectorCriterion.getType() ==
+				InfoCollectionProviderItemSelectorCriterion.Type.
+					ALL_COLLECTIONS) {
 
-		if (ListUtil.isEmpty(itemTypes)) {
 			if (Validator.isNotNull(keywords)) {
 				searchContainer.setResultsAndTotal(
 					() -> AssetListEntryServiceUtil.getAssetListEntries(
@@ -196,31 +205,32 @@ public class AssetListEntryItemSelectorDisplayContext {
 						themeDisplay.getScopeGroupId()));
 			}
 		}
-		else if (Validator.isNull(
-					_infoCollectionProviderItemSelectorCriterion.
-						getItemSubtype())) {
+		else if (_infoCollectionProviderItemSelectorCriterion.getType() ==
+					InfoCollectionProviderItemSelectorCriterion.Type.
+						SUPPORTED_INFO_FRAMEWORK_COLLECTIONS) {
+
+			String[] classNames = _getInfoItemClassNames();
 
 			if (Validator.isNotNull(keywords)) {
 				searchContainer.setResultsAndTotal(
 					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
-						itemTypes.toArray(new String[0]),
-						searchContainer.getStart(), searchContainer.getEnd(),
+						classNames, searchContainer.getStart(),
+						searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
-						itemTypes.toArray(new String[0])));
+						classNames));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
 					() -> AssetListEntryServiceUtil.getAssetListEntries(
-						new long[] {themeDisplay.getScopeGroupId()},
-						itemTypes.toArray(new String[0]),
+						new long[] {themeDisplay.getScopeGroupId()}, classNames,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()},
-						itemTypes.toArray(new String[0])));
+						classNames));
 			}
 		}
 		else {
@@ -396,6 +406,24 @@ public class AssetListEntryItemSelectorDisplayContext {
 		return breadcrumbEntry;
 	}
 
+	private String[] _getInfoItemClassNames() {
+
+		// LPS-166852
+
+		Set<String> infoItemClassNames = new HashSet<>();
+
+		for (String className :
+				_infoItemServiceRegistry.getInfoItemClassNames(
+					InfoItemFormProvider.class)) {
+
+			infoItemClassNames.add(className);
+			infoItemClassNames.add(
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
+		}
+
+		return ArrayUtil.toStringArray(infoItemClassNames);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListEntryItemSelectorDisplayContext.class);
 
@@ -403,6 +431,8 @@ public class AssetListEntryItemSelectorDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoCollectionProviderItemSelectorCriterion
 		_infoCollectionProviderItemSelectorCriterion;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private final String _itemSelectedEventName;
 	private final Language _language;
 	private final PortletURL _portletURL;

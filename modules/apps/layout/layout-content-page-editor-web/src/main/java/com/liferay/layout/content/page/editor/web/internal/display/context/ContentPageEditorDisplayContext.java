@@ -27,7 +27,6 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -107,7 +106,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -136,7 +134,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -798,8 +795,6 @@ public class ContentPageEditorDisplayContext {
 	protected List<ItemSelectorCriterion>
 		getCollectionItemSelectorCriterions() {
 
-		List<String> itemTypes = _getInfoItemClassNames();
-
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
 				new InfoCollectionProviderItemSelectorCriterion();
@@ -808,7 +803,9 @@ public class ContentPageEditorDisplayContext {
 			setDesiredItemSelectorReturnTypes(
 				new InfoListItemSelectorReturnType(),
 				new InfoListProviderItemSelectorReturnType());
-		infoCollectionProviderItemSelectorCriterion.setItemTypes(itemTypes);
+		infoCollectionProviderItemSelectorCriterion.setType(
+			InfoCollectionProviderItemSelectorCriterion.Type.
+				SUPPORTED_INFO_FRAMEWORK_COLLECTIONS);
 
 		return Collections.singletonList(
 			infoCollectionProviderItemSelectorCriterion);
@@ -1293,25 +1290,6 @@ public class ContentPageEditorDisplayContext {
 		_imageItemSelectorCriterion = itemSelectorCriterion;
 
 		return _imageItemSelectorCriterion;
-	}
-
-	private List<String> _getInfoItemClassNames() {
-
-		// LPS-166852
-
-		Set<String> infoItemClassNames = new HashSet<>();
-
-		for (String infoItemClassName :
-				infoItemServiceRegistry.getInfoItemClassNames(
-					InfoItemFormProvider.class)) {
-
-			infoItemClassNames.add(infoItemClassName);
-			infoItemClassNames.add(
-				infoSearchClassMapperRegistry.getSearchClassName(
-					infoItemClassName));
-		}
-
-		return ListUtil.fromCollection(infoItemClassNames);
 	}
 
 	private String _getInfoItemSelectorURL() {

@@ -34,7 +34,6 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
@@ -349,8 +348,6 @@ public class GetCollectionFieldMVCResourceCommand
 		HttpServletRequest httpServletRequest, String itemType,
 		String namespace) {
 
-		List<String> itemTypes = _getInfoItemFormProviderSearchClassNames();
-
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
 				new InfoCollectionProviderItemSelectorCriterion();
@@ -359,7 +356,9 @@ public class GetCollectionFieldMVCResourceCommand
 			setDesiredItemSelectorReturnTypes(
 				new InfoListItemSelectorReturnType(),
 				new InfoListProviderItemSelectorReturnType());
-		infoCollectionProviderItemSelectorCriterion.setItemTypes(itemTypes);
+		infoCollectionProviderItemSelectorCriterion.setType(
+			InfoCollectionProviderItemSelectorCriterion.Type.
+				SUPPORTED_INFO_FRAMEWORK_COLLECTIONS);
 
 		RelatedInfoItemCollectionProviderItemSelectorCriterion
 			relatedInfoItemCollectionProviderItemSelectorCriterion =
@@ -490,20 +489,6 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return null;
-	}
-
-	private List<String> _getInfoItemFormProviderSearchClassNames() {
-		List<String> infoItemClassNames = new ArrayList<>();
-
-		for (String className :
-				_infoItemServiceRegistry.getInfoItemClassNames(
-					InfoItemFormProvider.class)) {
-
-			infoItemClassNames.add(
-				_infoSearchClassMapperRegistry.getSearchClassName(className));
-		}
-
-		return infoItemClassNames;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

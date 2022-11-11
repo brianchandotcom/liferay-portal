@@ -85,7 +85,7 @@ definition {
 				value1 = "${rowEntry}");
 		}
 		else if ("${rowEntry}" == "Content Page") {
-			LexiconCard.clickCard(card = "Blank");
+			ContentPages._selectCard(masterLayoutName = "${masterLayoutName}");
 		}
 		else {
 			LexiconCard.clickCard(card = "${rowEntry}");

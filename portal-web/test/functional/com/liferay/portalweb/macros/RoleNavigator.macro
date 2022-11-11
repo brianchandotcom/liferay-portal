@@ -32,6 +32,10 @@ definition {
 	}
 
 	macro gotoRoleType {
+		if (!(isSet(roleType))) {
+			var roleType = "Regular";
+		}
+
 		Navigator.gotoNavItem(navItem = "${roleType} Roles");
 	}
 

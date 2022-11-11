@@ -1190,10 +1190,10 @@ definition {
 		}
 
 		task ("Assert the Collections are present") {
-			for (var key_title : list "Blog Entries,Featured Blog Entries,Team Members,Job Positions") {
+			for (var title : list "Blog Entries,Featured Blog Entries,Team Members,Job Positions") {
 				AssertElementPresent(
-					key_title = "${key_title}",
-					locator1 = "ItemSelector#LOCATION_INFO_LIST_GENERIC");
+					key_title = "${title}",
+					locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 			}
 		}
 	}

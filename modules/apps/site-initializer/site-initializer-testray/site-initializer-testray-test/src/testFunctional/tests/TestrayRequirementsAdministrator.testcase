@@ -216,4 +216,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-164143 - Verify that the user can not create a requirement if all the required fields are not filled in"
+	@priority = "3"
+	test AdminCanViewRequiredField {
+		task ("Given the user tries to create a requirements without filling out the required fields") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayRequirements.addRequirement();
+		}
+
+		task ("Then a required field message appears") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Summary",
+				warningMessage = "summary is a required field");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Link URL",
+				warningMessage = "linkURL is a required field");
+
+			Testray.viewErrorMessage(
+				fieldLabel = "Link Title",
+				warningMessage = "linkTitle is a required field");
+		}
+	}
+
 }

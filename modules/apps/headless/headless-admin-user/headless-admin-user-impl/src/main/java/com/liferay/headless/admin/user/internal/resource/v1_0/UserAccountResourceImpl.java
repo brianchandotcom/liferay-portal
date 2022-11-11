@@ -601,7 +601,7 @@ public class UserAccountResourceImpl
 				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
 				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 				userAccount.getJobTitle(), new long[0], new long[0],
-				new long[0], new long[0], false,
+				new long[0], new long[0], true,
 				ServiceContextRequestUtil.createServiceContext(
 					CustomFieldsUtil.toMap(
 						User.class.getName(), contextCompany.getCompanyId(),
@@ -640,7 +640,7 @@ public class UserAccountResourceImpl
 				new long[0], new long[0], _getAddresses(userAccount),
 				_getServiceBuilderEmailAddresses(userAccount),
 				_getServiceBuilderPhones(userAccount),
-				_getWebsites(userAccount), Collections.emptyList(), false,
+				_getWebsites(userAccount), Collections.emptyList(), true,
 				ServiceContextRequestUtil.createServiceContext(
 					CustomFieldsUtil.toMap(
 						User.class.getName(), contextCompany.getCompanyId(),

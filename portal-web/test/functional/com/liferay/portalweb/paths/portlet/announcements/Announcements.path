@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANNOUNCEMENT_TITLE_ANY</td>
+	<td>//tbody/tr/td[contains(@class,'lfr-title-column')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANNOUNCEMENT_ENTRY_TITLE</td>
 	<td>//div[contains(@class,'entry-title')]</td>
 	<td></td>

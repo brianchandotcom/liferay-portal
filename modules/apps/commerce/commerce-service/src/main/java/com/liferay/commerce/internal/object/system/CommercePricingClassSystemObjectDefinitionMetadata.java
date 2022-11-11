@@ -20,6 +20,7 @@ import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -71,8 +72,10 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 	}
 
 	@Override
-	public String getJaxRsApplicationName() {
-		return "Liferay.Headless.Commerce.Admin.Catalog";
+	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor() {
+		return new JaxRsApplicationDescriptor(
+			"Liferay.Headless.Commerce.Admin.Catalog",
+			"headless-commerce-admin-catalog", "product-groups", "v1.0");
 	}
 
 	@Override
@@ -104,11 +107,6 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return CommercePricingClassTable.INSTANCE.commercePricingClassId;
-	}
-
-	@Override
-	public String getRESTContextPath() {
-		return "headless-commerce-admin-catalog/v1.0/product-groups";
 	}
 
 	@Override

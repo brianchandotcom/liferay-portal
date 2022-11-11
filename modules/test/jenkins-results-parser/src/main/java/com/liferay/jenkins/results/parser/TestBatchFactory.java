@@ -36,10 +36,21 @@ public class TestBatchFactory {
 				testBatch = new FunctionalPortalTestBatch(
 					portalBatchBuildData, workspace);
 			}
-			else if (batchName.contains("integration") ||
-					 batchName.contains("unit")) {
+			else if (batchName.startsWith("integration-") ||
+					 batchName.startsWith("modules-integration-") ||
+					 batchName.startsWith("modules-unit-") ||
+					 batchName.startsWith("unit-")) {
 
 				testBatch = new JunitPortalTestBatch(
+					portalBatchBuildData, workspace);
+			}
+			else if (batchName.startsWith("js-unit-") ||
+					 batchName.startsWith("modules-compile-") ||
+					 batchName.startsWith("modules-semantic-versioning-") ||
+					 batchName.startsWith("rest-builder-") ||
+					 batchName.startsWith("service-builder-")) {
+
+				testBatch = new ModulesPortalTestBatch(
 					portalBatchBuildData, workspace);
 			}
 			else {

@@ -229,13 +229,13 @@ class CriteriaBuilder extends Component {
 
 		return (
 			<div className="criteria-builder-root">
-				<h4 className="sheet-subtitle">
+				<h3 className="sheet-subtitle">
 					{sub(
 						Liferay.Language.get('x-with-property-x'),
 						[modelLabel, ''],
 						false
 					)}
-				</h4>
+				</h3>
 
 				{(!emptyContributors || editing) && (
 					<CriteriaGroup

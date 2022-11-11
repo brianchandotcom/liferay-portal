@@ -50,13 +50,13 @@ definition {
 			key_itemName = "Delete View",
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 
-			AssertTextEquals(
-				locator1 = "Modal#BODY",
-				value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-			Click(
-				key_text = "Delete",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}

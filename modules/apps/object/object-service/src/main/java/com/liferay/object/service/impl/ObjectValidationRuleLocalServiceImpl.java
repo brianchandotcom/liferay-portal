@@ -22,7 +22,6 @@ import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
@@ -46,15 +45,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
-
-import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
@@ -213,37 +207,11 @@ public class ObjectValidationRuleLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
-		Map<String, Object> variables = null;
-
-		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
-			variables = ObjectEntryVariablesUtil.toVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+		Map<String, Object> variables =
+			ObjectEntryVariablesUtil.toValidationRuleVariables(
+				baseModel, _dtoConverterRegistry, objectDefinition,
+				_objectEntryLocalService, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry);
-		}
-		else {
-			variables = HashMapBuilder.<String, Object>putAll(
-				baseModel.getModelAttributes()
-			).build();
-
-			if (baseModel instanceof ObjectEntry) {
-				variables.putAll(
-					_objectEntryLocalService.getValues((ObjectEntry)baseModel));
-			}
-			else {
-				Map<String, Serializable> extendedProperties =
-					EntityExtensionThreadLocal.getExtendedProperties();
-
-				if (extendedProperties != null) {
-					variables.putAll(extendedProperties);
-				}
-			}
-
-			variables.putAll(
-				_objectEntryLocalService.
-					getExtensionDynamicObjectDefinitionTableValues(
-						objectDefinition,
-						GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
-		}
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {

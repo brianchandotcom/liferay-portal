@@ -15,15 +15,23 @@
 package com.liferay.object.internal.action.util;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +41,47 @@ import java.util.Map;
  * @author Carolina Barbosa
  */
 public class ObjectEntryVariablesUtil {
+
+	public static Map<String, Object> toValidationRuleVariables(
+			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
+			ObjectDefinition objectDefinition,
+			ObjectEntryLocalService objectEntryLocalService,
+			JSONObject payloadJSONObject,
+			SystemObjectDefinitionMetadataRegistry
+				systemObjectDefinitionMetadataRegistry)
+		throws PortalException {
+
+		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
+			return toVariables(
+				dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				systemObjectDefinitionMetadataRegistry);
+		}
+
+		Map<String, Object> variables = HashMapBuilder.<String, Object>putAll(
+			baseModel.getModelAttributes()
+		).build();
+
+		if (baseModel instanceof ObjectEntry) {
+			variables.putAll(
+				objectEntryLocalService.getValues((ObjectEntry)baseModel));
+		}
+		else {
+			Map<String, Serializable> extendedProperties =
+				EntityExtensionThreadLocal.getExtendedProperties();
+
+			if (extendedProperties != null) {
+				variables.putAll(extendedProperties);
+			}
+		}
+
+		variables.putAll(
+			objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition,
+					GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
+
+		return variables;
+	}
 
 	public static Map<String, Object> toVariables(
 		DTOConverterRegistry dtoConverterRegistry,

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = {})
-public class LayoutDisplayPageProviderTrackerUtil {
+public class LayoutDisplayPageProviderRegistryUtil {
 
 	public static LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String className) {

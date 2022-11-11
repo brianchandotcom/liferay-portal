@@ -46,9 +46,19 @@ definition {
 	macro deleteView {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
-		Click(locator1 = "FrontendDataSet#DELETE_VIEW_BUTTON");
+		Click(
+			key_itemName = "Delete View",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 
-		Click(locator1 = "FrontendDataSet#DELETE_BUTTON");
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro getValueByPosition {

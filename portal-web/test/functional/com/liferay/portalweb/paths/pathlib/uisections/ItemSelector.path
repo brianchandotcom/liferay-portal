@@ -54,11 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOCATION_INFO_LIST_GENERIC</td>
-	<td>//div[contains(@data-qa-id,'rowItemContent') and contains(.,'${key_title}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOCATION_INFO_TABLE</td>
 	<td>//tr[contains(@data-qa-id,'row') and contains(.,'${key_title}')]//td[contains(@class,'lfr-location-column') and contains(.,'${key_locationName}')]</td>
 	<td></td>

@@ -12,9 +12,4 @@
  * details.
  */
 
-import {ItemSelectorRepositoryEntryBrowser} from 'item-selector-taglib';
-import React from 'react';
-
-export default function (props) {
-	return <ItemSelectorRepositoryEntryBrowser {...props} />;
-}
+export {ItemSelectorRepositoryEntryBrowser as default} from 'item-selector-taglib';

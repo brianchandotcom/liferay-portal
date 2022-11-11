@@ -87,9 +87,9 @@ public interface ContentDashboardItem<T> {
 	public static class SpecificInformation<T> {
 
 		public SpecificInformation(
-			String help, String key, Type type, T value) {
+			String helpText, String key, Type type, T value) {
 
-			_help = help;
+			_helpText = helpText;
 			_key = key;
 			_type = type;
 			_value = value;
@@ -100,11 +100,11 @@ public interface ContentDashboardItem<T> {
 			_type = type;
 			_value = value;
 
-			_help = null;
+			_helpText = null;
 		}
 
-		public String getHelp() {
-			return _help;
+		public String getHelpText() {
+			return _helpText;
 		}
 
 		public String getKey() {
@@ -121,7 +121,7 @@ public interface ContentDashboardItem<T> {
 
 		public JSONObject toJSONObject(Language language, Locale locale) {
 			return JSONUtil.put(
-				"help", language.get(locale, getHelp())
+				"help", language.get(locale, getHelpText())
 			).put(
 				"title", language.get(locale, getKey())
 			).put(
@@ -173,7 +173,7 @@ public interface ContentDashboardItem<T> {
 			return String.valueOf(object);
 		}
 
-		private final String _help;
+		private final String _helpText;
 		private final String _key;
 		private final Type _type;
 		private final T _value;

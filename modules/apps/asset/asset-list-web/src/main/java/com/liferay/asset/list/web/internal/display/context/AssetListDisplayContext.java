@@ -23,6 +23,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -216,6 +217,21 @@ public class AssetListDisplayContext {
 			_httpServletRequest, "assetListEntryId");
 
 		return _assetListEntryId;
+	}
+
+	public int getAssetListEntrySegmentsEntryRelsCount(
+		AssetListEntry assetListEntry) {
+
+		int assetListEntryVariationCount =
+			AssetListEntrySegmentsEntryRelLocalServiceUtil.
+				getAssetListEntrySegmentsEntryRelsCount(
+					assetListEntry.getAssetListEntryId());
+
+		if (assetListEntryVariationCount < 2) {
+			return 0;
+		}
+
+		return assetListEntryVariationCount;
 	}
 
 	public String getAssetListEntryTitle() {

@@ -286,10 +286,8 @@ public class TestFlowTestrayDispatchTaskExecutor
 			sb.append("'");
 		}
 
-		String filter = sb.toString();
-
 		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntries(
-			null, companyId, filter, "Case");
+			null, companyId, sb.toString(), "Case");
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);

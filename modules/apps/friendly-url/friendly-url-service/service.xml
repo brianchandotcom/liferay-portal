@@ -34,7 +34,7 @@
 
 			<!-- Finder methods -->
 
-			<finder name="G_C_U" return-type="FriendlyURLEntryLocalization" unique="true">
+			<finder name="G_C_U" return-type="Collection">
 				<finder-column name="groupId" />
 				<finder-column name="classNameId" />
 				<finder-column name="urlTitle" />
@@ -44,6 +44,18 @@
 				<finder-column name="classNameId" />
 				<finder-column name="classPK" />
 				<finder-column name="languageId" />
+			</finder>
+			<finder name="G_C_L_U" return-type="FriendlyURLEntryLocalization" unique="true">
+				<finder-column name="groupId" />
+				<finder-column name="classNameId" />
+				<finder-column name="languageId" />
+				<finder-column name="urlTitle" />
+			</finder>
+			<finder name="G_C_NotL_U" return-type="Collection">
+				<finder-column name="groupId" />
+				<finder-column name="classNameId" />
+				<finder-column comparator="!=" name="languageId" />
+				<finder-column name="urlTitle" />
 			</finder>
 		</localized-entity>
 

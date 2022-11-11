@@ -126,10 +126,10 @@ public class JournalArticleFriendlyURLTest {
 		Map<Locale, String> friendlyURLMap = updatedArticle.getFriendlyURLMap();
 
 		Assert.assertEquals(
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(title2 + "-2"),
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(title2 + "-1"),
 			friendlyURLMap.get(LocaleUtil.US));
 		Assert.assertEquals(
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(title2 + "-2-1"),
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(title2 + "-1"),
 			friendlyURLMap.get(LocaleUtil.FRANCE));
 	}
 
@@ -188,7 +188,7 @@ public class JournalArticleFriendlyURLTest {
 			FriendlyURLNormalizerUtil.normalizeWithEncoding(title),
 			friendlyURLMap.get(LocaleUtil.US));
 		Assert.assertEquals(
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(title + "-1"),
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(title),
 			friendlyURLMap.get(LocaleUtil.FRANCE));
 	}
 
@@ -208,10 +208,10 @@ public class JournalArticleFriendlyURLTest {
 		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
 
 		Assert.assertEquals(
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(title + "-2"),
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(title + "-1"),
 			friendlyURLMap.get(LocaleUtil.US));
 		Assert.assertEquals(
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(title + "-2-1"),
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(title + "-1"),
 			friendlyURLMap.get(LocaleUtil.FRANCE));
 	}
 

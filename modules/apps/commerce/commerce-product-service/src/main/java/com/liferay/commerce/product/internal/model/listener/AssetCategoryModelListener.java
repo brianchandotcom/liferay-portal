@@ -91,7 +91,7 @@ public class AssetCategoryModelListener
 			String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 				assetCategory.getGroupId(),
 				_portal.getClassNameId(AssetCategory.class),
-				assetCategory.getCategoryId(), titleEntry.getValue());
+				assetCategory.getCategoryId(), titleEntry.getValue(), null);
 
 			urlTitleMap.put(
 				LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);

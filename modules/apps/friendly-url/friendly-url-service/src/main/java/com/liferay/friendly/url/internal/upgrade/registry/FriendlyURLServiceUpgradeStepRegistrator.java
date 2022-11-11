@@ -46,6 +46,8 @@ public class FriendlyURLServiceUpgradeStepRegistrator
 				"FriendlyURLEntryMapping"));
 
 		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
+
+		registry.register("3.1.1", "3.2.0", new DummyUpgradeStep());
 	}
 
 }

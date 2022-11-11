@@ -46,12 +46,63 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "Teams_1 Team");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = "Teams_1 Team");
 
 			Testray.assertItemName(key_name = "Teams_1 Team");
+		}
+	}
+
+	@description = "This is a test for LPS-166560 - Verify if as an administrator can assign teams without components to dualbox"
+	@priority = "4"
+	test AdminCanAssignTeamsByDualbox {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("create a component without team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Component_Unassigned");
+
+			Click(
+				key_modalTitle = "Components - Projects_1 Project",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Assign a component to a team via duallbox") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(
+				component = "Component_Unassigned",
+				teamName = "Components_1 Team");
+
+			Click(
+				key_modalTitle = "Teams - Projects_1 Project",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Assert that the component was Assign to a team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.assertItemName(key_name = "Component_Unassigned");
 		}
 	}
 
@@ -71,10 +122,11 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "Teams_2 Team");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = "Teams_2 Team");
 		}
 
 		task ("Delete Team and Assert it was Deleted") {
@@ -102,10 +154,11 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "Teams_3 Team");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = "Teams_3 Team");
 		}
 
 		task ("Edit Team and Assert it was Edited") {
@@ -133,17 +186,13 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "Teams_2 Team");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-			Click(locator1 = "TestrayManage#CLOSE_MODAL");
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "Teams_2 Team");
+			TestrayManage.createTeam(teamName = "Teams_2 Team");
+
+			TestrayManage.createTeam(teamName = "Teams_2 Team");
 
 			Alert.viewErrorMessage(errorMessage = "The Team name already exists");
 		}
@@ -165,10 +214,11 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam();
 
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",

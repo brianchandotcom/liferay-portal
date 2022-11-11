@@ -247,4 +247,8 @@ public interface COREntryRelModel
 	@Override
 	public COREntryRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

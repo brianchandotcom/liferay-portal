@@ -176,4 +176,8 @@ public interface AnnouncementsFlagModel
 	@Override
 	public AnnouncementsFlag cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

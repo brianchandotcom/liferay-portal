@@ -454,6 +454,11 @@ public class CTCollectionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CTCollectionWrapper wrap(CTCollection ctCollection) {
 		return new CTCollectionWrapper(ctCollection);
 	}

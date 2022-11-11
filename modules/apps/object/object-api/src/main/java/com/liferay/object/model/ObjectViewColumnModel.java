@@ -366,4 +366,8 @@ public interface ObjectViewColumnModel
 	@Override
 	public ObjectViewColumn cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

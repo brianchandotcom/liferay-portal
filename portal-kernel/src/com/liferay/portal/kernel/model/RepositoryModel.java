@@ -354,4 +354,8 @@ public interface RepositoryModel
 	@Override
 	public Repository cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

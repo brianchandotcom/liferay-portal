@@ -298,4 +298,8 @@ public interface ReadingTimeEntryModel
 	@Override
 	public ReadingTimeEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

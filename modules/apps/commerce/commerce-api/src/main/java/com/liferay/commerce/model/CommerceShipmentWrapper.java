@@ -677,6 +677,11 @@ public class CommerceShipmentWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return model.getStagedModelType();
 	}

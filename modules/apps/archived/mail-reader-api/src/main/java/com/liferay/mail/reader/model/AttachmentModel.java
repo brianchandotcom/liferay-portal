@@ -201,4 +201,8 @@ public interface AttachmentModel extends BaseModel<Attachment>, ShardedModel {
 	@Override
 	public Attachment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

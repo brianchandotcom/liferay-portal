@@ -600,6 +600,11 @@ public class CommerceChannelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommerceChannel, Object>>
 		getAttributeGetterFunctions() {
 

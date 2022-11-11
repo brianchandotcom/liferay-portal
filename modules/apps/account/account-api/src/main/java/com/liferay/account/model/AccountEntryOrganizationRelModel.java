@@ -133,4 +133,8 @@ public interface AccountEntryOrganizationRelModel
 	@Override
 	public AccountEntryOrganizationRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -438,6 +438,11 @@ public class MicroblogsEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected MicroblogsEntryWrapper wrap(MicroblogsEntry microblogsEntry) {
 		return new MicroblogsEntryWrapper(microblogsEntry);
 	}

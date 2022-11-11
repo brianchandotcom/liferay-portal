@@ -257,4 +257,8 @@ public interface MicroblogsEntryModel
 	@Override
 	public MicroblogsEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

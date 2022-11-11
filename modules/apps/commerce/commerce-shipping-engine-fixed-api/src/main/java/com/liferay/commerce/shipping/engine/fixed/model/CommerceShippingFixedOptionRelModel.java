@@ -366,4 +366,8 @@ public interface CommerceShippingFixedOptionRelModel
 	@Override
 	public CommerceShippingFixedOptionRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

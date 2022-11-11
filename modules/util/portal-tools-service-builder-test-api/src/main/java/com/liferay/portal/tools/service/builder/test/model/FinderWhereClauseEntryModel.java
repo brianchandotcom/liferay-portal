@@ -101,4 +101,8 @@ public interface FinderWhereClauseEntryModel
 	@Override
 	public FinderWhereClauseEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

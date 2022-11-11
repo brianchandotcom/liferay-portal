@@ -426,6 +426,11 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceAddressRestrictionWrapper wrap(
 		CommerceAddressRestriction commerceAddressRestriction) {
 

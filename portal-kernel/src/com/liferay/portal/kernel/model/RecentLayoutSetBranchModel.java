@@ -170,4 +170,8 @@ public interface RecentLayoutSetBranchModel
 	@Override
 	public RecentLayoutSetBranch cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

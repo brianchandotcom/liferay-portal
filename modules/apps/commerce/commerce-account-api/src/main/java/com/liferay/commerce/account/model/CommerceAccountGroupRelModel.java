@@ -230,4 +230,8 @@ public interface CommerceAccountGroupRelModel
 	@Override
 	public CommerceAccountGroupRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

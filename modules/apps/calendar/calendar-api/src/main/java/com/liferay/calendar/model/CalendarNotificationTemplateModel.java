@@ -349,4 +349,8 @@ public interface CalendarNotificationTemplateModel
 	@Override
 	public CalendarNotificationTemplate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

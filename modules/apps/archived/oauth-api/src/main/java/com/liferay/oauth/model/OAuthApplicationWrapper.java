@@ -521,6 +521,11 @@ public class OAuthApplicationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OAuthApplicationWrapper wrap(OAuthApplication oAuthApplication) {
 		return new OAuthApplicationWrapper(oAuthApplication);
 	}

@@ -507,6 +507,11 @@ public class LayoutClassedModelUsageWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<LayoutClassedModelUsage, Object>>
 		getAttributeGetterFunctions() {
 

@@ -401,6 +401,11 @@ public class CommerceShippingFixedOptionQualifierWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceShippingFixedOptionQualifierWrapper wrap(
 		CommerceShippingFixedOptionQualifier
 			commerceShippingFixedOptionQualifier) {

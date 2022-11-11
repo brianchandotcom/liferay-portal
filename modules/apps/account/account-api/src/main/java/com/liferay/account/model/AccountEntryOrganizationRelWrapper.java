@@ -246,6 +246,11 @@ public class AccountEntryOrganizationRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AccountEntryOrganizationRelWrapper wrap(
 		AccountEntryOrganizationRel accountEntryOrganizationRel) {
 

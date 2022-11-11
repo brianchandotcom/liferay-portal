@@ -259,6 +259,11 @@ public class AccountEntryUserRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AccountEntryUserRelWrapper wrap(
 		AccountEntryUserRel accountEntryUserRel) {
 

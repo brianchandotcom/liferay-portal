@@ -312,4 +312,8 @@ public interface KaleoConditionModel
 	@Override
 	public KaleoCondition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

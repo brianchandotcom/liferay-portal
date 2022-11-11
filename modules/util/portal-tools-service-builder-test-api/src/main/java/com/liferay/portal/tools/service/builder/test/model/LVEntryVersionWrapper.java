@@ -290,6 +290,11 @@ public class LVEntryVersionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public long getVersionedModelId() {
 		return model.getVersionedModelId();
 	}

@@ -387,4 +387,8 @@ public interface ObjectLayoutBoxModel
 	@Override
 	public ObjectLayoutBox cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -668,4 +668,8 @@ public interface CommerceNotificationTemplateModel
 	@Override
 	public CommerceNotificationTemplate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

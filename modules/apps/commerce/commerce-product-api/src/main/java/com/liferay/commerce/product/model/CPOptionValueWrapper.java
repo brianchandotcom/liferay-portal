@@ -660,6 +660,11 @@ public class CPOptionValueWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPOptionValue, Object>>
 		getAttributeGetterFunctions() {
 

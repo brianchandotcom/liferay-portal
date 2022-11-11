@@ -396,4 +396,8 @@ public interface KaleoInstanceModel
 	@Override
 	public KaleoInstance cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

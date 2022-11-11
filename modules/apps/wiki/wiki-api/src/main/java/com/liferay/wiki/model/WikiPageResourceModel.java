@@ -163,4 +163,8 @@ public interface WikiPageResourceModel
 	@Override
 	public WikiPageResource cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

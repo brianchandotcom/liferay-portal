@@ -295,4 +295,8 @@ public interface EmailAddressModel
 	@Override
 	public EmailAddress cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

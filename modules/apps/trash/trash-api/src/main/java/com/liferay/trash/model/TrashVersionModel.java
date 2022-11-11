@@ -211,4 +211,8 @@ public interface TrashVersionModel
 	@Override
 	public TrashVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

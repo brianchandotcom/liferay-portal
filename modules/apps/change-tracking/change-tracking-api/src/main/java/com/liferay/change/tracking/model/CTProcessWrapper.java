@@ -289,6 +289,11 @@ public class CTProcessWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CTProcessWrapper wrap(CTProcess ctProcess) {
 		return new CTProcessWrapper(ctProcess);
 	}

@@ -262,4 +262,8 @@ public interface FriendlyURLEntryModel
 	@Override
 	public FriendlyURLEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

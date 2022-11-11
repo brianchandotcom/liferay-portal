@@ -302,4 +302,8 @@ public interface UserGroupModel
 	@Override
 	public UserGroup cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

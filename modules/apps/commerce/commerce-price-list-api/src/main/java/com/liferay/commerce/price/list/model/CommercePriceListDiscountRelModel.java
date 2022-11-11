@@ -284,4 +284,8 @@ public interface CommercePriceListDiscountRelModel
 	@Override
 	public CommercePriceListDiscountRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

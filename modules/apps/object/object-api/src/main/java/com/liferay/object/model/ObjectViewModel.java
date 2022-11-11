@@ -358,4 +358,8 @@ public interface ObjectViewModel
 	@Override
 	public ObjectView cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

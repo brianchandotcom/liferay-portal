@@ -639,6 +639,11 @@ public class BatchPlannerPlanWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected BatchPlannerPlanWrapper wrap(BatchPlannerPlan batchPlannerPlan) {
 		return new BatchPlannerPlanWrapper(batchPlannerPlan);
 	}

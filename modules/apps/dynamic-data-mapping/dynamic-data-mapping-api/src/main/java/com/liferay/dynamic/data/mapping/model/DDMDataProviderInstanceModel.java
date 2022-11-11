@@ -506,4 +506,8 @@ public interface DDMDataProviderInstanceModel
 	@Override
 	public DDMDataProviderInstance cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

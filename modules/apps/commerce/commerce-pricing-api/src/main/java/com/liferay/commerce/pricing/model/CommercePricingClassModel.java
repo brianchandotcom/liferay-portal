@@ -472,4 +472,8 @@ public interface CommercePricingClassModel
 	@Override
 	public CommercePricingClass cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

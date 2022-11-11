@@ -515,4 +515,8 @@ public interface ContactModel
 	@Override
 	public Contact cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

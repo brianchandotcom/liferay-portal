@@ -386,6 +386,11 @@ public class ChangesetEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ChangesetEntryWrapper wrap(ChangesetEntry changesetEntry) {
 		return new ChangesetEntryWrapper(changesetEntry);
 	}

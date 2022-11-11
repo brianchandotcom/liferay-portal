@@ -424,6 +424,11 @@ public class MFAEmailOTPEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected MFAEmailOTPEntryWrapper wrap(MFAEmailOTPEntry mfaEmailOTPEntry) {
 		return new MFAEmailOTPEntryWrapper(mfaEmailOTPEntry);
 	}

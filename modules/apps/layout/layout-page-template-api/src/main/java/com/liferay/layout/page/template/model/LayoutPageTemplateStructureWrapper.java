@@ -470,6 +470,11 @@ public class LayoutPageTemplateStructureWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<LayoutPageTemplateStructure, Object>>
 		getAttributeGetterFunctions() {
 

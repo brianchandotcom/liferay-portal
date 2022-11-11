@@ -246,4 +246,8 @@ public interface ChangesetEntryModel
 	@Override
 	public ChangesetEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

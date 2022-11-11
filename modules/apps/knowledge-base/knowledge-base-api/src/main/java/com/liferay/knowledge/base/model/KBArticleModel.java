@@ -664,4 +664,8 @@ public interface KBArticleModel
 	@Override
 	public KBArticle cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

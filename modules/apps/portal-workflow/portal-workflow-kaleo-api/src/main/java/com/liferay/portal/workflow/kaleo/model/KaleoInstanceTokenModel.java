@@ -374,4 +374,8 @@ public interface KaleoInstanceTokenModel
 	@Override
 	public KaleoInstanceToken cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

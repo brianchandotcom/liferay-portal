@@ -289,4 +289,8 @@ public interface CommerceOrderNoteModel
 	@Override
 	public CommerceOrderNote cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

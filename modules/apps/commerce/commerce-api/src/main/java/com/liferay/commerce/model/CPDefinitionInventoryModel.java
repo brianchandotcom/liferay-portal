@@ -422,4 +422,8 @@ public interface CPDefinitionInventoryModel
 	@Override
 	public CPDefinitionInventory cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

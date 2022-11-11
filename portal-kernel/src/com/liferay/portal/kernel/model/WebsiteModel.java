@@ -309,4 +309,8 @@ public interface WebsiteModel
 	@Override
 	public Website cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

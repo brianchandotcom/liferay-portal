@@ -491,6 +491,11 @@ public class CPDefinitionLinkWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPDefinitionLink, Object>>
 		getAttributeGetterFunctions() {
 

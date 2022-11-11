@@ -377,6 +377,11 @@ public class AMImageEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AMImageEntryWrapper wrap(AMImageEntry amImageEntry) {
 		return new AMImageEntryWrapper(amImageEntry);
 	}

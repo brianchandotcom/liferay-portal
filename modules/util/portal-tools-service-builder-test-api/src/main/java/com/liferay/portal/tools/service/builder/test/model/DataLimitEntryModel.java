@@ -172,4 +172,8 @@ public interface DataLimitEntryModel
 	@Override
 	public DataLimitEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

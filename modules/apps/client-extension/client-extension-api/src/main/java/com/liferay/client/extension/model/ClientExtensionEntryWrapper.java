@@ -941,6 +941,11 @@ public class ClientExtensionEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<ClientExtensionEntry, Object>>
 		getAttributeGetterFunctions() {
 

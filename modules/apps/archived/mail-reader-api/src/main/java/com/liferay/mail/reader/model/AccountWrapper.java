@@ -862,6 +862,11 @@ public class AccountWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AccountWrapper wrap(Account account) {
 		return new AccountWrapper(account);
 	}

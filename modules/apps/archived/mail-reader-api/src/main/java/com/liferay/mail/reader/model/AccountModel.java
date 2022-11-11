@@ -496,4 +496,8 @@ public interface AccountModel
 	@Override
 	public Account cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

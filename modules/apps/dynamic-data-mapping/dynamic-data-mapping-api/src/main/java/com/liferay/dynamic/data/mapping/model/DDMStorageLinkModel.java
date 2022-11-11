@@ -211,4 +211,8 @@ public interface DDMStorageLinkModel
 	@Override
 	public DDMStorageLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

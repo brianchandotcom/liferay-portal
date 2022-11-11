@@ -164,4 +164,8 @@ public interface CTermEntryLocalizationModel
 	@Override
 	public CTermEntryLocalization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

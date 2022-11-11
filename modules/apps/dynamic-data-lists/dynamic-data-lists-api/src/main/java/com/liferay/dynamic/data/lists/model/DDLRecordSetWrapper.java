@@ -1006,6 +1006,11 @@ public class DDLRecordSetWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<DDLRecordSet, Object>>
 		getAttributeGetterFunctions() {
 

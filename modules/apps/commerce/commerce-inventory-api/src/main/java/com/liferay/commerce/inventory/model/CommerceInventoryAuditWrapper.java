@@ -401,6 +401,11 @@ public class CommerceInventoryAuditWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceInventoryAuditWrapper wrap(
 		CommerceInventoryAudit commerceInventoryAudit) {
 

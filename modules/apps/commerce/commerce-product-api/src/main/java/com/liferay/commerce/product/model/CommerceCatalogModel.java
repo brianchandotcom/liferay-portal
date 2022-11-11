@@ -307,4 +307,8 @@ public interface CommerceCatalogModel
 	@Override
 	public CommerceCatalog cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

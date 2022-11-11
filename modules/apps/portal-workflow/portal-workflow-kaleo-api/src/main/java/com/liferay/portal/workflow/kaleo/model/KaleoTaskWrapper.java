@@ -494,6 +494,11 @@ public class KaleoTaskWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoTask, Object>>
 		getAttributeGetterFunctions() {
 

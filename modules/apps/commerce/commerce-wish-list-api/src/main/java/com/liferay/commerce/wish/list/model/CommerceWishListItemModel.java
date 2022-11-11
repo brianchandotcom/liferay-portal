@@ -264,4 +264,8 @@ public interface CommerceWishListItemModel
 	@Override
 	public CommerceWishListItem cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

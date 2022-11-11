@@ -204,4 +204,8 @@ public interface JournalContentSearchModel
 	@Override
 	public JournalContentSearch cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

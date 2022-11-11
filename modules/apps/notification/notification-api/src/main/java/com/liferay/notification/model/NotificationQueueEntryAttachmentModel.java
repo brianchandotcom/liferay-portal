@@ -134,4 +134,8 @@ public interface NotificationQueueEntryAttachmentModel
 	@Override
 	public NotificationQueueEntryAttachment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

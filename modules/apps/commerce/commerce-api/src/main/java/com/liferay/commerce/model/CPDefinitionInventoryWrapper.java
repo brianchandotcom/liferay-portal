@@ -716,6 +716,11 @@ public class CPDefinitionInventoryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPDefinitionInventory, Object>>
 		getAttributeGetterFunctions() {
 

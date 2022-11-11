@@ -486,4 +486,8 @@ public interface CPOptionCategoryModel
 	@Override
 	public CPOptionCategory cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

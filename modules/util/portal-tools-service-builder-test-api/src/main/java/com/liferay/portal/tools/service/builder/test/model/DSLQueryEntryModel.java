@@ -85,4 +85,8 @@ public interface DSLQueryEntryModel extends BaseModel<DSLQueryEntry> {
 	@Override
 	public DSLQueryEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

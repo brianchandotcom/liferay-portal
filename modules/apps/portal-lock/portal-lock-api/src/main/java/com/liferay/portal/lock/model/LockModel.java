@@ -258,4 +258,8 @@ public interface LockModel extends BaseModel<Lock>, MVCCModel, ShardedModel {
 	@Override
 	public Lock cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

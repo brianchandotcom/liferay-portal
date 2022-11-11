@@ -393,6 +393,11 @@ public class CommerceDiscountRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceDiscountRelWrapper wrap(
 		CommerceDiscountRel commerceDiscountRel) {
 

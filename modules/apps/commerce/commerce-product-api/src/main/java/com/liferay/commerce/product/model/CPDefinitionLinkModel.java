@@ -300,4 +300,8 @@ public interface CPDefinitionLinkModel
 	@Override
 	public CPDefinitionLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

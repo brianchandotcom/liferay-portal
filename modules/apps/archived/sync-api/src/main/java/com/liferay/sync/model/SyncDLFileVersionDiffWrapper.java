@@ -299,6 +299,11 @@ public class SyncDLFileVersionDiffWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SyncDLFileVersionDiffWrapper wrap(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
 

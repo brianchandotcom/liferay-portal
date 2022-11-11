@@ -611,4 +611,8 @@ public interface CPDefinitionOptionRelModel
 	@Override
 	public CPDefinitionOptionRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -401,4 +401,8 @@ public interface KaleoActionModel
 	@Override
 	public KaleoAction cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

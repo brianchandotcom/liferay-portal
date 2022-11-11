@@ -169,4 +169,8 @@ public interface JournalArticleResourceModel
 	@Override
 	public JournalArticleResource cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -304,4 +304,8 @@ public interface RepositoryEntryModel
 	@Override
 	public RepositoryEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

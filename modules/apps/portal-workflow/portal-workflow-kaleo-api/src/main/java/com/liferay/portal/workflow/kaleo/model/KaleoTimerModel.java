@@ -391,4 +391,8 @@ public interface KaleoTimerModel
 	@Override
 	public KaleoTimer cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

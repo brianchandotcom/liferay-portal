@@ -459,6 +459,11 @@ public class OAuthClientEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OAuthClientEntryWrapper wrap(OAuthClientEntry oAuthClientEntry) {
 		return new OAuthClientEntryWrapper(oAuthClientEntry);
 	}

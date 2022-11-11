@@ -216,6 +216,11 @@ public class LazyBlobEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected LazyBlobEntryWrapper wrap(LazyBlobEntry lazyBlobEntry) {
 		return new LazyBlobEntryWrapper(lazyBlobEntry);
 	}

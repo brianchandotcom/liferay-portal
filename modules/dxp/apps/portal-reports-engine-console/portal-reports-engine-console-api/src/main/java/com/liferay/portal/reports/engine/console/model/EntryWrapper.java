@@ -714,6 +714,11 @@ public class EntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected EntryWrapper wrap(Entry entry) {
 		return new EntryWrapper(entry);
 	}

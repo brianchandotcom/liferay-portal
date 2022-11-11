@@ -351,4 +351,8 @@ public interface CommerceChannelModel
 	@Override
 	public CommerceChannel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

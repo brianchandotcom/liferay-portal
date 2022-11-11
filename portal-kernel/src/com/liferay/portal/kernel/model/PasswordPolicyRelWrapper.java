@@ -255,6 +255,11 @@ public class PasswordPolicyRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected PasswordPolicyRelWrapper wrap(
 		PasswordPolicyRel passwordPolicyRel) {
 

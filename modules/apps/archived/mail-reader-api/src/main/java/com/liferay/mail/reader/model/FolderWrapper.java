@@ -370,6 +370,11 @@ public class FolderWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected FolderWrapper wrap(Folder folder) {
 		return new FolderWrapper(folder);
 	}

@@ -369,4 +369,8 @@ public interface BatchPlannerPlanModel
 	@Override
 	public BatchPlannerPlan cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -188,6 +188,11 @@ public class ERCCompanyEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ERCCompanyEntryWrapper wrap(ERCCompanyEntry ercCompanyEntry) {
 		return new ERCCompanyEntryWrapper(ercCompanyEntry);
 	}

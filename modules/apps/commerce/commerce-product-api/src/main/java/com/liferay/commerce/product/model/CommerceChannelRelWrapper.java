@@ -422,6 +422,11 @@ public class CommerceChannelRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommerceChannelRel, Object>>
 		getAttributeGetterFunctions() {
 

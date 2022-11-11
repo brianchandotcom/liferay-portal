@@ -215,6 +215,11 @@ public class ERCGroupEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ERCGroupEntryWrapper wrap(ERCGroupEntry ercGroupEntry) {
 		return new ERCGroupEntryWrapper(ercGroupEntry);
 	}

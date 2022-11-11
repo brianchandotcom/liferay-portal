@@ -261,4 +261,8 @@ public interface SyncDeviceModel
 	@Override
 	public SyncDevice cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

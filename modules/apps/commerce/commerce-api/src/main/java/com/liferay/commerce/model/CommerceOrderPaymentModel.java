@@ -264,4 +264,8 @@ public interface CommerceOrderPaymentModel
 	@Override
 	public CommerceOrderPayment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

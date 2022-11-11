@@ -700,4 +700,8 @@ public interface CPAttachmentFileEntryModel
 	@Override
 	public CPAttachmentFileEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -462,6 +462,11 @@ public class CommerceWishListItemWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceWishListItemWrapper wrap(
 		CommerceWishListItem commerceWishListItem) {
 

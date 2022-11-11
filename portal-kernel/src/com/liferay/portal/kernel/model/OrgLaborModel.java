@@ -324,4 +324,8 @@ public interface OrgLaborModel
 	@Override
 	public OrgLabor cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

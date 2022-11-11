@@ -334,4 +334,8 @@ public interface NotificationQueueEntryModel
 	@Override
 	public NotificationQueueEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

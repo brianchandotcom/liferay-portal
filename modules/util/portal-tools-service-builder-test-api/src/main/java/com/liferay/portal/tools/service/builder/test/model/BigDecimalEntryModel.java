@@ -103,4 +103,8 @@ public interface BigDecimalEntryModel
 	@Override
 	public BigDecimalEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

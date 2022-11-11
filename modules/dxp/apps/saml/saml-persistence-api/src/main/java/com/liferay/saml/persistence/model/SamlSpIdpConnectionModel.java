@@ -432,4 +432,8 @@ public interface SamlSpIdpConnectionModel
 	@Override
 	public SamlSpIdpConnection cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -232,4 +232,8 @@ public interface CTEntryModel
 	@Override
 	public CTEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

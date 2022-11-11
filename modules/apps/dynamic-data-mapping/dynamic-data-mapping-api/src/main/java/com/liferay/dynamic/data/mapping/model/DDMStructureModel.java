@@ -632,4 +632,8 @@ public interface DDMStructureModel
 	@Override
 	public DDMStructure cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

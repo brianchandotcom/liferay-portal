@@ -528,4 +528,8 @@ public interface CommerceTermEntryModel
 	@Override
 	public CommerceTermEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

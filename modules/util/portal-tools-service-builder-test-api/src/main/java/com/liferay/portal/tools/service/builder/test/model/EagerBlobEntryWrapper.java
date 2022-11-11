@@ -189,6 +189,11 @@ public class EagerBlobEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected EagerBlobEntryWrapper wrap(EagerBlobEntry eagerBlobEntry) {
 		return new EagerBlobEntryWrapper(eagerBlobEntry);
 	}

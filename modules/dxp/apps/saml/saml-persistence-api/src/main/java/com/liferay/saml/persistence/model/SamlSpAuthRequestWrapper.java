@@ -217,6 +217,11 @@ public class SamlSpAuthRequestWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SamlSpAuthRequestWrapper wrap(
 		SamlSpAuthRequest samlSpAuthRequest) {
 

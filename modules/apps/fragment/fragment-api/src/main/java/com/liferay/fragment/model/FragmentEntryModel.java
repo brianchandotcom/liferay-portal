@@ -626,4 +626,8 @@ public interface FragmentEntryModel
 	@Override
 	public FragmentEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

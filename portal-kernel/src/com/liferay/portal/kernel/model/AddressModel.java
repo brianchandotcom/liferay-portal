@@ -505,4 +505,8 @@ public interface AddressModel
 	@Override
 	public Address cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

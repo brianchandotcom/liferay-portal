@@ -378,6 +378,11 @@ public class BatchEngineImportTaskErrorWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected BatchEngineImportTaskErrorWrapper wrap(
 		BatchEngineImportTaskError batchEngineImportTaskError) {
 

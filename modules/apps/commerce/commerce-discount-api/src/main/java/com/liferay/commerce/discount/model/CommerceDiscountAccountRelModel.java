@@ -264,4 +264,8 @@ public interface CommerceDiscountAccountRelModel
 	@Override
 	public CommerceDiscountAccountRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

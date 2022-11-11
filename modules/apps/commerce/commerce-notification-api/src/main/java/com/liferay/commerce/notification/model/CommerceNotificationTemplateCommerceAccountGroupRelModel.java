@@ -237,4 +237,8 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelModel
 	public CommerceNotificationTemplateCommerceAccountGroupRel
 		cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

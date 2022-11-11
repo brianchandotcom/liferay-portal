@@ -266,4 +266,8 @@ public interface ObjectViewFilterColumnModel
 	@Override
 	public ObjectViewFilterColumn cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

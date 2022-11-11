@@ -497,6 +497,11 @@ public class CSDiagramSettingWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CSDiagramSetting, Object>>
 		getAttributeGetterFunctions() {
 

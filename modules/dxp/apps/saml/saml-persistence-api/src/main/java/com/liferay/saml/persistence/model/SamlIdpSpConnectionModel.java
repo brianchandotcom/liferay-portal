@@ -390,4 +390,8 @@ public interface SamlIdpSpConnectionModel
 	@Override
 	public SamlIdpSpConnection cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

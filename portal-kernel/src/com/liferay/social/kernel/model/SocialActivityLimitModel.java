@@ -254,4 +254,8 @@ public interface SocialActivityLimitModel
 	@Override
 	public SocialActivityLimit cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

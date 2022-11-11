@@ -309,4 +309,8 @@ public interface DepotEntryGroupRelModel
 	@Override
 	public DepotEntryGroupRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

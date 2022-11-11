@@ -554,4 +554,8 @@ public interface SXPElementModel
 	@Override
 	public SXPElement cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

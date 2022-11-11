@@ -467,4 +467,8 @@ public interface CPMeasurementUnitModel
 	@Override
 	public CPMeasurementUnit cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

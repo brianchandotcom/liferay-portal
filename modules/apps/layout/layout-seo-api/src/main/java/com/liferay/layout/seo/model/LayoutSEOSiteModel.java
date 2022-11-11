@@ -397,4 +397,8 @@ public interface LayoutSEOSiteModel
 	@Override
 	public LayoutSEOSite cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

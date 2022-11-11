@@ -284,4 +284,8 @@ public interface CommercePriceListChannelRelModel
 	@Override
 	public CommercePriceListChannelRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

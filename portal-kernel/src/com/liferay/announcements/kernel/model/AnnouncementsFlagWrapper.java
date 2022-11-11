@@ -289,6 +289,11 @@ public class AnnouncementsFlagWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AnnouncementsFlagWrapper wrap(
 		AnnouncementsFlag announcementsFlag) {
 

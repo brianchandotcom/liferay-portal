@@ -133,6 +133,11 @@ public class TestEntityWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected TestEntityWrapper wrap(TestEntity testEntity) {
 		return new TestEntityWrapper(testEntity);
 	}

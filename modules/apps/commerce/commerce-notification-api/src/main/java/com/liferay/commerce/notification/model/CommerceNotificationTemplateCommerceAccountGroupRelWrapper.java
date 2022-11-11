@@ -392,6 +392,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceNotificationTemplateCommerceAccountGroupRelWrapper wrap(
 		CommerceNotificationTemplateCommerceAccountGroupRel
 			commerceNotificationTemplateCommerceAccountGroupRel) {

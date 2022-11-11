@@ -328,6 +328,11 @@ public class CommerceAccountUserRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceAccountUserRelWrapper wrap(
 		CommerceAccountUserRel commerceAccountUserRel) {
 

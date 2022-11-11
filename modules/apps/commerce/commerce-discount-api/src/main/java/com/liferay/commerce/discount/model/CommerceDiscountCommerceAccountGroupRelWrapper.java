@@ -370,6 +370,11 @@ public class CommerceDiscountCommerceAccountGroupRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceDiscountCommerceAccountGroupRelWrapper wrap(
 		CommerceDiscountCommerceAccountGroupRel
 			commerceDiscountCommerceAccountGroupRel) {

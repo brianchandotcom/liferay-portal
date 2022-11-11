@@ -482,6 +482,11 @@ public class UserNotificationEventWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected UserNotificationEventWrapper wrap(
 		UserNotificationEvent userNotificationEvent) {
 

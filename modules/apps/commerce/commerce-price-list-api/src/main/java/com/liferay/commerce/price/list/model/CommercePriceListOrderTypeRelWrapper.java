@@ -470,6 +470,11 @@ public class CommercePriceListOrderTypeRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommercePriceListOrderTypeRel, Object>>
 		getAttributeGetterFunctions() {
 

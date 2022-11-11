@@ -661,4 +661,8 @@ public interface DLFileEntryModel
 	@Override
 	public DLFileEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

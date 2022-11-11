@@ -507,4 +507,8 @@ public interface CPSpecificationOptionModel
 	@Override
 	public CPSpecificationOption cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

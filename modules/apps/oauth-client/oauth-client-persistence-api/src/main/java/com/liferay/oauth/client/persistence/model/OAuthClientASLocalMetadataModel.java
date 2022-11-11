@@ -221,4 +221,8 @@ public interface OAuthClientASLocalMetadataModel
 	@Override
 	public OAuthClientASLocalMetadata cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

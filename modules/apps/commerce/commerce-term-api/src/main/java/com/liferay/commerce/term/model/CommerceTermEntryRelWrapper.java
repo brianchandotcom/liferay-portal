@@ -388,6 +388,11 @@ public class CommerceTermEntryRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceTermEntryRelWrapper wrap(
 		CommerceTermEntryRel commerceTermEntryRel) {
 

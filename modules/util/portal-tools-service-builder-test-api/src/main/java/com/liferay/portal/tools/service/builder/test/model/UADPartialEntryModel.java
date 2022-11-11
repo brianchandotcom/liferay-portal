@@ -128,4 +128,8 @@ public interface UADPartialEntryModel extends BaseModel<UADPartialEntry> {
 	@Override
 	public UADPartialEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

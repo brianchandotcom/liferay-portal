@@ -484,4 +484,8 @@ public interface CPDefinitionOptionValueRelModel
 	@Override
 	public CPDefinitionOptionValueRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

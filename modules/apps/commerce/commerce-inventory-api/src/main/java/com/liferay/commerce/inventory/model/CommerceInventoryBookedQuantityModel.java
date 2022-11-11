@@ -249,4 +249,8 @@ public interface CommerceInventoryBookedQuantityModel
 	@Override
 	public CommerceInventoryBookedQuantity cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

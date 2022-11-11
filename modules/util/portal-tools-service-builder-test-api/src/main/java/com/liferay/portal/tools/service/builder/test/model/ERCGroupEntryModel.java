@@ -132,4 +132,8 @@ public interface ERCGroupEntryModel
 	@Override
 	public ERCGroupEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

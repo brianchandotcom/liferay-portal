@@ -923,6 +923,11 @@ public class LayoutPageTemplateEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<LayoutPageTemplateEntry, Object>>
 		getAttributeGetterFunctions() {
 

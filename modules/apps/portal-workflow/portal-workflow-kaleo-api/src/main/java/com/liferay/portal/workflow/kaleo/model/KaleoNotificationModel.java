@@ -387,4 +387,8 @@ public interface KaleoNotificationModel
 	@Override
 	public KaleoNotification cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -233,4 +233,8 @@ public interface CommerceDiscountUsageEntryModel
 	@Override
 	public CommerceDiscountUsageEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

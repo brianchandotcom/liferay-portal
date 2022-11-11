@@ -180,4 +180,8 @@ public interface AnalyticsMessageModel
 	@Override
 	public AnalyticsMessage cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

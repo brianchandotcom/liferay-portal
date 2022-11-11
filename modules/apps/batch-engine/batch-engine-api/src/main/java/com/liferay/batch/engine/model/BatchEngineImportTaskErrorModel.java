@@ -222,4 +222,8 @@ public interface BatchEngineImportTaskErrorModel
 	@Override
 	public BatchEngineImportTaskError cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

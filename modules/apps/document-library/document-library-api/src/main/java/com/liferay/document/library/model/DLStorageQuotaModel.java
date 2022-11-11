@@ -118,4 +118,8 @@ public interface DLStorageQuotaModel
 	@Override
 	public DLStorageQuota cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -214,4 +214,8 @@ public interface ExpandoColumnModel
 	@Override
 	public ExpandoColumn cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

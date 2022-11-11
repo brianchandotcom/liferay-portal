@@ -208,4 +208,8 @@ public interface PLOEntryModel
 	@Override
 	public PLOEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

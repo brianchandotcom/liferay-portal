@@ -118,4 +118,8 @@ public interface ERCCompanyEntryModel
 	@Override
 	public ERCCompanyEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

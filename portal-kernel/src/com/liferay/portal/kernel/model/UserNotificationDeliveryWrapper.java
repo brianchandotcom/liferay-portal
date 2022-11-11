@@ -371,6 +371,11 @@ public class UserNotificationDeliveryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected UserNotificationDeliveryWrapper wrap(
 		UserNotificationDelivery userNotificationDelivery) {
 

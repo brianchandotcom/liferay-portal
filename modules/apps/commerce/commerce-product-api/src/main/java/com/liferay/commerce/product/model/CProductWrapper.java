@@ -456,6 +456,11 @@ public class CProductWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CProduct, Object>>
 		getAttributeGetterFunctions() {
 

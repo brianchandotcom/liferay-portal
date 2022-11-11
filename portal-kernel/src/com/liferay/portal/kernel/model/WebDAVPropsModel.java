@@ -189,4 +189,8 @@ public interface WebDAVPropsModel
 	@Override
 	public WebDAVProps cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

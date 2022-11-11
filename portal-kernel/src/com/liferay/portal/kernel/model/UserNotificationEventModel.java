@@ -280,4 +280,8 @@ public interface UserNotificationEventModel
 	@Override
 	public UserNotificationEvent cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

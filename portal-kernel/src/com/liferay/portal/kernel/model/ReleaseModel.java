@@ -223,4 +223,8 @@ public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
 	@Override
 	public Release cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

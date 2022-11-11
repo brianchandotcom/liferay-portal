@@ -713,6 +713,11 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPDefinitionSpecificationOptionValue, Object>>
 		getAttributeGetterFunctions() {
 

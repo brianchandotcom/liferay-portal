@@ -271,6 +271,11 @@ public class ExpandoRowWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<ExpandoRow, Object>>
 		getAttributeGetterFunctions() {
 

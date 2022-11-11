@@ -576,4 +576,8 @@ public interface KaleoDefinitionVersionModel
 	@Override
 	public KaleoDefinitionVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

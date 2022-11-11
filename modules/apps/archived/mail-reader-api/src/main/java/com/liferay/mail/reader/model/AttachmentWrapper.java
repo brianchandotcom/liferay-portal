@@ -342,6 +342,11 @@ public class AttachmentWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AttachmentWrapper wrap(Attachment attachment) {
 		return new AttachmentWrapper(attachment);
 	}

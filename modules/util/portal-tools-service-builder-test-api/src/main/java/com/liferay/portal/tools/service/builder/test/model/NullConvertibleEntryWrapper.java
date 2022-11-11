@@ -136,6 +136,11 @@ public class NullConvertibleEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected NullConvertibleEntryWrapper wrap(
 		NullConvertibleEntry nullConvertibleEntry) {
 

@@ -414,4 +414,8 @@ public interface CPOptionValueModel
 	@Override
 	public CPOptionValue cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

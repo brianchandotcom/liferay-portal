@@ -310,4 +310,8 @@ public interface PhoneModel
 	@Override
 	public Phone cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

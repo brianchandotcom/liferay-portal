@@ -353,4 +353,8 @@ public interface NotificationRecipientSettingModel
 	@Override
 	public NotificationRecipientSetting cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

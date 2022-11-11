@@ -377,6 +377,11 @@ public class CommerceDiscountUsageEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceDiscountUsageEntryWrapper wrap(
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
 

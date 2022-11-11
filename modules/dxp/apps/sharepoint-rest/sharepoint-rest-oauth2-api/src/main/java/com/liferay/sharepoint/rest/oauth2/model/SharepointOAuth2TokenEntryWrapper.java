@@ -350,6 +350,11 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SharepointOAuth2TokenEntryWrapper wrap(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 

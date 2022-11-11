@@ -382,4 +382,8 @@ public interface KaleoTaskFormInstanceModel
 	@Override
 	public KaleoTaskFormInstance cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

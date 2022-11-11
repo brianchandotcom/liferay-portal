@@ -580,4 +580,8 @@ public interface CPDefinitionVirtualSettingModel
 	@Override
 	public CPDefinitionVirtualSetting cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

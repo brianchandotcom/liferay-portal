@@ -854,6 +854,11 @@ public class MBCategoryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<MBCategory, Object>>
 		getAttributeGetterFunctions() {
 

@@ -249,4 +249,8 @@ public interface LayoutLocalizationModel
 	@Override
 	public LayoutLocalization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

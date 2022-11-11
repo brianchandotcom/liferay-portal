@@ -169,4 +169,8 @@ public interface EntryModel extends BaseModel<Entry> {
 	@Override
 	public Entry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

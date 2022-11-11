@@ -392,6 +392,11 @@ public class ReleaseWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ReleaseWrapper wrap(Release release) {
 		return new ReleaseWrapper(release);
 	}

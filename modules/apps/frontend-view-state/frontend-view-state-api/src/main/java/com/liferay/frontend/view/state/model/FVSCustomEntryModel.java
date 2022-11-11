@@ -277,4 +277,8 @@ public interface FVSCustomEntryModel
 	@Override
 	public FVSCustomEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -251,4 +251,8 @@ public interface ObjectFieldSettingModel
 	@Override
 	public ObjectFieldSetting cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

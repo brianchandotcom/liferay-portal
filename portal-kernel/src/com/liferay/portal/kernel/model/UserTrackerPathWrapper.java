@@ -241,6 +241,11 @@ public class UserTrackerPathWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected UserTrackerPathWrapper wrap(UserTrackerPath userTrackerPath) {
 		return new UserTrackerPathWrapper(userTrackerPath);
 	}

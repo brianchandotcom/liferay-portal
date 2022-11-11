@@ -162,6 +162,11 @@ public class CacheMissEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CacheMissEntry, Object>>
 		getAttributeGetterFunctions() {
 

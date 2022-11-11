@@ -180,4 +180,8 @@ public interface LVEntryVersionModel
 	@Override
 	public LVEntryVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

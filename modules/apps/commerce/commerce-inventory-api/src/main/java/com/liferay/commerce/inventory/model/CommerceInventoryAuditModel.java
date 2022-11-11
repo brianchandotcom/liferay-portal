@@ -249,4 +249,8 @@ public interface CommerceInventoryAuditModel
 	@Override
 	public CommerceInventoryAudit cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

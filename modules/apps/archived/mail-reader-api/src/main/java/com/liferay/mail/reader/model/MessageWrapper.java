@@ -657,6 +657,11 @@ public class MessageWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected MessageWrapper wrap(Message message) {
 		return new MessageWrapper(message);
 	}

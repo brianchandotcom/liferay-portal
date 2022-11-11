@@ -288,4 +288,8 @@ public interface LayoutPageTemplateStructureModel
 	@Override
 	public LayoutPageTemplateStructure cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

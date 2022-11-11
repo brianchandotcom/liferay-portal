@@ -674,6 +674,11 @@ public class CommerceShippingFixedOptionRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceShippingFixedOptionRelWrapper wrap(
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
 

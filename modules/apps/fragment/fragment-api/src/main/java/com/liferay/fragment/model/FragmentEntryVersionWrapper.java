@@ -1031,6 +1031,11 @@ public class FragmentEntryVersionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<FragmentEntryVersion, Object>>
 		getAttributeGetterFunctions() {
 

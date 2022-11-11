@@ -297,6 +297,11 @@ public class PortletPreferencesWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<PortletPreferences, Object>>
 		getAttributeGetterFunctions() {
 

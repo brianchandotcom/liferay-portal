@@ -868,6 +868,11 @@ public class CommerceAddressWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceAddressWrapper wrap(CommerceAddress commerceAddress) {
 		return new CommerceAddressWrapper(commerceAddress);
 	}

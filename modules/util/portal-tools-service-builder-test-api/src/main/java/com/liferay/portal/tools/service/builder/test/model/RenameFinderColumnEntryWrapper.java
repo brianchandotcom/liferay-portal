@@ -164,6 +164,11 @@ public class RenameFinderColumnEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected RenameFinderColumnEntryWrapper wrap(
 		RenameFinderColumnEntry renameFinderColumnEntry) {
 

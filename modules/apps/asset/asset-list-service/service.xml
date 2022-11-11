@@ -215,6 +215,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="key" />
 		</finder>
+		<finder name="C_C_K" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="key" />
+		</finder>
 		<finder name="CK_CT_P" return-type="Collection">
 			<finder-column name="containerKey" />
 			<finder-column name="containerType" />

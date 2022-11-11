@@ -761,7 +761,12 @@ export function getThread(friendlyUrlPath, siteKey) {
 	});
 }
 
-export function getMessages(messageBoardThreadId, page, pageSize, sortBy) {
+export function getMessages(
+	messageBoardThreadId,
+	page,
+	pageSize,
+	sortBy = 'dateCreated:asc'
+) {
 	return clientNestedFields.request({
 		query: getMessagesQuery,
 		variables: {

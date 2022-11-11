@@ -39,6 +39,10 @@ public class JunitPortalTestBatch
 		buildParameters.put(
 			"test.batch.name", portalBatchBuildData.getBatchName());
 		buildParameters.put("test.batch.size", "1");
+		buildParameters.put(
+			"TEST_CLASS_GROUP_0",
+			JenkinsResultsParserUtil.join(
+				",", portalBatchBuildData.getTestList()));
 
 		Map<String, String> environmentVariables = new HashMap<>();
 

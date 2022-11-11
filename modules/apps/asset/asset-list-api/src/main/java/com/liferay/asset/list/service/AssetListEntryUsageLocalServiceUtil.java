@@ -409,6 +409,13 @@ public class AssetListEntryUsageLocalServiceUtil {
 			groupId, classNameId, key, type);
 	}
 
+	public static int getCompanyAssetListEntryUsagesCount(
+		long companyId, long classNameId, String key) {
+
+		return getService().getCompanyAssetListEntryUsagesCount(
+			companyId, classNameId, key);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

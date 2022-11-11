@@ -1001,6 +1001,173 @@ public interface AssetListEntryUsagePersistence
 	public int countByG_C_K(long groupId, long classNameId, String key);
 
 	/**
+	 * Returns all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @return the matching asset list entry usages
+	 */
+	public java.util.List<AssetListEntryUsage> findByC_C_K(
+		long companyId, long classNameId, String key);
+
+	/**
+	 * Returns a range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param start the lower bound of the range of asset list entry usages
+	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
+	 * @return the range of matching asset list entry usages
+	 */
+	public java.util.List<AssetListEntryUsage> findByC_C_K(
+		long companyId, long classNameId, String key, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param start the lower bound of the range of asset list entry usages
+	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset list entry usages
+	 */
+	public java.util.List<AssetListEntryUsage> findByC_C_K(
+		long companyId, long classNameId, String key, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param start the lower bound of the range of asset list entry usages
+	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset list entry usages
+	 */
+	public java.util.List<AssetListEntryUsage> findByC_C_K(
+		long companyId, long classNameId, String key, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
+	 */
+	public AssetListEntryUsage findByC_C_K_First(
+			long companyId, long classNameId, String key,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryUsage> orderByComparator)
+		throws NoSuchEntryUsageException;
+
+	/**
+	 * Returns the first asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
+	 */
+	public AssetListEntryUsage fetchByC_C_K_First(
+		long companyId, long classNameId, String key,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
+			orderByComparator);
+
+	/**
+	 * Returns the last asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset list entry usage could not be found
+	 */
+	public AssetListEntryUsage findByC_C_K_Last(
+			long companyId, long classNameId, String key,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryUsage> orderByComparator)
+		throws NoSuchEntryUsageException;
+
+	/**
+	 * Returns the last asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
+	 */
+	public AssetListEntryUsage fetchByC_C_K_Last(
+		long companyId, long classNameId, String key,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetListEntryUsage>
+			orderByComparator);
+
+	/**
+	 * Returns the asset list entry usages before and after the current asset list entry usage in the ordered set where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param assetListEntryUsageId the primary key of the current asset list entry usage
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset list entry usage
+	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
+	 */
+	public AssetListEntryUsage[] findByC_C_K_PrevAndNext(
+			long assetListEntryUsageId, long companyId, long classNameId,
+			String key,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryUsage> orderByComparator)
+		throws NoSuchEntryUsageException;
+
+	/**
+	 * Removes all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 */
+	public void removeByC_C_K(long companyId, long classNameId, String key);
+
+	/**
+	 * Returns the number of asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @return the number of matching asset list entry usages
+	 */
+	public int countByC_C_K(long companyId, long classNameId, String key);
+
+	/**
 	 * Returns all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param containerKey the container key

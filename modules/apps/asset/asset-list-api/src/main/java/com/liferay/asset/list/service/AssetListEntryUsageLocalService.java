@@ -350,6 +350,10 @@ public interface AssetListEntryUsageLocalService
 		long groupId, long classNameId, String key, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyAssetListEntryUsagesCount(
+		long companyId, long classNameId, String key);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 

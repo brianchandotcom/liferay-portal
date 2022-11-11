@@ -147,8 +147,8 @@ public class TestFlowTestrayDispatchTaskExecutor
 	}
 
 	private Page<ObjectEntry> _getObjectEntries(
-			long companyId, String objectDefinitionName,
-			Aggregation aggregation, String filter)
+			Aggregation aggregation, long companyId,
+			String objectDefinitionName, String filter)
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(

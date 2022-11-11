@@ -28,7 +28,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONDeserializerTransformer;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
@@ -66,7 +66,7 @@ public class ItemSelectorCriterionSerializerImpl
 		Class<T> itemSelectorCriterionClass, String json) {
 
 		JSONDeserializer<T> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
+			_jsonFactory.createJSONDeserializer();
 
 		jsonDeserializer.transform(
 			_desiredItemSelectorReturnTypesJSONDeserializerTransformer,
@@ -77,7 +77,7 @@ public class ItemSelectorCriterionSerializerImpl
 
 	@Override
 	public String serialize(ItemSelectorCriterion itemSelectorCriterion) {
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
 		jsonSerializer.transform(
 			_desiredItemSelectorReturnTypesJSONTransformer,
@@ -169,6 +169,9 @@ public class ItemSelectorCriterionSerializerImpl
 	@Reference
 	private ItemSelectorViewReturnTypeProviderHandler
 		_itemSelectorViewReturnTypeProviderHandler;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	private ServiceTracker
 		<ItemSelectorViewReturnTypeProvider, ItemSelectorViewReturnTypeProvider>

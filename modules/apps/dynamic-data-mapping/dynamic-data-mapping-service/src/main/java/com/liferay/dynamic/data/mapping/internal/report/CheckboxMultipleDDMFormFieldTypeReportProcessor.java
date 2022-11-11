@@ -18,12 +18,13 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Iterator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
@@ -48,7 +49,7 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 
 		Value value = ddmFormFieldValue.getValue();
 
-		JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
+		JSONArray valueJSONArray = _jsonFactory.createJSONArray(
 			value.getString(value.getDefaultLocale()));
 
 		Iterator<String> iterator = valueJSONArray.iterator();
@@ -70,5 +71,8 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 
 		return fieldJSONObject;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

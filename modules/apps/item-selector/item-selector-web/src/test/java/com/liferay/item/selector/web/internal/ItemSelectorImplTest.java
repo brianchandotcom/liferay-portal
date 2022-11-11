@@ -25,6 +25,7 @@ import com.liferay.item.selector.web.internal.util.ItemSelectorKeyUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -77,6 +78,10 @@ public class ItemSelectorImplTest {
 			_testStringItemSelectorReturnType);
 		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
+
+		ReflectionTestUtil.setFieldValue(
+			_stubItemSelectorCriterionSerializerImpl, "_jsonFactory",
+			new JSONFactoryImpl());
 
 		_itemSelectorImpl.setItemSelectorCriterionSerializer(
 			_stubItemSelectorCriterionSerializerImpl);

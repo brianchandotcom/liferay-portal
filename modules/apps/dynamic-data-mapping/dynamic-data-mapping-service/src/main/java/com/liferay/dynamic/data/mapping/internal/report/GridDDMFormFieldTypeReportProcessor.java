@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -54,7 +54,7 @@ public class GridDDMFormFieldTypeReportProcessor
 
 		Value value = ddmFormFieldValue.getValue();
 
-		JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject valueJSONObject = _jsonFactory.createJSONObject(
 			value.getString(value.getDefaultLocale()));
 
 		Iterator<String> iterator = valueJSONObject.keys();
@@ -65,7 +65,7 @@ public class GridDDMFormFieldTypeReportProcessor
 			JSONObject rowJSONObject = valuesJSONObject.getJSONObject(rowName);
 
 			if (rowJSONObject == null) {
-				rowJSONObject = JSONFactoryUtil.createJSONObject();
+				rowJSONObject = _jsonFactory.createJSONObject();
 			}
 
 			String columnName = valueJSONObject.getString(rowName);
@@ -114,7 +114,7 @@ public class GridDDMFormFieldTypeReportProcessor
 	private JSONArray _getOptionValuesJSONArray(
 		DDMFormField ddmFormField, String propertyName) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			(DDMFormFieldOptions)ddmFormField.getProperty(propertyName);
@@ -127,5 +127,8 @@ public class GridDDMFormFieldTypeReportProcessor
 
 		return jsonArray;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -88,7 +88,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest =
 			new ValidateRankingMVCResourceRequest(resourceRequest);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		List<String> duplicateQueryStrings = _getDuplicateQueryStrings(
 			resourceRequest, validateRankingMVCResourceRequest);
@@ -211,6 +211,9 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ValidateRankingMVCResourceCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

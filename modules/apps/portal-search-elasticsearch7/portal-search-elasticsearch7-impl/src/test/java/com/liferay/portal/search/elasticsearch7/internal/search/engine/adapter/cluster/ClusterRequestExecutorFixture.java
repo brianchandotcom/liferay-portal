@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
@@ -95,6 +96,8 @@ public class ClusterRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			statsClusterRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
+		ReflectionTestUtil.setFieldValue(
+			statsClusterRequestExecutor, "_jsonFactory", new JSONFactoryImpl());
 
 		return statsClusterRequestExecutor;
 	}

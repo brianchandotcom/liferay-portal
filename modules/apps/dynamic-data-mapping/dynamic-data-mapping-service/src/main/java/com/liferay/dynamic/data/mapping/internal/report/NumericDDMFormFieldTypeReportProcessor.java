@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,7 +73,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 		JSONObject summaryJSONObject = jsonObject.getJSONObject("summary");
 
 		if (summaryJSONObject == null) {
-			summaryJSONObject = JSONFactoryUtil.createJSONObject();
+			summaryJSONObject = jsonFactory.createJSONObject();
 		}
 
 		BigDecimal sumBigDecimal = new BigDecimal(

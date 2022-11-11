@@ -18,14 +18,15 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HtmlImpl;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -44,7 +45,16 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_setUpHtmlUtil();
-		_setUpJSONFactoryUtil();
+	}
+
+	@Before
+	public void setUp() {
+		_searchLocationDDMFormFieldValueRenderer =
+			new SearchLocationDDMFormFieldValueRenderer();
+
+		ReflectionTestUtil.setFieldValue(
+			_searchLocationDDMFormFieldValueRenderer, "_jsonFactory",
+			new JSONFactoryImpl());
 	}
 
 	@Test
@@ -58,13 +68,9 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 					).toString(),
 					LocaleUtil.US));
 
-		SearchLocationDDMFormFieldValueRenderer
-			searchLocationDDMFormFieldValueRenderer =
-				new SearchLocationDDMFormFieldValueRenderer();
-
 		Assert.assertEquals(
 			"{&#34;city&#34;:&#34;Recife&#34;}",
-			searchLocationDDMFormFieldValueRenderer.render(
+			_searchLocationDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
@@ -79,13 +85,9 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 					).toString(),
 					LocaleUtil.US));
 
-		SearchLocationDDMFormFieldValueRenderer
-			searchLocationDDMFormFieldValueRenderer =
-				new SearchLocationDDMFormFieldValueRenderer();
-
 		Assert.assertEquals(
 			"Recife",
-			searchLocationDDMFormFieldValueRenderer.render(
+			_searchLocationDDMFormFieldValueRenderer.render(
 				"city", ddmFormFieldValue, LocaleUtil.US));
 	}
 
@@ -100,13 +102,9 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 					).toString(),
 					LocaleUtil.US));
 
-		SearchLocationDDMFormFieldValueRenderer
-			searchLocationDDMFormFieldValueRenderer =
-				new SearchLocationDDMFormFieldValueRenderer();
-
 		Assert.assertEquals(
 			StringPool.BLANK,
-			searchLocationDDMFormFieldValueRenderer.render(
+			_searchLocationDDMFormFieldValueRenderer.render(
 				"city", ddmFormFieldValue, LocaleUtil.US));
 	}
 
@@ -117,13 +115,9 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 				"field",
 				DDMFormValuesTestUtil.createLocalizedValue("", LocaleUtil.US));
 
-		SearchLocationDDMFormFieldValueRenderer
-			searchLocationDDMFormFieldValueRenderer =
-				new SearchLocationDDMFormFieldValueRenderer();
-
 		Assert.assertEquals(
 			StringPool.BLANK,
-			searchLocationDDMFormFieldValueRenderer.render(
+			_searchLocationDDMFormFieldValueRenderer.render(
 				"city", ddmFormFieldValue, LocaleUtil.US));
 	}
 
@@ -133,10 +127,7 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 		htmlUtil.setHtml(new HtmlImpl());
 	}
 
-	private static void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
+	private SearchLocationDDMFormFieldValueRenderer
+		_searchLocationDDMFormFieldValueRenderer;
 
 }

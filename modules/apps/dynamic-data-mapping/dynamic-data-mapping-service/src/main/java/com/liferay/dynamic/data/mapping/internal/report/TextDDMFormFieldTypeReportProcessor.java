@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -68,7 +68,7 @@ public class TextDDMFormFieldTypeReportProcessor
 
 		boolean nullValue = Validator.isNull(getValue(ddmFormFieldValue));
 		int totalEntries = fieldJSONObject.getInt("totalEntries");
-		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray valuesJSONArray = jsonFactory.createJSONArray();
 
 		if (ddmFormInstanceReportEvent.equals(
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION)) {
@@ -186,6 +186,9 @@ public class TextDDMFormFieldTypeReportProcessor
 	@Reference
 	protected DDMFormInstanceRecordLocalService
 		ddmFormInstanceRecordLocalService;
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	private static final int _VALUES_MAX_LENGTH = 5;
 

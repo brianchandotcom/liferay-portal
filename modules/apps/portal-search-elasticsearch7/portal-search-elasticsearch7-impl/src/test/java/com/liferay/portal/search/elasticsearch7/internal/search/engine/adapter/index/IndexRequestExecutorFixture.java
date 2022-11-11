@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
@@ -187,6 +188,10 @@ public class IndexRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			getFieldMappingIndexRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
+
+		ReflectionTestUtil.setFieldValue(
+			getFieldMappingIndexRequestExecutor, "_jsonFactory",
+			new JSONFactoryImpl());
 
 		return getFieldMappingIndexRequestExecutor;
 	}

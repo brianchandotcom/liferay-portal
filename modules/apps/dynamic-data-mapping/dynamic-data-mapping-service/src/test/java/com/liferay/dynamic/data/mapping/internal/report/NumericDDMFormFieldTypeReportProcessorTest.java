@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -62,6 +63,9 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 		_numericDDMFormFieldTypeReportProcessor.
 			ddmFormInstanceRecordLocalService =
 				_ddmFormInstanceRecordLocalService;
+
+		_numericDDMFormFieldTypeReportProcessor.jsonFactory =
+			new JSONFactoryImpl();
 	}
 
 	@Test

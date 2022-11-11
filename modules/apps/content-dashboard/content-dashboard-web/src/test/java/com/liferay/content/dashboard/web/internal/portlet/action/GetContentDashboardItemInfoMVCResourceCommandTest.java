@@ -561,6 +561,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		_getContentDashboardItemInfoMVCResourceCommand =
 			new GetContentDashboardItemInfoMVCResourceCommand();
 
+		ReflectionTestUtil.setFieldValue(
+			_getContentDashboardItemInfoMVCResourceCommand, "_jsonFactory",
+			new JSONFactoryImpl());
+
 		AssetVocabularyLocalService assetVocabularyLocalService = Mockito.mock(
 			AssetVocabularyLocalService.class);
 

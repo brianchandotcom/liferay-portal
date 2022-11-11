@@ -19,7 +19,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -463,12 +463,12 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				fields.add(_toFieldMappingString((JSONObject)item));
 			}
 
-			return JSONFactoryUtil.createJSONArray(fields);
+			return _jsonFactory.createJSONArray(fields);
 		}
 
 		if ((value instanceof String) && Objects.equals(type, "json")) {
 			try {
-				return JSONFactoryUtil.createJSONObject((String)value);
+				return _jsonFactory.createJSONObject((String)value);
 			}
 			catch (JSONException jsonException) {
 				return ReflectionUtil.throwException(jsonException);
@@ -505,6 +505,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private HighlightBuilderFactory _highlightBuilderFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Queries _queries;

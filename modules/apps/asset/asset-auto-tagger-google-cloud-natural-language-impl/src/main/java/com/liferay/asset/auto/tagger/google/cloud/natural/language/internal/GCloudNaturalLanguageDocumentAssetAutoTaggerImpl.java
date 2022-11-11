@@ -23,7 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -212,7 +212,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 		String responseJSON = _http.URLtoString(options);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(responseJSON);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(responseJSON);
 
 		Http.Response response = options.getResponse();
 
@@ -300,5 +300,8 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

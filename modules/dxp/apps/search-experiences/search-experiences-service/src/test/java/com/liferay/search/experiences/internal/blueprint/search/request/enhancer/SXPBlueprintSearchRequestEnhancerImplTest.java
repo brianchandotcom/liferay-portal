@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.search.request.enhance
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -125,6 +126,9 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSearchRequestEnhancerImpl, "_highlightBuilderFactory",
 			new HighlightBuilderFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			_sxpBlueprintSearchRequestEnhancerImpl, "_jsonFactory",
+			new JSONFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSearchRequestEnhancerImpl, "_queries",
 			new QueriesImpl());

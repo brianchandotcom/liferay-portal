@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -232,7 +232,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 	private JSONObject _createJSONObject(String string) {
 		try {
-			return JSONFactoryUtil.createJSONObject(string);
+			return _jsonFactory.createJSONObject(string);
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -412,6 +412,9 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchResponseResourceImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Searcher _searcher;

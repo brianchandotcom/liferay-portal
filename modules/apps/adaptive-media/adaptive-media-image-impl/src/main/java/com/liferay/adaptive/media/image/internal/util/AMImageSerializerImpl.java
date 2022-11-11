@@ -23,7 +23,7 @@ import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.util.AMImageSerializer;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -37,6 +37,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -49,7 +50,7 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 		String s, Supplier<InputStream> inputStreamSupplier) {
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(s);
+			JSONObject jsonObject = _jsonFactory.createJSONObject(s);
 
 			Map<String, String> properties = new HashMap<>();
 
@@ -81,7 +82,7 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 
 	@Override
 	public String serialize(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
-		JSONObject attributesJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject attributesJSONObject = _jsonFactory.createJSONObject();
 
 		Map<String, AMAttribute<?, ?>> allowedAMAttributes =
 			AMImageAttribute.getAllowedAMAttributes();
@@ -102,5 +103,8 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 			"uri", adaptiveMedia.getURI()
 		).toString();
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

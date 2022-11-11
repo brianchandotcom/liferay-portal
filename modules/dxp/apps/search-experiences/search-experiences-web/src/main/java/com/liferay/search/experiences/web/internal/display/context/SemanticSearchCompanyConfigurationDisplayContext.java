@@ -86,6 +86,14 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _txtaiHostAddress;
 	}
 
+	public String getTxtaiPassword() {
+		return _txtaiPassword;
+	}
+
+	public String getTxtaiUserName() {
+		return _txtaiUserName;
+	}
+
 	public boolean isSentenceTransformerEnabled() {
 		return _sentenceTransformerEnabled;
 	}
@@ -172,6 +180,14 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_txtaiHostAddress = txtaiHostAddress;
 	}
 
+	public void setTxtaiPassword(String txtaiPassword) {
+		_txtaiPassword = txtaiPassword;
+	}
+
+	public void setTxtaiUserName(String txtaiUserName) {
+		_txtaiUserName = txtaiUserName;
+	}
+
 	private List<String> _assetEntryClassNames;
 	private Map<String, String> _availableAssetEntryClassNames;
 	private List<String> _availableEmbeddingVectorDimensions;
@@ -189,5 +205,7 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private String _sentenceTransformProvider;
 	private String _textTruncationStrategy;
 	private String _txtaiHostAddress;
+	private String _txtaiPassword;
+	private String _txtaiUserName;
 
 }

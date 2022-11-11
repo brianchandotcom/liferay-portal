@@ -111,6 +111,12 @@ public class SemanticSearchConfigurationFormRenderer
 		).put(
 			"txtaiHostAddress",
 			ParamUtil.getString(httpServletRequest, "txtaiHostAddress")
+		).put(
+			"txtaiPassword",
+			ParamUtil.getString(httpServletRequest, "txtaiPassword")
+		).put(
+			"txtaiUserName",
+			ParamUtil.getString(httpServletRequest, "txtaiUserName")
 		).build();
 	}
 
@@ -180,6 +186,10 @@ public class SemanticSearchConfigurationFormRenderer
 				_semanticSearchConfiguration.textTruncationStrategy());
 		semanticSearchCompanyConfigurationDisplayContext.setTxtaiHostAddress(
 			_semanticSearchConfiguration.txtaiHostAddress());
+		semanticSearchCompanyConfigurationDisplayContext.setTxtaiPassword(
+			_semanticSearchConfiguration.txtaiPassword());
+		semanticSearchCompanyConfigurationDisplayContext.setTxtaiUserName(
+			_semanticSearchConfiguration.txtaiUsername());
 
 		httpServletRequest.setAttribute(
 			SemanticSearchCompanyConfigurationDisplayContext.class.getName(),

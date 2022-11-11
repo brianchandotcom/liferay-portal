@@ -9,8 +9,8 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "Announcement Title");
 
-		CKEditor.addContentInWebContent(
-			content = "Web Content Content",
+		CKEditor.addContent(
+			content = "Announcement Message",
 			fieldLabel = "Content");
 
 		Button.clickSave();
@@ -31,7 +31,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Announcements#ANNOUNCEMENT_ENTRY_CONTENT",
-			value1 = "Web Content Content");
+			value1 = "Announcement Message");
 	}
 
 }

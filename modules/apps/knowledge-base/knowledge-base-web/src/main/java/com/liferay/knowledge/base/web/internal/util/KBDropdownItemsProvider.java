@@ -101,38 +101,39 @@ public class KBDropdownItemsProvider {
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
 					() -> _hasUpdatePermission(kbArticle),
-					_getEditDropdownItem(kbArticle)
+					_getEditActionUnsafeConsumer(kbArticle)
 				).add(
-					this::_hasAddPermission, _getAddChildDropdownItem(kbArticle)
+					this::_hasAddPermission,
+					_getAddChildActionUnsafeConsumer(kbArticle)
 				).add(
 					() ->
 						_isSubscriptionEnabled() &&
 						_hasSubscriptionPermission(kbArticle) &&
 						_hasSubscription(kbArticle),
-					_getUnsubscribeDropdownItem(kbArticle)
+					_getUnsubscribeActionUnsafeConsumer(kbArticle)
 				).add(
 					() ->
 						_isSubscriptionEnabled() &&
 						_hasSubscriptionPermission(kbArticle) &&
 						!_hasSubscription(kbArticle),
-					_getSubscribeDropdownItem(kbArticle)
+					_getSubscribeActionUnsafeConsumer(kbArticle)
 				).add(
 					() ->
 						_isHistoryEnabled() && _hasHistoryPermission(kbArticle),
-					_getHistoryDropdownItem(kbArticle)
+					_getHistoryActionUnsafeConsumer(kbArticle)
 				).build())
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> _hasRSSPermission(kbArticle),
-						_getRSSDropdownItem(kbArticle)
+						_getRSSActionUnsafeConsumer(kbArticle)
 					).add(
 						() -> _isPrintEnabled() && _hasPrintPermission(),
-						_getPrintDropdownItem(kbArticle)
+						_getPrintActionUnsafeConsumer(kbArticle)
 					).add(
 						() -> _hasMovePermission(kbArticle),
-						_getMoveDropdownItem(kbArticle)
+						_getMoveActionUnsafeConsumer(kbArticle)
 					).build());
 
 				dropdownGroupItem.setSeparator(true);
@@ -142,10 +143,10 @@ public class KBDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> _hasPermissionsPermission(kbArticle),
-						_getPermissionsDropdownItem(kbArticle)
+						_getPermissionsActionUnsafeConsumer(kbArticle)
 					).add(
 						() -> _hasDeletePermission(kbArticle),
-						_getDeleteDropdownItem(
+						_getDeleteActionUnsafeConsumer(
 							kbArticle, selectedItemAncestorIds)
 					).build());
 
@@ -172,13 +173,14 @@ public class KBDropdownItemsProvider {
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
 					() -> previousStatus != KBCommentConstants.STATUS_NONE,
-					_getUpdateStatusDropdownItem(kbComment, previousStatus)
+					_getUpdateStatusActionUnsafeConsumer(
+						kbComment, previousStatus)
 				).add(
 					() -> nextStatus != KBCommentConstants.STATUS_NONE,
-					_getUpdateStatusDropdownItem(kbComment, nextStatus)
+					_getUpdateStatusActionUnsafeConsumer(kbComment, nextStatus)
 				).add(
 					() -> _hasDeletePermission(kbComment),
-					_getDeleteDropdownItem(kbComment)
+					_getDeleteActionUnsafeConsumer(kbComment)
 				).build())
 		).build();
 	}
@@ -194,33 +196,33 @@ public class KBDropdownItemsProvider {
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
 					() -> _hasUpdatePermission(kbFolder),
-					_getEditDropdownItem(kbFolder)
+					_getEditActionUnsafeConsumer(kbFolder)
 				).add(
 					() -> _hasImportPermission(kbFolder),
-					_getImportDropdownItem(kbFolder)
+					_getImportActionUnsafeConsumer(kbFolder)
 				).add(
 					() -> _hasMovePermission(kbFolder),
-					_getMoveDropdownItem(kbFolder)
+					_getMoveActionUnsafeConsumer(kbFolder)
 				).add(
 					() ->
 						_hasSubscriptionPermission(kbFolder) &&
 						!_hasSubscription(),
-					_getGroupSubscribeDropdownItem()
+					_getGroupSubscribeActionUnsafeConsumer()
 				).add(
 					() ->
 						_hasSubscriptionPermission(kbFolder) &&
 						_hasSubscription(),
-					_getGroupUnsubscribeDropdownItem()
+					_getGroupUnsubscribeActionUnsafeConsumer()
 				).build())
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> _hasPermissionsPermission(kbFolder),
-						_getPermissionsDropdownItem(kbFolder)
+						_getPermissionsActionUnsafeConsumer(kbFolder)
 					).add(
 						() -> _hasDeletePermission(kbFolder),
-						_getDeleteDropdownItem(
+						_getDeleteActionUnsafeConsumer(
 							kbFolder, selectedItemAncestorIds)
 					).build());
 
@@ -236,20 +238,20 @@ public class KBDropdownItemsProvider {
 			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
 				DropdownItemListBuilder.add(
 					() -> _hasViewPermission(kbTemplate),
-					_getViewDropdownItem(kbTemplate)
+					_getViewActionUnsafeConsumer(kbTemplate)
 				).add(
 					() -> _hasUpdatePermission(kbTemplate),
-					_getEditDropdownItem(kbTemplate)
+					_getEditActionUnsafeConsumer(kbTemplate)
 				).build())
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> _hasPermissionsPermission(kbTemplate),
-						_getPermissionsDropdownItem(kbTemplate)
+						_getPermissionsActionUnsafeConsumer(kbTemplate)
 					).add(
 						() -> _hasDeletePermission(kbTemplate),
-						_getDeleteDropdownItem(kbTemplate)
+						_getDeleteActionUnsafeConsumer(kbTemplate)
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -301,8 +303,8 @@ public class KBDropdownItemsProvider {
 		).buildString();
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getAddChildDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getAddChildActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -328,8 +330,9 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
-		KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteActionUnsafeConsumer(
+			KBArticle kbArticle, List<Long> selectedItemAncestorIds) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
@@ -372,8 +375,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
-		KBComment kbComment) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteActionUnsafeConsumer(KBComment kbComment) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
@@ -394,8 +397,9 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
-		KBFolder kbFolder, List<Long> selectedItemAncestorIds) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteActionUnsafeConsumer(
+			KBFolder kbFolder, List<Long> selectedItemAncestorIds) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
@@ -429,8 +433,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getDeleteDropdownItem(
-		KBTemplate kbTemplate) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteActionUnsafeConsumer(KBTemplate kbTemplate) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
@@ -458,8 +462,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getEditDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getEditActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -482,8 +486,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getEditDropdownItem(
-		KBFolder kbFolder) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getEditActionUnsafeConsumer(KBFolder kbFolder) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -503,8 +507,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getEditDropdownItem(
-		KBTemplate kbTemplate) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getEditActionUnsafeConsumer(KBTemplate kbTemplate) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -525,7 +529,7 @@ public class KBDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getGroupSubscribeDropdownItem() {
+		_getGroupSubscribeActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -545,7 +549,7 @@ public class KBDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getGroupUnsubscribeDropdownItem() {
+		_getGroupUnsubscribeActionUnsafeConsumer() {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -564,8 +568,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getHistoryDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getHistoryActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -594,8 +598,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getImportDropdownItem(
-		KBFolder kbFolder) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getImportActionUnsafeConsumer(KBFolder kbFolder) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -623,8 +627,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getMoveDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMoveActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -655,8 +659,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getMoveDropdownItem(
-		KBFolder kbFolder) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMoveActionUnsafeConsumer(KBFolder kbFolder) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -694,8 +698,8 @@ public class KBDropdownItemsProvider {
 		return _createKBFolderRenderURL(kbArticle.getKbFolderId());
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getPermissionsDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getPermissionsActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
@@ -715,8 +719,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getPermissionsDropdownItem(
-		KBFolder kbFolder) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getPermissionsActionUnsafeConsumer(KBFolder kbFolder) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
@@ -730,8 +734,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getPermissionsDropdownItem(
-		KBTemplate kbTemplate) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getPermissionsActionUnsafeConsumer(KBTemplate kbTemplate) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
@@ -769,8 +773,8 @@ public class KBDropdownItemsProvider {
 			_liferayPortletRequest.getHttpServletRequest());
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getPrintDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getPrintActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "print");
@@ -796,7 +800,7 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getRSSDropdownItem(
+	private UnsafeConsumer<DropdownItem, Exception> _getRSSActionUnsafeConsumer(
 		KBArticle kbArticle) {
 
 		return dropdownItem -> {
@@ -820,8 +824,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getSubscribeDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getSubscribeActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -842,8 +846,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getUnsubscribeDropdownItem(
-		KBArticle kbArticle) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getUnsubscribeActionUnsafeConsumer(KBArticle kbArticle) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -865,7 +869,8 @@ public class KBDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getUpdateStatusDropdownItem(KBComment kbComment, int previousStatus) {
+		_getUpdateStatusActionUnsafeConsumer(
+			KBComment kbComment, int previousStatus) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -887,8 +892,8 @@ public class KBDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception> _getViewDropdownItem(
-		KBTemplate kbTemplate) {
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getViewActionUnsafeConsumer(KBTemplate kbTemplate) {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(

@@ -232,7 +232,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 		return score;
 	}
 
-	private long _increment(
+	private long _incrementTestrayFieldValue(
 			long companyId, String fieldName, String filterString,
 			String objectDefinitionShortName)
 		throws Exception {
@@ -417,7 +417,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 			int testraySubtaskScore = _getTestraySubtaskScore(
 				companyId, testrayCaseResultObjectEntry);
 
-			long increment = _increment(
+			long testraySubtaskName = _incrementTestrayFieldValue(
 				companyId, "name", "taskId eq '" + testrayTaskId + "'",
 				"Subtask");
 
@@ -426,7 +426,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 				HashMapBuilder.<String, Object>put(
 					"dueStatus", "OPEN"
 				).put(
-					"name", "ST-" + increment
+					"name", "ST-" + testraySubtaskName
 				).put(
 					"r_taskToSubtasks_c_taskId", testrayTaskId
 				).put(

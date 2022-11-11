@@ -496,13 +496,13 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${viewableBy}" == "Anyone (Guest Role)") {
-			AssertChecked(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
+			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#GUEST_VIEW_CHECKBOX");
 		}
 		else if ("${viewableBy}" == "Owner") {
-			AssertChecked(locator1 = "AssetPermissions#OWNER_VIEW_CHECKBOX");
+			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#OWNER_VIEW_CHECKBOX");
 		}
 		else if ("${viewableBy}" == "Site Members") {
-			AssertChecked(locator1 = "AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX");
+			AssertChecked.assertCheckedNotVisible(locator1 = "AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX");
 		}
 
 		SelectFrameTop(value1 = "relative=top");

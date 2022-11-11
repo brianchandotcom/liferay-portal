@@ -625,7 +625,7 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			AssertChecked(locator1 = "//tr[contains(.,'Site Team Name')]/td/input[contains(@id,'ACTION_VIEW')]");
+			AssertChecked.assertCheckedNotVisible(locator1 = "//tr[contains(.,'Site Team Name')]/td/input[contains(@id,'ACTION_VIEW')]");
 		}
 	}
 
@@ -1126,7 +1126,7 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			Check(
+			Check.checkNotVisible(
 				key_roleTitle = "account-manager",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 

@@ -118,11 +118,11 @@ definition {
 	}
 
 	macro definePermissionPG {
-		Check(locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]");
+		Check.checkNotVisible(locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]");
 
 		PortletEntry.save();
 
-		AssertChecked(locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]");
+		AssertChecked.assertCheckedNotVisible(locator1 = "//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]");
 	}
 
 	macro deleteCP {

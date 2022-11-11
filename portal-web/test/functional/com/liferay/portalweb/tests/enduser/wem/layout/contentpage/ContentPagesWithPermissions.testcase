@@ -1041,7 +1041,7 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			Check(
+			Check.checkNotVisible(
 				key_actionName = "UPDATE",
 				key_roleTitle = "site-member",
 				locator1 = "Permissions#PERMISSIONS_MODAL_CHECKBOX");

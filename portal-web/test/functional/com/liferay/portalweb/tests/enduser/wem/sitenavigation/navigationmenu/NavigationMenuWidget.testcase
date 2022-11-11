@@ -121,7 +121,7 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			Uncheck(
+			Uncheck.uncheckNotVisible(
 				key_roleTitle = "guest",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 

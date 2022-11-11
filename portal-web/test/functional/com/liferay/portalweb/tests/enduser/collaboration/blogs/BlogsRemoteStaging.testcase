@@ -170,6 +170,8 @@ definition {
 		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishScheduledEntry";
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
 			remotePort = "9080");
@@ -195,14 +197,14 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 
-		User.firstLoginUI(
+		User.loginPG(
+			nodePort = "9080",
 			password = "test",
-			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
+		Navigator.openSitePage(
 			baseURL = "http://localhost:9080",
 			pageName = "Staging Blogs Page",
 			siteName = "Remote Site");

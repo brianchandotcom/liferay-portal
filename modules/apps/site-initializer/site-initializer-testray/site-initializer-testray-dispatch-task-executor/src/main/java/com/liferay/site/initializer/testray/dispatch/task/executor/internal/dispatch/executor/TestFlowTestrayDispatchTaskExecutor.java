@@ -148,8 +148,8 @@ public class TestFlowTestrayDispatchTaskExecutor
 	}
 
 	private Page<ObjectEntry> _getObjectEntries(
-			Aggregation aggregation, long companyId,
-			String objectDefinitionName, String filter)
+			Aggregation aggregation, long companyId, String filter,
+			String objectDefinitionName)
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(
@@ -173,7 +173,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 				"r_caseToCaseResult_c_caseId", objectEntry);
 
 			Page<ObjectEntry> testrayCaseObjectEntriesPage2 = _getObjectEntries(
-				companyId, "Case", null, "id eq '" + testrayCaseId + "'");
+				null, companyId, "id eq '" + testrayCaseId + "'", "Case");
 
 			ObjectEntry testrayCaseObjectEntry =
 				testrayCaseObjectEntriesPage2.fetchFirstItem();
@@ -190,9 +190,10 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 		Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
 			_getObjectEntries(
-				companyId, "CaseResultsIssues", null,
+				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
-					"'");
+					"'",
+				"CaseResultsIssues");
 
 		List<ObjectEntry> testrayCaseResultsIssuesObjectEntries =
 			(List<ObjectEntry>)
@@ -212,7 +213,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 				testrayCaseResultsIssuesObjectEntry);
 
 			Page<ObjectEntry> testrayIssueObejctEntriesPage = _getObjectEntries(
-				companyId, "Issue", null, "id eq '" + issueId + "'");
+				null, companyId, "id eq '" + issueId + "'", "Issue");
 
 			ObjectEntry testrayIssueObjectEntry =
 				testrayIssueObejctEntriesPage.fetchFirstItem();
@@ -291,7 +292,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 		String filter = sb.toString();
 
 		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntries(
-			companyId, "Case", null, filter);
+			null, companyId, filter, "Case");
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
@@ -309,8 +310,8 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
 			_getObjectEntries(
-				companyId, "CaseResult", aggregation,
-				"buildId eq '" + testrayBuildId + "'");
+				aggregation, companyId, "buildId eq '" + testrayBuildId + "'",
+				"CaseResult");
 
 		List<Facet> testrayCaseResultFacets =
 			(List<Facet>)testrayCaseResultObjectEntriesPage1.getFacets();
@@ -319,7 +320,6 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 		List<Facet.FacetValue> testrayCaseResultFacetValues =
 			testrayCaseResultFacet.getFacetValues();
-
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 
@@ -413,7 +413,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 			});
 
-			long testrayTaskId = GetterUtil.getLong(
+		long testrayTaskId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayTaskId"));
 
 		for (List<ObjectEntry> testrayCaseResultObjectEntry :

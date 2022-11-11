@@ -200,7 +200,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 		_workflowMetricsSLADefinitionLocalService;
 
 	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener))"
+		filter = "(&(component.name=com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener))"
 	)
 	private MessageListener _workflowMetricsSLAProcessMessageListener;
 

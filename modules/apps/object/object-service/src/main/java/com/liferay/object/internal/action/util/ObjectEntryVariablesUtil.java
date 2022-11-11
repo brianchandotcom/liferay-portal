@@ -54,10 +54,10 @@ public class ObjectEntryVariablesUtil {
 					"creator", payloadJSONObject.get("userId")
 				).build();
 
-			Map<String, Object> allVariables = new HashMap<>();
+			Map<String, Object> variables = new HashMap<>();
 
 			if (objectDefinition.isSystem()) {
-				allVariables.putAll(
+				variables.putAll(
 					(Map<String, Object>)payloadJSONObject.get(
 						"model" + objectDefinition.getName()));
 
@@ -65,27 +65,26 @@ public class ObjectEntryVariablesUtil {
 					dtoConverterRegistry, objectDefinition,
 					systemObjectDefinitionMetadataRegistry);
 
-				allVariables.putAll(
+				variables.putAll(
 					(Map<String, Object>)payloadJSONObject.get(
 						"modelDTO" + contentType));
 			}
 			else {
-				allVariables.putAll(
+				variables.putAll(
 					(Map<String, Object>)payloadJSONObject.get("objectEntry"));
 
-				allVariables.putAll(
-					(Map<String, Object>)allVariables.get("values"));
+				variables.putAll((Map<String, Object>)variables.get("values"));
 
-				allVariables.remove("values");
+				variables.remove("values");
 
-				Object objectEntryId = allVariables.get("objectEntryId");
+				Object objectEntryId = variables.get("objectEntryId");
 
 				if (objectEntryId != null) {
 					allowedVariables.put("id", objectEntryId);
 				}
 			}
 
-			allVariables.remove("creator");
+			variables.remove("creator");
 
 			List<ObjectField> objectFields =
 				ObjectFieldLocalServiceUtil.getObjectFields(
@@ -95,7 +94,7 @@ public class ObjectEntryVariablesUtil {
 				if (!allowedVariables.containsKey(objectField.getName())) {
 					allowedVariables.put(
 						objectField.getName(),
-						allVariables.get(objectField.getName()));
+						variables.get(objectField.getName()));
 				}
 			}
 

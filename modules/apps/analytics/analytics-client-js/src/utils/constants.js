@@ -14,7 +14,7 @@
 
 // AC Version
 
-export const ANALYTICS_CLIENT_VERSION = '1.1.1';
+export const ANALYTICS_CLIENT_VERSION = '1.1.2';
 
 // Application ID
 
@@ -61,6 +61,8 @@ export const STORAGE_KEY_IDENTITY = 'ac_client_identity';
 export const STORAGE_KEY_MESSAGES = 'ac_message_queue';
 
 export const STORAGE_KEY_MESSAGE_IDENTITY = 'ac_message_queue_identity';
+
+export const STORAGE_KEY_PREV_EMAIL = 'ac_client_previous_email';
 
 export const STORAGE_KEY_USER_ID = 'ac_client_user_id';
 

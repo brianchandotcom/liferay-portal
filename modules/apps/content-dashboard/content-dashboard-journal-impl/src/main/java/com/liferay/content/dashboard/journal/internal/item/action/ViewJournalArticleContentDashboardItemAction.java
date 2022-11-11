@@ -21,7 +21,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -60,14 +60,14 @@ public class ViewJournalArticleContentDashboardItemAction
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
 		Language language,
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
 		LayoutLocalService layoutLocalService,
 		LayoutSEOLinkManager layoutSEOLinkManager, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
 		_language = language;
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 		_layoutLocalService = layoutLocalService;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_portal = portal;
@@ -115,7 +115,7 @@ public class ViewJournalArticleContentDashboardItemAction
 		_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
+			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
 					JournalArticle.class.getName());
 
@@ -244,8 +244,8 @@ public class ViewJournalArticleContentDashboardItemAction
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
-	private final LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private final LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private final Portal _portal;

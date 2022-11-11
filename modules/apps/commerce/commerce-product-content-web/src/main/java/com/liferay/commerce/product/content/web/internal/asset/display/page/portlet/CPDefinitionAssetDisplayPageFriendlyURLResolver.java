@@ -314,7 +314,7 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 		_getLayoutDisplayPageObjectProvider(CPDefinition cpDefinition) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderTracker.
+			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
 					CPDefinition.class.getName());
 

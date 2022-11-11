@@ -326,7 +326,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		_getLayoutDisplayPageObjectProvider(AssetCategory assetCategory) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderTracker.
+			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
 					AssetCategory.class.getName());
 

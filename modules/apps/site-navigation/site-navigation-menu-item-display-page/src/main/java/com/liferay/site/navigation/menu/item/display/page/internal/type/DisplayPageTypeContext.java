@@ -25,7 +25,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -41,7 +41,7 @@ public class DisplayPageTypeContext {
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry,
 		LayoutDisplayPageMultiSelectionProviderRegistry
 			layoutDisplayPageMultiSelectionProviderRegistry,
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
 		_className = className;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
@@ -49,7 +49,7 @@ public class DisplayPageTypeContext {
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry;
 		_layoutDisplayPageMultiSelectionProviderRegistry =
 			layoutDisplayPageMultiSelectionProviderRegistry;
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 	}
 
 	public String getClassName() {
@@ -116,7 +116,7 @@ public class DisplayPageTypeContext {
 	}
 
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider() {
-		return _layoutDisplayPageProviderTracker.
+		return _layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(_className);
 	}
 
@@ -138,7 +138,7 @@ public class DisplayPageTypeContext {
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
 	private final LayoutDisplayPageMultiSelectionProviderRegistry
 		_layoutDisplayPageMultiSelectionProviderRegistry;
-	private final LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private final LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 }

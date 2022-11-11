@@ -28,7 +28,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -139,7 +139,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			}
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				_layoutDisplayPageProviderTracker.
+				_layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByClassName(itemClassName);
 
 			if (layoutDisplayPageProvider != null) {
@@ -196,7 +196,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private Portal _portal;

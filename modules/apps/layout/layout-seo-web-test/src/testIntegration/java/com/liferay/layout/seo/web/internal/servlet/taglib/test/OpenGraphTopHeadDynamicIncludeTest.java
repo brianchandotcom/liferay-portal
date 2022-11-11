@@ -40,7 +40,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -1560,7 +1560,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			infoItemDetailsProvider.getInfoItemDetails(infoItem));
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
+			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(className);
 
 		httpServletRequest.setAttribute(
@@ -1816,7 +1816,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	private Layout _layout;
 
 	@Inject
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

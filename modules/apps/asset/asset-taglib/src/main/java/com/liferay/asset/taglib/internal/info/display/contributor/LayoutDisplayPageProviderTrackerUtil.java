@@ -14,7 +14,7 @@
 
 package com.liferay.asset.taglib.internal.info.display.contributor;
 
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,20 +25,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class LayoutDisplayPageProviderTrackerUtil {
 
-	public static LayoutDisplayPageProviderTracker
-		getLayoutDisplayPageProviderTracker() {
+	public static LayoutDisplayPageProviderRegistry
+		getLayoutDisplayPageProviderRegistry() {
 
-		return _layoutDisplayPageProviderTracker;
+		return _layoutDisplayPageProviderRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setServletContext(
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 	}
 
-	private static LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private static LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 }

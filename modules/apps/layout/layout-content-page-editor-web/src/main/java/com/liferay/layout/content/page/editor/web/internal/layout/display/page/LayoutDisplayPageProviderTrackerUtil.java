@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.layout.display.page;
 
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,18 +29,18 @@ public class LayoutDisplayPageProviderTrackerUtil {
 	public static LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String className) {
 
-		return _layoutDisplayPageProviderTracker.
+		return _layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(className);
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutDisplayPageProviderTracker(
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
+	protected void setLayoutDisplayPageProviderRegistry(
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 	}
 
-	private static LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private static LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 }

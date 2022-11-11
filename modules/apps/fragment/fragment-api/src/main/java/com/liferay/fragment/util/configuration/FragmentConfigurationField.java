@@ -18,7 +18,7 @@ import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -163,12 +163,12 @@ public class FragmentConfigurationField {
 				String className = defaultValueJSONObject.getString(
 					"className");
 
-				LayoutDisplayPageProviderTracker
-					layoutDisplayPageProviderTracker =
+				LayoutDisplayPageProviderRegistry
+					layoutDisplayPageProviderRegistry =
 						_serviceTracker.getService();
 
 				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-					layoutDisplayPageProviderTracker.
+					layoutDisplayPageProviderRegistry.
 						getLayoutDisplayPageProviderByClassName(className);
 
 				if (layoutDisplayPageProvider == null) {
@@ -215,7 +215,7 @@ public class FragmentConfigurationField {
 		FragmentConfigurationField.class);
 
 	private static final ServiceTracker
-		<LayoutDisplayPageProviderTracker, LayoutDisplayPageProviderTracker>
+		<LayoutDisplayPageProviderRegistry, LayoutDisplayPageProviderRegistry>
 			_serviceTracker;
 
 	static {
@@ -223,7 +223,7 @@ public class FragmentConfigurationField {
 			FragmentConfigurationField.class);
 
 		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), LayoutDisplayPageProviderTracker.class,
+			bundle.getBundleContext(), LayoutDisplayPageProviderRegistry.class,
 			null);
 
 		_serviceTracker.open();

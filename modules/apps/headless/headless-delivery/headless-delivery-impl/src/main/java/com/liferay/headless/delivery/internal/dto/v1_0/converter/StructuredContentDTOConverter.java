@@ -42,7 +42,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -329,7 +329,7 @@ public class StructuredContentDTOConverter
 				journalArticle.getResourcePrimKey(),
 				ddmStructure.getStructureId(), dtoConverterContext,
 				journalArticle.getGroupId(), journalArticle,
-				_infoItemServiceRegistry, _layoutDisplayPageProviderTracker,
+				_infoItemServiceRegistry, _layoutDisplayPageProviderRegistry,
 				_layoutLocalService, _layoutPageTemplateEntryService,
 				"getStructuredContentRenderedContentByDisplayPageDisplayPage" +
 					"Key");
@@ -377,7 +377,8 @@ public class StructuredContentDTOConverter
 	private JournalContent _journalContent;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

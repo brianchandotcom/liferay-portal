@@ -55,8 +55,10 @@
 									"fragment": {
 										"key": "side-bar"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -90,7 +92,8 @@
 									{
 										"definition": {
 											"fragmentSettings": {
-												"unallowedFragments": []
+												"unallowedFragments": [
+												]
 											}
 										},
 										"type": "DropZone"
@@ -211,7 +214,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -266,14 +270,14 @@
 																	},
 																	"fragmentConfig": {
 																		"textType": "h6",
-																		"truncateText": false,
 																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "© 2022 Liferay Inc. All Rights Reserved&nbsp; &nbsp; &nbsp; |"
@@ -329,7 +333,6 @@
 																	},
 																	"fragmentConfig": {
 																		"textType": "h6",
-																		"truncateText": false,
 																		"truncateText": false
 																	},
 																	"fragmentFields": [

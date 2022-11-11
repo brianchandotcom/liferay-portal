@@ -118,7 +118,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand text-truncate"
+								cssClass="text-truncate"
 								name="type"
 							>
 								<liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" />

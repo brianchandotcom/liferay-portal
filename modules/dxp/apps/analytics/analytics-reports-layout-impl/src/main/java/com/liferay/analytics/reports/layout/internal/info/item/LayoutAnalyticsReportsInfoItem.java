@@ -127,7 +127,13 @@ public class LayoutAnalyticsReportsInfoItem
 
 	@Override
 	public Date getPublishDate(Layout layout) {
-		return layout.getPublishDate();
+		Date date = layout.getPublishDate();
+
+		if (date == null) {
+			date = layout.getModifiedDate();
+		}
+
+		return date;
 	}
 
 	@Override

@@ -21,7 +21,13 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface NotificationTermEvaluator {
 
-	public String evaluate(Object object, String termName)
+	public String evaluate(Context context, Object object, String termName)
 		throws PortalException;
+
+	public enum Context {
+
+		CONTENT, RECIPIENT
+
+	}
 
 }

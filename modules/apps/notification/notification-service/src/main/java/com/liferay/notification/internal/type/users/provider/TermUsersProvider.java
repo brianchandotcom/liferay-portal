@@ -96,6 +96,7 @@ public class TermUsersProvider implements UsersProvider {
 					_userLocalService.getUser(
 						GetterUtil.getLong(
 							notificationTermEvaluator.evaluate(
+								NotificationTermEvaluator.Context.RECIPIENT,
 								notificationContext.getTermValues(), term))));
 			}
 		}

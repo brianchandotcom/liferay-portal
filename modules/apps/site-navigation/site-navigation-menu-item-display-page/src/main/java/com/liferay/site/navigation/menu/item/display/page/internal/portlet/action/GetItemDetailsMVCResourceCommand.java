@@ -25,7 +25,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -128,7 +128,7 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		LayoutDisplayPageInfoItemFieldValuesProvider
 			layoutDisplayPageInfoItemFieldValuesProvider =
-				_layoutDisplayPageInfoItemFieldValuesProviderTracker.
+				_layoutDisplayPageInfoItemFieldValuesProviderRegistry.
 					getLayoutDisplayPageInfoItemFieldValuesProvider(className);
 
 		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
@@ -230,8 +230,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 	private Language _language;
 
 	@Reference
-	private LayoutDisplayPageInfoItemFieldValuesProviderTracker
-		_layoutDisplayPageInfoItemFieldValuesProviderTracker;
+	private LayoutDisplayPageInfoItemFieldValuesProviderRegistry
+		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

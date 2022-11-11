@@ -27,7 +27,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
@@ -175,7 +175,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 		LayoutDisplayPageInfoItemFieldValuesProvider
 			assetCategoryLayoutDisplayPageInfoItemFieldValuesProvider =
-				_layoutDisplayPageInfoItemFieldValuesProviderTracker.
+				_layoutDisplayPageInfoItemFieldValuesProviderRegistry.
 					getLayoutDisplayPageInfoItemFieldValuesProvider(
 						AssetCategory.class.getName());
 
@@ -551,8 +551,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
-	private LayoutDisplayPageInfoItemFieldValuesProviderTracker
-		_layoutDisplayPageInfoItemFieldValuesProviderTracker;
+	private LayoutDisplayPageInfoItemFieldValuesProviderRegistry
+		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

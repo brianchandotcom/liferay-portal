@@ -147,7 +147,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
-	private Page<ObjectEntry> _getObjectEntries(
+	private Page<ObjectEntry> _getObjectEntriesPage(
 			Aggregation aggregation, long companyId, String filter,
 			String objectDefinitionName)
 		throws Exception {
@@ -168,7 +168,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 		throws Exception {
 
 		Page<ObjectEntry> testrayCaseResultsIssuesObjectEntriesPage1 =
-			_getObjectEntries(
+			_getObjectEntriesPage(
 				null, companyId,
 				"caseResultId eq '" + testrayCaseResultObjectEntry.getId() +
 					"'",
@@ -191,8 +191,9 @@ public class TestFlowTestrayDispatchTaskExecutor
 				"r_issueToCaseResultsIssues_c_issueId",
 				testrayCaseResultsIssuesObjectEntry);
 
-			Page<ObjectEntry> testrayIssueObejctEntriesPage = _getObjectEntries(
-				null, companyId, "id eq '" + issueId + "'", "Issue");
+			Page<ObjectEntry> testrayIssueObejctEntriesPage =
+				_getObjectEntriesPage(
+					null, companyId, "id eq '" + issueId + "'", "Issue");
 
 			ObjectEntry testrayIssueObjectEntry =
 				testrayIssueObejctEntriesPage.fetchFirstItem();
@@ -220,8 +221,9 @@ public class TestFlowTestrayDispatchTaskExecutor
 			Long testrayCaseId = (Long)_getProperty(
 				"r_caseToCaseResult_c_caseId", objectEntry);
 
-			Page<ObjectEntry> testrayCaseObjectEntriesPage = _getObjectEntries(
-				null, companyId, "id eq '" + testrayCaseId + "'", "Case");
+			Page<ObjectEntry> testrayCaseObjectEntriesPage =
+				_getObjectEntriesPage(
+					null, companyId, "id eq '" + testrayCaseId + "'", "Case");
 
 			ObjectEntry testrayCaseObjectEntry =
 				testrayCaseObjectEntriesPage.fetchFirstItem();
@@ -298,7 +300,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 			unicodeProperties.getProperty("testrayBuildId"));
 
 		Page<ObjectEntry> testrayCaseResultObjectEntriesPage1 =
-			_getObjectEntries(
+			_getObjectEntriesPage(
 				aggregation, companyId, "buildId eq '" + testrayBuildId + "'",
 				"CaseResult");
 
@@ -310,7 +312,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 		List<Facet.FacetValue> testrayCaseResultFacetValues =
 			testrayCaseResultFacet.getFacetValues();
 
-		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntries(
+		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntriesPage(
 			null, companyId, sb.toString(), "Case");
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(

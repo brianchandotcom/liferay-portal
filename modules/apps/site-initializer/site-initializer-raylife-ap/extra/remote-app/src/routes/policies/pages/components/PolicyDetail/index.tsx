@@ -33,11 +33,13 @@ type PolicyDetailsType = {
 	firstName: string;
 	gender: string;
 	highestEducation: string;
+	make: string;
 	maritalStatus: string;
 	model: string;
 	occupation: string;
 	ownership: string;
 	primaryUsage: string;
+	year: string;
 };
 
 const PolicyDetail = ({
@@ -103,6 +105,8 @@ const PolicyDetail = ({
 
 								<div className="align-self-start w-25">
 									<h5>
+										{curentVehicle?.year}{' '}
+										{curentVehicle?.make}{' '}
 										{curentVehicle?.model
 											? curentVehicle?.model
 											: 'No data'}

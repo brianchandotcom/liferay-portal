@@ -87,7 +87,7 @@ export const makeOptions: makeOptionsType[] = [
 			{name: 'Focus s sedan'},
 			{name: 'Mustang Gt Fastback'},
 		],
-		name: 'ford',
+		name: 'Ford',
 	},
 	{
 		checked: false,
@@ -99,7 +99,7 @@ export const makeOptions: makeOptionsType[] = [
 			{name: 'Highlander se'},
 			{name: 'Tundra Sr5'},
 		],
-		name: 'toyota',
+		name: 'Toyota',
 	},
 	{
 		checked: false,
@@ -110,7 +110,7 @@ export const makeOptions: makeOptionsType[] = [
 			{name: 'v90 cross country'},
 			{name: 'xc90 incription'},
 		],
-		name: 'volvo',
+		name: 'Volvo',
 	},
 ];
 

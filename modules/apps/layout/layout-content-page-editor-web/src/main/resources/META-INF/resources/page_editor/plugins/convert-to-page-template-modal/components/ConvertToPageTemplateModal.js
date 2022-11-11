@@ -15,7 +15,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -26,7 +27,38 @@ import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExp
 import LayoutService from '../../../app/services/LayoutService';
 import FormField from './FormField';
 
-const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
+export default function ModalWrapper() {
+	const isMounted = useIsMounted();
+
+	const [openModal, setOpenModal] = useState(false);
+	const onClose = useCallback(() => {
+		if (isMounted()) {
+			setOpenModal(false);
+		}
+	}, [isMounted]);
+
+	const {observer} = useModal({
+		onClose,
+	});
+
+	useEffect(() => {
+		const handler = Liferay.on('convertToPageTemplate', () => {
+			setOpenModal(true);
+		});
+
+		return () => {
+			handler.detach();
+		};
+	}, []);
+
+	if (!openModal) {
+		return null;
+	}
+
+	return <ConvertToPageTemplateModal observer={observer} onClose={onClose} />;
+}
+
+const ConvertToPageTemplateModal = ({observer, onClose}) => {
 	const [error, setError] = useState(null);
 	const hasMultipleSegmentsExperienceIds = useSelector(
 		(state) => Object.keys(state.availableSegmentsExperiences).length > 1
@@ -248,10 +280,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 	);
 };
 
-CreateLayoutPageTemplateEntryModal.propTypes = {
+ConvertToPageTemplateModal.propTypes = {
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
 };
-
-export {CreateLayoutPageTemplateEntryModal};
-export default CreateLayoutPageTemplateEntryModal;

@@ -234,15 +234,6 @@
 <tr>
 	<td>HEADER_ROW</td>
 	<td>xpath=(//div[contains(@class, "dnd-tr")])[1]</td>
-</tr>
-<tr>
-	<td>DELETE_VIEW_BUTTON</td>
-	<td>//button[@class='dropdown-item' and contains(text(), 'Delete View')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_BUTTON</td>
-	<td>//button[@class='btn btn-primary']</td>
 	<td></td>
 </tr>
 </tbody>

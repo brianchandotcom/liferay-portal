@@ -34,9 +34,7 @@ describe('Show Partial Results Alert', () => {
 
 		expect(queryByText('understood')).not.toBeInTheDocument();
 		expect(
-			queryByText(
-				'your-responses-will-be-visible-to-all-form-respondents'
-			)
+			queryByText('respondents-can-see-all-submitted-form-data')
 		).toBeInTheDocument();
 	});
 

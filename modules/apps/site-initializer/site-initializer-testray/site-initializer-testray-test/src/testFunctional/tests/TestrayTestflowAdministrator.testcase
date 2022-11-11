@@ -56,10 +56,11 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			TestrayManage.createTeam(
-				manageOption = "Manage Teams",
-				nameOptions = "Projects_1 Project",
-				version = "Teams_1 Team");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = "Teams_1 Team");
 
 			TestrayManage.closeModalInOptions();
 		}

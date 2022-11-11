@@ -138,6 +138,7 @@
 		<column name="objectDefinitionId" type="long" />
 		<column localized="true" name="body" type="String" />
 		<column name="description" type="String" />
+		<column name="editorType" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="recipientType" type="String" />
 		<column localized="true" name="subject" type="String" />

@@ -50,9 +50,7 @@ const LiferayExperienceCloudModal = ({
 	const handleOnConfirm = () => {
 		getHandleOnConfirm(
 			updateSubscriptionGroupsStatus,
-			updateProjectId,
 			handleError,
-			accountKey,
 			projectIdValue,
 			onClose
 		);

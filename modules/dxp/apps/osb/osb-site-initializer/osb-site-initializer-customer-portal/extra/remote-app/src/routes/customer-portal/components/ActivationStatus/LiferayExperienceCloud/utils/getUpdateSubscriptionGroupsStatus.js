@@ -25,9 +25,11 @@ export default function getUpdateSubscriptionGroupsStatus(
 	updateAccountSubscriptionGroup({
 		variables: {
 			AccountSubscriptionGroup: {
-				accountKey: project.accountKey,
+				accountKey: project?.accountKey,
 				activationStatus: STATUS_TAG_TYPE_NAMES.active,
 				manageContactsURL: `http://${projectIdValue}.lxc.liferay.com`,
+				r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+					project?.id,
 			},
 			accountSubscriptionGroupId:
 				subscriptionGroupLxcEnvironment?.accountSubscriptionGroupId,

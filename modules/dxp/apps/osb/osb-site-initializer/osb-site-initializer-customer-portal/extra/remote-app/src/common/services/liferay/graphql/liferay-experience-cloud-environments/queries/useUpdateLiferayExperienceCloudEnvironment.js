@@ -16,20 +16,33 @@ export const UPDATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT = gql`
 		$liferayExperienceCloudEnvironmentId: Long!
 		$LiferayExperienceCloudEnvironment: InputC_LiferayExperienceCloudEnvironment!
 	) {
-		c {
-			updateLiferayExperienceCloudEnvironment(
-				liferayExperienceCloudEnvironmentId: $liferayExperienceCloudEnvironmentId
-				LiferayExperienceCloudEnvironment: $LiferayExperienceCloudEnvironment
+		updateLiferayExperienceCloudEnvironment(
+			liferayExperienceCloudEnvironmentId: $liferayExperienceCloudEnvironmentId
+			input: $LiferayExperienceCloudEnvironment
+		)
+			@rest(
+				method: "PUT"
+				type: "C_LiferayExperienceCloudEnvironment"
+				path: "/c/liferayexperiencecloudenvironments/{args.liferayExperienceCloudEnvironmentId}"
 			) {
-				liferayExperienceCloudEnvironmentId
-				projectId
-			}
+			liferayExperienceCloudEnvironmentId
+			projectId
 		}
 	}
 `;
 
-export function useUpdateLiferayExperienceCloudEnvironment(variables) {
-	return useMutation(UPDATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT, {
-		variables,
-	});
+export function useUpdateLiferayExperienceCloudEnvironment(
+	variables,
+	options = {displaySuccess: false}
+) {
+	return useMutation(
+		UPDATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT,
+		{
+			context: {
+				displaySuccess: options.displaySuccess,
+				type: 'liferay-rest',
+			},
+		},
+		variables
+	);
 }

@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(service = NodeExecutorFactory.class)
-public class NodeExecutorFactory {
+@Component(service = NodeExecutorRegistry.class)
+public class NodeExecutorRegistry {
 
 	public NodeExecutor getNodeExecutor(String nodeTypeString)
 		throws KaleoDefinitionValidationException {

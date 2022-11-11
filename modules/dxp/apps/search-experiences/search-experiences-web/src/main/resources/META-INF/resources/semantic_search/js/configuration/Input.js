@@ -110,7 +110,7 @@ function Input({
 						onBlur={onBlur}
 						onChange={_handleEventChange}
 						required={required}
-						type="text"
+						type={type || 'text'}
 						value={value || ''}
 					/>
 				);

@@ -71,6 +71,10 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 				"textTruncationStrategy", semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy()
 			).put(
 				"txtaiHostAddress", semanticSearchCompanyConfigurationDisplayContext.getTxtaiHostAddress()
+			).put(
+				"txtaiPassword", semanticSearchCompanyConfigurationDisplayContext.getTxtaiPassword()
+			).put(
+				"txtaiUserName", semanticSearchCompanyConfigurationDisplayContext.getTxtaiUserName()
 			).build()
 		%>'
 	/>

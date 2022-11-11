@@ -513,7 +513,8 @@ public class FileEntryContentDashboardItemTest {
 
 		Assert.assertTrue(url.contains("webdav"));
 
-		Assert.assertEquals("webdav-help", webDAVSpecificInformation.getHelp());
+		Assert.assertEquals(
+			"webdav-help", webDAVSpecificInformation.getHelpText());
 	}
 
 	@Test

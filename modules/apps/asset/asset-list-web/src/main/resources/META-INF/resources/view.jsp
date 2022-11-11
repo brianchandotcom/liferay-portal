@@ -105,10 +105,12 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								cssClass="table-cell-expand text-truncate"
 								name="name"
 							>
-								<clay:icon
-									cssClass="mr-2 text-secondary"
-									symbol='<%= (assetListEntry.getType() == 0) ? "bolt" : "list" %>'
-								/>
+								<span class="lfr-portal-tooltip" title="<%= assetListDisplayContext.getAssetListEntryTypeLabel(assetListEntry) %>">
+									<clay:icon
+										cssClass="mr-2 text-secondary"
+										symbol='<%= (assetListEntry.getType() == 0) ? "bolt" : "list" %>'
+									/>
+								</span>
 
 								<aui:a href="<%= assetListDisplayContext.getEditURL(assetListEntry) %>">
 									<%= HtmlUtil.escape(assetListEntry.getTitle()) %>

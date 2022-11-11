@@ -259,6 +259,15 @@ public class AssetListDisplayContext {
 		return _assetListEntryType;
 	}
 
+	public String getAssetListEntryTypeLabel(AssetListEntry assetListEntry) {
+		if (assetListEntry.getType() == 0) {
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(), "dynamic-collection");
+		}
+
+		return LanguageUtil.get(_themeDisplay.getLocale(), "manual-collection");
+	}
+
 	public int getAssetListEntryUsageCount(AssetListEntry assetListEntry) {
 		return AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsagesCount(
 			_themeDisplay.getScopeGroupId(),

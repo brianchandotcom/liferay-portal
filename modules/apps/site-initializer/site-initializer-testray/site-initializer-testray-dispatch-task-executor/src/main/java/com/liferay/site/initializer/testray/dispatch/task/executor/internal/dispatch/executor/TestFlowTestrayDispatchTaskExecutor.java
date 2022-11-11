@@ -286,12 +286,6 @@ public class TestFlowTestrayDispatchTaskExecutor
 			sb.append("'");
 		}
 
-		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntries(
-			null, companyId, sb.toString(), "Case");
-
-		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
-
 		Aggregation aggregation = new Aggregation();
 
 		aggregation.setAggregationTerms(
@@ -314,6 +308,12 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 		List<Facet.FacetValue> testrayCaseResultFacetValues =
 			testrayCaseResultFacet.getFacetValues();
+
+		Page<ObjectEntry> testrayCaseObjectEntriesPage1 = _getObjectEntries(
+			null, companyId, sb.toString(), "Case");
+
+		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
+			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();
 

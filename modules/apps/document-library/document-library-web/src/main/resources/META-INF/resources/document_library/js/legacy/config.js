@@ -20,23 +20,6 @@
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
-					'document-library-upload': {
-						path: 'upload.js',
-						requires: [
-							'aui-component',
-							'aui-data-set-deprecated',
-							'aui-overlay-manager-deprecated',
-							'aui-overlay-mask-deprecated',
-							'aui-parse-content',
-							'aui-progressbar',
-							'aui-template-deprecated',
-							'aui-tooltip',
-							'liferay-history-manager',
-							'liferay-search-container',
-							'querystring-parse-simple',
-							'uploader',
-						],
-					},
 					'document-library-upload-component': {
 						path: 'DocumentLibraryUpload.js',
 						requires: [
@@ -50,13 +33,6 @@
 							'liferay-search-container',
 							'querystring-parse-simple',
 							'uploader',
-						],
-					},
-					'liferay-document-library': {
-						path: 'main.js',
-						requires: [
-							'document-library-upload',
-							'liferay-portlet-base',
 						],
 					},
 				},

@@ -324,18 +324,18 @@ public class TestFlowTestrayDispatchTaskExecutor
 				continue;
 			}
 
-			String escapeErrors = StringUtil.removeChar(
-				StringUtil.replace(
-					testrayCaseResultFacetValue.getTerm(), '\'', "''"),
-				'\\');
-
 			Page<ObjectEntry> testrayCaseResultObjectEntriesPage2 =
 				_objectEntryManager.getObjectEntries(
 					companyId, _objectDefinitions.get("CaseResult"), null, null,
 					_defaultDTOConverterContext,
 					StringBundler.concat(
 						"buildId eq '", testrayBuildId, "' and errors eq '",
-						escapeErrors, "'"),
+						StringUtil.removeChar(
+							StringUtil.replace(
+								testrayCaseResultFacetValue.getTerm(), '\'',
+								"''"),
+							'\\'),
+						"'"),
 					null, null, null);
 
 			List<ObjectEntry> testrayCaseResultObjectEntries =

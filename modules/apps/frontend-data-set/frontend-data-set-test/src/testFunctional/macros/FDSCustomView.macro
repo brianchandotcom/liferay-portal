@@ -10,8 +10,8 @@ definition {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 		Click(
-			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
-			value1 = "${key_itemName}");
+			key_optionName = "${key_itemName}",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 	}
 
 	macro compareValue {
@@ -109,25 +109,25 @@ definition {
 			value1 = "${key_itemName}");
 	}
 
-	macro verifyCustomView {
-		VerifyElementPresent(
+	macro assertCustomViewName {
+		AssertElementPresent(
 			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 			value1 = "${key_nameCustomView}");
 	}
 
-	macro verifyFilterSummaryLabel {
-		VerifyElementPresent(
+	macro assertFilterSummaryLabel {
+		AssertElementPresent(
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
 			value1 = "${key_filter}");
 	}
 
-	macro viewColumn {
-		VerifyElementPresent(
+	macro assertColumnPresent {
+		AssertElementPresent(
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
 
-	macro viewNoColumn {
+	macro assertColumnNotPresent {
 		AssertElementNotPresent(
 			key_field = "${key_field}",
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");

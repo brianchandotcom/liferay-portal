@@ -99,7 +99,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				implementedClassNames);
 		}
 
-		_checkIncorrectClassName(
+		_checkClassNameByUnimplementedClasses(
 			javaClass, fileName, absolutePath, className,
 			implementedClassNames);
 
@@ -187,7 +187,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private void _checkIncorrectClassName(
+	private void _checkClassNameByUnimplementedClasses(
 		JavaClass javaClass, String fileName, String absolutePath,
 		String className, List<String> implementedClassNames) {
 

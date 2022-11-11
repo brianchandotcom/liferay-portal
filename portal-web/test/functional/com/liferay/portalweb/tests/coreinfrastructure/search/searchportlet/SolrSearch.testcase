@@ -2379,7 +2379,6 @@ definition {
 
 	@priority = "5"
 	test ViewSearchResultDetails {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SolrSearch#ViewSearchResultDetails";
 
 		ApplicationsMenu.gotoPortlet(

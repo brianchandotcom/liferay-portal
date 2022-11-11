@@ -130,6 +130,6 @@ public class PoshiRunnerResourcesExtension {
 	private final Set<Object> _dirs = new HashSet<>();
 	private final Project _project;
 	private Object _rootDirName;
-	private Object _version = "latest.release";
+	private Object _version = "1.0.14";
 
 }

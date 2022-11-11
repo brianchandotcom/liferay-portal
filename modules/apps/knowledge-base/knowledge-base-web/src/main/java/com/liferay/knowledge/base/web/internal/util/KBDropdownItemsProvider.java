@@ -73,14 +73,12 @@ public class KBDropdownItemsProvider {
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_kbGroupServiceConfiguration = kbGroupServiceConfiguration;
-
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_currentURL = String.valueOf(
 			PortletURLUtil.getCurrent(
-				_liferayPortletRequest, _liferayPortletResponse));
-
+				liferayPortletRequest, liferayPortletResponse));
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

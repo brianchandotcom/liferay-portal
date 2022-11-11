@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
@@ -132,9 +133,17 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			}
 		}
 
+		DDMFormLayout ddmFormLayout;
+
+		if (readOnly) {
+			ddmFormLayout = structureVersion.getDDMFormLayout();
+		}
+		else {
+			ddmFormLayout = latestApprovedStructureVersion.getDDMFormLayout();
+		}
+
 		return _ddmFormRenderer.getDDMFormTemplateContext(
-			ddmForm, structureVersion.getDDMFormLayout(),
-			ddmFormRenderingContext);
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
@@ -251,9 +260,9 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		if (removed) {
 			_setDDMFormFieldRemovedLabel(formField);
-		}
 
-		formField.setReadOnly(true);
+			formField.setReadOnly(true);
+		}
 
 		// Nested fields
 
@@ -264,16 +273,27 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		}
 	}
 
-	private void _updateDDMFormFields(DDMForm currentForm, DDMForm latestForm) {
-		if (Objects.equals(currentForm, latestForm)) {
+	private void _updateDDMFormFields(
+		DDMForm currentDDMForm, DDMForm latestDDMForm) {
+
+		if (Objects.equals(currentDDMForm, latestDDMForm)) {
 			return;
 		}
 
 		Map<String, DDMFormField> latestDDMFormFieldMap =
-			latestForm.getDDMFormFieldsMap(true);
+			latestDDMForm.getDDMFormFieldsMap(true);
 
-		for (DDMFormField formField : currentForm.getDDMFormFields()) {
-			_updateDDMFormField(latestDDMFormFieldMap, formField);
+		for (DDMFormField ddmFormField : currentDDMForm.getDDMFormFields()) {
+			_updateDDMFormField(latestDDMFormFieldMap, ddmFormField);
+		}
+
+		Map<String, DDMFormField> currentDDMFormFieldMap =
+			currentDDMForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : latestDDMForm.getDDMFormFields()) {
+			if (!currentDDMFormFieldMap.containsKey(ddmFormField.getName())) {
+				currentDDMForm.addDDMFormField(ddmFormField);
+			}
 		}
 	}
 

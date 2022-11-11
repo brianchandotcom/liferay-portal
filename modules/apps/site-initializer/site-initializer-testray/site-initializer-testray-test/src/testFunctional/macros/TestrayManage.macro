@@ -87,11 +87,27 @@ definition {
 	}
 
 	macro createTeam {
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameOptions}");
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
+		if (isSet(teamName)) {
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "${teamName}");
+		}
 
-		TestrayManage.createNewCaseTypes(caseName = "${version}");
+		if (isSet(component)) {
+			Click(
+				key_parameterType = "Unassigned",
+				locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+				value1 = "${component}");
+
+			Click(
+				key_arrowDirection = "Right",
+				key_parameterType = "Unassigned",
+				locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+		Button.clickSave();
 	}
 
 	macro deleteAllCasesTypes {

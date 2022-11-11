@@ -115,6 +115,7 @@ public class MessageBoardThreadDTOConverter
 					_assetTagLocalService.getTags(
 						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR);
+				lastPostDate = mbThread.getLastPostDate();
 				locked = mbThread.isLocked();
 				messageBoardRootMessageId = mbThread.getRootMessageId();
 				messageBoardSectionId = mbMessage.getCategoryId();

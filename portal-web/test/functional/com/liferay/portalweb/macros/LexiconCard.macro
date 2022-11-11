@@ -109,6 +109,16 @@ definition {
 			value1 = "${card}");
 	}
 
+	macro viewMenuItemDisabled {
+		Click(
+			key_card = "${card}",
+			locator1 = "Card#CARD_ELLIPSIS");
+
+		AssertElementPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "MenuItem#DISABLED_MENU_ITEM");
+	}
+
 	macro viewMenuItemNotPresent {
 		Click(
 			key_card = "${card}",

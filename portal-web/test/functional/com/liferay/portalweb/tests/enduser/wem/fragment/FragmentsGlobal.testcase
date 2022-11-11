@@ -396,9 +396,9 @@ definition {
 		}
 
 		task ("Assert the View Site Usages action not shown") {
-			LexiconCard.viewMenuItemNotPresent(
+			LexiconCard.viewMenuItemDisabled(
 				card = "Global Fragment Name 1",
-				item = "View Site Usages");
+				menuItem = "View Site Usages");
 		}
 
 		task ("Add the second global fragment via JSON") {

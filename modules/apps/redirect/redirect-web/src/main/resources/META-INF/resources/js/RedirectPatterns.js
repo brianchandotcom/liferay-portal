@@ -29,6 +29,7 @@ const PatternField = ({
 	destinationURL: initialDestinationUrl,
 	handleAddClick,
 	handleRemoveClick,
+	handleUrlErrorChange,
 	index,
 	pattern = '',
 	portletNamespace,
@@ -83,7 +84,9 @@ const PatternField = ({
 					id="destinationURL"
 					name={`${portletNamespace}destinationURL_${index}`}
 					onBlur={({currentTarget}) => {
-						setUrlError(!urlAllowRelative(currentTarget.value));
+						const error = !urlAllowRelative(currentTarget.value);
+						setUrlError(error);
+						handleUrlErrorChange(destinationUrl && error, index);
 					}}
 					onChange={({currentTarget}) =>
 						setDestinationUrl(currentTarget.value)
@@ -168,6 +171,21 @@ const RedirectPattern = ({
 			: [emptyRow()]
 	);
 
+	const [invalidPatternsSet, setInvalidPatternsSet] = useState(new Set());
+
+	const handleUrlError = (error, index) => {
+		const newInvalidPatternSet = new Set(invalidPatternsSet);
+
+		if (error) {
+			newInvalidPatternSet.add(index);
+		}
+		else {
+			newInvalidPatternSet.delete(index);
+		}
+
+		setInvalidPatternsSet(newInvalidPatternSet);
+	};
+
 	return (
 		<form
 			action={actionUrl}
@@ -192,6 +210,7 @@ const RedirectPattern = ({
 							destinationURL={item.destinationURL}
 							handleAddClick={addRow}
 							handleRemoveClick={removeRow}
+							handleUrlErrorChange={handleUrlError}
 							index={index}
 							key={item.id}
 							pattern={item.pattern}
@@ -201,8 +220,11 @@ const RedirectPattern = ({
 				</div>
 
 				<div className="sheet-footer">
-					<ClayButton type="submit">
-						{Liferay.Language.get('save')}
+					<ClayButton
+						disabled={invalidPatternsSet.size > 0}
+						type="submit"
+					>
+						{Liferay.Language.get('save')} {invalidPatternsSet.size}
 					</ClayButton>
 				</div>
 			</div>

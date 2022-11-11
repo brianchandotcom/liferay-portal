@@ -26,7 +26,9 @@ function InviteUsersForm({
 	portletNamespace,
 	redirectURL,
 }) {
-	const [count, setCount] = useState(1);
+	const [inputGroups, setInputGroups] = useState([
+		{selectedAccountRoles: [], selectedEmailAddresses: []},
+	]);
 
 	const closeModal = () => {
 		const openerWindow = getOpener();
@@ -34,9 +36,15 @@ function InviteUsersForm({
 		openerWindow.Liferay.fire('closeModal');
 	};
 
-	const InviteUserFormGroup = ({index}) => {
-		const [accountRoles, setAccountRoles] = useState([]);
-		const [emailAddresses, setEmailAddresses] = useState([]);
+	const InviteUserFormGroup = ({
+		index,
+		selectedAccountRoles,
+		selectedEmailAddresses,
+	}) => {
+		const [accountRoles, setAccountRoles] = useState(selectedAccountRoles);
+		const [emailAddresses, setEmailAddresses] = useState(
+			selectedEmailAddresses
+		);
 		const [invalidAccountRoles, setInvalidAccountRoles] = useState([]);
 		const [invalidEmailAddresses, setInvalidEmailAddresses] = useState([]);
 		const [showRequiredMessage, setShowRequiredMessage] = useState(false);
@@ -56,7 +64,16 @@ function InviteUsersForm({
 			return emailRegex.test(emailAddresses);
 		};
 
+		const handleInputGroupValueChange = (name, value) => {
+			const inputGroupsArray = [...inputGroups];
+
+			inputGroupsArray[index][name] = value;
+
+			setInputGroups(inputGroupsArray);
+		};
+
 		const validateAccountRoles = (items) => {
+			handleInputGroupValueChange('selectedAccountRoles', items);
 			setAccountRoles(items);
 
 			const invalidItems = [];
@@ -75,6 +92,7 @@ function InviteUsersForm({
 		};
 
 		const validateEmailAddresses = (items) => {
+			handleInputGroupValueChange('selectedEmailAddresses', items);
 			setEmailAddresses(items);
 
 			if (items.length) {
@@ -219,7 +237,7 @@ function InviteUsersForm({
 		if (!error) {
 			const formData = new FormData(form);
 
-			formData.append(`${portletNamespace}count`, count);
+			formData.append(`${portletNamespace}count`, inputGroups.length);
 
 			fetch(inviteAccountUsersURL, {
 				body: formData,
@@ -254,14 +272,27 @@ function InviteUsersForm({
 			className="lfr-form-content"
 			id={`${portletNamespace}inviteUserForm`}
 		>
-			{[...Array(count)].map((_, index) => (
-				<InviteUserFormGroup index={index} key={index} />
+			{inputGroups.map((inputGroup, index) => (
+				<InviteUserFormGroup
+					index={index}
+					key={index}
+					selectedAccountRoles={inputGroup.selectedAccountRoles}
+					selectedEmailAddresses={inputGroup.selectedEmailAddresses}
+				/>
 			))}
 
 			<ClayLayout.SheetFooter>
 				<ClayButton
 					displayType="secondary"
-					onClick={() => setCount(count + 1)}
+					onClick={() => {
+						setInputGroups([
+							...inputGroups,
+							{
+								selectedAccountRoles: [],
+								selectedEmailAddresses: [],
+							},
+						]);
+					}}
 				>
 					<span className="inline-item inline-item-before">
 						<ClayIcon symbol="plus" />

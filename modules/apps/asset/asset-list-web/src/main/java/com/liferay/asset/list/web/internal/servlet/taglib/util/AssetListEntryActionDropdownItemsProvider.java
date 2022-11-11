@@ -23,6 +23,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -59,6 +60,7 @@ public class AssetListEntryActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
+		Group group = _themeDisplay.getScopeGroup();
 		boolean liveGroup = _isLiveGroup();
 
 		return DropdownItemListBuilder.addGroup(
@@ -85,6 +87,7 @@ public class AssetListEntryActionDropdownItemsProvider {
 								_assetListEntry, ActionKeys.UPDATE),
 						_getRenameAssetListEntryActionUnsafeConsumer()
 					).add(
+						() -> group.getType() != GroupConstants.TYPE_DEPOT,
 						_getViewAssetListEntryUsagesActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);

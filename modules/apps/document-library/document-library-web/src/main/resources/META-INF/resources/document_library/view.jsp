@@ -211,136 +211,39 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		}
 		%>
 
-		<c:choose>
-			<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-118829")) %>'>
-				<liferay-frontend:component
-					context='<%=
-						HashMapBuilder.<String, Object>put(
-							"columnNames", dlViewDisplayContext.getEntryColumnNames()
-						).put(
-							"defaultParentFolderId", dlViewDisplayContext.getFolderId()
-						).put(
-							"displayStyle", HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle())
-						).put(
-							"editEntryUrl", dlViewDisplayContext.getEditEntryURL()
-						).put(
-							"maxFileSize", DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null)
-						).put(
-							"namespace", "<portlet:namespace />"
-						).put(
-							"redirect", currentURL
-						).put(
-							"scopeGroupId", scopeGroupId
-						).put(
-							"searchContainerId", "entries"
-						).put(
-							"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
-						).put(
-							"uploadable", dlViewDisplayContext.isUploadable()
-						).put(
-							"uploadURL", dlViewDisplayContext.getUploadURL()
-						).put(
-							"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
-						).build()
-					%>'
-					destroyOnNavigate="<%= true %>"
-					module="document_library/js/DocumentLibrary"
-				/>
-			</c:when>
-			<c:otherwise>
-				<aui:script>
-					function <portlet:namespace />move(
-						itemsSelected,
-						parameterName,
-						parameterValue
-					) {
-						var dlComponent = Liferay.component('<portlet:namespace />DocumentLibrary');
-
-						if (dlComponent) {
-							dlComponent.showFolderDialog(
-								itemsSelected,
-								parameterName,
-								parameterValue
-							);
-						}
-					}
-				</aui:script>
-
-				<aui:script use="liferay-document-library">
-					Liferay.component(
-						'<portlet:namespace />DocumentLibrary',
-						new Liferay.Portlet.DocumentLibrary({
-							columnNames: ['<%= dlViewDisplayContext.getColumnNames() %>'],
-
-							<%
-							DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-							%>
-
-							decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-							displayStyle:
-								'<%= HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle()) %>',
-							editEntryUrl: '<%= dlViewDisplayContext.getEditEntryURL() %>',
-							downloadEntryUrl: '<%= dlViewDisplayContext.getDownloadEntryURL() %>',
-							folders: {
-								defaultParentFolderId: '<%= dlViewDisplayContext.getFolderId() %>',
-								dimensions: {
-									height:
-										'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) %>',
-									width:
-										'<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>',
-								},
-							},
-							form: {
-								method: 'POST',
-								node: A.one(document.<portlet:namespace />fm2),
-							},
-							maxFileSize: <%= DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null) %>,
-							namespace: '<portlet:namespace />',
-							openViewMoreFileEntryTypesURL:
-								'<%= dlViewDisplayContext.getViewMoreFileEntryTypesURL() %>',
-							portletId:
-								'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
-							redirect: encodeURIComponent('<%= currentURL %>'),
-							selectFileEntryTypeURL:
-								'<%= dlViewDisplayContext.getSelectFileEntryTypeURL() %>',
-							selectFolderURL: '<%= dlViewDisplayContext.getSelectFolderURL() %>',
-							scopeGroupId: <%= scopeGroupId %>,
-							searchContainerId: 'entries',
-							trashEnabled: <%= dlTrashHelper.isTrashEnabled(scopeGroupId, dlViewDisplayContext.getRepositoryId()) %>,
-							uploadable: <%= dlViewDisplayContext.isUploadable() %>,
-							uploadURL: '<%= dlViewDisplayContext.getUploadURL() %>',
-							viewFileEntryTypeURL:
-								'<%= dlViewDisplayContext.getViewFileEntryTypeURL() %>',
-							viewFileEntryURL: '<%= dlViewDisplayContext.getViewFileEntryURL() %>',
-						}),
-						{
-							destroyOnNavigate: true,
-							portletId:
-								'<%= HtmlUtil.escapeJS(dlRequestHelper.getResourcePortletId()) %>',
-						}
-					);
-
-					var changeScopeHandles = function (event) {
-						documentLibrary.destroy();
-
-						Liferay.detach('changeScope', changeScopeHandles);
-					};
-
-					Liferay.on('changeScope', changeScopeHandles);
-
-					var editFileEntryHandler = function (event) {
-						var uri = '<%= dlViewDisplayContext.getAddFileEntryURL() %>';
-
-						location.href = Liferay.Util.addParams(
-							'<portlet:namespace />fileEntryTypeId' + '=' + event.fileEntryTypeId,
-							uri
-						);
-					};
-
-					Liferay.on('<portlet:namespace />selectAddMenuItem', editFileEntryHandler);
-				</aui:script>
-			</c:otherwise>
-		</c:choose>
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"columnNames", dlViewDisplayContext.getEntryColumnNames()
+				).put(
+					"defaultParentFolderId", dlViewDisplayContext.getFolderId()
+				).put(
+					"displayStyle", HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle())
+				).put(
+					"editEntryUrl", dlViewDisplayContext.getEditEntryURL()
+				).put(
+					"maxFileSize", DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null)
+				).put(
+					"namespace", "<portlet:namespace />"
+				).put(
+					"redirect", currentURL
+				).put(
+					"scopeGroupId", scopeGroupId
+				).put(
+					"searchContainerId", "entries"
+				).put(
+					"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
+				).put(
+					"uploadable", dlViewDisplayContext.isUploadable()
+				).put(
+					"uploadURL", dlViewDisplayContext.getUploadURL()
+				).put(
+					"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
+				).build()
+			%>'
+			destroyOnNavigate="<%= true %>"
+			module="document_library/js/DocumentLibrary"
+		/>
 
 		<%
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Lourdes Fernández Besada
  */
-public interface LayoutDisplayPageMultiSelectionProviderTracker {
+public interface LayoutDisplayPageMultiSelectionProviderRegistry {
 
 	public LayoutDisplayPageMultiSelectionProvider<?>
 		getLayoutDisplayPageMultiSelectionProvider(String className);

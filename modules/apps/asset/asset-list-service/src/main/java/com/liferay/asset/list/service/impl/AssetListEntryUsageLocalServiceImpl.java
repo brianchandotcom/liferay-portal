@@ -158,6 +158,14 @@ public class AssetListEntryUsageLocalServiceImpl
 			groupId, classNameId, key, type);
 	}
 
+	@Override
+	public int getCompanyAssetListEntryUsagesCount(
+		long companyId, long classNameId, String key) {
+
+		return assetListEntryUsagePersistence.countByC_C_K(
+			companyId, classNameId, key);
+	}
+
 	private int _getType(long plid) {
 		if (plid <= 0) {
 			return AssetListEntryUsageConstants.TYPE_DEFAULT;

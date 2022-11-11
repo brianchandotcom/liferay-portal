@@ -517,6 +517,26 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setTestBatchRunPropertyQueries() {
+		if (isRootCauseAnalysis()) {
+			String portalBatchTestSelector = System.getenv(
+				"PORTAL_BATCH_TEST_SELECTOR");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					portalBatchTestSelector)) {
+
+				portalBatchTestSelector = getBuildStartProperty(
+					"PORTAL_BATCH_TEST_SELECTOR");
+			}
+
+			_testBatchRunPropertyQueries.put(
+				new File(
+					portalGitWorkingDirectory.getWorkingDirectory(),
+					"portal-web/test/functional/portalweb"),
+				"test.class.method.name == " + portalBatchTestSelector);
+
+			return;
+		}
+
 		for (File testBaseDir : getTestBaseDirs()) {
 			String testBatchRunPropertyQuery = _getTestBatchRunPropertyQuery(
 				testBaseDir);

@@ -23,6 +23,7 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.JobHistory;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
+import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
 import com.liferay.jenkins.results.parser.TestHistory;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
 import com.liferay.jenkins.results.parser.job.property.GlobJobProperty;
@@ -667,6 +668,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return true;
+	}
+
+	protected boolean isRootCauseAnalysis() {
+		return getJob() instanceof RootCauseAnalysisToolJob;
 	}
 
 	protected boolean isStableTestSuiteBatch() {

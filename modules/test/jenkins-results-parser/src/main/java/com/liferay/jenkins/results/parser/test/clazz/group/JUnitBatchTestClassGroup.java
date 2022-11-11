@@ -289,6 +289,36 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return includesJobProperties;
 	}
 
+	protected List<PathMatcher> getIncludesPathMatchers() {
+		if (!isRootCauseAnalysis()) {
+			return getPathMatchers(getIncludesJobProperties());
+		}
+
+		List<String> includeGlobs = new ArrayList<>();
+
+		String portalBatchTestSelector = System.getenv(
+			"PORTAL_BATCH_TEST_SELECTOR");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
+			portalBatchTestSelector = getBuildStartProperty(
+				"PORTAL_BATCH_TEST_SELECTOR");
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBatchTestSelector)) {
+			Collections.addAll(
+				includeGlobs,
+				JenkinsResultsParserUtil.getGlobsFromProperty(
+					portalBatchTestSelector));
+		}
+
+		return JenkinsResultsParserUtil.toPathMatchers(
+			JenkinsResultsParserUtil.combine(
+				JenkinsResultsParserUtil.getCanonicalPath(
+					portalGitWorkingDirectory.getWorkingDirectory()),
+				File.separator),
+			includeGlobs.toArray(new String[0]));
+	}
+
 	protected List<JobProperty> getReleaseExcludesJobProperties() {
 		List<JobProperty> excludesJobProperties = new ArrayList<>();
 
@@ -551,8 +581,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
-		final List<PathMatcher> includesPathMatchers = getPathMatchers(
-			getIncludesJobProperties());
+		final List<PathMatcher> includesPathMatchers =
+			getIncludesPathMatchers();
 
 		if (includesPathMatchers.isEmpty()) {
 			return;

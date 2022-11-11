@@ -28,6 +28,7 @@ export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUP = gql`
 			accountSubscriptionGroupId
 			accountKey
 			activationStatus
+			externalReferenceCode
 		}
 	}
 `;

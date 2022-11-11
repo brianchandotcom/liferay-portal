@@ -362,8 +362,6 @@ definition {
 	@description = "LPS-161920 - Verify that it's possible to send an e-mail notification via an Action"
 	@priority = "3"
 	test CanSendEmailViaAction {
-		property portal.upstream = "quarantine";
-
 		task ("Go to Templates and add a new Notification Template") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",

@@ -30,6 +30,7 @@ import {
 	STORAGE_KEY_IDENTITY,
 	STORAGE_KEY_MESSAGES,
 	STORAGE_KEY_MESSAGE_IDENTITY,
+	STORAGE_KEY_PREV_EMAIL,
 	STORAGE_KEY_USER_ID,
 	TRACK_DEFAULT_OPTIONS,
 	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
@@ -292,9 +293,13 @@ class Analytics {
 				: '',
 		};
 
-		this.config.identity = hashedIdentity;
+		this.config.identity = {
+			...identity,
+			...hashedIdentity,
+		};
 
 		const userId = this._getUserId();
+
 		this._sendIdentity(hashedIdentity, userId);
 
 		return Promise.resolve(userId);
@@ -313,6 +318,7 @@ class Analytics {
 				.forEach((disposer) => disposer());
 		}
 	}
+
 	_ensureIntegrity() {
 		const userId = getItem(STORAGE_KEY_USER_ID);
 
@@ -320,6 +326,7 @@ class Analytics {
 			this._setCookie(STORAGE_KEY_USER_ID, userId);
 		}
 	}
+
 	_getCurrentContextHash() {
 		const currentContext = this._getContext();
 		const currentContextHash = hash(currentContext);
@@ -370,8 +377,19 @@ class Analytics {
 	_getUserId() {
 		let userId = getItem(STORAGE_KEY_USER_ID);
 
+		const email = this.config.identity.email;
+		const previousEmail = getItem(STORAGE_KEY_PREV_EMAIL);
+
 		if (!userId) {
 			userId = this._generateUserId();
+		}
+
+		if (email && email !== previousEmail) {
+			setItem(STORAGE_KEY_PREV_EMAIL, email);
+
+			if (previousEmail) {
+				userId = this._generateUserId();
+			}
 		}
 
 		return userId;

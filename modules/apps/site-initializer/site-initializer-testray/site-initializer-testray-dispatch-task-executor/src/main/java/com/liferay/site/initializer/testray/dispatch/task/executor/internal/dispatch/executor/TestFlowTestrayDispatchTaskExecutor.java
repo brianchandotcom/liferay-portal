@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -273,11 +274,11 @@ public class TestFlowTestrayDispatchTaskExecutor
 	private void _process(long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		long testrayBuildId = Long.valueOf(
+		long testrayBuildId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayBuildId"));
 		String[] testrayCaseTypeIds = StringUtil.split(
 			unicodeProperties.getProperty("testrayCaseTypeIds"));
-		long testrayTaskId = Long.valueOf(
+		long testrayTaskId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayTaskId"));
 
 		List<List<ObjectEntry>> testrayCaseResultGroups = new ArrayList<>();

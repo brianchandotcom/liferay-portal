@@ -16,7 +16,6 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {ImageEditor} from 'item-selector-taglib';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
 import Footer from './Footer.es';
@@ -36,7 +35,6 @@ const itemIsImage = ({mimeType, type}) =>
 	type === 'image' || Boolean(mimeType?.match(/image.*/));
 
 const ItemSelectorPreview = ({
-	container,
 	currentIndex = 0,
 	editImageURL,
 	handleClose = noop,
@@ -58,20 +56,12 @@ const ItemSelectorPreview = ({
 
 	const isMounted = useIsMounted();
 
-	const close = useCallback(() => {
-		handleClose();
-
-		if (container) {
-			ReactDOM.unmountComponentAtNode(container);
-		}
-	}, [container, handleClose]);
-
 	const handleCancelEditing = () => {
 		setIsEditing(false);
 	};
 
 	const handleClickBack = () => {
-		close();
+		handleClose();
 
 		if (reloadOnHide) {
 			const frame = window.frameElement;
@@ -128,13 +118,13 @@ const ItemSelectorPreview = ({
 				case KEY_CODE.ESC:
 					event.preventDefault();
 					event.stopPropagation();
-					close();
+					handleClose();
 					break;
 				default:
 					break;
 			}
 		},
-		[close, handleClickNext, handleClickPrevious, isMounted]
+		[handleClickNext, handleClickPrevious, handleClose, isMounted]
 	);
 
 	const handleSaveEditedImage = ({file, success}) => {
@@ -164,7 +154,7 @@ const ItemSelectorPreview = ({
 
 			setIsEditing(false);
 
-			close();
+			handleClose();
 			handleSelectedItem(newItem);
 		}
 	};
@@ -274,7 +264,6 @@ const ItemSelectorPreview = ({
 };
 
 ItemSelectorPreview.propTypes = {
-	container: PropTypes.instanceOf(Element),
 	currentIndex: PropTypes.number,
 	editImageURL: PropTypes.string,
 	handleSelectedItem: PropTypes.func.isRequired,

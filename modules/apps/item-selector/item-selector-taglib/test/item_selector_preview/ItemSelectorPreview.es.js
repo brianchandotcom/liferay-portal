@@ -59,7 +59,6 @@ const items = [
 ];
 
 const previewProps = {
-	container: document.createElement('div'),
 	handleSelectedItem: jest.fn(),
 	headerTitle,
 	items,

@@ -1061,3 +1061,26 @@ Upgrade MySQL to 5.7.28 or higher or set the protocol to TLSv1.2 manually (See h
 
 - This change was made due to security vulnerability.
 - UtilLocator currently gives unrestricted access of all UtilClasses to templates which poses a risk of misuse or malicious attack. Commonly used Util classes such as StringUtil are already added to template context and ready to be used.
+
+---------------------------------------
+
+## Removed ConfigurationBeanDeclaration
+
+- **Date:** 2022-Nov-11
+- **JIRA Ticket:** [LPS-162830](https://issues.liferay.com/browse/LPS-162830)
+
+### What changed?
+
+- `ConfigurationBeanDeclaration` is removed. It is no longer required in order to use `ConfigurationProvider` to retrieve an annotated `*Configuration.java` interface.
+
+### Who is affected?
+
+- Any client who has implemented `ConfigurationBeanDeclaration`, or references the class in their code.
+
+### How should I update my code?
+
+- Delete any implementations of `ConfigurationBeanDeclaration` and remove any references to the class.
+
+### Why was this change made?
+
+- `ConfigurationBeanDeclaration` was used to register configuration classes with the `ConfigurationProvider` framework to be tracked by OSGi managed services. We now do this automatically by analyzing the metatype information present whenever a bundle is registered with the OSGi container. This will all happen in the background, and improves the developer experience by removing a requirement and possible frustration with using the `ConfigurationProvider` API.

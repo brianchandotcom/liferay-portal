@@ -323,17 +323,21 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 				<clay:content-col
 					cssClass="component-subtitle mr-3 print-action"
 				>
+
+					<%
+					String label = LanguageUtil.format(request, "print-x", HtmlUtil.escape(title));
+					%>
+
 					<c:choose>
 						<c:when test="<%= print %>">
-							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(title)) %>">
-								<clay:button
-									cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
-									displayType="secondary"
-									icon="print"
-									onClick="javascript:print();"
-									type="button"
-								/>
-							</span>
+							<clay:button
+								aria-label="<%= label %>"
+								cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip "
+								displayType="secondary"
+								icon="print"
+								onClick="javascript:print();"
+								type="button"
+							/>
 
 							<aui:script>
 								print();
@@ -345,15 +349,14 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 							String id = assetEntry.getEntryId() + StringUtil.randomId();
 							%>
 
-							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(title)) %>">
-								<clay:button
-									cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
-									displayType="secondary"
-									icon="print"
-									onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
-									type="button"
-								/>
-							</span>
+							<clay:button
+								aria-label="<%= label %>"
+								cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+								displayType="secondary"
+								icon="print"
+								onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
+								type="button"
+							/>
 
 							<aui:script>
 								function <portlet:namespace />printPage_<%= id %>() {

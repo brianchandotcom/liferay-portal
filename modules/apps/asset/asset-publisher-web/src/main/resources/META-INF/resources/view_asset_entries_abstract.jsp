@@ -276,17 +276,18 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 							<%
 							String id = assetEntry.getEntryId() + StringUtil.randomId();
+							String label = LanguageUtil.format(request, "print-x", HtmlUtil.escape(title));
 							%>
 
-							<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(title)) %>">
-								<clay:button
-									cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
-									displayType="secondary"
-									icon="print"
-									onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
-									type="button"
-								/>
-							</span>
+							<clay:button
+								aria-label="<%= label %>"
+								cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+								displayType="secondary"
+								icon="print"
+								onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
+								title="<%= label %>"
+								type="button"
+							/>
 
 							<aui:script>
 								function <portlet:namespace />printPage_<%= id %>() {

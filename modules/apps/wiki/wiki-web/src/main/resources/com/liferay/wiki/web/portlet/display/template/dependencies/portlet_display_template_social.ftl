@@ -223,16 +223,19 @@
 	${printURL.setWindowState("pop_up")}
 
 	<#assign
-		title = languageUtil.format(locale, "print-x-x", ["hide-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))], false)
-		taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+		title = languageUtil.format(locale, "print-x", [htmlUtil.escape(assetRenderer.getTitle(locale))], false)
+		taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + printURL.toString() + "'});"
 	/>
 
-	<@liferay_ui["icon"]
+	<div aria-label="${title}">
+	<@clay["button"]
+		cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip text-primary print-icon"
+		displayType="secondary"
 		icon="print"
-		markupView="lexicon"
-		message="print"
-		url=taglibPrintURL
+		onClick=taglibPrintURL
+		title="${title}"
 	/>
+	</div>
 </#macro>
 
 <#macro getRatings

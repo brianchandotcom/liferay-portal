@@ -153,12 +153,18 @@
 		${printURL.setParameter("type", entry.getAssetRendererFactory().getType())}
 		${printURL.setWindowState("pop_up")}
 
-		<@liferay_ui["icon"]
+		<#assign title = languageUtil.format(locale, "print-x", entryTitle, false) />
+
+		<div aria-label="${title}">
+		<@clay["button"]
+			cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+			displayType="secondary"
 			icon="print"
 			markupView="lexicon"
-			message="print"
-			url="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle], false) + "', id:'" + renderResponse.getNamespace() + "printAsset', url: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+			onClick="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x", [entryTitle], false) + "', url: '" + printURL.toString() + "'});"
+			title="${title}"
 		/>
+		</div>
 	</#if>
 </#macro>
 

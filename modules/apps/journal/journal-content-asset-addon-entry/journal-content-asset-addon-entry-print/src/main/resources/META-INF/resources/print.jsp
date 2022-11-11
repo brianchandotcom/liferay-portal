@@ -39,15 +39,20 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 		<clay:content-col
 			cssClass="print-action user-tool-asset-addon-entry"
 		>
-			<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, "print-x", HtmlUtil.escape(articleDisplay.getTitle())) %>">
-				<clay:button
-					cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
-					displayType="secondary"
-					icon="print"
-					onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
-					type="button"
-				/>
-			</span>
+
+			<%
+			String title = LanguageUtil.format(request, "print-x", HtmlUtil.escape(articleDisplay.getTitle()));
+			%>
+
+			<clay:button
+				aria-label="<%= title %>"
+				cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+				displayType="secondary"
+				icon="print"
+				onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
+				title="<%= title %>"
+				type="button"
+			/>
 		</clay:content-col>
 
 		<aui:script>

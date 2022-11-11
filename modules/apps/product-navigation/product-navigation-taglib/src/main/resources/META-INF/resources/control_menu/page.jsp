@@ -19,89 +19,30 @@
 <%
 boolean applicationsMenuApp = GetterUtil.getBoolean(request.getAttribute("liferay-product-navigation:control-menu:applicationsMenuApp"));
 
-ProductNavigationControlMenuCategoryRegistry productNavigationControlMenuCategoryRegistry = ServletContextUtil.getProductNavigationControlMenuCategoryRegistry();
-
-List<ProductNavigationControlMenuCategory> productNavigationControlMenuCategories = productNavigationControlMenuCategoryRegistry.getProductNavigationControlMenuCategories(ProductNavigationControlMenuCategoryKeys.ROOT);
-
-ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegistry = ServletContextUtil.getProductNavigationControlMenuEntryRegistry();
-
-boolean hasControlMenuEntries = false;
-
-Map<String, List<ProductNavigationControlMenuEntry>> productNavigationControlMenuEntriesMap = new LinkedHashMap<>();
-
-for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
-	List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntryRegistry.getProductNavigationControlMenuEntries(productNavigationControlMenuCategory, request);
-
-	productNavigationControlMenuEntriesMap.put(productNavigationControlMenuCategory.getKey(), productNavigationControlMenuEntries);
-
-	if (!productNavigationControlMenuEntries.isEmpty()) {
-		for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-			if (productNavigationControlMenuEntry.isRelevant(request)) {
-				hasControlMenuEntries = true;
-
-				break;
-			}
-		}
-	}
-}
+ProductNavigationControlMenuTagDisplayContext productNavigationControlMenuTagDisplayContext = new ProductNavigationControlMenuTagDisplayContext(request, pageContext);
 %>
 
-<c:if test="<%= hasControlMenuEntries %>">
+<c:if test="<%= productNavigationControlMenuTagDisplayContext.hasControlMenuEntries() %>">
 	<div class="cadmin control-menu-container">
 		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#pre" />
 
 		<div class="control-menu control-menu-level-1 control-menu-level-1-<%= applicationsMenuApp ? "light" : "dark" %> d-print-none" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
 			<clay:container-fluid>
-				<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+				<div class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
 					<%
-					for (Map.Entry<String, List<ProductNavigationControlMenuEntry>> entry : productNavigationControlMenuEntriesMap.entrySet()) {
-						List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = entry.getValue();
+					productNavigationControlMenuTagDisplayContext.writeProductNavigationControlMenuEntries(pageContext.getOut());
 					%>
 
-						<li class="control-menu-nav-category <%= entry.getKey() %>-control-group">
-							<ul class="control-menu-nav" role="<%= (productNavigationControlMenuEntries.size() == 1) ? "presentation" : "menu" %>">
-
-								<%
-								for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-									if (productNavigationControlMenuEntry.includeIcon(request, PipingServletResponseFactory.createPipingServletResponse(pageContext))) {
-										continue;
-									}
-								%>
-
-									<li class="control-menu-nav-item">
-										<liferay-ui:icon
-											data="<%= productNavigationControlMenuEntry.getData(request) %>"
-											icon="<%= productNavigationControlMenuEntry.getIcon(request) %>"
-											iconCssClass="<%= productNavigationControlMenuEntry.getIconCssClass(request) %>"
-											label="<%= false %>"
-											linkCssClass='<%= "control-menu-icon " + productNavigationControlMenuEntry.getLinkCssClass(request) %>'
-											message="<%= productNavigationControlMenuEntry.getLabel(locale) %>"
-											method="get"
-											url="<%= productNavigationControlMenuEntry.getURL(request) %>"
-										/>
-									</li>
-
-								<%
-								}
-								%>
-
-							</ul>
-						</li>
-
-					<%
-					}
-					%>
-
-				</ul>
+				</div>
 			</clay:container-fluid>
 
 			<div class="control-menu-body">
 
 				<%
-				for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
-					List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory.getKey());
+				Map<String, List<ProductNavigationControlMenuEntry>> productNavigationControlMenuEntriesMap = productNavigationControlMenuTagDisplayContext.getProductNavigationControlMenuEntriesMap();
 
+				for (List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries : productNavigationControlMenuEntriesMap.values()) {
 					for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
 						productNavigationControlMenuEntry.includeBody(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 					}

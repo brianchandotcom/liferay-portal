@@ -25,9 +25,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory" %><%@
-page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry" %><%@
-page import="com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry" %><%@
+<%@ page import="com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.List" %><%@

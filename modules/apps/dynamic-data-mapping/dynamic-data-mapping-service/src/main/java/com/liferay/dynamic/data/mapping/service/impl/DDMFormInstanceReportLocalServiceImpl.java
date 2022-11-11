@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
-import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessorTracker;
+import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessorRegistry;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceReportLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
@@ -191,7 +191,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 		throws Exception, JSONException {
 
 		DDMFormFieldTypeReportProcessor ddmFormFieldTypeReportProcessor =
-			_ddmFormFieldTypeReportProcessorTracker.
+			_ddmFormFieldTypeReportProcessorRegistry.
 				getDDMFormFieldTypeReportProcessor(ddmFormFieldValue.getType());
 
 		if (ddmFormFieldTypeReportProcessor != null) {
@@ -224,8 +224,8 @@ public class DDMFormInstanceReportLocalServiceImpl
 		DDMFormInstanceReportLocalServiceImpl.class);
 
 	@Reference
-	private DDMFormFieldTypeReportProcessorTracker
-		_ddmFormFieldTypeReportProcessorTracker;
+	private DDMFormFieldTypeReportProcessorRegistry
+		_ddmFormFieldTypeReportProcessorRegistry;
 
 	@Reference
 	private DDMFormInstancePersistence _ddmFormInstancePersistence;

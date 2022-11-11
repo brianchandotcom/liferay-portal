@@ -70,6 +70,9 @@ components:
                     type: string
                 description:
                     type: string
+                editorType:
+                    enum: [freemarker, richText]
+                    type: string
                 id:
                     format: int64
                     readOnly: true

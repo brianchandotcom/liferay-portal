@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
@@ -260,6 +261,16 @@ public class AssetListDisplayContext {
 	}
 
 	public int getAssetListEntryUsageCount(AssetListEntry assetListEntry) {
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (scopeGroup.getType() == GroupConstants.TYPE_DEPOT) {
+			return AssetListEntryUsageLocalServiceUtil.
+				getCompanyAssetListEntryUsagesCount(
+					_themeDisplay.getCompanyId(),
+					PortalUtil.getClassNameId(AssetListEntry.class),
+					String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
 		return AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsagesCount(
 			_themeDisplay.getScopeGroupId(),
 			PortalUtil.getClassNameId(AssetListEntry.class),

@@ -68,12 +68,15 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -949,11 +952,11 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddOrUpdateObjectEntryWithAccountEntryRestrictedObjectFieldId()
 		throws Exception {
 
-		User user = TestPropsValues.getUser();
+		_user = UserTestUtil.addUser();
 
 		ObjectDefinition accountObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				user.getCompanyId(), "accountEntry");
+				_user.getCompanyId(), "accountEntry");
 
 		ObjectDefinition customObjectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
@@ -965,7 +968,7 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				user.getUserId(),
+				_user.getUserId(),
 				accountObjectDefinition.getObjectDefinitionId(),
 				customObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
@@ -985,13 +988,13 @@ public class ObjectEntryLocalServiceTest {
 			customObjectDefinition);
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			user.getUserId(), customObjectDefinition.getObjectDefinitionId());
+			_user.getUserId(), customObjectDefinition.getObjectDefinitionId());
 
 		long invalidAccountEntryId = -1;
 
 		try {
 			_objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0,
+				_user.getUserId(), 0,
 				customObjectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"r_relationship_accountEntryId", invalidAccountEntryId
@@ -1013,13 +1016,13 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"The account entry ", invalidAccountEntryId,
-					" does not exist or the user ", user.getUserId(),
+					" does not exist or the user ", _user.getUserId(),
 					" does not belong to it"),
 				objectDefinitionAccountEntryRestrictedException.getMessage());
 		}
 
 		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			_user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			"account", null, null, null, null, null,
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
@@ -1027,16 +1030,23 @@ public class ObjectEntryLocalServiceTest {
 
 		AccountEntryUserRel accountEntryUserRel1 =
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry1.getAccountEntryId(), user.getUserId());
+				accountEntry1.getAccountEntryId(), _user.getUserId());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), "Administrator");
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			_user.getUserId(), 0,
 			customObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_relationship_accountEntryId",
 				accountEntry1.getAccountEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+
+		_userLocalService.deleteRoleUser(role.getRoleId(), _user);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -1046,7 +1056,7 @@ public class ObjectEntryLocalServiceTest {
 
 		try {
 			objectEntry = _objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				_user.getUserId(), objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
 					"r_relationship_accountEntryId", invalidAccountEntryId
 				).build(),
@@ -1067,13 +1077,13 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"The account entry ", invalidAccountEntryId,
-					" does not exist or the user ", user.getUserId(),
+					" does not exist or the user ", _user.getUserId(),
 					" does not belong to it"),
 				objectDefinitionAccountEntryRestrictedException.getMessage());
 		}
 
 		AccountEntry accountEntry2 = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			_user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			"account", null, null, null, null, null,
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
@@ -1081,7 +1091,9 @@ public class ObjectEntryLocalServiceTest {
 
 		AccountEntryUserRel accountEntryUserRel2 =
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry2.getAccountEntryId(), user.getUserId());
+				accountEntry2.getAccountEntryId(), _user.getUserId());
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -2906,6 +2918,15 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService

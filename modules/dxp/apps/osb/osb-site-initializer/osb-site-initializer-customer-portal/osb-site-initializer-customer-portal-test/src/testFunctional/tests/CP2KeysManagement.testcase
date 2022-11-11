@@ -91,18 +91,16 @@ definition {
 				linePosition = "2",
 				text = "Non-Prod");
 
-			CP2DataUtil.generateStaticFullStartAndEndDate();
-
 			CP2ActivationKeys.assertTextAtTable(
 				lineColunm = "5",
-				linePosition = "1",
-				text = "${staticFullEndDate}");
+				linePosition = "2",
+				text = "Sep 7, 2022");
 
 			CP2ActivationKeys.putMouseOverStatusElementAtTable(
-				linePosition = "1",
-				status = "Activated");
+				linePosition = "2",
+				status = "Expired");
 
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Activated");
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Expired");
 		}
 	}
 

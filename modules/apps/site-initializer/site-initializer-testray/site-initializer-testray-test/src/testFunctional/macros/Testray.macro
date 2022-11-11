@@ -19,22 +19,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addNewTeam {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-		for (var teamName : list "${teamName}") {
-			Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
-
-			SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${teamName}");
-
-			Button.clickSave();
-		}
-	}
-
 	macro addTestraySite {
 		Site.openSitesAdmin();
 

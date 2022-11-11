@@ -212,7 +212,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
-			Testray.addNewTeam(teamName = "Components_1 Team");
+			TestrayManage.createTeam(teamName = "Components_1 Team");
 
 			TestrayManage.closeModalInOptions();
 		}

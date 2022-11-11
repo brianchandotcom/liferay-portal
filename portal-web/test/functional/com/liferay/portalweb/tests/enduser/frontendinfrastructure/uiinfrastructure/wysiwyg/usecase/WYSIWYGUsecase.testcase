@@ -315,7 +315,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "//div[@class='portlet-body']/div[contains(@class,'mt-2')]",
+			locator1 = "//div[@class='portlet-body']/div[contains(@class,'container-fluid-max')]",
 			value1 = "Sample document for editor area test");
 
 		AssertElementPresent(locator1 = "//img[contains(@src,'redhead.JPG')]");

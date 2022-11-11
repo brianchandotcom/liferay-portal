@@ -16,18 +16,17 @@ package com.liferay.journal.internal.transformer;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Pavel Savinov
@@ -39,38 +38,21 @@ public class DefaultJournalTransformerListenerRegistryImpl
 	@Override
 	public List<TransformerListener> getTransformerListeners() {
 		return ListUtil.filter(
-			new ArrayList<>(_transformerListeners.values()),
-			transformerListener -> {
-				if (transformerListener.isEnabled()) {
-					return true;
-				}
-
-				return false;
-			});
+			_serviceTrackerList.toList(), TransformerListener::isEnabled);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"
-	)
-	public void registerTransformerListener(
-		TransformerListener transformerListener) {
-
-		Class<?> clazz = transformerListener.getClass();
-
-		_transformerListeners.put(clazz.getName(), transformerListener);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, TransformerListener.class,
+			"(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")");
 	}
 
-	public void unregisterTransformerListener(
-		TransformerListener transformerListener) {
-
-		Class<?> clazz = transformerListener.getClass();
-
-		_transformerListeners.remove(clazz.getName());
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
-	private final Map<String, TransformerListener> _transformerListeners =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerList<TransformerListener> _serviceTrackerList;
 
 }

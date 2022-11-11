@@ -191,7 +191,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 		JavaClass javaClass, String fileName, String absolutePath,
 		String className, List<String> implementedClassNames) {
 
-		if (javaClass.isInterface() || javaClass.isAbstract()) {
+		if (javaClass.isInterface()) {
 			return;
 		}
 

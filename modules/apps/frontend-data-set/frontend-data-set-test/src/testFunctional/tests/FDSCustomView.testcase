@@ -277,16 +277,6 @@ definition {
 	@priority = "4"
 	test CanUpdateName {
 		task ("And Given created custom view") {
-			FDSFilters.editFilters(
-				key_disableFilters = "Blue",
-				key_enableFilters = "Red",
-				key_filter = "Color");
-
-			Click(locator1 = "FrontendDataSet#SELECT_FIELD");
-
-			Click(
-				key_itemName = "Description",
-				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 
 			FDSCustomView.createNewView(key_nameView = "TEST");
 

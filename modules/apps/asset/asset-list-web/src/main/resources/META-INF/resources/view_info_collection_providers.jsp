@@ -41,7 +41,7 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 			modelVar="infoCollectionProvider"
 		>
 			<liferay-ui:search-container-column-icon
-				icon="list"
+				icon="bolt"
 			/>
 
 			<liferay-ui:search-container-column-text

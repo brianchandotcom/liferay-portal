@@ -128,11 +128,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		return _transactionalPortalCacheNames;
 	}
 
-	@Override
-	public boolean isClusterAware() {
-		return _clusterAware;
-	}
-
 	public boolean isTransactionalPortalCacheEnabled() {
 		return _transactionalPortalCacheEnabled;
 	}

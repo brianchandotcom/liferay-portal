@@ -55,8 +55,6 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public String getPortalCacheManagerName();
 
-	public boolean isClusterAware();
-
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader);
 

@@ -439,11 +439,6 @@ public class ToolDependencies {
 		}
 
 		@Override
-		public boolean isClusterAware() {
-			return false;
-		}
-
-		@Override
 		public void reconfigurePortalCaches(
 			URL configurationURL, ClassLoader classLoader) {
 		}

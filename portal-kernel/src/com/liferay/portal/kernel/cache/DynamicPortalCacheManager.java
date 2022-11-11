@@ -111,11 +111,6 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public boolean isClusterAware() {
-		return _portalCacheManager.isClusterAware();
-	}
-
-	@Override
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader) {
 

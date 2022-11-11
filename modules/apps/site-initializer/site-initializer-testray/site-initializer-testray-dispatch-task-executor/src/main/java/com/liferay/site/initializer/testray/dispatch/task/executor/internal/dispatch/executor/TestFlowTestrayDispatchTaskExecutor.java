@@ -287,7 +287,10 @@ public class TestFlowTestrayDispatchTaskExecutor
 			sb.append("caseTypeId eq '");
 			sb.append(testrayCaseTypeIds[i]);
 			sb.append("'");
+			sb.append(" or ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		Aggregation aggregation = new Aggregation();
 

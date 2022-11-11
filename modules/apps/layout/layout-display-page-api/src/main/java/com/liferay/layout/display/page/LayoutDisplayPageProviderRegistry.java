@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Jorge Ferrer
  */
-public interface LayoutDisplayPageProviderTracker {
+public interface LayoutDisplayPageProviderRegistry {
 
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProviderByClassName(
 		String className);

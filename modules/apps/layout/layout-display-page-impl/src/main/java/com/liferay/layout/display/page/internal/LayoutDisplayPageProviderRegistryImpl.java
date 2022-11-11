@@ -15,7 +15,7 @@
 package com.liferay.layout.display.page.internal;
 
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(service = LayoutDisplayPageProviderTracker.class)
-public class LayoutDisplayPageProviderTrackerImpl
-	implements LayoutDisplayPageProviderTracker {
+@Component(service = LayoutDisplayPageProviderRegistry.class)
+public class LayoutDisplayPageProviderRegistryImpl
+	implements LayoutDisplayPageProviderRegistry {
 
 	@Override
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProviderByClassName(

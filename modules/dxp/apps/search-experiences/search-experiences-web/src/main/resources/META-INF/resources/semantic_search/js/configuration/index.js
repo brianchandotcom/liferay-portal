@@ -75,6 +75,8 @@ export default function ({
 	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
+	txtaiPassword,
+	txtaiUserName,
 }) {
 	const _handleFormikValidate = (values) => {
 		const errors = {};
@@ -205,6 +207,8 @@ export default function ({
 			sentenceTransformerEnabled,
 			textTruncationStrategy,
 			txtaiHostAddress,
+			txtaiPassword,
+			txtaiUserName,
 		},
 		validate: _handleFormikValidate,
 		validateOnMount: true,
@@ -261,17 +265,44 @@ export default function ({
 
 				{formik.values.sentenceTransformProvider ===
 					SENTENCE_TRANSFORM_PROVIDER_TYPES.TXTAI && (
-					<Input
-						error={formik.errors.txtaiHostAddress}
-						helpText={Liferay.Language.get(
-							'sentence-transformer-txtai-host-address-help'
-						)}
-						label={Liferay.Language.get('txtai-host-address')}
-						name={`${namespace}txtaiHostAddress`}
-						onBlur={_handleInputBlur('txtaiHostAddress')}
-						onChange={_handleInputChange('txtaiHostAddress')}
-						value={formik.values.txtaiHostAddress}
-					/>
+					<>
+						<Input
+							error={formik.errors.txtaiHostAddress}
+							helpText={Liferay.Language.get(
+								'sentence-transformer-txtai-host-address-help'
+							)}
+							label={Liferay.Language.get('txtai-host-address')}
+							name={`${namespace}txtaiHostAddress`}
+							onBlur={_handleInputBlur('txtaiHostAddress')}
+							onChange={_handleInputChange('txtaiHostAddress')}
+							value={formik.values.txtaiHostAddress}
+						/>
+
+						<Input
+							error={formik.errors.txtaiUserName}
+							helpText={Liferay.Language.get(
+								'sentence-transformer-txtai-username-help'
+							)}
+							label={Liferay.Language.get('username')}
+							name={`${namespace}txtaiUserName`}
+							onBlur={_handleInputBlur('txtaiUserName')}
+							onChange={_handleInputChange('txtaiUserName')}
+							value={formik.values.txtaiUserName}
+						/>
+
+						<Input
+							error={formik.errors.txtaiPassword}
+							helpText={Liferay.Language.get(
+								'sentence-transformer-txtai-password-help'
+							)}
+							label={Liferay.Language.get('password')}
+							name={`${namespace}txtaiPassword`}
+							onBlur={_handleInputBlur('txtaiPassword')}
+							onChange={_handleInputChange('txtaiPassword')}
+							type="password"
+							value={formik.values.txtaiPassword}
+						/>
+					</>
 				)}
 
 				{formik.values.sentenceTransformProvider ===

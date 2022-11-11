@@ -160,6 +160,11 @@ public class RSVEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected RSVEntryWrapper wrap(RSVEntry rsvEntry) {
 		return new RSVEntryWrapper(rsvEntry);
 	}

@@ -1017,6 +1017,11 @@ public class KaleoLogWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoLog, Object>>
 		getAttributeGetterFunctions() {
 

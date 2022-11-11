@@ -429,6 +429,11 @@ public class CommerceOrderPaymentWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceOrderPaymentWrapper wrap(
 		CommerceOrderPayment commerceOrderPayment) {
 

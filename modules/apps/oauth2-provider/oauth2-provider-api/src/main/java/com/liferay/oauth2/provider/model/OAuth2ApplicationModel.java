@@ -498,4 +498,8 @@ public interface OAuth2ApplicationModel
 	@Override
 	public OAuth2Application cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

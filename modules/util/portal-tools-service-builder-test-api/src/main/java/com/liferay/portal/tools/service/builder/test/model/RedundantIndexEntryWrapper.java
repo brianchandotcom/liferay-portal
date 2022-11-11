@@ -161,6 +161,11 @@ public class RedundantIndexEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected RedundantIndexEntryWrapper wrap(
 		RedundantIndexEntry redundantIndexEntry) {
 

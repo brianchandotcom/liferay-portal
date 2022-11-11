@@ -1834,6 +1834,11 @@ public class ManyColumnsEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ManyColumnsEntryWrapper wrap(ManyColumnsEntry manyColumnsEntry) {
 		return new ManyColumnsEntryWrapper(manyColumnsEntry);
 	}

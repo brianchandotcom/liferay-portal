@@ -793,6 +793,11 @@ public class CommerceShippingMethodWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceShippingMethodWrapper wrap(
 		CommerceShippingMethod commerceShippingMethod) {
 

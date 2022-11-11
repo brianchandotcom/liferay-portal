@@ -265,4 +265,8 @@ public interface ObjectViewSortColumnModel
 	@Override
 	public ObjectViewSortColumn cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

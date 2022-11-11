@@ -403,4 +403,8 @@ public interface AssetListEntryUsageModel
 	@Override
 	public AssetListEntryUsage cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

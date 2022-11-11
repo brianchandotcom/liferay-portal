@@ -389,4 +389,8 @@ public interface SegmentsExperimentModel
 	@Override
 	public SegmentsExperiment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

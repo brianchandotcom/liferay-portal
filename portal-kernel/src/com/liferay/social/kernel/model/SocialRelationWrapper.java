@@ -324,6 +324,11 @@ public class SocialRelationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<SocialRelation, Object>>
 		getAttributeGetterFunctions() {
 

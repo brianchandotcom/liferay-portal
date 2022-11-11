@@ -634,4 +634,8 @@ public interface MBThreadModel
 	@Override
 	public MBThread cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

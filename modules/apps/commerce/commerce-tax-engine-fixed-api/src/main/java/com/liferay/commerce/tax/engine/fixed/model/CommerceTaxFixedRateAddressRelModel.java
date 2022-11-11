@@ -292,4 +292,8 @@ public interface CommerceTaxFixedRateAddressRelModel
 	@Override
 	public CommerceTaxFixedRateAddressRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

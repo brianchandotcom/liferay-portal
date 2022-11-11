@@ -315,4 +315,8 @@ public interface MBDiscussionModel
 	@Override
 	public MBDiscussion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

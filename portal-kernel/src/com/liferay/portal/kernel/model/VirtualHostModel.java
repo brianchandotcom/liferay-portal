@@ -184,4 +184,8 @@ public interface VirtualHostModel
 	@Override
 	public VirtualHost cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -583,4 +583,8 @@ public interface CommerceCurrencyModel
 	@Override
 	public CommerceCurrency cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

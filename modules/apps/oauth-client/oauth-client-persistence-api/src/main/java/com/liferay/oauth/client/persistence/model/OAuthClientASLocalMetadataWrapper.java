@@ -350,6 +350,11 @@ public class OAuthClientASLocalMetadataWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OAuthClientASLocalMetadataWrapper wrap(
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata) {
 

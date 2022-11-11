@@ -749,6 +749,11 @@ public class CPOptionCategoryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPOptionCategory, Object>>
 		getAttributeGetterFunctions() {
 

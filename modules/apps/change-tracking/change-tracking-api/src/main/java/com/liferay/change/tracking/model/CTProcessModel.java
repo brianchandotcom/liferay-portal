@@ -176,4 +176,8 @@ public interface CTProcessModel
 	@Override
 	public CTProcess cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

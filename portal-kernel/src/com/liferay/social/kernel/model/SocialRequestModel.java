@@ -324,4 +324,8 @@ public interface SocialRequestModel
 	@Override
 	public SocialRequest cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

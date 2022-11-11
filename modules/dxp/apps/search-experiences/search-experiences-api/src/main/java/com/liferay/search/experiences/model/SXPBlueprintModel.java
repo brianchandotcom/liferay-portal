@@ -645,4 +645,8 @@ public interface SXPBlueprintModel
 	@Override
 	public SXPBlueprint cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

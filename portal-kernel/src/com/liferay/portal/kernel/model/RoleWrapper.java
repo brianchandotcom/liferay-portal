@@ -838,6 +838,11 @@ public class RoleWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<Role, Object>> getAttributeGetterFunctions() {
 		return model.getAttributeGetterFunctions();
 	}

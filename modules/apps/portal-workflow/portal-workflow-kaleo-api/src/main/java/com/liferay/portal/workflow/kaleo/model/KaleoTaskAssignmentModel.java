@@ -386,4 +386,8 @@ public interface KaleoTaskAssignmentModel
 	@Override
 	public KaleoTaskAssignment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -505,4 +505,8 @@ public interface COREntryModel
 	@Override
 	public COREntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

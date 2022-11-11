@@ -561,4 +561,8 @@ public interface CommercePriceListModel
 	@Override
 	public CommercePriceList cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

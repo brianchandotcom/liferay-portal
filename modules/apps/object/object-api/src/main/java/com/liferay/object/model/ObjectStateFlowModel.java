@@ -221,4 +221,8 @@ public interface ObjectStateFlowModel
 	@Override
 	public ObjectStateFlow cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

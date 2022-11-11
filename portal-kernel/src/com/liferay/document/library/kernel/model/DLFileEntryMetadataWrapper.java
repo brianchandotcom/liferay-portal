@@ -331,6 +331,11 @@ public class DLFileEntryMetadataWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<DLFileEntryMetadata, Object>>
 		getAttributeGetterFunctions() {
 

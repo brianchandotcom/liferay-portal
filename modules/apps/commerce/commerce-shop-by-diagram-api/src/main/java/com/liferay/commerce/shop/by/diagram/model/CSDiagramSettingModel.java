@@ -298,4 +298,8 @@ public interface CSDiagramSettingModel
 	@Override
 	public CSDiagramSetting cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

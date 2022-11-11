@@ -546,4 +546,8 @@ public interface MBCategoryModel
 	@Override
 	public MBCategory cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

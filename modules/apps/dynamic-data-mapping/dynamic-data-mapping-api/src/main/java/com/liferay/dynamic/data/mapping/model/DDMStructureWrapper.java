@@ -1224,6 +1224,11 @@ public class DDMStructureWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<DDMStructure, Object>>
 		getAttributeGetterFunctions() {
 

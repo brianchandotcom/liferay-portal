@@ -725,6 +725,11 @@ public class KaleoTaskFormWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoTaskForm, Object>>
 		getAttributeGetterFunctions() {
 

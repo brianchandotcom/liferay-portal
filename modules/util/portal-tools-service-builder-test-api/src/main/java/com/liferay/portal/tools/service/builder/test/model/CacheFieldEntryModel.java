@@ -99,4 +99,8 @@ public interface CacheFieldEntryModel extends BaseModel<CacheFieldEntry> {
 	@Override
 	public CacheFieldEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

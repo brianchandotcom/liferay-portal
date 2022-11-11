@@ -113,4 +113,8 @@ public interface ClassNameModel
 	@Override
 	public ClassName cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

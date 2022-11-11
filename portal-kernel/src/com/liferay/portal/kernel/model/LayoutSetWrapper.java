@@ -694,6 +694,11 @@ public class LayoutSetWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<LayoutSet, Object>>
 		getAttributeGetterFunctions() {
 

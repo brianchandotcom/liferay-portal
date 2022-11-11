@@ -266,4 +266,8 @@ public interface CommercePriceModifierRelModel
 	@Override
 	public CommercePriceModifierRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

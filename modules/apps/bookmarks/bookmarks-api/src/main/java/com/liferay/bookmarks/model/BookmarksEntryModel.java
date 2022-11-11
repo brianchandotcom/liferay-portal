@@ -514,4 +514,8 @@ public interface BookmarksEntryModel
 	@Override
 	public BookmarksEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

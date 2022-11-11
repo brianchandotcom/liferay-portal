@@ -735,4 +735,8 @@ public interface DDMTemplateModel
 	@Override
 	public DDMTemplate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

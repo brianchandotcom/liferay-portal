@@ -249,4 +249,8 @@ public interface CommerceDiscountRuleModel
 	@Override
 	public CommerceDiscountRule cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

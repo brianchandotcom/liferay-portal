@@ -217,4 +217,8 @@ public interface CommerceAccountGroupCommerceAccountRelModel
 	@Override
 	public CommerceAccountGroupCommerceAccountRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

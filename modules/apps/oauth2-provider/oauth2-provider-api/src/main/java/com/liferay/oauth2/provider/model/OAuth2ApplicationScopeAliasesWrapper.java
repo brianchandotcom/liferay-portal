@@ -271,6 +271,11 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OAuth2ApplicationScopeAliasesWrapper wrap(
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
 

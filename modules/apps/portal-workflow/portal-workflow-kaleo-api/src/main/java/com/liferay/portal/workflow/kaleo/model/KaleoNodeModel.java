@@ -471,4 +471,8 @@ public interface KaleoNodeModel
 	@Override
 	public KaleoNode cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -620,4 +620,8 @@ public interface ClientExtensionEntryModel
 	@Override
 	public ClientExtensionEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

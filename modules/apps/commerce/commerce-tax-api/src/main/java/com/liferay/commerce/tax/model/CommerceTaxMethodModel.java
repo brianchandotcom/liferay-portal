@@ -480,4 +480,8 @@ public interface CommerceTaxMethodModel
 	@Override
 	public CommerceTaxMethod cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

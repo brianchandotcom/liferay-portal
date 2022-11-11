@@ -648,4 +648,8 @@ public interface DDMStructureVersionModel
 	@Override
 	public DDMStructureVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

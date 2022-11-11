@@ -394,6 +394,11 @@ public class RatingsStatsWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<RatingsStats, Object>>
 		getAttributeGetterFunctions() {
 

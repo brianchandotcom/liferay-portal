@@ -335,4 +335,8 @@ public interface SocialActivityModel
 	@Override
 	public SocialActivity cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

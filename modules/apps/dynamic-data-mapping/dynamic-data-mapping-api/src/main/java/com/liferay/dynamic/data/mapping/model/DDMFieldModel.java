@@ -246,4 +246,8 @@ public interface DDMFieldModel
 	@Override
 	public DDMField cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

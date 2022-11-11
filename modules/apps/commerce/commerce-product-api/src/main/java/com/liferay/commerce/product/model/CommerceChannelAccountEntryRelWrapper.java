@@ -543,6 +543,11 @@ public class CommerceChannelAccountEntryRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommerceChannelAccountEntryRel, Object>>
 		getAttributeGetterFunctions() {
 

@@ -832,6 +832,11 @@ public class CompanyWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CompanyWrapper wrap(Company company) {
 		return new CompanyWrapper(company);
 	}

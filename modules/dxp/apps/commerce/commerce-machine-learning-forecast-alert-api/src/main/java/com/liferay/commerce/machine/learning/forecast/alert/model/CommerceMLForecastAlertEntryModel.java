@@ -275,4 +275,8 @@ public interface CommerceMLForecastAlertEntryModel
 	@Override
 	public CommerceMLForecastAlertEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

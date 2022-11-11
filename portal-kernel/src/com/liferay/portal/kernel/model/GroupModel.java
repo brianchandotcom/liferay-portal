@@ -653,4 +653,8 @@ public interface GroupModel
 	@Override
 	public Group cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

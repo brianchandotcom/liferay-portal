@@ -924,4 +924,8 @@ public interface CPInstanceModel
 	@Override
 	public CPInstance cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -495,6 +495,11 @@ public class LayoutPageTemplateCollectionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<LayoutPageTemplateCollection, Object>>
 		getAttributeGetterFunctions() {
 

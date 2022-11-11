@@ -249,4 +249,8 @@ public interface CommerceShippingOptionAccountEntryRelModel
 	@Override
 	public CommerceShippingOptionAccountEntryRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -268,4 +268,8 @@ public interface KBTemplateModel
 	@Override
 	public KBTemplate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

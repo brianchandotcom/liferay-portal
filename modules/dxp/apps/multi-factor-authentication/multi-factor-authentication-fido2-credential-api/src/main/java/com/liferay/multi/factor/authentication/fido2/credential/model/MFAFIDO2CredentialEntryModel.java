@@ -276,4 +276,8 @@ public interface MFAFIDO2CredentialEntryModel
 	@Override
 	public MFAFIDO2CredentialEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

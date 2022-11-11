@@ -534,6 +534,11 @@ public class UserGroupWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<UserGroup, Object>>
 		getAttributeGetterFunctions() {
 

@@ -377,4 +377,8 @@ public interface MessageModel
 	@Override
 	public Message cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

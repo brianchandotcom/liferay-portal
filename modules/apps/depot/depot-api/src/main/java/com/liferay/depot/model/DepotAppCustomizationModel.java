@@ -155,4 +155,8 @@ public interface DepotAppCustomizationModel
 	@Override
 	public DepotAppCustomization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

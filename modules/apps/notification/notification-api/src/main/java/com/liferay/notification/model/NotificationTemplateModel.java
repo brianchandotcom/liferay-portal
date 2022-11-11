@@ -596,4 +596,8 @@ public interface NotificationTemplateModel
 	@Override
 	public NotificationTemplate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -170,6 +170,11 @@ public class CacheFieldEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CacheFieldEntryWrapper wrap(CacheFieldEntry cacheFieldEntry) {
 		return new CacheFieldEntryWrapper(cacheFieldEntry);
 	}

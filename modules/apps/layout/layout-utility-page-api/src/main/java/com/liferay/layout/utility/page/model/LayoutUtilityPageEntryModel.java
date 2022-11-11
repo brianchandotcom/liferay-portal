@@ -352,4 +352,8 @@ public interface LayoutUtilityPageEntryModel
 	@Override
 	public LayoutUtilityPageEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

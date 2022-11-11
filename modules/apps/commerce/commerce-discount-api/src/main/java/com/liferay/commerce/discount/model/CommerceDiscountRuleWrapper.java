@@ -419,6 +419,11 @@ public class CommerceDiscountRuleWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceDiscountRuleWrapper wrap(
 		CommerceDiscountRule commerceDiscountRule) {
 

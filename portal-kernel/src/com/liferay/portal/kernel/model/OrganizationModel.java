@@ -387,4 +387,8 @@ public interface OrganizationModel
 	@Override
 	public Organization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

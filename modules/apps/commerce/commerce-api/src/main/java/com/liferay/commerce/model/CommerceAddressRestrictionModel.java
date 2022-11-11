@@ -264,4 +264,8 @@ public interface CommerceAddressRestrictionModel
 	@Override
 	public CommerceAddressRestriction cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

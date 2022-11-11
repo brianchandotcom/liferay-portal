@@ -792,4 +792,8 @@ public interface ObjectDefinitionModel
 	@Override
 	public ObjectDefinition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

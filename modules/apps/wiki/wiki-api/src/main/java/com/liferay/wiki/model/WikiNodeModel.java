@@ -526,4 +526,8 @@ public interface WikiNodeModel
 	@Override
 	public WikiNode cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

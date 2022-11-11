@@ -250,4 +250,8 @@ public interface CommerceShippingFixedOptionQualifierModel
 	@Override
 	public CommerceShippingFixedOptionQualifier cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -460,4 +460,8 @@ public interface ObjectRelationshipModel
 	@Override
 	public ObjectRelationship cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

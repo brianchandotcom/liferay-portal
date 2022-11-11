@@ -316,6 +316,11 @@ public class SamlIdpSpSessionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SamlIdpSpSessionWrapper wrap(SamlIdpSpSession samlIdpSpSession) {
 		return new SamlIdpSpSessionWrapper(samlIdpSpSession);
 	}

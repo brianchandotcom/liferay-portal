@@ -1908,6 +1908,11 @@ public class UserWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<User, Object>> getAttributeGetterFunctions() {
 		return model.getAttributeGetterFunctions();
 	}

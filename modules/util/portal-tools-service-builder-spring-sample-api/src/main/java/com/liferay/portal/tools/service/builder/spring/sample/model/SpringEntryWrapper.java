@@ -215,6 +215,11 @@ public class SpringEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SpringEntryWrapper wrap(SpringEntry springEntry) {
 		return new SpringEntryWrapper(springEntry);
 	}

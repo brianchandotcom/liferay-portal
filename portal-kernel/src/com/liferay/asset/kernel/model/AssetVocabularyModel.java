@@ -534,4 +534,8 @@ public interface AssetVocabularyModel
 	@Override
 	public AssetVocabulary cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

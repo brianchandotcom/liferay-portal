@@ -556,4 +556,8 @@ public interface SegmentsEntryModel
 	@Override
 	public SegmentsEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

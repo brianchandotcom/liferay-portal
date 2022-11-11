@@ -253,4 +253,8 @@ public interface AssetCategoryPropertyModel
 	@Override
 	public AssetCategoryProperty cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

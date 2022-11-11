@@ -497,4 +497,8 @@ public interface SegmentsExperienceModel
 	@Override
 	public SegmentsExperience cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

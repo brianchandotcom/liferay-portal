@@ -1454,6 +1454,11 @@ public class CalendarBookingWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CalendarBooking, Object>>
 		getAttributeGetterFunctions() {
 

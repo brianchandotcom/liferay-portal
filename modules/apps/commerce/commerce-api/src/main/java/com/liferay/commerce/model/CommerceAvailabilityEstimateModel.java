@@ -352,4 +352,8 @@ public interface CommerceAvailabilityEstimateModel
 	@Override
 	public CommerceAvailabilityEstimate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

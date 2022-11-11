@@ -186,6 +186,11 @@ public class ListTypeWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ListTypeWrapper wrap(ListType listType) {
 		return new ListTypeWrapper(listType);
 	}

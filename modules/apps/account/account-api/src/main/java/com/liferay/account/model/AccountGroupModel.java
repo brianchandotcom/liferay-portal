@@ -288,4 +288,8 @@ public interface AccountGroupModel
 	@Override
 	public AccountGroup cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

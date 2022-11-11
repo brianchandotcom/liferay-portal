@@ -543,6 +543,11 @@ public class FragmentCollectionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<FragmentCollection, Object>>
 		getAttributeGetterFunctions() {
 

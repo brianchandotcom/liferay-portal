@@ -306,4 +306,8 @@ public interface FVSActiveEntryModel
 	@Override
 	public FVSActiveEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

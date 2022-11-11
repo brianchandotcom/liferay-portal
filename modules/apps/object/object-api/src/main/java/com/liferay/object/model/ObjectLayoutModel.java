@@ -358,4 +358,8 @@ public interface ObjectLayoutModel
 	@Override
 	public ObjectLayout cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

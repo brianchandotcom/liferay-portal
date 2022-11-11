@@ -372,4 +372,8 @@ public interface CommerceVirtualOrderItemModel
 	@Override
 	public CommerceVirtualOrderItem cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

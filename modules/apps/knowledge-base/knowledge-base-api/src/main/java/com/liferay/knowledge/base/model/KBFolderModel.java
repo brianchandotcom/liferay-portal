@@ -312,4 +312,8 @@ public interface KBFolderModel
 	@Override
 	public KBFolder cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -291,6 +291,11 @@ public class AnalyticsMessageWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AnalyticsMessageWrapper wrap(AnalyticsMessage analyticsMessage) {
 		return new AnalyticsMessageWrapper(analyticsMessage);
 	}

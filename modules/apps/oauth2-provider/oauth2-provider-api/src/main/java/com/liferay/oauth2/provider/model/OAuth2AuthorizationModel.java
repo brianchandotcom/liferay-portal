@@ -335,4 +335,8 @@ public interface OAuth2AuthorizationModel
 	@Override
 	public OAuth2Authorization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

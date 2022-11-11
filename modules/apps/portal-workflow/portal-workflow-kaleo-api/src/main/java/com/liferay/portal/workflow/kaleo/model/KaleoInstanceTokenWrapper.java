@@ -676,6 +676,11 @@ public class KaleoInstanceTokenWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoInstanceToken, Object>>
 		getAttributeGetterFunctions() {
 

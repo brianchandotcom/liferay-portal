@@ -393,6 +393,11 @@ public class RedirectNotFoundEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected RedirectNotFoundEntryWrapper wrap(
 		RedirectNotFoundEntry redirectNotFoundEntry) {
 

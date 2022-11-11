@@ -267,6 +267,11 @@ public class CTermEntryLocalizationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CTermEntryLocalizationWrapper wrap(
 		CTermEntryLocalization cTermEntryLocalization) {
 

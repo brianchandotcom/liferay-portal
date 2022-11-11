@@ -316,4 +316,8 @@ public interface CSDiagramEntryModel
 	@Override
 	public CSDiagramEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

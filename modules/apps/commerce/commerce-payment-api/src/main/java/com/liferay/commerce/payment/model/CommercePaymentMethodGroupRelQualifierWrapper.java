@@ -402,6 +402,11 @@ public class CommercePaymentMethodGroupRelQualifierWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommercePaymentMethodGroupRelQualifierWrapper wrap(
 		CommercePaymentMethodGroupRelQualifier
 			commercePaymentMethodGroupRelQualifier) {

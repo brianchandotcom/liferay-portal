@@ -239,4 +239,8 @@ public interface CommercePricingClassCPDefinitionRelModel
 	@Override
 	public CommercePricingClassCPDefinitionRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

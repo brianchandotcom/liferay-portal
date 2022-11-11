@@ -131,4 +131,8 @@ public interface KaleoProcessLinkModel
 	@Override
 	public KaleoProcessLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

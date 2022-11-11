@@ -307,6 +307,11 @@ public class VirtualHostWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<VirtualHost, Object>>
 		getAttributeGetterFunctions() {
 

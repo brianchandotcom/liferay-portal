@@ -505,6 +505,11 @@ public class AuditEventWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AuditEventWrapper wrap(AuditEvent auditEvent) {
 		return new AuditEventWrapper(auditEvent);
 	}

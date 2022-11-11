@@ -432,4 +432,8 @@ public interface CPDefinitionSpecificationOptionValueModel
 	@Override
 	public CPDefinitionSpecificationOptionValue cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -489,4 +489,8 @@ public interface ObjectValidationRuleModel
 	@Override
 	public ObjectValidationRule cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

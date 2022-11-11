@@ -527,4 +527,8 @@ public interface FragmentEntryLinkModel
 	@Override
 	public FragmentEntryLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -483,4 +483,8 @@ public interface DefinitionModel
 	@Override
 	public Definition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

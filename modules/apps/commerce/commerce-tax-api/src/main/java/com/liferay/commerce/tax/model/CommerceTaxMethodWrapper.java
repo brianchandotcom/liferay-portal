@@ -738,6 +738,11 @@ public class CommerceTaxMethodWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceTaxMethodWrapper wrap(
 		CommerceTaxMethod commerceTaxMethod) {
 

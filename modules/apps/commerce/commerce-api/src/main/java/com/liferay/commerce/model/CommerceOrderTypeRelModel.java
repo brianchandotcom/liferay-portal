@@ -279,4 +279,8 @@ public interface CommerceOrderTypeRelModel
 	@Override
 	public CommerceOrderTypeRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

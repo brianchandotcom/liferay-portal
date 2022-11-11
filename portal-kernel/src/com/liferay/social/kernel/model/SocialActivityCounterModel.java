@@ -302,4 +302,8 @@ public interface SocialActivityCounterModel
 	@Override
 	public SocialActivityCounter cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

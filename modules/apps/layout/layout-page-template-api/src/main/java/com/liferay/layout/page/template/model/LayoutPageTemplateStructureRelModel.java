@@ -450,4 +450,8 @@ public interface LayoutPageTemplateStructureRelModel
 	@Override
 	public LayoutPageTemplateStructureRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

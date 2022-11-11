@@ -147,4 +147,8 @@ public interface UserTrackerPathModel
 	@Override
 	public UserTrackerPath cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

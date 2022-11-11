@@ -238,4 +238,8 @@ public interface OpenIdConnectSessionModel
 	@Override
 	public OpenIdConnectSession cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

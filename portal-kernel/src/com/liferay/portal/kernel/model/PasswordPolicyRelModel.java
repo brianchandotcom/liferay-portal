@@ -157,4 +157,8 @@ public interface PasswordPolicyRelModel
 	@Override
 	public PasswordPolicyRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

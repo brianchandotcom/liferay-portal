@@ -230,4 +230,8 @@ public interface FolderModel
 	@Override
 	public Folder cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

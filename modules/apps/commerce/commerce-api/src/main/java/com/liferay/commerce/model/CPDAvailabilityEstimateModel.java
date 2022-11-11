@@ -250,4 +250,8 @@ public interface CPDAvailabilityEstimateModel
 	@Override
 	public CPDAvailabilityEstimate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -407,6 +407,11 @@ public class CommerceInventoryBookedQuantityWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceInventoryBookedQuantityWrapper wrap(
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 

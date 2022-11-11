@@ -201,4 +201,8 @@ public interface CommerceAccountUserRelModel
 	@Override
 	public CommerceAccountUserRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

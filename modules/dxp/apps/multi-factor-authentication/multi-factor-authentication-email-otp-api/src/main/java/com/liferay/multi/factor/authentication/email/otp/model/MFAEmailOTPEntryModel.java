@@ -261,4 +261,8 @@ public interface MFAEmailOTPEntryModel
 	@Override
 	public MFAEmailOTPEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

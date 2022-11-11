@@ -431,4 +431,8 @@ public interface KaleoTaskInstanceTokenModel
 	@Override
 	public KaleoTaskInstanceToken cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

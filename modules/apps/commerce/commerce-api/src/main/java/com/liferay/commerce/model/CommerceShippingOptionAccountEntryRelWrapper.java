@@ -412,6 +412,11 @@ public class CommerceShippingOptionAccountEntryRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceShippingOptionAccountEntryRelWrapper wrap(
 		CommerceShippingOptionAccountEntryRel
 			commerceShippingOptionAccountEntryRel) {

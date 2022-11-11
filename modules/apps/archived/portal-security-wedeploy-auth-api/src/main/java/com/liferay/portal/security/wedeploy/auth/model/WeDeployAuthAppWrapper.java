@@ -370,6 +370,11 @@ public class WeDeployAuthAppWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected WeDeployAuthAppWrapper wrap(WeDeployAuthApp weDeployAuthApp) {
 		return new WeDeployAuthAppWrapper(weDeployAuthApp);
 	}

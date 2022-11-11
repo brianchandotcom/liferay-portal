@@ -196,4 +196,8 @@ public interface AssetAutoTaggerEntryModel
 	@Override
 	public AssetAutoTaggerEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

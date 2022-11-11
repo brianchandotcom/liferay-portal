@@ -349,4 +349,8 @@ public interface MBSuspiciousActivityModel
 	@Override
 	public MBSuspiciousActivity cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

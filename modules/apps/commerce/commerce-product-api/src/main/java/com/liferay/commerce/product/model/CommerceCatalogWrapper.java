@@ -505,6 +505,11 @@ public class CommerceCatalogWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommerceCatalog, Object>>
 		getAttributeGetterFunctions() {
 

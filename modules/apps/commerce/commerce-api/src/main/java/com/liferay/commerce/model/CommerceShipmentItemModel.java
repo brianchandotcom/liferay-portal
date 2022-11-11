@@ -296,4 +296,8 @@ public interface CommerceShipmentItemModel
 	@Override
 	public CommerceShipmentItem cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

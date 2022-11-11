@@ -197,4 +197,8 @@ public interface DLFileRankModel
 	@Override
 	public DLFileRank cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

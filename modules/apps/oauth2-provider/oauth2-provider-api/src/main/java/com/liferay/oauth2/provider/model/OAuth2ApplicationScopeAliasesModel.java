@@ -162,4 +162,8 @@ public interface OAuth2ApplicationScopeAliasesModel
 	@Override
 	public OAuth2ApplicationScopeAliases cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

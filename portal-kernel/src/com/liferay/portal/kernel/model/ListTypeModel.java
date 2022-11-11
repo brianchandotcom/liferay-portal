@@ -115,4 +115,8 @@ public interface ListTypeModel extends BaseModel<ListType>, MVCCModel {
 	@Override
 	public ListType cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

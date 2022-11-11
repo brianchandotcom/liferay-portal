@@ -134,4 +134,8 @@ public interface SamlSpAuthRequestModel
 	@Override
 	public SamlSpAuthRequest cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

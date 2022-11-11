@@ -152,4 +152,8 @@ public interface DDMDataProviderInstanceLinkModel
 	@Override
 	public DDMDataProviderInstanceLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

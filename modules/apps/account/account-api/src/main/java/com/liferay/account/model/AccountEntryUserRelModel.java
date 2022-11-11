@@ -146,4 +146,8 @@ public interface AccountEntryUserRelModel
 	@Override
 	public AccountEntryUserRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

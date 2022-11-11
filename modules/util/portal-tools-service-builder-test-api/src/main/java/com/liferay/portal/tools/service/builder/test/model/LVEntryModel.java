@@ -208,4 +208,8 @@ public interface LVEntryModel
 	@Override
 	public LVEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -286,4 +286,8 @@ public interface CProductModel
 	@Override
 	public CProduct cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

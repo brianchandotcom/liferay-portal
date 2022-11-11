@@ -436,4 +436,8 @@ public interface KaleoDefinitionModel
 	@Override
 	public KaleoDefinition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

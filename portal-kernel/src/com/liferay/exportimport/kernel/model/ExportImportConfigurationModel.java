@@ -453,4 +453,8 @@ public interface ExportImportConfigurationModel
 	@Override
 	public ExportImportConfiguration cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

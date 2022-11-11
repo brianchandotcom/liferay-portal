@@ -299,4 +299,8 @@ public interface AppModel
 	@Override
 	public App cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -454,6 +454,11 @@ public class MFATimeBasedOTPEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected MFATimeBasedOTPEntryWrapper wrap(
 		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
 

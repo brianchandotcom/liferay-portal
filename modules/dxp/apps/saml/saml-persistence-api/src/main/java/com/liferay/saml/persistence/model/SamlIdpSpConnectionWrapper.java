@@ -660,6 +660,11 @@ public class SamlIdpSpConnectionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SamlIdpSpConnectionWrapper wrap(
 		SamlIdpSpConnection samlIdpSpConnection) {
 

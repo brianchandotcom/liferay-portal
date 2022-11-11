@@ -885,6 +885,11 @@ public class CommerceAccountWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceAccountWrapper wrap(CommerceAccount commerceAccount) {
 		return new CommerceAccountWrapper(commerceAccount);
 	}

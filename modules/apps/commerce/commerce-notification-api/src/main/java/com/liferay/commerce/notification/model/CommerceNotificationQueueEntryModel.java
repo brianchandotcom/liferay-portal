@@ -434,4 +434,8 @@ public interface CommerceNotificationQueueEntryModel
 	@Override
 	public CommerceNotificationQueueEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

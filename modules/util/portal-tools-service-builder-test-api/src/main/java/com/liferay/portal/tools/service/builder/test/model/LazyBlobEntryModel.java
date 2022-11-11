@@ -129,4 +129,8 @@ public interface LazyBlobEntryModel extends BaseModel<LazyBlobEntry> {
 	@Override
 	public LazyBlobEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

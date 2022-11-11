@@ -451,6 +451,11 @@ public class DispatchLogWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected DispatchLogWrapper wrap(DispatchLog dispatchLog) {
 		return new DispatchLogWrapper(dispatchLog);
 	}

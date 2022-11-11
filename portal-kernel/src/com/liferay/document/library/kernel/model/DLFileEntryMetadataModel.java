@@ -196,4 +196,8 @@ public interface DLFileEntryMetadataModel
 	@Override
 	public DLFileEntryMetadata cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

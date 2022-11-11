@@ -604,4 +604,8 @@ public interface DDLRecordSetModel
 	@Override
 	public DDLRecordSet cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

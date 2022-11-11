@@ -236,6 +236,11 @@ public class CountryLocalizationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CountryLocalizationWrapper wrap(
 		CountryLocalization countryLocalization) {
 

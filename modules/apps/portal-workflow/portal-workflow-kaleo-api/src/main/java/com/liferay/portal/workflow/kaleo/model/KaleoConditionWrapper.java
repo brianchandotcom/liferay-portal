@@ -510,6 +510,11 @@ public class KaleoConditionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoCondition, Object>>
 		getAttributeGetterFunctions() {
 

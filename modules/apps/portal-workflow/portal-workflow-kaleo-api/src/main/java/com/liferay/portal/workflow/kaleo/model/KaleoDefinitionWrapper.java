@@ -696,6 +696,11 @@ public class KaleoDefinitionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoDefinition, Object>>
 		getAttributeGetterFunctions() {
 

@@ -619,4 +619,8 @@ public interface DDMFormInstanceVersionModel
 	@Override
 	public DDMFormInstanceVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

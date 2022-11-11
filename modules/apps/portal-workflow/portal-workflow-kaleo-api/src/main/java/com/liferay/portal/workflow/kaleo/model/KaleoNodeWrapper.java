@@ -779,6 +779,11 @@ public class KaleoNodeWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoNode, Object>>
 		getAttributeGetterFunctions() {
 

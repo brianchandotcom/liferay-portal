@@ -513,6 +513,11 @@ public class TrashEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<TrashEntry, Object>>
 		getAttributeGetterFunctions() {
 

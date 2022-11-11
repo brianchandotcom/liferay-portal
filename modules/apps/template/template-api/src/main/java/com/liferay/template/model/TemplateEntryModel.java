@@ -302,4 +302,8 @@ public interface TemplateEntryModel
 	@Override
 	public TemplateEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

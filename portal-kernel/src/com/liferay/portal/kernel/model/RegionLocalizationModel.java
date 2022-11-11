@@ -146,4 +146,8 @@ public interface RegionLocalizationModel
 	@Override
 	public RegionLocalization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -246,4 +246,8 @@ public interface HtmlPreviewEntryModel
 	@Override
 	public HtmlPreviewEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

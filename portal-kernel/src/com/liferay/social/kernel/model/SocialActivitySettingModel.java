@@ -210,4 +210,8 @@ public interface SocialActivitySettingModel
 	@Override
 	public SocialActivitySetting cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

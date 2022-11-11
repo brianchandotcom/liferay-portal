@@ -523,4 +523,8 @@ public interface DLFileShortcutModel
 	@Override
 	public DLFileShortcut cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -658,4 +658,8 @@ public interface DLFolderModel
 	@Override
 	public DLFolder cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

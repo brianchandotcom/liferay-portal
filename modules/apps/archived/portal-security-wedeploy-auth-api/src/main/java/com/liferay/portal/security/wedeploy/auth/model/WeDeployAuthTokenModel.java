@@ -216,4 +216,8 @@ public interface WeDeployAuthTokenModel
 	@Override
 	public WeDeployAuthToken cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

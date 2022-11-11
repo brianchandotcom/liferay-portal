@@ -517,6 +517,11 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceTaxFixedRateAddressRelWrapper wrap(
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
 

@@ -297,4 +297,8 @@ public interface KaleoTaskModel
 	@Override
 	public KaleoTask cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

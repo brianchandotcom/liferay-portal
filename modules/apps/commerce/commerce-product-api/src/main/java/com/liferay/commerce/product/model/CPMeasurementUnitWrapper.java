@@ -744,6 +744,11 @@ public class CPMeasurementUnitWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPMeasurementUnit, Object>>
 		getAttributeGetterFunctions() {
 

@@ -326,6 +326,11 @@ public class DLFileRankWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected DLFileRankWrapper wrap(DLFileRank dlFileRank) {
 		return new DLFileRankWrapper(dlFileRank);
 	}

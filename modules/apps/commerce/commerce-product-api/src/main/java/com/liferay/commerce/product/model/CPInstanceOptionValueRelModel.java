@@ -287,4 +287,8 @@ public interface CPInstanceOptionValueRelModel
 	@Override
 	public CPInstanceOptionValueRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

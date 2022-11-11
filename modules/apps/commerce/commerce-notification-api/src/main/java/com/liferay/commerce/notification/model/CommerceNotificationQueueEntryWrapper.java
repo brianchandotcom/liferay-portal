@@ -734,6 +734,11 @@ public class CommerceNotificationQueueEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceNotificationQueueEntryWrapper wrap(
 		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 

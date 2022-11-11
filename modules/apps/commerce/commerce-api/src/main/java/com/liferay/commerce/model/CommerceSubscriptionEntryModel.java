@@ -526,4 +526,8 @@ public interface CommerceSubscriptionEntryModel
 	@Override
 	public CommerceSubscriptionEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

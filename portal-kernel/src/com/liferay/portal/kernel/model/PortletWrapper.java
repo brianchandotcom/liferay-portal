@@ -3729,6 +3729,11 @@ public class PortletWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public void unsetReady() {
 		model.unsetReady();
 	}

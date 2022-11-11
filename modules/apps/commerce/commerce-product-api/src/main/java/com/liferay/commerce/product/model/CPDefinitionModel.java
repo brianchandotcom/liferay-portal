@@ -1023,4 +1023,8 @@ public interface CPDefinitionModel
 	@Override
 	public CPDefinition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

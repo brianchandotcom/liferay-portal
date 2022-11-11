@@ -284,4 +284,8 @@ public interface TrashEntryModel
 	@Override
 	public TrashEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

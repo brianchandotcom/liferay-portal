@@ -303,4 +303,8 @@ public interface RedirectEntryModel
 	@Override
 	public RedirectEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

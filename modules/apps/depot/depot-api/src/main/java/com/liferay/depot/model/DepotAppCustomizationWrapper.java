@@ -254,6 +254,11 @@ public class DepotAppCustomizationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected DepotAppCustomizationWrapper wrap(
 		DepotAppCustomization depotAppCustomization) {
 

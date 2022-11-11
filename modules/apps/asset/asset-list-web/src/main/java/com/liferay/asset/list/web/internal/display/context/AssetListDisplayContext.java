@@ -23,6 +23,7 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -264,6 +265,19 @@ public class AssetListDisplayContext {
 			_themeDisplay.getScopeGroupId(),
 			PortalUtil.getClassNameId(AssetListEntry.class),
 			String.valueOf(assetListEntry.getAssetListEntryId()));
+	}
+
+	public int getAssetListEntryVariationCount(AssetListEntry assetListEntry) {
+		int numVariations =
+			AssetListEntrySegmentsEntryRelLocalServiceUtil.
+				getAssetListEntrySegmentsEntryRelsCount(
+					assetListEntry.getAssetListEntryId());
+
+		if (numVariations < 2) {
+			return 0;
+		}
+
+		return numVariations;
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {

@@ -136,6 +136,12 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 
 							<liferay-ui:search-container-column-text
 								cssClass="text-truncate"
+								name="variations"
+								value="<%= String.valueOf(assetListDisplayContext.getAssetListEntryVariationCount(assetListEntry)) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="text-truncate"
 								name="usages"
 								value="<%= String.valueOf(assetListDisplayContext.getAssetListEntryUsageCount(assetListEntry)) %>"
 							/>

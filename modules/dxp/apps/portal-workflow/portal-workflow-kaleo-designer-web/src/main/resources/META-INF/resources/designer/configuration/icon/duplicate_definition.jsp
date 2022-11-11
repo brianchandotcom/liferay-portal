@@ -17,13 +17,10 @@
 <%@ include file="/designer/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />duplicateDefinition'
-	] = function () {
-		Liferay.fire('<portlet:namespace />duplicateDefinition');
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />duplicateDefinition',
+		() => {
+			Liferay.fire('<portlet:namespace />duplicateDefinition');
+		}
+	);
 </aui:script>

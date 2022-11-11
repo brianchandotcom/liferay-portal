@@ -17,15 +17,12 @@ import {openToast} from 'frontend-js-web';
 export default function ({namespace}) {
 	const fileInput = document.getElementById(`${namespace}importScriptInput`);
 
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		`${namespace}journalDDMTemplateImportScript`
-	] = function () {
-		fileInput.click();
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		`${namespace}journalDDMTemplateImportScript`,
+		() => {
+			fileInput.click();
+		}
+	);
 
 	const onChange = (event) => {
 		const target = event.target;

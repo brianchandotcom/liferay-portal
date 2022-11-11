@@ -17,19 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />staging'
-	] = function () {
-		Liferay.Portlet.openModal({
-			namespace: '<portlet:namespace />',
-			portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
-			portletId: '<%= portletDisplay.getId() %>',
-			title: '<liferay-ui:message key="staging" />',
-			url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLStaging()) %>',
-		});
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />staging',
+		() => {
+			Liferay.Portlet.openModal({
+				namespace: '<portlet:namespace />',
+				portletSelector: '#p_p_id_<%= portletDisplay.getId() %>_',
+				portletId: '<%= portletDisplay.getId() %>',
+				title: '<liferay-ui:message key="staging" />',
+				url: '<%= HtmlUtil.escapeJS(portletDisplay.getURLStaging()) %>',
+			});
+		}
+	);
 </aui:script>

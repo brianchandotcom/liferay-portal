@@ -29,13 +29,10 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 </portlet:renderURL>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />restoreTrash'
-	] = function () {
-		<portlet:namespace />restoreDialog('<%= restoreTrashURL %>');
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />restoreTrash',
+		() => {
+			<portlet:namespace />restoreDialog('<%= restoreTrashURL %>');
+		}
+	);
 </aui:script>

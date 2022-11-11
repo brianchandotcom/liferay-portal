@@ -27,17 +27,14 @@ KBTemplate kbTemplate = (KBTemplate)liferayPortletRequest.getAttribute(KBWebKeys
 </portlet:renderURL>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />printKBTemplate'
-	] = function () {
-		window.open(
-			'<%= printURL %>',
-			'',
-			'directories=no,height=640,location=no, menubar=no,resizable=yes,scrollbars=yes,status=0, toolbar=0,width=680'
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />printKBTemplate',
+		() => {
+			window.open(
+				'<%= printURL %>',
+				'',
+				'directories=no,height=640,location=no, menubar=no,resizable=yes,scrollbars=yes,status=0, toolbar=0,width=680'
+			);
+		}
+	);
 </aui:script>

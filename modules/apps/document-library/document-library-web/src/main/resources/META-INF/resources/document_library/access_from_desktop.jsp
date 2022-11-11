@@ -36,38 +36,35 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 </div>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />accessFromDesktop',
+		() => {
+			var webdavContentContainer = document.getElementById(
+				'<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav'
+			);
 
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />accessFromDesktop'
-	] = function () {
-		var webdavContentContainer = document.getElementById(
-			'<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav'
-		);
+			var html = '';
 
-		var html = '';
+			if (webdavContentContainer) {
+				html = webdavContentContainer.innerHTML;
 
-		if (webdavContentContainer) {
-			html = webdavContentContainer.innerHTML;
+				webdavContentContainer.remove();
 
-			webdavContentContainer.remove();
+				Liferay.Util.openModal({
+					bodyHTML: html,
+					onOpen: function (event) {
+						var webdavURLInput = document.getElementById(
+							'<portlet:namespace /><%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDavURL'
+						);
 
-			Liferay.Util.openModal({
-				bodyHTML: html,
-				onOpen: function (event) {
-					var webdavURLInput = document.getElementById(
-						'<portlet:namespace /><%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDavURL'
-					);
-
-					if (webdavURLInput) {
-						webdavURLInput.focus();
-					}
-				},
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
-			});
+						if (webdavURLInput) {
+							webdavURLInput.focus();
+						}
+					},
+					title:
+						'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
+				});
+			}
 		}
-	};
+	);
 </aui:script>

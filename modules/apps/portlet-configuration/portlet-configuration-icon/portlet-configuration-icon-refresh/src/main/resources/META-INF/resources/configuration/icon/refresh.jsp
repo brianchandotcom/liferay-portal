@@ -17,13 +17,10 @@
 <%@ include file="/configuration/icon/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />refresh'
-	] = function () {
-		Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />refresh',
+		() => {
+			Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+		}
+	);
 </aui:script>

@@ -17,16 +17,13 @@
 <%@ include file="/configuration/icon/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />maximize'
-	] = function () {
-		submitForm(
-			document.hrefFm,
-			'<%= HtmlUtil.escapeJS(portletDisplay.getURLMax()) %>'
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />maximize',
+		() => {
+			submitForm(
+				document.hrefFm,
+				'<%= HtmlUtil.escapeJS(portletDisplay.getURLMax()) %>'
+			);
+		}
+	);
 </aui:script>

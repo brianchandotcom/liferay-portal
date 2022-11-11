@@ -17,16 +17,13 @@
 <%@ include file="/configuration/icon/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />minimize'
-	] = function (event) {
-		Liferay.Portlet.minimize(
-			'#p_p_id_<%= portletDisplay.getId() %>_',
-			event.target.closest('button')
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />minimize',
+		() => {
+			Liferay.Portlet.minimize(
+				'#p_p_id_<%= portletDisplay.getId() %>_',
+				event.target.closest('button')
+			);
+		}
+	);
 </aui:script>

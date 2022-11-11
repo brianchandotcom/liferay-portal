@@ -21,21 +21,21 @@
 </portlet:actionURL>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />emptyTrash'
-	] = function () {
-		Liferay.Util.openConfirmModal({
-			message:
-				'<liferay-ui:message key="are-you-sure-you-want-to-empty-the-recycle-bin" />',
-			onConfirm: (isConfirmed) => {
-				if (isConfirmed) {
-					submitForm(document.hrefFm, '<%= emptyTrashURL.toString() %>');
-				}
-			},
-		});
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />emptyTrash',
+		() => {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<liferay-ui:message key="are-you-sure-you-want-to-empty-the-recycle-bin" />',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						submitForm(
+							document.hrefFm,
+							'<%= emptyTrashURL.toString() %>'
+						);
+					}
+				},
+			});
+		}
+	);
 </aui:script>

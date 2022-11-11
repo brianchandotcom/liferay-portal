@@ -21,16 +21,13 @@ UserGroup userGroup = ActionUtil.getUserGroup(renderRequest);
 %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />deleteUserGroup'
-	] = function () {
-		<portlet:namespace />doDeleteUserGroup(
-			'<%= UserGroup.class.getName() %>',
-			'<%= userGroup.getUserGroupId() %>'
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />deleteUserGroup',
+		() => {
+			<portlet:namespace />doDeleteUserGroup(
+				'<%= UserGroup.class.getName() %>',
+				'<%= userGroup.getUserGroupId() %>'
+			);
+		}
+	);
 </aui:script>

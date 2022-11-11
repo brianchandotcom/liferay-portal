@@ -17,15 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />deletePasswordPolicy'
-	] = function () {
-		<portlet:namespace />deletePasswordPolicy(
-			'<%= ParamUtil.getLong(request, "passwordPolicyId") %>'
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />deletePasswordPolicy',
+		() => {
+			<portlet:namespace />deletePasswordPolicy(
+				'<%= ParamUtil.getLong(request, "passwordPolicyId") %>'
+			);
+		}
+	);
 </aui:script>

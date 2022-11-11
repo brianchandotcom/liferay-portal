@@ -292,13 +292,12 @@ public class TestFlowTestrayDispatchTaskExecutor
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
 			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
 
-		Map<String, String> map = HashMapBuilder.put(
-			"errors", "errors"
-		).build();
-
 		Aggregation aggregation = new Aggregation();
 
-		aggregation.setAggregationTerms(map);
+		aggregation.setAggregationTerms(
+			HashMapBuilder.put(
+				"errors", "errors"
+			).build());
 
 		long testrayBuildId = GetterUtil.getLong(
 			unicodeProperties.getProperty("testrayBuildId"));

@@ -123,6 +123,24 @@ public class Dom4JUtil {
 		return writer.toString();
 	}
 
+	public static Element getNewAnchorElement(
+		String href, Element parentElement, Object... items) {
+
+		if ((items == null) || (items.length == 0)) {
+			return null;
+		}
+
+		Element anchorElement = getNewElement("a", parentElement, items);
+
+		anchorElement.addAttribute("href", href);
+
+		return anchorElement;
+	}
+
+	public static Element getNewAnchorElement(String href, Object... items) {
+		return getNewAnchorElement(href, null, items);
+	}
+
 	public static Element getNewElement(String childElementTag) {
 		return getNewElement(childElementTag, null);
 	}

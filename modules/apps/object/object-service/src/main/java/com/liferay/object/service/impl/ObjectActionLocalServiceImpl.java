@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -254,7 +255,25 @@ public class ObjectActionLocalServiceImpl
 
 		if (Objects.equals(
 				objectActionExecutorKey,
-				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY)) {
+				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY) &&
+			Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE)) {
+
+			throw new ObjectActionTriggerKeyException(
+				StringBundler.concat(
+					"The executor key",
+					ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+					" is not allowed for trigger key",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE));
+		}
+
+		if (Objects.equals(
+				objectActionExecutorKey,
+				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY) ||
+			Objects.equals(
+				objectActionExecutorKey,
+				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
 
 			long objectDefinitionId = GetterUtil.getLong(
 				parametersUnicodeProperties.get("objectDefinitionId"));
@@ -270,7 +289,8 @@ public class ObjectActionLocalServiceImpl
 			}
 			else {
 				_validatePredefinedValues(
-					errorMessageKeys, objectDefinitionId,
+					errorMessageKeys, objectActionExecutorKey,
+					objectDefinitionId,
 					_jsonFactory.createJSONArray(
 						parametersUnicodeProperties.get("predefinedValues")));
 			}
@@ -306,8 +326,8 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	private void _validatePredefinedValues(
-		Map<String, Object> errorMessageKeys, long objectDefinitionId,
-		JSONArray predefinedValuesJSONArray) {
+		Map<String, Object> errorMessageKeys, String objectActionExecutorKey,
+		long objectDefinitionId, JSONArray predefinedValuesJSONArray) {
 
 		Map<String, String> predefinedValuesErrorMessageKeys = new HashMap<>();
 
@@ -332,6 +352,15 @@ public class ObjectActionLocalServiceImpl
 
 			predefinedValuesMap.put(name, value);
 
+			if (Objects.equals(
+					objectActionExecutorKey,
+					ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY) &&
+				objectField.isRequired() && Validator.isNull(value)) {
+
+				predefinedValuesErrorMessageKeys.put(
+					objectField.getName(), "required");
+			}
+
 			if (Validator.isNull(value) ||
 				predefinedValueJSONObject.getBoolean("inputAsValue")) {
 
@@ -351,6 +380,13 @@ public class ObjectActionLocalServiceImpl
 
 				predefinedValuesErrorMessageKeys.put(name, "syntax-error");
 			}
+		}
+
+		if (Objects.equals(
+				objectActionExecutorKey,
+				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
+
+			return;
 		}
 
 		for (ObjectField objectField :

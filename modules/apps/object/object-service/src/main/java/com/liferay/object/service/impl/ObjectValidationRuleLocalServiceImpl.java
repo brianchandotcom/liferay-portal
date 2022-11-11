@@ -208,7 +208,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
 		Map<String, Object> variables =
-			ObjectEntryVariablesUtil.toValidationRuleVariables(
+			ObjectEntryVariablesUtil.getValidationRuleVariables(
 				baseModel, _dtoConverterRegistry, objectDefinition,
 				_objectEntryLocalService, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry);

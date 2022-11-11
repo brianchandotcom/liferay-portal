@@ -203,9 +203,10 @@ public class AddObjectEntryObjectActionExecutorImpl
 
 		Map<String, Object> values = new HashMap<>();
 
-		Map<String, Object> variables = ObjectEntryVariablesUtil.toVariables(
-			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-			_systemObjectDefinitionMetadataRegistry);
+		Map<String, Object> variables =
+			ObjectEntryVariablesUtil.getActionVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionMetadataRegistry);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			parametersUnicodeProperties.get("predefinedValues"));

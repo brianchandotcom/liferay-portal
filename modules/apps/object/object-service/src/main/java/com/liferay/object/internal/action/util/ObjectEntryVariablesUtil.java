@@ -42,48 +42,7 @@ import java.util.Map;
  */
 public class ObjectEntryVariablesUtil {
 
-	public static Map<String, Object> toValidationRuleVariables(
-			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
-			ObjectDefinition objectDefinition,
-			ObjectEntryLocalService objectEntryLocalService,
-			JSONObject payloadJSONObject,
-			SystemObjectDefinitionMetadataRegistry
-				systemObjectDefinitionMetadataRegistry)
-		throws PortalException {
-
-		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
-			return toVariables(
-				dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				systemObjectDefinitionMetadataRegistry);
-		}
-
-		Map<String, Object> variables = HashMapBuilder.<String, Object>putAll(
-			baseModel.getModelAttributes()
-		).build();
-
-		if (baseModel instanceof ObjectEntry) {
-			variables.putAll(
-				objectEntryLocalService.getValues((ObjectEntry)baseModel));
-		}
-		else {
-			Map<String, Serializable> extendedProperties =
-				EntityExtensionThreadLocal.getExtendedProperties();
-
-			if (extendedProperties != null) {
-				variables.putAll(extendedProperties);
-			}
-		}
-
-		variables.putAll(
-			objectEntryLocalService.
-				getExtensionDynamicObjectDefinitionTableValues(
-					objectDefinition,
-					GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
-
-		return variables;
-	}
-
-	public static Map<String, Object> toVariables(
+	public static Map<String, Object> getActionVariables(
 		DTOConverterRegistry dtoConverterRegistry,
 		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
 		SystemObjectDefinitionMetadataRegistry
@@ -188,6 +147,47 @@ public class ObjectEntryVariablesUtil {
 		variables.put("creator", variables.get("userName"));
 		variables.put("currentUserId", payloadJSONObject.getLong("userId"));
 		variables.put("id", payloadJSONObject.getLong("classPK"));
+
+		return variables;
+	}
+
+	public static Map<String, Object> getValidationRuleVariables(
+			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
+			ObjectDefinition objectDefinition,
+			ObjectEntryLocalService objectEntryLocalService,
+			JSONObject payloadJSONObject,
+			SystemObjectDefinitionMetadataRegistry
+				systemObjectDefinitionMetadataRegistry)
+		throws PortalException {
+
+		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
+			return getActionVariables(
+				dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				systemObjectDefinitionMetadataRegistry);
+		}
+
+		Map<String, Object> variables = HashMapBuilder.<String, Object>putAll(
+			baseModel.getModelAttributes()
+		).build();
+
+		if (baseModel instanceof ObjectEntry) {
+			variables.putAll(
+				objectEntryLocalService.getValues((ObjectEntry)baseModel));
+		}
+		else {
+			Map<String, Serializable> extendedProperties =
+				EntityExtensionThreadLocal.getExtendedProperties();
+
+			if (extendedProperties != null) {
+				variables.putAll(extendedProperties);
+			}
+		}
+
+		variables.putAll(
+			objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition,
+					GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
 
 		return variables;
 	}

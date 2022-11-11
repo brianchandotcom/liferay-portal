@@ -120,9 +120,10 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 		Set<Long> objectActionIds =
 			ObjectActionThreadLocal.getObjectActionIds();
-		Map<String, Object> variables = ObjectEntryVariablesUtil.toVariables(
-			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-			_systemObjectDefinitionMetadataRegistry);
+		Map<String, Object> variables =
+			ObjectEntryVariablesUtil.getActionVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionMetadataRegistry);
 
 		for (ObjectAction objectAction :
 				_objectActionLocalService.getObjectActions(

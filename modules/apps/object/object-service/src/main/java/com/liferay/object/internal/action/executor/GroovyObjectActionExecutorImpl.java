@@ -50,7 +50,7 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 				payloadJSONObject.getLong("objectDefinitionId"));
 
 		Map<String, Object> results = _objectScriptingExecutor.execute(
-			ObjectEntryVariablesUtil.toVariables(
+			ObjectEntryVariablesUtil.getActionVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				_systemObjectDefinitionMetadataRegistry),
 			new HashSet<>(), parametersUnicodeProperties.get("script"));

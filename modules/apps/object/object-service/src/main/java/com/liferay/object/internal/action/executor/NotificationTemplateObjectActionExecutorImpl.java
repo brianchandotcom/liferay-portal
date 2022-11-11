@@ -64,9 +64,10 @@ public class NotificationTemplateObjectActionExecutorImpl
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> termValues = ObjectEntryVariablesUtil.toVariables(
-			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-			_systemObjectDefinitionMetadataRegistry);
+		Map<String, Object> termValues =
+			ObjectEntryVariablesUtil.getActionVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionMetadataRegistry);
 
 		notificationType.sendNotification(
 			notificationContextBuilder.className(

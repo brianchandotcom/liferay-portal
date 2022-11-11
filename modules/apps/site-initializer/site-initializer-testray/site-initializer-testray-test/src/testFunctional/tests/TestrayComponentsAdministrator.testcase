@@ -74,7 +74,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
-			Testray.addNewTeam(teamName = "Components_1 Team");
+			TestrayManage.createTeam(teamName = "Components_1 Team");
 
 			Testray.assertItemName(key_name = "Components_1 Team");
 		}
@@ -130,7 +130,9 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
-			Testray.addNewTeam(teamName = "Components_1 Team,Components_1 Team Second");
+			TestrayManage.createTeam(teamName = "Components_1 Team");
+
+			TestrayManage.createTeam(teamName = "Components_1 Team Second");
 
 			Testray.assertItemName(key_name = "Components_1 Team");
 

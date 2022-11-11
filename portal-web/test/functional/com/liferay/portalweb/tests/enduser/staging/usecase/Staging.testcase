@@ -1008,6 +1008,97 @@ definition {
 			searchAssetType = "Web Content");
 	}
 
+	@description = "This is a test for LPS-149374. TC-4: Verify if Publish Displayed Content by Default is set to false, DDL content will not be published via portlet if content is unchecked in the staging process."
+	@ignore = "true"
+	@priority = "4"
+	test PublishDDLViaPortletWithoutContent {
+		property test.name.skip.portal.instance = "Staging#PublishDDLViaPortletWithoutContent";
+
+		task ("Given: Unable the publish displayed content by default function and enable local staging") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Publish Displayed Content by Default");
+
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
+
+		task ("And: Create 1DDL content and connect it to display portlets on the page") {
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name-staging");
+
+			DDLList.addCP(
+				ddlListDescription = "Contacts Description",
+				ddlListName = "Contacts");
+
+			DDLDataDefinition.selectCP(ddlDataDefinitionName = "Contacts");
+
+			DDLDataDefinition.save();
+
+			DDLRecord.addCP(
+				ddlDataDefinitionName = "Contacts",
+				ddlListName = "Contacts");
+
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "Liferay",
+				fieldFieldLabel = "Company",
+				fieldName = "company");
+
+			PortletEntry.publish();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+
+			PagesAdmin.configurePage(
+				columnName = "1 Column",
+				pageName = "Staging Test Page",
+				sitePageType = "Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Staging Test Page",
+				site = "false",
+				widgetName = "Dynamic Data Lists Display");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			DDLList.selectViaDDLDisplayPG(ddlListName = "Contacts");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When: Publish staging without DDL content") {
+			Staging.gotoPublishToLive();
+
+			Staging.configurePublishToLive(
+				checkPageName = "Staging Test Page",
+				contentDateRange = "All",
+				uncheckContentNameList = "Dynamic Data Lists");
+
+			Staging.publishToLive();
+		}
+
+		task ("Then: Verify that the DDL portlet is present on Live but not the content from DDL") {
+			Navigator.gotoSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Portlet.viewPG(
+				portletBody = "Select an existing list or add a list to be displayed in this application.",
+				portletName = "Dynamic Data Lists Display");
+
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Contacts");
+		}
+	}
+
 	@description = "This is a use case for LPS-91959."
 	@priority = "3"
 	test PublishPageDeletions {

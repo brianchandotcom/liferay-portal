@@ -22,7 +22,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
@@ -39,16 +39,16 @@ public class DisplayPageTypeContext {
 		String className, InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry,
-		LayoutDisplayPageMultiSelectionProviderTracker
-			layoutDisplayPageMultiSelectionProviderTracker,
+		LayoutDisplayPageMultiSelectionProviderRegistry
+			layoutDisplayPageMultiSelectionProviderRegistry,
 		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
 
 		_className = className;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry =
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry;
-		_layoutDisplayPageMultiSelectionProviderTracker =
-			layoutDisplayPageMultiSelectionProviderTracker;
+		_layoutDisplayPageMultiSelectionProviderRegistry =
+			layoutDisplayPageMultiSelectionProviderRegistry;
 		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
 	}
 
@@ -97,7 +97,7 @@ public class DisplayPageTypeContext {
 		getLayoutDisplayPageMultiSelectionProviderOptional() {
 
 		return Optional.ofNullable(
-			_layoutDisplayPageMultiSelectionProviderTracker.
+			_layoutDisplayPageMultiSelectionProviderRegistry.
 				getLayoutDisplayPageMultiSelectionProvider(_className));
 	}
 
@@ -136,8 +136,8 @@ public class DisplayPageTypeContext {
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
-	private final LayoutDisplayPageMultiSelectionProviderTracker
-		_layoutDisplayPageMultiSelectionProviderTracker;
+	private final LayoutDisplayPageMultiSelectionProviderRegistry
+		_layoutDisplayPageMultiSelectionProviderRegistry;
 	private final LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
 

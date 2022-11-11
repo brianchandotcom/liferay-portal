@@ -18,7 +18,7 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.HierarchicalInfoItemReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -115,7 +115,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 				LayoutDisplayPageMultiSelectionProvider<?>
 					layoutDisplayPageMultiSelectionProvider =
-						_layoutDisplayPageMultiSelectionProviderTracker.
+						_layoutDisplayPageMultiSelectionProviderRegistry.
 							getLayoutDisplayPageMultiSelectionProvider(
 								siteNavigationMenuItemType);
 
@@ -241,8 +241,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 	private Language _language;
 
 	@Reference
-	private LayoutDisplayPageMultiSelectionProviderTracker
-		_layoutDisplayPageMultiSelectionProviderTracker;
+	private LayoutDisplayPageMultiSelectionProviderRegistry
+		_layoutDisplayPageMultiSelectionProviderRegistry;
 
 	@Reference
 	private Portal _portal;

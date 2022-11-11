@@ -46,10 +46,11 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 	}
 

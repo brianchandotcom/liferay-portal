@@ -86,7 +86,9 @@ type ListViewPayload = {
 	[ListViewTypes.SET_UPDATE_FILTERS_AND_SORT]: {filters?: any};
 };
 
-type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<ListViewPayload>];
+export type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<
+	ListViewPayload
+>];
 
 export const ListViewContext = createContext<
 	[InitialState, (param: AppActions) => void]

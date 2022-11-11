@@ -28,6 +28,7 @@ import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';
 import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import QATable from '../../components/Table/QATable';
+import {ListViewTypes} from '../../context/ListViewContext';
 import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
 import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
@@ -323,24 +324,32 @@ const TestFlowTasks = () => {
 					variables={{
 						filter: searchUtil.eq('taskId', testrayTask.id),
 					}}
-				/>
+				>
+					{(_, dispatch) => (
+						<FloatingBox
+							clearList={() =>
+								dispatch({
+									payload: [],
+									type: ListViewTypes.SET_CHECKED_ROW,
+								})
+							}
+							isVisible={!!selectedRows.length}
+							primaryButtonProps={{
+								title: i18n.translate('merge-subtasks'),
+							}}
+							selectedCount={selectedRows.length}
+							tooltipText={i18n.translate(
+								'merge-selected-subtasks-into-the-highest-scoring-subtask'
+							)}
+						/>
+					)}
+				</ListView>
 			</Container>
 
 			<SubtaskCompleteModal
 				modal={completeModal}
 				mutate={mutateTask}
 				subtask={completeModal.modalState}
-			/>
-
-			<FloatingBox
-				isVisible={!!selectedRows.length}
-				primaryButtonProps={{
-					title: i18n.translate('merge-subtasks'),
-				}}
-				selectedCount={selectedRows.length}
-				tooltipText={i18n.translate(
-					'merge-selected-subtasks-into-the-highest-scoring-subtask'
-				)}
 			/>
 		</>
 	);

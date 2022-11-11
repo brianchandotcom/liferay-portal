@@ -24,6 +24,7 @@ import {
 import {KeyedMutator} from 'swr';
 
 import ListViewContextProvider, {
+	AppActions,
 	InitialState as ListViewContextState,
 	ListViewContext,
 	ListViewContextProviderProps,
@@ -41,7 +42,11 @@ import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
 
 export type ListViewProps<T = any> = {
-	children?: (response: APIResponse, mutate: KeyedMutator<any>) => ReactNode;
+	children?: (
+		response: APIResponse,
+		dispatch: React.Dispatch<AppActions>,
+		mutate: KeyedMutator<any>
+	) => ReactNode;
 	forceRefetch?: number;
 	managementToolbarProps?: {
 		visible?: boolean;
@@ -236,7 +241,7 @@ const ListViewRest: React.FC<ListViewProps> = ({
 
 			{!items.length && <EmptyState />}
 
-			{children && children(response as APIResponse, mutate)}
+			{children && children(response as APIResponse, dispatch, mutate)}
 
 			{!!items.length && (
 				<>

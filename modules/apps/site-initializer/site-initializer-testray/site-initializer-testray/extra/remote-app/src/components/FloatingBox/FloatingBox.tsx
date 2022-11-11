@@ -29,7 +29,7 @@ type FloatingBoxProps = {
 	isVisible: boolean;
 	onSubmit?: () => void;
 	primaryButtonProps?: ButtonProps;
-	selectedCount?: number;
+	selectedCount: number;
 	tooltipText: string;
 };
 

@@ -112,8 +112,7 @@ public class RESTBuilderModulesBatchTestClassGroup
 
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
-		List<PathMatcher> includesPathMatchers = getPathMatchers(
-			getIncludesJobProperties());
+		List<PathMatcher> includesPathMatchers = getIncludesPathMatchers();
 
 		if (testRelevantChanges &&
 			!(includeStableTestSuite && isStableTestSuiteBatch())) {

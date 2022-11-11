@@ -75,8 +75,7 @@ public class JSUnitModulesBatchTestClassGroup
 
 		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
-		List<PathMatcher> includesPathMatchers = getPathMatchers(
-			getIncludesJobProperties());
+		List<PathMatcher> includesPathMatchers = getIncludesPathMatchers();
 
 		if (testRelevantChanges) {
 			moduleDirs.addAll(

@@ -91,112 +91,12 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentStyle": {
-												"borderRadius": "",
-												"borderWidth": "0",
-												"shadow": "",
-												"textAlign": ""
-											},
-											"indexed": true,
-											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
+											"fragmentSettings": {
+												"unallowedFragments": [
+												]
 											}
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderRadius": "",
-														"borderWidth": "0",
-														"height": "64px",
-														"marginLeft": "4",
-														"shadow": "",
-														"textAlign": ""
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"justify": "SpaceBetween",
-														"marginBottom": 0,
-														"marginLeft": 2,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "project-breadcrumbs"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderRadius": "",
-														"borderWidth": "0",
-														"marginRight": "4",
-														"shadow": "",
-														"textAlign": ""
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 2,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentSettings": {
-																"unallowedFragments": [
-																]
-															}
-														},
-														"type": "DropZone"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Section"
+										"type": "DropZone"
 									},
 									{
 										"definition": {
@@ -304,17 +204,13 @@
 																							"en_US": ""
 																						}
 																					},
-																					"fragmentImageClassPKReference": {
-																						"classPKReferences": {
-																							"en_US": {
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
 																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/assets/liferay_brand.svg#]"
 																							}
-																						},
-																						"fragmentImageConfiguration": {
-																							"landscapeMobile": "auto",
-																							"portraitMobile": "auto",
-																							"tablet": "auto"
 																						}
 																					}
 																				},
@@ -373,7 +269,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h6"
+																		"textType": "h6",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -435,7 +332,8 @@
 																		"key": "DIALECT-dialect-text"
 																	},
 																	"fragmentConfig": {
-																		"textType": "h6"
+																		"textType": "h6",
+																		"truncateText": false
 																	},
 																	"fragmentFields": [
 																		{

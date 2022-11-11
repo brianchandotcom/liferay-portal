@@ -293,6 +293,8 @@ public class NotificationTemplateResourceImpl
 					serviceBuilderNotificationTemplate.getModifiedDate();
 				description =
 					serviceBuilderNotificationTemplate.getDescription();
+				editorType = NotificationTemplate.EditorType.create(
+					serviceBuilderNotificationTemplate.getEditorType());
 				id =
 					serviceBuilderNotificationTemplate.
 						getNotificationTemplateId();

@@ -108,6 +108,8 @@ public class NotificationUtil {
 			LocalizedMapUtil.getLocalizedMap(notificationTemplate.getBody()));
 		serviceBuilderNotificationTemplate.setDescription(
 			notificationTemplate.getDescription());
+		serviceBuilderNotificationTemplate.setEditorType(
+			notificationTemplate.getEditorTypeAsString());
 		serviceBuilderNotificationTemplate.setName(
 			notificationTemplate.getName());
 		serviceBuilderNotificationTemplate.setRecipientType(

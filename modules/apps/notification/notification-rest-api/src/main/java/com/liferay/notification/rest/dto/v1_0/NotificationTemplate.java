@@ -14,9 +14,11 @@
 
 package com.liferay.notification.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -235,6 +237,44 @@ public class NotificationTemplate implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
+
+	@Schema
+	@Valid
+	public EditorType getEditorType() {
+		return editorType;
+	}
+
+	@JsonIgnore
+	public String getEditorTypeAsString() {
+		if (editorType == null) {
+			return null;
+		}
+
+		return editorType.toString();
+	}
+
+	public void setEditorType(EditorType editorType) {
+		this.editorType = editorType;
+	}
+
+	@JsonIgnore
+	public void setEditorType(
+		UnsafeSupplier<EditorType, Exception> editorTypeUnsafeSupplier) {
+
+		try {
+			editorType = editorTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected EditorType editorType;
 
 	@Schema
 	public Long getId() {
@@ -599,6 +639,20 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"");
 		}
 
+		if (editorType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"editorType\": ");
+
+			sb.append("\"");
+
+			sb.append(editorType);
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -730,6 +784,44 @@ public class NotificationTemplate implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("EditorType")
+	public static enum EditorType {
+
+		FREEMARKER("freemarker"), RICH_TEXT("richText");
+
+		@JsonCreator
+		public static EditorType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (EditorType editorType : values()) {
+				if (Objects.equals(editorType.getValue(), value)) {
+					return editorType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private EditorType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

@@ -1017,6 +1017,14 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("editorType", additionalAssertFieldName)) {
+				if (notificationTemplate.getEditorType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (notificationTemplate.getName() == null) {
 					valid = false;
@@ -1239,6 +1247,17 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						notificationTemplate1.getDescription(),
 						notificationTemplate2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("editorType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						notificationTemplate1.getEditorType(),
+						notificationTemplate2.getEditorType())) {
 
 					return false;
 				}
@@ -1534,6 +1553,11 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("editorType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("id")) {

@@ -165,6 +165,35 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected String description;
 
+	public EditorType getEditorType() {
+		return editorType;
+	}
+
+	public String getEditorTypeAsString() {
+		if (editorType == null) {
+			return null;
+		}
+
+		return editorType.toString();
+	}
+
+	public void setEditorType(EditorType editorType) {
+		this.editorType = editorType;
+	}
+
+	public void setEditorType(
+		UnsafeSupplier<EditorType, Exception> editorTypeUnsafeSupplier) {
+
+		try {
+			editorType = editorTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected EditorType editorType;
+
 	public Long getId() {
 		return id;
 	}
@@ -379,6 +408,39 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	public String toString() {
 		return NotificationTemplateSerDes.toJSON(this);
+	}
+
+	public static enum EditorType {
+
+		FREEMARKER("freemarker"), RICH_TEXT("richText");
+
+		public static EditorType create(String value) {
+			for (EditorType editorType : values()) {
+				if (Objects.equals(editorType.getValue(), value) ||
+					Objects.equals(editorType.name(), value)) {
+
+					return editorType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private EditorType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

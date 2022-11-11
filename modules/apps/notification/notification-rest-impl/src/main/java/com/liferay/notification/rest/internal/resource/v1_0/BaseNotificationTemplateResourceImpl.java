@@ -137,7 +137,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -323,7 +323,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -386,6 +386,11 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getDescription());
 		}
 
+		if (notificationTemplate.getEditorType() != null) {
+			existingNotificationTemplate.setEditorType(
+				notificationTemplate.getEditorType());
+		}
+
 		if (notificationTemplate.getName() != null) {
 			existingNotificationTemplate.setName(
 				notificationTemplate.getName());
@@ -430,7 +435,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "body": ___, "description": ___, "editorType": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "recipientType": ___, "recipients": ___, "subject": ___, "type": ___, "typeLabel": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

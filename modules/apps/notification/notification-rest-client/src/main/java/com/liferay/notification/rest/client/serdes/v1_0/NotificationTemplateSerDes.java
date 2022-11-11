@@ -154,6 +154,20 @@ public class NotificationTemplateSerDes {
 			sb.append("\"");
 		}
 
+		if (notificationTemplate.getEditorType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"editorType\": ");
+
+			sb.append("\"");
+
+			sb.append(notificationTemplate.getEditorType());
+
+			sb.append("\"");
+		}
+
 		if (notificationTemplate.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -354,6 +368,15 @@ public class NotificationTemplateSerDes {
 				String.valueOf(notificationTemplate.getDescription()));
 		}
 
+		if (notificationTemplate.getEditorType() == null) {
+			map.put("editorType", null);
+		}
+		else {
+			map.put(
+				"editorType",
+				String.valueOf(notificationTemplate.getEditorType()));
+		}
+
 		if (notificationTemplate.getId() == null) {
 			map.put("id", null);
 		}
@@ -487,6 +510,13 @@ public class NotificationTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					notificationTemplate.setDescription(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "editorType")) {
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setEditorType(
+						NotificationTemplate.EditorType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

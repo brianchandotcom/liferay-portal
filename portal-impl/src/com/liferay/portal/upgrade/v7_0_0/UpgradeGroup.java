@@ -15,18 +15,22 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
 
@@ -34,8 +38,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -102,8 +108,13 @@ public class UpgradeGroup extends UpgradeProcess {
 	protected void updateGroupsNames() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					"select groupId, name, typeSettings from Group_ where " +
-						"site = [$TRUE$] and friendlyURL != '/global'"));
+					StringBundler.concat(
+						"select Group_.companyId as companyId, ",
+						"User_.languageid as companyDefaultLanguageId, ",
+						"groupId, name, typeSettings from Group_ left join ",
+						"User_ on Group_.companyId = User_.companyId where ",
+						"User_.defaultuser = [$TRUE$] and site = [$TRUE$] and ",
+						"friendlyURL != '/global'")));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
@@ -111,6 +122,9 @@ public class UpgradeGroup extends UpgradeProcess {
 					"update Group_ set name = ? where groupId = ?")) {
 
 			while (resultSet.next()) {
+				long companyId = resultSet.getLong("companyId");
+				String companyDefaultLanguageId = resultSet.getString(
+					"companyDefaultLanguageId");
 				long groupId = resultSet.getLong("groupId");
 				String name = resultSet.getString("name");
 
@@ -123,10 +137,34 @@ public class UpgradeGroup extends UpgradeProcess {
 						typeSettings
 					).build();
 
-				String defaultLanguageId =
+				String defaultLanguageId = companyDefaultLanguageId;
+
+				Set<Locale> locales = LanguageUtil.getCompanyAvailableLocales(
+					companyId);
+
+				boolean inheritLocales = GetterUtil.getBoolean(
 					typeSettingsUnicodeProperties.getProperty(
-						"languageId",
-						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+						GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES),
+					true);
+
+				if (!inheritLocales) {
+					defaultLanguageId =
+						typeSettingsUnicodeProperties.getProperty(
+							"languageId", defaultLanguageId);
+
+					String typeSettingsLocales =
+						typeSettingsUnicodeProperties.getProperty("locales");
+
+					if (Validator.isNotNull(typeSettingsLocales)) {
+						locales = new HashSet<>();
+
+						for (String languageId :
+								StringUtil.split(typeSettingsLocales)) {
+
+							locales.add(LocaleUtil.fromLanguageId(languageId));
+						}
+					}
+				}
 
 				Locale currentDefaultLocale =
 					LocaleThreadLocal.getSiteDefaultLocale();
@@ -138,13 +176,7 @@ public class UpgradeGroup extends UpgradeProcess {
 					LocalizedValuesMap localizedValuesMap =
 						new LocalizedValuesMap();
 
-					for (String languageId :
-							StringUtil.split(
-								typeSettingsUnicodeProperties.getProperty(
-									"locales"))) {
-
-						Locale locale = LocaleUtil.fromLanguageId(languageId);
-
+					for (Locale locale : locales) {
 						localizedValuesMap.put(locale, name);
 					}
 

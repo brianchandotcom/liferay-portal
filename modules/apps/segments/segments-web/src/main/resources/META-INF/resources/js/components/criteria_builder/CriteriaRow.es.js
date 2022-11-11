@@ -504,6 +504,7 @@ class CriteriaRow extends Component {
 							displayType="secondary"
 							monospaced
 							onClick={this._handleDuplicate}
+							title={Liferay.Language.get('Duplicate')}
 						>
 							<ClayIcon symbol="paste" />
 						</ClayButton>
@@ -513,6 +514,7 @@ class CriteriaRow extends Component {
 							displayType="secondary"
 							monospaced
 							onClick={this._handleDelete}
+							title={Liferay.Language.get('Delete')}
 						>
 							<ClayIcon symbol="times-circle" />
 						</ClayButton>

@@ -346,16 +346,14 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"pathToAssets", _portal.getPathContext(resourceRequest)
 		).put(
 			"publishDate",
-			DateTimeFormatter.ISO_DATE.format(
+			_toIsoDateFormat(
 				_toLocaleDate(analyticsReportsInfoItem.getPublishDate(object)))
 		).put(
 			"timeRange",
 			JSONUtil.put(
-				"endDate",
-				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate())
+				"endDate", _toIsoDateFormat(timeRange.getEndLocalDate())
 			).put(
-				"startDate",
-				DateTimeFormatter.ISO_DATE.format(timeRange.getStartLocalDate())
+				"startDate", _toIsoDateFormat(timeRange.getStartLocalDate())
 			)
 		).put(
 			"timeSpanKey", _getTimeSpanKey(timeRange)
@@ -563,7 +561,19 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).toArray());
 	}
 
+	private String _toIsoDateFormat(LocalDate localDate) {
+		if (localDate == null) {
+			return null;
+		}
+
+		return DateTimeFormatter.ISO_DATE.format(localDate);
+	}
+
 	private LocalDate _toLocaleDate(Date date) {
+		if (date == null) {
+			return null;
+		}
+
 		Instant instant = date.toInstant();
 
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());

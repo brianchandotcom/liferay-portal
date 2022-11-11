@@ -15,7 +15,7 @@
 package com.liferay.info.internal.search;
 
 import com.liferay.info.search.InfoSearchClassMapper;
-import com.liferay.info.search.InfoSearchClassMapperTracker;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(service = InfoSearchClassMapperTracker.class)
-public class InfoSearchClassMapperTrackerImpl
-	implements InfoSearchClassMapperTracker {
+@Component(service = InfoSearchClassMapperRegistry.class)
+public class InfoSearchClassMapperRegistryImpl
+	implements InfoSearchClassMapperRegistry {
 
 	@Override
 	public String getClassName(String searchClassName) {

@@ -20,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Cristina González
  */
 @ProviderType
-public interface InfoSearchClassMapperTracker {
+public interface InfoSearchClassMapperRegistry {
 
 	public String getClassName(String searchClassName);
 

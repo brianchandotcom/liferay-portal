@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Lourdes Fernández Besada
  */
-public interface LayoutDisplayPageInfoItemFieldValuesProviderTracker {
+public interface LayoutDisplayPageInfoItemFieldValuesProviderRegistry {
 
 	public LayoutDisplayPageInfoItemFieldValuesProvider<?>
 		getLayoutDisplayPageInfoItemFieldValuesProvider(String className);

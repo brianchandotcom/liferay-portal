@@ -15,7 +15,7 @@
 package com.liferay.layout.display.page.internal;
 
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = LayoutDisplayPageInfoItemFieldValuesProviderTracker.class)
-public class LayoutDisplayPageInfoItemFieldValuesProviderTrackerImpl
-	implements LayoutDisplayPageInfoItemFieldValuesProviderTracker {
+@Component(service = LayoutDisplayPageInfoItemFieldValuesProviderRegistry.class)
+public class LayoutDisplayPageInfoItemFieldValuesProviderRegistryImpl
+	implements LayoutDisplayPageInfoItemFieldValuesProviderRegistry {
 
 	@Override
 	public LayoutDisplayPageInfoItemFieldValuesProvider<?>

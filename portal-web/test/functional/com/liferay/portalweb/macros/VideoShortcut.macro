@@ -22,7 +22,9 @@ definition {
 				value1 = "${videoURL}");
 		}
 		else {
-			WaitForElementPresent(locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_URLINPUT");
+			WaitForEditable(
+				key_text = "Video URL",
+				locator1 = "TextInput#ANY");
 
 			Type(
 				key_text = "Video URL",

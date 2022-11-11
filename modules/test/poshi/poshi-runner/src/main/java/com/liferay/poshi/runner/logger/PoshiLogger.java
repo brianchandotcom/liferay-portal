@@ -18,6 +18,7 @@ import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.elements.PoshiElement;
+import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.PropsValues;
@@ -44,57 +45,88 @@ public class PoshiLogger {
 	}
 
 	public void createPoshiReport() throws IOException {
-		ClassLoader classLoader = PoshiLogger.class.getClassLoader();
-
-		URL url = classLoader.getResource("META-INF/resources/html/index.html");
-
-		String indexHTMLContent = FileUtil.read(url);
-
-		indexHTMLContent = StringUtil.replace(
-			indexHTMLContent,
-			"<ul class=\"command-log\" data-logid=\"01\" " +
-				"id=\"commandLog\"></ul>",
-			_commandLogger.getCommandLogText());
-		indexHTMLContent = StringUtil.replace(
-			indexHTMLContent,
-			"<ul class=\"syntax-log-container\" id=\"syntaxLogContainer\"" +
-				"></ul>",
-			_syntaxLogger.getSyntaxLogText());
+		String indexHTMLContent = null;
 
 		String currentDirName = FileUtil.getCanonicalPath(".");
 
-		if (PropsValues.TEST_RUN_LOCALLY) {
-			FileUtil.copyFileFromResource(
-				"META-INF/resources/css/main.css",
-				currentDirName + "/test-results/css/main.css");
-			FileUtil.copyFileFromResource(
-				"META-INF/resources/js/component.js",
-				currentDirName + "/test-results/js/component.js");
-			FileUtil.copyFileFromResource(
-				"META-INF/resources/js/main.js",
-				currentDirName + "/test-results/js/main.js");
-			FileUtil.copyFileFromResource(
-				"META-INF/resources/js/update_images.js",
-				currentDirName + "/test-results/js/update_images.js");
-		}
-		else {
-			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<link href=\"../css/main.css\"",
-				"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/css/main.css\"");
-			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<script defer src=\"../js/component.js\"",
-				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/js/component.js\"");
-			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<script defer src=\"../js/main.js\"",
-				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/js/main.js\"");
+		try {
+			ClassLoader classLoader = PoshiLogger.class.getClassLoader();
+
+			URL url = classLoader.getResource(
+				"META-INF/resources/html/index.html");
+
+			indexHTMLContent = FileUtil.read(url);
+
 			indexHTMLContent = StringUtil.replace(
 				indexHTMLContent,
-				"<script defer src=\"../js/update_images.js\"",
-				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-					"/js/update_images.js\"");
+				"<ul class=\"command-log\" data-logid=\"01\" " +
+					"id=\"commandLog\"></ul>",
+				_commandLogger.getCommandLogText());
+			indexHTMLContent = StringUtil.replace(
+				indexHTMLContent,
+				"<ul class=\"syntax-log-container\" id=\"syntaxLogContainer\"" +
+					"></ul>",
+				_syntaxLogger.getSyntaxLogText());
+
+			if (PropsValues.TEST_RUN_LOCALLY) {
+				FileUtil.copyFileFromResource(
+					"META-INF/resources/css/main.css",
+					currentDirName + "/test-results/css/main.css");
+				FileUtil.copyFileFromResource(
+					"META-INF/resources/js/component.js",
+					currentDirName + "/test-results/js/component.js");
+				FileUtil.copyFileFromResource(
+					"META-INF/resources/js/main.js",
+					currentDirName + "/test-results/js/main.js");
+				FileUtil.copyFileFromResource(
+					"META-INF/resources/js/update_images.js",
+					currentDirName + "/test-results/js/update_images.js");
+			}
+			else {
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent, "<link href=\"../css/main.css\"",
+					"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/css/main.css\"");
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent,
+					"<script defer src=\"../js/component.js\"",
+					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/js/component.js\"");
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent, "<script defer src=\"../js/main.js\"",
+					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/js/main.js\"");
+				indexHTMLContent = StringUtil.replace(
+					indexHTMLContent,
+					"<script defer src=\"../js/update_images.js\"",
+					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+						"/js/update_images.js\"");
+			}
+		}
+		catch (OutOfMemoryError outOfMemoryError) {
+			System.out.println(
+				"Unable to create Poshi syntax logger. See POSHI-378 for " +
+					"details. Use the summary.html log instead.");
+
+			String summaryHTMLFileName = "summary.html";
+
+			if (System.getenv("JENKINS_HOME") != null) {
+				summaryHTMLFileName = summaryHTMLFileName + ".gz";
+			}
+
+			Element element = Dom4JUtil.getNewElement(
+				"html", null,
+				Dom4JUtil.getNewElement(
+					"body", null, "Unable to create Poshi syntax logger. See ",
+					Dom4JUtil.getNewAnchorElement(
+						"https://issues.liferay.com/browse/POSHI-378",
+						"POSHI-378"),
+					" details. Use the ",
+					Dom4JUtil.getNewAnchorElement(
+						summaryHTMLFileName, "Summary Log"),
+					" instead."));
+
+			indexHTMLContent = Dom4JUtil.format(element);
 		}
 
 		StringBuilder sb = new StringBuilder();

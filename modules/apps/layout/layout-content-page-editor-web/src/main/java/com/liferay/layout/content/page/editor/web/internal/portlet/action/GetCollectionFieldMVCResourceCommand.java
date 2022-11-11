@@ -43,7 +43,6 @@ import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.helper.CollectionPaginationHelper;
@@ -350,15 +349,7 @@ public class GetCollectionFieldMVCResourceCommand
 		HttpServletRequest httpServletRequest, String itemType,
 		String namespace) {
 
-		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
-			new InfoListItemSelectorCriterion();
-
-		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoListItemSelectorReturnType());
-
 		List<String> itemTypes = _getInfoItemFormProviderSearchClassNames();
-
-		infoListItemSelectorCriterion.setItemTypes(itemTypes);
 
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
@@ -366,6 +357,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		infoCollectionProviderItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(
+				new InfoListItemSelectorReturnType(),
 				new InfoListProviderItemSelectorReturnType());
 		infoCollectionProviderItemSelectorCriterion.setItemTypes(itemTypes);
 
@@ -397,7 +389,7 @@ public class GetCollectionFieldMVCResourceCommand
 
 		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			namespace + "selectInfoList", infoListItemSelectorCriterion,
+			namespace + "selectInfoList",
 			infoCollectionProviderItemSelectorCriterion,
 			relatedInfoItemCollectionProviderItemSelectorCriterion);
 

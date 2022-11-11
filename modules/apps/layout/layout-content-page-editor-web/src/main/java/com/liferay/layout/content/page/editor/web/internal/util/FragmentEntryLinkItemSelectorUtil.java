@@ -20,7 +20,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -157,9 +156,6 @@ public class FragmentEntryLinkItemSelectorUtil {
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
 		String namespace, JSONObject typeOptionsJSONObject) {
 
-		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
-			new InfoListItemSelectorCriterion();
-
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion =
 				new InfoCollectionProviderItemSelectorCriterion();
@@ -167,27 +163,24 @@ public class FragmentEntryLinkItemSelectorUtil {
 		String itemType = typeOptionsJSONObject.getString("itemType");
 
 		if (Validator.isNotNull(itemType)) {
-			infoListItemSelectorCriterion.setItemType(itemType);
-
 			infoCollectionProviderItemSelectorCriterion.setItemType(itemType);
 
 			String itemSubtype = typeOptionsJSONObject.getString("itemSubtype");
 
 			if (Validator.isNotNull(itemSubtype)) {
-				infoListItemSelectorCriterion.setItemSubtype(itemSubtype);
+				infoCollectionProviderItemSelectorCriterion.setItemSubtype(
+					itemSubtype);
 			}
 		}
 
-		infoListItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new InfoListItemSelectorReturnType());
-
 		infoCollectionProviderItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(
+				new InfoListItemSelectorReturnType(),
 				new InfoListProviderItemSelectorReturnType());
 
 		PortletURL infoListSelectorURL = itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			namespace + "selectInfoList", infoListItemSelectorCriterion,
+			namespace + "selectInfoList",
 			infoCollectionProviderItemSelectorCriterion);
 
 		if (infoListSelectorURL == null) {

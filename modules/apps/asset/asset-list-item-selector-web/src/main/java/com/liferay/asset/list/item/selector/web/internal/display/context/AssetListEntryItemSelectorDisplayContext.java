@@ -22,9 +22,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
+import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -68,13 +68,15 @@ public class AssetListEntryItemSelectorDisplayContext {
 	public AssetListEntryItemSelectorDisplayContext(
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		Language language, PortletURL portletURL,
-		InfoListItemSelectorCriterion infoListItemSelectorCriterion) {
+		InfoCollectionProviderItemSelectorCriterion
+			infoCollectionProviderItemSelectorCriterion) {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_language = language;
 		_portletURL = portletURL;
-		_infoListItemSelectorCriterion = infoListItemSelectorCriterion;
+		_infoCollectionProviderItemSelectorCriterion =
+			infoCollectionProviderItemSelectorCriterion;
 	}
 
 	public int getAssetListEntrySegmentsEntryRelsCount(
@@ -171,7 +173,8 @@ public class AssetListEntryItemSelectorDisplayContext {
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
-		List<String> itemTypes = _infoListItemSelectorCriterion.getItemTypes();
+		List<String> itemTypes =
+			_infoCollectionProviderItemSelectorCriterion.getItemTypes();
 
 		if (ListUtil.isEmpty(itemTypes)) {
 			if (Validator.isNotNull(keywords)) {
@@ -194,7 +197,8 @@ public class AssetListEntryItemSelectorDisplayContext {
 			}
 		}
 		else if (Validator.isNull(
-					_infoListItemSelectorCriterion.getItemSubtype())) {
+					_infoCollectionProviderItemSelectorCriterion.
+						getItemSubtype())) {
 
 			if (Validator.isNotNull(keywords)) {
 				searchContainer.setResultsAndTotal(
@@ -224,27 +228,35 @@ public class AssetListEntryItemSelectorDisplayContext {
 				searchContainer.setResultsAndTotal(
 					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
-						_infoListItemSelectorCriterion.getItemSubtype(),
-						_infoListItemSelectorCriterion.getItemType(),
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemSubtype(),
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemType(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
-						_infoListItemSelectorCriterion.getItemSubtype(),
-						_infoListItemSelectorCriterion.getItemType()));
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemSubtype(),
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemType()));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
 					() -> AssetListEntryServiceUtil.getAssetListEntries(
 						new long[] {themeDisplay.getScopeGroupId()},
-						_infoListItemSelectorCriterion.getItemSubtype(),
-						_infoListItemSelectorCriterion.getItemType(),
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemSubtype(),
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemType(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()},
-						_infoListItemSelectorCriterion.getItemSubtype(),
-						_infoListItemSelectorCriterion.getItemType()));
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemSubtype(),
+						_infoCollectionProviderItemSelectorCriterion.
+							getItemType()));
 			}
 		}
 
@@ -389,7 +401,8 @@ public class AssetListEntryItemSelectorDisplayContext {
 
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoListItemSelectorCriterion _infoListItemSelectorCriterion;
+	private final InfoCollectionProviderItemSelectorCriterion
+		_infoCollectionProviderItemSelectorCriterion;
 	private final String _itemSelectedEventName;
 	private final Language _language;
 	private final PortletURL _portletURL;

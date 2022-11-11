@@ -260,6 +260,7 @@ public abstract class BaseNotificationType implements NotificationType {
 				content = StringUtil.replace(
 					content, termName,
 					notificationTermEvaluator.evaluate(
+						NotificationTermEvaluator.Context.CONTENT,
 						notificationContext.getTermValues(), termName));
 			}
 		}

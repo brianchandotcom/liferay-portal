@@ -29,7 +29,7 @@ public class DefaultNotificationTermEvaluator
 	implements NotificationTermEvaluator {
 
 	@Override
-	public String evaluate(Object object, String termName)
+	public String evaluate(Context context, Object object, String termName)
 		throws PortalException {
 
 		if (!(object instanceof Map)) {

@@ -14,8 +14,8 @@
 
 package com.liferay.object.internal.notification.term.contributor;
 
-import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -45,7 +45,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 	}
 
 	@Override
-	public String evaluate(Object object, String termName)
+	public String evaluate(Context context, Object object, String termName)
 		throws PortalException {
 
 		if (!(object instanceof Map)) {
@@ -54,7 +54,11 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		Map<String, Object> termValues = (Map<String, Object>)object;
 
-		if (termName.contains("_CREATOR_FULL_NAME")) {
+		if (termName.contains("_CREATOR")) {
+			if (context.equals(Context.RECIPIENT)) {
+				return String.valueOf(termValues.get("currentUserId"));
+			}
+
 			User user = _userLocalService.getUser(
 				GetterUtil.getLong(termValues.get("currentUserId")));
 

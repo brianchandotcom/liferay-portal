@@ -34,6 +34,7 @@ export default function () {
 					},
 				}
 			);
+
 			if (response.ok) {
 				setClaims(await response.json());
 
@@ -47,6 +48,7 @@ export default function () {
 				type: 'danger',
 			});
 		};
+
 		if (mdfRequestId) {
 			getClaimFromMDFRequest();
 		}
@@ -58,19 +60,25 @@ export default function () {
 
 	return (
 		<div>
-			{claims?.items.length < 2 ? (
-				<div className="align-items-stretch d-flex justify-content-between">
-					<div>
-						<h6 className="font-weight-normal text-neutral-9">
-							Get Reimbursed
-						</h6>
+			<div className="align-items-stretch d-flex justify-content-between">
+				<div>
+					<h6 className="font-weight-normal text-neutral-9">
+						Get Reimbursed
+					</h6>
 
+					{claims?.items.length < 2 ? (
 						<h6 className="font-weight-normal text-neutral-8">
 							You can submit up to {2 - claims.items.length}{' '}
 							claim(s).
 						</h6>
-					</div>
+					) : (
+						<h6 className="font-weight-normal text-neutral-8">
+							You already submitted 2 claims.
+						</h6>
+					)}
+				</div>
 
+				{claims?.items.length < 2 && (
 					<button
 						className="btn btn-primary"
 						onClick={() =>
@@ -82,18 +90,8 @@ export default function () {
 					>
 						New Claim
 					</button>
-				</div>
-			) : (
-				<div>
-					<h6 className="font-weight-normal text-neutral-9">
-						Get Reimbursed
-					</h6>
-
-					<h6 className="font-weight-normal text-neutral-8">
-						You already submitted 2 claims.
-					</h6>
-				</div>
-			)}
+				)}
+			</div>
 		</div>
 	);
 }

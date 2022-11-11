@@ -64,7 +64,7 @@ export default function PagesTree({
 	);
 
 	const onItemMove = useCallback(
-		(item, parentItem) => {
+		(item, parentItem, {next: priority}) => {
 			if (NOT_DROPPABLE_TYPES.includes(parentItem.type)) {
 				return false;
 			}
@@ -73,6 +73,7 @@ export default function PagesTree({
 				body: Liferay.Util.objectToURLSearchParams({
 					parentPlid: parentItem.plid,
 					plid: item.plid,
+					priority,
 				}),
 				method: 'post',
 			}).catch(() => openErrorToast());

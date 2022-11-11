@@ -195,23 +195,19 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 			return;
 		}
 
-		List<String> notImplementedForbidClassNames = getAttributeValues(
-			_NOT_IMPLEMENTED_FORBID_CLASS_NAMES_KEY, absolutePath);
+		List<String> unimplementedClassNames = getAttributeValues(
+			_UNIMPLEMENTED_CLASS_NAMES_KEY, absolutePath);
 
-		for (String notImplementedForbidClassName :
-				notImplementedForbidClassNames) {
-
-			if (className.endsWith(notImplementedForbidClassName) &&
-				!implementedClassNames.contains(
-					notImplementedForbidClassName)) {
+		for (String unimplementedClassName : unimplementedClassNames) {
+			if (className.endsWith(unimplementedClassName) &&
+				!implementedClassNames.contains(unimplementedClassName)) {
 
 				addMessage(
 					fileName,
 					StringBundler.concat(
 						"Name of class not implementing '",
-						notImplementedForbidClassName,
-						"' should not end with '",
-						notImplementedForbidClassName, "'"));
+						unimplementedClassName, "' should not end with '",
+						unimplementedClassName, "'"));
 
 				break;
 			}
@@ -272,7 +268,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 	private static final String _EXPECTED_PACKAGE_PATH_DATA_KEY =
 		"expectedPackagePathData";
 
-	private static final String _NOT_IMPLEMENTED_FORBID_CLASS_NAMES_KEY =
-		"notImplementedForbidClassNames";
+	private static final String _UNIMPLEMENTED_CLASS_NAMES_KEY =
+		"unimplementedClassNames";
 
 }

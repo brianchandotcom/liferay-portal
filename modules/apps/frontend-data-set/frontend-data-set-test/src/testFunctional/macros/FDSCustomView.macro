@@ -1,9 +1,33 @@
 definition {
 
+	macro assertColumnNotPresent {
+		AssertElementNotPresent(
+			key_field = "${key_field}",
+			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
+	}
+
+	macro assertColumnPresent {
+		AssertElementPresent(
+			key_field = "${key_field}",
+			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
+	}
+
 	macro assertCustomView {
 		AssertTextEquals(
 			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 			value1 = "${key_nameCustomView}");
+	}
+
+	macro assertCustomViewName {
+		AssertElementPresent(
+			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
+			value1 = "${key_nameCustomView}");
+	}
+
+	macro assertFilterSummaryLabel {
+		AssertElementPresent(
+			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
+			value1 = "${key_filter}");
 	}
 
 	macro changeCustomView {
@@ -107,30 +131,6 @@ definition {
 		Click(
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
 			value1 = "${key_itemName}");
-	}
-
-	macro assertCustomViewName {
-		AssertElementPresent(
-			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-			value1 = "${key_nameCustomView}");
-	}
-
-	macro assertFilterSummaryLabel {
-		AssertElementPresent(
-			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
-			value1 = "${key_filter}");
-	}
-
-	macro assertColumnPresent {
-		AssertElementPresent(
-			key_field = "${key_field}",
-			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
-	}
-
-	macro assertColumnNotPresent {
-		AssertElementNotPresent(
-			key_field = "${key_field}",
-			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
 
 }

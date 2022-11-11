@@ -1,7 +1,7 @@
 ## UpgradeProcessCheck
 
 If there is a `if (hasColumn(...)) {...}` or `if (hasColumnType(...)) {...}`
-that only contains calls to the methods `alterColumnName`, `alterColumnType`,
+(or negative conditionals) that only contains calls to the methods `alterColumnName`, `alterColumnType`,
 `alterTableAddColumn` and/or `alterTableDropColumn`, the if-statement must be
 removed, letting the `alter*` methods.
 

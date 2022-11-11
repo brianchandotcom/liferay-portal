@@ -147,6 +147,33 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private DDMFormFieldTypeReportProcessor _getDDMFormFieldTypeReportProcessor(
+		DDMFormField ddmFormField, String type) {
+
+		if (StringUtil.equals(type, "checkbox_multiple") ||
+			StringUtil.equals(type, "select")) {
+
+			return new CheckboxMultipleDDMFormFieldTypeReportProcessor();
+		}
+		else if (StringUtil.equals(type, "color") ||
+				 StringUtil.equals(type, "date") ||
+				 StringUtil.equals(type, "text")) {
+
+			return new TextDDMFormFieldTypeReportProcessor();
+		}
+		else if (StringUtil.equals(type, "grid")) {
+			return new UpgradeGridDDMFormFieldTypeReportProcessor(ddmFormField);
+		}
+		else if (StringUtil.equals(type, "numeric")) {
+			return new NumericDDMFormFieldTypeReportProcessor();
+		}
+		else if (StringUtil.equals(type, "radio")) {
+			return new RadioDDMFormFieldTypeReportProcessor();
+		}
+
+		return null;
+	}
+
 	private DDMFormValues _getDDMFormValues(String data, DDMForm ddmForm)
 		throws Exception {
 
@@ -218,10 +245,9 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 				ddmFormValues.getDDMFormFieldValues()) {
 
 			DDMFormFieldTypeReportProcessor ddmFormFieldTypeReportProcessor =
-				_ddmFormFieldTypeReportProcessorTracker.
-					getDDMFormFieldTypeReportProcessor(
-						ddmFormFieldValue.getDDMFormField(),
-						ddmFormFieldValue.getType());
+				_getDDMFormFieldTypeReportProcessor(
+					ddmFormFieldValue.getDDMFormField(),
+					ddmFormFieldValue.getType());
 
 			if (ddmFormFieldTypeReportProcessor != null) {
 				String ddmFormFieldValueName = ddmFormFieldValue.getName();
@@ -265,43 +291,7 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 		DDMFormInstanceReportUpgradeProcess.class);
 
 	private final DDMFormDeserializer _ddmFormDeserializer;
-	private final DDMFormFieldTypeReportProcessorTracker
-		_ddmFormFieldTypeReportProcessorTracker =
-			new DDMFormFieldTypeReportProcessorTracker();
 	private final JSONFactory _jsonFactory;
-
-	private class DDMFormFieldTypeReportProcessorTracker {
-
-		public DDMFormFieldTypeReportProcessor
-			getDDMFormFieldTypeReportProcessor(
-				DDMFormField ddmFormField, String type) {
-
-			if (StringUtil.equals(type, "checkbox_multiple") ||
-				StringUtil.equals(type, "select")) {
-
-				return new CheckboxMultipleDDMFormFieldTypeReportProcessor();
-			}
-			else if (StringUtil.equals(type, "color") ||
-					 StringUtil.equals(type, "date") ||
-					 StringUtil.equals(type, "text")) {
-
-				return new TextDDMFormFieldTypeReportProcessor();
-			}
-			else if (StringUtil.equals(type, "grid")) {
-				return new UpgradeGridDDMFormFieldTypeReportProcessor(
-					ddmFormField);
-			}
-			else if (StringUtil.equals(type, "numeric")) {
-				return new NumericDDMFormFieldTypeReportProcessor();
-			}
-			else if (StringUtil.equals(type, "radio")) {
-				return new RadioDDMFormFieldTypeReportProcessor();
-			}
-
-			return null;
-		}
-
-	}
 
 	private class UpgradeGridDDMFormFieldTypeReportProcessor
 		implements DDMFormFieldTypeReportProcessor {

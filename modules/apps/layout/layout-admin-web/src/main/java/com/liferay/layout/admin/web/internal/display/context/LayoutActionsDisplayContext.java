@@ -108,6 +108,18 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setTarget("_blank");
 						}
 					).add(
+						() -> _isContentLayout(layout),
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "convertToPageTemplate");
+
+							dropdownItem.setIcon("page-template");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"convert-to-page-template"));
+						}
+					).add(
 						() ->
 							_isContentLayout(layout) &&
 							_isShowPermissionsAction(layout),

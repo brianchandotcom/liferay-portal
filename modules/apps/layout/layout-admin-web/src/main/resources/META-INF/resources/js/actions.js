@@ -17,6 +17,10 @@ import {navigate, openConfirmModal, openModal} from 'frontend-js-web';
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
 const ACTIONS = {
+	convertToPageTemplate: () => {
+		Liferay.fire('convertToPageTemplate');
+	},
+
 	copyLayout: ({copyLayoutURL}, portletNamespace) => {
 		openModal({
 			height: '60vh',

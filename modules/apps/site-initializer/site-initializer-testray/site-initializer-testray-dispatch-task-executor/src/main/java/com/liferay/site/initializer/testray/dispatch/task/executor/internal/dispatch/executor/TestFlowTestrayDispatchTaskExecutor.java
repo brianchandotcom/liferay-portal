@@ -300,8 +300,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 			companyId, "Case", null, filter);
 
 		List<Long> testrayCaseObjectEntriesIds = TransformUtil.transform(
-			testrayCaseObjectEntriesPage1.getItems(),
-			objectEntry -> objectEntry.getId());
+			testrayCaseObjectEntriesPage1.getItems(), ObjectEntry::getId);
 
 		Map<String, String> map = HashMapBuilder.put(
 			"errors", "errors"

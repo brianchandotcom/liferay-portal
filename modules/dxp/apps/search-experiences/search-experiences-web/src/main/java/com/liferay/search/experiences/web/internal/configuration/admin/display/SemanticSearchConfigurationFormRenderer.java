@@ -193,7 +193,7 @@ public class SemanticSearchConfigurationFormRenderer
 		semanticSearchCompanyConfigurationDisplayContext.setTxtaiPassword(
 			_semanticSearchConfiguration.txtaiPassword());
 		semanticSearchCompanyConfigurationDisplayContext.setTxtaiUserName(
-			_semanticSearchConfiguration.txtaiUsername());
+			_semanticSearchConfiguration.txtaiUserName());
 
 		httpServletRequest.setAttribute(
 			SemanticSearchCompanyConfigurationDisplayContext.class.getName(),

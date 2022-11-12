@@ -60,7 +60,7 @@ definition {
 
 		Type(
 			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
-			value1 = "${key_nameView}");
+			value1 = "${entryName}");
 
 		Click(
 			key_name = "Save",
@@ -124,7 +124,7 @@ definition {
 
 		Type(
 			locator1 = "FrontendDataSet#INPUT_CUSTOM_VIEW_NAME",
-			value1 = "${key_nameView}");
+			value1 = "${entryName}");
 
 		Click(
 			key_name = "Save",

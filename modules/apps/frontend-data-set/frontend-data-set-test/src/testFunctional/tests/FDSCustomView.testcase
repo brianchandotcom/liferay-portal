@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("And When Save As the custom view") {
-			FDSCustomView.createNewView(key_nameView = "TEST");
+			FDSCustomView.createNewView(entryName = "TEST");
 
 			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
@@ -165,7 +165,7 @@ definition {
 				key_enableFilters = "Red",
 				key_filter = "Color");
 
-			FDSCustomView.createNewView(key_nameView = "Custom View Name");
+			FDSCustomView.createNewView(entryName = "Custom View Name");
 		}
 
 		task ("When open menu to select created custom view") {
@@ -189,7 +189,7 @@ definition {
 	@priority = "4"
 	test CanCreateMultiple {
 		task ("And Given A custom view is created and selected") {
-			FDSCustomView.createNewView(key_nameView = "FrontendDataSet View");
+			FDSCustomView.createNewView(entryName = "FrontendDataSet View");
 		}
 
 		task ("When Make some changes to dataset display (filter, sorting, page size or visible columns if data display in table)") {
@@ -212,7 +212,7 @@ definition {
 		}
 
 		task ("And Click Save as button, provide a name") {
-			FDSCustomView.createNewView(key_nameView = "FrontendDataSet View 2");
+			FDSCustomView.createNewView(entryName = "FrontendDataSet View 2");
 		}
 
 		task ("Then A new custom view is created, and selected as current view") {
@@ -277,7 +277,7 @@ definition {
 	@priority = "4"
 	test CanUpdateName {
 		task ("And Given created custom view") {
-			FDSCustomView.createNewView(key_nameView = "TEST");
+			FDSCustomView.createNewView(entryName = "TEST");
 		}
 
 		task ("When edit custom view name") {

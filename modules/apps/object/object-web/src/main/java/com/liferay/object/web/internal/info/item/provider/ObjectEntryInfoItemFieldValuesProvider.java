@@ -104,13 +104,13 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			_getInfoFieldValues(objectEntry)
 		).infoFieldValues(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-				ObjectEntry.class.getName(), objectEntry)
+				objectEntry.getModelClassName(), objectEntry)
 		).infoFieldValues(
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
 				objectEntry.getModelClassName(), objectEntry)
 		).infoItemReference(
 			new InfoItemReference(
-				ObjectEntry.class.getName(), objectEntry.getObjectEntryId())
+				objectEntry.getModelClassName(), objectEntry.getObjectEntryId())
 		).build();
 	}
 

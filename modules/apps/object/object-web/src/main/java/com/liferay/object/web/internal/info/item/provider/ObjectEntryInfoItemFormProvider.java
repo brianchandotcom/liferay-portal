@@ -342,6 +342,9 @@ public class ObjectEntryInfoItemFormProvider
 	private InfoForm _getInfoForm(long objectDefinitionId)
 		throws NoSuchFormVariationException {
 
+		String objectDefinitionClassName =
+			"com.liferay.object.model.ObjectDefinition#" + objectDefinitionId;
+
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
@@ -354,20 +357,19 @@ public class ObjectEntryInfoItemFormProvider
 			}
 		).infoFieldSetEntry(
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
-				"com.liferay.object.model.ObjectDefinition#" +
-					objectDefinitionId)
+				objectDefinitionClassName)
 		).infoFieldSetEntry(
 			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-				ObjectEntry.class.getName())
+				objectDefinitionClassName)
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).values(
 				_objectDefinition.getLabelMap()
 			).build()
 		).name(
-			_objectDefinition.getClassName()
+			objectDefinitionClassName
 		).build();
 	}
 

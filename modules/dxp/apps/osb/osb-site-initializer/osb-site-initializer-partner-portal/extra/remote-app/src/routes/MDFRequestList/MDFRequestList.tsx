@@ -111,6 +111,18 @@ const MDFRequestList = () => {
 								})
 							}
 						/>
+
+						{!!filters.searchTerm &&
+							!!data.listItems.items?.length &&
+							!isValidating && (
+								<div>
+									<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
+										{data.listItems.items?.length > 1
+											? `${data.listItems.items?.length} results for ${filters.searchTerm}`
+											: `${data.listItems.items?.length} result for ${filters.searchTerm}`}
+									</p>
+								</div>
+							)}
 					</div>
 
 					<DropDownWithDrillDown

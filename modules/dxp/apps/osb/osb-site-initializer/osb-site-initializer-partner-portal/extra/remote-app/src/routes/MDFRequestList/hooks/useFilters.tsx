@@ -39,5 +39,5 @@ export default function useFilters() {
 		setFilterTerm(initialFilter);
 	}, [filters, filters.activityPeriod.dates, filters.searchTerm]);
 
-	return {filtersTerm, onFilter};
+	return {filters, filtersTerm, onFilter};
 }

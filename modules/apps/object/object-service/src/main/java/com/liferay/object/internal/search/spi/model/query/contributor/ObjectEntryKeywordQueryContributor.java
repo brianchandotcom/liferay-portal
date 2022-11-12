@@ -15,6 +15,7 @@
 package com.liferay.object.internal.search.spi.model.query.contributor;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
@@ -94,9 +95,7 @@ public class ObjectEntryKeywordQueryContributor
 		if (objectDefinitionId == 0) {
 			String className = keywordQueryContributorHelper.getClassName();
 
-			if (className.startsWith(
-					"com.liferay.object.model.ObjectDefinition#")) {
-
+			if (className.startsWith(ObjectDefinition.class.getName() + "#")) {
 				String[] parts = StringUtil.split(className, "#");
 
 				objectDefinitionId = Long.valueOf(parts[1]);

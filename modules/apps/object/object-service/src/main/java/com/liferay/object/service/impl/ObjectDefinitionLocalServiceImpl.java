@@ -1004,8 +1004,7 @@ public class ObjectDefinitionLocalServiceImpl
 			return className;
 		}
 
-		return "com.liferay.object.model.ObjectDefinition#" +
-			objectDefinitionId;
+		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
 	private String _getDBTableName(

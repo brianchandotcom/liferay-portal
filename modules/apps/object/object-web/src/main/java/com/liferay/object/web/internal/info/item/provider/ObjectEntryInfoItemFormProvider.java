@@ -343,7 +343,7 @@ public class ObjectEntryInfoItemFormProvider
 		throws NoSuchFormVariationException {
 
 		String objectDefinitionClassName =
-			"com.liferay.object.model.ObjectDefinition#" + objectDefinitionId;
+			ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 
 		return InfoForm.builder(
 		).infoFieldSetEntry(

@@ -103,7 +103,7 @@ public class AddInfoItemStrutsActionTest {
 
 		_classNameId = String.valueOf(
 			_portal.getClassNameId(
-				"com.liferay.object.model.ObjectDefinition#" +
+				ObjectDefinition.class.getName() + "#" +
 					_objectDefinition.getObjectDefinitionId()));
 
 		_layout = _addLayout();

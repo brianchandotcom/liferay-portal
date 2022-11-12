@@ -49,8 +49,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 	@Override
 	public String getModelClassName() {
-		return "com.liferay.object.model.ObjectDefinition#" +
-			getObjectDefinitionId();
+		return ObjectDefinition.class.getName() + "#" + getObjectDefinitionId();
 	}
 
 	@Override

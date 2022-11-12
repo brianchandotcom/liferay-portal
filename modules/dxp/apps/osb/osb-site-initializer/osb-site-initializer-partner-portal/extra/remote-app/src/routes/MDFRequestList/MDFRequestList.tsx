@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -15,12 +16,15 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import Table from '../../common/components/Table';
+import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
+import TableHeader from '../../common/components/TableHeader/TableHeader';
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
+import useFilters from './hooks/useFilters';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
 import getMDFListColumns from './utils/getMDFListColumns';
@@ -30,10 +34,13 @@ type MDFRequestItem = {
 };
 
 const MDFRequestList = () => {
+	const {filtersTerm, onFilter} = useFilters();
+
 	const pagination = usePagination();
 	const {data, isValidating} = useGetMDFRequestListData(
 		pagination.activePage,
-		pagination.activeDelta
+		pagination.activeDelta,
+		filtersTerm
 	);
 
 	const siteURL = useLiferayNavigate();
@@ -82,19 +89,45 @@ const MDFRequestList = () => {
 		<div className="border-0 pb-3 pt-5 px-6 sheet">
 			<h1>MDF Requests</h1>
 
-			<div className="bg-neutral-1 d-flex justify-content-end p-3 rounded">
-				<ClayButton
-					onClick={() =>
-						Liferay.Util.navigate(
-							`${siteURL}/${PRMPageRoute.CREATE_MDF_REQUEST}`
-						)
-					}
-				>
-					New Request
-				</ClayButton>
-			</div>
-
-			{isValidating && <ClayLoadingIndicator />}
+			<TableHeader
+				filters={[
+					{
+						component: (
+							<DateFilter
+								dateFilters={(dates: {
+									endDate: string;
+									startDate: string;
+								}) => {
+									onFilter({
+										activityPeriod: {
+											dates,
+										},
+									});
+								}}
+							/>
+						),
+						name: 'Activity Period',
+					},
+				]}
+				onSearchSubmit={(searchTerm: string) =>
+					onFilter({
+						searchTerm,
+					})
+				}
+			>
+				<div>
+					<ClayButton
+						className="mr-2"
+						onClick={() =>
+							Liferay.Util.navigate(
+								`${siteURL}/${PRMPageRoute.CREATE_MDF_REQUEST}`
+							)
+						}
+					>
+						New Request
+					</ClayButton>
+				</div>
+			</TableHeader>
 
 			{!isValidating &&
 				getTable(
@@ -102,6 +135,8 @@ const MDFRequestList = () => {
 					data.listItems.items,
 					columns
 				)}
+
+			{isValidating && <ClayLoadingIndicator />}
 		</div>
 	);
 };

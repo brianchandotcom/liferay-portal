@@ -1182,6 +1182,10 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);
+		objectDefinition.setClassName(
+			_getClassName(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getClassName(), objectDefinition.isSystem()));
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableObjectEntryHistory(enableObjectEntryHistory);

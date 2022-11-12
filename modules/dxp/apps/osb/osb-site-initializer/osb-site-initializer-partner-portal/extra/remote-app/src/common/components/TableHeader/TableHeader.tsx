@@ -13,7 +13,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 
 import DropDownWithDrillDown from './Filter/components/DropDownWithDrillDown/DropdownWithDrilldown';
-import SearchBar from './Search/Search';
+import Search from './Search/Search';
 
 interface FilterItem {
 	component: JSX.Element;
@@ -55,7 +55,7 @@ const TableHeader = ({children, filters, onSearchSubmit}: IProps) => {
 	return (
 		<div className="bg-neutral-1 d-md-flex justify-content-between p-3 rounded">
 			<div className="d-flex pb-2">
-				<SearchBar onSearchSubmit={onSearchSubmit} />
+				<Search onSearchSubmit={onSearchSubmit} />
 
 				<DropDownWithDrillDown
 					className="align-items-center"

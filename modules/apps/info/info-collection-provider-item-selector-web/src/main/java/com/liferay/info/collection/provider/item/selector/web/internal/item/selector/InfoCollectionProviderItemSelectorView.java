@@ -14,6 +14,7 @@
 
 package com.liferay.info.collection.provider.item.selector.web.internal.item.selector;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -108,12 +109,22 @@ public class InfoCollectionProviderItemSelectorView
 					InfoCollectionProvider::isAvailable));
 		}
 
+		String itemType =
+			infoCollectionProviderItemSelectorCriterion.getItemType();
+
+		if (infoCollectionProviderItemSelectorCriterion.getType() ==
+				InfoCollectionProviderItemSelectorCriterion.Type.
+					ALL_COLLECTIONS) {
+
+			itemType = AssetEntry.class.getName();
+		}
+
 		return Collections.unmodifiableList(
 			ListUtil.filter(
 				_infoItemServiceRegistry.getAllInfoItemServices(
 					(Class<InfoCollectionProvider<?>>)
 						(Class<?>)InfoCollectionProvider.class,
-					infoCollectionProviderItemSelectorCriterion.getItemType()),
+					itemType),
 				InfoCollectionProvider::isAvailable));
 	}
 

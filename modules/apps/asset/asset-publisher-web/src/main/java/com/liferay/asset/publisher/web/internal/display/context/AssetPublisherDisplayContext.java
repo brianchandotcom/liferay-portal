@@ -474,8 +474,6 @@ public class AssetPublisherDisplayContext {
 			setDesiredItemSelectorReturnTypes(
 				new InfoListItemSelectorReturnType(),
 				new InfoListProviderItemSelectorReturnType());
-		infoCollectionProviderItemSelectorCriterion.setItemType(
-			AssetEntry.class.getName());
 
 		PortletURL portletURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_portletRequest),

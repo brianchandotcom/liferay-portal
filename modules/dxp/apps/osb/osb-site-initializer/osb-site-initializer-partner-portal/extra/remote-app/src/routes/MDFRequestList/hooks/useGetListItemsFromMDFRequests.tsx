@@ -19,9 +19,10 @@ import getMDFDates from '../utils/getMDFDates';
 
 export default function useGetListItemsFromMDFRequests(
 	page: number,
-	pageSize: number
+	pageSize: number,
+	filtersTerm: string
 ) {
-	const swrResponse = useGetMDFRequests(page, pageSize);
+	const swrResponse = useGetMDFRequests(page, pageSize, filtersTerm);
 
 	const listItems = useMemo(
 		() =>

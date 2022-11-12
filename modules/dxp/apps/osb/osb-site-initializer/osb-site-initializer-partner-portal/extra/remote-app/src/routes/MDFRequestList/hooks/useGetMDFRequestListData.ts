@@ -14,14 +14,15 @@ import useGetListItemsFromMDFRequests from './useGetListItemsFromMDFRequests';
 
 export default function useGetMDFRequestListData(
 	page: number,
-	pageSize: number
+	pageSize: number,
+	filtersTerm: string
 ) {
 	const {
 		data: listItems,
 		error: errorListItems,
 		isValidating: isValidatingListItems,
 		mutate: mutateListItems,
-	} = useGetListItemsFromMDFRequests(page, pageSize);
+	} = useGetListItemsFromMDFRequests(page, pageSize, filtersTerm);
 
 	const {
 		data: listColumns,

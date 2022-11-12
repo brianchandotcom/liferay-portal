@@ -17,10 +17,14 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetMDFRequests(page: number, pageSize: number) {
+export default function useGetMDFRequests(
+	page: number,
+	pageSize: number,
+	filtersTerm: string
+) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=accountEntry&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=accountEntry${filtersTerm}&page=${page}&pageSize=${pageSize}`,
 			Liferay.authToken,
 		],
 		(url, token) =>

@@ -111,6 +111,19 @@ const activitiesSchema = object({
 							return false;
 						}
 					)
+					.test(
+						'end-date-year-current-year',
+						'The end date cannot exceed the current year',
+						(endDate) => {
+							const currentYear = new Date().getFullYear();
+
+							if (endDate && currentYear) {
+								return endDate.getFullYear() === currentYear;
+							}
+
+							return false;
+						}
+					)
 					.required('Required'),
 				gatedLandingPage: string().when('typeActivity', {
 					is: (
@@ -256,6 +269,19 @@ const activitiesSchema = object({
 								currentDate.setHours(0, 0, 0, 0);
 
 								return currentDate < startDate;
+							}
+
+							return false;
+						}
+					)
+					.test(
+						'end-date-year-current-year',
+						'The start date cannot exceed the current year',
+						(startDate) => {
+							const currentYear = new Date().getFullYear();
+
+							if (startDate && currentYear) {
+								return startDate.getFullYear() === currentYear;
 							}
 
 							return false;

@@ -12,11 +12,14 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import Table from '../../common/components/Table';
+import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
 import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter/DateFilter';
+import Search from '../../common/components/TableHeader/Search/Search';
 import TableHeader from '../../common/components/TableHeader/TableHeader';
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
@@ -27,6 +30,7 @@ import {Liferay} from '../../common/services/liferay';
 import useFilters from './hooks/useFilters';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
+import getDropDownFilterMenus from './utils/getDropDownFilterMenus';
 import getMDFListColumns from './utils/getMDFListColumns';
 
 type MDFRequestItem = {
@@ -34,13 +38,21 @@ type MDFRequestItem = {
 };
 
 const MDFRequestList = () => {
-	const {filtersTerm, onFilter} = useFilters();
+	const {filters, filtersTerm, onFilter} = useFilters();
+	console.log(
+		'🚀 ~ file: MDFRequestList.tsx ~ line 42 ~ MDFRequestList ~ filters',
+		filters.searchTerm
+	);
 
 	const pagination = usePagination();
 	const {data, isValidating} = useGetMDFRequestListData(
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm
+	);
+	console.log(
+		'🚀 ~ file: MDFRequestList.tsx ~ line 49 ~ MDFRequestList ~ data',
+		data.listItems.items?.length
 	);
 
 	const siteURL = useLiferayNavigate();
@@ -89,32 +101,51 @@ const MDFRequestList = () => {
 		<div className="border-0 pb-3 pt-5 px-6 sheet">
 			<h1>MDF Requests</h1>
 
-			<TableHeader
-				filters={[
-					{
-						component: (
-							<DateFilter
-								dateFilters={(dates: {
-									endDate: string;
-									startDate: string;
-								}) => {
-									onFilter({
-										activityPeriod: {
-											dates,
-										},
-									});
-								}}
-							/>
-						),
-						name: 'Activity Period',
-					},
-				]}
-				onSearchSubmit={(searchTerm: string) =>
-					onFilter({
-						searchTerm,
-					})
-				}
-			>
+			<TableHeader>
+				<div className="d-flex mb-sm-2">
+					<div>
+						<Search
+							onSearchSubmit={(searchTerm: string) =>
+								onFilter({
+									searchTerm,
+								})
+							}
+						/>
+					</div>
+
+					<DropDownWithDrillDown
+						className=""
+						initialActiveMenu="x0a0"
+						menus={getDropDownFilterMenus([
+							{
+								component: (
+									<DateFilter
+										dateFilters={(dates: {
+											endDate: string;
+											startDate: string;
+										}) => {
+											onFilter({
+												activityPeriod: {
+													dates,
+												},
+											});
+										}}
+									/>
+								),
+								name: 'Activity Period',
+							},
+						])}
+						trigger={
+							<ClayButton borderless className="btn-secondary">
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol="filter" />
+								</span>
+								Filter
+							</ClayButton>
+						}
+					/>
+				</div>
+
 				<div>
 					<ClayButton
 						className="mr-2"

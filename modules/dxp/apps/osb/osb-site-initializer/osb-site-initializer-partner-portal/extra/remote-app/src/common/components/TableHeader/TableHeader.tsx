@@ -9,75 +9,15 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-
-import DropDownWithDrillDown from './Filter/components/DropDownWithDrillDown/DropdownWithDrilldown';
-import Search from './Search/Search';
-
-interface FilterItem {
-	component: JSX.Element;
-	disabled?: boolean;
-	name: string;
-}
-
 interface IProps {
 	children?: JSX.Element | JSX.Element[];
-	filters: FilterItem[];
-	onSearchSubmit: (term: string) => void;
 }
 
-const TableHeader = ({children, filters, onSearchSubmit}: IProps) => {
-	const getMenus = () =>
-		filters.reduce<
-			React.ComponentProps<typeof DropDownWithDrillDown>['menus']
-		>(
-			(previousValue, currentValue, index) => ({
-				...previousValue,
-				x0a0: [
-					...(previousValue.x0a0 || []),
-					{
-						child: `x0a${index + 1}`,
-						disabled: currentValue.disabled,
-						title: currentValue.name,
-					},
-				],
-				[`x0a${index + 1}`]: [
-					{
-						child: currentValue.component,
-						type: 'component',
-					},
-				],
-			}),
-			{}
-		);
-
+const TableHeader = ({children}: IProps) => {
 	return (
-		<div className="bg-neutral-1 d-md-flex justify-content-between p-3 rounded">
-			<div className="d-flex pb-2">
-				<Search onSearchSubmit={onSearchSubmit} />
-
-				<DropDownWithDrillDown
-					className="align-items-center"
-					initialActiveMenu="x0a0"
-					menus={getMenus()}
-					trigger={
-						<ClayButton
-							borderless
-							className="btn-secondary px- py-2"
-						>
-							<span className="inline-item inline-item-before">
-								<ClayIcon symbol="filter" />
-							</span>
-							Filter
-						</ClayButton>
-					}
-				/>
-			</div>
-
+		<div className="bg-neutral-1 d-md-flex flex-row justify-content-between p-3 rounded">
 			{children}
 		</div>
 	);
 };
-
 export default TableHeader;

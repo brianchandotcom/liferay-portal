@@ -277,18 +277,11 @@ definition {
 	@priority = "4"
 	test CanUpdateName {
 		task ("And Given created custom view") {
-
 			FDSCustomView.createNewView(key_nameView = "TEST");
-
-			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
-
-			Click(
-				key_itemName = "Save View",
-				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 		}
 
 		task ("When edit custom view name") {
-			FDSCustomView.editView();
+			FDSCustomView.editCurrentViewName(entryName = "Edit View Name");
 		}
 
 		task ("Then name of custom view is updated in select custom view") {

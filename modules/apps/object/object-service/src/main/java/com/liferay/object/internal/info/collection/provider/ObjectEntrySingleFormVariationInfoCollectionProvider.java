@@ -680,7 +680,9 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				_objectDefinition.getObjectDefinitionId());
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 
 			return false;
 		}

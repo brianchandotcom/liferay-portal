@@ -372,6 +372,7 @@ export default function ({
 						formik.values.embeddingVectorDimensions
 					}
 					enableGPU={formik.values.enableGPU}
+					errors={formik.errors}
 					huggingFaceAccessToken={
 						formik.values.huggingFaceAccessToken
 					}

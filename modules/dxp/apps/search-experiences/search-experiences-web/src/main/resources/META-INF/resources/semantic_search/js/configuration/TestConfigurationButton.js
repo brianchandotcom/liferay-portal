@@ -12,6 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -27,6 +28,7 @@ function TestConfigurationButton({
 	cacheTimeout,
 	embeddingVectorDimensions,
 	enableGPU,
+	errors,
 	huggingFaceAccessToken,
 	languageIds,
 	maxCharacterCount,
@@ -261,22 +263,49 @@ function TestConfigurationButton({
 			});
 	};
 
+	const isMissingRequiredFields = () => {
+		if (
+			sentenceTransformProvider ===
+			SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE
+		) {
+			return (
+				errors.huggingFaceAccessToken ||
+				errors.model ||
+				errors.modelTimeout
+			);
+		}
+
+		return false;
+	};
+
 	return (
 		<div className="test-configuration-button-root">
-			<ClayButton
-				aria-label={Liferay.Language.get('test-configuration')}
-				disabled={loading}
-				displayType="secondary"
-				onClick={_handleTestConfigurationButtonClick}
-			>
-				{loading && (
-					<span className="inline-item inline-item-before">
-						<ClayLoadingIndicator small />
-					</span>
-				)}
+			<ClayTooltipProvider>
+				<ClayButton
+					aria-disabled={loading || isMissingRequiredFields()}
+					aria-label={Liferay.Language.get('test-configuration')}
+					className={
+						loading || isMissingRequiredFields() ? 'disabled' : ''
+					}
+					displayType="secondary"
+					onClick={_handleTestConfigurationButtonClick}
+					{...(isMissingRequiredFields()
+						? {
+								title: Liferay.Language.get(
+									'required-fields-missing'
+								),
+						  }
+						: {})}
+				>
+					{loading && (
+						<span className="inline-item inline-item-before">
+							<ClayLoadingIndicator small />
+						</span>
+					)}
 
-				{Liferay.Language.get('test-configuration')}
-			</ClayButton>
+					{Liferay.Language.get('test-configuration')}
+				</ClayButton>
+			</ClayTooltipProvider>
 
 			{!!testResultsMessage.message && (
 				<ClayAlert

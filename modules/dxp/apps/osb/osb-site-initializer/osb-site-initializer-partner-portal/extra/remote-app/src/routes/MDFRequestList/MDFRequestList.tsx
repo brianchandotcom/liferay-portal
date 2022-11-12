@@ -104,7 +104,7 @@ const MDFRequestList = () => {
 							}
 						/>
 
-						<div className="bd-highlight flex-shrink-2">
+						<div className="bd-highlight flex-shrink-2 mt-1">
 							{!!filters.searchTerm &&
 								!!data.listItems.items?.length &&
 								!isValidating && (
@@ -130,7 +130,7 @@ const MDFRequestList = () => {
 									small
 								>
 									<ClayIcon
-										className="ml-n2"
+										className="ml-n2 mr-1"
 										symbol="times-circle"
 									/>
 									Clear All Filters

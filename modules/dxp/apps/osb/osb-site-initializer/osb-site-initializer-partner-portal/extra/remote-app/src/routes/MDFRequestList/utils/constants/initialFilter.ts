@@ -16,5 +16,6 @@ export const INITIAL_FILTER = {
 			startDate: '',
 		},
 	},
+	hasValue: false,
 	searchTerm: '',
 };

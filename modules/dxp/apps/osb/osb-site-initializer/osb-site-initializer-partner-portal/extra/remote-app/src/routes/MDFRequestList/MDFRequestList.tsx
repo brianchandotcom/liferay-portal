@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -30,6 +29,7 @@ import {Liferay} from '../../common/services/liferay';
 import useFilters from './hooks/useFilters';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
+import {INITIAL_FILTER} from './utils/constants/initialFilter';
 import getDropDownFilterMenus from './utils/getDropDownFilterMenus';
 import getMDFListColumns from './utils/getMDFListColumns';
 
@@ -39,20 +39,12 @@ type MDFRequestItem = {
 
 const MDFRequestList = () => {
 	const {filters, filtersTerm, onFilter} = useFilters();
-	console.log(
-		'🚀 ~ file: MDFRequestList.tsx ~ line 42 ~ MDFRequestList ~ filters',
-		filters.searchTerm
-	);
 
 	const pagination = usePagination();
 	const {data, isValidating} = useGetMDFRequestListData(
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm
-	);
-	console.log(
-		'🚀 ~ file: MDFRequestList.tsx ~ line 49 ~ MDFRequestList ~ data',
-		data.listItems.items?.length
 	);
 
 	const siteURL = useLiferayNavigate();
@@ -102,7 +94,7 @@ const MDFRequestList = () => {
 			<h1>MDF Requests</h1>
 
 			<TableHeader>
-				<div className="d-flex mb-sm-2">
+				<div className="d-flex">
 					<div>
 						<Search
 							onSearchSubmit={(searchTerm: string) =>
@@ -112,17 +104,39 @@ const MDFRequestList = () => {
 							}
 						/>
 
-						{!!filters.searchTerm &&
-							!!data.listItems.items?.length &&
-							!isValidating && (
-								<div>
-									<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
-										{data.listItems.items?.length > 1
-											? `${data.listItems.items?.length} results for ${filters.searchTerm}`
-											: `${data.listItems.items?.length} result for ${filters.searchTerm}`}
-									</p>
-								</div>
+						<div className="bd-highlight flex-shrink-2">
+							{!!filters.searchTerm &&
+								!!data.listItems.items?.length &&
+								!isValidating && (
+									<div>
+										<p className="font-weight-semi-bold m-0 ml-1 mt-3 text-paragraph-sm">
+											{data.listItems.items?.length > 1
+												? `${data.listItems.items?.length} results for ${filters.searchTerm}`
+												: `${data.listItems.items?.length} result for ${filters.searchTerm}`}
+										</p>
+									</div>
+								)}
+
+							{filters.hasValue && (
+								<ClayButton
+									borderless
+									className="link"
+									onClick={() => {
+										onFilter({
+											...INITIAL_FILTER,
+											searchTerm: filters.searchTerm,
+										});
+									}}
+									small
+								>
+									<ClayIcon
+										className="ml-n2"
+										symbol="times-circle"
+									/>
+									Clear All Filters
+								</ClayButton>
 							)}
+						</div>
 					</div>
 
 					<DropDownWithDrillDown
@@ -158,9 +172,8 @@ const MDFRequestList = () => {
 					/>
 				</div>
 
-				<div>
+				<div className="mb-2 mb-lg-0">
 					<ClayButton
-						className="mr-2"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/${PRMPageRoute.CREATE_MDF_REQUEST}`

@@ -9,11 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {INITIAL_FILTER} from './constants/initialFilter';
-
 export default function getSearchFilterTerm(
 	initialFilter: string,
-	filters: typeof INITIAL_FILTER
+	searchTerm: string
 ) {
-	return initialFilter.concat(`&search=${filters.searchTerm}`);
+	return initialFilter.concat(`&search=${searchTerm}`);
 }

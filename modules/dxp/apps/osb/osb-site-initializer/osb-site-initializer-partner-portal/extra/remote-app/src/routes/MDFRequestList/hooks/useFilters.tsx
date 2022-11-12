@@ -17,6 +17,7 @@ import getSearchFilterTerm from '../utils/getSearchFilterTerm';
 
 export default function useFilters() {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
+
 	const [filtersTerm, setFilterTerm] = useState('');
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) =>
@@ -24,20 +25,32 @@ export default function useFilters() {
 
 	useEffect(() => {
 		let initialFilter = '';
+		let hasFilter = false;
 
 		if (
 			filters.activityPeriod.dates.endDate ||
 			filters.activityPeriod.dates.startDate
 		) {
-			initialFilter = getActivityPeriodFilterTerm(initialFilter, filters);
+			hasFilter = true;
+			initialFilter = getActivityPeriodFilterTerm(
+				initialFilter,
+				filters.activityPeriod
+			);
 		}
 
 		if (filters.searchTerm) {
-			initialFilter = getSearchFilterTerm(initialFilter, filters);
+			initialFilter = getSearchFilterTerm(
+				initialFilter,
+				filters.searchTerm
+			);
 		}
 
+		onFilter({
+			hasValue: hasFilter,
+		});
+
 		setFilterTerm(initialFilter);
-	}, [filters, filters.activityPeriod.dates, filters.searchTerm]);
+	}, [filters.activityPeriod, filters.searchTerm, setFilters]);
 
 	return {filters, filtersTerm, onFilter};
 }

@@ -182,7 +182,7 @@ public class BookmarksFolderTrashHandler extends BaseBookmarksTrashHandler {
 			return false;
 		}
 
-		return !folder.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(folder);
 	}
 
 	@Override

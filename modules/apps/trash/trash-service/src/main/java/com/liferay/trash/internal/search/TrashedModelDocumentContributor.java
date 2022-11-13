@@ -29,7 +29,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.model.TrashEntry;
 
 import java.util.Date;
 
@@ -60,7 +61,7 @@ public class TrashedModelDocumentContributor
 		TrashEntry trashEntry = null;
 
 		try {
-			trashEntry = trashedModel.getTrashEntry();
+			trashEntry = _trashHelper.getTrashEntry(trashedModel);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -100,7 +101,7 @@ public class TrashedModelDocumentContributor
 				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
 
 			if (trashedModel.isInTrash() &&
-				!trashedModel.isInTrashExplicitly()) {
+				!_trashHelper.isInTrashExplicitly(trashedModel)) {
 
 				document.addKeyword(
 					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());
@@ -136,6 +137,9 @@ public class TrashedModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrashedModelDocumentContributor.class);
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

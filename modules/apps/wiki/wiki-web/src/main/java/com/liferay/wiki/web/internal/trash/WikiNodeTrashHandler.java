@@ -197,7 +197,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			return false;
 		}
 
-		return !node.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(node);
 	}
 
 	@Override
@@ -253,6 +253,11 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 		return _wikiNodeModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
+	}
+
+	@Override
+	protected boolean isInTrashExplicitly(WikiPage page) {
+		return _trashHelper.isInTrashExplicitly(page);
 	}
 
 	@Reference

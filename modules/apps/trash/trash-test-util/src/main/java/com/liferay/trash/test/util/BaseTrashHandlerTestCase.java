@@ -3402,11 +3402,13 @@ public abstract class BaseTrashHandlerTestCase {
 		if (classedModel instanceof TrashedModel) {
 			TrashedModel trashedModel = (TrashedModel)classedModel;
 
-			return trashedModel.isInTrashContainer();
+			return isInTrashContainer(trashedModel);
 		}
 
 		return false;
 	}
+
+	protected abstract boolean isInTrashContainer(TrashedModel trashedModel);
 
 	protected boolean isValidTrashTitle(String title) {
 		if (title.startsWith(_TRASH_PREFIX)) {

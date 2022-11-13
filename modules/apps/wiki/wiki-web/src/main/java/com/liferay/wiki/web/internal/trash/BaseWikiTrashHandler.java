@@ -66,7 +66,7 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 			WikiPage parentPage = page.getParentPage();
 
 			while (parentPage != null) {
-				if (parentPage.isInTrashExplicitly()) {
+				if (isInTrashExplicitly(parentPage)) {
 					return WikiPage.class.getName();
 				}
 
@@ -205,6 +205,8 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 			userId, page.getNodeId(), page.getTitle(), parentPage.getNodeId(),
 			parentPage.getTitle());
 	}
+
+	protected abstract boolean isInTrashExplicitly(WikiPage page);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseWikiTrashHandler.class);

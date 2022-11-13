@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -188,6 +189,11 @@ public class WikiPageTrashHandlerTest
 		WikiPage page = (WikiPage)baseModel;
 
 		return _trashHelper.getOriginalTitle(page.getTitle());
+	}
+
+	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
 	}
 
 	@Override

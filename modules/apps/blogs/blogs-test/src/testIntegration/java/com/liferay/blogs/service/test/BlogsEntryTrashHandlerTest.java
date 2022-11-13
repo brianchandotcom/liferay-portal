@@ -22,12 +22,15 @@ import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 import com.liferay.trash.test.util.DefaultWhenIsAssetable;
 import com.liferay.trash.test.util.DefaultWhenIsIndexableBaseModel;
@@ -146,10 +149,18 @@ public class BlogsEntryTrashHandlerTest
 	}
 
 	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
+	}
+
+	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		BlogsEntryLocalServiceUtil.moveEntryToTrash(
 			TestPropsValues.getUserId(), primaryKey);
 	}
+
+	@Inject
+	private TrashHelper _trashHelper;
 
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();

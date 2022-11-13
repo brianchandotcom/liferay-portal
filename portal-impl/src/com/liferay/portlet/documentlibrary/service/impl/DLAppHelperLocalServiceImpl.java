@@ -404,7 +404,7 @@ public class DLAppHelperLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		if (dlFileShortcut.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(dlFileShortcut)) {
 			restoreFileShortcutFromTrash(userId, fileShortcut);
 		}
 		else {
@@ -1207,7 +1207,7 @@ public class DLAppHelperLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		if (dlFileEntry.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(dlFileEntry)) {
 			restoreFileEntryFromTrash(userId, newFolderId, fileEntry);
 
 			if (fileEntry.getFolderId() != newFolderId) {
@@ -1438,7 +1438,7 @@ public class DLAppHelperLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		if (dlFolder.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(dlFolder)) {
 			restoreFolderFromTrash(userId, folder);
 		}
 		else {
@@ -1710,11 +1710,11 @@ public class DLAppHelperLocalServiceImpl
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			if (moveToTrash) {
-				if (dlFileEntry.isInTrashExplicitly()) {
+				if (_trashHelper.isInTrashExplicitly(dlFileEntry)) {
 					continue;
 				}
 			}
-			else if (!dlFileEntry.isInTrashImplicitly()) {
+			else if (!_trashHelper.isInTrashImplicitly(dlFileEntry)) {
 				continue;
 			}
 
@@ -1814,7 +1814,7 @@ public class DLAppHelperLocalServiceImpl
 
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
 			if (moveToTrash) {
-				if (dlFileShortcut.isInTrashExplicitly()) {
+				if (_trashHelper.isInTrashExplicitly(dlFileShortcut)) {
 					continue;
 				}
 
@@ -1835,7 +1835,7 @@ public class DLAppHelperLocalServiceImpl
 				}
 			}
 			else {
-				if (!dlFileShortcut.isInTrashImplicitly()) {
+				if (!_trashHelper.isInTrashImplicitly(dlFileShortcut)) {
 					continue;
 				}
 
@@ -1865,7 +1865,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		if (moveToTrash) {
-			if (childDLFolder.isInTrashExplicitly()) {
+			if (_trashHelper.isInTrashExplicitly(childDLFolder)) {
 				return;
 			}
 
@@ -1884,7 +1884,7 @@ public class DLAppHelperLocalServiceImpl
 			}
 		}
 		else {
-			if (!childDLFolder.isInTrashImplicitly()) {
+			if (!_trashHelper.isInTrashImplicitly(childDLFolder)) {
 				return;
 			}
 

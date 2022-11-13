@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 
 import javax.portlet.PortletRequest;
@@ -162,7 +163,7 @@ public class BookmarksEntryTrashHandler extends BaseBookmarksTrashHandler {
 			return false;
 		}
 
-		return !entry.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(entry);
 	}
 
 	@Override
@@ -225,5 +226,8 @@ public class BookmarksEntryTrashHandler extends BaseBookmarksTrashHandler {
 	)
 	private ModelResourcePermission<BookmarksFolder>
 		_bookmarksFolderModelResourcePermission;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

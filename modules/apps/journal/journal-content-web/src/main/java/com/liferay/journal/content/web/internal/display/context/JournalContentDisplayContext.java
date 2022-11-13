@@ -84,8 +84,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,7 +116,7 @@ public class JournalContentDisplayContext {
 			long ddmStructureClassNameId,
 			ModelResourcePermission<DDMTemplate>
 				ddmTemplateModelResourcePermission,
-			ItemSelector itemSelector)
+			ItemSelector itemSelector, TrashHelper trashHelper)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -137,7 +138,7 @@ public class JournalContentDisplayContext {
 				portletRequest, portletResponse, themeDisplay,
 				journalContentPortletInstanceConfiguration,
 				ddmStructureClassNameId, ddmTemplateModelResourcePermission,
-				itemSelector);
+				itemSelector, trashHelper);
 
 			portletRequest.setAttribute(
 				getRequestAttributeName(portletDisplay.getId()),
@@ -820,7 +821,7 @@ public class JournalContentDisplayContext {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			JournalArticle.class.getName());
 
-		TrashEntry trashEntry = selectedArticle.getTrashEntry();
+		TrashEntry trashEntry = _trashHelper.getTrashEntry(selectedArticle);
 
 		return trashHandler.hasTrashPermission(
 			_themeDisplay.getPermissionChecker(), 0, trashEntry.getClassPK(),
@@ -1049,7 +1050,7 @@ public class JournalContentDisplayContext {
 			long ddmStructureClassNameId,
 			ModelResourcePermission<DDMTemplate>
 				ddmTemplateModelResourcePermission,
-			ItemSelector itemSelector)
+			ItemSelector itemSelector, TrashHelper trashHelper)
 		throws PortalException {
 
 		_portletRequest = portletRequest;
@@ -1061,6 +1062,7 @@ public class JournalContentDisplayContext {
 		_ddmTemplateModelResourcePermission =
 			ddmTemplateModelResourcePermission;
 		_itemSelector = itemSelector;
+		_trashHelper = trashHelper;
 
 		AssetEntry assetEntry = _getAssetEntry();
 
@@ -1223,6 +1225,7 @@ public class JournalContentDisplayContext {
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showSelectArticleLink;
 	private final ThemeDisplay _themeDisplay;
+	private final TrashHelper _trashHelper;
 	private List<UserToolAssetAddonEntry> _userToolAssetAddonEntries;
 
 }

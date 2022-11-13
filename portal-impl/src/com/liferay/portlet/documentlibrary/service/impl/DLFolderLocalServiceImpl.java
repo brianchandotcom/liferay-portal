@@ -75,11 +75,13 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.trash.helper.TrashHelper;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1264,7 +1266,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		for (DLFolder curDLFolder : dlFolders) {
-			if (includeTrashedEntries || !curDLFolder.isInTrashExplicitly()) {
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(curDLFolder)) {
+
 				repositoryEventTrigger.trigger(
 					RepositoryEventType.Delete.class, Folder.class,
 					new LiferayFolder(curDLFolder));
@@ -1396,6 +1400,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					" is invalid because it contains a /"));
 		}
 	}
+
+	private static volatile TrashHelper _trashHelper =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			TrashHelper.class, DLFolderLocalServiceImpl.class, "_trashHelper",
+			false);
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

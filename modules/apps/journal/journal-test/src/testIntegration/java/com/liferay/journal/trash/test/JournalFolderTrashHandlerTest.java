@@ -24,6 +24,7 @@ import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -248,6 +249,11 @@ public class JournalFolderTrashHandlerTest
 		JournalFolder folder = (JournalFolder)baseModel;
 
 		return _trashHelper.getOriginalTitle(folder.getName());
+	}
+
+	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
 	}
 
 	@Override

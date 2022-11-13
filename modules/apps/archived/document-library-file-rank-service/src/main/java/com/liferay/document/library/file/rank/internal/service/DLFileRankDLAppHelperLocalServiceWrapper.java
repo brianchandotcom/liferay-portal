@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.trash.TrashHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -114,7 +115,7 @@ public class DLFileRankDLAppHelperLocalServiceWrapper
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
-		if (dlFolder.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(dlFolder)) {
 			return curFolder;
 		}
 
@@ -159,5 +160,8 @@ public class DLFileRankDLAppHelperLocalServiceWrapper
 
 	@Reference
 	private DLFileRankLocalService _dlFileRankLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

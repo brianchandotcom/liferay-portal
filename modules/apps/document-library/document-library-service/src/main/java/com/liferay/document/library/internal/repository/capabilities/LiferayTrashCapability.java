@@ -40,6 +40,7 @@ import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
@@ -58,7 +59,7 @@ public class LiferayTrashCapability
 		DLFileEntryServiceAdapter dlFileEntryServiceAdapter,
 		DLFolderServiceAdapter dlFolderServiceAdapter,
 		RepositoryServiceAdapter repositoryServiceAdapter,
-		TrashEntryLocalService trashEntryLocalService,
+		TrashEntryLocalService trashEntryLocalService, TrashHelper trashHelper,
 		TrashVersionLocalService trashVersionLocalService) {
 
 		_dlAppHelperLocalService = dlAppHelperLocalService;
@@ -67,6 +68,7 @@ public class LiferayTrashCapability
 		_dlFolderServiceAdapter = dlFolderServiceAdapter;
 		_repositoryServiceAdapter = repositoryServiceAdapter;
 		_trashEntryLocalService = trashEntryLocalService;
+		_trashHelper = trashHelper;
 		_trashVersionLocalService = trashVersionLocalService;
 	}
 
@@ -283,7 +285,7 @@ public class LiferayTrashCapability
 			return;
 		}
 
-		if (dlFileEntry.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(dlFileEntry)) {
 			_trashEntryLocalService.deleteEntry(
 				DLFileEntryConstants.getClassName(),
 				dlFileEntry.getFileEntryId());
@@ -305,7 +307,7 @@ public class LiferayTrashCapability
 			return;
 		}
 
-		if (dlFolder.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(dlFolder)) {
 			_trashEntryLocalService.deleteEntry(
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
@@ -329,6 +331,7 @@ public class LiferayTrashCapability
 	private final DLFolderServiceAdapter _dlFolderServiceAdapter;
 	private final RepositoryServiceAdapter _repositoryServiceAdapter;
 	private final TrashEntryLocalService _trashEntryLocalService;
+	private final TrashHelper _trashHelper;
 	private final TrashVersionLocalService _trashVersionLocalService;
 
 	private class DeleteFileEntryRepositoryEventListener

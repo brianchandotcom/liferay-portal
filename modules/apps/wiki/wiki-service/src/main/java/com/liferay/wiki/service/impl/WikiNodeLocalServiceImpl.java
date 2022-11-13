@@ -616,7 +616,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		List<WikiPage> pages = _wikiPagePersistence.findByN_H(nodeId, true);
 
 		for (WikiPage page : pages) {
-			if (!page.isInTrashImplicitly()) {
+			if (!_trashHelper.isInTrashImplicitly(page)) {
 				continue;
 			}
 

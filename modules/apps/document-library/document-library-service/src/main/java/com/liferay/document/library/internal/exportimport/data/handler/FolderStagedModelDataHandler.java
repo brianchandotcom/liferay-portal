@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.util.RepositoryUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -368,7 +369,9 @@ public class FolderStagedModelDataHandler
 
 			DLFolder dlFolder = (DLFolder)liferayFolder.getModel();
 
-			if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
+			if (dlFolder.isInTrash() ||
+				_trashHelper.isInTrashContainer(dlFolder)) {
+
 				PortletDataException portletDataException =
 					new PortletDataException(
 						PortletDataException.STATUS_IN_TRASH);
@@ -524,5 +527,8 @@ public class FolderStagedModelDataHandler
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

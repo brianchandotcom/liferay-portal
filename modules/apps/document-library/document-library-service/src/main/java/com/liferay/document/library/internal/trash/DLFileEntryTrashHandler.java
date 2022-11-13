@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 import com.liferay.trash.constants.TrashEntryConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -259,7 +260,7 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 			return false;
 		}
 
-		return !dlFileEntry.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(dlFileEntry);
 	}
 
 	@Override
@@ -492,5 +493,8 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
 	private ModelResourcePermission<Folder> _folderModelResourcePermission;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

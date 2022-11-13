@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -99,7 +100,8 @@ public class JournalContentConfigurationAction
 		try {
 			JournalContentDisplayContext.create(
 				portletRequest, portletResponse, _CLASS_NAME_ID,
-				_ddmTemplateModelResourcePermission, _itemSelector);
+				_ddmTemplateModelResourcePermission, _itemSelector,
+				_trashHelper);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -272,5 +274,8 @@ public class JournalContentConfigurationAction
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

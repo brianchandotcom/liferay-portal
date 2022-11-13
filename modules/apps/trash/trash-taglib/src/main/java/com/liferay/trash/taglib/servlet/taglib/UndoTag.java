@@ -30,7 +30,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.trash.kernel.model.TrashEntry;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.taglib.internal.servlet.ServletContextUtil;
 
 import java.util.ArrayList;
@@ -122,13 +123,15 @@ public class UndoTag extends IncludeTag {
 		List<Long> restoreTrashEntryIds = new ArrayList<>();
 		List<String> titles = new ArrayList<>();
 
+		TrashHelper trashHelper = ServletContextUtil.getTrashHelper();
+
 		for (TrashedModel trashedModel : trashedModels) {
 			try {
 				if (!(trashedModel instanceof BaseModel)) {
 					continue;
 				}
 
-				TrashEntry trashEntry = trashedModel.getTrashEntry();
+				TrashEntry trashEntry = trashHelper.getTrashEntry(trashedModel);
 
 				restoreTrashEntryIds.add(trashEntry.getEntryId());
 

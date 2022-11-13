@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.BaseTrashHandler;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 
 import java.util.ArrayList;
@@ -218,7 +219,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			return false;
 		}
 
-		return !thread.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(thread);
 	}
 
 	@Override
@@ -322,6 +323,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBThread)"

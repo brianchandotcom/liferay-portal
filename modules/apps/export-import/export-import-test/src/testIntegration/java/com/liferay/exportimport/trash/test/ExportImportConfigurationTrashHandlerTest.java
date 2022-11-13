@@ -21,10 +21,13 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.trash.test.util.ExportImportConfigurationTestUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 
 import org.junit.ClassRule;
@@ -81,10 +84,18 @@ public class ExportImportConfigurationTrashHandlerTest
 	}
 
 	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
+	}
+
+	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		ExportImportConfigurationLocalServiceUtil.
 			moveExportImportConfigurationToTrash(
 				TestPropsValues.getUserId(), primaryKey);
 	}
+
+	@Inject
+	private TrashHelper _trashHelper;
 
 }

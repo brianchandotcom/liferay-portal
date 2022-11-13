@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.service.TrashEntryService;
 
 import java.io.IOException;
@@ -195,7 +196,8 @@ public class JournalContentPortlet extends MVCPortlet {
 		try {
 			JournalContentDisplayContext.create(
 				renderRequest, renderResponse, _CLASS_NAME_ID,
-				_ddmTemplateModelResourcePermission, _itemSelector);
+				_ddmTemplateModelResourcePermission, _itemSelector,
+				_trashHelper);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -252,7 +254,8 @@ public class JournalContentPortlet extends MVCPortlet {
 			try {
 				JournalContentDisplayContext.create(
 					resourceRequest, resourceResponse, _CLASS_NAME_ID,
-					_ddmTemplateModelResourcePermission, _itemSelector);
+					_ddmTemplateModelResourcePermission, _itemSelector,
+					_trashHelper);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -298,5 +301,8 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	@Reference
 	private TrashEntryService _trashEntryService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

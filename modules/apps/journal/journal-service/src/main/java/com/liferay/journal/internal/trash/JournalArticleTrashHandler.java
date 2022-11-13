@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 import com.liferay.trash.constants.TrashEntryConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -236,7 +237,7 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 			return false;
 		}
 
-		return !article.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(article);
 	}
 
 	@Override
@@ -429,5 +430,8 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

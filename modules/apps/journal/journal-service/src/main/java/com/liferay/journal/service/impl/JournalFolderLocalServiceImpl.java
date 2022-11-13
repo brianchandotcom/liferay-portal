@@ -180,7 +180,9 @@ public class JournalFolderLocalServiceImpl
 			folder.getGroupId(), folder.getFolderId());
 
 		for (JournalFolder curFolder : folders) {
-			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(curFolder)) {
+
 				journalFolderLocalService.deleteFolder(
 					curFolder, includeTrashedEntries);
 			}
@@ -217,7 +219,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Trash
 
-		if (folder.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(folder)) {
 			_trashEntryLocalService.deleteEntry(
 				JournalFolder.class.getName(), folder.getFolderId());
 		}
@@ -635,7 +637,7 @@ public class JournalFolderLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		if (folder.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(folder)) {
 			restoreFolderFromTrash(userId, folderId);
 		}
 		else {
@@ -1244,7 +1246,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalFolder folder = (JournalFolder)object;
 
-				if (folder.isInTrashExplicitly()) {
+				if (_trashHelper.isInTrashExplicitly(folder)) {
 					continue;
 				}
 
@@ -1294,7 +1296,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalArticle article = (JournalArticle)object;
 
-				if (!article.isInTrashImplicitly()) {
+				if (!_trashHelper.isInTrashImplicitly(article)) {
 					continue;
 				}
 
@@ -1361,7 +1363,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalFolder folder = (JournalFolder)object;
 
-				if (!folder.isInTrashImplicitly()) {
+				if (!_trashHelper.isInTrashImplicitly(folder)) {
 					continue;
 				}
 

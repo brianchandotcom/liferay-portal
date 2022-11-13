@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -461,6 +462,11 @@ public class JournalArticleTrashHandlerTest
 		JournalArticle article = (JournalArticle)baseModel;
 
 		return _trashHelper.getOriginalTitle(article.getArticleId());
+	}
+
+	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
 	}
 
 	@Override

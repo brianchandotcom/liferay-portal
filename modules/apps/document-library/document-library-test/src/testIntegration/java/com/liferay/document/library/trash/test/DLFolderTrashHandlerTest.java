@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -293,6 +294,11 @@ public class DLFolderTrashHandlerTest
 		DLFolder dlFolder = (DLFolder)baseModel;
 
 		return _trashHelper.getOriginalTitle(dlFolder.getName());
+	}
+
+	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
 	}
 
 	@Override

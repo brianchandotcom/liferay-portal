@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -380,6 +381,11 @@ public class DLFileEntryTrashHandlerTest
 		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
 
 		return dlFileEntry.getFileVersion();
+	}
+
+	@Override
+	protected boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
 	}
 
 	@Override

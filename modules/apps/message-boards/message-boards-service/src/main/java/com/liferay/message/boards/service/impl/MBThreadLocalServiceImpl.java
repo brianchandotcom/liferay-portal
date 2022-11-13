@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
 import com.liferay.trash.model.TrashEntry;
@@ -292,7 +293,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			groupId, categoryId);
 
 		for (MBThread thread : threads) {
-			if (includeTrashedEntries || !thread.isInTrashExplicitly()) {
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(thread)) {
+
 				mbThreadLocalService.deleteThread(thread);
 			}
 		}
@@ -657,7 +660,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		if (thread.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(thread)) {
 			restoreThreadFromTrash(userId, threadId);
 		}
 		else {
@@ -1216,6 +1219,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.trash.helper.TrashHelper;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutLocalServiceBaseImpl;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
@@ -196,7 +198,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		// Trash
 
-		if (fileShortcut.isInTrashExplicitly()) {
+		if (_trashHelper.isInTrashExplicitly(fileShortcut)) {
 			_trashEntryLocalService.deleteEntry(
 				DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId());
@@ -242,7 +244,9 @@ public class DLFileShortcutLocalServiceImpl
 			dlFileShortcutPersistence.findByG_F(groupId, folderId);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			if (includeTrashedEntries || !fileShortcut.isInTrashExplicitly()) {
+			if (includeTrashedEntries ||
+				!_trashHelper.isInTrashExplicitly(fileShortcut)) {
+
 				dlFileShortcutLocalService.deleteFileShortcut(fileShortcut);
 			}
 		}
@@ -503,6 +507,11 @@ public class DLFileShortcutLocalServiceImpl
 				"{fileEntryId=" + toFileEntryId + "}");
 		}
 	}
+
+	private static volatile TrashHelper _trashHelper =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			TrashHelper.class, DLFileShortcutLocalServiceImpl.class,
+			"_trashHelper", false);
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

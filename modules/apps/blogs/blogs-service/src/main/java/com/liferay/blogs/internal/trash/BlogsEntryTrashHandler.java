@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.BaseTrashHandler;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 
 import javax.portlet.PortletRequest;
@@ -113,7 +114,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			return false;
 		}
 
-		return !entry.isInTrashContainer();
+		return !_trashHelper.isInTrashContainer(entry);
 	}
 
 	@Override
@@ -173,5 +174,8 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

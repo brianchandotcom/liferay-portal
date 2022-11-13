@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
+import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -442,7 +443,7 @@ public class MBMessageStagedModelDataHandler
 			}
 		}
 
-		if (existingMessage.isInTrashContainer()) {
+		if (_trashHelper.isInTrashContainer(existingMessage)) {
 			MBThread existingThread = existingMessage.getThread();
 
 			TrashHandler trashHandler =
@@ -586,5 +587,8 @@ public class MBMessageStagedModelDataHandler
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

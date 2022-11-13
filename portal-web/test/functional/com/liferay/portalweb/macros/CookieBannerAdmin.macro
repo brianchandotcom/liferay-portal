@@ -2,7 +2,7 @@ definition {
 
 	@description = "Configure Cookie Banner to be visible"
 	macro configuredToShowBanner {
-		CookieNavigator.gotoSiteSettings(portlet = "Banner");
+		CookieNavigator.gotoInstanceSettings(portlet = "Banner");
 
 		CookieBannerAdmin.saveSettings();
 	}
@@ -64,11 +64,11 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	@description = "Set custom texts for Cookie Banner"
+	@description = "Set custom texts for Cookie Banner at Instance Level"
 	macro setCustomTextForAllFields {
 		Variables.assertDefined(parameterList = "${text}");
 
-		CookieNavigator.gotoSiteSettings(portlet = "Banner");
+		CookieNavigator.gotoInstanceSettings(portlet = "Banner");
 
 		Type(
 			locator1 = "CookieBannerAdmin#CONTENT",

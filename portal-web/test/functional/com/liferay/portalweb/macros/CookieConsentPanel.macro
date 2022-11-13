@@ -156,7 +156,7 @@ definition {
 
 		TestUtils.assertEquals(
 			actual = "${actualLink}",
-			expected = "http://localhost:8080/group/guest/~/control_panel/${key_text}_3");
+			expected = "http://localhost:8080/group/control_panel/${key_text}_3");
 
 		AssertElementPresent(
 			key_text = "${key_text}_4",

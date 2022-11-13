@@ -49,56 +49,9 @@ public class ObjectEntryVariablesUtil {
 			systemObjectDefinitionMetadataRegistry) {
 
 		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
-			Map<String, Object> allowedVariables =
-				HashMapBuilder.<String, Object>put(
-					"creator", payloadJSONObject.get("userId")
-				).build();
-
-			Map<String, Object> variables = new HashMap<>();
-
-			if (objectDefinition.isSystem()) {
-				variables.putAll(
-					(Map<String, Object>)payloadJSONObject.get(
-						"model" + objectDefinition.getName()));
-
-				String contentType = _getContentType(
-					dtoConverterRegistry, objectDefinition,
-					systemObjectDefinitionMetadataRegistry);
-
-				variables.putAll(
-					(Map<String, Object>)payloadJSONObject.get(
-						"modelDTO" + contentType));
-			}
-			else {
-				variables.putAll(
-					(Map<String, Object>)payloadJSONObject.get("objectEntry"));
-
-				variables.putAll((Map<String, Object>)variables.get("values"));
-
-				variables.remove("values");
-
-				Object objectEntryId = variables.get("objectEntryId");
-
-				if (objectEntryId != null) {
-					allowedVariables.put("id", objectEntryId);
-				}
-			}
-
-			variables.remove("creator");
-
-			List<ObjectField> objectFields =
-				ObjectFieldLocalServiceUtil.getObjectFields(
-					objectDefinition.getObjectDefinitionId());
-
-			for (ObjectField objectField : objectFields) {
-				if (!allowedVariables.containsKey(objectField.getName())) {
-					allowedVariables.put(
-						objectField.getName(),
-						variables.get(objectField.getName()));
-				}
-			}
-
-			return allowedVariables;
+			return _getVariables(
+				dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				systemObjectDefinitionMetadataRegistry);
 		}
 
 		if (objectDefinition.isSystem()) {
@@ -160,7 +113,7 @@ public class ObjectEntryVariablesUtil {
 		throws PortalException {
 
 		if (PropsValues.OBJECT_ENTRY_SCRIPT_VARIABLES_VERSION == 2) {
-			return getActionVariables(
+			return _getVariables(
 				dtoConverterRegistry, objectDefinition, payloadJSONObject,
 				systemObjectDefinitionMetadataRegistry);
 		}
@@ -213,6 +166,64 @@ public class ObjectEntryVariablesUtil {
 		}
 
 		return dtoConverter.getContentType();
+	}
+
+	private static Map<String, Object> _getVariables(
+		DTOConverterRegistry dtoConverterRegistry,
+		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
+
+		Map<String, Object> allowedVariables =
+			HashMapBuilder.<String, Object>put(
+				"creator", payloadJSONObject.get("userId")
+			).build();
+
+		Map<String, Object> variables = new HashMap<>();
+
+		if (objectDefinition.isSystem()) {
+			variables.putAll(
+				(Map<String, Object>)payloadJSONObject.get(
+					"model" + objectDefinition.getName()));
+
+			String contentType = _getContentType(
+				dtoConverterRegistry, objectDefinition,
+				systemObjectDefinitionMetadataRegistry);
+
+			variables.putAll(
+				(Map<String, Object>)payloadJSONObject.get(
+					"modelDTO" + contentType));
+		}
+		else {
+			variables.putAll(
+				(Map<String, Object>)payloadJSONObject.get("objectEntry"));
+
+			variables.putAll((Map<String, Object>)variables.get("values"));
+
+			variables.remove("values");
+
+			Object objectEntryId = variables.get("objectEntryId");
+
+			if (objectEntryId != null) {
+				allowedVariables.put("id", objectEntryId);
+			}
+		}
+
+		variables.remove("creator");
+
+		List<ObjectField> objectFields =
+			ObjectFieldLocalServiceUtil.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			if (!allowedVariables.containsKey(objectField.getName())) {
+				allowedVariables.put(
+					objectField.getName(),
+					variables.get(objectField.getName()));
+			}
+		}
+
+		return allowedVariables;
 	}
 
 }

@@ -14,31 +14,56 @@
 
 package com.liferay.analytics.message.sender.internal.messaging;
 
-import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
-import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Rachael Koestartyo
+ * @author Shuyang Zhou
  */
-@Component(
-	property = "destination.name=" + AnalyticsMessagesDestinationNames.ANALYTICS_MESSAGES_PROCESSOR,
-	service = MessageListener.class
-)
-public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
+@Component(service = {})
+public class SendAnalyticsMessagesSchedulerEventMessageListener
+	extends BaseMessageListener {
+
+	@Activate
+	protected void activate() {
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null, 1, TimeUnit.HOUR);
+
+		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
+			className, trigger);
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (_skipProcess(message)) {
+		if (_isDisabled()) {
 			return;
 		}
 
@@ -48,26 +73,16 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message, long companyId) throws Exception {
-		if (_skipProcess(message)) {
+		if (_isDisabled()) {
 			return;
 		}
 
 		_analyticsMessagesHelper.send(companyId);
 	}
 
-	private boolean _skipProcess(Message message) {
+	private boolean _isDisabled() {
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10632")) ||
 			!_analyticsConfigurationRegistry.isActive()) {
-
-			return true;
-		}
-
-		AnalyticsMessagesProcessorCommand analyticsMessagesProcessorCommand =
-			(AnalyticsMessagesProcessorCommand)message.get("command");
-
-		if ((analyticsMessagesProcessorCommand != null) &&
-			(analyticsMessagesProcessorCommand !=
-				AnalyticsMessagesProcessorCommand.SEND)) {
 
 			return true;
 		}
@@ -83,5 +98,11 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

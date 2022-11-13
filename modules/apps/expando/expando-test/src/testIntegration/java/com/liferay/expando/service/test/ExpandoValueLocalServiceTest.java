@@ -229,6 +229,17 @@ public class ExpandoValueLocalServiceTest {
 
 				return null;
 			});
+
+		Assert.assertEquals(
+			"column1-two",
+			ExpandoValueLocalServiceUtil.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column1", classPK));
+		Assert.assertEquals(
+			"column2-two",
+			ExpandoValueLocalServiceUtil.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column2", classPK));
 	}
 
 	@Test
@@ -264,6 +275,17 @@ public class ExpandoValueLocalServiceTest {
 
 				return null;
 			});
+
+		Assert.assertEquals(
+			"column1-two",
+			ExpandoValueLocalServiceUtil.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column1", classPK));
+		Assert.assertEquals(
+			"column2-two",
+			ExpandoValueLocalServiceUtil.getData(
+				_expandoTable.getCompanyId(), _expandoTable.getClassName(),
+				_expandoTable.getName(), "Test Column2", classPK));
 	}
 
 	@Test

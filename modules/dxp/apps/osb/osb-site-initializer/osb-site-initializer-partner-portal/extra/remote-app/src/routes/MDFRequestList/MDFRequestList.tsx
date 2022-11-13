@@ -174,6 +174,7 @@ const MDFRequestList = () => {
 
 				<div className="mb-2 mb-lg-0">
 					<ClayButton
+						className="mr-2 mr-md-2"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/${PRMPageRoute.CREATE_MDF_REQUEST}`

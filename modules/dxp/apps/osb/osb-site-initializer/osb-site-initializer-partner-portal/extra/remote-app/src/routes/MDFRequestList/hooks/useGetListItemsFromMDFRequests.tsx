@@ -16,6 +16,7 @@ import useGetMDFRequests from '../../../common/services/liferay/object/mdf-reque
 import getMDFActivityPeriod from '../utils/getMDFActivityPeriod';
 import getMDFBudgetInfos from '../utils/getMDFBudgetInfos';
 import getMDFDates from '../utils/getMDFDates';
+import getSummaryMDFClaims from '../utils/getSummaryMDFClaims';
 
 export default function useGetListItemsFromMDFRequests(
 	page: number,
@@ -27,6 +28,7 @@ export default function useGetListItemsFromMDFRequests(
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
+				...getSummaryMDFClaims(item.mdfRequestToMdfClaims),
 				[MDFColumnKey.ID]: String(item.id),
 				[MDFColumnKey.NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(

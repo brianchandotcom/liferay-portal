@@ -56,11 +56,11 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	@description = "Set custom text for all fields"
+	@description = "Set custom text for all fields at Instance level"
 	macro setCustomTextForAllFields {
 		Variables.assertDefined(parameterList = "${text}");
 
-		CookieNavigator.gotoSiteSettings(portlet = "Consent Panel");
+		CookieNavigator.gotoInstanceSettings(portlet = "Consent Panel");
 
 		Type(
 			locator1 = "CookieConsentAdmin#TITLE",

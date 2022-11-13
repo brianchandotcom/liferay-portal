@@ -12,6 +12,7 @@
 import AccountEntry from '../accountEntry';
 import MDFRequest from '../mdfRequest';
 import User from '../user';
+import MDFClaimDTO from './mdfClaimDTO';
 import MDFRequestActivityDTO from './mdfRequestActivityDTO';
 
 export default interface MDFRequestDTO
@@ -28,6 +29,7 @@ export default interface MDFRequestDTO
 	liferayBusinessSalesGoals?: string;
 	liferaysUserIdSF?: number;
 	mdfRequestToActivities?: MDFRequestActivityDTO[];
+	mdfRequestToMdfClaims?: MDFClaimDTO[];
 	r_accountToMDFRequests_accountEntry?: AccountEntry;
 	r_accountToMDFRequests_accountEntryId?: number;
 	r_userToMDFRequests_user?: User;

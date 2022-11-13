@@ -18,4 +18,5 @@ export default interface MDFClaimDTO
 	mdfRequestExternalReferenceCodeSF?: string;
 	mdfRequestTotalCostOfExpense?: number;
 	mdfRequestedAmount?: number;
+	paymentReceived?: number;
 }

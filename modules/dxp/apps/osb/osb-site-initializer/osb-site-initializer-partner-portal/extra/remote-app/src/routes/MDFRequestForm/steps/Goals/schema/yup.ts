@@ -29,7 +29,7 @@ const goalsSchema = object({
 		.max(255, 'You have exceeded the character limit')
 		.required('Required'),
 	overallCampaignName: string()
-		.max(255, 'You have exceeded the character limit')
+		.max(24, 'You have exceeded the character limit')
 		.required('Required'),
 	targetAudienceRoles: array().min(1, 'Required'),
 	targetMarkets: array()

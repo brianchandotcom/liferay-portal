@@ -11,6 +11,8 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
+
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingInInstanceSettings();
 		}
 	}
 
@@ -21,8 +23,6 @@ definition {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerAcceptAllSelected";
 
 		task ("Given: User click on Accept all") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
 			CookieBanner.cookiesBannerAcceptAll();
 		}
 
@@ -38,9 +38,7 @@ definition {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerCouldBeEnabledAndCustomized";
 
 		task ("Given: a site configured to show the Banner") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
-			CookieBannerAdmin.setCustomTextForAllFields(text = "CUSTOM");
+			CookieBannerAdmin.setCustomTextForAllFields(text = "INSTANCE_LEVEL");
 		}
 
 		task ("When: the End User first visits the site") {
@@ -48,7 +46,7 @@ definition {
 		}
 
 		task ("Then: they see the Banner text as the Description is configured for the Banner in the site administration.") {
-			CookieBanner.verifyCustomTextsArePresent(key_text = "CUSTOM");
+			CookieBanner.verifyCustomTextsArePresent(key_text = "INSTANCE_LEVEL");
 		}
 
 		task ("And: they see the 'Decline All' button on the right side of the Banner, next to the 'Accept All' button.") {
@@ -75,19 +73,17 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.consent.CookiesConsentConfiguration.scoped~default.config");
 
-			var siteId = JSONGroupAPI._getGroupIdByName(
-				groupName = "Guest",
-				site = "true");
+			var companyId = JSONCompany.getCompanyId();
 
 			AntCommand(
 				locator1 = "build-test-cookies.xml",
-				value1 = "update-cookies-osgi-site-configuration -DsiteId=${siteId}");
+				value1 = "update-cookies-osgi-instance-configuration -DcompanyId=${companyId}");
 
 			User.logoutAndLoginPG();
 
-			CookieNavigator.gotoSiteSettings(portlet = "Banner");
+			CookieNavigator.gotoInstanceSettings(portlet = "Banner");
 
-			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
+			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "INSTANCE_LEVEL");
 		}
 
 		task ("When: modify configuration entries and click cancel button") {
@@ -97,9 +93,9 @@ definition {
 		}
 
 		task ("Then: all the configuration value changes are not saved.") {
-			CookieNavigator.gotoSiteSettings(portlet = "Banner");
+			CookieNavigator.gotoInstanceSettings(portlet = "Banner");
 
-			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
+			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "INSTANCE_LEVEL");
 		}
 	}
 
@@ -110,8 +106,6 @@ definition {
 		property test.name.skip.portal.instance = "CookiesBanner#CookieBannerDeclineAllSelected";
 
 		task ("Given: User click on Decline all") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
 			CookieBanner.cookiesBannerDeclineAll();
 		}
 
@@ -138,9 +132,7 @@ definition {
 		}
 
 		task ("When: the End User opens the 'Cookie Consent' panel and clicks on the 'Cookie Policy Link's Display Link Text' with the configured URL as a link on that after the Description") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
-			CookieNavigator.gotoSiteSettings(portlet = "Banner");
+			CookieNavigator.gotoInstanceSettings(portlet = "Banner");
 
 			CookieBannerAdmin.saveSettings(privacyPolicyLink = "/web/guest/policypage");
 

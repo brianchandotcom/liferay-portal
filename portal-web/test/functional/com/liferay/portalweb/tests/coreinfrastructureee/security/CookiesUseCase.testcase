@@ -11,6 +11,8 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
+
+			CookiePreferenceHandlingAdmin.enablePreferenceHandlingInInstanceSettings();
 		}
 	}
 
@@ -21,8 +23,6 @@ definition {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerAndCookieConsentPanelElementsAreVisible";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
 			CookieBanner.verifyAllElementsArePresent();
 		}
 
@@ -46,8 +46,6 @@ definition {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired";
 
 		task ("Given: Cookie Banner is present on the Site.") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
 			CookieBanner.cookiesBannerAcceptAll();
 		}
 
@@ -70,8 +68,6 @@ definition {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
 
 		task ("Given: Cookie Banner is present on the Site.") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-
 			CookieBanner.cookiesBannerAcceptAll();
 		}
 
@@ -126,10 +122,6 @@ definition {
 	@priority = "3"
 	test VerifyOrderOfMenuItemsInSiteSettings {
 		property test.name.skip.portal.instance = "CookiesUseCase#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
-
-		task ("Given: Cookie Banner is present on the Site.") {
-			CookiePreferenceHandlingAdmin.enablePreferenceHandling();
-		}
 
 		task ("Verify the order of menu items in Site Settings") {
 			AssertVisible(locator1 = "CookieBannerAdmin#MENU_ITEMS_IN_ORDER");

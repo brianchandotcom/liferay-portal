@@ -753,6 +753,8 @@ public class ExpandoValueLocalServiceImpl
 		List<ExpandoColumn> columns = expandoColumnLocalService.getColumns(
 			table.getTableId(), attributes.keySet());
 
+		Map<String, String> data = new HashMap<>();
+
 		for (ExpandoColumn column : columns) {
 			ExpandoValue value = new ExpandoValueImpl();
 
@@ -842,10 +844,11 @@ public class ExpandoValueLocalServiceImpl
 				value.setString((String)attributeValue);
 			}
 
-			doAddValue(
-				companyId, classNameId, table.getTableId(),
-				column.getColumnId(), classPK, value.getData());
+			data.put(column.getName(), value.getData());
 		}
+
+		addValues(
+			table.getClassNameId(), table.getTableId(), columns, classPK, data);
 	}
 
 	@Override
@@ -1713,31 +1716,26 @@ public class ExpandoValueLocalServiceImpl
 		long companyId, long classNameId, long tableId, long columnId,
 		long classPK, String data) {
 
-		ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
-
-		ExpandoValue value = null;
-
-		if (row == null) {
-			long rowId = counterLocalService.increment();
-
-			row = expandoRowPersistence.create(rowId);
-
-			row.setCompanyId(companyId);
-			row.setModifiedDate(new Date());
-			row.setTableId(tableId);
-			row.setClassPK(classPK);
-
-			row = expandoRowPersistence.update(row);
-		}
-		else {
-			value = expandoValuePersistence.fetchByC_R(
-				columnId, row.getRowId());
-		}
+		ExpandoValue value = expandoValuePersistence.fetchByT_C_C(
+			tableId, columnId, classPK);
 
 		if (value == null) {
-			long valueId = counterLocalService.increment();
+			ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
 
-			value = expandoValuePersistence.create(valueId);
+			if (row == null) {
+				row = expandoRowPersistence.create(
+					counterLocalService.increment());
+
+				row.setCompanyId(companyId);
+				row.setModifiedDate(new Date());
+				row.setTableId(tableId);
+				row.setClassPK(classPK);
+
+				row = expandoRowPersistence.update(row);
+			}
+
+			value = expandoValuePersistence.create(
+				counterLocalService.increment());
 
 			value.setCompanyId(companyId);
 			value.setTableId(tableId);
@@ -1754,6 +1752,8 @@ public class ExpandoValueLocalServiceImpl
 			value.setData(data);
 
 			value = expandoValuePersistence.update(value);
+
+			ExpandoRow row = expandoRowPersistence.fetchByT_C(tableId, classPK);
 
 			row.setModifiedDate(new Date());
 

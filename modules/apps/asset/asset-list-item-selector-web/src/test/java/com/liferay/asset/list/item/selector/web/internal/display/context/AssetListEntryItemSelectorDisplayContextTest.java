@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.display.context;
+package com.liferay.asset.list.item.selector.web.internal.display.context;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 /**
  * @author Jürgen Kappler
  */
-public class ContentPageEditorDisplayContextTest {
+public class AssetListEntryItemSelectorDisplayContextTest {
 
 	@ClassRule
 	@Rule
@@ -82,22 +82,23 @@ public class ContentPageEditorDisplayContextTest {
 			"className2"
 		);
 
-		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
-			new ContentPageEditorDisplayContext(
-				null, null, null, null, httpServletRequest,
-				infoItemServiceRegistry, infoSearchClassMapperRegistry, null,
-				null, null, null, null, null, null);
+		AssetListEntryItemSelectorDisplayContext
+			assetListEntryItemSelectorDisplayContext =
+				new AssetListEntryItemSelectorDisplayContext(
+					httpServletRequest, infoItemServiceRegistry,
+					infoSearchClassMapperRegistry, null, null, null, null);
 
-		List<String> infoItemClassNames = ReflectionTestUtil.invoke(
-			contentPageEditorDisplayContext, "_getInfoItemClassNames",
+		String[] infoItemClassNames = ReflectionTestUtil.invoke(
+			assetListEntryItemSelectorDisplayContext, "_getInfoItemClassNames",
 			new Class<?>[0]);
 
 		Assert.assertEquals(
-			infoItemClassNames.toString(), 3, infoItemClassNames.size());
+			Arrays.toString(infoItemClassNames), 3, infoItemClassNames.length);
 
-		Assert.assertTrue(infoItemClassNames.contains("className1"));
-		Assert.assertTrue(infoItemClassNames.contains("className2"));
-		Assert.assertTrue(infoItemClassNames.contains("searchClassName1"));
+		Assert.assertTrue(ArrayUtil.contains(infoItemClassNames, "className1"));
+		Assert.assertTrue(ArrayUtil.contains(infoItemClassNames, "className2"));
+		Assert.assertTrue(
+			ArrayUtil.contains(infoItemClassNames, "searchClassName1"));
 	}
 
 }

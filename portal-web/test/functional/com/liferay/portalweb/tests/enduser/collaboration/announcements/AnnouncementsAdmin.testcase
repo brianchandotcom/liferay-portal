@@ -7,6 +7,10 @@ definition {
 	}
 
 	tearDown {
+		AnnouncementsNavigator.opentoAdmin(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
 		while (IsElementPresent(locator1 = "Announcements#ANNOUNCEMENT_TITLE_ANY")) {
 			JSONAnnouncement.deleteAnnouncement(
 				groupName = "Guest",
@@ -26,10 +30,6 @@ definition {
 		Announcements.addAnnouncement();
 
 		Announcements.viewAnnouncementEntry(announcementTitle = "Announcement Title");
-
-		AnnouncementsNavigator.opentoAdmin(
-			groupName = "Guest",
-			siteURLKey = "guest");
 	}
 
 }

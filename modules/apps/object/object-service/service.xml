@@ -24,6 +24,8 @@
 		<column name="active" type="boolean" />
 		<column name="conditionExpression" type="String" />
 		<column name="description" type="String" />
+		<column localized="true" name="errorMessage" type="String" />
+		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
 		<column name="objectActionExecutorKey" type="String" />
 		<column name="objectActionTriggerKey" type="String" />

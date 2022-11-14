@@ -228,13 +228,13 @@
 	/>
 
 	<div aria-label="${title}">
-	<@clay["button"]
-		cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip text-primary print-icon"
-		displayType="secondary"
-		icon="print"
-		onClick=taglibPrintURL
-		title="${title}"
-	/>
+		<@clay["button"]
+			cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip text-primary print-icon"
+			displayType="secondary"
+			icon="print"
+			onClick=taglibPrintURL
+			title="${title}"
+		/>
 	</div>
 </#macro>
 

@@ -156,14 +156,14 @@
 		<#assign title = languageUtil.format(locale, "print-x", entryTitle, false) />
 
 		<div aria-label="${title}">
-		<@clay["button"]
-			cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
-			displayType="secondary"
-			icon="print"
-			markupView="lexicon"
-			onClick="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x", [entryTitle], false) + "', url: '" + printURL.toString() + "'});"
-			title="${title}"
-		/>
+			<@clay["button"]
+				cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip"
+				displayType="secondary"
+				icon="print"
+				markupView="lexicon"
+				onClick="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x", [entryTitle], false) + "', url: '" + printURL.toString() + "'});"
+				title="${title}"
+			/>
 		</div>
 	</#if>
 </#macro>

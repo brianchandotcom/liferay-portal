@@ -60,9 +60,9 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField70() throws Exception {
+		String liferayProduct = "dxp";
 		String liferayVersion = "7.0.10.17";
 		String name = "foobar";
-		String product = "dxp";
 		String template = "form-field";
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -77,7 +77,8 @@ public class ProjectTemplatesFormFieldTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", liferayVersion, "--product", product);
+			"--liferay-product", liferayProduct, "--liferay-version",
+			liferayVersion);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
@@ -122,8 +123,8 @@ public class ProjectTemplatesFormFieldTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Foobar",
-			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar",
-			"-Dproduct=" + product);
+			"-DliferayProduct=" + liferayProduct,
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar");
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
@@ -138,9 +139,9 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField71() throws Exception {
+		String liferayProduct = "dxp";
 		String liferayVersion = "7.1.10.7";
 		String name = "foobar";
-		String product = "dxp";
 		String template = "form-field";
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -155,7 +156,8 @@ public class ProjectTemplatesFormFieldTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", liferayVersion, "--product", product);
+			"--liferay-product", liferayProduct, "--liferay-version",
+			liferayVersion);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
@@ -224,7 +226,7 @@ public class ProjectTemplatesFormFieldTest
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Foobar",
 			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar",
-			"-Dproduct=" + product);
+			"-DliferayProduct=" + liferayProduct);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -242,9 +244,9 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
+		String liferayProduct = "dxp";
 		String liferayVersion = "7.1.10.7";
 		String name = "foo-bar";
-		String product = "dxp";
 		String template = "form-field";
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -259,7 +261,8 @@ public class ProjectTemplatesFormFieldTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", liferayVersion, "--product", product);
+			"--liferay-product", liferayProduct, "--liferay-version",
+			liferayVersion);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
@@ -327,8 +330,8 @@ public class ProjectTemplatesFormFieldTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=FooBar",
-			"-DliferayVersion=" + liferayVersion, "-Dpackage=foo.bar",
-			"-Dproduct=" + product);
+			"-DliferayProduct=" + liferayProduct,
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=foo.bar");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -346,9 +349,9 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField72CustomPackage() throws Exception {
+		String liferayProduct = "dxp";
 		String liferayVersion = "7.2.10.7";
 		String name = "foobar";
-		String product = "dxp";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
 
@@ -360,8 +363,8 @@ public class ProjectTemplatesFormFieldTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), "form-field", name,
-			"--liferay-version", liferayVersion, "--package-name",
-			"com.liferay.test.form", "--product", product);
+			"--liferay-product", liferayProduct, "--liferay-version",
+			liferayVersion, "--package-name", "com.liferay.test.form");
 
 		testNotExists(
 			gradleProjectDir,

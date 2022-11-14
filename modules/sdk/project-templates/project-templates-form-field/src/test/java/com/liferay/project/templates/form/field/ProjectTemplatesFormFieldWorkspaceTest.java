@@ -77,10 +77,10 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 	}
 
 	public ProjectTemplatesFormFieldWorkspaceTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -97,7 +97,8 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", _liferayVersion, "--product", _product);
+			"--liferay-product", _liferayProduct, "--liferay-version",
+			_liferayVersion);
 
 		testContains(
 			gradleProjectDir, "package.json",
@@ -132,7 +133,8 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), template, name,
-			"--liferay-version", _liferayVersion, "--product", _product);
+			"--liferay-product", _liferayProduct, "--liferay-version",
+			_liferayVersion);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
@@ -230,8 +232,8 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 			completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 			completeArgs.add("-DclassName=FooBar");
 			completeArgs.add("-DgroupId=" + groupId);
+			completeArgs.add("-DliferayProduct=" + _liferayProduct);
 			completeArgs.add("-DliferayVersion=" + _liferayVersion);
-			completeArgs.add("-Dproduct=" + _product);
 
 			String mavenOutput = executeMaven(
 				mavenWorkspaceDir, true, mavenExecutor,
@@ -256,7 +258,8 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", _liferayVersion, "--product", _product);
+			"--liferay-product", _liferayProduct, "--liferay-version",
+			_liferayVersion);
 
 		testContains(
 			gradleProjectDir, "package.json",
@@ -290,7 +293,8 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules/test"), template, name,
-			"--liferay-version", _liferayVersion, "--product", _product);
+			"--liferay-product", _liferayProduct, "--liferay-version",
+			_liferayVersion);
 
 		testContains(
 			gradleProjectDir, "package.json",
@@ -326,7 +330,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceDir, template, name, "--liferay-version",
-			_liferayVersion, "--product", _product);
+			_liferayVersion, "--liferay-product", _liferayProduct);
 
 		removeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir, "liferay.workspace.modules.dir=modules");
@@ -357,7 +361,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

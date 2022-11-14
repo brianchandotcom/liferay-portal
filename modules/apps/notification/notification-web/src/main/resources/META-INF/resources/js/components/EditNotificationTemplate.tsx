@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayManagementToolbar from '@clayui/management-toolbar';
@@ -20,6 +21,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {
 	API,
 	Card,
+	CodeEditor,
 	Input,
 	InputLocalized,
 	RichTextLocalized,
@@ -41,10 +43,19 @@ const HEADERS = new Headers({
 });
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-interface Item {
-	label?: string;
-	value?: string;
+
+interface LabelValueObject {
+	label: string;
+	value: string;
 }
+
+type editorTypeOptions = 'freemarker' | 'richText';
+
+interface EditorType extends LabelValueObject {
+	value: editorTypeOptions;
+}
+
+interface Item extends Partial<LabelValueObject> {}
 
 interface IProps {
 	baseResourceURL: string;
@@ -65,12 +76,26 @@ interface User {
 	givenName: string;
 }
 
+type TEmailRecipients = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
+
+type TUserNotificationRecipients = {
+	[key in 'term' | 'userScreenName' | 'roleName']?: string;
+};
+
 export type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
 	body: LocalizedValue<string>;
 	cc: string;
 	description: string;
+	editorType: editorTypeOptions;
+	freemarkerTemplate: {lineCount?: number; template?: string};
 	from: string;
 	fromName: LocalizedValue<string>;
 	name: string;
@@ -85,17 +110,16 @@ export type TNotificationTemplate = {
 	type: string;
 };
 
-type TUserNotificationRecipients = {
-	[key in 'term' | 'userScreenName' | 'roleName']?: string;
-};
-
-type TEmailRecipients = {
-	bcc: string;
-	cc: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-};
+const EDITOR_TYPES = [
+	{
+		label: Liferay.Language.get('freemarker-template'),
+		value: 'freemarker',
+	},
+	{
+		label: Liferay.Language.get('rich-text'),
+		value: 'richText',
+	},
+];
 
 const RECIPIENT_OPTIONS = [
 	{
@@ -242,6 +266,13 @@ export default function EditNotificationTemplate({
 			[defaultLanguageId]: '',
 		},
 		description: '',
+		editorType: 'richText' as editorTypeOptions,
+		freemarkerTemplate: {
+			lineCount: 0,
+			template: `<#--
+		Add elements from the sidebar to define your template. Type "\${" to use the autocomplete feature
+		-->`,
+		},
 		name: '',
 		objectDefinitionId: 0,
 		recipients: recipientInitialValue,
@@ -507,7 +538,14 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								{values.type === 'userNotification' ? (
+								<Text as="span" color="secondary">
+									{Liferay.Language.get(
+										'use-terms-to-populate-fields-dynamically'
+									)}
+								</Text>
+
+								{Liferay.FeatureFlags['LPS-162133'] &&
+								values.type === 'userNotification' ? (
 									<>
 										<SingleSelect
 											label={Liferay.Language.get(
@@ -775,6 +813,14 @@ export default function EditNotificationTemplate({
 					</div>
 
 					<Card title={Liferay.Language.get('content')}>
+						{Liferay.FeatureFlags['LPS-162598'] && (
+							<Text as="span" color="secondary">
+								{Liferay.Language.get(
+									'use-terms-to-populate-fields-dynamically-with-the-exception-of-the-freemarker-template-editor'
+								)}
+							</Text>
+						)}
+
 						<InputLocalized
 							{...(values.type === 'userNotification' && {
 								component: 'textarea',
@@ -793,22 +839,108 @@ export default function EditNotificationTemplate({
 						/>
 
 						{values.type === 'email' && (
-							<RichTextLocalized
-								editorConfig={editorConfig}
-								label={Liferay.Language.get('body')}
-								name="body"
-								onSelectedLocaleChange={({label}) =>
-									setSelectedLocale(label)
-								}
-								onTranslationsChange={(translation) => {
-									setValues({
-										...values,
-										body: translation,
-									});
-								}}
-								selectedLocale={selectedLocale}
-								translations={values.body}
-							/>
+							<>
+								{Liferay.FeatureFlags['LPS-162598'] ? (
+									<>
+										<SingleSelect<EditorType>
+											label={Liferay.Language.get(
+												'editor-type'
+											)}
+											onChange={({value}: EditorType) => {
+												setValues({
+													...values,
+													editorType: value,
+												});
+											}}
+											options={
+												EDITOR_TYPES as EditorType[]
+											}
+											required
+											value={
+												EDITOR_TYPES.find(
+													({value}) =>
+														value ===
+														values.editorType
+												)?.label
+											}
+										/>
+
+										{values.editorType === 'richText' ? (
+											<RichTextLocalized
+												editorConfig={editorConfig}
+												label={Liferay.Language.get(
+													'template'
+												)}
+												name="template"
+												onSelectedLocaleChange={({
+													label,
+												}) => setSelectedLocale(label)}
+												onTranslationsChange={(
+													translation
+												) => {
+													setValues({
+														...values,
+														body: translation,
+													});
+												}}
+												selectedLocale={selectedLocale}
+												translations={values.body}
+											/>
+										) : (
+											<>
+												<CodeEditor
+													mode="freemarker"
+													onChange={(
+														template,
+														lineCount
+													) =>
+														setValues({
+															...values,
+															freemarkerTemplate: {
+																lineCount,
+																template,
+															},
+														})
+													}
+													sidebarElements={[]}
+													value={
+														values
+															.freemarkerTemplate
+															?.template ?? ''
+													}
+												/>
+
+												<Text
+													as="span"
+													color="secondary"
+													size={3}
+												>
+													{Liferay.Language.get(
+														'object-terms-cannot-be-used-in-freemarker-templates'
+													)}
+												</Text>
+											</>
+										)}
+									</>
+								) : (
+									<RichTextLocalized
+										editorConfig={editorConfig}
+										label={Liferay.Language.get('body')}
+										name="body"
+										onSelectedLocaleChange={({label}) =>
+											setSelectedLocale(label)
+										}
+										onTranslationsChange={(translation) => {
+											setValues({
+												...values,
+												body: translation,
+											});
+										}}
+										selectedLocale={selectedLocale}
+										translations={values.body}
+									/>
+								)}
+							</>
 						)}
 
 						<DefinitionOfTerms baseResourceURL={baseResourceURL} />

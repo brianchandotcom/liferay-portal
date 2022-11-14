@@ -15,18 +15,34 @@
 /// <reference types="react" />
 
 import './EditNotificationTemplate.scss';
+declare type editorTypeOptions = 'freemarker' | 'richText';
 interface IProps {
 	baseResourceURL: string;
 	editorConfig: object;
 	notificationTemplateId: number;
 	notificationTemplateType: string;
 }
+declare type TEmailRecipients = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
+declare type TUserNotificationRecipients = {
+	[key in 'term' | 'userScreenName' | 'roleName']?: string;
+};
 export declare type TNotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
 	body: LocalizedValue<string>;
 	cc: string;
 	description: string;
+	editorType: editorTypeOptions;
+	freemarkerTemplate: {
+		lineCount?: number;
+		template?: string;
+	};
 	from: string;
 	fromName: LocalizedValue<string>;
 	name: string;
@@ -39,16 +55,6 @@ export declare type TNotificationTemplate = {
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
 	type: string;
-};
-declare type TUserNotificationRecipients = {
-	[key in 'term' | 'userScreenName' | 'roleName']?: string;
-};
-declare type TEmailRecipients = {
-	bcc: string;
-	cc: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	to: LocalizedValue<string>;
 };
 export default function EditNotificationTemplate({
 	baseResourceURL,

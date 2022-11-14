@@ -29,9 +29,7 @@ import org.osgi.service.component.propertytypes.ServiceRanking;
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true, service = PortalK8sConfigurationPropertiesMutator.class
-)
+@Component(service = PortalK8sConfigurationPropertiesMutator.class)
 @ServiceRanking(1900)
 public class AnnotationsPortalK8sConfigurationPropertiesMutator
 	implements PortalK8sConfigurationPropertiesMutator {

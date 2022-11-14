@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "portalK8sConfigurationPropertiesMutators.cardinality.minimum:Integer=3",
 	service = PortalK8sConfigMapModifier.class
 )

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = ModelListener.class
 )
 public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {

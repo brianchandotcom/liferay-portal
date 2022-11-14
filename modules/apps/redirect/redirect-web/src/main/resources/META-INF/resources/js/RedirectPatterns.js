@@ -163,6 +163,12 @@ const RedirectPattern = ({
 		const tempList = [...patterns];
 		tempList.splice(index, 1);
 		setPatterns(tempList);
+
+		if (invalidPatternsSet.has(index)) {
+			const newInvalidPatternSet = new Set(invalidPatternsSet);
+			newInvalidPatternSet.delete(index);
+			setInvalidPatternsSet(newInvalidPatternSet);
+		}
 	};
 
 	const [patterns, setPatterns] = useState(
@@ -224,7 +230,7 @@ const RedirectPattern = ({
 						disabled={invalidPatternsSet.size > 0}
 						type="submit"
 					>
-						{Liferay.Language.get('save')} {invalidPatternsSet.size}
+						{Liferay.Language.get('save')}
 					</ClayButton>
 				</div>
 			</div>

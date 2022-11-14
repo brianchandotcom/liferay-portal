@@ -1117,23 +1117,25 @@ This change was made to address vulnerabilities in outdated libraries that are n
 
 The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`
 
-The indexed information of these fields is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
+These fields' indexed information is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
 
 This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language. For more information see <https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html>.
 
-If you update an existing Liferay installation, the new mappings take effect when a full reindex is executed and Elasticsearch mappings are recreated.
+When updating an existing Liferay installation, perform a full reindex to create the new mappings.
 
 ### Who is affected?
 
-If you are using the `*_<languageId>_sortable` and `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields in your custom Elasticsearch queries:
-   - **When observing sorted results**, you will find that results are now sorted using the correct collation rules of each language.
-   - **When retrieving information from the Elasticsearch index**, you will find that the information is now returned in an encoded format.
+If you use the `*_<languageId>_sortable` and `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields,
+
+- Results are now sorted using each language's correct collation rules
+
+- Indexed information is now encoded when returned
 
 ### How should I update my code?
 
-If you want to maintain the old sort behavior, you must customize the Elasticsearch mappings, removing the `icu_collation_keyword`. For more information about how to configure mappings, see: https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html
+If you want to maintain the old sort behavior, you must customize the Elasticsearch mappings, removing the `icu_collation_keyword`. For more information about how to configure mappings, see https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html
 
-To retrieve data from these fields, you can get the same information from the `_source` field of Elasticsearch: <https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html>. Alternatively, remove the `icu_collation_keyword` as explained in the previous paragraph.
+You can retrieve data from these fields from Elasticsearch's `_source` field (<https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html>). Alternatively, remove the `icu_collation_keyword` as explained above.
 
 ---------------------------------------
 
@@ -1144,11 +1146,11 @@ To retrieve data from these fields, you can get the same information from the `_
 
 ### What changed?
 
-Clients who use a MySQL version lower than 5.7.28, especially if they use the auto-downloaded MySQL connector on DXP U37 or higher. For those who manually installed MySQL connector 8.0.28 or higher, upgrading MySQL to 5.7.28 or higher is required.
+TLS 1.2 requires updating MySQL to 5.7.28 with MySQL Connector 8.0.29 or above.
 
 ### Who is affected?
 
-Clients who use a MySQL version lower than 5.7.28, especially if they use the auto-downloaded MySQL connector on DXP U37 or higher. For those who manually installed MySQL connector 8.0.28 or higher, upgrading MySQL to 5.7.28 or higher is required. 
+Anyone using a MySQL version lower than 5.7.28, especially if they use the auto-downloaded MySQL connector on DXP U37 or higher.
 
 ### How should I update my code?
 
@@ -1177,7 +1179,7 @@ Anyone currently using `utilLocator` within templates to access `*Util` classes.
 
 There is no replacement for this removal.
 
-The workaround is to set the environment variable  `LIFERAY_TEMPLATE_PERIOD_ENGINE_PERIOD_SERVICE_PERIOD_LOCATOR_PERIOD_RESTRICT` to false and access the desired util class using `ServiceLocator` instead. However, `ServiceLocator` opens unrestricted access to all published OSGi services within templates. Proceed with caution.
+The workaround is to set the environment variable `LIFERAY_TEMPLATE_PERIOD_ENGINE_PERIOD_SERVICE_PERIOD_LOCATOR_PERIOD_RESTRICT` to false and access the desired util class using `ServiceLocator` instead. However, `ServiceLocator` opens unrestricted access to all published OSGi services within templates. Proceed with caution.
 
 ### Why was this change made?
 
@@ -1194,16 +1196,16 @@ This change was made to address a security vulnerability.
 
 ### What changed?
 
-`ConfigurationBeanDeclaration` is removed, as it is no longer required to use `ConfigurationProvider` to retrieve an annotated `*Configuration.java` interface.
+Because `ConfigurationProvider` is no longer required to retrieve an annotated `*Configuration.java` interface, `ConfigurationBeanDeclaration` is removed.
 
 ### Who is affected?
 
-Any client who has implemented `ConfigurationBeanDeclaration`, or references the class in their code.
+Anyone who has implemented `ConfigurationBeanDeclaration` or references the class in their code.
 
 ### How should I update my code?
 
-Delete any implementations of `ConfigurationBeanDeclaration` and remove any references to the class.
+Delete implementations of `ConfigurationBeanDeclaration` and remove references to the class.
 
 ### Why was this change made?
 
-`ConfigurationBeanDeclaration` was used to register configuration classes with the `ConfigurationProvider` framework, to be tracked by OSGi managed services. Registration is now done automatically by analyzing the bundle's metatype information when it's registered with the OSGi container. This happens in the background, improving the developer experience by removing the `ConfigurationBeanDeclaration` requirement and the possible frustration of using the `ConfigurationProvider` API.
+`ConfigurationBeanDeclaration` was used to register configuration classes with the `ConfigurationProvider` framework, to be tracked by OSGi managed services. Liferay now analyzes a bundle's metatype information and registers configuration classes automatically at container registration. Now developers don't have to register configuration classes manually, because it happens in the background.

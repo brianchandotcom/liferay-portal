@@ -71,9 +71,11 @@ public class ProjectTemplatesPanelAppTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesPanelAppTest(String liferayVersion, String product) {
+	public ProjectTemplatesPanelAppTest(
+		String liferayVersion, String liferayProduct) {
+
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -90,7 +92,8 @@ public class ProjectTemplatesPanelAppTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--class-name", "Foo",
-			"--liferay-version", _liferayVersion, "--product", _product);
+			"--liferay-product", _liferayProduct, "--liferay-version",
+			_liferayVersion);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -142,8 +145,8 @@ public class ProjectTemplatesPanelAppTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Foo",
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=gradle.test",
-			"-Dproduct=" + _product);
+			"-DliferayProduct=" + _liferayProduct,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=gradle.test");
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
@@ -167,7 +170,7 @@ public class ProjectTemplatesPanelAppTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

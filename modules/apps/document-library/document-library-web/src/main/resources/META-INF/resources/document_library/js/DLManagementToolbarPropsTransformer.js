@@ -244,7 +244,7 @@ export default function propsTransformer({
 			const modelClassName =
 				element.getData('modelclassname') ?? defaultModelClassName;
 
-			const previousValue = map.get(element.get(modelClassName)) ?? [];
+			const previousValue = map.get(modelClassName) ?? [];
 
 			previousValue.push(element.get('value'));
 

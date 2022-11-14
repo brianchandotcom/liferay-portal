@@ -203,11 +203,23 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setErrorMessageMap(
 			errorMessageMap, LocaleUtil.getSiteDefault());
 		objectAction.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
-		objectAction.setName(name);
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
 		objectAction.setParameters(parametersUnicodeProperties.toString());
 		objectAction.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectAction.getObjectDefinitionId());
+
+		if (objectDefinition.isApproved()) {
+			return objectActionPersistence.update(objectAction);
+		}
+
+		_validateName(
+			objectActionId, objectDefinition.getObjectDefinitionId(), name);
+
+		objectAction.setName(name);
 
 		return objectActionPersistence.update(objectAction);
 	}

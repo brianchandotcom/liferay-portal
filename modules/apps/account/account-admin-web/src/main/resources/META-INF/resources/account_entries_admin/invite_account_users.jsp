@@ -28,6 +28,8 @@ InviteUsersDisplayContext inviteUsersDisplayContext = new InviteUsersDisplayCont
 	module="account_entries_admin/js/InviteUsersForm"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"accountEntryId", ParamUtil.getString(request, "accountEntryId")
+		).put(
 			"availableAccountRoles", inviteUsersDisplayContext.getAvailableAccountRolesMultiselectItems(ParamUtil.getLong(request, "accountEntryId"), themeDisplay.getCompanyId())
 		).put(
 			"inviteAccountUsersURL", inviteAccountUsersURL

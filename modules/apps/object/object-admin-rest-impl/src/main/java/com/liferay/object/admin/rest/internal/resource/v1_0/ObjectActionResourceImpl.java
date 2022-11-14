@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -129,6 +130,14 @@ public class ObjectActionResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			Objects.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				objectDefinitionId, objectAction.getActive(),
@@ -153,6 +162,14 @@ public class ObjectActionResourceImpl
 			Objects.equals(
 				objectAction.getObjectActionExecutorKey(),
 				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			Objects.equals(
+				objectAction.getObjectActionTriggerKey(),
+				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION)) {
 
 			throw new UnsupportedOperationException();
 		}

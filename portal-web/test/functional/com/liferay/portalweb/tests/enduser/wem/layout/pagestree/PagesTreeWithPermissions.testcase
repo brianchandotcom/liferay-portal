@@ -148,7 +148,7 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			AssertNotVisible(locator1 = "Icon#PLUS");
+			AssertElementNotPresent(locator1 = "Icon#PLUS");
 		}
 
 		task ("View the new user is able to navigate and add a Web Content") {

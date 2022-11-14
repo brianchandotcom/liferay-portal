@@ -169,6 +169,8 @@ public class CETDeployerImpl implements CETDeployer {
 				"javax.portlet.name", portletName
 			).put(
 				"javax.portlet.security-role-ref", "power-user,user"
+			).put(
+				"javax.portlet.version", "3.0"
 			).build();
 
 		if (customElementCET != null) {

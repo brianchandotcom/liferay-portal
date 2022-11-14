@@ -79,6 +79,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -2582,11 +2583,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateObjectFields(
-		Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-		ServiceContext serviceContext) {
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/object-entries");
+			"/site-initializer/object-fields");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -2599,6 +2601,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 			objectFieldResourceBuilder.user(
 				serviceContext.fetchUser()
 			).build();
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			json = _replace(json, objectDefinitionIdsStringUtilReplaceValues);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+			Long objectDefinitionId = Long.valueOf((String)jsonObject.remove(
+				"objectDefinitionId"));
+
+			ObjectField objectField = ObjectField.toDTO(JSONUtil.toString(jsonObject));
+
+			Page<ObjectField> objectFieldPage =
+				objectFieldResource.getObjectDefinitionObjectFieldsPage(
+					objectDefinitionId, null,
+					objectFieldResource.toFilter(
+						"name eq '" + objectField.getName() + "'"),
+					null, null);
+
+			ObjectField existingObjectField = objectFieldPage.fetchFirstItem();
+
+			if (existingObjectField == null) {
+				objectFieldResource.postObjectDefinitionObjectField(
+					objectDefinitionId, objectField);
+			}
+			else {
+				objectFieldResource.putObjectField(
+					existingObjectField.getId(), objectField);
+			}
+		}
 	}
 
 	private void _addOrUpdateObjectRelationships(

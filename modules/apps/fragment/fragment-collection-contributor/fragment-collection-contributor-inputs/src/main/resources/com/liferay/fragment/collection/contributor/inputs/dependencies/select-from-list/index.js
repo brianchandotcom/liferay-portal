@@ -72,6 +72,7 @@ function handleResultListClick(event) {
 	}
 
 	if (selectedOptionElement) {
+		setFocusedOption(selectedOptionElement);
 		setSelectedOption(selectedOptionElement);
 	}
 }
@@ -133,6 +134,7 @@ function handleInputKeyDown(event) {
 		setFocusedOption(optionListElement.lastElementChild);
 	}
 	else if (event.key === KEYS.Enter && currentFocusedOption) {
+		setFocusedOption(currentFocusedOption);
 		setSelectedOption(currentFocusedOption);
 	}
 }
@@ -288,6 +290,14 @@ function createOptionElement(option) {
 	optionElement.classList.add('dropdown-item');
 	optionElement.setAttribute('role', 'option');
 
+	if (
+		optionListElement.getAttribute('aria-activedescendant') ===
+		optionElement.id
+	) {
+		optionElement.setAttribute('aria-selected', 'true');
+		optionElement.scrollIntoView({block: 'center'});
+	}
+
 	if (valueInputElement.value === option.value) {
 		optionElement.classList.add('active');
 	}
@@ -341,8 +351,6 @@ function openDropdown() {
 }
 
 function closeDropdown() {
-	setFocusedOption(null);
-
 	dropdownElement.classList.replace('d-block', 'd-none');
 	uiInputElement.setAttribute('aria-expanded', 'false');
 	buttonElement.setAttribute('aria-expanded', 'false');

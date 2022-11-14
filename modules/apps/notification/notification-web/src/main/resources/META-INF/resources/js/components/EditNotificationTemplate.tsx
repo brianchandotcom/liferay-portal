@@ -269,9 +269,9 @@ export default function EditNotificationTemplate({
 		editorType: 'richText' as editorTypeOptions,
 		freemarkerTemplate: {
 			lineCount: 0,
-			template: `<#--
-		Add elements from the sidebar to define your template. Type "\${" to use the autocomplete feature
-		-->`,
+			template: `<#--${Liferay.Language.get(
+				'add-elements-from-the-sidebar-to-define-your-template'
+			)}-->`,
 		},
 		name: '',
 		objectDefinitionId: 0,
@@ -538,11 +538,13 @@ export default function EditNotificationTemplate({
 
 						<div className="col-lg-6 lfr__notification-template-card">
 							<Card title={Liferay.Language.get('settings')}>
-								<Text as="span" color="secondary">
-									{Liferay.Language.get(
-										'use-terms-to-populate-fields-dynamically'
-									)}
-								</Text>
+								{Liferay.FeatureFlags['LPS-162598'] && (
+									<Text as="span" color="secondary">
+										{Liferay.Language.get(
+											'use-terms-to-populate-fields-dynamically'
+										)}
+									</Text>
+								)}
 
 								{Liferay.FeatureFlags['LPS-162133'] &&
 								values.type === 'userNotification' ? (

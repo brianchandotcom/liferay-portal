@@ -15,18 +15,30 @@
 import CodeMirror from 'codemirror';
 import React from 'react';
 import './Sidebar.scss';
-export declare function Sidebar({editorRef, elements}: IProps): JSX.Element;
-interface IProps {
-	editorRef: React.RefObject<CodeMirror.Editor>;
-	elements: SidebarCategory[];
-}
-export interface SidebarCategory {
-	items: SidebarElement[];
-	label: string;
-}
 interface SidebarElement {
 	content: string;
 	helpText: string;
 	label: string;
 }
+export interface SidebarCategory {
+	items: SidebarElement[];
+	label: string;
+}
+declare type elementClickFunction = (item: SidebarElement) => void;
+export interface CustomSidebarContentProps {
+	elements?: SidebarCategory[];
+	handleElementClick: elementClickFunction;
+}
+interface IProps {
+	CustomSidebarContent?: (
+		props: CustomSidebarContentProps
+	) => React.ReactNode;
+	editorRef: React.RefObject<CodeMirror.Editor>;
+	elements?: SidebarCategory[];
+}
+export declare function Sidebar({
+	CustomSidebarContent,
+	editorRef,
+	elements,
+}: IProps): JSX.Element;
 export {};

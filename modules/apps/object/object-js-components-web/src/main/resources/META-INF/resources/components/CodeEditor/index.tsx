@@ -18,15 +18,30 @@ import React, {useRef} from 'react';
 
 import {FieldBase} from '../FieldBase';
 import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
-import {Sidebar, SidebarCategory} from './Sidebar';
+import {CustomSidebarContentProps, Sidebar, SidebarCategory} from './Sidebar';
 
 import './index.scss';
 
 export {default as CodeMirrorEditor} from './CodeMirrorEditor';
+export {Collapsible} from './Collapsible';
+export {Element} from './Element';
+export {CustomSidebarContentProps} from './Sidebar';
 export {SidebarCategory} from './Sidebar';
 
+interface IProps extends ICodeMirrorEditor {
+	CustomSidebarContent?: (
+		props: CustomSidebarContentProps
+	) => React.ReactNode;
+	className?: string;
+	error?: string;
+	sidebarElements?: SidebarCategory[];
+}
+
 const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
-	({className, error, sidebarElements, ...options}, ref) => {
+	(
+		{CustomSidebarContent, className, error, sidebarElements, ...options},
+		ref
+	) => {
 		const editorRef = useRef<CodeMirror.Editor>(
 			null
 		) as React.MutableRefObject<CodeMirror.Editor>;
@@ -61,6 +76,7 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
 
 					{sidebarElements && (
 						<Sidebar
+							CustomSidebarContent={CustomSidebarContent}
 							editorRef={editorRef}
 							elements={sidebarElements}
 						/>
@@ -72,9 +88,3 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, IProps>(
 );
 
 export default CodeEditor;
-
-interface IProps extends ICodeMirrorEditor {
-	className?: string;
-	error?: string;
-	sidebarElements?: SidebarCategory[];
-}

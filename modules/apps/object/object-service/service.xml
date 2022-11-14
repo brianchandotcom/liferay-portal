@@ -37,6 +37,10 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="ODI_N" return-type="ObjectAction">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="O_A_OATK" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />

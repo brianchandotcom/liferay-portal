@@ -90,10 +90,11 @@ public class ObjectActionLocalServiceImpl
 		throws PortalException {
 
 		_validate(
-			conditionExpression, name, objectActionExecutorKey,
+			conditionExpression, objectActionExecutorKey,
 			objectActionTriggerKey, parametersUnicodeProperties);
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateLabel(labelMap);
+		_validateName(0, objectDefinitionId, name);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -188,7 +189,7 @@ public class ObjectActionLocalServiceImpl
 		throws PortalException {
 
 		_validate(
-			conditionExpression, name, objectActionExecutorKey,
+			conditionExpression, objectActionExecutorKey,
 			objectActionTriggerKey, parametersUnicodeProperties);
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateLabel(labelMap);
@@ -225,14 +226,10 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	private void _validate(
-			String conditionExpression, String name,
-			String objectActionExecutorKey, String objectActionTriggerKey,
+			String conditionExpression, String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
-
-		if (Validator.isNull(name)) {
-			throw new ObjectActionNameException();
-		}
 
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
 				objectActionExecutorKey)) {
@@ -373,6 +370,37 @@ public class ObjectActionLocalServiceImpl
 		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
 			throw new ObjectActionLabelException(
 				"Label is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateName(
+			long objectActionId, long objectDefinitionId, String name)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new ObjectActionNameException.MustNotBeNull();
+		}
+
+		char[] nameCharArray = name.toCharArray();
+
+		for (char c : nameCharArray) {
+			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
+				throw new ObjectActionNameException.
+					MustOnlyContainLettersAndDigits();
+			}
+		}
+
+		if (nameCharArray.length > 41) {
+			throw new ObjectActionNameException.MustBeLessThan41Characters();
+		}
+
+		ObjectAction objectAction = objectActionPersistence.fetchByODI_N(
+			objectDefinitionId, name);
+
+		if ((objectAction != null) &&
+			(objectAction.getObjectActionId() != objectActionId)) {
+
+			throw new ObjectActionNameException.MustNotBeDuplicate(name);
 		}
 	}
 

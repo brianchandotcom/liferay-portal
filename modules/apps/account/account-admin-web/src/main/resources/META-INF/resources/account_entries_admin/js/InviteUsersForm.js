@@ -17,10 +17,17 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayMultiSelect from '@clayui/multi-select';
-import {fetch, getOpener, openToast, sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import {
+	fetch,
+	getOpener,
+	objectToFormData,
+	openToast,
+	sub,
+} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 function InviteUsersForm({
+	accountEntryId,
 	availableAccountRoles,
 	inviteAccountUsersURL,
 	portletNamespace,
@@ -58,12 +65,6 @@ function InviteUsersForm({
 			}
 		};
 
-		const isEmailAddressValid = (emailAddresses) => {
-			const emailRegex = /.+@.+\..+/i;
-
-			return emailRegex.test(emailAddresses);
-		};
-
 		const handleInputGroupValueChange = (name, value) => {
 			const inputGroupsArray = [...inputGroups];
 
@@ -98,17 +99,42 @@ function InviteUsersForm({
 			if (items.length) {
 				setShowRequiredMessage(false);
 			}
-
-			const invalidItems = [];
-
-			items.map(({label}) => {
-				if (!isEmailAddressValid(label)) {
-					invalidItems.push(label);
-				}
-			});
-
-			setInvalidEmailAddresses(invalidItems);
 		};
+
+		useEffect(() => {
+			Promise.allSettled(
+				emailAddresses.map(
+					({label}) =>
+						new Promise((resolve, reject) => {
+							fetch(`/o/account-admin/validate-email-address/`, {
+								body: objectToFormData({
+									accountEntryId,
+									emailAddress: label,
+								}),
+								method: 'POST',
+							})
+								.then((response) => response.json())
+								.then(({errorMessage, isValid}) => {
+									if (isValid) {
+										resolve();
+									}
+									else {
+										reject({
+											emailAddress: label,
+											error: errorMessage,
+										});
+									}
+								});
+						})
+				)
+			).then((results) => {
+				setInvalidEmailAddresses(
+					results
+						.filter((result) => result.status === 'rejected')
+						.map((result) => result.reason)
+				);
+			});
+		}, [emailAddresses]);
 
 		return (
 			<ClayLayout.Sheet size="lg">
@@ -156,14 +182,11 @@ function InviteUsersForm({
 									{invalidEmailAddresses.map(
 										(invalidEmailAddress) => (
 											<ClayForm.FeedbackItem
-												key={invalidEmailAddress}
+												key={
+													invalidEmailAddress.emailAddress
+												}
 											>
-												{sub(
-													Liferay.Language.get(
-														'x-is-not-a-valid-email-address'
-													),
-													invalidEmailAddress
-												)}
+												{invalidEmailAddress.error}
 											</ClayForm.FeedbackItem>
 										)
 									)}
@@ -258,7 +281,7 @@ function InviteUsersForm({
 				.catch(() => {
 					openToast({
 						message: Liferay.Language.get(
-							'please-enter-only-email-addresses-with-valid-domains'
+							'your-request-failed-to-complete'
 						),
 						title: Liferay.Language.get('error'),
 						type: 'danger',

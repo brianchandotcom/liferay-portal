@@ -1050,6 +1050,73 @@ definition {
 			formName = "Copy of Test");
 	}
 
+	@description = "LPS-161854 - Verify if title and description work correctly with line break"
+	@priority = "4"
+	test CheckTitleAndDescriptionWithLineBreak {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editDescription(formDescription = "Form Description");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertTextEquals(
+			key_formDescription = "Form Description",
+			locator1 = "Form#PUBLISH_FORM_DESCRIPTION_FIELD",
+			value1 = "Form Description");
+
+		AssertTextEquals(
+			key_formName = "Form 1",
+			locator1 = "Form#PUBLISH_FORM_NAME_FIELD",
+			value1 = "Form 1");
+
+		Navigator.openURL();
+
+		PopulateObjectFormsConfiguration.openForm();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.editName(formName = "Form 1");
+
+		for (var n : list "1,2") {
+			KeyPress(
+				locator1 = "Form#NAME_FIELD",
+				value1 = "\ENTER");
+		}
+
+		Form.editDescription(formDescription = "Form Description");
+
+		for (var n2 : list "1,2") {
+			KeyPress(
+				locator1 = "Form#DESCRIPTION_FIELD",
+				value1 = "\ENTER");
+		}
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertTextEquals(
+			key_formDescription = "Form Description",
+			locator1 = "Form#PUBLISH_FORM_DESCRIPTION_FIELD",
+			value1 = "Form Description");
+
+		AssertTextEquals(
+			key_formName = "Form 1",
+			locator1 = "Form#PUBLISH_FORM_NAME_FIELD",
+			value1 = "Form 1");
+	}
+
 	@description = "Verify if an unpublished form becomes unavailable on the page"
 	@priority = "4"
 	test CheckUnpublishedFormUnavailableOnPage {

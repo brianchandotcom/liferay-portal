@@ -52,6 +52,11 @@ jest.mock(
 				totalNumberOfItems: 32,
 			})
 		),
+		getCollectionVariations: jest.fn(() =>
+			Promise.resolve({
+				variations: [],
+			})
+		),
 	})
 );
 

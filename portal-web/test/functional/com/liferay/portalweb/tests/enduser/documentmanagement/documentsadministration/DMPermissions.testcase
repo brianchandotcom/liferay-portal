@@ -3104,6 +3104,7 @@ definition {
 	test ViewSearchResultsForChildObjectRespectsParentFolderPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "quarantine";
+		property test.name.skip.portal.instance = "DMPermissions#ViewSearchResultsForChildObjectRespectsParentFolderPermissions";
 		property testray.component.names = "Training";
 
 		SearchAdministration.executeReindex();

@@ -82,33 +82,34 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			long kbArticleClassNameId = _portal.getClassNameId(
 				KBArticleConstants.getClassName());
 
-			boolean movable = true;
-
 			if (resourceClassNameId == kbArticleClassNameId) {
-				double priority = ParamUtil.getDouble(
-					actionRequest, "priority");
+				if (!_isDragAndDrop(dragAndDrop)) {
+					double priority = ParamUtil.getDouble(
+						actionRequest, "priority");
 
-				if (_isDragAndDrop(dragAndDrop)) {
-					KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-						resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-					if (kbArticle.getParentResourcePrimKey() ==
-							parentResourcePrimKey) {
-
-						movable = false;
-					}
-
-					priority = kbArticle.getPriority();
-				}
-
-				if (movable) {
 					_kbArticleService.moveKBArticle(
 						resourcePrimKey, parentResourceClassNameId,
 						parentResourcePrimKey, priority);
 				}
+				else {
+					KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+						resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+					if (kbArticle.getParentResourcePrimKey() !=
+							parentResourcePrimKey) {
+
+						_kbArticleService.moveKBArticle(
+							resourcePrimKey, parentResourceClassNameId,
+							parentResourcePrimKey, kbArticle.getPriority());
+					}
+				}
 			}
 			else {
-				if (_isDragAndDrop(dragAndDrop)) {
+				if (!_isDragAndDrop(dragAndDrop)) {
+					_kbFolderService.moveKBFolder(
+						resourcePrimKey, parentResourcePrimKey);
+				}
+				else {
 					if (parentResourceClassNameId == kbArticleClassNameId) {
 						_errorMessage(
 							actionRequest, actionResponse,
@@ -122,17 +123,20 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 					KBFolder kbFolder = _kbFolderService.getKBFolder(
 						resourcePrimKey);
 
-					if (kbFolder.getParentKBFolderId() ==
+					if (kbFolder.getParentKBFolderId() !=
 							parentResourcePrimKey) {
 
-						movable = false;
+						_kbFolderService.moveKBFolder(
+							resourcePrimKey, parentResourcePrimKey);
 					}
 				}
+			}
 
-				if (movable) {
-					_kbFolderService.moveKBFolder(
-						resourcePrimKey, parentResourcePrimKey);
-				}
+			if (_isDragAndDrop(dragAndDrop)) {
+				JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
+
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 		}
 		catch (PortalException portalException) {
@@ -145,13 +149,6 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				_language.get(
 					_portal.getHttpServletRequest(actionRequest),
 					"your-request-failed-to-complete"));
-		}
-
-		if (_isDragAndDrop(dragAndDrop)) {
-			JSONObject jsonObject = JSONUtil.put("success", Boolean.TRUE);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
 		}
 	}
 

@@ -46,17 +46,36 @@ public class TLDStylingCheck extends BaseFileCheck {
 
 			int x = description.indexOf("replaced by ");
 
-			if (x == -1) {
-				continue;
+			if (x != -1) {
+				x = description.indexOf("<![CDATA[", x + 12);
+
+				if (x == -1) {
+					addMessage(
+						fileName,
+						"Missing CDATA after 'replaced by' in the description",
+						SourceUtil.getLineNumber(content, matcher.start(1)));
+				}
 			}
 
-			x = description.indexOf("<![CDATA[", x + 12);
+			x = description.indexOf("<code>");
 
-			if (x == -1) {
-				addMessage(
-					fileName,
-					"Missing CDATA after 'replaced by' in the description",
-					SourceUtil.getLineNumber(content, matcher.start(1)));
+			while (true) {
+				if (x == -1) {
+					break;
+				}
+
+				if (!StringUtil.endsWith(
+						description.substring(0, x), "<![CDATA[")) {
+
+					addMessage(
+						fileName,
+						"Use CDATA to warp each '<code>' in the description",
+						SourceUtil.getLineNumber(content, matcher.start(1)));
+
+					break;
+				}
+
+				x = description.indexOf("<code>", x + 6);
 			}
 		}
 	}

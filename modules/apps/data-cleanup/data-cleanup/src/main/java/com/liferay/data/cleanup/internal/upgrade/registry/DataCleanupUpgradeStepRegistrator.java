@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.data.cleanup.internal.configuration.DataCleanupConfiguration",
 		"com.liferay.data.cleanup.internal.configuration.DataRemovalConfiguration"
 	},
-	immediate = true, service = UpgradeStepRegistrator.class
+	service = UpgradeStepRegistrator.class
 )
 public class DataCleanupUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {

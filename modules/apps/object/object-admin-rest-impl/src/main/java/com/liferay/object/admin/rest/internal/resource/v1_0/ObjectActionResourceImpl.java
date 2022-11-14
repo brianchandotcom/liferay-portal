@@ -20,6 +20,7 @@ import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.service.ObjectActionService;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -132,7 +133,11 @@ public class ObjectActionResourceImpl
 			_objectActionService.addObjectAction(
 				objectDefinitionId, objectAction.getActive(),
 				objectAction.getConditionExpression(),
-				objectAction.getDescription(), objectAction.getName(),
+				objectAction.getDescription(),
+				LocalizedMapUtil.getLocalizedMap(
+					objectAction.getErrorMessage()),
+				LocalizedMapUtil.getLocalizedMap(objectAction.getLabel()),
+				objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
 				ObjectActionUtil.toParametersUnicodeProperties(
@@ -156,7 +161,11 @@ public class ObjectActionResourceImpl
 			_objectActionService.updateObjectAction(
 				objectActionId, objectAction.getActive(),
 				objectAction.getConditionExpression(),
-				objectAction.getDescription(), objectAction.getName(),
+				objectAction.getDescription(),
+				LocalizedMapUtil.getLocalizedMap(
+					objectAction.getErrorMessage()),
+				LocalizedMapUtil.getLocalizedMap(objectAction.getLabel()),
+				objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
 				ObjectActionUtil.toParametersUnicodeProperties(

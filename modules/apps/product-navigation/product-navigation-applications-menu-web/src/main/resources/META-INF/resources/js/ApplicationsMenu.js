@@ -494,7 +494,15 @@ const ApplicationsMenu = ({
 			)}
 
 			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('open-applications-menu')}
+				aria-label={
+					Liferay.Browser.isMac()
+						? Liferay.Language.get(
+								'open-applications-menu-or-use-cmd-shift-m'
+						  )
+						: Liferay.Language.get(
+								'open-applications-menu-or-use-ctrl-shift-m'
+						  )
+				}
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				data-title-set-as-html

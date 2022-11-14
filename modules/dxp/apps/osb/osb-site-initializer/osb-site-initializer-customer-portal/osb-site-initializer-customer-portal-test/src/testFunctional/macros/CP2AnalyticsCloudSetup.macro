@@ -27,6 +27,14 @@ definition {
 		Button.click(button = "Done");
 	}
 
+	macro assertFieldExtraIsNotVisible {
+		var key_index = "${position}";
+
+		AssertElementNotPresent(
+			label = "${field}",
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
+	}
+
 	macro clearAndDeleteCloudEntries {
 		CustomerPortal.clearActivationStatus(status = "${status}");
 

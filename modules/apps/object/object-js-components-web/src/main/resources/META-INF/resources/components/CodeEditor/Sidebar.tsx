@@ -20,7 +20,33 @@ import {Element} from './Element';
 
 import './Sidebar.scss';
 
-export function Sidebar({editorRef, elements}: IProps) {
+interface SidebarElement {
+	content: string;
+	helpText: string;
+	label: string;
+}
+
+export interface SidebarCategory {
+	items: SidebarElement[];
+	label: string;
+}
+
+type elementClickFunction = (item: SidebarElement) => void;
+
+export interface CustomSidebarContentProps {
+	elements?: SidebarCategory[];
+	handleElementClick: elementClickFunction;
+}
+
+interface IProps {
+	CustomSidebarContent?: (
+		props: CustomSidebarContentProps
+	) => React.ReactNode;
+	editorRef: React.RefObject<CodeMirror.Editor>;
+	elements?: SidebarCategory[];
+}
+
+export function Sidebar({CustomSidebarContent, editorRef, elements}: IProps) {
 	const handleClick = (item: SidebarElement) =>
 		editorRef.current?.replaceSelection(item.content);
 
@@ -29,34 +55,26 @@ export function Sidebar({editorRef, elements}: IProps) {
 			<div className="px-3">
 				<h5 className="my-3">{Liferay.Language.get('elements')}</h5>
 
-				{elements.map(({items, label}) => (
-					<Collapsible key={label} label={label}>
-						{items.map((item) => (
-							<Element
-								helpText={item.helpText}
-								key={item.label}
-								label={item.label}
-								onClick={() => handleClick(item)}
-							/>
-						))}
-					</Collapsible>
-				))}
+				{CustomSidebarContent &&
+					CustomSidebarContent({
+						elements,
+						handleElementClick: handleClick,
+					})}
+
+				{!CustomSidebarContent &&
+					elements?.map(({items, label}) => (
+						<Collapsible key={label} label={label}>
+							{items.map((item) => (
+								<Element
+									helpText={item.helpText}
+									key={item.label}
+									label={item.label}
+									onClick={() => handleClick(item)}
+								/>
+							))}
+						</Collapsible>
+					))}
 			</div>
 		</div>
 	);
-}
-interface IProps {
-	editorRef: React.RefObject<CodeMirror.Editor>;
-	elements: SidebarCategory[];
-}
-
-export interface SidebarCategory {
-	items: SidebarElement[];
-	label: string;
-}
-
-interface SidebarElement {
-	content: string;
-	helpText: string;
-	label: string;
 }

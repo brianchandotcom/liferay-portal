@@ -1,5 +1,5 @@
 dependencies {
 	compile project("${apiPath}")
 
-	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
+	compileOnly group: "com.liferay.portal", name: "release.${liferayProduct}.api"
 }

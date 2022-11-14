@@ -24,7 +24,7 @@
 #end
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
-			<artifactId>release.${product}.api</artifactId>
+			<artifactId>release.${liferayProduct}.api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

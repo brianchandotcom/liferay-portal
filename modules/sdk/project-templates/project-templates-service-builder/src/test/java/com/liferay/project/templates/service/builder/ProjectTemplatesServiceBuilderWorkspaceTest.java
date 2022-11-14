@@ -131,13 +131,13 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 
 	public ProjectTemplatesServiceBuilderWorkspaceTest(
 		String dependencyInjector, String name, String packageName,
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_dependencyInjector = dependencyInjector;
 		_name = name;
 		_packageName = packageName;
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -160,8 +160,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, _name, "--dependency-injector",
-			_dependencyInjector, "--liferay-version", _liferayVersion,
-			"--package-name", _packageName, "--product", _product);
+			_dependencyInjector, "--liferay-product", _liferayProduct,
+			"--liferay-version", _liferayVersion, "--package-name",
+			_packageName);
 
 		if (_name.contains("sample")) {
 			testContains(
@@ -224,8 +225,8 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, _name, "com.test",
 			mavenExecutor, "-DdependencyInjector=" + _dependencyInjector,
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + _packageName,
-			"-Dproduct=" + _product);
+			"-DliferayProduct=" + _liferayProduct,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + _packageName);
 
 		File mavenUADModuleDir = new File(mavenProjectDir, _name + "-uad");
 
@@ -253,9 +254,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 	private static URI _gradleDistribution;
 
 	private final String _dependencyInjector;
+	private final String _liferayProduct;
 	private final String _liferayVersion;
 	private final String _name;
 	private final String _packageName;
-	private final String _product;
 
 }

@@ -17,11 +17,13 @@ package com.liferay.portal.vulcan.internal.template.servlet;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -33,12 +35,18 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 
 	public RESTClientHttpRequest(HttpServletRequest httpServletRequest) {
 		super(httpServletRequest);
+
+		_locale = PortalUtil.getLocale(httpServletRequest);
 	}
 
 	@Override
 	public String getHeader(String name) {
 		if (StringUtil.equalsIgnoreCase(name, HttpHeaders.ACCEPT)) {
 			return ContentTypes.APPLICATION_JSON;
+		}
+
+		if (StringUtil.equalsIgnoreCase(name, "Accept-Language")) {
+			return _locale.toLanguageTag();
 		}
 
 		return super.getHeader(name);
@@ -51,6 +59,11 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 				Arrays.asList(ContentTypes.APPLICATION_JSON));
 		}
 
+		if (StringUtil.equalsIgnoreCase(name, "Accept-Language")) {
+			return Collections.enumeration(
+				Arrays.asList(_locale.toLanguageTag()));
+		}
+
 		return super.getHeaders(name);
 	}
 
@@ -58,5 +71,7 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 	public String getMethod() {
 		return HttpMethods.GET;
 	}
+
+	private final Locale _locale;
 
 }

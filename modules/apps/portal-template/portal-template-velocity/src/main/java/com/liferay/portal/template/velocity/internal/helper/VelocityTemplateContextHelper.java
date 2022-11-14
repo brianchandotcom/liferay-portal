@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = {TemplateContextHelper.class, VelocityTemplateContextHelper.class}
 )
 public class VelocityTemplateContextHelper extends TemplateContextHelper {

@@ -125,7 +125,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = "language.type=" + TemplateConstants.LANG_TYPE_FTL,
 	service = TemplateManager.class
 )

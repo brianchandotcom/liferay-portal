@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Igor Spasic
  */
 @Component(
-	immediate = true,
 	service = {
 		FreeMarkerTemplateResourceLoader.class, TemplateResourceLoader.class
 	}

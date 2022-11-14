@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
 	service = {
 		TemplateResourceLoader.class, VelocityTemplateResourceLoader.class
 	}

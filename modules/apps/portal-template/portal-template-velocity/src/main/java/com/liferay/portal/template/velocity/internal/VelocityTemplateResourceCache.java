@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = VelocityTemplateResourceCache.class
 )
 public class VelocityTemplateResourceCache extends BaseTemplateResourceCache {

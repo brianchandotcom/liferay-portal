@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = "language.type=" + TemplateConstants.LANG_TYPE_VM,
 	service = TemplateManager.class
 )

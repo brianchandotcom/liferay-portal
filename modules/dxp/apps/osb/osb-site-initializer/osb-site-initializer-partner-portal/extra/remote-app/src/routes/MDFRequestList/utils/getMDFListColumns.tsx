@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
+import Dropdown from '../../../common/components/Dropdown';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {RequestStatus} from '../../../common/enums/requestStatus';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
-import Dropdown from '../components/Dropdown';
 import RequestStatusBadge from '../components/RequestStatusBadge';
 
 export default function getMDFListColumns(

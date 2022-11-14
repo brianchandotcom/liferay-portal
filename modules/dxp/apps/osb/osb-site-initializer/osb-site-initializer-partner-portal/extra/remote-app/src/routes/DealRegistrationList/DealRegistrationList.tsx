@@ -18,9 +18,9 @@ import Table from '../../common/components/Table';
 import {DealRegistrationColumnKey} from '../../common/enums/dealRegistrationColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
+import usePagination from '../../common/hooks/usePagination';
 import {DealRegistrationListItem} from '../../common/interfaces/dealRegistrationListItem';
 import {Liferay} from '../../common/services/liferay';
-import usePagination from '../MDFRequestList/hooks/usePagination';
 import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDealRegistration';
 type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;

@@ -19,6 +19,9 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -49,10 +52,19 @@ public class KBArticleModelDocumentContributor
 		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
 		document.addKeyword(Field.FOLDER_ID, kbArticle.getKbFolderId());
 		document.addText(Field.TITLE, kbArticle.getTitle());
-		document.addKeyword(
-			Field.TREE_PATH,
-			StringUtil.split(kbArticle.buildTreePath(), CharPool.SLASH));
-		document.addKeyword("folderNames", _getKBFolderNames(kbArticle));
+
+		try {
+			document.addKeyword(
+				Field.TREE_PATH,
+				StringUtil.split(kbArticle.buildTreePath(), CharPool.SLASH));
+			document.addKeyword("folderNames", _getKBFolderNames(kbArticle));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
 		document.addKeyword(
 			"parentMessageId", kbArticle.getParentResourcePrimKey());
 		document.addKeyword("titleKeyword", kbArticle.getTitle(), true);
@@ -62,7 +74,9 @@ public class KBArticleModelDocumentContributor
 	@Reference
 	protected KBFolderLocalService kbFolderLocalService;
 
-	private String[] _getKBFolderNames(KBArticle kbArticle) throws Exception {
+	private String[] _getKBFolderNames(KBArticle kbArticle)
+		throws PortalException {
+
 		long kbFolderId = kbArticle.getKbFolderId();
 
 		Collection<String> kbFolderNames = new ArrayList<>();
@@ -77,6 +91,9 @@ public class KBArticleModelDocumentContributor
 
 		return kbFolderNames.toArray(new String[0]);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBArticleModelDocumentContributor.class);
 
 	@Reference
 	private HtmlParser _htmlParser;

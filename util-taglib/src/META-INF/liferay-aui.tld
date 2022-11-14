@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description><![CDATA[Provides the AUI component tags, prefixed with <code>aui:</code>.]]></description>
+	<description>Provides the AUI component tags, prefixed with <![CDATA[<code>aui:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>aui</short-name>
 	<uri>http://liferay.com/tld/aui</uri>
@@ -22,7 +22,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <code>&lt;p&gt;</code> tag could be used for something other than a paragraph.]]></description>
+			<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 			<name>ariaRole</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -34,7 +34,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -70,7 +70,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -83,7 +83,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A target window in which to open the URL. The default value is <code>self</code>. Possible values are <code>blank</code>, <code>self</code>, <code>parent</code>, <code>top</code>, and a unique frame's name.]]></description>
+			<description>A target window in which to open the URL. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -147,20 +147,20 @@
 		<tag-class>com.liferay.taglib.aui.ButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the component. These styles override the ones set by the <code>primary</code> attribute.]]></description>
+			<description>A CSS class for styling the component. These styles override the ones set by the <![CDATA[<code>primary</code> attribute]]>.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
+			<description>Whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -179,7 +179,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An alignment for the button's icon. The default value is <code>left</code>.]]></description>
+			<description>An alignment for the button's icon. The default value is <![CDATA[<code>left</code>]]>.</description>
 			<name>iconAlign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -203,27 +203,27 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to apply the <code>btn btn-primary</code> CSS styling to the button. If the <code>type</code> attribute is set to <code>submit</code>, this value is set to <code>true</code>. For all the other types, the value is set to <code>false</code> by default.]]></description>
+			<description>Whether to apply the <![CDATA[<code>btn btn-primary</code>]]> CSS styling to the button. If the <![CDATA[<code>type</code>]]> attribute is set to <![CDATA[<code>submit</code>]]>, this value is set to <![CDATA[<code>true</code>]]>. For all the other types, the value is set to <![CDATA[<code>false</code> by default]]>.</description>
 			<name>primary</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The button's type. Possible values are <code>button</code>, <code>submit</code>, <code>cancel</code> and <code>reset</code>. The default value is <code>button</code>.]]></description>
+			<description>The button's type. Possible values are <![CDATA[<code>button</code>]]>, <![CDATA[<code>submit</code>]]>, <![CDATA[<code>cancel</code>]]> and <![CDATA[<code>reset</code>]]>. The default value is <![CDATA[<code>button</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to open a dialog window with the <code>href</code> location when a user clicks the button. The default value is <code>false</code>.]]></description>
+			<description>Whether to open a dialog window with the <![CDATA[<code>href</code>]]> location when a user clicks the button. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>useDialog</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -238,7 +238,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a button row <code>&lt;div&gt;</code> tag to wrap <code>&lt;aui:button&gt;</code> components and offer additional styling.]]></description>
+		<description>Creates a button row <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:button&gt;</code>]]> components and offer additional styling.</description>
 		<name>button-row</name>
 		<tag-class>com.liferay.taglib.aui.ButtonRowTag</tag-class>
 		<body-content>JSP</body-content>
@@ -289,14 +289,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The width of the column in the containing row as a fraction of <code>12</code>. For example, a span of <code>4</code> would result in a column width <code>4/12</code> (or <code>1/3</code>) of the total width of the containing row.]]></description>
+			<description>The width of the column in the containing row as a fraction of <![CDATA[<code>12</code>]]>. For example, a span of <![CDATA[<code>4</code>]]> would result in a column width <![CDATA[<code>4/12</code>]]> (or <![CDATA[<code>1/3</code>]]>) of the total width of the containing row.</description>
 			<name>span</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The width of the column in the containing row as a percentage, overriding the <code>span</code> attribute. The width is then converted to a span expressed as <code>((width/100) x 12)</code>, rounded to the nearest whole number. For example, a width of <code>33</code> would be converted to <code>3.96</code>, which would be rounded up to a span value of <code>4</code>.]]></description>
+			<description>The width of the column in the containing row as a percentage, overriding the <![CDATA[<code>span</code>]]> attribute. The width is then converted to a span expressed as <![CDATA[<code>((width/100) x 12)</code>]]>, rounded to the nearest whole number. For example, a width of <![CDATA[<code>33</code>]]> would be converted to <![CDATA[<code>3.96</code>]]>, which would be rounded up to a span value of <![CDATA[<code>4</code>]]>.</description>
 			<name>width</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -321,7 +321,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to enable the container to span the entire width of the viewport. The default value is <code>true</code>.]]></description>
+			<description>Whether to enable the container to span the entire width of the viewport. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>fluid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -336,7 +336,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a <code>&lt;div&gt;</code> tag to wrap form fields and offer additional styling.]]></description>
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap form fields and offer additional styling.</description>
 		<name>field-wrapper</name>
 		<tag-class>com.liferay.taglib.aui.FieldWrapperTag</tag-class>
 		<body-content>JSP</body-content>
@@ -347,21 +347,21 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
+			<description>Whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the wrapper should be the first element of the form. The default value is <code>false</code>.]]></description>
+			<description>Whether the wrapper should be the first element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>first</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -374,14 +374,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to make this field inline with the next element. The default value is <code>false</code>.]]></description>
+			<description>Whether to make this field inline with the next element. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>inlineField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The alignment for the label's text. Possible values are <code>right</code> and <code>left</code>.]]></description>
+			<description>The alignment for the label's text. Possible values are <![CDATA[<code>right</code>]]> and <![CDATA[<code>left</code>]]>.</description>
 			<name>inlineLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -393,14 +393,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the wrapper should be the last element of the form. The default value is <code>false</code>.]]></description>
+			<description>Whether the wrapper should be the last element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>last</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -421,7 +421,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a <code>&lt;div&gt;</code> tag to group related form elements and offer additional styling.]]></description>
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<name>fieldset</name>
 		<tag-class>com.liferay.taglib.aui.FieldsetTag</tag-class>
 		<body-content>JSP</body-content>
@@ -469,7 +469,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Sets whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Sets whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -507,27 +507,27 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to escape the XML of the form's action URL. The default value is <code>true</code>.]]></description>
+			<description>Whether to escape the XML of the form's action URL. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>escapeXml</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to align the form's labels. The default value is <code>false</code>.]]></description>
+			<description>Whether to align the form's labels. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>inlineLabels</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The method to send the form data. The default value is <code>post</code>. Possible values are <code>get</code> and <code>post</code>.]]></description>
+			<description>The method to send the form data. The default value is <![CDATA[<code>post</code>]]>. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
 			<name>method</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the form that is also used for the ID of the component instance. The default value is <code>fm</code>.]]></description>
+			<description>A name for the form that is also used for the ID of the component instance. The default value is <![CDATA[<code>fm</code>]]>.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -545,14 +545,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to validate fields when they lose focus. The default value is <code>true</code>.]]></description>
+			<description>Whether to validate fields when they lose focus. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>validateOnBlur</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -566,13 +566,13 @@
 		<tag-class>com.liferay.taglib.aui.IconTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A class to give to the container of the icon, to provide an implementation for the icon. Note that the preferred method of setting the icon's image is via the <code>image</code> attribute.]]></description>
+			<description>A class to give to the container of the icon, to provide an implementation for the icon. Note that the preferred method of setting the icon's image is via the <![CDATA[<code>image</code>]]> attribute.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -585,7 +585,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The image to display for the icon. Values are taken from the suffix of the Bootstrap icon CSS classes. For example, to display the edit icon you would reference the <code>icon-edit</code> CSS class by setting the value <code>edit</code>. If an icon image is referenced for <code>cssClass</code> and <code>image</code>, both icons are shown in the component.]]></description>
+			<description>The image to display for the icon. Values are taken from the suffix of the Bootstrap icon CSS classes. For example, to display the edit icon you would reference the <![CDATA[<code>icon-edit</code>]]> CSS class by setting the value <![CDATA[<code>edit</code>]]>. If an icon image is referenced for <![CDATA[<code>cssClass</code>]]> and <![CDATA[<code>image</code>]]>, both icons are shown in the component.</description>
 			<name>image</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -608,7 +608,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The target window in which the URL is opened. The default value is <code>self</code>. Possible values are <code>blank</code>, <code>self</code>, <code>parent</code>, <code>top</code>, and a unique frame's name.]]></description>
+			<description>The target window in which the URL is opened. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -673,28 +673,28 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to reload the page when the value of the input changes. The default value is <code>false</code>.]]></description>
+			<description>Whether to reload the page when the value of the input changes. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>changesContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to select the input. Note that this attribute is only enabled when <code>type</code> is <code>radio</code> or <code>checkbox</code>.]]></description>
+			<description>Whether to select the input. Note that this attribute is only enabled when <![CDATA[<code>type</code>]]> is <![CDATA[<code>radio</code>]]> or <![CDATA[<code>checkbox</code>]]>.</description>
 			<name>checked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The primary key for the instance of the class. The default value is <code>0</code>.]]></description>
+			<description>The primary key for the instance of the class. The default value is <![CDATA[<code>0</code>]]>.</description>
 			<name>classPK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The primary key for the class type. The default value is <code>-1</code>.]]></description>
+			<description>The primary key for the class type. The default value is <![CDATA[<code>-1</code>]]>.</description>
 			<name>classTypePK</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -707,7 +707,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -725,7 +725,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
+			<description>Whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -737,7 +737,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A variable name to refer to the <code>field</code> of the component.]]></description>
+			<description>A variable name to refer to the <![CDATA[<code>field</code>]]> of the component.</description>
 			<name>fieldParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -762,7 +762,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the help message text. The default value is <code>input-group-addon</code>.]]></description>
+			<description>A CSS class for styling the help message text. The default value is <![CDATA[<code>input-group-addon</code>]]>.</description>
 			<name>helpTextCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -786,27 +786,27 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to ignore the value saved from the request object. The default value is <code>false</code>.]]></description>
+			<description>Whether to ignore the value saved from the request object. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to align the input's field with the next element in the form. The default value is <code>false</code>.]]></description>
+			<description>Whether to align the input's field with the next element in the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>inlineField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The input label's text alignment. Possible values are <code>right</code> and <code>left</code>.]]></description>
+			<description>The input label's text alignment. Possible values are <![CDATA[<code>right</code>]]> and <![CDATA[<code>left</code>]]>.</description>
 			<name>inlineLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A label for the input component. If not assigned a value, the label is automatically taken from the <code>name</code> attribute's value.]]></description>
+			<description>A label for the input component. If not assigned a value, the label is automatically taken from the <![CDATA[<code>name</code>]]> attribute's value.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -835,28 +835,28 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the component's text features into the user's language. The default value is <code>false</code>.]]></description>
+			<description>Whether to translate the component's text features into the user's language. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>localized</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The maximum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the max value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
+			<description>The maximum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the max value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
 			<name>max</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The minimum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the min value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
+			<description>The minimum value for the input if its <![CDATA[<code>type</code>]]> is <![CDATA[<code>number</code>]]> or <![CDATA[<code>range</code>]]>. Note that the min value is inclusive if the input's <![CDATA[<code>type</code>]]> is <![CDATA[<code>range</code>]]>.</description>
 			<name>min</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -876,7 +876,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the component. If the name contains <code>--</code>, the generated name will be the substring following the <code>--</code>, excluding the last two characters and any prefixes. For example, the pattern <code>prefix--customName--</code> would result in the name <code>customName</code>. If the <code>id</code> is not provided and the <code>type</code> is given, the name is used as the <code>id</code>.]]></description>
+			<description>A name for the component. If the name contains <![CDATA[<code>--</code>]]>, the generated name will be the substring following the <![CDATA[<code>--</code>]]>, excluding the last two characters and any prefixes. For example, the pattern <![CDATA[<code>prefix--customName--</code>]]> would result in the name <![CDATA[<code>customName</code>. If the <![CDATA[<code>id</code>]]> is not provided and the <![CDATA[<code>type</code>]]> is given, the name is used as the <![CDATA[<code>id</code>]]>.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -913,7 +913,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to make the input's field resizeable, if the input is of type <code>textarea</code>.]]></description>
+			<description>Whether to make the input's field resizeable, if the input is of type <![CDATA[<code>textarea</code>.]]></description>
 			<name>resizable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -945,13 +945,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The input's type. Possible values are <code>text</code>, <code>hidden</code>, <code>assetCategories</code>, <code>assetTags</code>, <code>textarea</code>, <code>timeZone</code>, <code>password</code>, <code>checkbox</code>, <code>radio</code>, <code>submit</code>, <code>button</code>, <code>color</code>, <code>email</code>, <code>number</code>, <code>range</code>, <code>resource</code>, <code>url</code>, and an empty value. If an empty value or no value is set, the input's type is obtained automatically from the input component's bean.]]></description>
+			<description>The input's type. Possible values are <![CDATA[<code>text</code>]]>, <![CDATA[<code>hidden</code>]]>, <![CDATA[<code>assetCategories</code>]]>, <![CDATA[<code>assetTags</code>]]>, <![CDATA[<code>textarea</code>]]>, <![CDATA[<code>timeZone</code>]]>, <![CDATA[<code>password</code>]]>, <![CDATA[<code>checkbox</code>]]>, <![CDATA[<code>radio</code>]]>, <![CDATA[<code>submit</code>]]>, <![CDATA[<code>button</code>]]>, <![CDATA[<code>color</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>number</code>]]>, <![CDATA[<code>range</code>]]>, <![CDATA[<code>resource</code>]]>, <![CDATA[<code>url</code>]]>, and an empty value. If an empty value or no value is set, the input's type is obtained automatically from the input component's bean.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -965,14 +965,14 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to wrap the input component in a <code>div</code>, that can be styled. The default value is <code>false</code>. If the <code>wrapperCssClass</code> attribute is configured, the value is set automatically to <code>true</code>.]]></description>
+			<description>Whether to wrap the input component in a <![CDATA[<code>div</code>]]>, that can be styled. The default value is <![CDATA[<code>false</code>]]>. If the <![CDATA[<code>wrapperCssClass</code>]]> attribute is configured, the value is set automatically to <![CDATA[<code>true</code>]]>.</description>
 			<name>wrappedField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the <code>div</code> that wraps the input component.]]></description>
+			<description>A CSS class for styling the <![CDATA[<code>div</code> that wraps the input component]]>.</description>
 			<name>wrapperCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1006,7 +1006,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a navigation wrapper component to hold <code>&lt;nav:item&gt;</code> components for an <code>&lt;aui:nav-bar&gt;</code> component.]]></description>
+		<description>Creates a navigation wrapper component to hold <![CDATA[<code>&lt;nav:item&gt;</code>]]> components for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
 		<name>nav</name>
 		<tag-class>com.liferay.taglib.aui.NavTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1017,7 +1017,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <code>&lt;p&gt;</code> tag could be used for something other than a paragraph.]]></description>
+			<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 			<name>ariaRole</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1053,7 +1053,7 @@
 			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1073,7 +1073,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1094,7 +1094,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a search component for an <code>&lt;aui:nav-bar&gt;</code> component.]]></description>
+		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code> component]]>.</description>
 		<name>nav-bar-search</name>
 		<tag-class>com.liferay.taglib.aui.NavBarSearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1125,25 +1125,25 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a navigation item for using in an <code>&lt;aui:nav&gt;</code> component.]]></description>
+		<description>Creates a navigation item for using in an <![CDATA[<code>&lt;aui:nav&gt;</code>]]> component.</description>
 		<name>nav-item</name>
 		<tag-class>com.liferay.taglib.aui.NavItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the link set in the <code>href</code> attribute.]]></description>
+			<description>A CSS class for styling the link set in the <![CDATA[<code>href</code>]]> attribute.</description>
 			<name>anchorCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>anchorData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An ID for the instance of the navigation item's link, set in the <code>href</code> attribute.]]></description>
+			<description>An ID for the instance of the navigation item's link, set in the <![CDATA[<code>href</code>]]> attribute.</description>
 			<name>anchorId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1155,7 +1155,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <code>&lt;p&gt;</code> tag could be used for something other than a paragraph.]]></description>
+			<description>A role for assistive technologies to interpret HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag could be used for something other than a paragraph.</description>
 			<name>ariaRole</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1167,14 +1167,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the navigation item is a dropdown menu. The default value is <code>false</code>.]]></description>
+			<description>Whether the navigation item is a dropdown menu. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>dropdown</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1211,14 +1211,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the navigation item is selected by default. The default value is <code>false</code>.]]></description>
+			<description>Whether the navigation item is selected by default. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>selected</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1253,14 +1253,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to open a dialog window with the <code>href</code> location when a user clicks the navigation item. The default value is <code>false</code>.]]></description>
+			<description>Whether to open a dialog window with the <![CDATA[<code>href</code>]]> location when a user clicks the navigation item. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>useDialog</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to wrap the navigation item's dropdown menu in an unordered list with the <code>drop-down-menu</code> class. The default value is <code>true</code>.]]></description>
+			<description>Whether to wrap the navigation item's dropdown menu in an unordered list with the <![CDATA[<code>drop-down-menu</code>]]> class. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>wrapDropDownMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1269,7 +1269,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates an option component for using in an <code>&lt;aui:select&gt;</code> component.]]></description>
+		<description>Creates an option component for using in an <![CDATA[<code>&lt;aui:select&gt;</code>]]> component.</description>
 		<name>option</name>
 		<tag-class>com.liferay.taglib.aui.OptionTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1280,14 +1280,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", foo&gt;</code> would render as the attribute <code>data-class-name = foo;</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", foo&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = foo;</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
+			<description>Whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1301,21 +1301,21 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the option is selected when the component loads. The default value is <code>false</code>.]]></description>
+			<description>Whether the option is selected when the component loads. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>selected</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Styling for the option component. For example, to align the text to the right you would specify <code>text-align:right;</code>.]]></description>
+			<description>Styling for the option component. For example, to align the text to the right you would specify <![CDATA[<code>text-align:right;</code>]]>.</description>
 			<name>style</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1327,7 +1327,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A value for the option. If no value is given, the value is taken from the <code>label</code> attribute.]]></description>
+			<description>A value for the option. If no value is given, the value is taken from the <![CDATA[<code>label</code>]]> attribute.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1389,7 +1389,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a select field (or combo box) for holding <code>&lt;aui:option&gt;</code> components.]]></description>
+		<description>Creates a select field (or combo box) for holding <![CDATA[<code>&lt;aui:option&gt;</code>]]> components.</description>
 		<name>select</name>
 		<tag-class>com.liferay.taglib.aui.SelectTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1401,7 +1401,7 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to reload the page when the value of the field changes. The default value is <code>false</code>.]]></description>
+			<description>Whether to reload the page when the value of the field changes. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>changesContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1414,14 +1414,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Miscellaneous data to be stored via a map. For example, the <code>HashMap&lt;"class-name", "foo"&gt;</code> would render as the attribute <code>data-class-name = "foo";</code>.]]></description>
+			<description>Miscellaneous data to be stored via a map. For example, the <![CDATA[<code>HashMap&lt;"class-name", "foo"&gt;</code>]]> would render as the attribute <![CDATA[<code>data-class-name = "foo";</code>]]>.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
+			<description>Whether the component is disabled. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1433,7 +1433,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component should be the first element of the form. The default value is <code>false</code>.]]></description>
+			<description>Whether the component should be the first element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>first</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1458,14 +1458,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to align the select field with the next element in the form. The default value is <code>false</code>.]]></description>
+			<description>Whether to align the select field with the next element in the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>inlineField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[An alignment for the label's text. Possible values are <code>right</code> and <code>left</code>.]]></description>
+			<description>An alignment for the label's text. Possible values are <![CDATA[<code>right</code>]]> and <![CDATA[<code>left</code>]]>.</description>
 			<name>inlineLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1477,14 +1477,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether the component should be the last element in the form. The default value is <code>false</code>.]]></description>
+			<description>Whether the component should be the last element in the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>last</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A list type in which to automatically generate the options. Possible values can be found in <code>ListTypeImpl.java</code>.]]></description>
+			<description>A list type in which to automatically generate the options. Possible values can be found in <![CDATA[<code>ListTypeImpl.java</code>]]>.</description>
 			<name>listType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1495,7 +1495,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to translate the label's text into the user's language. The default value is <code>true</code>.]]></description>
+			<description>Whether to translate the label's text into the user's language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1509,14 +1509,14 @@
 			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether multiple options can be selected. If set to <code>true</code>, the select field expands to allow for multiple selections. The default value is <code>false</code>.]]></description>
+			<description>Whether multiple options can be selected. If set to <![CDATA[<code>true</code>]]>, the select field expands to allow for multiple selections. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>multiple</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A name for the select field. Note that this value overrides the <code>label</code> attribute and takes the place of the label.]]></description>
+			<description>A name for the select field. Note that this value overrides the <![CDATA[<code>label</code>]]> attribute and takes the place of the label.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1540,21 +1540,21 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to mark the select field as required. The default value is <code>false</code>.]]></description>
+			<description>Whether to mark the select field as required. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>required</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to display an empty option as a placeholder. The default value is <code>false</code>.]]></description>
+			<description>Whether to display an empty option as a placeholder. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showEmptyOption</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to display the required label above the select field. Note that this attribute is only active if the <code>required</code> attribute is set to <code>true</code>. The default value is <code>false</code>.]]></description>
+			<description>Whether to display the required label above the select field. Note that this attribute is only active if the <![CDATA[<code>required</code>]]> attribute is set to <![CDATA[<code>true</code>]]>. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showRequiredLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1573,7 +1573,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<description>Whether to use the default portlet namespace, to avoid name conflicts. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1586,7 +1586,7 @@
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A CSS class for styling the <code>div</code> that wraps the select field.]]></description>
+			<description>A CSS class for styling the <![CDATA[<code>div</code>]]> that wraps the select field.</description>
 			<name>wrapperCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1606,7 +1606,7 @@
 			<type>java.util.Locale[]</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to make the translation manager default language changeable. The default value is <code>true</code>.]]></description>
+			<description>Whether to make the translation manager default language changeable. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>changeableDefaultLanguage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1637,14 +1637,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to activate the translation manager. The default value is <code>true</code>. If this is set to <code>false</code>, the translation manager will not work entirely.]]></description>
+			<description>Whether to activate the translation manager. The default value is <![CDATA[<code>true</code>]]>. If this is set to <![CDATA[<code>false</code>]]>, the translation manager will not work entirely.</description>
 			<name>initialize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to make the translation manager read-only for the user. The default value is <code>false</code>.]]></description>
+			<description>Whether to make the translation manager read-only for the user. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>readOnly</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1663,7 +1663,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The type of validation for the input field. Possible values are <code>acceptFiles</code>, <code>alpha</code>, <code>alphanum</code>, <code>date</code>, <code>digits</code>, <code>email</code>, <code>equalTo</code>, <code>iri</code>, <code>max</code>, <code>maxLength</code>, <code>min</code>, <code>minLength</code>, <code>number</code>, <code>required</code>, and <code>url</code>.]]></description>
+			<description>The type of validation for the input field. Possible values are <![CDATA[<code>acceptFiles</code>]]>, <![CDATA[<code>alpha</code>]]>, <![CDATA[<code>alphanum</code>, <![CDATA[<code>date</code>]]>, <![CDATA[<code>digits</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>equalTo</code>]]>, <![CDATA[<code>iri</code>]]>, <![CDATA[<code>max</code>]]>, <![CDATA[<code>maxLength</code>]]>, <![CDATA[<code>min</code>]]>, <![CDATA[<code>minLength</code>]]>, <![CDATA[<code>number</code>]]>, <![CDATA[<code>required</code>]]>, and <![CDATA[<code>url</code>]]>.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1707,28 +1707,28 @@
 			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to show the workflow status help message. The default value is <code>true</code>.]]></description>
+			<description>Whether to show the workflow status help message. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showHelpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to show the workflow status icon. The default value is <code>true</code>.]]></description>
+			<description>Whether to show the workflow status icon. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showIcon</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to show the status label. The default value is <code>true</code>.]]></description>
+			<description>Whether to show the status label. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A workflow status. Possible values are <code>0</code> (Approved), <code>1</code> (Pending), <code>2</code> (Draft), <code>3</code> (Expired), <code>4</code> (Denied), <code>5</code> (Inactive), <code>6</code> (Incomplete), <code>7</code> (Scheduled), and <code>8</code> (In-Trash). Any other value defaults to status (Any).]]></description>
+			<description>A workflow status. Possible values are <![CDATA[<code>0</code>]]> (Approved), <![CDATA[<code>1</code>]]> (Pending), <![CDATA[<code>2</code>]]> (Draft), <![CDATA[<code>3</code>]]> (Expired), <![CDATA[<code>4</code>]]> (Denied), <![CDATA[<code>5</code>]]> (Inactive), <![CDATA[<code>6</code>]]> (Incomplete), <![CDATA[<code>7</code>]]> (Scheduled), and <![CDATA[<code>8</code>]]> (In-Trash). Any other value defaults to status (Any).</description>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

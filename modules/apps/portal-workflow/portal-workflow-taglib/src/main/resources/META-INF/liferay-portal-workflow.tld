@@ -35,21 +35,21 @@
 			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to enable instance tracker on click. The default value is <code>false</code>.]]></description>
+			<description>Whether to enable instance tracker on click. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showInstanceTracker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to show the status label. The default value is <code>true</code>.]]></description>
+			<description>Whether to show the status label. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showStatusLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A workflow status. Possible values are <code>0</code> (Approved), <code>1</code> (Pending), <code>2</code> (Draft), <code>3</code> (Expired), <code>4</code> (Denied), <code>5</code> (Inactive), <code>6</code> (Incomplete), <code>7</code> (Scheduled), and <code>8</code> (In-Trash). Any other value defaults to status (Any).]]></description>
+			<description>A workflow status. Possible values are <![CDATA[<code>0</code>]]> (Approved), <![CDATA[<code>1</code>]]> (Pending), <![CDATA[<code>2</code>]]> (Draft), <![CDATA[<code>3</code>]]> (Expired), <![CDATA[<code>4</code>]]> (Denied), <![CDATA[<code>5</code>]]> (Inactive), <![CDATA[<code>6</code>]]> (Incomplete), <![CDATA[<code>7</code>]]> (Scheduled), and <![CDATA[<code>8</code>]]> (In-Trash). Any other value defaults to status (Any).</description>
 			<name>status</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

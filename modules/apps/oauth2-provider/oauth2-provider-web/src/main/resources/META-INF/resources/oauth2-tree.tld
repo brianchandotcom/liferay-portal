@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description><![CDATA[Provides the OAuth2 Tree tags, prefixed with <code>oauth2-tree:</code>.]]></description>
+	<description>Provides the OAuth2 Tree tags, prefixed with <![CDATA[<code>oauth2-tree:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>oauth2-tree</short-name>
 	<uri>http://liferay.com/tld/oauth2-tree</uri>

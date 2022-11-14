@@ -203,7 +203,9 @@ const BudgetBreakdownTable = ({activityId}) => {
 				<Table
 					items={budgets.items.map((budget) => ({
 						title: budget.expenseName,
-						value: getIntlNumberFormat().format(budget.claimAmount),
+						value: getIntlNumberFormat().format(
+							budget.invoiceAmount
+						),
 					}))}
 					title="Budget Breakdown"
 				/>

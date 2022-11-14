@@ -272,6 +272,9 @@ function setFocusedOption(optionElement) {
 		optionElement.setAttribute('aria-selected', 'true');
 		optionElement.scrollIntoView({block: 'center'});
 	}
+	else {
+		optionListElement.removeAttribute('aria-activedescendant');
+	}
 }
 
 function createOptionElement(option) {

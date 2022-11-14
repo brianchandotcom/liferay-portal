@@ -232,7 +232,7 @@ function filterRemoteOptions(query, abortController) {
 			return result.items.map((entry) => ({
 				textContent: entry[input.attributes.relationshipLabelFieldName],
 				textValue: entry[input.attributes.relationshipLabelFieldName],
-				value: entry[input.attributes.relationshipValueFieldName],
+				value: `${entry[input.attributes.relationshipValueFieldName]}`,
 			}));
 		});
 }

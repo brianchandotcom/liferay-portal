@@ -72,10 +72,10 @@ public class ProjectTemplatesPortletConfigurationIconTest
 	}
 
 	public ProjectTemplatesPortletConfigurationIconTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -92,9 +92,9 @@ public class ProjectTemplatesPortletConfigurationIconTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--package-name", packageName, "--product",
-			_product);
+			gradleWorkspaceModulesDir, template, name, "--liferay-product",
+			_liferayProduct, "--liferay-version", _liferayVersion,
+			"--package-name", packageName);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -127,7 +127,7 @@ public class ProjectTemplatesPortletConfigurationIconTest
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Icontest",
 			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + packageName,
-			"-Dproduct=" + _product);
+			"-DliferayProduct=" + _liferayProduct);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
@@ -151,7 +151,7 @@ public class ProjectTemplatesPortletConfigurationIconTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

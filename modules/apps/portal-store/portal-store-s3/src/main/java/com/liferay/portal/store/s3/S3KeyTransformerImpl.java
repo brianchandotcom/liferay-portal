@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Edward C. Han
  */
-@Component(immediate = true, service = S3KeyTransformer.class)
+@Component(service = S3KeyTransformer.class)
 public class S3KeyTransformerImpl implements S3KeyTransformer {
 
 	@Override

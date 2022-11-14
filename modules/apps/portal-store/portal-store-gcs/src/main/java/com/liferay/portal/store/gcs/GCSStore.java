@@ -70,7 +70,7 @@ import org.threeten.bp.Duration;
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "store.type=com.liferay.portal.store.gcs.GCSStore",
 	service = Store.class
 )

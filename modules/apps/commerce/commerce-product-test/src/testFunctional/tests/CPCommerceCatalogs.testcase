@@ -306,19 +306,19 @@ definition {
 
 		IFrame.selectPermissionsFrame();
 
-		AssertChecked(
+		AssertChecked.assertCheckedNotVisible(
 			key_roleTitle = "user",
 			locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
 
-		AssertChecked(
+		AssertChecked.assertCheckedNotVisible(
 			key_roleTitle = "user",
 			locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
 
-		AssertChecked(
+		AssertChecked.assertCheckedNotVisible(
 			key_roleTitle = "user",
 			locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
 
-		AssertChecked(
+		AssertChecked.assertCheckedNotVisible(
 			key_roleTitle = "user",
 			locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
 	}

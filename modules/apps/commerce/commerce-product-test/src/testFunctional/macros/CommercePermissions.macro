@@ -12,7 +12,7 @@ definition {
 		for (var permission : list "${permissions}") {
 			var permission = StringUtil.upperCase("${permission}");
 
-			AssertChecked(locator1 = "Permissions#INLINE_PERMISSIONS_${permission}_CHECKBOX");
+			AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#INLINE_PERMISSIONS_${permission}_CHECKBOX");
 		}
 	}
 
@@ -116,7 +116,7 @@ definition {
 
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
-			Check(locator1 = "Permissions#${permissionDefinitionKey}");
+			Check.checkNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 
 		Button.clickSave();
@@ -130,7 +130,7 @@ definition {
 
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
-			AssertChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+			AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 	}
 
@@ -146,7 +146,7 @@ definition {
 		for (var permission : list "${permissions}") {
 			var permission = StringUtil.upperCase("${permission}");
 
-			Check(locator1 = "Permissions#INLINE_PERMISSIONS_${permission}_CHECKBOX");
+			Check.checkNotVisible(locator1 = "Permissions#INLINE_PERMISSIONS_${permission}_CHECKBOX");
 		}
 
 		Button.clickSave();
@@ -158,7 +158,7 @@ definition {
 		for (var permission : list "${permissions}") {
 			var permission = StringUtil.upperCase("${permission}");
 
-			AssertChecked(locator1 = "Permissions#INLINE_PERMISSIONS_${permission}_CHECKBOX");
+			AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#INLINE_PERMISSIONS_${permission}_CHECKBOX");
 		}
 	}
 
@@ -192,7 +192,7 @@ definition {
 
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
-			Uncheck(locator1 = "Permissions#${permissionDefinitionKey}");
+			Uncheck.uncheckNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 
 		Button.clickSave();
@@ -206,7 +206,7 @@ definition {
 
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
-			AssertNotChecked(locator1 = "Permissions#${permissionDefinitionKey}");
+			AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 		}
 	}
 

@@ -108,7 +108,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 								<span class="lfr-portal-tooltip" title="<%= assetListDisplayContext.getAssetListEntryTypeLabel(assetListEntry) %>">
 									<clay:icon
 										cssClass="mr-2 text-secondary"
-										symbol='<%= (assetListEntry.getType() == 0) ? "bolt" : "list" %>'
+										symbol='<%= (assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC) ? "bolt" : "list" %>'
 									/>
 								</span>
 

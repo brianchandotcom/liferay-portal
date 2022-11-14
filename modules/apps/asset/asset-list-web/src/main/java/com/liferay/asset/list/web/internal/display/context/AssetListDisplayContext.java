@@ -260,7 +260,9 @@ public class AssetListDisplayContext {
 	}
 
 	public String getAssetListEntryTypeLabel(AssetListEntry assetListEntry) {
-		if (assetListEntry.getType() == 0) {
+		if (assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
 			return LanguageUtil.get(
 				_themeDisplay.getLocale(), "dynamic-collection");
 		}

@@ -71,17 +71,18 @@ public class ProjectTemplatesWarMVCPortletSuffixTest
 	}
 
 	public ProjectTemplatesWarMVCPortletSuffixTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
 	public void testBuildTemplateWarMvcPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
 			temporaryFolder, "war-mvc-portlet", "portlet-portlet", "portlet",
-			_liferayVersion, _product, mavenExecutor, _gradleDistribution);
+			_liferayVersion, _liferayProduct, mavenExecutor,
+			_gradleDistribution);
 
 		testTemplateWarPortletDTD(gradleProjectDir, _liferayVersion);
 	}
@@ -91,7 +92,7 @@ public class ProjectTemplatesWarMVCPortletSuffixTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

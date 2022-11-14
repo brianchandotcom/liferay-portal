@@ -140,7 +140,7 @@ public class JournalFeedActionDropdownItemsProvider {
 
 		String permissionsJournalFeedURL = PermissionsURLTag.doTag(
 			StringPool.BLANK, JournalFeed.class.getName(), _feed.getName(),
-			null, String.valueOf(_feed.getFeedId()),
+			null, String.valueOf(_feed.getId()),
 			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {

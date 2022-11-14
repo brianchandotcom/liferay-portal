@@ -19,6 +19,7 @@
 						<div class="custom-control custom-radio">
 							<label class="facet-checkbox-label" for="${entry.getLabel()}">
 								<input
+									autocomplete="off"
 									${(entry.isSelected())?then("checked", "")}
 									class="custom-control-input facet-term"
 									disabled
@@ -48,6 +49,7 @@
 				<div class="custom-control custom-radio">
 					<label class="facet-checkbox-label" for="${customRangeModifiedFacetTermDisplayContext.getLabel()}">
 						<input
+							autocomplete="off"
 							${(customRangeModifiedFacetTermDisplayContext.isSelected())?then("checked", "")}
 							class="custom-control-input facet-term"
 							disabled

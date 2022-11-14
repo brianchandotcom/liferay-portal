@@ -14,11 +14,22 @@
 
 package com.liferay.knowledge.base.internal.search.spi.model.index.contributor;
 
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tibor Lipusz
@@ -32,7 +43,42 @@ public class KBArticleModelDocumentContributor
 	implements ModelDocumentContributor<KBArticle> {
 
 	@Override
-	public void contribute(Document document, KBArticle baseModel) {
+	public void contribute(Document document, KBArticle kbArticle) {
+		document.addText(
+			Field.CONTENT, _htmlParser.extractText(kbArticle.getContent()));
+		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
+		document.addKeyword(Field.FOLDER_ID, kbArticle.getKbFolderId());
+		document.addText(Field.TITLE, kbArticle.getTitle());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(kbArticle.buildTreePath(), CharPool.SLASH));
+		document.addKeyword("folderNames", _getKBFolderNames(kbArticle));
+		document.addKeyword(
+			"parentMessageId", kbArticle.getParentResourcePrimKey());
+		document.addKeyword("titleKeyword", kbArticle.getTitle(), true);
+		document.addKeywordSortable("urlTitle", kbArticle.getUrlTitle());
 	}
+
+	@Reference
+	protected KBFolderLocalService kbFolderLocalService;
+
+	private String[] _getKBFolderNames(KBArticle kbArticle) throws Exception {
+		long kbFolderId = kbArticle.getKbFolderId();
+
+		Collection<String> kbFolderNames = new ArrayList<>();
+
+		while (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			KBFolder kbFolder = kbFolderLocalService.getKBFolder(kbFolderId);
+
+			kbFolderNames.add(kbFolder.getName());
+
+			kbFolderId = kbFolder.getParentKBFolderId();
+		}
+
+		return kbFolderNames.toArray(new String[0]);
+	}
+
+	@Reference
+	private HtmlParser _htmlParser;
 
 }

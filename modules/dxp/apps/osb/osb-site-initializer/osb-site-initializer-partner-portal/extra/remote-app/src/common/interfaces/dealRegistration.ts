@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {RequestStatus} from '../enums/requestStatus';
+import {Status} from '../enums/status';
 import MDFRequestActivityDTO from './dto/mdfRequestActivityDTO';
 import LiferayAccountBrief from './liferayAccountBrief';
 import LiferayObject from './liferayObject';
@@ -52,5 +52,5 @@ export default interface DealRegistration extends Partial<LiferayObject> {
 	projectNeed: string[];
 	projectTimeline: string;
 	prospect: Prospect;
-	registrationStatus: RequestStatus;
+	registrationStatus: Status;
 }

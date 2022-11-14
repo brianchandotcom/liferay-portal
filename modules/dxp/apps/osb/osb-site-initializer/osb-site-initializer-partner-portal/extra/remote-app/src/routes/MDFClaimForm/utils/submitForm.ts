@@ -11,7 +11,7 @@
 
 import {FormikHelpers} from 'formik';
 
-import {RequestStatus} from '../../../common/enums/requestStatus';
+import {Status} from '../../../common/enums/status';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
 import {Liferay} from '../../../common/services/liferay';
@@ -30,7 +30,7 @@ export default async function submitForm(
 	mdfRequest: MDFRequestDTO,
 	claimParentFolderId: number,
 	siteURL: string,
-	currentClaimStatus?: RequestStatus
+	currentClaimStatus?: Status
 ) {
 	if (currentClaimStatus) {
 		values.claimStatus = currentClaimStatus;

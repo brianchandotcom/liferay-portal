@@ -14,7 +14,7 @@ import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import {RequestStatus} from '../../common/enums/requestStatus';
+import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequest from '../../common/interfaces/mdfRequest';
 import {Liferay} from '../../common/services/liferay';
@@ -35,7 +35,7 @@ const initialFormValues: MDFRequest = {
 	liferayBusinessSalesGoals: [],
 	overallCampaignDescription: '',
 	overallCampaignName: '',
-	requestStatus: RequestStatus.PENDING,
+	requestStatus: Status.PENDING,
 	targetAudienceRoles: [],
 	targetMarkets: [],
 };
@@ -81,14 +81,7 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						siteURL,
-						RequestStatus.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 				validationSchema={goalsSchema}
 			/>
 		),
@@ -105,14 +98,7 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						siteURL,
-						RequestStatus.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 				validationSchema={activitiesSchema}
 			/>
 		),
@@ -126,14 +112,7 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						siteURL,
-						RequestStatus.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 			/>
 		),
 	};

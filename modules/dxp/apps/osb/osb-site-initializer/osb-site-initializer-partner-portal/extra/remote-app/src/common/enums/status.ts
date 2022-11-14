@@ -9,4 +9,15 @@
  * distribution rights of the Software.
  */
 
-export {default} from './RequestStatusBadge';
+export enum Status {
+	DRAFT = 'Draft',
+	PENDING = 'Pending Marketing Review',
+	APPROVED = 'Approved',
+	REQUEST_MORE_INFO = 'Request More Info',
+	REJECT = 'Reject',
+	EXPIRED = 'Expired',
+	MARKETING_DIRECTOR_REVIEW = 'Marketing Director Review',
+	CANCELED = 'Canceled',
+	CLAIM_PAID = 'Claim Paid',
+	IN_FINANCE_REVIEW = 'In Finance Review',
+}

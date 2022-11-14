@@ -12,7 +12,7 @@
 import {FormikHelpers} from 'formik';
 
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
-import {RequestStatus} from '../../../common/enums/requestStatus';
+import {Status} from '../../../common/enums/status';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
@@ -26,7 +26,7 @@ export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
 	siteURL: string,
-	currentRequestStatus?: RequestStatus
+	currentRequestStatus?: Status
 ) {
 	formikHelpers.setSubmitting(true);
 	if (currentRequestStatus) {

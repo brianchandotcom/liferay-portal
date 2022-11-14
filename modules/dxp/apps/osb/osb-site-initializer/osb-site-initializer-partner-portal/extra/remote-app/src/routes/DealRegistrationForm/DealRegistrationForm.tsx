@@ -14,7 +14,7 @@ import {useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import {RequestStatus} from '../../common/enums/requestStatus';
+import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import DealRegistration from '../../common/interfaces/dealRegistration';
 import {Liferay} from '../../common/services/liferay';
@@ -51,7 +51,7 @@ const initialFormValues: DealRegistration = {
 		postalCode: '',
 		state: {},
 	},
-	registrationStatus: RequestStatus.PENDING,
+	registrationStatus: Status.PENDING,
 };
 
 type StepComponent = {
@@ -96,14 +96,7 @@ const DealRegistrationForm = () => {
 						FormikHelpers<DealRegistration>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						siteURL,
-						RequestStatus.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 				validationSchema={generalSchema}
 			/>
 		),
@@ -117,14 +110,7 @@ const DealRegistrationForm = () => {
 						FormikHelpers<DealRegistration>,
 						'setFieldValue'
 					>
-				) =>
-					submitForm(
-						values,
-						formikHelpers,
-						siteURL,
-						RequestStatus.DRAFT
-					)
-				}
+				) => submitForm(values, formikHelpers, siteURL, Status.DRAFT)}
 			/>
 		),
 	};

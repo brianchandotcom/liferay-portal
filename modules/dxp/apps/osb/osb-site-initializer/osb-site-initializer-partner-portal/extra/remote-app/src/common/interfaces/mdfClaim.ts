@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {RequestStatus} from '../enums/requestStatus';
+import {Status} from '../enums/status';
 import LiferayObject from './liferayObject';
 import MDFClaimActivity from './mdfClaimActivity';
 
 export default interface MDFClaim extends Partial<LiferayObject> {
 	activities?: MDFClaimActivity[];
-	claimStatus: RequestStatus;
+	claimStatus: Status;
 	partial?: boolean;
 	r_mdfRequestToMdfClaims_c_mdfRequestId: number;
 	reimbursementInvoice?: File;

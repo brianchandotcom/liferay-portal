@@ -13,7 +13,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import {RequestStatus} from '../../common/enums/requestStatus';
+import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequestActivityDTO from '../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFClaim from '../../common/interfaces/mdfClaim';
@@ -44,7 +44,7 @@ const getInitialFormValues = (
 		selected: false,
 		totalCost: 0,
 	})),
-	claimStatus: RequestStatus.PENDING,
+	claimStatus: Status.PENDING,
 	r_mdfRequestToMdfClaims_c_mdfRequestId: mdfRequestId,
 	totalClaimAmount: 0,
 	totalrequestedAmount,
@@ -106,7 +106,7 @@ const MDFClaimForm = () => {
 						mdfRequest,
 						claimParentFolderId,
 						siteURL,
-						RequestStatus.PENDING
+						Status.PENDING
 					)
 				}
 				validationSchema={claimSchema}

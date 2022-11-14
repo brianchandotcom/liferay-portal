@@ -11,28 +11,30 @@
 
 import ClayIcon from '@clayui/icon';
 
-import {RequestStatus} from '../../../../common/enums/requestStatus';
+import {Status} from '../../enums/status';
 
 interface IProps {
-	status: RequestStatus;
+	status: Status;
 }
 
 type StatusClassname = {
-	[key in RequestStatus]: string;
+	[key in Status]: string;
 };
 
 const statusClassName: StatusClassname = {
-	[RequestStatus.DRAFT]: 'text-neutral-5',
-	[RequestStatus.PENDING]: 'text-brand-secondary',
-	[RequestStatus.APPROVED]: 'text-success',
-	[RequestStatus.REQUEST_MORE_INFO]: 'text-info',
-	[RequestStatus.REJECT]: 'text-danger',
-	[RequestStatus.EXPIRED]: 'text-danger',
-	[RequestStatus.MARKETING_DIRECTOR_REVIEW]: 'text-brand-secondary-darken-3',
-	[RequestStatus.CANCELED]: 'text-neutral-10',
+	[Status.DRAFT]: 'text-neutral-5',
+	[Status.PENDING]: 'text-brand-secondary',
+	[Status.APPROVED]: 'text-success',
+	[Status.REQUEST_MORE_INFO]: 'text-info',
+	[Status.REJECT]: 'text-danger',
+	[Status.EXPIRED]: 'text-danger',
+	[Status.MARKETING_DIRECTOR_REVIEW]: 'text-brand-secondary-darken-3',
+	[Status.CANCELED]: 'text-neutral-10',
+	[Status.CLAIM_PAID]: 'text-brand-primary-lighten-2',
+	[Status.IN_FINANCE_REVIEW]: 'text-brand-secondary-darken-3',
 };
 
-const RequestStatusBadge = ({status}: IProps) => {
+const StatusBadge = ({status}: IProps) => {
 	return (
 		<>
 			<ClayIcon
@@ -44,4 +46,4 @@ const RequestStatusBadge = ({status}: IProps) => {
 	);
 };
 
-export default RequestStatusBadge;
+export default StatusBadge;

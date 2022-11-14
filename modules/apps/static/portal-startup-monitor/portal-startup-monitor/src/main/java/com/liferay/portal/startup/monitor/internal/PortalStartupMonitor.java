@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Matthew Tambara
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class PortalStartupMonitor {
 
 	@Reference(

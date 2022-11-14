@@ -3,9 +3,11 @@ definition {
 	macro createBuild {
 		Click(locator1 = "Button#PLUS");
 
-		Click.javaScriptClick(
-			key_picklistOption = "${dropdownItem}",
-			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+		if (isSet(dropdownItem)) {
+			Click.javaScriptClick(
+				key_picklistOption = "${dropdownItem}",
+				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+		}
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",

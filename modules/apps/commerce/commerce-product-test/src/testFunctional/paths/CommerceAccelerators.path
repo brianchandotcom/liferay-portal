@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULT_OPTIONS</td>
-	<td>//section[contains(@id,'CPSearchResultsPortlet')]//div[@class='dropdown lfr-icon-menu portlet-options']</td>
+	<td>//section[contains(@id,'CPSearchResultsPortlet')]//header//menu//div[@class='dropdown']</td>
 	<td></td>
 </tr>
 <tr>

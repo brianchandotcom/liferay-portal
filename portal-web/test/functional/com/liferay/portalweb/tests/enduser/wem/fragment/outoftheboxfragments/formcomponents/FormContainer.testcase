@@ -1346,16 +1346,18 @@ definition {
 				fieldName = "price",
 				objectName = "PurchaseOrder");
 
-			var favoriteFoodPreferenceId = JSONObject.getObjectEntryId(
-				entryValue = "Fish",
-				fieldName = "foodPreferences",
-				objectName = "Preference");
+			var favoriteFoodPreferenceERC = JSONObject.getObjectEntryFieldValue(
+				attribute = "foodPreferences",
+				attributeValue = "Fish",
+				fieldName = "externalReferenceCode",
+				objectName = "Preference",
+				type = "String");
 
 			ObjectAdmin.assertObjectEntryFieldValueViaAPI(
 				attribute = "address",
 				attributeValue = "Dalian",
-				expectedValue = "${favoriteFoodPreferenceId}",
-				fieldName = "r_favoriteFood_c_preferenceId",
+				expectedValue = "${favoriteFoodPreferenceERC}",
+				fieldName = "r_favoriteFood_c_preferenceERC",
 				objectName = "PurchaseOrder");
 
 			ObjectAdmin.assertObjectEntryFieldValueViaAPI(

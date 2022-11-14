@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Preston Crary
  */
 @Component(
-	immediate = true,
 	property = "resource.name=" + PushNotificationsConstants.RESOURCE_NAME,
 	service = PortletResourcePermission.class
 )

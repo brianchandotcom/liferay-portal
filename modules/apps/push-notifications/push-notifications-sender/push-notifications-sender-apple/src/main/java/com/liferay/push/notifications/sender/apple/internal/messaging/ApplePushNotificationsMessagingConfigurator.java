@@ -28,8 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  */
 @Component(
-	enabled = false, immediate = true,
-	service = ApplePushNotificationsMessagingConfigurator.class
+	enabled = false, service = ApplePushNotificationsMessagingConfigurator.class
 )
 public class ApplePushNotificationsMessagingConfigurator {
 

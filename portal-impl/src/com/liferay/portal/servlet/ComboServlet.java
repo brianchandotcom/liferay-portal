@@ -373,7 +373,7 @@ public class ComboServlet extends HttpServlet {
 
 				_log.error(
 					"Skip " + modulePath +
-					" because its content type is not CSS or JavaScript");
+						" because its content type is not CSS or JavaScript");
 			}
 			else if (status != HttpServletResponse.SC_OK) {
 				_log.error(

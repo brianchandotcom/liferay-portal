@@ -19,6 +19,8 @@ import com.liferay.account.constants.AccountWebKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -129,8 +131,24 @@ public class CurrentAccountEntryManagerStore {
 	}
 
 	private PortalPreferences _getPortalPreferences(long userId) {
-		return _portletPreferencesFactory.getPortalPreferences(userId, true);
+
+		// LPS-156201
+
+		try {
+			return _portletPreferencesFactory.getPortalPreferences(
+				userId, true);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CurrentAccountEntryManagerStore.class);
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

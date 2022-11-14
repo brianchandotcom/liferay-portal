@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
-	service = LayoutsLocalPublisherMessageListener.class
+	service = MessageListener.class
 )
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {

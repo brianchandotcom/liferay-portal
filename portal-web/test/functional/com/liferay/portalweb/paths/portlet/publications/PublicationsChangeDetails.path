@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISCARD_CHANGE_BUTTON</td>
+	<td>//div[contains(@class,'autofit-section')]//a[contains(.,'Discard Change')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_CONTENT_VALUE_IN_PRODUCTION</td>
 	<td>//td[contains(@class,'publications-render-view-content') and contains(.,'${key_contentValueInProduction}')]</td>
 	<td></td>

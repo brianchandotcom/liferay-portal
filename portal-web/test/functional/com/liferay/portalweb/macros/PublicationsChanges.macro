@@ -65,7 +65,7 @@ definition {
 				Click(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON");
 			}
 			else {
-				MenuItem.click(menuItem = "Discard Change");
+				Click(locator1 = "PublicationsChangeDetails#DISCARD_CHANGE_BUTTON");
 			}
 		}
 		else {

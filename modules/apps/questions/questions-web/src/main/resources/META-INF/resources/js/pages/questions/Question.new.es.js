@@ -161,7 +161,8 @@ const Question = ({
 					setError(errorObject);
 
 					setLoading(false);
-				} else {
+				}
+				else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -219,7 +220,8 @@ const Question = ({
 					),
 					type: 'success',
 				});
-			} catch (error) {
+			}
+			catch (error) {
 				setError(error);
 
 				openToast({
@@ -227,7 +229,8 @@ const Question = ({
 					title: Liferay.Language.get('an-error-occurred'),
 					type: 'warning',
 				});
-			} finally {
+			}
+			finally {
 				setTimeout(() => {
 					setError(null);
 				}, FEEDBACK_DELAY);
@@ -249,7 +252,8 @@ const Question = ({
 					message: Liferay.Language.get('unsubscribe'),
 					type: 'success',
 				});
-			} else {
+			}
+			else {
 				subscribe(
 					{
 						variables: {
@@ -407,7 +411,8 @@ const Question = ({
 				siteKey: context.siteKey,
 			});
 			setIsVisibleEditor(false);
-		} catch (error) {}
+		}
+		catch (error) {}
 	};
 
 	const deleteAnswer = useCallback(

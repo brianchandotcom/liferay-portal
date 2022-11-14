@@ -100,10 +100,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			}
 
 			if (key.contains("objectActionName")) {
-				ListUtil.isNotEmptyForEach(
-					objectActions,
-					objectAction -> _addObjectActionPathItem(
-						key, objectAction, paths));
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-166918"))) {
+
+					ListUtil.isNotEmptyForEach(
+						objectActions,
+						objectAction -> _addObjectActionPathItem(
+							key, objectAction, paths));
+				}
 			}
 			else if (key.contains("objectRelationshipName")) {
 				for (Map.Entry<ObjectRelationship, ObjectDefinition> entry :

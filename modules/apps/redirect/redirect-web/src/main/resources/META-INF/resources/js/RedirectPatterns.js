@@ -16,7 +16,6 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import uuidv4 from 'uuid/v4';
@@ -126,7 +125,11 @@ const PatternField = ({
 							{Liferay.Language.get('please-enter-a-valid-url')}
 						</ClayForm.FeedbackItem>
 
-						<small>{Liferay.Language.get('destination-url-error-help-message')}</small>
+						<small>
+							{Liferay.Language.get(
+								'destination-url-error-help-message'
+							)}
+						</small>
 					</ClayForm.FeedbackGroup>
 				)}
 			</ClayLayout.Col>

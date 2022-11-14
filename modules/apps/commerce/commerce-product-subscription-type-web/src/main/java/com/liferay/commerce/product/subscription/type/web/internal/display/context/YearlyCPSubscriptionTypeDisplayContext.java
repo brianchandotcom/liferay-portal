@@ -109,11 +109,11 @@ public class YearlyCPSubscriptionTypeDisplayContext {
 
 		if (isPayment()) {
 			return GetterUtil.getInteger(
-				subscriptionTypeSettingsUnicodeProperties.get("deliveryMonth"));
+				subscriptionTypeSettingsUnicodeProperties.get("month"));
 		}
 
 		return GetterUtil.getInteger(
-			subscriptionTypeSettingsUnicodeProperties.get("month"));
+			subscriptionTypeSettingsUnicodeProperties.get("deliveryMonth"));
 	}
 
 	public int getSelectedYearlyMode() {

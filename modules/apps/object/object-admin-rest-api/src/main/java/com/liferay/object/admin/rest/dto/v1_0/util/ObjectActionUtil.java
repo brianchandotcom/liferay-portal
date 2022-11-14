@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.dto.v1_0.util;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.constants.ObjectActionConstants;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,7 +51,11 @@ public class ObjectActionUtil {
 				dateCreated = serviceBuilderObjectAction.getCreateDate();
 				dateModified = serviceBuilderObjectAction.getModifiedDate();
 				description = serviceBuilderObjectAction.getDescription();
+				errorMessage = LocalizedMapUtil.getLanguageIdMap(
+					serviceBuilderObjectAction.getErrorMessageMap());
 				id = serviceBuilderObjectAction.getObjectActionId();
+				label = LocalizedMapUtil.getLanguageIdMap(
+					serviceBuilderObjectAction.getLabelMap());
 				name = serviceBuilderObjectAction.getName();
 				objectActionExecutorKey =
 					serviceBuilderObjectAction.getObjectActionExecutorKey();

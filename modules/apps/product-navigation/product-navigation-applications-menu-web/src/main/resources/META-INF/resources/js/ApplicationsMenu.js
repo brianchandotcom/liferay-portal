@@ -394,10 +394,14 @@ const ApplicationsMenu = ({
 	virtualInstance,
 }) => {
 	const [appsPanelData, setAppsPanelData] = useState({});
+	const buttonRef = useRef();
 	const [visible, setVisible] = useState(false);
 
 	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false),
+		onClose: () => {
+			setVisible(false);
+			buttonRef.current.focus();
+		},
 	});
 
 	const buttonTitle = useMemo(() => {
@@ -511,6 +515,7 @@ const ApplicationsMenu = ({
 				onClick={handleTriggerButtonClick}
 				onFocus={fetchCategories}
 				onMouseOver={fetchCategories}
+				ref={buttonRef}
 				small
 				symbol="grid"
 				title={ReactDOMServer.renderToString(buttonTitle)}

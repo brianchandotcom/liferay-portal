@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.preferences-owned-by-group=true",

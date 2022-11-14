@@ -48,7 +48,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class LanguageResourcesExtender
 	implements BundleTrackerCustomizer<List<ServiceRegistration<?>>> {
 

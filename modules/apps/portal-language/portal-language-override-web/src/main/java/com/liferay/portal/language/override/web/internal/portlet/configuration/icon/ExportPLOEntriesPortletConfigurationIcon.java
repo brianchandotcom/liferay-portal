@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Erick Monteiro
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + PLOPortletKeys.PORTAL_LANGUAGE_OVERRIDE,
 	service = PortletConfigurationIcon.class
 )

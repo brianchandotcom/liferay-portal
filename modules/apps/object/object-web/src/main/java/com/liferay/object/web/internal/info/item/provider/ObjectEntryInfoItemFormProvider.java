@@ -514,6 +514,12 @@ public class ObjectEntryInfoItemFormProvider
 		if (titleObjectField == null) {
 			return "id";
 		}
+		else if (Objects.equals(titleObjectField.getName(), "createDate")) {
+			return "dateCreated";
+		}
+		else if (Objects.equals(titleObjectField.getName(), "modifiedDate")) {
+			return "dateModified";
+		}
 
 		return titleObjectField.getName();
 	}

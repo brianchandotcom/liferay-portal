@@ -72,10 +72,10 @@ public class ProjectTemplatesServiceWrapperTest
 	}
 
 	public ProjectTemplatesServiceWrapperTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -91,8 +91,8 @@ public class ProjectTemplatesServiceWrapperTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--product", _product, "--service",
+			gradleWorkspaceModulesDir, template, name, "--liferay-product",
+			_liferayProduct, "--liferay-version", _liferayVersion, "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
 		testExists(gradleProjectDir, "bnd.bnd");
@@ -128,7 +128,7 @@ public class ProjectTemplatesServiceWrapperTest
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Serviceoverride",
 			"-DliferayVersion=" + _liferayVersion, "-Dpackage=serviceoverride",
-			"-Dproduct=" + _product,
+			"-DliferayProduct=" + _liferayProduct,
 			"-DserviceWrapperClass=" +
 				"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
@@ -165,7 +165,7 @@ public class ProjectTemplatesServiceWrapperTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

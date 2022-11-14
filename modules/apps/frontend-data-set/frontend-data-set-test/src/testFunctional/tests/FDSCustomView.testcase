@@ -58,7 +58,7 @@ definition {
 		}
 
 		task ("Assert the custom view no longer exists") {
-			FDSCustomView.verifyCustomView(key_nameCustomView = "New View");
+			FDSCustomView.assertCustomViewName(key_nameCustomView = "New View");
 		}
 	}
 

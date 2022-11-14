@@ -223,8 +223,7 @@
 	${printURL.setWindowState("pop_up")}
 
 	<#assign
-		title = languageUtil.format(locale, "print-x", [htmlUtil.escape(assetRenderer.getTitle(locale))], false)
-		taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + printURL.toString() + "'});"
+		title = languageUtil.format(locale, "print-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)
 	/>
 
 	<div aria-label="${title}">
@@ -232,7 +231,7 @@
 			cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip text-primary print-icon"
 			displayType="secondary"
 			icon="print"
-			onClick=taglibPrintURL
+			onClick="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + printURL.toString() + "'});"
 			title="${title}"
 		/>
 	</div>

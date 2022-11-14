@@ -20,6 +20,7 @@ import AccountContextProvider from './context/AccountContext';
 import ClayIconProvider from './context/ClayIconProvider';
 
 import './styles/index.scss';
+import AppContextProvider from './context/AppPropertiesContext';
 import SWRCacheProvider from './services/SWRCacheProvider';
 import fetcher from './services/fetcher';
 
@@ -27,6 +28,10 @@ class Testray extends HTMLElement {
 	private root: Root | undefined;
 
 	connectedCallback() {
+		const properties = {
+			jiraBaseURL: this.getAttribute('jiraBaseURL'),
+		};
+
 		if (!this.root) {
 			this.root = createRoot(this);
 
@@ -38,11 +43,13 @@ class Testray extends HTMLElement {
 						revalidateOnFocus: false,
 					}}
 				>
-					<AccountContextProvider>
-						<ClayIconProvider>
-							<TestrayRouter />
-						</ClayIconProvider>
-					</AccountContextProvider>
+					<AppContextProvider properties={properties}>
+						<AccountContextProvider>
+							<ClayIconProvider>
+								<TestrayRouter />
+							</ClayIconProvider>
+						</AccountContextProvider>
+					</AppContextProvider>
 				</SWRConfig>
 			);
 		}

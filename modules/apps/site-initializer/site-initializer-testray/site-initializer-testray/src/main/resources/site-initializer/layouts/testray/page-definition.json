@@ -46,6 +46,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
+													"properties": "jiraBaseURL=https://issues.liferay.com"
 												},
 												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:TESTRAY$]"
 											}

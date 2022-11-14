@@ -14,6 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {useContext} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
@@ -24,9 +25,11 @@ import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../../../../components/StatusBadge/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
+import {AppPropertiesContext} from '../../../../../../context/AppPropertiesContext';
 import i18n from '../../../../../../i18n';
 import {
 	TestrayCaseResult,
+	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {getTimeFromNow} from '../../../../../../util/date';
@@ -39,12 +42,16 @@ type TestrayAttachment = {
 };
 
 const CaseResult = () => {
+	const {jiraBaseURL} = useContext(AppPropertiesContext);
+
 	const {
 		caseResult,
+		caseResultsIssues,
 		mutateCaseResult,
 		projectId,
 	}: {
 		caseResult: TestrayCaseResult;
+		caseResultsIssues: TestrayCaseResultIssue[];
 		mutateCaseResult: KeyedMutator<any>;
 		projectId: string;
 	} = useOutletContext();
@@ -237,7 +244,20 @@ const CaseResult = () => {
 								{
 									divider: true,
 									title: i18n.translate('issues'),
-									value: '-',
+									value: caseResultsIssues.map(
+										(
+											caseResultIssue: TestrayCaseResultIssue,
+											index: number
+										) => (
+											<a
+												className="mr-2"
+												href={`${jiraBaseURL}/browse/${caseResultIssue?.issue?.name}`}
+												key={index}
+											>
+												{caseResultIssue?.issue?.name}
+											</a>
+										)
+									),
 								},
 								{
 									title: i18n.translate('comment'),

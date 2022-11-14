@@ -67,7 +67,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.friendly.url.web.internal.servlet.FriendlyURLServlet",
 		"osgi.http.whiteboard.servlet.pattern=/friendly-url/*",

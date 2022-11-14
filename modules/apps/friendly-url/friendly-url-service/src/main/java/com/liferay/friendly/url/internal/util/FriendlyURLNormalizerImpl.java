@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=100",
 	service = FriendlyURLNormalizer.class
 )
 public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {

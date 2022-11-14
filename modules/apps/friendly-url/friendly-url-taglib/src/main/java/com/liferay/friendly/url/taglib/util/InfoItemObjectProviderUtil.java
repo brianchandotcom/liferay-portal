@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class InfoItemObjectProviderUtil {
 
 	public static Object getInfoItem(String className, long classPK) {

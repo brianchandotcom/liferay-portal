@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.portal.servlet.friendly.url.PrivateUserFriendlyURLServlet",
 		"osgi.http.whiteboard.servlet.pattern=/user/*",

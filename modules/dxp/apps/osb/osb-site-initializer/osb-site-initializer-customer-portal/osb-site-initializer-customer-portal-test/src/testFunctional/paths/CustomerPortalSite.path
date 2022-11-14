@@ -166,6 +166,10 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_INFO</td>
+	<td>//*[contains(@class, 'modal-content')]//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
 	<td>MODAL_TITLE</td>
 	<td>//div[contains(@class, 'flex-row')]//h2[contains(., '${modalTitle}')]</td>
 	<td></td>

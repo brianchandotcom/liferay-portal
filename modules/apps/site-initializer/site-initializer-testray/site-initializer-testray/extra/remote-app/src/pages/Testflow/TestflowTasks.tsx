@@ -93,6 +93,20 @@ const TestFlowTasks = () => {
 		return <Loading />;
 	}
 
+	const getFloatingBoxAlerts = () => {
+		const alerts = [];
+
+		if (selectedRows.length === 1) {
+			alerts.push({
+				text: i18n.translate(
+					'please-select-at-least-two-subtasks-to-merge'
+				),
+			});
+		}
+
+		return alerts;
+	};
+
 	return (
 		<>
 			<Container collapsable title={i18n.translate('task-details')}>
@@ -327,6 +341,7 @@ const TestFlowTasks = () => {
 				>
 					{(_, dispatch) => (
 						<FloatingBox
+							alerts={getFloatingBoxAlerts()}
 							clearList={() =>
 								dispatch({
 									payload: [],

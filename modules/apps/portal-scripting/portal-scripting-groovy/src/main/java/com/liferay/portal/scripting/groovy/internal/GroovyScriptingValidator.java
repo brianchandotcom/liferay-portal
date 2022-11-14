@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Feliphe Marinho
  */
 @Component(
-	immediate = true,
 	property = "scripting.language=" + GroovyScriptingValidator.LANGUAGE,
 	service = ScriptingValidator.class
 )

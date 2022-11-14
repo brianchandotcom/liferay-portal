@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = Scripting.class)
+@Component(service = Scripting.class)
 public class ScriptingImpl implements Scripting {
 
 	@Override

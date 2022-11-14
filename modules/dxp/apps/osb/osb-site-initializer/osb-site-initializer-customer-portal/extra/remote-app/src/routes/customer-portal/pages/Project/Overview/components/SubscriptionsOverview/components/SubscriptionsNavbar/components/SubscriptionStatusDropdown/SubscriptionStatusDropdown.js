@@ -25,15 +25,15 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 	const [items, setItems] = useState([
 		{
 			active: true,
-			label: SUBSCRIPTIONS_STATUS.active,
+			label: i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.active)),
 		},
 		{
 			active: false,
-			label: SUBSCRIPTIONS_STATUS.expired,
+			label: i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.expired)),
 		},
 		{
 			active: false,
-			label: SUBSCRIPTIONS_STATUS.future,
+			label: i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.future)),
 		},
 	]);
 
@@ -55,8 +55,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		if (currentActiveItems.length !== MAX_SUBSCRIPTION_STATUS) {
 			onClick(currentActiveItems.map((item) => item.label));
-		}
-		else {
+		} else {
 			onClick();
 		}
 
@@ -83,7 +82,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 					onClick={() => handleOnClick(index)}
 					symbolRight={item.active && 'check'}
 				>
-					{i18n.translate(getKebabCase(item.label))}
+					{i18n.translate(item.label)}
 				</DropDown.Item>
 			))}
 

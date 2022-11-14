@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Enoch Chu
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER,
 	service = PortletConfigurationIcon.class
 )

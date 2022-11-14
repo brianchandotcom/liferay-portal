@@ -49,9 +49,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Joan Kim
  * @author Ryan Park
  */
-@Component(
-	immediate = true, service = {BundleManager.class, BundleManagerImpl.class}
-)
+@Component(service = {BundleManager.class, BundleManagerImpl.class})
 public class BundleManagerImpl implements BundleManager {
 
 	@Override

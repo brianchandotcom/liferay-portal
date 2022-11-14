@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
 		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_APPS

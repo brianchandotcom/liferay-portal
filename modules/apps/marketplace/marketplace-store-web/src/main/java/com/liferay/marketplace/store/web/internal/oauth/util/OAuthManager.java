@@ -44,7 +44,7 @@ import org.scribe.oauth.OAuthService;
 /**
  * @author Ryan Park
  */
-@Component(immediate = true, service = OAuthManager.class)
+@Component(service = OAuthManager.class)
 public class OAuthManager {
 
 	public void deleteAccessToken(User user) throws PortalException {

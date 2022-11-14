@@ -85,7 +85,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=marketplace-app-manager-portlet",
 		"com.liferay.portlet.display-category=category.hidden",

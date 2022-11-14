@@ -71,6 +71,14 @@ definition {
 		Click(locator1 = "CP2Utils#CLOSE_BUTTON");
 	}
 
+	macro onboardingFlow {
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+	}
+
 	macro openActionMenu {
 		Click(
 			key_text = "${openUser}",

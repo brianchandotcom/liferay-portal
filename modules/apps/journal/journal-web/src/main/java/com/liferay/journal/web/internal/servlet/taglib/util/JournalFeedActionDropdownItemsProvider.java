@@ -41,10 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalFeedActionDropdownItemsProvider {
 
 	public JournalFeedActionDropdownItemsProvider(
-		JournalFeed journalFeed, LiferayPortletRequest liferayPortletRequest,
+		JournalFeed feed, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_journalFeed = journalFeed;
+		_feed = feed;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
@@ -59,7 +59,7 @@ public class JournalFeedActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> JournalFeedPermission.contains(
-							_themeDisplay.getPermissionChecker(), _journalFeed,
+							_themeDisplay.getPermissionChecker(), _feed,
 							ActionKeys.UPDATE),
 						_getEditJournalFeedActionUnsafeConsumer()
 					).build());
@@ -70,7 +70,7 @@ public class JournalFeedActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> JournalFeedPermission.contains(
-							_themeDisplay.getPermissionChecker(), _journalFeed,
+							_themeDisplay.getPermissionChecker(), _feed,
 							ActionKeys.PERMISSIONS),
 						_getPermissionsJournalFeedActionUnsafeConsumer()
 					).build());
@@ -81,7 +81,7 @@ public class JournalFeedActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> JournalFeedPermission.contains(
-							_themeDisplay.getPermissionChecker(), _journalFeed,
+							_themeDisplay.getPermissionChecker(), _feed,
 							ActionKeys.DELETE),
 						_getDeleteJournalFeedActionUnsafeConsumer()
 					).build());
@@ -104,7 +104,7 @@ public class JournalFeedActionDropdownItemsProvider {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"deleteFeedId", _journalFeed.getFeedId()
+					"deleteFeedId", _feed.getFeedId()
 				).buildString());
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
@@ -124,9 +124,9 @@ public class JournalFeedActionDropdownItemsProvider {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"feedId", _journalFeed.getFeedId()
+					"feedId", _feed.getFeedId()
 				).setParameter(
-					"groupId", _journalFeed.getGroupId()
+					"groupId", _feed.getGroupId()
 				).buildString());
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
@@ -139,9 +139,8 @@ public class JournalFeedActionDropdownItemsProvider {
 		throws Exception {
 
 		String permissionsJournalFeedURL = PermissionsURLTag.doTag(
-			StringPool.BLANK, JournalFeed.class.getName(),
-			_journalFeed.getName(), null,
-			String.valueOf(_journalFeed.getFeedId()),
+			StringPool.BLANK, JournalFeed.class.getName(), _feed.getName(),
+			null, String.valueOf(_feed.getFeedId()),
 			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 
 		return dropdownItem -> {
@@ -154,8 +153,8 @@ public class JournalFeedActionDropdownItemsProvider {
 		};
 	}
 
+	private final JournalFeed _feed;
 	private final HttpServletRequest _httpServletRequest;
-	private final JournalFeed _journalFeed;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 

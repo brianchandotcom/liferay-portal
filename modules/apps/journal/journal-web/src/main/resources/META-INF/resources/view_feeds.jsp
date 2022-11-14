@@ -110,7 +110,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= journalFeedActionDropdownItemsProvider.getActionDropdownItems() %>"
-							propsTransformer="js/JournalFeedElementsDefaultPropsTransformer"
+							propsTransformer="js/FeedElementsDefaultPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -142,7 +142,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= journalFeedActionDropdownItemsProvider.getActionDropdownItems() %>"
-							propsTransformer="js/JournalFeedElementsDefaultPropsTransformer"
+							propsTransformer="js/FeedElementsDefaultPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

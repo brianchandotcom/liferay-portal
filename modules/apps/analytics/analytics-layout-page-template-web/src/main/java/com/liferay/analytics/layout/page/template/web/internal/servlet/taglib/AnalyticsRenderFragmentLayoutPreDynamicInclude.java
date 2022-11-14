@@ -17,16 +17,20 @@ package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib;
 import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util.AnalyticsRenderFragmentLayoutUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
@@ -86,30 +90,44 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 			return;
 		}
 
-		printWriter.print("<div data-analytics-asset-id=\"");
-		printWriter.print(classPK);
-		printWriter.print("\" data-analytics-asset-title=\"");
-		printWriter.print(HtmlUtil.escapeAttribute(title));
-		printWriter.print("\" data-analytics-asset-type=\"");
-		printWriter.print(analyticsAssetType.getType());
-
 		Map<String, Function<T, String>> attributes =
-			analyticsAssetType.getAttributes();
+			HashMapBuilder.<String, Function<T, String>>put(
+				"data-analytics-asset-id", object -> String.valueOf(classPK)
+			).put(
+				"data-analytics-asset-title",
+				object -> HtmlUtil.escapeAttribute(title)
+			).put(
+				"data-analytics-asset-type",
+				object -> analyticsAssetType.getType()
+			).putAll(
+				analyticsAssetType.getAttributes()
+			).build();
 
-		Set<Map.Entry<String, Function<T, String>>> entries =
-			attributes.entrySet();
+		List<String> keys = new ArrayList<>(attributes.keySet());
 
-		for (Map.Entry<String, Function<T, String>> entry : entries) {
-			printWriter.print("\" ");
-			printWriter.print(entry.getKey());
-			printWriter.print("=\"");
+		Collections.sort(keys);
 
-			Function<T, String> function = entry.getValue();
+		StringBundler sb = new StringBundler((keys.size() * 3) + 2);
 
-			printWriter.print(function.apply(displayObject));
+		sb.append("<div ");
+
+		for (String key : keys) {
+			sb.append(key);
+			sb.append("=\"");
+
+			Function<T, String> function = attributes.get(key);
+
+			sb.append(function.apply(displayObject));
+
+			sb.append("\"");
+			sb.append(" ");
 		}
 
-		printWriter.print("\">");
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(">");
+
+		printWriter.print(sb);
 	}
 
 	@Reference

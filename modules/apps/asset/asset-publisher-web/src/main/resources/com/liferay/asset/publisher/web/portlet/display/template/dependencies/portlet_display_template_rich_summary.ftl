@@ -161,7 +161,7 @@
 				displayType="secondary"
 				icon="print"
 				markupView="lexicon"
-				onClick="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x", [entryTitle], false) + "', url: '" + printURL.toString() + "'});"
+				onClick="javascript:Liferay.Util.openModal({headerHTML: '" + title + "', url: '" + printURL.toString() + "'});"
 				title="${title}"
 			/>
 		</div>

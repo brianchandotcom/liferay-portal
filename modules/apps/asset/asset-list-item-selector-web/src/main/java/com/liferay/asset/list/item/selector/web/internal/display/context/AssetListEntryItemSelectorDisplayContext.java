@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -74,6 +75,21 @@ public class AssetListEntryItemSelectorDisplayContext {
 		_language = language;
 		_portletURL = portletURL;
 		_infoListItemSelectorCriterion = infoListItemSelectorCriterion;
+	}
+
+	public int getAssetListEntrySegmentsEntryRelsCount(
+		AssetListEntry assetListEntry) {
+
+		int assetListEntryVariationCount =
+			AssetListEntrySegmentsEntryRelLocalServiceUtil.
+				getAssetListEntrySegmentsEntryRelsCount(
+					assetListEntry.getAssetListEntryId());
+
+		if (assetListEntryVariationCount < 2) {
+			return 0;
+		}
+
+		return assetListEntryVariationCount;
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries(PortletURL currentURL)

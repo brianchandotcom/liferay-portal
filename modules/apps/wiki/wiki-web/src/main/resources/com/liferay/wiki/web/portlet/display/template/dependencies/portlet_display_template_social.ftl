@@ -186,34 +186,52 @@
 
 <#macro getEditIcon>
 	<#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())>
-		<#assign editPageURL = renderResponse.createRenderURL() />
+		<#assign
+			editPageURL = renderResponse.createRenderURL()
+			title = languageUtil.format(locale, "edit-x", entry.getTitle(), false)
+		/>
 
 		${editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page")}
 		${editPageURL.setParameter("redirect", currentURL)}
 		${editPageURL.setParameter("nodeId", entry.getNodeId()?string)}
 		${editPageURL.setParameter("title", entry.getTitle())}
 
-		<@liferay_ui["icon"]
-			icon="pencil"
-			markupView="lexicon"
-			message=entry.getTitle()
-			url=editPageURL?string
-		/>
+		<span aria-label="${title}">
+			<@clay["link"]
+				borderless=true
+				cssClass="lfr-portal-tooltip"
+				displayType="secondary"
+				href=editPageURL?string
+				icon="pencil"
+				monospaced=true
+				small=true
+				title=title
+			/>
+		</span>
 	</#if>
 </#macro>
 
 <#macro getPageDetailsIcon>
-	<#assign viewPageDetailsURL = renderResponse.createRenderURL() />
+	<#assign
+		title = languageUtil.get(locale, "details")
+		viewPageDetailsURL = renderResponse.createRenderURL()
+	/>
 
 	${viewPageDetailsURL.setParameter("mvcRenderCommandName", "/wiki/view_page_details")}
 	${viewPageDetailsURL.setParameter("redirect", currentURL)}
 
-	<@liferay_ui["icon"]
-		icon="document"
-		markupView="lexicon"
-		message="details"
-		url=viewPageDetailsURL?string
-	/>
+	<span aria-label="${title}">
+		<@clay["link"]
+			borderless=true
+			cssClass="lfr-portal-tooltip"
+			displayType="secondary"
+			href=viewPageDetailsURL?string
+			icon="document"
+			monospaced=true
+			small=true
+			title=title
+		/>
+	</span>
 </#macro>
 
 <#macro getPrintIcon>

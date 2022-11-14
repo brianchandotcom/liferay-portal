@@ -1,7 +1,7 @@
 dependencies {
 	compile project("${apiPath}")
 
-	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
+	compileOnly group: "com.liferay.portal", name: "release.${liferayProduct}.api"
 
 #if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.93") {force = true}

@@ -5,7 +5,7 @@ configurations.all {
 }
 
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "release.${product}.api"
+	testIntegrationCompile group: "com.liferay.portal", name: "release.${liferayProduct}.api"
 	testIntegrationCompile project("${apiPath}")
 	testIntegrationCompile project("${clientPath}")
 }

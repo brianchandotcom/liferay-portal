@@ -104,12 +104,12 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 
 	public ProjectTemplatesRESTBuilderWorkspaceTest(
 		String name, String packageName, String liferayVersion,
-		String product) {
+		String liferayProduct) {
 
 		_name = name;
 		_packageName = packageName;
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -159,9 +159,9 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		}
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, _name, "--liferay-version",
-			_liferayVersion, "--package-name", _packageName, "--product",
-			_product);
+			gradleWorkspaceModulesDir, template, _name, "--liferay-product",
+			_liferayProduct, "--liferay-version", _liferayVersion,
+			"--package-name", _packageName);
 
 		if (_name.contains("sample")) {
 			testContains(
@@ -261,8 +261,8 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, _name, "com.test",
 			mavenExecutor, "-DbuildType=maven",
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + _packageName,
-			"-Dproduct=" + _product);
+			"-DliferayProduct=" + _liferayProduct,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + _packageName);
 
 		File projectDir = new File(mavenModulesDir, _name);
 
@@ -398,9 +398,9 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
 	private final String _name;
 	private final String _packageName;
-	private final String _product;
 
 }

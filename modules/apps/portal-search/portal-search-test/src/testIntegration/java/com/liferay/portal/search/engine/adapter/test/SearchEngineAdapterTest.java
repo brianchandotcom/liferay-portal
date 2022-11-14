@@ -177,7 +177,13 @@ public class SearchEngineAdapterTest {
 				Assert.assertTrue(
 					message,
 					message.contains(
-						"<p>Problem accessing /solr/" + index + "/update"));
+						"org.apache.solr.client.solrj.impl." +
+							"HttpSolrClient$RemoteSolrException"));
+				Assert.assertTrue(
+					message,
+					message.contains(
+						"<tr><th>URI:</th><td>/solr/" + index +
+							"/update</td></tr>"));
 			}
 			else if (isSearchEngine("Elasticsearch7")) {
 				Assert.assertTrue(

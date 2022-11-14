@@ -228,10 +228,13 @@
 
 	<span aria-label="${title}">
 		<@clay["button"]
-			cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm lfr-portal-tooltip text-primary print-icon"
+			borderless=true
+			cssClass="lfr-portal-tooltip"
 			displayType="secondary"
 			icon="print"
+			monospaced=true
 			onClick="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + printURL.toString() + "'});"
+			small=true
 			title="${title}"
 		/>
 	</span>

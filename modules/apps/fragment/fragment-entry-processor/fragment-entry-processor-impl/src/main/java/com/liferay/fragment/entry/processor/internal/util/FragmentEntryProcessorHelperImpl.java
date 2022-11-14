@@ -45,7 +45,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -196,7 +200,7 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return _getMappedInfoItemFieldValue(
-			fieldName, infoItemFieldValuesProvider,
+			editableValueJSONObject, fieldName, infoItemFieldValuesProvider,
 			fragmentEntryProcessorContext.getLocale(), object);
 	}
 
@@ -308,6 +312,39 @@ public class FragmentEntryProcessorHelperImpl
 		return false;
 	}
 
+	private String _getDateValue(
+		JSONObject editableValueJSONObject, Date date, Locale locale) {
+
+		if (editableValueJSONObject == null) {
+			return _DEFAULT_DATE_FORMAT.format(date);
+		}
+
+		JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
+			"config");
+
+		if (configJSONObject == null) {
+			return _DEFAULT_DATE_FORMAT.format(date);
+		}
+
+		JSONObject dateFormatJSONObject = configJSONObject.getJSONObject(
+			"dateFormat");
+
+		if (dateFormatJSONObject == null) {
+			return _DEFAULT_DATE_FORMAT.format(date);
+		}
+
+		String pattern = dateFormatJSONObject.getString(
+			_language.getLanguageId(locale), null);
+
+		if (Validator.isNull(pattern)) {
+			return _DEFAULT_DATE_FORMAT.format(date);
+		}
+
+		DateFormat dateFormatPattern = new SimpleDateFormat(pattern);
+
+		return dateFormatPattern.format(date);
+	}
+
 	private long _getFileEntryId(
 		String className, Object displayObject, String fieldName,
 		Locale locale) {
@@ -411,7 +448,7 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	private Object _getMappedInfoItemFieldValue(
-		String fieldName,
+		JSONObject editableValueJSONObject, String fieldName,
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
 		Object object) {
 
@@ -471,6 +508,12 @@ public class FragmentEntryProcessorHelperImpl
 			return labeledFieldValue.getLabel(locale);
 		}
 
+		if (value instanceof Date) {
+			Date date = (Date)value;
+
+			return _getDateValue(editableValueJSONObject, date, locale);
+		}
+
 		Class<?> fieldValueClass = value.getClass();
 
 		InfoTextFormatter<Object> infoTextFormatter =
@@ -484,6 +527,9 @@ public class FragmentEntryProcessorHelperImpl
 
 		return value.toString();
 	}
+
+	private static final DateFormat _DEFAULT_DATE_FORMAT = new SimpleDateFormat(
+		"MM/dd/yy hh:mm a", LocaleUtil.US);
 
 	private static final InfoCollectionTextFormatter<Object>
 		_INFO_COLLECTION_TEXT_FORMATTER =

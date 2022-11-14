@@ -292,13 +292,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 													</aui:a>
 												</span>
 											</c:if>
-
-											<span class="kb-descriptive-details">
-												<liferay-ui:message arguments="<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>" key="priority-x" />
-											</span>
-											<span class="kb-descriptive-details">
-												<liferay-ui:message arguments="<%= kbArticle.getViewCount() %>" key="x-views" />
-											</span>
 										</span>
 									</liferay-ui:search-container-column-text>
 

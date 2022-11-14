@@ -46,9 +46,8 @@ public class AssertUtil {
 	}
 
 	private static final String _CREDENTIAL_EXCEPTION_MESSAGE_FORMAT =
-		"Error occurred when authenticating the %s certificate. Please " +
-			"verify that the SAML KeyStore contains a certificate for the " +
-				"Entity ID and that it is protected by the provided key " +
-					"credential password";
+		"Unable to authenticate with the %s certificate. Verify that the " +
+			"SAML KeyStore contains a certificate for the entity ID and that " +
+				"it is protected by the provided key credential password.";
 
 }

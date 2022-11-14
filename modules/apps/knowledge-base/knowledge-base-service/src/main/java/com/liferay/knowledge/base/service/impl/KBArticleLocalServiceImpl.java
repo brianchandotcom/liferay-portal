@@ -1789,6 +1789,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					companyId
 				).and(
 					KBArticleTable.INSTANCE.expirationDate.lte(expirationDate)
+				).and(
+					KBArticleTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_EXPIRED)
 				)
 			));
 	}

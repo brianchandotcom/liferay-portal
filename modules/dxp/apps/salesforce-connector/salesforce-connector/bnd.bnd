@@ -2,6 +2,10 @@ Bundle-Name: Liferay Salesforce Connector
 Bundle-SymbolicName: com.liferay.salesforce.connector
 Bundle-Version: 1.0.6
 Import-Package:\
+	com.liferay.dispatch.model;version="[6.2.0,9999.0.0)",\
+	com.liferay.dispatch.repository;version="[1.0.0,9999.0.0)",\
+	com.liferay.dispatch.service;version="[7.0.0,9999.0.0)",\
+	com.liferay.dispatch.talend.archive;version="[1.1.0,9999.0.0)",\
 	com.liferay.portal.instance.lifecycle;version="[2.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.model;version="[17.1.0,9999.0.0)",\
 	com.liferay.portal.kernel.repository.model;version="[11.0.0,9999.0.0)",\

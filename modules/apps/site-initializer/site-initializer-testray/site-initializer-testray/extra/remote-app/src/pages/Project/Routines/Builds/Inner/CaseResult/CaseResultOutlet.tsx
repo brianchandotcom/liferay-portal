@@ -29,6 +29,8 @@ import {
 	TestrayRoutine,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
+import {testrayCaseResultsIssuesImpl} from '../../../../../../services/rest/TestrayCaseresultsIssues';
+import {searchUtil} from '../../../../../../util/search';
 import useCaseResultActions from './useCaseResultActions';
 
 type OutletContext = {
@@ -54,6 +56,17 @@ const CaseResultOutlet = () => {
 		testrayCaseResultImpl.getResource(caseResultId as string),
 		(response) => testrayCaseResultImpl.transformData(response)
 	);
+
+	const {data, mutate: mutateCaseResultIssues} = useFetch(
+		`${testrayCaseResultsIssuesImpl.resource}&filter=${searchUtil.eq(
+			'caseResultId',
+			caseResultId as string
+		)}`,
+		(response) =>
+			testrayCaseResultsIssuesImpl.transformDataFromList(response)
+	);
+
+	const caseResultsIssues = data?.items || [];
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
@@ -121,7 +134,9 @@ const CaseResultOutlet = () => {
 			<Outlet
 				context={{
 					caseResult: testrayCaseResult,
+					caseResultsIssues,
 					mutateCaseResult,
+					mutateCaseResultIssues,
 					projectId,
 				}}
 			/>

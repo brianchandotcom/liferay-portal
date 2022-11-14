@@ -26,7 +26,9 @@ import i18n from '../../../../../../i18n';
 import yupSchema from '../../../../../../schema/yup';
 import {Liferay} from '../../../../../../services/liferay';
 import {
+	APIResponse,
 	TestrayCaseResult,
+	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {CaseResultStatuses} from '../../../../../../util/statuses';
@@ -34,7 +36,7 @@ import {CaseResultStatuses} from '../../../../../../util/statuses';
 type CaseResultForm = {
 	commentMBMessage: string;
 	dueStatus: string;
-	issue: string;
+	issues: string;
 };
 
 const CaseResultEditTest = () => {
@@ -45,13 +47,30 @@ const CaseResultEditTest = () => {
 
 	const {
 		caseResult,
+		caseResultsIssues,
 		mutateCaseResult,
+		mutateCaseResultIssues,
 	}: {
 		caseResult: TestrayCaseResult;
+		caseResultsIssues: TestrayCaseResultIssue[];
 		mutateCaseResult: KeyedMutator<any>;
+		mutateCaseResultIssues: KeyedMutator<
+			APIResponse<TestrayCaseResultIssue>
+		>;
 	} = useOutletContext();
 
-	const {handleSubmit, register} = useForm<CaseResultForm>({
+	const caseResultIssueList = caseResultsIssues
+		?.map(
+			(caseResultIssue: TestrayCaseResultIssue) =>
+				caseResultIssue?.issue?.name
+		)
+		.join(', ');
+
+	const {
+		formState: {errors},
+		handleSubmit,
+		register,
+	} = useForm<CaseResultForm>({
 		defaultValues: caseResult?.dueStatus
 			? ({
 					commentMBMessage: caseResult?.commentMBMessage,
@@ -60,7 +79,7 @@ const CaseResultEditTest = () => {
 						CaseResultStatuses.IN_PROGRESS
 							? CaseResultStatuses.PASSED
 							: caseResult?.dueStatus.key,
-					issue: caseResult?.issue,
+					issues: caseResultIssueList,
 			  } as any)
 			: {},
 		resolver: yupResolver(yupSchema.caseResult),
@@ -69,14 +88,19 @@ const CaseResultEditTest = () => {
 	const _onSubmit = async ({
 		commentMBMessage,
 		dueStatus,
-		issue,
+		issues,
 	}: CaseResultForm) => {
+		const _issues = issues
+			.split(',')
+			.map((name) => name.trim())
+			.filter(Boolean);
+
 		onSubmit(
 			{
 				commentMBMessage,
 				dueStatus,
 				id: caseResultId,
-				issue,
+				issues: _issues,
 				userId: Liferay.ThemeDisplay.getUserId(),
 			},
 			{
@@ -85,8 +109,30 @@ const CaseResultEditTest = () => {
 			}
 		)
 			.then(mutateCaseResult)
+			.then(() => {
+				mutateCaseResultIssues((response) => {
+					if (response) {
+						return {
+							...response,
+							items: _issues.map(
+								(issue) =>
+									(({
+										issue: {id: issue, name: issue},
+									} as unknown) as TestrayCaseResultIssue)
+							),
+							totalCount: _issues.length,
+						};
+					}
+				});
+			})
 			.then(onSave)
 			.catch(onError);
+	};
+
+	const inputProps = {
+		errors,
+		register,
+		required: true,
 	};
 
 	return (
@@ -114,7 +160,8 @@ const CaseResultEditTest = () => {
 			<Form.Input
 				className="container-fluid-max-md"
 				label={i18n.translate('issues')}
-				name="issue"
+				name="issues"
+				{...inputProps}
 			/>
 
 			<Form.Input

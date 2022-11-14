@@ -459,6 +459,7 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 	private SamlProviderConfiguration _defaultCompanySamlProviderConfiguration =
 		ConfigurableUtil.createConfigurable(
 			SamlProviderConfiguration.class, Collections.emptyMap());
+	private String _defaultCompanySamlProviderConfigurationPid;
 
 	@Reference
 	private LocalEntityManager _localEntityManager;
@@ -475,6 +476,13 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 
 		@Override
 		public void deleted(String pid) {
+			if (pid.equals(_defaultCompanySamlProviderConfigurationPid)) {
+				_defaultCompanySamlProviderConfiguration =
+					ConfigurableUtil.createConfigurable(
+						SamlProviderConfiguration.class,
+						Collections.emptyMap());
+				_defaultCompanySamlProviderConfigurationPid = null;
+			}
 		}
 
 		@Override
@@ -490,6 +498,7 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 				_defaultCompanySamlProviderConfiguration =
 					ConfigurableUtil.createConfigurable(
 						SamlProviderConfiguration.class, properties);
+				_defaultCompanySamlProviderConfigurationPid = pid;
 			}
 		}
 

@@ -350,7 +350,7 @@ definition {
 
 		MenuItem.click(menuItem = "Move");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${moveSubfolder}" == "true") {
 			AssertClick(

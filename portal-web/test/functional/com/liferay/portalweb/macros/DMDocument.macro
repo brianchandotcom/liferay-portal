@@ -2080,7 +2080,7 @@ definition {
 			MenuItem.click(menuItem = "Move");
 		}
 
-		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${dmFolderName}" == "Home") {
 			if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
@@ -2138,7 +2138,7 @@ definition {
 			MenuItem.click(menuItem = "Move");
 		}
 
-		SelectFrame(locator1 = "IFrame#SELECT_FOLDER");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_dmFolderName = "${dmFolderName}";
 

@@ -62,6 +62,14 @@ public class GetInfoItemFieldValueMVCResourceCommand
 		).put(
 			"classPK", ParamUtil.getLong(resourceRequest, "classPK")
 		).put(
+			"config",
+			() -> {
+				String editableTypeOptions = ParamUtil.getString(
+					resourceRequest, "editableTypeOptions");
+
+				return _jsonFactory.createJSONObject(editableTypeOptions);
+			}
+		).put(
 			"fieldId", ParamUtil.getString(resourceRequest, "fieldId")
 		);
 

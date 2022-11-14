@@ -191,7 +191,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					StringUtil.lowerCaseFirstLetter(schemaName)
 				}),
 			_createObjectRelationshipPathItem(
-				objectRelationship, paths.get(key), schemaName));
+				paths.get(key), objectRelationship, schemaName));
 	}
 
 	private void _addObjectRelationshipSchema(
@@ -255,52 +255,55 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	}
 
 	private PathItem _createObjectRelationshipPathItem(
-		ObjectRelationship objectRelationship, PathItem pathItem,
+		PathItem existingPathItem, ObjectRelationship objectRelationship,
 		String schemaName) {
 
+		PathItem pathItem = new PathItem();
+
 		Map<PathItem.HttpMethod, Operation> operations =
-			pathItem.readOperationsMap();
+			existingPathItem.readOperationsMap();
 
-		Operation operation = operations.get(PathItem.HttpMethod.GET);
-
-		if (operation != null) {
-			return new PathItem() {
-				{
-					get(
-						_getObjectRelationshipGetOperation(
-							objectRelationship, pathItem.getGet(), schemaName));
-				}
-			};
+		if (operations.containsKey(PathItem.HttpMethod.DELETE)) {
+			pathItem.delete(
+				_getObjectRelationshipDeleteOperation(
+					objectRelationship, existingPathItem.getDelete(),
+					schemaName));
 		}
 
-		operation = operations.get(PathItem.HttpMethod.PUT);
-
-		if (operation != null) {
-			return new PathItem() {
-				{
-					put(
-						_getObjectRelationshipPutOperation(
-							objectRelationship, pathItem.getPut(), schemaName));
-				}
-			};
+		if (operations.containsKey(PathItem.HttpMethod.GET)) {
+			pathItem.get(
+				_getObjectRelationshipGetOperation(
+					objectRelationship, existingPathItem.getGet(), schemaName));
 		}
 
-		return new PathItem();
+		if (operations.containsKey(PathItem.HttpMethod.PUT)) {
+			pathItem.put(
+				_getObjectRelationshipPutOperation(
+					objectRelationship, existingPathItem.getPut(), schemaName));
+		}
+
+		return pathItem;
 	}
 
 	private Content _getContent(Content originalContent, String schemaName) {
 		Content content = new Content();
 
-		Schema schema = new Schema();
+		Schema schema = null;
 
-		schema.set$ref(schemaName);
+		if (schemaName != null) {
+			schema = new Schema();
+
+			schema.set$ref(schemaName);
+		}
 
 		for (String key : originalContent.keySet()) {
+			Schema finalSchema = schema;
+
 			content.addMediaType(
 				key,
 				new MediaType() {
 					{
-						setSchema(schema);
+						setSchema(finalSchema);
 					}
 				});
 		}
@@ -332,6 +335,25 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		return apiResponses;
+	}
+
+	private Operation _getObjectRelationshipDeleteOperation(
+		ObjectRelationship objectRelationship, Operation operation,
+		String schemaName) {
+
+		return new Operation() {
+			{
+				operationId(
+					StringBundler.concat(
+						"delete", _objectDefinition.getShortName(),
+						StringUtil.upperCaseFirstLetter(
+							objectRelationship.getName()),
+						schemaName));
+				parameters(_getParameters(operation, schemaName));
+				responses(_getObjectRelationshipApiResponses(operation, null));
+				tags(operation.getTags());
+			}
+		};
 	}
 
 	private Operation _getObjectRelationshipGetOperation(

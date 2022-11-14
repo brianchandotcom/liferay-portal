@@ -14,14 +14,14 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
 
 /**
  * @author Alan Huang
@@ -35,45 +35,68 @@ public class TLDStylingCheck extends BaseFileCheck {
 
 		_checkMissingCDATA(fileName, content);
 
-		return content;
+		return _removeUnnecessaryCDATA(content);
 	}
 
-	private void _checkMissingCDATA(String fileName, String content)
-		throws DocumentException {
+	private void _checkMissingCDATA(String fileName, String content) {
+		Matcher matcher = _descriptionPattern.matcher(content);
 
-		Document document = SourceUtil.readXML(content);
+		while (matcher.find()) {
+			String description = matcher.group(1);
 
-		Element rootElement = document.getRootElement();
-
-		List<Element> tagElements = rootElement.elements("tag");
-
-		for (Element tagElement : tagElements) {
-			Element nameElement = tagElement.element("name");
-
-			Element descriptionElement = tagElement.element("description");
-
-			if (descriptionElement == null) {
-				continue;
-			}
-
-			String description = descriptionElement.asXML();
-
-			int x = description.indexOf("replaced by");
+			int x = description.indexOf("replaced by ");
 
 			if (x == -1) {
 				continue;
 			}
 
-			x = description.indexOf("<![CDATA[", x);
+			x = description.indexOf("<![CDATA[", x + 12);
 
 			if (x == -1) {
 				addMessage(
 					fileName,
-					StringBundler.concat(
-						"Missing CDATA after 'replaced by' in the description ",
-						"of tag '", nameElement.getText(), "'"));
+					"Missing CDATA after 'replaced by' in the description",
+					SourceUtil.getLineNumber(content, matcher.start(1)));
 			}
 		}
 	}
+
+	private String _removeUnnecessaryCDATA(String content) {
+		Matcher matcher = _descriptionPattern.matcher(content);
+
+		while (matcher.find()) {
+			String description = matcher.group(1);
+
+			int x = description.indexOf("<![CDATA[");
+
+			if (x == -1) {
+				continue;
+			}
+
+			int y = description.indexOf("]]>", x + 9);
+
+			if (y == -1) {
+				continue;
+			}
+
+			String cdata = description.substring(x + 9, y);
+
+			if (Validator.isNull(cdata) ||
+				(!cdata.contains("<") && !cdata.contains(">"))) {
+
+				return StringUtil.replaceFirst(
+					content, description,
+					description.substring(0, x) +
+						description.substring(x + 9, y) +
+							description.substring(y + 3),
+					matcher.start());
+			}
+		}
+
+		return content;
+	}
+
+	private static final Pattern _descriptionPattern = Pattern.compile(
+		"\n\t*<description>(.*)?</description>");
 
 }

@@ -26,13 +26,11 @@ class TestrayIssuesImpl extends Rest<Issue, TestrayIssue> {
 				id,
 				name,
 			}),
-			nestedFields: '',
-			transformData: (issues) => ({...issues}),
 			uri: 'issues',
 		});
 	}
 
-	public async createIfNotExist(name: any) {
+	public async createIfNotExist(name: string) {
 		const response = await this.getAll(searchUtil.eq('name', name));
 
 		if ((response?.totalCount ?? 0) > 0) {
@@ -40,10 +38,10 @@ class TestrayIssuesImpl extends Rest<Issue, TestrayIssue> {
 		}
 
 		return this.create({
-			id: null,
+			id: undefined,
 			name,
 		});
 	}
 }
 
-export const testraIssuesImpl = new TestrayIssuesImpl();
+export const testrayIssueImpl = new TestrayIssuesImpl();

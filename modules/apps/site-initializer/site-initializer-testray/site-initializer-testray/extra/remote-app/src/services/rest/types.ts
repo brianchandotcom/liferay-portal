@@ -146,8 +146,8 @@ export type TestrayCaseResultIssue = {
 	id: number;
 	issue?: TestrayIssue;
 	name: string;
-	r_caseResultToCaseResultsIssues_c_caseResultId?: TestrayCaseResult;
-	r_issueToCaseResultsIssues_c_issueId?: TestrayIssue;
+	r_caseResultToCaseResultsIssues_c_caseResult?: TestrayCaseResult;
+	r_issueToCaseResultsIssues_c_issue?: TestrayIssue;
 };
 
 export type TestrayCaseType = {
@@ -169,6 +169,9 @@ export type TestrayFactorOption = {
 };
 
 export type TestrayIssue = {
+	dateCreated: number;
+	dateModified: number;
+	id: number;
 	name: string;
 };
 

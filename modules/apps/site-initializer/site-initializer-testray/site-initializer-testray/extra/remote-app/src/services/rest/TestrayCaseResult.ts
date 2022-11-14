@@ -12,15 +12,13 @@
  * details.
  */
 
-import TestrayError from '../../TestrayError';
-import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {searchUtil} from '../../util/search';
 import {CaseResultStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
 import Rest from './Rest';
 import {testrayCaseResultsIssuesImpl} from './TestrayCaseresultsIssues';
-import {testraIssuesImpl} from './TestrayIssues';
+import {testrayIssueImpl} from './TestrayIssues';
 import {TestrayCaseResult} from './types';
 
 type CaseResultForm = typeof yupSchema.caseResult.__outputType;
@@ -123,47 +121,48 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		});
 	}
 
-	public async update(id: number, data: any): Promise<TestrayCaseResult> {
-		const issues =
-			data.issues.split(',').map((item: string) => item.trim()) || [];
-
-		const createdIssues = [];
+	public async assignCaseResultIssue(caseResultId: number, issues: string[]) {
+		const caseResultIssuesResponse = await testrayCaseResultsIssuesImpl.getAll(
+			searchUtil.eq('caseResultId', caseResultId)
+		);
 
 		for (const issue of issues) {
-			createdIssues.push(await testraIssuesImpl.createIfNotExist(issue));
+			const testrayIssue = await testrayIssueImpl.createIfNotExist(issue);
+
+			await testrayCaseResultsIssuesImpl.createIfNotExist({
+				caseResultId,
+				issueId: testrayIssue?.id,
+				name: `${issue}-${caseResultId}`,
+			});
 		}
 
-		const caseResultsIssuesResponse = await this.fetcher(
-			`${testrayCaseResultsIssuesImpl.resource}&filter=${searchUtil.eq(
-				'caseResultId',
-				id.toString()
-			)}&${testrayCaseResultsIssuesImpl.nestedFields}pageSize=1000`
-		);
-
-		const caseResultIssues =
-			testrayCaseResultsIssuesImpl
-				.transformDataFromList(caseResultsIssuesResponse)
-				?.items.map(({issue}: any) => issue.name) || [];
-
-		const validatedIssues = caseResultIssues.some((issue) =>
-			issues.includes(issue)
-		);
-
-		if (validatedIssues) {
-			throw new TestrayError(
-				i18n.sub('the-x-name-already-exists', 'issue')
+		if (caseResultIssuesResponse?.items) {
+			const caseResultIssuesTransform = testrayCaseResultsIssuesImpl.transformDataFromList(
+				caseResultIssuesResponse
 			);
-		}
 
-		return data;
+			const caseResulIssueIdsToRemove = caseResultIssuesTransform.items
+				.filter(({issue}) => !issues.includes(issue?.name || ''))
+				.map(({id}) => id);
+
+			for (const caseResultIssueId of caseResulIssueIdsToRemove) {
+				await testrayCaseResultsIssuesImpl.remove(caseResultIssueId);
+			}
+		}
+	}
+
+	public async update(
+		id: number,
+		data: Partial<CaseResultForm & {issues: string[]}>
+	): Promise<TestrayCaseResult> {
+		const caseResult = await super.update(id, data);
+
+		const issues = data.issues || [];
+
+		await this.assignCaseResultIssue(id, issues);
+
+		return caseResult;
 	}
 }
 
-const nestedFieldsParam =
-	'nestedFields=case.caseType,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
-
-const caseResultsResource = `/caseresults?${nestedFieldsParam}`;
-
 export const testrayCaseResultImpl = new TestrayCaseResultRest();
-
-export {caseResultsResource};

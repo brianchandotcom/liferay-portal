@@ -13,6 +13,7 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {searchUtil} from '../../util/search';
 import Rest from './Rest';
 import {TestrayCaseResultIssue} from './types';
 
@@ -25,8 +26,8 @@ class TestrayCaseResultsIssuesImpl extends Rest<
 	constructor() {
 		super({
 			adapter: ({
-				caseResult: r_caseResultToCaseResultsIssues_c_caseResultId,
-				issue: r_issueToCaseResultsIssues_c_issueId,
+				caseResultId: r_caseResultToCaseResultsIssues_c_caseResultId,
+				issueId: r_issueToCaseResultsIssues_c_issueId,
 				name,
 			}) => ({
 				name,
@@ -34,23 +35,33 @@ class TestrayCaseResultsIssuesImpl extends Rest<
 				r_issueToCaseResultsIssues_c_issueId,
 			}),
 			nestedFields: 'caseResults,issue',
-			transformData: (caseResultsIssue) => {
-				return {
-					...caseResultsIssue,
-					caseResult: caseResultsIssue?.r_caseResultToCaseResultsIssues_c_caseResultId
-						? {
-								...caseResultsIssue.r_caseResultToCaseResultsIssues_c_caseResultId,
-						  }
-						: undefined,
-					issue: caseResultsIssue?.r_issueToCaseResultsIssues_c_issueId
-						? {
-								...caseResultsIssue.r_issueToCaseResultsIssues_c_issueId,
-						  }
-						: undefined,
-				};
-			},
+			transformData: (caseResultsIssue) => ({
+				...caseResultsIssue,
+				caseResult: caseResultsIssue?.r_caseResultToCaseResultsIssues_c_caseResult
+					? {
+							...caseResultsIssue.r_caseResultToCaseResultsIssues_c_caseResult,
+					  }
+					: undefined,
+				issue: caseResultsIssue?.r_issueToCaseResultsIssues_c_issue
+					? {
+							...caseResultsIssue.r_issueToCaseResultsIssues_c_issue,
+					  }
+					: undefined,
+			}),
 			uri: 'caseresultsissueses',
 		});
+	}
+
+	public async createIfNotExist(data: CaseResultsIssues) {
+		const response = await this.getAll(
+			searchUtil.eq('name', data.name as string)
+		);
+
+		if ((response?.totalCount ?? 0) > 0) {
+			return response?.items[0];
+		}
+
+		return this.create(data);
 	}
 }
 

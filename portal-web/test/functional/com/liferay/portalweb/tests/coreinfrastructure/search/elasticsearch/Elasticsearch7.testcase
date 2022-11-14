@@ -581,8 +581,6 @@ definition {
 
 		SearchAdministration.executeReindex();
 
-		SearchAdministration.openSearchAdmin();
-
 		Navigator.gotoPage(pageName = "Home");
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");

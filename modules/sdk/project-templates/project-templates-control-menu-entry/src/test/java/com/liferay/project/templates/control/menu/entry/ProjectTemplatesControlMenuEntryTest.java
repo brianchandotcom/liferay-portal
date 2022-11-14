@@ -72,10 +72,10 @@ public class ProjectTemplatesControlMenuEntryTest
 	}
 
 	public ProjectTemplatesControlMenuEntryTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -91,8 +91,8 @@ public class ProjectTemplatesControlMenuEntryTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--product", _product);
+			gradleWorkspaceModulesDir, template, name, "--liferay-product",
+			_liferayProduct, "--liferay-version", _liferayVersion);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -125,8 +125,8 @@ public class ProjectTemplatesControlMenuEntryTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=FooBar",
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=foo.bar",
-			"-Dproduct=" + _product);
+			"-DliferayProduct=" + _liferayProduct,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=foo.bar");
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
@@ -150,7 +150,7 @@ public class ProjectTemplatesControlMenuEntryTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

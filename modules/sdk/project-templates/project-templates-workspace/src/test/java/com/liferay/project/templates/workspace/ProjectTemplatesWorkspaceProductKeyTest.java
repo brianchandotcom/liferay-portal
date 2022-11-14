@@ -71,7 +71,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 	}
 
 	public ProjectTemplatesWorkspaceProductKeyTest(
-		String liferayProduct, String liferayVersion) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayProduct = liferayProduct;
 		_liferayVersion = liferayVersion;

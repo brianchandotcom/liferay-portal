@@ -293,6 +293,8 @@ function createOptionElement(option) {
 }
 
 function setSelectedOption(optionElement) {
+	closeDropdown();
+
 	const selectedOption = document.getElementById(
 		// eslint-disable-next-line no-undef
 		`${fragmentEntryLinkNamespace}-option-${valueInputElement.value}`
@@ -302,15 +304,13 @@ function setSelectedOption(optionElement) {
 		selectedOption.classList.remove('active');
 	}
 
-	if (optionElement.dataset.optionValue) {
-		optionElement.classList.add('active');
-	}
+	lastSearchQuery = optionElement.textContent.toLowerCase();
+
+	optionElement.classList.add('active');
 
 	labelInputElement.value = optionElement.textContent;
 	uiInputElement.value = optionElement.textContent;
 	valueInputElement.value = optionElement.dataset.optionValue;
-
-	closeDropdown();
 }
 
 function checkIsOpenDropdown() {

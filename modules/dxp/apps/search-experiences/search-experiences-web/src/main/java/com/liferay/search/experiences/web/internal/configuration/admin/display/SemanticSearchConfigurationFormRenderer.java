@@ -85,8 +85,6 @@ public class SemanticSearchConfigurationFormRenderer
 			ParamUtil.getInteger(
 				httpServletRequest, "embeddingVectorDimensions")
 		).put(
-			"enableGPU", ParamUtil.getBoolean(httpServletRequest, "enableGPU")
-		).put(
 			"huggingFaceAccessToken",
 			ParamUtil.getString(httpServletRequest, "huggingFaceAccessToken")
 		).put(
@@ -160,8 +158,6 @@ public class SemanticSearchConfigurationFormRenderer
 		semanticSearchCompanyConfigurationDisplayContext.
 			setEmbeddingVectorDimensions(
 				_semanticSearchConfiguration.embeddingVectorDimensions());
-		semanticSearchCompanyConfigurationDisplayContext.setEnableGPU(
-			_semanticSearchConfiguration.enableGPU());
 		semanticSearchCompanyConfigurationDisplayContext.
 			setHuggingFaceAccessToken(
 				_semanticSearchConfiguration.huggingFaceAccessToken());
@@ -268,7 +264,8 @@ public class SemanticSearchConfigurationFormRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return LinkedHashMapBuilder.put(
-			"huggingFace", _language.get(httpServletRequest, "hugging-face")
+			"huggingFaceInferenceAPI",
+			_language.get(httpServletRequest, "hugging-face-inference-api")
 		).put(
 			"txtai", _language.get(httpServletRequest, "txtai")
 		).build();

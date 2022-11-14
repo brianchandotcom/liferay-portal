@@ -10,6 +10,6 @@
  */
 
 export const SENTENCE_TRANSFORM_PROVIDER_TYPES = {
-	HUGGING_FACE: 'huggingFace',
+	HUGGING_FACE_INFERENCE_API: 'huggingFaceInferenceAPI',
 	TXTAI: 'txtai',
 };

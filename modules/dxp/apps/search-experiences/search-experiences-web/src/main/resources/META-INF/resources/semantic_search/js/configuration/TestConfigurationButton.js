@@ -68,7 +68,7 @@ function TestConfigurationButton({
 	const _getSentenceTransformProviderSettings = () => {
 		if (
 			sentenceTransformProvider ===
-			SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE
+			SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			return {
 				enableGPU,

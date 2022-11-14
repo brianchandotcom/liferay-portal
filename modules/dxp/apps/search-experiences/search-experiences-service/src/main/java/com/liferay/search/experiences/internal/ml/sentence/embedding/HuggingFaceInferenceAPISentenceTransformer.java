@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "search.experiences.sentence.transformer.name=huggingFace",
+	property = "search.experiences.sentence.transformer.name=huggingFaceInferenceAPI",
 	service = SentenceTransformer.class
 )
-public class HuggingFaceSentenceTransformer
+public class HuggingFaceInferenceAPISentenceTransformer
 	extends BaseSentenceTransformer implements SentenceTransformer {
 
 	public Double[] getSentenceEmbedding(

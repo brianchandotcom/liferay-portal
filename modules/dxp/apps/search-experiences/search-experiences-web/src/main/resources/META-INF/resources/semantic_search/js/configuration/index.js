@@ -71,7 +71,7 @@ export default function ({
 	model,
 	modelTimeout = '',
 	namespace = '',
-	sentenceTransformProvider = SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE,
+	sentenceTransformProvider = SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API,
 	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
@@ -161,7 +161,7 @@ export default function ({
 		if (
 			values.modelTimeout === '' &&
 			values.sentenceTransformProvider ===
-				SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE
+				SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			errors.modelTimeout = Liferay.Language.get(
 				'this-field-is-required'
@@ -274,7 +274,7 @@ export default function ({
 				)}
 
 				{formik.values.sentenceTransformProvider ===
-					SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE && (
+					SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API && (
 					<>
 						<Input
 							error={formik.errors.huggingFaceAccessToken}

@@ -189,7 +189,7 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		BlogsEntry.editEntryContent(
 			entryContent = "Blogs Entry Content",

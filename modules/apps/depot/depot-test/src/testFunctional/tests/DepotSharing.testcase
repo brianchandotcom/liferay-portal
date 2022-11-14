@@ -198,7 +198,7 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
 
@@ -458,7 +458,7 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
 		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
 

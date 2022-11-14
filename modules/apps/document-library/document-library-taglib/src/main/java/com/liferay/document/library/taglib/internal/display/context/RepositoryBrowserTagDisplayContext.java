@@ -109,80 +109,6 @@ public class RepositoryBrowserTagDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private List<DropdownItem> _getActionDropdownItems(FileEntry fileEntry) {
-		return DropdownItemListBuilder.add(
-			() -> _fileEntryModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), fileEntry,
-				ActionKeys.UPDATE),
-			dropdownItem -> {
-				dropdownItem.putData("action", "rename");
-				dropdownItem.putData(
-					"renameURL", _getRenameFileEntryURL(fileEntry));
-				dropdownItem.putData("value", fileEntry.getTitle());
-				dropdownItem.setIcon("pencil");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "rename"));
-			}
-		).add(
-			() -> _fileEntryModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), fileEntry,
-				ActionKeys.DELETE),
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL", _getDeleteFileEntryURL(fileEntry));
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
-			}
-		).build();
-	}
-
-	private List<DropdownItem> _getActionDropdownItems(
-		FileShortcut fileShortcut) {
-
-		return DropdownItemListBuilder.add(
-			() -> _fileShortcutModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), fileShortcut,
-				ActionKeys.DELETE),
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData(
-					"deleteURL", _getDeleteFileShortcutURL(fileShortcut));
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
-			}
-		).build();
-	}
-
-	private List<DropdownItem> _getActionDropdownItems(Folder folder) {
-		return DropdownItemListBuilder.add(
-			() -> _folderModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.UPDATE),
-			dropdownItem -> {
-				dropdownItem.putData("action", "rename");
-				dropdownItem.putData("renameURL", _getRenameFolderURL(folder));
-				dropdownItem.putData("value", folder.getName());
-				dropdownItem.setIcon("pencil");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "rename"));
-			}
-		).add(
-			() -> _folderModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.DELETE),
-			dropdownItem -> {
-				dropdownItem.putData("action", "delete");
-				dropdownItem.putData("deleteURL", _getDeleteFolderURL(folder));
-				dropdownItem.setIcon("trash");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
-			}
-		).build();
-	}
-
 	public List<DropdownItem> getActionDropdownItems(
 		RepositoryEntry repositoryEntry) {
 
@@ -233,23 +159,6 @@ public class RepositoryBrowserTagDisplayContext {
 		return breadcrumbEntries;
 	}
 
-	private String _getDeleteFileEntryURL(FileEntry fileEntry) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "fileEntryId",
-			fileEntry.getFileEntryId());
-	}
-
-	private String _getDeleteFileShortcutURL(FileShortcut fileShortcut) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "fileShortcutId",
-			fileShortcut.getFileShortcutId());
-	}
-
-	private String _getDeleteFolderURL(Folder folder) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
-	}
-
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -283,17 +192,6 @@ public class RepositoryBrowserTagDisplayContext {
 			_folderId, _folderModelResourcePermission, _httpServletRequest,
 			_liferayPortletRequest, _liferayPortletResponse, _repositoryId,
 			getSearchContainer());
-	}
-
-	private String _getRenameFileEntryURL(FileEntry fileEntry) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "fileEntryId",
-			fileEntry.getFileEntryId());
-	}
-
-	private String _getRenameFolderURL(Folder folder) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
 
 	public Map<String, Object> getRepositoryBrowserComponentContext() {
@@ -506,6 +404,97 @@ public class RepositoryBrowserTagDisplayContext {
 		return breadcrumbEntry;
 	}
 
+	private List<DropdownItem> _getActionDropdownItems(FileEntry fileEntry) {
+		return DropdownItemListBuilder.add(
+			() -> _fileEntryModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), fileEntry,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "rename");
+				dropdownItem.putData(
+					"renameURL", _getRenameFileEntryURL(fileEntry));
+				dropdownItem.putData("value", fileEntry.getTitle());
+				dropdownItem.setIcon("pencil");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "rename"));
+			}
+		).add(
+			() -> _fileEntryModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), fileEntry,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL", _getDeleteFileEntryURL(fileEntry));
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
+	private List<DropdownItem> _getActionDropdownItems(
+		FileShortcut fileShortcut) {
+
+		return DropdownItemListBuilder.add(
+			() -> _fileShortcutModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), fileShortcut,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL", _getDeleteFileShortcutURL(fileShortcut));
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
+	private List<DropdownItem> _getActionDropdownItems(Folder folder) {
+		return DropdownItemListBuilder.add(
+			() -> _folderModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "rename");
+				dropdownItem.putData("renameURL", _getRenameFolderURL(folder));
+				dropdownItem.putData("value", folder.getName());
+				dropdownItem.setIcon("pencil");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "rename"));
+			}
+		).add(
+			() -> _folderModelResourcePermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData("deleteURL", _getDeleteFolderURL(folder));
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
+	private String _getDeleteFileEntryURL(FileEntry fileEntry) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileEntryId",
+			fileEntry.getFileEntryId());
+	}
+
+	private String _getDeleteFileShortcutURL(FileShortcut fileShortcut) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileShortcutId",
+			fileShortcut.getFileShortcutId());
+	}
+
+	private String _getDeleteFolderURL(Folder folder) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
+	}
+
 	private SearchContainer<Object> _getDLSearchContainer()
 		throws PortalException {
 
@@ -573,6 +562,17 @@ public class RepositoryBrowserTagDisplayContext {
 		searchContext.setStart(searchContainer.getStart());
 
 		return DLAppServiceUtil.search(_repositoryId, searchContext);
+	}
+
+	private String _getRenameFileEntryURL(FileEntry fileEntry) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileEntryId",
+			fileEntry.getFileEntryId());
+	}
+
+	private String _getRenameFolderURL(Folder folder) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
 
 	private String _getRepositoryBrowserURL() {

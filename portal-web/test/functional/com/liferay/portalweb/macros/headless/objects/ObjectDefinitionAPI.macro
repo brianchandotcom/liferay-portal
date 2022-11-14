@@ -428,31 +428,44 @@ definition {
 		return "${response}";
 	}
 
-	macro assertCreateBatchInActionBlock {
-		Variables.assertDefined(parameterList = "${responseToParse}");
+	macro assertBatchActionsInResponse {
+		Variables.assertDefined(parameterList = "${responseToParse},${batchActions}");
 
-		var actualBatch = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.createBatch");
-		var portalURL = JSONCompany.getPortalURL();
+		for (var batchAction : list "${batchActions}") {
+			var portalURL = JSONCompany.getPortalURL();
 
-		if (isSet(objectDefinitionId)) {
-			var href = "${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/${objectSchema}/batch";
+			if (isSet(objectSchema)) {
+				var expectedHref = "${portalURL}/o/object-admin/v1.0/${objectSchema}/batch";
+			}
+			else if (isSet(en_US_plural_label)) {
+				var expectedHref = "${portalURL}/o/c/${en_US_plural_label}/batch";
+			}
+			else {
+				var expectedHref = "${portalURL}/o/object-admin/v1.0/object-definitions/batch";
+			}
+
+			if ("${batchAction}" == "updateBatch") {
+				var actualHref = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.updateBatch[?(@.method == 'PUT')].href");
+			}
+			else if ("${batchAction}" == "deleteBatch") {
+				var actualHref = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.deleteBatch[?(@.method == 'DELETE')].href");
+			}
+			else {
+				var actualHref = JSONUtil.getWithJSONPath("${responseToParse}", "$.actions.createBatch[?(@.method == 'POST')].href");
+
+				if (isSet(objectDefinitionId)) {
+					var expectedHref = "${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/${objectSchema}/batch";
+				}
+			}
+
+			TestUtils.assertEquals(
+				actual = "${actualHref}",
+				expected = "${expectedHref}");
 		}
-		else if (isSet(en_US_plural_label)) {
-			var href = "${portalURL}/o/c/${en_US_plural_label}/batch";
-		}
-		else {
-			var href = "${portalURL}/o/object-admin/v1.0/object-definitions/batch";
-		}
-
-		var expectedBatch = StringUtil.add("{method=POST,", " href=${href}}", "");
-
-		TestUtils.assertEquals(
-			actual = "${actualBatch}",
-			expected = "${expectedBatch}");
 	}
 
-	macro assertCreateBatchWithGetObjectSchemas {
-		Variables.assertDefined(parameterList = "${objectDefinitionId},${objectSchemas}");
+	macro assertBatchActionsWithGetObjectSchemas {
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${objectSchemas},${batchActions}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -465,7 +478,8 @@ definition {
 
 			var response = JSONCurlUtil.get("${curl}");
 
-			ObjectDefinitionAPI.assertCreateBatchInActionBlock(
+			ObjectDefinitionAPI.assertBatchActionsInResponse(
+				batchActions = "${batchActions}",
 				objectDefinitionId = "${objectDefinitionId}",
 				objectSchema = "${objectSchema}",
 				responseToParse = "${response}");

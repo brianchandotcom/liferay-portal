@@ -7,6 +7,10 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given an object definition is created") {
+			ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
+		}
 	}
 
 	tearDown {
@@ -14,7 +18,65 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			ObjectAdmin.deleteObjectViaAPI(objectName = "University");
+
 			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test IncludeBatchActionsForObjectDefinition {
+		property portal.acceptance = "true";
+
+		task ("When invoking object admin GET '/v1.0/object-definition'") {
+			var response = ObjectDefinitionAPI.getObjectDefinitions();
+		}
+
+		task ("Then the actions block include the information for the updateBatch, deleteBatch action endpoint") {
+			ObjectDefinitionAPI.assertBatchActionsInResponse(
+				batchActions = "updateBatch,deleteBatch",
+				responseToParse = "${response}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test IncludeBatchActionsForObjectEntries {
+		property portal.acceptance = "true";
+
+		task ("And Given subject entry is created") {
+			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay Foundations");
+		}
+
+		task ("When invoking getStudentsPage in c/subjects") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "subjects");
+		}
+
+		task ("Then the actions block include the information for the updateBatch, deleteBatch action endpoint") {
+			ObjectDefinitionAPI.assertBatchActionsInResponse(
+				batchActions = "updateBatch,deleteBatch",
+				en_US_plural_label = "subjects",
+				responseToParse = "${response}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test IncludeBatchActionsForObjectSchemas {
+		property portal.acceptance = "true";
+
+		task ("When with get request and objectDefinitionId to retrieve objectAction, objectField, objectLayout, objectRelationship, objectValidationRule and objectView") {
+			var objectSchemas = "object-actions,object-fields,object-layouts,object-relationships,object-validation-rules,object-views";
+		}
+
+		task ("Then the actions block include the information for the updatebatch, deleteBatch action endpoint") {
+			ObjectDefinitionAPI.assertBatchActionsWithGetObjectSchemas(
+				batchActions = "updateBatch,deleteBatch",
+				objectDefinitionId = "${staticObjectId1}",
+				objectSchemas = "${objectSchemas}");
 		}
 	}
 
@@ -28,7 +90,9 @@ definition {
 		}
 
 		task ("Then the actions block include the information for the createBatch action endpoint") {
-			ObjectDefinitionAPI.assertCreateBatchInActionBlock(responseToParse = "${response}");
+			ObjectDefinitionAPI.assertBatchActionsInResponse(
+				batchActions = "createBatch",
+				responseToParse = "${response}");
 		}
 	}
 
@@ -36,14 +100,6 @@ definition {
 	@priority = "4"
 	test IncludeCreateBatchInActionsForObjectEntries {
 		property portal.acceptance = "true";
-
-		task ("Given subject object definition is created") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "subject",
-				en_US_plural_label = "subjects",
-				name = "Subject",
-				requiredStringFieldName = "name");
-		}
 
 		task ("And Given subject entry is created") {
 			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
@@ -56,7 +112,8 @@ definition {
 		}
 
 		task ("Then the actions block include the information for the createBatch action endpoint") {
-			ObjectDefinitionAPI.assertCreateBatchInActionBlock(
+			ObjectDefinitionAPI.assertBatchActionsInResponse(
+				batchActions = "createBatch",
 				en_US_plural_label = "subjects",
 				responseToParse = "${response}");
 		}
@@ -67,21 +124,14 @@ definition {
 	test IncludeCreateBatchInActionsForObjectSchemas {
 		property portal.acceptance = "true";
 
-		task ("Given an object definition is created") {
-			var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "subject",
-				en_US_plural_label = "subjects",
-				name = "Subject",
-				requiredStringFieldName = "name");
-		}
-
 		task ("When with get request and objectDefinitionId to retrieve objectAction, objectField, objectLayout, objectRelationship, objectValidationRule and objectView") {
 			var objectSchemas = "object-actions,object-fields,object-layouts,object-relationships,object-validation-rules,object-views";
 		}
 
 		task ("Then the actions block include the information for the createBatch action endpoint") {
-			ObjectDefinitionAPI.assertCreateBatchWithGetObjectSchemas(
-				objectDefinitionId = "${objectDefinitionId}",
+			ObjectDefinitionAPI.assertBatchActionsWithGetObjectSchemas(
+				batchActions = "createBatch",
+				objectDefinitionId = "${staticObjectId1}",
 				objectSchemas = "${objectSchemas}");
 		}
 	}

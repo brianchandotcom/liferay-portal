@@ -112,6 +112,14 @@ html#{$cadmin-selector} {
 					}
 				}
 			}
+
+			&.open {
+				> .cadmin.portlet-topper {
+					@include media-breakpoint-up(md) {
+						transition-duration: 0ms;
+					}
+				}
+			}
 		}
 	}
 

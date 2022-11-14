@@ -87,6 +87,8 @@ SearchContainer<AssetListEntry> searchContainer = assetListEntryItemSelectorDisp
 						Date modifiedDate = assetListEntry.getModifiedDate();
 
 						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+						int assetListEntryVariationCount = assetListEntryItemSelectorDisplayContext.getAssetListEntrySegmentsEntryRelsCount(assetListEntry);
 						%>
 
 						<span class="text-default">
@@ -112,6 +114,22 @@ SearchContainer<AssetListEntry> searchContainer = assetListEntryItemSelectorDisp
 						<p class="h6 text-default">
 							<liferay-ui:message key="supports-filters" />
 						</p>
+
+						<c:choose>
+							<c:when test="<%= assetListEntryVariationCount > 0 %>">
+								<clay:label
+									cssClass="mr-auto"
+									displayType="info"
+									label='<%= LanguageUtil.format(locale, "x-variations", new String[] {String.valueOf(assetListEntryVariationCount)}) %>'
+								/>
+							</c:when>
+							<c:otherwise>
+								<clay:label
+									cssClass="mr-auto"
+									label='<%= LanguageUtil.get(request, "no-variations") %>'
+								/>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>

@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.related.models;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -219,7 +220,11 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 						Column<?, Long> groupIdColumn = _table.getColumn(
 							"groupId");
 
-						if (groupIdColumn == null) {
+						if ((groupIdColumn == null) ||
+							Objects.equals(
+								ObjectDefinitionConstants.SCOPE_COMPANY,
+								objectDefinition1.getScope())) {
+
 							return null;
 						}
 
@@ -309,7 +314,11 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 				() -> {
 					Column<?, Long> groupIdColumn = _table.getColumn("groupId");
 
-					if (groupIdColumn == null) {
+					if ((groupIdColumn == null) ||
+						Objects.equals(
+							ObjectDefinitionConstants.SCOPE_COMPANY,
+							objectDefinition1.getScope())) {
+
 						return null;
 					}
 

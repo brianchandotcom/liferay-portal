@@ -239,8 +239,9 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new SystemObject1toMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectEntryLocalService,
-					_objectFieldLocalService, _objectRelationshipLocalService,
+					objectDefinition, _objectDefinitionLocalService,
+					_objectEntryLocalService, _objectFieldLocalService,
+					_objectRelationshipLocalService,
 					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionMetadata,
 					_systemObjectDefinitionMetadataRegistry),

@@ -49,8 +49,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -156,6 +156,23 @@ public class BatchEngineImportTaskExecutorImpl
 		return batchEngineTaskCompanyConfiguration.csvFileColumnDelimiter();
 	}
 
+	private Map<String, Serializable> _getParameters(
+		BatchEngineImportTask batchEngineImportTask) {
+
+		Map<String, Serializable> parameters =
+			batchEngineImportTask.getParameters();
+
+		if (parameters == null) {
+			parameters = new HashMap<>();
+		}
+
+		parameters.computeIfAbsent(
+			"taskItemDelegateName",
+			key -> batchEngineImportTask.getTaskItemDelegateName());
+
+		return parameters;
+	}
+
 	private void _handleException(
 			BatchEngineImportTask batchEngineImportTask, Exception exception,
 			int processedItemsCount)
@@ -177,12 +194,8 @@ public class BatchEngineImportTaskExecutorImpl
 	private void _importItems(BatchEngineImportTask batchEngineImportTask)
 		throws Throwable {
 
-		Map<String, Serializable> parameters =
-			batchEngineImportTask.getParameters();
-
-		if (parameters == null) {
-			parameters = Collections.emptyMap();
-		}
+		Map<String, Serializable> parameters = _getParameters(
+			batchEngineImportTask);
 
 		try (BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_batchEngineImportTaskItemReaderFactory.create(

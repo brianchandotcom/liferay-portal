@@ -305,10 +305,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis using"
+	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis"
 	@ignore = "Test Stub"
 	@priority = "3"
-	test AdminCanNotArchiveBuildInAnalysis {
+	test AdminCanNotArchivedBuildInAnalysis {
 
 		// TODO LPS-156557 AdminCanNotArchivedBuildInAnalysis pending implementation
 
@@ -353,12 +353,21 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156585 - Verify if as an Administrator I should be able to sort the Builds Index"
+	@description = "This is a test for LPS-156585 - Verify if as an Administrator I should be able to sort the Builds Name"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test AdminCanSortBuildByName {
 
-		// TODO LPS-156585 AdminCanSortCompilationBuildName pending implementation
+		// TODO LPS-156585 AdminCanSortBuildByName pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156588 - Verify if as an Administrator I should be able to sort the Builds Product Version"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortBuildProductVersion {
+
+		// TODO LPS-156588 AdminCanSortBuildProductVersion pending implementation
 
 	}
 
@@ -368,15 +377,6 @@ definition {
 	test AdminCanSortBuildPromoted {
 
 		// TODO LPS-156586 AdminCanSortBuildPromoted pending implementation
-
-	}
-
-	@description = "This is a test for LPS-156588 - Verify if as an Administrator I should be able to sort the Builds Index"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test AdminCanSortCompilationBuildProductVersion {
-
-		// TODO LPS-156588 AdminCanSortCompilationBuildProductVersion pending implementation
 
 	}
 

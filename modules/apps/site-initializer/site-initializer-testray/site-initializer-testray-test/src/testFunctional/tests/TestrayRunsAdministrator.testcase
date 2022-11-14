@@ -194,15 +194,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160593 - Verify if as an Administrator I should be able to delete a run that contains Case Results"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test AdminCanDeleteRunsWithCaseResults {
-
-		// TODO LPS-160593 AdminCanDeleteRunsWithCaseResults pending implementation
-
-	}
-
 	@description = "This is a test for LPS-163959 - Verify if as an Administrator I should be able to edit a Run"
 	@priority = "5"
 	test AdminCanEditRun {

@@ -29,7 +29,7 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 				{columns.map((column: TableColumn<T>, index: number) => (
 					<ClayTable.Cell
 						align="left"
-						className="border-neutral-2 rounded-0 w-50"
+						className="border-neutral-2 rounded-0"
 						headingCell
 						key={index}
 					>
@@ -48,7 +48,7 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 						return (
 							<ClayTable.Cell
 								align="left"
-								className="border-0 font-weight-normal py-4 text-neutral-10 w-50"
+								className="border-0 font-weight-normal py-4 text-neutral-10"
 								headingCell
 								key={index}
 							>

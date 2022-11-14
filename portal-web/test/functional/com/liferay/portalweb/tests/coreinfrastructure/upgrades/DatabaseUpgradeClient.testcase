@@ -1,0 +1,62 @@
+@component-name = "portal-database-upgrade-tool"
+definition {
+
+	property app.server.types = "tomcat";
+	property data.archive.type = "data-archive-portal";
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property portal.version = "6.2.10.21";
+	property skip.get.testcase.database.properties = "true";
+	property skip.start.app.server = "true";
+	property skip.upgrade-legacy-database = "true";
+	property testcase.url = "http://www.example.com";
+	property testray.main.component.name = "Database Upgrade Tool";
+
+	setUp {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-database-upgrade-configuration");
+	}
+
+	@description = "LPS-158522: Upgrade client can run with additional settings"
+	@priority = "3"
+	test CheckUpgradeClientAdditionalSettings {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-additional-settings");
+	}
+
+	@description = "LPS-158522: Upgrade client can create custom log output"
+	@priority = "3"
+	test CheckUpgradeClientCustomLog {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-custom-log");
+	}
+
+	@description = "LPS-158522: Upgrade client displays help screen"
+	@priority = "3"
+	test CheckUpgradeClientHelp {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-help");
+	}
+
+	@description = "LPS-158522: Upgrade client should not be able to run on versions greater than Java SE 8 "
+	@priority = "3"
+	test CheckUpgradeClientJavaVersion {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-java-version");
+	}
+
+	@description = "LPS-158522: Upgrade client contains necessary files"
+	@priority = "3"
+	test CheckUpgradeClientZipContents {
+		AntCommand(
+			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
+			value1 = "check-upgrade-client-zip-content");
+	}
+
+}

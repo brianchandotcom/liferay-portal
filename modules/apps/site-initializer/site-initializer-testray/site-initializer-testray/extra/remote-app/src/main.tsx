@@ -20,7 +20,7 @@ import AccountContextProvider from './context/AccountContext';
 import ClayIconProvider from './context/ClayIconProvider';
 
 import './styles/index.scss';
-import AppContextProvider from './context/AppPropertiesContext';
+import ApplicationContextProvider from './context/ApplicationPropertiesContext';
 import SWRCacheProvider from './services/SWRCacheProvider';
 import fetcher from './services/fetcher';
 
@@ -29,7 +29,7 @@ class Testray extends HTMLElement {
 
 	connectedCallback() {
 		const properties = {
-			jiraBaseURL: this.getAttribute('jiraBaseURL'),
+			jiraBaseURL: this.getAttribute('jiraBaseURL') || '',
 		};
 
 		if (!this.root) {
@@ -43,13 +43,13 @@ class Testray extends HTMLElement {
 						revalidateOnFocus: false,
 					}}
 				>
-					<AppContextProvider properties={properties}>
+					<ApplicationContextProvider properties={properties}>
 						<AccountContextProvider>
 							<ClayIconProvider>
 								<TestrayRouter />
 							</ClayIconProvider>
 						</AccountContextProvider>
-					</AppContextProvider>
+					</ApplicationContextProvider>
 				</SWRConfig>
 			);
 		}

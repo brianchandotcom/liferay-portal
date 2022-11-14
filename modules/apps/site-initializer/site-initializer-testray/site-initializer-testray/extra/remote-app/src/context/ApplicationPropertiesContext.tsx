@@ -14,22 +14,28 @@
 
 import React, {createContext} from 'react';
 
-const Properties = {
+type DefaultProperties = {jiraBaseURL: string};
+
+const defaultProperties = {
 	jiraBaseURL: '',
-	route: '',
 };
 
-type AppContextProviderProps = {children: JSX.Element; properties: any};
+type ApplicationContextProviderProps = {
+	children: JSX.Element;
+	properties: DefaultProperties;
+};
 
-export const AppPropertiesContext = createContext(Properties);
+export const ApplicationPropertiesContext = createContext<DefaultProperties>(
+	defaultProperties
+);
 
-const AppContextProvider: React.FC<AppContextProviderProps> = ({
+const ApplicationContextProvider: React.FC<ApplicationContextProviderProps> = ({
 	children,
 	properties,
 }) => (
-	<AppPropertiesContext.Provider value={properties}>
+	<ApplicationPropertiesContext.Provider value={properties}>
 		{children}
-	</AppPropertiesContext.Provider>
+	</ApplicationPropertiesContext.Provider>
 );
 
-export default AppContextProvider;
+export default ApplicationContextProvider;

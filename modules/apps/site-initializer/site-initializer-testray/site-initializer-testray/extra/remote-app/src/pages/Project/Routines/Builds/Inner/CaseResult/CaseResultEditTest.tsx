@@ -47,20 +47,20 @@ const CaseResultEditTest = () => {
 
 	const {
 		caseResult,
-		caseResultsIssues,
+		caseResultsIssues = [],
 		mutateCaseResult,
 		mutateCaseResultIssues,
 	}: {
 		caseResult: TestrayCaseResult;
 		caseResultsIssues: TestrayCaseResultIssue[];
-		mutateCaseResult: KeyedMutator<any>;
+		mutateCaseResult: KeyedMutator<TestrayCaseResult>;
 		mutateCaseResultIssues: KeyedMutator<
 			APIResponse<TestrayCaseResultIssue>
 		>;
 	} = useOutletContext();
 
-	const caseResultIssueList = caseResultsIssues
-		?.map(
+	const issues = caseResultsIssues
+		.map(
 			(caseResultIssue: TestrayCaseResultIssue) =>
 				caseResultIssue?.issue?.name
 		)
@@ -79,7 +79,7 @@ const CaseResultEditTest = () => {
 						CaseResultStatuses.IN_PROGRESS
 							? CaseResultStatuses.PASSED
 							: caseResult?.dueStatus.key,
-					issues: caseResultIssueList,
+					issues,
 			  } as any)
 			: {},
 		resolver: yupResolver(yupSchema.caseResult),

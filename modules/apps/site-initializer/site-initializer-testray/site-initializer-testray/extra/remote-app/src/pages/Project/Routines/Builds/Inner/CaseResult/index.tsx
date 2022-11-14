@@ -25,7 +25,7 @@ import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../../../../components/StatusBadge/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
-import {AppPropertiesContext} from '../../../../../../context/AppPropertiesContext';
+import {ApplicationPropertiesContext} from '../../../../../../context/ApplicationPropertiesContext';
 import i18n from '../../../../../../i18n';
 import {
 	TestrayCaseResult,
@@ -42,7 +42,7 @@ type TestrayAttachment = {
 };
 
 const CaseResult = () => {
-	const {jiraBaseURL} = useContext(AppPropertiesContext);
+	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
 
 	const {
 		caseResult,

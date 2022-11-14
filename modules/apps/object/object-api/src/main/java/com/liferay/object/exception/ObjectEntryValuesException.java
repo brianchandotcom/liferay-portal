@@ -196,28 +196,32 @@ public class ObjectEntryValuesException extends PortalException {
 		extends ObjectEntryValuesException {
 
 		public InvalidObjectStateTransition(
-			String sourceObjectState, String targetObjectState) {
+			String sourceObjectStateListTypeEntryKey,
+			String targetObjectStateListTypeEntryKey) {
 
 			super(
 				String.format(
 					"Object state '%s' cannot be transited to object state " +
 						"'%s'",
-					sourceObjectState, targetObjectState));
+					sourceObjectStateListTypeEntryKey,
+					targetObjectStateListTypeEntryKey));
 
-			_sourceObjectState = sourceObjectState;
-			_targetObjectState = targetObjectState;
+			_sourceObjectStateListTypeEntryKey =
+				sourceObjectStateListTypeEntryKey;
+			_targetObjectStateListTypeEntryKey =
+				targetObjectStateListTypeEntryKey;
 		}
 
-		public String getSourceObjectState() {
-			return _sourceObjectState;
+		public String getSourceObjectStateListTypeEntryKey() {
+			return _sourceObjectStateListTypeEntryKey;
 		}
 
-		public String getTargetObjectState() {
-			return _targetObjectState;
+		public String getTargetObjectStateListTypeEntryKey() {
+			return _targetObjectStateListTypeEntryKey;
 		}
 
-		private final String _sourceObjectState;
-		private final String _targetObjectState;
+		private final String _sourceObjectStateListTypeEntryKey;
+		private final String _targetObjectStateListTypeEntryKey;
 
 	}
 

@@ -33,12 +33,12 @@
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
-		<requiredProperty key="liferayVersion">
-			<validationRegex>^[0-7]\.\d+\.\d+.*</validationRegex>
-		</requiredProperty>
-		<requiredProperty key="product">
+		<requiredProperty key="liferayProduct">
 			<defaultValue>portal</defaultValue>
 			<validationRegex>(dxp)|(portal)</validationRegex>
+		</requiredProperty>
+		<requiredProperty key="liferayVersion">
+			<validationRegex>^[0-7]\.\d+\.\d+.*</validationRegex>
 		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

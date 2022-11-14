@@ -12,26 +12,26 @@
  * details.
  */
 
-export type Parameters = {
-	[key: string]: string | string[];
-};
+import {Parameters, parametersFormater} from '.';
+import {axios} from './liferay/api';
 
-export function parametersFormater(
-	parametersList: string[],
-	parameters: Parameters
-) {
-	const parametersContainer: String[] = [];
+const DeliveryAPI = 'o/c/raylifeclaims/';
 
-	parametersList.forEach((item) => {
-		parametersContainer.push(`${item}=${parameters[item]}`);
-	});
+export function getClaims(parameters: Parameters = {}) {
+	const parametersList = Object.keys(parameters);
+	if (parametersList.length) {
+		return axios.get(
+			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+		);
+	}
 
-	const parametersString = '?' + parametersContainer.join('&');
-
-	return parametersString;
+	return axios.get(`${DeliveryAPI}/`);
 }
 
-export * from './Application';
-export * from './Claim';
-export * from './Policy';
-export * from './SalesGoal';
+export function deleteClaimByExternalReferenceCode(
+	externalReferenceCode: string
+) {
+	return axios.delete(
+		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
+	);
+}

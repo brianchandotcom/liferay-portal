@@ -28,6 +28,10 @@ const DeliveryAPI = 'o/c/raylifepolicies';
 
 const userId = Liferay.ThemeDisplay.getUserId();
 
+export async function getPolicyById(id: number) {
+	return await axios.get(`${DeliveryAPI}/${id}`);
+}
+
 export function getPolicies(parameters: Parameters = {}) {
 	const parametersList = Object.keys(parameters);
 

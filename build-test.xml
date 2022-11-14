@@ -10788,6 +10788,10 @@ ${update.properties}</echo>
 		<prepare-chrome-driver />
 	</target>
 
+	<target name="prepare-database-upgrade-configuration">
+		<prepare-database-upgrade-configuration />
+	</target>
+
 	<target name="prepare-encryption-PCKS12-certificate">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />

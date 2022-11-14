@@ -18,14 +18,17 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayTabs from '@clayui/tabs';
 import ClayUpperToolbar from '@clayui/upper-toolbar';
 import classNames from 'classnames';
+import {openToast} from 'frontend-js-web';
 import {useMutation} from 'graphql-hooks';
 import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -101,28 +104,29 @@ const Question = ({
 			block: 'start',
 		});
 
-	const context = useContext(AppContext);
-	const historyPushParser = historyPushWithSlug(history.push);
-
-	const [error, setError] = useState(null);
-	const [isPageScroll, setIsPageScroll] = useState(false);
 	const [activeIndex, setActiveIndex] = useState(0);
 
-	const editorRef = useRef('');
-
-	const [isModerate, setIsModerate] = useState(false);
-	const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
-	const [isVisibleEditor, setIsVisibleEditor] = useState(false);
-	const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
-
 	const [allowSubscription, setAllowSubscription] = useState(false);
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(20);
-
+	const [answers, setAnswers] = useState({});
+	const [createAnswer] = useMutation(createAnswerQuery);
+	const [error, setError] = useState(null);
+	const [isModerate, setIsModerate] = useState(false);
+	const [isPageScroll, setIsPageScroll] = useState(false);
+	const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
+	const [isSubscribed, setIsSubscribe] = useState(true);
+	const [isVisibleEditor, setIsVisibleEditor] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [loadingAnswer, setLoadingAnswer] = useState(true);
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(20);
 	const [question, setQuestion] = useState({});
-	const [answers, setAnswers] = useState({});
+	const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
+	const [subscribe] = useMutation(subscribeQuery);
+	const [unsubscribe] = useMutation(unsubscribeQuery);
+	const context = useContext(AppContext);
+	const editorRef = useRef('');
+	const FEEDBACK_DELAY = 2000;
+	const historyPushParser = historyPushWithSlug(history.push);
 
 	const fetchMessages = useCallback(() => {
 		const sortBy = tabs[activeIndex].sortBy;
@@ -134,10 +138,15 @@ const Question = ({
 					setLoadingAnswer(false);
 				}
 			);
+			setIsSubscribe(question.subscribed);
 		}
 	}, [activeIndex, question, page, pageSize]);
 
 	useEffect(() => {
+		if (!questionId) {
+			return;
+		}
+
 		getThread(questionId, context.siteKey)
 			.then(({data: {messageBoardThreadByFriendlyUrlPath}, error}) => {
 				if (error) {
@@ -148,10 +157,11 @@ const Question = ({
 						),
 						Liferay.Language.get('the-question-is-not-found')
 					);
+
 					setError(errorObject);
+
 					setLoading(false);
-				}
-				else {
+				} else {
 					setQuestion(messageBoardThreadByFriendlyUrlPath);
 					setLoading(false);
 				}
@@ -187,6 +197,147 @@ const Question = ({
 	const questionVisited = context?.questionsVisited?.includes(question.id);
 
 	useEffect(() => {
+		setIsSubscribe(question.subscribed);
+	}, [question.subscribed]);
+
+	const kebabOptions = useMemo(() => {
+		const clipboardHandler = async () => {
+			const urlClipboard = `${getFullPath(
+				context.historyRouterBasePath || 'questions'
+			)}${
+				context.historyRouterBasePath
+					? context.historyRouterBasePath
+					: '#'
+			}/questions/${sectionTitle}/${questionId}`;
+
+			try {
+				await navigator.clipboard.writeText(urlClipboard);
+
+				openToast({
+					message: Liferay.Language.get(
+						'copied-link-to-the-clipboard'
+					),
+					type: 'success',
+				});
+			} catch (error) {
+				setError(error);
+
+				openToast({
+					message: error,
+					title: Liferay.Language.get('an-error-occurred'),
+					type: 'warning',
+				});
+			} finally {
+				setTimeout(() => {
+					setError(null);
+				}, FEEDBACK_DELAY);
+			}
+		};
+
+		const changeSubscribe = (question) => {
+			if (isSubscribed) {
+				unsubscribe(
+					{
+						variables: {
+							messageBoardThreadId: question.id,
+						},
+					},
+					setIsSubscribe(false)
+				);
+
+				openToast({
+					message: Liferay.Language.get('unsubscribe'),
+					type: 'success',
+				});
+			} else {
+				subscribe(
+					{
+						variables: {
+							messageBoardThreadId: question.id,
+						},
+					},
+					setIsSubscribe(true)
+				);
+
+				openToast({
+					message: Liferay.Language.get('subscribe'),
+					type: 'success',
+				});
+			}
+		};
+		const options = [
+			{
+				href: `${getFullPath(
+					context.historyRouterBasePath || 'questions'
+				)}${
+					context.historyRouterBasePath
+						? context.historyRouterBasePath
+						: '#'
+				}/questions/${sectionTitle}/${questionId}`,
+				label: Liferay.Language.get('view-question'),
+				symbolLeft: 'shortcut',
+			},
+			{
+				label: Liferay.Language.get('share'),
+				onClick: () => {
+					clipboardHandler();
+				},
+				symbolLeft: 'share',
+			},
+		];
+
+		if (question?.actions?.replace) {
+			options.push({
+				href: `${getFullPath(
+					context.historyRouterBasePath || 'questions'
+				)}${
+					context.historyRouterBasePath
+						? context.historyRouterBasePath
+						: '#'
+				}/questions/${sectionTitle}/${questionId}/edit`,
+				label: Liferay.Language.get('edit'),
+				symbolLeft: 'pencil',
+			});
+		}
+
+		if (question?.actions?.subscribe || question?.actions?.unsubscribe) {
+			options.push({
+				label: isSubscribed
+					? Liferay.Language.get('unsubscribe')
+					: Liferay.Language.get('subscribe'),
+				onClick: () => {
+					changeSubscribe(question);
+				},
+				symbolLeft: isSubscribed ? 'bell-off' : 'bell-on',
+			});
+		}
+		if (question?.actions?.delete) {
+			options.push(
+				{
+					type: 'divider',
+				},
+				{
+					label: Liferay.Language.get('delete'),
+					onClick: () => {
+						setShowDeleteModalPanel(true);
+					},
+					symbolLeft: 'trash',
+				}
+			);
+		}
+
+		return options;
+	}, [
+		context.historyRouterBasePath,
+		isSubscribed,
+		question,
+		questionId,
+		sectionTitle,
+		subscribe,
+		unsubscribe,
+	]);
+
+	useEffect(() => {
 		if (question.id && context?.questionsVisited && !questionVisited) {
 			context.setQuestionsVisited([
 				...context.questionsVisited,
@@ -194,9 +345,6 @@ const Question = ({
 			]);
 		}
 	}, [context, question, questionVisited]);
-
-	const [createAnswer] = useMutation(createAnswerQuery);
-	const [subscribe] = useMutation(subscribeQuery);
 
 	const onSubscription = useCallback(
 		async ({
@@ -259,8 +407,7 @@ const Question = ({
 				siteKey: context.siteKey,
 			});
 			setIsVisibleEditor(false);
-		}
-		catch (error) {}
+		} catch (error) {}
 	};
 
 	const deleteAnswer = useCallback(
@@ -481,44 +628,20 @@ const Question = ({
 
 										{display.kebab && (
 											<>
-												<ClayUpperToolbar.Item>
-													<ClayDropDownWithItems
-														items={[
-															{
-																label: Liferay.Language.get(
-																	'view-question'
-																),
-															},
-															{
-																label: Liferay.Language.get(
-																	'share'
-																),
-															},
-															{
-																label: Liferay.Language.get(
-																	'edit'
-																),
-															},
-															{
-																label: Liferay.Language.get(
-																	'unsubscribe'
-																),
-															},
-															{
-																label: Liferay.Language.get(
-																	'delete'
-																),
-															},
-														]}
-														trigger={
-															<ClayButtonWithIcon
-																displayType="unstyled"
-																small
-																symbol="ellipsis-v"
-															/>
-														}
-													/>
-												</ClayUpperToolbar.Item>
+												<ClayManagementToolbar.ItemList>
+													<ClayUpperToolbar.Item>
+														<ClayDropDownWithItems
+															items={kebabOptions}
+															trigger={
+																<ClayButtonWithIcon
+																	displayType="unstyled"
+																	small
+																	symbol="ellipsis-v"
+																/>
+															}
+														/>
+													</ClayUpperToolbar.Item>
+												</ClayManagementToolbar.ItemList>
 											</>
 										)}
 									</div>
@@ -582,19 +705,9 @@ const Question = ({
 													/>
 												)}
 
-											{display.actions &&
-												question.actions.delete && (
-													<>
-														<DeleteQuestion
-															deleteModalVisibility={
-																showDeleteModalPanel
-															}
-															question={question}
-															setDeleteModalVisibility={
-																setShowDeleteModalPanel
-															}
-														/>
-
+											<>
+												{display.actions &&
+													question.actions.delete && (
 														<ClayButton
 															data-tooltip-align="top"
 															displayType="secondary"
@@ -609,8 +722,8 @@ const Question = ({
 														>
 															<ClayIcon symbol="trash" />
 														</ClayButton>
-													</>
-												)}
+													)}
+											</>
 
 											<FlagsContainer
 												content={question}
@@ -816,6 +929,12 @@ const Question = ({
 					/>
 				</Helmet>
 			)}
+
+			<DeleteQuestion
+				deleteModalVisibility={showDeleteModalPanel}
+				question={question}
+				setDeleteModalVisibility={setShowDeleteModalPanel}
+			/>
 		</section>
 	);
 };

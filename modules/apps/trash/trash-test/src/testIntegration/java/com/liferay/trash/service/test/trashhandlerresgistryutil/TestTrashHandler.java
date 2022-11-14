@@ -188,11 +188,6 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	public TrashEntry getTrashEntry(long classPK) {
-		return null;
-	}
-
-	@Override
 	public int getTrashModelsCount(long classPK) {
 		return 0;
 	}
@@ -222,11 +217,6 @@ public class TestTrashHandler implements TrashHandler {
 
 	@Override
 	public boolean isInTrash(long classPK) {
-		return false;
-	}
-
-	@Override
-	public boolean isInTrashContainer(long classPK) {
 		return false;
 	}
 

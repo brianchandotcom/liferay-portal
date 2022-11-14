@@ -361,12 +361,6 @@ public interface TrashHandler {
 
 	public TrashedModel getTrashedModel(long classPK);
 
-	public default TrashEntry getTrashEntry(long classPK)
-		throws PortalException {
-
-		return null;
-	}
-
 	public int getTrashModelsCount(long classPK) throws PortalException;
 
 	public default List<TrashedModel> getTrashModelTrashedModels(
@@ -439,21 +433,6 @@ public interface TrashHandler {
 		if (trashedModel != null) {
 			return trashedModel.isInTrash();
 		}
-
-		return false;
-	}
-
-	/**
-	 * Returns <code>true</code> if the model entity with the primary key is in
-	 * a container that is in the Recycle Bin.
-	 *
-	 * @param  classPK the primary key of the model entity
-	 * @return <code>true</code> if the model entity with the primary key is in
-	 *         a container that is in the Recycle Bin; <code>false</code>
-	 *         otherwise
-	 */
-	public default boolean isInTrashContainer(long classPK)
-		throws PortalException {
 
 		return false;
 	}

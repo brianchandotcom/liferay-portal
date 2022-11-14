@@ -14,8 +14,10 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import Dropdown from '../../common/components/Dropdown';
+import StatusBadge from '../../common/components/StatusBadge';
 import Table from '../../common/components/Table';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
+import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
@@ -40,6 +42,7 @@ const MDFClaimList = () => {
 		{
 			columnKey: MDFClaimColumnKey.REQUEST_ID,
 			label: 'Request ID',
+			render: (data?: string) => <>{`Request-${data}`}</>,
 		},
 		{
 			columnKey: MDFClaimColumnKey.PARTNER,
@@ -48,6 +51,7 @@ const MDFClaimList = () => {
 		{
 			columnKey: MDFClaimColumnKey.STATUS,
 			label: 'Status',
+			render: (data?: string) => <StatusBadge status={data as Status} />,
 		},
 		{
 			columnKey: MDFClaimColumnKey.TYPE,

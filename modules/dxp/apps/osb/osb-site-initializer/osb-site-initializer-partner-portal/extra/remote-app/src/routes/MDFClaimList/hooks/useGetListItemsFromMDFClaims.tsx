@@ -26,7 +26,7 @@ export default function useGetListItemsFromMDFClaims(
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
-				[MDFClaimColumnKey.REQUEST_ID]: item.id,
+				[MDFClaimColumnKey.REQUEST_ID]: String(item.id),
 				[MDFClaimColumnKey.PARTNER]:
 					item.r_accountToMdfClaims_accountEntry?.name,
 				[MDFClaimColumnKey.STATUS]: item.claimStatus,

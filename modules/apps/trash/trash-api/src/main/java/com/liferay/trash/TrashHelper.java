@@ -24,9 +24,12 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface TrashHelper {
 
 	public int getMaxAge(Group group);

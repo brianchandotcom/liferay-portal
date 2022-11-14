@@ -35,7 +35,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
@@ -92,11 +91,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -138,7 +134,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -680,37 +675,6 @@ public class ObjectEntryLocalServiceImpl
 
 		return objectEntryPersistence.findByERC_G_C(
 			externalReferenceCode, groupId, companyId);
-	}
-
-	@Override
-	public long getObjectEntryId(
-			String externalReferenceCode, long companyId,
-			long objectDefinitionId)
-		throws PortalException {
-
-		// TODO Temporary workaround to avoid two insert statements when adding
-		// an object entry
-
-		DynamicQuery dynamicQuery = dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"externalReferenceCode", externalReferenceCode));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"objectDefinitionId", objectDefinitionId));
-
-		List<Long> objectEntryIds = objectEntryPersistence.findWithDynamicQuery(
-			dynamicQuery.setProjection(
-				ProjectionFactoryUtil.property("objectEntryId")));
-
-		if (ListUtil.isEmpty(objectEntryIds)) {
-			throw new NoSuchObjectEntryException(
-				externalReferenceCode, objectDefinitionId);
-		}
-
-		return objectEntryIds.get(0);
 	}
 
 	public List<ObjectEntry> getOneToManyObjectEntries(

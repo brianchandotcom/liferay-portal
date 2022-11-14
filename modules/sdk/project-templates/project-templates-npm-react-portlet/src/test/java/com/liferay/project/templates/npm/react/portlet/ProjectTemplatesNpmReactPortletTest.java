@@ -90,14 +90,15 @@ public class ProjectTemplatesNpmReactPortletTest
 
 	public ProjectTemplatesNpmReactPortletTest(
 		String name, String packageName, String className,
-		String liferayVersion, String nodePackageManager, String product) {
+		String liferayVersion, String nodePackageManager,
+		String liferayProduct) {
 
 		_name = name;
 		_packageName = packageName;
 		_className = className;
 		_liferayVersion = liferayVersion;
 		_nodePackageManager = nodePackageManager;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -106,7 +107,7 @@ public class ProjectTemplatesNpmReactPortletTest
 
 		testBuildTemplateNpm(
 			temporaryFolder, mavenExecutor, template, _name, _packageName,
-			_className, _liferayVersion, _nodePackageManager, _product,
+			_className, _liferayVersion, _nodePackageManager, _liferayProduct,
 			_gradleDistribution);
 	}
 
@@ -116,10 +117,10 @@ public class ProjectTemplatesNpmReactPortletTest
 	private static URI _gradleDistribution;
 
 	private final String _className;
+	private final String _liferayProduct;
 	private final String _liferayVersion;
 	private final String _name;
 	private final String _nodePackageManager;
 	private final String _packageName;
-	private final String _product;
 
 }

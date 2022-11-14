@@ -1302,8 +1302,8 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBuildTemplateNpm(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
-			String liferayVersion, String nodePackageManager, String product,
-			URI gradleDistribution)
+			String liferayVersion, String nodePackageManager,
+			String liferayProduct, URI gradleDistribution)
 		throws Exception {
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -1315,7 +1315,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			liferayVersion, "--product", product);
+			liferayVersion, "--liferay-product", liferayProduct);
 
 		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
 			testContains(
@@ -1344,8 +1344,8 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + className,
-			"-DliferayVersion=" + liferayVersion, "-Dpackage=" + packageName,
-			"-Dproduct=" + product);
+			"-DliferayProduct=" + liferayProduct,
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=" + packageName);
 
 		testContains(
 			mavenProjectDir, "package.json",

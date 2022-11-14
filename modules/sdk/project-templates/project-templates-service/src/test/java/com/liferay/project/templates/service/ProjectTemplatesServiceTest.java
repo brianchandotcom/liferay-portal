@@ -78,9 +78,11 @@ public class ProjectTemplatesServiceTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesServiceTest(String liferayVersion, String product) {
+	public ProjectTemplatesServiceTest(
+		String liferayVersion, String liferayProduct) {
+
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -97,8 +99,8 @@ public class ProjectTemplatesServiceTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--class-name",
-			"FooAction", "--liferay-version", _liferayVersion, "--product",
-			_product, "--service",
+			"FooAction", "--liferay-product", _liferayProduct,
+			"--liferay-version", _liferayVersion, "--service",
 			"com.liferay.portal.kernel.events.LifecycleAction");
 
 		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
@@ -122,8 +124,8 @@ public class ProjectTemplatesServiceTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=FooAction",
+			"-DliferayProduct=" + _liferayProduct,
 			"-DliferayVersion=" + _liferayVersion, "-Dpackage=servicepreaction",
-			"-Dproduct=" + _product,
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction");
 
 		if (isBuildProjects()) {
@@ -187,7 +189,7 @@ public class ProjectTemplatesServiceTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

@@ -30,9 +30,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -64,6 +66,10 @@ public class AssetEntryActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
+		if (RenderLayoutContentThreadLocal.isRenderLayoutContent()) {
+			return Collections.emptyList();
+		}
+
 		return new DropdownItemList() {
 			{
 				PortletURL editAssetEntryURL = _getEditAssetEntryURL();

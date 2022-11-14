@@ -170,6 +170,12 @@
 	<td>//*[contains(@class, 'modal-content')]//*[contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MODAL_SETUP</td>
+	<td>//*[contains(@class, 'modal-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_TITLE</td>
 	<td>//div[contains(@class, 'flex-row')]//h2[contains(., '${modalTitle}')]</td>
 	<td></td>

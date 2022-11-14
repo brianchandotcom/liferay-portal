@@ -54,7 +54,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Lourdes Fernández Besada
  */
 @Component(service = {})
-public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
+public class DisplayPageSiteNavigationMenuItemTypeProviderTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

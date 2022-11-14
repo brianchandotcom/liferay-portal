@@ -16,10 +16,10 @@ package com.liferay.style.book.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.style.book.internal.upgrade.v1_1_0.StyleBookEntryUpgradeProcess;
 import com.liferay.style.book.internal.upgrade.v1_2_0.StyleBookEntryVersionUpgradeProcess;
-import com.liferay.style.book.internal.upgrade.v1_2_1.util.UpgradeMVCCVersion;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -45,7 +45,16 @@ public class StyleBookServiceUpgradeStepRegistrator
 		registry.register(
 			"1.1.0", "1.2.0", new StyleBookEntryVersionUpgradeProcess());
 
-		registry.register("1.2.0", "1.2.1", new UpgradeMVCCVersion());
+		registry.register(
+			"1.2.0", "1.2.1",
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getTableNames() {
+					return new String[] {"StyleBookEntryVersion"};
+				}
+
+			});
 
 		registry.register(
 			"1.2.1", "1.3.0", new CTModelUpgradeProcess("StyleBookEntry"));

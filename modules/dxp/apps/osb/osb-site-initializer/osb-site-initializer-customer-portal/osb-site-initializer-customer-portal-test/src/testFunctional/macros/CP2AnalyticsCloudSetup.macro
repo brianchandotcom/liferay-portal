@@ -87,7 +87,7 @@ definition {
 
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "timeZone",
-			value = "UTC-08:00");
+			value = "UTC-03:00");
 
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "email",

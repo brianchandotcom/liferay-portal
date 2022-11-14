@@ -80,12 +80,6 @@ public interface SemanticSearchConfiguration {
 	public int modelTimeout();
 
 	@Meta.AD(
-		deflt = "false", description = "sentence-transformer-enable-gpu-help",
-		name = "enable-gpu", required = false
-	)
-	public boolean enableGPU();
-
-	@Meta.AD(
 		deflt = "768",
 		description = "sentence-transformer-embedding-vector-dimensions-help",
 		name = "embedding-vector-dimensions",

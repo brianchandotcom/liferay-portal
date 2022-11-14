@@ -85,10 +85,6 @@ public class HuggingFaceInferenceAPISentenceTransformer
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
-		if (semanticSearchConfiguration.enableGPU()) {
-			options.addHeader("x-use-gpu", "true");
-		}
-
 		options.setBody(
 			jsonObject.toString(), ContentTypes.APPLICATION_JSON,
 			StringPool.UTF8);

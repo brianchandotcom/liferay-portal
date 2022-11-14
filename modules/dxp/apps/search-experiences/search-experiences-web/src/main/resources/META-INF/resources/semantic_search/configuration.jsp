@@ -50,8 +50,6 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"embeddingVectorDimensions", semanticSearchCompanyConfigurationDisplayContext.getEmbeddingVectorDimensions()
 			).put(
-				"enableGPU", semanticSearchCompanyConfigurationDisplayContext.isEnableGPU()
-			).put(
 				"huggingFaceAccessToken", semanticSearchCompanyConfigurationDisplayContext.getHuggingFaceAccessToken()
 			).put(
 				"languageIds", semanticSearchCompanyConfigurationDisplayContext.getLanguageIds()

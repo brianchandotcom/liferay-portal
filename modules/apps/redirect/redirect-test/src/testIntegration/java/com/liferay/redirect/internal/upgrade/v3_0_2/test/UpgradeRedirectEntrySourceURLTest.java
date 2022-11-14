@@ -174,6 +174,12 @@ public class UpgradeRedirectEntrySourceURLTest {
 		Assume.assumeFalse(
 			"Skip this test because MySQL is not case sensitive",
 			_db.getDBType() == DBType.MYSQL);
+		Assume.assumeFalse(
+			"Skip this test because mariadb is not case sensitive",
+			_db.getDBType() == DBType.MARIADB);
+		Assume.assumeFalse(
+			"Skip this test because sqlserver is not case sensitive",
+			_db.getDBType() == DBType.SQLSERVER);
 
 		long redirectEntryId1 = _counterLocalService.increment();
 		long redirectEntryId2 = _counterLocalService.increment();

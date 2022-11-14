@@ -77,7 +77,7 @@ class CriteriaSidebarItem extends Component {
 		);
 
 		return connectDragSource(
-			<li className={classes}>
+			<li className={classes} tabIndex="0">
 				<span className="inline-item">
 					<ClayIcon symbol="drag" />
 				</span>

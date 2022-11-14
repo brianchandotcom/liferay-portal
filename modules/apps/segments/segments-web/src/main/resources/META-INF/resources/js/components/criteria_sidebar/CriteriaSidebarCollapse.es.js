@@ -116,6 +116,7 @@ const CriteriaSidebarCollapse = ({
 						<a
 							className="sidebar-collapse-header"
 							onClick={_handleClick(key, active)}
+							tabIndex="0"
 						>
 							{propertyGroup.name}
 

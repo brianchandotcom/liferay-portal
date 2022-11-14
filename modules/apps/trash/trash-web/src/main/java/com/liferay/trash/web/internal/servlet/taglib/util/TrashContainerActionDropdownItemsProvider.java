@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
 
 import java.util.List;
@@ -51,6 +53,8 @@ public class TrashContainerActionDropdownItemsProvider {
 			WebKeys.THEME_DISPLAY);
 		_trashEntry = trashDisplayContext.getTrashEntry();
 		_trashHandler = trashDisplayContext.getTrashHandler();
+		_trashHelper = (TrashHelper)liferayPortletRequest.getAttribute(
+			TrashWebKeys.TRASH_HELPER);
 		_trashRenderer = trashDisplayContext.getTrashRenderer();
 	}
 
@@ -63,8 +67,9 @@ public class TrashContainerActionDropdownItemsProvider {
 							(_trashEntry != null) &&
 							_trashHandler.isRestorable(
 								_trashEntry.getClassPK()) &&
-							!_trashHandler.isInTrashContainer(
-								_trashEntry.getClassPK()),
+							!_trashHelper.isInTrashContainer(
+								_trashHandler.getTrashedModel(
+									_trashEntry.getClassPK())),
 						_getRestoreActionDropdownItem()
 					).add(
 						() ->
@@ -239,6 +244,7 @@ public class TrashContainerActionDropdownItemsProvider {
 	private final TrashDisplayContext _trashDisplayContext;
 	private final TrashEntry _trashEntry;
 	private final TrashHandler _trashHandler;
+	private final TrashHelper _trashHelper;
 	private final TrashRenderer _trashRenderer;
 
 }

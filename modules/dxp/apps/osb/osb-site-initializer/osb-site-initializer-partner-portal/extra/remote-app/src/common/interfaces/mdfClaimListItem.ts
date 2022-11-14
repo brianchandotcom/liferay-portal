@@ -9,17 +9,8 @@
  * distribution rights of the Software.
  */
 
-import AccountEntry from '../accountEntry';
-import MDFClaim from '../mdfClaim';
+import {MDFClaimColumnKey} from '../enums/mdfClaimColumnKey';
 
-export default interface MDFClaimDTO
-	extends Omit<MDFClaim, 'activities' | 'reimbursementInvoice'> {
-	amountClaimed?: number;
-	externalReferenceCodeSF?: string;
-	mdfRequestExternalReferenceCodeSF?: string;
-	mdfRequestTotalCostOfExpense?: number;
-	mdfRequestedAmount?: number;
-	paymentReceived?: number;
-	r_accountToMdfClaims_accountEntry?: AccountEntry;
-	r_accountToMdfClaims_accountEntryId?: number;
-}
+export type MDFClaimListItem = {
+	[key in MDFClaimColumnKey]?: string;
+};

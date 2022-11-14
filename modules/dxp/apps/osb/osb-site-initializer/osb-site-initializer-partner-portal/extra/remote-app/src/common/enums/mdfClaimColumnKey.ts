@@ -8,18 +8,13 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-import AccountEntry from '../accountEntry';
-import MDFClaim from '../mdfClaim';
-
-export default interface MDFClaimDTO
-	extends Omit<MDFClaim, 'activities' | 'reimbursementInvoice'> {
-	amountClaimed?: number;
-	externalReferenceCodeSF?: string;
-	mdfRequestExternalReferenceCodeSF?: string;
-	mdfRequestTotalCostOfExpense?: number;
-	mdfRequestedAmount?: number;
-	paymentReceived?: number;
-	r_accountToMdfClaims_accountEntry?: AccountEntry;
-	r_accountToMdfClaims_accountEntryId?: number;
+export enum MDFClaimColumnKey {
+	ACTION = 'FIXED-ACTION',
+	AMOUNT_CLAIMED = 'AMOUNT_CLAIMED',
+	DATE_SUBMITTED = 'DATE_SUBMITTED',
+	PAID = 'PAID',
+	PARTNER = 'PARTNER',
+	REQUEST_ID = 'REQUEST_ID',
+	STATUS = 'STATUS',
+	TYPE = 'TYPE',
 }

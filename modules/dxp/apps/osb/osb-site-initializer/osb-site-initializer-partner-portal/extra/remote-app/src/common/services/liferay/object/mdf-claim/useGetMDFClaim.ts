@@ -12,18 +12,17 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
+import MDFClaimDTO from '../../../../interfaces/dto/mdfClaimDTO';
 import {LiferayAPIs} from '../../common/enums/apis';
+import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetMDFRequestById(id: number | undefined) {
+export default function useGetMDFClaim(page: number, pageSize: number) {
 	return useSWR(
-		id
-			? [
-					`/o/${LiferayAPIs.OBJECT}/mdfrequests/${id}?nestedFields=accountEntry,mdfRequestToActivities,activityToBudgets&nestedFieldsDepth=2`,
-					Liferay.authToken,
-			  ]
-			: null,
-		(url, token) => liferayFetcher<MDFRequestDTO>(url, token)
+		[
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims?nestedFields=accountEntry&page=${page}&pageSize=${pageSize}`,
+			Liferay.authToken,
+		],
+		(url, token) => liferayFetcher<LiferayItems<MDFClaimDTO[]>>(url, token)
 	);
 }

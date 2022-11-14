@@ -26,6 +26,8 @@ export function getDTOFromMDFClaim(
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
 		mdfRequestedAmount: mdfClaim.totalrequestedAmount,
 		partial: mdfClaim.partial,
+		r_accountToMdfClaims_accountEntryId:
+			mdfRequest.r_accountToMDFRequests_accountEntry?.id,
 		r_mdfRequestToMdfClaims_c_mdfRequestId:
 			mdfClaim.r_mdfRequestToMdfClaims_c_mdfRequestId,
 	};

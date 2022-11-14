@@ -543,7 +543,7 @@ definition {
 	}
 
 	macro assertResponseIncludesDetailsOfNotDeletedEmployee {
-		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId2} && @.r_supervisor_c_managerId==${managerId2})].r_supervisor_c_managerId");
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId2})].r_supervisor_c_manager.id");
 
 		TestUtils.assertEquals(
 			actual = "${actual}",
@@ -559,8 +559,8 @@ definition {
 	}
 
 	macro assertResponseNotIncludesDetailsOfDeletedEmployee {
-		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId1} && @.r_supervisor_c_managerId==${managerId1})].r_supervisor_c_managerId");
-
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId1})].r_supervisor_c_manager.id");
+		
 		TestUtils.assertEquals(
 			actual = "${actual}",
 			expected = "");

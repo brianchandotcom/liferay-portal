@@ -14,9 +14,9 @@ definition {
 
 			User.firstLoginPG();
 
-			Testray.addTestraySite();
+			// Testray.addTestraySite();
 
-			Refresh();
+			// Refresh();
 		}
 
 		task ("Go to Testray, Create Project and change pagination") {
@@ -49,14 +49,196 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+		// Testray.tearDownCP();
 
-		Testray.deleteAllProjects();
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
+	}
 
-		Testray.tearDownCP();
+	@description = "This is a test for LPS-166570 - Verify that as an administrator cannot add a new template without enviroments"
+	@priority = "5"
+	test CanNotAddTemplateWithoutEnviroments {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayTemplate.addTemplate(
+                dropdownItem = "New Template",
+                fieldName = "Build_Template");
+		}
+
+		task ("Then the error message should appear") {
+			Alert.viewErrorMessage(errorMessage = "At least one environment stack is required.");
+		}
+	}
+
+	@description = "This is a test for LPS-166571 - Verify if, as an Administrator, can see the required field message"
+	@priority = "3"
+	test CanViewRequiredField {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayTemplate.addTemplate(
+                dropdownItem = "New Template");
+		}
+
+		task ("Then a warning message is displayed") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "Name is a required field.");
+		}
+	}
+
+	@description = "This is a test for LPS-166569 - Verify if As an administrator can search for the new template created"
+	@priority = "3"
+	test CanSeachTemplate {
+		task ("Given that the user add a new build with Environments Factors") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+		task ("Add Environments Factors") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+            TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then the Routine should be updated on the list") {
+			TestrayTemplate.assertTemplateName(dropdownItem = "Build_Template");
+		}
+	}
+
+	@description = "This is a test for LPS-166567 - Verify if As an administrator can use a new template in a build"
+	@priority = "3"
+	test CanUseTemplateInBuild {
+        task ("Go to created project and add a component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Components_1 Project 1");
+
+            Click(
+				key_modalTitle = "Components - Projects_1 Project",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Given that the user add a new build with Environments Factors") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+        task ("Create a new Routine and a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "40",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			Testray.projectTabNavigator(navTabName = "Routine");
+		}
+
+		task ("Add Environments Factors") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+            TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then the Routine should be updated on the list") {
+			TestrayTemplate.assertTemplateName(dropdownItem = "Build_Template");
+
+            TestrayTemplate.goToBuildTemplate(dropdownItem = "Build_Template");
+
+            TestrayBuild.createBuild(
+				addVersion = "1.4",
+				caseName = "Cases_1 Case",
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.4",
+				routine = "Routines_1 Routine");
+
+            Testray.assertItemName(key_name = "Builds_1 Project");
+		}
+	}
+
+    @description = "This is a test for LPS-168472 - Verify if as an Administrator I should not be able to add a duplicate template"
+	@priority = "5"
+	test AdminCanNotAddDuplicateTemplate {
+		task ("Given that the user add a new build with Environments Factors") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+		}
+
+		task ("Add Environments Factors") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+            TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+
+            TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then the error message should appear") {
+			Alert.viewErrorMessage(errorMessage = "The Build name already exists.");
 		}
 	}
 

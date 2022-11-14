@@ -5,22 +5,40 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"paddingBottom": "6",
-						"paddingLeft": "6",
-						"paddingRight": "6",
 						"textAlign": ""
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"hidden": false
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"contentDisplay": "FlexColumn",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 6,
-						"paddingLeft": 6,
-						"paddingRight": 6,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
 						"paddingTop": 0,
 						"widthType": "Fluid"
 					}

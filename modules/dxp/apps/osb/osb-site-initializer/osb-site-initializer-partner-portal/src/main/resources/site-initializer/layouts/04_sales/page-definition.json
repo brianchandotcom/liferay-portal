@@ -5,35 +5,26 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"marginBottom": "4",
-						"paddingLeft": "6",
-						"paddingRight": "6",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "0",
+								"paddingRight": "0"
 							},
 							"id": "landscapeMobile"
 						},
 						{
 							"fragmentViewportStyle": {
-								"hidden": false,
-								"marginLeft": "0",
-								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"hidden": false
 							},
 							"id": "portraitMobile"
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginLeft": "0",
-								"marginRight": "0",
-								"paddingLeft": "5",
-								"paddingRight": "5"
+								"paddingLeft": "0",
+								"paddingRight": "0"
 							},
 							"id": "tablet"
 						}
@@ -41,13 +32,13 @@
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 2,
+						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
-						"paddingLeft": 6,
-						"paddingRight": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
 						"paddingTop": 0,
 						"widthType": "Fluid"
 					}

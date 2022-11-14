@@ -26,9 +26,7 @@
 						"definition": {
 							"fragmentStyle": {
 								"marginBottom": "10",
-								"marginLeft": "10",
 								"overflow": "auto",
-								"paddingLeft": "3",
 								"textAlign": "center",
 								"textColor": "colorNeutral0"
 							},
@@ -51,7 +49,7 @@
 								},
 								{
 									"fragmentViewportStyle": {
-										"marginLeft": "4"
+										"marginLeft": "0"
 									},
 									"id": "tablet"
 								}
@@ -245,7 +243,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "h2"
+																				"textType": "h2",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -289,7 +288,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-paragraph"
+																				"textType": "text-paragraph",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -318,8 +318,10 @@
 																				}
 																			],
 																			"fragmentStyle": {
+																				"borderRadius": "",
 																				"marginBottom": "4",
 																				"marginTop": "2",
+																				"shadow": "",
 																				"textAlign": "",
 																				"textColor": "colorNeutral10"
 																			},
@@ -448,7 +450,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "h5"
+																				"textType": "h5",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -491,7 +494,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-paragraph"
+																				"textType": "text-paragraph",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -534,7 +538,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-link-md"
+																				"textType": "text-link-md",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -685,7 +690,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-paragraph"
+																				"textType": "text-paragraph",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -725,6 +731,7 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
+																				"borderWidth": "0",
 																				"marginTop": "3"
 																			},
 																			"indexed": true,
@@ -880,8 +887,8 @@
 																		{
 																			"fragmentViewportStyle": {
 																				"marginBottom": "4",
-																				"marginLeft": "4",
-																				"marginRight": "4",
+																				"marginLeft": "0",
+																				"marginRight": "0",
 																				"marginTop": "0",
 																				"paddingLeft": "4",
 																				"paddingTop": "4"
@@ -916,7 +923,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "h2"
+																				"textType": "h2",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -960,7 +968,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-paragraph"
+																				"textType": "text-paragraph",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -1084,8 +1093,8 @@
 																		{
 																			"fragmentViewportStyle": {
 																				"marginBottom": "4",
-																				"marginLeft": "4",
-																				"marginRight": "4",
+																				"marginLeft": "0",
+																				"marginRight": "0",
 																				"marginTop": "2"
 																			},
 																			"id": "portraitMobile"
@@ -1105,6 +1114,7 @@
 																		"marginLeft": 0,
 																		"marginRight": 0,
 																		"marginTop": 0,
+																		"opacity": 100,
 																		"paddingBottom": 1,
 																		"paddingLeft": 1,
 																		"paddingRight": 1,
@@ -1119,7 +1129,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "h5"
+																				"textType": "h5",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -1162,7 +1173,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-paragraph"
+																				"textType": "text-paragraph",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -1205,7 +1217,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-link-md"
+																				"textType": "text-link-md",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -1281,8 +1294,8 @@
 																		{
 																			"fragmentViewportStyle": {
 																				"marginBottom": "4",
-																				"marginLeft": "4",
-																				"marginRight": "4"
+																				"marginLeft": "0",
+																				"marginRight": "0"
 																			},
 																			"id": "portraitMobile"
 																		},
@@ -1356,7 +1369,8 @@
 																				"key": "DIALECT-dialect-text"
 																			},
 																			"fragmentConfig": {
-																				"textType": "text-paragraph"
+																				"textType": "text-paragraph",
+																				"truncateText": false
 																			},
 																			"fragmentFields": [
 																				{
@@ -1396,6 +1410,7 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
+																				"borderWidth": "0",
 																				"marginTop": "3"
 																			},
 																			"indexed": true,

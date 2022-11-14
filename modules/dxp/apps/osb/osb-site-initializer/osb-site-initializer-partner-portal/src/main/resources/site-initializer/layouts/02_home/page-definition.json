@@ -5,20 +5,18 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"marginBottom": "6",
-						"marginLeft": "6",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"marginLeft": "4"
+								"marginLeft": "0"
 							},
 							"id": "landscapeMobile"
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginLeft": "5"
+								"marginLeft": "0"
 							},
 							"id": "tablet"
 						}
@@ -26,8 +24,8 @@
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 6,
-						"marginLeft": 6,
+						"marginBottom": 0,
+						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
@@ -65,22 +63,20 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginRight": "6",
 								"marginTop": "4",
-								"paddingTop": "3",
-								"textAlign": ""
+								"paddingTop": "3"
 							},
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
-										"marginRight": "4",
+										"marginRight": "0",
 										"textAlign": "center"
 									},
 									"id": "portraitMobile"
 								},
 								{
 									"fragmentViewportStyle": {
-										"marginRight": "4"
+										"marginRight": "0"
 									},
 									"id": "tablet"
 								}

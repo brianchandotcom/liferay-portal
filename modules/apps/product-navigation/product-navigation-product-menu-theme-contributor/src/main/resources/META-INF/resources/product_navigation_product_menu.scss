@@ -102,7 +102,7 @@ html#{$cadmin-selector} {
 		}
 
 		.product-menu {
-			a:not(.layout-tree),
+			a:not(.page-type-selector *),
 			button.list-group-heading.navigation-link {
 				color: $product-menu-nav-link-color;
 				outline: 0;

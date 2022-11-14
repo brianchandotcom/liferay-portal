@@ -809,6 +809,8 @@
 		<exception>DuplicateObjectFieldExternalReferenceCode</exception>
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>ObjectActionConditionExpression</exception>
+		<exception>ObjectActionErrorMessage</exception>
+		<exception>ObjectActionLabel</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionParameters</exception>
 		<exception>ObjectActionTriggerKey</exception>

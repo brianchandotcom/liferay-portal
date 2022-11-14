@@ -23,10 +23,18 @@ components:
                     type: string
                 description:
                     type: string
+                errorMessage:
+                    additionalProperties:
+                        type: string
+                    type: object
                 id:
                     format: int64
                     readOnly: true
                     type: integer
+                label:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name:
                     type: string
                 objectActionExecutorKey:

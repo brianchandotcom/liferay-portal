@@ -30,7 +30,7 @@ const valueInputElement = document.getElementById(
 buttonElement.addEventListener('click', toggleDropdown);
 buttonElement.addEventListener('blur', handleResultListBlur);
 uiInputElement.addEventListener('click', toggleDropdown);
-uiInputElement.addEventListener('input', handleInputChange);
+uiInputElement.addEventListener('input', debounce(handleInputChange, 1000));
 uiInputElement.addEventListener('blur', handleInputBlur);
 uiInputElement.addEventListener('keydown', handleInputKeyDown);
 optionListElement.addEventListener('click', handleResultListClick);
@@ -383,4 +383,13 @@ function renderOptionList(options) {
 		.forEach((option) =>
 			optionListElement.appendChild(createOptionElement(option))
 		);
+}
+
+function debounce(fn, delay) {
+	let debounceId = null;
+
+	return function (...args) {
+		clearTimeout(debounceId);
+		debounceId = setTimeout(() => fn(...args), delay);
+	};
 }

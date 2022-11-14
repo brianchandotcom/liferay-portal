@@ -238,7 +238,7 @@ definition {
 				var value = StringUtil.extractLast("${borderColorAttribute}", "-");
 
 				PageEditor.selectColorSwatchItem(
-					colorSwatchItem = "${value}",
+					colorSwatchItem = "#${value}",
 					fieldLabel = "${fieldLabel}");
 			}
 		}

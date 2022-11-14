@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Sergio González
  */
-@Component(immediate = true, service = PortletToolbarContributorLocator.class)
+@Component(service = PortletToolbarContributorLocator.class)
 public class StrutsPortletToolbarContributorLocator
 	extends BasePortletToolbarContributorLocator {
 

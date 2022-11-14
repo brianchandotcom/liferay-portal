@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
+@Component(service = PortletConfigurationIcon.class)
 public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 

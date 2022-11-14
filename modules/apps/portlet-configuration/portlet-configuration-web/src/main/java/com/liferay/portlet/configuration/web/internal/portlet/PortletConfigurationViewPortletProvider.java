@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=" + PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
 	service = ViewPortletProvider.class
 )

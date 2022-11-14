@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>CHILD_PAGE_NAME</td>
-	<td>//li[contains(@class,'tree-node') and div[contains(.,'${key_parentPageName}')]]/ul[contains(@class,'tree-container')]//a[contains(@class,'layout-tree')][contains(.,'${key_childPageName}')]</td>
+	<td>//li[contains(@class,'treeview-item') and div[normalize-space()='${key_parentPageName}']]//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')]//a[normalize-space()='${key_childPageName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,17 +22,17 @@
 </tr>
 <tr>
 	<td>PAGE_ELLIPSIS_ICON</td>
-	<td>//span[contains(@class,'tree-label') and contains(.,'${key_pageName}')]//button[contains(@class,'dropdown')]</td>
+	<td>//div[contains(@class,'pages-tree')]//div[contains(@role,'treeitem')][normalize-space()='${key_pageName}']//button[contains(@class,'dropdown')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_ICON</td>
-	<td>//div[contains(@class,'pages-tree')]//*[contains(@class,'tree-node')]//a[normalize-space()='${key_pageName}']//span[contains(@class,'page-icon')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
+	<td>//div[contains(@class,'pages-tree')]//div[contains(@role,'treeitem')][normalize-space()='${key_pageName}']//div[contains(@class,'component-icon')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//div[contains(@class,'pages-tree')]//*[contains(@class,'tree-node')]//a[normalize-space()='${key_pageName}']</td>
+	<td>//div[contains(@class,'pages-tree')]//div[contains(@role,'treeitem')]//a[normalize-space()='${key_pageName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>TREE_NODE_ITEM</td>
-	<td>//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][${key_index}][contains(.,'${key_pageName}')]</td>
+	<td>xpath=(//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')])[${key_index}][normalize-space()='${key_pageName}']</td>
 	<td></td>
 </tr>
 <tr>

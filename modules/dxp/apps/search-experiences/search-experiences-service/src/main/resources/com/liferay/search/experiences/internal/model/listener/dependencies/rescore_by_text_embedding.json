@@ -70,7 +70,7 @@
 						},
 						{
 							"defaultValue": "cosineSimilarity",
-							"helpText": "Vector functions measure similarity between search keywords and target document text embeddings. Check model documentation for suitability.",
+							"helpText": "Specify the vector function for measuring similarity between the text embeddings of the search keywords and target documents. Check the model's documentation for suitability.",
 							"label": "Vector Field Function",
 							"name": "vector_field_function",
 							"type": "select",
@@ -90,7 +90,7 @@
 						},
 						{
 							"defaultValue": 1,
-							"helpText": "Only items above this score will be rescored.",
+							"helpText": "Set the minimum score for a result to be rescored.",
 							"label": "Min Score",
 							"name": "min_score",
 							"type": "number",
@@ -100,7 +100,7 @@
 						},
 						{
 							"defaultValue": 0.01,
-							"helpText": "Weight of the original query score in the final score calculation.",
+							"helpText": "Set the weight of the original query to determine its importance in the final score calculation",
 							"label": "Query Weight",
 							"name": "query_weight",
 							"type": "slider",
@@ -111,7 +111,7 @@
 						},
 						{
 							"defaultValue": 10,
-							"helpText": "Weight of the rescore query score in the final score calculation.",
+							"helpText": "Set the weight of the rescore query to determine its importance in the final score calculation.",
 							"label": "Rescore Query Weight",
 							"name": "rescore_query_weight",
 							"type": "slider",
@@ -122,7 +122,7 @@
 						},
 						{
 							"defaultValue": "avg",
-							"helpText": "How to combine the scores of original and rescorer queries.",
+							"helpText": "Choose how the original and rescore query scores are combined when calculating the final score.",
 							"label": "Score Mode",
 							"name": "score_mode",
 							"type": "select",
@@ -154,7 +154,7 @@
 						},
 						{
 							"defaultValue": 50,
-							"helpText": "Number of top hits to be rescored.",
+							"helpText": "Set the number of top results from the original query to rescore.",
 							"label": "Rescorer Window Size",
 							"name": "window_size",
 							"type": "number",

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION,
 	service = MessageListener.class
 )

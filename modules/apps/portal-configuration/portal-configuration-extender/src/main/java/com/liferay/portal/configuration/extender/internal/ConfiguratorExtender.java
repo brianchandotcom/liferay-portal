@@ -52,7 +52,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Carlos Sierra Andrés
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 
 	@Override

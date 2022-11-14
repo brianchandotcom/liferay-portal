@@ -53,10 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-@Component(
-	immediate = true,
-	service = {SettingsFactory.class, SettingsFactoryImpl.class}
-)
+@Component(service = {SettingsFactory.class, SettingsFactoryImpl.class})
 public class SettingsFactoryImpl implements SettingsFactory {
 
 	public SettingsFactoryImpl() {

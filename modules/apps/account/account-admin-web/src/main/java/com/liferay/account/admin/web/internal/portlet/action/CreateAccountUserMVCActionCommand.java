@@ -21,6 +21,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
@@ -96,9 +97,16 @@ public class CreateAccountUserMVCActionCommand
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			ticket.getExtraInfo());
 
+		JSONArray jsonArray = jsonObject.getJSONArray("accountRoleIds");
+
+		long[] accountRolesIds = new long[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			accountRolesIds[i] = jsonArray.getLong(i);
+		}
+
 		User user = _addUser(
-			actionRequest, ticket.getClassPK(),
-			(long[])jsonObject.get("accountRoleIds"),
+			actionRequest, ticket.getClassPK(), accountRolesIds,
 			jsonObject.getString("emailAddress"));
 
 		_ticketLocalService.deleteTicket(ticket);

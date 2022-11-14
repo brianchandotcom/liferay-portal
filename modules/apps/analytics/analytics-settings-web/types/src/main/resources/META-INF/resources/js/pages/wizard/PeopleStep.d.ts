@@ -12,7 +12,7 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const Step: () => JSX.Element;
+import React from 'react';
+import {IGenericStepProps} from './WizardPage';
+declare const Step: React.FC<IGenericStepProps>;
 export default Step;

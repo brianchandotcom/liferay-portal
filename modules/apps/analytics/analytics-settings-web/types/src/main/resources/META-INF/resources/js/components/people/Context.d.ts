@@ -13,8 +13,18 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
+declare type TState = {
+	accountsCount: number;
+	organizationsCount: number;
+	usersCount: number;
+};
+declare const useData: () => TState;
+declare const useDispatch: () => any;
+export declare enum Events {
+	AccountsCount = 'ACCOUNTS_COUNT',
+	OrganizationsCount = 'ORGANIZATIONS_COUNT',
+	UsersCount = 'USERS_COUNT',
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare const PeopleContextProvider: React.FC;
+export {useData, useDispatch};
+export default PeopleContextProvider;

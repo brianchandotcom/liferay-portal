@@ -13,8 +13,8 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
+export interface IPages<T, K> {
+	Component: React.FC<T>;
+	key: K;
 	title: string;
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;

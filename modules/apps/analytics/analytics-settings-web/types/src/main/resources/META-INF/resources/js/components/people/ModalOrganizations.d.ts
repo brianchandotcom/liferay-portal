@@ -12,7 +12,7 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const ChannelTab: () => JSX.Element;
-export default ChannelTab;
+import React from 'react';
+import {ICommonModalProps} from './Modal';
+declare const ModalOrganizations: React.FC<ICommonModalProps>;
+export default ModalOrganizations;

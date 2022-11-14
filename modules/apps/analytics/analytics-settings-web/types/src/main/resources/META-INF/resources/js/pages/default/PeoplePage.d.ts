@@ -13,23 +13,6 @@
  */
 
 import React from 'react';
-<<<<<<<< HEAD:modules/apps/analytics/analytics-settings-web/types/src/main/resources/META-INF/resources/js/pages/default/WorkspaceConnection.d.ts
-declare const WorkspaceConnection: React.FC;
-export default WorkspaceConnection;
-========
-
-import BasePage from '../../components/BasePage';
-import People from '../../components/people/People';
 import {IGenericPageProps} from './DefaultPage';
-
-const PeoplePage: React.FC<IGenericPageProps> = ({title}) => (
-	<BasePage
-		description={Liferay.Language.get('sync-people-description')}
-		title={title}
-	>
-		<People />
-	</BasePage>
-);
-
+declare const PeoplePage: React.FC<IGenericPageProps>;
 export default PeoplePage;
->>>>>>>> e9a7555e (LRAC-12196 Finish People step):modules/apps/analytics/analytics-settings-web/src/main/resources/META-INF/resources/js/pages/default/PeoplePage.tsx

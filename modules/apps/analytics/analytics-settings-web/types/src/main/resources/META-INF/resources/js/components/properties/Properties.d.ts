@@ -15,7 +15,7 @@
 import React from 'react';
 export declare type TProperty = {
 	channelId: string;
-	commerceSyncEnabled?: boolean;
+	commerceSyncEnabled: boolean;
 	dataSources: Array<TDataSource>;
 	name: string;
 };

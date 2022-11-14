@@ -12,14 +12,7 @@
  * details.
  */
 
-<<<<<<<< HEAD:modules/apps/analytics/analytics-settings-web/types/src/main/resources/META-INF/resources/js/components/LoadingInline.d.ts
 import React from 'react';
-declare const LoadingInline: React.FC;
-export default LoadingInline;
-========
-export interface IPages<T, K> {
-	Component: React.FC<T>;
-	key: K;
-	title: string;
-}
->>>>>>>> e9a7555e (LRAC-12196 Finish People step):modules/apps/analytics/analytics-settings-web/src/main/resources/META-INF/resources/js/utils/types.ts
+import {IGenericPageProps} from './DefaultPage';
+declare const AttributesPage: React.FC<IGenericPageProps>;
+export default AttributesPage;

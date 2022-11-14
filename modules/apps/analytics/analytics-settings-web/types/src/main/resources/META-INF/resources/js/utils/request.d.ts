@@ -12,9 +12,5 @@
  * details.
  */
 
-import React from 'react';
-export interface IGenericPageProps {
-	title: string;
-}
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare function request(path: string, config: RequestInit): Promise<any>;
+export default request;

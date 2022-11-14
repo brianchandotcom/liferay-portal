@@ -13,8 +13,10 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
+import {TColumn} from './Table';
+interface IManagementToolbarProps {
+	columns: TColumn[];
+	disabled: boolean;
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare const ManagementToolbar: React.FC<IManagementToolbarProps>;
+export default ManagementToolbar;

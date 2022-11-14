@@ -12,9 +12,15 @@
  * details.
  */
 
-import React from 'react';
-export interface IGenericPageProps {
-	title: string;
+export declare type TFilter = {
+	type: OrderBy;
+	value: string;
+};
+export declare enum OrderBy {
+	Asc = 'asc',
+	Desc = 'desc',
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+export declare const DEFAULT_FILTER: {
+	type: OrderBy;
+	value: string;
+};

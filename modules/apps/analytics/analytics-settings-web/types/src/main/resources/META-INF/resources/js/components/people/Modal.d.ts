@@ -13,8 +13,22 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
+import {TColumn, TItem} from '../table/Table';
+export interface ICommonModalProps {
+	observer: any;
+	onCloseModal: () => void;
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
+}
+interface IModalProps {
+	columns: TColumn[];
+	emptyStateTitle: string;
+	fetchFn: () => Promise<any>;
+	noResultsTitle: string;
+	observer: any;
+	onAddItems: (items: TItem[]) => void;
+	onCloseModal: () => void;
 	title: string;
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare const Modal: React.FC<IModalProps>;
+export default Modal;

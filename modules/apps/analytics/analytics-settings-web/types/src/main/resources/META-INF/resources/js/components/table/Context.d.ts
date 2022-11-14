@@ -13,31 +13,27 @@
  */
 
 import React from 'react';
-declare type TData = {
-	connected: boolean;
-	liferayAnalyticsURL: string;
-	pageView: EPageView;
-	token: string;
-};
-declare type TView = {
-	[key in EPageView]: React.FC;
-};
-export declare enum EPageView {
-	Wizard = 'VIEW_WIZARD_MODE',
-	Default = 'VIEW_DEFAULT_MODE',
-}
-export declare const View: TView;
-declare const useData: () => TData;
-declare const useDispatch: () => any;
+import {TFilter} from '../../utils/filter';
+import {TPagination} from '../../utils/pagination';
+import {TItem} from './Table';
 export declare enum Events {
-	Connect = 'CONNECT',
-	ChangePageView = 'CHANGE_PAGE_VIEW',
+	ChangeFilter = 'CHANGE_FILTER',
+	ChangeItems = 'CHANGE_ITEMS',
+	ChangeKeywords = 'CHANGE_KEYWORDS',
+	ChangePagination = 'CHANGE_PAGINATION',
+	FormatData = 'FORMAT_DATA',
+	ToggleCheckbox = 'TOGGLE_CHECKBOX',
 }
-interface IAppProps extends React.HTMLAttributes<HTMLElement> {
-	connected: boolean;
-	liferayAnalyticsURL: string;
-	token: string;
-}
-declare const App: React.FC<IAppProps>;
+declare type TState = {
+	checked: boolean;
+	filter: TFilter;
+	internalKeywords: string;
+	items: TItem[];
+	keywords: string;
+	pagination: TPagination;
+};
+declare const useData: () => TState;
+declare const useDispatch: () => any;
+declare const TableContext: React.FC;
 export {useData, useDispatch};
-export default App;
+export default TableContext;

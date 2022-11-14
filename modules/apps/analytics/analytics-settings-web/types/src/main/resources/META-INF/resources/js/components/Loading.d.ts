@@ -13,8 +13,8 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
+interface ILoadingProps {
+	inline?: boolean;
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare const Loading: React.FC<ILoadingProps>;
+export default Loading;

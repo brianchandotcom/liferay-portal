@@ -13,8 +13,7 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
-}
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+import {IGenericStepProps} from './WizardPage';
+interface IStepProps extends IGenericStepProps {}
+declare const Step: React.FC<IStepProps>;
+export default Step;

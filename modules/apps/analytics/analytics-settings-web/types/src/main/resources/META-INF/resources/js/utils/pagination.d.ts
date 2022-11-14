@@ -12,9 +12,14 @@
  * details.
  */
 
-import React from 'react';
-export interface IGenericPageProps {
-	title: string;
-}
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+export declare type TPagination = {
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+export declare const DEFAULT_PAGINATION: {
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+export declare const DELTAS: number[];

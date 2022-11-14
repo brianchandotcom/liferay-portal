@@ -12,16 +12,7 @@
  * details.
  */
 
-import React from 'react';
-import {TProperty} from '../components/PropertiesTable';
-interface IAssignModalProps {
-	observer: any;
-	onCloseModal: () => void;
-	property: TProperty;
-}
-export declare enum ETabs {
-	Channel = 0,
-	Sites = 1,
-}
-declare const AssignModal: React.FC<IAssignModalProps>;
-export default AssignModal;
+/// <reference types="react" />
+
+declare const PeopleWrapper: () => JSX.Element;
+export default PeopleWrapper;

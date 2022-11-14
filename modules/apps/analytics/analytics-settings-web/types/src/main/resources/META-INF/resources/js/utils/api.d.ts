@@ -12,9 +12,43 @@
  * details.
  */
 
-export declare function fetchConnection(token: string): Promise<Response>;
-export declare function deleteConnection(): Promise<Response>;
+export declare function createProperty(name: string): Promise<any>;
+export declare function deleteConnection(): Promise<any>;
+export declare function fetchAccountGroups(queryString?: string): Promise<any>;
+export declare function fetchChannels(queryString?: string): Promise<any>;
+export declare function fetchConnection(token: string): Promise<any>;
+export declare function fetchContactsOrganization(
+	queryString?: string
+): Promise<any>;
+export declare function fetchContactsUsersGroup(
+	queryString?: string
+): Promise<any>;
+export declare function fetchAttributesConfiguration(): Promise<any>;
 export declare function fetchProperties(): Promise<any>;
-export declare function createProperty(name: string): Promise<Response>;
-export declare function fetchChannels(): Promise<any>;
-export declare function fetchSites(): Promise<any>;
+export declare function fetchSites(queryString?: string): Promise<any>;
+export declare function updateProperty({
+	channelId,
+	commerceChannelIds,
+	commerceSyncEnabled,
+	dataSourceId,
+	siteIds,
+}: {
+	channelId: string;
+	commerceChannelIds?: number[];
+	commerceSyncEnabled?: boolean;
+	dataSourceId?: string;
+	siteIds?: number[];
+}): Promise<any>;
+export declare function updateAttributesConfiguration({
+	syncAllAccounts,
+	syncAllContacts,
+	syncedAccountGroupIds,
+	syncedOrganizationIds,
+	syncedUserGroupIds,
+}: {
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
+	syncedAccountGroupIds?: string[];
+	syncedOrganizationIds?: string[];
+	syncedUserGroupIds?: string[];
+}): Promise<any>;

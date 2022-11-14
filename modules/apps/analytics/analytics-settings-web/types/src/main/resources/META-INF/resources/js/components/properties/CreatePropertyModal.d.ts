@@ -13,8 +13,9 @@
  */
 
 import React from 'react';
-export interface IGenericPageProps {
-	title: string;
+interface IModalProps {
+	observer: any;
+	onCloseModal: (updateProperty: boolean) => void;
 }
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+declare const CreatePropertyModal: React.FC<IModalProps>;
+export default CreatePropertyModal;

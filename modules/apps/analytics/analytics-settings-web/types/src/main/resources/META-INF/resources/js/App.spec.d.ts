@@ -12,9 +12,4 @@
  * details.
  */
 
-import React from 'react';
-export interface IGenericPageProps {
-	title: string;
-}
-declare const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>>;
-export default DefaultPage;
+import '@testing-library/jest-dom/extend-expect';

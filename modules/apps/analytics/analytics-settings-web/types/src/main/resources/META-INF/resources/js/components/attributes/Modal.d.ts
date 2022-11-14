@@ -13,23 +13,18 @@
  */
 
 import React from 'react';
-<<<<<<<< HEAD:modules/apps/analytics/analytics-settings-web/types/src/main/resources/META-INF/resources/js/components/CreatePropertyModal.d.ts
-interface IModalProps {
+import {TColumn, TItem} from '../table/Table';
+export interface ICommonModalProps {
 	observer: any;
 	onCloseModal: () => void;
 }
-declare const CreatePropertyModal: React.FC<IModalProps>;
-export default CreatePropertyModal;
-========
-
-import BasePage from '../../components/BasePage';
-import {IGenericPageProps} from './DefaultPage';
-
-const PeopleDataPage: React.FC<IGenericPageProps> = ({title}) => (
-	<BasePage title={title}>
-		<div>{title}</div>
-	</BasePage>
-);
-
-export default PeopleDataPage;
->>>>>>>> e9a7555e (LRAC-12196 Finish People step):modules/apps/analytics/analytics-settings-web/src/main/resources/META-INF/resources/js/pages/default/PeopleDataPage.tsx
+interface IModalProps {
+	columns: TColumn[];
+	fetchFn: () => Promise<any>;
+	observer: any;
+	onAddItems: (items: TItem[]) => void;
+	onCloseModal: () => void;
+	title: string;
+}
+declare const Modal: React.FC<IModalProps>;
+export default Modal;

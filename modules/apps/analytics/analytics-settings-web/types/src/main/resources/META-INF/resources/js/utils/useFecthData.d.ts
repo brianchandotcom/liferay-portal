@@ -12,17 +12,15 @@
  * details.
  */
 
-import React from 'react';
-export declare type TProperty = {
-	channelId: string;
-	commerceSyncEnabled?: boolean;
-	dataSources: Array<TDataSource>;
-	name: string;
+export declare type TUseFecthDataResult = {
+	data?: any;
+	error: boolean;
+	loading: boolean;
+	refetch: () => void;
+	refetching: boolean;
 };
-declare type TDataSource = {
-	commerceChannelIds: Array<number>;
-	dataSourceId: string;
-	siteIds: Array<number>;
-};
-declare const Properties: React.FC;
-export default Properties;
+declare function useFetchData(
+	fetchFn: (queryString?: string) => Promise<any>,
+	queryString?: string
+): TUseFecthDataResult;
+export default useFetchData;

@@ -27,6 +27,7 @@ import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.engine.WikiEngineRenderer;
+import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiPage;
 
@@ -58,11 +59,11 @@ public class WikiPageModelDocumentContributor
 
 			document.addText(Field.CONTENT, content);
 		}
-		catch (WikiFormatException wikiFormatException) {
+		catch (PageContentException | WikiFormatException exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get wiki engine for " + wikiPage.getFormat(),
-					wikiFormatException);
+					exception);
 			}
 		}
 

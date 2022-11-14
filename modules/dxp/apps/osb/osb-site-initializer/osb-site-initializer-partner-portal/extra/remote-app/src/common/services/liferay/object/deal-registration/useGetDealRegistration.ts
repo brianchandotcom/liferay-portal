@@ -16,11 +16,16 @@ import DealRegistrationDTO from '../../../../interfaces/dto/dealRegistrationDTO'
 import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
+import {ResourceName} from '../enum/resourceName';
 
-export default function useGetDealRegistration(page: number, pageSize: number) {
+export default function useGetDealRegistration(
+	apiOption: ResourceName,
+	page: number,
+	pageSize: number
+) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/dealregistrations?&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/${apiOption}?&page=${page}&pageSize=${pageSize}`,
 			Liferay.authToken,
 		],
 		(url, token) =>

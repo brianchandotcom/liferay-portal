@@ -12,14 +12,20 @@
 import {useMemo} from 'react';
 
 import {DealRegistrationColumnKey} from '../../../common/enums/dealRegistrationColumnKey';
+import {Liferay} from '../../../common/services/liferay';
 import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
+import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import getDealDates from '../utils/getDealDates';
 
 export default function useGetListItemsFromDealRegistration(
 	page: number,
 	pageSize: number
 ) {
-	const swrResponse = useGetDealRegistration(page, pageSize);
+	const apiOption = Liferay.FeatureFlags['LPS-164528']
+		? ResourceName.LEADS_SALESFORCE
+		: ResourceName.DEAL_REGISTRATION_DXP;
+
+	const swrResponse = useGetDealRegistration(apiOption, page, pageSize);
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({

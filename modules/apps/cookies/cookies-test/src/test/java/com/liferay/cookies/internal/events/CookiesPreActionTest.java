@@ -14,12 +14,12 @@
 
 package com.liferay.cookies.internal.events;
 
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.internal.manager.CookiesManagerImpl;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -332,8 +332,9 @@ public class CookiesPreActionTest {
 		throws Exception {
 
 		Mockito.when(
-			_configurationProvider.getGroupConfiguration(
-				CookiesPreferenceHandlingConfiguration.class, 0)
+			_cookiesConfigurationProvider.
+				getCookiesPreferenceHandlingConfiguration(
+					Mockito.any(ThemeDisplay.class))
 		).thenReturn(
 			new CookiesPreferenceHandlingConfiguration() {
 
@@ -351,8 +352,8 @@ public class CookiesPreActionTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_cookiesPreAction, "_configurationProvider",
-			_configurationProvider);
+			_cookiesPreAction, "_cookiesConfigurationProvider",
+			_cookiesConfigurationProvider);
 
 		ReflectionTestUtil.setFieldValue(_cookiesManager, "_portal", _portal);
 
@@ -372,8 +373,8 @@ public class CookiesPreActionTest {
 		CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
 	};
 
-	private final ConfigurationProvider _configurationProvider = Mockito.mock(
-		ConfigurationProvider.class);
+	private final CookiesConfigurationProvider _cookiesConfigurationProvider =
+		Mockito.mock(CookiesConfigurationProvider.class);
 	private final CookiesManager _cookiesManager = new CookiesManagerImpl();
 	private final CookiesPreAction _cookiesPreAction = new CookiesPreAction();
 	private final Portal _portal = Mockito.mock(Portal.class);

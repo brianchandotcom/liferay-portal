@@ -5,6 +5,14 @@ const labelInputElement = document.getElementById(
 	// eslint-disable-next-line no-undef
 	`${fragmentEntryLinkNamespace}-label-input`
 );
+const loadingResultsElement = document.getElementById(
+	// eslint-disable-next-line no-undef
+	`${fragmentEntryLinkNamespace}-loading-results-message`
+);
+const noResultsElement = document.getElementById(
+	// eslint-disable-next-line no-undef
+	`${fragmentEntryLinkNamespace}-no-results-message`
+);
 const uiInputElement = document.getElementById(
 	// eslint-disable-next-line no-undef
 	`${fragmentEntryLinkNamespace}-ui-input`
@@ -47,47 +55,6 @@ const optionList = (input.attributes.options || []).map((option) => ({
 	textValue: option.label.toLowerCase(),
 	value: option.value,
 }));
-
-function createLoadingResultsElement() {
-	const animation = document.createElement('span');
-	const label = document.createElement('span');
-	const labelText = document.createTextNode(
-		fragmentElement.querySelector(
-			'.forms-select-from-list-loading-results-message'
-		).innerHTML
-	);
-	const loadingElement = document.createElement('p');
-
-	animation.classList.add('loading-animation');
-	label.classList.add('sr-only');
-	loadingElement.classList.add('loading-results-animation');
-
-	label.appendChild(labelText);
-
-	loadingElement.appendChild(label);
-	loadingElement.appendChild(animation);
-
-	return loadingElement;
-}
-
-function createNoResultsFoundElement() {
-	const noResultElement = document.createElement('p');
-
-	noResultElement.textContent = fragmentElement.querySelector(
-		'.forms-select-from-list-no-results-message'
-	).innerHTML;
-
-	noResultElement.classList.add(
-		'mb-0',
-		'pb-2',
-		'pl-3',
-		'pr-3',
-		'pt-2',
-		'text-muted'
-	);
-
-	return noResultElement;
-}
 
 function handleResultListClick(event) {
 	let selectedOption = null;
@@ -173,8 +140,19 @@ function handleInputChange() {
 
 		lastSearchQuery = filterValue;
 
-		filterOptions(filterValue).then(() => {
-			setFocusedOption(optionListElement.firstElementChild);
+		loadingResultsElement.classList.remove('d-none');
+
+		filterOptions(filterValue).then((filteredOptions) => {
+			loadingResultsElement.classList.add('d-none');
+			renderOptionList(filteredOptions);
+
+			if (optionListElement.firstElementChild) {
+				noResultsElement.classList.add('d-none');
+				setFocusedOption(optionListElement.firstElementChild);
+			}
+			else {
+				noResultsElement.classList.remove('d-none');
+			}
 		});
 	}
 }
@@ -184,38 +162,13 @@ function filterOptions(query) {
 		if (input.attributes.relationshipURL) {
 			lastSearchAbortController.abort();
 			lastSearchAbortController = new AbortController();
-
-			filterRemoteOptions(query, lastSearchAbortController)
-				.then((options) => {
-					resolve();
-
-					resetOptionListElement(options);
-				})
-				.finally(() => {
-					optionListElement.removeChild(
-						optionListElement.querySelector(
-							'.loading-results-animation'
-						)
-					);
-				});
+			filterRemoteOptions(query, lastSearchAbortController).then(resolve);
 		}
 		else if (query) {
-			resetOptionListElement(filterLocalOptions(query));
-
-			resolve();
-
-			optionListElement.removeChild(
-				optionListElement.querySelector('.loading-results-animation')
-			);
+			resolve(filterLocalOptions(query));
 		}
 		else {
-			resetOptionListElement(optionList);
-
-			resolve();
-
-			optionListElement.removeChild(
-				optionListElement.querySelector('.loading-results-animation')
-			);
+			resolve(optionList);
 		}
 	});
 }
@@ -419,19 +372,12 @@ function repositionResultListElement() {
 	`;
 }
 
-function resetOptionListElement(options) {
+function renderOptionList(options) {
 	optionListElement.innerHTML = '';
 
-	optionListElement.appendChild(createLoadingResultsElement());
-
-	let i = 0;
-
-	while (i < MAX_ITEMS && i < options.length) {
-		optionListElement.appendChild(createOptionElement(options[i]));
-		i++;
-	}
-
-	if (!options.length) {
-		optionListElement.appendChild(createNoResultsFoundElement());
-	}
+	options
+		.slice(0, MAX_ITEMS)
+		.forEach((option) =>
+			optionListElement.appendChild(createOptionElement(option))
+		);
 }

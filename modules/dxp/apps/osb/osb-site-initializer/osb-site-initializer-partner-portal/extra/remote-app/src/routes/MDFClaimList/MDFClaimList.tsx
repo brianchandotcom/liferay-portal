@@ -19,7 +19,7 @@ const MDFClaimList = () => {
 	const siteURL = useLiferayNavigate();
 
 	return (
-		<div className="border-0 pb-3 pt-5 px-6 sheet">
+		<div className="border-0 my-4">
 			<h1>MDF Claim</h1>
 
 			<div className="bg-neutral-1 d-flex justify-content-end p-3 rounded">

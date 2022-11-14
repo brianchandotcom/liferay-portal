@@ -90,7 +90,7 @@ const MDFRequestList = () => {
 	};
 
 	return (
-		<div className="border-0 pb-3 pt-5 px-6 sheet">
+		<div className="border-0 my-4">
 			<h1>MDF Requests</h1>
 
 			<TableHeader>

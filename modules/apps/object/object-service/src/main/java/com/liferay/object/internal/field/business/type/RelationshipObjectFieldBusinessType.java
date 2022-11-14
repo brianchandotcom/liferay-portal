@@ -18,14 +18,16 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
-import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -115,11 +117,12 @@ public class RelationshipObjectFieldBusinessType
 		}
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.findByObjectFieldId2(
-				objectField.getObjectFieldId());
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
+			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
 		if (objectDefinition.isSystem()) {
@@ -136,13 +139,16 @@ public class RelationshipObjectFieldBusinessType
 			return baseModel.getPrimaryKeyObj();
 		}
 
-		// TODO Temporary workaround to avoid "Lock wait timeout exceeded" error
-		// in MySQL when using ObjectEntryPersistence#findByERC_C_ODI by using
-		// ObjectEntryLocalServiceUtil
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			externalReferenceCode, objectDefinition.getObjectDefinitionId());
 
-		return ObjectEntryLocalServiceUtil.getObjectEntryId(
-			externalReferenceCode, objectDefinition.getCompanyId(),
-			objectDefinition.getObjectDefinitionId());
+		if (objectEntry == null) {
+			throw new NoSuchObjectEntryException(
+				externalReferenceCode,
+				objectDefinition.getObjectDefinitionId());
+		}
+
+		return objectEntry.getObjectEntryId();
 	}
 
 	@Override
@@ -154,10 +160,13 @@ public class RelationshipObjectFieldBusinessType
 	private Language _language;
 
 	@Reference
-	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private SystemObjectDefinitionMetadataRegistry

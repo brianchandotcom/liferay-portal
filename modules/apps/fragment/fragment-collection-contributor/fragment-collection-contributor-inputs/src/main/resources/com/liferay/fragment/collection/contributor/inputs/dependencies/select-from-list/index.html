@@ -7,23 +7,32 @@
 					[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /] [/#if]
 				</label>
 
-			<input aria-autocomplete="list" aria-controls="listbox" aria-expanded="false" class="form-control" id="${fragmentEntryLinkNamespace}-ui-input" name="" role="combobox" type="text" ${input.required?then('required', '')} [#if input.value??]value="${input.value}"[/#if] />
+			<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" class="form-control" id="${fragmentEntryLinkNamespace}-ui-input" name="" role="combobox" type="text" ${input.required?then('required', '')} [#if input.value??]value="${input.value}"[/#if] />
 
 			<input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 			<input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 			</div>
 
 			<span class="input-group-append input-group-item input-group-item-shrink">
-			<button aria-controls="listbox" aria-expanded="false" class="btn btn-secondary" type="button">
+			<button aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" class="btn btn-secondary" type="button">
 					[@clay["icon"] symbol="caret-double" /]
 				</button>
 			</span>
 
-			<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="dropdown-menu dropdown-menu-width-sm list-unstyled select-from-list__dropdown-menu" id="${fragmentEntryLinkNamespace}-listbox" role="listbox">
-				<li class="dropdown-item text-muted" data-option-value="" id="${fragmentEntryLinkNamespace}-option--" role="option">
+			<div class="d-none dropdown-menu dropdown-menu-width-sm select-from-list__dropdown-menu" id="${fragmentEntryLinkNamespace}-dropdown">
+				<p class="mb-0 px-3 py-2 text-muted" id="${fragmentEntryLinkNamespace}-choose-option-message">
 					${languageUtil.get(locale, "choose-an-option")}
-				</li>
+				</p>
 
+				<p class="d-none mb-0 px-3 py-2 text-muted" id="${fragmentEntryLinkNamespace}-loading-results-message">
+					${languageUtil.get(locale, "loading")}
+				</p>
+
+				<p class="d-none mb-0 px-3 py-2 text-muted" id="${fragmentEntryLinkNamespace}-no-results-message">
+					${languageUtil.get(locale, "no-results-were-found")}
+				</p>
+
+			<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox">
 				[#assign selectedValueFoundInOptions=false]
 				[#assign options=(input.attributes.options)![]]
 
@@ -47,14 +56,7 @@
 				</li>
 				[/#if]
 			</ul>
-
-			<p class="d-none" id="${fragmentEntryLinkNamespace}-loading-results-message">
-				${languageUtil.get(locale, "loading")}
-			</p>
-
-			<p class="d-none" id="${fragmentEntryLinkNamespace}-no-results-message">
-				${languageUtil.get(locale, "no-results-were-found")}
-			</p>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,6 +1,11 @@
 const buttonElement = fragmentElement.querySelector('.btn');
-const optionListElement = fragmentElement.querySelector('.dropdown-menu');
+const dropdownElement = fragmentElement.querySelector('.dropdown-menu');
+const optionListElement = fragmentElement.querySelector('.list-unstyled');
 
+const chooseOptionElement = document.getElementById(
+	// eslint-disable-next-line no-undef
+	`${fragmentEntryLinkNamespace}-choose-option-message`
+);
 const labelInputElement = document.getElementById(
 	// eslint-disable-next-line no-undef
 	`${fragmentEntryLinkNamespace}-label-input`
@@ -22,9 +27,9 @@ const valueInputElement = document.getElementById(
 	`${fragmentEntryLinkNamespace}-value-input`
 );
 
-buttonElement.addEventListener('click', toggleResultList);
+buttonElement.addEventListener('click', toggleDropdown);
 buttonElement.addEventListener('blur', handleResultListBlur);
-uiInputElement.addEventListener('click', toggleResultList);
+uiInputElement.addEventListener('click', toggleDropdown);
 uiInputElement.addEventListener('input', handleInputChange);
 uiInputElement.addEventListener('blur', handleInputBlur);
 uiInputElement.addEventListener('keydown', handleInputKeyDown);
@@ -57,31 +62,31 @@ const optionList = (input.attributes.options || []).map((option) => ({
 }));
 
 function handleResultListClick(event) {
-	let selectedOption = null;
+	let selectedOptionElement = null;
 
 	if (event.target.matches('.dropdown-item')) {
-		selectedOption = event.target;
+		selectedOptionElement = event.target;
 	}
 	else if (event.target.closest('.dropdown-item')) {
-		selectedOption = event.target.closest('.dropdown-item');
+		selectedOptionElement = event.target.closest('.dropdown-item');
 	}
 
-	if (selectedOption) {
-		setSelectedOption(selectedOption);
+	if (selectedOptionElement) {
+		setSelectedOption(selectedOptionElement);
 	}
 }
 
 function handleInputBlur() {
 	uiInputElement.value = labelInputElement.value;
 
-	if (checkIsOpenResultList()) {
-		setTimeout(() => closeResultList(), 500);
+	if (checkIsOpenDropdown()) {
+		setTimeout(() => closeDropdown(), 500);
 	}
 }
 
 function handleResultListBlur() {
-	if (checkIsOpenResultList()) {
-		setTimeout(() => closeResultList(), 500);
+	if (checkIsOpenDropdown()) {
+		setTimeout(() => closeDropdown(), 500);
 	}
 }
 
@@ -95,7 +100,7 @@ function handleInputKeyDown(event) {
 	);
 
 	if (KEYS[event.key]) {
-		openResultList();
+		openDropdown();
 		event.preventDefault();
 	}
 
@@ -136,10 +141,11 @@ function handleInputChange() {
 	const filterValue = uiInputElement.value.toLowerCase();
 
 	if (filterValue !== lastSearchQuery) {
-		openResultList();
+		openDropdown();
 
 		lastSearchQuery = filterValue;
 
+		chooseOptionElement.classList.add('d-none');
 		loadingResultsElement.classList.remove('d-none');
 
 		filterOptions(filterValue).then((filteredOptions) => {
@@ -147,10 +153,12 @@ function handleInputChange() {
 			renderOptionList(filteredOptions);
 
 			if (optionListElement.firstElementChild) {
+				chooseOptionElement.classList.remove('d-none');
 				noResultsElement.classList.add('d-none');
 				setFocusedOption(optionListElement.firstElementChild);
 			}
 			else {
+				chooseOptionElement.classList.add('d-none');
 				noResultsElement.classList.remove('d-none');
 			}
 		});
@@ -234,15 +242,15 @@ function handleWindowResizeOrScroll() {
 		window.removeEventListener('resize', handleWindowResizeOrScroll);
 		window.removeEventListener('scroll', handleWindowResizeOrScroll);
 
-		if (document.body.contains(optionListElement)) {
-			optionListElement.parentElement.removeChild(optionListElement);
+		if (document.body.contains(dropdownElement)) {
+			dropdownElement.parentElement.removeChild(dropdownElement);
 		}
 
 		return;
 	}
 
-	if (checkIsOpenResultList()) {
-		repositionResultListElement();
+	if (checkIsOpenDropdown()) {
+		repositionDropdownElement();
 	}
 }
 
@@ -298,75 +306,67 @@ function setSelectedOption(optionElement) {
 		optionElement.classList.add('active');
 	}
 
-	labelInputElement.value = optionElement.dataset.optionValue
-		? optionElement.textContent
-		: '';
-
-	uiInputElement.value = optionElement.dataset.optionValue
-		? optionElement.textContent
-		: '';
-
+	labelInputElement.value = optionElement.textContent;
+	uiInputElement.value = optionElement.textContent;
 	valueInputElement.value = optionElement.dataset.optionValue;
 
-	closeResultList();
+	closeDropdown();
 }
 
-function checkIsOpenResultList() {
+function checkIsOpenDropdown() {
 	return (
 		uiInputElement.getAttribute('aria-expanded') === 'true' &&
 		buttonElement.getAttribute('aria-expanded') === 'true'
 	);
 }
 
-function openResultList() {
+function openDropdown() {
 	const canFetchOptions = input.attributes.relationshipURL;
 
 	if (!canFetchOptions && !optionList.length) {
 		return;
 	}
 
-	optionListElement.style.display = 'block';
-
+	dropdownElement.classList.replace('d-none', 'd-block');
 	uiInputElement.setAttribute('aria-expanded', 'true');
 	buttonElement.setAttribute('aria-expanded', 'true');
 
 	requestAnimationFrame(() => {
 		handleInputChange();
-		repositionResultListElement();
+		repositionDropdownElement();
 	});
 }
 
-function closeResultList() {
+function closeDropdown() {
 	setFocusedOption(null);
 
-	optionListElement.style.display = 'none';
-
+	dropdownElement.classList.replace('d-block', 'd-none');
 	uiInputElement.setAttribute('aria-expanded', 'false');
 	buttonElement.setAttribute('aria-expanded', 'false');
 }
 
-function toggleResultList() {
-	if (checkIsOpenResultList()) {
-		closeResultList();
+function toggleDropdown() {
+	if (checkIsOpenDropdown()) {
+		closeDropdown();
 	}
 	else {
-		openResultList();
+		openDropdown();
 	}
 }
 
-function repositionResultListElement() {
+function repositionDropdownElement() {
 	const uiInputRect = uiInputElement.getBoundingClientRect();
 
 	if (document.body.contains(fragmentElement)) {
-		if (fragmentElement.contains(optionListElement)) {
-			document.body.appendChild(optionListElement);
+		if (fragmentElement.contains(dropdownElement)) {
+			document.body.appendChild(dropdownElement);
 		}
 	}
-	else if (document.body.contains(optionListElement)) {
-		optionListElement.parentNode.removeChild(optionListElement);
+	else if (document.body.contains(dropdownElement)) {
+		dropdownElement.parentNode.removeChild(dropdownElement);
 	}
 
-	optionListElement.style.transform = `
+	dropdownElement.style.transform = `
 		translateX(${uiInputRect.left + window.scrollX}px)
 		translateY(${uiInputRect.bottom + window.scrollY}px)
 	`;

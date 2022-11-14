@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `851ef01d7128`.*
+*This document has been reviewed through the breaking change entry at commit `90502b5fc445441164332bdb2317533d1c0c4164`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -989,7 +989,7 @@ No code changes are necessary. Administrators may need to reconfigure the Google
 
 ---------------------------------------
 
-## Elasticsearch sortable type mappings were changed from keyword to icu_collation_keyword
+## Elasticsearch Sortable Type Mappings Were Changed from keyword to icu_collation_keyword
 
 - **Date:** 2022-May-12
 - **JIRA Ticket:** [LPS-152937](https://issues.liferay.com/browse/LPS-152937)
@@ -998,44 +998,45 @@ No code changes are necessary. Administrators may need to reconfigure the Google
 
 The Elasticsearch type mapping of localized sortable `*_<languageId>_sortable` and nested `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields were changed from `keyword` to `icu_collation_keyword`
 
-The indexed information of these fields is now stored in an encoded format, for example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
+The indexed information of these fields is now stored in an encoded format. For example, the `entity title` text is now stored as `MkRQOlBaBFA6UEAyARABEAA=`
 
-This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language for more information see https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html
+This new `icu_collation_keyword` type allows sorting using the correct collation rules of each language. For more information see <https://www.elastic.co/guide/en/elasticsearch/plugins/7.17/analysis-icu-collation-keyword-field.html>.
 
-If you update your existing Liferay installation, this change won't be applied until a full reindex is executed and Elasticsearch mappings are recreated.
+If you update an existing Liferay installation, the new mappings take effect when a full reindex is executed and Elasticsearch mappings are recreated.
 
 ### Who is affected?
 
 If you are using the `*_<languageId>_sortable` and `ddmFieldArray.ddmFieldValueText_<languageId>_String_sortable` fields in your custom Elasticsearch queries:
-   - **To sort your results:** you will find that now they are sorted using the correct collation rules of each language.
-   - **To retrieve some information from the Elasticsearch index:** you will find that now the returned information is returned in an encoded format.
+   - **When observing sorted results**, you will find that results are now sorted using the correct collation rules of each language.
+   - **When retrieving information from the Elasticsearch index**, you will find that the information is now returned in an encoded format.
 
 ### How should I update my code?
 
-If you want to maintain the old sort behavior, you will have to customize the Elasticsearch mappings, removing the `icu_collation_keyword`. For more information about how to personalize them, see: https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html
+If you want to maintain the old sort behavior, you must customize the Elasticsearch mappings, removing the `icu_collation_keyword`. For more information about how to configure mappings, see: https://learn.liferay.com/dxp/latest/en/using-search/installing-and-upgrading-a-search-engine/elasticsearch/advanced-configuration-of-the-liferay-elasticsearch-connector.html
 
-If you need to retrieve data from these fields, you can get the same information from the _source field of Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html or you can also remove the `icu_collation_keyword` as it is explained in the previous paragraph.
+To retrieve data from these fields, you can get the same information from the `_source` field of Elasticsearch: <https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html>. Alternatively, remove the `icu_collation_keyword` as explained in the previous paragraph.
 
 ---------------------------------------
 
 ## Upgraded MySQL Connector to 8.0.29 and Forced to Use Protocol TLSv1.2 for MySQL
 
 - **Date:** 2022-Jul-20
-- **JIRA Ticket:** [LPS-157036](https://issues.liferay.com/browse/LPS-157036)
+- **JIRA Ticket:** [LPS-157036](https://issues.liferay.com/browse/LPS-157036), [LPS-157039](https://issues.liferay.com/browse/LPS-157039)
 
 ### What changed?
 
-- MySQL connector has been upgraded to version 8.0.29, it is forced to use protocol TLSv1.2 because it does not support TLSv1 and TLSv1.1 any more. (See https://dev.mysql.com/doc/refman/8.0/en/encrypted-connection-protocols-ciphers.html)
+The MySQL connector has been upgraded to version 8.0.29. MySQL 8.0.29 utilizes TLSv1.2, and TLSv1 and TLv1.1 are no longer supported. See https://dev.mysql.com/doc/refman/8.0/en/encrypted-connection-protocols-ciphers.html for more information.
 
 ### Who is affected?
 
-- For the clients who use MySQL with version less than 5.7.28, and if they use the auto-downloaded MySQL connector on DXP U37 or higher, or they manually installed MySQL connector 8.0.28 or higher.
+Clients who use a MySQL version lower than 5.7.28, especially if they use the auto-downloaded MySQL connector on DXP U37 or higher. For those who manually installed MySQL connector 8.0.28 or higher, upgrading MySQL to 5.7.28 or higher is required. 
 
 ### How should I update my code?
-Upgrade MySQL to 5.7.28 or higher or set the protocol to TLSv1.2 manually (See https://dev.mysql.com/doc/refman/5.7/en/encrypted-connection-protocols-ciphers.html#encrypted-connection-supported-protocols).
+
+Upgrade MySQL to version 5.7.28 or higher, or set the protocol to TLSv1.2 manually (See https://dev.mysql.com/doc/refman/5.7/en/encrypted-connection-protocols-ciphers.html#encrypted-connection-supported-protocols).
 
 ### Why was this change made?
-- This change was made due to security vulnerability.
+- This change was made to address security vulnerabilities.
 
 ---------------------------------------
 
@@ -1046,21 +1047,23 @@ Upgrade MySQL to 5.7.28 or higher or set the protocol to TLSv1.2 manually (See h
 
 ### What changed?
 
-- UtilLocator is removed. Templates can no longer use utilLocator.findUtil() to access Util classes.
+`UtilLocator` is removed. Templates can no longer use `utilLocator.findUtil()` to access `*Util` classes.
 
 ### Who is affected?
 
-- For the clients who is currently using utilLocator within templates to access the Util classes
+Anyone currently using `utilLocator` within templates to access `*Util` classes.
 
 ### How should I update my code?
 
-- There is no replacement for this removal.
-- The workaround is to set LIFERAY_TEMPLATE_PERIOD_ENGINE_PERIOD_SERVICE_PERIOD_LOCATOR_PERIOD_RESTRICT environment variable to false and access the desired util class using ServiceLocator instead. However, please note that this approach would open unrestricted access to all published OSGi services to templates.
+There is no replacement for this removal.
+
+The workaround is to set the environment variable  `LIFERAY_TEMPLATE_PERIOD_ENGINE_PERIOD_SERVICE_PERIOD_LOCATOR_PERIOD_RESTRICT` to false and access the desired util class using `ServiceLocator` instead. However, `ServiceLocator` opens unrestricted access to all published OSGi services within templates. Proceed with caution.
 
 ### Why was this change made?
 
-- This change was made due to security vulnerability.
-- UtilLocator currently gives unrestricted access of all UtilClasses to templates which poses a risk of misuse or malicious attack. Commonly used Util classes such as StringUtil are already added to template context and ready to be used.
+This change was made to address a security vulnerability.
+
+`UtilLocator` currently gives unrestricted access to all `*Util` classes in templates, exposing these classes for misuse or a malicious attack. Commonly used `Util` classes such as `StringUtil` are already included in the template context and ready to be used.
 
 ---------------------------------------
 
@@ -1071,16 +1074,16 @@ Upgrade MySQL to 5.7.28 or higher or set the protocol to TLSv1.2 manually (See h
 
 ### What changed?
 
-- `ConfigurationBeanDeclaration` is removed. It is no longer required in order to use `ConfigurationProvider` to retrieve an annotated `*Configuration.java` interface.
+`ConfigurationBeanDeclaration` is removed, as it is no longer required to use `ConfigurationProvider` to retrieve an annotated `*Configuration.java` interface.
 
 ### Who is affected?
 
-- Any client who has implemented `ConfigurationBeanDeclaration`, or references the class in their code.
+Any client who has implemented `ConfigurationBeanDeclaration`, or references the class in their code.
 
 ### How should I update my code?
 
-- Delete any implementations of `ConfigurationBeanDeclaration` and remove any references to the class.
+Delete any implementations of `ConfigurationBeanDeclaration` and remove any references to the class.
 
 ### Why was this change made?
 
-- `ConfigurationBeanDeclaration` was used to register configuration classes with the `ConfigurationProvider` framework to be tracked by OSGi managed services. We now do this automatically by analyzing the metatype information present whenever a bundle is registered with the OSGi container. This will all happen in the background, and improves the developer experience by removing a requirement and possible frustration with using the `ConfigurationProvider` API.
+`ConfigurationBeanDeclaration` was used to register configuration classes with the `ConfigurationProvider` framework, to be tracked by OSGi managed services. Regsitration is now done automatically by analyzing the bundle's metatype information when it's registered with the OSGi container. This happens in the background, improving the developer experience by removing the `ConfigurationBeanDeclaration` requirement and the possible frustration of using the `ConfigurationProvider` API.

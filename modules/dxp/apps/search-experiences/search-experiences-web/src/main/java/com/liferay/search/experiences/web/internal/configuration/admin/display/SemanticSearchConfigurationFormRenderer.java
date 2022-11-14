@@ -226,7 +226,7 @@ public class SemanticSearchConfigurationFormRenderer
 					httpServletRequest,
 					"model.resource.com.liferay.message.boards.model.MBMessage")
 			).put(
-				"model.resource.com.liferay.wiki.model.WikiPage",
+				"com.liferay.wiki.model.WikiPage",
 				_language.get(
 					httpServletRequest,
 					"model.resource.com.liferay.wiki.model.WikiPage")

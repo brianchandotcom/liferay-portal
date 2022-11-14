@@ -401,6 +401,10 @@ public class ContentPageEditorDisplayContext {
 					"/layout_content_page_editor" +
 						"/get_collection_supported_filters")
 			).put(
+				"getCollectionVariationsURL",
+				_getResourceURL(
+					"/layout_content_page_editor/get_collection_variations")
+			).put(
 				"getExperienceDataURL",
 				_getResourceURL(
 					"/layout_content_page_editor/get_experience_data")

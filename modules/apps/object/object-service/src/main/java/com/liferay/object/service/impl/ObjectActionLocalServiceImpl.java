@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -215,7 +216,9 @@ public class ObjectActionLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectAction.getObjectDefinitionId());
 
-		if (objectDefinition.isApproved()) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			objectDefinition.isApproved()) {
+
 			return objectActionPersistence.update(objectAction);
 		}
 
@@ -249,7 +252,8 @@ public class ObjectActionLocalServiceImpl
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		if (Objects.equals(
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			Objects.equals(
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION) &&
 			((errorMessageMap == null) ||
@@ -265,7 +269,9 @@ public class ObjectActionLocalServiceImpl
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			((labelMap == null) || Validator.isNull(labelMap.get(locale)))) {
+
 			throw new ObjectActionLabelException(
 				"Label is null for locale " + locale.getDisplayName());
 		}
@@ -277,6 +283,10 @@ public class ObjectActionLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new ObjectActionNameException.MustNotBeNull();
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918"))) {
+			return;
 		}
 
 		char[] nameCharArray = name.toCharArray();

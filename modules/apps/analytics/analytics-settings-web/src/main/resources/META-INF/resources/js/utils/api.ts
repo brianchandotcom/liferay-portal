@@ -60,7 +60,7 @@ export function fetchContactsUsersGroup(queryString?: string) {
 	});
 }
 
-export function fetchPeopleData() {
+export function fetchAttributesConfiguration() {
 	return request('/contacts/configuration', {
 		method: 'GET',
 	});
@@ -107,7 +107,7 @@ export function updateProperty({
 	});
 }
 
-export function updatePeopleData({
+export function updateAttributesConfiguration({
 	syncAllAccounts,
 	syncAllContacts,
 	syncedAccountGroupIds,

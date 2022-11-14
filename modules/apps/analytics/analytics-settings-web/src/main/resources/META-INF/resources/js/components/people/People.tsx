@@ -16,7 +16,10 @@ import {ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import React, {useEffect, useState} from 'react';
 
-import {fetchPeopleData, updatePeopleData} from '../../utils/api';
+import {
+	fetchAttributesConfiguration,
+	updateAttributesConfiguration,
+} from '../../utils/api';
 import PeopleContextProvider from './Context';
 import SelectPanels from './SelectPanels';
 
@@ -24,7 +27,7 @@ const request = async (
 	syncAllAccounts: boolean,
 	syncAllContacts: boolean
 ): Promise<void> => {
-	await updatePeopleData({syncAllAccounts, syncAllContacts});
+	await updateAttributesConfiguration({syncAllAccounts, syncAllContacts});
 };
 
 const People: React.FC = () => {
@@ -34,7 +37,10 @@ const People: React.FC = () => {
 
 	useEffect(() => {
 		const request = async () => {
-			const {syncAllAccounts, syncAllContacts} = await fetchPeopleData();
+			const {
+				syncAllAccounts,
+				syncAllContacts,
+			} = await fetchAttributesConfiguration();
 
 			setSyncAll(syncAllAccounts && syncAllContacts);
 			setSyncAllAccounts(syncAllAccounts);

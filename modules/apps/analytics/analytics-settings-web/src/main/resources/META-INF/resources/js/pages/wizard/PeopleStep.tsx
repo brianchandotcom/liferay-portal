@@ -28,7 +28,7 @@ const Step: React.FC<IGenericStepProps> = ({onCancel, onChangeStep}) => (
 
 		<BasePage.Footer>
 			<ClayButton.Group spaced>
-				<ClayButton onClick={() => onChangeStep(ESteps.PeopleData)}>
+				<ClayButton onClick={() => onChangeStep(ESteps.Attributes)}>
 					{Liferay.Language.get('next')}
 				</ClayButton>
 

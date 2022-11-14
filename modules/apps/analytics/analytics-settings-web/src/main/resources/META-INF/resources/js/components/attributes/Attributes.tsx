@@ -16,14 +16,14 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import AccountsAttributesModal from '../../components/people-data/AccountsAttributesModal';
-import OrderAttributsModal from '../../components/people-data/OrderAttributsModal';
-import PeopleAttributesModal from '../../components/people-data/PeopleAttributesModal';
-import ProductsAttributesModal from '../../components/people-data/ProductsAttributesModal';
+import AccountsAttributesModal from './AccountsAttributesModal';
+import OrderAttributsModal from './OrderAttributsModal';
+import PeopleAttributesModal from './PeopleAttributesModal';
+import ProductsAttributesModal from './ProductsAttributesModal';
 
-const PeopleData: React.FC = () => {
+const Attributes: React.FC = () => {
 	const {
 		observer: observerAccountsAttributes,
 		onOpenChange: onOpenChangeAccountsAttributes,
@@ -45,65 +45,69 @@ const PeopleData: React.FC = () => {
 		open: openOrderAttributes,
 	} = useModal();
 
-	const attributesList = [
+	const attributesList = useMemo(
+		() => [
 
-		// TODO: Remove mocked data on "count" property
+			// TODO: Remove mocked data on "count" property
 
-		{
-			count: 15,
-			icon: 'users',
-			onOpenModal: () => onOpenChangePeopleAttributes(true),
-			title: Liferay.Language.get('people'),
-		},
-		{
-			count: 3,
-			icon: 'briefcase',
-			onOpenModal: () => onOpenChangeAccountsAttributes(true),
-			title: Liferay.Language.get('account'),
-		},
-		{
-			count: 7,
-			icon: 'categories',
-			onOpenModal: () => onOpenChangeProductsAttributes(true),
-			title: Liferay.Language.get('products'),
-		},
-		{
-			count: 13,
-			icon: 'shopping-cart',
-			onOpenModal: () => onOpenChangeOrderAttributes(true),
-			title: Liferay.Language.get('order'),
-		},
-	];
+			{
+				count: 15,
+				icon: 'users',
+				onOpenModal: () => onOpenChangePeopleAttributes(true),
+				title: Liferay.Language.get('people'),
+			},
+			{
+				count: 3,
+				icon: 'briefcase',
+				onOpenModal: () => onOpenChangeAccountsAttributes(true),
+				title: Liferay.Language.get('account'),
+			},
+			{
+				count: 7,
+				icon: 'categories',
+				onOpenModal: () => onOpenChangeProductsAttributes(true),
+				title: Liferay.Language.get('products'),
+			},
+			{
+				count: 13,
+				icon: 'shopping-cart',
+				onOpenModal: () => onOpenChangeOrderAttributes(true),
+				title: Liferay.Language.get('order'),
+			},
+		],
+		[
+			onOpenChangeAccountsAttributes,
+			onOpenChangeOrderAttributes,
+			onOpenChangePeopleAttributes,
+			onOpenChangeProductsAttributes,
+		]
+	);
 
 	return (
 		<>
 			<ClayList className="mb-0">
-				{attributesList.map((item) => (
+				{attributesList.map(({count, icon, onOpenModal, title}) => (
 					<ClayList.Item
 						className="align-items-center"
 						flex
-						key={item.title}
+						key={title}
 					>
 						<ClayList.ItemField className="mr-2">
-							<ClayIcon symbol={item.icon} />
+							<ClayIcon symbol={icon} />
 						</ClayList.ItemField>
 
 						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>
-								{item.title}
-							</ClayList.ItemTitle>
+							<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
 
 							<ClayList.ItemText>
-								{`${item.count} ${Liferay.Language.get(
-									'selected'
-								)}`}
+								{`${count} ${Liferay.Language.get('selected')}`}
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 
 						<ClayList.ItemField>
 							<ClayButton
 								displayType="secondary"
-								onClick={item.onOpenModal}
+								onClick={onOpenModal}
 							>
 								{Liferay.Language.get('select-attributes')}
 							</ClayButton>
@@ -143,4 +147,4 @@ const PeopleData: React.FC = () => {
 	);
 };
 
-export default PeopleData;
+export default Attributes;

@@ -14,10 +14,9 @@
 
 import React from 'react';
 
-import {fetchAccountGroups} from '../../utils/api';
 import Modal, {ICommonModalProps} from './Modal';
 
-const ProductsAttributesModal: React.FC<ICommonModalProps> = ({
+const OrderAttributesModal: React.FC<ICommonModalProps> = ({
 	observer,
 	onCloseModal,
 }) => (
@@ -40,15 +39,12 @@ const ProductsAttributesModal: React.FC<ICommonModalProps> = ({
 				value: 'sampleData',
 			},
 		]}
-
-		// TODO: replace fetchAccountGroups with attributes request when created (waiting for backend PR with endpoint)
-
-		fetchFn={fetchAccountGroups}
+		fetchFn={() => Promise.resolve()}
 		observer={observer}
 		onAddItems={() => {}}
 		onCloseModal={onCloseModal}
-		title={Liferay.Language.get('sync-product-attributes')}
+		title={Liferay.Language.get('sync-order-attributes')}
 	/>
 );
 
-export default ProductsAttributesModal;
+export default OrderAttributesModal;

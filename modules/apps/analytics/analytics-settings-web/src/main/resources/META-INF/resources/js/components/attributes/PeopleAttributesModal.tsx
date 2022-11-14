@@ -14,10 +14,9 @@
 
 import React from 'react';
 
-import {fetchAccountGroups} from '../../utils/api';
 import Modal, {ICommonModalProps} from './Modal';
 
-const AccountsAttributesModal: React.FC<ICommonModalProps> = ({
+const PeopleAttributesModal: React.FC<ICommonModalProps> = ({
 	observer,
 	onCloseModal,
 }) => (
@@ -40,15 +39,12 @@ const AccountsAttributesModal: React.FC<ICommonModalProps> = ({
 				value: 'sampleData',
 			},
 		]}
-		
-		// TODO: replace fetchAccountGroups with attributes request when created (waiting for backend PR with endpoint)
-
-		fetchFn={fetchAccountGroups}
+		fetchFn={() => Promise.resolve()}
 		observer={observer}
 		onAddItems={() => {}}
 		onCloseModal={onCloseModal}
-		title={Liferay.Language.get('sync-account-attributes')}
+		title={Liferay.Language.get('sync-people-attributes')}
 	/>
 );
 
-export default AccountsAttributesModal;
+export default PeopleAttributesModal;

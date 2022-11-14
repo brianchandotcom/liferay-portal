@@ -12,7 +12,7 @@
  * details.
  */
 
-import {updatePeopleData} from '../../utils/api';
+import {updateAttributesConfiguration} from '../../utils/api';
 import {SUCCESS_MESSAGE} from '../../utils/constants';
 import {TItem} from '../table/Table';
 import {Events, useDispatch} from './Context';
@@ -39,7 +39,7 @@ export function useAddItems({
 	return async (items: TItem[]) => {
 		const ids = getIds(items);
 
-		const {ok} = await updatePeopleData({
+		const {ok} = await updateAttributesConfiguration({
 			[name]: ids,
 			syncAllAccounts,
 			syncAllContacts,

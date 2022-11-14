@@ -17,7 +17,7 @@ import React from 'react';
 
 import {EPageView, Events, useDispatch} from '../../App';
 import BasePage from '../../components/BasePage';
-import PeopleData from '../../components/people-data/PeopleData';
+import Attributes from '../../components/attributes/Attributes';
 import {IGenericStepProps} from './WizardPage';
 
 interface IStepProps extends IGenericStepProps {}
@@ -30,7 +30,7 @@ const Step: React.FC<IStepProps> = () => {
 			description={Liferay.Language.get('attributes-step-description')}
 			title={Liferay.Language.get('attributes')}
 		>
-			<PeopleData />
+			<Attributes />
 
 			<BasePage.Footer>
 				<ClayButton

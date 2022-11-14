@@ -17,8 +17,8 @@ import {ClayVerticalNav} from '@clayui/nav';
 import React, {useState} from 'react';
 
 import {IPages} from '../../utils/types';
+import AttributesPage from './AttributesPage';
 import ConnectPage from './ConnectPage';
-import PeopleDataPage from './PeopleDataPage';
 import PeoplePage from './PeoplePage';
 import PropertiesPage from './PropertiesPage';
 
@@ -50,7 +50,7 @@ const PAGES: IPages<IGenericPageProps, EPages>[] = [
 		title: Liferay.Language.get('people'),
 	},
 	{
-		Component: PeopleDataPage,
+		Component: AttributesPage,
 		key: EPages.Attributes,
 		title: Liferay.Language.get('attributes'),
 	},

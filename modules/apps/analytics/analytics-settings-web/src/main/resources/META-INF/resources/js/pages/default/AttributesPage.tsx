@@ -13,24 +13,15 @@
  */
 
 import React from 'react';
-<<<<<<<< HEAD:modules/apps/analytics/analytics-settings-web/types/src/main/resources/META-INF/resources/js/components/CreatePropertyModal.d.ts
-interface IModalProps {
-	observer: any;
-	onCloseModal: () => void;
-}
-declare const CreatePropertyModal: React.FC<IModalProps>;
-export default CreatePropertyModal;
-========
 
 import BasePage from '../../components/BasePage';
-import PeopleData from '../../components/people-data/PeopleData';
+import Attributes from '../../components/attributes/Attributes';
 import {IGenericPageProps} from './DefaultPage';
 
-const PeopleDataPage: React.FC<IGenericPageProps> = ({title}) => (
+const AttributesPage: React.FC<IGenericPageProps> = ({title}) => (
 	<BasePage title={title}>
-		<PeopleData />
+		<Attributes />
 	</BasePage>
 );
 
-export default PeopleDataPage;
->>>>>>>> e9a7555e (LRAC-12196 Finish People step):modules/apps/analytics/analytics-settings-web/src/main/resources/META-INF/resources/js/pages/default/PeopleDataPage.tsx
+export default AttributesPage;

@@ -17,8 +17,8 @@ import React, {useState} from 'react';
 
 import {EPageView, Events, useDispatch} from '../../App';
 import {IPages} from '../../utils/types';
+import AttributesStep from './AttributesStep';
 import ConnectStep from './ConnectStep';
-import PeopleDataStep from './PeopleDataStep';
 import PeopleStep from './PeopleStep';
 import PropertyStep from './PropertyStep';
 
@@ -31,7 +31,7 @@ export enum ESteps {
 	ConnectAC = 0,
 	Property = 1,
 	People = 2,
-	PeopleData = 3,
+	Attributes = 3,
 }
 
 interface IStepProps<T, K> extends IPages<T, K> {
@@ -58,9 +58,9 @@ const STEPS: IStepProps<IGenericStepProps, ESteps>[] = [
 		title: Liferay.Language.get('people'),
 	},
 	{
-		Component: PeopleDataStep,
+		Component: AttributesStep,
 		available: false,
-		key: ESteps.PeopleData,
+		key: ESteps.Attributes,
 		title: Liferay.Language.get('attributes'),
 	},
 ];

@@ -136,9 +136,6 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 			mockHttpServletRequest, mockHttpServletResponse,
 			RandomTestUtil.randomString());
 
-		// TODO Can we sort this? Why is data-analytics-asset-action after
-		// data-analytics-asset-id.
-
 		Assert.assertEquals(
 			StringBundler.concat(
 				"<div data-analytics-asset-action=\"preview",

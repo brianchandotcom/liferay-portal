@@ -391,7 +391,7 @@ public class SamlProviderResourceTest extends BaseSamlProviderResourceTestCase {
 			httpResponse.getContent());
 
 		Assert.assertEquals(
-			"Can only configure one of sp & idp roles",
+			"Identity and service provider roles are mutually exclusive",
 			jsonObject.get("title"));
 
 		postSamlProvider.setSp((Sp)null);

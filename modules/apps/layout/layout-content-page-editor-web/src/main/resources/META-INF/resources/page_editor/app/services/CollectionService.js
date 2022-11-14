@@ -122,4 +122,16 @@ export default {
 			() => {}
 		);
 	},
+
+	/**
+	 * @param {string} classPK
+	 * @returns {Promise<string[]>}
+	 */
+	getCollectionVariations(classPK) {
+		return serviceFetch(
+			config.getCollectionVariationsURL,
+			{body: {classPK}},
+			() => {}
+		);
+	},
 };

@@ -13,7 +13,6 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -43,7 +42,7 @@ export default function CollectionSelector({
 	return (
 		<>
 			<ItemSelector
-				className={classNames({'mb-0': isPrefiltered})}
+				className="mb-0"
 				eventName={eventName}
 				itemSelectorURL={
 					customCollectionSelectorURL ||

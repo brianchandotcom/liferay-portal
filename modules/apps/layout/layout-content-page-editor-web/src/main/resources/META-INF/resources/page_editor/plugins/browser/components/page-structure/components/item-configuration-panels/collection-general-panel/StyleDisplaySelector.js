@@ -68,7 +68,7 @@ export function StyleDisplaySelector({
 	}, [collectionItemType]);
 
 	return (
-		<ClayForm.Group small>
+		<ClayForm.Group className="mt-3" small>
 			<label htmlFor={listStyleId}>
 				{Liferay.Language.get('style-display')}
 			</label>

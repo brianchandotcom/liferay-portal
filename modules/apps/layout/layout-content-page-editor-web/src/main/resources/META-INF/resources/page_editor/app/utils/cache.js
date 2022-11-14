@@ -16,6 +16,7 @@ let cache = null;
 
 export const CACHE_KEYS = {
 	allowedInputTypes: 'allowedInputTypes',
+	collectionVariations: 'collectionVariations',
 	formFields: 'formFields',
 };
 

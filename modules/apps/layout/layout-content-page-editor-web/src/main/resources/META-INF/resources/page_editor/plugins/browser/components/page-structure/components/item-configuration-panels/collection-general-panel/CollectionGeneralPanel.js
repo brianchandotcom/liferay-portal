@@ -12,8 +12,11 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
-import {openConfirmModal} from 'frontend-js-web';
+import ClayPopover from '@clayui/popover';
+import {openConfirmModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -34,7 +37,9 @@ import CollectionService from '../../../../../../../app/services/CollectionServi
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
+import {CACHE_KEYS} from '../../../../../../../app/utils/cache';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
+import useCache from '../../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
 import {useId} from '../../../../../../../core/hooks/useId';
@@ -248,16 +253,24 @@ export function CollectionGeneralPanel({item}) {
 					open
 				>
 					{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-						<CollectionSelector
-							collectionItem={collection}
-							itemSelectorURL={config.collectionSelectorURL}
-							label={Liferay.Language.get('collection')}
-							onCollectionSelect={handleCollectionSelect}
-							onPreventCollectionSelect={
-								onPreventCollectionSelect
-							}
-							optionsMenuItems={optionsMenuItems}
-						/>
+						<>
+							<CollectionSelector
+								collectionItem={collection}
+								itemSelectorURL={config.collectionSelectorURL}
+								label={Liferay.Language.get('collection')}
+								onCollectionSelect={handleCollectionSelect}
+								onPreventCollectionSelect={
+									onPreventCollectionSelect
+								}
+								optionsMenuItems={optionsMenuItems}
+							/>
+
+							{collection?.classPK && (
+								<VariationsPopover
+									classPK={collection.classPK}
+								/>
+							)}
+						</>
 					)}
 
 					{collection && (
@@ -419,4 +432,57 @@ export function CollectionGeneralPanel({item}) {
 
 CollectionGeneralPanel.propTypes = {
 	item: PropTypes.object.isRequired,
+};
+
+function VariationsPopover({classPK}) {
+	const popoverId = useId();
+
+	const variations = useCache({
+		fetcher: () => CollectionService.getCollectionVariations(classPK),
+		key: [CACHE_KEYS.collectionVariations, classPK],
+	});
+
+	if (!variations?.length) {
+		return null;
+	}
+
+	return (
+		<ClayPopover
+			alignPosition="bottom"
+			closeOnClickOutside
+			header={
+				<span className="font-weight-bold">
+					{Liferay.Language.get('collection-variations')}
+				</span>
+			}
+			id={popoverId}
+			trigger={
+				<ClayButton
+					borderless
+					className="mb-0 mt-2"
+					displayType="secondary"
+					size="xs"
+				>
+					{sub(
+						Liferay.Language.get('x-variations'),
+						variations.length
+					)}
+				</ClayButton>
+			}
+		>
+			{variations.map((variation, index) => (
+				<ClayLabel
+					className="mb-2 mr-2"
+					displayType="secondary"
+					key={index}
+				>
+					{variation}
+				</ClayLabel>
+			))}
+		</ClayPopover>
+	);
+}
+
+VariationsPopover.propTypes = {
+	classPK: PropTypes.string.isRequired,
 };

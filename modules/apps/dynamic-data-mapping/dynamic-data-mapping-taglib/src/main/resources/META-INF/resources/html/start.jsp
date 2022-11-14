@@ -75,7 +75,33 @@
 							String linkCssClass = "dropdown-item palette-item";
 
 							Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
+
+							String translationStatus = LanguageUtil.get(request, "untranslated");
+							String translationStatusCssClass = "warning";
+
+							if (ddmFormValues != null) {
+								Set<Locale> ddmFormValuesAvailableLocales = ddmFormValues.getAvailableLocales();
+
+								if (ddmFormValuesAvailableLocales.contains(curLocale)) {
+									translationStatus = LanguageUtil.get(request, "translated");
+									translationStatusCssClass = "success";
+								}
+							}
+
+							if (curLanguageId.equals(defaultLanguageId)) {
+								translationStatus = LanguageUtil.get(request, "default");
+								translationStatusCssClass = "info";
+								linkCssClass += " active";
+							}
 						%>
+
+						<liferay-util:buffer
+							var="linkContent"
+						>
+							<%= StringUtil.replace(curLanguageId, '_', '-') %>
+
+							<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
+						</liferay-util:buffer>
 
 							<c:if test="<%= showLanguageSelector %>">
 								<liferay-ui:icon
@@ -93,7 +119,7 @@
 									iconCssClass="inline-item inline-item-before"
 									linkCssClass="<%= linkCssClass %>"
 									markupView="lexicon"
-									message="<%= StringUtil.replace(curLanguageId, '_', '-') %>"
+									message="<%= linkContent %>"
 									onClick="event.preventDefault(); fireLocaleChanged(event);"
 									url="javascript:void(0);"
 								>
@@ -178,6 +204,22 @@
 
 			var onLocaleChange = function (event) {
 				var languageId = event.item.getAttribute('data-value');
+
+				var childrenItems = A.all(
+					'#<portlet:namespace /><%= fieldsNamespace %>PaletteContentBox a'
+				);
+
+				childrenItems.each((item) => {
+					if (item.hasClass('active')) {
+						item.removeClass('active');
+					}
+
+					var languageIdActive = item.getAttribute('data-value');
+
+					if (languageId === languageIdActive) {
+						item.addClass('active');
+					}
+				});
 
 				languageId = languageId.replace('_', '-');
 

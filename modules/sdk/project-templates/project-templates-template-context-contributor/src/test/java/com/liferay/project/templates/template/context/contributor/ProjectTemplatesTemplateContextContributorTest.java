@@ -72,10 +72,10 @@ public class ProjectTemplatesTemplateContextContributorTest
 	}
 
 	public ProjectTemplatesTemplateContextContributorTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -91,8 +91,8 @@ public class ProjectTemplatesTemplateContextContributorTest
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion, "--product", _product);
+			gradleWorkspaceModulesDir, template, name, "--liferay-product",
+			_liferayProduct, "--liferay-version", _liferayVersion);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -124,8 +124,8 @@ public class ProjectTemplatesTemplateContextContributorTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=BladeTest",
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=blade.test",
-			"-Dproduct=" + _product);
+			"-DliferayProduct=" + _liferayProduct,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=blade.test");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd",
@@ -147,7 +147,7 @@ public class ProjectTemplatesTemplateContextContributorTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.taglib.internal.servlet;
 
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -132,8 +133,8 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 			if (fileEntryId != 0) {
 				_dlAppService.updateFileEntry(
-					fileEntryId, null, null, name, null, null, null, null,
-					new byte[0], null, null,
+					fileEntryId, null, null, name, null, null, null,
+					DLVersionNumberIncrease.NONE, (byte[])null, null, null,
 					ServiceContextFactory.getInstance(
 						FileEntry.class.getName(), httpServletRequest));
 			}

@@ -43,7 +43,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Cristina González
  * @author Preston Crary
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ParserRegistrar {
 
 	@Activate

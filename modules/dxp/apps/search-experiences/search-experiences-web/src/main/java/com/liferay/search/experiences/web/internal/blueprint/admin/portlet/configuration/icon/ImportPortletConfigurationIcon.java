@@ -65,6 +65,11 @@ public class ImportPortletConfigurationIcon
 	}
 
 	@Override
+	public String getMessage(PortletRequest portletRequest) {
+		return _language.get(getLocale(portletRequest), "import");
+	}
+
+	@Override
 	public double getWeight() {
 		return 100;
 	}

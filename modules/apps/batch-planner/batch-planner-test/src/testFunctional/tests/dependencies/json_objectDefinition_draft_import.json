@@ -1,0 +1,33 @@
+[
+	{
+		"accountEntryRestricted": false,
+		"accountEntryRestrictedObjectFieldId": 0,
+		"active": true,
+		"dateCreated": "2022-08-16T16:31:41.557+00:00",
+		"dateModified": "2022-08-16T16:31:42.358+00:00",
+		"id": 43445,
+		"label": {
+			"en_US": "Coupon"
+		},
+		"name": "Coupon",
+		"objectLayouts": [
+		],
+		"objectRelationships": [
+		],
+		"objectViews": [
+		],
+		"panelCategoryKey": "",
+		"parameterRequired": false,
+		"pluralLabel": {
+			"en_US": "Coupons"
+		},
+		"portlet": false,
+		"scope": "company",
+		"status": {
+			"code": 2,
+			"label": "draft",
+			"label_i18n": "Draft"
+		},
+		"system": false
+	}
+]

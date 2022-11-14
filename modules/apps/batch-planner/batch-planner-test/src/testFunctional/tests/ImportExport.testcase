@@ -26,6 +26,8 @@ definition {
 			BatchPlanner.batchPlannerTearDown();
 
 			JSONUser.tearDownNonAdminUsers();
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "Coupon");
 		}
 	}
 
@@ -770,6 +772,92 @@ definition {
 				accountName = "Test Person Account",
 				accountType = "Person",
 				externalReferenceCode = "103");
+		}
+	}
+
+	@priority = "4"
+	test CanImportObjectDefinitionWithApprovedStatus {
+		property portal.acceptance = "true";
+
+		task ("Given in import and export center I create an import file task") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("When import objectDefinition with an existing json file in which status is approved") {
+			ImportExport.selectEntity(entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)");
+
+			UploadDependencyFile.uploadFile(fileName = "json_objectDefinition_approved_import.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+		}
+
+		task ("Then the import process completed successfully") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "ObjectDefinition",
+				executionAction = "Import",
+				executionName = "json_objectDefinition_approved_import",
+				executionStatus = "Completed");
+		}
+
+		task ("And Then the status of the imported objectDefinition is approved") {
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
+
+			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+
+			TestUtils.assertEquals(
+				actual = "${objectDefinitionStatus}",
+				expected = "true");
+		}
+	}
+
+	@priority = "4"
+	test CanImportObjectDefinitionWithDraftStatus {
+		property portal.acceptance = "true";
+
+		task ("Given in import and export center I create an import file task") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+		}
+
+		task ("When import objectDefinition with an existing json file in which the status is draft") {
+			ImportExport.selectEntity(entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)");
+
+			UploadDependencyFile.uploadFile(fileName = "json_objectDefinition_draft_import.json");
+
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
+		}
+
+		task ("Then the import process completed successfully") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "ObjectDefinition",
+				executionAction = "Import",
+				executionName = "json_objectDefinition_draft_import",
+				executionStatus = "Completed");
+		}
+
+		task ("And Then the status of the imported objectDefinition is Draft") {
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Coupon");
+
+			var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+
+			TestUtils.assertEquals(
+				actual = "${objectDefinitionStatus}",
+				expected = "false");
 		}
 	}
 

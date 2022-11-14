@@ -12,12 +12,6 @@ definition {
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
 
-	macro assertCustomView {
-		AssertTextEquals(
-			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
-			value1 = "${key_nameCustomView}");
-	}
-
 	macro assertCustomViewName {
 		AssertElementPresent(
 			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",

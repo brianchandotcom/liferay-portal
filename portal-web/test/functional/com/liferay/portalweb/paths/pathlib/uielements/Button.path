@@ -667,7 +667,7 @@
 </tr>
 <tr>
 	<td>REMOVE_REPEATABLE</td>
-	<td>(//button[contains(@aria-label,'Remove')])[${key_index}]</td>
+	<td>//*[contains(@id,"RedirectPortlet")]//div[2]/div/div[${key_index}]/div[2]/button[1]</td>
 	<td></td>
 </tr>
 <tr>

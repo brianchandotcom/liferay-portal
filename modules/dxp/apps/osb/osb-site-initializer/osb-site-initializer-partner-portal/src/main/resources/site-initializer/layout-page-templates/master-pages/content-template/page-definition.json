@@ -5,8 +5,9 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"paddingLeft": "6",
-						"paddingRight": "6",
+						"maxWidth": "1440px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
 						"shadow": "boxShadowSm",
 						"textAlign": ""
 					},
@@ -15,8 +16,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "landscapeMobile"
 						},
@@ -24,8 +25,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "portraitMobile"
 						},
@@ -33,8 +34,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "5",
-								"paddingRight": "5"
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
 							},
 							"id": "tablet"
 						}
@@ -47,10 +48,10 @@
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
-						"paddingLeft": 6,
-						"paddingRight": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
 						"paddingTop": 0,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
@@ -407,6 +408,9 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
+						"maxWidth": "1440px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
@@ -414,8 +418,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "landscapeMobile"
 						},
@@ -423,8 +427,9 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0"
+								"paddingLeft": "24px",
+								"paddingRight": "24px",
+								"paddingTop": "0"
 							},
 							"id": "portraitMobile"
 						},
@@ -432,8 +437,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0"
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
 							},
 							"id": "tablet"
 						}
@@ -449,7 +454,7 @@
 						"paddingLeft": 0,
 						"paddingRight": 0,
 						"paddingTop": 0,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [

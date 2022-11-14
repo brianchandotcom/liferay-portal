@@ -4,9 +4,11 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderRadius": "",
 						"borderWidth": "0",
-						"paddingLeft": "6",
-						"paddingRight": "6",
+						"maxWidth": "1440px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
 						"shadow": "boxShadowSm",
 						"textAlign": ""
 					},
@@ -15,8 +17,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "landscapeMobile"
 						},
@@ -24,8 +26,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "portraitMobile"
 						},
@@ -33,8 +35,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "5",
-								"paddingRight": "5"
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
 							},
 							"id": "tablet"
 						}
@@ -46,11 +48,12 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
-						"paddingLeft": 6,
-						"paddingRight": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
 						"paddingTop": 0,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
@@ -407,8 +410,9 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"paddingLeft": "6",
-						"paddingRight": "6",
+						"maxWidth": "1440px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
@@ -416,8 +420,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "landscapeMobile"
 						},
@@ -425,8 +429,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "portraitMobile"
 						},
@@ -434,8 +438,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "5",
-								"paddingRight": "5"
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
 							},
 							"id": "tablet"
 						}
@@ -448,10 +452,10 @@
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
-						"paddingLeft": 6,
-						"paddingRight": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
 						"paddingTop": 0,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
@@ -479,6 +483,9 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
+						"maxWidth": "1440px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
@@ -486,8 +493,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "landscapeMobile"
 						},
@@ -495,8 +502,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0"
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "portraitMobile"
 						},
@@ -504,8 +511,8 @@
 							"fragmentViewportStyle": {
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingLeft": "0",
-								"paddingRight": "0"
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
 							},
 							"id": "tablet"
 						}
@@ -521,7 +528,7 @@
 						"paddingLeft": 0,
 						"paddingRight": 0,
 						"paddingTop": 0,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
@@ -541,9 +548,11 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
-						"paddingBottom": "6",
-						"paddingLeft": "6",
-						"paddingRight": "6",
+						"maxWidth": "1440px",
+						"paddingBottom": "80px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
+						"paddingTop": "80px",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
@@ -552,9 +561,10 @@
 								"marginBottom": "0",
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingBottom": "4",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingBottom": "24px",
+								"paddingLeft": "24px",
+								"paddingRight": "24px",
+								"paddingTop": "24px"
 							},
 							"id": "landscapeMobile"
 						},
@@ -563,9 +573,9 @@
 								"marginBottom": "0",
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingBottom": "4",
-								"paddingLeft": "4",
-								"paddingRight": "4"
+								"paddingBottom": "24px",
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
 							},
 							"id": "portraitMobile"
 						},
@@ -574,9 +584,10 @@
 								"marginBottom": "0",
 								"marginLeft": "0",
 								"marginRight": "0",
-								"paddingBottom": "5",
-								"paddingLeft": "5",
-								"paddingRight": "5"
+								"paddingBottom": "40px",
+								"paddingLeft": "40px",
+								"paddingRight": "40px",
+								"paddingTop": "40px"
 							},
 							"id": "tablet"
 						}
@@ -588,11 +599,12 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 6,
-						"paddingLeft": 6,
-						"paddingRight": 6,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
 						"paddingTop": 0,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [

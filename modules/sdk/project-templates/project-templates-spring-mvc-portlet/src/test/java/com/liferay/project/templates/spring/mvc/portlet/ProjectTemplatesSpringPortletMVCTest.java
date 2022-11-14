@@ -97,13 +97,13 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 	public ProjectTemplatesSpringPortletMVCTest(
 		String framework, String frameworkDependencies, String viewType,
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_framework = framework;
 		_frameworkDependencies = frameworkDependencies;
 		_viewType = viewType;
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
@@ -223,24 +223,25 @@ public class ProjectTemplatesSpringPortletMVCTest
 				destinationDir, destinationDir, template, name, groupId,
 				mavenExecutor, "-DclassName=Sample", "-Dframework=" + framework,
 				"-DframeworkDependencies=" + frameworkDependencies,
+				"-DliferayProduct=" + _liferayProduct,
 				"-DliferayVersion=" + liferayVersion, "-Dpackage=com.test",
-				"-Dproduct=" + _product, "-DviewType=" + viewType);
+				"-DviewType=" + viewType);
 		}
 
 		return buildTemplateWithGradle(
 			destinationDir, template, name, "--class-name", "Sample",
 			"--framework", framework, "--framework-dependencies",
-			frameworkDependencies, "--liferay-version", liferayVersion,
-			"--package-name", "com.test", "--product", _product, "--view-type",
-			viewType);
+			frameworkDependencies, "--liferay-product", _liferayProduct,
+			"--liferay-version", liferayVersion, "--package-name", "com.test",
+			"--view-type", viewType);
 	}
 
 	private static URI _gradleDistribution;
 
 	private final String _framework;
 	private final String _frameworkDependencies;
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 	private final String _viewType;
 
 }

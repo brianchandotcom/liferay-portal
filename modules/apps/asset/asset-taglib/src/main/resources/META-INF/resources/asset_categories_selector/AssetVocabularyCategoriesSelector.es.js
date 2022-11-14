@@ -46,7 +46,6 @@ function AssetVocabulariesCategoriesSelector({
 
 	const [invalidItems, setInvalidItems] = useState([]);
 	const [resource, setResource] = useState([]);
-	const [selectionModalIsOpen, setSelectionModalIsOpen] = useState(false);
 	const selectButtonRef = useRef();
 
 	const previousInputValue = usePrevious(inputValue);
@@ -135,11 +134,7 @@ function AssetVocabulariesCategoriesSelector({
 		onSelectedItemsChange(current);
 	};
 
-	const selectionModalId = inputName + '_SelectionModal';
-
 	const handleSelectButtonClick = () => {
-		setSelectionModalIsOpen(true);
-
 		const url = createPortletURL(portletURL, {
 			selectedCategories: selectedItems.map((item) => item.value).join(),
 			singleSelect,
@@ -149,12 +144,9 @@ function AssetVocabulariesCategoriesSelector({
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			height: '70vh',
-			id: selectionModalId,
 			iframeBodyCssClass: '',
 			multiple: true,
 			onClose: () => {
-				setSelectionModalIsOpen(false);
-
 				selectButtonRef.current?.focus();
 			},
 			onSelect: (selectedItems) => {
@@ -279,8 +271,6 @@ function AssetVocabulariesCategoriesSelector({
 
 					<ClayInput.GroupItem shrink>
 						<ClayButton
-							aria-controls={selectionModalId}
-							aria-expanded={selectionModalIsOpen}
 							aria-haspopup="dialog"
 							aria-label={sub(
 								Liferay.Language.get('select-x'),

@@ -19,7 +19,7 @@ import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {objectToFormData, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 const noop = () => {};
 
@@ -37,7 +37,6 @@ function AssetTagsSelector({
 	selectedItems = [],
 	showSelectButton,
 }) {
-	const [selectionModalIsOpen, setSelectionModalIsOpen] = useState(false);
 	const selectButtonRef = useRef();
 
 	const {refetch, resource} = useResource({
@@ -123,11 +122,7 @@ function AssetTagsSelector({
 		);
 	};
 
-	const selectionModalId = inputName + '_SelectionModal';
-
 	const handleSelectButtonClick = () => {
-		setSelectionModalIsOpen(true);
-
 		const sub = (str, object) =>
 			str.replace(/\{([^}]+)\}/g, (_, m) => object[m]);
 
@@ -138,11 +133,8 @@ function AssetTagsSelector({
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			getSelectedItemsOnly: false,
-			id: {selectionModalId},
 			multiple: true,
 			onClose: () => {
-				setSelectionModalIsOpen(false);
-
 				selectButtonRef.current?.focus();
 			},
 			onSelect: (dialogSelectedItems) => {
@@ -248,8 +240,6 @@ function AssetTagsSelector({
 					{showSelectButton && (
 						<ClayInput.GroupItem shrink>
 							<ClayButton
-								aria-controls={selectionModalId}
-								aria-expanded={selectionModalIsOpen}
 								aria-haspopup="dialog"
 								aria-label={sub(
 									Liferay.Language.get('select-x'),

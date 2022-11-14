@@ -19,8 +19,11 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
+import com.liferay.object.exception.ObjectActionErrorMessageException;
+import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -88,6 +92,8 @@ public class ObjectActionLocalServiceImpl
 		_validate(
 			conditionExpression, name, objectActionExecutorKey,
 			objectActionTriggerKey, parametersUnicodeProperties);
+		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
+		_validateLabel(labelMap);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -106,6 +112,9 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setActive(active);
 		objectAction.setConditionExpression(conditionExpression);
 		objectAction.setDescription(description);
+		objectAction.setErrorMessageMap(
+			errorMessageMap, LocaleUtil.getSiteDefault());
+		objectAction.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectAction.setName(name);
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
@@ -181,6 +190,8 @@ public class ObjectActionLocalServiceImpl
 		_validate(
 			conditionExpression, name, objectActionExecutorKey,
 			objectActionTriggerKey, parametersUnicodeProperties);
+		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
+		_validateLabel(labelMap);
 
 		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
 			objectActionId);
@@ -188,6 +199,9 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setActive(active);
 		objectAction.setConditionExpression(conditionExpression);
 		objectAction.setDescription(description);
+		objectAction.setErrorMessageMap(
+			errorMessageMap, LocaleUtil.getSiteDefault());
+		objectAction.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectAction.setName(name);
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
@@ -331,6 +345,34 @@ public class ObjectActionLocalServiceImpl
 
 		if (MapUtil.isNotEmpty(errorMessageKeys)) {
 			throw new ObjectActionParametersException(errorMessageKeys);
+		}
+	}
+
+	private void _validateErrorMessage(
+			Map<Locale, String> errorMessageMap, String objectActionTriggerKey)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION) &&
+			((errorMessageMap == null) ||
+			 Validator.isNull(errorMessageMap.get(locale)))) {
+
+			throw new ObjectActionErrorMessageException(
+				"Error message is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateLabel(Map<Locale, String> labelMap)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
+			throw new ObjectActionLabelException(
+				"Label is null for locale " + locale.getDisplayName());
 		}
 	}
 

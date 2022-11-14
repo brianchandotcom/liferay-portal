@@ -79,7 +79,6 @@ TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPrefe
 				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= tagFacetPortletPreferences.getFrequencyThreshold() %>" />
 
 				<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(TagFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= tagFacetPortletPreferences.getOrder() %>">
-					<aui:option label="" value="" />
 					<aui:option label="term-frequency-descending" value="count:desc" />
 					<aui:option label="term-frequency-ascending" value="count:asc" />
 					<aui:option label="term-value-ascending" value="key:asc" />

@@ -557,11 +557,11 @@ definition {
 		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster1\"");
 	}
 
-	@description = "LPS-167308 - Assure that search is still functional after ElasticSearch is redeployed"
+	@description = "Assert search is functional after Elasticsearch connector is redeployed from GogoShell"
 	@priority = "3"
-	test SearchAfterRedeployElasticSearchConnector {
+	test SearchAfterRedeployingElasticsearchConnector {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#SearchAfterRedeployElasticSearchConnector";
+		property test.name.skip.portal.instance = "Elasticsearch7#SearchAfterRedeployingElasticsearchConnector";
 
 		GogoShell.openGogoShellAdmin();
 

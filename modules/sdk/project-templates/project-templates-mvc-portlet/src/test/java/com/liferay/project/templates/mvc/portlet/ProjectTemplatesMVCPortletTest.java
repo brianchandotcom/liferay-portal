@@ -71,17 +71,17 @@ public class ProjectTemplatesMVCPortletTest
 	}
 
 	public ProjectTemplatesMVCPortletTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
 			temporaryFolder, "mvc-portlet", "foo", "foo", _liferayVersion,
-			_product, mavenExecutor, _gradleDistribution);
+			_liferayProduct, mavenExecutor, _gradleDistribution);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");
@@ -105,7 +105,7 @@ public class ProjectTemplatesMVCPortletTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

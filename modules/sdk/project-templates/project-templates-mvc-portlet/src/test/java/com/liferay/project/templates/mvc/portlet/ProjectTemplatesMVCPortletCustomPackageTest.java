@@ -71,17 +71,18 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 	}
 
 	public ProjectTemplatesMVCPortletCustomPackageTest(
-		String liferayVersion, String product) {
+		String liferayVersion, String liferayProduct) {
 
 		_liferayVersion = liferayVersion;
-		_product = product;
+		_liferayProduct = liferayProduct;
 	}
 
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
 			temporaryFolder, "mvc-portlet", "foo", "com.liferay.test",
-			_liferayVersion, _product, mavenExecutor, _gradleDistribution);
+			_liferayVersion, _liferayProduct, mavenExecutor,
+			_gradleDistribution);
 
 		testContains(
 			gradleProjectDir,
@@ -95,7 +96,7 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 
 	private static URI _gradleDistribution;
 
+	private final String _liferayProduct;
 	private final String _liferayVersion;
-	private final String _product;
 
 }

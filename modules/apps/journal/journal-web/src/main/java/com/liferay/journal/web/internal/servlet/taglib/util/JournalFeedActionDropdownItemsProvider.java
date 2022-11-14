@@ -106,6 +106,7 @@ public class JournalFeedActionDropdownItemsProvider {
 				).setParameter(
 					"deleteFeedId", _journalFeed.getFeedId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -127,6 +128,7 @@ public class JournalFeedActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _journalFeed.getGroupId()
 				).buildString());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -146,6 +148,7 @@ public class JournalFeedActionDropdownItemsProvider {
 			dropdownItem.putData("action", "permissionsJournalFeed");
 			dropdownItem.putData(
 				"permissionsJournalFeedURL", permissionsJournalFeedURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};

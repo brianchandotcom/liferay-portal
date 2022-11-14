@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = LockManager.class)
+@Component(service = LockManager.class)
 public class LockManagerImpl implements LockManager {
 
 	@Override

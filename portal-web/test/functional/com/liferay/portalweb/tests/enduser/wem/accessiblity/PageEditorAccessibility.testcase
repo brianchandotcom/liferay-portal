@@ -378,9 +378,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			Click(
-				key_text = "page-template",
-				locator1 = "Icon#ANY");
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 		}
 
 		task ("Then the page creator sees the Name and Page Template Set fields with aria-required attribute on modal") {

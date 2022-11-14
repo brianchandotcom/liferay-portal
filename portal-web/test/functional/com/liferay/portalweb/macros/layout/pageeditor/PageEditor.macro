@@ -1704,9 +1704,7 @@ definition {
 	}
 
 	macro createPageTemplate {
-		Click(
-			key_text = "page-template",
-			locator1 = "Icon#ANY");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 
 		if (isSet(experienceName)) {
 			AssertTextEquals(

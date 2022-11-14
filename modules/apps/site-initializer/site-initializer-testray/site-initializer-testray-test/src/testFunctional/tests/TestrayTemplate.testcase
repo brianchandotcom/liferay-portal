@@ -1,0 +1,108 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-163118=true";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.addTestraySite();
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("Go to project and create a new Routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+        }
+
+		task ("Go to Testray 2 and change the pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+
+		Testray.deleteAllProjects();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-163905 - Verify that when creating a build with template, it comes with 'Active' status by default"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateTemplateWithActiveDefault {
+
+		// TODO LPS-163905 CanCreateTemplateWithActiveDefault pending implementation
+
+	}
+
+	@description = "This is a test for LPS-163906 - Verify that can filter out deactivated models"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanFilterDeactiveTemplate {
+
+		// TODO LPS-163906 CanFilterDeactiveTemplate pending implementation
+
+	}
+
+	@description = "This is a test for LPS-163907 - Verify that can see the deactivated templates in the filter when deactivate a template"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewDeactiveInFilter {
+
+		// TODO LPS-163907 CanViewDeactiveInFilter pending implementation
+
+	}
+
+	@description = "This is a test for LPS-163908 - Verify if can delete an deactived template"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteDeactiveTemplate {
+
+		// TODO LPS-163908 CanDeleteDeactiveTemplate pending implementation
+
+	}
+
+	@description = "This is a test for LPS-163909 - Verify that can not delete an activated template"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanNotDeleteActiveTemplate {
+
+		// TODO LPS-163909 CanNotDeleteActiveTemplate pending implementation
+
+	}
+
+}

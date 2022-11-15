@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -32,9 +30,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -82,32 +77,9 @@ public class DefaultDestinationFactory implements DestinationFactory {
 			new SynchronousDestinationPrototype());
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDestinationPrototype(
-		DestinationPrototype destinationPrototype,
-		Map<String, Object> properties) {
-
-		_destinationPrototypes.put(
-			MapUtil.getString(properties, "destination.type"),
-			destinationPrototype);
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		_destinationPrototypes.clear();
-	}
-
-	protected void removeDestinationPrototype(
-		DestinationPrototype destinationPrototype,
-		Map<String, Object> properties) {
-
-		_destinationPrototypes.remove(
-			MapUtil.getString(properties, "destination.type"),
-			destinationPrototype);
 	}
 
 	private final ConcurrentMap<String, DestinationPrototype>

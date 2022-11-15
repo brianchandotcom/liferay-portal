@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -1050,6 +1051,12 @@ public class ViewChangesDisplayContext {
 			CTEntry ctEntry = ctEntryMap.get(classPK);
 
 			if (ctEntry == null) {
+				if (modelClassNameId == _portal.getClassNameId(
+						PortletPreferences.class)) {
+
+					continue;
+				}
+
 				if (baseModelMap == null) {
 					baseModelMap = _basePersistenceRegistry.fetchBaseModelMap(
 						modelClassNameId, classPKs);

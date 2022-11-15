@@ -17,9 +17,9 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useSessionState} from '@liferay/layout-content-page-editor-web';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {fetch, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 
 const ENTER_KEYCODE = 13;
 const ROOT_ITEM_ID = '0';
@@ -123,6 +123,9 @@ PagesTree.propTypes = {
 };
 
 function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
+	const stackAnchorRef = useRef(null);
+	const itemAnchorRef = useRef(null);
+
 	return (
 		<ClayTreeView.Item
 			actions={
@@ -147,7 +150,7 @@ function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
 				draggable={item.id !== ROOT_ITEM_ID}
 				onKeyDown={(event) => {
 					if (event.keyCode === ENTER_KEYCODE && item.regularURL) {
-						navigate(item.regularURL);
+						stackAnchorRef.current.click();
 					}
 				}}
 			>
@@ -159,7 +162,9 @@ function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
 							className="flex-grow-1 text-decoration-none text-truncate w-100"
 							data-tooltip-floating="true"
 							href={item.regularURL}
+							ref={stackAnchorRef}
 							tabIndex="-1"
+							target={item.target}
 							title={item.name}
 						>
 							{item.name}
@@ -197,7 +202,7 @@ function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
 								event.keyCode === ENTER_KEYCODE &&
 								item.regularURL
 							) {
-								navigate(item.regularURL);
+								itemAnchorRef.current.click();
 							}
 						}}
 					>
@@ -209,7 +214,9 @@ function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
 									className="flex-grow-1 text-decoration-none text-truncate w-100"
 									data-tooltip-floating="true"
 									href={item.regularURL}
+									ref={itemAnchorRef}
 									tabIndex="-1"
+									target={item.target}
 									title={item.name}
 								>
 									{item.name}

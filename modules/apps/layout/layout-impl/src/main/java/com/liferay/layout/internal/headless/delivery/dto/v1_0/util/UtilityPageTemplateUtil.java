@@ -20,11 +20,29 @@ import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Bárbara Cabrera
  */
 public class UtilityPageTemplateUtil {
+
+	public static String convertToExternalValue(int value) {
+		Set<String> externalValues = _types.keySet();
+
+		for (String externalValue : externalValues) {
+			if (Objects.equals(value, _types.get(externalValue))) {
+				return externalValue;
+			}
+		}
+
+		return null;
+	}
+
+	public static int convertToInternalValue(String label) {
+		return _types.get(label);
+	}
 
 	public static UtilityPageTemplate toUtilityPageTemplate(
 		LayoutUtilityPageEntry layoutUtilityPageEntry) {
@@ -37,16 +55,16 @@ public class UtilityPageTemplateUtil {
 					layoutUtilityPageEntry.getExternalReferenceCode();
 				name = layoutUtilityPageEntry.getName();
 				type = Type.create(
-					_types.get(layoutUtilityPageEntry.getType()));
+					convertToExternalValue(layoutUtilityPageEntry.getType()));
 			}
 		};
 	}
 
-	private static final Map<Integer, String> _types = HashMapBuilder.put(
-		LayoutUtilityPageEntryConstants.Type.ERROR_404.getType(), "Error"
+	private static final Map<String, Integer> _types = HashMapBuilder.put(
+		"Error", LayoutUtilityPageEntryConstants.Type.ERROR_404.getType()
 	).put(
-		LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE.getType(),
-		"TermsOfUse"
+		"TermsOfUse",
+		LayoutUtilityPageEntryConstants.Type.TERMS_OF_USE.getType()
 	).build();
 
 }

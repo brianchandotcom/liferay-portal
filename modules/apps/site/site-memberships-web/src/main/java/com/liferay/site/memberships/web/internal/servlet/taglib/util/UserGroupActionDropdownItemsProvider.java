@@ -123,9 +123,8 @@ public class UserGroupActionDropdownItemsProvider {
 					).setParameter(
 						"removeUserGroupId", _userGroup.getUserGroupId()
 					).buildString());
-				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
+					LanguageUtil.get(_httpServletRequest, "remove-membership"));
 			}
 		).build();
 	}

@@ -26,57 +26,43 @@ if (assetPublisherAddItemHolders.size() == 1) {
 
 	label = LanguageUtil.format(request, "new-x", new Object[] {assetPublisherAddItemHolder.getModelResource()});
 }
-
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"title", label
-).build();
 %>
 
 <liferay-ui:success key="collectionItemAdded" message="your-request-completed-successfully" />
 
 <li class="control-menu-nav-item control-menu-nav-item-content">
-	<a aria-label="<%= label %>" data-title="<%= label %>">
-		<c:choose>
-			<c:when test="<%= assetPublisherAddItemHolders.size() == 1 %>">
+	<c:choose>
+		<c:when test="<%= assetPublisherAddItemHolders.size() == 1 %>">
 
-				<%
-				AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
-				%>
+			<%
+			AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
+			%>
 
-				<liferay-ui:icon
-					data="<%= data %>"
-					icon="plus"
-					linkCssClass="icon-monospaced lfr-portal-tooltip"
-					markupView="lexicon"
-					message="<%= label %>"
-					url="<%= String.valueOf(assetPublisherAddItemHolder.getPortletURL()) %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:icon-menu
-					cssClass="lfr-portal-tooltip"
-					data="<%= data %>"
-					direction="left-side"
-					icon="plus"
-					markupView="lexicon"
-					message="<%= label %>"
-				>
+			<liferay-ui:icon
+				data="<%= data %>"
+				icon="plus"
+				linkCssClass="icon-monospaced lfr-portal-tooltip"
+				markupView="lexicon"
+				message="<%= label %>"
+				url="<%= String.valueOf(assetPublisherAddItemHolder.getPortletURL()) %>"
+			/>
+		</c:when>
+		<c:otherwise>
 
-					<%
-					for (AssetPublisherAddItemHolder assetPublisherAddItemHolder : assetPublisherAddItemHolders) {
-					%>
+			<%
+			CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (CollectionItemsDetailDisplayContext)request.getAttribute(CollectionPageLayoutTypeControllerWebKeys.COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT);
+			%>
 
-						<liferay-ui:icon
-							message="<%= assetPublisherAddItemHolder.getModelResource() %>"
-							url="<%= String.valueOf(assetPublisherAddItemHolder.getPortletURL()) %>"
-						/>
-
-					<%
-					}
-					%>
-
-				</liferay-ui:icon-menu>
-			</c:otherwise>
-		</c:choose>
-	</a>
+			<clay:dropdown-menu
+				aria-label="<%= label %>"
+				borderless="<%= true %>"
+				displayType="unstyled"
+				dropdownItems="<%= collectionItemsDetailDisplayContext.getDropdownItems(assetPublisherAddItemHolders) %>"
+				icon="plus"
+				monospaced="<%= true %>"
+				small="<%= true %>"
+				title="<%= label %>"
+			/>
+		</c:otherwise>
+	</c:choose>
 </li>

@@ -17,6 +17,9 @@ package com.liferay.layout.type.controller.collection.internal.display.context;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -91,6 +94,29 @@ public class CollectionItemsDetailDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public List<DropdownItem> getDropdownItems(
+		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders) {
+
+		return new DropdownItemList() {
+			{
+				for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
+						assetPublisherAddItemHolders) {
+
+					add(
+						dropdownItem -> {
+							String collectionItemURL = String.valueOf(
+								assetPublisherAddItemHolder.getPortletURL());
+
+							dropdownItem.setHref(collectionItemURL);
+
+							dropdownItem.setLabel(
+								assetPublisherAddItemHolder.getModelResource());
+						});
+				}
+			}
+		};
 	}
 
 	public String getNamespace() {

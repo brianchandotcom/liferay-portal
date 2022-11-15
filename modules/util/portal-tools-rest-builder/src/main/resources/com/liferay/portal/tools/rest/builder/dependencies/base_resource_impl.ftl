@@ -1015,10 +1015,7 @@ public abstract class Base${schemaName}ResourceImpl
 		return permissions;
 	}
 
-	private Permission _toPermission(
-		List<ResourceAction> resourceActions,
-		ResourcePermission resourcePermission, com.liferay.portal.kernel.model.Role role) {
-
+	private Permission _toPermission(List<ResourceAction> resourceActions, ResourcePermission resourcePermission, com.liferay.portal.kernel.model.Role role) {
 		Set<String> actionsIdsSet = new HashSet<>();
 
 		long actionIds = resourcePermission.getActionIds();

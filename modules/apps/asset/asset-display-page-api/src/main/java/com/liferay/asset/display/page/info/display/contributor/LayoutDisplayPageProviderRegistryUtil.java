@@ -23,7 +23,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Jürgen Kappler
  */
-public class LayoutDisplayPageProviderTrackerUtil {
+public class LayoutDisplayPageProviderRegistryUtil {
 
 	public static LayoutDisplayPageProviderRegistry
 		getLayoutDisplayPageProviderRegistry() {

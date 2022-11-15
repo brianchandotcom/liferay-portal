@@ -50,9 +50,18 @@ String userGroupGroupRolesString = ListUtil.toString(UserGroupGroupRoleLocalServ
 				<%= HtmlUtil.escape(userGroupGroupRolesString) %>
 			</h6>
 
-			<liferay-ui:search-container-column-jsp
-				path="/user_group_action.jsp"
-			/>
+			<liferay-ui:search-container-column-text>
+
+				<%
+				UserGroupActionDropdownItemsProvider userGroupActionDropdownItemsProvider = new UserGroupActionDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, siteMembershipsDisplayContext, userGroup);
+				%>
+
+				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+					dropdownItems="<%= userGroupActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/UserGroupsDefaultPropsTransformer"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -77,9 +86,18 @@ String userGroupGroupRolesString = ListUtil.toString(UserGroupGroupRoleLocalServ
 				value="<%= HtmlUtil.escape(userGroupGroupRolesString) %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/user_group_action.jsp"
-			/>
+			<liferay-ui:search-container-column-text>
+
+				<%
+				UserGroupActionDropdownItemsProvider userGroupActionDropdownItemsProvider = new UserGroupActionDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse, siteMembershipsDisplayContext, userGroup);
+				%>
+
+				<clay:dropdown-actions
+					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+					dropdownItems="<%= userGroupActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/UserGroupsDefaultPropsTransformer"
+				/>
+			</liferay-ui:search-container-column-text>
 		</c:if>
 	</c:otherwise>
 </c:choose>

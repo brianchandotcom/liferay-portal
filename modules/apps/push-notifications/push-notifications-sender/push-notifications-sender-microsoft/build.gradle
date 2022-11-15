@@ -1,9 +1,9 @@
 dependencies {
-	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.jboss.aerogear.windows", name: "java-mpns", version: "0.1.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:push-notifications:push-notifications-api")
 	compileOnly project(":core:petra:petra-function")

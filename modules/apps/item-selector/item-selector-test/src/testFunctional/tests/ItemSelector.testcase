@@ -223,7 +223,10 @@ definition {
 			viewNoLocationInfo = "Site Name");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test ensures that web content using a structure can be filtered from the current depot."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanFilterCustomWCFromCurrentDepot {
@@ -273,7 +276,10 @@ definition {
 			itemType = "Web Content Article");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test ensures that a document folder can be filtered from the current depot."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanFilterDMFolderFromCurrentDepot {
@@ -301,7 +307,10 @@ definition {
 			itemType = "Documents Folder");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test ensures that a document can be filtered from the current depot."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanFilterImageFromCurrentDepot {
@@ -333,7 +342,10 @@ definition {
 			itemType = "Document");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test ensures that web contents can filter by the current site in the item selector."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanFilterWCByCurrentSite {
@@ -380,7 +392,10 @@ definition {
 			webContentTitle = "Web Content From Site");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test ensures that the web content folder can be filtered from the current depot."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanFilterWCFolderFromCurrentDepot {
@@ -409,7 +424,10 @@ definition {
 			itemType = "Web Content Folder");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test ensures that web content can be filtered from the current depot."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanFilterWCFromCurrentDepot {
@@ -850,7 +868,10 @@ definition {
 		ContentPages.viewFragmentBackgroundImage(image = "document_1-jpeg");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This test covers LPS-119553. It ensures that the assets in the connected site can not be filtered out after navigating to the depot through the breadcrumb."
+	@ignore = "true"
 	@priority = "4"
 	@refactordone
 	test CanViewCorrectFilterResultsInSpecificBreadcrumb {
@@ -912,7 +933,10 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "WC WebContent From Site");
 	}
 
+	// Ignored until LPS-159228 implemented
+
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
+	@ignore = "true"
 	@priority = "5"
 	@refactordone
 	test CanViewCorrectWCLocationInfo {

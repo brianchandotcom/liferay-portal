@@ -38,13 +38,16 @@ if (assetPublisherAddItemHolders.size() == 1) {
 			AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
 			%>
 
-			<liferay-ui:icon
-				data="<%= data %>"
+			<clay:link
+				aria-label="<%= label %>"
+				borderless="<%= true %>"
+				cssClass="lfr-portal-tooltip"
+				data-title="<%= label %>"
+				displayType="unstyled"
+				href="<%= String.valueOf(assetPublisherAddItemHolder.getPortletURL()) %>"
 				icon="plus"
-				linkCssClass="icon-monospaced lfr-portal-tooltip"
-				markupView="lexicon"
-				message="<%= label %>"
-				url="<%= String.valueOf(assetPublisherAddItemHolder.getPortletURL()) %>"
+				monospaced="<%= true %>"
+				small="<%= true %>"
 			/>
 		</c:when>
 		<c:otherwise>

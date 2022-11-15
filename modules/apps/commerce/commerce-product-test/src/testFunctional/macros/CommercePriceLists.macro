@@ -25,7 +25,7 @@ definition {
 
 	macro assertDeleteButtonNotPresent {
 		Click(
-			key_value = "${baseName}",
+			key_value = "${baseEntryName}",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		AssertElementNotPresent(

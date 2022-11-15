@@ -1608,7 +1608,7 @@ definition {
 
 		task ("Then verifies that there is no Delete button for Master and Minium Base Price Lists") {
 			for (var basePriceListName : list "Master Base Price List,Minium Base Price List") {
-				CommercePriceLists.assertDeleteButtonNotPresent(baseName = "${basePriceListName}");
+				CommercePriceLists.assertDeleteButtonNotPresent(baseEntryName = "${basePriceListName}");
 			}
 		}
 
@@ -1640,7 +1640,7 @@ definition {
 
 		task ("Then verifies that there is no Delete button for Master and Minium Base Promotions") {
 			for (var basePromotionName : list "Master Base Promotion,Minium Base Promotion") {
-				CommercePriceLists.assertDeleteButtonNotPresent(baseName = "${basePromotionName}");
+				CommercePriceLists.assertDeleteButtonNotPresent(baseEntryName = "${basePromotionName}");
 			}
 		}
 

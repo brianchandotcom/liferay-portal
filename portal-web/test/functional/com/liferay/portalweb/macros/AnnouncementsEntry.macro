@@ -35,12 +35,6 @@ definition {
 
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
 
-		var displayDateHourLength = StringUtil.length("${displayDateHour}");
-
-		if ("${displayDateHourLength}" == "1") {
-			var displayDateHour = "0${displayDateHour}";
-		}
-
 		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
 
 		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
@@ -48,12 +42,29 @@ definition {
 		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
 
-		var displayDateMinuteFuture = ${displayDateMinute} + 1;
+		var displayDateMinuteFuture = ${displayDateMinute} + 2;
+
+		if ("${displayDateMinuteFuture}" == "60") {
+			var displayDateMinuteFuture = "00";
+		}
+		else if ("${displayDateMinuteFuture}" == "61") {
+			var displayDateMinuteFuture = "01";
+		}
+
+		if ("${displayDateMinuteFuture" == "00" | "01") {
+			var displayDateHour = ${displayDateHour} + 1;
+		}
 
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
 		if ("${displayDateMinuteFutureLength}" == "1") {
 			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
+		}
+
+		var displayDateHourLength = StringUtil.length("${displayDateHour}");
+
+		if ("${displayDateHourLength}" == "1") {
+			var displayDateHour = "0${displayDateHour}";
 		}
 
 		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";

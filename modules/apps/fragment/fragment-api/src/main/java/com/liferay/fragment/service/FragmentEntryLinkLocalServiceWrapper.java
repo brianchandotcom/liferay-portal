@@ -725,6 +725,16 @@ public class FragmentEntryLinkLocalServiceWrapper
 	}
 
 	@Override
+	public void updateLatestChanges(
+			com.liferay.fragment.model.FragmentEntry fragmentEntry,
+			FragmentEntryLink fragmentEntryLink)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_fragmentEntryLinkLocalService.updateLatestChanges(
+			fragmentEntry, fragmentEntryLink);
+	}
+
+	@Override
 	public void updateLatestChanges(long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -15,6 +15,7 @@
 package com.liferay.fragment.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -480,6 +481,10 @@ public interface FragmentEntryLinkLocalService
 	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
+		throws PortalException;
+
+	public void updateLatestChanges(
+			FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink)
 		throws PortalException;
 
 	public void updateLatestChanges(long fragmentEntryLinkId)

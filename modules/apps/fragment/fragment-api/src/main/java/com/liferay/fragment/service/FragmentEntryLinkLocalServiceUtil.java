@@ -635,6 +635,14 @@ public class FragmentEntryLinkLocalServiceUtil {
 			fragmentEntryLinkId, editableValues, updateClassedModel);
 	}
 
+	public static void updateLatestChanges(
+			com.liferay.fragment.model.FragmentEntry fragmentEntry,
+			FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		getService().updateLatestChanges(fragmentEntry, fragmentEntryLink);
+	}
+
 	public static void updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException {
 

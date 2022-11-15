@@ -33,6 +33,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {DataEngineTaglibCompatibilityLayer} from './DataEngineTaglibCompatibilityLayer';
 import {FormBuilder} from './FormBuilder';
+import KeyboardDNDText from './KeyboardDNDText';
 import INITIAL_CONFIG from './config/initialConfig';
 import INITIAL_STATE from './config/initialState';
 import {useData} from './hooks/useData';
@@ -79,6 +80,8 @@ const App = (props) => {
 							<DataEngineTaglibCompatibilityLayer />
 
 							<FormBuilder />
+
+							<KeyboardDNDText />
 						</KeyboardDNDContextProvider>
 					</FormProvider>
 				</ConfigProvider>

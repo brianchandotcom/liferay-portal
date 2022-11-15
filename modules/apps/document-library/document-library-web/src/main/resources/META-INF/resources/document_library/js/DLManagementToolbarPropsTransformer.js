@@ -18,6 +18,7 @@ import {
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
+	openToast,
 	sub,
 } from 'frontend-js-web';
 
@@ -250,6 +251,16 @@ export default function propsTransformer({
 
 			map.set(modelClassName, previousValue);
 		});
+
+		if (map.size > 1) {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+
+			return;
+		}
 
 		const selectedModelClassName = prioritizedModelClassNames.find(
 			(modelClassName) => map.has(modelClassName)

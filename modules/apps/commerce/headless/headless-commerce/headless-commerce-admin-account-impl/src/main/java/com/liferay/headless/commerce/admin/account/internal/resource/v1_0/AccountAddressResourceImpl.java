@@ -184,6 +184,9 @@ public class AccountAddressResourceImpl
 				accountAddress.getType(), commerceAddress.getType()),
 			_serviceContextHelper.getServiceContext());
 
+		_updateDefaultBillingShippingAddressId(
+			commerceAddress.getClassPK(), accountAddress, commerceAddress);
+
 		return _toAccountAddress(commerceAddress);
 	}
 
@@ -233,6 +236,9 @@ public class AccountAddressResourceImpl
 			GetterUtil.getInteger(
 				accountAddress.getType(), commerceAddress.getType()),
 			_serviceContextHelper.getServiceContext());
+
+		_updateDefaultBillingShippingAddressId(
+			commerceAddress.getClassPK(), accountAddress, commerceAddress);
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -359,6 +365,9 @@ public class AccountAddressResourceImpl
 					CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING),
 				_serviceContextHelper.getServiceContext());
 
+		_updateDefaultBillingShippingAddressId(
+			accountEntry.getAccountEntryId(), accountAddress, commerceAddress);
+
 		return _accountAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				commerceAddress.getCommerceAddressId(),
@@ -429,6 +438,26 @@ public class AccountAddressResourceImpl
 		}
 
 		return accountAddresses;
+	}
+
+	private void _updateDefaultBillingShippingAddressId(
+			long accountEntryId, AccountAddress accountAddress,
+			CommerceAddress commerceAddress)
+		throws Exception {
+
+		if (Boolean.TRUE.equals(accountAddress.getDefaultBilling())) {
+			_accountEntryLocalService.updateDefaultBillingAddressId(
+				accountEntryId, commerceAddress.getCommerceAddressId());
+
+			commerceAddress.setDefaultBilling(true);
+		}
+
+		if (Boolean.TRUE.equals(accountAddress.getDefaultShipping())) {
+			_accountEntryLocalService.updateDefaultShippingAddressId(
+				accountEntryId, commerceAddress.getCommerceAddressId());
+
+			commerceAddress.setDefaultShipping(true);
+		}
 	}
 
 	@Reference(

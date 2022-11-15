@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = InfoItemObjectVariationProvider.class)
+@Component(service = InfoItemObjectVariationProvider.class)
 public class FileEntryInfoItemObjectVariationProvider
 	implements InfoItemObjectVariationProvider<FileEntry> {
 

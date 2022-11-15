@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.web.internal.configuration.CacheControlConfiguration.scoped",
 	service = {
 		CacheControlConfigurationManagedServiceFactory.class,

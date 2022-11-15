@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class DLFileEntryTypePermissionPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

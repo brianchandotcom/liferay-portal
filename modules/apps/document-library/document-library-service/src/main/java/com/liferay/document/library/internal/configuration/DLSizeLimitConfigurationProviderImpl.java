@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLSizeLimitConfigurationProvider.class)
+@Component(service = DLSizeLimitConfigurationProvider.class)
 public class DLSizeLimitConfigurationProviderImpl
 	implements DLSizeLimitConfigurationProvider {
 

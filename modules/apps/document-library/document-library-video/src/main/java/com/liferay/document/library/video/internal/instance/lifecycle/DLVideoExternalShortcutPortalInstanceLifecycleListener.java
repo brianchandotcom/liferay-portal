@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class DLVideoExternalShortcutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

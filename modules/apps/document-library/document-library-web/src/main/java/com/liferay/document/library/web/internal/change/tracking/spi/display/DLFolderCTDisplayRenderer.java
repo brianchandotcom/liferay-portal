@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = CTDisplayRenderer.class)
+@Component(service = CTDisplayRenderer.class)
 public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 
 	@Override

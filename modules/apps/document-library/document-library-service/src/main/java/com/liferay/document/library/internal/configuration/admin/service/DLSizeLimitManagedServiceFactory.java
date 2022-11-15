@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration",
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.scoped",
 	service = {
 		DLSizeLimitManagedServiceFactory.class, ManagedServiceFactory.class

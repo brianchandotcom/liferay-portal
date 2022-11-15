@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	service = {ModelListener.class, PortalInstanceLifecycleListener.class}
 )
 public class DLFileEntryTypeModelListener

@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = MenuItemProvider.class)
+@Component(service = MenuItemProvider.class)
 public class MenuItemProvider {
 
 	public List<MenuItem> getAddDocumentTypesMenuItems(

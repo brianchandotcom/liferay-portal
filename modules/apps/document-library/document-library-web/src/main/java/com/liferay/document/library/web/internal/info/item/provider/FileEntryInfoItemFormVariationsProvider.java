@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Adolfo Pérez
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = InfoItemFormVariationsProvider.class)
+@Component(service = InfoItemFormVariationsProvider.class)
 public class FileEntryInfoItemFormVariationsProvider
 	implements InfoItemFormVariationsProvider<FileEntry> {
 

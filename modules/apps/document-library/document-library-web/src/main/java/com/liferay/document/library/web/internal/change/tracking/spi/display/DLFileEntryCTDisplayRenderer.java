@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = CTDisplayRenderer.class)
+@Component(service = CTDisplayRenderer.class)
 public class DLFileEntryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DLFileEntry> {
 

@@ -71,9 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(
-	enabled = false, immediate = true, service = InfoCollectionProvider.class
-)
+@Component(enabled = false, service = InfoCollectionProvider.class)
 public class BasicDocumentSingleFormVariationInfoCollectionProvider
 	implements ConfigurableInfoCollectionProvider<FileEntry>,
 			   FilteredInfoCollectionProvider<FileEntry>,

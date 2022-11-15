@@ -340,7 +340,7 @@ function openDropdown() {
 		return;
 	}
 
-	dropdownElement.classList.replace('d-none', 'd-block');
+	dropdownElement.classList.replace('d-none', 'show');
 	uiInputElement.setAttribute('aria-expanded', 'true');
 	buttonElement.setAttribute('aria-expanded', 'true');
 
@@ -351,7 +351,7 @@ function openDropdown() {
 }
 
 function closeDropdown() {
-	dropdownElement.classList.replace('d-block', 'd-none');
+	dropdownElement.classList.replace('show', 'd-none');
 	uiInputElement.setAttribute('aria-expanded', 'false');
 	buttonElement.setAttribute('aria-expanded', 'false');
 }

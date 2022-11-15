@@ -208,6 +208,8 @@ public class CPDefinitionDisplayLayoutDisplayContext
 				return commerceChannel.getGroupId();
 			}
 		).setParameter(
+			"ignoreCommerceAccountGroup", Boolean.TRUE
+		).setParameter(
 			"singleSelection", Boolean.TRUE
 		).buildString();
 	}

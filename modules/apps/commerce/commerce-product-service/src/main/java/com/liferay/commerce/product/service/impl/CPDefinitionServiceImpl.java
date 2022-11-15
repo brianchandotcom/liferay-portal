@@ -419,8 +419,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-			long companyId, String keywords, int status, int start, int end,
-			Sort sort)
+			long companyId, String keywords, int status,
+			boolean ignoreCommerceAccountGroup, int start, int end, Sort sort)
 		throws PortalException {
 
 		List<CommerceCatalog> commerceCatalogs =
@@ -434,7 +434,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		).toArray();
 
 		return cpDefinitionLocalService.searchCPDefinitions(
-			companyId, groupIds, keywords, status, start, end, sort);
+			companyId, groupIds, keywords, status, ignoreCommerceAccountGroup,
+			start, end, sort);
 	}
 
 	@Override
@@ -462,7 +463,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public BaseModelSearchResult<CPDefinition>
 			searchCPDefinitionsByChannelGroupId(
 				long companyId, long commerceChannelGroupId, String keywords,
-				int status, int start, int end, Sort sort)
+				int status, boolean ignoreCommerceAccountGroup, int start,
+				int end, Sort sort)
 		throws PortalException {
 
 		List<CommerceCatalog> commerceCatalogs =
@@ -477,7 +479,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.searchCPDefinitionsByChannelGroupId(
 			companyId, groupIds, commerceChannelGroupId, keywords, status,
-			start, end, sort);
+			ignoreCommerceAccountGroup, start, end, sort);
 	}
 
 	@Override

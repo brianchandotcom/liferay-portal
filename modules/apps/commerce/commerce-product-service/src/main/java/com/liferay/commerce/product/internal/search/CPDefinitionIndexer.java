@@ -290,8 +290,14 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				CPField.ACCOUNT_GROUP_FILTER_ENABLED, Boolean.FALSE.toString(),
 				BooleanClauseOccur.SHOULD);
 
-			contextBooleanFilter.add(
-				commerceAccountGroupsBooleanFilter, BooleanClauseOccur.MUST);
+			boolean ignoreCommerceAccountGroup = GetterUtil.getBoolean(
+				attributes.get("ignoreCommerceAccountGroup"));
+
+			if (!ignoreCommerceAccountGroup) {
+				contextBooleanFilter.add(
+					commerceAccountGroupsBooleanFilter,
+					BooleanClauseOccur.MUST);
+			}
 		}
 		else {
 			long[] commerceCatalogIds = _getUserCommerceCatalogIds(

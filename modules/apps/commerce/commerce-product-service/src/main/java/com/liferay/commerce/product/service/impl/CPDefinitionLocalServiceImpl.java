@@ -2053,11 +2053,14 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
 			long companyId, long[] groupIds, String keywords, int status,
-			int start, int end, Sort sort)
+			boolean ignoreCommerceAccountGroup, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
 			companyId, groupIds, keywords, status, start, end, sort);
+
+		searchContext.setAttribute(
+			"ignoreCommerceAccountGroup", ignoreCommerceAccountGroup);
 
 		return _searchCPDefinitions(searchContext);
 	}
@@ -2085,7 +2088,8 @@ public class CPDefinitionLocalServiceImpl
 	public BaseModelSearchResult<CPDefinition>
 			searchCPDefinitionsByChannelGroupId(
 				long companyId, long[] groupIds, long commerceChannelGroupId,
-				String keywords, int status, int start, int end, Sort sort)
+				String keywords, int status, boolean ignoreCommerceAccountGroup,
+				int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
@@ -2093,6 +2097,8 @@ public class CPDefinitionLocalServiceImpl
 
 		searchContext.setAttribute(
 			CPField.COMMERCE_CHANNEL_GROUP_ID, commerceChannelGroupId);
+		searchContext.setAttribute(
+			"ignoreCommerceAccountGroup", ignoreCommerceAccountGroup);
 		searchContext.setAttribute("secure", Boolean.TRUE);
 
 		return _searchCPDefinitions(searchContext);

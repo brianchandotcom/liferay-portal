@@ -96,14 +96,14 @@ public class CPDefinitionInfoCollectionProvider
 				cpDefinitionBaseModelSearchResult =
 					_cpDefinitionService.searchCPDefinitionsByChannelGroupId(
 						serviceContext.getCompanyId(), commerceChannelGroupId,
-						keywords, WorkflowConstants.STATUS_APPROVED,
+						keywords, WorkflowConstants.STATUS_APPROVED, false,
 						pagination.getStart(), pagination.getEnd(), sort);
 			}
 			else {
 				cpDefinitionBaseModelSearchResult =
 					_cpDefinitionService.searchCPDefinitions(
 						serviceContext.getCompanyId(), keywords,
-						WorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_APPROVED, false,
 						pagination.getStart(), pagination.getEnd(), sort);
 			}
 

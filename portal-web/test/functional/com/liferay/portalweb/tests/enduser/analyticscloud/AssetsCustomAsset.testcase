@@ -184,8 +184,8 @@ definition {
 
 		task ("Navigate to Custom Asset page") {
 			ACUtils.navigateToSitePage(
-					pageName = "AC Page 2",
-					siteName = "Site Name");
+				pageName = "AC Page 2",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {

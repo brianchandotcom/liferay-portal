@@ -18,6 +18,7 @@ import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
+import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManagerHttpExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
@@ -28,6 +29,7 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsR
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -68,6 +71,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -103,25 +107,23 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
-		String objectDefinitionKey = _getObjectDefinitionKey(
-			objectDefinition.getCompanyId(),
-			objectDefinition.getRESTContextPath());
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinitionKey);
+			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
 
 		if (objectDefinitions == null) {
 			objectDefinitions = new HashMap<>();
 
-			_objectDefinitionsMap.put(objectDefinitionKey, objectDefinitions);
+			_objectDefinitionsMap.put(
+				objectDefinition.getRESTContextPath(), objectDefinitions);
 
 			_excludeScopedMethods(objectDefinition, objectScopeProvider);
-
-			_initCustomObjectDefinition(objectDefinition, objectDefinitionKey);
 		}
+
+		_initCustomObjectDefinition(objectDefinition);
 
 		objectDefinitions.put(
 			objectDefinition.getCompanyId(), objectDefinition);
@@ -144,8 +146,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		long companyId, String restContextPath) {
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(
-				_getObjectDefinitionKey(companyId, restContextPath));
+			_objectDefinitionsMap.get(restContextPath);
 
 		if (objectDefinitions != null) {
 			return objectDefinitions.get(companyId);
@@ -156,27 +157,34 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
-		String objectDefinitionKey = _getObjectDefinitionKey(
-			objectDefinition.getCompanyId(),
-			objectDefinition.getRESTContextPath());
+		String restContextPath = objectDefinition.getRESTContextPath();
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinitionKey);
+			_objectDefinitionsMap.get(restContextPath);
 
 		if (objectDefinitions != null) {
 			objectDefinitions.remove(objectDefinition.getCompanyId());
 
 			if (objectDefinitions.isEmpty()) {
-				_objectDefinitionsMap.remove(objectDefinitionKey);
+				_objectDefinitionsMap.remove(restContextPath);
 			}
 		}
 
-		if (_objectDefinitionsMap.containsKey(objectDefinitionKey)) {
-			return;
+		ServiceRegistration<?> serviceRegistration1 =
+			_applicationServiceRegistrations.remove(restContextPath);
+
+		serviceRegistration1.unregister();
+
+		List<String> companyIds = _basePathCompanyIds.get(restContextPath);
+
+		companyIds.remove(String.valueOf(objectDefinition.getCompanyId()));
+
+		if (companyIds.isEmpty()) {
+			_basePathCompanyIds.remove(restContextPath);
 		}
 
 		List<ComponentInstance> componentInstances =
-			_componentInstancesMap.remove(objectDefinitionKey);
+			_componentInstancesMap.remove(restContextPath);
 
 		if (componentInstances != null) {
 			for (ComponentInstance componentInstance : componentInstances) {
@@ -185,13 +193,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrationsMap.remove(objectDefinitionKey);
+			_serviceRegistrationsMap.remove(restContextPath);
 
 		if (serviceRegistrations != null) {
-			for (ServiceRegistration<?> serviceRegistration :
+			for (ServiceRegistration<?> serviceRegistration2 :
 					serviceRegistrations) {
 
-				serviceRegistration.unregister();
+				serviceRegistration2.unregister();
 			}
 		}
 	}
@@ -261,39 +269,51 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 	}
 
-	private String _getObjectDefinitionKey(
-		long companyId, String restContextPath) {
-
-		return restContextPath + companyId;
-	}
-
 	private void _initCustomObjectDefinition(
-		ObjectDefinition objectDefinition, String objectDefinitionKey) {
+		ObjectDefinition objectDefinition) {
+
+		String restContextPath = objectDefinition.getRESTContextPath();
+
+		List<String> companyIds = _basePathCompanyIds.computeIfAbsent(
+			restContextPath, key -> new ArrayList<>());
+
+		companyIds.add(String.valueOf(objectDefinition.getCompanyId()));
 
 		String osgiJaxRsName = objectDefinition.getOSGiJaxRsName();
 
-		_componentInstancesMap.put(
-			objectDefinitionKey,
-			Arrays.asList(
-				_objectEntryApplicationComponentFactory.newInstance(
-					HashMapDictionaryBuilder.<String, Object>put(
-						"companyId",
-						String.valueOf(objectDefinition.getCompanyId())
-					).put(
-						"liferay.jackson", false
-					).put(
-						"osgi.jaxrs.application.base",
-						objectDefinition.getRESTContextPath()
-					).put(
-						"osgi.jaxrs.extension.select",
-						"(osgi.jaxrs.name=Liferay.Vulcan)"
-					).put(
-						"osgi.jaxrs.name", osgiJaxRsName
-					).build())));
+		HashMapDictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", companyIds
+			).put(
+				"liferay.jackson", false
+			).put(
+				"osgi.jaxrs.application.base",
+				objectDefinition.getRESTContextPath()
+			).put(
+				"osgi.jaxrs.extension.select",
+				"(osgi.jaxrs.name=Liferay.Vulcan)"
+			).put(
+				"osgi.jaxrs.name", osgiJaxRsName
+			).build();
 
-		_serviceRegistrationsMap.put(
-			objectDefinitionKey,
-			Arrays.asList(
+		ServiceRegistration<Application> applicationServiceRegistration =
+			_applicationServiceRegistrations.get(restContextPath);
+
+		if (applicationServiceRegistration == null) {
+			_applicationServiceRegistrations.put(
+				restContextPath,
+				_bundleContext.registerService(
+					Application.class,
+					new ObjectEntryApplication(_objectEntryOpenAPIResource),
+					properties));
+		}
+		else {
+			applicationServiceRegistration.setProperties(properties);
+		}
+
+		_serviceRegistrationsMap.computeIfAbsent(
+			restContextPath,
+			key -> Arrays.asList(
 				_bundleContext.registerService(
 					ContextProvider.class,
 					new ObjectDefinitionContextProvider(this, _portal),
@@ -495,6 +515,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionDeployerImpl.class);
 
+	private final Map<String, ServiceRegistration<Application>>
+		_applicationServiceRegistrations = new HashMap<>();
+	private final Map<String, List<String>> _basePathCompanyIds =
+		new HashMap<>();
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -529,16 +553,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final Map<String, Map<Long, ObjectDefinition>>
 		_objectDefinitionsMap = new HashMap<>();
 
-	@Reference(
-		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
-	)
-	private ComponentFactory _objectEntryApplicationComponentFactory;
-
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

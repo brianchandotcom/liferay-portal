@@ -23,17 +23,16 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Javier de Arcos
  */
-@Component(
-	factory = "com.liferay.object.internal.jaxrs.application.ObjectEntryApplication",
-	service = Application.class
-)
 public class ObjectEntryApplication extends Application {
+
+	public ObjectEntryApplication(
+		ObjectEntryOpenAPIResource objectEntryOpenAPIResource) {
+
+		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
+	}
 
 	@Override
 	public Set<Object> getSingletons() {
@@ -45,7 +44,6 @@ public class ObjectEntryApplication extends Application {
 		return objects;
 	}
 
-	@Reference
-	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
+	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 }

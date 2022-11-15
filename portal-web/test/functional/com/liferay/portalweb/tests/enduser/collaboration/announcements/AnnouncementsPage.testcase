@@ -83,11 +83,15 @@ definition {
 			entryTitle = "Announcements Entry Title",
 			entryURL = "http://www.liferay.com");
 
+		var currentTime = DateUtil.getFormattedCurrentDate("h:mm", "UTC");
+
+		echo("Current Time: ${currentTime}");
+
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 
-		// We need to wait for the system time to pass by 1 minute in order to verify the announcement display date. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
+		// We need to wait for the system time to pass by 2 minutes in order to verify the announcement display date. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = "60000");
+		Pause(locator1 = "120000");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 

@@ -28,9 +28,11 @@ exports[`CriteriaRow renders 1`] = `
         </b>
       </span>
       <select
+        aria-label="select-option"
         class="form-control criterion-input form-control operator-input"
       />
       <input
+        aria-label="input-a-value"
         class="criterion-input form-control"
         data-testid="simple-string"
         type="text"
@@ -38,6 +40,7 @@ exports[`CriteriaRow renders 1`] = `
       />
       <button
         class="btn-outline-borderless btn-sm mr-1 btn btn-monospaced btn-secondary"
+        title="Duplicate"
         type="button"
       >
         <svg
@@ -51,6 +54,7 @@ exports[`CriteriaRow renders 1`] = `
       </button>
       <button
         class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
+        title="Delete"
         type="button"
       >
         <svg
@@ -95,10 +99,12 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         </b>
       </span>
       <select
+        aria-label="select-option"
         class="form-control criterion-input form-control operator-input"
         disabled=""
       />
       <input
+        aria-label="input-a-value"
         class="criterion-input form-control"
         data-testid="simple-string"
         disabled=""

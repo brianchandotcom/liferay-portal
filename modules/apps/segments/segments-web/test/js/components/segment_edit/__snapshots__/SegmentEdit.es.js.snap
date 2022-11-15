@@ -75,6 +75,7 @@ exports[`SegmentEdit renders 1`] = `
               class="input-group-item ml-2"
             >
               <input
+                aria-label="untitled-segment"
                 class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
@@ -169,6 +170,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
               class="input-group-item ml-2"
             >
               <input
+                aria-label="untitled-segment"
                 class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
@@ -189,7 +191,9 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
               class="btn-group-item mr-2"
             >
               <label
+                aria-label="Edit"
                 class="toggle-switch toggle-editing"
+                title="Edit"
               >
                 <input
                   class="toggle-switch-check"
@@ -343,6 +347,7 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="input-group-item ml-2"
             >
               <input
+                aria-label="untitled-segment"
                 class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
@@ -362,7 +367,9 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="btn-group-item mr-2"
             >
               <label
+                aria-label="View"
                 class="toggle-switch toggle-editing"
+                title="View"
               >
                 <input
                   checked=""
@@ -522,6 +529,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                   class="input-group-item"
                 >
                   <input
+                    aria-label="search"
                     class="form-control input-group-inset input-group-inset-after"
                     data-testid="search-input"
                     placeholder="search"
@@ -534,6 +542,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                     <button
                       class="btn btn-unstyled"
                       data-testid="search-button"
+                      title="Search"
                       type="button"
                     >
                       <svg
@@ -560,6 +569,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                 >
                   <a
                     class="sidebar-collapse-header"
+                    tabindex="0"
                   >
                     First Test Values Group
                     <span>
@@ -587,6 +597,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                       <li
                         class="criteria-sidebar-item-root color--first-test-values-group"
                         draggable="true"
+                        tabindex="0"
                       >
                         <span
                           class="inline-item"
@@ -680,11 +691,11 @@ exports[`SegmentEdit renders with given values 1`] = `
                   <div
                     class="criteria-builder-root"
                   >
-                    <h4
+                    <h3
                       class="sheet-subtitle"
                     >
                       x-with-property-x
-                    </h4>
+                    </h3>
                     <div
                       class="criteria-group-root criteria-group-item-root color--first-test-values-group"
                     >
@@ -725,6 +736,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </b>
                             </span>
                             <select
+                              aria-label="select-option"
                               class="form-control criterion-input form-control operator-input"
                             >
                               <option
@@ -749,6 +761,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </option>
                             </select>
                             <input
+                              aria-label="input-a-value"
                               class="criterion-input form-control"
                               data-testid="simple-string"
                               type="text"
@@ -756,6 +769,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                             />
                             <button
                               class="btn-outline-borderless btn-sm mr-1 btn btn-monospaced btn-secondary"
+                              title="Duplicate"
                               type="button"
                             >
                               <svg
@@ -769,6 +783,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                             </button>
                             <button
                               class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
+                              title="Delete"
                               type="button"
                             >
                               <svg
@@ -894,6 +909,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
               class="input-group-item ml-2"
             >
               <input
+                aria-label="untitled-segment"
                 class="field form-control form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"

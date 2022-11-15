@@ -5,11 +5,11 @@ exports[`CriteriaBuilder renders 1`] = `
   <div
     class="criteria-builder-root"
   >
-    <h4
+    <h3
       class="sheet-subtitle"
     >
       x-with-property-x
-    </h4>
+    </h3>
     <div
       class="criteria-group-item-root color--user"
     >

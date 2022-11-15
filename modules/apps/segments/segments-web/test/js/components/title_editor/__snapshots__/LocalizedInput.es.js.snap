@@ -474,6 +474,7 @@ exports[`LocalizedInput rendering with pre-existing value has dropdown with opti
       class="input-group-item ml-2"
     >
       <input
+        aria-label=""
         class="field form-control form-control-inline language-value rounded"
         data-testid="localized-main-input"
         placeholder=""
@@ -525,6 +526,7 @@ exports[`LocalizedInput rendering with pre-existing value renders 1`] = `
       class="input-group-item ml-2"
     >
       <input
+        aria-label=""
         class="field form-control form-control-inline language-value rounded"
         data-testid="localized-main-input"
         placeholder=""
@@ -576,6 +578,7 @@ exports[`LocalizedInput with minimal configuration renders 1`] = `
       class="input-group-item ml-2"
     >
       <input
+        aria-label=""
         class="field form-control form-control-inline language-value rounded"
         data-testid="localized-main-input"
         placeholder=""

@@ -4,6 +4,7 @@ exports[`CriteriaSidebarItem renders 1`] = `
 <DocumentFragment>
   <li
     class="criteria-sidebar-item-root"
+    tabindex="0"
   >
     <span
       class="inline-item"

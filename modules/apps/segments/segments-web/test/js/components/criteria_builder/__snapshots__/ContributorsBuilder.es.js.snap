@@ -26,6 +26,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
               class="input-group-item"
             >
               <input
+                aria-label="search"
                 class="form-control input-group-inset input-group-inset-after"
                 data-testid="search-input"
                 placeholder="search"
@@ -38,6 +39,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                 <button
                   class="btn btn-unstyled"
                   data-testid="search-button"
+                  title="Search"
                   type="button"
                 >
                   <svg
@@ -64,6 +66,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
             >
               <a
                 class="sidebar-collapse-header"
+                tabindex="0"
               >
                 User
                 <span>
@@ -91,6 +94,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -125,6 +129,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -159,6 +164,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -193,6 +199,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -227,6 +234,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -261,6 +269,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -295,6 +304,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -329,6 +339,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -363,6 +374,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -397,6 +409,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -431,6 +444,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -465,6 +479,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -499,6 +514,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -533,6 +549,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -567,6 +584,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -601,6 +619,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -635,6 +654,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -669,6 +689,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -708,6 +729,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
             >
               <a
                 class="sidebar-collapse-header"
+                tabindex="0"
               >
                 User Organization
                 <span>
@@ -813,6 +835,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
               class="input-group-item"
             >
               <input
+                aria-label="search"
                 class="form-control input-group-inset input-group-inset-after"
                 data-testid="search-input"
                 placeholder="search"
@@ -825,6 +848,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                 <button
                   class="btn btn-unstyled"
                   data-testid="search-button"
+                  title="Search"
                   type="button"
                 >
                   <svg
@@ -851,6 +875,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
             >
               <a
                 class="sidebar-collapse-header"
+                tabindex="0"
               >
                 User
                 <span>
@@ -878,6 +903,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -912,6 +938,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -946,6 +973,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -980,6 +1008,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1014,6 +1043,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1048,6 +1078,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1082,6 +1113,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1116,6 +1148,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1150,6 +1183,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1184,6 +1218,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1218,6 +1253,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1252,6 +1288,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1286,6 +1323,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1320,6 +1358,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1354,6 +1393,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1388,6 +1428,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1422,6 +1463,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1456,6 +1498,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <li
                     class="criteria-sidebar-item-root color--user"
                     draggable="true"
+                    tabindex="0"
                   >
                     <span
                       class="inline-item"
@@ -1495,6 +1538,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
             >
               <a
                 class="sidebar-collapse-header"
+                tabindex="0"
               >
                 User Organization
                 <span>

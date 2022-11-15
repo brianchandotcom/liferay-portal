@@ -56,7 +56,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBrie
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseDocumentResourceImpl;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -185,7 +185,7 @@ public class DocumentDTOConverter
 						_getDDMStructureId(fileEntry), dtoConverterContext,
 						fileEntry.getGroupId(), fileEntry,
 						_infoItemServiceRegistry,
-						_layoutDisplayPageProviderTracker, _layoutLocalService,
+						_layoutDisplayPageProviderRegistry, _layoutLocalService,
 						_layoutPageTemplateEntryService,
 						"getDocumentRenderedContentByDisplayPageDisplayPage" +
 							"Key"));
@@ -417,7 +417,8 @@ public class DocumentDTOConverter
 	private JournalArticleService _journalArticleService;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

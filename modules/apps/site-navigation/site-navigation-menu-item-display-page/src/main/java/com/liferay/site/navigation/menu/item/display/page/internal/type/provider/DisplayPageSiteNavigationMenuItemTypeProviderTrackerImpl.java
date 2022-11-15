@@ -22,7 +22,7 @@ import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.reflect.GenericUtil;
@@ -104,7 +104,8 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 		_layoutDisplayPageMultiSelectionProviderRegistry;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private Portal _portal;
@@ -176,7 +177,7 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 								className, _infoItemServiceRegistry,
 								_layoutDisplayPageInfoItemFieldValuesProviderRegistry,
 								_layoutDisplayPageMultiSelectionProviderRegistry,
-								_layoutDisplayPageProviderTracker),
+								_layoutDisplayPageProviderRegistry),
 							_itemSelector, _jspRenderer, _portal,
 							_servletContext),
 						HashMapDictionaryBuilder.<String, Object>put(

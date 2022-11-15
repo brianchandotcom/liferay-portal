@@ -30,7 +30,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -197,10 +197,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return null;
 		}
 
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker =
-			ServletContextUtil.getLayoutDisplayPageProviderTracker();
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry =
+			ServletContextUtil.getLayoutDisplayPageProviderRegistry();
 
-		return layoutDisplayPageProviderTracker.
+		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
 				InfoSearchClassMapperRegistryUtil.getClassName(
 					listObjectReference.getItemType()));

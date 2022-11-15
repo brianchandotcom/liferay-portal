@@ -36,7 +36,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -246,7 +246,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	protected InfoSearchClassMapperRegistry infoSearchClassMapperRegistry;
 
 	@Reference
-	protected LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker;
+	protected LayoutDisplayPageProviderRegistry
+		layoutDisplayPageProviderRegistry;
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;
@@ -402,7 +403,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		String urlSeparator = _getURLSeparator(friendlyURL);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderTracker.
+			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByURLSeparator(urlSeparator);
 
 		if (layoutDisplayPageProvider == null) {

@@ -31,7 +31,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -297,12 +297,12 @@ public class SelectAssetDisplayPageDisplayContext {
 			return _inheritableDisplayPageTemplate;
 		}
 
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker =
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry =
 			LayoutDisplayPageProviderTrackerUtil.
-				getLayoutDisplayPageProviderTracker();
+				getLayoutDisplayPageProviderRegistry();
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderTracker.
+			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
 					PortalUtil.getClassName(_classNameId));
 
@@ -348,12 +348,13 @@ public class SelectAssetDisplayPageDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker =
-				LayoutDisplayPageProviderTrackerUtil.
-					getLayoutDisplayPageProviderTracker();
+			LayoutDisplayPageProviderRegistry
+				layoutDisplayPageProviderRegistry =
+					LayoutDisplayPageProviderTrackerUtil.
+						getLayoutDisplayPageProviderRegistry();
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				layoutDisplayPageProviderTracker.
+				layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByClassName(
 						PortalUtil.getClassName(_classNameId));
 

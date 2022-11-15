@@ -20,7 +20,7 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemVe
 import com.liferay.content.dashboard.journal.internal.item.action.PreviewJournalArticleContentDashboardItemVersionAction;
 import com.liferay.content.dashboard.journal.internal.item.action.ViewJournalArticleContentDashboardItemAction;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -62,7 +62,7 @@ public class PreviewJournalArticleContentDashboardItemVersionActionProvider
 
 		return new PreviewJournalArticleContentDashboardItemVersionAction(
 			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
-			journalArticle, _language, _layoutDisplayPageProviderTracker,
+			journalArticle, _language, _layoutDisplayPageProviderRegistry,
 			_layoutLocalService, _layoutSEOLinkManager, _portal,
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 	}
@@ -88,7 +88,7 @@ public class PreviewJournalArticleContentDashboardItemVersionActionProvider
 					new ViewJournalArticleContentDashboardItemAction(
 						_assetDisplayPageFriendlyURLProvider,
 						httpServletRequest, journalArticle, _language,
-						_layoutDisplayPageProviderTracker, _layoutLocalService,
+						_layoutDisplayPageProviderRegistry, _layoutLocalService,
 						_layoutSEOLinkManager, _portal);
 
 			if (Validator.isNull(
@@ -118,7 +118,8 @@ public class PreviewJournalArticleContentDashboardItemVersionActionProvider
 	private Language _language;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

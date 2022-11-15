@@ -18,7 +18,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.content.dashboard.item.action.ContentDashboardItemVersionAction;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -49,7 +49,7 @@ public class PreviewJournalArticleContentDashboardItemVersionAction
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
 		Language language,
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry,
 		LayoutLocalService layoutLocalService,
 		LayoutSEOLinkManager layoutSEOLinkManager, Portal portal,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
@@ -59,7 +59,7 @@ public class PreviewJournalArticleContentDashboardItemVersionAction
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
 		_language = language;
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 		_layoutLocalService = layoutLocalService;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_portal = portal;
@@ -96,7 +96,7 @@ public class PreviewJournalArticleContentDashboardItemVersionAction
 				new ViewJournalArticleContentDashboardItemAction(
 					_assetDisplayPageFriendlyURLProvider, _httpServletRequest,
 					_journalArticle, _language,
-					_layoutDisplayPageProviderTracker, _layoutLocalService,
+					_layoutDisplayPageProviderRegistry, _layoutLocalService,
 					_layoutSEOLinkManager, _portal);
 
 		String displayPageTemplateURL =
@@ -149,8 +149,8 @@ public class PreviewJournalArticleContentDashboardItemVersionAction
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
-	private final LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private final LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private final Portal _portal;

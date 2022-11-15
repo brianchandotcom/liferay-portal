@@ -14,7 +14,7 @@
 
 package com.liferay.asset.display.page.info.display.contributor;
 
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -25,25 +25,26 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class LayoutDisplayPageProviderTrackerUtil {
 
-	public static LayoutDisplayPageProviderTracker
-		getLayoutDisplayPageProviderTracker() {
+	public static LayoutDisplayPageProviderRegistry
+		getLayoutDisplayPageProviderRegistry() {
 
 		return _serviceTracker.getService();
 	}
 
 	private static final ServiceTracker
-		<LayoutDisplayPageProviderTracker, LayoutDisplayPageProviderTracker>
+		<LayoutDisplayPageProviderRegistry, LayoutDisplayPageProviderRegistry>
 			_serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
-			LayoutDisplayPageProviderTracker.class);
+			LayoutDisplayPageProviderRegistry.class);
 
 		ServiceTracker
-			<LayoutDisplayPageProviderTracker, LayoutDisplayPageProviderTracker>
-				serviceTracker = new ServiceTracker<>(
+			<LayoutDisplayPageProviderRegistry,
+			 LayoutDisplayPageProviderRegistry> serviceTracker =
+				new ServiceTracker<>(
 					bundle.getBundleContext(),
-					LayoutDisplayPageProviderTracker.class, null);
+					LayoutDisplayPageProviderRegistry.class, null);
 
 		serviceTracker.open();
 

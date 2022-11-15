@@ -19,7 +19,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.journal.internal.item.action.ViewJournalArticleContentDashboardItemAction;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -83,7 +83,7 @@ public class ViewJournalArticleContentDashboardItemActionProvider
 
 		return new ViewJournalArticleContentDashboardItemAction(
 			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
-			journalArticle, _language, _layoutDisplayPageProviderTracker,
+			journalArticle, _language, _layoutDisplayPageProviderRegistry,
 			_layoutLocalService, _layoutSEOLinkManager, _portal);
 	}
 
@@ -95,7 +95,8 @@ public class ViewJournalArticleContentDashboardItemActionProvider
 	private Language _language;
 
 	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -22,7 +22,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
@@ -100,10 +100,10 @@ public class ServletContextUtil {
 		return _layoutClassedModelUsageRecorders;
 	}
 
-	public static LayoutDisplayPageProviderTracker
-		getLayoutDisplayPageProviderTracker() {
+	public static LayoutDisplayPageProviderRegistry
+		getLayoutDisplayPageProviderRegistry() {
 
-		return _layoutDisplayPageProviderTracker;
+		return _layoutDisplayPageProviderRegistry;
 	}
 
 	public static LayoutListRetrieverRegistry getLayoutListRetrieverRegistry() {
@@ -232,10 +232,10 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutDisplayPageProviderTracker(
-		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
+	protected void setLayoutDisplayPageProviderRegistry(
+		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
-		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
+		_layoutDisplayPageProviderRegistry = layoutDisplayPageProviderRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -295,8 +295,8 @@ public class ServletContextUtil {
 	private static LayoutAdaptiveMediaProcessor _layoutAdaptiveMediaProcessor;
 	private static final Map<String, LayoutClassedModelUsageRecorder>
 		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();
-	private static LayoutDisplayPageProviderTracker
-		_layoutDisplayPageProviderTracker;
+	private static LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 	private static LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
 	private static ListObjectReferenceFactoryRegistry
 		_listObjectReferenceFactoryRegistry;

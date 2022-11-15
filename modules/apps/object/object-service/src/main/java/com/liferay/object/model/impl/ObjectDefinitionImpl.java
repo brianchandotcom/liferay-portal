@@ -73,7 +73,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getOSGiJaxRsName(String className) {
-		return StringBundler.concat(getName(), className, getCompanyId());
+		return getName() + className;
 	}
 
 	@Override

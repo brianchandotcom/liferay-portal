@@ -13,13 +13,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
-import {objectToFormData, openSelectionModal, sub} from 'frontend-js-web';
+import {fetch, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const noop = () => {};
 
@@ -39,35 +38,38 @@ function AssetTagsSelector({
 }) {
 	const selectButtonRef = useRef();
 
-	const {refetch, resource} = useResource({
-		fetchOptions: {
-			'body': objectToFormData({
-				cmd: JSON.stringify({
-					'/assettag/search': {
-						end: 20,
-						groupIds,
-						name: `%${inputValue === '*' ? '' : inputValue}%`,
-						start: 0,
-						tagProperties: '',
-					},
-				}),
-				p_auth: Liferay.authToken,
-			}),
-			'credentials': 'include',
-			'method': 'POST',
-			'x-csrf-token': Liferay.authToken,
-		},
-		link: `${window.location.origin}${themeDisplay.getPathContext()}
-				/api/jsonws/invoke`,
-	});
+	const [resource, setResource] = useState([]);
 
 	const previousInputValue = usePrevious(inputValue);
 
 	useEffect(() => {
 		if (inputValue && inputValue !== previousInputValue) {
-			refetch();
+			fetch(
+				`${
+					window.location.origin
+				}${themeDisplay.getPathContext()}/api/jsonws/invoke`,
+				{
+					body: new URLSearchParams({
+						cmd: JSON.stringify({
+							'/assettag/search': {
+								end: 20,
+								groupIds,
+								name: `%${
+									inputValue === '*' ? '' : inputValue
+								}%`,
+								start: 0,
+								tagProperties: '',
+							},
+						}),
+						p_auth: Liferay.authToken,
+					}),
+					method: 'POST',
+				}
+			)
+				.then((response) => response.json())
+				.then((response) => setResource(response));
 		}
-	}, [inputValue, previousInputValue, refetch]);
+	}, [groupIds, inputValue, previousInputValue]);
 
 	const callGlobalCallback = (callback, item) => {
 		if (callback && typeof window[callback] === 'function') {

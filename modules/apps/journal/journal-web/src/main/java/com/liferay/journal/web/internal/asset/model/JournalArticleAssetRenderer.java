@@ -371,6 +371,32 @@ public class JournalArticleAssetRenderer
 			return _getHitLayoutURL(noSuchEntryRedirect, themeDisplay);
 		}
 
+		Layout layout = _article.getLayout();
+
+		if (layout == null) {
+			AssetRendererFactory<JournalArticle> assetRendererFactory =
+				getAssetRendererFactory();
+
+			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+				getClassName(), getClassPK());
+
+			layout = _getArticleLayout(
+				assetEntry.getLayoutUuid(), assetEntry.getGroupId());
+		}
+
+		if (layout != null) {
+			String friendlyURL = JournalHelperUtil.createURLPattern(
+				_article, themeDisplay.getLocale(), layout.isPrivateLayout(),
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR, themeDisplay);
+
+			if (!_article.isApproved()) {
+				friendlyURL = HttpComponentsUtil.addParameter(
+					friendlyURL, "version", _article.getVersion());
+			}
+
+			return PortalUtil.addPreservedParameters(themeDisplay, friendlyURL);
+		}
+
 		if (_assetDisplayPageFriendlyURLProvider != null) {
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
@@ -387,33 +413,7 @@ public class JournalArticleAssetRenderer
 			}
 		}
 
-		Layout layout = _article.getLayout();
-
-		if (layout == null) {
-			AssetRendererFactory<JournalArticle> assetRendererFactory =
-				getAssetRendererFactory();
-
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				getClassName(), getClassPK());
-
-			layout = _getArticleLayout(
-				assetEntry.getLayoutUuid(), assetEntry.getGroupId());
-
-			if (layout == null) {
-				return noSuchEntryRedirect;
-			}
-		}
-
-		String friendlyURL = JournalHelperUtil.createURLPattern(
-			_article, themeDisplay.getLocale(), layout.isPrivateLayout(),
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR, themeDisplay);
-
-		if (!_article.isApproved()) {
-			friendlyURL = HttpComponentsUtil.addParameter(
-				friendlyURL, "version", _article.getVersion());
-		}
-
-		return PortalUtil.addPreservedParameters(themeDisplay, friendlyURL);
+		return noSuchEntryRedirect;
 	}
 
 	@Override

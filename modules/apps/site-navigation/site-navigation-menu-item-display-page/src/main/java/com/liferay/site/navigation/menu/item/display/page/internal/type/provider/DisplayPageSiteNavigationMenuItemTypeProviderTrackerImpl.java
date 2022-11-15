@@ -20,7 +20,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
@@ -96,8 +96,8 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 	private JSPRenderer _jspRenderer;
 
 	@Reference
-	private LayoutDisplayPageInfoItemFieldValuesProviderTracker
-		_layoutDisplayPageInfoItemFieldValuesProviderTracker;
+	private LayoutDisplayPageInfoItemFieldValuesProviderRegistry
+		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;
 
 	@Reference
 	private LayoutDisplayPageMultiSelectionProviderTracker
@@ -174,7 +174,7 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 							_assetDisplayPageFriendlyURLProvider,
 							new DisplayPageTypeContext(
 								className, _infoItemServiceRegistry,
-								_layoutDisplayPageInfoItemFieldValuesProviderTracker,
+								_layoutDisplayPageInfoItemFieldValuesProviderRegistry,
 								_layoutDisplayPageMultiSelectionProviderTracker,
 								_layoutDisplayPageProviderTracker),
 							_itemSelector, _jspRenderer, _portal,

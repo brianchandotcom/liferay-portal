@@ -2546,7 +2546,7 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		if (fromArchive || fromCompletedBuild) {
+		if (fromArchive || isFromCompletedBuild()) {
 			update();
 		}
 	}

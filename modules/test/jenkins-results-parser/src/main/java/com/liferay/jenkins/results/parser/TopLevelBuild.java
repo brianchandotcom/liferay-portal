@@ -63,6 +63,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -649,6 +650,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public boolean isFromCompletedBuild() {
+		if (fromCompletedBuild) {
+			return fromCompletedBuild;
+		}
+
 		Build parentBuild = getParentBuild();
 
 		if (parentBuild != null) {
@@ -657,11 +662,39 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		String consoleText = getConsoleText();
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(consoleText)) {
+			return false;
+		}
+
 		if (consoleText.contains("stop-current-job:") ||
 			consoleText.contains(
 				"com.liferay.jenkins.results.parser.BuildLauncher teardown")) {
 
-			return true;
+			fromCompletedBuild = true;
+
+			return fromCompletedBuild;
+		}
+
+		String buildURL = getBuildURL();
+
+		if (!JenkinsResultsParserUtil.isURL(buildURL)) {
+			return false;
+		}
+
+		try {
+			JSONObject buildJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				buildURL + "api/json?tree=result");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					buildJSONObject.optString("result", null))) {
+
+				fromCompletedBuild = true;
+
+				return fromCompletedBuild;
+			}
+		}
+		catch (IOException | JSONException exception) {
+			return false;
 		}
 
 		return false;

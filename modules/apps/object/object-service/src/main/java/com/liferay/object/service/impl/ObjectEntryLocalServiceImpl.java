@@ -147,6 +147,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -2891,8 +2892,12 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
 		try {
 			_skipModelListeners.set(true);
+
+			WorkflowThreadLocal.setEnabled(true);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
@@ -2900,6 +2905,7 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectEntryId(), objectEntry, serviceContext);
 		}
 		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
 			_skipModelListeners.set(false);
 		}
 	}

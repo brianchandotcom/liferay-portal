@@ -571,7 +571,8 @@ definition {
 			value1 = "${assetListTitle}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+			key_assetTitle = "${assetListTitle}",
+			locator1 = "AssetLists#ASSET_TYPE_ROW",
 			value1 = "${type}");
 	}
 

@@ -4,8 +4,8 @@ definition {
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "User Interface";
-	property testray.main.component.name = "User Interface";
+	property testray.component.names = "Frontend Custom Dialog";
+	property testray.main.component.name = "Frontend JS API";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -35,6 +35,20 @@ definition {
 			SystemSettings.configureSystemSetting(
 				enableSetting = "false",
 				settingFieldName = "Enabled");
+		}
+	}
+
+	@description = "LPS-165263: This test validates that the liferay custom alert modal dialog can render."
+	@priority = "3"
+	test CanRenderOpenAlertModal {
+		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {
+			RunScript(locator1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
+		}
+
+		task ("Then: text 'Test Alert Modal' is present in the modal") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Test Alert Modal");
 		}
 	}
 

@@ -9,21 +9,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		// task ("Copy the token from AC") {
-		// 	ACUtils.launchAC();
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
 
-		// 	ACSettings.takeTokenFromAnalyticsCloud();
-		// }
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
 
-		// task ("Set up instance and sign in DXP") {
-		// 	TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
-		// }
+		}
 
-		// task ("Connect the DXP to AC") {
-		// 	ACDXPSettings.connectDXPtoAnalyticsCloud();
-		// }
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 	}
 
 	tearDown {
@@ -124,9 +124,12 @@ definition {
 		property test.name.skip.portal.instance = "SearchAPI#RequestKeywordsUsingGroupID";
 
 		var groupId1 = JSONGroupSetter.setGroupId(groupName = "Guest");
-		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");
 		var keyword = "general groupid";
 		var parametersGroup1 = "groupId=${groupId1}&sort=counts,desc,lastModifiedDate,desc";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");
 		var parametersGroup2 = "groupId=${groupId2}&sort=counts,desc,lastModifiedDate,desc";
 
 		task ("Go to DXP and get analytics configuration") {

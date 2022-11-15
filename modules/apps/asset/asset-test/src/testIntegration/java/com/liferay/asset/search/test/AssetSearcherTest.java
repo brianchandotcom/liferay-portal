@@ -18,10 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
-import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
@@ -72,7 +72,7 @@ public class AssetSearcherTest {
 		serviceContext.setAddGuestPermissions(false);
 
 		AssetVocabulary publicAssetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
+			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
@@ -87,7 +87,7 @@ public class AssetSearcherTest {
 			_group.getGroupId(), publicAssetVocabulary.getVocabularyId());
 
 		AssetVocabulary internalAssetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
+			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
@@ -391,12 +391,18 @@ public class AssetSearcherTest {
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
-		BlogsEntryLocalServiceUtil.addEntry(
+		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
 			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
 			serviceContext);
 	}
+
+	@Inject
+	private static AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private static BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
 	private static UserLocalService _userLocalService;

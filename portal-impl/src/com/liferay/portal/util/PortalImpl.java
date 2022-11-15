@@ -8751,7 +8751,9 @@ public class PortalImpl implements Portal {
 
 				String ppid = url.substring(x + 3, y);
 
-				if (Validator.isNotNull(ppid)) {
+				if (Validator.isNotNull(ppid) &&
+					(PortletLocalServiceUtil.getPortletById(ppid) != null)) {
+
 					friendlyURL = url.substring(0, x);
 
 					Map<String, String[]> actualParams = null;

@@ -19,10 +19,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Workflow.tearDownSiteWorkflow();
-
-			KBFolder.tearDownCP();
-
 			KBArticle.tearDownCP();
 
 			JSONUser.tearDownNonAdminUsers();

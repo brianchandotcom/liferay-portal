@@ -22,8 +22,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			KBFolder.tearDownCP();
-
 			KBArticle.tearDownCP();
 		}
 	}

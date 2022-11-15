@@ -57,11 +57,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		String href = configJSONObject.getString("href");
-
-		if (Validator.isNull(href)) {
-			return;
-		}
+		String href = null;
 
 		JSONObject hrefJSONObject = configJSONObject.getJSONObject("href");
 
@@ -93,6 +89,10 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			href = hrefJSONObject.getString(languageId);
 		}
 		else {
+			href = configJSONObject.getString("href");
+		}
+
+		if (Validator.isNull(href)) {
 			return;
 		}
 

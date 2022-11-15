@@ -177,6 +177,14 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-ext-properties">
+		<sequential>
+			<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+enterprise.product.commerce.enabled=false</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-solr-configurations">
 		<sequential>
 			<copy
@@ -364,6 +372,8 @@ schema=schema.xml</echo>
 		<deploy-solr-app />
 
 		<unzip-solr />
+
+		<prepare-portal-ext-properties />
 
 		<prepare-solr-configurations />
 

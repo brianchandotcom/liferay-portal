@@ -106,7 +106,7 @@ public class AssetSearcherTest {
 			_assetCategoryIds[0], _assetCategoryIds[1], _assetCategoryIds[2]
 		};
 
-		addAssetEntries(allAssetCategoryIds, new String[0], 3, true);
+		addAssetEntries(allAssetCategoryIds, new String[0], 3);
 
 		AssetSearcher assetSearcher = new AssetSearcher();
 
@@ -132,7 +132,7 @@ public class AssetSearcherTest {
 			_assetCategoryIds[0], _assetCategoryIds[1], _assetCategoryIds[2]
 		};
 
-		addAssetEntries(anyAssetCategoryIds, new String[0], 3, true);
+		addAssetEntries(anyAssetCategoryIds, new String[0], 3);
 
 		AssetSearcher assetSearcher = new AssetSearcher();
 
@@ -376,9 +376,8 @@ public class AssetSearcherTest {
 		}
 	}
 
-	protected List<AssetEntry> addAssetEntries(
-			long[] assetCategoryIds, String[] assetTagNames, int count,
-			boolean manualMode)
+	protected void addAssetEntries(
+			long[] assetCategoryIds, String[] assetTagNames, int count)
 		throws Exception {
 
 		List<AssetEntry> assetEntries = new ArrayList<>();

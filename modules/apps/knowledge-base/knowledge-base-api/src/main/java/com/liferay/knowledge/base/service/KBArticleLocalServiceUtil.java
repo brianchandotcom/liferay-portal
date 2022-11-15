@@ -133,6 +133,10 @@ public class KBArticleLocalServiceUtil {
 			groupId, userId, fileName, tempFolderName, inputStream, mimeType);
 	}
 
+	public static void checkKBArticles() throws PortalException {
+		getService().checkKBArticles();
+	}
+
 	/**
 	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
 	 *

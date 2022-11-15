@@ -134,6 +134,13 @@ public class KBArticleLocalServiceWrapper
 			groupId, userId, fileName, tempFolderName, inputStream, mimeType);
 	}
 
+	@Override
+	public void checkKBArticles()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_kbArticleLocalService.checkKBArticles();
+	}
+
 	/**
 	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
 	 *

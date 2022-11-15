@@ -125,6 +125,8 @@ public interface KBArticleLocalService
 			InputStream inputStream, String mimeType)
 		throws PortalException;
 
+	public void checkKBArticles() throws PortalException;
+
 	/**
 	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
 	 *

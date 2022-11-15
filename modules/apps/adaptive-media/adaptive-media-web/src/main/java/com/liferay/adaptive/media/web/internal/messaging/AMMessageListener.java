@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + AMDestinationNames.ADAPTIVE_MEDIA_PROCESSOR,
 	service = MessageListener.class
 )

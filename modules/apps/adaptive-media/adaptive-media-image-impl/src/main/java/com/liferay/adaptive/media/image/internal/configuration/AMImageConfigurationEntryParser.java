@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = AMImageConfigurationEntryParser.class)
+@Component(service = AMImageConfigurationEntryParser.class)
 public class AMImageConfigurationEntryParser {
 
 	public String getConfigurationString(

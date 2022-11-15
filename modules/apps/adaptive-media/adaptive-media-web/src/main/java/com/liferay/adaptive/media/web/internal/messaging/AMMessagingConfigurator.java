@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.adaptive.media.web.internal.configuration.AMConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class AMMessagingConfigurator {
 

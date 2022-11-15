@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	immediate = true, service = AMCompanyThumbnailConfigurationInitializer.class
-)
+@Component(service = AMCompanyThumbnailConfigurationInitializer.class)
 public class AMCompanyThumbnailConfigurationInitializer {
 
 	public void initializeCompany(Company company)

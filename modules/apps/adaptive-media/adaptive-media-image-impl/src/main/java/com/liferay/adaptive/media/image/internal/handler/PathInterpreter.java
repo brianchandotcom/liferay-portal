@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = PathInterpreter.class)
+@Component(service = PathInterpreter.class)
 public class PathInterpreter {
 
 	public Optional<Tuple<FileVersion, Map<String, String>>> interpretPath(

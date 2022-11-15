@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = "content.transformer.content.type=html",
+	property = "content.transformer.content.type=html",
 	service = ContentTransformer.class
 )
 public class HtmlContentTransformerImpl

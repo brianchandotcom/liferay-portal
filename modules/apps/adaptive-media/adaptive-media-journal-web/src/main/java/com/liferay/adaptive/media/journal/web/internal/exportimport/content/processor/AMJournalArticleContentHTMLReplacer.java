@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	immediate = true, service = AMJournalArticleContentHTMLReplacer.class
-)
+@Component(service = AMJournalArticleContentHTMLReplacer.class)
 public class AMJournalArticleContentHTMLReplacer {
 
 	public String replace(String content, Replace replace) throws Exception {

@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.check.csrf.token=false",
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + AMWebConstants.SERVLET_PATH + "/*",

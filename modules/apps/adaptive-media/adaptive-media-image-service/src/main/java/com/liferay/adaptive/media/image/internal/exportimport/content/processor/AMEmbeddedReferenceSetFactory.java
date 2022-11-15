@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = AMEmbeddedReferenceSetFactory.class)
+@Component(service = AMEmbeddedReferenceSetFactory.class)
 public class AMEmbeddedReferenceSetFactory {
 
 	public AMEmbeddedReferenceSet create(

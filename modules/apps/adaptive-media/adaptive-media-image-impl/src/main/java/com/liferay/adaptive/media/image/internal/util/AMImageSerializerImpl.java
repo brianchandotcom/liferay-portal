@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = AMImageSerializer.class)
+@Component(service = AMImageSerializer.class)
 public class AMImageSerializerImpl implements AMImageSerializer {
 
 	@Override

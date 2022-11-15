@@ -16,10 +16,8 @@ package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
@@ -45,9 +43,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.AssetSearcher;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -380,8 +375,6 @@ public class AssetSearcherTest {
 			long[] assetCategoryIds, String[] assetTagNames, int count)
 		throws Exception {
 
-		List<AssetEntry> assetEntries = new ArrayList<>();
-
 		for (int i = 0; i < count; i++) {
 			JournalArticle article = JournalTestUtil.addArticle(
 				_group.getGroupId(), RandomTestUtil.randomString(),
@@ -390,14 +383,7 @@ public class AssetSearcherTest {
 			JournalArticleLocalServiceUtil.updateAsset(
 				TestPropsValues.getUserId(), article, assetCategoryIds,
 				assetTagNames, null, null);
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
-
-			assetEntries.add(assetEntry);
 		}
-
-		return assetEntries;
 	}
 
 	protected void addAssetVocabulary() throws Exception {

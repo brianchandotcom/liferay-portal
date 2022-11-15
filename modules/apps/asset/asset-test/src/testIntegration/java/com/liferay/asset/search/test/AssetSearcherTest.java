@@ -66,16 +66,26 @@ public class AssetSearcherTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		AssetVocabulary publicAssetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		AssetVocabulary publicAssetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		_publicAssetCategory1 = AssetTestUtil.addCategory(
 			_group.getGroupId(), publicAssetVocabulary.getVocabularyId());
 		_publicAssetCategory2 = AssetTestUtil.addCategory(
 			_group.getGroupId(), publicAssetVocabulary.getVocabularyId());
 
-		AssetVocabulary internalAssetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
+		AssetVocabulary internalAssetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		_internalAssetCategory = AssetTestUtil.addCategory(
 			_group.getGroupId(), internalAssetVocabulary.getVocabularyId());

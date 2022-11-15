@@ -966,7 +966,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				Set<String> warningMessages = new HashSet<>();
 
 				_processPageDefinition(
-					layoutPageTemplateEntry, pageDefinition, warningMessages);
+					layoutPageTemplateEntry.getPlid(), pageDefinition,
+					warningMessages);
 
 				long previewFileEntryId = _getPreviewFileEntryId(
 					groupId,
@@ -1065,12 +1066,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processPageDefinition(
-			LayoutPageTemplateEntry layoutPageTemplateEntry,
-			PageDefinition pageDefinition, Set<String> warningMessages)
+			long plid, PageDefinition pageDefinition,
+			Set<String> warningMessages)
 		throws Exception {
 
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -1113,7 +1113,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
 
-		_updateLayouts(layoutPageTemplateEntry);
+		_updateLayouts(plid);
 	}
 
 	private boolean _processPageElement(
@@ -1272,18 +1272,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private void _updateLayouts(LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws Exception {
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
+	private void _updateLayouts(long plid) throws Exception {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
 
 		_layoutLocalService.updateStatus(
-			layoutPageTemplateEntry.getUserId(), draftLayout.getPlid(),
+			draftLayout.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextThreadLocal.getServiceContext());
 	}

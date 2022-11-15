@@ -22,6 +22,7 @@ import {
 	DRAG_TYPES,
 	useSetKeyboardDNDSourceItem,
 } from 'data-engine-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -115,16 +116,25 @@ const FieldType = (props) => {
 			data-field-type-name={name}
 			onClick={!disabled && onClick ? handleOnClick : null}
 			onDoubleClick={disabled ? null : handleOnDoubleClick}
-			onKeyDown={disabled ? null : handleOnKeyDown}
 			ref={disabled ? null : drag}
 			role="button"
-			tabIndex={disabled ? -1 : 0}
 			title={label}
 			verticalAlign="center"
 		>
 			{draggable && dragAlignment === 'left' && (
 				<ClayLayout.ContentCol className="pl-2 pr-2">
-					<ClayIcon symbol="drag" />
+					<ClayButtonWithIcon
+						aria-label={sub(
+							Liferay.Language.get('press-enter-to-add-x-field'),
+							[label]
+						)}
+						disabled={disabled}
+						displayType="unstyled"
+						onKeyDown={disabled ? null : handleOnKeyDown}
+						role="application"
+						size="xs"
+						symbol="drag"
+					/>
 				</ClayLayout.ContentCol>
 			)}
 

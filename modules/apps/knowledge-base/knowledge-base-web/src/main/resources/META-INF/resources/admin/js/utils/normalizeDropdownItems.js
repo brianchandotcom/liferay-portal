@@ -14,8 +14,51 @@
 
 import KBDropdownPropsTransformer from '../KBDropdownPropsTransformer';
 
+function addSeparators(items) {
+	if (items.length < 2) {
+		return items;
+	}
+
+	const separatedItems = [items[0]];
+
+	for (let i = 1; i < items.length; i++) {
+		const item = items[i];
+
+		if (item.type === 'group' && item.separator) {
+			separatedItems.push({type: 'divider'});
+		}
+
+		separatedItems.push(item);
+	}
+
+	return separatedItems.map((item) => {
+		if (item.type === 'group') {
+			return {
+				...item,
+				items: addSeparators(item.items),
+			};
+		}
+
+		return item;
+	});
+}
+
+function filterEmptyGroups(items) {
+	return items
+		.filter(
+			(item) =>
+				item.type !== 'group' ||
+				(Array.isArray(item.items) && item.items.length)
+		)
+		.map((item) =>
+			item.type === 'group'
+				? {...item, items: filterEmptyGroups(item.items)}
+				: item
+		);
+}
+
 export default function normalizeDropdownItems(items = []) {
-	return KBDropdownPropsTransformer({
+	const transformedItems = KBDropdownPropsTransformer({
 		items: items.map((item) => {
 			return {
 				...item,
@@ -26,4 +69,8 @@ export default function normalizeDropdownItems(items = []) {
 			};
 		}),
 	}).items;
+
+	const filteredItems = filterEmptyGroups(transformedItems);
+
+	return addSeparators(filteredItems);
 }

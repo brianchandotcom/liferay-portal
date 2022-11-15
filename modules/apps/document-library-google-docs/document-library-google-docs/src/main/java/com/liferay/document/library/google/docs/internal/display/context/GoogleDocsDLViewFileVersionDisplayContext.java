@@ -18,7 +18,6 @@ import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplay
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.internal.helper.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.docs.internal.util.constants.GoogleDocsConstants;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -85,29 +83,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		_googleDocsUIItemsProcessor.processDropdownItems(actionDropdownItems);
 
 		return actionDropdownItems;
-	}
-
-	@Override
-	public List<DDMStructure> getDDMStructures() throws PortalException {
-		List<DDMStructure> ddmStructures = super.getDDMStructures();
-
-		Iterator<DDMStructure> iterator = ddmStructures.iterator();
-
-		while (iterator.hasNext()) {
-			DDMStructure ddmStructure = iterator.next();
-
-			String structureKey = ddmStructure.getStructureKey();
-
-			if (structureKey.equals(
-					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
-
-				iterator.remove();
-
-				break;
-			}
-		}
-
-		return ddmStructures;
 	}
 
 	@Override

@@ -16,9 +16,11 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
-import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -197,10 +200,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		if (_fileVersionDisplayContextHelper.isDLFileVersion()) {
-			DLFileVersion dlFileVersion =
-				(DLFileVersion)_fileVersion.getModel();
-
-			_ddmStructures = dlFileVersion.getDDMStructures();
+			_ddmStructures = _getVisibleDDMStructures();
 		}
 		else {
 			_ddmStructures = Collections.emptyList();
@@ -413,6 +413,35 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 	}
 
+	private DLFileEntryType _getDLFileEntryType() {
+		try {
+			if (_dlFileEntryType != null) {
+				return _dlFileEntryType;
+			}
+
+			if (!_fileVersionDisplayContextHelper.isDLFileVersion()) {
+				return null;
+			}
+
+			FileEntry fileEntry = _getFileEntry(_fileVersion);
+
+			if (fileEntry == null) {
+				return null;
+			}
+
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+			_dlFileEntryType = dlFileEntry.getDLFileEntryType();
+
+			return _dlFileEntryType;
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return null;
+		}
+	}
+
 	private FileEntry _getFileEntry(FileVersion fileVersion)
 		throws PortalException {
 
@@ -421,6 +450,24 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return null;
+	}
+
+	private List<DDMStructure> _getVisibleDDMStructures()
+		throws PortalException {
+
+		DLFileEntryType dlFileEntryType = _getDLFileEntryType();
+
+		if (dlFileEntryType == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			dlFileEntryType.getDDMStructures(),
+			ddmStructure ->
+				(ddmStructure.getStructureId() !=
+					dlFileEntryType.getDataDefinitionId()) ||
+				(dlFileEntryType.getScope() !=
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM));
 	}
 
 	private void _handleError(
@@ -484,6 +531,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		DefaultDLViewFileVersionDisplayContext.class);
 
 	private List<DDMStructure> _ddmStructures;
+	private DLFileEntryType _dlFileEntryType;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;

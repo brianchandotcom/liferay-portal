@@ -95,21 +95,6 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean hasPreview() {
-		return false;
-	}
-
-	@Override
-	public boolean isDownloadLinkVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isVersionInfoVisible() {
-		return false;
-	}
-
-	@Override
 	public void renderPreview(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

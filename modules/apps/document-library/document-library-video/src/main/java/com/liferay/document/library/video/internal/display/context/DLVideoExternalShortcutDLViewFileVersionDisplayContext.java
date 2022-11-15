@@ -64,21 +64,6 @@ public class DLVideoExternalShortcutDLViewFileVersionDisplayContext
 		return toolbarItems;
 	}
 
-	@Override
-	public boolean hasPreview() {
-		return false;
-	}
-
-	@Override
-	public boolean isDownloadLinkVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isVersionInfoVisible() {
-		return false;
-	}
-
 	private static final UUID _UUID = UUID.fromString(
 		"7deb426a-96b9-4db6-88ac-9afbc7fc2151");
 

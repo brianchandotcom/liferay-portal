@@ -290,17 +290,21 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean hasPreview() {
-		if (_dlPreviewRendererProvider != null) {
-			DLPreviewRenderer dlPreviewRenderer =
-				_dlPreviewRendererProvider.getPreviewDLPreviewRenderer(
-					_fileVersion);
+		if ((_dlPreviewRendererProvider == null) ||
+			_isSystemDLFileEntryType()) {
 
-			if (dlPreviewRenderer != null) {
-				return true;
-			}
+			return false;
 		}
 
-		return false;
+		DLPreviewRenderer dlPreviewRenderer =
+			_dlPreviewRendererProvider.getPreviewDLPreviewRenderer(
+				_fileVersion);
+
+		if (dlPreviewRenderer == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -314,7 +318,13 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isDownloadActionAvailable();
+		if (_isSystemDLFileEntryType() ||
+			!_fileEntryDisplayContextHelper.isDownloadActionAvailable()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -324,6 +334,10 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isVersionInfoVisible() {
+		if (_isSystemDLFileEntryType()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -487,6 +501,19 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		jspRenderer.render(httpServletRequest, httpServletResponse);
+	}
+
+	private boolean _isSystemDLFileEntryType() {
+		DLFileEntryType dlFileEntryType = _getDLFileEntryType();
+
+		if ((dlFileEntryType == null) ||
+			(dlFileEntryType.getScope() !=
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _renderPreview(

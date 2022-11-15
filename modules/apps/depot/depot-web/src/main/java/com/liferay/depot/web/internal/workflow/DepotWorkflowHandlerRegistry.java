@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DepotWorkflowHandlerRegistry.class)
+@Component(service = DepotWorkflowHandlerRegistry.class)
 public class DepotWorkflowHandlerRegistry {
 
 	@Activate

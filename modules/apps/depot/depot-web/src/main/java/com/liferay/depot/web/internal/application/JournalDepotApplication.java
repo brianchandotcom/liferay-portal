@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DepotApplication.class)
+@Component(service = DepotApplication.class)
 public class JournalDepotApplication implements DepotApplication {
 
 	@Override

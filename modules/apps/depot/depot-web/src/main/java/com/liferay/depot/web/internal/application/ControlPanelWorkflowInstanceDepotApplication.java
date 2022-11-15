@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DepotApplication.class)
+@Component(service = DepotApplication.class)
 public class ControlPanelWorkflowInstanceDepotApplication
 	implements DepotApplication {
 

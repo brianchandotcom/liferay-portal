@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.depot.model.DepotEntry",
 	service = ModelDocumentContributor.class
 )

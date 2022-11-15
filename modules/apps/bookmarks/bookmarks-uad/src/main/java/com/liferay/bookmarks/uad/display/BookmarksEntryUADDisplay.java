@@ -21,6 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = UADDisplay.class)
+@Component(service = UADDisplay.class)
 public class BookmarksEntryUADDisplay extends BaseBookmarksEntryUADDisplay {
 }

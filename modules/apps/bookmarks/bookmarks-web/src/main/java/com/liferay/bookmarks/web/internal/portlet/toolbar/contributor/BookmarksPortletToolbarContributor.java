@@ -58,7 +58,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"mvc.render.command.name=-", "mvc.render.command.name=/bookmarks/view",

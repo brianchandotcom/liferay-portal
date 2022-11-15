@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Luan Maoski
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry",
 	service = BaseSearcher.class
 )

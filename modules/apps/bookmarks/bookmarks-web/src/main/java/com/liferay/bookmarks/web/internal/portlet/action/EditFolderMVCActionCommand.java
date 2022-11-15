@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
 		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,

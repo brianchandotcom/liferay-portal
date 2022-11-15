@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN,
 	service = ConfigurationAction.class
 )

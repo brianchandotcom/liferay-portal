@@ -21,6 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UADDisplay.class)
+@Component(service = UADDisplay.class)
 public class BookmarksFolderUADDisplay extends BaseBookmarksFolderUADDisplay {
 }

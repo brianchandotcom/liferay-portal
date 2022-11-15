@@ -83,6 +83,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 					httpServletRequest, "checkedCPDefinitionIds"));
 		}
 
+		long commerceChannelGroupId = ParamUtil.getLong(
+			httpServletRequest, CPField.COMMERCE_CHANNEL_GROUP_ID);
+
+		portletURL.setParameter(
+			CPField.COMMERCE_CHANNEL_GROUP_ID,
+			String.valueOf(commerceChannelGroupId));
+
 		boolean ignoreCommerceAccountGroup = ParamUtil.getBoolean(
 			httpServletRequest, "ignoreCommerceAccountGroup");
 

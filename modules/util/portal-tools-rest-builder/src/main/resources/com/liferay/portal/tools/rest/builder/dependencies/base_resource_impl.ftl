@@ -745,18 +745,10 @@ public abstract class Base${schemaName}ResourceImpl
 			List<ResourceAction> resourceActions = resourceActionLocalService.getResourceActions(resourceName);
 
 			if (Validator.isNotNull(roleNames)) {
-				return Page.of(
-					actions,
-						_getResourcePermissionsByResourceName(
-						contextCompany.getCompanyId(), resourceActions, id,
-						resourceName, StringUtil.split(roleNames)));
+				return Page.of(actions, _getResourcePermissionsByResourceName(contextCompany.getCompanyId(), resourceActions, id, resourceName, StringUtil.split(roleNames)));
 			}
 
-			return Page.of(
-				actions,
-						_getResourcePermissionsByResourceName(
-						contextCompany.getCompanyId(), resourceActions, id,
-						resourceName, null));
+			return Page.of(actions, _getResourcePermissionsByResourceName(contextCompany.getCompanyId(), resourceActions, id, resourceName, null));
 		}
 	</#if>
 

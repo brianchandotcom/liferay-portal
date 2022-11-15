@@ -106,11 +106,10 @@ public class CollectionItemsDetailDisplayContext {
 
 					add(
 						dropdownItem -> {
-							String collectionItemURL = String.valueOf(
-								assetPublisherAddItemHolder.getPortletURL());
-
-							dropdownItem.setHref(collectionItemURL);
-
+							dropdownItem.setHref(
+								String.valueOf(
+									assetPublisherAddItemHolder.
+										getPortletURL()));
 							dropdownItem.setLabel(
 								assetPublisherAddItemHolder.getModelResource());
 						});

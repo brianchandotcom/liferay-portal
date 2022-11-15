@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
+import com.liferay.portal.reports.engine.ReportDataSourceType;
 import com.liferay.portal.reports.engine.ReportEngine;
 import com.liferay.portal.reports.engine.ReportFormat;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
@@ -27,7 +28,6 @@ import com.liferay.portal.reports.engine.ReportRequestContext;
 import com.liferay.portal.reports.engine.ReportResultContainer;
 import com.liferay.portal.reports.engine.console.jasper.internal.compiler.ReportCompiler;
 import com.liferay.portal.reports.engine.console.jasper.internal.fill.manager.ReportFillManager;
-import com.liferay.portal.reports.engine.console.jasper.internal.fill.manager.ReportFillManagerRegistry;
 
 import java.util.Map;
 
@@ -78,15 +78,21 @@ public class ReportEngineImpl implements ReportEngine {
 		throws ReportGenerationException {
 
 		try {
-			JasperReport jasperReport = _reportCompiler.compile(
-				reportRequest.getReportDesignRetriever());
-
 			ReportRequestContext reportRequestContext =
 				reportRequest.getReportRequestContext();
 
 			ReportFillManager reportFillManager =
-				_reportFillManagerRegistry.getReportFillManager(
+				_reportFillManagerServiceTrackerMap.getService(
 					reportRequestContext.getReportDataSourceType());
+
+			if (reportFillManager == null) {
+				throw new IllegalArgumentException(
+					"No report fill manager found for " +
+						reportRequestContext.getReportDataSourceType());
+			}
+
+			JasperReport jasperReport = _reportCompiler.compile(
+				reportRequest.getReportDesignRetriever());
 
 			JasperPrint jasperPrint = reportFillManager.fillReport(
 				jasperReport, reportRequest);
@@ -127,6 +133,16 @@ public class ReportEngineImpl implements ReportEngine {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_reportFillManagerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ReportFillManager.class, null,
+				(serviceReference, emitter) -> {
+					String reportDataSourceTypeString = GetterUtil.getString(
+						serviceReference.getProperty("reportDataSourceType"));
+
+					emitter.emit(
+						ReportDataSourceType.parse(reportDataSourceTypeString));
+				});
 		_reportFormatExporterServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ReportFormatExporter.class, null,
@@ -140,6 +156,7 @@ public class ReportEngineImpl implements ReportEngine {
 
 	@Deactivate
 	protected void deactivate() {
+		_reportFillManagerServiceTrackerMap.close();
 		_reportFormatExporterServiceTrackerMap.close();
 	}
 
@@ -152,9 +169,8 @@ public class ReportEngineImpl implements ReportEngine {
 	)
 	private volatile ReportCompiler _reportCompiler;
 
-	@Reference
-	private ReportFillManagerRegistry _reportFillManagerRegistry;
-
+	private ServiceTrackerMap<ReportDataSourceType, ReportFillManager>
+		_reportFillManagerServiceTrackerMap;
 	private ServiceTrackerMap<ReportFormat, ReportFormatExporter>
 		_reportFormatExporterServiceTrackerMap;
 

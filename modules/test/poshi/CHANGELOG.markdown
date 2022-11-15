@@ -1,5 +1,49 @@
 # Poshi Runner Change Log
 
+## 1.0.387
+
+### Core
+
+* [POSHI-425](https://issues.liferay.com/browse/POSHI-425) - Lazy load poshi test files to improve runtime performance
+
+### Gradle
+
+* [POSHI-426](https://issues.liferay.com/browse/POSHI-426) - Pass in system properties from gradle-plugins-poshi-runner to poshi runner JVM
+
+### IDE
+
+* [POSHI-406](https://issues.liferay.com/browse/POSHI-406) - Feature Request: Run case via shortcuts instead of manual typing
+
+### Logger
+
+* [POSHI-437](https://issues.liferay.com/browse/POSHI-437) - Create a minimal index.html file when OutOfMemoryError's are thrown
+
+### Maintenance
+
+* [POSHI-74](https://issues.liferay.com/browse/POSHI-74) - Consolidate poshi property for poshi files into a list
+
+### Other
+
+* [LRQA-78221](https://issues.liferay.com/browse/LRQA-78221) -  Duplicate locator(s) found in com.liferay.poshi.core.elements.PoshiElementFactoryTest
+
+### Utils
+
+* [POSHI-390](https://issues.liferay.com/browse/POSHI-390) - The request URL for JSONCurlUtil should be single quoted to avoid using an & character in /bin/sh
+* [POSHI-409](https://issues.liferay.com/browse/POSHI-409) - Fail to execute commands curl  on Windows
+
+### Validation
+
+* [POSHI-415](https://issues.liferay.com/browse/POSHI-415) - Use concurrency in PoshiValidation
+
+### WebDriver
+
+* [POSHI-282](https://issues.liferay.com/browse/POSHI-282) - Sometimes paths defined in path files are unusable in macros and tests and it can only be resolved by hard coding the actual value of the path
+* [POSHI-36](https://issues.liferay.com/browse/POSHI-36) - Deprecate typeAlloyEditor
+* [POSHI-421](https://issues.liferay.com/browse/POSHI-421) - Add robotType and robotTypeShortcut to deprecation warning list
+* [POSHI-422](https://issues.liferay.com/browse/POSHI-422) - Implement assertElementAccessible
+* [POSHI-423](https://issues.liferay.com/browse/POSHI-423) - Update axe version
+* [POSHI-431](https://issues.liferay.com/browse/POSHI-431) - Investigate Type function not clearing input
+
 ## 1.0.381
 
 ### Other

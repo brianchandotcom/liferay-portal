@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="/layout_admin/import" var="importURL">
+<portlet:actionURL name="/layout_admin/import_layout_utility_page_entries" var="importURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 </portlet:actionURL>
@@ -45,7 +45,7 @@
 					</aui:validator>
 				</aui:input>
 
-				<aui:input checked="<%= true %>" label="overwrite-existing-page-templates" name="overwrite" type="checkbox" />
+				<aui:input checked="<%= true %>" label="overwrite-existing-utility-pages" name="overwrite" type="checkbox" />
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

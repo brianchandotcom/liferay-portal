@@ -15,12 +15,16 @@
 package com.liferay.asset.browser.web.internal.item.selector;
 
 import com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext;
+import com.liferay.asset.browser.web.internal.display.context.AssetBrowserManagementToolbarDisplayContext;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 import javax.portlet.PortletException;
 
@@ -34,15 +38,25 @@ public class AssetEntryItemSelectorViewDescriptor
 
 	public AssetEntryItemSelectorViewDescriptor(
 		HttpServletRequest httpServletRequest,
-		AssetBrowserDisplayContext assetBrowserDisplayContext) {
+		AssetBrowserDisplayContext assetBrowserDisplayContext,
+		AssetBrowserManagementToolbarDisplayContext
+			assetBrowserManagementToolbarDisplayContext) {
 
 		_httpServletRequest = httpServletRequest;
 		_assetBrowserDisplayContext = assetBrowserDisplayContext;
+		_assetBrowserManagementToolbarDisplayContext =
+			assetBrowserManagementToolbarDisplayContext;
 	}
 
 	@Override
 	public String getDefaultDisplayStyle() {
 		return "list";
+	}
+
+	@Override
+	public List<DropdownItem> getFilterNavigationDropdownItems() {
+		return _assetBrowserManagementToolbarDisplayContext.
+			getFilterNavigationDropdownItems();
 	}
 
 	@Override
@@ -79,6 +93,8 @@ public class AssetEntryItemSelectorViewDescriptor
 	}
 
 	private final AssetBrowserDisplayContext _assetBrowserDisplayContext;
+	private final AssetBrowserManagementToolbarDisplayContext
+		_assetBrowserManagementToolbarDisplayContext;
 	private final HttpServletRequest _httpServletRequest;
 
 }

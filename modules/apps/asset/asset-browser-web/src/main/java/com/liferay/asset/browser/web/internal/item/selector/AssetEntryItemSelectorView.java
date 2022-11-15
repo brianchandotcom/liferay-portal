@@ -15,6 +15,7 @@
 package com.liferay.asset.browser.web.internal.item.selector;
 
 import com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext;
+import com.liferay.asset.browser.web.internal.display.context.AssetBrowserManagementToolbarDisplayContext;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.service.DepotEntryService;
@@ -25,6 +26,7 @@ import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -40,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -84,25 +87,37 @@ public class AssetEntryItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = _getDynamicServletRequest(
-			itemSelectorCriterion, servletRequest);
+		try {
+			HttpServletRequest httpServletRequest = _getDynamicServletRequest(
+				itemSelectorCriterion, servletRequest);
 
-		RenderRequest renderRequest =
-			(RenderRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-		RenderResponse renderResponse =
-			(RenderResponse)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
+			RenderRequest renderRequest =
+				(RenderRequest)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+			RenderResponse renderResponse =
+				(RenderResponse)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		_itemSelectorViewDescriptorRenderer.renderHTML(
-			httpServletRequest, servletResponse, itemSelectorCriterion,
-			portletURL, itemSelectedEventName, search,
-			new AssetEntryItemSelectorViewDescriptor(
-				httpServletRequest,
+			AssetBrowserDisplayContext assetBrowserDisplayContext =
 				new AssetBrowserDisplayContext(
 					_assetEntryLocalService, _assetHelper, _depotEntryService,
 					_groupService, httpServletRequest, _language, _portal,
-					portletURL, renderRequest, renderResponse)));
+					portletURL, renderRequest, renderResponse);
+
+			_itemSelectorViewDescriptorRenderer.renderHTML(
+				httpServletRequest, servletResponse, itemSelectorCriterion,
+				portletURL, itemSelectedEventName, search,
+				new AssetEntryItemSelectorViewDescriptor(
+					httpServletRequest, assetBrowserDisplayContext,
+					new AssetBrowserManagementToolbarDisplayContext(
+						httpServletRequest,
+						_portal.getLiferayPortletRequest(renderRequest),
+						_portal.getLiferayPortletResponse(renderResponse),
+						assetBrowserDisplayContext)));
+		}
+		catch (PortalException | PortletException exception) {
+			throw new ServletException(exception);
+		}
 	}
 
 	private DynamicServletRequest _getDynamicServletRequest(

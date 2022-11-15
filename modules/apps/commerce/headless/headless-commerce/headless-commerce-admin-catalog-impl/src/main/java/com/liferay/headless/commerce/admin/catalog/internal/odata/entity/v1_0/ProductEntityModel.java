@@ -61,7 +61,9 @@ public class ProductEntityModel implements EntityModel {
 			new IntegerEntityField("catalogId", locale -> "commerceCatalogId"),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName("name")),
-			new StringEntityField("productType", locale -> "productTypeName"));
+			new StringEntityField("productType", locale -> "productTypeName"),
+			new CollectionEntityField(
+				new StringEntityField("tags", locale -> "assetTagNames")));
 	}
 
 	@Override

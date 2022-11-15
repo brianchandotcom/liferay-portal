@@ -9,21 +9,21 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		task ("Copy the token from AC") {
-			ACUtils.launchAC();
+		// task ("Copy the token from AC") {
+		// 	ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
-		}
+		// 	ACSettings.takeTokenFromAnalyticsCloud();
+		// }
 
-		task ("Set up instance and sign in DXP") {
-			TestCase.setUpPortalInstance();
+		// task ("Set up instance and sign in DXP") {
+		// 	TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
-		}
+		// }
 
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
+		// task ("Connect the DXP to AC") {
+		// 	ACDXPSettings.connectDXPtoAnalyticsCloud();
+		// }
 	}
 
 	tearDown {
@@ -121,13 +121,11 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12144 | Test Summary: Request search keywords using groupID"
 	@priority = "3"
 	test RequestKeywordsUsingGroupID {
-		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
-		var keyword1 = "general groupid";
-		var keyword2 = "specific groupid";
-		var parametersGroup1 = "groupId=${groupId}&sort=counts,desc,lastModifiedDate,desc";
-		var parametersGroup2 = "sort=counts,desc,lastModifiedDate,desc";
-
-		JSONGroup.addGroup(groupName = "Site Name");
+		var groupId1 = JSONGroupSetter.setGroupId(groupName = "Guest");
+		var groupId2 = JSONGroupSetter.setGroupId(groupName = "Site Name");
+		var keyword = "general groupid";
+		var parametersGroup1 = "groupId=${groupId1}&sort=counts,desc,lastModifiedDate,desc";
+		var parametersGroup2 = "groupId=${groupId2}&sort=counts,desc,lastModifiedDate,desc";
 
 		task ("Go to DXP and get analytics configuration") {
 			ACApi.getAnalyticsConfiguration();
@@ -139,44 +137,30 @@ definition {
 				siteName = "guest");
 		}
 
-		task ("Type keyword in search bar") {
-			SearchPortlets.searchEmbedded(searchTerm = "${keyword1}");
+		task ("Go to the search bar and search for a keyword") {
+			SearchPortlets.searchEmbedded(searchTerm = "${keyword}");
 		}
 
-		task ("Run curl command to get keyword results") {
+		task ("Run curl command to get keyword results using group Guest") {
 			ACApi.getSearchKeywords(parameters = "${parametersGroup1}");
 		}
 
 		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(
-				expected = "${keyword2}",
-				keywordPosition = "1");
+			ACApi.assertSearchResponse(expected = "${keyword}");
 		}
 
-		task ("Assert response does not return keyword") {
-			ACApi.assertSearchKeywordNotPresent(
-				expected = "${keyword1}",
-				keywordPosition = "2");
+		task ("Assert response returns result from group Guest") {
+			ACApi.assertGenericJSONPathResponse(
+				apiPath = "search-keywords[0].groupId",
+				expected = "${groupId1}");
 		}
 
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "Home",
-				siteName = "Site Name");
-		}
-
-		task ("Run curl command to get keyword results") {
+		task ("Run curl command to get keyword results using group Site Name") {
 			ACApi.getSearchKeywords(parameters = "${parametersGroup2}");
 		}
 
-		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(expected = "${keyword1}");
-		}
-
-		task ("Assert response returns keyword") {
-			ACApi.assertSearchResponse(
-				expected = "${keyword2}",
-				keywordPosition = "1");
+		task ("Assert response returns empty") {
+			ACApi.assertSearchResponse(expected = "");
 		}
 	}
 

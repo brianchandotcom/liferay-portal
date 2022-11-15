@@ -98,7 +98,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(
-				layoutDisplayPageProvider, groupId, friendlyURL);
+				layoutDisplayPageProvider, groupId, friendlyURL,
+				_getVersion(params));
 
 		Object infoItem = _getInfoItem(layoutDisplayPageObjectProvider, params);
 
@@ -184,7 +185,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(
-				layoutDisplayPageProvider, groupId, friendlyURL);
+				layoutDisplayPageProvider, groupId, friendlyURL,
+				_getVersion(params));
 
 		if (layoutDisplayPageObjectProvider == null) {
 			throw new PortalException();
@@ -331,10 +333,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	private LayoutDisplayPageObjectProvider<?>
 		_getLayoutDisplayPageObjectProvider(
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
-			long groupId, String friendlyURL) {
+			long groupId, String friendlyURL, String version) {
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			groupId, _getUrlTitle(friendlyURL));
+			groupId, _getUrlTitle(friendlyURL), version);
 	}
 
 	private Layout _getLayoutDisplayPageObjectProviderLayout(

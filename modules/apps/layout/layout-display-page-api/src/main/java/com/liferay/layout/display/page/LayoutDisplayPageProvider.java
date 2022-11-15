@@ -30,6 +30,13 @@ public interface LayoutDisplayPageProvider<T> {
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle);
 
 	public default LayoutDisplayPageObjectProvider<T>
+		getLayoutDisplayPageObjectProvider(
+			long groupId, String urlTitle, String version) {
+
+		return getLayoutDisplayPageObjectProvider(groupId, urlTitle);
+	}
+
+	public default LayoutDisplayPageObjectProvider<T>
 		getParentLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 

@@ -22,6 +22,8 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,7 +68,26 @@ public class JournalArticleLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		try {
-			JournalArticle article = _getArticle(groupId, urlTitle);
+			JournalArticle article = _getArticle(groupId, urlTitle, null);
+
+			if ((article == null) || article.isInTrash()) {
+				return null;
+			}
+
+			return new JournalArticleLayoutDisplayPageObjectProvider(article);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<JournalArticle>
+		getLayoutDisplayPageObjectProvider(
+			long groupId, String urlTitle, String version) {
+
+		try {
+			JournalArticle article = _getArticle(groupId, urlTitle, version);
 
 			if ((article == null) || article.isInTrash()) {
 				return null;
@@ -90,16 +111,24 @@ public class JournalArticleLayoutDisplayPageProvider
 	@Reference
 	protected SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider;
 
-	private JournalArticle _getArticle(long groupId, String urlTitle)
+	private JournalArticle _getArticle(
+			long groupId, String urlTitle, String version)
 		throws PortalException {
 
 		for (long connectedGroupId :
 				siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(groupId)) {
 
-			JournalArticle article =
-				journalArticleLocalService.fetchArticleByUrlTitle(
+			JournalArticle article = null;
+
+			if (Validator.isNotNull(version)) {
+				article = journalArticleLocalService.fetchArticleByUrlTitle(
+					connectedGroupId, urlTitle, GetterUtil.getDouble(version));
+			}
+			else {
+				article = journalArticleLocalService.fetchArticleByUrlTitle(
 					connectedGroupId, urlTitle);
+			}
 
 			if (article != null) {
 				return article;

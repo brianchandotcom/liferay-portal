@@ -15,6 +15,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.index.creation.contributor;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.IndexToFilterSynchronizer;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -45,6 +46,9 @@ public class SynonymSetIndexCreationIndexContributorTest
 		ReflectionTestUtil.setFieldValue(
 			_synonymSetIndexCreationIndexContributor,
 			"_indexToFilterSynchronizer", _indexToFilterSynchronizer);
+		ReflectionTestUtil.setFieldValue(
+			_synonymSetIndexCreationIndexContributor,
+			"_searchEngineInformation", _searchEngineInformation);
 		ReflectionTestUtil.setFieldValue(
 			_synonymSetIndexCreationIndexContributor, "_synonymSetIndexReader",
 			synonymSetIndexReader);
@@ -78,6 +82,8 @@ public class SynonymSetIndexCreationIndexContributorTest
 
 	private final IndexToFilterSynchronizer _indexToFilterSynchronizer =
 		Mockito.mock(IndexToFilterSynchronizer.class);
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 	private SynonymSetIndexCreationIndexContributor
 		_synonymSetIndexCreationIndexContributor;
 

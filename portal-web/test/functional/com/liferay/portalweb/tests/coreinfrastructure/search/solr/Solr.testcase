@@ -28,6 +28,7 @@ definition {
 	}
 
 	test AssertSearchAdmin {
+		property portal.acceptance = "brian";
 		property test.name.skip.portal.instance = "Solr#AssertSearchAdmin";
 
 		ApplicationsMenu.gotoPortlet(

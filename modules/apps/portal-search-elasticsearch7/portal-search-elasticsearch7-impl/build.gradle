@@ -41,7 +41,6 @@ dependencies {
 	compileInclude group: "commons-logging", name: "commons-logging", version: "1.2"
 	compileInclude group: "joda-time", name: "joda-time", version: "2.10.10"
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.21"
-	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.14"
 	compileInclude group: "org.apache.lucene", name: "lucene-core", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: luceneVersion
@@ -76,6 +75,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"

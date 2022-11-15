@@ -343,12 +343,14 @@ public class CPDefinitionServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinition> searchCPDefinitions(
-				long companyId, String keywords, int status, int start, int end,
+				long companyId, String keywords, int status,
+				boolean ignoreCommerceAccountGroup, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchCPDefinitions(
-			companyId, keywords, status, start, end, sort);
+			companyId, keywords, status, ignoreCommerceAccountGroup, start, end,
+			sort);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
@@ -365,13 +367,13 @@ public class CPDefinitionServiceUtil {
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinition> searchCPDefinitionsByChannelGroupId(
 				long companyId, long commerceChannelGroupId, String keywords,
-				int status, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
+				int status, boolean ignoreCommerceAccountGroup, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchCPDefinitionsByChannelGroupId(
-			companyId, commerceChannelGroupId, keywords, status, start, end,
-			sort);
+			companyId, commerceChannelGroupId, keywords, status,
+			ignoreCommerceAccountGroup, start, end, sort);
 	}
 
 	public static CPDefinition updateCPDefinition(

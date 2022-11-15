@@ -991,8 +991,8 @@ public class CPDefinitionServiceHttp {
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
 				HttpPrincipal httpPrincipal, long companyId, String keywords,
-				int status, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
+				int status, boolean ignoreCommerceAccountGroup, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1001,7 +1001,8 @@ public class CPDefinitionServiceHttp {
 				_searchCPDefinitionsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, keywords, status, start, end, sort);
+				methodKey, companyId, keywords, status,
+				ignoreCommerceAccountGroup, start, end, sort);
 
 			Object returnObj = null;
 
@@ -1082,7 +1083,7 @@ public class CPDefinitionServiceHttp {
 				searchCPDefinitionsByChannelGroupId(
 					HttpPrincipal httpPrincipal, long companyId,
 					long commerceChannelGroupId, String keywords, int status,
-					int start, int end,
+					boolean ignoreCommerceAccountGroup, int start, int end,
 					com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1094,7 +1095,7 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, commerceChannelGroupId, keywords, status,
-				start, end, sort);
+				ignoreCommerceAccountGroup, start, end, sort);
 
 			Object returnObj = null;
 
@@ -1660,8 +1661,8 @@ public class CPDefinitionServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _searchCPDefinitionsParameterTypes19 =
 		new Class[] {
-			long.class, String.class, int.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, String.class, int.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _searchCPDefinitionsParameterTypes20 =
 		new Class[] {
@@ -1670,8 +1671,8 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_searchCPDefinitionsByChannelGroupIdParameterTypes21 = new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			int.class, com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, String.class, int.class, boolean.class,
+			int.class, int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes22 =
 		new Class[] {

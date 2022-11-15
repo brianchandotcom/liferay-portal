@@ -241,8 +241,8 @@ public interface CPDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-			long companyId, String keywords, int status, int start, int end,
-			Sort sort)
+			long companyId, String keywords, int status,
+			boolean ignoreCommerceAccountGroup, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -255,7 +255,8 @@ public interface CPDefinitionService extends BaseService {
 	public BaseModelSearchResult<CPDefinition>
 			searchCPDefinitionsByChannelGroupId(
 				long companyId, long commerceChannelGroupId, String keywords,
-				int status, int start, int end, Sort sort)
+				int status, boolean ignoreCommerceAccountGroup, int start,
+				int end, Sort sort)
 		throws PortalException;
 
 	public CPDefinition updateCPDefinition(

@@ -360,12 +360,14 @@ public class CPDefinitionServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<CPDefinition>
 			searchCPDefinitions(
-				long companyId, String keywords, int status, int start, int end,
+				long companyId, String keywords, int status,
+				boolean ignoreCommerceAccountGroup, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionService.searchCPDefinitions(
-			companyId, keywords, status, start, end, sort);
+			companyId, keywords, status, ignoreCommerceAccountGroup, start, end,
+			sort);
 	}
 
 	@Override
@@ -384,13 +386,13 @@ public class CPDefinitionServiceWrapper
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<CPDefinition>
 			searchCPDefinitionsByChannelGroupId(
 				long companyId, long commerceChannelGroupId, String keywords,
-				int status, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
+				int status, boolean ignoreCommerceAccountGroup, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionService.searchCPDefinitionsByChannelGroupId(
-			companyId, commerceChannelGroupId, keywords, status, start, end,
-			sort);
+			companyId, commerceChannelGroupId, keywords, status,
+			ignoreCommerceAccountGroup, start, end, sort);
 	}
 
 	@Override

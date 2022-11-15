@@ -2062,10 +2062,6 @@ definition {
 			var loginAttempts = "1";
 		}
 
-		if (!(isSet(errorMessage))) {
-			var errorMessage = "This account is locked. Please contact an administrator to have this account unlocked.";
-		}
-
 		while ("${count}" != "${loginAttempts}") {
 			var count = ${count} + 1;
 
@@ -2073,16 +2069,9 @@ definition {
 				password = "${password}",
 				userEmailAddress = "${userEmailAddress}");
 
-			if ("${count}" == "${maximumFailure}") {
-				AssertTextEquals.assertPartialText(
-					locator1 = "Message#ERROR_DISMISSIBLE",
-					value1 = "${errorMessage}");
-			}
-			else {
-				AssertTextEquals.assertPartialText(
-					locator1 = "Message#ERROR_DISMISSIBLE",
-					value1 = "Authentication failed. Please try again.");
-			}
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
 		}
 	}
 

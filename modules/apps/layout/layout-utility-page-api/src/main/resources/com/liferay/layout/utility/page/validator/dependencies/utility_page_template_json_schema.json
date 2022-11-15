@@ -1,0 +1,34 @@
+{
+	"$id": "http://example.com/root.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"additionalProperties": false,
+	"properties": {
+		"defaultTemplate": {
+			"title": "The defaultTemplate Schema",
+			"type": "boolean"
+		},
+		"externalReferenceCode": {
+			"title": "The external reference code Schema",
+			"type": "string"
+		},
+		"name": {
+			"title": "The name Schema",
+			"type": "string"
+		},
+		"type": {
+			"enum": [
+				"Error",
+				"TermsOfUse"
+			],
+			"title": "The type Schema",
+			"type": "string"
+		}
+	},
+	"required": [
+		"externalReferenceCode",
+		"name",
+		"type"
+	],
+	"title": "The UtilityPageTemplate Schema",
+	"type": "object"
+}

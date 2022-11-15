@@ -33,38 +33,45 @@ definition {
 
 		Uncheck(locator1 = "Checkbox#DISPLAY_IMMEDIATELY");
 
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+		task ("Convert 0 and 1 selenium attributes to AM and PM") {
+			var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
 
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+			var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
 
-		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "0", "AM");
-
-		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-
-		var displayDateMinuteFuture = ${displayDateMinute} + 2;
-
-		if ("${displayDateMinuteFuture}" == "60") {
-			var displayDateMinuteFuture = "00";
-		}
-		else if ("${displayDateMinuteFuture}" == "61") {
-			var displayDateMinuteFuture = "01";
+			var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
 		}
 
-		if ("${displayDateMinuteFuture" == "00" | "01") {
-			var displayDateHour = ${displayDateHour} + 1;
+		task ("Add 2 minutes for the future time. If it exceeds 60 then add one hour then reset the minutes.") {
+			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+
+			var displayDateMinuteFuture = ${displayDateMinute} + 2;
+
+			if ("${displayDateMinuteFuture}" == "60") {
+				var displayDateMinuteFuture = "00";
+			}
+			else if ("${displayDateMinuteFuture}" == "61") {
+				var displayDateMinuteFuture = "01";
+			}
+
+			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+
+			if ("${displayDateMinuteFuture" == "00" | "01") {
+				var displayDateHour = ${displayDateHour} + 1;
+			}
 		}
 
-		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
+		task ("Make sure minutes and hours with single digits have a 0 in front of them.") {
+			var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
-		if ("${displayDateMinuteFutureLength}" == "1") {
-			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
-		}
+			if ("${displayDateMinuteFutureLength}" == "1") {
+				var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
+			}
 
-		var displayDateHourLength = StringUtil.length("${displayDateHour}");
+			var displayDateHourLength = StringUtil.length("${displayDateHour}");
 
-		if ("${displayDateHourLength}" == "1") {
-			var displayDateHour = "0${displayDateHour}";
+			if ("${displayDateHourLength}" == "1") {
+				var displayDateHour = "0${displayDateHour}";
+			}
 		}
 
 		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";

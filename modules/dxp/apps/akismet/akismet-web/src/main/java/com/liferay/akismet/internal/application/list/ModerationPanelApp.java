@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie Sammons
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
 	service = PanelApp.class
 )

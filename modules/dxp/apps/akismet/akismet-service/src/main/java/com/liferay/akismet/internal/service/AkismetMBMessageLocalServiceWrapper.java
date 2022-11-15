@@ -52,8 +52,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	property = {}, service = ServiceWrapper.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, property = {},
+	service = ServiceWrapper.class
 )
 public class AkismetMBMessageLocalServiceWrapper
 	extends MBMessageLocalServiceWrapper {

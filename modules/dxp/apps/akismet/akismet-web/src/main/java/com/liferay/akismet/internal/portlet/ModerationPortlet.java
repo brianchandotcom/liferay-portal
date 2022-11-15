@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",

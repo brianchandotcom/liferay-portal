@@ -12,6 +12,7 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -171,12 +172,24 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				event.keyCode === ARROW_DOWN_KEYCODE ||
 				event.keyCode === ARROW_UP_KEYCODE
 			) {
-				setState(
-					getNextValidTarget(
-						formStateRef.current,
-						stateRef.current!,
-						event.keyCode === ARROW_DOWN_KEYCODE ? 'down' : 'up'
-					)
+				const nextState = getNextValidTarget(
+					formStateRef.current,
+					stateRef.current!,
+					event.keyCode === ARROW_DOWN_KEYCODE ? 'down' : 'up'
+				);
+
+				setState(nextState);
+
+				const {name, position} = getTextData(
+					nextState,
+					formStateRef.current
+				);
+
+				setText(
+					sub(Liferay.Language.get('targeting-x-of-x'), [
+						position,
+						name,
+					])
 				);
 			}
 			else if (event.keyCode === ESCAPE_KEYCODE) {
@@ -184,40 +197,77 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 			}
 			else if (event.keyCode === ENTER_KEYCODE) {
 				handleDrop(stateRef.current!);
+
+				const {name, position} = getTextData(
+					stateRef.current!,
+					formStateRef.current
+				);
+
+				setText(
+					sub(Liferay.Language.get('field-placed-on-x-of-x'), [
+						position,
+						name,
+					])
+				);
+
+				setTimeout(() => setText(null), 1000);
+
 				setState(null);
 			}
 			else if (event.keyCode === HOME_KEYCODE) {
-				setState(
-					getNextValidTarget(
-						formStateRef.current,
-						{
-							...stateRef.current!,
-							currentTarget: {
-								itemPath: [0],
-								itemType: 'page',
-								position: 'top',
-							},
+				const nextState = getNextValidTarget(
+					formStateRef.current,
+					{
+						...stateRef.current!,
+						currentTarget: {
+							itemPath: [0],
+							itemType: 'page',
+							position: 'top',
 						},
-						'down'
-					)
+					},
+					'down'
+				);
+
+				setState(nextState);
+
+				const {name, position} = getTextData(
+					nextState,
+					formStateRef.current
+				);
+
+				setText(
+					sub(Liferay.Language.get('targeting-x-of-x'), [
+						position,
+						name,
+					])
 				);
 			}
 			else if (event.keyCode === END_KEYCODE) {
-				setState(
-					getNextValidTarget(
-						formStateRef.current,
-						{
-							...stateRef.current!,
-							currentTarget: {
-								itemPath: [
-									formStateRef.current.pages.length - 1,
-								],
-								itemType: 'page',
-								position: 'bottom',
-							},
+				const nextState = getNextValidTarget(
+					formStateRef.current,
+					{
+						...stateRef.current!,
+						currentTarget: {
+							itemPath: [formStateRef.current.pages.length - 1],
+							itemType: 'page',
+							position: 'bottom',
 						},
-						'up'
-					)
+					},
+					'up'
+				);
+
+				setState(nextState);
+
+				const {name, position} = getTextData(
+					nextState,
+					formStateRef.current
+				);
+
+				setText(
+					sub(Liferay.Language.get('targeting-x-of-x'), [
+						position,
+						name,
+					])
 				);
 			}
 		};
@@ -238,10 +288,10 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 
 export function useSetSourceItem() {
 	const formState = useFormState();
-	const {setState} = useContext(KeyboardDNDContext);
+	const {setState, setText} = useContext(KeyboardDNDContext);
 
 	return useCallback(
-		(nextSourceItem: IState['sourceItem'] | null) =>
+		(nextSourceItem: IState['sourceItem'] | null) => {
 			setState((state) => {
 				if (nextSourceItem && !state) {
 					return getNextValidTarget(
@@ -263,8 +313,15 @@ export function useSetSourceItem() {
 				}
 
 				return state;
-			}),
-		[formState, setState]
+			});
+
+			setText(
+				Liferay.Language.get(
+					'use-up-and-down-arrows-to-move-the-field-and-press-enter-to-place-it-in-desired-position'
+				)
+			);
+		},
+		[formState, setState, setText]
 	);
 }
 
@@ -565,5 +622,18 @@ function getNextValidTarget(
 	return {
 		currentTarget: findNextValidTarget(initialTarget),
 		sourceItem,
+	};
+}
+
+function getTextData(
+	state: IState,
+	formState: ReturnType<typeof useFormState>
+) {
+	const {itemPath, itemType, position} = state.currentTarget;
+	const item = getItem(formState, itemPath);
+
+	return {
+		name: item.label || itemType,
+		position,
 	};
 }

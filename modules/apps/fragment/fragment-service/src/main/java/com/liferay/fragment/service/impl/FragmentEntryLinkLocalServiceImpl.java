@@ -59,6 +59,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -562,6 +563,100 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public void updateLatestChanges(
+			FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		long fragmentEntryId = fragmentEntryLink.getFragmentEntryId();
+
+		if ((fragmentEntryId != fragmentEntry.getFragmentEntryId()) ||
+			((fragmentEntryId == 0) &&
+			 !Objects.equals(
+				 fragmentEntry.getFragmentEntryKey(),
+				 fragmentEntryLink.getRendererKey()))) {
+
+			throw new UnsupportedOperationException(
+				"Invalid Fragment Entry for propagation");
+		}
+
+		boolean modified = false;
+
+		// LPS-132154 Set configuration before processing the HTML
+
+		if (!Objects.equals(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntry.getConfiguration())) {
+
+			fragmentEntryLink.setConfiguration(
+				fragmentEntry.getConfiguration());
+
+			modified = true;
+		}
+
+		if (!Objects.equals(
+				fragmentEntryLink.getHtml(), fragmentEntry.getHtml())) {
+
+			fragmentEntryLink.setHtml(
+				_replaceResources(
+					fragmentEntry.getFragmentEntryId(),
+					fragmentEntry.getHtml()));
+
+			String defaultEditableValues = String.valueOf(
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(
+						_getProcessedHTML(
+							fragmentEntryLink,
+							ServiceContextThreadLocal.getServiceContext()),
+						fragmentEntryLink.getConfiguration()));
+
+			String newEditableValues = _mergeEditableValues(
+				defaultEditableValues, fragmentEntryLink.getEditableValues());
+
+			fragmentEntryLink.setEditableValues(newEditableValues);
+
+			modified = true;
+		}
+
+		if (!Objects.equals(
+				fragmentEntryLink.getCss(), fragmentEntry.getCss())) {
+
+			fragmentEntryLink.setCss(fragmentEntry.getCss());
+
+			modified = true;
+		}
+
+		if (!Objects.equals(fragmentEntryLink.getJs(), fragmentEntry.getJs())) {
+			fragmentEntryLink.setJs(fragmentEntry.getJs());
+
+			modified = true;
+		}
+
+		if (fragmentEntryLink.getType() != fragmentEntry.getType()) {
+			fragmentEntryLink.setType(fragmentEntry.getType());
+
+			modified = true;
+		}
+
+		if (modified) {
+			fragmentEntryLink.setLastPropagationDate(new Date());
+
+			fragmentEntryLink = fragmentEntryLinkPersistence.update(
+				fragmentEntryLink);
+
+			_updateFragmentEntryLinkLayout(fragmentEntryLink);
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.
+					onUpdateFragmentEntryLinkConfigurationValues(
+						fragmentEntryLink);
+			}
+		}
+	}
+
+	@Override
 	public void updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException {
 
@@ -572,44 +667,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			_fragmentEntryPersistence.findByPrimaryKey(
 				fragmentEntryLink.getFragmentEntryId());
 
-		fragmentEntryLink.setHtml(
-			_replaceResources(
-				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml()));
-
-		// LPS-132154 Set configuration before processing the HTML
-
-		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-
-		String defaultEditableValues = String.valueOf(
-			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				_getProcessedHTML(
-					fragmentEntryLink,
-					ServiceContextThreadLocal.getServiceContext()),
-				fragmentEntryLink.getConfiguration()));
-
-		fragmentEntryLink.setCss(fragmentEntry.getCss());
-		fragmentEntryLink.setJs(fragmentEntry.getJs());
-
-		String newEditableValues = _mergeEditableValues(
-			defaultEditableValues, fragmentEntryLink.getEditableValues());
-
-		fragmentEntryLink.setEditableValues(newEditableValues);
-
-		fragmentEntryLink.setType(fragmentEntry.getType());
-		fragmentEntryLink.setLastPropagationDate(new Date());
-
-		fragmentEntryLink = fragmentEntryLinkPersistence.update(
-			fragmentEntryLink);
-
-		_updateFragmentEntryLinkLayout(fragmentEntryLink);
-
-		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				_fragmentEntryLinkListenerRegistry.
-					getFragmentEntryLinkListeners()) {
-
-			fragmentEntryLinkListener.
-				onUpdateFragmentEntryLinkConfigurationValues(fragmentEntryLink);
-		}
+		updateLatestChanges(fragmentEntry, fragmentEntryLink);
 	}
 
 	private String _getProcessedHTML(

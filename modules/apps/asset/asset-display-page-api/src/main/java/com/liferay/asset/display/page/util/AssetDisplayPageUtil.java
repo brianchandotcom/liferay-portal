@@ -15,7 +15,7 @@
 package com.liferay.asset.display.page.util;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.info.display.contributor.LayoutDisplayPageProviderTrackerUtil;
+import com.liferay.asset.display.page.info.display.contributor.LayoutDisplayPageProviderRegistryUtil;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -43,7 +43,7 @@ public class AssetDisplayPageUtil {
 					groupId, classNameId, classTypeId);
 
 		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry =
-			LayoutDisplayPageProviderTrackerUtil.
+			LayoutDisplayPageProviderRegistryUtil.
 				getLayoutDisplayPageProviderRegistry();
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =

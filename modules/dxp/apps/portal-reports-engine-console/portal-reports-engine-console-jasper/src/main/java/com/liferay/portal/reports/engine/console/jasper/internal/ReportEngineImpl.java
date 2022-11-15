@@ -14,10 +14,13 @@
 
 package com.liferay.portal.reports.engine.console.jasper.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.reports.engine.ReportEngine;
+import com.liferay.portal.reports.engine.ReportFormat;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
-import com.liferay.portal.reports.engine.ReportFormatExporterRegistry;
 import com.liferay.portal.reports.engine.ReportGenerationException;
 import com.liferay.portal.reports.engine.ReportRequest;
 import com.liferay.portal.reports.engine.ReportRequestContext;
@@ -33,7 +36,10 @@ import javax.servlet.ServletContext;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -86,8 +92,14 @@ public class ReportEngineImpl implements ReportEngine {
 				jasperReport, reportRequest);
 
 			ReportFormatExporter reportFormatExporter =
-				_reportFormatExporterRegistry.getReportFormatExporter(
+				_reportFormatExporterServiceTrackerMap.getService(
 					reportRequest.getReportFormat());
+
+			if (reportFormatExporter == null) {
+				throw new IllegalArgumentException(
+					"No report format exporter found for " +
+						reportRequest.getReportFormat());
+			}
 
 			reportFormatExporter.format(
 				jasperPrint, reportRequest, resultContainer);
@@ -113,6 +125,24 @@ public class ReportEngineImpl implements ReportEngine {
 		_engineParameters = engineParameters;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_reportFormatExporterServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ReportFormatExporter.class, null,
+				(serviceReference, emitter) -> {
+					String reportFormatString = GetterUtil.getString(
+						serviceReference.getProperty("reportFormat"));
+
+					emitter.emit(ReportFormat.parse(reportFormatString));
+				});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_reportFormatExporterServiceTrackerMap.close();
+	}
+
 	private Map<String, String> _engineParameters;
 
 	@Reference(
@@ -125,7 +155,7 @@ public class ReportEngineImpl implements ReportEngine {
 	@Reference
 	private ReportFillManagerRegistry _reportFillManagerRegistry;
 
-	@Reference
-	private ReportFormatExporterRegistry _reportFormatExporterRegistry;
+	private ServiceTrackerMap<ReportFormat, ReportFormatExporter>
+		_reportFormatExporterServiceTrackerMap;
 
 }

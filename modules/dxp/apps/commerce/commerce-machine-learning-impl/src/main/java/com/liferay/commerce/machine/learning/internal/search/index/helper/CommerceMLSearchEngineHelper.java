@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
@@ -36,6 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceMLSearchEngineHelper {
 
 	public void createIndex(String indexName, String indexMappingFileName) {
+		if (!_searchCapabilities.isCommerceSupported()) {
+			return;
+		}
+
 		if (_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(String.format("Index %s already exist", indexName));
@@ -73,6 +78,10 @@ public class CommerceMLSearchEngineHelper {
 	}
 
 	public void dropIndex(String indexName) {
+		if (!_searchCapabilities.isCommerceSupported()) {
+			return;
+		}
+
 		if (!_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(String.format("Index %s does not exist", indexName));
@@ -110,5 +119,8 @@ public class CommerceMLSearchEngineHelper {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
 
 }

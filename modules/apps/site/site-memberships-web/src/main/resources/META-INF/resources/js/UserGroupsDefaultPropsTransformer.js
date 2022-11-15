@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {
+	openConfirmModal,
+	openSelectionModal,
+	setFormValues,
+} from 'frontend-js-web';
 
 const ACTIONS = {
 	assignUserGroupRole(itemData, portletNamespace) {
@@ -23,11 +27,11 @@ const ACTIONS = {
 			return;
 		}
 
-		Liferay.Util.setFormValues(addUserGroupGroupRoleFm, {
+		setFormValues(addUserGroupGroupRoleFm, {
 			userGroupId: itemData.userGroupId,
 		});
 
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
 			onSelect(selectedItems) {
@@ -55,7 +59,7 @@ const ACTIONS = {
 		});
 	},
 
-	deleteUserGroup(itemData) {
+	deleteGroupUserGroups(itemData) {
 		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
@@ -74,11 +78,11 @@ const ACTIONS = {
 			return;
 		}
 
-		Liferay.Util.setFormValues(unassignUserGroupGroupRoleFm, {
+		setFormValues(unassignUserGroupGroupRoleFm, {
 			userGroupId: itemData.userGroupId,
 		});
 
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
 			onSelect(selectedItems) {

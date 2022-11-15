@@ -954,8 +954,7 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 
 	private void _checkResources(
-			long companyId, long resourceId, String resourceName,
-			ResourcePermissionLocalService resourcePermissionLocalService)
+			long companyId, long resourceId, String resourceName)
 		throws PortalException {
 
 		int count = resourcePermissionLocalService.getResourcePermissionsCount(
@@ -975,8 +974,7 @@ public abstract class Base${schemaName}ResourceImpl
 		throws PortalException {
 
 		_checkResources(
-			companyId, resourceId, resourceName,
-			resourcePermissionLocalService);
+			companyId, resourceId, resourceName);
 
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionLocalService.getResourcePermissions(resourceName);

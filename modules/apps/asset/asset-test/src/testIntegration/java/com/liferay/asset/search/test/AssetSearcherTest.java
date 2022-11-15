@@ -235,8 +235,12 @@ public class AssetSearcherTest {
 
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
-		Hits hits = assetSearcher.search(
-			SearchContextTestUtil.getSearchContext(_group.getGroupId()));
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		searchContext.setIncludeInternalAssetCategories(true);
+
+		Hits hits = assetSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 	}
@@ -260,8 +264,12 @@ public class AssetSearcherTest {
 
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
 
-		Hits hits = assetSearcher.search(
-			SearchContextTestUtil.getSearchContext(_group.getGroupId()));
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_group.getGroupId());
+
+		searchContext.setIncludeInternalAssetCategories(true);
+
+		Hits hits = assetSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 3, hits.getLength());
 	}

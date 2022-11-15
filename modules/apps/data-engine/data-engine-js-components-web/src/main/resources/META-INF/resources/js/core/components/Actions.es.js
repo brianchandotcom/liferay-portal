@@ -277,6 +277,7 @@ export const Actions = forwardRef(
 					className="mr-2 sr-only sr-only-focusable"
 					displayType="primary"
 					onClick={handleDragButtonClick}
+					role="application"
 					symbol="drag"
 				/>
 

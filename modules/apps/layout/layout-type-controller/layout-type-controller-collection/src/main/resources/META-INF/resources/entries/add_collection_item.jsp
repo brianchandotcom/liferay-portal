@@ -17,15 +17,7 @@
 <%@ include file="/entries/init.jsp" %>
 
 <%
-String label = LanguageUtil.get(resourceBundle, "new-collection-page-item");
-
 List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders = (List<AssetPublisherAddItemHolder>)request.getAttribute(CollectionPageLayoutTypeControllerWebKeys.ASSET_PUBLISHER_ADD_ITEM_HOLDERS);
-
-if (assetPublisherAddItemHolders.size() == 1) {
-	AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
-
-	label = LanguageUtil.format(request, "new-x", new Object[] {assetPublisherAddItemHolder.getModelResource()});
-}
 %>
 
 <liferay-ui:success key="collectionItemAdded" message="your-request-completed-successfully" />
@@ -36,6 +28,8 @@ if (assetPublisherAddItemHolders.size() == 1) {
 
 			<%
 			AssetPublisherAddItemHolder assetPublisherAddItemHolder = assetPublisherAddItemHolders.get(0);
+
+			String label = LanguageUtil.format(request, "new-x", new Object[] {assetPublisherAddItemHolder.getModelResource()});
 			%>
 
 			<clay:link
@@ -53,6 +47,8 @@ if (assetPublisherAddItemHolders.size() == 1) {
 		<c:otherwise>
 
 			<%
+			String label = LanguageUtil.get(resourceBundle, "new-collection-page-item");
+
 			CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (CollectionItemsDetailDisplayContext)request.getAttribute(CollectionPageLayoutTypeControllerWebKeys.COLLECTION_ITEMS_DETAIL_DISPLAY_CONTEXT);
 			%>
 

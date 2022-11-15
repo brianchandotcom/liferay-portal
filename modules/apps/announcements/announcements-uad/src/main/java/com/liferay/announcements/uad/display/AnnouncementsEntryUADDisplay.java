@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = UADDisplay.class)
+@Component(service = UADDisplay.class)
 public class AnnouncementsEntryUADDisplay
 	extends BaseAnnouncementsEntryUADDisplay {
 

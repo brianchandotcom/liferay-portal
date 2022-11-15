@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noah Sherrill
  */
-@Component(immediate = true, service = UADAnonymizer.class)
+@Component(service = UADAnonymizer.class)
 public class AnnouncementsEntryUADAnonymizer
 	extends BaseAnnouncementsEntryUADAnonymizer {
 }

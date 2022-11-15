@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CommentPortletKeys.COMMENT,
 	service = UserNotificationDefinition.class
 )

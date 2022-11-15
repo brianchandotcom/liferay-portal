@@ -30,7 +30,7 @@ import org.owasp.html.PolicyFactory;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = Sanitizer.class)
+@Component(service = Sanitizer.class)
 public class CommentSanitizerImpl implements Sanitizer {
 
 	public CommentSanitizerImpl() {

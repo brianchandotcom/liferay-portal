@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @AccessControlled
 @Component(
-	immediate = true,
 	property = {
 		"json.web.service.context.name=comment",
 		"json.web.service.context.path=Comment"

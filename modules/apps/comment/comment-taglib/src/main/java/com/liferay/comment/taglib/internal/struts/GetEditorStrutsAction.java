@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = "path=/portal/comment/discussion/get_editor",
+	property = "path=/portal/comment/discussion/get_editor",
 	service = StrutsAction.class
 )
 public class GetEditorStrutsAction implements StrutsAction {

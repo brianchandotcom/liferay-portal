@@ -15,21 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {
-	createPortletURL,
-	getPortletNamespace,
-	openModal,
-	openSelectionModal,
-	openToast,
-	sub,
-} from 'frontend-js-web';
+import {getPortletNamespace, openSelectionModal, sub} from 'frontend-js-web';
+import React from 'react';
 
 export default function AssetDisplayPageSelector({
 	assetDisplayPageSelected,
+	disabled = true,
 	namespace,
-	newArticle,
-	previewURL,
-	saveAsDraftURL,
 	selectAssetDisplayPageEventName,
 	selectAssetDisplayPageURL,
 	selectedSite,
@@ -67,7 +59,7 @@ export default function AssetDisplayPageSelector({
 	};
 
 	return (
-		<div className="mb-3 mt-2">
+		<div className="mb-2 mt-2">
 			<ClayForm.Group className="mb-2">
 				<label className="sr-only" htmlFor={assetDisplayPageId}>
 					{Liferay.Language.get('display-page')}
@@ -76,7 +68,7 @@ export default function AssetDisplayPageSelector({
 				<ClayInput.Group small>
 					<ClayInput.GroupItem>
 						<ClayInput
-							disabled={!selectedSite?.groupId}
+							disabled={disabled}
 							onClick={() => openAssetDisplayPageSelector()}
 							placeholder={sub(
 								Liferay.Language.get('select-x'),
@@ -90,7 +82,7 @@ export default function AssetDisplayPageSelector({
 
 					<ClayInput.GroupItem shrink>
 						<ClayButton
-							disabled={!selectedSite?.groupId}
+							disabled={disabled}
 							displayType="secondary"
 							monospaced
 							onClick={() => openAssetDisplayPageSelector()}
@@ -112,121 +104,6 @@ export default function AssetDisplayPageSelector({
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ClayForm.Group>
-
-			<ClayButton
-				disabled={!assetDisplayPageSelected}
-				displayType="secondary"
-				onClick={() => {
-					updateJournalInput({
-						name: 'formDate',
-						namespace,
-						value: Date.now().toString(),
-					});
-
-					const form = document.getElementById(`${namespace}fm1`);
-
-					const formData = new FormData(form);
-
-					const articleId = document.getElementById(
-						`${namespace}articleId`
-					);
-
-					formData.append(
-						`${namespace}cmd`,
-						newArticle && !articleId.value ? 'add' : 'update'
-					);
-
-					return Liferay.Util.fetch(saveAsDraftURL, {
-						body: formData,
-						method: form.method,
-					})
-						.then((response) => response.json())
-						.then(
-							({
-								articleId,
-								classPK,
-								error,
-								friendlyUrlMap,
-								version,
-							}) => {
-								if (error) {
-									openToast({
-										message: Liferay.Language.get(
-											'web-content-could-not-be-previewed-due-to-an-unexpected-error-while-generating-the-draft'
-										),
-										title: Liferay.Language.get('error'),
-										type: 'danger',
-									});
-								}
-								else {
-									updateJournalInput({
-										name: 'formDate',
-										namespace,
-										value: Date.now().toString(),
-									});
-
-									updateJournalInput({
-										name: 'articleId',
-										namespace,
-										value: articleId,
-									});
-
-									updateJournalInput({
-										name: 'version',
-										namespace,
-										value: version,
-									});
-
-									Object.entries(friendlyUrlMap).forEach(
-										([languageId, value]) => {
-											updateJournalInput({
-												name: `friendlyURL_${languageId}`,
-												namespace,
-												value,
-											});
-										}
-									);
-
-									openModal({
-										title: Liferay.Language.get('preview'),
-										url: createPortletURL(previewURL, {
-											classPK,
-
-											selPlid:
-												assetDisplayPageSelected?.plid,
-											version,
-										}).toString(),
-									});
-								}
-							}
-						)
-						.catch(() => {
-							openToast({
-								message: Liferay.Language.get(
-									'web-content-could-not-be-previewed-due-to-an-unexpected-error-while-generating-the-draft'
-								),
-								title: Liferay.Language.get('error'),
-								type: 'danger',
-							});
-						});
-				}}
-				title={
-					assetDisplayPageSelected &&
-					Liferay.Language.get(
-						'a-draft-will-be-saved-before-displaying-the-preview'
-					)
-				}
-			>
-				{Liferay.Language.get('preview')}
-			</ClayButton>
 		</div>
 	);
-}
-
-function updateJournalInput({name, namespace, value}) {
-	const input = document.getElementById(`${namespace}${name}`);
-
-	if (input) {
-		input.value = value;
-	}
 }

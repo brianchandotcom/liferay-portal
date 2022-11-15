@@ -247,7 +247,7 @@ public class CalendarSearcherTest {
 
 		String vendor = searchEngine.getVendor();
 
-		if (vendor.equals("Elasticsearch")) {
+		if (vendor.equals("Elasticsearch") || vendor.equals("Solr")) {
 			return false;
 		}
 

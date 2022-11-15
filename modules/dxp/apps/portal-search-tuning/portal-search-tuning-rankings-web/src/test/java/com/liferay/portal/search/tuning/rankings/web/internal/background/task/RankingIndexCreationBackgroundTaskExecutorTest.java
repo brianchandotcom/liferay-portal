@@ -17,6 +17,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.background.task;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.SingleIndexToMultipleIndexImporter;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -43,6 +44,9 @@ public class RankingIndexCreationBackgroundTaskExecutorTest {
 		_rankingIndexCreationBackgroundTaskExecutor =
 			new RankingIndexCreationBackgroundTaskExecutor();
 
+		ReflectionTestUtil.setFieldValue(
+			_rankingIndexCreationBackgroundTaskExecutor,
+			"_searchEngineInformation", _searchEngineInformation);
 		ReflectionTestUtil.setFieldValue(
 			_rankingIndexCreationBackgroundTaskExecutor,
 			"_singleIndexToMultipleIndexImporter",
@@ -78,6 +82,8 @@ public class RankingIndexCreationBackgroundTaskExecutorTest {
 
 	private RankingIndexCreationBackgroundTaskExecutor
 		_rankingIndexCreationBackgroundTaskExecutor;
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 	private final SingleIndexToMultipleIndexImporter
 		_singleIndexToMultipleIndexImporter = Mockito.mock(
 			SingleIndexToMultipleIndexImporter.class);

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.engine.ConnectionInformation;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -48,6 +50,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -292,6 +295,28 @@ public class DDMIndexerImplTest {
 					new DDMFormValuesToFieldsConverterImpl());
 				ReflectionTestUtil.setFieldValue(
 					this, "_ddmIndexerConfiguration", ddmIndexerConfiguration);
+
+				searchEngineInformation = new SearchEngineInformation() {
+
+					public String getClientVersionString() {
+						return null;
+					}
+
+					public List<ConnectionInformation>
+						getConnectionInformationList() {
+
+						return null;
+					}
+
+					public String getNodesString() {
+						return null;
+					}
+
+					public String getVendorString() {
+						return null;
+					}
+
+				};
 			}
 		};
 	}

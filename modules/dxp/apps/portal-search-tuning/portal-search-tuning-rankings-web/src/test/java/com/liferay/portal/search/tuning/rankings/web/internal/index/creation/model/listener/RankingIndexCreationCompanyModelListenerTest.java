@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.mo
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
@@ -52,6 +53,9 @@ public class RankingIndexCreationCompanyModelListenerTest {
 		ReflectionTestUtil.setFieldValue(
 			_rankingIndexCreationCompanyModelListener, "_rankingIndexReader",
 			_rankingIndexReader);
+		ReflectionTestUtil.setFieldValue(
+			_rankingIndexCreationCompanyModelListener,
+			"_searchEngineInformation", _searchEngineInformation);
 	}
 
 	@Test
@@ -152,5 +156,7 @@ public class RankingIndexCreationCompanyModelListenerTest {
 		Mockito.mock(RankingIndexNameBuilder.class);
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
 		RankingIndexReader.class);
+	private final SearchEngineInformation _searchEngineInformation =
+		Mockito.mock(SearchEngineInformation.class);
 
 }

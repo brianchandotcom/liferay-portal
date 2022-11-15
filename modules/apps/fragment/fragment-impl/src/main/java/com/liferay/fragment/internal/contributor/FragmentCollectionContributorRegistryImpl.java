@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -172,51 +171,12 @@ public class FragmentCollectionContributorRegistryImpl
 				fragmentEntry.getFragmentEntryKey());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			boolean modified = false;
-
-			if (!Objects.equals(
-					fragmentEntryLink.getCss(), fragmentEntry.getCss())) {
-
-				fragmentEntryLink.setCss(fragmentEntry.getCss());
-
-				modified = true;
+			try {
+				_fragmentEntryLinkLocalService.updateLatestChanges(
+					fragmentEntry, fragmentEntryLink);
 			}
-
-			if (!Objects.equals(
-					fragmentEntryLink.getHtml(), fragmentEntry.getHtml())) {
-
-				fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-
-				modified = true;
-			}
-
-			if (!Objects.equals(
-					fragmentEntryLink.getJs(), fragmentEntry.getJs())) {
-
-				fragmentEntryLink.setJs(fragmentEntry.getJs());
-
-				modified = true;
-			}
-
-			if (!Objects.equals(
-					fragmentEntryLink.getConfiguration(),
-					fragmentEntry.getConfiguration())) {
-
-				fragmentEntryLink.setConfiguration(
-					fragmentEntry.getConfiguration());
-
-				modified = true;
-			}
-
-			if (fragmentEntryLink.getType() != fragmentEntry.getType()) {
-				fragmentEntryLink.setType(fragmentEntry.getType());
-
-				modified = true;
-			}
-
-			if (modified) {
-				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-					fragmentEntryLink);
+			catch (PortalException portalException) {
+				_log.error(portalException);
 			}
 		}
 	}

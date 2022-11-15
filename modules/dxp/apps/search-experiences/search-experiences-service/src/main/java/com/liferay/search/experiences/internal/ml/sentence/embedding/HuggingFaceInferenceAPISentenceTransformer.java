@@ -20,14 +20,14 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
-
-import java.io.IOException;
 
 import java.net.HttpURLConnection;
 
@@ -71,39 +71,29 @@ public class HuggingFaceInferenceAPISentenceTransformer
 		return jsonArray1;
 	}
 
-	private String _getResponseJSON(
-			Http.Options options,
-			SemanticSearchConfiguration semanticSearchConfiguration,
-			String text)
-		throws IOException {
-
-		JSONObject jsonObject = JSONUtil.put("inputs", text);
-
-		options.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"Bearer " + semanticSearchConfiguration.huggingFaceAccessToken());
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
-		options.setBody(
-			jsonObject.toString(), ContentTypes.APPLICATION_JSON,
-			StringPool.UTF8);
-		options.setLocation(
-			"https://api-inference.huggingface.co/models/" +
-				semanticSearchConfiguration.model());
-		options.setPost(true);
-
-		return _http.URLtoString(options);
-	}
-
 	private Double[] _getSentenceEmbedding(
 		SemanticSearchConfiguration semanticSearchConfiguration, String text) {
 
 		try {
 			Http.Options options = new Http.Options();
 
-			String responseJSON = _getResponseJSON(
-				options, semanticSearchConfiguration, text);
+			JSONObject jsonObject = JSONUtil.put("inputs", text);
+
+			options.addHeader(
+				HttpHeaders.AUTHORIZATION,
+				"Bearer " +
+					semanticSearchConfiguration.huggingFaceAccessToken());
+			options.addHeader(
+				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+			options.setBody(
+				jsonObject.toString(), ContentTypes.APPLICATION_JSON,
+				StringPool.UTF8);
+			options.setLocation(
+				"https://api-inference.huggingface.co/models/" +
+					semanticSearchConfiguration.model());
+			options.setPost(true);
+
+			String responseJSON = _http.URLtoString(options);
 
 			Http.Response response = options.getResponse();
 
@@ -114,18 +104,27 @@ public class HuggingFaceInferenceAPISentenceTransformer
 				options.setTimeout(
 					semanticSearchConfiguration.modelTimeout() * 1000);
 
-				responseJSON = _getResponseJSON(
-					options, semanticSearchConfiguration, text);
+				responseJSON = _http.URLtoString(options);
 			}
 
-			if (_isJSONArray(responseJSON)) {
+			if (!_isJSONArray(responseJSON)) {
+				throw new IllegalArgumentException(responseJSON);
+			}
+			else if (!_isValidResponse(responseJSON)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Invalid response: " + responseJSON);
+				}
+
+				throw new IllegalArgumentException(
+					"The selected model is not valid for creating sentence " +
+						"embeddings");
+			}
+			else {
 				List<Double> list = JSONUtil.toDoubleList(
 					_getJSONArray(_jsonFactory.createJSONArray(responseJSON)));
 
 				return list.toArray(new Double[0]);
 			}
-
-			throw new IllegalArgumentException(responseJSON);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -139,6 +138,17 @@ public class HuggingFaceInferenceAPISentenceTransformer
 
 		return false;
 	}
+
+	private boolean _isValidResponse(String s) {
+		if (StringUtil.startsWith(s, "[[") && StringUtil.endsWith(s, "]]")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HuggingFaceInferenceAPISentenceTransformer.class);
 
 	@Reference
 	private Http _http;

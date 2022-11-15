@@ -97,52 +97,6 @@ public class AssetSearcherTest {
 	}
 
 	@Test
-	public void testGetAssetEntriesFilteredByAllCategoryIds() throws Exception {
-		setGuestUser();
-
-		AssetSearcher assetSearcher = new AssetSearcher();
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		assetEntryQuery.setAllCategoryIds(
-			new long[] {
-				_internalAssetCategory.getCategoryId(),
-				_publicAssetCategory1.getCategoryId(),
-				_publicAssetCategory2.getCategoryId()
-			});
-
-		assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-		Hits hits = assetSearcher.search(
-			SearchContextTestUtil.getSearchContext(_group.getGroupId()));
-
-		Assert.assertEquals(hits.toString(), 1, hits.getLength());
-	}
-
-	@Test
-	public void testGetAssetEntriesFilteredByAnyCategoryIds() throws Exception {
-		setGuestUser();
-
-		AssetSearcher assetSearcher = new AssetSearcher();
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		assetEntryQuery.setAnyCategoryIds(
-			new long[] {
-				_internalAssetCategory.getCategoryId(),
-				_publicAssetCategory1.getCategoryId(),
-				_publicAssetCategory2.getCategoryId()
-			});
-
-		assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-		Hits hits = assetSearcher.search(
-			SearchContextTestUtil.getSearchContext(_group.getGroupId()));
-
-		Assert.assertEquals(hits.toString(), 3, hits.getLength());
-	}
-
-	@Test
 	public void testSearchAllAssetCategoryIdsIncludingInternalAssetCategories()
 		throws Exception {
 
@@ -246,6 +200,56 @@ public class AssetSearcherTest {
 		Hits hits = assetSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 2, hits.getLength());
+	}
+
+	@Test
+	public void testSearchAssetEntriesFilteredByAllCategoryIds()
+		throws Exception {
+
+		setGuestUser();
+
+		AssetSearcher assetSearcher = new AssetSearcher();
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setAllCategoryIds(
+			new long[] {
+				_internalAssetCategory.getCategoryId(),
+				_publicAssetCategory1.getCategoryId(),
+				_publicAssetCategory2.getCategoryId()
+			});
+
+		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+		Hits hits = assetSearcher.search(
+			SearchContextTestUtil.getSearchContext(_group.getGroupId()));
+
+		Assert.assertEquals(hits.toString(), 1, hits.getLength());
+	}
+
+	@Test
+	public void testSearchAssetEntriesFilteredByAnyCategoryIds()
+		throws Exception {
+
+		setGuestUser();
+
+		AssetSearcher assetSearcher = new AssetSearcher();
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setAnyCategoryIds(
+			new long[] {
+				_internalAssetCategory.getCategoryId(),
+				_publicAssetCategory1.getCategoryId(),
+				_publicAssetCategory2.getCategoryId()
+			});
+
+		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+		Hits hits = assetSearcher.search(
+			SearchContextTestUtil.getSearchContext(_group.getGroupId()));
+
+		Assert.assertEquals(hits.toString(), 3, hits.getLength());
 	}
 
 	@Test

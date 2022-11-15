@@ -43,6 +43,7 @@ function PreviewSidebar({
 	onFetchCancel,
 	onFetchResults,
 	onFocusSXPElement,
+	requestString = '',
 	responseString = '',
 	totalHits,
 	visible,
@@ -166,6 +167,27 @@ function PreviewSidebar({
 			</ManagementToolbar.ItemList>
 
 			<ManagementToolbar.ItemList>
+				<ManagementToolbar.Item>
+					<PreviewModalWithCopyDownload
+						fileName="raw_request.json"
+						folded
+						lineWrapping={false}
+						size="lg"
+						text={parseAndPrettifyJSON(requestString)}
+						title={Liferay.Language.get('raw-request')}
+					>
+						<ClayButton
+							borderless
+							className="raw-request"
+							disabled={loading}
+							displayType="secondary"
+							small
+						>
+							{Liferay.Language.get('view-raw-request')}
+						</ClayButton>
+					</PreviewModalWithCopyDownload>
+				</ManagementToolbar.Item>
+
 				<ManagementToolbar.Item>
 					<PreviewModalWithCopyDownload
 						fileName="raw_response.json"
@@ -316,6 +338,7 @@ PreviewSidebar.propTypes = {
 	onFetchCancel: PropTypes.func,
 	onFetchResults: PropTypes.func,
 	onFocusSXPElement: PropTypes.func,
+	requestString: PropTypes.string,
 	responseString: PropTypes.string,
 	totalHits: PropTypes.number,
 	visible: PropTypes.bool,

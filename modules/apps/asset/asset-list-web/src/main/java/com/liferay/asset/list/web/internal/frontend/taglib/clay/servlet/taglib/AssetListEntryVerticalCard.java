@@ -14,6 +14,7 @@
 
 package com.liferay.asset.list.web.internal.frontend.taglib.clay.servlet.taglib;
 
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
@@ -70,7 +71,9 @@ public class AssetListEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getIcon() {
-		if (_assetListEntry.getType() == 0) {
+		if (_assetListEntry.getType() ==
+				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
+
 			return "bolt";
 		}
 

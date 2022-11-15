@@ -155,6 +155,7 @@ export function Column({
 				{editable && (
 					<Actions
 						activePage={pageIndex}
+						field={fieldRootOrCurrent}
 						fieldId={firstField.fieldName}
 						fieldType={firstField.type}
 						isFieldSelected={isFieldSelected}

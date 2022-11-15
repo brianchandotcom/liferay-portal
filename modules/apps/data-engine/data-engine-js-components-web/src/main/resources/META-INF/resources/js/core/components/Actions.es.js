@@ -35,6 +35,8 @@ import {useForm, useFormState} from '../hooks/useForm.es';
 import {useResizeObserver} from '../hooks/useResizeObserver.es';
 import {getFieldChildren} from '../utils/getFieldChildren';
 
+import './Actions.scss';
+
 const ActionsContext = createContext({});
 
 const ACTIONS_TYPES = {
@@ -194,6 +196,7 @@ export const Actions = forwardRef(
 	(
 		{
 			activePage,
+			field,
 			fieldId,
 			fieldType,
 			isFieldSelected,
@@ -205,7 +208,8 @@ export const Actions = forwardRef(
 	) => {
 		const {fieldTypes} = useConfig();
 		const formState = useFormState();
-		const {actions} = useActions();
+		const {actions, dispatch} = useActions();
+
 		const setKeyboardDNDSourceItem = useSetKeyboardDNDSourceItem();
 
 		const label = useMemo(() => {
@@ -215,6 +219,13 @@ export const Actions = forwardRef(
 
 			return fieldTypes.find(({name}) => name === fieldType).label;
 		}, [fieldType, isFieldSet, fieldTypes]);
+
+		const handleEditButtonClick = () => {
+			dispatch({
+				payload: {activePage, field},
+				type: ACTIONS_TYPES.ACTIVE,
+			});
+		};
 
 		const handleDragButtonClick = () => {
 			let parentField;
@@ -272,14 +283,29 @@ export const Actions = forwardRef(
 				})}
 				ref={actionsRef}
 			>
-				<ClayButtonWithIcon
-					aria-label={sub(Liferay.Language.get('move-x'), [label])}
-					className="mr-2 sr-only sr-only-focusable"
-					displayType="primary"
-					onClick={handleDragButtonClick}
-					role="application"
-					symbol="drag"
-				/>
+				<div className="ddm-field-action-buttons">
+					<ClayButtonWithIcon
+						aria-label={sub(Liferay.Language.get('move-x'), [
+							label,
+						])}
+						className="ddm-field-action-button mr-2 sr-only sr-only-focusable"
+						displayType="primary"
+						onClick={handleDragButtonClick}
+						role="application"
+						symbol="drag"
+					/>
+
+					<ClayButtonWithIcon
+						aria-label={sub(Liferay.Language.get('edit-x'), [
+							label,
+						])}
+						className="ddm-field-action-button mr-2 sr-only sr-only-focusable"
+						displayType="primary"
+						onClick={handleEditButtonClick}
+						role="application"
+						symbol="cog"
+					/>
+				</div>
 
 				<span className="actions-label">{label}</span>
 

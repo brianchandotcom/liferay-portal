@@ -1751,7 +1751,7 @@ definition {
 
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Preview Draft",
-				pageName = "Test Page Name");
+				pageName = "Test Page Name*");
 		}
 
 		task ("Then the page creator can change new experience and view the new experience shown in experience selector") {

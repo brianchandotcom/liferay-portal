@@ -481,7 +481,7 @@ definition {
 
 				PagesFinder.gotoPageEllipsisItem(
 					item = "View Collection Items",
-					pageName = "Test Collection Page Name");
+					pageName = "Test Collection Page Name*");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1409,7 +1409,7 @@ definition {
 
 			PagesFinder.gotoPageEllipsisItem(
 				item = "View Collection Items",
-				pageName = "Dynamic Collection Page Name");
+				pageName = "Dynamic Collection Page Name*");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

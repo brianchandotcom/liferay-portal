@@ -643,7 +643,7 @@ definition {
 		task ("Preview the draft content page in a new tab") {
 			PagesFinder.gotoPageEllipsisItem(
 				item = "Preview Draft",
-				pageName = "Test Page Name");
+				pageName = "Test Page Name*");
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
@@ -782,7 +782,7 @@ definition {
 		task ("Assert the order of Pages in Page Tree panel") {
 			var n = "1";
 
-			for (var pageName : list "Test Portlet Page,Test Content Page,Test Embedded Page") {
+			for (var pageName : list "Test Portlet Page,Test Content Page*,Test Embedded Page") {
 				AssertVisible(
 					key_index = "${n}",
 					key_pageName = "${pageName}",
@@ -793,16 +793,15 @@ definition {
 		}
 
 		task ("Reorganize the order of Pages in Page Tree panel") {
-			DragAndDrop.dragAndDropReorganizeObjects(
-				locator1 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][2][contains(.,'Test Content Page')]",
-				locator2 = "//ul[contains(@class,'tree-container')]/li[contains(@class,'tree-node')][1][contains(.,'Test Portlet Page')]",
-				position = "0,-4");
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Content Page*']",
+				locator2 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Portlet Page']");
 		}
 
 		task ("Assert the order of Pages in Page Tree panel") {
 			var n = "1";
 
-			for (var pageName : list "Test Content Page,Test Portlet Page,Test Embedded Page") {
+			for (var pageName : list "Test Content Page*,Test Portlet Page,Test Embedded Page") {
 				AssertVisible(
 					key_index = "${n}",
 					key_pageName = "${pageName}",

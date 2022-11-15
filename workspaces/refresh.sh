@@ -41,7 +41,7 @@ function init_workspace {
 
 	mkdir -p ${1}/configs/local
 
-	cp sample-default-workspace/configs/local/portal-ext.properties ${1}/configs/local
+	cp sample-default-workspace/configs/local/portal-env.properties ${1}/configs/local
 }
 
 function refresh_liferay_learn_workspace {
@@ -55,13 +55,16 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u40
+	${BLADE_PATH} init --liferay-version dxp-7.4-u50
+
+	sed -i'.bak' "s/\"com.liferay.gradle.plugins.workspace\", version: \"4.0.5\"/\"com.liferay.gradle.plugins.workspace\", version: \"4.0.23\"/" settings.gradle
 
 	echo -e "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
-	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-ext.properties
+	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-env.properties
 
-	echo -e "\nliferay.workspace.docker.image.liferay=liferay/7.4.13.nightly-d4.1.4-20220707214146" >> gradle.properties
+	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13-u50-d5.0.2-20221110093908" >> gradle.properties
+	echo -e "\nliferay.workspace.node.package.manager=yarn" >> gradle.properties
 
 	sort -o gradle.properties gradle.properties
 
@@ -83,9 +86,41 @@ function refresh_sample_minimal_workspace {
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
 
+	../tools/create_remote_app.sh delta-remote-app react
+
+	cat <<EOF > delta-remote-app/client-extension.yaml
+delta-remote-app:
+  cssURLs:
+    - static/css/main.*.css
+  friendlyURLMapping: delta-remote-app
+  htmlElementName: delta-remote-app
+  instanceable: false
+  name: Delta Remote App
+  portletCategoryName: category.remote-apps
+  type: customElement
+  urls:
+    - static/js/main.*.js
+  useESM: false
+
+assemble:
+  - from: build
+    include: static/
+    into: static/
+EOF
+
+	sed -i'.bak' '/^.*react-scripts test.*$/d' delta-remote-app/package.json
+
+	rm -fr sample-minimal-workspace/client-extensions/delta-remote-app
+
+	mv delta-remote-app sample-minimal-workspace/client-extensions
+
 	rm -fr sample-default-workspace/client-extensions
 
 	cp -R sample-minimal-workspace/client-extensions sample-default-workspace
+}
+
+function remove_bak_files {
+	find . -name '*.bak' -exec rm {} +
 }
 
 function main {
@@ -96,6 +131,8 @@ function main {
 	refresh_sample_minimal_workspace
 
 	refresh_liferay_learn_workspace
+
+	remove_bak_files
 }
 
 main "${@}"

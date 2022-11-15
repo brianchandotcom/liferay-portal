@@ -16,6 +16,9 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -94,6 +98,38 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 					"classPK", article.getResourcePrimKey()
 				).put(
 					"friendlyUrlMap", article.getFriendlyURLMap()
+				).put(
+					"previewURL",
+					() -> {
+						AssetRendererFactory<JournalArticle>
+							assetRendererFactory =
+								AssetRendererFactoryRegistryUtil.
+									getAssetRendererFactoryByClass(
+										JournalArticle.class);
+
+						AssetRenderer<JournalArticle> assetRenderer =
+							assetRendererFactory.getAssetRenderer(
+								article.getResourcePrimKey(),
+								AssetRendererFactory.TYPE_LATEST);
+
+						String viewContentURL = StringPool.BLANK;
+
+						try {
+							viewContentURL = assetRenderer.getURLViewInContext(
+								_portal.getLiferayPortletRequest(actionRequest),
+								_portal.getLiferayPortletResponse(
+									actionResponse),
+								null);
+						}
+						catch (Exception exception) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(exception);
+							}
+						}
+
+						return HttpComponentsUtil.addParameter(
+							viewContentURL, "p_l_mode", Constants.PREVIEW);
+					}
 				).put(
 					"version", article.getVersion()
 				));

@@ -419,9 +419,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 						</c:choose>
 					}
 
-					<c:if test="<%= ddmFormDisplayContext.isRememberMe() %>">
-						var rememberMe = true;
-					</c:if>
+					var rememberMe = '<%= ddmFormDisplayContext.isRememberMe() %>';
 
 					window.<portlet:namespace />sessionIntervalId = setInterval(() => {
 						if (Liferay.Session || rememberMe) {

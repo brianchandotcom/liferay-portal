@@ -133,7 +133,7 @@ public class JournalHistoryDisplayContext {
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
 			_httpServletRequest, JournalPortletKeys.JOURNAL,
-			"history-order-by-type", "asc");
+			"history-order-by-type", "desc");
 
 		return _orderByType;
 	}

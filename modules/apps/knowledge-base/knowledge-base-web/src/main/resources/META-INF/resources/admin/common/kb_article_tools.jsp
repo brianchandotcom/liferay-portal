@@ -30,16 +30,4 @@ KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_K
 			/>
 		</a>
 	</c:if>
-
-	<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
-
-		<%
-		KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(kbGroupServiceConfiguration, liferayPortletRequest, liferayPortletResponse);
-		%>
-
-		<clay:dropdown-actions
-			dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
-			propsTransformer="admin/js/KBDropdownPropsTransformer"
-		/>
-	</c:if>
 </div>

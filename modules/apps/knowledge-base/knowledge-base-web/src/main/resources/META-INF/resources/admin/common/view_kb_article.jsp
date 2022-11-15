@@ -95,9 +95,26 @@ if (portletTitleBasedNavigation) {
 
 	<div class="sidenav-content <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-form-lg" : StringPool.BLANK %>">
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				title="<%= kbArticle.getTitle() %>"
-			/>
+			<div class="autofit-row">
+				<div class="autofit-col autofit-col-expand">
+					<h1><%= kbArticle.getTitle() %></h1>
+				</div>
+
+				<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
+					<div class="autofit-col">
+
+						<%
+						KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(kbGroupServiceConfiguration, liferayPortletRequest, liferayPortletResponse);
+						%>
+
+						<clay:dropdown-actions
+							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+							dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
+							propsTransformer="admin/js/KBDropdownPropsTransformer"
+						/>
+					</div>
+				</c:if>
+			</div>
 		</c:if>
 
 		<div class="kb-tools">

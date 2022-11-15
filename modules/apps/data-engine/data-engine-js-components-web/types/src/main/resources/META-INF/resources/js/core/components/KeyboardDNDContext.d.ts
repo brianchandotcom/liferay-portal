@@ -42,6 +42,7 @@ export declare function KeyboardDNDContextProvider({
 export declare function useSetSourceItem(): (
 	nextSourceItem: IState['sourceItem'] | null
 ) => void;
+export declare function useText(): string | null;
 export declare function useIsOverTarget(
 	itemPath: number[],
 	position: ITargetPosition

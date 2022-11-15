@@ -39,6 +39,13 @@ const HOME_KEYCODE = 36;
 type ITargetPosition = 'bottom' | 'middle' | 'top';
 type IItemType = 'root' | 'page' | 'row' | 'column' | 'field';
 
+const INITIAL_STATE = {
+	setState: () => {},
+	setText: () => {},
+	state: null,
+	text: null,
+};
+
 interface IState {
 	currentTarget: {
 		itemPath: number[];
@@ -60,15 +67,19 @@ interface IState {
 		  };
 }
 
-const KeyboardDNDContext = React.createContext<
-	[IState | null, Dispatch<SetStateAction<IState | null>>]
->([null, () => {}]);
+const KeyboardDNDContext = React.createContext<{
+	setState: Dispatch<SetStateAction<IState | null>>;
+	setText: Dispatch<SetStateAction<string | null>>;
+	state: IState | null;
+	text: string | null;
+}>(INITIAL_STATE);
 
 export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 	const dispatch = useForm();
 	const formState = useFormState();
 	const formStateRef = useRef(formState);
 	const [state, setState] = useState<IState | null>(null);
+	const [text, setText] = useState<string | null>(null);
 
 	const isDragging = useMemo(() => Boolean(state as any), [state]);
 	const stateRef = useRef(state);
@@ -219,7 +230,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 	}, [dispatch, isDragging]);
 
 	return (
-		<KeyboardDNDContext.Provider value={[state, setState]}>
+		<KeyboardDNDContext.Provider value={{setState, setText, state, text}}>
 			{children}
 		</KeyboardDNDContext.Provider>
 	);
@@ -227,7 +238,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 
 export function useSetSourceItem() {
 	const formState = useFormState();
-	const [, setState] = useContext(KeyboardDNDContext);
+	const {setState} = useContext(KeyboardDNDContext);
 
 	return useCallback(
 		(nextSourceItem: IState['sourceItem'] | null) =>
@@ -257,12 +268,16 @@ export function useSetSourceItem() {
 	);
 }
 
+export function useText() {
+	return useContext(KeyboardDNDContext).text;
+}
+
 export function useIsOverTarget(
 	itemPath: number[],
 	position: ITargetPosition
 ): boolean {
 	const formState = useFormState();
-	const [state] = useContext(KeyboardDNDContext);
+	const {state} = useContext(KeyboardDNDContext);
 
 	if (!state) {
 		return false;

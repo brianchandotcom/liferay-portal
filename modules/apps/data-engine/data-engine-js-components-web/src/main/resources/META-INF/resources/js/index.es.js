@@ -80,4 +80,5 @@ export {FormView} from './custom/form/FormView.es';
 export {
 	KeyboardDNDContextProvider,
 	useSetSourceItem as useSetKeyboardDNDSourceItem,
+	useText as useKeyboardDNDText,
 } from './core/components/KeyboardDNDContext';

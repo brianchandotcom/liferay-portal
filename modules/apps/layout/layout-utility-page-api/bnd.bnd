@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.layout.utility.page.exception,\
 	com.liferay.layout.utility.page.model,\
 	com.liferay.layout.utility.page.service,\
-	com.liferay.layout.utility.page.service.persistence
+	com.liferay.layout.utility.page.service.persistence,\
+	com.liferay.layout.utility.page.validator

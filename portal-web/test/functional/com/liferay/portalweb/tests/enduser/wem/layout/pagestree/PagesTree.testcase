@@ -166,6 +166,11 @@ definition {
 		}
 
 		task ("Navigate to child page via page tree") {
+
+			// Workaround until LPS-168565 resolved
+
+			Portlet.expandTree();
+
 			PagesFinder.navigateToChildPage(
 				childPageName = "Test Child Page",
 				parentPageName = "Test Page Name");

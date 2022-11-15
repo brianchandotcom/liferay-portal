@@ -293,10 +293,7 @@ definition {
 				userPassword = "test");
 		}
 
-		AnnouncementsNavigator.openToEntriesTab(
-			layoutName = "announcements-page",
-			siteURLKey = "guest",
-			tabName = "unread");
+		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsPortlet.configureDisplayCountPG(maxDisplayItems = "4");
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -111,7 +112,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		_userGroups = userGroupSearchFixture.getUserGroups();
 
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			_resourcePermissionLocalService, _uidFactory,
+			_resourcePermissionLocalService, _searchEngineHelper, _uidFactory,
 			_documentBuilderFactory);
 	}
 
@@ -375,6 +376,9 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	@Inject
 	private static ResourcePermissionLocalService
 		_resourcePermissionLocalService;
+
+	@Inject
+	private static SearchEngineHelper _searchEngineHelper;
 
 	@Inject
 	private static Searcher _searcher;

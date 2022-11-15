@@ -503,13 +503,13 @@
 		<field indexed="true" name="content" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="createDate" stored="true" type="string" />
 		<field indexed="true" name="dataRepositoryId" stored="true" type="string" />
-		<field indexed="true" name="destinationURL" stored="true" type="text" />
-		<field indexed="true" name="destinationURLParts" stored="true" type="text" />
 		<field indexed="true" name="ddmContent" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field docValues="true" indexed="true" name="ddmStructureKey" stored="true" type="string" />
 		<field indexed="true" name="ddmTemplateKey" stored="true" type="string" />
 		<field indexed="true" name="defaultLanguageId" stored="true" type="string" />
 		<field indexed="true" name="description" stored="true" termPositions="true" termVectors="true" type="text" />
+		<field indexed="true" name="destinationURL" stored="true" type="text" />
+		<field indexed="true" name="destinationURLParts" stored="true" type="text" />
 		<field indexed="true" name="discussion" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="displayDate" stored="true" type="string" />
 		<field indexed="true" name="emailAddress" stored="true" type="string" />

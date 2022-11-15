@@ -58,67 +58,67 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_PORTLET_DISPLAY_TEMPLATE')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_PORTLET_DISPLAY_TEMPLATE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_DOCUMENT')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_DOCUMENT']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_ENTRY</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_ENTRY')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_ENTRY']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_FOLDER</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_FOLDER')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_FOLDER']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_SHORTCUT')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_SHORTCUT']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_SUBFOLDER')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_SUBFOLDER']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_TO_PAGE')] | //input[@id='${key_roleTitle}_PRESELECTED_ADD_TO_PAGE']</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_TO_PAGE'] | //input[@id='${key_roleTitle}_PRESELECTED_ADD_TO_PAGE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_CONFIGURATION')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_CONFIGURATION']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_SUBSCRIBE')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_VIEW')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_VIEW']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ACCESS')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ACCESS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_PERMISSIONS')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ACCESS_IN_CONTROL_PANEL')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ACCESS_IN_CONTROL_PANEL']</td>
 	<td></td>
 </tr>
 <tr>

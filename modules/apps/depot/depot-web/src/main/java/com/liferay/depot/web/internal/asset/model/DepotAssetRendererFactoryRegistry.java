@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = DepotAssetRendererFactoryRegistry.class)
+@Component(service = {})
 public class DepotAssetRendererFactoryRegistry {
 
 	@Activate

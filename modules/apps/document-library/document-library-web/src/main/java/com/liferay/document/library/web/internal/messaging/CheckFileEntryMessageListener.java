@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL,
-	service = CheckFileEntryMessageListener.class
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
 )
 public class CheckFileEntryMessageListener extends BaseMessageListener {
 

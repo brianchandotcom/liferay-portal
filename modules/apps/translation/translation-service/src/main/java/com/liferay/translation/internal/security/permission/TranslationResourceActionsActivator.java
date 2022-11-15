@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia Garcia
  */
-@Component(service = TranslationResourceActionsActivator.class)
+@Component(service = {})
 public class TranslationResourceActionsActivator {
 
 	@Activate

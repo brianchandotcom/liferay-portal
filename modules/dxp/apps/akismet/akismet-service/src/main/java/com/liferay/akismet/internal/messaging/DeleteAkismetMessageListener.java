@@ -47,8 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.akismet.internal.configuration.AkismetServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	property = "cron.expression=0 0 0 * * ?",
-	service = DeleteAkismetMessageListener.class
+	property = "cron.expression=0 0 0 * * ?", service = {}
 )
 public class DeleteAkismetMessageListener extends BaseMessageListener {
 

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.sharing.internal.configuration.SharingSystemConfiguration",
-	service = DeleteExpiredSharingEntriesMessageListener.class
+	service = {}
 )
 public class DeleteExpiredSharingEntriesMessageListener
 	extends BaseMessageListener {

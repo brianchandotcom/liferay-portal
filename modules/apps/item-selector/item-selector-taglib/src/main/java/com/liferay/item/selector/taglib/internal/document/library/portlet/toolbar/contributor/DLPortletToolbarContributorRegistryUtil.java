@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = DLPortletToolbarContributorRegistryUtil.class)
+@Component(service = {})
 public class DLPortletToolbarContributorRegistryUtil {
 
 	public static DLPortletToolbarContributor getDLPortletToolbarContributor() {

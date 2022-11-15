@@ -2,7 +2,6 @@ String luceneVersion = "8.6.2"
 
 dependencies {
 	compileInclude group: "commons-io", name: "commons-io", version: "2.11.0"
-	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.13"
 	compileInclude group: "org.apache.lucene", name: "lucene-analyzers-common", version: luceneVersion
@@ -20,6 +19,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileOnly group: "org.apache.lucene", name: "lucene-misc", version: luceneVersion
 	compileOnly group: "org.apache.lucene", name: "lucene-sandbox", version: luceneVersion
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"

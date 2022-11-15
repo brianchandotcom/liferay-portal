@@ -48,6 +48,16 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 	<liferay-ui:success key="importDataDefinitionSuccessMessage" message="the-structure-was-successfully-imported" />
 
 	<liferay-ui:error embed="<%= false %>" key="importDataDefinitionErrorMessage" message="the-structure-was-not-successfully-imported" />
+
+	<liferay-ui:error embed="<%= false %>" key="importDataDefinitionException">
+
+		<%
+		Exception exception = (Exception)errorException;
+		%>
+
+		<liferay-ui:message key="<%= exception.getMessage() %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />

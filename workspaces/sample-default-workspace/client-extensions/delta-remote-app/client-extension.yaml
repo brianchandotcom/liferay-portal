@@ -1,0 +1,17 @@
+delta-remote-app:
+  cssURLs:
+    - static/css/main.*.css
+  friendlyURLMapping: delta-remote-app
+  htmlElementName: delta-remote-app
+  instanceable: false
+  name: Delta Remote App
+  portletCategoryName: category.remote-apps
+  type: customElement
+  urls:
+    - static/js/main.*.js
+  useESM: false
+
+assemble:
+  - from: build
+    include: static/
+    into: static/

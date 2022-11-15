@@ -16,9 +16,7 @@ package com.liferay.document.library.google.docs.internal.display.context;
 
 import com.liferay.document.library.display.context.IGDisplayContextFactory;
 import com.liferay.document.library.display.context.IGViewFileVersionDisplayContext;
-import com.liferay.document.library.google.docs.internal.helper.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -86,27 +84,6 @@ public class GoogleDocsIGDisplayContextFactory
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!_isEnabled(themeDisplay.getCompanyId())) {
-			return parentIGViewFileVersionDisplayContext;
-		}
-
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(
-				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-				(DLFileVersion)fileVersion.getModel(),
-				_dlFileEntryMetadataLocalService,
-				_fieldsToDDMFormValuesConverter, _storageEngine);
-
-		if (googleDocsMetadataHelper.isGoogleDocs()) {
-			return new GoogleDocsIGViewFileVersionDisplayContext(
-				parentIGViewFileVersionDisplayContext, httpServletRequest,
-				httpServletResponse, fileVersion, googleDocsMetadataHelper);
-		}
 
 		return parentIGViewFileVersionDisplayContext;
 	}

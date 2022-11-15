@@ -63,7 +63,7 @@ public class UserGroupActionDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.putData("action", "assignUserGroupRole");
 				dropdownItem.putData(
-					"assignURL",
+					"assignUserGroupRoleURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -84,7 +84,7 @@ public class UserGroupActionDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.putData("action", "unassignUserGroupRole");
 				dropdownItem.putData(
-					"unassignURL",
+					"unassignUserGroupRoleURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -109,7 +109,7 @@ public class UserGroupActionDropdownItemsProvider {
 				_siteMembershipsDisplayContext.getGroup(),
 				ActionKeys.ASSIGN_MEMBERS),
 			dropdownItem -> {
-				dropdownItem.putData("action", "deleteUserGroup");
+				dropdownItem.putData("action", "deleteGroupUserGroups");
 				dropdownItem.putData(
 					"deleteGroupUserGroupsURL",
 					PortletURLBuilder.createActionURL(

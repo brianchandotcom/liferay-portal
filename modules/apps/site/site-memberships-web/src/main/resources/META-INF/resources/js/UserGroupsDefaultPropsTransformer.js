@@ -51,7 +51,7 @@ const ACTIONS = {
 				submitForm(addUserGroupGroupRoleFm);
 			},
 			title: Liferay.Language.get('assign-roles'),
-			url: itemData.assignURL,
+			url: itemData.assignUserGroupRoleURL,
 		});
 	},
 
@@ -102,7 +102,7 @@ const ACTIONS = {
 				submitForm(unassignUserGroupGroupRoleFm);
 			},
 			title: Liferay.Language.get('unassign-roles'),
-			url: itemData.unassignURL,
+			url: itemData.unassignUserGroupRoleURL,
 		});
 	},
 };

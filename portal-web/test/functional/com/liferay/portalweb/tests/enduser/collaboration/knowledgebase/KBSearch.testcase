@@ -69,9 +69,8 @@ definition {
 			layoutName = "Knowledge Base Display Page",
 			widgetName = "Knowledge Base Display");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
 			kbFolderName = "KB Folder");
 

@@ -305,13 +305,17 @@ definition {
 			kbArticleContent = "Test Content",
 			kbArticleTitle = "Article 2 Title");
 
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "Folder 1");
 
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 2 Description",
 			kbFolderName = "Folder 2");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.moveArticleCP(
 			kbArticleCurrentParent = "Home",
@@ -518,19 +522,22 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticleWithTheSameTitleAndPriorityInDifferentFolders {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder Description",
 			kbFolderName = "KB Root Folder");
 
-		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
-
-		KBFolder.addCP(
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
 			kbFolderDescription = "KB Folder 1",
-			kbFolderName = "KB Folder 1");
+			kbFolderName = "KB Folder 1",
+			parentFolderName = "KB Root Folder");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder 2",
+			kbFolderName = "KB Folder 2",
+			parentFolderName = "KB Root Folder");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder 1",
@@ -545,14 +552,6 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2",
 			parentFolderName = "KB Root Folder");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
-
-		KBFolder.addCP(
-			kbFolderDescription = "KB Folder 2",
-			kbFolderName = "KB Folder 2");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder 2",

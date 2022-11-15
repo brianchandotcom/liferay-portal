@@ -15,7 +15,7 @@
 package com.liferay.layout.display.page.internal;
 
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = LayoutDisplayPageMultiSelectionProviderTracker.class)
-public class LayoutDisplayPageMultiSelectionProviderTrackerImpl
-	implements LayoutDisplayPageMultiSelectionProviderTracker {
+@Component(service = LayoutDisplayPageMultiSelectionProviderRegistry.class)
+public class LayoutDisplayPageMultiSelectionProviderRegistryImpl
+	implements LayoutDisplayPageMultiSelectionProviderRegistry {
 
 	@Override
 	public LayoutDisplayPageMultiSelectionProvider<?>

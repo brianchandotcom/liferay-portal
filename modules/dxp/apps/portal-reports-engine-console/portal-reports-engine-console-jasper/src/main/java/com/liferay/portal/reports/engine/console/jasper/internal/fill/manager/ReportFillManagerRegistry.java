@@ -14,19 +14,15 @@
 
 package com.liferay.portal.reports.engine.console.jasper.internal.fill.manager;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.reports.engine.ReportDataSourceType;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Gavin Wan
@@ -39,7 +35,7 @@ public class ReportFillManagerRegistry {
 	public ReportFillManager getReportFillManager(
 		ReportDataSourceType reportDataSourceType) {
 
-		ReportFillManager reportFillManager = _reportFillManagers.get(
+		ReportFillManager reportFillManager = _serviceTrackerMap.getService(
 			reportDataSourceType);
 
 		if (reportFillManager == null) {
@@ -50,49 +46,25 @@ public class ReportFillManagerRegistry {
 		return reportFillManager;
 	}
 
-	public void unsetReportFillManager(
-		ReportFillManager reportFillManager, Map<String, Object> properties) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ReportFillManager.class, null,
+			(serviceReference, emitter) -> {
+				String reportDataSourceTypeString = GetterUtil.getString(
+					serviceReference.getProperty("reportDataSourceType"));
 
-		String reportDataSourceTypeString = GetterUtil.getString(
-			properties.get("reportDataSourceType"));
-
-		ReportDataSourceType reportDataSourceType = ReportDataSourceType.parse(
-			reportDataSourceTypeString);
-
-		if (reportDataSourceType == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No report data source type specified for " +
-						reportFillManager);
-			}
-
-			return;
-		}
-
-		_reportFillManagers.remove(reportDataSourceType);
+				emitter.emit(
+					ReportDataSourceType.parse(reportDataSourceTypeString));
+			});
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setReportFillManager(
-		ReportFillManager reportFillManager, Map<String, Object> properties) {
-
-		String reportDataSourceTypeString = GetterUtil.getString(
-			properties.get("reportDataSourceType"));
-
-		ReportDataSourceType reportDataSourceType = ReportDataSourceType.parse(
-			reportDataSourceTypeString);
-
-		_reportFillManagers.put(reportDataSourceType, reportFillManager);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ReportFillManagerRegistry.class);
-
-	private final Map<ReportDataSourceType, ReportFillManager>
-		_reportFillManagers = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<ReportDataSourceType, ReportFillManager>
+		_serviceTrackerMap;
 
 }

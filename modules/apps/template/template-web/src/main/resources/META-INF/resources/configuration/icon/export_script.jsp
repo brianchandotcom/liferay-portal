@@ -17,13 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />templateExportScript'
-	] = function () {
-		Liferay.fire('<portlet:namespace />exportScript');
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />templateExportScript',
+		() => {
+			Liferay.fire('<portlet:namespace />exportScript');
+		}
+	);
 </aui:script>

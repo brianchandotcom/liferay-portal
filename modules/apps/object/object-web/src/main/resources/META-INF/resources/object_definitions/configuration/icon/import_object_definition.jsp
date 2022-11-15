@@ -39,17 +39,14 @@
 <aui:script>
 	function <portlet:namespace />openImportObjectDefinitionModal() {}
 
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />importObjectDefinition'
-	] = function () {
-		Liferay.componentReady(
-			'<portlet:namespace />importObjectDefinitionModal'
-		).then((importObjectDefinitionModal) => {
-			importObjectDefinitionModal.open();
-		});
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />importObjectDefinition',
+		() => {
+			Liferay.componentReady(
+				'<portlet:namespace />importObjectDefinitionModal'
+			).then((importObjectDefinitionModal) => {
+				importObjectDefinitionModal.open();
+			});
+		}
+	);
 </aui:script>

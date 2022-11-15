@@ -73,9 +73,13 @@ export default function propsTransformer({
 						if (globalAction) {
 							event.preventDefault();
 
-							Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__?.[
+							const callback = Liferay.Util.getPortletConfigurationIconAction(
 								action
-							]?.(event);
+							);
+
+							if (callback) {
+								callback(event);
+							}
 						}
 						else {
 							event.preventDefault();

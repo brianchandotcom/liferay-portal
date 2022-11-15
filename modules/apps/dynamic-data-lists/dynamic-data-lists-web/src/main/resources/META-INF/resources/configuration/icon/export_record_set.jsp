@@ -25,13 +25,10 @@ long recordSetId = ParamUtil.getLong(request, liferayPortletResponse.getNamespac
 </liferay-portlet:resourceURL>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />exportRecordSet'
-	] = function () {
-		<portlet:namespace />exportRecordSet('<%= exportRecordSetURL %>');
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />exportRecordSet',
+		() => {
+			<portlet:namespace />exportRecordSet('<%= exportRecordSetURL %>');
+		}
+	);
 </aui:script>

@@ -17,25 +17,22 @@
 <%@ include file="/designer/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />deleteDefinition'
-	] = function () {
-		<portlet:namespace />confirmDeleteDefinition(
-			'<%=
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"/portal_workflow/delete_workflow_definition"
-				).setParameter(
-					"name", renderRequest.getParameter("name")
-				).setParameter(
-					"version", renderRequest.getParameter("draftVersion")
-				).buildString()
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />deleteDefinition',
+		() => {
+			<portlet:namespace />confirmDeleteDefinition(
+				'<%=
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.ACTION_PHASE)
+					).setActionName(
+						"/portal_workflow/delete_workflow_definition"
+					).setParameter(
+						"name", renderRequest.getParameter("name")
+					).setParameter(
+						"version", renderRequest.getParameter("draftVersion")
+					).buildString()
 		%>'
-		);
-	};
+			);
+		}
+	);
 </aui:script>

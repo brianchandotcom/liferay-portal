@@ -37,17 +37,14 @@
 </div>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />importDataDefinition'
-	] = function () {
-		Liferay.componentReady(
-			'<portlet:namespace />importDataDefinitionModal'
-		).then((importDataDefinitionModal) => {
-			importDataDefinitionModal.open();
-		});
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />importDataDefinition',
+		() => {
+			Liferay.componentReady(
+				'<portlet:namespace />importDataDefinitionModal'
+			).then((importDataDefinitionModal) => {
+				importDataDefinitionModal.open();
+			});
+		}
+	);
 </aui:script>

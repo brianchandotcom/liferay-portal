@@ -27,16 +27,13 @@ if (Validator.isNull(backURL)) {
 %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />deleteOrganization'
-	] = function () {
-		<portlet:namespace />deleteOrganization(
-			'<%= organization.getOrganizationId() %>',
-			'<%= HtmlUtil.escapeJS(backURL) %>'
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />deleteOrganization',
+		() => {
+			<portlet:namespace />deleteOrganization(
+				'<%= organization.getOrganizationId() %>',
+				'<%= HtmlUtil.escapeJS(backURL) %>'
+			);
+		}
+	);
 </aui:script>

@@ -84,6 +84,10 @@ import normalizeFriendlyURL from './util/normalize_friendly_url';
 import ns from './util/ns.es';
 import objectToURLSearchParams from './util/object_to_url_search_params.es';
 import openWindow from './util/open_window';
+import {
+	getPortletConfigurationIconAction,
+	setPortletConfigurationIconAction,
+} from './util/portlet_configuration_icon_action';
 import createActionURL from './util/portlet_url/create_action_url.es';
 import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
@@ -227,6 +231,7 @@ Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
 Liferay.Util.getLexiconIconTpl = getLexiconIconTpl;
 Liferay.Util.getOpener = getOpener;
+Liferay.Util.getPortletConfigurationIconAction = getPortletConfigurationIconAction;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {getPortletId} from 'frontend-js-web'`
@@ -311,6 +316,7 @@ Liferay.Util.openToast = (...args) => {
 Liferay.Util.openWindow = openWindow;
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
+Liferay.Util.setPortletConfigurationIconAction = setPortletConfigurationIconAction;
 Liferay.Util.showCapsLock = showCapsLock;
 Liferay.Util.sub = sub;
 

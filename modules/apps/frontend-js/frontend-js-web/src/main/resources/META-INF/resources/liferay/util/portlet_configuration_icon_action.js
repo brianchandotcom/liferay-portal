@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+/**
+ */
 
-<%
-UserGroup userGroup = ActionUtil.getUserGroup(renderRequest);
-%>
+export const portletConfigurationIconActions = new Map();
 
-<aui:script>
-	Liferay.Util.setPortletConfigurationIconAction(
-		'<portlet:namespace />deleteUserGroup',
-		() => {
-			<portlet:namespace />doDeleteUserGroup(
-				'<%= UserGroup.class.getName() %>',
-				'<%= userGroup.getUserGroupId() %>'
-			);
-		}
-	);
-</aui:script>
+export function getPortletConfigurationIconAction(id) {
+	return portletConfigurationIconActions.get(id);
+}
+
+export function setPortletConfigurationIconAction(id, callback) {
+	portletConfigurationIconActions.set(id, callback);
+}

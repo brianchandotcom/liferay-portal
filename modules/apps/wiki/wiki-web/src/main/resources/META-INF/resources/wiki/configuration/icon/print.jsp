@@ -30,17 +30,14 @@ WikiPage wikiPage = ActionUtil.getPage(liferayPortletRequest);
 </portlet:renderURL>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />print'
-	] = function () {
-		window.open(
-			'<%= printURL %>',
-			'',
-			'directories=0,height=480,left=80,location=1, menubar=1,resizable=1,scrollbars=yes,status=0, toolbar=0,top=180,width=640'
-		);
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />print',
+		() => {
+			window.open(
+				'<%= printURL %>',
+				'',
+				'directories=0,height=480,left=80,location=1, menubar=1,resizable=1,scrollbars=yes,status=0, toolbar=0,top=180,width=640'
+			);
+		}
+	);
 </aui:script>

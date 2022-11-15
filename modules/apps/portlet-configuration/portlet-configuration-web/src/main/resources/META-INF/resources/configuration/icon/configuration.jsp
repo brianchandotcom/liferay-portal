@@ -17,13 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <aui:script>
-	if (!Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__) {
-		Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__ = {};
-	}
-
-	Liferay.__PORTLET_CONFIGURATION_ICON_ACTIONS__[
-		'<portlet:namespace />configuration'
-	] = function () {
-		<%= portletDisplay.getURLConfigurationJS() %>;
-	};
+	Liferay.Util.setPortletConfigurationIconAction(
+		'<portlet:namespace />configuration',
+		() => {
+			<%= portletDisplay.getURLConfigurationJS() %>;
+		}
+	);
 </aui:script>

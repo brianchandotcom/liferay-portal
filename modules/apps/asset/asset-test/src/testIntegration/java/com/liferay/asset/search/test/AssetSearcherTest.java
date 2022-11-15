@@ -17,6 +17,7 @@ package com.liferay.asset.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
@@ -35,9 +36,12 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.AssetSearcher;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,7 +74,12 @@ public class AssetSearcherTest {
 		AssetVocabulary publicAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				Collections.emptyMap(), StringPool.BLANK,
+				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+				serviceContext);
 
 		_publicAssetCategory1 = AssetTestUtil.addCategory(
 			_group.getGroupId(), publicAssetVocabulary.getVocabularyId());
@@ -80,7 +89,12 @@ public class AssetSearcherTest {
 		AssetVocabulary internalAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				Collections.emptyMap(), StringPool.BLANK,
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
+				serviceContext);
 
 		_internalAssetCategory = AssetTestUtil.addCategory(
 			_group.getGroupId(), internalAssetVocabulary.getVocabularyId());

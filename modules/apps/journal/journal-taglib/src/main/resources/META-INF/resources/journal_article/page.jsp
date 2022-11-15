@@ -41,7 +41,13 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 	<c:otherwise>
 		<div class="journal-content-article <%= Validator.isNotNull(wrapperCssClass) ? wrapperCssClass : StringPool.BLANK %>" <%= dataAnalyticsTrackingEnabled ? String.format("data-analytics-asset-id=\"%s\" data-analytics-asset-title=\"%s\" data-analytics-asset-type=\"web-content\"", articleDisplay.getArticleId(), HtmlUtil.escapeAttribute(articleDisplay.getTitle())) : "" %>>
 			<c:if test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle")) %>'>
-				<%= HtmlUtil.escape(articleDisplay.getTitle()) %>
+				<clay:row>
+					<clay:col>
+						<h3 class="m-0"><%= HtmlUtil.escape(articleDisplay.getTitle()) %></h3>
+					</clay:col>
+				</clay:row>
+
+				<hr class="mb-4 separator" />
 			</c:if>
 
 			<%= articleDisplay.getContent() %>

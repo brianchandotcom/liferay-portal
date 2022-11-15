@@ -1596,6 +1596,10 @@
 			<description name="Checks that the `finder name` in `service.xml`." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="XMLSolrSchemaFileCheck">
+			<category name="Styling" />
+			<description name="Checks the order of elements in `portlet-preferences.xml` file." />
+		</check>
 		<check name="XMLStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />

@@ -63,9 +63,14 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(assetListDisplayContext.getDisplayStyle(), "descriptive") %>'>
-							<liferay-ui:search-container-column-icon
-								icon='<%= (assetListEntry.getType() == 0) ? "bolt" : "list" %>'
-							/>
+							<liferay-ui:search-container-column-text>
+								<div class="lfr-portal-tooltip sticker sticker-secondary" title="<%= assetListDisplayContext.getAssetListEntryTypeLabel(assetListEntry) %>">
+									<clay:icon
+										cssClass="mr-2 text-secondary"
+										symbol='<%= (assetListEntry.getType() == AssetListEntryTypeConstants.TYPE_DYNAMIC) ? "bolt" : "list" %>'
+									/>
+								</div>
+							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"

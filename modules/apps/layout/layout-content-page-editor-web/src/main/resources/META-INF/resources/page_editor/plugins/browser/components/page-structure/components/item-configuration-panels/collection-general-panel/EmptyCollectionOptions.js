@@ -13,7 +13,6 @@
  */
 
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,7 +20,6 @@ import {useSelector} from '../../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../../app/selectors/selectLanguageId';
 import {getEditableLocalizedValue} from '../../../../../../../app/utils/getEditableLocalizedValue';
 import CurrentLanguageFlag from '../../../../../../../common/components/CurrentLanguageFlag';
-import {PopoverTooltip} from '../../../../../../../common/components/PopoverTooltip';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
 import {useId} from '../../../../../../../core/hooks/useId';
 
@@ -31,7 +29,7 @@ export function EmptyCollectionOptions({
 	handleConfigurationChanged,
 }) {
 	const {displayMessage = true} = emptyCollectionOptions || {};
-	const tooltipId = useId();
+	const helpTextId = useId();
 
 	const handleDisplayMessageChanged = (event) =>
 		handleConfigurationChanged({
@@ -56,30 +54,20 @@ export function EmptyCollectionOptions({
 
 	return (
 		<>
-			<div className="align-items-center d-flex mb-2 pt-1">
+			<div className="mb-2 pt-1">
 				<ClayCheckbox
-					aria-describedby={tooltipId}
+					aria-describedby={helpTextId}
 					checked={displayMessage}
 					containerProps={{className: 'mb-0'}}
 					label={Liferay.Language.get('show-empty-collection-alert')}
 					onChange={handleDisplayMessageChanged}
 				/>
 
-				<PopoverTooltip
-					alignPosition="left"
-					content={Liferay.Language.get(
-						'information-message-displayed-in-view-mode-when-the-collection-is-empty-or-no-results-match-the-applied-filters'
+				<div className="mb-3 mt-1 small text-secondary" id={helpTextId}>
+					{Liferay.Language.get(
+						'checking-this-option-will-display-an-informative-message-in-view-mode-when-no-results-match-the-applied-filters-or-the-collection-is-empty'
 					)}
-					header={Liferay.Language.get('empty-collection-alert')}
-					id={tooltipId}
-					trigger={
-						<ClayIcon
-							aria-label={Liferay.Language.get('show-more')}
-							className="ml-2"
-							symbol="question-circle-full"
-						/>
-					}
-				/>
+				</div>
 			</div>
 
 			{displayMessage && (

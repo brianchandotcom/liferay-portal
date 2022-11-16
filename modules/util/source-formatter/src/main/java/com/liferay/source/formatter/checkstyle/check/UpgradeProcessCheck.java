@@ -177,7 +177,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _containsOnlyAlterMethodCalls(
-		DetailAST detailAST, String talbeName, String columnName) {
+		DetailAST detailAST, String tableName, String columnName) {
 
 		if (detailAST == null) {
 			return false;
@@ -212,9 +212,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 				}
 
 				if (Validator.isNotNull(columnName) &&
-					Validator.isNotNull(talbeName) &&
+					Validator.isNotNull(tableName) &&
 					!_hasSameTableNameAndColumnName(
-						firstChildDetailAST, talbeName, columnName)) {
+						firstChildDetailAST, tableName, columnName)) {
 
 					return false;
 				}
@@ -242,7 +242,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 	}
 
 	private boolean _hasSameTableNameAndColumnName(
-		DetailAST detailAST, String talbeName, String columnName) {
+		DetailAST detailAST, String tableName, String columnName) {
 
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
@@ -257,7 +257,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 		if ((firstChildDetailAST == null) ||
 			(firstChildDetailAST.getType() != TokenTypes.EXPR) ||
 			!StringUtil.equals(
-				talbeName, _getParameterName(firstChildDetailAST))) {
+				tableName, _getParameterName(firstChildDetailAST))) {
 
 			return false;
 		}
@@ -319,14 +319,14 @@ public class UpgradeProcessCheck extends BaseCheck {
 		}
 
 		String columnName = _getParameterName(exprDetailASTList.get(1));
-		String talbeName = _getParameterName(exprDetailASTList.get(0));
+		String tableName = _getParameterName(exprDetailASTList.get(0));
 
-		if (Validator.isNull(columnName) || Validator.isNull(talbeName)) {
+		if (Validator.isNull(columnName) || Validator.isNull(tableName)) {
 			return false;
 		}
 
 		return _containsOnlyAlterMethodCalls(
-			detailAST.findFirstToken(TokenTypes.SLIST), talbeName, columnName);
+			detailAST.findFirstToken(TokenTypes.SLIST), tableName, columnName);
 	}
 
 	private boolean _isUnnecessaryUpgradeProcessClass(DetailAST detailAST) {

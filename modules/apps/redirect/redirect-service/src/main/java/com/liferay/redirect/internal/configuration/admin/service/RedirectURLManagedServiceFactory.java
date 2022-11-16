@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.redirect.internal.configuration.RedirectURLConfiguration",
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.redirect.internal.configuration.RedirectURLConfiguration.scoped",
 	service = {
 		ManagedServiceFactory.class, RedirectURLManagedServiceFactory.class

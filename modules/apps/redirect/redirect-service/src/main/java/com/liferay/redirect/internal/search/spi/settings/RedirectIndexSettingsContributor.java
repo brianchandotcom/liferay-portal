@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = IndexSettingsContributor.class)
+@Component(service = IndexSettingsContributor.class)
 public class RedirectIndexSettingsContributor
 	implements IndexSettingsContributor {
 

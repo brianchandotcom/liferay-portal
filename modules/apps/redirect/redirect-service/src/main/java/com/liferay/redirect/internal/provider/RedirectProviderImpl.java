@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.redirect.internal.configuration.RedirectPatternConfiguration.scoped",
 	service = {ManagedServiceFactory.class, RedirectProvider.class}
 )

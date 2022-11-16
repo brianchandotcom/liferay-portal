@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-redirect",
 		"com.liferay.portlet.display-category=category.hidden",

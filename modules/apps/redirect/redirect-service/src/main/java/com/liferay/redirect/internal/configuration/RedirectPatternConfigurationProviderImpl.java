@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(
-	immediate = true, service = RedirectPatternConfigurationProvider.class
-)
+@Component(service = RedirectPatternConfigurationProvider.class)
 public class RedirectPatternConfigurationProviderImpl
 	implements RedirectPatternConfigurationProvider {
 

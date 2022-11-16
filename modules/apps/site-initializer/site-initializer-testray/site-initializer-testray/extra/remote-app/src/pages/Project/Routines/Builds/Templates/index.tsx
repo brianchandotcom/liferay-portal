@@ -24,7 +24,7 @@ import {SearchBuilder} from '../../../../../util/search';
 import {BuildStatuses} from '../../../../../util/statuses';
 import useBuildTemplateActions from './useBuildTemplateActions';
 
-const searchBuilder = new SearchBuilder();
+const searchBuilder = new SearchBuilder({useURIEncode: false});
 
 const BuildTemplates = () => {
 	const navigate = useNavigate();

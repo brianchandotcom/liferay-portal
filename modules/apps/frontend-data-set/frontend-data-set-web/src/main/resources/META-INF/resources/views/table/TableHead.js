@@ -58,6 +58,13 @@ function TableHead({
 								}
 								name="table-head-selector"
 								onChange={handleCheckboxClick}
+								title={
+									items.length !== selectedItemsValue.length
+										? Liferay.Language.get('select-items')
+										: Liferay.Language.get(
+												'clear-selection'
+										  )
+								}
 							/>
 						) : null}
 					</DndTable.Cell>

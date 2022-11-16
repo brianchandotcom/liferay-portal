@@ -1,6 +1,8 @@
 @component-name = "portal-document-management-ee"
 definition {
 
+	// Stop running on release until ISIT-32385 fixed
+
 	property cmis.repository.type = "sharepoint2013";
 	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
 	property osgi.modules.includes = "sharepoint-soap";

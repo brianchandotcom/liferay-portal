@@ -1,5 +1,5 @@
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
+	compileOnly group: "com.liferay.portal", name: "release.${liferayProduct}.api"
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api"
 #else

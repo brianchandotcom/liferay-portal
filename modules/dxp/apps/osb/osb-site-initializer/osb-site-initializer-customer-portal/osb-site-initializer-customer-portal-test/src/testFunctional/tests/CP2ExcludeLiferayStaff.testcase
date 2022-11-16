@@ -77,10 +77,6 @@ definition {
 
 			AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}
-
-		task ("Delete entry from the Account Flag object") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
-		}
 	}
 
 	@description = "Automation ID: LPS-147722 | Test Summary: Verify if when user is Liferay Staff and not administrator of a project, he wont pass through the onboarding"

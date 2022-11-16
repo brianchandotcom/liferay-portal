@@ -15,6 +15,7 @@ import {DealRegistrationColumnKey} from '../../../common/enums/dealRegistrationC
 import {Liferay} from '../../../common/services/liferay';
 import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
+import getDealAmount from '../utils/getDealAmount';
 import getDealDates from '../utils/getDealDates';
 
 export default function useGetListItemsFromDealRegistration(
@@ -22,17 +23,21 @@ export default function useGetListItemsFromDealRegistration(
 	pageSize: number
 ) {
 	const apiOption = Liferay.FeatureFlags['LPS-164528']
-		? ResourceName.LEADS_SALESFORCE
+		? ResourceName.OPPORTUNITIES_SALESFORCE
 		: ResourceName.DEAL_REGISTRATION_DXP;
 
 	const swrResponse = useGetDealRegistration(apiOption, page, pageSize);
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
-				[DealRegistrationColumnKey.ACCOUNT_NAME]: String(
-					item.prospectAccountName
+				[DealRegistrationColumnKey.ACCOUNT_NAME]:
+					item.partnerAccountName,
+				...getDealDates(
+					item.projectSubscriptionStartDate,
+					item.projectSubscriptionEndDate
 				),
-				...getDealDates(item.dateCreated, item.dateModified),
+				...getDealAmount(item.amount),
+				[DealRegistrationColumnKey.STAGE]: item.stage,
 			})),
 		[swrResponse.data?.items]
 	);

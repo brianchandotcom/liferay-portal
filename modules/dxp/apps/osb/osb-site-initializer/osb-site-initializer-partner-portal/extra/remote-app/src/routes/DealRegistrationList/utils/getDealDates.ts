@@ -13,15 +13,18 @@ import {DealRegistrationColumnKey} from '../../../common/enums/dealRegistrationC
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
-export default function getDealDates(dateCreated?: Date, dateModified?: Date) {
-	if (dateCreated && dateModified) {
+export default function getDealDates(
+	projectSubscriptionStartDate?: Date,
+	projectSubscriptionEndDate?: Date
+) {
+	if (projectSubscriptionStartDate && projectSubscriptionEndDate) {
 		const startDate = getDateCustomFormat(
-			dateCreated,
+			projectSubscriptionStartDate,
 			customFormatDateOptions.SHORT_MONTH
 		);
 
 		const endDate = getDateCustomFormat(
-			dateModified,
+			projectSubscriptionEndDate,
 			customFormatDateOptions.SHORT_MONTH
 		);
 

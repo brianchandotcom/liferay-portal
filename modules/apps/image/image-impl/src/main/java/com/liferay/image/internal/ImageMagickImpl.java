@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alexander Chow
  * @author Ivica Cardic
  */
-@Component(immediate = true, service = ImageMagick.class)
+@Component(service = ImageMagick.class)
 public class ImageMagickImpl implements ImageMagick {
 
 	@Override

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Guilherme Camacho
  */
-@Component(immediate = true, service = CMYKImageTool.class)
+@Component(service = CMYKImageTool.class)
 public class CMYKImageToolImpl implements CMYKImageTool {
 
 	@Override

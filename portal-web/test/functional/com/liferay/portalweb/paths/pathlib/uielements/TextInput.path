@@ -411,6 +411,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIRTUAL_INSTANCE_SCREEN_NAME</td>
+	<td>//input[contains(@id,'screenNameAdmin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_INSTANCE_EMAIL</td>
+	<td>//input[contains(@id,'emailAdmin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_INSTANCE_PASSWORD</td>
+	<td>//input[contains(@id,'passwordAdmin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_INSTANCE_FIRST_NAME</td>
+	<td>//input[contains(@id,'firstNameAdmin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_INSTANCE_LAST_NAME</td>
+	<td>//input[contains(@id,'lastNameAdmin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAX_HEIGHT</td>
 	<td>//input[contains(@id,'maxHeight')]</td>
 	<td></td>

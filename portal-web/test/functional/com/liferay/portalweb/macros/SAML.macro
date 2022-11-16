@@ -164,6 +164,11 @@ definition {
 
 		for (var virtualHostName : list "${virtualHosts}") {
 			PortalInstances.addCP(
+				instanceAdminEmail = "${instanceAdminEmail}",
+				instanceAdminFirstName = "${instanceAdminFirstName}",
+				instanceAdminLastName = "${instanceAdminLastName}",
+				instancePassword = "${instancePassword}",
+				instanceScreenName = "${instanceScreenName}",
 				mailDomain = "${virtualHostName}",
 				virtualHost = "${virtualHostName}",
 				webId = "${virtualHostName}");

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SET_PASSWORD_TITLE</td>
+	<td>//div[contains(@class, 'portlet-content')]//h2[contains(text(), 'Set Password')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONTENT_USER_NAME</td>
 	<td>//section[@id='portlet_com_liferay_login_web_portlet_LoginPortlet']//div[@class='portlet-body']/a</td>
 	<td></td>

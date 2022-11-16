@@ -89,27 +89,17 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 				</c:if>
 
 				<li class="control-menu-nav-item d-md-block d-none flex-shrink-0 ml-2">
-					<liferay-ui:icon-menu
-						direction="left-side"
-						icon="<%= StringPool.BLANK %>"
-						markupView="lexicon"
-						message="<%= StringPool.BLANK %>"
-						showWhenSingleIcon="<%= true %>"
-					>
-						<liferay-ui:icon
-							message="<%= toggleCustomizedViewMessage %>"
-							url="<%= toggleCustomizationViewURL %>"
-						/>
 
-						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<liferay-ui:icon
-								message="reset-my-customizations"
-								url="<%= resetCustomizationsViewURLString %>"
-							/>
-						</c:if>
-					</liferay-ui:icon-menu>
+					<%
+					CustomizationSettingsActionDropdownItemsProvider customizationSettingsActionDropdownItemsProvider = new CustomizationSettingsActionDropdownItemsProvider(request);
+					%>
+
+					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+						dropdownItems="<%= customizationSettingsActionDropdownItemsProvider.getActionDropdownItems() %>"
+						propsTransformer="js/CustomizationSettingsActionDropdownPropsTransformer"
+					/>
 				</li>
-
 			</ul>
 		</clay:container-fluid>
 	</div>

@@ -363,6 +363,47 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"RequiredObjectRelationshipExceptionMapper")
 					).build()),
 				_bundleContext.registerService(
+					ObjectEntryRelatedObjectsResourceImpl.class,
+					new PrototypeServiceFactory
+						<ObjectEntryRelatedObjectsResourceImpl>() {
+
+						@Override
+						public ObjectEntryRelatedObjectsResourceImpl getService(
+							Bundle bundle,
+							ServiceRegistration
+								<ObjectEntryRelatedObjectsResourceImpl>
+									serviceRegistration) {
+
+							return new ObjectEntryRelatedObjectsResourceImpl(
+								_objectDefinitionLocalService,
+								_objectEntryManagerRegistry,
+								_objectRelationshipService);
+						}
+
+						@Override
+						public void ungetService(
+							Bundle bundle,
+							ServiceRegistration
+								<ObjectEntryRelatedObjectsResourceImpl>
+									serviceRegistration,
+							ObjectEntryRelatedObjectsResourceImpl
+								objectEntryRelatedObjectsResourceImpl) {
+						}
+
+					},
+					HashMapDictionaryBuilder.<String, Object>put(
+						"api.version", "v1.0"
+					).put(
+						"entity.class.name",
+						ObjectEntry.class.getName() + "#" +
+							objectDefinition.getName()
+					).put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
+					).put(
+						"osgi.jaxrs.resource", "true"
+					).build()),
+				_bundleContext.registerService(
 					ObjectEntryResource.Factory.class,
 					new ObjectEntryResourceFactoryImpl(
 						_companyLocalService, _defaultPermissionCheckerFactory,
@@ -415,47 +456,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"entity.class.name",
 						ObjectEntry.class.getName() + "#" + osgiJaxRsName
-					).put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-					).put(
-						"osgi.jaxrs.resource", "true"
-					).build()),
-				_bundleContext.registerService(
-					ObjectEntryRelatedObjectsResourceImpl.class,
-					new PrototypeServiceFactory
-						<ObjectEntryRelatedObjectsResourceImpl>() {
-
-						@Override
-						public ObjectEntryRelatedObjectsResourceImpl getService(
-							Bundle bundle,
-							ServiceRegistration
-								<ObjectEntryRelatedObjectsResourceImpl>
-									serviceRegistration) {
-
-							return new ObjectEntryRelatedObjectsResourceImpl(
-								_objectDefinitionLocalService,
-								_objectEntryManagerRegistry,
-								_objectRelationshipService);
-						}
-
-						@Override
-						public void ungetService(
-							Bundle bundle,
-							ServiceRegistration
-								<ObjectEntryRelatedObjectsResourceImpl>
-									serviceRegistration,
-							ObjectEntryRelatedObjectsResourceImpl
-								objectEntryRelatedObjectsResourceImpl) {
-						}
-
-					},
-					HashMapDictionaryBuilder.<String, Object>put(
-						"api.version", "v1.0"
-					).put(
-						"entity.class.name",
-						ObjectEntry.class.getName() + "#" +
-							objectDefinition.getName()
 					).put(
 						"osgi.jaxrs.application.select",
 						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"

@@ -81,7 +81,7 @@ public class ProjectTemplatesWarMVCPortletSuffixTest
 	public void testBuildTemplateWarMvcPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
 			temporaryFolder, "war-mvc-portlet", "portlet-portlet", "portlet",
-			_liferayVersion, _liferayProduct, mavenExecutor,
+			_liferayProduct, _liferayVersion, mavenExecutor,
 			_gradleDistribution);
 
 		testTemplateWarPortletDTD(gradleProjectDir, _liferayVersion);

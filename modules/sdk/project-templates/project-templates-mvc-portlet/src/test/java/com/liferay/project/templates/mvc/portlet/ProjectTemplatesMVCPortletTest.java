@@ -80,8 +80,8 @@ public class ProjectTemplatesMVCPortletTest
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
-			temporaryFolder, "mvc-portlet", "foo", "foo", _liferayVersion,
-			_liferayProduct, mavenExecutor, _gradleDistribution);
+			temporaryFolder, "mvc-portlet", "foo", "foo", _liferayProduct,
+			_liferayVersion, mavenExecutor, _gradleDistribution);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Export-Package: foo.constants");

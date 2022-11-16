@@ -107,7 +107,7 @@ public class ProjectTemplatesNpmReactPortletTest
 
 		testBuildTemplateNpm(
 			temporaryFolder, mavenExecutor, template, _name, _packageName,
-			_className, _liferayVersion, _nodePackageManager, _liferayProduct,
+			_className, _liferayProduct, _liferayVersion, _nodePackageManager,
 			_gradleDistribution);
 	}
 

@@ -81,7 +81,7 @@ public class ProjectTemplatesMVCPortletCustomPackageTest
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
 			temporaryFolder, "mvc-portlet", "foo", "com.liferay.test",
-			_liferayVersion, _liferayProduct, mavenExecutor,
+			_liferayProduct, _liferayVersion, mavenExecutor,
 			_gradleDistribution);
 
 		testContains(

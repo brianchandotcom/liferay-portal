@@ -52,6 +52,10 @@ public class ProjectTemplatesArgs {
 		return _groupId;
 	}
 
+	public String getLiferayProduct() {
+		return _liferayProduct;
+	}
+
 	public String getLiferayVersion() {
 		return _liferayVersion;
 	}
@@ -62,10 +66,6 @@ public class ProjectTemplatesArgs {
 
 	public String getPackageName() {
 		return _packageName;
-	}
-
-	public String getProduct() {
-		return _liferayProduct;
 	}
 
 	public ProjectTemplatesArgsExt getProjectTemplatesArgsExt() {
@@ -138,6 +138,10 @@ public class ProjectTemplatesArgs {
 		_groupId = groupId;
 	}
 
+	public void setLiferayProduct(String liferayiProduct) {
+		_liferayProduct = liferayiProduct;
+	}
+
 	public void setLiferayVersion(String version) {
 		_liferayVersion = version;
 	}
@@ -152,10 +156,6 @@ public class ProjectTemplatesArgs {
 
 	public void setPackageName(String packageName) {
 		_packageName = packageName;
-	}
-
-	public void setProduct(String product) {
-		_liferayProduct = product;
 	}
 
 	public void setProjectTemplatesArgsExt(

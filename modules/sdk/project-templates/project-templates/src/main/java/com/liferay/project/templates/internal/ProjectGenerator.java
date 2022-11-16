@@ -54,7 +54,7 @@ public class ProjectGenerator {
 		String groupId = projectTemplatesArgs.getGroupId();
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
-		String product = projectTemplatesArgs.getProduct();
+		String product = projectTemplatesArgs.getLiferayProduct();
 
 		String template = projectTemplatesArgs.getTemplate();
 

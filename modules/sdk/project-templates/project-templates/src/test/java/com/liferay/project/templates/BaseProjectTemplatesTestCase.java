@@ -712,7 +712,7 @@ public interface BaseProjectTemplatesTestCase {
 					"liferay.workspace.target.platform.version=7.4.3.36");
 
 				writeGradlePropertiesInWorkspace(
-					workspaceDir, "liferay.workspace.product=portal-7.4-ga16");
+					workspaceDir, "liferay.workspace.product=portal-7.4-ga36");
 			}
 		}
 		else {
@@ -1302,8 +1302,8 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBuildTemplateNpm(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
-			String liferayVersion, String nodePackageManager,
-			String liferayProduct, URI gradleDistribution)
+			String liferayProduct, String liferayVersion,
+			String nodePackageManager, URI gradleDistribution)
 		throws Exception {
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -1314,8 +1314,8 @@ public interface BaseProjectTemplatesTestCase {
 			gradleWorkspaceDir, "modules");
 
 		File gradleProjectDir = buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			liferayVersion, "--liferay-product", liferayProduct);
+			gradleWorkspaceModulesDir, template, name, "--liferay-product",
+			liferayProduct, "--liferay-version", liferayVersion);
 
 		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
 			testContains(
@@ -1375,7 +1375,7 @@ public interface BaseProjectTemplatesTestCase {
 
 	public default File testBuildTemplatePortlet(
 			TemporaryFolder temporaryFolder, String template, String name,
-			String packageName, String liferayVersion, String liferayProduct,
+			String packageName, String liferayProduct, String liferayVersion,
 			MavenExecutor mavenExecutor, URI gradleDistribution)
 		throws Exception {
 

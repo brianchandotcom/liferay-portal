@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -176,16 +175,15 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		CollectionQuery collectionQuery, SearchContext searchContext) {
 
 		searchContext.setAndSearch(true);
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.STATUS, WorkflowConstants.STATUS_APPROVED
-			).put(
-				"ddmStructureKey", "BASIC-WEB-CONTENT"
-			).put(
-				"head", true
-			).put(
-				"latest", true
-			).build());
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put("ddmStructureKey", "BASIC-WEB-CONTENT");
+		attributes.put("head", true);
+		attributes.put("latest", true);
+
+		searchContext.setAttributes(attributes);
 
 		Optional<Map<String, String[]>> configurationOptional =
 			collectionQuery.getConfigurationOptional();

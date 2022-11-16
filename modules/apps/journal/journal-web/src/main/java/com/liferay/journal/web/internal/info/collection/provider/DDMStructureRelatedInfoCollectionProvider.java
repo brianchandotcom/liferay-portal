@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -46,6 +45,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -151,16 +151,16 @@ public class DDMStructureRelatedInfoCollectionProvider
 		searchContext.setAndSearch(true);
 		searchContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.STATUS, WorkflowConstants.STATUS_APPROVED
-			).put(
-				"ddmStructureKey", _ddmStructure.getStructureKey()
-			).put(
-				"head", true
-			).put(
-				"latest", true
-			).build());
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put("ddmStructureKey", _ddmStructure.getStructureKey());
+		attributes.put("head", true);
+		attributes.put("latest", true);
+
+		searchContext.setAttributes(attributes);
+
 		searchContext.setClassTypeIds(
 			new long[] {_ddmStructure.getStructureId()});
 

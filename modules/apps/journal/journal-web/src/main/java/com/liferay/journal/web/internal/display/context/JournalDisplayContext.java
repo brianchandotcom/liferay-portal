@@ -93,7 +93,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1437,36 +1436,30 @@ public class JournalDisplayContext {
 		int start, int end, SearchContext searchContext, boolean showVersions) {
 
 		searchContext.setAndSearch(false);
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.ARTICLE_ID, getKeywords()
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		attributes.put(Field.ARTICLE_ID, getKeywords());
+		attributes.put(
+			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+		attributes.put(Field.CONTENT, getKeywords());
+		attributes.put(Field.DESCRIPTION, getKeywords());
+		attributes.put(Field.STATUS, getStatus());
+		attributes.put(Field.TITLE, getKeywords());
+		attributes.put("ddmStructureKey", getDDMStructureKey());
+		attributes.put("head", !showVersions);
+		attributes.put("latest", !showVersions);
+		attributes.put(
+			"params",
+			LinkedHashMapBuilder.<String, Object>put(
+				"expandoAttributes", getKeywords()
 			).put(
-				Field.CLASS_NAME_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT
-			).put(
-				Field.CONTENT, getKeywords()
-			).put(
-				Field.DESCRIPTION, getKeywords()
-			).put(
-				Field.STATUS, getStatus()
-			).put(
-				Field.TITLE, getKeywords()
-			).put(
-				"ddmStructureKey", getDDMStructureKey()
-			).put(
-				"head", !showVersions
-			).put(
-				"latest", !showVersions
-			).put(
-				"params",
-				LinkedHashMapBuilder.<String, Object>put(
-					"expandoAttributes", getKeywords()
-				).put(
-					"keywords", getKeywords()
-				).build()
-			).put(
-				"showNonindexable", !showVersions
+				"keywords", getKeywords()
 			).build());
+		attributes.put("showNonindexable", !showVersions);
+
+		searchContext.setAttributes(attributes);
+
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(_getFolderIds());

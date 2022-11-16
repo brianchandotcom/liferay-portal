@@ -51,7 +51,7 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 		<>
 			<ClayForm.Group className="page-editor__custom-css-field" small>
 				<div className="align-items-end d-flex justify-content-between">
-					<label aria-describedby={tooltipId} htmlFor={id}>
+					<label htmlFor={id}>
 						{Liferay.Language.get('custom-css')}
 
 						<PopoverTooltip

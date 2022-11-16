@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = "display.style=simple",
+	property = "display.style=simple",
 	service = ReadingTimeMessageProvider.class
 )
 public class SimpleReadingTimeMessageProviderImpl

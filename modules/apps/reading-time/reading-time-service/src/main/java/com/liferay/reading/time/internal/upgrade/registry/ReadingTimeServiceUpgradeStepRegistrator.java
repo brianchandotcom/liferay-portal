@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author José Ángel Jiménez
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class ReadingTimeServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

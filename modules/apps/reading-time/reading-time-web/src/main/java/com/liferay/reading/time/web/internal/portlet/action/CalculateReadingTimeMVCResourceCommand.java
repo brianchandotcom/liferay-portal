@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ReadingTimePortletKeys.READING_TIME,
 		"mvc.command.name=/reading_time/calculate_reading_time"

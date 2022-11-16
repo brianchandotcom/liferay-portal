@@ -474,6 +474,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues =
 					_invoke(
 						() -> _addObjectDefinitions(
+							documentsStringUtilReplaceValues,
 							listTypeDefinitionIdsStringUtilReplaceValues,
 							serviceContext,
 							siteNavigationMenuItemSettingsBuilder));
@@ -1046,6 +1047,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addObjectDefinitions(
+			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
@@ -1176,7 +1178,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
 			() -> _addOrUpdateObjectEntries(
-				serviceContext, siteNavigationMenuItemSettingsBuilder));
+				documentsStringUtilReplaceValues, serviceContext,
+				siteNavigationMenuItemSettingsBuilder));
 
 		return HashMapBuilder.putAll(
 			objectDefinitionIdsStringUtilReplaceValues
@@ -2461,6 +2464,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addOrUpdateObjectEntries(
+			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
@@ -2491,7 +2495,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			json = _replace(json, objectEntryIdsStringUtilReplaceValues);
+			json = _replace(
+				json, documentsStringUtilReplaceValues,
+				objectEntryIdsStringUtilReplaceValues);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 

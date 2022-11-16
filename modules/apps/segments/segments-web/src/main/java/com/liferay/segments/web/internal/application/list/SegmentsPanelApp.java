@@ -21,21 +21,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
  */
-@Component(
-	property = {
-		"panel.app.order:Integer=300",
-		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS
-	},
-	service = PanelApp.class
-)
+@Component(service = {})
 public class SegmentsPanelApp extends BasePanelApp {
 
 	@Override
@@ -46,6 +47,10 @@ public class SegmentsPanelApp extends BasePanelApp {
 	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			return true;
+		}
 
 		if (group.isLayoutSetPrototype() || group.isUser()) {
 			return false;
@@ -62,5 +67,39 @@ public class SegmentsPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			_serviceRegistration = bundleContext.registerService(
+				PanelApp.class, this,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"panel.app.order", 300
+				).put(
+					"panel.category.key",
+					PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS
+				).build());
+		}
+		else {
+			_serviceRegistration = bundleContext.registerService(
+				PanelApp.class, this,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"panel.app.order", 800
+				).put(
+					"panel.category.key", PanelCategoryKeys.CONTROL_PANEL_USERS
+				).build());
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration == null) {
+			return;
+		}
+
+		_serviceRegistration.unregister();
+	}
+
+	private volatile ServiceRegistration<PanelApp> _serviceRegistration;
 
 }

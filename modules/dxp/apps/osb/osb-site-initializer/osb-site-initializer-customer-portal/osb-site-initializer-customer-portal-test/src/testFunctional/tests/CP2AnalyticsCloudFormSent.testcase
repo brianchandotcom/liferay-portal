@@ -161,7 +161,7 @@ definition {
 		}
 
 		task ("Delete account flag and go to CP2.0 and join a project") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-");
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
 
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
@@ -186,6 +186,13 @@ definition {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
 				title = "Your Analytics Cloud workspace is being set up and will be available soon.");
+		}
+
+		task ("Delete the entries and objects created") {
+			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
+				entry = "ERC-003",
+				index = "3",
+				status = "Active");
 		}
 	}
 

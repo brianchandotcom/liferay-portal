@@ -212,9 +212,10 @@ definition {
 		}
 
 		task ("Then the page designer can only see 10 options on dropdown menu") {
-			AssertTextEquals(
+			AssertAttributeValue(
+				attribute1 = "placeholder",
 				index = "1",
-				locator1 = "Fragment#INPUT_TOGGLE",
+				locator1 = "Fragment#INPUT_FIELD",
 				type = "select-from-list",
 				value1 = "Choose an Option");
 

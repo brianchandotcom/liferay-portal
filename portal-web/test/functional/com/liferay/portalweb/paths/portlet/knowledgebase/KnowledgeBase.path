@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_TITLE</td>
-	<td>//h3[@class='header-title']//span</td>
+	<td>//div[contains(@class,'kb-article-container')]//h1</td>
 	<td></td>
 </tr>
 <tr>

@@ -1088,6 +1088,11 @@
 	<td>xpath=((//a[text()='${key_productName}'])[${key_row}]/../../..//strong[contains(.,'${key_status}')])</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_ENTRY_CHECKBOX</td>
+	<td>//a[text()='${key_productName}']/../../..//input[@type='checkbox']</td>
+	<td></td>
+</tr>
 
 <!--OPTION-->
 

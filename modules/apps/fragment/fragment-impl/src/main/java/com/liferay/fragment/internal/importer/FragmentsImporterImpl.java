@@ -706,8 +706,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	}
 
 	private long _getOrCreateFolderId(
-			Map<String, Long> folderIdsMap, String folderPath, long repositoryId,
-			long userId)
+			Map<String, Long> folderIdsMap, String folderPath,
+			long repositoryId, long userId)
 		throws Exception {
 
 		if (folderIdsMap.containsKey(folderPath)) {

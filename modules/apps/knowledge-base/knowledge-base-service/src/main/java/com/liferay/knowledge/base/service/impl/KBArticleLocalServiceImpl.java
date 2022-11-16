@@ -81,10 +81,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -97,11 +95,8 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -1593,7 +1588,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long companyId, Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		long userId = _getActiveCompanyAdminUserId(companyId);
+		long userId = _userLocalService.getDefaultUserId(companyId);
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
 			companyId, expirationDate);
@@ -1611,68 +1606,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				userId, kbArticle.getResourcePrimKey(),
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
 		}
-	}
-
-	private long _getActiveCompanyAdminUserId(long companyId)
-		throws PortalException {
-
-		Role role = _roleLocalService.getRole(
-			companyId, RoleConstants.ADMINISTRATOR);
-
-		Long userId = _getActiveUser(
-			_userLocalService.getRoleUserIds(role.getRoleId()));
-
-		if (userId != null) {
-			return userId;
-		}
-
-		List<Group> groups = _groupLocalService.getRoleGroups(role.getRoleId());
-
-		for (Group group : groups) {
-			if (group.isDepot() || group.isRegularSite()) {
-				userId = _getActiveUser(
-					_groupLocalService.getUserPrimaryKeys(group.getGroupId()));
-
-				if (userId != null) {
-					return userId;
-				}
-			}
-			else if (group.isOrganization()) {
-				userId = _getActiveUser(
-					_organizationLocalService.getUserPrimaryKeys(
-						group.getClassPK()));
-
-				if (userId != null) {
-					return userId;
-				}
-			}
-			else if (group.isUserGroup()) {
-				userId = _getActiveUser(
-					_userGroupLocalService.getUserPrimaryKeys(
-						group.getClassPK()));
-
-				if (userId != null) {
-					return userId;
-				}
-			}
-		}
-
-		throw new PortalException(
-			"Unable to find an administrator user in company " + companyId);
-	}
-
-	private Long _getActiveUser(long[] userIds) {
-		if (!ArrayUtil.isEmpty(userIds)) {
-			for (long userId : userIds) {
-				User user = _userLocalService.fetchUser(userId);
-
-				if ((user != null) && user.isActive()) {
-					return userId;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private void _getAllDescendantKBArticles(
@@ -2345,9 +2278,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private KBFolderPersistence _kbFolderPersistence;
 
 	@Reference
-	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
 	private Portal _portal;
 
 	@Reference
@@ -2360,16 +2290,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	private ResourceLocalService _resourceLocalService;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

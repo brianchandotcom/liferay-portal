@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPMENT_CONTENT,
 		"mvc.command.name=/commerce_shipment_content/view_commerce_shipment_items"

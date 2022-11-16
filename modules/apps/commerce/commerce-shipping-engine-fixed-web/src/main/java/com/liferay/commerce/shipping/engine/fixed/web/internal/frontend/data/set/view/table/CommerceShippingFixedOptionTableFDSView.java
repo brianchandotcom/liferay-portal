@@ -65,7 +65,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = {
 		"fds.data.provider.key=" + CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS,
 		"frontend.data.set.name=" + CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS

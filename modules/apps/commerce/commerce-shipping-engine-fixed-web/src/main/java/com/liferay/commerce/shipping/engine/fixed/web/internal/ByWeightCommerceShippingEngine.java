@@ -62,7 +62,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "commerce.shipping.engine.key=" + ByWeightCommerceShippingEngine.KEY,
 	service = CommerceShippingEngine.class
 )

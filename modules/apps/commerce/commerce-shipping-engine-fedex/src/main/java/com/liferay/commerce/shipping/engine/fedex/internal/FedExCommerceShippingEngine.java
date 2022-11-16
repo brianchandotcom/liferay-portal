@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = "commerce.shipping.engine.key=" + FedExCommerceShippingEngine.KEY,
 	service = CommerceShippingEngine.class
 )

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class CommerceShippingFixedOptionIndexer
 	extends BaseIndexer<CommerceShippingFixedOption> {
 

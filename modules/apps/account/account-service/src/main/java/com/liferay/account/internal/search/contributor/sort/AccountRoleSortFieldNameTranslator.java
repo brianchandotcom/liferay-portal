@@ -14,7 +14,7 @@
 
 package com.liferay.account.internal.search.contributor.sort;
 
-import com.liferay.portal.search.contributor.constants.ContributorConstants;
+import com.liferay.account.model.AccountRole;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,12 +22,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Drew Brokke
  */
-@Component(
-	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.account.model.AccountRole",
-	service = SortFieldNameTranslator.class
-)
+@Component(service = SortFieldNameTranslator.class)
 public class AccountRoleSortFieldNameTranslator
 	implements SortFieldNameTranslator {
+
+	@Override
+	public Class<?> getEntityClass() {
+		return AccountRole.class;
+	}
 
 	@Override
 	public String getSortFieldName(String orderByCol) {

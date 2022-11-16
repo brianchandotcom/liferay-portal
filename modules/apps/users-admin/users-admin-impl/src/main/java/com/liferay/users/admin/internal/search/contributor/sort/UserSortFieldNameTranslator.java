@@ -14,7 +14,7 @@
 
 package com.liferay.users.admin.internal.search.contributor.sort;
 
-import com.liferay.portal.search.contributor.constants.ContributorConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,11 +22,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.portal.kernel.model.User",
-	service = SortFieldNameTranslator.class
-)
+@Component(service = SortFieldNameTranslator.class)
 public class UserSortFieldNameTranslator implements SortFieldNameTranslator {
+
+	@Override
+	public Class<?> getEntityClass() {
+		return User.class;
+	}
 
 	@Override
 	public String getSortFieldName(String orderByCol) {

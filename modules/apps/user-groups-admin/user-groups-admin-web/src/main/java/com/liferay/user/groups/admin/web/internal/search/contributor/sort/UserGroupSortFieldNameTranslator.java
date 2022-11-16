@@ -14,7 +14,7 @@
 
 package com.liferay.user.groups.admin.web.internal.search.contributor.sort;
 
-import com.liferay.portal.search.contributor.constants.ContributorConstants;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,12 +22,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.portal.kernel.model.UserGroup",
-	service = SortFieldNameTranslator.class
-)
+@Component(service = SortFieldNameTranslator.class)
 public class UserGroupSortFieldNameTranslator
 	implements SortFieldNameTranslator {
+
+	@Override
+	public Class<?> getEntityClass() {
+		return UserGroup.class;
+	}
 
 	@Override
 	public String getSortFieldName(String orderByCol) {

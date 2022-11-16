@@ -14,7 +14,7 @@
 
 package com.liferay.contacts.internal.search.contributor.sort;
 
-import com.liferay.portal.search.contributor.constants.ContributorConstants;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,11 +22,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Lucas Marques de Paula
  */
-@Component(
-	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.portal.kernel.model.Contact",
-	service = SortFieldNameTranslator.class
-)
+@Component(service = SortFieldNameTranslator.class)
 public class ContactSortFieldNameTranslator implements SortFieldNameTranslator {
+
+	@Override
+	public Class<?> getEntityClass() {
+		return Contact.class;
+	}
 
 	@Override
 	public String getSortFieldName(String orderByCol) {

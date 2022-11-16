@@ -65,13 +65,13 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-166126",
-		"dispatch.task.executor.name=testflow-testray",
+		"dispatch.task.executor.name=testray-testflow",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testflow-testray"
+		"dispatch.task.executor.type=testray-testflow"
 	},
 	service = DispatchTaskExecutor.class
 )
-public class TestFlowTestrayDispatchTaskExecutor
+public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
 	@Override
@@ -123,7 +123,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testflow-testray";
+		return "testray-testflow";
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -452,7 +452,7 @@ public class TestFlowTestrayDispatchTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TestFlowTestrayDispatchTaskExecutor.class);
+		SiteInitializerTestrayTestFlowDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
 

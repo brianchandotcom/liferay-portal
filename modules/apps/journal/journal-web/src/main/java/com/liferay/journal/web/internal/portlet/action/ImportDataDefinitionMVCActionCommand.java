@@ -109,12 +109,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			SessionErrors.add(
-				actionRequest, "importDataDefinitionErrorMessage");
-
-			if (Validator.isNotNull(exception.getMessage())) {
-				SessionErrors.add(
-					actionRequest, "importDataDefinitionException", exception);
-			}
+				actionRequest, "importDataDefinitionErrorMessage", exception);
 
 			hideDefaultErrorMessage(actionRequest);
 		}

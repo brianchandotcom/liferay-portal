@@ -47,15 +47,71 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 
 	<liferay-ui:success key="importDataDefinitionSuccessMessage" message="the-structure-was-successfully-imported" />
 
-	<liferay-ui:error embed="<%= false %>" key="importDataDefinitionErrorMessage" message="the-structure-was-not-successfully-imported" />
+	<liferay-ui:error embed="<%= false %>" key="importDataDefinitionErrorMessage">
+		<c:choose>
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException %>">
+				<liferay-ui:message key="please-enter-a-valid-form-definition" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustNotDuplicateFieldName %>">
 
-	<liferay-ui:error embed="<%= false %>" key="importDataDefinitionException">
+				<%
+				DataDefinitionValidationException.MustNotDuplicateFieldName mndfn = (DataDefinitionValidationException.MustNotDuplicateFieldName)errorException;
+				%>
 
-		<%
-		Exception exception = (Exception)errorException;
-		%>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustSetFields %>">
+				<liferay-ui:message key="at-least-one-field-must-be-added" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustSetOptionsForField %>">
 
-		<liferay-ui:message key="<%= exception.getMessage() %>" />
+				<%
+				DataDefinitionValidationException.MustSetOptionsForField msoff = (DataDefinitionValidationException.MustSetOptionsForField)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldLabel()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustSetValidCharactersForFieldName %>">
+
+				<%
+				DataDefinitionValidationException.MustSetValidCharactersForFieldName msvcffn = (DataDefinitionValidationException.MustSetValidCharactersForFieldName)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataDefinitionValidationException.MustSetValidName %>">
+				<liferay-ui:message key="please-enter-a-valid-name" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataLayoutValidationException %>">
+				<liferay-ui:message key="please-enter-a-valid-form-layout" />
+			</c:when>
+			<c:when test="<%= errorException instanceof DataLayoutValidationException.MustNotDuplicateFieldName %>">
+
+				<%
+				DataLayoutValidationException.MustNotDuplicateFieldName mndfn = (DataLayoutValidationException.MustNotDuplicateFieldName)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			</c:when>
+			<c:when test="<%= errorException instanceof PrincipalException.MustHavePermission %>">
+				<liferay-ui:message key="you-do-not-have-the-required-permissions" />
+			</c:when>
+			<c:otherwise>
+
+				<%
+				Exception exception = (Exception)errorException;
+				%>
+
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(exception.getMessage()) %>">
+						<liferay-ui:message key="<%= exception.getMessage() %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="the-structure-was-not-successfully-imported" />
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />

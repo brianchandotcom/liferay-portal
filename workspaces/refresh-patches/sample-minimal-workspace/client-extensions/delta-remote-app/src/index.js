@@ -27,12 +27,11 @@ class WebComponent extends HTMLElement {
 			this
 		);
 
-    if (Liferay.ThemeDisplay.isSignedIn()) {
+		if (Liferay.ThemeDisplay.isSignedIn()) {
 			api(
 				'o/headless-admin-user/v1.0/my-user-account'
-      ).then((res) => res.json()
+			).then((res) => res.json()
 			).then(data => {
-        console.log(data);
 				let nameEls = document.getElementsByClassName('hello-world-name');
 				if (nameEls.length > 0){
 					if (data.givenName) {

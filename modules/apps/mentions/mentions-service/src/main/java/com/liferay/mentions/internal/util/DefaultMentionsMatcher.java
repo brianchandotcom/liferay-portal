@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = {
 		"model.class.name=*", "service.ranking:Integer=" + Integer.MIN_VALUE
 	},

@@ -6,7 +6,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscriptions");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "1");
+		CustomerPortal.viewCPObjectCustomInfo();
 
 		Click(locator1 = "CP2DXPCloudSetup#HAS_DISASTER_DATA_CENTER_REGION");
 
@@ -22,8 +22,10 @@ definition {
 	}
 
 	macro clearAndDeleteDXPCloudEntries {
+		var entry = "ERC-001";
+
 		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
-			entry = "ERC-001",
+			entry = "${entry}",
 			portlet = "DXP Cloud Environments");
 
 		CustomerPortal.clearActivationStatus(status = "${status}");

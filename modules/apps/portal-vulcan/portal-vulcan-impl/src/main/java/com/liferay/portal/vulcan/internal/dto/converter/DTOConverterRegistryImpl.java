@@ -67,7 +67,7 @@ public class DTOConverterRegistryImpl implements DTOConverterRegistry {
 				emitter.emit(dtoClassName);
 
 				String applicationName = (String)serviceReference.getProperty(
-					"applicationName");
+					"application.name");
 				String version = (String)serviceReference.getProperty(
 					"version");
 

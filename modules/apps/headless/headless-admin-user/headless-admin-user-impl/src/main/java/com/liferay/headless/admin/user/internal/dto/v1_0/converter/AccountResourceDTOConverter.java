@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"applicationName=Liferay.Headless.Admin.User",
+		"application.name=Liferay.Headless.Admin.User",
 		"dto.class.name=com.liferay.account.model.AccountEntry", "version=v1.0"
 	},
 	service = {AccountResourceDTOConverter.class, DTOConverter.class}

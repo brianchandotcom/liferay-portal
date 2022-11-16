@@ -22,6 +22,8 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -67,7 +70,19 @@ public class GetInfoItemFieldValueMVCResourceCommand
 				String editableTypeOptions = ParamUtil.getString(
 					resourceRequest, "editableTypeOptions");
 
-				return _jsonFactory.createJSONObject(editableTypeOptions);
+				if (Validator.isNotNull(editableTypeOptions)) {
+					try {
+						return _jsonFactory.createJSONObject(
+							editableTypeOptions);
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+					}
+				}
+
+				return _jsonFactory.createJSONObject();
 			}
 		).put(
 			"fieldId", ParamUtil.getString(resourceRequest, "fieldId")
@@ -102,6 +117,9 @@ public class GetInfoItemFieldValueMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetInfoItemFieldValueMVCResourceCommand.class);
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

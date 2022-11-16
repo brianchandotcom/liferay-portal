@@ -90,6 +90,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -245,6 +246,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldResource.Factory objectFieldResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
@@ -312,6 +314,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldResourceFactory = objectFieldResourceFactory;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
@@ -2610,10 +2613,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			Long objectDefinitionId = Long.valueOf((String)jsonObject.remove(
-				"objectDefinitionId"));
+			Long objectDefinitionId = Long.valueOf(
+				(String)jsonObject.remove("objectDefinitionId"));
 
-			ObjectField objectField = ObjectField.toDTO(JSONUtil.toString(jsonObject));
+			ObjectField objectField = ObjectField.toDTO(
+				JSONUtil.toString(jsonObject));
 
 			Page<ObjectField> objectFieldPage =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
@@ -4413,6 +4417,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFieldResource.Factory _objectFieldResourceFactory;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

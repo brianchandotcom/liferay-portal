@@ -118,6 +118,8 @@ EOF
 
 	mv delta-remote-app sample-minimal-workspace/client-extensions
 
+	cp -R refresh-patches/sample-minimal-workspace/* sample-minimal-workspace/
+
 	rm -fr sample-default-workspace/client-extensions
 
 	cp -R sample-minimal-workspace/client-extensions sample-default-workspace

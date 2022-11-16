@@ -66,6 +66,8 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			new ScopeSearchFacetDisplayContext();
 
+		scopeSearchFacetDisplayContext.setBucketDisplayContexts(
+			buildBucketDisplayContexts(getTermCollectors()));
 		scopeSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		scopeSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
@@ -79,8 +81,6 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		scopeSearchFacetDisplayContext.setRenderNothing(isRenderNothing());
 		scopeSearchFacetDisplayContext.setSiteFacetPortletInstanceConfiguration(
 			_siteFacetPortletInstanceConfiguration);
-		scopeSearchFacetDisplayContext.setBucketDisplayContexts(
-			buildBucketDisplayContexts(getTermCollectors()));
 
 		return scopeSearchFacetDisplayContext;
 	}

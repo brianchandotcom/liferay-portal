@@ -19,4 +19,5 @@ export enum ResourceName {
 	MDF_CLAIM_SALESFORCE = 'mdfclaimsfs',
 	LEADS_SALESFORCE = 'leadsfs',
 	LEAD_QUALIFICATIONS_SALESFORCE = 'leadqualificationsfs',
+	OPPORTUNITIES_SALESFORCE = 'opportunitysfs',
 }

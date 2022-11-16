@@ -91,6 +91,26 @@
 <!--ASSET_ENTRY_TABLE-->
 
 <tr>
+	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_BUTTON</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//a[contains(.,'Details...')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_COLLAPSED</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//div[contains(@class,'table-details') and contains(@class,'hide')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_KEY</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//td[contains(@class,'key-column') and contains(.,'${key_documentDetailKey}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_KEY_VALUE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//tr[./td[contains(@class,'key-column') and contains(.,'${key_documentDetailKey}')]]/td[contains(@class,'table-details-content')][./code]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ENTRY_TABLE_TITLE</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//a</td>
 	<td></td>

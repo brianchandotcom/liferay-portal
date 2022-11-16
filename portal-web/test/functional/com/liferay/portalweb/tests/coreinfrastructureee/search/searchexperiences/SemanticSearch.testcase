@@ -1,0 +1,154 @@
+@component-name = "portal-search"
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Search Experiences";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
+		property custom.properties = "feature.flag.LPS-163688=true";
+		property txtai.enabled = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Test Web Content");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Rescore by Text Embedding");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Test Web Content",
+			searchAssetType = "Web Content Article");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test AssertTxtaiTextEmbeddingIndexFieldAddedToAssets {
+		property custom.properties = "feature.flag.LPS-163688=true";
+		property test.name.skip.portal.instance = "SemanticSearch#AssertTxtaiTextEmbeddingIndexFieldAddedToAssets";
+		property txtai.enabled = "true";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
+
+		Select(
+			ariaLabel = "Asset Entry Class Names",
+			locator1 = "Select#ANY_ARIA_LABEL",
+			value1 = "Message Boards Message");
+
+		PortletEntry.update();
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Test Web Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Blog Content",
+			entryTitle = "Test Blog",
+			groupName = "Guest");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Test Knowledge Base Article Content",
+			kbArticleTitle = "Test Knowledge Base Article");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "",
+			threadSubject = "Test Message Board Thread");
+
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "",
+			wikiPageName = "Test Wiki Page");
+
+		Search.openSearchPage();
+
+		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		for (var assetTitle : list "Test Web Content,Test Blog,Test Knowledge Base Article,Test Message Board Thread,Test Wiki Page") {
+			SearchResultPortlet.viewDocumentDetailValue(
+				documentDetailKey = "text_embedding_768_en_US",
+				documentDetailKeyValue = "0.0",
+				searchAssetTitle = "${assetTitle}");
+		}
+	}
+
+	test AssertTxtaiWithTextEmbeddingElementAffectsBlueprintPreview {
+		property custom.properties = "feature.flag.LPS-163688=true";
+		property txtai.enabled = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Test Web Content");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Rescore by Text Embedding");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		var assetTitle = "Test Web Content";
+		var assetScoreBoosted = selenium.getText("Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
+
+		echo("Search score with Semantic Search: ${assetScoreBoosted}");
+
+		Uncheck.uncheckToggleSwitch(
+			elementName = "Rescore by Text Embedding",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE");
+
+		Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_REFRESH_SEARCH_BUTTON");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		var assetScoreUnboosted = selenium.getText("Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SCORE");
+
+		if ("${assetScoreUnboosted}" != "${assetScoreBoosted}") {
+			echo("Assertion PASSED: Semantic Search had an effect on the search result score");
+
+			echo("Search score without Semantic Search: ${assetScoreUnboosted}");
+
+			echo("Search score with Semantic Search: ${assetScoreBoosted}");
+		}
+		else {
+			fail("Assertion FAILED: Semantic Search had no effect on the search result score");
+		}
+	}
+
+}

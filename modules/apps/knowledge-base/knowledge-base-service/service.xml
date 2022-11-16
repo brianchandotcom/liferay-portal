@@ -345,8 +345,6 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>DuplicateKBArticleExternalReferenceCode</exception>
-		<exception>DuplicateKBFolderExternalReferenceCode</exception>
 		<exception>DuplicateKBFolderName</exception>
 		<exception>InvalidKBFolderName</exception>
 		<exception>KBArticleContent</exception>

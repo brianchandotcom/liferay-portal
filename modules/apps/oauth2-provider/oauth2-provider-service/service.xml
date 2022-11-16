@@ -170,7 +170,6 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateOAuth2ApplicationClientId</exception>
-		<exception>DuplicateOAuth2ApplicationExternalReferenceCode</exception>
 		<exception>DuplicateOAuth2ScopeGrant</exception>
 		<exception>OAuth2ApplicationClientCredentialUserId</exception>
 		<exception>OAuth2ApplicationClientGrantType</exception>

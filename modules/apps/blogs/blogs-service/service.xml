@@ -167,7 +167,6 @@
 	<entity local-service="true" name="BlogsStatsUser" remote-service="false">
 	</entity>
 	<exceptions>
-		<exception>DuplicateEntryExternalReferenceCode</exception>
 		<exception>EntryContent</exception>
 		<exception>EntryCoverImageCrop</exception>
 		<exception>EntryDescription</exception>

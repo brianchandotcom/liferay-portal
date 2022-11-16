@@ -24,6 +24,7 @@ import com.liferay.petra.http.invoker.HttpInvoker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -999,7 +1000,7 @@ public class Main {
 			archiver.extract(tempFilePath.toFile(), tempDirectoryFile);
 
 			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
+				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
 
 			DocumentBuilder documentBuilder =
 				documentBuilderFactory.newDocumentBuilder();

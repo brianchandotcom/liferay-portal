@@ -49,17 +49,35 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 			Map<String, Object> data = (HashMap<String, Object>)dropdownItem.get("data");
 			%>
 
-			<liferay-ui:icon
-				cssClass="visible-interaction"
-				data='<%= (HashMap)dropdownItem.get("data") %>'
-				icon='<%= String.valueOf(dropdownItem.get("icon")) %>'
-				linkCssClass="text-primary"
-				markupView="lexicon"
-				message='<%= String.valueOf(dropdownItem.get("label")) %>'
-				method="get"
-				url='<%= String.valueOf(dropdownItem.get("href")) %>'
-				useDialog='<%= GetterUtil.getBoolean(data.get("useDialog")) %>'
-			/>
+			<c:choose>
+				<c:when test='<%= (data != null) && GetterUtil.getBoolean(data.get("useDialog")) %>'>
+					<clay:button
+						aria-label='<%= String.valueOf(dropdownItem.get("label")) %>'
+						borderless="<%= true %>"
+						cssClass="text-primary visible-interaction"
+						data-url='<%= String.valueOf(data.get("assetEntryActionURL")) %>'
+						displayType="unstyled"
+						icon='<%= String.valueOf(dropdownItem.get("icon")) %>'
+						monospaced="<%= true %>"
+						propsTransformer="js/AssetEntryActionButtonPropsTransformer"
+						small="<%= true %>"
+						title='<%= String.valueOf(dropdownItem.get("label")) %>'
+					/>
+				</c:when>
+				<c:otherwise>
+					<clay:link
+						aria-label='<%= String.valueOf(dropdownItem.get("label")) %>'
+						borderless="<%= true %>"
+						cssClass="lfr-portal-tooltip text-primary visible-interaction"
+						displayType="unstyled"
+						href='<%= String.valueOf(dropdownItem.get("href")) %>'
+						icon='<%= String.valueOf(dropdownItem.get("icon")) %>'
+						monospaced="<%= true %>"
+						small="<%= true %>"
+						title='<%= String.valueOf(dropdownItem.get("label")) %>'
+					/>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 </c:if>

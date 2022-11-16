@@ -184,28 +184,28 @@ definition {
 			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
 
 			if (("${roleTitle}" == "Guest") || ("${roleTitle}" == "Site Member")) {
-				AssertNotChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX");
+				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX");
 			}
 			else {
-				AssertChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX");
+				AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX");
 			}
 
 			if (("${roleTitle}" == "Guest") || ("${roleTitle}" == "Power User") || ("${roleTitle}" == "Site Member") || ("${roleTitle}" == "User")) {
-				AssertNotChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX");
+				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX");
 
-				AssertNotChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX");
+				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX");
 			}
 			else {
-				AssertChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX");
+				AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX");
 
-				AssertChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX");
+				AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX");
 			}
 
 			if (("${roleTitle}" == "Power User") || ("${roleTitle}" == "User")) {
-				AssertNotChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
 			else {
-				AssertChecked(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+				AssertChecked.assertCheckedNotVisible(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 			}
 		}
 	}

@@ -14,8 +14,8 @@
 
 package com.liferay.layout.page.template.validator.test;
 
-import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
 import com.liferay.layout.page.template.validator.DisplayPageTemplateValidator;
+import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -39,7 +39,7 @@ public class DisplayPageTemplateValidatorTest {
 	public void testValidatePageTemplateInvalidExtraProperties()
 		throws Exception {
 
-		expectedException.expect(DisplayPageTemplateValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith("extraneous key [extra] is not permitted"));
 
@@ -51,7 +51,7 @@ public class DisplayPageTemplateValidatorTest {
 	public void testValidatePageTemplateInvalidMissingContentType()
 		throws Exception {
 
-		expectedException.expect(DisplayPageTemplateValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith("required key [contentType] not found"));
 
@@ -63,7 +63,7 @@ public class DisplayPageTemplateValidatorTest {
 	public void testValidatePageTemplateInvalidMissingContentTypeClassName()
 		throws Exception {
 
-		expectedException.expect(DisplayPageTemplateValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/contentType: required key [className] not found"));
@@ -76,7 +76,7 @@ public class DisplayPageTemplateValidatorTest {
 
 	@Test
 	public void testValidatePageTemplateInvalidMissingName() throws Exception {
-		expectedException.expect(DisplayPageTemplateValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith("required key [name] not found"));
 

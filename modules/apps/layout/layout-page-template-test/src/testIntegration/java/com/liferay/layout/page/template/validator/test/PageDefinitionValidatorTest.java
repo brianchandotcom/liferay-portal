@@ -14,8 +14,8 @@
 
 package com.liferay.layout.page.template.validator.test;
 
-import com.liferay.layout.page.template.exception.PageDefinitionValidatorException;
 import com.liferay.layout.page.template.validator.PageDefinitionValidator;
+import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -40,7 +40,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidColumnExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/pageElements/0/definition: " +
@@ -54,7 +54,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidDropZoneAllowedFragmentsUnallowedFragments()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringContains(
 				"/pageElement/pageElements/0/definition/fragmentSettings: " +
@@ -74,7 +74,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith("extraneous key [extra] is not permitted"));
 
@@ -86,7 +86,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidFragmentExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/definition: extraneous key " +
@@ -100,7 +100,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidFragmentMissingKey()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/definition/fragment: required " +
@@ -114,7 +114,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidPageElementExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement: extraneous key [extra] is not permitted"));
@@ -128,7 +128,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidRootExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/definition: extraneous key [extra] is not " +
@@ -142,7 +142,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidRowExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/pageElements/0/definition: " +
@@ -156,7 +156,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidSectionBackgroundExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/definition/backgroundImage: " +
@@ -172,7 +172,7 @@ public class PageDefinitionValidatorTest {
 	public void testValidatePageDefinitionInvalidSectionExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageDefinitionValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith(
 				"/pageElement/pageElements/0/definition: extraneous key " +

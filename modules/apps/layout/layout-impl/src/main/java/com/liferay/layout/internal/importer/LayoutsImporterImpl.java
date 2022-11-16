@@ -40,8 +40,6 @@ import com.liferay.layout.internal.importer.exception.DropzoneLayoutStructureIte
 import com.liferay.layout.internal.importer.structure.util.LayoutStructureItemImporter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
-import com.liferay.layout.page.template.exception.DisplayPageTemplateValidatorException;
-import com.liferay.layout.page.template.exception.MasterPageValidatorException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -61,13 +59,13 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageExportImportConstants;
-import com.liferay.layout.utility.page.exception.UtilityPageTemplateValidatorException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.layout.utility.page.validator.UtilityPageTemplateValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -276,14 +274,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				displayPageTemplate = _objectMapper.readValue(
 					content, DisplayPageTemplate.class);
 			}
-			catch (DisplayPageTemplateValidatorException
-						displayPageTemplateValidatorException) {
-
+			catch (JSONValidatorException jsonValidatorException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid display page template for: " +
 							zipEntry.getName(),
-						displayPageTemplateValidatorException);
+						jsonValidatorException);
 				}
 
 				_layoutsImporterResultEntries.add(
@@ -464,14 +460,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				utilityPageTemplate = _objectMapper.readValue(
 					content, UtilityPageTemplate.class);
 			}
-			catch (UtilityPageTemplateValidatorException
-						utilityPageTemplateValidatorException) {
-
+			catch (JSONValidatorException jsonValidatorException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid utility page template for: " +
 							zipEntry.getName(),
-						utilityPageTemplateValidatorException);
+						jsonValidatorException);
 				}
 
 				_layoutsImporterResultEntries.add(
@@ -552,11 +546,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				masterPage = _objectMapper.readValue(content, MasterPage.class);
 			}
-			catch (MasterPageValidatorException masterPageValidatorException) {
+			catch (JSONValidatorException jsonValidatorException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Invalid master page for: " + zipEntry.getName(),
-						masterPageValidatorException);
+						jsonValidatorException);
 				}
 
 				_layoutsImporterResultEntries.add(

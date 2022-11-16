@@ -88,13 +88,13 @@ import org.w3c.dom.NodeList;
 	property = {
 		"dispatch.task.executor.cluster.mode=single-node",
 		"dispatch.task.executor.feature.flag=LPS-163118",
-		"dispatch.task.executor.name=testray",
+		"dispatch.task.executor.name=testray-import-results",
 		"dispatch.task.executor.overlapping=false",
-		"dispatch.task.executor.type=testray"
+		"dispatch.task.executor.type=testray-import-results"
 	},
 	service = DispatchTaskExecutor.class
 )
-public class SiteInitializerTestrayDispatchTaskExecutor
+public class SiteInitializerTestrayImportResultsDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
 	@Override
@@ -153,7 +153,7 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return "testray";
+		return "testray-import-results";
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -250,7 +250,7 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 				"Case",
 				HashMapBuilder.<String, Object>put(
 					"caseNumber",
-					_increment(
+					_incrementTestrayFieldValue(
 						companyId, "caseNumber",
 						"projectId eq '" + testrayProjectId + "'", "Case")
 				).put(
@@ -1147,7 +1147,7 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 				"name", testrayRunName
 			).put(
 				"number",
-				_increment(
+				_incrementTestrayFieldValue(
 					companyId, "number", "buildId eq '" + testrayBuildId + "'",
 					"Run")
 			).put(
@@ -1202,7 +1202,7 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 		return objectEntry.getId();
 	}
 
-	private long _increment(
+	private long _incrementTestrayFieldValue(
 			long companyId, String fieldName, String filterString,
 			String objectDefinitionShortName)
 		throws Exception {
@@ -1606,7 +1606,7 @@ public class SiteInitializerTestrayDispatchTaskExecutor
 	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteInitializerTestrayDispatchTaskExecutor.class);
+		SiteInitializerTestrayImportResultsDispatchTaskExecutor.class);
 
 	private DefaultDTOConverterContext _defaultDTOConverterContext;
 

@@ -49,26 +49,26 @@ public class ProjectTemplatesNpmReactPortletTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"foo", "foo", "Foo", "7.0.10.17", "yarn", "dxp"},
-				{"foo", "foo", "Foo", "7.1.10.7", "yarn", "dxp"},
-				{"foo", "foo", "Foo", "7.2.10.7", "yarn", "dxp"},
-				{"foo", "foo", "Foo", "7.3.7", "yarn", "portal"},
-				{"foo", "foo", "Foo", "7.4.3.36", "yarn", "portal"},
-				{"foo-bar", "foo.bar", "FooBar", "7.0.10.17", "yarn", "dxp"},
-				{"foo-bar", "foo.bar", "FooBar", "7.1.10.7", "yarn", "dxp"},
-				{"foo-bar", "foo.bar", "FooBar", "7.2.10.7", "yarn", "dxp"},
-				{"foo-bar", "foo.bar", "FooBar", "7.3.7", "yarn", "portal"},
-				{"foo-bar", "foo.bar", "FooBar", "7.4.3.36", "yarn", "portal"},
-				{"foo", "foo", "Foo", "7.0.10.17", "npm", "dxp"},
-				{"foo", "foo", "Foo", "7.1.10.7", "npm", "dxp"},
-				{"foo", "foo", "Foo", "7.2.10.7", "npm", "dxp"},
-				{"foo", "foo", "Foo", "7.3.7", "npm", "portal"},
-				{"foo", "foo", "Foo", "7.4.3.36", "npm", "portal"},
-				{"foo-bar", "foo.bar", "FooBar", "7.0.10.17", "npm", "dxp"},
-				{"foo-bar", "foo.bar", "FooBar", "7.1.10.7", "npm", "dxp"},
-				{"foo-bar", "foo.bar", "FooBar", "7.2.10.7", "npm", "dxp"},
-				{"foo-bar", "foo.bar", "FooBar", "7.3.7", "npm", "portal"},
-				{"foo-bar", "foo.bar", "FooBar", "7.4.3.36", "npm", "portal"}
+				{"foo", "foo", "Foo", "dxp", "7.0.10.17", "yarn"},
+				{"foo", "foo", "Foo", "dxp", "7.1.10.7", "yarn"},
+				{"foo", "foo", "Foo", "dxp", "7.2.10.7", "yarn"},
+				{"foo", "foo", "Foo", "portal", "7.3.7", "yarn"},
+				{"foo", "foo", "Foo", "portal", "7.4.3.36", "yarn"},
+				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.0.10.17", "yarn"},
+				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.1.10.7", "yarn"},
+				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.2.10.7", "yarn"},
+				{"foo-bar", "foo.bar", "FooBar", "portal", "7.3.7", "yarn"},
+				{"foo-bar", "foo.bar", "FooBar", "portal", "7.4.3.36", "yarn"},
+				{"foo", "foo", "Foo", "dxp", "7.0.10.17", "npm"},
+				{"foo", "foo", "Foo", "dxp", "7.1.10.7", "npm"},
+				{"foo", "foo", "Foo", "dxp", "7.2.10.7", "npm"},
+				{"foo", "foo", "Foo", "portal", "7.3.7", "npm"},
+				{"foo", "foo", "Foo", "portal", "7.4.3.36", "npm"},
+				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.0.10.17", "npm"},
+				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.1.10.7", "npm"},
+				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.2.10.7", "npm"},
+				{"foo-bar", "foo.bar", "FooBar", "portal", "7.3.7", "npm"},
+				{"foo-bar", "foo.bar", "FooBar", "portal", "7.4.3.36", "npm"}
 			});
 	}
 
@@ -90,15 +90,15 @@ public class ProjectTemplatesNpmReactPortletTest
 
 	public ProjectTemplatesNpmReactPortletTest(
 		String name, String packageName, String className,
-		String liferayVersion, String nodePackageManager,
-		String liferayProduct) {
+		String liferayProduct, String liferayVersion,
+		String nodePackageManager) {
 
 		_name = name;
 		_packageName = packageName;
 		_className = className;
+		_liferayProduct = liferayProduct;
 		_liferayVersion = liferayVersion;
 		_nodePackageManager = nodePackageManager;
-		_liferayProduct = liferayProduct;
 	}
 
 	@Test

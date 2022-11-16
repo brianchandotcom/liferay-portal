@@ -52,37 +52,39 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
-	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}, {1}, {2}")
+	@Parameterized.Parameters(
+		name = "Testcase-{index}: testing {0}, {1}, {2}, {3}"
+	)
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"guestbook", "com.liferay.docs.guestbook", "7.1.10.7", "dxp"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.2.10.7", "dxp"},
-				{"guestbook", "com.liferay.docs.guestbook", "7.3.7", "portal"},
+				{"guestbook", "com.liferay.docs.guestbook", "dxp", "7.1.10.7"},
+				{"guestbook", "com.liferay.docs.guestbook", "dxp", "7.2.10.7"},
+				{"guestbook", "com.liferay.docs.guestbook", "portal", "7.3.7"},
 				{
-					"guestbook", "com.liferay.docs.guestbook", "7.4.3.16",
-					"portal"
+					"guestbook", "com.liferay.docs.guestbook", "portal",
+					"7.4.3.16"
+				},
+				{
+					"backend-integration", "com.liferay.docs.guestbook", "dxp",
+					"7.1.10.7"
+				},
+				{
+					"backend-integration", "com.liferay.docs.guestbook", "dxp",
+					"7.2.10.7"
 				},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
-					"7.1.10.7", "dxp"
+					"portal", "7.3.7"
 				},
 				{
 					"backend-integration", "com.liferay.docs.guestbook",
-					"7.2.10.7", "dxp"
+					"portal", "7.4.3.36"
 				},
-				{
-					"backend-integration", "com.liferay.docs.guestbook",
-					"7.3.7", "portal"
-				},
-				{
-					"backend-integration", "com.liferay.docs.guestbook",
-					"7.4.3.36", "portal"
-				},
-				{"sample", "com.test.sample", "7.1.10.7", "dxp"},
-				{"sample", "com.test.sample", "7.2.10.7", "dxp"},
-				{"sample", "com.test.sample", "7.3.7", "portal"},
-				{"sample", "com.test.sample", "7.4.3.16", "portal"}
+				{"sample", "com.test.sample", "dxp", "7.1.10.7"},
+				{"sample", "com.test.sample", "dxp", "7.2.10.7"},
+				{"sample", "com.test.sample", "portal", "7.3.7"},
+				{"sample", "com.test.sample", "portal", "7.4.3.16"}
 			});
 	}
 
@@ -103,13 +105,13 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 	}
 
 	public ProjectTemplatesRESTBuilderWorkspaceTest(
-		String name, String packageName, String liferayVersion,
-		String liferayProduct) {
+		String name, String packageName, String liferayProduct,
+		String liferayVersion) {
 
 		_name = name;
 		_packageName = packageName;
-		_liferayVersion = liferayVersion;
 		_liferayProduct = liferayProduct;
+		_liferayVersion = liferayVersion;
 	}
 
 	@Test

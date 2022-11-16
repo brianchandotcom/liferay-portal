@@ -45,7 +45,7 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
-	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
+	@Parameterized.Parameters(name = "Testcase-{index}: testing {1} {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {

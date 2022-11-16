@@ -45,12 +45,12 @@ public class ProjectTemplatesMVCPortletTest
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
-	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
+	@Parameterized.Parameters(name = "Testcase-{index}: testing {1} {0}")
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2", "dxp"}, {"7.1.3-1", "dxp"}, {"7.2.1-1", "dxp"},
-				{"7.3.7", "portal"}, {"7.4.3.36", "portal"}
+				{"dxp", "7.0.10.17"}, {"dxp", "7.1.10.7"}, {"dxp", "7.2.10.7"},
+				{"portal", "7.3.7"}, {"portal", "7.4.3.36"}
 			});
 	}
 
@@ -71,10 +71,10 @@ public class ProjectTemplatesMVCPortletTest
 	}
 
 	public ProjectTemplatesMVCPortletTest(
-		String liferayVersion, String liferayProduct) {
+		String liferayProduct, String liferayVersion) {
 
-		_liferayVersion = liferayVersion;
 		_liferayProduct = liferayProduct;
+		_liferayVersion = liferayVersion;
 	}
 
 	@Test

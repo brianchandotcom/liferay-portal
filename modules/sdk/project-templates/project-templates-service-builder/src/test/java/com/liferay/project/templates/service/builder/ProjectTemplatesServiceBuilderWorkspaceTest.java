@@ -54,62 +54,62 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 		return Arrays.asList(
 			new Object[][] {
 				{
-					"spring", "guestbook", "com.liferay.docs.guestbook",
-					"7.0.10.17", "dxp"
+					"spring", "guestbook", "com.liferay.docs.guestbook", "dxp",
+					"7.0.10.17"
 				},
 				{
-					"spring", "guestbook", "com.liferay.docs.guestbook",
-					"7.1.10.7", "dxp"
+					"spring", "guestbook", "com.liferay.docs.guestbook", "dxp",
+					"7.1.10.7"
 				},
 				{
-					"ds", "guestbook", "com.liferay.docs.guestbook", "7.2.10.7",
-					"dxp"
+					"ds", "guestbook", "com.liferay.docs.guestbook", "dxp",
+					"7.2.10.7"
 				},
 				{
-					"ds", "guestbook", "com.liferay.docs.guestbook", "7.3.7",
-					"portal"
+					"ds", "guestbook", "com.liferay.docs.guestbook", "portal",
+					"7.3.7"
 				},
 				{
-					"ds", "guestbook", "com.liferay.docs.guestbook", "7.4.3.36",
-					"portal"
-				},
-				{
-					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.0.10.17", "dxp"
+					"ds", "guestbook", "com.liferay.docs.guestbook", "portal",
+					"7.4.3.36"
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.1.10.7", "dxp"
+					"com.liferay.docs.guestbook", "dxp", "7.0.10.17"
+				},
+				{
+					"spring", "backend-integration",
+					"com.liferay.docs.guestbook", "dxp", "7.1.10.7"
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
-					"7.2.10.7", "dxp"
+					"dxp", "7.2.10.7"
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
-					"7.3.7", "portal"
+					"portal", "7.3.7"
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
-					"7.4.3.36", "portal"
+					"portal", "7.4.3.36"
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.2.10.7", "dxp"
+					"com.liferay.docs.guestbook", "dxp", "7.2.10.7"
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.3.7", "portal"
+					"com.liferay.docs.guestbook", "portal", "7.3.7"
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.4.3.36", "portal"
+					"com.liferay.docs.guestbook", "portal", "7.4.3.36"
 				},
-				{"spring", "sample", "com.test.sample", "7.0.10.17", "dxp"},
-				{"spring", "sample", "com.test.sample", "7.1.10.7", "dxp"},
-				{"ds", "sample", "com.test.sample", "7.2.10.7", "dxp"},
-				{"ds", "sample", "com.test.sample", "7.3.7", "portal"},
-				{"ds", "sample", "com.test.sample", "7.4.3.36", "portal"}
+				{"spring", "sample", "com.test.sample", "dxp", "7.0.10.17"},
+				{"spring", "sample", "com.test.sample", "dxp", "7.1.10.7"},
+				{"ds", "sample", "com.test.sample", "dxp", "7.2.10.7"},
+				{"ds", "sample", "com.test.sample", "portal", "7.3.7"},
+				{"ds", "sample", "com.test.sample", "portal", "7.4.3.36"}
 			});
 	}
 
@@ -131,13 +131,13 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 
 	public ProjectTemplatesServiceBuilderWorkspaceTest(
 		String dependencyInjector, String name, String packageName,
-		String liferayVersion, String liferayProduct) {
+		String liferayProduct, String liferayVersion) {
 
 		_dependencyInjector = dependencyInjector;
 		_name = name;
 		_packageName = packageName;
-		_liferayVersion = liferayVersion;
 		_liferayProduct = liferayProduct;
+		_liferayVersion = liferayVersion;
 	}
 
 	@Test

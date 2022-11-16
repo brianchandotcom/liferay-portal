@@ -51,30 +51,30 @@ public class ProjectTemplatesSpringPortletMVCTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"springportletmvc", "embedded", "jsp", "7.0.10.17", "dxp"},
-				{"springportletmvc", "embedded", "jsp", "7.1.10.7", "dxp"},
-				{"springportletmvc", "embedded", "jsp", "7.2.10.7", "dxp"},
-				{"springportletmvc", "embedded", "jsp", "7.3.7", "portal"},
-				{"springportletmvc", "embedded", "jsp", "7.4.3.29", "portal"},
-				{"portletmvc4spring", "embedded", "jsp", "7.1.10.7", "dxp"},
-				{"portletmvc4spring", "embedded", "jsp", "7.2.10.7", "dxp"},
-				{"portletmvc4spring", "embedded", "jsp", "7.3.7", "portal"},
-				{"portletmvc4spring", "embedded", "jsp", "7.4.3.29", "portal"},
+				{"springportletmvc", "embedded", "jsp", "dxp", "7.0.10.17"},
+				{"springportletmvc", "embedded", "jsp", "dxp", "7.1.10.7"},
+				{"springportletmvc", "embedded", "jsp", "dxp", "7.2.10.7"},
+				{"springportletmvc", "embedded", "jsp", "portal", "7.3.7"},
+				{"springportletmvc", "embedded", "jsp", "portal", "7.4.3.29"},
+				{"portletmvc4spring", "embedded", "jsp", "dxp", "7.1.10.7"},
+				{"portletmvc4spring", "embedded", "jsp", "dxp", "7.2.10.7"},
+				{"portletmvc4spring", "embedded", "jsp", "portal", "7.3.7"},
+				{"portletmvc4spring", "embedded", "jsp", "portal", "7.4.3.29"},
 				{
-					"portletmvc4spring", "embedded", "thymeleaf", "7.1.10.7",
-					"dxp"
+					"portletmvc4spring", "embedded", "thymeleaf", "dxp",
+					"7.1.10.7"
 				},
 				{
-					"portletmvc4spring", "embedded", "thymeleaf", "7.2.10.7",
-					"dxp"
+					"portletmvc4spring", "embedded", "thymeleaf", "dxp",
+					"7.2.10.7"
 				},
 				{
-					"portletmvc4spring", "embedded", "thymeleaf", "7.3.7",
-					"portal"
+					"portletmvc4spring", "embedded", "thymeleaf", "portal",
+					"7.3.7"
 				},
 				{
-					"portletmvc4spring", "embedded", "thymeleaf", "7.4.3.29",
-					"portal"
+					"portletmvc4spring", "embedded", "thymeleaf", "portal",
+					"7.4.3.29"
 				}
 			});
 	}
@@ -97,13 +97,13 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 	public ProjectTemplatesSpringPortletMVCTest(
 		String framework, String frameworkDependencies, String viewType,
-		String liferayVersion, String liferayProduct) {
+		String liferayProduct, String liferayVersion) {
 
 		_framework = framework;
 		_frameworkDependencies = frameworkDependencies;
 		_viewType = viewType;
-		_liferayVersion = liferayVersion;
 		_liferayProduct = liferayProduct;
+		_liferayVersion = liferayVersion;
 	}
 
 	@Test

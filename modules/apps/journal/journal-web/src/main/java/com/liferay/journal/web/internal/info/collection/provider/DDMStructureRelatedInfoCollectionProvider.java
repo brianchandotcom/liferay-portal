@@ -79,7 +79,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 
 		List<JournalArticle> articles =
 			JournalSearcherUtil.searchJournalArticles(
-				searchContext -> _buildSearchContext(
+				searchContext -> _populateSearchContext(
 					(AssetCategory)relatedItem, collectionQuery,
 					searchContext));
 
@@ -144,7 +144,7 @@ public class DDMStructureRelatedInfoCollectionProvider
 		return false;
 	}
 
-	private SearchContext _buildSearchContext(
+	private SearchContext _populateSearchContext(
 		AssetCategory assetCategory, CollectionQuery collectionQuery,
 		SearchContext searchContext) {
 

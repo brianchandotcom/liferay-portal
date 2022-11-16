@@ -82,7 +82,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		List<JournalArticle> articles =
 			JournalSearcherUtil.searchJournalArticles(
-				searchContext -> _buildSearchContext(
+				searchContext -> _populateSearchContext(
 					collectionQuery, searchContext));
 
 		return InfoPage.of(
@@ -133,7 +133,46 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return Arrays.asList(new KeywordsInfoFilter());
 	}
 
-	private SearchContext _buildSearchContext(
+	private InfoField<?> _getAssetTagsInfoField() {
+		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		List<AssetTag> assetTags = new ArrayList<>(
+			_assetTagLocalService.getGroupTags(
+				serviceContext.getScopeGroupId()));
+
+		assetTags.sort(new AssetTagNameComparator(true));
+
+		for (AssetTag assetTag : assetTags) {
+			options.add(
+				new SelectInfoFieldType.Option(
+					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
+					assetTag.getName()));
+		}
+
+		InfoField.FinalStep<?> finalStep = InfoField.builder(
+		).infoFieldType(
+			SelectInfoFieldType.INSTANCE
+		).namespace(
+			StringPool.BLANK
+		).name(
+			Field.ASSET_TAG_NAMES
+		).attribute(
+			SelectInfoFieldType.MULTIPLE, true
+		).attribute(
+			SelectInfoFieldType.OPTIONS, options
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "tag")
+		).localizable(
+			true
+		);
+
+		return finalStep.build();
+	}
+
+	private SearchContext _populateSearchContext(
 		CollectionQuery collectionQuery, SearchContext searchContext) {
 
 		searchContext.setAndSearch(true);
@@ -219,45 +258,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
-	}
-
-	private InfoField<?> _getAssetTagsInfoField() {
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		List<AssetTag> assetTags = new ArrayList<>(
-			_assetTagLocalService.getGroupTags(
-				serviceContext.getScopeGroupId()));
-
-		assetTags.sort(new AssetTagNameComparator(true));
-
-		for (AssetTag assetTag : assetTags) {
-			options.add(
-				new SelectInfoFieldType.Option(
-					new SingleValueInfoLocalizedValue<>(assetTag.getName()),
-					assetTag.getName()));
-		}
-
-		InfoField.FinalStep<?> finalStep = InfoField.builder(
-		).infoFieldType(
-			SelectInfoFieldType.INSTANCE
-		).namespace(
-			StringPool.BLANK
-		).name(
-			Field.ASSET_TAG_NAMES
-		).attribute(
-			SelectInfoFieldType.MULTIPLE, true
-		).attribute(
-			SelectInfoFieldType.OPTIONS, options
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "tag")
-		).localizable(
-			true
-		);
-
-		return finalStep.build();
 	}
 
 	@Reference

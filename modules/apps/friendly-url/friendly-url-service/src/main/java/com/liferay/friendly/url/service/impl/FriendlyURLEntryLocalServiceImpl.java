@@ -615,23 +615,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
-	private boolean _hasFriendlyURLEntryWithUrlTitle(
-		long groupId, long classNameId, long notClassPK, String urlTitle,
-		String languageId) {
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
-				groupId, classNameId, languageId, urlTitle);
-
-		if ((friendlyURLEntryLocalization != null) &&
-			(friendlyURLEntryLocalization.getClassPK() != notClassPK)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _getURLEncodedSubstring(
 		String decodedString, String encodedString, int maxLength) {
 
@@ -669,6 +652,23 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		return urlTitleMap;
+	}
+
+	private boolean _hasFriendlyURLEntryWithUrlTitle(
+		long groupId, long classNameId, long notClassPK, String urlTitle,
+		String languageId) {
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalizationPersistence.fetchByG_C_L_U(
+				groupId, classNameId, languageId, urlTitle);
+
+		if ((friendlyURLEntryLocalization != null) &&
+			(friendlyURLEntryLocalization.getClassPK() != notClassPK)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Map<String, String> _merge(

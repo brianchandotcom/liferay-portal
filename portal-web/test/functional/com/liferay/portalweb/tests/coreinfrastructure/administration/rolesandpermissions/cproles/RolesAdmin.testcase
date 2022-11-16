@@ -716,9 +716,7 @@ definition {
 	test UserCanAddARoleWithoutATitle {
 		Role.openRolesAdmin();
 
-		Role.viewCP(
-			roleKey = "Administrator",
-			toolTip = "A title is a localizable human-readable name for a role. If not provided, the key will be displayed by default.");
+		Role.viewCP(roleKey = "Administrator");
 
 		Role.openRolesAdmin();
 

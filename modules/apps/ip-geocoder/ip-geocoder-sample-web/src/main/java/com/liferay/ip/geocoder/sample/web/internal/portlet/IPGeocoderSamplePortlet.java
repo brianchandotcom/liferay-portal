@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-ip-geocoder-sample",
 		"com.liferay.portlet.display-category=category.tools",

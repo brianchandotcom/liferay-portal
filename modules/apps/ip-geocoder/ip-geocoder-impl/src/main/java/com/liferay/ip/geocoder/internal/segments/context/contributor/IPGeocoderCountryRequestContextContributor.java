@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Allen Ziegenfus
  */
 @Component(
-	immediate = true,
 	property = {
 		"request.context.contributor.key=" + IPGeocoderCountryRequestContextContributor.KEY,
 		"request.context.contributor.type=string"

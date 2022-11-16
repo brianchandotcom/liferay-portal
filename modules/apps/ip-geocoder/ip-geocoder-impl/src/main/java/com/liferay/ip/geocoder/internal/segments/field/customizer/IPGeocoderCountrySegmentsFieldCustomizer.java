@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Allen Ziegenfus
  */
 @Component(
-	immediate = true,
 	property = {
 		"segments.field.customizer.entity.name=Context",
 		"segments.field.customizer.key=" + IPGeocoderCountrySegmentsFieldCustomizer.KEY,

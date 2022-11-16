@@ -105,8 +105,7 @@ public class AccountOrganizationRetrieverImpl
 			}
 
 			FieldSort fieldSort = _sorts.field(
-				_sortFieldBuilder.getSortField(
-					Organization.class.getName(), sortField),
+				_sortFieldBuilder.getSortField(Organization.class, sortField),
 				sortOrder);
 
 			searchRequestBuilder.sorts(fieldSort);

@@ -63,7 +63,7 @@ public class SortFactoryImpl implements SortFactory {
 
 		if (inferSortField) {
 			sortFieldName = sortFieldBuilder.getSortField(
-				clazz.getName(), orderByCol, type);
+				clazz, orderByCol, type);
 		}
 
 		if (Validator.isNull(orderByType)) {

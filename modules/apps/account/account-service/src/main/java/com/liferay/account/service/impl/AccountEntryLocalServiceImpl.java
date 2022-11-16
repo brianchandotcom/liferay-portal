@@ -992,7 +992,7 @@ public class AccountEntryLocalServiceImpl
 
 			FieldSort fieldSort = _sorts.field(
 				_sortFieldBuilder.getSortField(
-					AccountEntry.class.getName(), orderByField),
+					AccountEntry.class, orderByField),
 				sortOrder);
 
 			searchRequestBuilder.sorts(fieldSort);

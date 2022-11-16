@@ -638,7 +638,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"UnnecessaryUpgradeProcessClass.testjava",
 			"No need to create 'UnnecessaryUpgradeProcessClass' class. " +
 				"Replace it by inline calls to the 'UpgradeProcessFactory' " +
-					"class in the registry class",
+					"class in the registrator class",
 			22);
 	}
 

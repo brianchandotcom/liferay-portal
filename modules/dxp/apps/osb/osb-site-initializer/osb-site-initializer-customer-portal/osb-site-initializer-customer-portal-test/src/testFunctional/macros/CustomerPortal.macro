@@ -267,10 +267,14 @@ definition {
 		var key_status = "${status}";
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {
-			CustomerPortal.viewCPObjectInfo();
+			CustomerPortal.viewCPObjectCustomInfo(position = "${position}");
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "activationStatus",
+				value = "");
+
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "manageContactsURL",
 				value = "");
 
 			Click(locator1 = "Button#SAVE");

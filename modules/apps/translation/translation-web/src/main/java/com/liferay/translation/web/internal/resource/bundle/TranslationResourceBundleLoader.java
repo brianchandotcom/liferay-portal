@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = "bundle.symbolic.name=com.liferay.translation.web",
 	service = ResourceBundleLoader.class
 )

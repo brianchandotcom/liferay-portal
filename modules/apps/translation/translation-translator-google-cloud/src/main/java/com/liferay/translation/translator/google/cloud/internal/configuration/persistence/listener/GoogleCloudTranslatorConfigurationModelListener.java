@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration",
 	service = ConfigurationModelListener.class
 )

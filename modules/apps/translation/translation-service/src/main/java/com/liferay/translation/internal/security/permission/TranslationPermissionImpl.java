@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = TranslationPermission.class)
+@Component(service = TranslationPermission.class)
 public class TranslationPermissionImpl implements TranslationPermission {
 
 	@Override

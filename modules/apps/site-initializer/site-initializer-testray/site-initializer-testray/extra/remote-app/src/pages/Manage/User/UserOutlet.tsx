@@ -14,21 +14,31 @@
 
 import {useContext} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import {AccountContext} from '../../../context/AccountContext';
 import {useFetch} from '../../../hooks/useFetch';
-import {liferayUserAccountsRest} from '../../../services/rest';
+import {Liferay} from '../../../services/liferay';
+import {UserAccount, liferayUserAccountsRest} from '../../../services/rest';
 
 const UserOutlet = () => {
 	const {userId} = useParams();
 
 	const [{myUserAccount}, , mutateMyUserAccount] = useContext(AccountContext);
 	const {data, mutate} = useFetch(
-		userId ? liferayUserAccountsRest.getResource(userId as string) : null
+		userId ? liferayUserAccountsRest.getResource(userId as string) : null,
+		undefined
 	);
 
 	const context = {
-		mutateUser: userId ? mutate : mutateMyUserAccount,
+		mutateUser: userId
+			? userId === Liferay.ThemeDisplay.getUserId()
+				? (response: KeyedMutator<UserAccount>) => {
+						(mutateMyUserAccount as any)(response);
+						mutate(response);
+				  }
+				: mutate
+			: mutateMyUserAccount,
 		userAccount: userId ? data : myUserAccount,
 	};
 

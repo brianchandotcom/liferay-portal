@@ -24,6 +24,43 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-150388 TC-4: On-Demand Admin can change user information on created virtual instances"
+	@ignore = "true"
+	@priority = "5"
+	test OnDemandAdminCanChangeInstanceAdminPassword {
+		property test.name.skip.portal.instance = "OnDemandAdmin#OnDemandAdminCanChangeInstanceAdminPassword";
+
+		task ("Given: a new Virtual Instance is created") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When: The Default admin logs in the instance with a temporary On-Demand Admin") {
+			PortalInstances.openOnDemandAdminPortlet();
+
+			PortalInstances.requestOnDemandAdminOnInstance(virtualHost = "www.able.com");
+		}
+
+		task ("Then: As On-Demand Admin, it is possible to change the information of the instance admin") {
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
+
+			UserNavigator.gotoUser(userScreenName = "test");
+
+			User.editPassword(newPassword = "tester");
+
+			User.logoutPG(specificURL = "www.able.com:8080");
+
+			User.firstLoginUI(
+				password = "tester",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			User.viewLoggedInPG();
+		}
+	}
+
 	@description = "This test covers LPS-156154 and asserts that the portlet for On-Demand Admin is not available when accessing through a non-default instance."
 	@priority = "5"
 	test OnDemandAdminUnavailableInNonDefaultInstance {

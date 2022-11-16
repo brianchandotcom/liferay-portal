@@ -27,6 +27,32 @@ definition {
 			Uncheck(locator1 = "Checkbox#ACTIVE");
 		}
 
+		if (isSet(instanceScreenName)) {
+			Type(
+				locator1 = "TextInput#VIRTUAL_INSTANCE_SCREEN_NAME",
+				value1 = "${instanceScreenName}");
+
+			Type(
+				locator1 = "TextInput#VIRTUAL_INSTANCE_EMAIL",
+				value1 = "${instanceAdminEmail}");
+
+			Type(
+				locator1 = "TextInput#VIRTUAL_INSTANCE_PASSWORD",
+				value1 = "${instancePassword}");
+		}
+
+		if (isSet(instanceAdminFirstName)) {
+			Type(
+				locator1 = "TextInput#VIRTUAL_INSTANCE_FIRST_NAME",
+				value1 = "${instanceAdminFirstName}");
+		}
+
+		if (isSet(instanceAdminLastName)) {
+			Type(
+				locator1 = "TextInput#VIRTUAL_INSTANCE_LAST_NAME",
+				value1 = "${instanceAdminLastName}");
+		}
+
 		Button.clickAdd();
 
 		SelectFrameTop();
@@ -92,6 +118,21 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro openOnDemandAdminPortlet {
+		if (isSet(baseURL)) {
+			var baseURL = "${baseURL}";
+
+			Navigator.openWithAppendToBaseURL(
+				baseURL = "${baseURL}",
+				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_on_demand_admin_web_internal_portlet_OnDemandAdminPortlet");
+		}
+		else {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_on_demand_admin_web_internal_portlet_OnDemandAdminPortlet");
+		}
+	}
+
 	macro openVirtualInstancesAdmin {
 		if (isSet(baseURL)) {
 			var baseURL = "${baseURL}";
@@ -103,6 +144,26 @@ definition {
 		else {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_instances_web_portlet_PortalInstancesPortlet");
 		}
+	}
+
+	macro requestOnDemandAdminOnInstance {
+		WaitForElementPresent(
+			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
+			value1 = "${virtualHost}");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Request Administrator Access");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Button.clickSubmitButton();
+
+		SelectWindow(locator1 = "Home - ${virtualHost}");
+
+		WaitForElementPresent(locator1 = "Button#I_AGREE");
+
+		SignIn.agreeToTermsOfUse();
+
+		User.answerPasswordReminder();
 	}
 
 	@summary = "Clean up Portal Instances as part of standard teardown"

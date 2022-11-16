@@ -2296,12 +2296,6 @@ definition {
 		AssertElementNotPresent(locator1 = "TextInput#TITLE");
 	}
 
-	macro viewPageBreak {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Pagination#PAGES",
-			value1 = "Pages");
-	}
-
 	macro viewPaginateRelatedAssets {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",

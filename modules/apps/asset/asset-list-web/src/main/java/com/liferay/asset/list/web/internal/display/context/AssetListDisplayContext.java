@@ -64,6 +64,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -123,7 +124,9 @@ public class AssetListDisplayContext {
 		String assetEntryTypeLabel = getAssetEntryTypeLabel(assetListEntry);
 		String classTypeLabel = getClassTypeLabel(assetListEntry);
 
-		if (Validator.isNull(classTypeLabel)) {
+		if (Validator.isNull(classTypeLabel) ||
+			Objects.equals(StringPool.DASH, classTypeLabel)) {
+
 			return HtmlUtil.escape(assetEntryTypeLabel);
 		}
 
@@ -335,10 +338,10 @@ public class AssetListDisplayContext {
 			assetListEntry.getAssetEntrySubtype(), -1);
 
 		if (classTypeId < 0) {
-			return StringPool.BLANK;
+			return StringPool.DASH;
 		}
 
-		String classTypeLabel = StringPool.BLANK;
+		String classTypeLabel = StringPool.DASH;
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(

@@ -110,7 +110,7 @@ public class OneToManyObjectFieldFilterStrategy
 						objectDefinition1.getName());
 
 			String contextPath =
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					systemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor());
 

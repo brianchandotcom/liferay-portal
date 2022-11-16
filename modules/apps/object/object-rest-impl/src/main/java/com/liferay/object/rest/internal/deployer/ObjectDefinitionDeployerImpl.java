@@ -475,7 +475,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
 		_componentInstancesMap.computeIfAbsent(
-			JaxRsApplicationDescriptorUtil.getRestContextPath(
+			JaxRsApplicationDescriptorUtil.getRESTContextPath(
 				jaxRsApplicationDescriptor),
 			key -> Arrays.asList(
 				_relatedObjectEntryResourceImplComponentFactory.newInstance(

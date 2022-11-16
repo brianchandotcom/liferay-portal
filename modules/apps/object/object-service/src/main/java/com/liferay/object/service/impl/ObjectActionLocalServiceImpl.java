@@ -89,12 +89,15 @@ public class ObjectActionLocalServiceImpl
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
-		_validate(
-			conditionExpression, objectActionExecutorKey,
-			objectActionTriggerKey, parametersUnicodeProperties);
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateLabel(labelMap);
 		_validateName(0, objectDefinitionId, name);
+		_validateObjectActionExecutorKey(objectActionExecutorKey);
+		_validateObjectActionTriggerKey(
+			conditionExpression, objectActionTriggerKey);
+		_validateParameters(
+			conditionExpression, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -188,11 +191,14 @@ public class ObjectActionLocalServiceImpl
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
-		_validate(
-			conditionExpression, objectActionExecutorKey,
-			objectActionTriggerKey, parametersUnicodeProperties);
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateLabel(labelMap);
+		_validateObjectActionExecutorKey(objectActionExecutorKey);
+		_validateObjectActionTriggerKey(
+			conditionExpression, objectActionTriggerKey);
+		_validateParameters(
+			conditionExpression, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 
 		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
 			objectActionId);
@@ -237,10 +243,67 @@ public class ObjectActionLocalServiceImpl
 		return objectActionPersistence.update(objectAction);
 	}
 
-	private void _validate(
-			String conditionExpression, String objectActionExecutorKey,
-			String objectActionTriggerKey,
-			UnicodeProperties parametersUnicodeProperties)
+	private void _validateErrorMessage(
+			Map<Locale, String> errorMessageMap, String objectActionTriggerKey)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION) &&
+			((errorMessageMap == null) ||
+			 Validator.isNull(errorMessageMap.get(locale)))) {
+
+			throw new ObjectActionErrorMessageException(
+				"Error message is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateLabel(Map<Locale, String> labelMap)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
+			throw new ObjectActionLabelException(
+				"Label is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateName(
+			long objectActionId, long objectDefinitionId, String name)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new ObjectActionNameException.MustNotBeNull();
+		}
+
+		char[] nameCharArray = name.toCharArray();
+
+		for (char c : nameCharArray) {
+			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
+				throw new ObjectActionNameException.
+					MustOnlyContainLettersAndDigits();
+			}
+		}
+
+		if (nameCharArray.length > 41) {
+			throw new ObjectActionNameException.MustBeLessThan41Characters();
+		}
+
+		ObjectAction objectAction = objectActionPersistence.fetchByODI_N(
+			objectDefinitionId, name);
+
+		if ((objectAction != null) &&
+			(objectAction.getObjectActionId() != objectActionId)) {
+
+			throw new ObjectActionNameException.MustNotBeDuplicate(name);
+		}
+	}
+
+	private void _validateObjectActionExecutorKey(
+			String objectActionExecutorKey)
 		throws PortalException {
 
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
@@ -252,6 +315,11 @@ public class ObjectActionLocalServiceImpl
 						objectActionExecutorKey);
 			}
 		}
+	}
+
+	private void _validateObjectActionTriggerKey(
+			String conditionExpression, String objectActionTriggerKey)
+		throws PortalException {
 
 		if (!ListUtil.exists(
 				ObjectActionTriggerUtil.getDefaultObjectActionTriggers(),
@@ -266,6 +334,13 @@ public class ObjectActionLocalServiceImpl
 				throw new ObjectActionConditionExpressionException();
 			}
 		}
+	}
+
+	private void _validateParameters(
+			String conditionExpression, String objectActionExecutorKey,
+			String objectActionTriggerKey,
+			UnicodeProperties parametersUnicodeProperties)
+		throws PortalException {
 
 		Map<String, Object> errorMessageKeys = new HashMap<>();
 
@@ -354,65 +429,6 @@ public class ObjectActionLocalServiceImpl
 
 		if (MapUtil.isNotEmpty(errorMessageKeys)) {
 			throw new ObjectActionParametersException(errorMessageKeys);
-		}
-	}
-
-	private void _validateErrorMessage(
-			Map<Locale, String> errorMessageMap, String objectActionTriggerKey)
-		throws PortalException {
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		if (Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION) &&
-			((errorMessageMap == null) ||
-			 Validator.isNull(errorMessageMap.get(locale)))) {
-
-			throw new ObjectActionErrorMessageException(
-				"Error message is null for locale " + locale.getDisplayName());
-		}
-	}
-
-	private void _validateLabel(Map<Locale, String> labelMap)
-		throws PortalException {
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
-			throw new ObjectActionLabelException(
-				"Label is null for locale " + locale.getDisplayName());
-		}
-	}
-
-	private void _validateName(
-			long objectActionId, long objectDefinitionId, String name)
-		throws PortalException {
-
-		if (Validator.isNull(name)) {
-			throw new ObjectActionNameException.MustNotBeNull();
-		}
-
-		char[] nameCharArray = name.toCharArray();
-
-		for (char c : nameCharArray) {
-			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
-				throw new ObjectActionNameException.
-					MustOnlyContainLettersAndDigits();
-			}
-		}
-
-		if (nameCharArray.length > 41) {
-			throw new ObjectActionNameException.MustBeLessThan41Characters();
-		}
-
-		ObjectAction objectAction = objectActionPersistence.fetchByODI_N(
-			objectDefinitionId, name);
-
-		if ((objectAction != null) &&
-			(objectAction.getObjectActionId() != objectActionId)) {
-
-			throw new ObjectActionNameException.MustNotBeDuplicate(name);
 		}
 	}
 

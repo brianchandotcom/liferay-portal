@@ -125,4 +125,68 @@ definition {
 		MenuItem.clickNoError(menuItem = "Resend");
 	}
 
+	macro viewNotificationTemplateDetails {
+		Click(
+			key_name = "${name}",
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+		AssertTextEquals(
+			key_text = "Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${name}");
+
+		AssertTextEquals(
+			key_text = "From Address",
+			locator1 = "TextInput#ANY",
+			value1 = "${fromAddress}");
+
+		AssertTextEquals(
+			key_text = "From Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${fromName}");
+
+		if (isSet(description)) {
+			AssertTextEquals(
+				key_text = "description",
+				locator1 = "TextArea#ANY",
+				value1 = "${description}");
+		}
+
+		if (isSet(entryTo)) {
+			AssertTextEquals(
+				key_text = "To",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryTo}");
+		}
+
+		if (isSet(cc)) {
+			AssertTextEquals(
+				key_text = "CC",
+				locator1 = "TextInput#ANY",
+				value1 = "${cc}");
+		}
+
+		if (isSet(bcc)) {
+			AssertTextEquals(
+				key_text = "BCC",
+				locator1 = "TextInput#ANY",
+				value1 = "${bcc}");
+		}
+
+		if (isSet(subject)) {
+			AssertTextEquals(
+				key_text = "Subject",
+				locator1 = "TextInput#ANY",
+				value1 = "${subject}");
+		}
+
+		if (isSet(emailBody)) {
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			AssertElementPresent(
+				key_text = "${emailBody}",
+				locator1 = "CKEditor#BODY_TEXT");
+		}
+	}
+
 }

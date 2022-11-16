@@ -1417,38 +1417,16 @@ public class JournalDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		articleVersionsSearchContainer.setOrderByType(getOrderByType());
 
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
-			JournalArticle.class);
-
-		SearchContext searchContext = new SearchContext();
-
-		_populateSearchContext(
-			articleVersionsSearchContainer.getStart(),
-			articleVersionsSearchContainer.getEnd(), searchContext, true);
-
-		Hits hits = indexer.search(searchContext);
-
-		List<JournalArticle> results = new ArrayList<>();
-
-		Document[] documents = hits.getDocs();
-
-		for (Document document : documents) {
-			if (!Objects.equals(
-					document.get(Field.ENTRY_CLASS_NAME),
-					JournalArticle.class.getName())) {
-
-				continue;
-			}
-
-			results.add(
-				JournalArticleLocalServiceUtil.fetchArticle(
-					GetterUtil.getLong(document.get(Field.GROUP_ID)),
-					document.get(Field.ARTICLE_ID),
-					GetterUtil.getDouble(document.get(Field.VERSION))));
-		}
+		List<JournalArticle> results =
+			JournalSearcherUtil.searchJournalArticles(
+				true,
+				searchContext -> _populateSearchContext(
+					articleVersionsSearchContainer.getStart(),
+					articleVersionsSearchContainer.getEnd(), searchContext,
+					true));
 
 		articleVersionsSearchContainer.setResultsAndTotal(
-			() -> results, hits.getLength());
+			() -> results, results.size());
 
 		_articleVersionsSearchContainer = articleVersionsSearchContainer;
 

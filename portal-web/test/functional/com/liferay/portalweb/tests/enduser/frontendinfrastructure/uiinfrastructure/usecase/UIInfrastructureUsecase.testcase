@@ -41,12 +41,12 @@ definition {
 		Refresh();
 
 		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator1 = "//*[contains(@id,'controlMenu')]",
 			locator2 = "display",
 			value1 = "flex");
 
 		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator1 = "//*[contains(@id,'controlMenu')]",
 			locator2 = "list-style",
 			value1 = "outside none none");
 
@@ -303,12 +303,12 @@ definition {
 		Refresh();
 
 		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator1 = "//*[contains(@id,'controlMenu')]",
 			locator2 = "display",
 			value1 = "flex");
 
 		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator1 = "//*[contains(@id,'controlMenu')]",
 			locator2 = "list-style",
 			value1 = "outside none none");
 
@@ -319,12 +319,12 @@ definition {
 		Refresh();
 
 		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator1 = "//*[contains(@id,'controlMenu')]",
 			locator2 = "display",
 			value1 = "flex");
 
 		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator1 = "//*[contains(@id,'controlMenu')]",
 			locator2 = "list-style",
 			value1 = "outside none none");
 

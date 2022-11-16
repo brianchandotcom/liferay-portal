@@ -19,9 +19,9 @@ apply plugin: "java"
 dependencies {
 	compile group: "com.google.cloud", name: "google-cloud-storage", version: "2.4.0"
 	compile group: "com.google.cloud.functions", name: "functions-framework-api", version: "1.0.1"
-	compile group: "com.liferay", name: "com.liferay.petra.http.invoker", version: "1.0.1"
-	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
-	compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
+	compile project(":core:petra:petra-http-invoker")
+	compile project(":core:petra:petra-lang")
+	compile project(":core:petra:petra-string")
 	compile group: "org.json", name: "json", version: "20220320"
 	compile group: "org.rauschig", name: "jarchivelib", version: "0.7.1"
 }

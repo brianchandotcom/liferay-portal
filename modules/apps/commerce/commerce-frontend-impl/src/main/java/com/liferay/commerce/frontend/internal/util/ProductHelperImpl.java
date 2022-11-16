@@ -145,7 +145,7 @@ public class ProductHelperImpl implements ProductHelper {
 	}
 
 	@Override
-	public ProductSettingsModel getProductSettingsModel(long cpInstanceId)
+	public ProductSettingsModel getProductSettingsModel(long cpDefinitionId)
 		throws PortalException {
 
 		ProductSettingsModel productSettingsModel = new ProductSettingsModel();
@@ -157,17 +157,9 @@ public class ProductHelperImpl implements ProductHelper {
 		int multipleQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
-		CPDefinitionInventory cpDefinitionInventory = null;
-
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-			cpInstanceId);
-
-		if (cpInstance != null) {
-			cpDefinitionInventory =
-				_cpDefinitionInventoryLocalService.
-					fetchCPDefinitionInventoryByCPDefinitionId(
-						cpInstance.getCPDefinitionId());
-		}
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 
 		if (cpDefinitionInventory != null) {
 			minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();

@@ -109,7 +109,7 @@ public class AvailabilityLabelInfoItemRenderer
 			if ((cpSku != null) && !hasChildCPDefinitions) {
 				ProductSettingsModel productSettingsModel =
 					_productHelper.getProductSettingsModel(
-						cpSku.getCPInstanceId());
+						cpDefinition.getCPDefinitionId());
 
 				if (productSettingsModel.isShowAvailabilityDot()) {
 					JSONObject availabilityContentContributorValueJSONObject =

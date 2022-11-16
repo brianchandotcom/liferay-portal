@@ -212,7 +212,7 @@ public class CommerceCartResourceUtil {
 
 			ProductSettingsModel settings =
 				_productHelper.getProductSettingsModel(
-					commerceOrderItem.getCPInstanceId());
+					commerceOrderItem.getCPDefinitionId());
 
 			Product product = new Product(
 				commerceOrderItem.getCommerceOrderItemId(),

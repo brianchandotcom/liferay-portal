@@ -72,7 +72,8 @@ public class PriceTag extends IncludeTag {
 
 			if (_quantity <= 0) {
 				ProductSettingsModel productSettingsModel =
-					_productHelper.getProductSettingsModel(cpInstanceId);
+					_productHelper.getProductSettingsModel(
+						_cpCatalogEntry.getCPDefinitionId());
 
 				_quantity = productSettingsModel.getMinQuantity();
 			}

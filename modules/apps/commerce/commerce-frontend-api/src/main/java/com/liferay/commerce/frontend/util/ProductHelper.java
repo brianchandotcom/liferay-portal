@@ -57,7 +57,7 @@ public interface ProductHelper {
 			String commerceOptionValuesJSON, Locale locale)
 		throws PortalException;
 
-	public ProductSettingsModel getProductSettingsModel(long cpInstanceId)
+	public ProductSettingsModel getProductSettingsModel(long cpDefinitionId)
 		throws PortalException;
 
 }

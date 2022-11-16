@@ -84,10 +84,6 @@ definition {
 		task ("Assert that the user remained on the Team Members page") {
 			CP2TeamMembers.viewTeamMembersPage();
 		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
-		}
 	}
 
 	@description = "Automation ID: LPS-150013 | Test Summary: Verify that after the user clicks Edit a Cancel button is available"
@@ -154,10 +150,6 @@ definition {
 			Button.click(button = "Cancel");
 
 			CP2Utils.assertNotChangeRole(role = "Administrator");
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
 		}
 
 		task ("Delete user created") {
@@ -233,10 +225,6 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
-		}
-
 		task ("Delete user created") {
 			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
@@ -308,10 +296,6 @@ definition {
 
 		task ("Assert that the role really has changed") {
 			CP2Utils.assertChangeRole(role = "User");
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
 		}
 
 		task ("Delete user created") {

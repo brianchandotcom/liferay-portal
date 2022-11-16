@@ -21,7 +21,7 @@
 		module="sxp_blueprint_admin/js/view_sxp_blueprints/ImportSXPBlueprintModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"componentId", liferayPortletResponse.getNamespace() + "importModal"
+				"portletNamespace", liferayPortletResponse.getNamespace()
 			).put(
 				"redirectURL", currentURL
 			).build()

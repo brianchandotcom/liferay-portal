@@ -19,11 +19,16 @@ import React, {useEffect, useState} from 'react';
 
 const VALID_EXTENSIONS = '.json';
 
-const ImportSXPBlueprintModal = ({componentId, redirectURL}) => {
+const ImportSXPBlueprintModal = ({portletNamespace, redirectURL}) => {
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);
 	const [importFile, setImportFile] = useState();
 	const [visible, setVisible] = useState(false);
+
+	// Define componentId upon mount to prevent browser console error
+	// about `Component with id is being registered twice`.
+
+	const componentId = `${portletNamespace}importModal`;
 
 	const {observer, onClose} = useModal({
 		onClose: () => {

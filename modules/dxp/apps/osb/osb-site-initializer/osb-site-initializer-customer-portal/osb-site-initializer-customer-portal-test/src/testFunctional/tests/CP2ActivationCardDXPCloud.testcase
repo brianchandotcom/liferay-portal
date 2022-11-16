@@ -254,10 +254,6 @@ definition {
 				locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
 				value1 = "Finish Activation");
 		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
-		}
 	}
 
 }

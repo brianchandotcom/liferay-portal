@@ -387,7 +387,10 @@ const CustomViewsControls = () => {
 					hasLeftSymbols
 					onActiveChange={setActionsDropdownActive}
 					trigger={
-						<ClayButton displayType="unstyled">
+						<ClayButton
+							displayType="unstyled"
+							title={Liferay.Language.get('show-view-actions')}
+						>
 							<ClayIcon symbol="ellipsis-v" />
 						</ClayButton>
 					}

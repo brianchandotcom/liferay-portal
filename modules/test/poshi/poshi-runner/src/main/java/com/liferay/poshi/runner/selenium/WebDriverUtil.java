@@ -72,6 +72,20 @@ public class WebDriverUtil extends PropsValues {
 	private WebDriver _getChromeDriver() {
 		_validateWebDriverBinary("webdriver.chrome.driver", "chromedriver");
 
+		ChromeOptions chromeOptions = _getDefaultChromeOptions();
+
+		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_FILE)) {
+			chromeOptions.setBinary(PropsValues.BROWSER_CHROME_BIN_FILE);
+		}
+
+		return new ChromeDriver(chromeOptions);
+	}
+
+	private WebDriver _getChromeRemoteDriver() {
+		return _getRemoteWebDriver(_getDefaultChromeOptions());
+	}
+
+	private ChromeOptions _getDefaultChromeOptions() {
 		ChromeOptions chromeOptions = new ChromeOptions();
 
 		_setGenericCapabilities(chromeOptions);
@@ -108,24 +122,7 @@ public class WebDriverUtil extends PropsValues {
 				PropsValues.BROWSER_CHROME_BIN_ARGS.split("\\s+"));
 		}
 
-		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_FILE)) {
-			chromeOptions.setBinary(PropsValues.BROWSER_CHROME_BIN_FILE);
-		}
-
-		return new ChromeDriver(chromeOptions);
-	}
-
-	private WebDriver _getChromeRemoteDriver() {
-		ChromeOptions chromeOptions = new ChromeOptions();
-
-		_setGenericCapabilities(chromeOptions);
-
-		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_ARGS)) {
-			chromeOptions.addArguments(
-				PropsValues.BROWSER_CHROME_BIN_ARGS.split("\\s+"));
-		}
-
-		return _getRemoteWebDriver(chromeOptions);
+		return chromeOptions;
 	}
 
 	private InternetExplorerOptions _getDefaultInternetExplorerOptions() {

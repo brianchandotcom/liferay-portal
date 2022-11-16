@@ -147,28 +147,25 @@ export default function TabsPanel({
 							id={getTabPanelId(index)}
 							key={index}
 						>
-							<ul className="list-unstyled">
-								{tab.collections.length ? (
-									tab.collections.map((collection, index) => (
-										<TabCollection
-											collection={collection}
-											displayStyle={
-												tab.id ===
-												COLLECTION_IDS.widgets
-													? FRAGMENTS_DISPLAY_STYLES.LIST
-													: displayStyle
-											}
-											initialOpen={
-												index <
-												INITIAL_EXPANDED_ITEM_COLLECTIONS
-											}
-											key={index}
-										/>
-									))
-								) : (
-									<ClayLoadingIndicator small />
-								)}
-							</ul>
+							{tab.collections.length ? (
+								tab.collections.map((collection, index) => (
+									<TabCollection
+										collection={collection}
+										displayStyle={
+											tab.id === COLLECTION_IDS.widgets
+												? FRAGMENTS_DISPLAY_STYLES.LIST
+												: displayStyle
+										}
+										initialOpen={
+											index <
+											INITIAL_EXPANDED_ITEM_COLLECTIONS
+										}
+										key={index}
+									/>
+								))
+							) : (
+								<ClayLoadingIndicator small />
+							)}
 						</ClayTabs.TabPane>
 					))}
 				</ClayTabs.Content>

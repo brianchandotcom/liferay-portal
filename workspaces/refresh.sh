@@ -88,30 +88,6 @@ function refresh_sample_minimal_workspace {
 
 	../tools/create_remote_app.sh delta-remote-app react
 
-	cat <<EOF > delta-remote-app/client-extension.yaml
-delta-remote-app:
-  cssURLs:
-    - static/css/main.*.css
-  friendlyURLMapping: delta-remote-app
-  htmlElementName: delta-remote-app
-  instanceable: false
-  name: Delta Remote App
-  portletCategoryName: category.remote-apps
-  type: customElement
-  urls:
-    - static/js/main.*.js
-    # To enable dev server run following command
-    # blade gw deploy && yarn start
-    # and then uncomment the line below
-    #- http://localhost:3000/static/js/bundle.js
-  useESM: false
-
-assemble:
-  - from: build
-    include: static/
-    into: static/
-EOF
-
 	sed -i'.bak' '/^.*react-scripts test.*$/d' delta-remote-app/package.json
 
 	rm -fr sample-minimal-workspace/client-extensions/delta-remote-app

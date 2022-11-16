@@ -20,6 +20,7 @@ import com.google.common.collect.Multimap;
 
 import com.liferay.poshi.core.elements.PoshiElementAttribute;
 import com.liferay.poshi.core.elements.PoshiElementException;
+import com.liferay.poshi.core.elements.PropertyPoshiElement;
 import com.liferay.poshi.core.pql.PQLEntity;
 import com.liferay.poshi.core.pql.PQLEntityFactory;
 import com.liferay.poshi.core.prose.PoshiProseMatcher;
@@ -735,8 +736,16 @@ public class PoshiContext {
 		List<Element> rootPropertyElements = rootElement.elements("property");
 
 		for (Element propertyElement : rootPropertyElements) {
-			String propertyName = propertyElement.attributeValue("name");
-			String propertyValue = propertyElement.attributeValue("value");
+			PropertyPoshiElement propertyPoshiElement =
+				(PropertyPoshiElement)propertyElement;
+
+			String propertyName = propertyPoshiElement.attributeValue("name");
+
+			String propertyValue = propertyPoshiElement.attributeValue("value");
+
+			if (Validator.isNull(propertyValue)) {
+				propertyValue = propertyPoshiElement.getVarValue();
+			}
 
 			properties.setProperty(propertyName, propertyValue);
 		}
@@ -745,8 +754,15 @@ public class PoshiContext {
 			"property");
 
 		for (Element propertyElement : commandPropertyElements) {
+			PropertyPoshiElement propertyPoshiElement =
+				(PropertyPoshiElement)propertyElement;
 			String propertyName = propertyElement.attributeValue("name");
+
 			String propertyValue = propertyElement.attributeValue("value");
+
+			if (Validator.isNull(propertyValue)) {
+				propertyValue = propertyPoshiElement.getVarValue();
+			}
 
 			properties.setProperty(propertyName, propertyValue);
 		}

@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -156,6 +157,8 @@ public class ObjectActionServiceTest {
 		return _objectActionLocalService.addObjectAction(
 			user.getUserId(), _objectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -180,6 +183,8 @@ public class ObjectActionServiceTest {
 			objectAction = _objectActionService.addObjectAction(
 				_objectDefinition.getObjectDefinitionId(), true,
 				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				RandomTestUtil.randomString(),
 				ObjectActionExecutorConstants.KEY_WEBHOOK,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -241,7 +246,10 @@ public class ObjectActionServiceTest {
 
 			objectAction = _objectActionService.updateObjectAction(
 				objectAction.getObjectActionId(), true, StringPool.BLANK,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(),
 				ObjectActionExecutorConstants.KEY_GROOVY,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				new UnicodeProperties());

@@ -11219,6 +11219,8 @@ company.security.strangers.verify=false
 
 browser.launcher.url=
 
+default.admin.password=test
+
 setup.wizard.enabled=false
 
 passwords.default.policy.change.required=false

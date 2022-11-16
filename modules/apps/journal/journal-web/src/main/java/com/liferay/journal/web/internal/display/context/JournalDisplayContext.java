@@ -1074,7 +1074,7 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	protected SearchContext buildSearchContext(
+	protected SearchContext populateSearchContext(
 		int start, int end, SearchContext searchContext, boolean showVersions) {
 
 		searchContext.setAndSearch(false);
@@ -1248,7 +1248,7 @@ public class JournalDisplayContext {
 		if (isSearch()) {
 			List<Object> results =
 				JournalSearcherUtil.searchJournalArticleAndFolders(
-					searchContext -> buildSearchContext(
+					searchContext -> populateSearchContext(
 						articleAndFolderSearchContainer.getStart(),
 						articleAndFolderSearchContainer.getEnd(), searchContext,
 						false));
@@ -1479,7 +1479,7 @@ public class JournalDisplayContext {
 
 		SearchContext searchContext = new SearchContext();
 
-		buildSearchContext(
+		populateSearchContext(
 			articleVersionsSearchContainer.getStart(),
 			articleVersionsSearchContainer.getEnd(), searchContext, true);
 

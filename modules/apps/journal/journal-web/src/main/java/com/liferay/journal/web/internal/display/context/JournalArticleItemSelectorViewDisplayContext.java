@@ -349,7 +349,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				JournalSearcherUtil.searchJournalArticleAndFolders(
 					searchContext -> {
 						try {
-							buildSearchContext(
+							populateSearchContext(
 								folderIds,
 								articleAndFolderSearchContainer.getStart(),
 								articleAndFolderSearchContainer.getEnd(),
@@ -443,7 +443,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return false;
 	}
 
-	protected SearchContext buildSearchContext(
+	protected SearchContext populateSearchContext(
 			List<Long> folderIds, int start, int end,
 			SearchContext searchContext)
 		throws PortalException {

@@ -3911,4 +3911,35 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test CanDownloadDocumentsThroughTheSearchPreview {
+		task("Upload a PDF and a DOCX file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DOCX File",
+				groupName = "Guest",
+				mimeType = "application/docx",
+				sourceFileName = "Document_1.docx");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "PDF File",
+				groupName = "Guest",
+				mimeType = "application/pdf",
+				sourceFileName = "Document_1.pdf");
+		}
+
+		task("Search for the DOCX and PDF files and Assert 'Download' Button is Present") {
+			SearchPortlets.searchEmbedded(searchTerm = "DOCX File");
+			Search.gotoResultAssetViaTitle(searchAssetTitle = "DOCX File");
+			Button.click(button = "Info");
+			Button.viewPresent(button = "Download");
+			Button.click(button = "Download");
+			ImportExport.assertDownloadedFileName(downloadedFile = "Document_1.docx");
+
+			SearchPortlets.searchEmbedded(searchTerm = "PDF File");
+			Search.gotoResultAssetViaTitle(searchAssetTitle = "PDF File");
+			Button.click(button = "Info");
+			Button.viewPresent(button = "Download");
+			Button.click(button = "Download");
+			ImportExport.assertDownloadedFileName(downloadedFile = "Document_1.pdf");
+		}
+	}
 }

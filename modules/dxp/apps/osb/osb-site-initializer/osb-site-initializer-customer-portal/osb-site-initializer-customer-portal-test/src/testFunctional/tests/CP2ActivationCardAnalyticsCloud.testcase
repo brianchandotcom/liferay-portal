@@ -225,10 +225,6 @@ definition {
 
 			Button.clickCancel();
 		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
-		}
 	}
 
 	@description = "Automation ID: LPS-150374 | Test Summary: Verify activation form link name: Go to Workspace"

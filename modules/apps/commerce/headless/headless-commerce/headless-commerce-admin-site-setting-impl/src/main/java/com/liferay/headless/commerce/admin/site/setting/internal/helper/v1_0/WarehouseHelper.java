@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
-@Component(immediate = true, service = WarehouseHelper.class)
+@Component(service = WarehouseHelper.class)
 public class WarehouseHelper {
 
 	public Warehouse addOrUpdateWarehouse(

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
-@Component(immediate = true, service = TaxCategoryHelper.class)
+@Component(service = TaxCategoryHelper.class)
 public class TaxCategoryHelper {
 
 	public TaxCategory addOrUpdateTaxCategory(

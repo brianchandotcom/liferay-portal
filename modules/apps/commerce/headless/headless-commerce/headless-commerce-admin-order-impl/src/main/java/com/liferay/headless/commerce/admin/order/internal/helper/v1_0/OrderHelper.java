@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrati
  */
-@Component(immediate = true, service = OrderHelper.class)
+@Component(service = OrderHelper.class)
 public class OrderHelper {
 
 	public Page<Order> getOrdersPage(

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
-@Component(immediate = true, service = DTOMapper.class)
+@Component(service = DTOMapper.class)
 public class DTOMapper {
 
 	public AvailabilityEstimate modelToDTO(

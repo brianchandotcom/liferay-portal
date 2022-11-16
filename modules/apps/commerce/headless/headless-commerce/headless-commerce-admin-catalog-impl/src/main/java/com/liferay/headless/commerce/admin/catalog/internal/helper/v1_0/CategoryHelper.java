@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = CategoryHelper.class)
+@Component(service = CategoryHelper.class)
 public class CategoryHelper {
 
 	public Page<Category> getCategoriesPage(

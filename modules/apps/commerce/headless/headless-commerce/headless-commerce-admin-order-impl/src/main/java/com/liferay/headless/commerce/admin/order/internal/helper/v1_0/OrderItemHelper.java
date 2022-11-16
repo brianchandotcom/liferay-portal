@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = OrderItemHelper.class)
+@Component(service = OrderItemHelper.class)
 public class OrderItemHelper {
 
 	public Page<OrderItem> getOrderItemsPage(

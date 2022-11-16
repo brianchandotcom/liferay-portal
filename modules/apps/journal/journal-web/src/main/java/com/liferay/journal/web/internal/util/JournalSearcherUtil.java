@@ -72,7 +72,7 @@ public class JournalSearcherUtil {
 	}
 
 	public static List<JournalArticle> searchJournalArticles(
-		Consumer<SearchContext> searchContextConsumer) {
+		boolean showVersions, Consumer<SearchContext> searchContextConsumer) {
 
 		SearchResponse searchResponse = _searcher.search(
 			_searchRequestBuilderFactory.builder(
@@ -89,10 +89,23 @@ public class JournalSearcherUtil {
 			searchHit -> {
 				Document document = searchHit.getDocument();
 
+				if (showVersions) {
+					return _journalArticleLocalService.fetchArticle(
+						document.getLong(Field.GROUP_ID),
+						document.getString(Field.ARTICLE_ID),
+						document.getDouble(Field.VERSION));
+				}
+
 				return _journalArticleLocalService.fetchLatestArticle(
 					document.getLong(Field.ENTRY_CLASS_PK),
 					WorkflowConstants.STATUS_ANY, false);
 			});
+	}
+
+	public static List<JournalArticle> searchJournalArticles(
+		Consumer<SearchContext> searchContextConsumer) {
+
+		return searchJournalArticles(false, searchContextConsumer);
 	}
 
 	@Reference(unbind = "-")

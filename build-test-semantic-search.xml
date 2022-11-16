@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-semantic-search" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<import file="build-test.xml" />
+
+	<condition else="liferay" property="container.prefix" value="${env.HOSTNAME}">
+		<isset property="env.JENKINS_HOME" />
+	</condition>
+
+	<macrodef name="build-txtai-docker-image">
+		<sequential>
+			<echo file="${project.dir}/txtai/config.yml">path: /tmp/index
+writable: False
+embeddings:
+     path: sentence-transformers/msmarco-distilbert-base-dot-prod-v3</echo>
+
+			<echo file="${project.dir}/txtai/Dockerfile">FROM neuml/txtai-cpu:5.1.0
+
+COPY config.yml .
+
+RUN python -c "from txtai.api import API; API('config.yml', False)"
+
+ENV CONFIG "config.yml"
+ENTRYPOINT ["uvicorn", "--host", "0.0.0.0", "txtai.api:app"]</echo>
+
+			<execute dir="${project.dir}/txtai">
+				<![CDATA[
+					docker build -t txtai-api .
+				]]>
+			</execute>
+
+			<delete dir="${project.dir}/txtai" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-portal-txtai-osgi-properties">
+		<sequential>
+			<exec executable="/bin/bash" outputproperty="txtai.container.ip">
+				<arg value="-c" />
+				<arg value="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${container.prefix}_txtai" />
+			</exec>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.search.experiences.configuration.SemanticSearchConfiguration.config">sentenceTransformProvider="txtai"
+sentenceTransformerEnabled="true"
+txtaiHostAddress="http://${txtai.container.ip}:8000"</echo>
+		</sequential>
+	</macrodef>
+
+	<target name="set-up-txtai">
+		<build-txtai-docker-image />
+
+		<start-docker-container image="txtai-api" name="${container.prefix}_txtai">\
+			-p 8000:8000 \
+		</start-docker-container>
+
+		<configure-portal-txtai-osgi-properties />
+	</target>
+</project>

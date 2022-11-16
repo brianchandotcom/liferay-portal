@@ -25,8 +25,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
-import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
@@ -39,6 +37,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldFormulaEvaluatorUtil;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
 import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceRegistry;
@@ -129,7 +128,6 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -170,14 +168,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import java.text.DateFormat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -1985,48 +1980,6 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
-	private Serializable _getOutputValue(String outputType, Object value) {
-		if (StringUtil.equals(
-				outputType, ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
-
-			return GetterUtil.getBoolean(value);
-		}
-
-		if (StringUtil.equals(
-				outputType, ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
-
-			User user = _userLocalService.fetchUser(
-				PrincipalThreadLocal.getUserId());
-
-			Locale locale =
-				(user == null) ? LocaleUtil.getSiteDefault() : user.getLocale();
-
-			DateFormat dateFormat = DateFormatFactoryUtil.getDate(locale);
-
-			return dateFormat.format(value);
-		}
-
-		if (StringUtil.equals(
-				outputType, ObjectFieldConstants.BUSINESS_TYPE_DECIMAL)) {
-
-			return GetterUtil.getDouble(value);
-		}
-
-		if (StringUtil.equals(
-				outputType, ObjectFieldConstants.BUSINESS_TYPE_INTEGER)) {
-
-			return GetterUtil.getInteger(value);
-		}
-
-		if (StringUtil.equals(
-				outputType, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-
-			return value.toString();
-		}
-
-		return null;
-	}
-
 	private Predicate _getPermissionWherePredicate(
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 		long groupId) {
@@ -2529,43 +2482,10 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			Map<String, Object> objectFieldSettingMap = new HashMap<>();
-
-			List<ObjectFieldSetting> objectFieldSettings =
-				_objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId());
-
-			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-				objectFieldSettingMap.put(
-					objectFieldSetting.getName(),
-					objectFieldSetting.getValue());
-			}
-
-			Object script = objectFieldSettingMap.get("script");
-
-			if (script == null) {
-				break;
-			}
-
-			DDMExpression<Serializable> ddmExpression =
-				_ddmExpressionFactory.createExpression(
-					CreateExpressionRequest.Builder.newBuilder(
-						String.valueOf(script)
-					).build());
-
-			ddmExpression.setVariables(new HashMap<>(values));
-
-			try {
-				values.put(
-					objectField.getName(),
-					_getOutputValue(
-						String.valueOf(objectFieldSettingMap.get("output")),
-						ddmExpression.evaluate()));
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+			ObjectFieldFormulaEvaluatorUtil.evaluate(
+				_ddmExpressionFactory,
+				_objectFieldLocalService.getObjectFields(objectDefinitionId),
+				_objectFieldSettingLocalService, values, _userLocalService);
 		}
 
 		return values;

@@ -74,14 +74,18 @@ definition {
 	}
 
 	@description = "LPS-161917 - Verify that it's possible to create an e-mail notification template"
-	@priority = "3"
+	@priority = "5"
 	test CanCreateEmailTemplate {
-		task ("Go to Templates and add a new Notification Template") {
+		property portal.acceptance = "true";
+
+		task ("Given the user navigates to Notifications - Templates in the Control Panel") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",
 				panel = "Control Panel",
 				portlet = "Templates");
+		}
 
+		task ("When the user creates a new Notification Template") {
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
@@ -93,12 +97,18 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Assert the Notification Template is present") {
-			Refresh();
-
+		task ("Then the Notification Template is saved with the correct values") {
 			AssertElementPresent(
 				key_name = "Notification Template",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			ObjectNotifications.viewNotificationTemplateDetails(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "Liferay",
+				fromName = "Test Test",
+				name = "Notification Template",
+				subject = "Subject");
 		}
 	}
 

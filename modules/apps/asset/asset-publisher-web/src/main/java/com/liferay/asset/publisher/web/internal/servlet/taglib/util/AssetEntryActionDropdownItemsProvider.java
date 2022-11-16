@@ -77,8 +77,6 @@ public class AssetEntryActionDropdownItemsProvider {
 				if (editAssetEntryURL != null) {
 					add(
 						dropdownItem -> {
-							dropdownItem.putData(
-								"useDialog", Boolean.FALSE.toString());
 							dropdownItem.setHref(editAssetEntryURL.toString());
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
@@ -115,14 +113,16 @@ public class AssetEntryActionDropdownItemsProvider {
 						add(
 							dropdownItem -> {
 								dropdownItem.putData(
-									"destroyOnHide", Boolean.TRUE.toString());
-								dropdownItem.putData("title", title);
+									"action", "assetEntryAction");
 								dropdownItem.putData(
-									"useDialog", Boolean.TRUE.toString());
-								dropdownItem.setHref(
+									"assetEntryActionTitle", title);
+								dropdownItem.putData(
+									"assetEntryActionURL",
 									objectAssetEntryAction.getDialogURL(
 										_httpServletRequest,
 										(AssetRenderer<Object>)_assetRenderer));
+								dropdownItem.putData(
+									"useDialog", Boolean.TRUE.toString());
 								dropdownItem.setIcon(
 									objectAssetEntryAction.getIcon());
 								dropdownItem.setLabel(title);

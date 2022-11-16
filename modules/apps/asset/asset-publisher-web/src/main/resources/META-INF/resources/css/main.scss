@@ -30,6 +30,16 @@
 		font-size: 0.875rem;
 	}
 
+	.portlet {
+		&:hover,
+		&.open,
+		&.focus {
+			a.visible-interaction {
+				display: inline-flex;
+			}
+		}
+	}
+
 	.preview-asset-entry {
 		border: 1px solid #0b5fff;
 		border-radius: 0;

@@ -29,34 +29,17 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 <c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 	<c:choose>
 		<c:when test="<%= dropdownItems.size() > 1 %>">
-			<liferay-ui:icon-menu
-				cssClass="visible-interaction"
-				direction="left-side"
-				icon="<%= StringPool.BLANK %>"
-				markupView="lexicon"
-				message="<%= StringPool.BLANK %>"
-				showWhenSingleIcon="<%= true %>"
-				triggerCssClass="text-primary"
-			>
-
-				<%
-				for (DropdownItem dropdownItem : dropdownItems) {
-					Map<String, Object> data = (HashMap<String, Object>)dropdownItem.get("data");
-				%>
-
-					<liferay-ui:icon
-						data="<%= data %>"
-						message='<%= String.valueOf(dropdownItem.get("label")) %>'
-						method="get"
-						url='<%= String.valueOf(dropdownItem.get("href")) %>'
-						useDialog='<%= GetterUtil.getBoolean(data.get("useDialog")) %>'
-					/>
-
-				<%
-				}
-				%>
-
-			</liferay-ui:icon-menu>
+			<clay:dropdown-actions
+				aria-label='<%= LanguageUtil.format(locale, "dropdown-actions-for-x", assetEntry.getTitle(locale)) %>'
+				borderless="<%= true %>"
+				cssClass="text-primary visible-interaction"
+				displayType="unstyled"
+				dropdownItems="<%= dropdownItems %>"
+				monospaced="<%= true %>"
+				propsTransformer="js/AssetEntryActionDropdownPropsTransformer"
+				small="<%= true %>"
+				title='<%= LanguageUtil.format(locale, "dropdown-actions-for-x", assetEntry.getTitle(locale)) %>'
+			/>
 		</c:when>
 		<c:otherwise>
 

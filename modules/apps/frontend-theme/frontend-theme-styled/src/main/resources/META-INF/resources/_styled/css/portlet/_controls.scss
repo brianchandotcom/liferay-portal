@@ -98,7 +98,8 @@ body.portlet {
 	}
 
 	&:hover,
-	&.open {
+	&.open,
+	&.focus {
 		.visible-interaction {
 			display: block;
 		}

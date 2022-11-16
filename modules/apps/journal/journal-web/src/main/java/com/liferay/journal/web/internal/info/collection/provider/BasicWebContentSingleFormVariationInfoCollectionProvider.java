@@ -39,8 +39,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -261,9 +259,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		return finalStep.build();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BasicWebContentSingleFormVariationInfoCollectionProvider.class);
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

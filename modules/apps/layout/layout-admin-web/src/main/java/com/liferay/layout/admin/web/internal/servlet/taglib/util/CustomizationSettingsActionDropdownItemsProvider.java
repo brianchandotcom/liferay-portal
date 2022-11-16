@@ -41,10 +41,11 @@ public class CustomizationSettingsActionDropdownItemsProvider {
 
 		_httpServletRequest = httpServletRequest;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		_layoutTypePortlet = _themeDisplay.getLayoutTypePortlet();
+		_layoutTypePortlet = themeDisplay.getLayoutTypePortlet();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -105,6 +106,5 @@ public class CustomizationSettingsActionDropdownItemsProvider {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutTypePortlet _layoutTypePortlet;
-	private final ThemeDisplay _themeDisplay;
 
 }

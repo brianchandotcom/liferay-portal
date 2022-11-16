@@ -151,9 +151,10 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
-
-			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(status = "In-Progress");
+			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
+				entry = "ERC-003",
+				position = "3",
+				status = "In-Progress");
 		}
 	}
 

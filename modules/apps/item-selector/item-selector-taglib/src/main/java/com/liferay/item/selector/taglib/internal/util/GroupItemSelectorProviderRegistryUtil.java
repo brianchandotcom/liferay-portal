@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class GroupItemSelectorProviderRegistryUtil {
 
 	public static Optional<GroupItemSelectorProvider>

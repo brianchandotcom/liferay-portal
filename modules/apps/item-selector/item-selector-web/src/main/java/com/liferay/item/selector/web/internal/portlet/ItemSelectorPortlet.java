@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jose A. Jimenez
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-item-selector",

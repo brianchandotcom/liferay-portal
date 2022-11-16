@@ -251,6 +251,32 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 						<dd class="sidebar-dd">
 							<%= kbArticle.getViewCount() %>
 						</dd>
+
+						<%
+						int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+						%>
+
+						<c:if test="<%= childKBArticlesCount > 0 %>">
+							<dt class="sidebar-dt">
+								<liferay-ui:message key="child-articles" />
+							</dt>
+
+							<liferay-portlet:renderURL varImpl="childKBArticlesURL">
+								<portlet:param name="mvcPath" value="/admin/view_kb_articles.jsp" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+								<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
+								<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
+								<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+								<portlet:param name="selectedItemId" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+							</liferay-portlet:renderURL>
+
+							<dd class="sidebar-dd">
+								<aui:a href="<%= childKBArticlesURL.toString() %>">
+									<liferay-ui:message arguments="<%= childKBArticlesCount %>" key="x-child-articles" />
+								</aui:a>
+							</dd>
+						</c:if>
 					</dl>
 				</liferay-ui:section>
 

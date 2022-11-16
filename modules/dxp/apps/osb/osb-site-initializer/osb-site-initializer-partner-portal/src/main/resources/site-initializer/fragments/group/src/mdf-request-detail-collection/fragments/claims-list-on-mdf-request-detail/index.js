@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,6 +12,13 @@
 
 import React, {useEffect, useState} from 'react';
 
+function getIntlNumberFormat() {
+	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		currency: 'USD',
+		style: 'currency',
+	});
+}
+
 const currentPath = Liferay.currentURL.split('/');
 const mdfRequestId = +currentPath.at(-1);
 const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
@@ -18,6 +26,33 @@ const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 	.slice(0, 3)
 	.join('/');
 
+const Panel = ({mdfClaims}) => (
+	<div>
+		<div className="text-neutral-7 text-paragraph-xs">
+			Type: {mdfClaims.partial === 'true' ? 'Partial' : 'Full'}
+		</div>
+
+		<div className="mb-1 mt-1 text-neutral-9 text-paragraph-sm">
+			Claim ({mdfClaims.id})
+		</div>
+
+		<div className="align-items-center d-flex justify-content-between">
+			<p className="font-weight-bold text-neutral-9 text-paragraph-sm">
+				Claimed USD
+				 {getIntlNumberFormat().format(mdfClaims.amountClaimed)}
+			</p>
+
+			<button
+				className="btn btn-secondary btn-sm"
+				onClick={() =>
+					Liferay.Util.navigate(`${SITE_URL}/l/${mdfClaims.id}`)
+				}
+			>
+				View
+			</button>
+		</div>
+	</div>
+);
 export default function () {
 	const [claims, setClaims] = useState();
 	const [loading, setLoading] = useState();
@@ -26,7 +61,7 @@ export default function () {
 		const getClaimFromMDFRequest = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfclaims/?filter=(r_mdfRequestToMdfClaims_c_mdfRequestId eq '${mdfRequestId}')`,
+				`/o/c/mdfclaims?nestedFields=mdfClaimToMdfClaimActivities,mdfClaimActivityToMdfClaimBudgets&nestedFieldsDepth=2&filter=(r_mdfRequestToMdfClaims_c_mdfRequestId eq '${mdfRequestId}')`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -60,6 +95,18 @@ export default function () {
 
 	return (
 		<div>
+			{claims?.items.length && (
+				<div>
+					{claims?.items.map((mdfClaims, index) => (
+						<div key={index}>
+							<Panel mdfClaims={mdfClaims} />
+
+							<hr></hr>
+						</div>
+					))}
+				</div>
+			)}
+
 			<div className="align-items-stretch d-flex justify-content-between">
 				<div>
 					<h6 className="font-weight-normal text-neutral-9">

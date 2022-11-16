@@ -14,17 +14,16 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 
-import com.liferay.portal.workflow.kaleo.definition.NodeTypeDependentObjectRegistry;
-import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -32,44 +31,25 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service = NodeExecutorRegistry.class)
 public class NodeExecutorRegistry {
 
-	public NodeExecutor getNodeExecutor(String nodeTypeString)
-		throws KaleoDefinitionValidationException {
-
-		return _nodeExecutors.getNodeTypeDependentObjects(nodeTypeString);
+	public NodeExecutor getNodeExecutor(String nodeTypeString) {
+		return _serviceTrackerMap.getService(NodeType.valueOf(nodeTypeString));
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addNodeExporter(
-		NodeExecutor nodeExecutor, Map<String, Object> properties) {
-
-		String nodeType = (String)properties.get("node.type");
-
-		if (nodeType == null) {
-			throw new IllegalArgumentException(
-				"The property \"node.type\" is null");
-		}
-
-		_nodeExecutors.addNodeTypeDependentObject(nodeType, nodeExecutor);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, NodeExecutor.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(nodeExecutor, emitter) -> emitter.emit(
+					nodeExecutor.getNodeType())));
 	}
 
-	protected void removeNodeExporter(
-		NodeExecutor nodeExecutor, Map<String, Object> properties) {
-
-		String nodeType = (String)properties.get("node.type");
-
-		if (nodeType == null) {
-			throw new IllegalArgumentException(
-				"The property \"node.type\" is null");
-		}
-
-		_nodeExecutors.removeNodeTypeDependentObjects(nodeType);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final NodeTypeDependentObjectRegistry<NodeExecutor> _nodeExecutors =
-		new NodeTypeDependentObjectRegistry<>();
+	private ServiceTrackerMap<NodeType, NodeExecutor> _serviceTrackerMap;
 
 }

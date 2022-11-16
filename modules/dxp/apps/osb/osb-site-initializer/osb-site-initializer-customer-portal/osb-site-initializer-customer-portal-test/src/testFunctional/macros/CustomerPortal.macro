@@ -780,8 +780,13 @@ definition {
 	}
 
 	macro viewCPObjectCustomInfo {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		var key_index = "${position}";
+
 		Click(
-			key_index = "${index}",
 			key_text = "",
 			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 

@@ -151,7 +151,7 @@ public class CommerceShipmentItemServiceImpl
 
 		return commerceShipmentItemLocalService.
 			fetchCommerceShipmentItemByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	@Override

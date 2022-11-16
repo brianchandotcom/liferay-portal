@@ -195,7 +195,7 @@ public class JournalFolderServiceTest {
 
 		JournalFolder folder2 =
 			_journalFolderLocalService.getJournalFolderByExternalReferenceCode(
-				_group.getGroupId(), externalReferenceCode);
+				externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(folder1, folder2);
 	}
@@ -322,7 +322,7 @@ public class JournalFolderServiceTest {
 		JournalFolder folder2 =
 			JournalFolderLocalServiceUtil.
 				getJournalFolderByExternalReferenceCode(
-					_group.getGroupId(), externalReferenceCode);
+					externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(
 			folder2.getExternalReferenceCode(), externalReferenceCode);

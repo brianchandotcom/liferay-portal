@@ -177,8 +177,8 @@ public class CommerceAccountLocalServiceImpl
 				CommerceAccountImpl.fromAccountEntry(
 					_accountEntryLocalService.
 						fetchAccountEntryByExternalReferenceCode(
-							serviceContext.getCompanyId(),
-							externalReferenceCode));
+							externalReferenceCode,
+							serviceContext.getCompanyId()));
 
 			if (commerceAccount != null) {
 				return commerceAccountLocalService.updateCommerceAccount(
@@ -315,7 +315,7 @@ public class CommerceAccountLocalServiceImpl
 
 		return CommerceAccountImpl.fromAccountEntry(
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				companyId, externalReferenceCode));
+				externalReferenceCode, companyId));
 	}
 
 	@Override
@@ -330,7 +330,7 @@ public class CommerceAccountLocalServiceImpl
 
 		return CommerceAccountImpl.fromAccountEntry(
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				companyId, externalReferenceCode));
+				externalReferenceCode, companyId));
 	}
 
 	@Override
@@ -697,7 +697,7 @@ public class CommerceAccountLocalServiceImpl
 
 		CommerceAccount commerceAccount = CommerceAccountImpl.fromAccountEntry(
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				companyId, externalReferenceCode));
+				externalReferenceCode, companyId));
 
 		if ((commerceAccount != null) &&
 			(commerceAccount.getCommerceAccountId() != commerceAccountId)) {

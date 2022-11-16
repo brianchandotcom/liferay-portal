@@ -106,8 +106,8 @@ public class CommerceOrderNoteLocalServiceImpl
 			commerceOrderNote = getCommerceOrderNote(commerceOrderNoteId);
 		}
 		else {
-			commerceOrderNote = commerceOrderNotePersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			commerceOrderNote = commerceOrderNotePersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (commerceOrderNote != null) {
@@ -135,8 +135,8 @@ public class CommerceOrderNoteLocalServiceImpl
 			return null;
 		}
 
-		return commerceOrderNotePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderNotePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -226,8 +226,8 @@ public class CommerceOrderNoteLocalServiceImpl
 		}
 
 		CommerceOrderNote commerceOrderNote =
-			commerceOrderNotePersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commerceOrderNotePersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commerceOrderNote != null) {
 			throw new DuplicateCommerceOrderNoteException(

@@ -213,9 +213,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			BatchEngineExportTask batchEngineExportTask =
 				BatchEngineExportTaskLocalServiceUtil.
 					getBatchEngineExportTaskByExternalReferenceCode(
-						batchPlannerPlan.getCompanyId(),
 						String.valueOf(
-							batchPlannerPlan.getBatchPlannerPlanId()));
+							batchPlannerPlan.getBatchPlannerPlanId()),
+						batchPlannerPlan.getCompanyId());
 
 			builder.processedItemsCount(
 				batchEngineExportTask.getProcessedItemsCount()
@@ -227,9 +227,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			BatchEngineImportTask batchEngineImportTask =
 				BatchEngineImportTaskLocalServiceUtil.
 					getBatchEngineImportTaskByExternalReferenceCode(
-						batchPlannerPlan.getCompanyId(),
 						String.valueOf(
-							batchPlannerPlan.getBatchPlannerPlanId()));
+							batchPlannerPlan.getBatchPlannerPlanId()),
+						batchPlannerPlan.getCompanyId());
 
 			int batchEngineImportTaskErrorsCount =
 				batchEngineImportTask.getBatchEngineImportTaskErrorsCount();

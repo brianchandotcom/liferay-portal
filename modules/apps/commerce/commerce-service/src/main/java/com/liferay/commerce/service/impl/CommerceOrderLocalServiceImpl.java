@@ -336,8 +336,8 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			commerceOrder = commerceOrderPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			commerceOrder = commerceOrderPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (commerceOrder != null) {
@@ -581,8 +581,8 @@ public class CommerceOrderLocalServiceImpl
 			return null;
 		}
 
-		return commerceOrderPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -1717,8 +1717,8 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			commerceOrder = commerceOrderPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			commerceOrder = commerceOrderPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (commerceOrder != null) {

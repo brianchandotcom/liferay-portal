@@ -56,7 +56,7 @@ public class AccountEntrySystemObjectDefinitionMetadata
 		throws PortalException {
 
 		return _accountEntryLocalService.getAccountEntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override

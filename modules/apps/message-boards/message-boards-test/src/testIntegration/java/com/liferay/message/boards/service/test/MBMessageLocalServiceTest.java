@@ -239,7 +239,7 @@ public class MBMessageLocalServiceTest {
 
 		MBMessage mbMessage2 =
 			MBMessageLocalServiceUtil.getMBMessageByExternalReferenceCode(
-				_group.getGroupId(), externalReferenceCode);
+				externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(mbMessage1, mbMessage2);
 	}

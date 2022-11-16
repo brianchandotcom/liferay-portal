@@ -64,8 +64,8 @@ public class ListTypeDefinitionLocalServiceImpl
 				counterLocalService.increment());
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278"))) {
-			int count = listTypeDefinitionPersistence.countByC_ERC(
-				listTypeDefinition.getCompanyId(), externalReferenceCode);
+			int count = listTypeDefinitionPersistence.countByERC_C(
+				externalReferenceCode, listTypeDefinition.getCompanyId());
 
 			if (count != 0) {
 				throw new DuplicateListTypeExternalReferenceCodeException(

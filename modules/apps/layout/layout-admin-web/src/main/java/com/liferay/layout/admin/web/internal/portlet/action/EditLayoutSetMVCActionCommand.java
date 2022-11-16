@@ -131,7 +131,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			ClientExtensionEntryRel clientExtensionEntryRel =
 				_clientExtensionEntryRelLocalService.
 					fetchClientExtensionEntryRelByExternalReferenceCode(
-						layoutSet.getCompanyId(), cetExternalReferenceCode);
+						cetExternalReferenceCode, layoutSet.getCompanyId());
 
 			if (clientExtensionEntryRel == null) {
 				_clientExtensionEntryRelLocalService.

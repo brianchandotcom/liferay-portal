@@ -111,7 +111,7 @@ public class WikiNodeLocalServiceTest {
 
 		WikiNode wikiNode2 =
 			WikiNodeLocalServiceUtil.getWikiNodeByExternalReferenceCode(
-				TestPropsValues.getGroupId(), externalReferenceCode);
+				externalReferenceCode, TestPropsValues.getGroupId());
 
 		Assert.assertEquals(wikiNode1, wikiNode2);
 	}

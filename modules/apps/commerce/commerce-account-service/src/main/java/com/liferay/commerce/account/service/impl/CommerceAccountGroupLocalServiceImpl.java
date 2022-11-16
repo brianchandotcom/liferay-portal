@@ -187,7 +187,7 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		return CommerceAccountGroupImpl.fromAccountGroup(
 			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
-				companyId, externalReferenceCode));
+				externalReferenceCode, companyId));
 	}
 
 	@Override
@@ -384,7 +384,7 @@ public class CommerceAccountGroupLocalServiceImpl
 			CommerceAccountGroupImpl.fromAccountGroup(
 				_accountGroupLocalService.
 					fetchAccountGroupByExternalReferenceCode(
-						companyId, externalReferenceCode));
+						externalReferenceCode, companyId));
 
 		if ((commerceAccountGroup != null) &&
 			(commerceAccountGroup.getCommerceAccountGroupId() !=

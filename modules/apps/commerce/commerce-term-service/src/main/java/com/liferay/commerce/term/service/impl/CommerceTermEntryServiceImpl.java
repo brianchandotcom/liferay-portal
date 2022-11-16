@@ -96,7 +96,7 @@ public class CommerceTermEntryServiceImpl
 		CommerceTermEntry commerceTermEntry =
 			commerceTermEntryLocalService.
 				fetchCommerceTermEntryByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		if (commerceTermEntry != null) {
 			_commerceTermEntryModelResourcePermission.check(

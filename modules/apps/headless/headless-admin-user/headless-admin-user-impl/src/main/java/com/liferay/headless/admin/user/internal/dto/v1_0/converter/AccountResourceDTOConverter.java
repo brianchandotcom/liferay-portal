@@ -62,7 +62,7 @@ public class AccountResourceDTOConverter
 
 		AccountEntry accountEntry =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				CompanyThreadLocal.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, CompanyThreadLocal.getCompanyId());
 
 		if (accountEntry == null) {
 			accountEntry = _accountEntryLocalService.getAccountEntry(

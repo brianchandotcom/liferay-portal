@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountExternalReferenceCodeException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
@@ -304,6 +305,28 @@ public class CommerceDiscountPersistenceTest {
 			Time.getShortTimestamp(newCommerceDiscount.getStatusDate()));
 	}
 
+	@Test(
+		expected = DuplicateCommerceDiscountExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CommerceDiscount commerceDiscount = addCommerceDiscount();
+
+		CommerceDiscount newCommerceDiscount = addCommerceDiscount();
+
+		newCommerceDiscount.setCompanyId(commerceDiscount.getCompanyId());
+
+		newCommerceDiscount = _persistence.update(newCommerceDiscount);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCommerceDiscount);
+
+		newCommerceDiscount.setExternalReferenceCode(
+			commerceDiscount.getExternalReferenceCode());
+
+		_persistence.update(newCommerceDiscount);
+	}
+
 	@Test
 	public void testCountByUuid() throws Exception {
 		_persistence.countByUuid("");
@@ -379,12 +402,12 @@ public class CommerceDiscountPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_ERC() throws Exception {
-		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
-		_persistence.countByC_ERC(0L, "null");
+		_persistence.countByERC_C("null", 0L);
 
-		_persistence.countByC_ERC(0L, (String)null);
+		_persistence.countByERC_C((String)null, 0L);
 	}
 
 	@Test
@@ -712,15 +735,15 @@ public class CommerceDiscountPersistenceTest {
 				new Class<?>[] {String.class}, "active_"));
 
 		Assert.assertEquals(
-			Long.valueOf(commerceDiscount.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				commerceDiscount, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
 			commerceDiscount.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				commerceDiscount, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(commerceDiscount.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceDiscount, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CommerceDiscount addCommerceDiscount() throws Exception {

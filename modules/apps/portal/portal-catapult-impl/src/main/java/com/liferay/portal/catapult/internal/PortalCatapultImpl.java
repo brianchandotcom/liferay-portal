@@ -55,7 +55,7 @@ public class PortalCatapultImpl implements PortalCatapult {
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.
 				getOAuth2ApplicationByExternalReferenceCode(
-					companyId, oAuth2ApplicationExternalReferenceCode);
+					oAuth2ApplicationExternalReferenceCode, companyId);
 
 		options.setLocation(_getLocation(oAuth2Application, resourcePath));
 

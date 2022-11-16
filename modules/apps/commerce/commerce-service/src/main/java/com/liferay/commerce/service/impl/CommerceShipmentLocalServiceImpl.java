@@ -891,8 +891,8 @@ public class CommerceShipmentLocalServiceImpl
 		}
 
 		CommerceShipment commerceShipment =
-			commerceShipmentPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commerceShipmentPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commerceShipment == null) {
 			return;

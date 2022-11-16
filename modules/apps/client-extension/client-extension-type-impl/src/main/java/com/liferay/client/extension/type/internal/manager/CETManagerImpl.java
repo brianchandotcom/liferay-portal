@@ -82,7 +82,7 @@ public class CETManagerImpl implements CETManager {
 		ClientExtensionEntry clientExtensionEntry =
 			_clientExtensionEntryLocalService.
 				fetchClientExtensionEntryByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		if (clientExtensionEntry != null) {
 			try {

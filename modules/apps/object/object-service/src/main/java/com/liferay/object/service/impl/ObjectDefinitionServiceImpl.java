@@ -93,7 +93,7 @@ public class ObjectDefinitionServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		if (objectDefinition != null) {
 			_objectDefinitionModelResourcePermission.check(
@@ -122,7 +122,7 @@ public class ObjectDefinitionServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinition, ActionKeys.VIEW);

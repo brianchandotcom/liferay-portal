@@ -248,8 +248,8 @@ public class CommerceDiscountServiceImpl
 
 		if (!Validator.isBlank(externalReferenceCode)) {
 			CommerceDiscount commerceDiscount =
-				commerceDiscountPersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
+				commerceDiscountPersistence.fetchByERC_C(
+					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commerceDiscount != null) {
 				return updateCommerceDiscount(

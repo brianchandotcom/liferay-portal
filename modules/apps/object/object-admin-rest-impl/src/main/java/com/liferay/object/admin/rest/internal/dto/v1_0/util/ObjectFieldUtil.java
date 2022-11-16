@@ -63,8 +63,8 @@ public class ObjectFieldUtil {
 		ListTypeDefinition listTypeDefinition =
 			listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
-					companyId,
-					objectField.getListTypeDefinitionExternalReferenceCode());
+					objectField.getListTypeDefinitionExternalReferenceCode(),
+					companyId);
 
 		if (listTypeDefinition == null) {
 			listTypeDefinition =
@@ -125,8 +125,8 @@ public class ObjectFieldUtil {
 		ListTypeDefinition listTypeDefinition =
 			listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
-					companyId,
-					objectField.getListTypeDefinitionExternalReferenceCode());
+					objectField.getListTypeDefinitionExternalReferenceCode(),
+					companyId);
 
 		if (listTypeDefinition == null) {
 			return 0;

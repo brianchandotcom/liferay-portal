@@ -95,8 +95,8 @@ public class CommercePricingClassServiceImpl
 
 		if (!Validator.isBlank(externalReferenceCode)) {
 			CommercePricingClass commercePricingClass =
-				commercePricingClassPersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
+				commercePricingClassPersistence.fetchByERC_C(
+					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commercePricingClass != null) {
 				return commercePricingClassLocalService.

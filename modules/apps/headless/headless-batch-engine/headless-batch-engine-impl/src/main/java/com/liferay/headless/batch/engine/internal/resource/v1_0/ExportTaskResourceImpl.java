@@ -66,7 +66,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 		return _toExportTask(
 			_batchEngineExportTaskLocalService.
 				getBatchEngineExportTaskByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode));
+					externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.
 				getBatchEngineExportTaskByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		return _getExportTaskContent(batchEngineExportTask);
 	}

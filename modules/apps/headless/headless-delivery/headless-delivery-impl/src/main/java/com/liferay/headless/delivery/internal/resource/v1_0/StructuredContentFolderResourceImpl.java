@@ -327,7 +327,7 @@ public class StructuredContentFolderResourceImpl
 		JournalFolder journalFolder =
 			_journalFolderLocalService.
 				fetchJournalFolderByExternalReferenceCode(
-					assetLibraryId, externalReferenceCode);
+					externalReferenceCode, assetLibraryId);
 
 		if (journalFolder != null) {
 			return _updateStructuredContentFolder(
@@ -351,7 +351,7 @@ public class StructuredContentFolderResourceImpl
 		JournalFolder journalFolder =
 			_journalFolderLocalService.
 				fetchJournalFolderByExternalReferenceCode(
-					siteId, externalReferenceCode);
+					externalReferenceCode, siteId);
 
 		if (journalFolder != null) {
 			return _updateStructuredContentFolder(

@@ -102,7 +102,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		BlogsEntry blogsEntry =
 			_blogsEntryLocalService.getBlogsEntryByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		_blogsEntryService.deleteEntry(blogsEntry.getEntryId());
 	}
@@ -256,7 +256,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		BlogsEntry blogsEntry =
 			_blogsEntryLocalService.fetchBlogsEntryByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		if (blogsEntry != null) {
 			return _updateBlogPosting(blogsEntry, blogPosting);

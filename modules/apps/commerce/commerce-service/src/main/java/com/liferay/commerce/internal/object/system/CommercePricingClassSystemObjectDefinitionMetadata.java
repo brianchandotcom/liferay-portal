@@ -57,7 +57,7 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 
 		return _commercePricingClassLocalService.
 			getCommercePricingClassByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 	}
 
 	@Override

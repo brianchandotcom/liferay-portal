@@ -67,7 +67,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		KBFolder kbFolder =
 			_kbFolderLocalService.getKBFolderByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		_kbFolderService.deleteKBFolder(kbFolder.getKbFolderId());
 	}
@@ -210,7 +210,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 		KBFolder kbFolder =
 			_kbFolderLocalService.fetchKBFolderByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		if (kbFolder != null) {
 			return _updateKnowledgeBaseFolder(kbFolder, knowledgeBaseFolder);

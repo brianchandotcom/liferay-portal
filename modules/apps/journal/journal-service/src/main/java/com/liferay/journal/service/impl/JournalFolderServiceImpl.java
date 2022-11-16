@@ -137,7 +137,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		JournalFolder folder =
 			journalFolderLocalService.getJournalFolderByExternalReferenceCode(
-				groupId, externalReferenceCode);
+				externalReferenceCode, groupId);
 
 		_journalFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.VIEW);

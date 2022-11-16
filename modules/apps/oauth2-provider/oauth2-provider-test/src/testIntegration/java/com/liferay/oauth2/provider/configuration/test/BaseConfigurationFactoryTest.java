@@ -72,8 +72,8 @@ public class BaseConfigurationFactoryTest {
 				oAuth2Application =
 					_oAuth2ApplicationLocalService.
 						getOAuth2ApplicationByExternalReferenceCode(
-							TestPropsValues.getCompanyId(),
-							externalReferenceCode);
+							externalReferenceCode,
+							TestPropsValues.getCompanyId());
 			}
 			catch (Exception exception) {
 

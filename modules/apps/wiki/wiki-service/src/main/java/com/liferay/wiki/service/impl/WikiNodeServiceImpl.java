@@ -182,7 +182,7 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 		throws PortalException {
 
 		WikiNode node = wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
-			groupId, externalReferenceCode);
+			externalReferenceCode, groupId);
 
 		_wikiNodeModelResourcePermission.check(
 			getPermissionChecker(), node, ActionKeys.VIEW);

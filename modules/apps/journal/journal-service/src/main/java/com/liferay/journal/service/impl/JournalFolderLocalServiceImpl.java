@@ -1522,8 +1522,8 @@ public class JournalFolderLocalServiceImpl
 			return;
 		}
 
-		JournalFolder journalFolder = journalFolderPersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
+		JournalFolder journalFolder = journalFolderPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 
 		if (journalFolder != null) {
 			throw new DuplicateFolderExternalReferenceCodeException(

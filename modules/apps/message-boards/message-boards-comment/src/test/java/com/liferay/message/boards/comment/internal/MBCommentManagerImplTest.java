@@ -290,7 +290,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		Mockito.when(
 			_mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
-				anyLong(), anyString())
+				anyString(), anyLong())
 		).thenReturn(
 			_mbMessage
 		);
@@ -307,7 +307,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).fetchMBMessageByExternalReferenceCode(
-			groupId, externalReferenceCode
+			externalReferenceCode, groupId
 		);
 	}
 
@@ -318,7 +318,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		Mockito.when(
 			_mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
-				anyLong(), anyString())
+				anyString(), anyLong())
 		).thenReturn(
 			null
 		);
@@ -331,7 +331,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).fetchMBMessageByExternalReferenceCode(
-			groupId, externalReferenceCode
+			externalReferenceCode, groupId
 		);
 	}
 
@@ -344,7 +344,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		Mockito.when(
 			_mbMessageLocalService.getMBMessageByExternalReferenceCode(
-				anyLong(), anyString())
+				anyString(), anyLong())
 		).thenReturn(
 			_mbMessage
 		);
@@ -361,7 +361,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).getMBMessageByExternalReferenceCode(
-			groupId, externalReferenceCode
+			externalReferenceCode, groupId
 		);
 	}
 

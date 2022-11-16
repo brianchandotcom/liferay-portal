@@ -315,7 +315,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		OAuth2Application oAuth2Application =
 			fetchOAuth2ApplicationByExternalReferenceCode(
-				user.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, user.getCompanyId());
 
 		if (oAuth2Application != null) {
 			long oAuth2ApplicationScopeAliasesId =
@@ -372,7 +372,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		OAuth2Application oAuth2Application =
 			fetchOAuth2ApplicationByExternalReferenceCode(
-				user.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, user.getCompanyId());
 
 		if (oAuth2Application != null) {
 			long oAuth2ApplicationScopeAliasesId =
@@ -924,7 +924,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuthApplicationId);
 
 		oAuth2Application = fetchOAuth2ApplicationByExternalReferenceCode(
-			oAuth2Application.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, oAuth2Application.getCompanyId());
 
 		if (oAuth2Application == null) {
 			return;

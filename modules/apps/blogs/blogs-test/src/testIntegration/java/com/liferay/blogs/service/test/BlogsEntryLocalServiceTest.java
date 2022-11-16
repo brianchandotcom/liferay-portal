@@ -198,7 +198,7 @@ public class BlogsEntryLocalServiceTest {
 
 		BlogsEntry blogsEntry2 =
 			BlogsEntryLocalServiceUtil.getBlogsEntryByExternalReferenceCode(
-				TestPropsValues.getGroupId(), externalReferenceCode);
+				externalReferenceCode, TestPropsValues.getGroupId());
 
 		Assert.assertEquals(blogsEntry1, blogsEntry2);
 	}

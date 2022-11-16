@@ -125,7 +125,7 @@ public class KBFolderLocalServiceTest {
 
 		KBFolder kbFolder2 =
 			_kbFolderLocalService.getKBFolderByExternalReferenceCode(
-				_group.getGroupId(), externalReferenceCode);
+				externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(kbFolder1, kbFolder2);
 	}

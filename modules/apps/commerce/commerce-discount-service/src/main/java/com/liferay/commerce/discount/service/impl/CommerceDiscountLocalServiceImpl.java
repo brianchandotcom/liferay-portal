@@ -463,8 +463,8 @@ public class CommerceDiscountLocalServiceImpl
 
 		if (!Validator.isBlank(externalReferenceCode)) {
 			CommerceDiscount commerceDiscount =
-				commerceDiscountPersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
+				commerceDiscountPersistence.fetchByERC_C(
+					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commerceDiscount != null) {
 				return commerceDiscountLocalService.updateCommerceDiscount(
@@ -537,8 +537,8 @@ public class CommerceDiscountLocalServiceImpl
 
 		if (!Validator.isBlank(externalReferenceCode)) {
 			CommerceDiscount commerceDiscount =
-				commerceDiscountPersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
+				commerceDiscountPersistence.fetchByERC_C(
+					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commerceDiscount != null) {
 				return commerceDiscountLocalService.updateCommerceDiscount(
@@ -656,8 +656,8 @@ public class CommerceDiscountLocalServiceImpl
 			return null;
 		}
 
-		return commerceDiscountPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceDiscountPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -668,8 +668,8 @@ public class CommerceDiscountLocalServiceImpl
 			return null;
 		}
 
-		return commerceDiscountPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceDiscountPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -1996,8 +1996,8 @@ public class CommerceDiscountLocalServiceImpl
 		}
 
 		CommerceDiscount commerceDiscount =
-			commerceDiscountPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commerceDiscountPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commerceDiscount != null) {
 			throw new DuplicateCommerceDiscountException(

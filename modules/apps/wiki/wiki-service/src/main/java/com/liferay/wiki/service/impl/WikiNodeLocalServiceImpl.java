@@ -658,8 +658,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			return;
 		}
 
-		WikiNode wikiNode = wikiNodePersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
+		WikiNode wikiNode = wikiNodePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 
 		if (wikiNode != null) {
 			throw new DuplicateNodeExternalReferenceCodeException(

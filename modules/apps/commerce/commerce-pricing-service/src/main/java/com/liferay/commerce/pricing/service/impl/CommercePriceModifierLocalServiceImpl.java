@@ -240,8 +240,8 @@ public class CommercePriceModifierLocalServiceImpl
 
 		if (!Validator.isBlank(externalReferenceCode)) {
 			CommercePriceModifier commercePriceModifier =
-				commercePriceModifierPersistence.fetchByC_ERC(
-					serviceContext.getCompanyId(), externalReferenceCode);
+				commercePriceModifierPersistence.fetchByERC_C(
+					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (commercePriceModifier != null) {
 				return commercePriceModifierLocalService.
@@ -356,8 +356,8 @@ public class CommercePriceModifierLocalServiceImpl
 			return null;
 		}
 
-		return commercePriceModifierPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commercePriceModifierPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -669,8 +669,8 @@ public class CommercePriceModifierLocalServiceImpl
 		}
 
 		CommercePriceModifier commercePriceModifier =
-			commercePriceModifierPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commercePriceModifierPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commercePriceModifier != null) {
 			throw new DuplicateCommercePriceModifierException(

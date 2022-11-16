@@ -376,8 +376,8 @@ public class CommerceOrderItemLocalServiceImpl
 			return null;
 		}
 
-		return commerceOrderItemPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderItemPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -526,8 +526,8 @@ public class CommerceOrderItemLocalServiceImpl
 		if ((commerceOrderItem == null) &&
 			!Validator.isBlank(externalReferenceCode)) {
 
-			commerceOrderItem = commerceOrderItemPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			commerceOrderItem = commerceOrderItemPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (commerceOrderItem == null) {

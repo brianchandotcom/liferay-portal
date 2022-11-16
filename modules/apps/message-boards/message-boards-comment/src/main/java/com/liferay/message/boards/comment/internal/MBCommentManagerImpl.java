@@ -236,7 +236,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	public Comment fetchComment(long groupId, String externalReferenceCode) {
 		MBMessage mbMessage =
 			_mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
-				groupId, externalReferenceCode);
+				externalReferenceCode, groupId);
 
 		if (mbMessage == null) {
 			return null;
@@ -292,7 +292,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		return new MBCommentImpl(
 			_mbMessageLocalService.getMBMessageByExternalReferenceCode(
-				groupId, externalReferenceCode));
+				externalReferenceCode, groupId));
 	}
 
 	@Override

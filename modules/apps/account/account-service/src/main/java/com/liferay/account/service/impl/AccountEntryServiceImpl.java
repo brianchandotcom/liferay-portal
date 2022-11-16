@@ -183,7 +183,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		AccountEntry accountEntry =
 			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (accountEntry != null) {
 			_accountEntryModelResourcePermission.check(

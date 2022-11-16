@@ -82,7 +82,7 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 
 		COREntry corEntry =
 			corEntryLocalService.fetchCOREntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (corEntry != null) {
 			_corEntryModelResourcePermission.check(

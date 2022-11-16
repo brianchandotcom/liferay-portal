@@ -394,7 +394,7 @@ public class BundleSiteInitializerTest {
 		ClientExtensionEntry clientExtensionEntry =
 			_clientExtensionEntryLocalService.
 				fetchClientExtensionEntryByExternalReferenceCode(
-					group.getCompanyId(), "ERC001");
+					"ERC001", group.getCompanyId());
 
 		Assert.assertNotNull(clientExtensionEntry);
 

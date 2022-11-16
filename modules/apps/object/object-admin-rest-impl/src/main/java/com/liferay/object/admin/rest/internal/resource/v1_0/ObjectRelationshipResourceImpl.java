@@ -138,9 +138,9 @@ public class ObjectRelationshipResourceImpl
 			com.liferay.object.model.ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
 					fetchObjectDefinitionByExternalReferenceCode(
-						contextCompany.getCompanyId(),
 						objectRelationship.
-							getObjectDefinitionExternalReferenceCode2());
+							getObjectDefinitionExternalReferenceCode2(),
+						contextCompany.getCompanyId());
 
 			if (objectDefinition == null) {
 				objectDefinition =

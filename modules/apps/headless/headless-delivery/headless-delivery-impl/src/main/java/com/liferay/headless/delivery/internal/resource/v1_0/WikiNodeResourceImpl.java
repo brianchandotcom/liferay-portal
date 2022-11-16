@@ -61,7 +61,7 @@ public class WikiNodeResourceImpl extends BaseWikiNodeResourceImpl {
 
 		com.liferay.wiki.model.WikiNode wikiNode =
 			_wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		_wikiNodeService.deleteNode(wikiNode.getNodeId());
 	}
@@ -156,7 +156,7 @@ public class WikiNodeResourceImpl extends BaseWikiNodeResourceImpl {
 
 		com.liferay.wiki.model.WikiNode serviceBuilderWikiNode =
 			_wikiNodeLocalService.fetchWikiNodeByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		if (serviceBuilderWikiNode != null) {
 			return _updateWikiNode(serviceBuilderWikiNode, wikiNode);

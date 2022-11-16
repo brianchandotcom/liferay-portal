@@ -2902,8 +2902,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		MBMessage message = mbMessagePersistence.fetchByG_ERC(
-			groupId, externalReferenceCode);
+		MBMessage message = mbMessagePersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
 
 		if (message != null) {
 			throw new DuplicateMessageExternalReferenceCodeException(

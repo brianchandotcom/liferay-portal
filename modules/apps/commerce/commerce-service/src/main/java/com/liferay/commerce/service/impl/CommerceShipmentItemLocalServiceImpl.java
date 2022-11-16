@@ -170,8 +170,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		CommerceShipmentItem commerceShipmentItem = null;
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			commerceShipmentItem = commerceShipmentItemPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			commerceShipmentItem = commerceShipmentItemPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (commerceShipmentItem == null) {
@@ -569,8 +569,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		}
 
 		CommerceShipmentItem commerceShipmentItem =
-			commerceShipmentItemPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commerceShipmentItemPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commerceShipmentItem == null) {
 			return;

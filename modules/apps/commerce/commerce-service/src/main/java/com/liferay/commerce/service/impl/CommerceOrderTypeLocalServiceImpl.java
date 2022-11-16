@@ -205,8 +205,8 @@ public class CommerceOrderTypeLocalServiceImpl
 			return null;
 		}
 
-		return commerceOrderTypePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceOrderTypePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

@@ -135,7 +135,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 		KBFolder kbFolder =
 			kbFolderLocalService.getKBFolderByExternalReferenceCode(
-				groupId, externalReferenceCode);
+				externalReferenceCode, groupId);
 
 		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolder, KBActionKeys.VIEW);

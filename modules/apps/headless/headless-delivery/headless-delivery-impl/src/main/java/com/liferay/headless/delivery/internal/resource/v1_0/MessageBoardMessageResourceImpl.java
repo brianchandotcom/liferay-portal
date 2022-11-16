@@ -123,7 +123,7 @@ public class MessageBoardMessageResourceImpl
 
 		MBMessage mbMessage =
 			_mbMessageLocalService.getMBMessageByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		_mbMessageService.deleteMessage(mbMessage.getMessageId());
 	}
@@ -307,7 +307,7 @@ public class MessageBoardMessageResourceImpl
 
 		return _toMessageBoardMessage(
 			_mbMessageLocalService.getMBMessageByExternalReferenceCode(
-				siteId, externalReferenceCode));
+				externalReferenceCode, siteId));
 	}
 
 	@Override
@@ -439,7 +439,7 @@ public class MessageBoardMessageResourceImpl
 
 		MBMessage mbMessage =
 			_mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				externalReferenceCode, siteId);
 
 		if (mbMessage != null) {
 			return _updateMessageBoardMessage(mbMessage, messageBoardMessage);

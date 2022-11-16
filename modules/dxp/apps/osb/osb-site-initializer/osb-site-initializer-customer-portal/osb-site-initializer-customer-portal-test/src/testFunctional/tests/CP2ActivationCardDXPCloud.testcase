@@ -175,8 +175,6 @@ definition {
 
 		task ("Delete the entries and objects created") {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
-
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 		}
 	}
 

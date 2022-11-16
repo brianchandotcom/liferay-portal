@@ -14,8 +14,8 @@
 
 package com.liferay.layout.page.template.validator.test;
 
-import com.liferay.layout.page.template.exception.PageTemplateValidatorException;
 import com.liferay.layout.page.template.validator.PageTemplateValidator;
+import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -39,7 +39,7 @@ public class PageTemplateValidatorTest {
 	public void testValidatePageTemplateInvalidExtraProperties()
 		throws Exception {
 
-		expectedException.expect(PageTemplateValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith("extraneous key [extra] is not permitted"));
 
@@ -49,7 +49,7 @@ public class PageTemplateValidatorTest {
 
 	@Test
 	public void testValidatePageTemplateInvalidMissingName() throws Exception {
-		expectedException.expect(PageTemplateValidatorException.class);
+		expectedException.expect(JSONValidatorException.class);
 		expectedException.expectMessage(
 			new StringStartsWith("required key [name] not found"));
 

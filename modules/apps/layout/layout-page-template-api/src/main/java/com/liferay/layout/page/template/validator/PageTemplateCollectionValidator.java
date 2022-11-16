@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.validator;
 
-import com.liferay.layout.page.template.exception.PageTemplateCollectionValidatorException;
 import com.liferay.portal.json.validator.JSONValidator;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,19 +25,13 @@ public class PageTemplateCollectionValidator {
 
 	public static void validatePageTemplateCollection(
 			String pageTemplateCollectionJSON)
-		throws PageTemplateCollectionValidatorException {
+		throws JSONValidatorException {
 
 		if (Validator.isNull(pageTemplateCollectionJSON)) {
 			return;
 		}
 
-		try {
-			_jsonValidator.validate(pageTemplateCollectionJSON);
-		}
-		catch (JSONValidatorException jsonValidatorException) {
-			throw new PageTemplateCollectionValidatorException(
-				jsonValidatorException.getMessage(), jsonValidatorException);
-		}
+		_jsonValidator.validate(pageTemplateCollectionJSON);
 	}
 
 	private static final JSONValidator _jsonValidator = new JSONValidator(

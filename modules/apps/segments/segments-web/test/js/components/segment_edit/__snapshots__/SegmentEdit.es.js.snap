@@ -529,10 +529,10 @@ exports[`SegmentEdit renders with given values 1`] = `
                   class="input-group-item"
                 >
                   <input
-                    aria-label="search"
+                    aria-label="search-properties"
                     class="form-control input-group-inset input-group-inset-after"
                     data-testid="search-input"
-                    placeholder="search"
+                    placeholder="search-properties"
                     type="text"
                     value=""
                   />
@@ -542,7 +542,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                     <button
                       class="btn btn-unstyled"
                       data-testid="search-button"
-                      title="Search"
+                      title="search-properties"
                       type="button"
                     >
                       <svg
@@ -736,7 +736,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </b>
                             </span>
                             <select
-                              aria-label="select-option"
+                              aria-label="select-property-operator-option"
                               class="form-control criterion-input form-control operator-input"
                             >
                               <option
@@ -769,7 +769,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                             />
                             <button
                               class="btn-outline-borderless btn-sm mr-1 btn btn-monospaced btn-secondary"
-                              title="Duplicate"
+                              title="duplicate-segment-property"
                               type="button"
                             >
                               <svg
@@ -783,7 +783,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                             </button>
                             <button
                               class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
-                              title="Delete"
+                              title="delete-segment-property"
                               type="button"
                             >
                               <svg

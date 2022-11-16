@@ -20,10 +20,10 @@ exports[`CriteriaSidebar renders 1`] = `
           class="input-group-item"
         >
           <input
-            aria-label="search"
+            aria-label="search-properties"
             class="form-control input-group-inset input-group-inset-after"
             data-testid="search-input"
-            placeholder="search"
+            placeholder="search-properties"
             type="text"
             value=""
           />
@@ -33,7 +33,7 @@ exports[`CriteriaSidebar renders 1`] = `
             <button
               class="btn btn-unstyled"
               data-testid="search-button"
-              title="Search"
+              title="search-properties"
               type="button"
             >
               <svg

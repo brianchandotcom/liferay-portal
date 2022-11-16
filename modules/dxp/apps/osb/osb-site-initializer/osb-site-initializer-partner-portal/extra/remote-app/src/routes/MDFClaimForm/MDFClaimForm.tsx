@@ -106,7 +106,7 @@ const MDFClaimForm = () => {
 						mdfRequest,
 						claimParentFolderId,
 						siteURL,
-						Status.PENDING
+						Status.DRAFT
 					)
 				}
 				validationSchema={claimSchema}

@@ -201,7 +201,7 @@ public class TrashHelperImpl implements TrashHelper {
 
 		TrashedModel trashedModel = trashHandler.getTrashedModel(classPK);
 
-		if (isInTrashContainer(trashedModel)) {
+		if ((trashedModel != null) && isInTrashContainer(trashedModel)) {
 			TrashEntry trashEntry = getTrashEntry(trashedModel);
 
 			className = trashEntry.getClassName();
@@ -251,6 +251,10 @@ public class TrashHelperImpl implements TrashHelper {
 
 	@Override
 	public boolean isInTrashContainer(TrashedModel trashedModel) {
+		if (trashedModel == null) {
+			return false;
+		}
+
 		BaseModel<?> baseModel = (BaseModel<?>)trashedModel;
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(

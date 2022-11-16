@@ -599,32 +599,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			SearchContext searchContext)
 		throws PortalException {
 
-		boolean orderByAsc = false;
-
-		if (Objects.equals(_getOrderByType(), "asc")) {
-			orderByAsc = true;
-		}
-
-		Sort sort = null;
-
-		if (Objects.equals(_getOrderByCol(), "id")) {
-			sort = new Sort(
-				Field.getSortableFieldName(Field.ARTICLE_ID), Sort.STRING_TYPE,
-				!orderByAsc);
-		}
-		else if (Objects.equals(_getOrderByCol(), "modified-date")) {
-			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
-		}
-		else if (Objects.equals(_getOrderByCol(), "relevance")) {
-			sort = new Sort(null, Sort.SCORE_TYPE, false);
-		}
-		else if (Objects.equals(_getOrderByCol(), "title")) {
-			sort = new Sort(
-				Field.getSortableFieldName(
-					"localized_title_" + _themeDisplay.getLanguageId()),
-				!orderByAsc);
-		}
-
 		searchContext.setAndSearch(false);
 		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
 		searchContext.setAttribute(
@@ -656,6 +630,32 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(_getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(_getOrderByCol(), "id")) {
+			sort = new Sort(
+				Field.getSortableFieldName(Field.ARTICLE_ID), Sort.STRING_TYPE,
+				!orderByAsc);
+		}
+		else if (Objects.equals(_getOrderByCol(), "modified-date")) {
+			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
+		}
+		else if (Objects.equals(_getOrderByCol(), "relevance")) {
+			sort = new Sort(null, Sort.SCORE_TYPE, false);
+		}
+		else if (Objects.equals(_getOrderByCol(), "title")) {
+			sort = new Sort(
+				Field.getSortableFieldName(
+					"localized_title_" + _themeDisplay.getLanguageId()),
+				!orderByAsc);
+		}
 
 		if (sort != null) {
 			searchContext.setSorts(sort);

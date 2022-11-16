@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(service = ServletContextUtil.class)
+@Component(service = {})
 public class ServletContextUtil {
 
 	public static CommerceChannelLocalService getCommerceChannelLocalService() {

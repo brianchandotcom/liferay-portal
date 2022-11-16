@@ -543,6 +543,14 @@ definition {
 			AssertElementNotPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_FULL_DESCRIPTION");
 		}
 
+		task ("And assert Specifications/Attachments/Replacements tabs are not shown if there are no specifications/attachments/replacement products set") {
+			for (var text : list "Specifications,Attachments,Replacements") {
+				AssertElementNotPresent(
+					key_text = "${text}",
+					locator1 = "Button#ANY");
+			}
+		}
+
 		task ("When the buyer navigates to Simple T-Shirt product") {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 

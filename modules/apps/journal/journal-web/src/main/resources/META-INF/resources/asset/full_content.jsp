@@ -35,8 +35,8 @@ int cur = ParamUtil.getInteger(request, "cur");
 <liferay-journal:journal-article-display
 	articleDisplay="<%= articleDisplay %>"
 	paginationURL='<%=
-		PortletURLBuilder.createRenderURL(
-			renderResponse
+		PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(request, JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/view_content.jsp"
 		).setRedirect(

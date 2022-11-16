@@ -22,13 +22,11 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayTabs from '@clayui/tabs';
 import ClayUpperToolbar from '@clayui/upper-toolbar';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-web';
 import {useMutation} from 'graphql-hooks';
 import React, {
 	useCallback,
 	useContext,
 	useEffect,
-	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -71,6 +69,7 @@ import {
 	historyPushWithSlug,
 } from '../../utils/utils.es';
 import FlagsContainer from './components/FlagsContainer';
+import useActiviyQuestionKebabOptions from './hooks/useActivityQuestionKebabOptions.es';
 
 const tabs = [
 	{label: Liferay.Language.get('newest'), sortBy: 'dateCreated:desc'},
@@ -113,7 +112,7 @@ const Question = ({
 	const [isModerate, setIsModerate] = useState(false);
 	const [isPageScroll, setIsPageScroll] = useState(false);
 	const [isPostButtonDisable, setIsPostButtonDisable] = useState(true);
-	const [isSubscribed, setIsSubscribe] = useState(true);
+
 	const [isVisibleEditor, setIsVisibleEditor] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [loadingAnswer, setLoadingAnswer] = useState(true);
@@ -122,11 +121,18 @@ const Question = ({
 	const [question, setQuestion] = useState({});
 	const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
 	const [subscribe] = useMutation(subscribeQuery);
-	const [unsubscribe] = useMutation(unsubscribeQuery);
 	const context = useContext(AppContext);
 	const editorRef = useRef('');
-	const FEEDBACK_DELAY = 2000;
 	const historyPushParser = historyPushWithSlug(history.push);
+
+	const {kebabOptions, setIsSubscribe} = useActiviyQuestionKebabOptions({
+		context,
+		question,
+		questionId,
+		sectionTitle,
+		setError,
+		setShowDeleteModalPanel,
+	});
 
 	const fetchMessages = useCallback(() => {
 		const sortBy = tabs[activeIndex].sortBy;
@@ -138,9 +144,10 @@ const Question = ({
 					setLoadingAnswer(false);
 				}
 			);
+
 			setIsSubscribe(question.subscribed);
 		}
-	}, [activeIndex, question, page, pageSize]);
+	}, [activeIndex, question, page, pageSize, setIsSubscribe]);
 
 	useEffect(() => {
 		if (!questionId) {
@@ -199,147 +206,7 @@ const Question = ({
 
 	useEffect(() => {
 		setIsSubscribe(question.subscribed);
-	}, [question.subscribed]);
-
-	const kebabOptions = useMemo(() => {
-		const clipboardHandler = async () => {
-			const urlClipboard = `${getFullPath(
-				context.historyRouterBasePath || 'questions'
-			)}${
-				context.historyRouterBasePath
-					? context.historyRouterBasePath
-					: '#'
-			}/questions/${sectionTitle}/${questionId}`;
-
-			try {
-				await navigator.clipboard.writeText(urlClipboard);
-
-				openToast({
-					message: Liferay.Language.get(
-						'copied-link-to-the-clipboard'
-					),
-					type: 'success',
-				});
-			}
-			catch (error) {
-				setError(error);
-
-				openToast({
-					message: error,
-					title: Liferay.Language.get('an-error-occurred'),
-					type: 'warning',
-				});
-			}
-			finally {
-				setTimeout(() => {
-					setError(null);
-				}, FEEDBACK_DELAY);
-			}
-		};
-
-		const changeSubscribe = (question) => {
-			if (isSubscribed) {
-				unsubscribe(
-					{
-						variables: {
-							messageBoardThreadId: question.id,
-						},
-					},
-					setIsSubscribe(false)
-				);
-
-				openToast({
-					message: Liferay.Language.get('unsubscribe'),
-					type: 'success',
-				});
-			}
-			else {
-				subscribe(
-					{
-						variables: {
-							messageBoardThreadId: question.id,
-						},
-					},
-					setIsSubscribe(true)
-				);
-
-				openToast({
-					message: Liferay.Language.get('subscribe'),
-					type: 'success',
-				});
-			}
-		};
-		const options = [
-			{
-				href: `${getFullPath(
-					context.historyRouterBasePath || 'questions'
-				)}${
-					context.historyRouterBasePath
-						? context.historyRouterBasePath
-						: '#'
-				}/questions/${sectionTitle}/${questionId}`,
-				label: Liferay.Language.get('view-question'),
-				symbolLeft: 'shortcut',
-			},
-			{
-				label: Liferay.Language.get('share'),
-				onClick: () => {
-					clipboardHandler();
-				},
-				symbolLeft: 'share',
-			},
-		];
-
-		if (question?.actions?.replace) {
-			options.push({
-				href: `${getFullPath(
-					context.historyRouterBasePath || 'questions'
-				)}${
-					context.historyRouterBasePath
-						? context.historyRouterBasePath
-						: '#'
-				}/questions/${sectionTitle}/${questionId}/edit`,
-				label: Liferay.Language.get('edit'),
-				symbolLeft: 'pencil',
-			});
-		}
-
-		if (question?.actions?.subscribe || question?.actions?.unsubscribe) {
-			options.push({
-				label: isSubscribed
-					? Liferay.Language.get('unsubscribe')
-					: Liferay.Language.get('subscribe'),
-				onClick: () => {
-					changeSubscribe(question);
-				},
-				symbolLeft: isSubscribed ? 'bell-off' : 'bell-on',
-			});
-		}
-		if (question?.actions?.delete) {
-			options.push(
-				{
-					type: 'divider',
-				},
-				{
-					label: Liferay.Language.get('delete'),
-					onClick: () => {
-						setShowDeleteModalPanel(true);
-					},
-					symbolLeft: 'trash',
-				}
-			);
-		}
-
-		return options;
-	}, [
-		context.historyRouterBasePath,
-		isSubscribed,
-		question,
-		questionId,
-		sectionTitle,
-		subscribe,
-		unsubscribe,
-	]);
+	}, [question.subscribed, setIsSubscribe]);
 
 	useEffect(() => {
 		if (question.id && context?.questionsVisited && !questionVisited) {
@@ -540,7 +407,7 @@ const Question = ({
 
 			<div
 				className={classNames('', {
-					' c-mt-2': display.styled,
+					'c-mt-2': display.styled,
 					'c-mt-5': !display.styled,
 				})}
 			>
@@ -632,22 +499,20 @@ const Question = ({
 										</h1>
 
 										{display.kebab && (
-											<>
-												<ClayManagementToolbar.ItemList>
-													<ClayUpperToolbar.Item>
-														<ClayDropDownWithItems
-															items={kebabOptions}
-															trigger={
-																<ClayButtonWithIcon
-																	displayType="unstyled"
-																	small
-																	symbol="ellipsis-v"
-																/>
-															}
-														/>
-													</ClayUpperToolbar.Item>
-												</ClayManagementToolbar.ItemList>
-											</>
+											<ClayManagementToolbar.ItemList>
+												<ClayUpperToolbar.Item>
+													<ClayDropDownWithItems
+														items={kebabOptions}
+														trigger={
+															<ClayButtonWithIcon
+																displayType="unstyled"
+																small
+																symbol="ellipsis-v"
+															/>
+														}
+													/>
+												</ClayUpperToolbar.Item>
+											</ClayManagementToolbar.ItemList>
 										)}
 									</div>
 
@@ -660,8 +525,12 @@ const Question = ({
 											)}
 										/>
 
-										{`
-										/ ${lang.sub(Liferay.Language.get('viewed-x-times'), [question.viewCount])}`}
+										{`/ ${lang.sub(
+											Liferay.Language.get(
+												'viewed-x-times'
+											),
+											[question.viewCount]
+										)}`}
 									</p>
 								</div>
 
@@ -669,7 +538,7 @@ const Question = ({
 									<div className="col-md-5 text-right">
 										<ClayButton.Group
 											className="questions-actions"
-											spaced={true}
+											spaced
 										>
 											{display.actions &&
 												question.actions.subscribe && (
@@ -710,25 +579,23 @@ const Question = ({
 													/>
 												)}
 
-											<>
-												{display.actions &&
-													question.actions.delete && (
-														<ClayButton
-															data-tooltip-align="top"
-															displayType="secondary"
-															onClick={() =>
-																setShowDeleteModalPanel(
-																	true
-																)
-															}
-															title={Liferay.Language.get(
-																'delete'
-															)}
-														>
-															<ClayIcon symbol="trash" />
-														</ClayButton>
-													)}
-											</>
+											{display.actions &&
+												question.actions.delete && (
+													<ClayButton
+														data-tooltip-align="top"
+														displayType="secondary"
+														onClick={() =>
+															setShowDeleteModalPanel(
+																true
+															)
+														}
+														title={Liferay.Language.get(
+															'delete'
+														)}
+													>
+														<ClayIcon symbol="trash" />
+													</ClayButton>
+												)}
 
 											<FlagsContainer
 												content={question}

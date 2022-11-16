@@ -189,7 +189,7 @@
 		${editPageURL.setParameter("title", entry.getTitle())}
 
 		<@liferay_ui["icon"]
-			iconCssClass="icon-edit"
+			icon="pencil"
 			message=entry.getTitle()
 			url=editPageURL?string
 		/>
@@ -221,7 +221,7 @@
 	/>
 
 	<@liferay_ui["icon"]
-		iconCssClass="icon-print"
+		icon="print"
 		message="print"
 		url=taglibPrintURL
 	/>

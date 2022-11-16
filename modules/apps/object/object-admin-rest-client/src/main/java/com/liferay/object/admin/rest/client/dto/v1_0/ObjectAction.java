@@ -163,6 +163,28 @@ public class ObjectAction implements Cloneable, Serializable {
 
 	protected String description;
 
+	public Map<String, String> getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(Map<String, String> errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public void setErrorMessage(
+		UnsafeSupplier<Map<String, String>, Exception>
+			errorMessageUnsafeSupplier) {
+
+		try {
+			errorMessage = errorMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> errorMessage;
+
 	public Long getId() {
 		return id;
 	}
@@ -181,6 +203,27 @@ public class ObjectAction implements Cloneable, Serializable {
 	}
 
 	protected Long id;
+
+	public Map<String, String> getLabel() {
+		return label;
+	}
+
+	public void setLabel(Map<String, String> label) {
+		this.label = label;
+	}
+
+	public void setLabel(
+		UnsafeSupplier<Map<String, String>, Exception> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> label;
 
 	public String getName() {
 		return name;

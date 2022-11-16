@@ -81,6 +81,12 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
+	public void
+			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+				String objectEntryExternalReferenceCode,
+				String objectActionName)
+		throws Exception;
+
 	public void deleteScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception;
@@ -110,6 +116,10 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response putObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public void putObjectEntryObjectActionObjectActionName(
+			Long objectEntryId, String objectActionName)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>

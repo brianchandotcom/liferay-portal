@@ -62,10 +62,8 @@ public class AnnotationFeature implements Feature {
 	public boolean configure(FeatureContext featureContext) {
 		Set<String> scopes = new HashSet<>();
 
-		// TODO What is a?
-
 		featureContext.register(
-			(DynamicFeature)(resourceInfo, a) -> scopes.addAll(
+			(DynamicFeature)(resourceInfo, fc) -> scopes.addAll(
 				RequiresScopeAnnotationFinder.find(
 					resourceInfo.getResourceClass())));
 

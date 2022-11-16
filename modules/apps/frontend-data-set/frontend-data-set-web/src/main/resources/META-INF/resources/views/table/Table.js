@@ -16,7 +16,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
@@ -154,15 +154,16 @@ function Table({items, itemsActions, schema, style}) {
 
 								return (
 									<React.Fragment key={itemId}>
-										<DndTable.Row
-											className={classNames({
-												active: highlightedItemsValue.includes(
-													itemId
-												),
-												selected: selectedItemsValue.includes(
-													itemId
-												),
-											})}
+										<RowWithActions
+											active={highlightedItemsValue.includes(
+												itemId
+											)}
+											item={item}
+											itemId={itemId}
+											itemsActions={itemsActions}
+											selected={selectedItemsValue.includes(
+												itemId
+											)}
 										>
 											{selectable && (
 												<DndTable.Cell
@@ -199,13 +200,7 @@ function Table({items, itemsActions, schema, style}) {
 												itemsActions,
 												itemsChanges[itemId]
 											)}
-
-											<ActionsCell
-												item={item}
-												itemId={itemId}
-												itemsActions={itemsActions}
-											/>
-										</DndTable.Row>
+										</RowWithActions>
 
 										{nestedItems &&
 											nestedItems.map((nestedItem, i) => (
@@ -264,7 +259,13 @@ function Table({items, itemsActions, schema, style}) {
 	);
 }
 
-const ActionsCell = ({item, itemId, itemsActions}) => {
+const ActionsCell = ({
+	item,
+	itemId,
+	itemsActions,
+	menuActive,
+	onMenuActiveChange,
+}) => {
 	return (
 		<DndTable.Cell className="item-actions" columnName="item-actions">
 			{(itemsActions?.length > 0 ||
@@ -273,9 +274,45 @@ const ActionsCell = ({item, itemId, itemsActions}) => {
 					actions={itemsActions || item.actionDropdownItems}
 					itemData={item}
 					itemId={itemId}
+					menuActive={menuActive}
+					onMenuActiveChange={onMenuActiveChange}
 				/>
 			)}
 		</DndTable.Cell>
+	);
+};
+
+const RowWithActions = ({
+	active,
+	children,
+	className,
+	item,
+	itemId,
+	itemsActions,
+	selected,
+	...props
+}) => {
+	const [menuActive, setMenuActive] = useState(false);
+
+	return (
+		<DndTable.Row
+			className={classNames(className, {
+				active,
+				expanded: menuActive,
+				selected,
+			})}
+			{...props}
+		>
+			{children}
+
+			<ActionsCell
+				item={item}
+				itemId={itemId}
+				itemsActions={itemsActions}
+				menuActive={menuActive}
+				onMenuActiveChange={setMenuActive}
+			/>
+		</DndTable.Row>
 	);
 };
 

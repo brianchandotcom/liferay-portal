@@ -19,7 +19,7 @@ import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
@@ -67,12 +67,12 @@ function ActionsDropdown({
 	itemData,
 	itemId,
 	loading,
+	menuActive,
 	onClick,
+	onMenuActiveChange,
 	setLoading,
 }) {
 	const context = useContext(FrontendDataSetContext);
-
-	const [menuActive, setMenuActive] = useState(false);
 
 	const inlineEditingAvailable =
 		context.inlineEditingSettings && itemData.actions?.update;
@@ -228,7 +228,7 @@ function ActionsDropdown({
 			return (
 				<DropdownItem
 					action={item}
-					closeMenu={() => setMenuActive(false)}
+					closeMenu={() => onMenuActiveChange(false)}
 					handleAction={handleAction}
 					itemData={itemData}
 					itemId={itemId}
@@ -246,7 +246,7 @@ function ActionsDropdown({
 
 			<ClayDropDown
 				active={menuActive}
-				onActiveChange={setMenuActive}
+				onActiveChange={onMenuActiveChange}
 				trigger={
 					<ClayButton
 						className="component-action dropdown-toggle ml-1"

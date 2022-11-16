@@ -20,7 +20,7 @@ const noResultsElement = document.getElementById(
 );
 const uiInputElement = document.getElementById(
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-ui-input`
+	`${fragmentEntryLinkNamespace}-select-from-list-input`
 );
 const valueInputElement = document.getElementById(
 	// eslint-disable-next-line no-undef

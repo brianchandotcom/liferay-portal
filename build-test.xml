@@ -9635,176 +9635,201 @@ virtualHostname="localhost"
 	</target>
 
 	<target name="deploy-osgi-apps">
-		<get-testcase-property property.name="osgi.app.includes" />
+		<for list="${osgi.app.includes}" param="osgi.app.name">
+			<sequential>
+				<antelope:stringutil property="osgi.app.name" string="@{osgi.app.name}">
+					<antelope:trim />
+				</antelope:stringutil>
 
-		<if>
-			<isset property="osgi.app.includes" />
-			<then>
-				<for list="${osgi.app.includes}" param="osgi.app.name">
+				<local name="app.dir.includes" />
+
+				<condition else="apps/${osgi.app.name},apps/archived/${osgi.app.name}" property="app.dir.includes" value="apps/${osgi.app.name},apps/archived/${osgi.app.name},dxp/apps/${osgi.app.name}">
+					<and>
+						<equals arg1="${build.profile}" arg2="dxp" />
+						<not>
+							<equals arg1="${osgi.app.name}" arg2="commerce" />
+						</not>
+					</and>
+				</condition>
+
+				<for param="app.dir">
+					<path>
+						<dirset
+							dir="modules"
+							includes="${app.dir.includes}"
+						/>
+					</path>
 					<sequential>
-						<antelope:stringutil property="osgi.app.name" string="@{osgi.app.name}">
-							<antelope:trim />
-						</antelope:stringutil>
+						<local name="Liferay-Releng-App-Title" />
 
-						<local name="app.dir.includes" />
+						<property file="@{app.dir}/app.bnd" />
 
-						<condition else="apps/${osgi.app.name},apps/archived/${osgi.app.name}" property="app.dir.includes" value="apps/${osgi.app.name},apps/archived/${osgi.app.name},dxp/apps/${osgi.app.name}">
+						<if>
+							<available file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+							<then>
+								<delete file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+							</then>
+						</if>
+
+						<if>
 							<and>
-								<equals arg1="${build.profile}" arg2="dxp" />
-								<not>
-									<equals arg1="${osgi.app.name}" arg2="commerce" />
-								</not>
+								<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+								<equals arg1="${osgi.app.name}" arg2="commerce" />
 							</and>
-						</condition>
+							<then>
+								<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg.</echo>
 
-						<for param="app.dir">
-							<path>
-								<dirset
-									dir="modules"
-									includes="${app.dir.includes}"
+								<copy
+									file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
+									tofile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
 								/>
-							</path>
-							<sequential>
-								<local name="Liferay-Releng-App-Title" />
+							</then>
+							<elseif>
+								<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+								<then>
+									<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
 
-								<property file="@{app.dir}/app.bnd" />
+									<copy
+										file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
+										tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
+									/>
+								</then>
+							</elseif>
+							<elseif>
+								<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+								<then>
+									<echo>Copying ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
 
+									<copy
+										file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg"
+										tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
+									/>
+								</then>
+							</elseif>
+							<else>
 								<if>
-									<available file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									<isset property="env.TEST_PORTAL_RELEASE_VERSION" />
 									<then>
-										<delete file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+										<fail message="This release test is attempting to build Marketplace applications from source instead of deploying the latest released version from Marketplace." />
 									</then>
 								</if>
+
+								<echo>Deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
+
+								<local name="app.name" />
+
+								<propertyregex
+									input="@{app.dir}"
+									property="app.name"
+									regexp=".*\/(.*)"
+									select="\1"
+								/>
+
+								<available file="@{app.dir}/settings.gradle" property="settings.gradle.present" />
+
+								<move
+									failonerror="false"
+									file="@{app.dir}/settings.gradle"
+									if:set="settings.gradle.present"
+									tofile="@{app.dir}/settings.gradle.temp"
+									verbose="true"
+								/>
+
+								<for param="module.dir.path">
+									<path>
+										<dirset
+											dir="@{app.dir}"
+										>
+											<exclude name="**/*-test*" />
+											<include name="**" />
+											<present targetdir="@{app.dir}">
+												<mapper
+													from="*"
+													to="*/bnd.bnd"
+													type="glob"
+												/>
+											</present>
+										</dirset>
+									</path>
+									<sequential>
+										<if>
+											<contains string="${test.modules.force.deploy}" substring="${app.name}" />
+											<then>
+												<echo file="@{module.dir.path}/.lfrbuild-portal" />
+											</then>
+										</if>
+									</sequential>
+								</for>
+
+								<gradle-execute dir="@{app.dir}" task="deploy">
+									<arg value="clean" />
+									<arg value="-Dbuild.profile=${build.profile}" />
+								</gradle-execute>
 
 								<if>
 									<and>
-										<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
 										<equals arg1="${osgi.app.name}" arg2="commerce" />
+										<not>
+											<contains string="@{app.dir}" substring="dxp" />
+										</not>
 									</and>
 									<then>
-										<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg.</echo>
-
-										<copy
-											file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
-											tofile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
-										/>
-									</then>
-									<elseif>
-										<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
-										<then>
-											<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
-
-											<copy
-												file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
-												tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
-											/>
-										</then>
-									</elseif>
-									<elseif>
-										<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
-										<then>
-											<echo>Copying ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
-
-											<copy
-												file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg"
-												tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
-											/>
-										</then>
-									</elseif>
-									<else>
-										<if>
-											<isset property="env.TEST_PORTAL_RELEASE_VERSION" />
-											<then>
-												<fail message="This release test is attempting to build Marketplace applications from source instead of deploying the latest released version from Marketplace." />
-											</then>
-										</if>
-
-										<echo>Deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
-
-										<local name="app.name" />
-
-										<propertyregex
-											input="@{app.dir}"
-											property="app.name"
-											regexp=".*\/(.*)"
-											select="\1"
-										/>
-
-										<move
-											failonerror="false"
-											file="@{app.dir}/settings.gradle"
-											quiet="true"
-											tofile="@{app.dir}/settings.gradle.temp"
-										/>
-
-										<for param="module.dir.path">
-											<path>
-												<dirset
-													dir="@{app.dir}"
-												>
-													<exclude name="**/*-test*" />
-													<include name="**" />
-													<present targetdir="@{app.dir}">
-														<mapper
-															from="*"
-															to="*/bnd.bnd"
-															type="glob"
-														/>
-													</present>
-												</dirset>
-											</path>
-											<sequential>
-												<if>
-													<contains string="${test.modules.force.deploy}" substring="${app.name}" />
-													<then>
-														<echo file="@{module.dir.path}/.lfrbuild-portal" />
-													</then>
-												</if>
-											</sequential>
-										</for>
-
-										<gradle-execute dir="@{app.dir}" task="deploy">
+										<gradle-execute dir="${project.dir}/modules/dxp/apps/${osgi.app.name}" task="deploy">
 											<arg value="clean" />
 											<arg value="-Dbuild.profile=${build.profile}" />
 										</gradle-execute>
+									</then>
+								</if>
 
+								<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
+									<property name="app.name" value="${osgi.app.name}" />
+									<property name="output.dir" value="${liferay.home}/osgi/marketplace" />
+									<property name="osgi.dir" value="${liferay.home}/osgi" />
+								</ant>
+
+								<gradle-execute dir="@{app.dir}" task="clean" />
+
+								<available file="@{app.dir}/settings.gradle.temp" property="setting.gradle.temp.present" />
+
+								<move
+									failonerror="false"
+									file="@{app.dir}/settings.gradle.temp"
+									if:set="setting.gradle.temp.present"
+									tofile="@{app.dir}/settings.gradle"
+									verbose="true"
+								/>
+
+								<for param="module.dir.path">
+									<path>
+										<dirset
+											dir="@{app.dir}"
+										>
+											<exclude name="**/*-test*" />
+											<include name="**" />
+											<present targetdir="@{app.dir}">
+												<mapper
+													from="*"
+													to="*/bnd.bnd"
+													type="glob"
+												/>
+											</present>
+										</dirset>
+									</path>
+									<sequential>
 										<if>
-											<and>
-												<equals arg1="${osgi.app.name}" arg2="commerce" />
-												<not>
-													<contains string="@{app.dir}" substring="dxp" />
-												</not>
-											</and>
+											<contains string="${test.modules.force.deploy}" substring="${app.name}" />
 											<then>
-												<gradle-execute dir="${project.dir}/modules/dxp/apps/${osgi.app.name}" task="deploy">
-													<arg value="clean" />
-													<arg value="-Dbuild.profile=${build.profile}" />
-												</gradle-execute>
+												<delete file="@{module.dir.path}/.lfrbuild-portal" />
 											</then>
 										</if>
-
-										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
-											<property name="app.name" value="${osgi.app.name}" />
-											<property name="output.dir" value="${liferay.home}/osgi/marketplace" />
-											<property name="osgi.dir" value="${liferay.home}/osgi" />
-										</ant>
-
-										<gradle-execute dir="@{app.dir}" task="clean" />
-
-										<move
-											failonerror="false"
-											file="@{app.dir}/settings.gradle.temp"
-											quiet="true"
-											tofile="@{app.dir}/settings.gradle"
-										/>
-									</else>
-								</if>
-							</sequential>
-						</for>
+									</sequential>
+								</for>
+							</else>
+						</if>
 					</sequential>
 				</for>
-			</then>
-		</if>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="deploy-osgi-module-configurations">
@@ -14807,7 +14832,9 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<antcall target="deploy-osgi-apps" />
+		<get-testcase-property property.name="osgi.app.includes" />
+
+		<antcall if:set="osgi.app.includes" target="deploy-osgi-apps" />
 
 		<antcall target="hot-deploy-osgi-apps" />
 

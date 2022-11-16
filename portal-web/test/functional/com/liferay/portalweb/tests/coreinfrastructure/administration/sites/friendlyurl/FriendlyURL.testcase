@@ -42,6 +42,14 @@ definition {
 		AssertConsoleTextPresent(value1 = "NoSuchVirtualHostException");
 	}
 
+	@description = "Verify navigating to the URL of an uncreated portlet does not throw errors."
+	@priority = "3"
+	test NavigatingToURLOfUncreatedPortletDoesNotThrowError {
+		property test.assert.warning.exceptions = "true";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/home/-/testportlet");
+	}
+
 	@description = "If virtual.hosts.strict.access=true is not set, redirect to a default instance even if there is no associated company"
 	@priority = "3"
 	test RedirectToDefaultInstanceWithNoCompany {

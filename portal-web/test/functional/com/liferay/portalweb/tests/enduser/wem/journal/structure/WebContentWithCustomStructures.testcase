@@ -1937,7 +1937,7 @@ definition {
 				key_fieldFieldLabel = "Select from List",
 				locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER");
 
-			for (var selectFromListOption : list "Choose an Option,option 1,option 2,option 3") {
+			for (var selectFromListOption : list "option 1,option 2,option 3") {
 				AssertElementPresent(
 					key_menuItem = "${selectFromListOption}",
 					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
@@ -1951,7 +1951,7 @@ definition {
 		}
 
 		task ("View options are shown in Select From List after add repeatable fields") {
-			for (var selectFromListOption : list "Choose an Option,option 1,option 2,option 3") {
+			for (var selectFromListOption : list "option 1,option 2,option 3") {
 				Click(
 					key_fieldFieldLabel = "Select from List",
 					locator1 = "WCEditWebContent#SELECT_FIELD_TRIGGER_2");

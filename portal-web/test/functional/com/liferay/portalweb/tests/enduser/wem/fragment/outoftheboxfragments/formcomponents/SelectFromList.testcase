@@ -106,7 +106,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Reserved,Giveaways,Members");
+			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -130,7 +130,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Reserved,Giveaways,Members");
+			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
 		}
 	}
 
@@ -224,7 +224,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
+			MenuItem.viewOrder(menuItemList = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
 
 			MenuItem.viewNotPresent(menuItem = "Rice");
 
@@ -243,14 +243,16 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
+			MenuItem.viewOrder(menuItemList = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
 
 			MenuItem.viewNotPresent(menuItem = "Rice");
 		}
 
 		task ("When the page designer searches an non-existing option") {
-			Type(
-				locator1 = "MenuItem#SEARCH_FIELD",
+			Type.sendKeys(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "select-from-list",
 				value1 = "Non-Existing");
 		}
 
@@ -259,8 +261,15 @@ definition {
 		}
 
 		task ("When the page designer searches for the 11th entry") {
-			Type(
-				locator1 = "MenuItem#SEARCH_FIELD",
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			Type.sendKeys(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "select-from-list",
 				value1 = "Rice");
 		}
 
@@ -338,7 +347,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free");
+			MenuItem.viewOrder(menuItemList = "Assets,Equity,Expenses,Free");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -355,7 +364,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free");
+			MenuItem.viewOrder(menuItemList = "Assets,Equity,Expenses,Free");
 		}
 
 		task ("When the page designer adds six accounts") {
@@ -376,7 +385,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
+			MenuItem.viewOrder(menuItemList = "Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
 
 			AssertNotVisible(locator1 = "MenuItem#SEARCH_FIELD");
 

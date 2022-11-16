@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=my-subscriptions-portlet",
 		"com.liferay.portlet.display-category=category.collaboration",

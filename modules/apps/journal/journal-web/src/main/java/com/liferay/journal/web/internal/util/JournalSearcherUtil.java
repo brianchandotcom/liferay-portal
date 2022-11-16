@@ -15,7 +15,9 @@
 package com.liferay.journal.web.internal.util;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -37,6 +39,37 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = {})
 public class JournalSearcherUtil {
+
+	public static List<Object> searchJournalArticleAndFolders(
+		Consumer<SearchContext> searchContextConsumer) {
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).modelIndexerClasses(
+				JournalArticle.class, JournalFolder.class
+			).withSearchContext(
+				searchContextConsumer
+			).build());
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		return TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
+
+				String className = document.getString(Field.ENTRY_CLASS_NAME);
+
+				if (className.equals(JournalArticle.class.getName())) {
+					return _journalArticleLocalService.fetchLatestArticle(
+						document.getLong(Field.ENTRY_CLASS_PK),
+						WorkflowConstants.STATUS_ANY, false);
+				}
+
+				return _journalFolderLocalService.fetchJournalFolder(
+					document.getLong(Field.ENTRY_CLASS_PK));
+			});
+	}
 
 	public static List<JournalArticle> searchJournalArticles(
 		Consumer<SearchContext> searchContextConsumer) {
@@ -70,6 +103,13 @@ public class JournalSearcherUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSearcher(Searcher searcher) {
 		_searcher = searcher;
 	}
@@ -82,6 +122,7 @@ public class JournalSearcherUtil {
 	}
 
 	private static JournalArticleLocalService _journalArticleLocalService;
+	private static JournalFolderLocalService _journalFolderLocalService;
 	private static Searcher _searcher;
 	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
 

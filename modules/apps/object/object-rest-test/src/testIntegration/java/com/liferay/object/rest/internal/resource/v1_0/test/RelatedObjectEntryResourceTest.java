@@ -130,7 +130,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
@@ -143,7 +143,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -170,7 +170,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -184,7 +184,7 @@ public class RelatedObjectEntryResourceTest {
 		HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -195,7 +195,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -224,7 +224,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -237,7 +237,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -266,7 +266,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
@@ -279,7 +279,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -306,7 +306,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -320,7 +320,7 @@ public class RelatedObjectEntryResourceTest {
 		HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -331,7 +331,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -360,7 +360,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -373,7 +373,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -400,7 +400,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
@@ -423,7 +423,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -458,7 +458,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -472,7 +472,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -499,7 +499,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
@@ -512,7 +512,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRestContextPath(
+				JaxRsApplicationDescriptorUtil.getRESTContextPath(
 					_userSystemObjectDefinitionMetadata.
 						getJaxRsApplicationDescriptor()),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,

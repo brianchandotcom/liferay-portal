@@ -172,7 +172,7 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			return StringPool.BLANK;
 		}
 
-		return JaxRsApplicationDescriptorUtil.getRestContextPath(
+		return JaxRsApplicationDescriptorUtil.getRESTContextPath(
 			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor());
 	}
 

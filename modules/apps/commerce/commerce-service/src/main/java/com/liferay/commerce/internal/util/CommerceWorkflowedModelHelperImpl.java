@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = CommerceWorkflowedModelHelper.class)
+@Component(service = CommerceWorkflowedModelHelper.class)
 public class CommerceWorkflowedModelHelperImpl
 	implements CommerceWorkflowedModelHelper {
 

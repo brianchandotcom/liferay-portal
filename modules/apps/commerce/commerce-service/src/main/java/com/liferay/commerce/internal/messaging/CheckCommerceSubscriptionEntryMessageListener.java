@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.configuration.CommerceSubscriptionConfiguration",
-	immediate = true,
 	service = CheckCommerceSubscriptionEntryMessageListener.class
 )
 public class CheckCommerceSubscriptionEntryMessageListener

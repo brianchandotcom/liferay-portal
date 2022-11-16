@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luca Pellizzon
  */
 @Component(
-	immediate = true,
 	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.DELIVERY_SUBSCRIPTION_INFO,
 	service = CPContentContributor.class
 )

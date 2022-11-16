@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true, property = "sap.scope.finder=true",
+	property = "sap.scope.finder=true",
 	service = {
 		PortalInstanceLifecycleListener.class, ScopeFinder.class,
 		ScopeMapper.class

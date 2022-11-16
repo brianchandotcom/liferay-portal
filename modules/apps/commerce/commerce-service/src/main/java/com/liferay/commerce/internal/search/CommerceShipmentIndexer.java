@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 
 	public static final String CLASS_NAME = CommerceShipment.class.getName();

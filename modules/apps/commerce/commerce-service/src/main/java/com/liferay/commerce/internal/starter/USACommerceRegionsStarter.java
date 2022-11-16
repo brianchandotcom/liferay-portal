@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	immediate = true,
 	property = "commerce.region.starter.key=" + USACommerceRegionsStarter.USA_NUMERIC_ISO_CODE,
 	service = CommerceRegionsStarter.class
 )

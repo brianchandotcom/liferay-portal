@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.order.status.key=" + InProgressCommerceOrderStatusImpl.KEY,
 		"commerce.order.status.priority:Integer=" + InProgressCommerceOrderStatusImpl.PRIORITY

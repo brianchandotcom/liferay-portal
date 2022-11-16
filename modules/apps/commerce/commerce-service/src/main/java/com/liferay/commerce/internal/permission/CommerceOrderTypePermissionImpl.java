@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(immediate = true, service = CommerceOrderTypePermission.class)
+@Component(service = CommerceOrderTypePermission.class)
 public class CommerceOrderTypePermissionImpl
 	implements CommerceOrderTypePermission {
 

@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Alec Sloan
  */
 @Component(
-	immediate = true,
 	property = {
 		"commerce.order.status.key=" + PendingCommerceOrderStatusImpl.KEY,
 		"commerce.order.status.priority:Integer=" + PendingCommerceOrderStatusImpl.PRIORITY

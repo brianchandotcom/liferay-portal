@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceTaxEngineRegistry.class)
+@Component(service = CommerceTaxEngineRegistry.class)
 public class CommerceTaxEngineRegistryImpl
 	implements CommerceTaxEngineRegistry {
 

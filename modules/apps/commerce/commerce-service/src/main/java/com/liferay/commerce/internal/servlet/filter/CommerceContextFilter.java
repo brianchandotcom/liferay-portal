@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true,
 	property = {
 		"servlet-context-name=", "servlet-filter-name=Commerce Context Filter",
 		"url-pattern=/o/frontend-taglib-clay/app/*",

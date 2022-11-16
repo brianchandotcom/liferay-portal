@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	immediate = true,
 	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.PURCHASABLE,
 	service = CPContentContributor.class
 )

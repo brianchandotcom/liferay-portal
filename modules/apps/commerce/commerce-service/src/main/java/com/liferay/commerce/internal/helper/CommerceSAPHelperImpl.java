@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luca Pellizzon
  */
-@Component(immediate = true, service = CommerceSAPHelper.class)
+@Component(service = CommerceSAPHelper.class)
 public class CommerceSAPHelperImpl implements CommerceSAPHelper {
 
 	@Override

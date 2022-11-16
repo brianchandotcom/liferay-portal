@@ -95,7 +95,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(immediate = true, service = CommerceOrderEngine.class)
+@Component(service = CommerceOrderEngine.class)
 public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	@Override

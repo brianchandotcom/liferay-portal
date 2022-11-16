@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.commerce.model.CommerceOrder",
 	service = ModelDocumentContributor.class
 )

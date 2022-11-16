@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  */
 @Component(
-	immediate = true,
 	property = "commerce.region.starter.key=" + IndiaCommerceRegionsStarter.INDIA_NUMERIC_ISO_CODE,
 	service = CommerceRegionsStarter.class
 )

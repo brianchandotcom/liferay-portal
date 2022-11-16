@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	immediate = true,
 	property = {
 		"cp.definition.inventory.engine.key=" + CPDefinitionInventoryEngineImpl.KEY,
 		"cp.definition.inventory.engine.priority:Integer=1"

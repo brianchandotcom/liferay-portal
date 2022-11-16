@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.configuration.CommerceOrderTypeConfiguration",
-	immediate = true, service = CheckCommerceOrderTypeMessageListener.class
+	service = CheckCommerceOrderTypeMessageListener.class
 )
 public class CheckCommerceOrderTypeMessageListener extends BaseMessageListener {
 

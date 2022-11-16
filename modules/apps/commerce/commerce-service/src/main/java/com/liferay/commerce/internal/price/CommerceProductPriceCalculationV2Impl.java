@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Riccardo Alberti
  */
-@Component(immediate = true, service = CommerceProductPriceCalculation.class)
+@Component(service = CommerceProductPriceCalculation.class)
 public class CommerceProductPriceCalculationV2Impl
 	extends BaseCommerceProductPriceCalculation {
 

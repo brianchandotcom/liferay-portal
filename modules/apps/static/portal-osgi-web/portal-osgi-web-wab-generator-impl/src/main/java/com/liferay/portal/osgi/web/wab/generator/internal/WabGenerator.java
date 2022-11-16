@@ -70,7 +70,6 @@ import org.osgi.util.tracker.BundleTracker;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true,
 	service = com.liferay.portal.osgi.web.wab.generator.WabGenerator.class
 )
 public class WabGenerator

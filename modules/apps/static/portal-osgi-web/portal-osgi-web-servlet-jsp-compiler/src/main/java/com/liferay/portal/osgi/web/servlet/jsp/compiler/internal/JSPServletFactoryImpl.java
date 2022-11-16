@@ -50,7 +50,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = JSPServletFactory.class)
+@Component(service = JSPServletFactory.class)
 public class JSPServletFactoryImpl implements JSPServletFactory {
 
 	@Override

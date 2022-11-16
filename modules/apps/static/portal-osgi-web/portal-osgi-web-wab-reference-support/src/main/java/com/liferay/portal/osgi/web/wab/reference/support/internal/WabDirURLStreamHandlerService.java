@@ -55,7 +55,6 @@ import org.osgi.service.url.URLStreamHandlerService;
  * @author Gregory Amerson
  */
 @Component(
-	immediate = true,
 	property = URLConstants.URL_HANDLER_PROTOCOL + "=webbundledir",
 	service = URLStreamHandlerService.class
 )

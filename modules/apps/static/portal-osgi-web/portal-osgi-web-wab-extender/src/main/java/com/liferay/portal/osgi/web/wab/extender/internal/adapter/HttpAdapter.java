@@ -53,7 +53,7 @@ import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class HttpAdapter {
 
 	@Activate

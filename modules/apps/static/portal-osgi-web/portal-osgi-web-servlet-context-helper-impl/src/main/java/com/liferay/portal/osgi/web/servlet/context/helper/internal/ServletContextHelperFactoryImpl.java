@@ -40,7 +40,7 @@ import org.xml.sax.SAXNotSupportedException;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = ServletContextHelperFactory.class)
+@Component(service = ServletContextHelperFactory.class)
 public class ServletContextHelperFactoryImpl
 	implements ServletContextHelperFactory {
 

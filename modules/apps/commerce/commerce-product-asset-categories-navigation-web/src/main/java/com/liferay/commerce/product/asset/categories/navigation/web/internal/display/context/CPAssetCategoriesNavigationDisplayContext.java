@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -141,12 +143,22 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return _assetVocabulary;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		long assetVocabularyId = GetterUtil.getLong(
 			_cpAssetCategoriesNavigationPortletInstanceConfiguration.
 				assetVocabularyId());
 
-		_assetVocabulary = _assetVocabularyService.fetchVocabulary(
-			assetVocabularyId);
+		if ((assetVocabularyId > 0) &&
+			AssetVocabularyPermission.contains(
+				themeDisplay.getPermissionChecker(), assetVocabularyId,
+				ActionKeys.VIEW)) {
+
+			_assetVocabulary = _assetVocabularyService.fetchVocabulary(
+				assetVocabularyId);
+		}
 
 		return _assetVocabulary;
 	}

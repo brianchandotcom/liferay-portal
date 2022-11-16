@@ -50,8 +50,8 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 			})}
 		>
 			<>
-				{alerts.map(({header, text}, index) => {
-					return (
+				<div className="box-alerts">
+					{alerts.map(({header, text}, index) => (
 						<div className="box-alert" key={index}>
 							<ClayAlert
 								displayType="danger"
@@ -62,12 +62,12 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
 								<span className="ml-1">{text}</span>
 							</ClayAlert>
 						</div>
-					);
-				})}
+					))}
+				</div>
 
 				<div className="align-items d-flex justify-content-between m-3">
 					<div className="box-label-selected d-flex">
-						<span className="mr-2 selectd-count">
+						<span className="mr-2 selected-count">
 							{selectedCount}
 						</span>
 

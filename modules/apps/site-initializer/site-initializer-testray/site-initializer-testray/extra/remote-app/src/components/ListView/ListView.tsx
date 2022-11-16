@@ -41,12 +41,14 @@ import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
 
+type ChildrenOptions = {
+	dispatch: React.Dispatch<AppActions>;
+	listViewContext: ListViewContextState;
+	mutate: KeyedMutator<any>;
+};
+
 export type ListViewProps<T = any> = {
-	children?: (
-		response: APIResponse,
-		dispatch: React.Dispatch<AppActions>,
-		mutate: KeyedMutator<any>
-	) => ReactNode;
+	children?: (response: APIResponse, options: ChildrenOptions) => ReactNode;
 	forceRefetch?: number;
 	managementToolbarProps?: {
 		visible?: boolean;
@@ -71,7 +73,7 @@ export type ListViewProps<T = any> = {
 	variables?: any;
 };
 
-const ListViewRest: React.FC<ListViewProps> = ({
+const ListView: React.FC<ListViewProps> = ({
 	children,
 	forceRefetch,
 	managementToolbarProps: {
@@ -241,7 +243,12 @@ const ListViewRest: React.FC<ListViewProps> = ({
 
 			{!items.length && <EmptyState />}
 
-			{children && children(response as APIResponse, dispatch, mutate)}
+			{children &&
+				children(response as APIResponse, {
+					dispatch,
+					listViewContext,
+					mutate,
+				})}
 
 			{!!items.length && (
 				<>
@@ -269,7 +276,7 @@ const ListViewRest: React.FC<ListViewProps> = ({
 	);
 };
 
-const ListViewMemoized = memo(ListViewRest);
+const ListViewMemoized = memo(ListView);
 
 const ListViewWithContext: React.FC<
 	ListViewProps & {

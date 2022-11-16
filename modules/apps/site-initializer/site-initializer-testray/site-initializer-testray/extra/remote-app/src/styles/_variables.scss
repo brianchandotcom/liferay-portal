@@ -246,6 +246,12 @@ $sidebar-divider-color: #8b8db2;
 		color: $color-black;
 	}
 
+	&.completed {
+		background-color: $completed-color;
+		border-color: $completed-color;
+		color: $color-white;
+	}
+
 	&.failed {
 		background-color: $failedColor;
 		border-color: $failedColor;

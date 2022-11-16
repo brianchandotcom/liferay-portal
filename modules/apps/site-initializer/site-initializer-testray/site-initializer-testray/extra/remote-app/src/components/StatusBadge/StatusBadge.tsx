@@ -17,7 +17,9 @@ import {ReactNode} from 'react';
 
 const statusBarClassNames = {
 	blocked: 'blocked',
+	complete: 'completed',
 	failed: 'failed',
+	inanalysis: 'in-analysis',
 	incomplete: 'light',
 	inprogress: 'in-progress',
 	other: 'primary',

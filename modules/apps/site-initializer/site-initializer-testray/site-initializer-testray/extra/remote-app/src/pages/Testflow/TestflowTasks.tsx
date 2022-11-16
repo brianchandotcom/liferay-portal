@@ -13,7 +13,6 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
@@ -35,6 +34,7 @@ import useHeader from '../../hooks/useHeader';
 import useMutate from '../../hooks/useMutate';
 import i18n from '../../i18n';
 import {filters} from '../../schema/filter';
+import {Liferay} from '../../services/liferay';
 import {
 	APIResponse,
 	PickList,
@@ -65,7 +65,6 @@ const TestFlowTasks = () => {
 	const {mutateTask, testrayTask} = useOutletContext<OutletContext>();
 	const {updateItemFromList} = useMutate();
 	const {actions, completeModal} = useSubtasksActions();
-	const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
 	const {data: taskUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
 		testrayTask?.id
@@ -93,10 +92,10 @@ const TestFlowTasks = () => {
 		return <Loading />;
 	}
 
-	const getFloatingBoxAlerts = () => {
+	const getFloatingBoxAlerts = (subtasks: TestraySubTask[]) => {
 		const alerts = [];
 
-		if (selectedRows.length === 1) {
+		if (subtasks.length === 1) {
 			alerts.push({
 				text: i18n.translate(
 					'please-select-at-least-two-subtasks-to-merge'
@@ -104,7 +103,21 @@ const TestFlowTasks = () => {
 			});
 		}
 
-		return alerts;
+		const subtasksWithDifferentAssignedUsers = subtasks
+			.filter(
+				({user}) =>
+					user &&
+					user.id.toString() !== Liferay.ThemeDisplay.getUserId()
+			)
+			.map(({name}) => ({
+				header: name,
+				text: i18n.sub(
+					'subtask-x-must-be-assigned-to-you-to-be-user-id-a-merge',
+					name
+				),
+			}));
+
+		return [...alerts, ...subtasksWithDifferentAssignedUsers];
 	};
 
 	return (
@@ -119,8 +132,7 @@ const TestFlowTasks = () => {
 									value: (
 										<StatusBadge
 											type={
-												testrayTask.dueStatus
-													.key as StatusBadgeType
+												testrayTask.dueStatus.key.toLowerCase() as StatusBadgeType
 											}
 										>
 											{testrayTask.dueStatus.name}
@@ -243,9 +255,6 @@ const TestFlowTasks = () => {
 						filterFields: filters.subtasks as any,
 						title: i18n.translate('subtasks'),
 					}}
-					onContextChange={({selectedRows}) =>
-						setSelectedRows(selectedRows)
-					}
 					resource={testraySubTaskImpl.resource}
 					tableProps={{
 						actions,
@@ -261,7 +270,9 @@ const TestFlowTasks = () => {
 								key: 'dueStatus',
 								render: (dueStatus: PickList) => (
 									<StatusBadge
-										type={dueStatus?.key as StatusBadgeType}
+										type={
+											dueStatus?.key.toLowerCase() as StatusBadgeType
+										}
 									>
 										{dueStatus?.name}
 									</StatusBadge>
@@ -339,25 +350,34 @@ const TestFlowTasks = () => {
 						filter: searchUtil.eq('taskId', testrayTask.id),
 					}}
 				>
-					{(_, dispatch) => (
-						<FloatingBox
-							alerts={getFloatingBoxAlerts()}
-							clearList={() =>
-								dispatch({
-									payload: [],
-									type: ListViewTypes.SET_CHECKED_ROW,
-								})
-							}
-							isVisible={!!selectedRows.length}
-							primaryButtonProps={{
-								title: i18n.translate('merge-subtasks'),
-							}}
-							selectedCount={selectedRows.length}
-							tooltipText={i18n.translate(
-								'merge-selected-subtasks-into-the-highest-scoring-subtask'
-							)}
-						/>
-					)}
+					{({items}, {dispatch, listViewContext: {selectedRows}}) => {
+						const alerts = getFloatingBoxAlerts(
+							selectedRows.map((rowId) =>
+								items.find(({id}) => rowId === id)
+							)
+						);
+
+						return (
+							<FloatingBox
+								alerts={alerts}
+								clearList={() =>
+									dispatch({
+										payload: [],
+										type: ListViewTypes.SET_CHECKED_ROW,
+									})
+								}
+								isVisible={!!selectedRows.length}
+								primaryButtonProps={{
+									disabled: !!alerts.length,
+									title: i18n.translate('merge-subtasks'),
+								}}
+								selectedCount={selectedRows.length}
+								tooltipText={i18n.translate(
+									'merge-selected-subtasks-into-the-highest-scoring-subtask'
+								)}
+							/>
+						);
+					}}
 				</ListView>
 			</Container>
 

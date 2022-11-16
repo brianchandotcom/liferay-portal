@@ -8,17 +8,23 @@
 	position: fixed;
 	right: 0;
 	width: 650px;
+	z-index: 98;
 
-	.box-alert {
-		background-color: #fff0f1;
-		margin-bottom: 0;
-		padding: 5px;
+	.box-alerts {
+		max-height: 100px;
+		overflow-y: scroll;
+
+		.box-alert {
+			background-color: #fff0f1;
+			margin-bottom: 0;
+			padding: 5px;
+		}
 	}
 
 	.box-label-selected {
 		align-items: center;
 
-		.selectd-count {
+		.selected-count {
 			background-color: #373ecc;
 			color: white;
 			height: 26px;

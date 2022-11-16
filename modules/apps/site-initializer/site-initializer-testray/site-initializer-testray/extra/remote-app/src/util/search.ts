@@ -67,8 +67,8 @@ export const searchUtil = {
 };
 
 export class SearchBuilder {
-	private query: string = '';
 	private lock: boolean = false;
+	private query: string = '';
 	private useURIEncode?: boolean = true;
 
 	constructor({useURIEncode}: {useURIEncode?: boolean} = {}) {

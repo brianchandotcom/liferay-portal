@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -86,9 +85,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Alberti
  * @generated
  */
-@Component(
-	service = {CommercePricingClassPersistence.class, BasePersistence.class}
-)
+@Component(service = CommercePricingClassPersistence.class)
 public class CommercePricingClassPersistenceImpl
 	extends BasePersistenceImpl<CommercePricingClass>
 	implements CommercePricingClassPersistence {

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -84,9 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @generated
  */
-@Component(
-	service = {CPDefinitionLocalizationPersistence.class, BasePersistence.class}
-)
+@Component(service = CPDefinitionLocalizationPersistence.class)
 public class CPDefinitionLocalizationPersistenceImpl
 	extends BasePersistenceImpl<CPDefinitionLocalization>
 	implements CPDefinitionLocalizationPersistence {

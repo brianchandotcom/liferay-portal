@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -84,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @generated
  */
-@Component(service = {CSDiagramSettingPersistence.class, BasePersistence.class})
+@Component(service = CSDiagramSettingPersistence.class)
 public class CSDiagramSettingPersistenceImpl
 	extends BasePersistenceImpl<CSDiagramSetting>
 	implements CSDiagramSettingPersistence {

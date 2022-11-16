@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -81,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  * @generated
  */
-@Component(service = {PLOEntryPersistence.class, BasePersistence.class})
+@Component(service = PLOEntryPersistence.class)
 public class PLOEntryPersistenceImpl
 	extends BasePersistenceImpl<PLOEntry> implements PLOEntryPersistence {
 

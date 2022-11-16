@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -82,11 +81,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Riccardo Ferrari
  * @generated
  */
-@Component(
-	service = {
-		CommerceMLForecastAlertEntryPersistence.class, BasePersistence.class
-	}
-)
+@Component(service = CommerceMLForecastAlertEntryPersistence.class)
 public class CommerceMLForecastAlertEntryPersistenceImpl
 	extends BasePersistenceImpl<CommerceMLForecastAlertEntry>
 	implements CommerceMLForecastAlertEntryPersistence {

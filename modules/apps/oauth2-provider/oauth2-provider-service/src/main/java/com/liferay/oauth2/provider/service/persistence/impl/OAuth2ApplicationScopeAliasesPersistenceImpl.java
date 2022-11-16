@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,11 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(
-	service = {
-		OAuth2ApplicationScopeAliasesPersistence.class, BasePersistence.class
-	}
-)
+@Component(service = OAuth2ApplicationScopeAliasesPersistence.class)
 public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	extends BasePersistenceImpl<OAuth2ApplicationScopeAliases>
 	implements OAuth2ApplicationScopeAliasesPersistence {

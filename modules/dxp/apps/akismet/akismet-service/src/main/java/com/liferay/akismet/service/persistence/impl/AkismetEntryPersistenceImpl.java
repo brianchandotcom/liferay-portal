@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -77,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jamie Sammons
  * @generated
  */
-@Component(service = {AkismetEntryPersistence.class, BasePersistence.class})
+@Component(service = AkismetEntryPersistence.class)
 public class AkismetEntryPersistenceImpl
 	extends BasePersistenceImpl<AkismetEntry>
 	implements AkismetEntryPersistence {

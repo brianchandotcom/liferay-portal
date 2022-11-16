@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -88,7 +87,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @generated
  */
-@Component(service = {CPDefinitionPersistence.class, BasePersistence.class})
+@Component(service = CPDefinitionPersistence.class)
 public class CPDefinitionPersistenceImpl
 	extends BasePersistenceImpl<CPDefinition>
 	implements CPDefinitionPersistence {

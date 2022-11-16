@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -81,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @generated
  */
-@Component(service = {KaleoProcessPersistence.class, BasePersistence.class})
+@Component(service = KaleoProcessPersistence.class)
 public class KaleoProcessPersistenceImpl
 	extends BasePersistenceImpl<KaleoProcess>
 	implements KaleoProcessPersistence {

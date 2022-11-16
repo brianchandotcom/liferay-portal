@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -71,11 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  * @generated
  */
-@Component(
-	service = {
-		NotificationTemplateAttachmentPersistence.class, BasePersistence.class
-	}
-)
+@Component(service = NotificationTemplateAttachmentPersistence.class)
 public class NotificationTemplateAttachmentPersistenceImpl
 	extends BasePersistenceImpl<NotificationTemplateAttachment>
 	implements NotificationTemplateAttachmentPersistence {

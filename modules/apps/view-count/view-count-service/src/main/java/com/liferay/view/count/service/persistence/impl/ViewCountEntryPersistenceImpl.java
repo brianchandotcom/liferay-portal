@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -68,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  * @generated
  */
-@Component(service = {ViewCountEntryPersistence.class, BasePersistence.class})
+@Component(service = ViewCountEntryPersistence.class)
 public class ViewCountEntryPersistenceImpl
 	extends BasePersistenceImpl<ViewCountEntry>
 	implements ViewCountEntryPersistence {

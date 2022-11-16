@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,9 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @generated
  */
-@Component(
-	service = {PushNotificationsDevicePersistence.class, BasePersistence.class}
-)
+@Component(service = PushNotificationsDevicePersistence.class)
 public class PushNotificationsDevicePersistenceImpl
 	extends BasePersistenceImpl<PushNotificationsDevice>
 	implements PushNotificationsDevicePersistence {

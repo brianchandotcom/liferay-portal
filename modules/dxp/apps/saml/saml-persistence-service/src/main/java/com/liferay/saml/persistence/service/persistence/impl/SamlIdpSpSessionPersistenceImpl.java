@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  * @generated
  */
-@Component(service = {SamlIdpSpSessionPersistence.class, BasePersistence.class})
+@Component(service = SamlIdpSpSessionPersistence.class)
 public class SamlIdpSpSessionPersistenceImpl
 	extends BasePersistenceImpl<SamlIdpSpSession>
 	implements SamlIdpSpSessionPersistence {

@@ -18,15 +18,22 @@ import com.liferay.document.library.taglib.internal.display.context.RepositoryBr
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,8 +106,39 @@ public class FileShortcutVerticalCard implements VerticalCard {
 	}
 
 	@Override
+	public List<LabelItem> getLabels() {
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(
+				BeanPropertiesUtil.getInteger(
+					_fileShortcut.getModel(), "status",
+					WorkflowConstants.STATUS_APPROVED))
+		).build();
+	}
+
+	@Override
+	public String getSubtitle() {
+		Date modifiedDate = _fileShortcut.getModifiedDate();
+
+		String modifiedDateDescription = LanguageUtil.getTimeDescription(
+			_httpServletRequest,
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+		return LanguageUtil.format(
+			_httpServletRequest, "x-ago-by-x",
+			new Object[] {
+				modifiedDateDescription,
+				HtmlUtil.escape(_fileShortcut.getUserName())
+			});
+	}
+
+	@Override
 	public String getTitle() {
 		return _fileShortcut.getToTitle();
+	}
+
+	@Override
+	public Boolean isFlushHorizontal() {
+		return true;
 	}
 
 	private final FileShortcut _fileShortcut;

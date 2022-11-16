@@ -29,7 +29,21 @@ JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("re
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<c:choose>
-		<c:when test="<%= relevantIdpConnectionsJSONArray.length() > 0 %>">
+		<c:when test="<%= relevantIdpConnectionsJSONArray.length() == 1 %>">
+
+			<%
+			JSONObject relevantIdpConnectionJSONObject = relevantIdpConnectionsJSONArray.getJSONObject(0);
+			%>
+
+			<aui:input name="idpEntityId" type="hidden" value='<%= HtmlUtil.escapeAttribute(relevantIdpConnectionJSONObject.getString("entityId")) %>' />
+
+			<aui:script sandbox="<%= true %>">
+				window.addEventListener("load", (event) => {
+					window.fm.submit();
+				});
+			</aui:script>
+		</c:when>
+		<c:when test="<%= relevantIdpConnectionsJSONArray.length() > 1 %>">
 			<p><liferay-ui:message key="please-select-your-identity-provider" /></p>
 
 			<aui:select label="identity-provider" name="idpEntityId">
@@ -61,3 +75,17 @@ JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("re
 		</c:otherwise>
 	</c:choose>
 </aui:form>
+
+<c:if test="<%= Validator.isNotNull(redirect) %>">
+	<aui:script sandbox="<%= true %>">
+		var form = document.getElementById('<portlet:namespace />fm');
+
+		var redirect = form.querySelector('#<portlet:namespace />redirect');
+
+		if (redirect) {
+		var redirectVal = redirect.getAttribute('value');
+
+		redirect.setAttribute('value', redirectVal + window.location.hash);
+		}
+	</aui:script>
+</c:if>

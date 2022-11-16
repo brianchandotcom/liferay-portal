@@ -56,11 +56,11 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		if (termName.contains("_CREATOR")) {
 			if (context.equals(Context.RECIPIENT)) {
-				return String.valueOf(termValues.get("currentUserId"));
+				return String.valueOf(termValues.get("creator"));
 			}
 
 			User user = _userLocalService.getUser(
-				GetterUtil.getLong(termValues.get("currentUserId")));
+				GetterUtil.getLong(termValues.get("creator")));
 
 			return user.getFullName(true, true);
 		}

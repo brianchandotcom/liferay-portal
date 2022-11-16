@@ -18,19 +18,25 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.payment.internal.configuration.OfflineCommercePaymentMethodConfiguration;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -105,17 +111,72 @@ public class OfflineCommercePaymentMethod implements CommercePaymentMethod {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_offlineCommercePaymentMethodConfiguration =
 			ConfigurableUtil.createConfigurable(
 				OfflineCommercePaymentMethodConfiguration.class, properties);
 	}
 
+	@Deactivate
+	protected void deactivate() throws PortalException {
+		String key = getKey();
+
+		if (key == null) {
+			return;
+		}
+
+		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels =
+			_commercePaymentMethodGroupRelLocalService.
+				getCommercePaymentMethodGroupRels(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
+				commercePaymentMethodGroupRels) {
+
+			if (key.equals(commercePaymentMethodGroupRel.getEngineKey())) {
+				_commercePaymentMethodGroupRelLocalService.
+					deleteCommercePaymentMethodGroupRel(
+						commercePaymentMethodGroupRel.
+							getCommercePaymentMethodGroupRelId());
+			}
+		}
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws PortalException {
+
+		_offlineCommercePaymentMethodConfiguration =
+			ConfigurableUtil.createConfigurable(
+				OfflineCommercePaymentMethodConfiguration.class, properties);
+
+		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels =
+			_commercePaymentMethodGroupRelLocalService.
+				getCommercePaymentMethodGroupRels(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		String key = (String)properties.get("key");
+
+		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
+				commercePaymentMethodGroupRels) {
+
+			if (key.equals(commercePaymentMethodGroupRel.getEngineKey())) {
+				_commercePaymentMethodGroupRelLocalService.
+					deleteCommercePaymentMethodGroupRel(
+						commercePaymentMethodGroupRel.
+							getCommercePaymentMethodGroupRelId());
+			}
+		}
+	}
+
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 	}
+
+	@Reference
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
 	private Language _language;

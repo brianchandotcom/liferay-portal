@@ -1647,8 +1647,6 @@ ${httpUtil.URLtoString(request.getAttribute("CTX").getResource(".").toURI().crea
 		}
 
 		task ("View content page break in Web Content Display") {
-			WebContent.viewPageBreak();
-
 			WebContentDisplayPortlet.viewContentPageBreak(webContentContent = "Home");
 		}
 	}

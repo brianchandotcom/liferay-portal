@@ -21,7 +21,7 @@ const SELECT_BOX_SHOW_ITEMS_COUNT = 6;
 
 function Input({
 	error,
-	formText,
+	children,
 	helpText,
 	label,
 	name,
@@ -149,11 +149,7 @@ function Input({
 				</ClayForm.FeedbackGroup>
 			)}
 
-			{formText && (
-				<ClayForm.FeedbackGroup>
-					<ClayForm.Text>{formText}</ClayForm.Text>
-				</ClayForm.FeedbackGroup>
-			)}
+			{children}
 		</ClayForm.Group>
 	);
 }

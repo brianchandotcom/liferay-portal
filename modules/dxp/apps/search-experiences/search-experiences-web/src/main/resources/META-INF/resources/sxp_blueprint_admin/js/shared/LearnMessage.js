@@ -10,6 +10,7 @@
  */
 
 import ClayLink from '@clayui/link';
+import getCN from 'classnames';
 import React, {useContext} from 'react';
 
 import {getLocalizedLearnMessageObject} from '../utils/language';
@@ -29,10 +30,10 @@ import ThemeContext from './ThemeContext';
  *		}
  *	}
  * }
- *
+ * @param {string=} className
  * @param {string} resourceKey Identifies which resource to render
  */
-export default function LearnMessage({resourceKey}) {
+export default function LearnMessage({className = '', resourceKey}) {
 	const {defaultLocale, learnMessages, locale} = useContext(ThemeContext);
 
 	const learnMessageObject = getLocalizedLearnMessageObject(
@@ -45,7 +46,53 @@ export default function LearnMessage({resourceKey}) {
 	if (learnMessageObject.url) {
 		return (
 			<ClayLink
-				className="learn-message"
+				className={getCN('learn-message', className)}
+				href={learnMessageObject.url}
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				{learnMessageObject.message}
+			</ClayLink>
+		);
+	}
+
+	return <></>;
+}
+
+/**
+ * LearnMessage is used to render links to resources, like Liferay Learn
+ * articles. The json object `learnMessages` contains the messages and urls
+ * and is taken from portal/learn-resources. LearnMessageWithoutContext
+ * requires learnMessages to be passed in and refers to locales from
+ * Liferay.ThemeDisplay.
+ *
+ * Example of `learnMessages`:
+ * {
+ *	"general": {
+ *		"en_US": {
+ *			"message": "Tell me more",
+ *			"url": "https://learn.liferay.com/"
+ *		}
+ *	}
+ * }
+ * @param {string=} className
+ * @param {Object} learnMessages Contains messages and urls
+ * @param {string} resourceKey Identifies which resource to render
+ */
+export function LearnMessageWithoutContext({
+	className = '',
+	learnMessages,
+	resourceKey,
+}) {
+	const learnMessageObject = getLocalizedLearnMessageObject(
+		resourceKey,
+		learnMessages
+	);
+
+	if (learnMessageObject.url) {
+		return (
+			<ClayLink
+				className={getCN('learn-message', className)}
 				href={learnMessageObject.url}
 				rel="noopener noreferrer"
 				target="_blank"

@@ -13,6 +13,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useFormik} from 'formik';
 import React from 'react';
 
+import {LearnMessageWithoutContext} from '../../../sxp_blueprint_admin/js/shared/LearnMessage';
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
 import Input from './Input';
 import TestConfigurationButton from './TestConfigurationButton';
@@ -66,6 +67,7 @@ export default function ({
 	embeddingVectorDimensions,
 	enableGPU,
 	huggingFaceAccessToken,
+	learnMessages,
 	languageIds,
 	maxCharacterCount = '',
 	model,
@@ -261,7 +263,24 @@ export default function ({
 					onChange={_handleInputChange('sentenceTransformer')}
 					type="select"
 					value={formik.values.sentenceTransformer}
-				/>
+				>
+					{formik.values.sentenceTransformer ===
+						SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.Text>
+								{Liferay.Language.get(
+									'sentence-transformer-hugging-face-help'
+								)}
+
+								<LearnMessageWithoutContext
+									className="ml-1"
+									learnMessages={learnMessages}
+									resourceKey="semantic-search"
+								/>
+							</ClayForm.Text>
+						</ClayForm.FeedbackGroup>
+					)}
+				</Input>
 
 				{formik.values.sentenceTransformer ===
 					SENTENCE_TRANSFORMER_TYPES.TXTAI && (
@@ -325,9 +344,6 @@ export default function ({
 
 						<Input
 							error={formik.errors.model}
-							formText={Liferay.Language.get(
-								'begin-typing-and-select-a-model'
-							)}
 							helpText={Liferay.Language.get(
 								'sentence-transformer-model-help'
 							)}
@@ -339,7 +355,15 @@ export default function ({
 							touched={formik.touched.model}
 							type="model"
 							value={formik.values.model}
-						/>
+						>
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'begin-typing-and-select-a-model'
+									)}
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
+						</Input>
 
 						<Input
 							error={formik.errors.modelTimeout}

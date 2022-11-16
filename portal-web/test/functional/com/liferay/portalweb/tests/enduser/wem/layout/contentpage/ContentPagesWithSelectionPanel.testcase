@@ -784,7 +784,7 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			AssertNotChecked(
+			AssertNotChecked.assertNotCheckedNotVisible(
 				key_roleTitle = "guest",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class SocialBookmarksRegistryUtil {
 
 	public static SocialBookmark getSocialBookmark(String type) {

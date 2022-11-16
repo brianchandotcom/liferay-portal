@@ -117,11 +117,6 @@ definition {
 			collectionName = "Menu Display",
 			fragmentName = "Knowledge Base Navigation");
 
-		PageEditor.editContentDisplay(
-			entryTitle = "KB Parent Article",
-			fragmentName = "Knowledge Base Navigation",
-			knowledgeBase = "true");
-
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
 			fragmentName = "HTML",

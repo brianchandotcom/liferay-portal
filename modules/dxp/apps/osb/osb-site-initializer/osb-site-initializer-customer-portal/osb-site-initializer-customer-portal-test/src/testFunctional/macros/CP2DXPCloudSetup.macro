@@ -64,7 +64,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Objects");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "14");
+		CustomerPortal.viewCPObjectCustomInfo(position = "14");
 
 		CreateObject.checkToggleActive();
 
@@ -78,8 +78,9 @@ definition {
 	macro deleteEntryCloudEnvironments {
 		var key_status = "${entry}";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
 			portlet = "${portlet}");
 
 		if (IsElementPresent(locator1 = "CustomerPortalSite#DND_TABLE_ELEMENT")) {

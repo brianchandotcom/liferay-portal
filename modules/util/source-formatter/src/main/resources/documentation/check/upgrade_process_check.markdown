@@ -52,7 +52,7 @@ Correct:
 
 ```java
 // Remove AccountEntryUpgradeProcess and write the upgrade process as inline
-// calls in the registry class by using the UpgradeProcessFactory class
+// calls in the registrator class by using the UpgradeProcessFactory class
 
 registry.register(
 	"2.5.0", "2.6.0",

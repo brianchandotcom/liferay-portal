@@ -292,6 +292,7 @@ const AddButton = ({item}) => {
 				})
 			}
 			ref={buttonRef}
+			role="application"
 			symbol="plus"
 			title={sub(Liferay.Language.get('add-x'), item.label)}
 		/>

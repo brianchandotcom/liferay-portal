@@ -47,7 +47,6 @@ import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
-import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
@@ -55,6 +54,7 @@ import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionD
 import com.liferay.journal.web.internal.util.JournalArticleTranslation;
 import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
+import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1075,9 +1075,7 @@ public class JournalDisplayContext {
 	}
 
 	protected SearchContext buildSearchContext(
-		int start, int end, boolean showVersions) {
-
-		SearchContext searchContext = new SearchContext();
+		int start, int end, SearchContext searchContext, boolean showVersions) {
 
 		searchContext.setAndSearch(false);
 		searchContext.setAttributes(
@@ -1248,36 +1246,16 @@ public class JournalDisplayContext {
 		articleAndFolderSearchContainer.setOrderByType(getOrderByType());
 
 		if (isSearch()) {
-			Indexer<?> indexer = JournalSearcher.getInstance();
-
-			SearchContext searchContext = buildSearchContext(
-				articleAndFolderSearchContainer.getStart(),
-				articleAndFolderSearchContainer.getEnd(), false);
-
-			Hits hits = indexer.search(searchContext);
-
-			List<Object> results = new ArrayList<>();
-
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				String className = document.get(Field.ENTRY_CLASS_NAME);
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				if (className.equals(JournalArticle.class.getName())) {
-					results.add(
-						JournalArticleLocalServiceUtil.fetchLatestArticle(
-							classPK, WorkflowConstants.STATUS_ANY, false));
-				}
-				else if (className.equals(JournalFolder.class.getName())) {
-					results.add(
-						JournalFolderLocalServiceUtil.getFolder(classPK));
-				}
-			}
+			List<Object> results =
+				JournalSearcherUtil.searchJournalArticleAndFolders(
+					searchContext -> buildSearchContext(
+						articleAndFolderSearchContainer.getStart(),
+						articleAndFolderSearchContainer.getEnd(), searchContext,
+						false));
 
 			articleAndFolderSearchContainer.setResultsAndTotal(
-				() -> results, hits.getLength());
+				() -> results, results.size());
+
 			articleAndFolderSearchContainer.setRowChecker(_getEntriesChecker());
 
 			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
@@ -1499,9 +1477,11 @@ public class JournalDisplayContext {
 		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class);
 
-		SearchContext searchContext = buildSearchContext(
+		SearchContext searchContext = new SearchContext();
+
+		buildSearchContext(
 			articleVersionsSearchContainer.getStart(),
-			articleVersionsSearchContainer.getEnd(), true);
+			articleVersionsSearchContainer.getEnd(), searchContext, true);
 
 		Hits hits = indexer.search(searchContext);
 

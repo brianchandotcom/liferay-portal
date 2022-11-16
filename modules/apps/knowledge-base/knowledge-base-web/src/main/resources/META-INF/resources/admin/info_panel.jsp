@@ -93,30 +93,60 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 
 		<div class="sidebar-body">
 			<dl class="sidebar-dl sidebar-section">
-				<dt class="sidebar-dt">
-					<liferay-ui:message key="num-of-items" />
-				</dt>
+				<c:choose>
+					<c:when test="<%= kbFolder != null %>">
+						<dt class="sidebar-dt">
+							<liferay-ui:message key="num-of-folders" />
+						</dt>
 
-				<%
-				long folderId = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+						<%
+						int kbFoldersCount = KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId());
+						%>
 
-				if (kbFolder != null) {
-					folderId = kbFolder.getKbFolderId();
-				}
-				%>
+						<dd class="sidebar-dd">
+							<c:choose>
+								<c:when test="<%= kbFoldersCount == 1 %>">
+									<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folder" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message arguments="<%= kbFoldersCount %>" key="x-folders" />
+								</c:otherwise>
+							</c:choose>
+						</dd>
+						<dt class="sidebar-dt">
+							<liferay-ui:message key="num-of-kb-articles" />
+						</dt>
 
-				<dd class="sidebar-dd">
-					<%= KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED) %>
-				</dd>
+						<%
+						int kbArticlesCount = KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY);
+						%>
 
-				<c:if test="<%= kbFolder != null %>">
-					<dt class="sidebar-dt">
-						<liferay-ui:message key="created" />
-					</dt>
-					<dd class="sidebar-dd">
-						<%= HtmlUtil.escape(kbFolder.getUserName()) %>
-					</dd>
-				</c:if>
+						<dd class="sidebar-dd">
+							<c:choose>
+								<c:when test="<%= kbArticlesCount == 1 %>">
+									<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-article" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message arguments="<%= kbArticlesCount %>" key="x-articles" />
+								</c:otherwise>
+							</c:choose>
+						</dd>
+						<dt class="sidebar-dt">
+							<liferay-ui:message key="created" />
+						</dt>
+						<dd class="sidebar-dd">
+							<%= HtmlUtil.escape(kbFolder.getUserName()) %>
+						</dd>
+					</c:when>
+					<c:otherwise>
+						<dt class="sidebar-dt">
+							<liferay-ui:message key="num-of-items" />
+						</dt>
+						<dd class="sidebar-dd">
+							<%= KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, WorkflowConstants.STATUS_APPROVED) %>
+						</dd>
+					</c:otherwise>
+				</c:choose>
 			</dl>
 		</div>
 	</c:when>

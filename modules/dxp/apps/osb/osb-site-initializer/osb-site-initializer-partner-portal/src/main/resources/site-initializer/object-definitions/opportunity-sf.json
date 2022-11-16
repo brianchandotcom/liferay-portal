@@ -1,0 +1,131 @@
+{
+	"externalReferenceCode": "Opportunity",
+	"label": {
+		"en_US": "Opportunity SF"
+	},
+	"name": "OpportunitySF",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Account_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Account Name"
+			},
+			"name": "partnerAccountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "Project_Subscription_Start_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Subscription Start Date"
+			},
+			"name": "projectSubscriptionStartDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "Project_Subscription_End_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Subscription End Date"
+			},
+			"name": "projectSubscriptionEndDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "Amount",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Amount"
+			},
+			"name": "amount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_First_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner First Name"
+			},
+			"name": "partnerFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Last_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Last Name"
+			},
+			"name": "partnerLastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Email__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Email"
+			},
+			"name": "partnerEmail",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "OwnerId",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Opportunity Owner"
+			},
+			"name": "opportunityOwner",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "StageName",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Stage"
+			},
+			"name": "stage",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Opportunities SF"
+	},
+	"scope": "company",
+	"storageType": "salesforce"
+}

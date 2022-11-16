@@ -48,9 +48,12 @@ const SelectSubscription = ({
 		infoSelectedKey?.licenseEntryType
 	);
 
+	const doesNotAllowPermanentLicense = !generateFormValues?.allowPermanentLicenses;
+
 	const hasNotPermanentLicence =
-		!generateFormValues?.allowPermanentLicenses ||
-		selectedKeyType?.includes('Virtual Cluster');
+		selectedKeyType?.includes('Virtual Cluster') ||
+		selectedKeyType?.includes('OEM') ||
+		selectedKeyType?.includes('Enterprise');
 
 	useEffect(() => {
 		const fetchGenerateFormData = async () => {
@@ -149,7 +152,7 @@ const SelectSubscription = ({
 	);
 
 	const getCustomAlert = (subscriptionTerm) =>
-		hasNotPermanentLicence ? (
+		hasNotPermanentLicence || doesNotAllowPermanentLicense ? (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
 					{i18n.sub('activation-keys-will-be-valid-x-x', [
@@ -195,6 +198,7 @@ const SelectSubscription = ({
 						onClick={() => {
 							setInfoSelectedKey((previousInfoSelectedKey) => ({
 								...previousInfoSelectedKey,
+								doesNotAllowPermanentLicense,
 								hasNotPermanentLicence,
 								selectedSubscription: {
 									...selectedSubscription,

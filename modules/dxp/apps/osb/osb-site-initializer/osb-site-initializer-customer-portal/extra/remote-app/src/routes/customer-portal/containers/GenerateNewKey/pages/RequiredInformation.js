@@ -26,6 +26,8 @@ import GenerateCardLayout from '../GenerateCardLayout';
 import KeyInputs from '../KeyInputs';
 import KeySelect from '../KeySelect';
 
+const DNE_YEARS = 100;
+
 const RequiredInformation = ({
 	accountKey,
 	errors,
@@ -116,8 +118,7 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		}
-		else {
+		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 			const sizing = `Sizing ${
 				infoSelectedKey?.selectedSubscription?.instanceSize || 1
@@ -128,11 +129,27 @@ const RequiredInformation = ({
 				? 'virtual-cluster'
 				: 'production';
 
+			const subscriptionStartDate = new Date(
+				infoSelectedKey.selectedSubscription.startDate
+			);
+
+			const permanentLicenseKeys = new Date(
+				subscriptionStartDate.setFullYear(
+					subscriptionStartDate.getFullYear() + DNE_YEARS
+				)
+			);
+
+			const hasExpirationDate =
+				infoSelectedKey?.doesNotAllowPermanentLicense ||
+				infoSelectedKey?.hasNotPermanentLicence;
+
 			const licenseKey = {
 				accountKey,
 				active: true,
 				description: values?.description,
-				expirationDate: infoSelectedKey?.selectedSubscription.endDate,
+				expirationDate: hasExpirationDate
+					? infoSelectedKey?.selectedSubscription.endDate
+					: permanentLicenseKeys,
 				licenseEntryType: isVirtualClusterOrProduction,
 				maxClusterNodes: values?.maxClusterNodes || 0,
 				name: values?.name,
@@ -152,8 +169,7 @@ const RequiredInformation = ({
 					sessionId,
 					licenseKey
 				);
-			}
-			else {
+			} else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {

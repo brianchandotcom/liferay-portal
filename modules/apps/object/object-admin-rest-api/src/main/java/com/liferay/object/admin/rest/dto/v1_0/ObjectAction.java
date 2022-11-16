@@ -233,6 +233,36 @@ public class ObjectAction implements Serializable {
 	protected String description;
 
 	@Schema
+	@Valid
+	public Map<String, String> getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(Map<String, String> errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	@JsonIgnore
+	public void setErrorMessage(
+		UnsafeSupplier<Map<String, String>, Exception>
+			errorMessageUnsafeSupplier) {
+
+		try {
+			errorMessage = errorMessageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> errorMessage;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -257,6 +287,35 @@ public class ObjectAction implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
+
+	@Schema
+	@Valid
+	public Map<String, String> getLabel() {
+		return label;
+	}
+
+	public void setLabel(Map<String, String> label) {
+		this.label = label;
+	}
+
+	@JsonIgnore
+	public void setLabel(
+		UnsafeSupplier<Map<String, String>, Exception> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> label;
 
 	@Schema
 	public String getName() {
@@ -507,6 +566,16 @@ public class ObjectAction implements Serializable {
 			sb.append("\"");
 		}
 
+		if (errorMessage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessage\": ");
+
+			sb.append(_toJSON(errorMessage));
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -515,6 +584,16 @@ public class ObjectAction implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (label != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append(_toJSON(label));
 		}
 
 		if (name != null) {

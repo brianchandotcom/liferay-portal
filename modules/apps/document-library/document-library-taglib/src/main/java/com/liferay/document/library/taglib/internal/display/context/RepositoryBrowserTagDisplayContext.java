@@ -19,6 +19,8 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileEntryVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileShortcutVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FolderHorizontalCard;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -504,11 +507,19 @@ public class RepositoryBrowserTagDisplayContext {
 				_liferayPortletRequest, _liferayPortletResponse),
 			null, "there-are-no-documents-in-this-folder");
 
+		searchContainer.setOrderByCol(
+			ParamUtil.getString(
+				_httpServletRequest, searchContainer.getOrderByColParam()));
+		searchContainer.setOrderByType(
+			ParamUtil.getString(
+				_httpServletRequest, searchContainer.getOrderByTypeParam()));
+
 		searchContainer.setResultsAndTotal(
 			() -> DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
 				_repositoryId, _folderId, WorkflowConstants.STATUS_APPROVED,
 				null, false, false, searchContainer.getStart(),
-				searchContainer.getEnd(), null),
+				searchContainer.getEnd(),
+				_getOrderByComparator(searchContainer)),
 			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
 				_repositoryId, _folderId, WorkflowConstants.STATUS_APPROVED,
 				null, false, false));
@@ -562,6 +573,26 @@ public class RepositoryBrowserTagDisplayContext {
 		searchContext.setStart(searchContainer.getStart());
 
 		return DLAppServiceUtil.search(_repositoryId, searchContext);
+	}
+
+	private OrderByComparator<?> _getOrderByComparator(
+		SearchContainer<Object> searchContainer) {
+
+		boolean ascending = false;
+
+		if (Objects.equals(searchContainer.getOrderByType(), "asc")) {
+			ascending = true;
+		}
+
+		if (Objects.equals(searchContainer.getOrderByCol(), "modified-date")) {
+			return new RepositoryModelModifiedDateComparator<>(ascending);
+		}
+
+		if (Objects.equals(searchContainer.getOrderByCol(), "title")) {
+			return new RepositoryModelTitleComparator<>(ascending);
+		}
+
+		return null;
 	}
 
 	private String _getRenameFileEntryURL(FileEntry fileEntry) {

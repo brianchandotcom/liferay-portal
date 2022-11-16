@@ -147,6 +147,11 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 		return "icon";
 	}
 
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"modified-date", "title"};
+	}
+
 	private final long _folderId;
 	private final ModelResourcePermission<Folder>
 		_folderModelResourcePermission;

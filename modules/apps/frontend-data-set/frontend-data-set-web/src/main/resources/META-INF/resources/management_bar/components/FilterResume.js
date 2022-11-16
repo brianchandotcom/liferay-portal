@@ -53,6 +53,7 @@ function FilterResume(props) {
 						})),
 					});
 				},
+				title: Liferay.Language.get('remove-filter'),
 			}}
 			role="button"
 		>

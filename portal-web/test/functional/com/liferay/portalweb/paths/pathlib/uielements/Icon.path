@@ -152,7 +152,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_EDIT</td>
-	<td>//a[contains(@class,'taglib-icon')]/i[contains(@class,'icon-edit')]</td>
+	<td>//a[contains(@class,'taglib-icon')]//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
 	<td></td>
 </tr>
 <tr>

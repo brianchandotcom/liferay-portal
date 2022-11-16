@@ -155,11 +155,12 @@ public class DefaultObjectEntryManagerImplTest {
 			PermissionThreadLocal.getPermissionChecker();
 		_simpleDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+		_adminUser = TestPropsValues.getUser();
+
 		_simpleDTOConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, _adminUser);
-
-		_adminUser = TestPropsValues.getUser();
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_adminUser));

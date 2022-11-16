@@ -27,7 +27,6 @@ function TestConfigurationButton({
 	availableSentenceTransformers,
 	cacheTimeout,
 	embeddingVectorDimensions,
-	enableGPU,
 	errors,
 	huggingFaceAccessToken,
 	languageIds,
@@ -50,7 +49,6 @@ function TestConfigurationButton({
 		assetEntryClassNames,
 		cacheTimeout,
 		embeddingVectorDimensions,
-		enableGPU,
 		huggingFaceAccessToken,
 		languageIds,
 		maxCharacterCount,
@@ -73,7 +71,6 @@ function TestConfigurationButton({
 			SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			return {
-				enableGPU,
 				huggingFaceAccessToken,
 				model,
 				modelTimeout,

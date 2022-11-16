@@ -65,7 +65,6 @@ export default function ({
 	availableTextTruncationStrategies,
 	cacheTimeout = '',
 	embeddingVectorDimensions,
-	enableGPU,
 	huggingFaceAccessToken,
 	learnMessages,
 	languageIds,
@@ -199,7 +198,6 @@ export default function ({
 			assetEntryClassNames,
 			cacheTimeout,
 			embeddingVectorDimensions,
-			enableGPU,
 			huggingFaceAccessToken,
 			languageIds,
 			maxCharacterCount,
@@ -380,25 +378,6 @@ export default function ({
 							type="number"
 							value={formik.values.modelTimeout}
 						/>
-
-						<ClayForm.Group>
-							<ClayCheckbox
-								aria-label={Liferay.Language.get('enable-gpu')}
-								checked={!!formik.values.enableGPU}
-								label={Liferay.Language.get('enable-gpu')}
-								name={`${namespace}enableGPU`}
-								onChange={_handleCheckboxChange('enableGPU')}
-								value={!!formik.values.enableGPU}
-							/>
-
-							<ClayForm.FeedbackGroup>
-								<ClayForm.Text>
-									{Liferay.Language.get(
-										'sentence-transformer-enable-gpu-help'
-									)}
-								</ClayForm.Text>
-							</ClayForm.FeedbackGroup>
-						</ClayForm.Group>
 					</>
 				)}
 
@@ -427,7 +406,6 @@ export default function ({
 					embeddingVectorDimensions={
 						formik.values.embeddingVectorDimensions
 					}
-					enableGPU={formik.values.enableGPU}
 					errors={formik.errors}
 					huggingFaceAccessToken={
 						formik.values.huggingFaceAccessToken

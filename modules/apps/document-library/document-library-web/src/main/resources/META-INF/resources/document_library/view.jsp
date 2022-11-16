@@ -82,8 +82,6 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						).build()
 					).put(
 						"defaultModelClassName", Folder.class.getSimpleName()
-					).put(
-						"prioritizedModelClassNames", Arrays.asList(FileEntry.class.getSimpleName(), DLFileShortcut.class.getSimpleName(), Folder.class.getSimpleName())
 					).build()
 				).put(
 					"selectFileEntryTypeURL", dlViewDisplayContext.getSelectFileEntryTypeURL()

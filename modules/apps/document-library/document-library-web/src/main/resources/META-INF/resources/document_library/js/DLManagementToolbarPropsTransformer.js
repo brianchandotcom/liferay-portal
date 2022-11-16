@@ -26,11 +26,7 @@ import {collectDigitalSignature} from './digital-signature/DigitalSignatureUtil'
 
 export default function propsTransformer({
 	additionalProps: {
-		bulkPermissionsConfiguration: {
-			defaultModelClassName,
-			permissionsURLs,
-			prioritizedModelClassNames,
-		},
+		bulkPermissionsConfiguration: {defaultModelClassName, permissionsURLs},
 		collectDigitalSignaturePortlet,
 		downloadEntryURL,
 		editEntryURL,

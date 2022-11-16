@@ -1,6 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationCompile project(":apps:application-list:application-list-api")
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:configuration-admin:configuration-admin-api")
 	testIntegrationCompile project(":apps:export-import:export-import-api")

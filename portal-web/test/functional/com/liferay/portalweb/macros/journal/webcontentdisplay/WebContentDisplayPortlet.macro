@@ -557,18 +557,16 @@ definition {
 	}
 
 	macro viewContentPageBreak {
-		AssertClick(
-			locator1 = "Pagination#PAGE_2",
-			value1 = "2");
+		Click(
+			key_pageNumber = "2",
+			locator1 = "Pagination#ANY_PAGE");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			index = "1",
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "${webContentContent}");
 
-		AssertClick(
-			locator1 = "Pagination#PREVIOUS_LINK",
-			value1 = "Previous");
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
 	}
 
 	macro viewEnabledFileTypes {

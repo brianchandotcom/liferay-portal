@@ -36,22 +36,17 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.web.internal.search.JournalSearcher;
+import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -87,42 +82,13 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		try {
-			Indexer<?> indexer = JournalSearcher.getInstance();
+		List<JournalArticle> articles =
+			JournalSearcherUtil.searchJournalArticles(
+				searchContext -> _buildSearchContext(
+					collectionQuery, searchContext));
 
-			SearchContext searchContext = _buildSearchContext(collectionQuery);
-
-			Hits hits = indexer.search(searchContext);
-
-			List<JournalArticle> articles = new ArrayList<>();
-
-			for (Document document : hits.getDocs()) {
-				String className = document.get(Field.ENTRY_CLASS_NAME);
-
-				if (className.equals(JournalArticle.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
-
-					JournalArticle article =
-						_journalArticleLocalService.fetchLatestArticle(
-							classPK, WorkflowConstants.STATUS_ANY, false);
-
-					if (article != null) {
-						articles.add(article);
-					}
-				}
-			}
-
-			return InfoPage.of(
-				articles, collectionQuery.getPagination(), hits.getLength());
-		}
-		catch (SearchException searchException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(searchException);
-			}
-		}
-
-		return null;
+		return InfoPage.of(
+			articles, collectionQuery.getPagination(), articles.size());
 	}
 
 	@Override
@@ -169,8 +135,8 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return Arrays.asList(new KeywordsInfoFilter());
 	}
 
-	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
-		SearchContext searchContext = new SearchContext();
+	private SearchContext _buildSearchContext(
+		CollectionQuery collectionQuery, SearchContext searchContext) {
 
 		searchContext.setAndSearch(true);
 		searchContext.setAttributes(

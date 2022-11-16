@@ -25,30 +25,24 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.web.internal.search.JournalSearcher;
+import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -73,48 +67,24 @@ public class DDMStructureRelatedInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		try {
-			Optional<Object> relatedItemOptional =
-				collectionQuery.getRelatedItemObjectOptional();
+		Optional<Object> relatedItemOptional =
+			collectionQuery.getRelatedItemObjectOptional();
 
-			Object relatedItem = relatedItemOptional.orElse(null);
+		Object relatedItem = relatedItemOptional.orElse(null);
 
-			if (!(relatedItem instanceof AssetCategory)) {
-				return InfoPage.of(
-					Collections.emptyList(), collectionQuery.getPagination(),
-					0);
-			}
-
-			Indexer<?> indexer = JournalSearcher.getInstance();
-
-			SearchContext searchContext = _buildSearchContext(
-				(AssetCategory)relatedItem, collectionQuery);
-
-			Hits hits = indexer.search(searchContext);
-
-			List<JournalArticle> articles = new ArrayList<>();
-
-			for (Document document : hits.getDocs()) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				JournalArticle article =
-					_journalArticleLocalService.fetchLatestArticle(
-						classPK, WorkflowConstants.STATUS_ANY, false);
-
-				articles.add(article);
-			}
-
+		if (!(relatedItem instanceof AssetCategory)) {
 			return InfoPage.of(
-				articles, collectionQuery.getPagination(), hits.getLength());
+				Collections.emptyList(), collectionQuery.getPagination(), 0);
 		}
-		catch (SearchException searchException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(searchException);
-			}
 
-			return null;
-		}
+		List<JournalArticle> articles =
+			JournalSearcherUtil.searchJournalArticles(
+				searchContext -> _buildSearchContext(
+					(AssetCategory)relatedItem, collectionQuery,
+					searchContext));
+
+		return InfoPage.of(
+			articles, collectionQuery.getPagination(), articles.size());
 	}
 
 	@Override
@@ -175,9 +145,8 @@ public class DDMStructureRelatedInfoCollectionProvider
 	}
 
 	private SearchContext _buildSearchContext(
-		AssetCategory assetCategory, CollectionQuery collectionQuery) {
-
-		SearchContext searchContext = new SearchContext();
+		AssetCategory assetCategory, CollectionQuery collectionQuery,
+		SearchContext searchContext) {
 
 		searchContext.setAndSearch(true);
 		searchContext.setAssetCategoryIds(

@@ -29,24 +29,7 @@ definition {
 
 			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		CustomerPortal.customerPortalTearDown();
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
-		}
-	}
-
-	@description = "Automation ID: LPS-150650 | Test Summary: Verify if the user can add additional Incident Report Contacts using the 'Add Incident Report Contact' button"
-	@priority = "3"
-	test AddingAdditionalIncidentReportContacts {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -80,7 +63,24 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
+	}
 
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+	@description = "Automation ID: LPS-150650 | Test Summary: Verify if the user can add additional Incident Report Contacts using the 'Add Incident Report Contact' button"
+	@priority = "3"
+	test AddingAdditionalIncidentReportContacts {
 		task ("And I assert that one more 'Incident Report Contact' field has been added") {
 			CustomerPortal.clickOnFinishActivationButton();
 
@@ -105,40 +105,6 @@ definition {
 	@description = "Automation ID: LPS-150654 | Test Summary: Verify if the user enters a wrong value in 'Owner Email' an error message is displayed"
 	@priority = "3"
 	test CanSeeTheErrorMessageInAllTheRequiredFields {
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "${testAccount}");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
-		}
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "${testAccount}");
-		}
-
-		task ("And I go through onboarding") {
-			CP2Utils.onboardingFlow();
-		}
-
-		task ("Then I click on the AC product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
 		task ("And I enter Setup AC") {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
@@ -195,40 +161,6 @@ definition {
 	@description = "Automation ID: LPS-150649 | Test Summary: Verify if team member administrator can only submit the form after filling out all required fields"
 	@priority = "4"
 	test CanViewTheAdministratorSubmitTheForm {
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "${testAccount}");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
-		}
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "${testAccount}");
-		}
-
-		task ("And I go through onboarding") {
-			CP2Utils.onboardingFlow();
-		}
-
-		task ("Then I click on the AC product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
 		task ("And the Submit button must be disabled") {
 			CustomerPortal.clickOnFinishActivationButton();
 
@@ -263,40 +195,6 @@ definition {
 	@description = "Automation ID: LPS-150660 | Test Summary: Verify if the user enters an invalid e-mail address for the owner and contacts in the incident report an error message is displayed"
 	@priority = "3"
 	test CanViewTheSuccessMessage {
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "${testAccount}");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to Customer Portal Site") {
-			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
-
-			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
-		}
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(
-				status = "Expired",
-				title = "${testAccount}");
-		}
-
-		task ("And I go through onboarding") {
-			CP2Utils.onboardingFlow();
-		}
-
-		task ("Then I click on the AC product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
 		task ("When I fill in all the required fields") {
 			CustomerPortal.clickOnFinishActivationButton();
 

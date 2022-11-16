@@ -164,7 +164,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 							<%
 							List<String> resourcePrimKeys = actionIdResourcePrimKeysMap.getOrDefault(action, Collections.emptyList());
 
-							if (resourcePrimKeys.size() < resources.size()) {
+							if (!disabled && (resourcePrimKeys.size() < resources.size())) {
 								checked = false;
 							}
 

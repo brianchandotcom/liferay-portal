@@ -36,9 +36,7 @@ function ActiveViewSelector({views}) {
 					className="nav-link nav-link-monospaced"
 					displayType="unstyled"
 					symbol={activeView.thumbnail}
-					title={Liferay.Language.get(
-						'show-view-options'
-					)}
+					title={Liferay.Language.get('show-view-options')}
 				/>
 			}
 		>

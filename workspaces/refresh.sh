@@ -100,6 +100,10 @@ delta-remote-app:
   type: customElement
   urls:
     - static/js/main.*.js
+    # To enable dev server run following command
+    # blade gw deploy && yarn start
+    # and then uncomment the line below
+    #- http://localhost:3000/static/js/bundle.js
   useESM: false
 
 assemble:

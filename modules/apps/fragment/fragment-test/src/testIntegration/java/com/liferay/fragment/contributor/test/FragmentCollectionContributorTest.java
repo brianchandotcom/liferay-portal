@@ -28,15 +28,13 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,88 +56,127 @@ public class FragmentCollectionContributorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
+	@Test
+	public void testRegisterContributedFragmentEntries() {
+		String fragmentCollectionContributorKey = RandomTestUtil.randomString();
+
+		TestFragmentCollectionContributor testFragmentCollectionContributor =
+			new TestFragmentCollectionContributor(
+				fragmentCollectionContributorKey,
+				HashMapBuilder.put(
+					-1,
+					_getFragmentEntry(
+						"test-unsupported-fragment-entry",
+						RandomTestUtil.randomString(), -1)
+				).put(
+					FragmentConstants.TYPE_COMPONENT,
+					_getFragmentEntry(
+						"test-component-fragment-entry",
+						RandomTestUtil.randomString(),
+						FragmentConstants.TYPE_COMPONENT)
+				).put(
+					FragmentConstants.TYPE_INPUT,
+					_getFragmentEntry(
+						"test-input-fragment-entry",
+						RandomTestUtil.randomString(),
+						FragmentConstants.TYPE_INPUT)
+				).put(
+					FragmentConstants.TYPE_SECTION,
+					_getFragmentEntry(
+						"test-section-fragment-entry",
+						RandomTestUtil.randomString(),
+						FragmentConstants.TYPE_SECTION)
+				).build());
+
+		ServiceRegistration<?> serviceRegistration = _getServiceRegistration(
+			testFragmentCollectionContributor);
+
+		try {
+			Map<String, FragmentEntry> fragmentEntries =
+				_fragmentCollectionContributorRegistry.getFragmentEntries();
+
+			Assert.assertNotNull(
+				fragmentEntries.get("test-component-fragment-entry"));
+			Assert.assertNotNull(
+				fragmentEntries.get("test-input-fragment-entry"));
+			Assert.assertNotNull(
+				fragmentEntries.get("test-section-fragment-entry"));
+			Assert.assertNull(
+				fragmentEntries.get("test-unsupported-fragment-entry"));
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
+	public void testRegisterFragmentCollectionContributor() {
+		String fragmentCollectionContributorKey = RandomTestUtil.randomString();
+
+		ServiceRegistration<?> serviceRegistration = _getServiceRegistration(
+			new TestFragmentCollectionContributor(
+				fragmentCollectionContributorKey, new HashMap<>()));
+
+		try {
+			Assert.assertNotNull(
+				_fragmentCollectionContributorRegistry.
+					getFragmentCollectionContributor(
+						fragmentCollectionContributorKey));
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private FragmentEntry _getFragmentEntry(String key, String html, int type) {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
+
+		fragmentEntry.setFragmentEntryKey(key);
+		fragmentEntry.setName(RandomTestUtil.randomString());
+		fragmentEntry.setCss(null);
+		fragmentEntry.setHtml(html);
+		fragmentEntry.setJs(null);
+		fragmentEntry.setConfiguration(null);
+		fragmentEntry.setType(type);
+
+		return fragmentEntry;
+	}
+
+	private ServiceRegistration<?> _getServiceRegistration(
+		TestFragmentCollectionContributor testFragmentCollectionContributor) {
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			FragmentCollectionContributorTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
+		return bundleContext.registerService(
 			FragmentCollectionContributor.class,
-			new TestFragmentCollectionContributor(),
+			testFragmentCollectionContributor,
 			MapUtil.singletonDictionary(
 				"fragment.collection.key",
-				TestFragmentCollectionContributor.
-					TEST_FRAGMENT_COLLECTION_KEY));
-	}
-
-	@After
-	public void tearDown() {
-		_serviceRegistration.unregister();
-	}
-
-	@Test
-	public void testRegisterContributedFragmentEntries() {
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorRegistry.getFragmentEntries();
-
-		Assert.assertNotNull(
-			fragmentEntries.get(
-				TestFragmentCollectionContributor.
-					TEST_COMPONENT_FRAGMENT_ENTRY));
-		Assert.assertNotNull(
-			fragmentEntries.get(
-				TestFragmentCollectionContributor.TEST_INPUT_FRAGMENT_ENTRY));
-		Assert.assertNotNull(
-			fragmentEntries.get(
-				TestFragmentCollectionContributor.TEST_SECTION_FRAGMENT_ENTRY));
-		Assert.assertNull(
-			fragmentEntries.get(
-				TestFragmentCollectionContributor.
-					TEST_UNSUPPORTED_FRAGMENT_ENTRY));
-	}
-
-	@Test
-	public void testRegisterFragmentCollectionContributor() {
-		_fragmentCollectionContributorRegistry.getFragmentCollectionContributor(
-			TestFragmentCollectionContributor.TEST_FRAGMENT_COLLECTION_KEY);
-
-		Assert.assertNotNull(
-			_fragmentCollectionContributorRegistry.
-				getFragmentCollectionContributor(
-					TestFragmentCollectionContributor.
-						TEST_FRAGMENT_COLLECTION_KEY));
+				testFragmentCollectionContributor.getFragmentCollectionKey()));
 	}
 
 	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 
-	private ServiceRegistration<FragmentCollectionContributor>
-		_serviceRegistration;
-
 	private static class TestFragmentCollectionContributor
 		implements FragmentCollectionContributor {
 
-		public static final String TEST_COMPONENT_FRAGMENT_ENTRY =
-			"test-component-fragment-entry";
+		public TestFragmentCollectionContributor(
+			String fragmentCollectionKey,
+			Map<Integer, FragmentEntry> fragmentEntriesMap) {
 
-		public static final String TEST_FRAGMENT_COLLECTION_KEY =
-			"test-fragment-collection-contributor";
-
-		public static final String TEST_INPUT_FRAGMENT_ENTRY =
-			"test-input-fragment-entry";
-
-		public static final String TEST_SECTION_FRAGMENT_ENTRY =
-			"test-section-fragment-entry";
-
-		public static final String TEST_UNSUPPORTED_FRAGMENT_ENTRY =
-			"test-unsuported-fragment-entry";
+			_fragmentCollectionKey = fragmentCollectionKey;
+			_fragmentEntriesMap = fragmentEntriesMap;
+		}
 
 		@Override
 		public String getFragmentCollectionKey() {
-			return TEST_FRAGMENT_COLLECTION_KEY;
+			return _fragmentCollectionKey;
 		}
 
 		@Override
@@ -149,28 +186,13 @@ public class FragmentCollectionContributorTest {
 
 		@Override
 		public List<FragmentEntry> getFragmentEntries(int type) {
-			List<FragmentEntry> fragmentEntries = new ArrayList<>();
+			FragmentEntry fragmentEntry = _fragmentEntriesMap.get(type);
 
-			if (type == FragmentConstants.TYPE_COMPONENT) {
-				fragmentEntries.add(
-					_getFragmentEntry(TEST_COMPONENT_FRAGMENT_ENTRY, type));
-			}
-			else if (type == FragmentConstants.TYPE_INPUT) {
-				fragmentEntries.add(
-					_getFragmentEntry(TEST_INPUT_FRAGMENT_ENTRY, type));
-			}
-			else if (type == FragmentConstants.TYPE_SECTION) {
-				fragmentEntries.add(
-					_getFragmentEntry(TEST_SECTION_FRAGMENT_ENTRY, type));
-			}
-			else {
-				fragmentEntries.add(
-					_getFragmentEntry(
-						TEST_UNSUPPORTED_FRAGMENT_ENTRY,
-						RandomTestUtil.randomInt()));
+			if (fragmentEntry != null) {
+				return Collections.singletonList(fragmentEntry);
 			}
 
-			return fragmentEntries;
+			return Collections.emptyList();
 		}
 
 		@Override
@@ -190,20 +212,8 @@ public class FragmentCollectionContributorTest {
 			).build();
 		}
 
-		private FragmentEntry _getFragmentEntry(String key, int type) {
-			FragmentEntry fragmentEntry =
-				FragmentEntryLocalServiceUtil.createFragmentEntry(0L);
-
-			fragmentEntry.setFragmentEntryKey(key);
-			fragmentEntry.setName(RandomTestUtil.randomString());
-			fragmentEntry.setCss(null);
-			fragmentEntry.setHtml(RandomTestUtil.randomString());
-			fragmentEntry.setJs(null);
-			fragmentEntry.setConfiguration(null);
-			fragmentEntry.setType(type);
-
-			return fragmentEntry;
-		}
+		private final String _fragmentCollectionKey;
+		private final Map<Integer, FragmentEntry> _fragmentEntriesMap;
 
 	}
 

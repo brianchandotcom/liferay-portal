@@ -49,6 +49,7 @@ import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
+import org.dom4j.Node;
 
 /**
  * @author Karen Dang
@@ -1494,11 +1495,27 @@ public class PoshiValidation {
 	protected static void validatePropertyElement(PoshiElement poshiElement) {
 		String filePath = _getFilePath(poshiElement);
 
-		List<String> attributeNames = Arrays.asList(
-			"line-number", "name", "value");
+		List<String> attributeNames = Arrays.asList("line-number", "name");
 
 		validateHasNoChildElements(poshiElement);
 		validatePossibleAttributeNames(poshiElement, attributeNames);
+
+		if (Validator.isNotNull(poshiElement.attributeValue("value"))) {
+			attributeNames.add("value");
+		}
+		else {
+			if (poshiElement.nodeCount() == 1) {
+				Node cdataNode = poshiElement.node(0);
+
+				if (Validator.isNull(cdataNode.getStringValue())) {
+					_addException(
+						poshiElement,
+						poshiElement.attributeValue("name") + " has no value",
+						filePath);
+				}
+			}
+		}
+
 		validateRequiredAttributeNames(poshiElement, attributeNames, filePath);
 		validatePossiblePropertyValues(poshiElement);
 	}

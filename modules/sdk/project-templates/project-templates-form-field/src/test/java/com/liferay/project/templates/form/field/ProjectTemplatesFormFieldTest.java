@@ -225,8 +225,8 @@ public class ProjectTemplatesFormFieldTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Foobar",
-			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar",
-			"-DliferayProduct=" + liferayProduct);
+			"-DliferayProduct=" + liferayProduct,
+			"-DliferayVersion=" + liferayVersion, "-Dpackage=foobar");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");

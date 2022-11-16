@@ -103,8 +103,8 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 		String template = "service-builder";
 
 		File serviceBuilderProjectDir = buildTemplateWithGradle(
-			modulesDir, template, template + "test", "--liferay-version",
-			_BOM_VERSION, "--product", liferayProduct);
+			modulesDir, template, template + "test", "--liferay-product",
+			liferayProduct, "--liferay-version", _BOM_VERSION);
 
 		String serviceProjectName = template + "test-service";
 

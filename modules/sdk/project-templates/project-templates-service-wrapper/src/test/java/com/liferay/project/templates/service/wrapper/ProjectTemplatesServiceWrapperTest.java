@@ -127,8 +127,8 @@ public class ProjectTemplatesServiceWrapperTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Serviceoverride",
-			"-DliferayVersion=" + _liferayVersion, "-Dpackage=serviceoverride",
 			"-DliferayProduct=" + _liferayProduct,
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=serviceoverride",
 			"-DserviceWrapperClass=" +
 				"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 

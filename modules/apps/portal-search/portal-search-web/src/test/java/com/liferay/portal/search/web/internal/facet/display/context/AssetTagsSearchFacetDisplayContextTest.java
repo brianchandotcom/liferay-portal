@@ -185,88 +185,162 @@ public class AssetTagsSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermFrequencyAscending() throws Exception {
-		List<TermCollector> termCollectors = _addTagsAndCreateTermCollectors(
-			new String[] {"alpha", "charlie", "bravo", "delta"},
-			new int[] {4, 5, 5, 6});
+		List<TermCollector> termCollectors1 = _addTagsAndCreateTermCollectors(
+			new String[] {"alpha", "delta", "bravo", "charlie"},
+			new int[] {3, 4, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors);
+		_setUpMultipleTermCollectors(termCollectors1);
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "count:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts1 =
+			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+		String nameFrequencyString1 = _buildNameFrequencyString(
+			bucketDisplayContexts1);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			"alpha:4|bravo:5|charlie:5|delta:6", nameFrequencyString);
+			bucketDisplayContexts1.toString(),
+			"alpha:3|delta:4|bravo:5|charlie:6", nameFrequencyString1);
+
+		List<TermCollector> termCollectors2 = _addTagsAndCreateTermCollectors(
+			new String[] {"alpha", "delta", "bravo", "charlie"},
+			new int[] {4, 5, 5, 6});
+
+		_setUpMultipleTermCollectors(termCollectors2);
+
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
+			createDisplayContext(StringPool.BLANK, "count:asc");
+
+		List<BucketDisplayContext> bucketDisplayContexts2 =
+			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
+
+		String nameFrequencyString2 = _buildNameFrequencyString(
+			bucketDisplayContexts2);
+
+		Assert.assertEquals(
+			bucketDisplayContexts2.toString(),
+			"alpha:4|bravo:5|delta:5|charlie:6", nameFrequencyString2);
 	}
 
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
-		List<TermCollector> termCollectors = _addTagsAndCreateTermCollectors(
+		List<TermCollector> termCollectors1 = _addTagsAndCreateTermCollectors(
 			new String[] {"alpha", "charlie", "bravo", "delta"},
-			new int[] {4, 5, 5, 6});
+			new int[] {3, 4, 5, 6});
 
-		_setUpMultipleTermCollectors(termCollectors);
+		_setUpMultipleTermCollectors(termCollectors1);
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "count:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts1 =
+			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+		String nameFrequencyString1 = _buildNameFrequencyString(
+			bucketDisplayContexts1);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			"delta:6|bravo:5|charlie:5|alpha:4", nameFrequencyString);
+			bucketDisplayContexts1.toString(),
+			"delta:6|bravo:5|charlie:4|alpha:3", nameFrequencyString1);
+
+		List<TermCollector> termCollectors2 = _addTagsAndCreateTermCollectors(
+			new String[] {"alpha", "delta", "bravo", "charlie"},
+			new int[] {4, 5, 5, 6});
+
+		_setUpMultipleTermCollectors(termCollectors2);
+
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
+			createDisplayContext(StringPool.BLANK, "count:desc");
+
+		List<BucketDisplayContext> bucketDisplayContexts2 =
+			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
+
+		String nameFrequencyString2 = _buildNameFrequencyString(
+			bucketDisplayContexts2);
+
+		Assert.assertEquals(
+			bucketDisplayContexts2.toString(),
+			"charlie:6|bravo:5|delta:5|alpha:4", nameFrequencyString2);
 	}
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		List<TermCollector> termCollectors = _addTagsAndCreateTermCollectors(
-			"alpha", "bravo", "charlie", "bravo");
+		List<TermCollector> termCollectors1 = _addTagsAndCreateTermCollectors(
+			"bravo", "delta", "alpha", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors);
+		_setUpMultipleTermCollectors(termCollectors1);
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "key:asc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts1 =
+			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+		String nameFrequencyString1 = _buildNameFrequencyString(
+			bucketDisplayContexts1);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			"alpha:1|bravo:4|bravo:2|charlie:3", nameFrequencyString);
+			bucketDisplayContexts1.toString(),
+			"alpha:3|bravo:1|charlie:4|delta:2", nameFrequencyString1);
+
+		List<TermCollector> termCollectors2 = _addTagsAndCreateTermCollectors(
+			"bravo", "alpha", "bravo", "charlie");
+
+		_setUpMultipleTermCollectors(termCollectors2);
+
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
+			createDisplayContext(StringPool.BLANK, "key:asc");
+
+		List<BucketDisplayContext> bucketDisplayContexts2 =
+			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
+
+		String nameFrequencyString2 = _buildNameFrequencyString(
+			bucketDisplayContexts2);
+
+		Assert.assertEquals(
+			bucketDisplayContexts1.toString(),
+			"alpha:2|bravo:3|bravo:1|charlie:4", nameFrequencyString2);
 	}
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		List<TermCollector> termCollectors = _addTagsAndCreateTermCollectors(
-			"alpha", "bravo", "charlie", "bravo");
+		List<TermCollector> termCollectors1 = _addTagsAndCreateTermCollectors(
+			"bravo", "delta", "alpha", "charlie");
 
-		_setUpMultipleTermCollectors(termCollectors);
+		_setUpMultipleTermCollectors(termCollectors1);
 
-		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext1 =
 			createDisplayContext(StringPool.BLANK, "key:desc");
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			assetTagsSearchFacetDisplayContext.getBucketDisplayContexts();
+		List<BucketDisplayContext> bucketDisplayContexts1 =
+			assetTagsSearchFacetDisplayContext1.getBucketDisplayContexts();
 
-		String nameFrequencyString = _buildNameFrequencyString(
-			bucketDisplayContexts);
+		String nameFrequencyString1 = _buildNameFrequencyString(
+			bucketDisplayContexts1);
 
 		Assert.assertEquals(
-			bucketDisplayContexts.toString(),
-			"charlie:3|bravo:4|bravo:2|alpha:1", nameFrequencyString);
+			bucketDisplayContexts1.toString(),
+			"delta:2|charlie:4|bravo:1|alpha:3", nameFrequencyString1);
+
+		List<TermCollector> termCollectors2 = _addTagsAndCreateTermCollectors(
+			"bravo", "alpha", "bravo", "charlie");
+
+		_setUpMultipleTermCollectors(termCollectors2);
+
+		AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext2 =
+			createDisplayContext(StringPool.BLANK, "key:desc");
+
+		List<BucketDisplayContext> bucketDisplayContexts2 =
+			assetTagsSearchFacetDisplayContext2.getBucketDisplayContexts();
+
+		String nameFrequencyString2 = _buildNameFrequencyString(
+			bucketDisplayContexts2);
+
+		Assert.assertEquals(
+			bucketDisplayContexts2.toString(),
+			"charlie:4|bravo:3|bravo:1|alpha:2", nameFrequencyString2);
 	}
 
 	protected AssetTagsSearchFacetDisplayContext createDisplayContext(

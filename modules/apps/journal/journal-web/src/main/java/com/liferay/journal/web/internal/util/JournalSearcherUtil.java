@@ -21,6 +21,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
@@ -62,12 +63,13 @@ public class JournalSearcherUtil {
 
 				if (className.equals(JournalArticle.class.getName())) {
 					return _journalArticleLocalService.fetchLatestArticle(
-						document.getLong(Field.ENTRY_CLASS_PK),
+						GetterUtil.getLong(
+							document.getLong(Field.ENTRY_CLASS_PK)),
 						WorkflowConstants.STATUS_ANY, false);
 				}
 
 				return _journalFolderLocalService.fetchJournalFolder(
-					document.getLong(Field.ENTRY_CLASS_PK));
+					GetterUtil.getLong(document.getLong(Field.ENTRY_CLASS_PK)));
 			});
 	}
 
@@ -91,13 +93,14 @@ public class JournalSearcherUtil {
 
 				if (showVersions) {
 					return _journalArticleLocalService.fetchArticle(
-						document.getLong(Field.GROUP_ID),
+						GetterUtil.getLong(document.getLong(Field.GROUP_ID)),
 						document.getString(Field.ARTICLE_ID),
-						document.getDouble(Field.VERSION));
+						GetterUtil.getDouble(
+							document.getDouble(Field.VERSION)));
 				}
 
 				return _journalArticleLocalService.fetchLatestArticle(
-					document.getLong(Field.ENTRY_CLASS_PK),
+					GetterUtil.getLong(document.getLong(Field.ENTRY_CLASS_PK)),
 					WorkflowConstants.STATUS_ANY, false);
 			});
 	}

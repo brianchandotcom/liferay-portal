@@ -177,7 +177,7 @@ public class HttpMethodFeature implements Feature {
 			Request request = containerRequestContext.getRequest();
 
 			return _httpMethodScopeLogic.check(
-				_scopeChecker, _propertyAccessorFunction, request.getMethod());
+				_propertyAccessorFunction, request.getMethod(), _scopeChecker);
 		}
 
 		@Context

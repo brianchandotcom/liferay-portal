@@ -54,19 +54,18 @@ public class HttpMethodScopeLogic implements ScopeLogic {
 
 	@Override
 	public boolean check(
-		ScopeChecker scopeChecker,
 		Function<String, Object> propertyAccessorFunction,
-		Class<?> resourceClass, Method resourceMethod) {
+		Class<?> resourceClass, Method resourceMethod,
+		ScopeChecker scopeChecker) {
 
 		return check(
-			scopeChecker, propertyAccessorFunction,
-			_getHttpMethod(resourceMethod));
+			propertyAccessorFunction, _getHttpMethod(resourceMethod),
+			scopeChecker);
 	}
 
 	public boolean check(
-		ScopeChecker scopeChecker,
-		Function<String, Object> propertyAccessorFunction,
-		String requestMethod) {
+		Function<String, Object> propertyAccessorFunction, String requestMethod,
+		ScopeChecker scopeChecker) {
 
 		try {
 			String applicationName = GetterUtil.getString(

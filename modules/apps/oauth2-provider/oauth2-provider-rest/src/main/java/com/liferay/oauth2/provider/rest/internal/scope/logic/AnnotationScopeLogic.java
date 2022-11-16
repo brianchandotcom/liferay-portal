@@ -39,9 +39,9 @@ public class AnnotationScopeLogic implements ScopeLogic {
 
 	@Override
 	public boolean check(
-		ScopeChecker scopeChecker,
 		Function<String, Object> propertyAccessorFunction,
-		Class<?> resourceClass, Method resourceMethod) {
+		Class<?> resourceClass, Method resourceMethod,
+		ScopeChecker scopeChecker) {
 
 		RequiresNoScope requiresNoScope =
 			RequiresScopeAnnotationFinder.getScopeAnnotation(

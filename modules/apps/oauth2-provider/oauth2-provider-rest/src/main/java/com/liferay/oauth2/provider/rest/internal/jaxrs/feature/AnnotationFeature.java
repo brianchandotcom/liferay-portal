@@ -115,9 +115,8 @@ public class AnnotationFeature implements Feature {
 			ContainerRequestContext containerRequestContext) {
 
 			return _scopeLogic.check(
-				_scopeChecker, _propertyAccessorFunction,
-				_resourceInfo.getResourceClass(),
-				_resourceInfo.getResourceMethod());
+				_propertyAccessorFunction, _resourceInfo.getResourceClass(),
+				_resourceInfo.getResourceMethod(), _scopeChecker);
 		}
 
 		@Context

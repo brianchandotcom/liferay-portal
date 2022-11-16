@@ -88,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.document.library.configuration.DLConfiguration",
 		"com.liferay.users.admin.configuration.UserFileUploadsConfiguration"
 	},
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = {
 		"javax.portlet.name=" + ImageUploaderPortletKeys.IMAGE_UPLOADER,
 		"mvc.command.name=/image_uploader/upload_image"

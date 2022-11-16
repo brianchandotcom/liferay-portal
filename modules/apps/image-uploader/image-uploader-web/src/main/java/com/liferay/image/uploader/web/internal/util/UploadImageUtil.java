@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = UploadImageUtil.class
 )
 public class UploadImageUtil {

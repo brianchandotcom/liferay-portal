@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = ConnectedAppProvider.class)
+@Component(service = ConnectedAppProvider.class)
 public class SharepointRestRepositoryConnectedAppProvider
 	implements ConnectedAppProvider {
 

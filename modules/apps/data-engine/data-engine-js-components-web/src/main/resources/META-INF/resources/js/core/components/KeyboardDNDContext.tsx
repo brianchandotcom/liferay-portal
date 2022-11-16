@@ -180,7 +180,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 
 				setState(nextState);
 
-				const {name, position} = getTextData(
+				const {path, position} = getTextData(
 					nextState,
 					formStateRef.current
 				);
@@ -188,7 +188,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				setText(
 					sub(Liferay.Language.get('targeting-x-of-x'), [
 						position,
-						name,
+						path,
 					])
 				);
 			}
@@ -198,7 +198,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 			else if (event.keyCode === ENTER_KEYCODE) {
 				handleDrop(stateRef.current!);
 
-				const {name, position} = getTextData(
+				const {path, position} = getTextData(
 					stateRef.current!,
 					formStateRef.current
 				);
@@ -206,7 +206,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				setText(
 					sub(Liferay.Language.get('field-placed-on-x-of-x'), [
 						position,
-						name,
+						path,
 					])
 				);
 
@@ -230,7 +230,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 
 				setState(nextState);
 
-				const {name, position} = getTextData(
+				const {path, position} = getTextData(
 					nextState,
 					formStateRef.current
 				);
@@ -238,7 +238,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				setText(
 					sub(Liferay.Language.get('targeting-x-of-x'), [
 						position,
-						name,
+						path,
 					])
 				);
 			}
@@ -258,7 +258,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 
 				setState(nextState);
 
-				const {name, position} = getTextData(
+				const {path, position} = getTextData(
 					nextState,
 					formStateRef.current
 				);
@@ -266,7 +266,7 @@ export function KeyboardDNDContextProvider({children}: {children: ReactNode}) {
 				setText(
 					sub(Liferay.Language.get('targeting-x-of-x'), [
 						position,
-						name,
+						path,
 					])
 				);
 			}
@@ -629,11 +629,47 @@ function getTextData(
 	state: IState,
 	formState: ReturnType<typeof useFormState>
 ) {
-	const {itemPath, itemType, position} = state.currentTarget;
-	const item = getItem(formState, itemPath);
+	const {itemPath, position} = state.currentTarget;
+	const {paginationMode} = formState;
+
+	const pathItems: Array<string> = [];
+
+	itemPath.forEach((itemIndex, i) => {
+		const item = getItem(formState, itemPath.slice(0, i + 1));
+		const itemType = getItemType(item);
+		const itemTypeLabel = getItemTypeLabel(itemType);
+
+		if (
+			itemType === 'page' &&
+			paginationMode === 'single-page' &&
+			itemPath.length > 1
+		) {
+			return;
+		}
+
+		pathItems.push(item.label || `${itemTypeLabel} ${itemIndex + 1}`);
+	});
 
 	return {
-		name: item.label || itemType,
+		path: pathItems.join(','),
 		position,
 	};
+}
+
+function getItemTypeLabel(itemType: string) {
+	switch (itemType) {
+		case 'root':
+			return Liferay.Language.get('root');
+		case 'page':
+			return Liferay.Language.get('page');
+		case 'row':
+			return Liferay.Language.get('row');
+		case 'column':
+			return Liferay.Language.get('column');
+		case 'field': {
+			return Liferay.Language.get('field');
+		}
+		default:
+			return itemType;
+	}
 }

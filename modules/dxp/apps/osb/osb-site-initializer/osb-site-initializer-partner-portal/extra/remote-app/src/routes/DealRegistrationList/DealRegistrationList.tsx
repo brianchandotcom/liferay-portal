@@ -47,6 +47,22 @@ const DealRegistrationList = () => {
 			columnKey: DealRegistrationColumnKey.END_DATE,
 			label: 'End Date',
 		},
+		{
+			columnKey: DealRegistrationColumnKey.DEAL_AMOUNT,
+			label: 'Amount',
+		},
+		{
+			columnKey: DealRegistrationColumnKey.PARTNER_REP,
+			label: 'Partner Rep',
+		},
+		{
+			columnKey: DealRegistrationColumnKey.LIFERAY_REP,
+			label: 'Liferay Rep',
+		},
+		{
+			columnKey: DealRegistrationColumnKey.STAGE,
+			label: 'Stage',
+		},
 	];
 
 	const getTable = (totalCount: number, items?: DealRegistrationItem[]) => {

@@ -99,7 +99,8 @@ public class AssetListEntryVerticalCard extends BaseVerticalCard {
 						LanguageUtil.format(
 							themeDisplay.getLocale(), "x-variations",
 							new String[] {
-								String.valueOf(assetListEntrySegmentsEntryRelsCount)
+								String.valueOf(
+									assetListEntrySegmentsEntryRelsCount)
 							}));
 				}
 			).build();

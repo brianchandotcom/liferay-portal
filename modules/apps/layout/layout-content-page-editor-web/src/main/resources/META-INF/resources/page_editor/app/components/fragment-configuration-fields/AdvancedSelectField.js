@@ -306,7 +306,7 @@ const SingleSelectWithIcon = ({
 			</label>
 
 			<ClaySelectWithOption
-				aria-describedby={helpTextId}
+				aria-describedby={field.description ? helpTextId : null}
 				className="page-editor__single-select-with-icon__select"
 				disabled={Boolean(disabled)}
 				id={inputId}

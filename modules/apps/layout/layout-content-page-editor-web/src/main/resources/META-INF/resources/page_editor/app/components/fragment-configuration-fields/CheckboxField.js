@@ -71,7 +71,7 @@ export function CheckboxField({
 			>
 				{field.typeOptions?.displayType === 'toggle' ? (
 					<ClayToggle
-						aria-describedby={helpTextId}
+						aria-describedby={field.description ? helpTextId : null}
 						containerProps={{className: 'mb-0'}}
 						disabled={disabled}
 						label={label}
@@ -80,7 +80,7 @@ export function CheckboxField({
 					/>
 				) : (
 					<ClayCheckbox
-						aria-describedby={helpTextId}
+						aria-describedby={field.description ? helpTextId : null}
 						checked={checked}
 						containerProps={{className: 'mb-0'}}
 						disabled={disabled}

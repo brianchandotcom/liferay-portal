@@ -178,7 +178,7 @@ const MultiSelect = ({
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
-						aria-describedby={helpTextId}
+						aria-describedby={field.description ? helpTextId : null}
 						aria-labelledby={labelId}
 						className="form-control-select form-control-sm text-left w-100"
 						displayType="secondary"
@@ -224,7 +224,7 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 			</label>
 
 			<ClaySelectWithOption
-				aria-describedby={helpTextId}
+				aria-describedby={field.description ? helpTextId : null}
 				disabled={!!disabled}
 				id={inputId}
 				onChange={(event) => {

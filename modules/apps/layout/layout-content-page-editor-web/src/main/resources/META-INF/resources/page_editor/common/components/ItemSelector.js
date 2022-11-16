@@ -198,7 +198,7 @@ export default function ItemSelector({
 			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
-						aria-describedby={helpTextId}
+						aria-describedby={helpText ? helpTextId : null}
 						className={classNames({
 							'page-editor__item-selector__content-input': showEditControls,
 						})}

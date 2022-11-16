@@ -39,7 +39,7 @@ export function TextField({field, onValueSelect, value}) {
 			<label htmlFor={inputId}>{field.label}</label>
 
 			<ClayInput
-				aria-describedby={helpTextId}
+				aria-describedby={field.description ? helpTextId : null}
 				component={component}
 				id={inputId}
 				onBlur={(event) => {

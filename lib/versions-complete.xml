@@ -3212,48 +3212,6 @@
 				<latest-version-publish-date>2016-10-30 14:41:57</latest-version-publish-date>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-annotations.jar</file-name>
-				<version>2.13.2</version>
-				<project-name>Jackson-annotations</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2022-03-06 19:20:43</current-version-publish-date>
-				<latest-version-publish-date>2022-11-05 20:16:23</latest-version-publish-date>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-core.jar</file-name>
-				<version>2.13.2</version>
-				<project-name>Jackson-core</project-name>
-				<project-url>https://github.com/FasterXML/jackson-core</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2022-03-06 19:27:56</current-version-publish-date>
-				<latest-version-publish-date>2022-11-05 20:38:09</latest-version-publish-date>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-databind.jar</file-name>
-				<version>2.13.2.2</version>
-				<project-name>jackson-databind</project-name>
-				<project-url>http://github.com/FasterXML/jackson</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2022-03-29 02:00:51</current-version-publish-date>
-				<latest-version-publish-date>2022-11-05 20:39:36</latest-version-publish-date>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-dataformat-yaml.jar</file-name>
 				<version>2.13.2</version>
 				<project-name>Jackson-dataformat-YAML</project-name>

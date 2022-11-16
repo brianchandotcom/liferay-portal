@@ -221,7 +221,7 @@ public class ProductNavigationControlMenuTagDisplayContext {
 			writer.append("<div ");
 		}
 
-		writer.append("class \"control-menu-nav-item\">");
+		writer.append("class=\"control-menu-nav-item\">");
 
 		IconTag iconTag = new IconTag();
 

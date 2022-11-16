@@ -602,45 +602,63 @@ definition {
 
 	@priority = "3"
 	test UserLockoutShowsTimezoneInformation {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";
 		property testray.component.names = "Password Policies";
 		property user.time.zone = "UTC";
 
-		User.firstLoginPG();
+		task ("Given: Change time zone, add a new user and enable lockout function of default password policy.") {
+			User.firstLoginPG();
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Time Zone",
-			configurationScope = "Virtual Instance Scope");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Time Zone",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureTimeZone(timeZone = "(UTC +05:00) Pakistan Time");
+			PortalSettings.configureTimeZone(timeZone = "(UTC +05:00) Pakistan Time");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
+			JSONUser.setFirstPassword(
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		PasswordPolicies.enableLockout(
-			lockoutDuration = "5 Minutes",
-			passwordPolicyName = "Default Password Policy",
-			passwordPolicyPanel = "Lockout");
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "Password Policies");
 
-		User.logoutPG();
+			PasswordPolicies.enableLockout(
+				lockoutDuration = "5 Minutes",
+				passwordPolicyName = "Default Password Policy",
+				passwordPolicyPanel = "Lockout");
+		}
 
-		User.loginUserInvalidPG(
-			errorMessage = "This account is locked until",
-			loginAttempts = "3",
-			maximumFailure = "3",
-			password = "INVALID",
-			userEmailAddress = "userea@liferay.com");
+		task ("When: Try three times to log in as the new user with the wrong password and log in with the correct password for the fourth time.") {
+			User.logoutPG();
 
-		task ("Assert Timezone is included with account lockout message.") {
+			User.loginUserInvalidPG(
+				loginAttempts = "3",
+				password = "INVALID",
+				userEmailAddress = "userea@liferay.com");
+
+			Navigator.openURL();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Then: Assert Timezone is included with account lockout message.") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "This account is locked until");
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "PKT.");

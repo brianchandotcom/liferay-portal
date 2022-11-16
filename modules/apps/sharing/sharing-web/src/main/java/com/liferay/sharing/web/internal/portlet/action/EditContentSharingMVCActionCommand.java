@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
 		"mvc.command.name=/sharing/edit_content_sharing"

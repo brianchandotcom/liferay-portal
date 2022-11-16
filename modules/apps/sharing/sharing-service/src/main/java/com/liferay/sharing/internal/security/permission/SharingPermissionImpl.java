@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = SharingPermission.class)
+@Component(service = SharingPermission.class)
 public class SharingPermissionImpl implements SharingPermission {
 
 	@Override

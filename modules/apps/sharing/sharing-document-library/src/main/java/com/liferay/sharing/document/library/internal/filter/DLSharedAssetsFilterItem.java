@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	immediate = true, property = "navigation.item.order:Integer=1000",
+	property = "navigation.item.order:Integer=1000",
 	service = SharedAssetsFilterItem.class
 )
 public class DLSharedAssetsFilterItem implements SharedAssetsFilterItem {

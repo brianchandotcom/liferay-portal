@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + SharingPortletKeys.SHARING,
 	service = UserNotificationDefinition.class
 )

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = SharingHelper.class)
+@Component(service = SharingHelper.class)
 public class SharingHelper {
 
 	public SharingEntryPermissionDisplayAction

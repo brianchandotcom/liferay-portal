@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.sharing.model.SharingEntry",
 	service = PreviewPortletProvider.class
 )

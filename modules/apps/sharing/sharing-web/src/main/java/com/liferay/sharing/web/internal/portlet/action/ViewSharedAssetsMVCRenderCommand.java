@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS,
 		"mvc.command.name=/"

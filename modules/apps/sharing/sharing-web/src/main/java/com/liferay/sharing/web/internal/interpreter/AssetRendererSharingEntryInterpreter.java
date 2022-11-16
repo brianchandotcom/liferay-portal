@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	immediate = true, service = AssetRendererSharingEntryInterpreter.class
-)
+@Component(service = AssetRendererSharingEntryInterpreter.class)
 public class AssetRendererSharingEntryInterpreter
 	implements SharingEntryInterpreter {
 

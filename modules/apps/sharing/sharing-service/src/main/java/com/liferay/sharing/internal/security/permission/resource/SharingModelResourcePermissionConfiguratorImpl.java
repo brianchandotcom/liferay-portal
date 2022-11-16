@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.sharing.internal.configuration.SharingSystemConfiguration",
-	immediate = true, service = SharingModelResourcePermissionConfigurator.class
+	service = SharingModelResourcePermissionConfigurator.class
 )
 public class SharingModelResourcePermissionConfiguratorImpl
 	implements SharingModelResourcePermissionConfigurator {

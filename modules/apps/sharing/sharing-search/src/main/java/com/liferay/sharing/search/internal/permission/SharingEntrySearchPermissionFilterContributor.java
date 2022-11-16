@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Sergio González
  */
-@Component(immediate = true, service = SearchPermissionFilterContributor.class)
+@Component(service = SearchPermissionFilterContributor.class)
 public class SharingEntrySearchPermissionFilterContributor
 	implements SearchPermissionFilterContributor {
 

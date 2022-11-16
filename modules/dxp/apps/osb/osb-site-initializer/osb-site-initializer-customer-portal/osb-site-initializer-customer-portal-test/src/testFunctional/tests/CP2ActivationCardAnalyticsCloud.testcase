@@ -103,9 +103,9 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(status = "Active");
-
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
+			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(
+				position = "3",
+				status = "Active");
 		}
 	}
 

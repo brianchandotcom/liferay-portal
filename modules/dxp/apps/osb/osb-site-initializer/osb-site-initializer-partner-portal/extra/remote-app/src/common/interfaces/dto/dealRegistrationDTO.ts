@@ -30,8 +30,14 @@ export default interface DealRegistrationDTO
 	additionalContactLastName?: string;
 	additionalContacts?: string;
 	additionalInformationAboutTheOpportunity?: string;
+	amount?: number;
 	leadExternalReferenceCode?: string;
 	mdfActivityExternalReferenceCodeSF?: string;
+	opportunityOwner?: string;
+	partnerAccountName?: string;
+	partnerEmail?: string;
+	partnerFirstName?: string;
+	partnerLastName?: string;
 	primaryProspectBusinessUnit?: string;
 	primaryProspectDepartment?: LiferayPicklist;
 	primaryProspectEmailAddress?: string;
@@ -41,6 +47,8 @@ export default interface DealRegistrationDTO
 	primaryProspectPhone?: string;
 	projectCategories?: string;
 	projectNeed?: string;
+	projectSubscriptionEndDate?: Date;
+	projectSubscriptionStartDate?: Date;
 	projectTimeline: string;
 	prospectAccountName?: string;
 	prospectAddress?: string;
@@ -55,4 +63,5 @@ export default interface DealRegistrationDTO
 	r_accountToDealRegistrations_accountEntryId?: number;
 	r_activityToDealRegistrations_c_activity?: MDFRequestActivity;
 	r_activityToDealRegistrations_c_activityId?: number;
+	stage?: StaticRangeInit;
 }

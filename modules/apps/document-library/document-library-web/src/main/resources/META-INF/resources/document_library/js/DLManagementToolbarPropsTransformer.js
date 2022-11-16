@@ -241,11 +241,10 @@ export default function propsTransformer({
 			const modelClassName =
 				element.getData('modelclassname') ?? defaultModelClassName;
 
-			const previousValue = map.get(modelClassName) ?? [];
-
-			previousValue.push(element.get('value'));
-
-			map.set(modelClassName, previousValue);
+			map.set(modelClassName, [
+				...(map.get(modelClassName) ?? []),
+				element.get('value'),
+			]);
 		});
 
 		if (map.size > 1) {

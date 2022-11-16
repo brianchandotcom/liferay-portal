@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
@@ -34,8 +35,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -115,12 +119,32 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 		infoItemItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new JournalArticleItemSelectorReturnType());
 
-		return String.valueOf(
+		long articleId = ParamUtil.getLong(httpServletRequest, "articleId");
+
+		String itemSelectorURL = String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 				ddmFormFieldRenderingContext.getPortletNamespace() +
 					"selectJournalArticle",
 				infoItemItemSelectorCriterion));
+
+		if (articleId > 0) {
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+
+			JournalArticle journalArticle =
+				_journalArticleLocalService.fetchLatestArticle(
+					groupId, String.valueOf(articleId),
+					WorkflowConstants.STATUS_APPROVED);
+
+			String itemSelectorNamespace = _portal.getPortletNamespace(
+				ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+			itemSelectorURL = HttpComponentsUtil.addParameter(
+				itemSelectorURL, itemSelectorNamespace + "refererClassPK",
+				journalArticle.getResourcePrimKey());
+		}
+
+		return itemSelectorURL;
 	}
 
 	private String _getMessage(Locale defaultLocale, String value) {

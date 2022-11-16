@@ -60,7 +60,11 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 				<c:when test="<%= curArticle != null %>">
 
 					<%
-					row.setCssClass("articles selector-button" + row.getCssClass());
+					row.setCssClass("articles " + row.getCssClass());
+
+					if (!journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle)) {
+						row.setCssClass("selector-button " + row.getCssClass());
+					}
 
 					row.setData(journalArticleItemSelectorViewDisplayContext.getJournalArticleContext(curArticle));
 					%>
@@ -69,7 +73,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
 
 							<%
-							row.setCssClass("item-preview " + row.getCssClass());
+							if (!journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle)) {
+								row.setCssClass("item-preview " + row.getCssClass());
+							}
 							%>
 
 							<liferay-ui:search-container-column-text>
@@ -118,6 +124,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
+									disabled="<%= journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle) %>"
 									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>"
 								/>
 							</liferay-ui:search-container-column-text>
@@ -125,7 +132,9 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 						<c:otherwise>
 
 							<%
-							row.setCssClass("item-preview " + row.getCssClass());
+							if (!journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle)) {
+								row.setCssClass("item-preview " + row.getCssClass());
+							}
 							%>
 
 							<c:if test="<%= journalArticleItemSelectorViewDisplayContext.showArticleId() %>">

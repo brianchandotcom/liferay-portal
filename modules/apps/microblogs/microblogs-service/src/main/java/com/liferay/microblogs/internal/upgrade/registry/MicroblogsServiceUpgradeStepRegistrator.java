@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Ryan Park
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class MicroblogsServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

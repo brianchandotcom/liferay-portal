@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author István András Dézsi
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
 		"mvc.command.name=/microblogs/autocomplete_user_mentions"

@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jonathan Lee
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
 	service = UserNotificationHandler.class
 )

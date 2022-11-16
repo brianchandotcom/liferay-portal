@@ -3,7 +3,7 @@
 If there is a `if (hasColumn(...)) {...}` or `if (hasColumnType(...)) {...}`
 (or negative conditionals) that only contains calls to the methods `alterColumnName`, `alterColumnType`,
 `alterTableAddColumn` and/or `alterTableDropColumn`, the if-statement must be
-removed, letting the `alter*` methods.
+removed, leaving the `alter*` methods.
 
 ### Examples
 
@@ -28,7 +28,8 @@ alterColumnType(
 If an upgrade process class only contains calls to the methods
 `alterColumnName`, `alterColumnType`, `alterTableAddColumn` and/or
 `alterTableDropColumn`, no need to create the upgrade process class and replace
-it by inline calls to the `UpgradeProcessFactory` class in the registry class.
+it by inline calls to the `UpgradeProcessFactory` class in the registrator
+class.
 
 ### Examples
 

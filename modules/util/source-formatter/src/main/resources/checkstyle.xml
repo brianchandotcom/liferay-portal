@@ -846,7 +846,7 @@
 			<property name="category" value="Performance" />
 			<property name="description" value="Performs several checks on `*UpgradeProcess` classes." />
 			<property name="enabled" value="false" />
-			<message key="class.unnecessary" value="No need to create ''{0}'' class. Replace it by inline calls to the ''UpgradeProcessFactory'' class in the registry class" />
+			<message key="class.unnecessary" value="No need to create ''{0}'' class. Replace it by inline calls to the ''UpgradeProcessFactory'' class in the registrator class" />
 			<message key="if.statement.unnecessary" value="No need to use if-statement to wrap ''alterColumn*'' and ''alterTable*'' calls" />
 			<message key="upgrade.step.move.inside.post.upgrade.steps" value="Move ''{0}'' call inside ''getPostUpgradeSteps'' method" />
 			<message key="upgrade.step.move.inside.pre.upgrade.steps" value="Move ''{0}'' call inside ''getPreUpgradeSteps'' method" />

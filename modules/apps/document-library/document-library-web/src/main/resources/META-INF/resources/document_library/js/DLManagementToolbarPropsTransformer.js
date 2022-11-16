@@ -262,9 +262,10 @@ export default function propsTransformer({
 			return;
 		}
 
-		const selectedModelClassName = prioritizedModelClassNames.find(
-			(modelClassName) => map.has(modelClassName)
-		);
+		const [
+			selectedModelClassName,
+			selectedFileEntries,
+		] = map.entries()?.next().value;
 
 		const permissionsURL = permissionsURLs[selectedModelClassName];
 
@@ -276,9 +277,7 @@ export default function propsTransformer({
 				{
 					[`_${url.searchParams.get(
 						'p_p_id'
-					)}_resourcePrimKey`]: map
-						.get(selectedModelClassName)
-						.join(','),
+					)}_resourcePrimKey`]: selectedFileEntries.join(','),
 				},
 				permissionsURL
 			),

@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -25,6 +26,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldFormulaEvaluatorUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -39,6 +41,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -485,13 +488,32 @@ public class ObjectEntryDTOConverter
 								objectRelationship.getObjectDefinitionId1());
 
 						if (relatedObjectDefinition.isSystem()) {
+							Map<String, Object> systemModelAttributes =
+								_objectEntryLocalService.
+									getSystemModelAttributes(
+										relatedObjectDefinition, objectEntryId);
+
+							Map<String, Serializable> variables =
+								new HashMap<>();
+
+							for (Map.Entry<String, Object> entry :
+									systemModelAttributes.entrySet()) {
+
+								variables.put(
+									entry.getKey(),
+									(Serializable)entry.getValue());
+							}
+
 							_addNestedFields(
 								map, nestedFieldsOptional.get(),
 								objectFieldName, objectRelationship,
-								_objectEntryLocalService.
-									getSystemModelAttributes(
-										relatedObjectDefinition,
-										objectEntryId));
+								ObjectFieldFormulaEvaluatorUtil.evaluate(
+									_ddmExpressionFactory,
+									_objectFieldLocalService.getObjectFields(
+										relatedObjectDefinition.
+											getObjectDefinitionId()),
+									_objectFieldSettingLocalService, variables,
+									_userLocalService));
 						}
 						else {
 							_addNestedFields(
@@ -593,6 +615,9 @@ public class ObjectEntryDTOConverter
 		ObjectEntryDTOConverter.class);
 
 	@Reference
+	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -618,6 +643,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JaxRsApplicationDescriptorUtil {
 
-	public static String getRestContextPath(
+	public static String getRESTContextPath(
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor) {
 
 		return StringBundler.concat(

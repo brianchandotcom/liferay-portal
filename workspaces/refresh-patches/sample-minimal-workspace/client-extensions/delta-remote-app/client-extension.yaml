@@ -2,7 +2,6 @@ assemble:
     - from: build
       include: static/
       into: static/
-
 delta-remote-app:
     cssURLs:
         - static/css/main.*.css

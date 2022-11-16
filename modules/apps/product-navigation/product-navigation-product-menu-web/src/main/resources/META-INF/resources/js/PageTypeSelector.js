@@ -153,6 +153,7 @@ function PageTypeSelector({
 								displayType="unstyled"
 								size="sm"
 								symbol="plus"
+								title={Liferay.Language.get('add-page')}
 							/>
 						}
 					>
@@ -196,12 +197,14 @@ function PageTypeSelector({
 			<div className="autofit-col ml-2">
 				{configureLayoutSetURL && (
 					<ClayLink
+						aria-label={Liferay.Language.get('configure-pages')}
 						borderless
 						className="configure-link"
 						displayType="unstyled"
 						href={configureLayoutSetURL}
 						monospaced
 						outline
+						title={Liferay.Language.get('configure-pages')}
 					>
 						<ClayIcon symbol="cog" />
 					</ClayLink>

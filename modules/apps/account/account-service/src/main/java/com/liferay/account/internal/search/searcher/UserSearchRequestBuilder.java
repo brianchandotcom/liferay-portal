@@ -81,8 +81,7 @@ public class UserSearchRequestBuilder {
 			}
 
 			FieldSort fieldSort = _sorts.field(
-				_sortFieldBuilder.getSortField(
-					User.class.getName(), _sortField),
+				_sortFieldBuilder.getSortField(User.class, _sortField),
 				sortOrder);
 
 			searchRequestBuilder.sorts(fieldSort);

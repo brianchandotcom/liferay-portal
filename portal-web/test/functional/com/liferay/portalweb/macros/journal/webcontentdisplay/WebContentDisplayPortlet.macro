@@ -420,9 +420,9 @@ definition {
 			locator1 = "WCD#WEB_CONTENT_CONTENT",
 			value1 = "${webContentContentLocalized}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Icon#PRINT",
-			value1 = "Print");
+		AssertElementPresent(
+			key_text = "print",
+			locator1 = "Icon#ANY");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Button#SUBSCRIBE",

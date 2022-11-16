@@ -151,13 +151,14 @@ public class CommerceInventoryWarehousesImporter {
 						getCommerceInventoryWarehouseId(),
 					commerceChannel.getCommerceChannelId());
 
-			if (commerceChannelRel == null) {
-				_commerceChannelRelLocalService.addCommerceChannelRel(
-					CommerceInventoryWarehouse.class.getName(),
-					commerceInventoryWarehouse.
-						getCommerceInventoryWarehouseId(),
-					commerceChannel.getCommerceChannelId(), serviceContext);
+			if (commerceChannelRel != null) {
+				return commerceInventoryWarehouse;
 			}
+
+			_commerceChannelRelLocalService.addCommerceChannelRel(
+				CommerceInventoryWarehouse.class.getName(),
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				commerceChannel.getCommerceChannelId(), serviceContext);
 		}
 
 		return commerceInventoryWarehouse;

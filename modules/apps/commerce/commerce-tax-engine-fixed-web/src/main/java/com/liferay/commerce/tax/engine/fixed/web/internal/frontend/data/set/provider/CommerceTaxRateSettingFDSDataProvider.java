@@ -30,10 +30,9 @@ import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.Sort;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,34 +67,30 @@ public class CommerceTaxRateSettingFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<TaxRateSetting> taxRateSettings = new ArrayList<>();
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
 
-		try {
-			long commerceChannelId = ParamUtil.getLong(
-				httpServletRequest, "commerceChannelId");
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-			CommerceChannel commerceChannel =
-				_commerceChannelService.getCommerceChannel(commerceChannelId);
+		long commerceTaxMethodId = ParamUtil.getLong(
+			httpServletRequest, "commerceTaxMethodId");
 
-			long commerceTaxMethodId = ParamUtil.getLong(
-				httpServletRequest, "commerceTaxMethodId");
+		List<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRels =
+			_commerceTaxFixedRateAddressRelService.
+				getCommerceTaxMethodFixedRateAddressRels(
+					commerceChannel.getGroupId(), commerceTaxMethodId,
+					fdsPagination.getStartPosition(),
+					fdsPagination.getEndPosition(), null);
 
-			List<CommerceTaxFixedRateAddressRel>
-				commerceTaxFixedRateAddressRels =
-					_commerceTaxFixedRateAddressRelService.
-						getCommerceTaxMethodFixedRateAddressRels(
-							commerceChannel.getGroupId(), commerceTaxMethodId,
-							fdsPagination.getStartPosition(),
-							fdsPagination.getEndPosition(), null);
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				commerceChannel.getCompanyId(),
+				commerceChannel.getCommerceCurrencyCode());
 
-			CommerceCurrency commerceCurrency =
-				_commerceCurrencyLocalService.getCommerceCurrency(
-					commerceChannel.getCompanyId(),
-					commerceChannel.getCommerceCurrencyCode());
-
-			for (CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel :
-					commerceTaxFixedRateAddressRels) {
-
+		return TransformUtil.transform(
+			commerceTaxFixedRateAddressRels,
+			commerceTaxFixedRateAddressRel -> {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
@@ -104,26 +98,19 @@ public class CommerceTaxRateSettingFDSDataProvider
 				CPTaxCategory cpTaxCategory =
 					commerceTaxFixedRateAddressRel.getCPTaxCategory();
 
-				taxRateSettings.add(
-					new TaxRateSetting(
-						_getCountry(
-							commerceTaxFixedRateAddressRel.getCountry(),
-							themeDisplay.getLanguageId()),
-						_getLocalizedRate(
-							commerceCurrency, commerceTaxFixedRateAddressRel,
-							themeDisplay.getLocale()),
-						_getRegion(commerceTaxFixedRateAddressRel.getRegion()),
-						cpTaxCategory.getName(themeDisplay.getLanguageId()),
-						commerceTaxFixedRateAddressRel.
-							getCommerceTaxFixedRateAddressRelId(),
-						_getZip(commerceTaxFixedRateAddressRel.getZip())));
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return taxRateSettings;
+				return new TaxRateSetting(
+					_getCountry(
+						commerceTaxFixedRateAddressRel.getCountry(),
+						themeDisplay.getLanguageId()),
+					_getLocalizedRate(
+						commerceCurrency, commerceTaxFixedRateAddressRel,
+						themeDisplay.getLocale()),
+					_getRegion(commerceTaxFixedRateAddressRel.getRegion()),
+					cpTaxCategory.getName(themeDisplay.getLanguageId()),
+					commerceTaxFixedRateAddressRel.
+						getCommerceTaxFixedRateAddressRelId(),
+					_getZip(commerceTaxFixedRateAddressRel.getZip()));
+			});
 	}
 
 	@Override
@@ -192,9 +179,6 @@ public class CommerceTaxRateSettingFDSDataProvider
 
 		return zip;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceTaxRateSettingFDSDataProvider.class);
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;

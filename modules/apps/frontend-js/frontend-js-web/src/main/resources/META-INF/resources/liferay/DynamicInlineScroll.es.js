@@ -83,7 +83,9 @@ class DynamicInlineScroll extends PortletBase {
 
 		listItem.innerHTML = `<a class="dropdown-item" href="${this.getHREF_(
 			pageIndex
-		)}">${pageIndex}</a>`;
+		)}"><span class="sr-only">${Liferay.Language.get(
+			'page'
+		)}&nbsp;</span>${pageIndex}</a>`;
 
 		pageIndex++;
 

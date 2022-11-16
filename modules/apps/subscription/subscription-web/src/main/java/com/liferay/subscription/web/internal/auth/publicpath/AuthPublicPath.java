@@ -20,8 +20,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	immediate = true, property = "auth.public.path=/portal/unsubscribe",
-	service = Object.class
+	property = "auth.public.path=/portal/unsubscribe", service = Object.class
 )
 public class AuthPublicPath {
 }

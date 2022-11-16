@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.SUBSCRIPTION_SENDER,
 	service = MessageListener.class
 )

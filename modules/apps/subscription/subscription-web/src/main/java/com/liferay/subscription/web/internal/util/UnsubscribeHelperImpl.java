@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration",
-	immediate = true, service = UnsubscribeHelper.class
+	service = UnsubscribeHelper.class
 )
 public class UnsubscribeHelperImpl implements UnsubscribeHelper {
 

@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true,
 	property = "destination.name=" + DestinationNames.SUBSCRIPTION_CLEAN_UP,
 	service = MessageListener.class
 )

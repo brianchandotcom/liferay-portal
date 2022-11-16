@@ -723,13 +723,6 @@ definition {
 				navItem = "Web Content",
 				panel = "General");
 
-			var baseURL = PropsUtil.get("portal.url");
-
-			AssertVisible(
-				key_append = "//img",
-				key_url = "${baseURL}/web/test-site-name/w/web-content-title",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
 			PageEditor.publish();
 		}
 
@@ -737,6 +730,8 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
+
+			var baseURL = PropsUtil.get("portal.url");
 
 			AssertVisible(
 				key_append = "/img",

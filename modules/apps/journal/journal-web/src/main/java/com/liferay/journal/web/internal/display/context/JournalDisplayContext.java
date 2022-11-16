@@ -1074,63 +1074,6 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	protected SearchContext populateSearchContext(
-		int start, int end, SearchContext searchContext, boolean showVersions) {
-
-		searchContext.setAndSearch(false);
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.ARTICLE_ID, getKeywords()
-			).put(
-				Field.CLASS_NAME_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT
-			).put(
-				Field.CONTENT, getKeywords()
-			).put(
-				Field.DESCRIPTION, getKeywords()
-			).put(
-				Field.STATUS, getStatus()
-			).put(
-				Field.TITLE, getKeywords()
-			).put(
-				"ddmStructureKey", getDDMStructureKey()
-			).put(
-				"head", !showVersions
-			).put(
-				"latest", !showVersions
-			).put(
-				"params",
-				LinkedHashMapBuilder.<String, Object>put(
-					"expandoAttributes", getKeywords()
-				).put(
-					"keywords", getKeywords()
-				).build()
-			).put(
-				"showNonindexable", !showVersions
-			).build());
-		searchContext.setCompanyId(_themeDisplay.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setFolderIds(_getFolderIds());
-		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
-		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setKeywords(getKeywords());
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		Sort sort = _getSort();
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		searchContext.setStart(start);
-
-		return searchContext;
-	}
-
 	private JournalDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
@@ -1248,7 +1191,7 @@ public class JournalDisplayContext {
 		if (isSearch()) {
 			List<Object> results =
 				JournalSearcherUtil.searchJournalArticleAndFolders(
-					searchContext -> populateSearchContext(
+					searchContext -> _populateSearchContext(
 						articleAndFolderSearchContainer.getStart(),
 						articleAndFolderSearchContainer.getEnd(), searchContext,
 						false));
@@ -1479,7 +1422,7 @@ public class JournalDisplayContext {
 
 		SearchContext searchContext = new SearchContext();
 
-		populateSearchContext(
+		_populateSearchContext(
 			articleVersionsSearchContainer.getStart(),
 			articleVersionsSearchContainer.getEnd(), searchContext, true);
 
@@ -1510,6 +1453,63 @@ public class JournalDisplayContext {
 		_articleVersionsSearchContainer = articleVersionsSearchContainer;
 
 		return _articleVersionsSearchContainer;
+	}
+
+	private SearchContext _populateSearchContext(
+		int start, int end, SearchContext searchContext, boolean showVersions) {
+
+		searchContext.setAndSearch(false);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.ARTICLE_ID, getKeywords()
+			).put(
+				Field.CLASS_NAME_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT
+			).put(
+				Field.CONTENT, getKeywords()
+			).put(
+				Field.DESCRIPTION, getKeywords()
+			).put(
+				Field.STATUS, getStatus()
+			).put(
+				Field.TITLE, getKeywords()
+			).put(
+				"ddmStructureKey", getDDMStructureKey()
+			).put(
+				"head", !showVersions
+			).put(
+				"latest", !showVersions
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"expandoAttributes", getKeywords()
+				).put(
+					"keywords", getKeywords()
+				).build()
+			).put(
+				"showNonindexable", !showVersions
+			).build());
+		searchContext.setCompanyId(_themeDisplay.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(_getFolderIds());
+		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
+		searchContext.setIncludeInternalAssetCategories(true);
+		searchContext.setKeywords(getKeywords());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		Sort sort = _getSort();
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
 	}
 
 	private String[] _addMenuFavItems;

@@ -349,7 +349,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				JournalSearcherUtil.searchJournalArticleAndFolders(
 					searchContext -> {
 						try {
-							populateSearchContext(
+							_populateSearchContext(
 								folderIds,
 								articleAndFolderSearchContainer.getStart(),
 								articleAndFolderSearchContainer.getEnd(),
@@ -441,78 +441,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		}
 
 		return false;
-	}
-
-	protected SearchContext populateSearchContext(
-			List<Long> folderIds, int start, int end,
-			SearchContext searchContext)
-		throws PortalException {
-
-		boolean orderByAsc = false;
-
-		if (Objects.equals(_getOrderByType(), "asc")) {
-			orderByAsc = true;
-		}
-
-		Sort sort = null;
-
-		if (Objects.equals(_getOrderByCol(), "id")) {
-			sort = new Sort(
-				Field.getSortableFieldName(Field.ARTICLE_ID), Sort.STRING_TYPE,
-				!orderByAsc);
-		}
-		else if (Objects.equals(_getOrderByCol(), "modified-date")) {
-			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
-		}
-		else if (Objects.equals(_getOrderByCol(), "relevance")) {
-			sort = new Sort(null, Sort.SCORE_TYPE, false);
-		}
-		else if (Objects.equals(_getOrderByCol(), "title")) {
-			sort = new Sort(
-				Field.getSortableFieldName(
-					"localized_title_" + _themeDisplay.getLanguageId()),
-				!orderByAsc);
-		}
-
-		searchContext.setAndSearch(false);
-		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
-		searchContext.setAttribute(
-			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
-		searchContext.setAttribute(Field.CONTENT, getKeywords());
-		searchContext.setAttribute(Field.DESCRIPTION, getKeywords());
-		searchContext.setAttribute(
-			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
-		searchContext.setAttribute(Field.TITLE, getKeywords());
-		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
-		searchContext.setAttribute("head", Boolean.TRUE);
-		searchContext.setAttribute("latest", Boolean.TRUE);
-		searchContext.setAttribute(
-			"params",
-			LinkedHashMapBuilder.<String, Object>put(
-				"expandoAttributes", getKeywords()
-			).put(
-				"keywords", getKeywords()
-			).build());
-		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
-		searchContext.setCompanyId(_themeDisplay.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setFolderIds(folderIds);
-		searchContext.setGroupIds(_getGroupIds());
-		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setKeywords(getKeywords());
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		searchContext.setStart(start);
-
-		return searchContext;
 	}
 
 	private long _getClassTypeId(DDMStructure ddmStructure) {
@@ -664,6 +592,78 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		}
 
 		return false;
+	}
+
+	private SearchContext _populateSearchContext(
+			List<Long> folderIds, int start, int end,
+			SearchContext searchContext)
+		throws PortalException {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(_getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(_getOrderByCol(), "id")) {
+			sort = new Sort(
+				Field.getSortableFieldName(Field.ARTICLE_ID), Sort.STRING_TYPE,
+				!orderByAsc);
+		}
+		else if (Objects.equals(_getOrderByCol(), "modified-date")) {
+			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
+		}
+		else if (Objects.equals(_getOrderByCol(), "relevance")) {
+			sort = new Sort(null, Sort.SCORE_TYPE, false);
+		}
+		else if (Objects.equals(_getOrderByCol(), "title")) {
+			sort = new Sort(
+				Field.getSortableFieldName(
+					"localized_title_" + _themeDisplay.getLanguageId()),
+				!orderByAsc);
+		}
+
+		searchContext.setAndSearch(false);
+		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
+		searchContext.setAttribute(
+			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+		searchContext.setAttribute(Field.CONTENT, getKeywords());
+		searchContext.setAttribute(Field.DESCRIPTION, getKeywords());
+		searchContext.setAttribute(
+			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
+		searchContext.setAttribute(Field.TITLE, getKeywords());
+		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
+		searchContext.setAttribute("head", Boolean.TRUE);
+		searchContext.setAttribute("latest", Boolean.TRUE);
+		searchContext.setAttribute(
+			"params",
+			LinkedHashMapBuilder.<String, Object>put(
+				"expandoAttributes", getKeywords()
+			).put(
+				"keywords", getKeywords()
+			).build());
+		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
+		searchContext.setCompanyId(_themeDisplay.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(folderIds);
+		searchContext.setGroupIds(_getGroupIds());
+		searchContext.setIncludeInternalAssetCategories(true);
+		searchContext.setKeywords(getKeywords());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
 	}
 
 	private SearchContainer<?> _articleSearchContainer;

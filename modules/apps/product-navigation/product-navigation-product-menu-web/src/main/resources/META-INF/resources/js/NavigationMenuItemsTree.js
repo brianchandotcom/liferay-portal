@@ -14,6 +14,7 @@
 
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function NavigationMenuItemsTree({
@@ -30,51 +31,53 @@ export default function NavigationMenuItemsTree({
 			nestedKey="children"
 			showExpanderOnHover={false}
 		>
-			{(item) => {
-				const hasUrl = item.url && item.url !== '#';
-
-				return (
-					<ClayTreeView.Item>
-						<ClayTreeView.ItemStack
-							active={selectedKeys.has(item.id)}
-						>
-							<ClayIcon symbol={item.url ? 'page' : 'folder'} />
-
-							{hasUrl ? (
-								<a
-									className="d-block h-100 w-100"
-									href={item.url}
-								>
-									{item.name}
-								</a>
-							) : (
-								<p className="m-0">{item.name}</p>
-							)}
-						</ClayTreeView.ItemStack>
-
-						<ClayTreeView.Group items={item.children}>
-							{(item) => (
-								<ClayTreeView.Item>
-									<ClayIcon
-										symbol={item.url ? 'page' : 'folder'}
-									/>
-
-									{hasUrl ? (
-										<a
-											className="d-block h-100 w-100"
-											href={item.url}
-										>
-											{item.name}
-										</a>
-									) : (
-										<p className="m-0">{item.name}</p>
-									)}
-								</ClayTreeView.Item>
-							)}
-						</ClayTreeView.Group>
-					</ClayTreeView.Item>
-				);
-			}}
+			{(item) => <TreeItem item={item} selectedKeys={selectedKeys} />}
 		</ClayTreeView>
 	);
 }
+
+NavigationMenuItemsTree.propTypes = {
+	selectedSiteNavigationMenuItemId: PropTypes.string.isRequired,
+	siteNavigationMenuItems: PropTypes.array.isRequired,
+};
+
+function TreeItem({item, selectedKeys}) {
+	const hasUrl = item.url && item.url !== '#';
+
+	return (
+		<ClayTreeView.Item>
+			<ClayTreeView.ItemStack active={selectedKeys.has(item.id)}>
+				<ClayIcon symbol={item.url ? 'page' : 'folder'} />
+
+				{hasUrl ? (
+					<a className="d-block h-100 w-100" href={item.url}>
+						{item.name}
+					</a>
+				) : (
+					<p className="m-0">{item.name}</p>
+				)}
+			</ClayTreeView.ItemStack>
+
+			<ClayTreeView.Group items={item.children}>
+				{(item) => (
+					<ClayTreeView.Item>
+						<ClayIcon symbol={item.url ? 'page' : 'folder'} />
+
+						{hasUrl ? (
+							<a className="d-block h-100 w-100" href={item.url}>
+								{item.name}
+							</a>
+						) : (
+							<p className="m-0">{item.name}</p>
+						)}
+					</ClayTreeView.Item>
+				)}
+			</ClayTreeView.Group>
+		</ClayTreeView.Item>
+	);
+}
+
+TreeItem.propTypes = {
+	items: PropTypes.array.isRequired,
+	selectedKeys: PropTypes.object.isRequired,
+};

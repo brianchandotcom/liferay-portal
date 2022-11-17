@@ -194,6 +194,15 @@ definition {
 	}
 
 	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade740 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.0";
+
+		Upgrade.addUserAndSuborganization();
+	}
+
+	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.1.10";
@@ -205,6 +214,15 @@ definition {
 	test AddUserandSuborganizationAfterUpgrade7210 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.2.10";
+
+		Upgrade.addUserAndSuborganization();
+	}
+
+	@priority = "5"
+	test AddUserandSuborganizationAfterUpgrade7413 {
+		property data.archive.type = "data-archive-admin-org-with-user";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.4.13";
 
 		Upgrade.addUserAndSuborganization();
 	}

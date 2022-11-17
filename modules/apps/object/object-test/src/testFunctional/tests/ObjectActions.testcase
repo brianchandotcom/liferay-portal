@@ -1540,6 +1540,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-156320 - Assert an Action with an Expression can be triggered after adding an entry."
+	@priority = "4"
+	test CanTriggerActionWithExpressionByAddingEntry {
+		task ("Given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object156320",
+				objectName = "CustomObject156320",
+				pluralLabelName = "Custom Objects 156320");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject156320");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156320");
+		}
+
+		task ("When an action is created with an expression") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Label",
+				actionName = "ActionName",
+				active = "true",
+				inputExpression = "customObjectField == 'Entry Test'",
+				inputMethod = "true",
+				inputValue = "Add Entry Test",
+				objectLabel = "Custom Object156320",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("Then the action will be triggered after adding an entry.") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject156320",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156320");
+
+			ObjectPortlet.viewEntry(entry = "Add Entry Test");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "ActionName",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to update an Action"
 	@priority = "4"
 	test CanUpdateAction {

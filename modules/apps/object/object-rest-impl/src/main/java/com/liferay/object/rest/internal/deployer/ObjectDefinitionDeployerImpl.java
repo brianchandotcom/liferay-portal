@@ -18,6 +18,7 @@ import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
+import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManagerHttpExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
@@ -27,6 +28,7 @@ import com.liferay.object.rest.internal.resource.v1_0.BaseObjectEntryResourceImp
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactoryImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -48,6 +50,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,6 +69,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -77,7 +81,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentFactory;
-import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -164,23 +167,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			}
 		}
 
-		List<ComponentInstance> componentInstances =
-			_componentInstancesMap.remove(restContextPath);
+		ServiceRegistration<?> serviceRegistration1 =
+			_applicationServiceRegistrations.remove(restContextPath);
 
-		if (componentInstances != null) {
-			for (ComponentInstance componentInstance : componentInstances) {
-				componentInstance.dispose();
-			}
+		serviceRegistration1.unregister();
+
+		List<String> companyIds = _basePathCompanyIds.get(restContextPath);
+
+		companyIds.remove(String.valueOf(objectDefinition.getCompanyId()));
+
+		if (companyIds.isEmpty()) {
+			_basePathCompanyIds.remove(restContextPath);
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
 			_serviceRegistrationsMap.remove(restContextPath);
 
 		if (serviceRegistrations != null) {
-			for (ServiceRegistration<?> serviceRegistration :
-				serviceRegistrations) {
+			for (ServiceRegistration<?> serviceRegistration2 :
+					serviceRegistrations) {
 
-				serviceRegistration.unregister();
+				serviceRegistration2.unregister();
 			}
 		}
 	}
@@ -253,31 +260,48 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private void _initCustomObjectDefinition(
 		ObjectDefinition objectDefinition) {
 
-		String osgiJaxRsName = objectDefinition.getOSGiJaxRsName();
 		String restContextPath = objectDefinition.getRESTContextPath();
 
-		_componentInstancesMap.computeIfAbsent(
+		List<String> companyIds = _basePathCompanyIds.computeIfAbsent(
+			restContextPath, key -> new ArrayList<>());
+
+		companyIds.add(String.valueOf(objectDefinition.getCompanyId()));
+
+		String osgiJaxRsName = objectDefinition.getOSGiJaxRsName();
+
+		HashMapDictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", companyIds
+			).put(
+				"liferay.jackson", false
+			).put(
+				"osgi.jaxrs.application.base",
+				objectDefinition.getRESTContextPath()
+			).put(
+				"osgi.jaxrs.extension.select",
+				"(osgi.jaxrs.name=Liferay.Vulcan)"
+			).put(
+				"osgi.jaxrs.name", osgiJaxRsName
+			).build();
+
+		ServiceRegistration<Application> applicationServiceRegistration =
+			_applicationServiceRegistrations.get(restContextPath);
+
+		if (applicationServiceRegistration == null) {
+			_applicationServiceRegistrations.put(
+				restContextPath,
+				_bundleContext.registerService(
+					Application.class,
+					new ObjectEntryApplication(_objectEntryOpenAPIResource),
+					properties));
+		}
+		else {
+			applicationServiceRegistration.setProperties(properties);
+		}
+
+		_serviceRegistrationsMap.computeIfAbsent(
 			restContextPath,
 			key -> Arrays.asList(
-				_objectEntryApplicationComponentFactory.newInstance(
-					HashMapDictionaryBuilder.<String, Object>put(
-						"companyId",
-						String.valueOf(objectDefinition.getCompanyId())
-					).put(
-						"liferay.jackson", false
-					).put(
-						"osgi.jaxrs.application.base",
-						objectDefinition.getRESTContextPath()
-					).put(
-						"osgi.jaxrs.extension.select",
-						"(osgi.jaxrs.name=Liferay.Vulcan)"
-					).put(
-						"osgi.jaxrs.name", osgiJaxRsName
-					).build())));
-
-		_serviceRegistrationsMap.put(
-			restContextPath,
-			Arrays.asList(
 				_bundleContext.registerService(
 					ContextProvider.class,
 					new ObjectDefinitionContextProvider(this, _portal),
@@ -413,37 +437,38 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return;
 		}
 
-		_componentInstancesMap.computeIfAbsent(
+		_applicationServiceRegistrations.computeIfAbsent(
 			systemObjectDefinitionMetadata.getRESTContextPath(),
-			key -> Arrays.asList(
-				_relatedObjectEntryResourceImplComponentFactory.newInstance(
-					HashMapDictionaryBuilder.<String, Object>put(
-						"api.version", "v1.0"
-					).put(
-						"osgi.jaxrs.application.select",
-						() -> {
-							String jaxRsApplicationName =
-								systemObjectDefinitionMetadata.
-									getJaxRsApplicationName();
+			key -> _bundleContext.registerService(
+				Application.class,
+				new ObjectEntryApplication(_objectEntryOpenAPIResource),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"api.version", "v1.0"
+				).put(
+					"osgi.jaxrs.application.select",
+					() -> {
+						String jaxRsApplicationName =
+							systemObjectDefinitionMetadata.
+								getJaxRsApplicationName();
 
-							return "(osgi.jaxrs.name=" + jaxRsApplicationName +
-								")";
-						}
-					).put(
-						"osgi.jaxrs.resource", "true"
-					).build())));
+						return "(osgi.jaxrs.name=" + jaxRsApplicationName + ")";
+					}
+				).put(
+					"osgi.jaxrs.resource", "true"
+				).build()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionDeployerImpl.class);
 
+	private final Map<String, ServiceRegistration<Application>>
+		_applicationServiceRegistrations = new HashMap<>();
+	private final Map<String, List<String>> _basePathCompanyIds =
+		new HashMap<>();
 	private BundleContext _bundleContext;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	private final Map<String, List<ComponentInstance>> _componentInstancesMap =
-		new HashMap<>();
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
@@ -471,16 +496,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final Map<String, Map<Long, ObjectDefinition>>
 		_objectDefinitionsMap = new HashMap<>();
 
-	@Reference(
-		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
-	)
-	private ComponentFactory _objectEntryApplicationComponentFactory;
-
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

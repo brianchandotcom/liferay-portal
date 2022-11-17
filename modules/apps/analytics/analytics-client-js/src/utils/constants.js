@@ -62,7 +62,7 @@ export const STORAGE_KEY_MESSAGES = 'ac_message_queue';
 
 export const STORAGE_KEY_MESSAGE_IDENTITY = 'ac_message_queue_identity';
 
-export const STORAGE_KEY_PREV_EMAIL = 'ac_client_previous_email';
+export const STORAGE_KEY_PREV_EMAIL_ADDRESS = 'ac_client_previous_email';
 
 export const STORAGE_KEY_USER_ID = 'ac_client_user_id';
 

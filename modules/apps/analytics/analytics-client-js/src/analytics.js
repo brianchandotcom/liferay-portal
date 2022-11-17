@@ -30,7 +30,7 @@ import {
 	STORAGE_KEY_IDENTITY,
 	STORAGE_KEY_MESSAGES,
 	STORAGE_KEY_MESSAGE_IDENTITY,
-	STORAGE_KEY_PREV_EMAIL,
+	STORAGE_KEY_PREV_EMAIL_ADDRESS,
 	STORAGE_KEY_USER_ID,
 	TRACK_DEFAULT_OPTIONS,
 	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
@@ -377,17 +377,17 @@ class Analytics {
 	_getUserId() {
 		let userId = getItem(STORAGE_KEY_USER_ID);
 
-		const email = this.config.identity.email;
-		const previousEmail = getItem(STORAGE_KEY_PREV_EMAIL);
+		const emailAddress = this.config.identity.email;
+		const previousEmailAddress = getItem(STORAGE_KEY_PREV_EMAIL_ADDRESS);
 
 		if (!userId) {
 			userId = this._generateUserId();
 		}
 
-		if (email && email !== previousEmail) {
-			setItem(STORAGE_KEY_PREV_EMAIL, email);
+		if (emailAddress && emailAddress !== previousEmailAddress) {
+			setItem(STORAGE_KEY_PREV_EMAIL_ADDRESS, emailAddress);
 
-			if (previousEmail) {
+			if (previousEmailAddress) {
 				userId = this._generateUserId();
 			}
 		}

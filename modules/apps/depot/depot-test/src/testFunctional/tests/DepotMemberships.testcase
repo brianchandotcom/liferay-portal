@@ -54,9 +54,7 @@ definition {
 
 		Depot.removeOrganization(orgName = "Organization Name");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No organization was found that is a member of this asset library.");
+		Portlet.viewEmptyMessage(message = "No organization was found that is a member of this asset library.");
 	}
 
 	@description = "This ensures that a user can be added and removed in the membership of an asset library."
@@ -88,22 +86,14 @@ definition {
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
-		AssertElementNotPresent(
-			key_card = "userfn userln",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "userfn userln");
+		LexiconCard.viewCardNotPresent(card = "userfn userln");
 	}
 
 	@description = "This ensures that a user group can be added and removed in the membership of an asset library."
 	@priority = "5"
 	@refactorneeded
 	test AddAndRemoveUserGroup {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "User Groups");
-
-		UserGroup.addCP(userGroupName = "User Group Name");
+		JSONUserGroup.addUserGroup(userGroupName = "User Group Name");
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
@@ -121,9 +111,7 @@ definition {
 			bulkEditing = "true",
 			userGroupNameList = "User Group Name");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No user group was found that is a member of this asset library.");
+		Portlet.viewEmptyMessage(message = "No user group was found that is a member of this asset library.");
 	}
 
 	@description = "This ensures that an asset library can be assigned to a user from the user profile."
@@ -136,10 +124,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editUserAssetLibraryCP(
 			depotName = "Test Depot Name",
@@ -213,10 +198,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.removeUserAssetLibraryCP(
 			depotName = "Test Depot Name",

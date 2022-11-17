@@ -267,4 +267,8 @@ public interface SamlSpSessionModel
 	@Override
 	public SamlSpSession cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

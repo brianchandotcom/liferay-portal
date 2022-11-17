@@ -235,4 +235,8 @@ public interface ObjectStateModel
 	@Override
 	public ObjectState cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -266,4 +266,8 @@ public interface CSDiagramPinModel
 	@Override
 	public CSDiagramPin cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

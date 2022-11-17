@@ -371,6 +371,11 @@ public class BatchPlannerPolicyWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected BatchPlannerPolicyWrapper wrap(
 		BatchPlannerPolicy batchPlannerPolicy) {
 

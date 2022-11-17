@@ -890,6 +890,11 @@ public class ContactWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected ContactWrapper wrap(Contact contact) {
 		return new ContactWrapper(contact);
 	}

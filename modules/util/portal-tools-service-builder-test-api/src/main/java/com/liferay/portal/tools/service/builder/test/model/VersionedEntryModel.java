@@ -121,4 +121,8 @@ public interface VersionedEntryModel
 	@Override
 	public VersionedEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

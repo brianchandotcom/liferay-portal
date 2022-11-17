@@ -1288,4 +1288,8 @@ public interface LayoutModel
 	@Override
 	public Layout cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

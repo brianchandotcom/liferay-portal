@@ -459,6 +459,11 @@ public class TeamWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<Team, Object>> getAttributeGetterFunctions() {
 		return model.getAttributeGetterFunctions();
 	}

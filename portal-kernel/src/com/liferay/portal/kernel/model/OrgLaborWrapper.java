@@ -598,6 +598,11 @@ public class OrgLaborWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OrgLaborWrapper wrap(OrgLabor orgLabor) {
 		return new OrgLaborWrapper(orgLabor);
 	}

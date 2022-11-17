@@ -383,4 +383,8 @@ public interface CommerceShipmentModel
 	@Override
 	public CommerceShipment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

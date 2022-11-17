@@ -278,4 +278,8 @@ public interface CommerceQualifierEntryModel
 	@Override
 	public CommerceQualifierEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

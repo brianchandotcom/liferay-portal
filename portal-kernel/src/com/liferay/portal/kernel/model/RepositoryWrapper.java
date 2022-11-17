@@ -591,6 +591,11 @@ public class RepositoryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<Repository, Object>>
 		getAttributeGetterFunctions() {
 

@@ -275,4 +275,8 @@ public interface CommerceNotificationAttachmentModel
 	@Override
 	public CommerceNotificationAttachment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

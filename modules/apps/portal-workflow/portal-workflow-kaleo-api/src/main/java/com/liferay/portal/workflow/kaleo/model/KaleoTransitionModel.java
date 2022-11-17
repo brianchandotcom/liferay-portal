@@ -492,4 +492,8 @@ public interface KaleoTransitionModel
 	@Override
 	public KaleoTransition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

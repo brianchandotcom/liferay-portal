@@ -400,4 +400,8 @@ public interface CompanyModel
 	@Override
 	public Company cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

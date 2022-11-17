@@ -181,4 +181,8 @@ public interface CTPreferencesModel
 	@Override
 	public CTPreferences cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

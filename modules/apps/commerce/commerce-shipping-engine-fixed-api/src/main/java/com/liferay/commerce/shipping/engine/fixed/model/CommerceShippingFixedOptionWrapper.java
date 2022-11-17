@@ -757,6 +757,11 @@ public class CommerceShippingFixedOptionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceShippingFixedOptionWrapper wrap(
 		CommerceShippingFixedOption commerceShippingFixedOption) {
 

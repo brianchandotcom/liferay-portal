@@ -379,6 +379,11 @@ public class ExpandoColumnWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<ExpandoColumn, Object>>
 		getAttributeGetterFunctions() {
 

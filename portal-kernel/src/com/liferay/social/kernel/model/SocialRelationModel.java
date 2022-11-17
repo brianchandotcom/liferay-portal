@@ -196,4 +196,8 @@ public interface SocialRelationModel
 	@Override
 	public SocialRelation cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

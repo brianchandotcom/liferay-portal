@@ -225,6 +225,11 @@ public class NotificationTemplateAttachmentWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected NotificationTemplateAttachmentWrapper wrap(
 		NotificationTemplateAttachment notificationTemplateAttachment) {
 

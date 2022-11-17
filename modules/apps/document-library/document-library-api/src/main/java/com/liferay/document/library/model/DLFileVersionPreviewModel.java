@@ -180,4 +180,8 @@ public interface DLFileVersionPreviewModel
 	@Override
 	public DLFileVersionPreview cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

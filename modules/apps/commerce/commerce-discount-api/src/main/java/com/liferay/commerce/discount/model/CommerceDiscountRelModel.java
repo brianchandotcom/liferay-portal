@@ -247,4 +247,8 @@ public interface CommerceDiscountRelModel
 	@Override
 	public CommerceDiscountRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

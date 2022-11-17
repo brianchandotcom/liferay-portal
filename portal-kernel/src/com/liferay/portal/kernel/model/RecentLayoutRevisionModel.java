@@ -184,4 +184,8 @@ public interface RecentLayoutRevisionModel
 	@Override
 	public RecentLayoutRevision cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

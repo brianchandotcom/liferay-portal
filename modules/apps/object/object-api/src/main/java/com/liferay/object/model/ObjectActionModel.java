@@ -346,4 +346,8 @@ public interface ObjectActionModel
 	@Override
 	public ObjectAction cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

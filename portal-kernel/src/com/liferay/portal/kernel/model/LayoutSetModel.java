@@ -311,4 +311,8 @@ public interface LayoutSetModel
 	@Override
 	public LayoutSet cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

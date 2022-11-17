@@ -965,4 +965,8 @@ public interface ManyColumnsEntryModel extends BaseModel<ManyColumnsEntry> {
 	@Override
 	public ManyColumnsEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

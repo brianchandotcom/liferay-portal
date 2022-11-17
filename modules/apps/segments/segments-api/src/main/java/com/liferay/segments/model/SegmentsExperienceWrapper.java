@@ -807,6 +807,11 @@ public class SegmentsExperienceWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<SegmentsExperience, Object>>
 		getAttributeGetterFunctions() {
 

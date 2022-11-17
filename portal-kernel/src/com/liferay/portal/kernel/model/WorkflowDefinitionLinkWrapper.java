@@ -501,6 +501,11 @@ public class WorkflowDefinitionLinkWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<WorkflowDefinitionLink, Object>>
 		getAttributeGetterFunctions() {
 

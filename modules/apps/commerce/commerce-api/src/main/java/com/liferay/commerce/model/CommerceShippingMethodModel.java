@@ -502,4 +502,8 @@ public interface CommerceShippingMethodModel
 	@Override
 	public CommerceShippingMethod cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -344,6 +344,11 @@ public class StatusWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected StatusWrapper wrap(Status status) {
 		return new StatusWrapper(status);
 	}

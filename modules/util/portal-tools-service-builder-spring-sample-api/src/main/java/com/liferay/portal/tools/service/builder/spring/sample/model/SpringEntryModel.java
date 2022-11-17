@@ -136,4 +136,8 @@ public interface SpringEntryModel
 	@Override
 	public SpringEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

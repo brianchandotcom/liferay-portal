@@ -1056,4 +1056,8 @@ public interface LayoutRevisionModel
 	@Override
 	public LayoutRevision cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -280,4 +280,8 @@ public interface CPDefinitionGroupedEntryModel
 	@Override
 	public CPDefinitionGroupedEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

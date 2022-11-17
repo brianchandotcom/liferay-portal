@@ -249,6 +249,11 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<DDMDataProviderInstanceLink, Object>>
 		getAttributeGetterFunctions() {
 

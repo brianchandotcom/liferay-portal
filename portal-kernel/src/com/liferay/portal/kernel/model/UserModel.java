@@ -766,4 +766,8 @@ public interface UserModel
 	@Override
 	public User cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -206,4 +206,8 @@ public interface CTCommentModel
 	@Override
 	public CTComment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

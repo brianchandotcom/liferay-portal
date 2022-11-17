@@ -280,4 +280,8 @@ public interface OAuthClientEntryModel
 	@Override
 	public OAuthClientEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

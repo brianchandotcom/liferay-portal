@@ -644,6 +644,11 @@ public class KaleoNotificationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoNotification, Object>>
 		getAttributeGetterFunctions() {
 

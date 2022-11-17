@@ -311,4 +311,8 @@ public interface OAuthApplicationModel
 	@Override
 	public OAuthApplication cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

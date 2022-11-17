@@ -403,4 +403,8 @@ public interface ClientExtensionEntryRelModel
 	@Override
 	public ClientExtensionEntryRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

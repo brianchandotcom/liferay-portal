@@ -453,4 +453,8 @@ public interface KaleoTimerInstanceTokenModel
 	@Override
 	public KaleoTimerInstanceToken cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

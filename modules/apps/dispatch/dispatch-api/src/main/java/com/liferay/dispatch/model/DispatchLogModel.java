@@ -275,4 +275,8 @@ public interface DispatchLogModel
 	@Override
 	public DispatchLog cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

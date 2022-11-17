@@ -570,4 +570,8 @@ public interface CalendarResourceModel
 	@Override
 	public CalendarResource cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

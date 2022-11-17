@@ -328,6 +328,11 @@ public class AssetAutoTaggerEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<AssetAutoTaggerEntry, Object>>
 		getAttributeGetterFunctions() {
 

@@ -405,6 +405,11 @@ public class CPDefinitionLocalizationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPDefinitionLocalization, Object>>
 		getAttributeGetterFunctions() {
 

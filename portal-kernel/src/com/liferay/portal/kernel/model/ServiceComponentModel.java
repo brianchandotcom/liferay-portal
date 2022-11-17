@@ -144,4 +144,8 @@ public interface ServiceComponentModel
 	@Override
 	public ServiceComponent cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

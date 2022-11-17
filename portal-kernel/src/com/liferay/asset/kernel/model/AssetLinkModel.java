@@ -239,4 +239,8 @@ public interface AssetLinkModel
 	@Override
 	public AssetLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

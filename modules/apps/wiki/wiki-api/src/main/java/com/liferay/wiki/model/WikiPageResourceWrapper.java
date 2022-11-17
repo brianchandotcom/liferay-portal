@@ -268,6 +268,11 @@ public class WikiPageResourceWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected WikiPageResourceWrapper wrap(WikiPageResource wikiPageResource) {
 		return new WikiPageResourceWrapper(wikiPageResource);
 	}

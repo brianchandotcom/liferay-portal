@@ -250,4 +250,8 @@ public interface CommercePaymentMethodGroupRelQualifierModel
 	@Override
 	public CommercePaymentMethodGroupRelQualifier cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

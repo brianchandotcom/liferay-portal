@@ -247,4 +247,8 @@ public interface CommerceTermEntryRelModel
 	@Override
 	public CommerceTermEntryRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

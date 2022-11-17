@@ -338,4 +338,8 @@ public interface ListTypeDefinitionModel
 	@Override
 	public ListTypeDefinition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

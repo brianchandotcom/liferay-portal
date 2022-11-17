@@ -181,4 +181,8 @@ public interface DDMTemplateLinkModel
 	@Override
 	public DDMTemplateLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -591,4 +591,8 @@ public interface ObjectFieldModel
 	@Override
 	public ObjectField cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

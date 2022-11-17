@@ -518,6 +518,11 @@ public class SocialActivityCounterWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<SocialActivityCounter, Object>>
 		getAttributeGetterFunctions() {
 

@@ -799,4 +799,8 @@ public interface AssetEntryModel
 	@Override
 	public AssetEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

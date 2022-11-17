@@ -497,4 +497,8 @@ public interface SyncDLObjectModel
 	@Override
 	public SyncDLObject cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

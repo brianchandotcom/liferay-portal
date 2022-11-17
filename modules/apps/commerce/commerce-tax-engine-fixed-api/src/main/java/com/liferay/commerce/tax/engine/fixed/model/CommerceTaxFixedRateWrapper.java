@@ -407,6 +407,11 @@ public class CommerceTaxFixedRateWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceTaxFixedRateWrapper wrap(
 		CommerceTaxFixedRate commerceTaxFixedRate) {
 

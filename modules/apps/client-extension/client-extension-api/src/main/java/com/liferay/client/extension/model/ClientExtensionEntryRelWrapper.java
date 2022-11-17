@@ -634,6 +634,11 @@ public class ClientExtensionEntryRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<ClientExtensionEntryRel, Object>>
 		getAttributeGetterFunctions() {
 

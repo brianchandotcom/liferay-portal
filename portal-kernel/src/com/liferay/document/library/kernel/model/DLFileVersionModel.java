@@ -652,4 +652,8 @@ public interface DLFileVersionModel
 	@Override
 	public DLFileVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

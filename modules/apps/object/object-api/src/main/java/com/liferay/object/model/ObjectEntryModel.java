@@ -414,4 +414,8 @@ public interface ObjectEntryModel
 	@Override
 	public ObjectEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

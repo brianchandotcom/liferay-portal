@@ -427,4 +427,8 @@ public interface KaleoTaskFormModel
 	@Override
 	public KaleoTaskForm cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

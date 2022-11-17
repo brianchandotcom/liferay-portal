@@ -457,6 +457,11 @@ public class ReadingTimeEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<ReadingTimeEntry, Object>>
 		getAttributeGetterFunctions() {
 

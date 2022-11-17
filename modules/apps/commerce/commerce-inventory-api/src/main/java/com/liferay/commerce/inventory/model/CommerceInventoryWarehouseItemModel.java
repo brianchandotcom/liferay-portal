@@ -281,4 +281,8 @@ public interface CommerceInventoryWarehouseItemModel
 	@Override
 	public CommerceInventoryWarehouseItem cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

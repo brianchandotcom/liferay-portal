@@ -512,4 +512,8 @@ public interface CommerceAccountModel
 	@Override
 	public CommerceAccount cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -246,4 +246,8 @@ public interface MembershipRequestModel
 	@Override
 	public MembershipRequest cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

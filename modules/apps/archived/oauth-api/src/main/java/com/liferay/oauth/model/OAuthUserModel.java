@@ -230,4 +230,8 @@ public interface OAuthUserModel
 	@Override
 	public OAuthUser cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -403,6 +403,11 @@ public class OpenIdConnectSessionWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OpenIdConnectSessionWrapper wrap(
 		OpenIdConnectSession openIdConnectSession) {
 

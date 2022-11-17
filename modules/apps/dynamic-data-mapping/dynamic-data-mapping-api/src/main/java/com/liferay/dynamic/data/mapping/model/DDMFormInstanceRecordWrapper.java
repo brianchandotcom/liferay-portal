@@ -664,6 +664,11 @@ public class DDMFormInstanceRecordWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<DDMFormInstanceRecord, Object>>
 		getAttributeGetterFunctions() {
 

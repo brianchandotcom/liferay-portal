@@ -205,4 +205,8 @@ public interface StatusModel extends BaseModel<Status> {
 	@Override
 	public Status cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

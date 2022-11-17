@@ -401,6 +401,11 @@ public class AssetCategoryPropertyWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<AssetCategoryProperty, Object>>
 		getAttributeGetterFunctions() {
 

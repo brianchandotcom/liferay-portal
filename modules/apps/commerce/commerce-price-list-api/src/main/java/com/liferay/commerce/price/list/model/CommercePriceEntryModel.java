@@ -621,4 +621,8 @@ public interface CommercePriceEntryModel
 	@Override
 	public CommercePriceEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -262,6 +262,11 @@ public class DataLimitEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected DataLimitEntryWrapper wrap(DataLimitEntry dataLimitEntry) {
 		return new DataLimitEntryWrapper(dataLimitEntry);
 	}

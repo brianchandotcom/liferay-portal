@@ -272,4 +272,8 @@ public interface MBThreadFlagModel
 	@Override
 	public MBThreadFlag cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

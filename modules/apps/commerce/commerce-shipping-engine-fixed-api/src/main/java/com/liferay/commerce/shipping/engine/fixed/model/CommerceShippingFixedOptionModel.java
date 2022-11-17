@@ -483,4 +483,8 @@ public interface CommerceShippingFixedOptionModel
 	@Override
 	public CommerceShippingFixedOption cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

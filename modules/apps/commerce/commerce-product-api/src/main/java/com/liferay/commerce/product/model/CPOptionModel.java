@@ -565,4 +565,8 @@ public interface CPOptionModel
 	@Override
 	public CPOption cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -391,4 +391,8 @@ public interface DDMContentModel
 	@Override
 	public DDMContent cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -211,4 +211,8 @@ public interface AnnouncementsDeliveryModel
 	@Override
 	public AnnouncementsDelivery cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

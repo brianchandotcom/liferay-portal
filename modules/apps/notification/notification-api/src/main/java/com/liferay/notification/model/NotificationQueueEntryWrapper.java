@@ -557,6 +557,11 @@ public class NotificationQueueEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected NotificationQueueEntryWrapper wrap(
 		NotificationQueueEntry notificationQueueEntry) {
 

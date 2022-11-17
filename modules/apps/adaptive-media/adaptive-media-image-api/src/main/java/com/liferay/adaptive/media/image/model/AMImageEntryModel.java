@@ -219,4 +219,8 @@ public interface AMImageEntryModel
 	@Override
 	public AMImageEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -103,4 +103,8 @@ public interface RedundantIndexEntryModel
 	@Override
 	public RedundantIndexEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

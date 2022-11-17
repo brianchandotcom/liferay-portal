@@ -248,6 +248,11 @@ public class SamlSpMessageWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected SamlSpMessageWrapper wrap(SamlSpMessage samlSpMessage) {
 		return new SamlSpMessageWrapper(samlSpMessage);
 	}

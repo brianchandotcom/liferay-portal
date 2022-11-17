@@ -266,4 +266,8 @@ public interface ObjectFilterModel
 	@Override
 	public ObjectFilter cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

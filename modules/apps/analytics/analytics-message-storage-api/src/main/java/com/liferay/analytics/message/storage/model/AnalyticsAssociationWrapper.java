@@ -374,6 +374,11 @@ public class AnalyticsAssociationWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AnalyticsAssociationWrapper wrap(
 		AnalyticsAssociation analyticsAssociation) {
 

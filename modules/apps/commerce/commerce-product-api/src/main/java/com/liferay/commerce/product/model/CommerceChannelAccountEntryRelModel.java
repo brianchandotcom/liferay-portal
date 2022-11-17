@@ -331,4 +331,8 @@ public interface CommerceChannelAccountEntryRelModel
 	@Override
 	public CommerceChannelAccountEntryRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

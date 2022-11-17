@@ -187,6 +187,11 @@ public class DLStorageQuotaWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected DLStorageQuotaWrapper wrap(DLStorageQuota dlStorageQuota) {
 		return new DLStorageQuotaWrapper(dlStorageQuota);
 	}

@@ -281,4 +281,8 @@ public interface CommerceInventoryReplenishmentItemModel
 	@Override
 	public CommerceInventoryReplenishmentItem cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

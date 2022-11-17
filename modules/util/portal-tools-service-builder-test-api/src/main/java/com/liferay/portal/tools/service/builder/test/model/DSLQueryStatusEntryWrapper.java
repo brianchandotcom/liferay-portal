@@ -189,6 +189,11 @@ public class DSLQueryStatusEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected DSLQueryStatusEntryWrapper wrap(
 		DSLQueryStatusEntry dslQueryStatusEntry) {
 

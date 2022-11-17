@@ -455,4 +455,8 @@ public interface LayoutPrototypeModel
 	@Override
 	public LayoutPrototype cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -524,6 +524,11 @@ public class CSDiagramEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CSDiagramEntry, Object>>
 		getAttributeGetterFunctions() {
 

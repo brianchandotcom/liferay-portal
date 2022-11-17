@@ -218,4 +218,8 @@ public interface TicketModel
 	@Override
 	public Ticket cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

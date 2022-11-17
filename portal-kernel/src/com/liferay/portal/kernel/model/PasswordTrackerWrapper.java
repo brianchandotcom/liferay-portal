@@ -261,6 +261,11 @@ public class PasswordTrackerWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected PasswordTrackerWrapper wrap(PasswordTracker passwordTracker) {
 		return new PasswordTrackerWrapper(passwordTracker);
 	}

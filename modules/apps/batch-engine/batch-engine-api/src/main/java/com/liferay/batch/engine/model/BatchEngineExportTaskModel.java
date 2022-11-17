@@ -395,4 +395,8 @@ public interface BatchEngineExportTaskModel
 	@Override
 	public BatchEngineExportTask cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -133,4 +133,8 @@ public interface NotificationTemplateAttachmentModel
 	@Override
 	public NotificationTemplateAttachment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

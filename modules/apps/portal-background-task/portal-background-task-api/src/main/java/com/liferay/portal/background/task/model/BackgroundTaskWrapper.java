@@ -608,6 +608,11 @@ public class BackgroundTaskWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected BackgroundTaskWrapper wrap(BackgroundTask backgroundTask) {
 		return new BackgroundTaskWrapper(backgroundTask);
 	}

@@ -226,6 +226,11 @@ public class NotificationQueueEntryAttachmentWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected NotificationQueueEntryAttachmentWrapper wrap(
 		NotificationQueueEntryAttachment notificationQueueEntryAttachment) {
 

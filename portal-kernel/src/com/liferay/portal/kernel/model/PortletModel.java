@@ -153,4 +153,8 @@ public interface PortletModel
 	@Override
 	public Portlet cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

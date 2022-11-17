@@ -901,6 +901,11 @@ public class AssetVocabularyWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<AssetVocabulary, Object>>
 		getAttributeGetterFunctions() {
 

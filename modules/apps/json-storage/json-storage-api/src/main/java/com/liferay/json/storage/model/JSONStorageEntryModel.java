@@ -254,4 +254,8 @@ public interface JSONStorageEntryModel
 	@Override
 	public JSONStorageEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

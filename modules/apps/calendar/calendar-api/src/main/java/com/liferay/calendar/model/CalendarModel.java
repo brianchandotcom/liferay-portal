@@ -581,4 +581,8 @@ public interface CalendarModel
 	@Override
 	public Calendar cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

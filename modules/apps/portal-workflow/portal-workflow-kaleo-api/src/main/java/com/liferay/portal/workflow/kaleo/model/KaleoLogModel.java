@@ -578,4 +578,8 @@ public interface KaleoLogModel
 	@Override
 	public KaleoLog cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

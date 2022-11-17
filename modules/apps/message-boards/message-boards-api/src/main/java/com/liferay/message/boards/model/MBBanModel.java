@@ -286,4 +286,8 @@ public interface MBBanModel
 	@Override
 	public MBBan cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -130,4 +130,8 @@ public interface ResourceActionModel
 	@Override
 	public ResourceAction cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

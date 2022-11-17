@@ -248,4 +248,8 @@ public interface CommerceTaxFixedRateModel
 	@Override
 	public CommerceTaxFixedRate cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

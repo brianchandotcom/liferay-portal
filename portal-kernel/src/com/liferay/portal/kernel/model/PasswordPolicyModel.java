@@ -647,4 +647,8 @@ public interface PasswordPolicyModel
 	@Override
 	public PasswordPolicy cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

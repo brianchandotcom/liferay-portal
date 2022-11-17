@@ -221,4 +221,8 @@ public interface AnalyticsAssociationModel
 	@Override
 	public AnalyticsAssociation cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

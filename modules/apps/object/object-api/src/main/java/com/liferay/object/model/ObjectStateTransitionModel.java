@@ -249,4 +249,8 @@ public interface ObjectStateTransitionModel
 	@Override
 	public ObjectStateTransition cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

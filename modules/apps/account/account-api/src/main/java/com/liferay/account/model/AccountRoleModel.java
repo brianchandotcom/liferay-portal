@@ -132,4 +132,8 @@ public interface AccountRoleModel
 	@Override
 	public AccountRole cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

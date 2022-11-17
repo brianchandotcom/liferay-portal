@@ -213,6 +213,11 @@ public class PortalPreferencesWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected PortalPreferencesWrapper wrap(
 		PortalPreferences portalPreferences) {
 

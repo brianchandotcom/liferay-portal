@@ -488,4 +488,8 @@ public interface CommercePaymentMethodGroupRelModel
 	@Override
 	public CommercePaymentMethodGroupRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

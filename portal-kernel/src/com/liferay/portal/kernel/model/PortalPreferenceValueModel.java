@@ -190,4 +190,8 @@ public interface PortalPreferenceValueModel
 	@Override
 	public PortalPreferenceValue cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

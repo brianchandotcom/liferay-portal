@@ -168,4 +168,8 @@ public interface PluginSettingModel
 	@Override
 	public PluginSetting cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

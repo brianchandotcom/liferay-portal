@@ -933,6 +933,11 @@ public class FragmentEntryLinkWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<FragmentEntryLink, Object>>
 		getAttributeGetterFunctions() {
 

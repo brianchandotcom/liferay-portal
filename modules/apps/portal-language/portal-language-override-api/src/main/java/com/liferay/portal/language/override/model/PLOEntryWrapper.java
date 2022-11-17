@@ -343,6 +343,11 @@ public class PLOEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected PLOEntryWrapper wrap(PLOEntry ploEntry) {
 		return new PLOEntryWrapper(ploEntry);
 	}

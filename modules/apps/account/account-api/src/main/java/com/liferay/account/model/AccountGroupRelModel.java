@@ -247,4 +247,8 @@ public interface AccountGroupRelModel
 	@Override
 	public AccountGroupRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

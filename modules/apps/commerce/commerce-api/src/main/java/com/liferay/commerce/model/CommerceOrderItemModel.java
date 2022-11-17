@@ -1152,4 +1152,8 @@ public interface CommerceOrderItemModel
 	@Override
 	public CommerceOrderItem cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -100,4 +100,8 @@ public interface RenameFinderColumnEntryModel
 	@Override
 	public RenameFinderColumnEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

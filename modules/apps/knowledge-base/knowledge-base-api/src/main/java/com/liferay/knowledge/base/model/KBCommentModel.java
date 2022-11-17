@@ -325,4 +325,8 @@ public interface KBCommentModel
 	@Override
 	public KBComment cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -244,4 +244,8 @@ public interface CPDefinitionLocalizationModel
 	@Override
 	public CPDefinitionLocalization cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

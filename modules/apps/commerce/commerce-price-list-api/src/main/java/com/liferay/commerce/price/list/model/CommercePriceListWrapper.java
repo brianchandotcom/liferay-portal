@@ -915,6 +915,11 @@ public class CommercePriceListWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommercePriceList, Object>>
 		getAttributeGetterFunctions() {
 

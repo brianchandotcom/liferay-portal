@@ -85,4 +85,8 @@ public interface TestEntityModel extends BaseModel<TestEntity> {
 	@Override
 	public TestEntity cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

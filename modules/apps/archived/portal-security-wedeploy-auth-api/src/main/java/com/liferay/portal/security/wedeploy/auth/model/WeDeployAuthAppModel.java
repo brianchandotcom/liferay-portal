@@ -232,4 +232,8 @@ public interface WeDeployAuthAppModel
 	@Override
 	public WeDeployAuthApp cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

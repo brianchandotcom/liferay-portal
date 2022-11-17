@@ -224,4 +224,8 @@ public interface DepotEntryModel
 	@Override
 	public DepotEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

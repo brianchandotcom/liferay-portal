@@ -665,6 +665,11 @@ public class KaleoTaskAssignmentInstanceWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<KaleoTaskAssignmentInstance, Object>>
 		getAttributeGetterFunctions() {
 

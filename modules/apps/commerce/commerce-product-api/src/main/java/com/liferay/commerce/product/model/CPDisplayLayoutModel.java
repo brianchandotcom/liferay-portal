@@ -301,4 +301,8 @@ public interface CPDisplayLayoutModel
 	@Override
 	public CPDisplayLayout cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

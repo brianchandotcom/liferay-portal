@@ -263,4 +263,8 @@ public interface ObjectLayoutColumnModel
 	@Override
 	public ObjectLayoutColumn cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -164,6 +164,11 @@ public class FinderWhereClauseEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected FinderWhereClauseEntryWrapper wrap(
 		FinderWhereClauseEntry finderWhereClauseEntry) {
 

@@ -392,6 +392,11 @@ public class HtmlPreviewEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected HtmlPreviewEntryWrapper wrap(HtmlPreviewEntry htmlPreviewEntry) {
 		return new HtmlPreviewEntryWrapper(htmlPreviewEntry);
 	}

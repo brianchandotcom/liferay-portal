@@ -266,4 +266,8 @@ public interface CommerceChannelRelModel
 	@Override
 	public CommerceChannelRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -1019,6 +1019,11 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPDefinitionOptionRel, Object>>
 		getAttributeGetterFunctions() {
 

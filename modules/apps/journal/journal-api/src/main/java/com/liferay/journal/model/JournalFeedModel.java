@@ -465,4 +465,8 @@ public interface JournalFeedModel
 	@Override
 	public JournalFeed cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

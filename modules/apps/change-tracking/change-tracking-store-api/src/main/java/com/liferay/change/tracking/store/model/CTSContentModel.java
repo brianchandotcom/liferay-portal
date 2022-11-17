@@ -214,4 +214,8 @@ public interface CTSContentModel
 	@Override
 	public CTSContent cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

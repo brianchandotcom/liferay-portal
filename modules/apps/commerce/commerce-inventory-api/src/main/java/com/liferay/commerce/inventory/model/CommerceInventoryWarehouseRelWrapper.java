@@ -398,6 +398,11 @@ public class CommerceInventoryWarehouseRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceInventoryWarehouseRelWrapper wrap(
 		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel) {
 

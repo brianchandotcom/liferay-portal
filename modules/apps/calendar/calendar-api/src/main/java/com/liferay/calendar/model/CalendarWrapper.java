@@ -925,6 +925,11 @@ public class CalendarWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<Calendar, Object>>
 		getAttributeGetterFunctions() {
 

@@ -315,6 +315,11 @@ public class RecentLayoutBranchWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected RecentLayoutBranchWrapper wrap(
 		RecentLayoutBranch recentLayoutBranch) {
 

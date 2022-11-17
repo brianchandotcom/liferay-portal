@@ -392,6 +392,11 @@ public class COREntryRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected COREntryRelWrapper wrap(COREntryRel corEntryRel) {
 		return new COREntryRelWrapper(corEntryRel);
 	}

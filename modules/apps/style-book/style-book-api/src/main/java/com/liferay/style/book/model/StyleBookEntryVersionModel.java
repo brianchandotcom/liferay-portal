@@ -352,4 +352,8 @@ public interface StyleBookEntryVersionModel
 	@Override
 	public StyleBookEntryVersion cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

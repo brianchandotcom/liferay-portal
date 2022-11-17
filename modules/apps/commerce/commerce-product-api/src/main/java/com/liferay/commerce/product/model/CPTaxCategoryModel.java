@@ -458,4 +458,8 @@ public interface CPTaxCategoryModel
 	@Override
 	public CPTaxCategory cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

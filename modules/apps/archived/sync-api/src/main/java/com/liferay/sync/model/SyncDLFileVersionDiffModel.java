@@ -173,4 +173,8 @@ public interface SyncDLFileVersionDiffModel
 	@Override
 	public SyncDLFileVersionDiff cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

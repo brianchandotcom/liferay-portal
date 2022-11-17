@@ -469,6 +469,11 @@ public class CommerceQualifierEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommerceQualifierEntryWrapper wrap(
 		CommerceQualifierEntry commerceQualifierEntry) {
 

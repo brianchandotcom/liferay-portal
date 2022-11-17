@@ -181,4 +181,8 @@ public interface FriendlyURLEntryMappingModel
 	@Override
 	public FriendlyURLEntryMapping cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

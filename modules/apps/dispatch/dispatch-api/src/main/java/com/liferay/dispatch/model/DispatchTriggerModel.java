@@ -402,4 +402,8 @@ public interface DispatchTriggerModel
 	@Override
 	public DispatchTrigger cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -235,4 +235,8 @@ public interface ObjectLayoutRowModel
 	@Override
 	public ObjectLayoutRow cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

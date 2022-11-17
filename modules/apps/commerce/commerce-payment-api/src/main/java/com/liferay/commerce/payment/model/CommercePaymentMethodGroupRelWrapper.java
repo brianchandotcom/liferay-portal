@@ -771,6 +771,11 @@ public class CommercePaymentMethodGroupRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CommercePaymentMethodGroupRelWrapper wrap(
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
 

@@ -367,4 +367,8 @@ public interface ListTypeEntryModel
 	@Override
 	public ListTypeEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

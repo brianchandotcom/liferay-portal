@@ -437,4 +437,8 @@ public interface BatchEngineImportTaskModel
 	@Override
 	public BatchEngineImportTask cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

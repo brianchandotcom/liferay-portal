@@ -148,4 +148,8 @@ public interface SamlSpMessageModel
 	@Override
 	public SamlSpMessage cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

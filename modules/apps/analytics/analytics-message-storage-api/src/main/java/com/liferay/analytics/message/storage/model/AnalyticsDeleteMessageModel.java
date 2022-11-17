@@ -192,4 +192,8 @@ public interface AnalyticsDeleteMessageModel
 	@Override
 	public AnalyticsDeleteMessage cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

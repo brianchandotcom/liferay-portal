@@ -282,4 +282,8 @@ public interface SegmentsEntryRelModel
 	@Override
 	public SegmentsEntryRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

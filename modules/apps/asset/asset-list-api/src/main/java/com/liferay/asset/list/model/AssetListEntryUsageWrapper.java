@@ -659,6 +659,11 @@ public class AssetListEntryUsageWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<AssetListEntryUsage, Object>>
 		getAttributeGetterFunctions() {
 

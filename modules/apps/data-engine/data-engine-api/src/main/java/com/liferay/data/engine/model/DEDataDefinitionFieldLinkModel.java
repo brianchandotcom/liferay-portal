@@ -279,4 +279,8 @@ public interface DEDataDefinitionFieldLinkModel
 	@Override
 	public DEDataDefinitionFieldLink cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -284,4 +284,8 @@ public interface CommercePriceListOrderTypeRelModel
 	@Override
 	public CommercePriceListOrderTypeRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

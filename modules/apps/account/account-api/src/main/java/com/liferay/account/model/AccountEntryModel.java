@@ -565,4 +565,8 @@ public interface AccountEntryModel
 	@Override
 	public AccountEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

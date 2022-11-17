@@ -350,6 +350,11 @@ public class WebDAVPropsWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected WebDAVPropsWrapper wrap(WebDAVProps webDAVProps) {
 		return new WebDAVPropsWrapper(webDAVProps);
 	}

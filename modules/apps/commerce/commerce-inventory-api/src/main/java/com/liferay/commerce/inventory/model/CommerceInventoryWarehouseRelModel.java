@@ -249,4 +249,8 @@ public interface CommerceInventoryWarehouseRelModel
 	@Override
 	public CommerceInventoryWarehouseRel cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

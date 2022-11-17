@@ -662,4 +662,8 @@ public interface CommerceOrderTypeModel
 	@Override
 	public CommerceOrderType cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

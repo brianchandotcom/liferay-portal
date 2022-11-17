@@ -134,6 +134,11 @@ public class CacheDisabledEntryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected CacheDisabledEntryWrapper wrap(
 		CacheDisabledEntry cacheDisabledEntry) {
 

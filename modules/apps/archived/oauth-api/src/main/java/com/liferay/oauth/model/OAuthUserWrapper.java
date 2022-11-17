@@ -363,6 +363,11 @@ public class OAuthUserWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected OAuthUserWrapper wrap(OAuthUser oAuthUser) {
 		return new OAuthUserWrapper(oAuthUser);
 	}

@@ -391,6 +391,11 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CommercePricingClassCPDefinitionRel, Object>>
 		getAttributeGetterFunctions() {
 

@@ -177,4 +177,8 @@ public interface UserGroupRoleModel
 	@Override
 	public UserGroupRole cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

@@ -496,4 +496,8 @@ public interface CommerceAddressModel
 	@Override
 	public CommerceAddress cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

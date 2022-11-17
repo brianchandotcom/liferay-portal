@@ -238,4 +238,8 @@ public interface LayoutBranchModel
 	@Override
 	public LayoutBranch cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

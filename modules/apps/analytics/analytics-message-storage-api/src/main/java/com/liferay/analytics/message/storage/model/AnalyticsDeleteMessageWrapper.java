@@ -320,6 +320,11 @@ public class AnalyticsDeleteMessageWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	protected AnalyticsDeleteMessageWrapper wrap(
 		AnalyticsDeleteMessage analyticsDeleteMessage) {
 

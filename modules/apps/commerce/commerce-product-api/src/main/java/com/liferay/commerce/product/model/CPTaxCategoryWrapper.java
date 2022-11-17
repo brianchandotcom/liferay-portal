@@ -695,6 +695,11 @@ public class CPTaxCategoryWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map<String, Function<CPTaxCategory, Object>>
 		getAttributeGetterFunctions() {
 

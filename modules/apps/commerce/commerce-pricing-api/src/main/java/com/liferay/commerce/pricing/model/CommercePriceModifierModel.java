@@ -557,4 +557,8 @@ public interface CommercePriceModifierModel
 	@Override
 	public CommercePriceModifier cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

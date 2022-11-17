@@ -86,4 +86,8 @@ public interface NullConvertibleEntryModel
 	@Override
 	public NullConvertibleEntry cloneWithOriginalValues();
 
+	public default String toXmlString() {
+		return null;
+	}
+
 }

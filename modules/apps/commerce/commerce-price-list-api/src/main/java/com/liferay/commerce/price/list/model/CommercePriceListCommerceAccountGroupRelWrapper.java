@@ -481,6 +481,11 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 	}
 
 	@Override
+	public String toXmlString() {
+		return model.toXmlString();
+	}
+
+	@Override
 	public Map
 		<String, Function<CommercePriceListCommerceAccountGroupRel, Object>>
 			getAttributeGetterFunctions() {

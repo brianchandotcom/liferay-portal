@@ -52,34 +52,30 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 			</h2>
 
 			<div className="c-mt-2">
-				<ul className="c-mb-0 list-unstyled">
-					{virtualInstance && (
-						<li className="applications-menu-virtual-instance c-mt-2">
-							<a
-								className="applications-menu-nav-link"
-								href={virtualInstance.url}
-							>
-								<ClayLayout.ContentRow verticalAlign="center">
-									<ClayLayout.ContentCol>
-										<ClaySticker>
-											<img
-												alt=""
-												height="32px"
-												src={virtualInstance.logoURL}
-											/>
-										</ClaySticker>
-									</ClayLayout.ContentCol>
+				{virtualInstance && (
+					<a
+						className="applications-menu-nav-link applications-menu-virtual-instance"
+						href={virtualInstance.url}
+					>
+						<ClayLayout.ContentRow verticalAlign="center">
+							<ClayLayout.ContentCol>
+								<ClaySticker>
+									<img
+										alt=""
+										height="32px"
+										src={virtualInstance.logoURL}
+									/>
+								</ClaySticker>
+							</ClayLayout.ContentCol>
 
-									<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
-										<span className="text-truncate">
-											{virtualInstance.label}
-										</span>
-									</ClayLayout.ContentCol>
-								</ClayLayout.ContentRow>
-							</a>
-						</li>
-					)}
-				</ul>
+							<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
+								<span className="text-truncate">
+									{virtualInstance.label}
+								</span>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					</a>
+				)}
 			</div>
 
 			<div className="applications-menu-nav-divider c-my-3"></div>

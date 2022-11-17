@@ -19,6 +19,7 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -56,10 +57,10 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			_log.debug("Activate " + properties);
 		}
 
-		long companyId = ConfigurableUtil.getCompanyId(
+		long companyId = ConfigurationFactoryUtil.getCompanyId(
 			companyLocalService, properties);
 		String externalReferenceCode =
-			ConfigurableUtil.getExternalReferenceCode(properties);
+			ConfigurationFactoryUtil.getExternalReferenceCode(properties);
 
 		OAuth2ProviderApplicationUserAgentConfiguration
 			oAuth2ProviderApplicationUserAgentConfiguration =

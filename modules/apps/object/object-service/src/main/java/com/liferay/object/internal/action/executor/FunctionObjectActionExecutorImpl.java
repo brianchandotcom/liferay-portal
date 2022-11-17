@@ -17,6 +17,7 @@ package com.liferay.object.internal.action.executor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.configuration.FunctionObjectActionExecutorImplConfiguration;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.catapult.PortalCatapult;
@@ -64,7 +65,7 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
-		_companyId = ConfigurableUtil.getCompanyId(
+		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionObjectActionExecutorImplConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -72,7 +73,7 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 				properties);
 		_key = StringBundler.concat(
 			ObjectActionExecutorConstants.KEY_FUNCTION, StringPool.POUND,
-			ConfigurableUtil.getExternalReferenceCode(properties));
+			ConfigurationFactoryUtil.getExternalReferenceCode(properties));
 	}
 
 	private long _companyId;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Map;
@@ -43,12 +43,14 @@ public class FunctionActionExecutorImplFactory {
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 
+		String externalReferenceCode =
+			ConfigurationFactoryUtil.getExternalReferenceCode(properties);
+
 		_componentInstance = _componentFactory.newInstance(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portal.workflow.kaleo.runtime.action.executor." +
 					"language",
-				"function#" +
-					ConfigurableUtil.getExternalReferenceCode(properties)
+				"function#" + externalReferenceCode
 			).putAll(
 				properties
 			).remove(

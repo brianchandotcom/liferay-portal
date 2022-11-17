@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.action.executor;
 
+import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -65,7 +66,7 @@ public class FunctionActionExecutorImpl implements ActionExecutor {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
-		_companyId = ConfigurableUtil.getCompanyId(
+		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionActionExecutorImplConfiguration =
 			ConfigurableUtil.createConfigurable(

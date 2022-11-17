@@ -120,9 +120,11 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				caseIds.map((caseId) => ({
 					buildId: build.id,
 					caseId,
-					commentMBMessage: undefined,
+					comment: undefined,
 					dueStatus: CaseResultStatuses.UNTESTED,
 					issues: undefined,
+					mbMessageId: 0,
+					mbThreadId: 0,
 					runId: testrayRun.id,
 					startDate: undefined,
 					userId: testrayCaseResultImpl.UNASSIGNED_USER_ID,

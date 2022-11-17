@@ -89,7 +89,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				<Form.Input
 					className="container-fluid-max-md"
 					label={i18n.translate('comment')}
-					name="commentMBMessage"
+					name="comment"
 					type="textarea"
 				/>
 			</Container>

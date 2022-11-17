@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cookies.internal.configuration.helper;
+package com.liferay.cookies.internal.configuration.provider;
 
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;

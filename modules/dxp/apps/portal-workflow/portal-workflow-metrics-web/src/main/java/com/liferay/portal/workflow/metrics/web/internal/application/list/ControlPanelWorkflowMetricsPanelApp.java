@@ -17,7 +17,11 @@ package com.liferay.portal.workflow.metrics.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.workflow.metrics.web.internal.constants.WorkflowMetricsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +45,17 @@ public class ControlPanelWorkflowMetricsPanelApp extends BasePanelApp {
 	}
 
 	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (!_searchCapabilities.isWorkflowMetricsSupported()) {
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
+	}
+
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + WorkflowMetricsPortletKeys.WORKFLOW_METRICS + ")",
 		unbind = "-"
@@ -48,5 +63,8 @@ public class ControlPanelWorkflowMetricsPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
 
 }

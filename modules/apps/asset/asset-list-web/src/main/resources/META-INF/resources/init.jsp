@@ -54,6 +54,7 @@ page import="com.liferay.asset.list.web.internal.display.context.InfoCollectionP
 page import="com.liferay.asset.list.web.internal.display.context.SelectStructureFieldDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.frontend.taglib.clay.servlet.taglib.AssetListEntryVerticalCard" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListEntryVariationActionDropdownItemsProvider" %><%@
+page import="com.liferay.asset.list.web.internal.servlet.taglib.util.EditAssetListEntryManualActionDropdownItemsProvider" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.InfoCollectionProviderActionDropdownItems" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDropdownItems" %><%@
 page import="com.liferay.asset.list.web.internal.util.comparator.ClassTypeNameComparator" %><%@

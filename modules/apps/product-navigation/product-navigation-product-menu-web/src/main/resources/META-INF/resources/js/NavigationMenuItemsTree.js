@@ -14,36 +14,52 @@
 
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {useSessionState} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 
 const ENTER_KEYCODE = 13;
 
 export default function NavigationMenuItemsTree({
+	portletNamespace,
 	selectedSiteNavigationMenuItemId,
 	siteNavigationMenuItems,
 }) {
-	const selectedKeys = new Set([selectedSiteNavigationMenuItemId]);
+	const [
+		expandedKeys,
+		setExpandedKeys,
+	] = useSessionState(`${portletNamespace}_navigationMenusExpandedKeys`, [
+		selectedSiteNavigationMenuItemId,
+	]);
 
 	return (
 		<ClayTreeView
-			defaultExpandedKeys={selectedKeys}
 			defaultItems={siteNavigationMenuItems}
 			displayType="dark"
+			expandedKeys={new Set(expandedKeys)}
 			nestedKey="children"
+			onExpandedChange={(keys) => {
+				setExpandedKeys(Array.from(keys));
+			}}
 			showExpanderOnHover={false}
 		>
-			{(item) => <TreeItem item={item} selectedKeys={selectedKeys} />}
+			{(item) => (
+				<TreeItem
+					item={item}
+					selectedItemId={selectedSiteNavigationMenuItemId}
+				/>
+			)}
 		</ClayTreeView>
 	);
 }
 
 NavigationMenuItemsTree.propTypes = {
+	portletNamespace: PropTypes.string.isRequired,
 	selectedSiteNavigationMenuItemId: PropTypes.string.isRequired,
 	siteNavigationMenuItems: PropTypes.array.isRequired,
 };
 
-function TreeItem({item, selectedKeys}) {
+function TreeItem({item, selectedItemId}) {
 	const hasUrl = item.url && item.url !== '#';
 
 	const stackAnchorRef = useRef(null);
@@ -52,7 +68,7 @@ function TreeItem({item, selectedKeys}) {
 	return (
 		<ClayTreeView.Item>
 			<ClayTreeView.ItemStack
-				active={selectedKeys.has(item.id)}
+				active={selectedItemId === item.id ? 'true' : null}
 				onKeyDown={(event) => {
 					if (event.keyCode === ENTER_KEYCODE && hasUrl) {
 						stackAnchorRef.current.click();
@@ -83,6 +99,7 @@ function TreeItem({item, selectedKeys}) {
 			<ClayTreeView.Group items={item.children}>
 				{(item) => (
 					<ClayTreeView.Item
+						active={selectedItemId === item.id ? 'true' : null}
 						onKeyDown={(event) => {
 							if (event.keyCode === ENTER_KEYCODE && hasUrl) {
 								stackAnchorRef.current.click();
@@ -117,5 +134,5 @@ function TreeItem({item, selectedKeys}) {
 
 TreeItem.propTypes = {
 	items: PropTypes.array.isRequired,
-	selectedKeys: PropTypes.object.isRequired,
+	selectedItemId: PropTypes.string.isRequired,
 };

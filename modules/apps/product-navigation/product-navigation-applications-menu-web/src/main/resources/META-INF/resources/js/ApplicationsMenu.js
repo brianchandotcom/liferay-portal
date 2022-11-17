@@ -81,7 +81,10 @@ const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 			<div className="applications-menu-nav-divider c-my-3"></div>
 
 			<div className="applications-menu-sites c-my-2">
-				<ul className="list-unstyled">
+				<ul
+					aria-label={Liferay.Language.get('sites')}
+					className="list-unstyled"
+				>
 					{sites && (
 						<Sites
 							mySites={sites.mySites}

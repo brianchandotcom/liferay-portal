@@ -265,6 +265,12 @@ html#{$cadmin-selector} {
 			border-color: #c67;
 		}
 
+		.has-error .alloy-editor-container .form-feedback-item {
+			font-size: 0.875rem;
+			font-weight: 600;
+			line-height: 4;
+		}
+
 		.form-control.form-control-unstyled {
 			background: transparent;
 			border-width: 0;

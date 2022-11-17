@@ -37,4 +37,9 @@ public class SolrDocumentMappingTest extends BaseDocumentMappingTestCase {
 		return new SolrIndexingFixture();
 	}
 
+	@Override
+	protected String getIndexName() {
+		return "liferay";
+	}
+
 }

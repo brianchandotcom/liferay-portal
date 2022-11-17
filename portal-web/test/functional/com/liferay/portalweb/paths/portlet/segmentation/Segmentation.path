@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_SEGMENT_PROPERTY_BUTTON</td>
+	<td>//*[contains(@class,'btn-outline-danger') and contains(text(),'Delete Segment Property')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DUPLICATE_BUTTON</td>
 	<td>//button//*[contains(@class,'lexicon-icon lexicon-icon-paste')]</td>
 	<td></td>

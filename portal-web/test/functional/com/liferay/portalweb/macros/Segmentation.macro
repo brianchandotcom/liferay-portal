@@ -111,6 +111,10 @@ definition {
 		Click(locator1 = "Icon#REMOVE");
 	}
 
+	macro deletePropertyElementNotExisting {
+		Click(locator1 = "Segmentation#DELETE_SEGMENT_PROPERTY_BUTTON");
+	}
+
 	macro deleteSegment {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${entry}",

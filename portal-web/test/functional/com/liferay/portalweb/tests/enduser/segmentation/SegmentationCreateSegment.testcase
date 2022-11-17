@@ -2515,7 +2515,7 @@ definition {
 		task ("Remove from second segment criteria related to the first segment") {
 			Segmentation.editSegment(entry = "Second Segment");
 
-			Button.clickDelete();
+			Segmentation.deletePropertyElementNotExisting();
 
 			Button.clickSave();
 		}

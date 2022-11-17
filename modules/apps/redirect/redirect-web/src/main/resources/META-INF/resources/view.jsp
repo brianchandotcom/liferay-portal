@@ -33,6 +33,16 @@ RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.
 		<liferay-util:include page="/view_redirect_not_found_entries.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/view_redirect_patterns.jsp" servletContext="<%= application %>" />
+
+		<%
+		RedirectPatternConfigurationDisplayContext redirectPatternConfigurationDisplayContext = (RedirectPatternConfigurationDisplayContext)request.getAttribute(RedirectPatternConfigurationDisplayContext.class.getName());
+		%>
+
+		<div>
+			<react:component
+				module="js/RedirectPatterns"
+				props="<%= redirectPatternConfigurationDisplayContext.getRedirectPatterns() %>"
+			/>
+		</div>
 	</c:otherwise>
 </c:choose>

@@ -327,6 +327,7 @@ export default {
 	'template-name': 'Template Name',
 	'template-test': 'Template Test',
 	'templates': 'Templates',
+	'test-details': 'Test Details',
 	'test-fix': 'Test Fix',
 	'test-history': 'Test History',
 	'test-lead-should-only-have-access-to-builds-test-plans-test-suites-and-test-cases-.-this-role-will-be-responsible-for-creating-builds-and-for-creating-test-plans-test-runs-the-people-assigned-to-these-would-be-our-current-product-leads':

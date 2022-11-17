@@ -465,10 +465,10 @@ definition {
 				groupName = "Test Site Name");
 
 			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
+				content = "Web Content Content 1",
 				folderName = "WC Folder Name",
 				groupName = "Test Site Name",
-				title = "Web Content Title");
+				title = "Web Content Title 1");
 		}
 
 		task ("Edit the web content 3 times") {
@@ -478,18 +478,11 @@ definition {
 				folderName = "WC Folder Name",
 				webContentTitle = "WC Folder Name");
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.editCP(
-				webContentContentEdit = "Web Content Content Edit 1",
-				webContentTitle = "Web Content Title",
-				webContentTitleEdit = "Web Content Title Edit 1");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
 
 			WebContent.editCP(
 				webContentContentEdit = "Web Content Content Edit 2",
-				webContentTitle = "Web Content Title Edit 1",
+				webContentTitle = "Web Content Title 1",
 				webContentTitleEdit = "Web Content Title Edit 2");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 2");
@@ -498,12 +491,19 @@ definition {
 				webContentContentEdit = "Web Content Content Edit 3",
 				webContentTitle = "Web Content Title Edit 2",
 				webContentTitleEdit = "Web Content Title Edit 3");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 3");
+
+			WebContent.editCP(
+				webContentContentEdit = "Web Content Content Edit 4",
+				webContentTitle = "Web Content Title Edit 3",
+				webContentTitleEdit = "Web Content Title Edit 4");
 		}
 
 		task ("Expire the third web content") {
 			WebContent.expireSpecificVersionCP(
-				webContentList = "Web Content Title Edit 1,Web Content Title Edit 2",
-				webContentTitle = "Web Content Title Edit 3");
+				webContentList = "Web Content Title Edit 2,Web Content Title Edit 3",
+				webContentTitle = "Web Content Title Edit 4");
 		}
 
 		task ("Save the web content as draft") {
@@ -513,12 +513,12 @@ definition {
 				folderName = "WC Folder Name",
 				webContentTitle = "WC Folder Name");
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 3");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 4");
 
 			WebContent.editCP(
 				saveAsDraft = "true",
 				webContentContentEdit = "Web Content Content Edit Draft",
-				webContentTitle = "Web Content Title Edit 3",
+				webContentTitle = "Web Content Title Edit 4",
 				webContentTitleEdit = "Web Content Title Edit Draft");
 		}
 
@@ -550,19 +550,19 @@ definition {
 
 			WebContent.viewSpecificVersionHistoryCP(
 				webContentStatus = "APPROVED",
-				webContentTitle = "Web Content Title");
-
-			WebContent.viewSpecificVersionHistoryCP(
-				webContentStatus = "EXPIRED",
-				webContentTitle = "Web Content Title Edit 1");
+				webContentTitle = "Web Content Title 1");
 
 			WebContent.viewSpecificVersionHistoryCP(
 				webContentStatus = "EXPIRED",
 				webContentTitle = "Web Content Title Edit 2");
 
 			WebContent.viewSpecificVersionHistoryCP(
-				webContentStatus = "APPROVED",
+				webContentStatus = "EXPIRED",
 				webContentTitle = "Web Content Title Edit 3");
+
+			WebContent.viewSpecificVersionHistoryCP(
+				webContentStatus = "APPROVED",
+				webContentTitle = "Web Content Title Edit 4");
 
 			WebContent.viewSpecificVersionHistoryCP(
 				webContentStatus = "DRAFT",

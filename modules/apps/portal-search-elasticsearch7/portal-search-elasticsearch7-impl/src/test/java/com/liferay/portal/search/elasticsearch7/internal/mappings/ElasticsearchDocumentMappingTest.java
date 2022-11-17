@@ -38,4 +38,9 @@ public class ElasticsearchDocumentMappingTest
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
+	@Override
+	protected String getIndexName() {
+		return String.valueOf(getCompanyId());
+	}
+
 }

@@ -301,6 +301,8 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 			).collect(
 				Collectors.toList()
 			)
+		).totalHits(
+			documents.size()
 		).build();
 	}
 

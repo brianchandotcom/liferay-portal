@@ -223,11 +223,11 @@ public class ImportDisplayContext {
 				layoutsImporterResultEntry.getStatus();
 
 			if (_layoutsImporterResultEntryMap.get(status) != null) {
-				layoutsImporterResultEntries =
+				statusLayoutsImporterResultEntries =
 					_layoutsImporterResultEntryMap.get(status);
 			}
 
-			layoutsImporterResultEntries.add(layoutsImporterResultEntry);
+			statusLayoutsImporterResultEntries.add(layoutsImporterResultEntry);
 
 			_layoutsImporterResultEntryMap.put(
 				status, statusLayoutsImporterResultEntries);

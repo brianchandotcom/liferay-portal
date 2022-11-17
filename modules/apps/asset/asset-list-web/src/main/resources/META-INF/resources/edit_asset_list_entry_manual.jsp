@@ -87,7 +87,16 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 						<clay:content-col
 							cssClass="inline-item-after"
 						>
-							<liferay-util:include page="/asset_list_entry_variation_action.jsp" servletContext="<%= application %>" />
+
+							<%
+							AssetListEntryVariationActionDropdownItemsProvider assetListEntryVariationActionDropdownItemsProvider = new AssetListEntryVariationActionDropdownItemsProvider(editAssetListDisplayContext, liferayPortletRequest, liferayPortletResponse);
+							%>
+
+							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+								dropdownItems="<%= assetListEntryVariationActionDropdownItemsProvider.getActionDropdownItems() %>"
+								propsTransformer="js/AssetListEntryVariationDefaultPropsTransformer"
+							/>
 						</clay:content-col>
 					</clay:content-row>
 				</h3>

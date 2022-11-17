@@ -341,6 +341,17 @@ public class LayoutsTreeDisplayContext {
 				}
 			).put(
 				"namespace", getNamespace()
+			).put(
+				"stagingEnabled",
+				() -> {
+					Group scopeGroup = _themeDisplay.getScopeGroup();
+
+					if (scopeGroup.hasLocalOrRemoteStagingGroup()) {
+						return true;
+					}
+
+					return false;
+				}
 			).build()
 		).put(
 			"isPrivateLayoutsTree", isPrivateLayout()

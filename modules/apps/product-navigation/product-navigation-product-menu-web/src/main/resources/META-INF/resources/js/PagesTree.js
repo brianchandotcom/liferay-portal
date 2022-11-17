@@ -91,7 +91,7 @@ export default function PagesTree({
 			<ClayTreeView
 				defaultItems={items}
 				displayType="dark"
-				dragAndDrop
+				dragAndDrop={!config.stagingEnabled}
 				expandedKeys={new Set(expandedKeys)}
 				onExpandedChange={(keys) => {
 					setExpandedKeys(Array.from(keys));

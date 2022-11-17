@@ -68,7 +68,6 @@ html#{$cadmin-selector} {
 
 			.pages-administration-link {
 				align-items: center;
-				background-color: $cadmin-dark;
 				border-top: 1px solid $cadmin-gray-800;
 				bottom: 0;
 				display: flex;
@@ -85,9 +84,7 @@ html#{$cadmin-selector} {
 
 			.page-type-selector {
 				border-top: 1px solid $cadmin-gray-800;
-				font-size: 14px;
 				margin-top: 20px;
-				padding-top: 16px;
 
 				.add-page-button,
 				.configure-link {

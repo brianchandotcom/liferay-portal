@@ -14,6 +14,9 @@
 
 package com.liferay.object.internal.action.util;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
+import com.liferay.dynamic.data.mapping.expression.DDMExpression;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -22,10 +25,14 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -144,6 +151,53 @@ public class ObjectEntryVariablesUtil {
 					GetterUtil.getLong(baseModel.getPrimaryKeyObj())));
 
 		return variables;
+	}
+
+	public static Map<String, Object> getValues(
+			DDMExpressionFactory ddmExpressionFactory,
+			UnicodeProperties parametersUnicodeProperties,
+			Map<String, Object> variables)
+		throws Exception {
+
+		Map<String, Object> values = new HashMap<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			parametersUnicodeProperties.get("predefinedValues"));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.get("value");
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			if (!jsonObject.getBoolean("inputAsValue")) {
+				value = _evaluateExpression(
+					ddmExpressionFactory, value.toString(), variables);
+			}
+
+			values.put(jsonObject.getString("name"), value);
+		}
+
+		return values;
+	}
+
+	private static Serializable _evaluateExpression(
+			DDMExpressionFactory ddmExpressionFactory, String expression,
+			Map<String, Object> variables)
+		throws Exception {
+
+		DDMExpression<Serializable> ddmExpression =
+			ddmExpressionFactory.createExpression(
+				CreateExpressionRequest.Builder.newBuilder(
+					expression
+				).build());
+
+		ddmExpression.setVariables(variables);
+
+		return ddmExpression.evaluate();
 	}
 
 	private static String _getContentType(

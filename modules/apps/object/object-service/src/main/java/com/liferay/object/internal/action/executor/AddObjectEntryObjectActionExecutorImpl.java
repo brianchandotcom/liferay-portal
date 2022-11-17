@@ -14,8 +14,6 @@
 
 package com.liferay.object.internal.action.executor;
 
-import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
-import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -30,8 +28,6 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -41,14 +37,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
-import java.io.Serializable;
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -94,9 +86,12 @@ public class AddObjectEntryObjectActionExecutorImpl
 			targetObjectDefinition,
 			new ObjectEntry() {
 				{
-					properties = _getValues(
-						sourceObjectDefinition, parametersUnicodeProperties,
-						payloadJSONObject);
+					properties = ObjectEntryVariablesUtil.getValues(
+						_ddmExpressionFactory, parametersUnicodeProperties,
+						ObjectEntryVariablesUtil.getActionVariables(
+							_dtoConverterRegistry, sourceObjectDefinition,
+							payloadJSONObject,
+							_systemObjectDefinitionMetadataRegistry));
 				}
 			},
 			String.valueOf(
@@ -132,21 +127,6 @@ public class AddObjectEntryObjectActionExecutorImpl
 	@Override
 	public String getKey() {
 		return ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY;
-	}
-
-	private Serializable _evaluateExpression(
-			String expression, Map<String, Object> variables)
-		throws Exception {
-
-		DDMExpression<Serializable> ddmExpression =
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					expression
-				).build());
-
-		ddmExpression.setVariables(variables);
-
-		return ddmExpression.evaluate();
 	}
 
 	private long _getGroupId(
@@ -195,41 +175,6 @@ public class AddObjectEntryObjectActionExecutorImpl
 		};
 	}
 
-	private Map<String, Object> _getValues(
-			ObjectDefinition objectDefinition,
-			UnicodeProperties parametersUnicodeProperties,
-			JSONObject payloadJSONObject)
-		throws Exception {
-
-		Map<String, Object> values = new HashMap<>();
-
-		Map<String, Object> variables =
-			ObjectEntryVariablesUtil.getActionVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataRegistry);
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(
-			parametersUnicodeProperties.get("predefinedValues"));
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			Object value = jsonObject.get("value");
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			if (!jsonObject.getBoolean("inputAsValue")) {
-				value = _evaluateExpression(value.toString(), variables);
-			}
-
-			values.put(jsonObject.getString("name"), value);
-		}
-
-		return values;
-	}
-
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
 
@@ -238,9 +183,6 @@ public class AddObjectEntryObjectActionExecutorImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

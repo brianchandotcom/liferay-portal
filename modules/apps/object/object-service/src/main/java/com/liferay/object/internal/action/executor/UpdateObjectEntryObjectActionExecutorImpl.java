@@ -14,8 +14,6 @@
 
 package com.liferay.object.internal.action.executor;
 
-import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
-import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -28,21 +26,15 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
-import java.io.Serializable;
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +73,10 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 				{
 					properties = _getValues(
 						sourceObjectDefinition, parametersUnicodeProperties,
-						payloadJSONObject);
+						ObjectEntryVariablesUtil.getActionVariables(
+							_dtoConverterRegistry, sourceObjectDefinition,
+							payloadJSONObject,
+							_systemObjectDefinitionMetadataRegistry));
 				}
 			});
 	}
@@ -91,52 +86,14 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		return ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY;
 	}
 
-	private Serializable _evaluateExpression(
-			String expression, Map<String, Object> variables)
-		throws Exception {
-
-		DDMExpression<Serializable> ddmExpression =
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					expression
-				).build());
-
-		ddmExpression.setVariables(variables);
-
-		return ddmExpression.evaluate();
-	}
-
 	private Map<String, Object> _getValues(
 			ObjectDefinition objectDefinition,
 			UnicodeProperties parametersUnicodeProperties,
-			JSONObject payloadJSONObject)
+			Map<String, Object> variables)
 		throws Exception {
 
-		Map<String, Object> values = new HashMap<>();
-
-		Map<String, Object> variables =
-			ObjectEntryVariablesUtil.getActionVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataRegistry);
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(
-			parametersUnicodeProperties.get("predefinedValues"));
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			Object value = jsonObject.get("value");
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			if (!jsonObject.getBoolean("inputAsValue")) {
-				value = _evaluateExpression(value.toString(), variables);
-			}
-
-			values.put(jsonObject.getString("name"), value);
-		}
+		Map<String, Object> values = ObjectEntryVariablesUtil.getValues(
+			_ddmExpressionFactory, parametersUnicodeProperties, variables);
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -159,9 +116,6 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

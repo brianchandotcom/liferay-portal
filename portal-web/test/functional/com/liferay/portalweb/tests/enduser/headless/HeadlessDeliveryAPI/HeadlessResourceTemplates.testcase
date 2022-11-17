@@ -129,7 +129,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				fragmentName = "component-paragraph",
 				locator1 = "Fragment#FRAGMENT_ANY_TEXT",
-				value1 = "\"id\": ${objectDefinitionEntryId}, \"properties\": {\"name\": \"Liferay University\"}");
+				value1 = "Liferay University");
 		}
 	}
 

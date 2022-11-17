@@ -147,7 +147,10 @@ const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 				))}
 
 			{recentSites?.length > 0 && mySites?.length > 0 && (
-				<li className="applications-menu-nav-divider c-mt-3"></li>
+				<li
+					className="applications-menu-nav-divider c-mt-3"
+					role="presentation"
+				></li>
 			)}
 
 			{mySites?.length > 0 &&

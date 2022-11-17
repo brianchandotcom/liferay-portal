@@ -32,7 +32,7 @@ definition {
 
 	@description = "This ensures that the depot language can be set in a depot."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanSetCustomLanguage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -69,7 +69,7 @@ definition {
 
 	@description = "This ensures that the custom type language can be set in a depot."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanViewCustomLanguagesOrderForCustomType {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -164,7 +164,7 @@ definition {
 
 	@description = "This ensures that the web content language can be set in a depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewCustomLanguagesOrderForWebContent {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

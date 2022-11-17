@@ -237,7 +237,9 @@ definition {
 
 				MouseOver(locator1 = "//div[contains(@data-field-name,'CompanhiaOperadoraFieldSet')]//div[contains(@class,'placeholder')]");
 
-				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Duplicate");
+				Click.clickNoWaitForVisible(locator1 = "//div[contains(@data-field-name,'CompanhiaOperadoraFieldSet')]//div[contains(@class,'dropdown-action')]//button[contains(@class,'dropdown-toggle')]");
+
+				MenuItem.clickNoError(menuItem = "Duplicate");
 			}
 
 			WebContentStructures.saveCP();
@@ -621,7 +623,9 @@ definition {
 
 				MouseOver(locator1 = "//div[contains(@data-field-name,'ListaDePaisesFieldSet')]//div[contains(@class,'placeholder')]");
 
-				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Duplicate");
+				Click.clickNoWaitForVisible(locator1 = "//div[contains(@data-field-name,'ListaDePaisesFieldSet')]//div[contains(@class,'dropdown-action')]//button[contains(@class,'dropdown-toggle')]");
+
+				MenuItem.clickNoError(menuItem = "Duplicate");
 			}
 
 			WebContentStructures.saveCP();

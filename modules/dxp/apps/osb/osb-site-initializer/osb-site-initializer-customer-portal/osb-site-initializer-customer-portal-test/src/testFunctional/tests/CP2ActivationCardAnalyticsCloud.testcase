@@ -157,8 +157,8 @@ definition {
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				portlet = "Incident Report Contacts Analytics Cloud",
-				email = "test@liferay.com");
+				email = "test@liferay.com",
+				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}
 

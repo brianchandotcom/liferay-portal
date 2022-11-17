@@ -150,7 +150,7 @@ definition {
 		task ("And I enter Setup AC") {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
-		
+
 		task ("Then I assert that the 'Incident Report Contact' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "email",
@@ -216,8 +216,8 @@ definition {
 				status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				portlet = "Incident Report Contacts Analytics Cloud",
-				email = "test@liferay.com");
+				email = "test@liferay.com",
+				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}
 

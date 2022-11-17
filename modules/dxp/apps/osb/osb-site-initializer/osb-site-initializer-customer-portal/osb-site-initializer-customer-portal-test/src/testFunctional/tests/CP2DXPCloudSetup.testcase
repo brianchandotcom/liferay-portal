@@ -246,8 +246,8 @@ definition {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				portlet = "Admins DXP Cloud",
-				email = "test@liferay.com");
+				email = "test@liferay.com",
+				portlet = "Admins DXP Cloud");
 		}
 	}
 
@@ -683,8 +683,8 @@ definition {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				portlet = "Admins DXP Cloud",
-				email = "test@liferay.com");
+				email = "test@liferay.com",
+				portlet = "Admins DXP Cloud");
 		}
 	}
 

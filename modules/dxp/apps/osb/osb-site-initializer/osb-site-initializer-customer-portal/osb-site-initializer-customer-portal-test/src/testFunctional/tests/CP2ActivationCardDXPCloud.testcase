@@ -106,8 +106,8 @@ definition {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "Active");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				portlet = "Admins DXP Cloud",
-				email = "test@liferay.com");
+				email = "test@liferay.com",
+				portlet = "Admins DXP Cloud");
 		}
 	}
 
@@ -171,18 +171,18 @@ definition {
 			Button.click(button = "Submit");
 		}
 
-		// task ("Assert the card legend change") {
-		// 	AssertElementPresent(
-		// 		locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-		// 		title = "Your LXC - SM environments are being set up and will be available soon");
-		// }
+		//task ("Assert the card legend change") {
+		//	AssertElementPresent(
+		//		locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
+		//		title = "Your LXC - SM environments are being set up and will be available soon");
+		//}
 
 		task ("Delete the entries and objects created") {
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
 
 			CP2Utils.deleteSpecificObjectEntry(
-				portlet = "Admins DXP Cloud",
-				email = "test@liferay.com");
+				email = "test@liferay.com",
+				portlet = "Admins DXP Cloud");
 		}
 	}
 

@@ -71,6 +71,23 @@ definition {
 		Click(locator1 = "CP2Utils#CLOSE_BUTTON");
 	}
 
+	macro deleteSpecificObjectEntry {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "${portlet}");
+
+		Click(
+			key_text = "${email}",
+			locator1 = "CP2Utils#OBJECT_ENTRY_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this entry?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro onboardingFlow {
 		CustomerPortal.clickOnStartProjectSetup();
 
@@ -93,23 +110,6 @@ definition {
 				locator1 = "CP2Utils#PROJECT_SEARCH",
 				value1 = "${searchItem}");
 		}
-	}
-
-	macro deleteSpecificObjectEntry {
-		ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "${portlet}");
-
-		Click(
-			key_text = "${email}",
-			locator1 = "CP2Utils#OBJECT_ENTRY_ELLIPSIS_BUTTON");
-
-		MenuItem.clickNoError(menuItem = "Delete");
-
-		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this entry?");
-
-		Alert.viewSuccessMessage();
 	}
 
 }

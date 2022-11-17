@@ -31,17 +31,17 @@ definition {
 		}
 	}
 
-	macro assertThatUserGuestIsVisible {
-		var key_email = "${email}";
-
-		AssertElementPresent(locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
-	}
-
 	macro assertInvitedUserIsNotVisible {
 		AssertNotVisible(
 			key_name = "${name}",
 			key_status = "${status}",
 			locator1 = "CP2TeamMembers#TEAM_MEMBERS_TABLE");
+	}
+
+	macro assertThatUserGuestIsVisible {
+		var key_email = "${email}";
+
+		AssertElementPresent(locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
 	}
 
 	macro assertTheInvitedUser {

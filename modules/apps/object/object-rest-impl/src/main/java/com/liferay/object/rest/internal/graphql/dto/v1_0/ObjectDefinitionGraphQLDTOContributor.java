@@ -187,6 +187,11 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
+	public String getApplicationName() {
+		return _objectDefinition.getOSGiJaxRsName();
+	}
+
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}

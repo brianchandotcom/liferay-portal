@@ -739,10 +739,7 @@ definition {
 		var key_kbArticleTitle = "${kbArticleTitle}";
 		var key_localizedText = "Editor de texto enriquecido";
 
-		AssertClick(
-			key_kbTool = "${key_editLocalized}",
-			locator1 = "KnowledgeBase#KB_TOOLS",
-			value1 = "${key_editLocalized}");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Editar");
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
@@ -971,10 +968,7 @@ definition {
 	macro moveArticleViaKBDisplayPG {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		AssertClick(
-			key_kbTool = "Move",
-			locator1 = "KnowledgeBase#KB_TOOLS",
-			value1 = "Move");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Move");
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
@@ -1271,9 +1265,7 @@ definition {
 	}
 
 	macro viewArticleHistoryPG {
-		AssertClick(
-			locator1 = "KnowledgeBaseArticle#HISTORY",
-			value1 = "History");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "History");
 
 		Check(
 			key_versionNumber = "${kbArticleVersionNew}",
@@ -1877,10 +1869,7 @@ definition {
 	}
 
 	macro viewSourceURLPG {
-		AssertClick(
-			key_kbTool = "Edit",
-			locator1 = "KnowledgeBase#KB_TOOLS",
-			value1 = "Edit");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		Panel.expandPanel(panel = "Configuration");
 

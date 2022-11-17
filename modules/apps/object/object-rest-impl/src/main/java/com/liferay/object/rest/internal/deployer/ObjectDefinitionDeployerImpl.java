@@ -101,25 +101,23 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
-		String objectDefinitionKey = _getObjectDefinitionKey(
-			objectDefinition.getCompanyId(),
-			objectDefinition.getRESTContextPath());
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinitionKey);
+			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
 
 		if (objectDefinitions == null) {
 			objectDefinitions = new HashMap<>();
 
-			_objectDefinitionsMap.put(objectDefinitionKey, objectDefinitions);
+			_objectDefinitionsMap.put(
+				objectDefinition.getRESTContextPath(), objectDefinitions);
 
 			_excludeScopedMethods(objectDefinition, objectScopeProvider);
-
-			_initCustomObjectDefinition(objectDefinition, objectDefinitionKey);
 		}
+
+		_initCustomObjectDefinition(objectDefinition);
 
 		objectDefinitions.put(
 			objectDefinition.getCompanyId(), objectDefinition);
@@ -142,8 +140,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		long companyId, String restContextPath) {
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(
-				_getObjectDefinitionKey(companyId, restContextPath));
+			_objectDefinitionsMap.get(restContextPath);
 
 		if (objectDefinitions != null) {
 			return objectDefinitions.get(companyId);
@@ -154,27 +151,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public synchronized void undeploy(ObjectDefinition objectDefinition) {
-		String objectDefinitionKey = _getObjectDefinitionKey(
-			objectDefinition.getCompanyId(),
-			objectDefinition.getRESTContextPath());
+		String restContextPath = objectDefinition.getRESTContextPath();
 
 		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.get(objectDefinitionKey);
+			_objectDefinitionsMap.get(restContextPath);
 
 		if (objectDefinitions != null) {
 			objectDefinitions.remove(objectDefinition.getCompanyId());
 
 			if (objectDefinitions.isEmpty()) {
-				_objectDefinitionsMap.remove(objectDefinitionKey);
+				_objectDefinitionsMap.remove(restContextPath);
 			}
 		}
 
-		if (_objectDefinitionsMap.containsKey(objectDefinitionKey)) {
-			return;
-		}
-
 		List<ComponentInstance> componentInstances =
-			_componentInstancesMap.remove(objectDefinitionKey);
+			_componentInstancesMap.remove(restContextPath);
 
 		if (componentInstances != null) {
 			for (ComponentInstance componentInstance : componentInstances) {
@@ -183,11 +174,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrationsMap.remove(objectDefinitionKey);
+			_serviceRegistrationsMap.remove(restContextPath);
 
 		if (serviceRegistrations != null) {
 			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
+				serviceRegistrations) {
 
 				serviceRegistration.unregister();
 			}
@@ -259,20 +250,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 	}
 
-	private String _getObjectDefinitionKey(
-		long companyId, String restContextPath) {
-
-		return restContextPath + companyId;
-	}
-
 	private void _initCustomObjectDefinition(
-		ObjectDefinition objectDefinition, String objectDefinitionKey) {
+		ObjectDefinition objectDefinition) {
 
 		String osgiJaxRsName = objectDefinition.getOSGiJaxRsName();
+		String restContextPath = objectDefinition.getRESTContextPath();
 
-		_componentInstancesMap.put(
-			objectDefinitionKey,
-			Arrays.asList(
+		_componentInstancesMap.computeIfAbsent(
+			restContextPath,
+			key -> Arrays.asList(
 				_objectEntryApplicationComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
 						"companyId",
@@ -290,7 +276,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).build())));
 
 		_serviceRegistrationsMap.put(
-			objectDefinitionKey,
+			restContextPath,
 			Arrays.asList(
 				_bundleContext.registerService(
 					ContextProvider.class,

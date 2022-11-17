@@ -52,8 +52,9 @@ definition {
 				value1 = "Manual Asset List Test");
 
 			AssertTextEquals.assertPartialText(
-				key_type = "Manual",
-				locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+				key_columnName = "lfr-type",
+				key_tableEntry = "Manual",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 				value1 = "Manual");
 
 			AssertTextEquals.assertPartialText(
@@ -62,8 +63,9 @@ definition {
 				value1 = "Dynamic Asset List Test");
 
 			AssertTextEquals.assertPartialText(
-				key_type = "Dynamic",
-				locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+				key_columnName = "lfr-type",
+				key_tableEntry = "Dynamic",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 				value1 = "Dynamic");
 		}
 	}
@@ -3081,8 +3083,9 @@ definition {
 				value1 = "Manual Asset List Edit");
 
 			AssertTextEquals.assertPartialText(
-				key_type = "Manual",
-				locator1 = "AssetLists#ASSET_LIST_ENTRY_TYPE",
+				key_columnName = "lfr-type",
+				key_tableEntry = "Manual",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
 				value1 = "Manual");
 		}
 	}

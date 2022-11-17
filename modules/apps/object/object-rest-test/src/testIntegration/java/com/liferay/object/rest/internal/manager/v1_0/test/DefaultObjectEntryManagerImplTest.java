@@ -876,11 +876,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Map<String, Object> actualObjectEntryProperties =
 			actualObjectEntry.getProperties();
-
-		Assert.assertFalse(
-			actualObjectEntryProperties.containsKey(
-				_objectRelationshipFieldName));
-
 		Map<String, Object> expectedObjectEntryProperties =
 			expectedObjectEntry.getProperties();
 

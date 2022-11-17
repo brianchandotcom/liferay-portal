@@ -150,31 +150,13 @@ definition {
 			MessageboardsCategory.addCP(categoryName = "Test Category");
 		}
 
-		task ("And clicks on the order button") {
-			Click(
-				key_text = "order-list-up",
-				locator1 = "ManagementBar#ANY_ICON");
-		}
-
-		task ("Then there is no dropdown menu") {
-			AssertElementNotPresent(
-				key_item = "",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
-		}
-
-		task ("And the button is changed to the other order direction") {
-			AssertElementPresent(
-				key_text = "order-list-down",
-				locator1 = "ManagementBar#ANY_ICON");
-		}
-
-		task ("And a tooltip message will be displayed") {
-			Refresh();
-
+		task ("When mouse hover over order list icon") {
 			MouseOver(
-				key_text = "order-list-down",
+				key_text = "order-list",
 				locator1 = "ManagementBar#ANY_ICON");
+		}
 
+		task ("Then a tooltip message will be displayed") {
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
 				value1 = "Reverse Order Direction");

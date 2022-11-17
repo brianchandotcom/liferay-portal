@@ -3538,7 +3538,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
-			"site-initializer/site-settings.json", _servletContext);
+			"/site-initializer/site-settings.json", _servletContext);
 
 		if (json == null) {
 			return;

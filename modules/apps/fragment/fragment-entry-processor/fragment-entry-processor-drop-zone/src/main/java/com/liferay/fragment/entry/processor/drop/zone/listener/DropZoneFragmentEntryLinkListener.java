@@ -32,11 +32,14 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
@@ -196,33 +199,46 @@ public class DropZoneFragmentEntryLinkListener
 			return;
 		}
 
-		List<String> childrenItemIds =
-			parentLayoutStructureItem.getChildrenItemIds();
+		List<String> elementIds = new LinkedList<>();
 
-		if (childrenItemIds.size() == elements.size()) {
-			return;
-		}
-
-		if (childrenItemIds.size() > elements.size()) {
-			List<String> childrenItemIdsToRemove = childrenItemIds.subList(
-				elements.size(), childrenItemIds.size());
-
-			childrenItemIdsToRemove.forEach(
-				itemId -> layoutStructure.markLayoutStructureItemForDeletion(
-					itemId, Collections.emptyList()));
-		}
-		else {
-			for (int i = childrenItemIds.size(); i < elements.size(); i++) {
-				_addOrRestoreDropZoneLayoutStructureItem(
-					layoutStructure, parentLayoutStructureItem);
+		for (Element element : elements) {
+			if (Validator.isNull(element.id())) {
+				break;
 			}
+
+			elementIds.add(element.id());
 		}
 
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-				fragmentEntryLink.getSegmentsExperienceId(),
-				layoutStructure.toString());
+		if (elementIds.size() < elements.size()) {
+			List<String> childrenItemIds =
+				parentLayoutStructureItem.getChildrenItemIds();
+
+			if (childrenItemIds.size() == elements.size()) {
+				return;
+			}
+
+			if (childrenItemIds.size() > elements.size()) {
+				List<String> childrenItemIdsToRemove = childrenItemIds.subList(
+					elements.size(), childrenItemIds.size());
+
+				childrenItemIdsToRemove.forEach(
+					itemId ->
+						layoutStructure.markLayoutStructureItemForDeletion(
+							itemId, Collections.emptyList()));
+			}
+			else {
+				for (int i = childrenItemIds.size(); i < elements.size(); i++) {
+					_addOrRestoreDropZoneLayoutStructureItem(
+						layoutStructure, parentLayoutStructureItem);
+				}
+			}
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
+					fragmentEntryLink.getSegmentsExperienceId(),
+					layoutStructure.toString());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

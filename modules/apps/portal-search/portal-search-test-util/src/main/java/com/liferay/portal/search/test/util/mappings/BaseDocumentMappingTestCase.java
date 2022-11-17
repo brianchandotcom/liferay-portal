@@ -103,7 +103,7 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 					searchEngineAdapter.execute(
 						new SearchSearchRequest() {
 							{
-								setIndexNames(String.valueOf(getCompanyId()));
+								setIndexNames(getIndexName());
 								setQuery(
 									BaseDocumentTestCase.getQuery(keywords));
 							}
@@ -140,6 +140,8 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 
 		return list.toArray(new Float[0]);
 	}
+
+	protected abstract String getIndexName();
 
 	protected Integer[] getIntegerArray(Document document) {
 		List<Integer> list = new ArrayList<>();

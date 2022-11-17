@@ -48,7 +48,8 @@ type OutletContext = {
 const getAttachments = (caseResult: TestrayCaseResult): TestrayAttachment[] => {
 	try {
 		return JSON.parse(caseResult.attachments);
-	} catch (error) {
+	}
+	catch (error) {
 		return [];
 	}
 };

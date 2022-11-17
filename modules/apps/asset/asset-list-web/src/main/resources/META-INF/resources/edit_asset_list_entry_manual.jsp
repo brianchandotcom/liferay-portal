@@ -119,33 +119,18 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 							<clay:content-col
 								containerElement="span"
 							>
-								<liferay-ui:icon-menu
-									direction="right"
-									message="select"
-									showArrow="<%= false %>"
-									showWhenSingleIcon="<%= true %>"
-									triggerCssClass="btn-sm"
-								>
 
-									<%
-									Map<String, Map<String, Object>> manualAddIconDataMap = editAssetListDisplayContext.getManualAddIconDataMap();
+								<%
+								EditAssetListEntryManualActionDropdownItemsProvider editAssetListEntryManualActionDropdownItemsProvider = new EditAssetListEntryManualActionDropdownItemsProvider(editAssetListDisplayContext);
+								%>
 
-									for (Map.Entry<String, Map<String, Object>> entry : manualAddIconDataMap.entrySet()) {
-									%>
-
-										<liferay-ui:icon
-											cssClass="asset-selector"
-											data="<%= entry.getValue() %>"
-											id="<%= themeDisplay.getScopeGroupId() + HtmlUtil.getAUICompatibleId(entry.getKey()) %>"
-											message="<%= HtmlUtil.escape(entry.getKey()) %>"
-											url="javascript:void(0);"
-										/>
-
-									<%
-									}
-									%>
-
-								</liferay-ui:icon-menu>
+								<clay:dropdown-menu
+									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+									cssClass="btn btn-secondary btn-sm"
+									dropdownItems="<%= editAssetListEntryManualActionDropdownItemsProvider.getActionDropdownItems() %>"
+									label='<%= LanguageUtil.get(request, "select") %>'
+									propsTransformer="js/EditAssetListEntryManualDefaultPropsTransformer"
+								/>
 							</clay:content-col>
 						</c:if>
 					</clay:content-row>

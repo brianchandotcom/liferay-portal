@@ -76,7 +76,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -116,7 +115,7 @@ public class LayoutsTreeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public PortletURL getAddCollectionLayoutURL() throws Exception {
+	public PortletURL getAddCollectionLayoutURL() {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
@@ -140,7 +139,7 @@ public class LayoutsTreeDisplayContext {
 		).buildPortletURL();
 	}
 
-	public PortletURL getAddLayoutURL() throws Exception {
+	public PortletURL getAddLayoutURL() {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
@@ -174,7 +173,7 @@ public class LayoutsTreeDisplayContext {
 		).buildString();
 	}
 
-	public PortletURL getConfigureLayoutSetURL() throws PortalException {
+	public PortletURL getConfigureLayoutSetURL() {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -210,9 +209,7 @@ public class LayoutsTreeDisplayContext {
 		return _groupId;
 	}
 
-	public Map<String, Object> getLayoutFinderData()
-		throws WindowStateException {
-
+	public Map<String, Object> getLayoutFinderData() {
 		return HashMapBuilder.<String, Object>put(
 			"administrationPortletNamespace",
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
@@ -293,7 +290,7 @@ public class LayoutsTreeDisplayContext {
 		).build();
 	}
 
-	public String getPagesTreeURL() throws WindowStateException {
+	public String getPagesTreeURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_liferayPortletRequest,
@@ -313,7 +310,7 @@ public class LayoutsTreeDisplayContext {
 		).buildString();
 	}
 
-	public Map<String, Object> getPageTypeSelectorData() throws Exception {
+	public Map<String, Object> getPageTypeSelectorData() {
 		return HashMapBuilder.<String, Object>put(
 			"addCollectionLayoutURL", _setSelPlid(getAddCollectionLayoutURL())
 		).put(
@@ -342,7 +339,7 @@ public class LayoutsTreeDisplayContext {
 		).build();
 	}
 
-	public String getProductMenuPortletURL() throws WindowStateException {
+	public String getProductMenuPortletURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_liferayPortletRequest,
@@ -388,7 +385,7 @@ public class LayoutsTreeDisplayContext {
 		return layout.getPlid();
 	}
 
-	public Map<String, Object> getSiteNavigationMenuData() throws Exception {
+	public Map<String, Object> getSiteNavigationMenuData() {
 		return HashMapBuilder.<String, Object>put(
 			"selectedSiteNavigationMenuItemId",
 			String.valueOf(getSelectedSiteNavigationMenuItemId())

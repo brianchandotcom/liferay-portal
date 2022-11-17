@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property osgi.modules.includes = "frontend-js-walkthrough-sample-web,frontend-editor-ckeditor-sample-web";
+	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Walkthrough";
@@ -92,7 +92,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Walkthrough Page 2",
-				widgetName = "CKEditor Sample");
+				widgetName = "Clay Sample");
 
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Site Name",

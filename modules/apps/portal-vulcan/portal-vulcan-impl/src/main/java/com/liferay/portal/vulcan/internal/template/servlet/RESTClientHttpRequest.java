@@ -45,6 +45,10 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 			return ContentTypes.APPLICATION_JSON;
 		}
 
+		if (StringUtil.equalsIgnoreCase(name, HttpHeaders.CONTENT_TYPE)) {
+			return null;
+		}
+
 		if (StringUtil.equalsIgnoreCase(name, "Accept-Language")) {
 			return _locale.toLanguageTag();
 		}
@@ -57,6 +61,10 @@ public class RESTClientHttpRequest extends HttpServletRequestWrapper {
 		if (StringUtil.equalsIgnoreCase(name, HttpHeaders.ACCEPT)) {
 			return Collections.enumeration(
 				Arrays.asList(ContentTypes.APPLICATION_JSON));
+		}
+
+		if (StringUtil.equalsIgnoreCase(name, HttpHeaders.CONTENT_TYPE)) {
+			return Collections.enumeration(Collections.emptyList());
 		}
 
 		if (StringUtil.equalsIgnoreCase(name, "Accept-Language")) {

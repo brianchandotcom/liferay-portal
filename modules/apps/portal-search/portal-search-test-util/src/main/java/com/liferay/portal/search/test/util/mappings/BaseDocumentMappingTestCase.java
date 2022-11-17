@@ -106,6 +106,7 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 								setIndexNames(getIndexName());
 								setQuery(
 									BaseDocumentTestCase.getQuery(keywords));
+								setSelectedFieldNames(StringPool.STAR);
 							}
 						});
 
@@ -115,7 +116,7 @@ public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 
 				Assert.assertNotEquals(0, documents.length);
 
-				for (Document document : hits.getDocs()) {
+				for (Document document : documents) {
 					assertMappings(document);
 				}
 			});

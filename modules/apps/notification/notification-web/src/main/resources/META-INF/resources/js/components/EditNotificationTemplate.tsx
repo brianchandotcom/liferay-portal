@@ -32,6 +32,7 @@ import {
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../util/constants';
 import {Attachments} from './Attachments';
 import {DefinitionOfTerms} from './DefinitionOfTerms';
 
@@ -41,8 +42,6 @@ const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface LabelValueObject {
 	label: string;

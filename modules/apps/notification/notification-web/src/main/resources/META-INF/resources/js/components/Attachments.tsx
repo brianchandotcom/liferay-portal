@@ -22,10 +22,10 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {defaultLanguageId} from '../util/constants';
+
 import './Attachments.scss';
 import {TNotificationTemplate} from './EditNotificationTemplate';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function Attachments({setValues, values}: IProps) {
 	const [objectDefinitions, setObjectDefinitions] = useState<

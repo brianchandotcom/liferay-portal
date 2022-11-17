@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.upgrade.registry;
 
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.fragment.internal.upgrade.v1_1_0.PortletPreferencesUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentCollectionTable;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryLinkTable;
@@ -21,6 +22,7 @@ import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryTable;
 import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_6_0.util.FragmentEntryVersionTable;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -183,7 +185,19 @@ public class FragmentServiceUpgradeStepRegistrator
 			"2.9.4", "2.10.0",
 			new com.liferay.fragment.internal.upgrade.v2_10_0.
 				FragmentEntryLinkUpgradeProcess());
+
+		registry.register(
+			"2.10.0", "2.10.1",
+			new com.liferay.fragment.internal.upgrade.v2_10_1.
+				FragmentCollectionUpgradeProcess(
+					_dlFolderLocalService, _groupLocalService));
 	}
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

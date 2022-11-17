@@ -24,6 +24,8 @@ import '../css/redirect_pattern.scss';
 
 const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(https?:\/\/|www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
+const urlAllowRelative = (url) => REGEX_URL_ALLOW_RELATIVE.test(url);
+
 const PatternField = ({
 	destinationURL: initialDestinationUrl,
 	error,
@@ -35,10 +37,6 @@ const PatternField = ({
 	portletNamespace,
 }) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
-
-	const urlAllowRelative = (url) => {
-		return REGEX_URL_ALLOW_RELATIVE && REGEX_URL_ALLOW_RELATIVE.test(url);
-	};
 
 	return (
 		<ClayLayout.Row className="redirect-pattern-row">

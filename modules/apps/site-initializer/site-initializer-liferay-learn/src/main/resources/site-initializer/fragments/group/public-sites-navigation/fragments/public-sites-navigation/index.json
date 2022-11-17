@@ -49,6 +49,14 @@
 					"label": "site-navigation-menu-id",
 					"name": "siteNavigationMenuId",
 					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "account-menu-id",
+					"label": "Account Menu ID",
+					"name": "accountMenuId",
+					"type": "text"
 				}
 			]
 		}

@@ -2982,79 +2982,6 @@ plugins.includes=</echo>
 
 	<target name="zip-portal-war">
 		<antcall target="zip-portal-war-2.4" />
-		<!--<antcall target="zip-portal-war-2.3" />
-		<antcall target="zip-portal-war-2.4-with-dependencies" />
-		<antcall target="zip-portal-war-2.3-with-dependencies" />-->
-	</target>
-
-	<target name="zip-portal-war-2.3">
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-		</tstamp>
-
-		<java
-			classname="com.liferay.portal.tools.WebXML23Converter"
-			classpathref="project.classpath"
-			fork="true"
-			maxmemory="128m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<jvmarg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
-			<arg value="${app.server.portal.dir}/WEB-INF/web.xml" />
-			<arg value="${tstamp.value}/WEB-INF/web.xml" />
-		</java>
-
-		<delete failonerror="false" file="dist/liferay-portal-${lp.version}-servlet23.war" />
-
-		<copy
-			file="dist/liferay-portal-${lp.version}.war"
-			overwrite="true"
-			tofile="dist/liferay-portal-${lp.version}-servlet23.war"
-		/>
-
-		<zip
-			basedir="${tstamp.value}"
-			destfile="dist/liferay-portal-${lp.version}-servlet23.war"
-			update="yes"
-		/>
-
-		<delete dir="${tstamp.value}" />
-	</target>
-
-	<target name="zip-portal-war-2.3-with-dependencies">
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-		</tstamp>
-
-		<copy
-			todir="${tstamp.value}/WEB-INF/lib"
-		>
-			<fileset
-				dir="${app.server.lib.global.dir}"
-				includes="annotations.jar"
-			/>
-			<fileset
-				dir="${app.server.lib.portal.dir}"
-				includes="portlet.jar"
-			/>
-		</copy>
-
-		<delete failonerror="false" file="dist/liferay-portal-${lp.version}-servlet23-with-dependencies.war" />
-
-		<copy
-			file="dist/liferay-portal-${lp.version}-servlet23.war"
-			overwrite="true"
-			tofile="dist/liferay-portal-${lp.version}-servlet23-with-dependencies.war"
-		/>
-
-		<zip
-			basedir="${tstamp.value}"
-			destfile="dist/liferay-portal-${lp.version}-servlet23-with-dependencies.war"
-			update="yes"
-		/>
-
-		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="zip-portal-war-2.4">
@@ -3064,41 +2991,6 @@ plugins.includes=</echo>
 			basedir="${app.server.portal.dir}"
 			destfile="dist/liferay-portal-${lp.version}.war"
 		/>
-	</target>
-
-	<target name="zip-portal-war-2.4-with-dependencies">
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-		</tstamp>
-
-		<copy
-			todir="${tstamp.value}/WEB-INF/lib"
-		>
-			<fileset
-				dir="${app.server.lib.global.dir}"
-				includes="annotations.jar"
-			/>
-			<fileset
-				dir="${app.server.lib.portal.dir}"
-				includes="portlet.jar"
-			/>
-		</copy>
-
-		<delete failonerror="false" file="dist/liferay-portal-${lp.version}-with-dependencies.war" />
-
-		<copy
-			file="dist/liferay-portal-${lp.version}.war"
-			overwrite="true"
-			tofile="dist/liferay-portal-${lp.version}-with-dependencies.war"
-		/>
-
-		<zip
-			basedir="${tstamp.value}"
-			destfile="dist/liferay-portal-${lp.version}-with-dependencies.war"
-			update="yes"
-		/>
-
-		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="zip-sql">

@@ -2027,9 +2027,16 @@ definition {
 			branchingPublic = "true",
 			groupName = "Site Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		WaitForElementPresent(
+			key_pageName = "Staging Test Page",
+			locator1 = "Home#PAGE_ACTIVE");
+
+		AssertClick(
+			key_pageName = "Staging Test Page",
+			locator1 = "Home#PAGE",
+			value1 = "Staging Test Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

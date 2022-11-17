@@ -40,6 +40,8 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public boolean deleteDTO(long id) throws Exception;
 
+	public String getApplicationName();
+
 	public long getCompanyId();
 
 	public R getDTO(DTOConverterContext dtoConverterContext, long id)

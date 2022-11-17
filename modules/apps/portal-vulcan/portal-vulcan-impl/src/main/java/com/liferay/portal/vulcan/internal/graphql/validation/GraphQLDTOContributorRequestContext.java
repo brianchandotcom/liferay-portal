@@ -36,7 +36,7 @@ public class GraphQLDTOContributorRequestContext
 
 	@Override
 	public String getApplicationName() {
-		return _graphQLDTOContributor.getTypeName();
+		return _graphQLDTOContributor.getApplicationName();
 	}
 
 	@Override

@@ -55,6 +55,8 @@ public class ObjectActionWrapper
 		attributes.put("active", isActive());
 		attributes.put("conditionExpression", getConditionExpression());
 		attributes.put("description", getDescription());
+		attributes.put("errorMessage", getErrorMessage());
+		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
 		attributes.put("objectActionTriggerKey", getObjectActionTriggerKey());
@@ -139,6 +141,18 @@ public class ObjectActionWrapper
 			setDescription(description);
 		}
 
+		String errorMessage = (String)attributes.get("errorMessage");
+
+		if (errorMessage != null) {
+			setErrorMessage(errorMessage);
+		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -187,6 +201,11 @@ public class ObjectActionWrapper
 		return model.getActive();
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
+	}
+
 	/**
 	 * Returns the company ID of this object action.
 	 *
@@ -217,6 +236,11 @@ public class ObjectActionWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
+	}
+
 	/**
 	 * Returns the description of this object action.
 	 *
@@ -225,6 +249,158 @@ public class ObjectActionWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the error message of this object action.
+	 *
+	 * @return the error message of this object action
+	 */
+	@Override
+	public String getErrorMessage() {
+		return model.getErrorMessage();
+	}
+
+	/**
+	 * Returns the localized error message of this object action in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized error message of this object action
+	 */
+	@Override
+	public String getErrorMessage(java.util.Locale locale) {
+		return model.getErrorMessage(locale);
+	}
+
+	/**
+	 * Returns the localized error message of this object action in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized error message of this object action. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getErrorMessage(java.util.Locale locale, boolean useDefault) {
+		return model.getErrorMessage(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized error message of this object action in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized error message of this object action
+	 */
+	@Override
+	public String getErrorMessage(String languageId) {
+		return model.getErrorMessage(languageId);
+	}
+
+	/**
+	 * Returns the localized error message of this object action in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized error message of this object action
+	 */
+	@Override
+	public String getErrorMessage(String languageId, boolean useDefault) {
+		return model.getErrorMessage(languageId, useDefault);
+	}
+
+	@Override
+	public String getErrorMessageCurrentLanguageId() {
+		return model.getErrorMessageCurrentLanguageId();
+	}
+
+	@Override
+	public String getErrorMessageCurrentValue() {
+		return model.getErrorMessageCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized error messages of this object action.
+	 *
+	 * @return the locales and localized error messages of this object action
+	 */
+	@Override
+	public Map<java.util.Locale, String> getErrorMessageMap() {
+		return model.getErrorMessageMap();
+	}
+
+	/**
+	 * Returns the label of this object action.
+	 *
+	 * @return the label of this object action
+	 */
+	@Override
+	public String getLabel() {
+		return model.getLabel();
+	}
+
+	/**
+	 * Returns the localized label of this object action in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized label of this object action
+	 */
+	@Override
+	public String getLabel(java.util.Locale locale) {
+		return model.getLabel(locale);
+	}
+
+	/**
+	 * Returns the localized label of this object action in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object action. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getLabel(java.util.Locale locale, boolean useDefault) {
+		return model.getLabel(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized label of this object action in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized label of this object action
+	 */
+	@Override
+	public String getLabel(String languageId) {
+		return model.getLabel(languageId);
+	}
+
+	/**
+	 * Returns the localized label of this object action in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object action
+	 */
+	@Override
+	public String getLabel(String languageId, boolean useDefault) {
+		return model.getLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getLabelCurrentLanguageId() {
+		return model.getLabelCurrentLanguageId();
+	}
+
+	@Override
+	public String getLabelCurrentValue() {
+		return model.getLabelCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized labels of this object action.
+	 *
+	 * @return the locales and localized labels of this object action
+	 */
+	@Override
+	public Map<java.util.Locale, String> getLabelMap() {
+		return model.getLabelMap();
 	}
 
 	/**
@@ -389,6 +565,21 @@ public class ObjectActionWrapper
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	 * Sets whether this object action is active.
 	 *
@@ -437,6 +628,137 @@ public class ObjectActionWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the error message of this object action.
+	 *
+	 * @param errorMessage the error message of this object action
+	 */
+	@Override
+	public void setErrorMessage(String errorMessage) {
+		model.setErrorMessage(errorMessage);
+	}
+
+	/**
+	 * Sets the localized error message of this object action in the language.
+	 *
+	 * @param errorMessage the localized error message of this object action
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setErrorMessage(String errorMessage, java.util.Locale locale) {
+		model.setErrorMessage(errorMessage, locale);
+	}
+
+	/**
+	 * Sets the localized error message of this object action in the language, and sets the default locale.
+	 *
+	 * @param errorMessage the localized error message of this object action
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setErrorMessage(
+		String errorMessage, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setErrorMessage(errorMessage, locale, defaultLocale);
+	}
+
+	@Override
+	public void setErrorMessageCurrentLanguageId(String languageId) {
+		model.setErrorMessageCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized error messages of this object action from the map of locales and localized error messages.
+	 *
+	 * @param errorMessageMap the locales and localized error messages of this object action
+	 */
+	@Override
+	public void setErrorMessageMap(
+		Map<java.util.Locale, String> errorMessageMap) {
+
+		model.setErrorMessageMap(errorMessageMap);
+	}
+
+	/**
+	 * Sets the localized error messages of this object action from the map of locales and localized error messages, and sets the default locale.
+	 *
+	 * @param errorMessageMap the locales and localized error messages of this object action
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setErrorMessageMap(
+		Map<java.util.Locale, String> errorMessageMap,
+		java.util.Locale defaultLocale) {
+
+		model.setErrorMessageMap(errorMessageMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the label of this object action.
+	 *
+	 * @param label the label of this object action
+	 */
+	@Override
+	public void setLabel(String label) {
+		model.setLabel(label);
+	}
+
+	/**
+	 * Sets the localized label of this object action in the language.
+	 *
+	 * @param label the localized label of this object action
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setLabel(String label, java.util.Locale locale) {
+		model.setLabel(label, locale);
+	}
+
+	/**
+	 * Sets the localized label of this object action in the language, and sets the default locale.
+	 *
+	 * @param label the localized label of this object action
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setLabel(
+		String label, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setLabel(label, locale, defaultLocale);
+	}
+
+	@Override
+	public void setLabelCurrentLanguageId(String languageId) {
+		model.setLabelCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized labels of this object action from the map of locales and localized labels.
+	 *
+	 * @param labelMap the locales and localized labels of this object action
+	 */
+	@Override
+	public void setLabelMap(Map<java.util.Locale, String> labelMap) {
+		model.setLabelMap(labelMap);
+	}
+
+	/**
+	 * Sets the localized labels of this object action from the map of locales and localized labels, and sets the default locale.
+	 *
+	 * @param labelMap the locales and localized labels of this object action
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setLabelMap(
+		Map<java.util.Locale, String> labelMap,
+		java.util.Locale defaultLocale) {
+
+		model.setLabelMap(labelMap, defaultLocale);
 	}
 
 	/**

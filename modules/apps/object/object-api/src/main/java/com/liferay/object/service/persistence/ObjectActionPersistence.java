@@ -483,6 +483,56 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 	public int countByObjectDefinitionId(long objectDefinitionId);
 
 	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	public ObjectAction findByODI_N(long objectDefinitionId, String name)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public ObjectAction fetchByODI_N(long objectDefinitionId, String name);
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public ObjectAction fetchByODI_N(
+		long objectDefinitionId, String name, boolean useFinderCache);
+
+	/**
+	 * Removes the object action where objectDefinitionId = &#63; and name = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the object action that was removed
+	 */
+	public ObjectAction removeByODI_N(long objectDefinitionId, String name)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63; and name = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the number of matching object actions
+	 */
+	public int countByODI_N(long objectDefinitionId, String name);
+
+	/**
 	 * Returns all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -655,6 +705,75 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 	 */
 	public int countByO_A_OATK(
 		long objectDefinitionId, boolean active, String objectActionTriggerKey);
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	public ObjectAction findByODI_A_N_OATK(
+			long objectDefinitionId, boolean active, String name,
+			String objectActionTriggerKey)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public ObjectAction fetchByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey);
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public ObjectAction fetchByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey, boolean useFinderCache);
+
+	/**
+	 * Removes the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the object action that was removed
+	 */
+	public ObjectAction removeByODI_A_N_OATK(
+			long objectDefinitionId, boolean active, String name,
+			String objectActionTriggerKey)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the number of matching object actions
+	 */
+	public int countByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey);
 
 	/**
 	 * Caches the object action in the entity cache if it is enabled.

@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -69,8 +71,10 @@ public interface ObjectActionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectAction addObjectAction(
 			long userId, long objectDefinitionId, boolean active,
-			String conditionExpression, String description, String name,
-			String objectActionExecutorKey, String objectActionTriggerKey,
+			String conditionExpression, String description,
+			Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
+			String name, String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException;
 
@@ -248,6 +252,11 @@ public interface ObjectActionLocalService
 	public ObjectAction getObjectAction(long objectActionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectAction getObjectAction(
+			long objectDefinitionId, String name, String objectActionTriggerKey)
+		throws PortalException;
+
 	/**
 	 * Returns the object action with the matching UUID and company.
 	 *
@@ -308,8 +317,9 @@ public interface ObjectActionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectAction updateObjectAction(
 			long objectActionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<Locale, String> errorMessageMap,
+			Map<Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException;
 

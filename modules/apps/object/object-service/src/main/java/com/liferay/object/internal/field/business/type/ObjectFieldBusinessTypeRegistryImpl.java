@@ -74,7 +74,7 @@ public class ObjectFieldBusinessTypeRegistryImpl
 	}
 
 	@Deactivate
-	protected void deactivate() {
+	protected synchronized void deactivate() {
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
 		}
@@ -83,19 +83,27 @@ public class ObjectFieldBusinessTypeRegistryImpl
 	private ServiceTrackerMap<String, ObjectFieldBusinessType>
 		_getServiceTrackerMap() {
 
-		if (_serviceTrackerMap != null) {
-			return _serviceTrackerMap;
+		ServiceTrackerMap<String, ObjectFieldBusinessType> serviceTrackerMap =
+			_serviceTrackerMap;
+
+		if (serviceTrackerMap != null) {
+			return serviceTrackerMap;
 		}
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			_bundleContext, ObjectFieldBusinessType.class,
-			"object.field.business.type.key");
+		synchronized (this) {
+			if (_serviceTrackerMap == null) {
+				_serviceTrackerMap =
+					ServiceTrackerMapFactory.openSingleValueMap(
+						_bundleContext, ObjectFieldBusinessType.class,
+						"object.field.business.type.key");
+			}
 
-		return _serviceTrackerMap;
+			return _serviceTrackerMap;
+		}
 	}
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, ObjectFieldBusinessType>
+	private volatile ServiceTrackerMap<String, ObjectFieldBusinessType>
 		_serviceTrackerMap;
 
 }

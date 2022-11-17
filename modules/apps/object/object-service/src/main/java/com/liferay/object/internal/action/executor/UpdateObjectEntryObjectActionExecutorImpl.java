@@ -29,6 +29,7 @@ import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -54,30 +55,35 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		ObjectDefinition sourceObjectDefinition =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 		User user = _userLocalService.getUser(userId);
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
-				sourceObjectDefinition.getStorageType());
+				objectDefinition.getStorageType());
 
-		objectEntryManager.updateObjectEntry(
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				user.getLocale(), null, user),
-			sourceObjectDefinition,
-			GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
-			new ObjectEntry() {
-				{
-					properties = _getValues(
-						sourceObjectDefinition, parametersUnicodeProperties,
-						ObjectEntryVariablesUtil.getActionVariables(
-							_dtoConverterRegistry, sourceObjectDefinition,
-							payloadJSONObject,
-							_systemObjectDefinitionMetadataRegistry));
-				}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				objectEntryManager.updateObjectEntry(
+					new DefaultDTOConverterContext(
+						false, Collections.emptyMap(), _dtoConverterRegistry,
+						null, user.getLocale(), null, user),
+					objectDefinition,
+					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
+					new ObjectEntry() {
+						{
+							properties = _getValues(
+								objectDefinition, parametersUnicodeProperties,
+								ObjectEntryVariablesUtil.getActionVariables(
+									_dtoConverterRegistry, objectDefinition,
+									payloadJSONObject,
+									_systemObjectDefinitionMetadataRegistry));
+						}
+					});
+
+				return null;
 			});
 	}
 

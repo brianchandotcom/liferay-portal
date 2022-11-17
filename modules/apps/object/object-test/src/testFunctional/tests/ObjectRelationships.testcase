@@ -1101,7 +1101,6 @@ definition {
 	@priority = "5"
 	test CanRelateManyToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add 2 users entries to relate to custom object entries") {
 			JSONUser.addUser(

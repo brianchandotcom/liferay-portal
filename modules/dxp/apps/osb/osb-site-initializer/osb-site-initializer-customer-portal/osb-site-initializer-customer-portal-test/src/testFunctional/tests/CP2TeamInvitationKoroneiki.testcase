@@ -32,6 +32,10 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CP2Utils.deleteSpecificObjectEntry(
+			portlet = "Team Members Invitation",
+			email = "test01@liferay.com");
+
 		CustomerPortal.customerPortalTearDown();
 
 		if ("${testPortalInstance}" == "true") {
@@ -73,18 +77,13 @@ definition {
 			CP2TeamMembers.clickTeamMembersSendInvitation();
 		}
 
-		task ("Go to admin accounts") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "${testAccount}");
-
-			Navigator.gotoNavTab(navTab = "Users");
-		}
-
 		task ("Assert that the guest user is being shown") {
-			AssertElementPresent(
-				email = "test01@liferay.com",
-				locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Team Members Invitation");
+
+			CP2TeamMembers.assertThatUserGuestIsVisible(email = "test01@liferay.com");
 		}
 	}
 

@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>SVG_DROPDOWN</td>
-	<td>//*[contains(@class, 'cp-layout-header')]/div//*[contains(@class, ' lexicon-icon-caret-bottom')] | //*[contains(@class, 'cp-layout-header')]/descendant::span</td>
+	<td>//*[contains(@class, 'cp-layout-header')]/descendant::span</td>
 	<td></td>
 </tr>
 <tr>

@@ -46,19 +46,9 @@ public class RedirectPatternConfigurationDisplayContext {
 			redirectPatternConfigurationProvider;
 	}
 
-	public String getRedirectPatternConfigurationURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/redirect/edit_redirect_patterns"
-		).setRedirect(
-			PortalUtil.getCurrentURL(_httpServletRequest)
-		).buildString();
-	}
-
 	public Map<String, Object> getRedirectPatterns() {
 		return HashMapBuilder.<String, Object>put(
-			"actionUrl", getRedirectPatternConfigurationURL()
+			"actionUrl", _getRedirectPatternConfigurationURL()
 		).put(
 			"patterns",
 			() -> {
@@ -85,6 +75,16 @@ public class RedirectPatternConfigurationDisplayContext {
 		).put(
 			"portletNamespace", _liferayPortletResponse.getNamespace()
 		).build();
+	}
+
+	private String _getRedirectPatternConfigurationURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/redirect/edit_redirect_patterns"
+		).setRedirect(
+			PortalUtil.getCurrentURL(_httpServletRequest)
+		).buildString();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

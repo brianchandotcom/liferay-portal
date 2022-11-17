@@ -78,7 +78,7 @@ definition {
 	}
 
 	macro closeSegmentationDisabledWarning {
-		Click(locator1 = "Icon#CLOSE");
+		Click(locator1 = "Icon#CLOSE_ALERT");
 	}
 
 	macro createExperienceWithSegment {

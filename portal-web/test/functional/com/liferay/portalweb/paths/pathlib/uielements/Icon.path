@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_ALERT</td>
+	<td>//*[@role='alert'] //button[contains(@class,'close')] | //a[contains(@id,'closePanelAdd') and contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COG_PAGE</td>
 	<td>//li/div[contains(.,'${key_pageName}')]/..//a[*[name()='svg'][contains(@class,'icon-cog')]]</td>
 	<td></td>

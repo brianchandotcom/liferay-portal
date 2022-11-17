@@ -7,7 +7,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Check(locator1 = "AssetPermissions#GUEST_REPLY_TO_MESSAGE_CHECKBOX");
+		Check.checkNotVisible(locator1 = "AssetPermissions#GUEST_REPLY_TO_MESSAGE_CHECKBOX");
 
 		PortletEntry.save();
 

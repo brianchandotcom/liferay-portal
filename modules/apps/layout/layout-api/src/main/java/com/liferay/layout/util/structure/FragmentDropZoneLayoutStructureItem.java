@@ -15,8 +15,8 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -27,9 +27,13 @@ public class FragmentDropZoneLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public String getFragmentDropZoneId() {
+		return _fragmentDropZoneId;
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		return JSONFactoryUtil.createJSONObject();
+		return JSONUtil.put("fragmentDropZoneId", _fragmentDropZoneId);
 	}
 
 	@Override
@@ -37,8 +41,18 @@ public class FragmentDropZoneLayoutStructureItem extends LayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE;
 	}
 
+	public void setFragmentDropZoneId(String fragmentDropZoneId) {
+		_fragmentDropZoneId = fragmentDropZoneId;
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		if (itemConfigJSONObject.has("fragmentDropZoneId")) {
+			setFragmentDropZoneId(
+				itemConfigJSONObject.getString("fragmentDropZoneId"));
+		}
 	}
+
+	private String _fragmentDropZoneId;
 
 }

@@ -258,7 +258,10 @@ function TestConfigurationButton({
 	};
 
 	const isMissingRequiredFields = () => {
-		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE) {
+		if (
+			sentenceTransformer ===
+			SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
+		) {
 			return (
 				errors.huggingFaceAccessToken ||
 				errors.model ||

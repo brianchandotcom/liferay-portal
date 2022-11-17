@@ -205,7 +205,7 @@ public class BundleSiteInitializerTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testInitialize() throws Exception {
+	public void testInitializeFromBundle() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
 			BundleSiteInitializerTest.class);
 

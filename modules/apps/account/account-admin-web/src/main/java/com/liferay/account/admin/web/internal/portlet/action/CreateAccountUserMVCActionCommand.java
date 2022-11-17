@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -174,7 +174,7 @@ public class CreateAccountUserMVCActionCommand
 		if (fileEntryId > 0) {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
+			portraitBytes = _file.getBytes(fileEntry.getContentStream());
 		}
 
 		if (portraitBytes != null) {
@@ -200,6 +200,9 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private JSONFactory _jsonFactory;

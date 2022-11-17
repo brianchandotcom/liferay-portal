@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -263,11 +262,11 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 				relativePath.subpath(0, relativePath.getNameCount() - 1));
 		}
 
-		String fileExtension = FileUtil.getExtension(fileName);
+		String fileExtension = _file.getExtension(fileName);
 
 		if (fileExtension.equals("afsh")) {
 			fileExtension = StringPool.BLANK;
-			fileName = FileUtil.stripExtension(fileName);
+			fileName = _file.stripExtension(fileName);
 		}
 
 		if (!fileNameFragment.isEmpty()) {
@@ -332,6 +331,9 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 
 	@Reference
 	private DestinationFactory _destinationFactory;
+
+	@Reference
+	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
 	private MessageBus _messageBus;

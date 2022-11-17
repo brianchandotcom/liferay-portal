@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -222,7 +222,7 @@ public class CSVCommerceOrderImporterTypeImpl
 
 		try {
 			return CSVParser.parse(
-				FileUtil.createTempFile(fileEntry.getContentStream()),
+				_file.createTempFile(fileEntry.getContentStream()),
 				Charset.defaultCharset(), csvFormat);
 		}
 		catch (IOException ioException) {
@@ -358,6 +358,9 @@ public class CSVCommerceOrderImporterTypeImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

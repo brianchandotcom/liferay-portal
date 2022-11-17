@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -151,7 +150,7 @@ public class DLImporter {
 			InputStream inputStream = classLoader.getResourceAsStream(
 				documentsDependencyPath + fileName);
 
-			File file = FileUtil.createTempFile(inputStream);
+			File file = _file.createTempFile(inputStream);
 
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 				null, userId, repository.getRepositoryId(),
@@ -236,6 +235,9 @@ public class DLImporter {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
 	private JSONFactory _jsonFactory;

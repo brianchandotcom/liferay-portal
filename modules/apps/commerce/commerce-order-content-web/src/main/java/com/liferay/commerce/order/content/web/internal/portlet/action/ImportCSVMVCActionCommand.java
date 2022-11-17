@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -204,7 +204,7 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			return CSVParser.parse(
-				FileUtil.createTempFile(fileEntry.getContentStream()),
+				_file.createTempFile(fileEntry.getContentStream()),
 				Charset.defaultCharset(), csvFormat);
 		}
 		catch (IOException ioException) {
@@ -256,6 +256,9 @@ public class ImportCSVMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private Portal _portal;

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -128,7 +128,7 @@ public class CSDiagramSettingImageUploadFileEntryHandler
 			throw new CPAttachmentFileEntrySizeException();
 		}
 
-		String extension = FileUtil.getExtension(fileName);
+		String extension = _file.getExtension(fileName);
 
 		String[] imageExtensions =
 			_csDiagramSettingImageConfiguration.imageExtensions();
@@ -155,6 +155,9 @@ public class CSDiagramSettingImageUploadFileEntryHandler
 
 	private volatile CSDiagramSettingImageConfiguration
 		_csDiagramSettingImageConfiguration;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

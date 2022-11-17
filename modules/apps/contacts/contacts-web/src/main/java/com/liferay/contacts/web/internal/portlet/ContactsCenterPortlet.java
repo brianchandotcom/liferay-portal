@@ -77,7 +77,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -754,6 +754,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 	protected EntryLocalService entryLocalService;
 
 	@Reference
+	protected File file;
+
+	@Reference
 	protected JSONFactory jsonFactory;
 
 	@Reference
@@ -1267,7 +1270,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 			try (InputStream inputStream = fileEntry.getContentStream()) {
-				portraitBytes = FileUtil.getBytes(inputStream);
+				portraitBytes = file.getBytes(inputStream);
 			}
 		}
 

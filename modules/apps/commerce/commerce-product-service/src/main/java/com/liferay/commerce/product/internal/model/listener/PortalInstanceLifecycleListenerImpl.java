@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -107,7 +106,7 @@ public class PortalInstanceLifecycleListenerImpl
 
 				Image image = _imageTool.getDefaultCompanyLogo();
 
-				File file = FileUtil.createTempFile(image.getTextObj());
+				File file = _file.createTempFile(image.getTextObj());
 
 				try {
 					String mimeType = MimeTypesUtil.getContentType(file);
@@ -120,7 +119,7 @@ public class PortalInstanceLifecycleListenerImpl
 						null, serviceContext);
 				}
 				finally {
-					FileUtil.delete(file);
+					_file.delete(file);
 				}
 			}
 		}
@@ -137,6 +136,9 @@ public class PortalInstanceLifecycleListenerImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
 	private ImageTool _imageTool;

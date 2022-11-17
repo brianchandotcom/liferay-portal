@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -260,7 +260,7 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 					commerceNotificationAttachment.getFileEntry();
 
 				mailMessage.addFileAttachment(
-					FileUtil.createTempFile(fileEntry.getContentStream()),
+					_file.createTempFile(fileEntry.getContentStream()),
 					fileEntry.getFileName());
 			}
 
@@ -363,6 +363,9 @@ public class CommerceNotificationQueueEntryLocalServiceImpl
 	@Reference
 	private CommerceNotificationAttachmentLocalService
 		_commerceNotificationAttachmentLocalService;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private MailService _mailService;

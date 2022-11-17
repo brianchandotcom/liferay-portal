@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -195,7 +195,7 @@ public class CommerceAccountsImporter {
 				_commerceAccountLocalService.updateCommerceAccount(
 					commerceAccount.getCommerceAccountId(),
 					commerceAccount.getName(), true,
-					FileUtil.getBytes(inputStream), commerceAccount.getEmail(),
+					_file.getBytes(inputStream), commerceAccount.getEmail(),
 					commerceAccount.getTaxId(), true, serviceContext);
 			}
 		}
@@ -355,6 +355,9 @@ public class CommerceAccountsImporter {
 
 	@Reference
 	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;

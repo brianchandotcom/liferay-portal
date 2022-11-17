@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
@@ -56,7 +56,7 @@ public class CSVUploadFileEntryHandler implements UploadFileEntryHandler {
 			uploadPortletRequest.getContentType(_PARAMETER_NAME),
 			uploadPortletRequest.getSize(_PARAMETER_NAME));
 
-		String extension = FileUtil.getExtension(fileName);
+		String extension = _file.getExtension(fileName);
 
 		if (!extension.equals("csv")) {
 			throw new FileExtensionException(
@@ -120,6 +120,9 @@ public class CSVUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

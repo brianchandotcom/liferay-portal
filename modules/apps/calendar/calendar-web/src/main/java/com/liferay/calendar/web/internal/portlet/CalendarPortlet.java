@@ -103,7 +103,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -217,7 +217,7 @@ public class CalendarPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String data = FileUtil.read(uploadPortletRequest.getFile("file"));
+		String data = _file.read(uploadPortletRequest.getFile("file"));
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -1859,6 +1859,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

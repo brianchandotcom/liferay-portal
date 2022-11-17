@@ -61,20 +61,6 @@
 				<latest-version-publish-date>2022-10-02 07:17:11</latest-version-publish-date>
 			</library>
 			<library>
-				<file-name>com.liferay.batch.engine.service.jar!SparseBitSet.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
-				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
-			</library>
-			<library>
 				<file-name>com.liferay.batch.engine.service.jar!commons-collections4.jar</file-name>
 				<version>4.3</version>
 				<project-name>Apache Commons Collections</project-name>
@@ -588,20 +574,6 @@
 				<latest-version-publish-date>2017-11-16 19:48:21</latest-version-publish-date>
 			</library>
 			<library>
-				<file-name>com.liferay.commerce.report.impl.jar!SparseBitSet.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
-				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
-			</library>
-			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!com.lowagie.itext.jar</file-name>
 				<version>2.1.7.js10.LIFERAY-PATCHED-1</version>
 				<project-name>com.lowagie.itext</project-name>
@@ -1037,20 +1009,6 @@
 				</licenses>
 				<current-version-publish-date>2020-01-06 21:55:57</current-version-publish-date>
 				<latest-version-publish-date>2020-01-06 21:55:57</latest-version-publish-date>
-			</library>
-			<library>
-				<file-name>com.liferay.content.dashboard.web.jar!SparseBitSet.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
-				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.content.dashboard.web.jar!commons-collections4.jar</file-name>
@@ -1788,20 +1746,6 @@
 				<latest-version-publish-date>2022-10-24 06:11:31</latest-version-publish-date>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.lists.service.jar!SparseBitSet.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
-				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.lists.service.jar!commons-collections4.jar</file-name>
 				<version>4.3</version>
 				<project-name>Apache Commons Collections</project-name>
@@ -2063,20 +2007,6 @@
 				</licenses>
 				<current-version-publish-date>2011-11-17 10:38:32</current-version-publish-date>
 				<latest-version-publish-date>2015-11-06 10:05:01</latest-version-publish-date>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.service.jar!SparseBitSet.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
-				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!accessors-smart.jar</file-name>
@@ -5180,7 +5110,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-23 06:27:48</current-version-publish-date>
-				<latest-version-publish-date>2022-10-19 23:40:37</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 22:46:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!guava.jar</file-name>
@@ -5306,7 +5236,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 23:07:49</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 16:35:47</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 21:08:35</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java-util.jar</file-name>
@@ -5362,7 +5292,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 21:30:32</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 21:45:48</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -5376,7 +5306,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 21:31:43</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 21:44:56</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -5390,7 +5320,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 21:30:29</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 21:45:29</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -5584,20 +5514,6 @@
 				</licenses>
 				<current-version-publish-date>2013-10-17 15:13:18</current-version-publish-date>
 				<latest-version-publish-date>2013-10-17 15:13:18</latest-version-publish-date>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.tika.jar!SparseBitSet.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
-				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tika.jar!apache-mime4j-core.jar</file-name>
@@ -6591,7 +6507,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-11-18 23:49:34</current-version-publish-date>
-				<latest-version-publish-date>2022-11-10 16:41:18</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 20:18:13</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.segments.content.targeting.upgrade.jar!commons-lang3.jar</file-name>
@@ -7191,6 +7107,20 @@
 				<latest-version-publish-date>2021-12-28 17:21:29</latest-version-publish-date>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.sparsebitset.jar!SparseBitSet.jar</file-name>
+				<version>1.2</version>
+				<project-name>SparseBitSet</project-name>
+				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+				<current-version-publish-date>2018-04-16 09:39:42</current-version-publish-date>
+				<latest-version-publish-date>2018-04-16 09:39:42</latest-version-publish-date>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.woodstox.core.jar!woodstox-core.jar</file-name>
 				<version>6.4.0</version>
 				<project-name>Woodstox</project-name>
@@ -7545,7 +7475,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-23 06:27:48</current-version-publish-date>
-				<latest-version-publish-date>2022-10-19 23:40:37</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 22:46:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!guava.jar</file-name>
@@ -7685,7 +7615,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 23:07:49</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 16:35:47</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 21:08:35</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!protobuf-java-util.jar</file-name>

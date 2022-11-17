@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -151,12 +152,17 @@ public class FieldsetTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		if (Validator.isNull(_id) && Validator.isNotNull(_label) &&
-			_collapsible) {
+		if (Validator.isNull(_id)) {
+			String id = StringPool.BLANK;
 
-			String id = PortalUtil.getUniqueElementId(
-				httpServletRequest, _getNamespace(),
-				AUIUtil.normalizeId(_label));
+			if (Validator.isNotNull(_label)) {
+				id = PortalUtil.getUniqueElementId(
+					httpServletRequest, _getNamespace(),
+					AUIUtil.normalizeId(_label));
+			}
+			else {
+				id = StringUtil.randomId();
+			}
 
 			setId(_getNamespace() + id);
 		}

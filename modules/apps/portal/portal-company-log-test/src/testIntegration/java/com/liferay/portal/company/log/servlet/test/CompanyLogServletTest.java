@@ -339,13 +339,29 @@ public class CompanyLogServletTest {
 			String startString, String endString)
 		throws Exception {
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PortalImpl.class.getName(), LoggerTestUtil.WARN)) {
+
+			String message =
+				"Start and end cannot be less than 0. Start cannot be " +
+					"greater than or equal to end.";
+
 			_assertHttpServletResponseStatusAndLogInfo(
 				_createMockHttpServletRequest(startString, endString),
-				IllegalArgumentException.class,
-				"Start and end cannot be less than 0. Start cannot be " +
-					"greater than or equal to end.",
+				IllegalArgumentException.class, message,
 				HttpServletResponse.SC_BAD_REQUEST);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertSame(
+				IllegalArgumentException.class, throwable.getClass());
+			Assert.assertEquals(message, throwable.getMessage());
 		}
 		finally {
 			_mockHttpServletResponse.setCommitted(false);

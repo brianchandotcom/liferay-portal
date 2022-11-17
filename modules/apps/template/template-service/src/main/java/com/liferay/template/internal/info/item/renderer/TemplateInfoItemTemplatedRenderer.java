@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
-import com.liferay.template.internal.transformer.TemplateNodeFactory;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
+import com.liferay.template.transformer.TemplateNodeFactory;
 
 import java.io.Writer;
 

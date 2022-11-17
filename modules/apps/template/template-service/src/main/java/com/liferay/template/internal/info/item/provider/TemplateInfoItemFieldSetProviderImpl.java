@@ -37,9 +37,9 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
-import com.liferay.template.internal.transformer.TemplateNodeFactory;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
+import com.liferay.template.transformer.TemplateNodeFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;

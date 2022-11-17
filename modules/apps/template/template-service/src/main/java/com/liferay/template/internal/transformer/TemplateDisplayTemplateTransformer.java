@@ -35,6 +35,7 @@ import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.transformer.TemplateNodeFactory;
 
 import java.util.Map;
 

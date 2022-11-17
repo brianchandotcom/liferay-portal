@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.template.info.field.transformer.TemplateNodeTransformer;
 import com.liferay.template.internal.info.field.transformer.TemplateNodeTransformerRegistry;
+import com.liferay.template.transformer.TemplateNodeFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,9 +29,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = TemplateNodeFactory.class)
-public class TemplateNodeFactory {
+@Component(service = TemplateNodeFactory.class)
+public class TemplateNodeFactoryImpl implements TemplateNodeFactory {
 
+	@Override
 	public TemplateNode createTemplateNode(
 		InfoFieldValue<Object> infoFieldValue, ThemeDisplay themeDisplay) {
 

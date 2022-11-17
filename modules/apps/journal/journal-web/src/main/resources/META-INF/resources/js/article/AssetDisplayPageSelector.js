@@ -100,6 +100,12 @@ export default function AssetDisplayPageSelector({
 
 					<ClayInput.GroupItem shrink>
 						<ClayButton
+							aria-label={sub(
+								assetDisplayPageSelected
+									? Liferay.Language.get('change-x')
+									: Liferay.Language.get('select-x'),
+								Liferay.Language.get('display-page')
+							)}
 							disabled={disabled}
 							displayType="secondary"
 							monospaced

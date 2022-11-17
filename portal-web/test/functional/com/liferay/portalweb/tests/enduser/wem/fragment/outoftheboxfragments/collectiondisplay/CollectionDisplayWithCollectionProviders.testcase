@@ -3070,7 +3070,7 @@ definition {
 				key_webContentTitle = "First Web Content",
 				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_TITLE");
 
-			var firstModifiedDate = selenium.getAttribute("//tr[2]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
+			var firstModifiedDate = selenium.getAttribute("//tr[1]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}
 
 		task ("Assert the display order of collection items") {

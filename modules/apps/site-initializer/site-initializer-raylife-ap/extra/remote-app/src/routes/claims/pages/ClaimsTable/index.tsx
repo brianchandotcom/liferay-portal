@@ -20,7 +20,7 @@ import {useEffect, useState} from 'react';
 
 import Header from '../../../../common/components/header';
 import Table from '../../../../common/components/table';
-import {getPolicyById} from '../../../../common/services';
+import {getPolicyByExternalReferenceCode} from '../../../../common/services';
 import {
 	deleteClaimByExternalReferenceCode,
 	getClaims,
@@ -41,7 +41,7 @@ const ClaimsTable = () => {
 	const HEADERS = [
 		{
 			greyColor: true,
-			key: 'dateCreated',
+			key: 'claimCreateDate',
 			value: 'Date Field',
 		},
 		{
@@ -51,7 +51,7 @@ const ClaimsTable = () => {
 		},
 		{
 			bold: true,
-			key: 'id',
+			key: 'externalReferenceCode',
 			type: 'link',
 			value: 'Claim Number',
 		},
@@ -86,24 +86,16 @@ const ClaimsTable = () => {
 	};
 
 	type ClaimTableType = {
+		claimCreateDate: string;
 		claimStatus: {name: string};
-		dateCreated: string;
 		externalReferenceCode: string;
-		id: string;
-		r_policyToClaims_c_raylifePolicyId: any;
+		r_policyToClaims_c_raylifePolicyERC: string;
 	};
 
-	async function getProductName(policyId: number) {
-		const policy = await getPolicyById(policyId);
-
-		return policy?.data?.productName;
-	}
-
-	async function getPolicyOwnerName(policyId: number) {
-		const policy = await getPolicyById(policyId);
-
-		return policy?.data?.policyOwnerName;
-	}
+	type PolicyDataType = {
+		policyOwnerName: string;
+		productName: string;
+	};
 
 	const handleDeleteClaim = (externalReferenceCode: string) => {
 		deleteClaimByExternalReferenceCode(externalReferenceCode);
@@ -122,27 +114,33 @@ const ClaimsTable = () => {
 
 	useEffect(() => {
 		getClaims(PARAMETERS).then((results) => {
-			const claimList: TableContentType[] | any = [];
+			const claimList: TableContentType[] = [];
 			results?.data?.items?.forEach(
 				async ({
+					claimCreateDate,
 					claimStatus,
-					dateCreated,
 					externalReferenceCode,
-					id,
-					r_policyToClaims_c_raylifePolicyId,
+					r_policyToClaims_c_raylifePolicyERC,
 				}: ClaimTableType) => {
+					const policyElement = await getPolicyByExternalReferenceCode<
+						PolicyDataType
+					>(r_policyToClaims_c_raylifePolicyERC);
+
+					const policyOwnerName =
+						policyElement?.data?.policyOwnerName;
+
+					const productName = policyElement?.data?.productName;
+
 					claimList.push({
-						claimName: await getPolicyOwnerName(
-							r_policyToClaims_c_raylifePolicyId
+						claimCreateDate: formatDate(
+							new Date(claimCreateDate),
+							true
 						),
+						claimName: policyOwnerName,
 						claimStatus: claimStatus?.name,
-						dateCreated: formatDate(new Date(dateCreated), true),
-						id,
 						key: externalReferenceCode,
-						policyNumber: r_policyToClaims_c_raylifePolicyId,
-						productName: await getProductName(
-							r_policyToClaims_c_raylifePolicyId
-						),
+						policyNumber: r_policyToClaims_c_raylifePolicyERC,
+						productName,
 					});
 				}
 			);

@@ -1,28 +1,52 @@
 {
 	"object-entries": [
 		{
-			"claimNumber": 1,
+			"claimAmount": 2000,
+			"claimCreateDate": "2022-03-17",
 			"claimStatus": "inInvestigation",
-			"dateFiled": "2022-03-17",
-			"name": "User Test",
-			"product": "Professional Liability",
+			"externalReferenceCode": "RAYCLAIM-001",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-015",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-015$]"
+		},
+		{
+			"claimAmount": 4000,
+			"claimCreateDate": "2022-03-04",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-002",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-024",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-024$]"
+		},
+		{
+			"claimAmount": 5000,
+			"claimCreateDate": "2022-08-08",
+			"claimStatus": "inEstimation",
+			"externalReferenceCode": "RAYCLAIM-003",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-001",
 			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-001$]"
 		},
 		{
-			"claimNumber": 2,
-			"claimStatus": "approved",
-			"dateFiled": "2022-03-04",
-			"name": "User Test 1",
-			"product": "Business Owners Policy",
+			"claimAmount": 1500,
+			"claimCreateDate": "2022-10-17",
+			"claimStatus": "claimSubmitted",
+			"externalReferenceCode": "RAYCLAIM-004",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-002",
 			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-002$]"
 		},
 		{
-			"claimNumber": 3,
-			"claimStatus": "inEstimation",
-			"dateFiled": "2022-03-08",
-			"name": "User Test 2",
-			"product": "General Liability",
-			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-003$]"
+			"claimAmount": 3000,
+			"claimCreateDate": "2022-11-04",
+			"claimStatus": "settled",
+			"externalReferenceCode": "RAYCLAIM-005",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-032",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-032$]"
+		},
+		{
+			"claimAmount": 1000,
+			"claimCreateDate": "2022-12-04",
+			"claimStatus": "approved",
+			"externalReferenceCode": "RAYCLAIM-006",
+			"r_policyToClaims_c_raylifePolicyERC": "RAYPOL-034",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-034$]"
 		}
 	],
 	"objectDefinitionName": "RaylifeClaim"

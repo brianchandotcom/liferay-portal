@@ -3,10 +3,6 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"borderWidth": "0",
-						"textAlign": ""
-					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -14,6 +10,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -74,14 +71,13 @@
 												"key": "plus-button"
 											},
 											"fragmentConfig": {
-												"buttonName": "New Claims",
-												"eventName": "event"
+												"buttonName": "NEW CLAIMS",
+												"eventName": ""
 											},
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginLeft": "3",
-												"textAlign": ""
+												"marginLeft": "3"
 											},
 											"indexed": true
 										},
@@ -95,9 +91,11 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderRadius": "",
 												"borderWidth": "0",
 												"paddingBottom": "4",
 												"paddingTop": "4",
+												"shadow": "",
 												"textAlign": ""
 											},
 											"indexed": true,
@@ -109,6 +107,7 @@
 												"marginLeft": 0,
 												"marginRight": 0,
 												"marginTop": 0,
+												"opacity": 100,
 												"paddingBottom": 2,
 												"paddingLeft": 0,
 												"paddingRight": 0,
@@ -120,7 +119,10 @@
 											{
 												"definition": {
 													"fragmentStyle": {
+														"borderRadius": "",
 														"maxWidth": "1500px",
+														"shadow": "",
+														"textAlign": "",
 														"width": "100%"
 													},
 													"gutters": true,
@@ -417,9 +419,11 @@
 											{
 												"definition": {
 													"fragmentStyle": {
+														"borderRadius": "",
 														"borderWidth": "0",
 														"marginTop": "4",
 														"maxWidth": "1500px",
+														"shadow": "",
 														"textAlign": "",
 														"width": "100%"
 													},
@@ -430,6 +434,7 @@
 														"marginLeft": 0,
 														"marginRight": 0,
 														"marginTop": 2,
+														"opacity": 100,
 														"paddingBottom": 0,
 														"paddingLeft": 0,
 														"paddingRight": 0,
@@ -455,18 +460,14 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"fragment": {
-																				"key": "fake-content"
-																			},
-																			"fragmentConfig": {
-																				"fakeContentId": "fake content",
-																				"height": "915px"
-																			},
-																			"fragmentFields": [
-																			],
-																			"indexed": true
+																			"widgetInstance": {
+																				"widgetConfig": {
+																					"properties": "route=claims-table"
+																				},
+																				"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+																			}
 																		},
-																		"type": "Fragment"
+																		"type": "Widget"
 																	}
 																],
 																"type": "FragmentDropZone"

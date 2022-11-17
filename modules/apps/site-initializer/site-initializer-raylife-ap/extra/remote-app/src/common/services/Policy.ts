@@ -32,6 +32,14 @@ export async function getPolicyById(id: number) {
 	return await axios.get(`${DeliveryAPI}/${id}`);
 }
 
+export function getPolicyByExternalReferenceCode<T = unknown>(
+	externalReferenceCode: string
+) {
+	return axios.get<T>(
+		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
+	);
+}
+
 export function getPolicies(parameters: Parameters = {}) {
 	const parametersList = Object.keys(parameters);
 
@@ -90,14 +98,6 @@ export function getPoliciesForSalesGoal(
 ) {
 	return axios.get(
 		`${DeliveryAPI}/?fields=boundDate,termPremium,productExternalReferenceCode,productName&pageSize=200&filter=policyStatus ne 'declined' and userId eq '${userId}' and boundDate le ${currentYear}-${currentMonth}-31 and boundDate ge ${periodYear}-${periodMonth}-01`
-	);
-}
-
-export function getPolicyByExternalReferenceCode<T = unknown>(
-	externalReferenceCode: string
-) {
-	return axios.get<T>(
-		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
 	);
 }
 

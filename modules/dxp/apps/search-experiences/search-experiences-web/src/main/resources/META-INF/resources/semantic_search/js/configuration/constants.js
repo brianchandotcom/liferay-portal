@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-export const SENTENCE_TRANSFORM_PROVIDER_TYPES = {
+export const SENTENCE_TRANSFORMER_TYPES = {
 	HUGGING_FACE_INFERENCE_API: 'huggingFaceInferenceAPI',
 	TXTAI: 'txtai',
 };

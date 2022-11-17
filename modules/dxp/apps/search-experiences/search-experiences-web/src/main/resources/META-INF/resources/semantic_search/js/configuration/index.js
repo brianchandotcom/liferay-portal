@@ -16,7 +16,7 @@ import React from 'react';
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
 import Input from './Input';
 import TestConfigurationButton from './TestConfigurationButton';
-import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
+import {SENTENCE_TRANSFORMER_TYPES} from './constants';
 
 /**
  * Formats the object into an array of label and value, important for inputs
@@ -51,7 +51,7 @@ const transformToLabelValueArray = (items = {}) => {
 };
 
 /**
- * Form within semantic search settings page, configures transform provider and
+ * Form within semantic search settings page, configures sentence transformer and
  * indexing settings.
  * This can be found on: System Settings > Search Experiences > Semantic Search
  */
@@ -60,7 +60,7 @@ export default function ({
 	availableAssetEntryClassNames,
 	availableEmbeddingVectorDimensions,
 	availableLanguageDisplayNames,
-	availableSentenceTransformProviders,
+	availableSentenceTransformers,
 	availableTextTruncationStrategies,
 	cacheTimeout = '',
 	embeddingVectorDimensions,
@@ -71,7 +71,7 @@ export default function ({
 	model,
 	modelTimeout = '',
 	namespace = '',
-	sentenceTransformProvider = SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API,
+	sentenceTransformer = SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API,
 	sentenceTransformerEnabled,
 	textTruncationStrategy,
 	txtaiHostAddress,
@@ -162,8 +162,8 @@ export default function ({
 
 		if (
 			values.modelTimeout === '' &&
-			values.sentenceTransformProvider ===
-				SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
+			values.sentenceTransformer ===
+				SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			errors.modelTimeout = Liferay.Language.get(
 				'this-field-is-required'
@@ -203,7 +203,7 @@ export default function ({
 			maxCharacterCount,
 			model,
 			modelTimeout,
-			sentenceTransformProvider,
+			sentenceTransformer,
 			sentenceTransformerEnabled,
 			textTruncationStrategy,
 			txtaiHostAddress,
@@ -251,20 +251,20 @@ export default function ({
 				</ClayForm.Group>
 
 				<Input
-					error={formik.errors.sentenceTransformProvider}
+					error={formik.errors.sentenceTransformer}
 					items={transformToLabelValueArray(
-						availableSentenceTransformProviders
+						availableSentenceTransformers
 					)}
 					label={Liferay.Language.get('sentence-transformer')}
-					name={`${namespace}sentenceTransformProvider`}
-					onBlur={_handleInputBlur('sentenceTransformProvider')}
-					onChange={_handleInputChange('sentenceTransformProvider')}
+					name={`${namespace}sentenceTransformer`}
+					onBlur={_handleInputBlur('sentenceTransformer')}
+					onChange={_handleInputChange('sentenceTransformer')}
 					type="select"
-					value={formik.values.sentenceTransformProvider}
+					value={formik.values.sentenceTransformer}
 				/>
 
-				{formik.values.sentenceTransformProvider ===
-					SENTENCE_TRANSFORM_PROVIDER_TYPES.TXTAI && (
+				{formik.values.sentenceTransformer ===
+					SENTENCE_TRANSFORMER_TYPES.TXTAI && (
 					<>
 						<Input
 							error={formik.errors.txtaiHostAddress}
@@ -305,8 +305,8 @@ export default function ({
 					</>
 				)}
 
-				{formik.values.sentenceTransformProvider ===
-					SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API && (
+				{formik.values.sentenceTransformer ===
+					SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API && (
 					<>
 						<Input
 							error={formik.errors.huggingFaceAccessToken}
@@ -396,8 +396,8 @@ export default function ({
 
 				<TestConfigurationButton
 					assetEntryClassNames={formik.values.assetEntryClassNames}
-					availableSentenceTransformProviders={
-						availableSentenceTransformProviders
+					availableSentenceTransformers={
+						availableSentenceTransformers
 					}
 					cacheTimeout={formik.values.cacheTimeout}
 					embeddingVectorDimensions={
@@ -412,9 +412,7 @@ export default function ({
 					maxCharacterCount={formik.values.maxCharacterCount}
 					model={formik.values.model}
 					modelTimeout={formik.values.modelTimeout}
-					sentenceTransformProvider={
-						formik.values.sentenceTransformProvider
-					}
+					sentenceTransformer={formik.values.sentenceTransformer}
 					sentenceTransformerEnabled={
 						formik.values.sentenceTransformerEnabled
 					}

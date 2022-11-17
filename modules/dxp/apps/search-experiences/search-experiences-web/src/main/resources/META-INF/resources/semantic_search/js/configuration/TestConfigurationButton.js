@@ -16,7 +16,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
+import {SENTENCE_TRANSFORMER_TYPES} from './constants';
 
 /**
  * A button to test the connection for the semantic search settings page.
@@ -24,7 +24,7 @@ import {SENTENCE_TRANSFORM_PROVIDER_TYPES} from './constants';
  */
 function TestConfigurationButton({
 	assetEntryClassNames,
-	availableSentenceTransformProviders,
+	availableSentenceTransformers,
 	cacheTimeout,
 	embeddingVectorDimensions,
 	enableGPU,
@@ -34,7 +34,7 @@ function TestConfigurationButton({
 	maxCharacterCount,
 	model,
 	modelTimeout,
-	sentenceTransformProvider,
+	sentenceTransformer,
 	textTruncationStrategy,
 	txtaiHostAddress,
 }) {
@@ -56,7 +56,7 @@ function TestConfigurationButton({
 		maxCharacterCount,
 		model,
 		modelTimeout,
-		sentenceTransformProvider,
+		sentenceTransformer,
 		textTruncationStrategy,
 		txtaiHostAddress,
 	]);
@@ -67,10 +67,10 @@ function TestConfigurationButton({
 	 * sentence transform provider type.
 	 * @returns {object}
 	 */
-	const _getSentenceTransformProviderSettings = () => {
+	const _getSentenceTransformerSettings = () => {
 		if (
-			sentenceTransformProvider ===
-			SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE_INFERENCE_API
+			sentenceTransformer ===
+			SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE_INFERENCE_API
 		) {
 			return {
 				enableGPU,
@@ -80,10 +80,7 @@ function TestConfigurationButton({
 			};
 		}
 
-		if (
-			sentenceTransformProvider ===
-			SENTENCE_TRANSFORM_PROVIDER_TYPES.TXTAI
-		) {
+		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.TXTAI) {
 			return {
 				txtaiHostAddress,
 			};
@@ -102,9 +99,9 @@ function TestConfigurationButton({
 			sentenceTransformerEnabled: true, // Always set as `true`. LPS-167506
 		};
 
-		const generalTransformProviderSettings = {
+		const generalTransformerSettings = {
 			embeddingVectorDimensions,
-			sentenceTransformProvider,
+			sentenceTransformer,
 		};
 
 		const indexingSettings = {
@@ -119,8 +116,8 @@ function TestConfigurationButton({
 			{
 				body: JSON.stringify({
 					...generalSettings,
-					...generalTransformProviderSettings,
-					..._getSentenceTransformProviderSettings(),
+					...generalTransformerSettings,
+					..._getSentenceTransformerSettings(),
 					...indexingSettings,
 				}),
 				headers: new Headers({
@@ -168,8 +165,8 @@ function TestConfigurationButton({
 									'unable-to-connect-to-x.-connection-failed-with-x'
 								),
 								[
-									availableSentenceTransformProviders[
-										sentenceTransformProvider
+									availableSentenceTransformers[
+										sentenceTransformer
 									],
 									JSON.stringify(errorMessage),
 								]
@@ -187,8 +184,8 @@ function TestConfigurationButton({
 									'unable-to-connect-to-x.-connection-failed-with-x'
 								),
 								[
-									availableSentenceTransformProviders[
-										sentenceTransformProvider
+									availableSentenceTransformers[
+										sentenceTransformer
 									],
 									responseData.errorMessage,
 								]
@@ -264,10 +261,7 @@ function TestConfigurationButton({
 	};
 
 	const isMissingRequiredFields = () => {
-		if (
-			sentenceTransformProvider ===
-			SENTENCE_TRANSFORM_PROVIDER_TYPES.HUGGING_FACE
-		) {
+		if (sentenceTransformer === SENTENCE_TRANSFORMER_TYPES.HUGGING_FACE) {
 			return (
 				errors.huggingFaceAccessToken ||
 				errors.model ||

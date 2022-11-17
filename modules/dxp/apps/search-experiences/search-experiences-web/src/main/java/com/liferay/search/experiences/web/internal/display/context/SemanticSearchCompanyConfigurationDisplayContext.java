@@ -38,8 +38,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _availableLanguageDisplayNames;
 	}
 
-	public Map<String, String> getAvailableSentenceTranformProviders() {
-		return _availableSentenceTranformProviders;
+	public Map<String, String> getAvailableSentenceTransformers() {
+		return _availableSentenceTransformers;
 	}
 
 	public Map<String, String> getAvailableTextTruncationStrategies() {
@@ -74,8 +74,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _modelTimeout;
 	}
 
-	public String getSentenceTransformProvider() {
-		return _sentenceTransformProvider;
+	public String getSentenceTransformer() {
+		return _sentenceTransformer;
 	}
 
 	public String getTextTruncationStrategy() {
@@ -121,11 +121,10 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_availableLanguageDisplayNames = availableLanguageDisplayNames;
 	}
 
-	public void setAvailableSentenceTranformProviders(
-		Map<String, String> availableSentenceTranformProviders) {
+	public void setAvailableSentenceTransformers(
+		Map<String, String> availableSentenceTransformers) {
 
-		_availableSentenceTranformProviders =
-			availableSentenceTranformProviders;
+		_availableSentenceTransformers = availableSentenceTransformers;
 	}
 
 	public void setAvailableTextTruncationStrategies(
@@ -162,14 +161,14 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_modelTimeout = modelTimeout;
 	}
 
+	public void setSentenceTransformer(String sentenceTransformer) {
+		_sentenceTransformer = sentenceTransformer;
+	}
+
 	public void setSentenceTransformerEnabled(
 		boolean sentenceTransformerEnabled) {
 
 		_sentenceTransformerEnabled = sentenceTransformerEnabled;
-	}
-
-	public void setSentenceTransformProvider(String sentenceTransformProvider) {
-		_sentenceTransformProvider = sentenceTransformProvider;
 	}
 
 	public void setTextTruncationStrategy(String textTruncationStrategy) {
@@ -192,7 +191,7 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private Map<String, String> _availableAssetEntryClassNames;
 	private List<String> _availableEmbeddingVectorDimensions;
 	private Map<String, String> _availableLanguageDisplayNames;
-	private Map<String, String> _availableSentenceTranformProviders;
+	private Map<String, String> _availableSentenceTransformers;
 	private Map<String, String> _availableTextTruncationStrategies;
 	private int _cacheTimeout;
 	private int _embeddingVectorDimensions;
@@ -201,8 +200,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private int _maxCharacterCount;
 	private String _model;
 	private int _modelTimeout;
+	private String _sentenceTransformer;
 	private boolean _sentenceTransformerEnabled;
-	private String _sentenceTransformProvider;
 	private String _textTruncationStrategy;
 	private String _txtaiHostAddress;
 	private String _txtaiPassword;

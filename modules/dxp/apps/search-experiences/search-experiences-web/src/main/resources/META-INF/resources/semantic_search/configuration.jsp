@@ -42,7 +42,7 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"availableLanguageDisplayNames", semanticSearchCompanyConfigurationDisplayContext.getAvailableLanguageDisplayNames()
 			).put(
-				"availableSentenceTransformProviders", semanticSearchCompanyConfigurationDisplayContext.getAvailableSentenceTranformProviders()
+				"availableSentenceTransformers", semanticSearchCompanyConfigurationDisplayContext.getAvailableSentenceTransformers()
 			).put(
 				"availableTextTruncationStrategies", semanticSearchCompanyConfigurationDisplayContext.getAvailableTextTruncationStrategies()
 			).put(
@@ -62,9 +62,9 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
-				"sentenceTransformerEnabled", semanticSearchCompanyConfigurationDisplayContext.isSentenceTransformerEnabled()
+				"sentenceTransformer", semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformer()
 			).put(
-				"sentenceTransformProvider", semanticSearchCompanyConfigurationDisplayContext.getSentenceTransformProvider()
+				"sentenceTransformerEnabled", semanticSearchCompanyConfigurationDisplayContext.isSentenceTransformerEnabled()
 			).put(
 				"textTruncationStrategy", semanticSearchCompanyConfigurationDisplayContext.getTextTruncationStrategy()
 			).put(

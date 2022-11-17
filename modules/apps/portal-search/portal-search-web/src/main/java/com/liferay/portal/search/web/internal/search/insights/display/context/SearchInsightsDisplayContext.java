@@ -31,10 +31,18 @@ public class SearchInsightsDisplayContext implements Serializable {
 	}
 
 	public String getRequestString() {
+		if (_searchEngineVendor.equals("Solr")) {
+			return _requestString;
+		}
+
 		return _getPrettyPrintedJSON(_requestString);
 	}
 
 	public String getResponseString() {
+		if (_searchEngineVendor.equals("Solr")) {
+			return _responseString;
+		}
+
 		return _getPrettyPrintedJSON(_responseString);
 	}
 
@@ -48,6 +56,10 @@ public class SearchInsightsDisplayContext implements Serializable {
 
 	public void setResponseString(String responseString) {
 		_responseString = responseString;
+	}
+
+	public void setSearchEngineVendor(String searchEngineVendor) {
+		_searchEngineVendor = searchEngineVendor;
 	}
 
 	private String _getPrettyPrintedJSON(String json) {
@@ -71,5 +83,6 @@ public class SearchInsightsDisplayContext implements Serializable {
 	private String _helpMessage;
 	private String _requestString;
 	private String _responseString;
+	private String _searchEngineVendor;
 
 }

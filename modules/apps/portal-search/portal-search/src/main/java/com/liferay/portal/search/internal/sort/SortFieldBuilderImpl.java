@@ -68,7 +68,7 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_defaultSortableTextFields = SetUtil.fromArray(
-			props.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS));
+			_props.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS));
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SortFieldNameTranslator.class, null,
@@ -83,18 +83,12 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 		_serviceTrackerMap.close();
 	}
 
-	@Reference
-	protected IndexerRegistry indexerRegistry;
-
-	@Reference
-	protected Props props;
-
 	private String _getSortField(Class<?> entityClass, String orderByCol) {
 		SortFieldNameTranslator sortFieldNameTranslator =
 			_serviceTrackerMap.getService(entityClass);
 
 		if (sortFieldNameTranslator == null) {
-			Indexer<?> indexer = indexerRegistry.getIndexer(entityClass);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(entityClass);
 
 			return indexer.getSortField(orderByCol);
 		}
@@ -103,6 +97,13 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 	}
 
 	private Set<String> _defaultSortableTextFields;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private Props _props;
+
 	private ServiceTrackerMap<Class<?>, SortFieldNameTranslator>
 		_serviceTrackerMap;
 

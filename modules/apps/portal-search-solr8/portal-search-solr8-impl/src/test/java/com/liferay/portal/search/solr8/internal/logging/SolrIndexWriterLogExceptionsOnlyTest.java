@@ -175,8 +175,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 
 	@ExpectedLog(
 		expectedClass = SolrIndexWriter.class,
-		expectedLevel = ExpectedLog.Level.WARNING,
-		expectedLog = "java.lang.NullPointerException"
+		expectedLevel = ExpectedLog.Level.WARNING, expectedLog = "null"
 	)
 	@Test
 	public void testDeleteEntityDocuments() {

@@ -121,6 +121,7 @@ public class LangBuilder {
 		_langFileName = langFileName;
 		_titleCapitalization = titleCapitalization;
 		_translate = translate;
+		_translateSubscriptionKey = translateSubscriptionKey;
 
 		Translate.setSubscriptionKey(translateSubscriptionKey);
 
@@ -749,6 +750,14 @@ public class LangBuilder {
 			return null;
 		}
 
+		if (Validator.isNull(_translateSubscriptionKey)) {
+			System.out.println(
+				"Translation is disabled because credentials are not " +
+					"specified");
+
+			return null;
+		}
+
 		// LPS-61961
 
 		if (ArrayUtil.contains(_excludedLanguageIds, toLanguageId)) {
@@ -826,5 +835,6 @@ public class LangBuilder {
 	private final Properties _renameKeys;
 	private final boolean _titleCapitalization;
 	private final boolean _translate;
+	private final String _translateSubscriptionKey;
 
 }

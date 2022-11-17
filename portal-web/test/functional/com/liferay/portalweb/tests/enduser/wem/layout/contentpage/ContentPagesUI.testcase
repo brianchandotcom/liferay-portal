@@ -693,7 +693,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 
 			Click.clickNoMouseOver(
-				ariaLabel = "Mark Button as Favorite",
+				ariaLabel = "Mark Card as Favorite",
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Card",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");
@@ -860,7 +860,7 @@ definition {
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
 
 				Click.clickNoMouseOver(
-					ariaLabel = "Mark Button as Favorite",
+					ariaLabel = "Mark Card as Favorite",
 					key_collectionName = "Basic Components",
 					key_fragmentName = "Card",
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_BUTTON_WITH_ARIA_LABEL");

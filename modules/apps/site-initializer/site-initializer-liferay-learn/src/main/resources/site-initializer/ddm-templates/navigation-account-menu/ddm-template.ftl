@@ -2,7 +2,7 @@
 	<#if entries?has_content>
 		<#list entries as menuItem>
 			<#assign
-				menuItemCustomFields = menuItem.getExpandoAttributes()
+				menuItemCustomFields = menuItem.getExpandoAttributes()!{}
 				iconURL = getLocalizedExpandoValue(menuItemCustomFields["Menu Item Image Url"])!""
 			/>
 

@@ -21,16 +21,23 @@ const liferayHost = window.location.origin;
 function changeResource(resource: RequestInfo) {
 	const headlessAdminUserAPIs = ['account', 'roles', 'user-groups'];
 
-	const isHeadlessAdminUserAPI = headlessAdminUserAPIs.some(
-		(headlessAdminUserAPI) =>
-			resource.toString().includes(headlessAdminUserAPI)
-	);
+	const headlessDeliveryAPIs = [
+		'message-board-messages',
+		'message-board-threads',
+	];
+
+	const getIsResourceFromAPI = (apis: string[]) =>
+		apis.some((api) => resource.toString().includes(api));
 
 	if (resource.toString().startsWith('http')) {
 		return resource;
 	}
 
-	if (isHeadlessAdminUserAPI) {
+	if (getIsResourceFromAPI(headlessDeliveryAPIs)) {
+		return `${liferayHost}/o/headless-delivery/v1.0${resource}`;
+	}
+
+	if (getIsResourceFromAPI(headlessAdminUserAPIs)) {
 		return `${liferayHost}/o/headless-admin-user/v1.0${resource}`;
 	}
 

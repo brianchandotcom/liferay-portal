@@ -13,9 +13,11 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {waitTimeout} from '../../util';
 import {searchUtil} from '../../util/search';
 import {CaseResultStatuses} from '../../util/statuses';
 import {Liferay} from '../liferay';
+import {liferayMessageBoardImpl} from './LiferayMessageBoard';
 import Rest from './Rest';
 import {testrayCaseResultsIssuesImpl} from './TestrayCaseresultsIssues';
 import {testrayIssueImpl} from './TestrayIssues';
@@ -29,18 +31,20 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 	constructor() {
 		super({
 			adapter: ({
+				mbMessageId,
+				mbThreadId,
 				buildId: r_buildToCaseResult_c_buildId,
 				caseId: r_caseToCaseResult_c_caseId,
-				commentMBMessage,
 				dueStatus,
 				issues,
 				runId: r_runToCaseResult_c_runId,
 				startDate,
 				userId: r_userToCaseResults_userId = Liferay.ThemeDisplay.getUserId(),
 			}) => ({
-				commentMBMessage,
 				dueStatus,
 				issues,
+				mbMessageId,
+				mbThreadId,
 				r_buildToCaseResult_c_buildId,
 				r_caseToCaseResult_c_caseId,
 				r_runToCaseResult_c_runId,
@@ -151,15 +155,52 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		}
 	}
 
+	private async addComment(data: Partial<CaseResultForm>) {
+		try {
+			const message = data.comment as string;
+			let mbThreadId = data.mbThreadId;
+
+			if (!mbThreadId) {
+				const mbThread = await liferayMessageBoardImpl.createMbThread(
+					message
+				);
+
+				mbThreadId = mbThread.id;
+
+				await waitTimeout(1500);
+			}
+
+			const mbMessage = await liferayMessageBoardImpl.createMbMessage(
+				message,
+				mbThreadId as number
+			);
+
+			return {mbMessage, mbThreadId};
+		} catch {
+			return {};
+		}
+	}
+
 	public async update(
 		id: number,
 		data: Partial<CaseResultForm & {issues: string[]}>
 	): Promise<TestrayCaseResult> {
-		const caseResult = await super.update(id, data);
-
 		const issues = data.issues || [];
 
 		await this.assignCaseResultIssue(id, issues);
+
+		if (data.comment) {
+			const {mbMessage, mbThreadId} = await this.addComment(data);
+
+			data.mbMessageId = mbMessage.id;
+			data.mbThreadId = mbThreadId;
+		}
+
+		if (!data.comment && data.mbMessageId) {
+			data.mbMessageId = 0;
+		}
+
+		const caseResult = await super.update(id, data);
 
 		return caseResult;
 	}

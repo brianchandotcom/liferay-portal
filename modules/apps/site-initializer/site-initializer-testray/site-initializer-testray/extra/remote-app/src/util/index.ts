@@ -19,3 +19,7 @@ export function isIncludingFormPage(pathname: string) {
 export function getUniqueList(items: number[]) {
 	return [...new Set([...items])];
 }
+
+export function waitTimeout(timer: number) {
+	return new Promise((resolve) => setTimeout(resolve, timer));
+}

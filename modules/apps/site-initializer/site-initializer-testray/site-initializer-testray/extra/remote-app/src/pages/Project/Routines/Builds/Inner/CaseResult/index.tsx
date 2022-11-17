@@ -28,6 +28,8 @@ import QATable, {Orientation} from '../../../../../../components/Table/QATable';
 import {ApplicationPropertiesContext} from '../../../../../../context/ApplicationPropertiesContext';
 import i18n from '../../../../../../i18n';
 import {
+	MessageBoardMessage,
+	TestrayAttachment,
 	TestrayCaseResult,
 	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
@@ -35,10 +37,20 @@ import {
 import {getTimeFromNow} from '../../../../../../util/date';
 import CaseResultHeaderActions from './CaseResultHeaderActions';
 
-type TestrayAttachment = {
-	name: string;
-	url: string;
-	value: string;
+type OutletContext = {
+	caseResult: TestrayCaseResult;
+	caseResultsIssues: TestrayCaseResultIssue[];
+	mbMessage: MessageBoardMessage;
+	mutateCaseResult: KeyedMutator<TestrayCaseResult>;
+	projectId: string;
+};
+
+const getAttachments = (caseResult: TestrayCaseResult): TestrayAttachment[] => {
+	try {
+		return JSON.parse(caseResult.attachments);
+	} catch (error) {
+		return [];
+	}
 };
 
 const CaseResult = () => {
@@ -47,25 +59,12 @@ const CaseResult = () => {
 	const {
 		caseResult,
 		caseResultsIssues,
+		mbMessage,
 		mutateCaseResult,
 		projectId,
-	}: {
-		caseResult: TestrayCaseResult;
-		caseResultsIssues: TestrayCaseResultIssue[];
-		mutateCaseResult: KeyedMutator<any>;
-		projectId: string;
-	} = useOutletContext();
+	}: OutletContext = useOutletContext();
 
-	const getAttachments = (): TestrayAttachment[] => {
-		try {
-			return JSON.parse(caseResult.attachments);
-		}
-		catch (error) {
-			return [];
-		}
-	};
-
-	const attachments = getAttachments();
+	const attachments = getAttachments(caseResult);
 
 	return (
 		<>
@@ -73,12 +72,13 @@ const CaseResult = () => {
 				caseResult={caseResult}
 				mutateCaseResult={mutateCaseResult}
 			/>
+
 			<ClayLayout.Row>
 				<ClayLayout.Col xs={9}>
 					<Container
 						className="mt-4"
 						collapsable
-						title="Test Details"
+						title={i18n.translate('test-details')}
 					>
 						<QATable
 							items={[
@@ -261,7 +261,27 @@ const CaseResult = () => {
 								},
 								{
 									title: i18n.translate('comment'),
-									value: caseResult.commentMBMessage,
+									value: mbMessage ? (
+										<div className="d-flex flex-column">
+											<cite>
+												{mbMessage?.articleBody}
+											</cite>
+
+											<small className="mt-1 text-gray">
+												<Avatar
+													displayName
+													name={`${
+														mbMessage.creator.name
+													} · ${getTimeFromNow(
+														mbMessage.dateCreated
+													)}`}
+													url={
+														mbMessage.creator.image
+													}
+												/>
+											</small>
+										</div>
+									) : null,
 								},
 							]}
 							orientation={Orientation.VERTICAL}

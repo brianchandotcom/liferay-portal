@@ -17,6 +17,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import {InferType} from 'yup';
 
 import Form from '../../../../../../components/Form';
 import Footer from '../../../../../../components/Form/Footer';
@@ -27,37 +28,36 @@ import yupSchema from '../../../../../../schema/yup';
 import {Liferay} from '../../../../../../services/liferay';
 import {
 	APIResponse,
+	MessageBoardMessage,
 	TestrayCaseResult,
 	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {CaseResultStatuses} from '../../../../../../util/statuses';
 
-type CaseResultForm = {
-	commentMBMessage: string;
-	dueStatus: string;
-	issues: string;
+type CaseResultForm = InferType<typeof yupSchema.caseResult>;
+
+type OutletContext = {
+	caseResult: TestrayCaseResult;
+	caseResultsIssues: TestrayCaseResultIssue[];
+	mbMessage: MessageBoardMessage;
+	mutateCaseResult: KeyedMutator<TestrayCaseResult>;
+	mutateCaseResultIssues: KeyedMutator<APIResponse<TestrayCaseResultIssue>>;
 };
 
 const CaseResultEditTest = () => {
 	const {
-		form: {onClose, onError, onSave, onSubmit},
+		form: {onClose, onError, onSave, onSubmit, submitting},
 	} = useFormActions();
 	const {caseResultId} = useParams();
 
 	const {
+		mbMessage,
 		caseResult,
 		caseResultsIssues = [],
 		mutateCaseResult,
 		mutateCaseResultIssues,
-	}: {
-		caseResult: TestrayCaseResult;
-		caseResultsIssues: TestrayCaseResultIssue[];
-		mutateCaseResult: KeyedMutator<TestrayCaseResult>;
-		mutateCaseResultIssues: KeyedMutator<
-			APIResponse<TestrayCaseResultIssue>
-		>;
-	} = useOutletContext();
+	}: OutletContext = useOutletContext();
 
 	const issues = caseResultsIssues
 		.map(
@@ -73,7 +73,7 @@ const CaseResultEditTest = () => {
 	} = useForm<CaseResultForm>({
 		defaultValues: caseResult?.dueStatus
 			? ({
-					commentMBMessage: caseResult?.commentMBMessage,
+					comment: mbMessage?.articleBody,
 					dueStatus:
 						caseResult?.dueStatus.key ===
 						CaseResultStatuses.IN_PROGRESS
@@ -86,47 +86,54 @@ const CaseResultEditTest = () => {
 	});
 
 	const _onSubmit = async ({
-		commentMBMessage,
+		comment,
 		dueStatus,
-		issues,
+		issues = '',
 	}: CaseResultForm) => {
 		const _issues = issues
 			.split(',')
 			.map((name) => name.trim())
 			.filter(Boolean);
 
-		onSubmit(
-			{
-				commentMBMessage,
-				dueStatus,
-				id: caseResultId,
-				issues: _issues,
-				userId: Liferay.ThemeDisplay.getUserId(),
-			},
-			{
-				create: (data) => testrayCaseResultImpl.create(data),
-				update: (id, data) => testrayCaseResultImpl.update(id, data),
-			}
-		)
-			.then(mutateCaseResult)
-			.then(() => {
-				mutateCaseResultIssues((response) => {
-					if (response) {
-						return {
-							...response,
-							items: _issues.map(
-								(issue) =>
-									(({
-										issue: {id: issue, name: issue},
-									} as unknown) as TestrayCaseResultIssue)
-							),
-							totalCount: _issues.length,
-						};
-					}
-				});
-			})
-			.then(onSave)
-			.catch(onError);
+		try {
+			const response = await onSubmit(
+				{
+					comment,
+					dueStatus,
+					id: caseResultId,
+					issues: _issues,
+					mbMessageId: caseResult.mbMessageId,
+					mbThreadId: caseResult.mbThreadId,
+					userId: Liferay.ThemeDisplay.getUserId(),
+				},
+				{
+					create: (data) => testrayCaseResultImpl.create(data),
+					update: (id, data) =>
+						testrayCaseResultImpl.update(id, data),
+				}
+			);
+
+			mutateCaseResult(response);
+
+			mutateCaseResultIssues((response) => {
+				if (response) {
+					return {
+						...response,
+						items: _issues.map(
+							(issue) =>
+								(({
+									issue: {id: issue, name: issue},
+								} as unknown) as TestrayCaseResultIssue)
+						),
+						totalCount: _issues.length,
+					};
+				}
+			});
+
+			onSave();
+		} catch (error) {
+			onError(error);
+		}
 	};
 
 	const inputProps = {
@@ -158,23 +165,25 @@ const CaseResultEditTest = () => {
 			/>
 
 			<Form.Input
+				{...inputProps}
 				className="container-fluid-max-md"
 				label={i18n.translate('issues')}
 				name="issues"
-				{...inputProps}
 			/>
 
 			<Form.Input
+				{...inputProps}
 				className="container-fluid-max-md"
 				label={i18n.translate('comment')}
-				name="commentMBMessage"
+				name="comment"
 				type="textarea"
 			/>
 
 			<Footer
 				onClose={onClose}
 				onSubmit={handleSubmit(_onSubmit)}
-			></Footer>
+				primaryButtonProps={{disabled: submitting}}
+			/>
 		</Container>
 	);
 };

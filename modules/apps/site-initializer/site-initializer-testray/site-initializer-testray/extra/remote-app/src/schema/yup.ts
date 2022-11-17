@@ -104,9 +104,11 @@ const yupSchema = {
 	caseResult: yup.object({
 		buildId: yup.number(),
 		caseId: yup.number(),
-		commentMBMessage: yup.string(),
+		comment: yup.string(),
 		dueStatus: yup.string().required(),
 		issues: yup.string(),
+		mbMessageId: yup.number().nullable(),
+		mbThreadId: yup.number().nullable(),
 		runId: yup.number(),
 		startDate: yup.string().nullable(),
 		userId: yup.number(),

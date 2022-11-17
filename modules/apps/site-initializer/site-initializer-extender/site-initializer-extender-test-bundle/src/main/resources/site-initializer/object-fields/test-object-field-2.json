@@ -1,0 +1,15 @@
+{
+	"DBType": "Integer",
+	"businessType": "Integer",
+	"externalReferenceCode": "TESTFIELD002",
+	"indexed": false,
+	"indexedAsKeyword": false,
+	"label": {
+		"en_US": "integerTestField"
+	},
+	"listTypeDefinitionId": 0,
+	"name": "integerTestField",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition2$]",
+	"required": false,
+	"state": false
+}

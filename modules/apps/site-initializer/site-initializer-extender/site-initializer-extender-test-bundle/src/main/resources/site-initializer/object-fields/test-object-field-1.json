@@ -1,0 +1,30 @@
+{
+	"DBType": "String",
+	"businessType": "Aggregation",
+	"externalReferenceCode": "TESTFIELD001",
+	"indexed": true,
+	"indexedAsKeyword": false,
+	"indexedLanguageId": "en_US",
+	"label": {
+		"en_US": "aggregationTestField"
+	},
+	"listTypeDefinitionId": 0,
+	"name": "aggregationTestField",
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]",
+	"objectFieldSettings": [
+		{
+			"name": "objectRelationshipName",
+			"value": "testOR1"
+		},
+		{
+			"name": "objectFieldName",
+			"value": "id"
+		},
+		{
+			"name": "function",
+			"value": "SUM"
+		}
+	],
+	"required": false,
+	"state": false
+}

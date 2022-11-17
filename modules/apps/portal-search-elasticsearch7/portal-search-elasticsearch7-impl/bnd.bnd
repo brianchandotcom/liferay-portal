@@ -70,7 +70,6 @@ Import-Package:\
 	!org.apache.commons.csv.*,\
 	!org.apache.commons.io.*,\
 	!org.apache.commons.lang.*,\
-	!org.apache.http.*,\
 	!org.apache.ivy.*,\
 	!org.apache.kafka.clients.producer.*,\
 	!org.apache.log.*,\

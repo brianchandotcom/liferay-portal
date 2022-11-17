@@ -3,9 +3,11 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="MethodNamingCheck" files="site-initializer-extender/site-initializer-extender/src/main/java/com/liferay/site/initializer/extender/internal/file/backed/servlet/FileBackedServletContextDelegate\.java" />
+		<suppress checks="UnprocessedExceptionCheck" files="site-initializer-extender/site-initializer-extender/src/main/java/com/liferay/site/initializer/extender/internal/file/backed/osgi/FileBackedBundleDelegate\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="GradleDependenciesCheck" files=".*" />
+		<suppress checks="JavaModuleClassGetResourceCallCheck" files="site-initializer-extender/site-initializer-extender-test/src/testIntegration/java/com/liferay/site/initializer/extender/internal/test/BundleSiteInitializerTest\.java" />
 		<suppress checks="PoshiPauseUsageCheck" files="site-initializer-raylife-d2c/site-initializer-raylife-d2c-test/src/testFunctional/macros/Raylife\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="site-initializer-raylife-d2c/site-initializer-raylife-d2c-test/src/testFunctional/tests/RaylifeSite\.testcase" />
 	</source-check>

@@ -79,13 +79,6 @@ dependencies {
 	testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
 }
 
-deployDependencies {
-	from configurations.compileOnly
-
-	include "swagger-annotations-*.jar"
-	include "swagger-models-*.jar"
-}
-
 jar {
 	finalizedBy jarManifest
 }

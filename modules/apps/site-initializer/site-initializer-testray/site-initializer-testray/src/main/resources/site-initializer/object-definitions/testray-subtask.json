@@ -27,28 +27,6 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "Long",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Merged To Testray Subtask Id"
-			},
-			"name": "mergedToTestraySubtaskId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Split From Testray Subtask Id"
-			},
-			"name": "splitFromTestraySubtaskId",
-			"required": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,

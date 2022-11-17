@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.internal.info.item.renderer.TemplateInfoItemTemplatedRenderer;
-import com.liferay.template.internal.transformer.TemplateNodeFactory;
 import com.liferay.template.service.TemplateEntryLocalService;
+import com.liferay.template.transformer.TemplateNodeFactory;
 
 import java.util.List;
 import java.util.Map;

@@ -9,4 +9,5 @@ Export-Package:\
 	com.liferay.template.info.item.provider,\
 	com.liferay.template.model,\
 	com.liferay.template.service,\
-	com.liferay.template.service.persistence
+	com.liferay.template.service.persistence,\
+	com.liferay.template.transformer

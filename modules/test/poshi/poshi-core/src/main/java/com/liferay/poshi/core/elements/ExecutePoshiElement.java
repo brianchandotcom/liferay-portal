@@ -232,13 +232,12 @@ public class ExecutePoshiElement extends PoshiElement {
 				String poshiElementAttributeValue =
 					poshiElementAttribute.getValue();
 
-				if (!isQuotedContent(poshiElementAttributeValue)) {
-					assignments.add(poshiElementAttributeValue);
+				if (isQuotedContent(poshiElementAttributeValue)) {
+					poshiElementAttributeValue = doubleQuoteContent(
+						poshiElementAttributeValue);
 				}
-				else {
-					assignments.add(
-						doubleQuoteContent(poshiElementAttributeValue));
-				}
+
+				assignments.add(poshiElementAttributeValue);
 
 				continue;
 			}

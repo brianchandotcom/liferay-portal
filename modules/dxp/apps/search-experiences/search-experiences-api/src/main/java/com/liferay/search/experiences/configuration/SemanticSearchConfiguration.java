@@ -39,7 +39,7 @@ public interface SemanticSearchConfiguration {
 	public boolean sentenceTransformerEnabled();
 
 	@Meta.AD(
-		deflt = "huggingFace", name = "sentence-transform-provider",
+		deflt = "huggingFaceInferenceAPI", name = "sentence-transform-provider",
 		optionLabels = {"Hugging Face Inference API", "txtai"},
 		optionValues = {"huggingFaceInferenceAPI", "txtai"}, required = false
 	)

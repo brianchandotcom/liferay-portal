@@ -59,13 +59,13 @@ definition {
 			locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO",
 			value1 = "You can customize this page.");
 
-		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+		Click(locator1 = "Icon#CONTROL_MENU_VERTICAL_ELLIPSIS");
 
 		for (var menuItem : list "View Page without my customizations,Reset My Customizations") {
 			MenuItem.viewPresent(menuItem = "${menuItem}");
 		}
 
-		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
+		Click(locator1 = "Icon#CONTROL_MENU_VERTICAL_ELLIPSIS");
 	}
 
 }

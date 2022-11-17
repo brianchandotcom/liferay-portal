@@ -2,7 +2,6 @@
 
 @import 'variables';
 
-@import 'NavigationMenuItemsTree';
 @import 'PagesTree';
 
 $product-menu-width: 320px;
@@ -12,14 +11,6 @@ $product-menu-pages-administration-link-height: 72px;
 html#{$cadmin-selector} {
 	.cadmin {
 		.pages-tree {
-			.child-page-action-option {
-				display: block;
-			}
-
-			.child-page-action-option.type-false {
-				display: none;
-			}
-
 			.layout-finder {
 				border-bottom: 1px solid $cadmin-dark;
 				padding: 24px 16px 0;
@@ -119,177 +110,6 @@ html#{$cadmin-selector} {
 						color: $cadmin-secondary-l3;
 					}
 				}
-			}
-
-			.tree-view {
-				min-height: 300px;
-
-				.lfr-root-node.tree-node-content {
-					align-items: center;
-					display: flex;
-
-					.tree-label a {
-						color: $cadmin-white;
-					}
-				}
-
-				.tree-container {
-					cursor: pointer;
-					margin-left: 6px;
-					padding-left: 14px;
-
-					.dropdown-item {
-						color: $cadmin-gray-600;
-
-						&:hover {
-							color: $cadmin-dark;
-						}
-					}
-
-					.tree-node .tree-node-content {
-						align-items: center;
-						display: flex;
-
-						&.tree-drag-insert-above {
-							border-top: none;
-
-							.autofit-row {
-								box-shadow: 0 -2px 0 0 $cadmin-primary-l1;
-							}
-						}
-
-						&.tree-drag-insert-below {
-							border-bottom: none;
-
-							.autofit-row {
-								box-shadow: 0 2px 0 0 $cadmin-primary-l1;
-							}
-						}
-
-						&.tree-drag-insert-append .tree-label {
-							background: transparent;
-							border: none;
-
-							> .autofit-row {
-								border-radius: 4px;
-								box-shadow: 0 0 0 2px $cadmin-primary-l1;
-							}
-						}
-					}
-				}
-
-				.tree-node {
-					.dropdown-toggle {
-						color: $cadmin-white;
-					}
-
-					.tree-hitarea {
-						background-color: $cadmin-gray-800;
-						border: 1px solid $cadmin-gray-800;
-						border-radius: 2px;
-						color: $cadmin-gray-400;
-						font-size: 6px;
-						height: 12px;
-						margin-right: 0;
-						padding: 2px 2px 1px;
-						text-align: center;
-						width: 12px;
-
-						& + span {
-							display: none;
-						}
-					}
-
-					.tree-node-hidden-hitarea {
-						opacity: 0;
-						pointer-events: none;
-					}
-
-					.tree-label > span a.layout-tree {
-						color: $cadmin-secondary-l3;
-						padding-left: 1px;
-						width: 100%;
-
-						&:focus {
-							border-radius: 4px;
-							box-shadow: 0 0 0 2px $cadmin-white,
-								0 0 0 4px $cadmin-primary-l1;
-							outline: 0;
-						}
-
-						&:hover {
-							color: $cadmin-white;
-						}
-					}
-
-					font-size: 14px;
-					margin-bottom: 6px;
-					margin-top: 6px;
-
-					.tree-label {
-						.dropdown {
-							visibility: hidden;
-						}
-
-						&:hover .dropdown {
-							visibility: visible;
-						}
-
-						color: $cadmin-gray-500 !important;
-						display: flex;
-						flex-grow: 1;
-						margin-left: 8px;
-						padding-right: 17px;
-						vertical-align: middle;
-						width: calc(100% - 20px);
-					}
-
-					.tree-node-selected {
-						.tree-label .layout-tree {
-							color: white;
-							font-weight: 600;
-						}
-
-						.dropdown {
-							visibility: visible !important;
-						}
-					}
-				}
-
-				a.tree-node-paginator {
-					color: white !important;
-				}
-
-				.tree-view-content {
-					padding-top: 1rem;
-				}
-
-				.tree-hitarea:focus:before {
-					box-shadow: 0 0 0 0.125rem #fff,
-						0 0 0 0.25rem rgba(11, 95, 255, 0.5);
-				}
-
-				.tree-view-content {
-					margin-bottom: calc(
-						#{$product-menu-pages-administration-link-height} + #{$cadmin-spacer}
-					);
-				}
-			}
-
-			.view-collection-items-action-option {
-				display: none;
-			}
-
-			.view-collection-items-action-option.collection {
-				display: block;
-			}
-
-			.preview-draft-action-option {
-				display: none;
-			}
-
-			.preview-draft-action-option.draft {
-				display: block;
 			}
 		}
 
@@ -439,34 +259,6 @@ html#{$cadmin-selector} {
 			.staging-links {
 				font-size: 12px;
 				margin: 6px 22px 4px 16px;
-			}
-		}
-	}
-
-	.tree-drag-helper {
-		.tree-drag-helper-content {
-			background: $cadmin-primary-l1;
-			border: none;
-			border-radius: 4px;
-			box-shadow: none;
-
-			.layout-tree {
-				color: white;
-				display: inline-block;
-				font-size: 12px;
-				font-weight: bold;
-				max-width: 16ch;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-
-			.autofit-col {
-				display: none;
-			}
-
-			.autofit-col:first-child {
-				display: block;
 			}
 		}
 	}

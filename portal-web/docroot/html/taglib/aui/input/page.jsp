@@ -50,7 +50,7 @@
 			<%= toggleSwitchLabelContent %>
 		</c:if>
 
-		<span aria-hidden="true" class="toggle-switch-check-bar">
+		<span class="toggle-switch-check-bar">
 </liferay-util:buffer>
 
 <liferay-util:buffer

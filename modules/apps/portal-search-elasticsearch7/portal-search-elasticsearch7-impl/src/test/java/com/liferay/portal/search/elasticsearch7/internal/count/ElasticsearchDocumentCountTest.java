@@ -37,4 +37,9 @@ public class ElasticsearchDocumentCountTest extends BaseDocumentCountTestCase {
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
+	@Override
+	protected String getIndexName() {
+		return String.valueOf(getCompanyId());
+	}
+
 }

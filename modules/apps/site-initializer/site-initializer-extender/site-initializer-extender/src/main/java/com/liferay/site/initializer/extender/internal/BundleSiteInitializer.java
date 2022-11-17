@@ -1185,6 +1185,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_invoke(
 			() -> _addOrUpdateObjectFields(
+				listTypeDefinitionIdsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
@@ -2586,6 +2587,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateObjectFields(
+			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -2609,7 +2611,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
-			json = _replace(json, objectDefinitionIdsStringUtilReplaceValues);
+			json = _replace(
+				json, listTypeDefinitionIdsStringUtilReplaceValues,
+				objectDefinitionIdsStringUtilReplaceValues);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 

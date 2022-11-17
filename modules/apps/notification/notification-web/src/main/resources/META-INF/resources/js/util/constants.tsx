@@ -12,12 +12,4 @@
  * details.
  */
 
-/// <reference types="react" />
-
-interface FreemarkerEditorSidebarContentProps {
-	objectDefinitions: ObjectDefinition[];
-}
-export default function FreemarkerEditorSidebarContent({
-	objectDefinitions,
-}: FreemarkerEditorSidebarContentProps): JSX.Element;
-export {};
+export const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();

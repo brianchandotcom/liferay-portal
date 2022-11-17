@@ -48,7 +48,7 @@ export default function NavigationPanel({
 		navigate(item.href);
 	};
 
-	const handleItemMove = (item, parentItem) => {
+	const handleItemMove = (item, parentItem, index) => {
 		if (
 			item.type === ITEM_TYPES.folder &&
 			parentItem.type === ITEM_TYPES.article
@@ -66,6 +66,7 @@ export default function NavigationPanel({
 		fetch(moveKBObjectURL, {
 			body: objectToFormData({
 				[`${portletNamespace}dragAndDrop`]: true,
+				[`${portletNamespace}position`]: index?.next ?? -1,
 				[`${portletNamespace}resourceClassNameId`]: item.classNameId,
 				[`${portletNamespace}resourcePrimKey`]: item.id,
 				[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,

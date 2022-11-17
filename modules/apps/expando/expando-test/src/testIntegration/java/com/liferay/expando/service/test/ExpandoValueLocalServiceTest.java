@@ -182,25 +182,29 @@ public class ExpandoValueLocalServiceTest {
 	public void testAddSiteDefaultLocalizedStringValue() throws Exception {
 		Locale originalLocale = LocaleUtil.getSiteDefault();
 
-		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.FRANCE);
+		try {
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.FRANCE);
 
-		ExpandoColumn column = ExpandoTestUtil.addColumn(
-			_expandoTable, "Test Column",
-			ExpandoColumnConstants.STRING_LOCALIZED);
+			ExpandoColumn column = ExpandoTestUtil.addColumn(
+				_expandoTable, "Test Column",
+				ExpandoColumnConstants.STRING_LOCALIZED);
 
-		ExpandoValue value = ExpandoTestUtil.addValue(
-			_expandoTable, column,
-			HashMapBuilder.put(
-				_enLocale, "one"
-			).put(
-				_frLocale, "un"
-			).build());
+			ExpandoValue value = ExpandoTestUtil.addValue(
+				_expandoTable, column,
+				HashMapBuilder.put(
+					_enLocale, "one"
+				).put(
+					_frLocale, "un"
+				).build());
 
-		value = _expandoValueLocalService.getExpandoValue(value.getValueId());
+			value = _expandoValueLocalService.getExpandoValue(
+				value.getValueId());
 
-		Assert.assertEquals(_frLocale, value.getDefaultLocale());
-
-		LocaleThreadLocal.setSiteDefaultLocale(originalLocale);
+			Assert.assertEquals(_frLocale, value.getDefaultLocale());
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(originalLocale);
+		}
 	}
 
 	@Test

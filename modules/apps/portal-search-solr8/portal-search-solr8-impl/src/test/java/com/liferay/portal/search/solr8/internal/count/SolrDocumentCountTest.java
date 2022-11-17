@@ -37,4 +37,9 @@ public class SolrDocumentCountTest extends BaseDocumentCountTestCase {
 		return new SolrIndexingFixture();
 	}
 
+	@Override
+	protected String getIndexName() {
+		return "liferay";
+	}
+
 }

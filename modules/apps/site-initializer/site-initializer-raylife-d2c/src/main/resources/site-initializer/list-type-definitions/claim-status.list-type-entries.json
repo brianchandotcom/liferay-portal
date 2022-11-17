@@ -16,6 +16,14 @@
 		"type": "string"
 	},
 	{
+		"key": "declined",
+		"name": "Declined",
+		"name_i18n": {
+			"en-US": "Declined"
+		},
+		"type": "string"
+	},
+	{
 		"key": "inEstimation",
 		"name": "In Estimation",
 		"name_i18n": {

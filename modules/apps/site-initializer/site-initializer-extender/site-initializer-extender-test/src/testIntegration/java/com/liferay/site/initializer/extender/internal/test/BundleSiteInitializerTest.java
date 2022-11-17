@@ -94,6 +94,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -976,6 +977,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(3, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
+		_assertObjectFields(objectDefinition1, 9);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
@@ -988,6 +990,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(2, objectDefinition2);
 		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
+		_assertObjectFields(objectDefinition2, 8);
 
 		ObjectDefinition objectDefinition3 =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -1002,6 +1005,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(0, objectDefinition3);
 		_assertObjectEntries(0, objectDefinition3, 5);
+		_assertObjectFields(objectDefinition3, 7);
 	}
 
 	private void _assertObjectEntries(
@@ -1013,6 +1017,15 @@ public class BundleSiteInitializerTest {
 			objectEntriesCount,
 			_objectEntryLocalService.getObjectEntriesCount(
 				groupId, objectDefinition.getObjectDefinitionId()));
+	}
+
+	private void _assertObjectFields(
+		ObjectDefinition objectDefinition, int objectFieldsCount) {
+
+		Assert.assertEquals(
+			objectFieldsCount,
+			_objectFieldLocalService.getObjectFieldsCount(
+				objectDefinition.getObjectDefinitionId()));
 	}
 
 	private void _assertObjectRelationships(
@@ -1900,6 +1913,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectRelationshipResource.Factory

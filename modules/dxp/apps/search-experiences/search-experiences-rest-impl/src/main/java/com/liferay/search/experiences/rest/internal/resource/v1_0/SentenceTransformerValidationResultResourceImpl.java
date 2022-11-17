@@ -79,11 +79,10 @@ public class SentenceTransformerValidationResultResourceImpl
 		).put(
 			"modelTimeout", jsonObject.getInt("modelTimeout")
 		).put(
+			"sentenceTransformer", jsonObject.getString("sentenceTransformer")
+		).put(
 			"sentenceTransformerEnabled",
 			jsonObject.getBoolean("sentenceTransformerEnabled")
-		).put(
-			"sentenceTransformProvider",
-			jsonObject.getString("sentenceTransformProvider")
 		).put(
 			"textTruncationStrategy",
 			jsonObject.getString("textTruncationStrategy")

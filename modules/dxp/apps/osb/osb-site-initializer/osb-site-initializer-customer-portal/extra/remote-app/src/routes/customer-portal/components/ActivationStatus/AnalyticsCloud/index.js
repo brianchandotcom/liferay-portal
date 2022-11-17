@@ -36,7 +36,6 @@ import ActivationStatusLayout from '../Layout';
 import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
 
 const ActivationStatusAnalyticsCloud = ({
-	analyticsCloudWorkspace,
 	project,
 	subscriptionGroupAnalyticsCloud,
 	userAccount,
@@ -96,10 +95,10 @@ const ActivationStatusAnalyticsCloud = ({
 
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
-			buttonLink: (
+			buttonLink: project?.acWorkspaceGroupId && (
 				<a
 					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-					href={`https://analytics.liferay.com/workspace/${analyticsCloudWorkspace?.workspaceGroupId}/sites`}
+					href={`https://analytics.liferay.com/workspace/${project?.acWorkspaceGroupId}/sites`}
 					rel="noopener noreferrer"
 					target="_blank"
 				>

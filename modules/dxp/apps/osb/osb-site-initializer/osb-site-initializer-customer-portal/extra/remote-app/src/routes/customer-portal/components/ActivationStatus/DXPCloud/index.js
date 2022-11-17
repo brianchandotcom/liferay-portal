@@ -144,7 +144,7 @@ const ActivationStatusDXPCloud = ({
 			buttonLink: (
 				<a
 					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-					href={`https://console.liferay.cloud/projects/${dxpCloudEnvironment?.projectId}/overview`}
+					href="https://console.liferay.cloud"
 					rel="noopener noreferrer"
 					target="_blank"
 				>

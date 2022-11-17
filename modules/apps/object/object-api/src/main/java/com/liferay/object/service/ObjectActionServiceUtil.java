@@ -17,6 +17,8 @@ package com.liferay.object.service;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ObjectAction. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectActionServiceImpl</code> and is an
@@ -38,16 +40,17 @@ public class ObjectActionServiceUtil {
 	 */
 	public static ObjectAction addObjectAction(
 			long objectDefinitionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<java.util.Locale, String> errorMessageMap,
+			Map<java.util.Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
 		throws PortalException {
 
 		return getService().addObjectAction(
-			objectDefinitionId, active, conditionExpression, description, name,
-			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			objectDefinitionId, active, conditionExpression, description,
+			errorMessageMap, labelMap, name, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 	}
 
 	public static ObjectAction deleteObjectAction(long objectActionId)
@@ -73,16 +76,17 @@ public class ObjectActionServiceUtil {
 
 	public static ObjectAction updateObjectAction(
 			long objectActionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<java.util.Locale, String> errorMessageMap,
+			Map<java.util.Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
 		throws PortalException {
 
 		return getService().updateObjectAction(
-			objectActionId, active, conditionExpression, description, name,
-			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			objectActionId, active, conditionExpression, description,
+			errorMessageMap, labelMap, name, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 	}
 
 	public static ObjectActionService getService() {

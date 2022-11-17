@@ -752,11 +752,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 					});
 
 				zipWriter.addEntry(
-					StringUtil.removeFirst(fileName, parentResourcePath), json);
+					_removeFirst(fileName, parentResourcePath), json);
 			}
 			else {
 				zipWriter.addEntry(
-					StringUtil.removeFirst(fileName, parentResourcePath),
+					_removeFirst(fileName, parentResourcePath),
 					url.openStream());
 			}
 		}
@@ -1001,13 +1001,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 
 				zipWriter.addEntry(
-					StringUtil.removeFirst(
+					_removeFirst(
 						urlPath, "/site-initializer/layout-page-templates"),
 					json);
 			}
 			else {
 				zipWriter.addEntry(
-					StringUtil.removeFirst(
+					_removeFirst(
 						urlPath, "/site-initializer/layout-page-templates"),
 					url.openStream());
 			}
@@ -3590,8 +3590,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			zipWriter.addEntry(
-				StringUtil.removeFirst(
-					fileName, "/site-initializer/style-books/"),
+				_removeFirst(fileName, "/site-initializer/style-books/"),
 				url.openStream());
 		}
 
@@ -4072,6 +4071,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return t;
+	}
+
+	private String _removeFirst(String s, String oldSub) {
+		int index = s.indexOf(oldSub);
+
+		return s.substring(index + oldSub.length());
 	}
 
 	private String _replace(

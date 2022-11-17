@@ -26,15 +26,15 @@ const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+
 
 const PatternField = ({
 	destinationURL: initialDestinationUrl,
+	error,
 	handleAddClick,
+	handlePatternError,
 	handleRemoveClick,
-	handleUrlErrorChange,
 	index,
 	pattern = '',
 	portletNamespace,
 }) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
-	const [urlError, setUrlError] = useState(false);
 
 	const urlAllowRelative = (url) => {
 		return REGEX_URL_ALLOW_RELATIVE && REGEX_URL_ALLOW_RELATIVE.test(url);
@@ -62,10 +62,7 @@ const PatternField = ({
 				/>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col
-				className={destinationUrl && urlError ? 'has-error' : ''}
-				md="6"
-			>
+			<ClayLayout.Col className={error ? 'has-error' : ''} md="6">
 				<label htmlFor="destinationURL">
 					{Liferay.Language.get('destination-url')}
 
@@ -84,8 +81,8 @@ const PatternField = ({
 					name={`${portletNamespace}destinationURL_${index}`}
 					onBlur={({currentTarget}) => {
 						const error = !urlAllowRelative(currentTarget.value);
-						setUrlError(error);
-						handleUrlErrorChange(destinationUrl && error, index);
+
+						handlePatternError(destinationUrl && error, index);
 					}}
 					onChange={({currentTarget}) =>
 						setDestinationUrl(currentTarget.value)
@@ -117,7 +114,7 @@ const PatternField = ({
 					<ClayIcon symbol="plus" />
 				</ClayButton>
 
-				{destinationUrl && urlError && (
+				{error && (
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
@@ -143,7 +140,12 @@ const RedirectPattern = ({
 	patterns: initialPatternsList,
 	portletNamespace,
 }) => {
-	const emptyRow = () => ({destinationURL: '', id: uuidv4(), pattern: ''});
+	const emptyRow = () => ({
+		destinationURL: '',
+		error: false,
+		id: uuidv4(),
+		pattern: '',
+	});
 
 	const addRow = (index) => {
 		const tempList = [...patterns];
@@ -155,33 +157,22 @@ const RedirectPattern = ({
 		const tempList = [...patterns];
 		tempList.splice(index, 1);
 		setPatterns(tempList);
-
-		if (invalidPatternsSet.has(index)) {
-			const newInvalidPatternSet = new Set(invalidPatternsSet);
-			newInvalidPatternSet.delete(index);
-			setInvalidPatternsSet(newInvalidPatternSet);
-		}
 	};
 
 	const [patterns, setPatterns] = useState(
 		initialPatternsList && !!initialPatternsList.length
-			? initialPatternsList.map((item) => ({...item, id: uuidv4()}))
+			? initialPatternsList.map((item) => ({
+					...item,
+					error: false,
+					id: uuidv4(),
+			  }))
 			: [emptyRow()]
 	);
 
-	const [invalidPatternsSet, setInvalidPatternsSet] = useState(new Set());
-
 	const handleUrlError = (error, index) => {
-		const newInvalidPatternSet = new Set(invalidPatternsSet);
-
-		if (error) {
-			newInvalidPatternSet.add(index);
-		}
-		else {
-			newInvalidPatternSet.delete(index);
-		}
-
-		setInvalidPatternsSet(newInvalidPatternSet);
+		const tempList = [...patterns];
+		tempList[index].error = error;
+		setPatterns(tempList);
 	};
 
 	return (
@@ -206,9 +197,10 @@ const RedirectPattern = ({
 					{patterns.map((item, index) => (
 						<PatternField
 							destinationURL={item.destinationURL}
+							error={item.error}
 							handleAddClick={addRow}
+							handlePatternError={handleUrlError}
 							handleRemoveClick={removeRow}
-							handleUrlErrorChange={handleUrlError}
 							index={index}
 							key={item.id}
 							pattern={item.pattern}
@@ -219,7 +211,7 @@ const RedirectPattern = ({
 
 				<div className="sheet-footer">
 					<ClayButton
-						disabled={invalidPatternsSet.size > 0}
+						disabled={patterns.some((pattern) => pattern.error)}
 						type="submit"
 					>
 						{Liferay.Language.get('save')}

@@ -99,7 +99,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 		try {
 			folder = PortletFileRepositoryUtil.getPortletFolder(
 				repository.getRepositoryId(), repository.getDlFolderId(),
-				String.valueOf(getFragmentCollectionId()));
+				String.valueOf(getFragmentCollectionKey()));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -115,7 +115,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 				folder = PortletFileRepositoryUtil.addPortletFolder(
 					getUserId(), repository.getRepositoryId(),
 					repository.getDlFolderId(),
-					String.valueOf(getFragmentCollectionId()), serviceContext);
+					String.valueOf(getFragmentCollectionKey()), serviceContext);
 			}
 			else {
 				return 0;

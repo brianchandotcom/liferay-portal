@@ -7,8 +7,6 @@ definition {
 	}
 
 	macro editUserInformation {
-		AssertElementPresent.assertElementPresent(locator1 = "TextInput#FIRST_NAME");
-
 		if (isSet(userFirstNameEdit)) {
 			Type(
 				locator1 = "TextInput#FIRST_NAME",
@@ -38,20 +36,20 @@ definition {
 
 	macro viewUserInfomation {
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "${userLastName}");
+			locator1 = "Testray#DETAILS_LAST_NAME_FIELD",
+			value1 = "${lastName}");
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "${userEmailAddress}");
+			locator1 = "Testray#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "${emailAddress}");
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "${userScreenName}");
+			locator1 = "Testray#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "${screenName}");
 
 		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "${userFirstName}");
+			locator1 = "Testray#DETAILS_FIRST_NAME_FIELD",
+			value1 = "${firstName}");
 	}
 
 }

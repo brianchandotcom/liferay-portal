@@ -50,20 +50,36 @@ definition {
 			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
 
 			TestrayManageUser.editUserInformation(
-				userEmailAddressEdit = "testadmin@liferay.com",
+				userEmailAddressEdit = "test@liferay.com",
 				userFirstNameEdit = "changedfirstname",
 				userLastNameEdit = "Updateln",
 				userScreenNameEdit = "testscreen");
 
-			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+			Testray.checkSuccessAlertAppearsAndDisappears();
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "changedfirstname Updateln");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 		}
 
-		task ("Then the account information is displayed") {
+		task ("Then the account information is displayed in Manage Users and Manage Account") {
 			TestrayManageUser.viewUserInfomation(
-				userEmailAddress = "testadmin@liferay.com",
-				userFirstName = "changedfirstname",
-				userLastName = "Updateln",
-				userScreenName = "testscreen");
+				emailAddress = "test@liferay.com",
+				firstName = "changedfirstname",
+				lastName = "Updateln",
+				screenName = "testscreen");
+
+			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+
+			TestrayManageUser.viewUserInfomation(
+				emailAddress = "test@liferay.com",
+				firstName = "changedfirstname",
+				lastName = "Updateln",
+				screenName = "testscreen");
 		}
 	}
 

@@ -75,7 +75,7 @@ public abstract class BaseDocumentCountTestCase extends BaseDocumentTestCase {
 					searchEngineAdapter.execute(
 						new SearchSearchRequest() {
 							{
-								setIndexNames(String.valueOf(getCompanyId()));
+								setIndexNames(getIndexName());
 								setQuery(
 									BaseDocumentTestCase.getQuery(keywords));
 							}
@@ -87,5 +87,7 @@ public abstract class BaseDocumentCountTestCase extends BaseDocumentTestCase {
 					"Total hits", expectedCount, searchHits.getTotalHits());
 			});
 	}
+
+	protected abstract String getIndexName();
 
 }

@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectActionModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -30,9 +31,12 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -45,8 +49,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -79,6 +86,7 @@ public class ObjectActionModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId", Types.BIGINT}, {"active_", Types.BOOLEAN},
 		{"conditionExpression", Types.CLOB}, {"description", Types.VARCHAR},
+		{"errorMessage", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"objectActionExecutorKey", Types.VARCHAR},
 		{"objectActionTriggerKey", Types.VARCHAR}, {"parameters", Types.CLOB},
 		{"status", Types.INTEGER}
@@ -100,6 +108,8 @@ public class ObjectActionModelImpl
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("conditionExpression", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("errorMessage", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectActionExecutorKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectActionTriggerKey", Types.VARCHAR);
@@ -108,7 +118,7 @@ public class ObjectActionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectActionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,conditionExpression TEXT null,description VARCHAR(75) null,name VARCHAR(75) null,objectActionExecutorKey VARCHAR(75) null,objectActionTriggerKey VARCHAR(75) null,parameters TEXT null,status INTEGER)";
+		"create table ObjectAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectActionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,conditionExpression TEXT null,description VARCHAR(75) null,errorMessage STRING null,label STRING null,name VARCHAR(75) null,objectActionExecutorKey VARCHAR(75) null,objectActionTriggerKey VARCHAR(75) null,parameters TEXT null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectAction";
 
@@ -140,26 +150,32 @@ public class ObjectActionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTACTIONTRIGGERKEY_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 8L;
+	public static final long OBJECTACTIONTRIGGERKEY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTACTIONID_COLUMN_BITMASK = 32L;
+	public static final long OBJECTACTIONID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -325,6 +341,14 @@ public class ObjectActionModelImpl
 		attributeSetterBiConsumers.put(
 			"description",
 			(BiConsumer<ObjectAction, String>)ObjectAction::setDescription);
+		attributeGetterFunctions.put(
+			"errorMessage", ObjectAction::getErrorMessage);
+		attributeSetterBiConsumers.put(
+			"errorMessage",
+			(BiConsumer<ObjectAction, String>)ObjectAction::setErrorMessage);
+		attributeGetterFunctions.put("label", ObjectAction::getLabel);
+		attributeSetterBiConsumers.put(
+			"label", (BiConsumer<ObjectAction, String>)ObjectAction::setLabel);
 		attributeGetterFunctions.put("name", ObjectAction::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ObjectAction, String>)ObjectAction::setName);
@@ -625,6 +649,227 @@ public class ObjectActionModelImpl
 
 	@JSON
 	@Override
+	public String getErrorMessage() {
+		if (_errorMessage == null) {
+			return "";
+		}
+		else {
+			return _errorMessage;
+		}
+	}
+
+	@Override
+	public String getErrorMessage(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getErrorMessage(languageId);
+	}
+
+	@Override
+	public String getErrorMessage(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getErrorMessage(languageId, useDefault);
+	}
+
+	@Override
+	public String getErrorMessage(String languageId) {
+		return LocalizationUtil.getLocalization(getErrorMessage(), languageId);
+	}
+
+	@Override
+	public String getErrorMessage(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getErrorMessage(), languageId, useDefault);
+	}
+
+	@Override
+	public String getErrorMessageCurrentLanguageId() {
+		return _errorMessageCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getErrorMessageCurrentValue() {
+		Locale locale = getLocale(_errorMessageCurrentLanguageId);
+
+		return getErrorMessage(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getErrorMessageMap() {
+		return LocalizationUtil.getLocalizationMap(getErrorMessage());
+	}
+
+	@Override
+	public void setErrorMessage(String errorMessage) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_errorMessage = errorMessage;
+	}
+
+	@Override
+	public void setErrorMessage(String errorMessage, Locale locale) {
+		setErrorMessage(errorMessage, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setErrorMessage(
+		String errorMessage, Locale locale, Locale defaultLocale) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(errorMessage)) {
+			setErrorMessage(
+				LocalizationUtil.updateLocalization(
+					getErrorMessage(), "ErrorMessage", errorMessage, languageId,
+					defaultLanguageId));
+		}
+		else {
+			setErrorMessage(
+				LocalizationUtil.removeLocalization(
+					getErrorMessage(), "ErrorMessage", languageId));
+		}
+	}
+
+	@Override
+	public void setErrorMessageCurrentLanguageId(String languageId) {
+		_errorMessageCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setErrorMessageMap(Map<Locale, String> errorMessageMap) {
+		setErrorMessageMap(errorMessageMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setErrorMessageMap(
+		Map<Locale, String> errorMessageMap, Locale defaultLocale) {
+
+		if (errorMessageMap == null) {
+			return;
+		}
+
+		setErrorMessage(
+			LocalizationUtil.updateLocalization(
+				errorMessageMap, getErrorMessage(), "ErrorMessage",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
+	public String getLabel() {
+		if (_label == null) {
+			return "";
+		}
+		else {
+			return _label;
+		}
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getLabel(languageId);
+	}
+
+	@Override
+	public String getLabel(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getLabel(String languageId) {
+		return LocalizationUtil.getLocalization(getLabel(), languageId);
+	}
+
+	@Override
+	public String getLabel(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getLabel(), languageId, useDefault);
+	}
+
+	@Override
+	public String getLabelCurrentLanguageId() {
+		return _labelCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getLabelCurrentValue() {
+		Locale locale = getLocale(_labelCurrentLanguageId);
+
+		return getLabel(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getLabelMap() {
+		return LocalizationUtil.getLocalizationMap(getLabel());
+	}
+
+	@Override
+	public void setLabel(String label) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_label = label;
+	}
+
+	@Override
+	public void setLabel(String label, Locale locale) {
+		setLabel(label, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setLabel(String label, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(label)) {
+			setLabel(
+				LocalizationUtil.updateLocalization(
+					getLabel(), "Label", label, languageId, defaultLanguageId));
+		}
+		else {
+			setLabel(
+				LocalizationUtil.removeLocalization(
+					getLabel(), "Label", languageId));
+		}
+	}
+
+	@Override
+	public void setLabelCurrentLanguageId(String languageId) {
+		_labelCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setLabelMap(Map<Locale, String> labelMap) {
+		setLabelMap(labelMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setLabelMap(
+		Map<Locale, String> labelMap, Locale defaultLocale) {
+
+		if (labelMap == null) {
+			return;
+		}
+
+		setLabel(
+			LocalizationUtil.updateLocalization(
+				labelMap, getLabel(), "Label",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -641,6 +886,15 @@ public class ObjectActionModelImpl
 		}
 
 		_name = name;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalName() {
+		return getColumnOriginalValue("name");
 	}
 
 	@JSON
@@ -771,6 +1025,94 @@ public class ObjectActionModelImpl
 	}
 
 	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> errorMessageMap = getErrorMessageMap();
+
+		for (Map.Entry<Locale, String> entry : errorMessageMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		Map<Locale, String> labelMap = getLabelMap();
+
+		for (Map.Entry<Locale, String> entry : labelMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(
+			new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getErrorMessage();
+
+		if (xml == null) {
+			return "";
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+			getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+			ObjectAction.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String errorMessage = getErrorMessage(defaultLocale);
+
+		if (Validator.isNull(errorMessage)) {
+			setErrorMessage(
+				getErrorMessage(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setErrorMessage(
+				getErrorMessage(defaultLocale), defaultLocale, defaultLocale);
+		}
+
+		String label = getLabel(defaultLocale);
+
+		if (Validator.isNull(label)) {
+			setLabel(getLabel(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setLabel(getLabel(defaultLocale), defaultLocale, defaultLocale);
+		}
+	}
+
+	@Override
 	public ObjectAction toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, ObjectAction>
@@ -801,6 +1143,8 @@ public class ObjectActionModelImpl
 		objectActionImpl.setActive(isActive());
 		objectActionImpl.setConditionExpression(getConditionExpression());
 		objectActionImpl.setDescription(getDescription());
+		objectActionImpl.setErrorMessage(getErrorMessage());
+		objectActionImpl.setLabel(getLabel());
 		objectActionImpl.setName(getName());
 		objectActionImpl.setObjectActionExecutorKey(
 			getObjectActionExecutorKey());
@@ -839,6 +1183,9 @@ public class ObjectActionModelImpl
 			this.<String>getColumnOriginalValue("conditionExpression"));
 		objectActionImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		objectActionImpl.setErrorMessage(
+			this.<String>getColumnOriginalValue("errorMessage"));
+		objectActionImpl.setLabel(this.<String>getColumnOriginalValue("label"));
 		objectActionImpl.setName(this.<String>getColumnOriginalValue("name"));
 		objectActionImpl.setObjectActionExecutorKey(
 			this.<String>getColumnOriginalValue("objectActionExecutorKey"));
@@ -990,6 +1337,22 @@ public class ObjectActionModelImpl
 			objectActionCacheModel.description = null;
 		}
 
+		objectActionCacheModel.errorMessage = getErrorMessage();
+
+		String errorMessage = objectActionCacheModel.errorMessage;
+
+		if ((errorMessage != null) && (errorMessage.length() == 0)) {
+			objectActionCacheModel.errorMessage = null;
+		}
+
+		objectActionCacheModel.label = getLabel();
+
+		String label = objectActionCacheModel.label;
+
+		if ((label != null) && (label.length() == 0)) {
+			objectActionCacheModel.label = null;
+		}
+
 		objectActionCacheModel.name = getName();
 
 		String name = objectActionCacheModel.name;
@@ -1106,6 +1469,10 @@ public class ObjectActionModelImpl
 	private boolean _active;
 	private String _conditionExpression;
 	private String _description;
+	private String _errorMessage;
+	private String _errorMessageCurrentLanguageId;
+	private String _label;
+	private String _labelCurrentLanguageId;
 	private String _name;
 	private String _objectActionExecutorKey;
 	private String _objectActionTriggerKey;
@@ -1153,6 +1520,8 @@ public class ObjectActionModelImpl
 		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("conditionExpression", _conditionExpression);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("errorMessage", _errorMessage);
+		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put(
 			"objectActionExecutorKey", _objectActionExecutorKey);
@@ -1208,15 +1577,19 @@ public class ObjectActionModelImpl
 
 		columnBitmasks.put("description", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("errorMessage", 4096L);
 
-		columnBitmasks.put("objectActionExecutorKey", 8192L);
+		columnBitmasks.put("label", 8192L);
 
-		columnBitmasks.put("objectActionTriggerKey", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("parameters", 32768L);
+		columnBitmasks.put("objectActionExecutorKey", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("objectActionTriggerKey", 65536L);
+
+		columnBitmasks.put("parameters", 131072L);
+
+		columnBitmasks.put("status", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

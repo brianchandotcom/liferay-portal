@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for ObjectAction. This utility wraps
@@ -46,7 +47,9 @@ public class ObjectActionLocalServiceUtil {
 	 */
 	public static ObjectAction addObjectAction(
 			long userId, long objectDefinitionId, boolean active,
-			String conditionExpression, String description, String name,
+			String conditionExpression, String description,
+			Map<java.util.Locale, String> errorMessageMap,
+			Map<java.util.Locale, String> labelMap, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
@@ -54,7 +57,8 @@ public class ObjectActionLocalServiceUtil {
 
 		return getService().addObjectAction(
 			userId, objectDefinitionId, active, conditionExpression,
-			description, name, objectActionExecutorKey, objectActionTriggerKey,
+			description, errorMessageMap, labelMap, name,
+			objectActionExecutorKey, objectActionTriggerKey,
 			parametersUnicodeProperties);
 	}
 
@@ -276,6 +280,14 @@ public class ObjectActionLocalServiceUtil {
 		return getService().getObjectAction(objectActionId);
 	}
 
+	public static ObjectAction getObjectAction(
+			long objectDefinitionId, String name, String objectActionTriggerKey)
+		throws PortalException {
+
+		return getService().getObjectAction(
+			objectDefinitionId, name, objectActionTriggerKey);
+	}
+
 	/**
 	 * Returns the object action with the matching UUID and company.
 	 *
@@ -346,16 +358,17 @@ public class ObjectActionLocalServiceUtil {
 
 	public static ObjectAction updateObjectAction(
 			long objectActionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<java.util.Locale, String> errorMessageMap,
+			Map<java.util.Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
 		throws PortalException {
 
 		return getService().updateObjectAction(
-			objectActionId, active, conditionExpression, description, name,
-			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			objectActionId, active, conditionExpression, description,
+			errorMessageMap, labelMap, name, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 	}
 
 	/**

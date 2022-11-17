@@ -43,57 +43,53 @@ definition {
 	test AccountAdminCanAddAccount {
 		property portal.acceptance = "true";
 
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
+		task ("Given add a user as Account Administrator with add account entry permission assign to a Business Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			Accounts.setAddAccountEntryPermissions(
+				roleTitle = "Reg Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+		task ("When adds account via widget as Account Admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.setAddAccountEntryPermissions(
-			roleTitle = "Reg Role Name",
-			userEmailAddress = "userea@liferay.com");
+			Accounts.addBusinessAccount(
+				accountDescription = "Accounts Name Description for Test",
+				accountName = "Accounts Name for Test");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Then assert the new account added successfully via widget") {
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		Accounts.addBusinessAccount(
-			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+			LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+		}
 	}
 
 	@description = "This test asserts that an Account Admin can add a billing address to an Account."
@@ -358,53 +354,57 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AccountAdminCanDeactivateAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
+		task ("Given add an user as Account Administrator assigned to a Business Account with delete permission") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Administrator",
+				roleType = "account");
+		}
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+		task ("When deactivate the account via widget as account admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.account.model.AccountEntry",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			Accounts.goToEntryMenuItem(
+				menuItem = "Deactivate",
+				rowEntry = "Account Name");
 
-		Accounts.goToEntryMenuItem(
-			menuItem = "Deactivate",
-			rowEntry = "Account Name");
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 
-		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+			Alert.viewSuccessMessage();
+		}
 
-		Alert.viewSuccessMessage();
-
-		Accounts.viewInactiveAccount(accountName = "Account Name");
+		task ("Then assert the account is deactivated") {
+			Accounts.viewInactiveAccount(accountName = "Account Name");
+		}
 	}
 
 	@description = "This test asserts that an Account can be deleted."
@@ -413,51 +413,59 @@ definition {
 	test AccountAdminCanDeleteAccount {
 		property portal.acceptance = "true";
 
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
+		task ("Given add an Account Administrator with delete permission assigned to a Business Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Administrator",
+				roleType = "account");
+		}
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+		task ("When deleted the account via widget as account admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
-			resourceName = "com.liferay.account.model.AccountEntry",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			Accounts.goToEntryMenuItem(
+				menuItem = "Delete",
+				rowEntry = "Account Name");
 
-		Accounts.goToEntryMenuItem(
-			menuItem = "Delete",
-			rowEntry = "Account Name");
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+			Alert.viewSuccessMessage();
+		}
 
-		Alert.viewSuccessMessage();
+		task ("Then assert the account is deleted") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+		}
 	}
 
 	@description = "This test asserts that an Account Admin can edit an account he is assigned to."
@@ -527,40 +535,30 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AccountAdminCanEditOtherUserInfo {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
+		task ("Given add two users userea as Account Administrator with update view permision and userea1 assigned to a Business Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		task ("Sign in as Super User and add additional user into an account") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
 			JSONAccountEntryUser.addAccountEntryUser(
 				accountEntryName = "Account Name",
@@ -568,9 +566,7 @@ definition {
 				userFirstName = "userfn1",
 				userLastName = "userln1",
 				userScreenName = "usersn1");
-		}
 
-		task ("Create and assign a new role to Account Admin that allows for them to view and edit other users") {
 			JSONRole.addRegularRole(roleTitle = "Edit User Role");
 
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
@@ -585,7 +581,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Sign back in as Account Admin and edit the other user name") {
+		task ("When edit the other user name as Account Admin") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -602,7 +598,7 @@ definition {
 				editFirstName = "userEdit");
 		}
 
-		task ("Assert that the user has the edited first name and the original name cannot be found") {
+		task ("Then assert that the user has the edited first name and the original name cannot be found") {
 			Navigator.gotoPage(pageName = "2B Account Page");
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
@@ -835,154 +831,148 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AccountAdminCanUnassignOrganizationsInBulk {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
+		task ("Given add an Account Administrator with manage org permission assigned to a Business Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "MANAGE_ORGANIZATIONS",
-			resourceName = "com.liferay.account.model.AccountEntry",
-			roleTitle = "Account Administrator",
-			roleType = "account");
-
-		for (var organizationNumber : list "1,2,3,4") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization ${organizationNumber}",
-				organizationSite = "true");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_ORGANIZATIONS",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Administrator",
+				roleType = "account");
 		}
 
-		Accounts.openAccountsAdmin();
+		task ("And add 4 orgs assign org1 org3 org4 to Account Name") {
+			for (var organizationNumber : list "1,2,3,4") {
+				JSONOrganization.addOrganization(
+					organizationName = "Organization ${organizationNumber}",
+					organizationSite = "true");
+			}
 
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+			Accounts.openAccountsAdmin();
 
-		Accounts.assignMultipleOrganizations(
-			accountName = "Account Name",
-			organizationNumber = "1,3,4");
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			Accounts.assignMultipleOrganizations(
+				accountName = "Account Name",
+				organizationNumber = "1,3,4");
+		}
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+		task ("When unassign the orgs in bulk from Account Name as Account Admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.unassignMultipleOrganizations(
-			accountName = "Account Name",
-			organizationNumber = "1,3,4");
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			Accounts.unassignMultipleOrganizations(
+				accountName = "Account Name",
+				organizationNumber = "1,3,4");
+		}
 
-		Accounts.viewNoAssignee(
-			accountName = "Account Name",
-			assigneeType = "Organizations");
+		task ("Then assert there isn't any orgs in Account Name") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			Accounts.viewNoAssignee(
+				accountName = "Account Name",
+				assigneeType = "Organizations");
+		}
 	}
 
 	@description = "This test asserts that an Account Admin can add and unassign organization to an account"
 	@priority = "5"
 	@refactorneeded
 	test AccountAdminCanUnassignOrganizationToAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
+		task ("Given add an Account Administrator with manage org permission assigned to a Business Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_ORGANIZATIONS",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Administrator",
+				roleType = "account");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			JSONOrganization.addOrganization(
+				organizationName = "Organization for Account",
+				organizationSite = "true");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+			Accounts.openAccountsAdmin();
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "MANAGE_ORGANIZATIONS",
-			resourceName = "com.liferay.account.model.AccountEntry",
-			roleTitle = "Account Administrator",
-			roleType = "account");
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		JSONOrganization.addOrganization(
-			organizationName = "Organization for Account",
-			organizationSite = "true");
+			Accounts.assignOrganizations(
+				accountName = "Account Name",
+				assigneeName = "Organization for Account");
+		}
 
-		Accounts.openAccountsAdmin();
+		task ("When unassign all the org from Account Name as Account Admin") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.assignOrganizations(
-			accountName = "Account Name",
-			assigneeName = "Organization for Account");
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
+			Accounts.removeOrganizationAsAssignee(
+				accountName = "Account Name",
+				assigneeName = "Organization for Account");
+		}
 
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
+		task ("Then assert there isn org in Account Name") {
+			Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
-
-		Accounts.removeOrganizationAsAssignee(
-			accountName = "Account Name",
-			assigneeName = "Organization for Account");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		Accounts.viewNoAssignee(
-			accountName = "Account Name",
-			assigneeType = "Organizations");
+			Accounts.viewNoAssignee(
+				accountName = "Account Name",
+				assigneeType = "Organizations");
+		}
 	}
 
 	@description = "This test asserts that an Account Admin can unassign roles to users."
@@ -1510,85 +1500,89 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanChangePaginationInAccounts {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONAccountEntryUser.addExistUsertoAccount(
-			accountEntryName = "Account Name",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONAccountRole.associateUser(
-			accountEntryName = "Account Name",
-			accountRole = "Account Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		for (var accountNum : list "1,2,3,4,5") {
+		task ("Given add an Account Administrator assigned to five Business Accounts") {
 			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Account Name ${accountNum}",
+				accountEntryName = "Account Name",
 				accountEntryType = "Business");
-		}
 
-		for (var accountNames : list "Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
-			Accounts.openAccountsAdmin();
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-			LexiconEntry.gotoEntry(rowEntry = "${accountNames}");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
-			Accounts.assignUsers(
-				accountName = "${accountNames}",
-				assigneeName = "userfn userln");
-		}
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoPage(pageName = "2B Account Page");
-
-		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
-
-		for (var listEntries : list "4,8,20,60") {
-			Pagination.changePagination(itemsPerPage = "${listEntries}");
-
-			if ("${listEntries}" == "4") {
-				Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-
-				LexiconEntry.viewNoEntry(rowEntry = "Account Name 4");
-
-				LexiconEntry.viewNoEntry(rowEntry = "Account Name 5");
-
-				for (var accountEntries : list "Account Name,Account Name 1,Account Name 2,Account Name 3") {
-					LexiconEntry.viewEntryName(rowEntry = "${accountEntries}");
-				}
-
-				Click(locator1 = "Pagination#NEXT_LINK");
-
-				Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-
-				LexiconEntry.viewEntryName(rowEntry = "Account Name 4");
-
-				LexiconEntry.viewEntryName(rowEntry = "Account Name 5");
-
-				for (var accountEntries : list "Account Name,Account Name 1,Account Name 2,Account Name 3") {
-					LexiconEntry.viewNoEntry(rowEntry = "${accountEntries}");
-				}
+			for (var accountNum : list "1,2,3,4,5") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account Name ${accountNum}",
+					accountEntryType = "Business");
 			}
-			else {
-				Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 
-				for (var allAccounts : list "Account Name,Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
-					LexiconEntry.viewEntryName(rowEntry = "${allAccounts}");
+			for (var accountNames : list "Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "${accountNames}");
+
+				Accounts.assignUsers(
+					accountName = "${accountNames}",
+					assigneeName = "userfn userln");
+			}
+		}
+
+		task ("Then assert the size of the pagination list can be changed") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+			for (var listEntries : list "4,8,20,60") {
+				Pagination.changePagination(itemsPerPage = "${listEntries}");
+
+				if ("${listEntries}" == "4") {
+					Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+
+					LexiconEntry.viewNoEntry(rowEntry = "Account Name 4");
+
+					LexiconEntry.viewNoEntry(rowEntry = "Account Name 5");
+
+					for (var accountEntries : list "Account Name,Account Name 1,Account Name 2,Account Name 3") {
+						LexiconEntry.viewEntryName(rowEntry = "${accountEntries}");
+					}
+
+					Click(locator1 = "Pagination#NEXT_LINK");
+
+					Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+
+					LexiconEntry.viewEntryName(rowEntry = "Account Name 4");
+
+					LexiconEntry.viewEntryName(rowEntry = "Account Name 5");
+
+					for (var accountEntries : list "Account Name,Account Name 1,Account Name 2,Account Name 3") {
+						LexiconEntry.viewNoEntry(rowEntry = "${accountEntries}");
+					}
+				}
+				else {
+					Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
+
+					for (var allAccounts : list "Account Name,Account Name 1,Account Name 2,Account Name 3,Account Name 4,Account Name 5") {
+						LexiconEntry.viewEntryName(rowEntry = "${allAccounts}");
+					}
 				}
 			}
 		}

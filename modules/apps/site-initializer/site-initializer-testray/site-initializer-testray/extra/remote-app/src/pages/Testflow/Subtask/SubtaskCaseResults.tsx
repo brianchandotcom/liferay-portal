@@ -14,6 +14,7 @@
 
 import {useParams} from 'react-router-dom';
 
+import FloatingBox from '../../../components/FloatingBox';
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
@@ -124,7 +125,20 @@ const SubtasksCaseResults = () => {
 			variables={{
 				filter: searchUtil.eq('subtaskId', subtaskId as string),
 			}}
-		/>
+		>
+			{() => (
+				<FloatingBox
+					isVisible={true}
+					primaryButtonProps={{
+						title: i18n.translate('split-tests'),
+					}}
+					selectedCount={0}
+					tooltipText={i18n.translate(
+						'move-selected-tests-to-a-new-subtask'
+					)}
+				/>
+			)}
+		</ListView>
 	);
 };
 export default SubtasksCaseResults;

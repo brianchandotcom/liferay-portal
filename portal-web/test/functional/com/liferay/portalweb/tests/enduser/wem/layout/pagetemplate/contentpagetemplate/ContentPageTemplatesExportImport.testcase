@@ -625,7 +625,7 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			AssertChecked.assertCheckedNotVisible(locator1 = "//tr[contains(.,'Site Team Name')]/td/input[contains(@id,'ACTION_VIEW')]");
+			AssertChecked.assertCheckedNotVisible(locator1 = "//tr[contains(.,'Site Team Name')]/td//input[contains(@id,'ACTION_VIEW')]");
 		}
 	}
 

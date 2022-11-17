@@ -11,6 +11,8 @@ create table ObjectAction (
 	active_ BOOLEAN,
 	conditionExpression TEXT null,
 	description VARCHAR(75) null,
+	errorMessage STRING null,
+	label STRING null,
 	name VARCHAR(75) null,
 	objectActionExecutorKey VARCHAR(75) null,
 	objectActionTriggerKey VARCHAR(75) null,

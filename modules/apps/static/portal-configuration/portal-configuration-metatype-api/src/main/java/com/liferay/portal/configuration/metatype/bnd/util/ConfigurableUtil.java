@@ -19,8 +19,6 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -87,10 +85,6 @@ public class ConfigurableUtil {
 						snapshotClassData.length);
 				}
 				catch (InvocationTargetException invocationTargetException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(invocationTargetException);
-					}
-
 					snapshotClass = (Class<T>)classLoader.loadClass(
 						snapshotClassName);
 				}
@@ -269,9 +263,6 @@ public class ConfigurableUtil {
 			overrideProperties
 		).build();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurableUtil.class);
 
 	private static final Method _defineClassMethod;
 	private static final Method _findLoadedClassMethod;

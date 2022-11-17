@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="UnprocessedExceptionCheck" files="portal-configuration-metatype-api/src/main/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtil\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="portal-configuration-metatype-api/src/test/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtilTest\.java" />
 		<suppress checks="JavaModuleInternalImportsCheck" files="portal-configuration-persistence-api/src/main/java/com/liferay/portal/configuration/persistence/ConfigurationOverridePropertiesUtil\.java" />

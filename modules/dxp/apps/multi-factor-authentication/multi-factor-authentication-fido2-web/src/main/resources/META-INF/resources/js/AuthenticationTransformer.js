@@ -19,7 +19,7 @@ export default function AuthenticationTransformer({
 	return {
 		...otherProps,
 		onClick() {
-			const button = this.document.activeElement;
+			const button = window.document.activeElement;
 			const form = button.form;
 
 			if (!assertionRequest) {

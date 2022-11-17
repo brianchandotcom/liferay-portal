@@ -15,7 +15,9 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useRef} from 'react';
+
+const ENTER_KEYCODE = 13;
 
 export default function NavigationMenuItemsTree({
 	selectedSiteNavigationMenuItemId,
@@ -44,32 +46,68 @@ NavigationMenuItemsTree.propTypes = {
 function TreeItem({item, selectedKeys}) {
 	const hasUrl = item.url && item.url !== '#';
 
+	const stackAnchorRef = useRef(null);
+	const itemAnchorRef = useRef(null);
+
 	return (
 		<ClayTreeView.Item>
-			<ClayTreeView.ItemStack active={selectedKeys.has(item.id)}>
+			<ClayTreeView.ItemStack
+				active={selectedKeys.has(item.id)}
+				onKeyDown={(event) => {
+					if (event.keyCode === ENTER_KEYCODE && hasUrl) {
+						stackAnchorRef.current.click();
+					}
+				}}
+			>
 				<ClayIcon symbol={item.url ? 'page' : 'folder'} />
 
-				{hasUrl ? (
-					<a className="d-block h-100 w-100" href={item.url}>
-						{item.name}
-					</a>
-				) : (
-					<p className="m-0">{item.name}</p>
-				)}
+				<div className="align-items-center d-flex pl-2">
+					{hasUrl ? (
+						<a
+							className="flex-grow-1 text-decoration-none text-truncate w-100"
+							data-tooltip-floating="true"
+							href={item.url}
+							ref={stackAnchorRef}
+							tabIndex="-1"
+							target={item.target}
+							title={item.name}
+						>
+							{item.name}
+						</a>
+					) : (
+						<span>{item.name}</span>
+					)}
+				</div>
 			</ClayTreeView.ItemStack>
 
 			<ClayTreeView.Group items={item.children}>
 				{(item) => (
-					<ClayTreeView.Item>
+					<ClayTreeView.Item
+						onKeyDown={(event) => {
+							if (event.keyCode === ENTER_KEYCODE && hasUrl) {
+								stackAnchorRef.current.click();
+							}
+						}}
+					>
 						<ClayIcon symbol={item.url ? 'page' : 'folder'} />
 
-						{hasUrl ? (
-							<a className="d-block h-100 w-100" href={item.url}>
-								{item.name}
-							</a>
-						) : (
-							<p className="m-0">{item.name}</p>
-						)}
+						<div className="align-items-center d-flex pl-2">
+							{hasUrl ? (
+								<a
+									className="flex-grow-1 text-decoration-none text-truncate w-100"
+									data-tooltip-floating="true"
+									href={item.url}
+									ref={itemAnchorRef}
+									tabIndex="-1"
+									target={item.target}
+									title={item.name}
+								>
+									{item.name}
+								</a>
+							) : (
+								<span>{item.name}</span>
+							)}
+						</div>
 					</ClayTreeView.Item>
 				)}
 			</ClayTreeView.Group>

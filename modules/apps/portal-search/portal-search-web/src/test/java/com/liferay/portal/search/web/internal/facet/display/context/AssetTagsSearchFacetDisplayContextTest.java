@@ -456,14 +456,14 @@ public class AssetTagsSearchFacetDisplayContextTest {
 	}
 
 	private List<TermCollector> _addTagsAndCreateTermCollectors(
-			String[] term, int[] frequencies)
+			String[] terms, int[] frequencies)
 		throws Exception {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
 
-		for (int i = 1; i <= term.length; i++) {
+		for (int i = 1; i <= terms.length; i++) {
 			termCollectors.add(
-				createTermCollector(term[i - 1], frequencies[i - 1]));
+				createTermCollector(terms[i - 1], frequencies[i - 1]));
 		}
 
 		return termCollectors;

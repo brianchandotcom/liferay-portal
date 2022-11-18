@@ -4157,6 +4157,38 @@ definition {
 			accountTaxId = "Z9870654786390342199899Y");
 	}
 
+	@description = "This test asserts that no tab displays on account creation. These tabs will display after saving."
+	@priority = "4"
+	test TabsDisplayAfterAccountIsSaved {
+		property portal.acceptance = "true";
+
+		task ("When a user is in the account creation page") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then no tabs are present") {
+			for (var navTab : list "Details,Addresses,Users,Organizations,Account Groups,Roles,Channel Defaults") {
+				Navigator.viewNoNavTab(navTab = "${navTab}");
+			}
+		}
+
+		task ("When a user saves the account") {
+			PortletEntry.inputName(name = "Acme Inc.");
+
+			Button.clickSave();
+		}
+
+		task ("Then all the other tabs become available") {
+			for (var navTab : list "Details,Addresses,Users,Organizations,Account Groups,Roles,Channel Defaults") {
+				AssertElementPresent(
+					key_tab = "${navTab}",
+					locator1 = "NavTab#TAB_LINK");
+			}
+		}
+	}
+
 	@description = "This test assigns a user to an account with valid domain set. Manager can filter valid domain users and all users when assigning."
 	@priority = "3"
 	test UsersWithValidAndInvalidDomainsAreFilteredWhenAssigningUsers {

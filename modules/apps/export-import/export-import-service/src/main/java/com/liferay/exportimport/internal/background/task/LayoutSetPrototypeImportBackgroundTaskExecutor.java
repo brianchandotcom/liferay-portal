@@ -67,15 +67,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutSetPrototypeImportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
 
-	public LayoutSetPrototypeImportBackgroundTaskExecutor() {
-		setBackgroundTaskStatusMessageTranslator(
-			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
-
-		// Isolation level guarantees this will be serial in a group
-
-		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_GROUP);
-	}
-
 	@Override
 	public BackgroundTaskExecutor clone() {
 		return this;

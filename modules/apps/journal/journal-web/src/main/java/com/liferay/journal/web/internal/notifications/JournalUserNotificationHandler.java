@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,7 +64,7 @@ public class JournalUserNotificationHandler
 		long userId = GetterUtil.getLong(
 			jsonObject.getLong("userId"), journalArticle.getUserId());
 
-		String userFullName = HtmlUtil.escape(
+		String userFullName = _html.escape(
 			_portal.getUserName(userId, StringPool.BLANK));
 
 		int notificationType = jsonObject.getInt("notificationType");
@@ -118,6 +118,9 @@ public class JournalUserNotificationHandler
 
 		return title;
 	}
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Language _language;

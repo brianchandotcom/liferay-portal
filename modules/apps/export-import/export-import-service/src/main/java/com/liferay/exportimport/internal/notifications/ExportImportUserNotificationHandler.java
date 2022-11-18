@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
@@ -106,7 +106,7 @@ public class ExportImportUserNotificationHandler
 		}
 		else {
 			return "Unable to process notification: " +
-				HtmlUtil.escape(jsonObject.toString());
+				_html.escape(jsonObject.toString());
 		}
 
 		long backgroundTaskId = jsonObject.getLong("backgroundTaskId");
@@ -165,6 +165,9 @@ public class ExportImportUserNotificationHandler
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private JSONFactory _jsonFactory;

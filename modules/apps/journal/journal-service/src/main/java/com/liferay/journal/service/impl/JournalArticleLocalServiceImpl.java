@@ -182,7 +182,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -7760,7 +7760,7 @@ public class JournalArticleLocalServiceImpl
 			Element pageElement = null;
 
 			if (Validator.isNotNull(targetPage)) {
-				targetPage = HtmlUtil.escapeXPathAttribute(targetPage);
+				targetPage = _html.escapeXPathAttribute(targetPage);
 
 				XPath xPathSelector = SAXReaderUtil.createXPath(
 					"/root/page[@id = " + targetPage + "]");
@@ -9454,6 +9454,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -159,10 +159,10 @@ public class JournalContentPortletToolbarContributor
 			urlMenuItem.setData(
 				HashMapBuilder.<String, Object>put(
 					"id",
-					HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset"
+					_html.escape(portletDisplay.getNamespace()) + "editAsset"
 				).put(
 					"title",
-					HtmlUtil.escape(
+					_html.escape(
 						_language.format(
 							themeDisplay.getLocale(), "new-x",
 							ddmStructure.getName(themeDisplay.getLocale())))
@@ -212,6 +212,9 @@ public class JournalContentPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletToolbarContributor.class);
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private JournalFolderService _journalFolderService;

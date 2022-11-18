@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -259,7 +259,7 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	private List<Node> _getElementsByName(Document document, String name) {
-		name = HtmlUtil.escapeXPathAttribute(name);
+		name = _html.escapeXPathAttribute(name);
 
 		XPath xPathSelector = _saxReader.createXPath(
 			StringBundler.concat("//dynamic-element[@name=", name, "]"));
@@ -317,6 +317,9 @@ public class DDMXMLImpl implements DDMXML {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private SAXReader _saxReader;

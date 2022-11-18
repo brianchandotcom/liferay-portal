@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -332,7 +332,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 			sb.append("; const layoutMode = '");
 			sb.append(
-				HtmlUtil.escapeJS(
+				_html.escapeJS(
 					ParamUtil.getString(
 						_portal.getOriginalServletRequest(httpServletRequest),
 						"p_l_mode", Constants.VIEW)));
@@ -486,6 +486,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private ItemSelector _itemSelector;

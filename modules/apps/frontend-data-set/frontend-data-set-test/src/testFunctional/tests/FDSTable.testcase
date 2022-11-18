@@ -60,6 +60,8 @@ definition {
 		}
 
 		task ("Then: There is no hyphen in any header text") {
+			WaitForElementPresent(locator1 = "FrontendDataSet#HEADER_ROW");
+
 			var header = selenium.getText("FrontendDataSet#HEADER_ROW");
 
 			var containsHyphen = StringUtil.contains("${header}", "-");

@@ -40,6 +40,10 @@
 
 					<liferay-ui:message arguments='<%= unicodeProperties.get("siteInitializerKey") %>' key="site-initializer-extender-synchronize-help-x" />
 				</div>
+
+				<div>
+					<aui:input label="upload-your-zip-file" name="siteInitializerFile" type="file" />
+				</div>
 			</div>
 
 			<clay:sheet-footer>

@@ -16,6 +16,7 @@ package com.liferay.document.library.opener.google.drive.web.internal;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -34,6 +35,8 @@ import com.liferay.portal.background.task.constants.BackgroundTaskContextMapCons
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -138,6 +141,18 @@ public class DLOpenerGoogleDriveManager
 				_getGoogleDriveFileId(fileEntry));
 
 			driveFilesDelete.execute();
+
+			_dlOpenerFileEntryReferenceLocalService.
+				deleteDLOpenerFileEntryReference(
+					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
+		}
+		catch (GoogleJsonResponseException googleJsonResponseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"The Google Drive file does not exist",
+					googleJsonResponseException);
+			}
 
 			_dlOpenerFileEntryReferenceLocalService.
 				deleteDLOpenerFileEntryReference(
@@ -367,6 +382,9 @@ public class DLOpenerGoogleDriveManager
 			throw new RuntimeException(exception);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLOpenerGoogleDriveManager.class);
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;

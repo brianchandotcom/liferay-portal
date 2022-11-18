@@ -25,24 +25,21 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.util.Hashtable;
-
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = ServiceFactory.class)
 public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
+
+	public NPMResolverServiceFactory(
+		JSONFactory jsonFactory, NPMRegistry npmRegistry) {
+
+		_jsonFactory = jsonFactory;
+		_npmRegistry = npmRegistry;
+	}
 
 	@Override
 	public NPMResolver getService(
@@ -81,17 +78,6 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 		NPMResolver npmResolver) {
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			NPMResolver.class, this, new Hashtable<String, Object>());
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
-	}
-
 	private JSONObject _createJSONObject(URL url) {
 		try {
 			return _jsonFactory.createJSONObject(
@@ -102,18 +88,7 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 		}
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile JSONFactory _jsonFactory;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile NPMRegistry _npmRegistry;
-
-	private ServiceRegistration<NPMResolver> _serviceRegistration;
+	private final JSONFactory _jsonFactory;
+	private final NPMRegistry _npmRegistry;
 
 }

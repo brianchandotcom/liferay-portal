@@ -292,6 +292,10 @@
 			<contains>The iframe tag contained an attribute that we could not process</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-168158">
+			<contains>Skip com_liferay_document_library_web_portlet_DLPortlet</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

@@ -16,6 +16,8 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="description" type="String" />
+		<field localized="true" name="errorMessage" type="String" />
+		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 		<field name="objectActionExecutorKey" type="String" />
 		<field name="objectActionTriggerKey" type="String" />

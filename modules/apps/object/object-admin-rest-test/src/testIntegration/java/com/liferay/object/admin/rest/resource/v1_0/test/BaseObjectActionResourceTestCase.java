@@ -662,6 +662,22 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
+				if (objectAction.getErrorMessage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("label", additionalAssertFieldName)) {
+				if (objectAction.getLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (objectAction.getName() == null) {
 					valid = false;
@@ -866,9 +882,31 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)objectAction1.getErrorMessage(),
+						(Map)objectAction2.getErrorMessage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectAction1.getId(), objectAction2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("label", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)objectAction1.getLabel(),
+						(Map)objectAction2.getLabel())) {
 
 					return false;
 				}
@@ -1122,7 +1160,17 @@ public abstract class BaseObjectActionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("errorMessage")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("label")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

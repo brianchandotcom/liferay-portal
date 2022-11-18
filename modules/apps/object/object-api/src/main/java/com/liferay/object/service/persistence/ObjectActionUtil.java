@@ -644,6 +644,73 @@ public class ObjectActionUtil {
 	}
 
 	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	public static ObjectAction findByODI_N(long objectDefinitionId, String name)
+		throws com.liferay.object.exception.NoSuchObjectActionException {
+
+		return getPersistence().findByODI_N(objectDefinitionId, name);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public static ObjectAction fetchByODI_N(
+		long objectDefinitionId, String name) {
+
+		return getPersistence().fetchByODI_N(objectDefinitionId, name);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public static ObjectAction fetchByODI_N(
+		long objectDefinitionId, String name, boolean useFinderCache) {
+
+		return getPersistence().fetchByODI_N(
+			objectDefinitionId, name, useFinderCache);
+	}
+
+	/**
+	 * Removes the object action where objectDefinitionId = &#63; and name = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the object action that was removed
+	 */
+	public static ObjectAction removeByODI_N(
+			long objectDefinitionId, String name)
+		throws com.liferay.object.exception.NoSuchObjectActionException {
+
+		return getPersistence().removeByODI_N(objectDefinitionId, name);
+	}
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63; and name = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the number of matching object actions
+	 */
+	public static int countByODI_N(long objectDefinitionId, String name) {
+		return getPersistence().countByODI_N(objectDefinitionId, name);
+	}
+
+	/**
 	 * Returns all the object actions where objectDefinitionId = &#63; and active = &#63; and objectActionTriggerKey = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -860,6 +927,96 @@ public class ObjectActionUtil {
 
 		return getPersistence().countByO_A_OATK(
 			objectDefinitionId, active, objectActionTriggerKey);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	public static ObjectAction findByODI_A_N_OATK(
+			long objectDefinitionId, boolean active, String name,
+			String objectActionTriggerKey)
+		throws com.liferay.object.exception.NoSuchObjectActionException {
+
+		return getPersistence().findByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public static ObjectAction fetchByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey) {
+
+		return getPersistence().fetchByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public static ObjectAction fetchByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey, boolean useFinderCache) {
+
+		return getPersistence().fetchByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the object action that was removed
+	 */
+	public static ObjectAction removeByODI_A_N_OATK(
+			long objectDefinitionId, boolean active, String name,
+			String objectActionTriggerKey)
+		throws com.liferay.object.exception.NoSuchObjectActionException {
+
+		return getPersistence().removeByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey);
+	}
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the number of matching object actions
+	 */
+	public static int countByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey) {
+
+		return getPersistence().countByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey);
 	}
 
 	/**

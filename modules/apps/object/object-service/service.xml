@@ -24,6 +24,8 @@
 		<column name="active" type="boolean" />
 		<column name="conditionExpression" type="String" />
 		<column name="description" type="String" />
+		<column localized="true" name="errorMessage" type="String" />
+		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
 		<column name="objectActionExecutorKey" type="String" />
 		<column name="objectActionTriggerKey" type="String" />
@@ -35,9 +37,19 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="ODI_N" return-type="ObjectAction">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="O_A_OATK" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
+			<finder-column name="objectActionTriggerKey" />
+		</finder>
+		<finder name="ODI_A_N_OATK" return-type="ObjectAction">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="active" />
+			<finder-column name="name" />
 			<finder-column name="objectActionTriggerKey" />
 		</finder>
 	</entity>
@@ -801,6 +813,8 @@
 		<exception>DuplicateObjectFieldExternalReferenceCode</exception>
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>ObjectActionConditionExpression</exception>
+		<exception>ObjectActionErrorMessage</exception>
+		<exception>ObjectActionLabel</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionParameters</exception>
 		<exception>ObjectActionTriggerKey</exception>

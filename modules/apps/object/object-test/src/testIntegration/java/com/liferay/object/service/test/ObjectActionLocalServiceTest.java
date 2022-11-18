@@ -30,6 +30,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -119,7 +120,10 @@ public class ObjectActionLocalServiceTest {
 		ObjectAction objectAction1 = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
@@ -130,7 +134,10 @@ public class ObjectActionLocalServiceTest {
 		ObjectAction objectAction2 = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 			UnicodePropertiesBuilder.put(
@@ -141,7 +148,10 @@ public class ObjectActionLocalServiceTest {
 		ObjectAction objectAction3 = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			UnicodePropertiesBuilder.put(
@@ -323,6 +333,8 @@ public class ObjectActionLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			"equals(firstName, \"João\")", RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
@@ -388,7 +400,10 @@ public class ObjectActionLocalServiceTest {
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
@@ -431,8 +446,10 @@ public class ObjectActionLocalServiceTest {
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
-			"equals(firstName, \"John\")", "Able Description", "Able",
-			ObjectActionExecutorConstants.KEY_WEBHOOK,
+			"equals(firstName, \"John\")", "Able Description",
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"Able", ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"secret", "0123456789"
@@ -464,8 +481,10 @@ public class ObjectActionLocalServiceTest {
 
 		objectAction = _objectActionLocalService.updateObjectAction(
 			objectAction.getObjectActionId(), false,
-			"equals(firstName, \"João\")", "Baker Description", "Baker",
-			ObjectActionExecutorConstants.KEY_GROOVY,
+			"equals(firstName, \"João\")", "Baker Description",
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"Baker", ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 			UnicodePropertiesBuilder.put(
 				"secret", "30624700"

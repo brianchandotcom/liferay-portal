@@ -12,19 +12,28 @@
  * details.
  */
 
-package com.liferay.object.constants;
+package com.liferay.object.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
  */
-public class ObjectActionTriggerConstants {
+public class ObjectActionErrorMessageException extends PortalException {
 
-	public static final String KEY_ON_AFTER_ADD = "onAfterAdd";
+	public ObjectActionErrorMessageException() {
+	}
 
-	public static final String KEY_ON_AFTER_DELETE = "onAfterDelete";
+	public ObjectActionErrorMessageException(String msg) {
+		super(msg);
+	}
 
-	public static final String KEY_ON_AFTER_UPDATE = "onAfterUpdate";
+	public ObjectActionErrorMessageException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
 
-	public static final String KEY_STAND_ALONE_ACTION = "standAloneAction";
+	public ObjectActionErrorMessageException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

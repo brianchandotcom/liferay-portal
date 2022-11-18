@@ -77,7 +77,7 @@ public class ObjectActionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,6 +103,10 @@ public class ObjectActionCacheModel
 		sb.append(conditionExpression);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", errorMessage=");
+		sb.append(errorMessage);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", objectActionExecutorKey=");
@@ -173,6 +177,20 @@ public class ObjectActionCacheModel
 			objectActionImpl.setDescription(description);
 		}
 
+		if (errorMessage == null) {
+			objectActionImpl.setErrorMessage("");
+		}
+		else {
+			objectActionImpl.setErrorMessage(errorMessage);
+		}
+
+		if (label == null) {
+			objectActionImpl.setLabel("");
+		}
+		else {
+			objectActionImpl.setLabel(label);
+		}
+
 		if (name == null) {
 			objectActionImpl.setName("");
 		}
@@ -230,6 +248,8 @@ public class ObjectActionCacheModel
 		active = objectInput.readBoolean();
 		conditionExpression = (String)objectInput.readObject();
 		description = objectInput.readUTF();
+		errorMessage = objectInput.readUTF();
+		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 		objectActionExecutorKey = objectInput.readUTF();
 		objectActionTriggerKey = objectInput.readUTF();
@@ -283,6 +303,20 @@ public class ObjectActionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		if (errorMessage == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(errorMessage);
+		}
+
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -326,6 +360,8 @@ public class ObjectActionCacheModel
 	public boolean active;
 	public String conditionExpression;
 	public String description;
+	public String errorMessage;
+	public String label;
 	public String name;
 	public String objectActionExecutorKey;
 	public String objectActionTriggerKey;

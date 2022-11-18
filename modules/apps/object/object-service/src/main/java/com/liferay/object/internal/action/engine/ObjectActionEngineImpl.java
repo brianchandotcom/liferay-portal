@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -48,6 +50,40 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectActionEngine.class)
 public class ObjectActionEngineImpl implements ObjectActionEngine {
+
+	@Override
+	public void executeObjectAction(
+		String objectActionName, String objectActionTriggerKey,
+		long objectDefinitionId, JSONObject payloadJSONObject, long userId) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918"))) {
+			throw new UnsupportedOperationException();
+		}
+
+		try {
+			ObjectAction objectAction =
+				_objectActionLocalService.getObjectAction(
+					objectDefinitionId, objectActionName,
+					objectActionTriggerKey);
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
+			_updatePayloadJSONObject(
+				objectDefinition, payloadJSONObject,
+				_userLocalService.getUser(userId));
+
+			_executeObjectAction(
+				objectAction, objectDefinition, payloadJSONObject, userId,
+				ObjectEntryVariablesUtil.getActionVariables(
+					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+					_systemObjectDefinitionMetadataRegistry));
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
 
 	@Override
 	public void executeObjectActions(
@@ -83,6 +119,47 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		return ddmExpression.evaluate();
 	}
 
+	private void _executeObjectAction(
+			ObjectAction objectAction, ObjectDefinition objectDefinition,
+			JSONObject payloadJSONObject, long userId,
+			Map<String, Object> variables)
+		throws Exception {
+
+		Set<Long> objectActionIds =
+			ObjectActionThreadLocal.getObjectActionIds();
+
+		try {
+			if (objectActionIds.contains(objectAction.getObjectActionId()) ||
+				!_evaluateConditionExpression(
+					objectAction.getConditionExpression(), variables)) {
+
+				return;
+			}
+
+			objectActionIds.add(objectAction.getObjectActionId());
+
+			ObjectActionExecutor objectActionExecutor =
+				_objectActionExecutorRegistry.getObjectActionExecutor(
+					objectAction.getObjectActionExecutorKey());
+
+			objectActionExecutor.execute(
+				objectDefinition.getCompanyId(),
+				objectAction.getParametersUnicodeProperties(),
+				payloadJSONObject, userId);
+
+			_objectActionLocalService.updateStatus(
+				objectAction.getObjectActionId(),
+				ObjectActionConstants.STATUS_SUCCESS);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			_objectActionLocalService.updateStatus(
+				objectAction.getObjectActionId(),
+				ObjectActionConstants.STATUS_FAILED);
+		}
+	}
+
 	private void _executeObjectActions(
 			String className, long companyId, String objectActionTriggerKey,
 			JSONObject payloadJSONObject, long userId)
@@ -106,20 +183,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			return;
 		}
 
-		payloadJSONObject.put(
-			"companyId", companyId
-		).put(
-			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
-		).put(
-			"status", objectDefinition.getStatus()
-		).put(
-			"userId", userId
-		).put(
-			"userName", user.getFullName()
-		);
+		_updatePayloadJSONObject(objectDefinition, payloadJSONObject, user);
 
-		Set<Long> objectActionIds =
-			ObjectActionThreadLocal.getObjectActionIds();
 		Map<String, Object> variables =
 			ObjectEntryVariablesUtil.getActionVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
@@ -130,37 +195,27 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					objectDefinition.getObjectDefinitionId(),
 					objectActionTriggerKey)) {
 
-			try {
-				if (objectActionIds.contains(
-						objectAction.getObjectActionId()) ||
-					!_evaluateConditionExpression(
-						objectAction.getConditionExpression(), variables)) {
-
-					continue;
-				}
-
-				objectActionIds.add(objectAction.getObjectActionId());
-
-				ObjectActionExecutor objectActionExecutor =
-					_objectActionExecutorRegistry.getObjectActionExecutor(
-						objectAction.getObjectActionExecutorKey());
-
-				objectActionExecutor.execute(
-					companyId, objectAction.getParametersUnicodeProperties(),
-					payloadJSONObject, userId);
-
-				_objectActionLocalService.updateStatus(
-					objectAction.getObjectActionId(),
-					ObjectActionConstants.STATUS_SUCCESS);
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-
-				_objectActionLocalService.updateStatus(
-					objectAction.getObjectActionId(),
-					ObjectActionConstants.STATUS_FAILED);
-			}
+			_executeObjectAction(
+				objectAction, objectDefinition, payloadJSONObject, userId,
+				variables);
 		}
+	}
+
+	private void _updatePayloadJSONObject(
+		ObjectDefinition objectDefinition, JSONObject payloadJSONObject,
+		User user) {
+
+		payloadJSONObject.put(
+			"companyId", objectDefinition.getCompanyId()
+		).put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).put(
+			"status", objectDefinition.getStatus()
+		).put(
+			"userId", user.getUserId()
+		).put(
+			"userName", user.getFullName()
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

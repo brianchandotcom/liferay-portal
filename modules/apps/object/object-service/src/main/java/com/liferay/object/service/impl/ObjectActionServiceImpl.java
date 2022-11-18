@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Locale;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,8 +44,9 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 	@Override
 	public ObjectAction addObjectAction(
 			long objectDefinitionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<Locale, String> errorMessageMap,
+			Map<Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
@@ -51,7 +55,8 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 
 		return objectActionLocalService.addObjectAction(
 			getUserId(), objectDefinitionId, active, conditionExpression,
-			description, name, objectActionExecutorKey, objectActionTriggerKey,
+			description, errorMessageMap, labelMap, name,
+			objectActionExecutorKey, objectActionTriggerKey,
 			parametersUnicodeProperties);
 	}
 
@@ -86,8 +91,9 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 	@Override
 	public ObjectAction updateObjectAction(
 			long objectActionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<Locale, String> errorMessageMap,
+			Map<Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
@@ -99,9 +105,9 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return objectActionLocalService.updateObjectAction(
-			objectActionId, active, conditionExpression, description, name,
-			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			objectActionId, active, conditionExpression, description,
+			errorMessageMap, labelMap, name, objectActionExecutorKey,
+			objectActionTriggerKey, parametersUnicodeProperties);
 	}
 
 	@Reference(

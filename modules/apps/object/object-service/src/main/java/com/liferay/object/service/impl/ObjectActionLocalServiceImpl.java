@@ -22,9 +22,12 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
+import com.liferay.object.exception.ObjectActionErrorMessageException;
+import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
+import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -48,13 +51,17 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -75,14 +82,22 @@ public class ObjectActionLocalServiceImpl
 	@Override
 	public ObjectAction addObjectAction(
 			long userId, long objectDefinitionId, boolean active,
-			String conditionExpression, String description, String name,
-			String objectActionExecutorKey, String objectActionTriggerKey,
+			String conditionExpression, String description,
+			Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
+			String name, String objectActionExecutorKey,
+			String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
-		_validate(
-			conditionExpression, name, objectActionExecutorKey,
-			objectActionTriggerKey, parametersUnicodeProperties);
+		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
+		_validateLabel(labelMap);
+		_validateName(0, objectDefinitionId, name);
+		_validateObjectActionExecutorKey(objectActionExecutorKey);
+		_validateObjectActionTriggerKey(
+			conditionExpression, objectActionTriggerKey);
+		_validateParameters(
+			conditionExpression, objectActionExecutorKey,
+			parametersUnicodeProperties);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -101,6 +116,9 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setActive(active);
 		objectAction.setConditionExpression(conditionExpression);
 		objectAction.setDescription(description);
+		objectAction.setErrorMessageMap(
+			errorMessageMap, LocaleUtil.getSiteDefault());
+		objectAction.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectAction.setName(name);
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
@@ -141,6 +159,15 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectAction getObjectAction(
+			long objectDefinitionId, String name, String objectActionTriggerKey)
+		throws PortalException {
+
+		return objectActionPersistence.findByODI_A_N_OATK(
+			objectDefinitionId, true, name, objectActionTriggerKey);
+	}
+
+	@Override
 	public List<ObjectAction> getObjectActions(long objectDefinitionId) {
 		return objectActionPersistence.findByObjectDefinitionId(
 			objectDefinitionId);
@@ -158,14 +185,18 @@ public class ObjectActionLocalServiceImpl
 	@Override
 	public ObjectAction updateObjectAction(
 			long objectActionId, boolean active, String conditionExpression,
-			String description, String name, String objectActionExecutorKey,
-			String objectActionTriggerKey,
+			String description, Map<Locale, String> errorMessageMap,
+			Map<Locale, String> labelMap, String name,
+			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
-		_validate(
-			conditionExpression, name, objectActionExecutorKey,
-			objectActionTriggerKey, parametersUnicodeProperties);
+		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
+		_validateLabel(labelMap);
+		_validateObjectActionExecutorKey(objectActionExecutorKey);
+		_validateParameters(
+			conditionExpression, objectActionExecutorKey,
+			parametersUnicodeProperties);
 
 		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
 			objectActionId);
@@ -173,11 +204,30 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setActive(active);
 		objectAction.setConditionExpression(conditionExpression);
 		objectAction.setDescription(description);
-		objectAction.setName(name);
+		objectAction.setErrorMessageMap(
+			errorMessageMap, LocaleUtil.getSiteDefault());
+		objectAction.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
-		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
 		objectAction.setParameters(parametersUnicodeProperties.toString());
 		objectAction.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectAction.getObjectDefinitionId());
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			objectDefinition.isApproved()) {
+
+			return objectActionPersistence.update(objectAction);
+		}
+
+		_validateName(
+			objectActionId, objectDefinition.getObjectDefinitionId(), name);
+		_validateObjectActionTriggerKey(
+			conditionExpression, objectActionTriggerKey);
+
+		objectAction.setName(name);
+		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
 
 		return objectActionPersistence.update(objectAction);
 	}
@@ -195,15 +245,75 @@ public class ObjectActionLocalServiceImpl
 		return objectActionPersistence.update(objectAction);
 	}
 
-	private void _validate(
-			String conditionExpression, String name,
-			String objectActionExecutorKey, String objectActionTriggerKey,
-			UnicodeProperties parametersUnicodeProperties)
+	private void _validateErrorMessage(
+			Map<Locale, String> errorMessageMap, String objectActionTriggerKey)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_STAND_ALONE_ACTION) &&
+			((errorMessageMap == null) ||
+			 Validator.isNull(errorMessageMap.get(locale)))) {
+
+			throw new ObjectActionErrorMessageException(
+				"Error message is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateLabel(Map<Locale, String> labelMap)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918")) &&
+			((labelMap == null) || Validator.isNull(labelMap.get(locale)))) {
+
+			throw new ObjectActionLabelException(
+				"Label is null for locale " + locale.getDisplayName());
+		}
+	}
+
+	private void _validateName(
+			long objectActionId, long objectDefinitionId, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new ObjectActionNameException();
+			throw new ObjectActionNameException.MustNotBeNull();
 		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166918"))) {
+			return;
+		}
+
+		char[] nameCharArray = name.toCharArray();
+
+		for (char c : nameCharArray) {
+			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
+				throw new ObjectActionNameException.
+					MustOnlyContainLettersAndDigits();
+			}
+		}
+
+		if (nameCharArray.length > 41) {
+			throw new ObjectActionNameException.MustBeLessThan41Characters();
+		}
+
+		ObjectAction objectAction = objectActionPersistence.fetchByODI_N(
+			objectDefinitionId, name);
+
+		if ((objectAction != null) &&
+			(objectAction.getObjectActionId() != objectActionId)) {
+
+			throw new ObjectActionNameException.MustNotBeDuplicate(name);
+		}
+	}
+
+	private void _validateObjectActionExecutorKey(
+			String objectActionExecutorKey)
+		throws PortalException {
 
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
 				objectActionExecutorKey)) {
@@ -214,16 +324,16 @@ public class ObjectActionLocalServiceImpl
 						objectActionExecutorKey);
 			}
 		}
+	}
 
-		if (!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD) &&
-			!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE) &&
-			!Objects.equals(
-				objectActionTriggerKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE)) {
+	private void _validateObjectActionTriggerKey(
+			String conditionExpression, String objectActionTriggerKey)
+		throws PortalException {
+
+		if (!ListUtil.exists(
+				ObjectActionTriggerUtil.getDefaultObjectActionTriggers(),
+				objectActionTrigger -> StringUtil.equals(
+					objectActionTrigger.getKey(), objectActionTriggerKey))) {
 
 			if (!_messageBus.hasDestination(objectActionTriggerKey)) {
 				throw new ObjectActionTriggerKeyException();
@@ -233,6 +343,12 @@ public class ObjectActionLocalServiceImpl
 				throw new ObjectActionConditionExpressionException();
 			}
 		}
+	}
+
+	private void _validateParameters(
+			String conditionExpression, String objectActionExecutorKey,
+			UnicodeProperties parametersUnicodeProperties)
+		throws PortalException {
 
 		Map<String, Object> errorMessageKeys = new HashMap<>();
 

@@ -139,6 +139,16 @@ public class ObjectActionSerDes {
 			sb.append("\"");
 		}
 
+		if (objectAction.getErrorMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessage\": ");
+
+			sb.append(_toJSON(objectAction.getErrorMessage()));
+		}
+
 		if (objectAction.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +157,16 @@ public class ObjectActionSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(objectAction.getId());
+		}
+
+		if (objectAction.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append(_toJSON(objectAction.getLabel()));
 		}
 
 		if (objectAction.getName() != null) {
@@ -282,11 +302,26 @@ public class ObjectActionSerDes {
 				"description", String.valueOf(objectAction.getDescription()));
 		}
 
+		if (objectAction.getErrorMessage() == null) {
+			map.put("errorMessage", null);
+		}
+		else {
+			map.put(
+				"errorMessage", String.valueOf(objectAction.getErrorMessage()));
+		}
+
 		if (objectAction.getId() == null) {
 			map.put("id", null);
 		}
 		else {
 			map.put("id", String.valueOf(objectAction.getId()));
+		}
+
+		if (objectAction.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(objectAction.getLabel()));
 		}
 
 		if (objectAction.getName() == null) {
@@ -386,10 +421,24 @@ public class ObjectActionSerDes {
 					objectAction.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "errorMessage")) {
+				if (jsonParserFieldValue != null) {
+					objectAction.setErrorMessage(
+						(Map)ObjectActionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					objectAction.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					objectAction.setLabel(
+						(Map)ObjectActionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

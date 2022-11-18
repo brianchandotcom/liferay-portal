@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 
@@ -52,6 +53,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1717,6 +1719,271 @@ public class ObjectActionPersistenceImpl
 		_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2 =
 			"objectAction.objectDefinitionId = ?";
 
+	private FinderPath _finderPathFetchByODI_N;
+	private FinderPath _finderPathCountByODI_N;
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction findByODI_N(long objectDefinitionId, String name)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = fetchByODI_N(objectDefinitionId, name);
+
+		if (objectAction == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("objectDefinitionId=");
+			sb.append(objectDefinitionId);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectActionException(sb.toString());
+		}
+
+		return objectAction;
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction fetchByODI_N(long objectDefinitionId, String name) {
+		return fetchByODI_N(objectDefinitionId, name, true);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction fetchByODI_N(
+		long objectDefinitionId, String name, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {objectDefinitionId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByODI_N, finderArgs, this);
+		}
+
+		if (result instanceof ObjectAction) {
+			ObjectAction objectAction = (ObjectAction)result;
+
+			if ((objectDefinitionId != objectAction.getObjectDefinitionId()) ||
+				!Objects.equals(name, objectAction.getName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBJECTACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI_N_OBJECTDEFINITIONID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_ODI_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				List<ObjectAction> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByODI_N, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									objectDefinitionId, name
+								};
+							}
+
+							_log.warn(
+								"ObjectActionPersistenceImpl.fetchByODI_N(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectAction objectAction = list.get(0);
+
+					result = objectAction;
+
+					cacheResult(objectAction);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectAction)result;
+		}
+	}
+
+	/**
+	 * Removes the object action where objectDefinitionId = &#63; and name = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the object action that was removed
+	 */
+	@Override
+	public ObjectAction removeByODI_N(long objectDefinitionId, String name)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = findByODI_N(objectDefinitionId, name);
+
+		return remove(objectAction);
+	}
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63; and name = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the number of matching object actions
+	 */
+	@Override
+	public int countByODI_N(long objectDefinitionId, String name) {
+		name = Objects.toString(name, "");
+
+		FinderPath finderPath = _finderPathCountByODI_N;
+
+		Object[] finderArgs = new Object[] {objectDefinitionId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI_N_OBJECTDEFINITIONID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_ODI_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ODI_N_OBJECTDEFINITIONID_2 =
+		"objectAction.objectDefinitionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI_N_NAME_2 =
+		"objectAction.name = ?";
+
+	private static final String _FINDER_COLUMN_ODI_N_NAME_3 =
+		"(objectAction.name IS NULL OR objectAction.name = '')";
+
 	private FinderPath _finderPathWithPaginationFindByO_A_OATK;
 	private FinderPath _finderPathWithoutPaginationFindByO_A_OATK;
 	private FinderPath _finderPathCountByO_A_OATK;
@@ -2362,6 +2629,362 @@ public class ObjectActionPersistenceImpl
 		_FINDER_COLUMN_O_A_OATK_OBJECTACTIONTRIGGERKEY_3 =
 			"(objectAction.objectActionTriggerKey IS NULL OR objectAction.objectActionTriggerKey = '')";
 
+	private FinderPath _finderPathFetchByODI_A_N_OATK;
+	private FinderPath _finderPathCountByODI_A_N_OATK;
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction findByODI_A_N_OATK(
+			long objectDefinitionId, boolean active, String name,
+			String objectActionTriggerKey)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = fetchByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey);
+
+		if (objectAction == null) {
+			StringBundler sb = new StringBundler(10);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("objectDefinitionId=");
+			sb.append(objectDefinitionId);
+
+			sb.append(", active=");
+			sb.append(active);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append(", objectActionTriggerKey=");
+			sb.append(objectActionTriggerKey);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectActionException(sb.toString());
+		}
+
+		return objectAction;
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction fetchByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey) {
+
+		return fetchByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey, true);
+	}
+
+	/**
+	 * Returns the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	@Override
+	public ObjectAction fetchByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+		objectActionTriggerKey = Objects.toString(objectActionTriggerKey, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				objectDefinitionId, active, name, objectActionTriggerKey
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByODI_A_N_OATK, finderArgs, this);
+		}
+
+		if (result instanceof ObjectAction) {
+			ObjectAction objectAction = (ObjectAction)result;
+
+			if ((objectDefinitionId != objectAction.getObjectDefinitionId()) ||
+				(active != objectAction.isActive()) ||
+				!Objects.equals(name, objectAction.getName()) ||
+				!Objects.equals(
+					objectActionTriggerKey,
+					objectAction.getObjectActionTriggerKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_SELECT_OBJECTACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI_A_N_OATK_OBJECTDEFINITIONID_2);
+
+			sb.append(_FINDER_COLUMN_ODI_A_N_OATK_ACTIVE_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_NAME_2);
+			}
+
+			boolean bindObjectActionTriggerKey = false;
+
+			if (objectActionTriggerKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_OBJECTACTIONTRIGGERKEY_3);
+			}
+			else {
+				bindObjectActionTriggerKey = true;
+
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_OBJECTACTIONTRIGGERKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId);
+
+				queryPos.add(active);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindObjectActionTriggerKey) {
+					queryPos.add(objectActionTriggerKey);
+				}
+
+				List<ObjectAction> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByODI_A_N_OATK, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									objectDefinitionId, active, name,
+									objectActionTriggerKey
+								};
+							}
+
+							_log.warn(
+								"ObjectActionPersistenceImpl.fetchByODI_A_N_OATK(long, boolean, String, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectAction objectAction = list.get(0);
+
+					result = objectAction;
+
+					cacheResult(objectAction);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectAction)result;
+		}
+	}
+
+	/**
+	 * Removes the object action where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the object action that was removed
+	 */
+	@Override
+	public ObjectAction removeByODI_A_N_OATK(
+			long objectDefinitionId, boolean active, String name,
+			String objectActionTriggerKey)
+		throws NoSuchObjectActionException {
+
+		ObjectAction objectAction = findByODI_A_N_OATK(
+			objectDefinitionId, active, name, objectActionTriggerKey);
+
+		return remove(objectAction);
+	}
+
+	/**
+	 * Returns the number of object actions where objectDefinitionId = &#63; and active = &#63; and name = &#63; and objectActionTriggerKey = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param active the active
+	 * @param name the name
+	 * @param objectActionTriggerKey the object action trigger key
+	 * @return the number of matching object actions
+	 */
+	@Override
+	public int countByODI_A_N_OATK(
+		long objectDefinitionId, boolean active, String name,
+		String objectActionTriggerKey) {
+
+		name = Objects.toString(name, "");
+		objectActionTriggerKey = Objects.toString(objectActionTriggerKey, "");
+
+		FinderPath finderPath = _finderPathCountByODI_A_N_OATK;
+
+		Object[] finderArgs = new Object[] {
+			objectDefinitionId, active, name, objectActionTriggerKey
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_OBJECTACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI_A_N_OATK_OBJECTDEFINITIONID_2);
+
+			sb.append(_FINDER_COLUMN_ODI_A_N_OATK_ACTIVE_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_NAME_2);
+			}
+
+			boolean bindObjectActionTriggerKey = false;
+
+			if (objectActionTriggerKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_OBJECTACTIONTRIGGERKEY_3);
+			}
+			else {
+				bindObjectActionTriggerKey = true;
+
+				sb.append(_FINDER_COLUMN_ODI_A_N_OATK_OBJECTACTIONTRIGGERKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId);
+
+				queryPos.add(active);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				if (bindObjectActionTriggerKey) {
+					queryPos.add(objectActionTriggerKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_ODI_A_N_OATK_OBJECTDEFINITIONID_2 =
+			"objectAction.objectDefinitionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI_A_N_OATK_ACTIVE_2 =
+		"objectAction.active = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI_A_N_OATK_NAME_2 =
+		"objectAction.name = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI_A_N_OATK_NAME_3 =
+		"(objectAction.name IS NULL OR objectAction.name = '') AND ";
+
+	private static final String
+		_FINDER_COLUMN_ODI_A_N_OATK_OBJECTACTIONTRIGGERKEY_2 =
+			"objectAction.objectActionTriggerKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_ODI_A_N_OATK_OBJECTACTIONTRIGGERKEY_3 =
+			"(objectAction.objectActionTriggerKey IS NULL OR objectAction.objectActionTriggerKey = '')";
+
 	public ObjectActionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2387,6 +3010,21 @@ public class ObjectActionPersistenceImpl
 	public void cacheResult(ObjectAction objectAction) {
 		entityCache.putResult(
 			ObjectActionImpl.class, objectAction.getPrimaryKey(), objectAction);
+
+		finderCache.putResult(
+			_finderPathFetchByODI_N,
+			new Object[] {
+				objectAction.getObjectDefinitionId(), objectAction.getName()
+			},
+			objectAction);
+
+		finderCache.putResult(
+			_finderPathFetchByODI_A_N_OATK,
+			new Object[] {
+				objectAction.getObjectDefinitionId(), objectAction.isActive(),
+				objectAction.getName(), objectAction.getObjectActionTriggerKey()
+			},
+			objectAction);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -2455,6 +3093,30 @@ public class ObjectActionPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(ObjectActionImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		ObjectActionModelImpl objectActionModelImpl) {
+
+		Object[] args = new Object[] {
+			objectActionModelImpl.getObjectDefinitionId(),
+			objectActionModelImpl.getName()
+		};
+
+		finderCache.putResult(_finderPathCountByODI_N, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByODI_N, args, objectActionModelImpl);
+
+		args = new Object[] {
+			objectActionModelImpl.getObjectDefinitionId(),
+			objectActionModelImpl.isActive(), objectActionModelImpl.getName(),
+			objectActionModelImpl.getObjectActionTriggerKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByODI_A_N_OATK, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByODI_A_N_OATK, args, objectActionModelImpl);
 	}
 
 	/**
@@ -2639,6 +3301,8 @@ public class ObjectActionPersistenceImpl
 
 		entityCache.putResult(
 			ObjectActionImpl.class, objectActionModelImpl, false, true);
+
+		cacheUniqueFindersCache(objectActionModelImpl);
 
 		if (isNew) {
 			objectAction.setNew(false);
@@ -2978,6 +3642,16 @@ public class ObjectActionPersistenceImpl
 			"countByObjectDefinitionId", new String[] {Long.class.getName()},
 			new String[] {"objectDefinitionId"}, false);
 
+		_finderPathFetchByODI_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"objectDefinitionId", "name"}, true);
+
+		_finderPathCountByODI_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"objectDefinitionId", "name"}, false);
+
 		_finderPathWithPaginationFindByO_A_OATK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_A_OATK",
 			new String[] {
@@ -3009,6 +3683,30 @@ public class ObjectActionPersistenceImpl
 			},
 			new String[] {
 				"objectDefinitionId", "active_", "objectActionTriggerKey"
+			},
+			false);
+
+		_finderPathFetchByODI_A_N_OATK = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByODI_A_N_OATK",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), String.class.getName()
+			},
+			new String[] {
+				"objectDefinitionId", "active_", "name",
+				"objectActionTriggerKey"
+			},
+			true);
+
+		_finderPathCountByODI_A_N_OATK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_A_N_OATK",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName(), String.class.getName()
+			},
+			new String[] {
+				"objectDefinitionId", "active_", "name",
+				"objectActionTriggerKey"
 			},
 			false);
 

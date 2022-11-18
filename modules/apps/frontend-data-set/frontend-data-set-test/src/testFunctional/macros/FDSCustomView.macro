@@ -20,7 +20,7 @@ definition {
 
 	macro assertFilterSummaryLabel {
 		AssertElementPresent(
-			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
+			locator1 = "Fron	tendDataSet#FILTER_SUMMARY_LABEL",
 			value1 = "${key_filter}");
 	}
 
@@ -49,7 +49,7 @@ definition {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
-			key_itemName = "Save View As",
+			key_itemName = "Save View As...",
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 
 		Type(
@@ -127,4 +127,9 @@ definition {
 			value1 = "${key_itemName}");
 	}
 
+	macro assertMenuItem {
+		AssertElementPresent(
+				key_itemName = "${key_menuItem}",
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+	}
 }

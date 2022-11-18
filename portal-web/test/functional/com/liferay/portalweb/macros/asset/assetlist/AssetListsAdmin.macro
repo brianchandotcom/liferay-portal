@@ -658,11 +658,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
-
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

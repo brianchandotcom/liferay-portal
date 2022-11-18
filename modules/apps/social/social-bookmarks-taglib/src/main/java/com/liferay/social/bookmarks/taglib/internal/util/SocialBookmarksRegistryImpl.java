@@ -19,11 +19,8 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
@@ -98,28 +95,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 		_serviceTrackerList.close();
 		_serviceTrackerMap.close();
 	}
-
-	private boolean _isValidDeprecatedSocialBookmark(String type) {
-		String icon = PropsUtil.get(_SOCIAL_BOOKMARK_ICON, new Filter(type));
-		String jspPath = PropsUtil.get(_SOCIAL_BOOKMARK_JSP, new Filter(type));
-		String postUrl = PropsUtil.get(
-			_SOCIAL_BOOKMARK_POST_URL, new Filter(type));
-
-		if (Validator.isNotNull(postUrl) &&
-			(Validator.isNotNull(icon) || Validator.isNotNull(jspPath))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final String _SOCIAL_BOOKMARK_ICON = "social.bookmark.icon";
-
-	private static final String _SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
-
-	private static final String _SOCIAL_BOOKMARK_POST_URL =
-		"social.bookmark.post.url";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialBookmarksRegistryImpl.class);

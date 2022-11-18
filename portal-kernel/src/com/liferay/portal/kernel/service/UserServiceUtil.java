@@ -752,6 +752,14 @@ public class UserServiceUtil {
 		getService().deleteUser(userId);
 	}
 
+	public static User fetchUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchUserByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static List<User> getCompanyUsers(long companyId, int start, int end)
 		throws PortalException {
 

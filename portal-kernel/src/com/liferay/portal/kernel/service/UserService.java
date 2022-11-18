@@ -658,6 +658,11 @@ public interface UserService extends BaseService {
 	public void deleteUser(long userId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public User fetchUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getCompanyUsers(long companyId, int start, int end)
 		throws PortalException;
 

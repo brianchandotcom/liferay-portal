@@ -777,6 +777,15 @@ public class UserServiceWrapper
 	}
 
 	@Override
+	public User fetchUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userService.fetchUserByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public java.util.List<User> getCompanyUsers(
 			long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

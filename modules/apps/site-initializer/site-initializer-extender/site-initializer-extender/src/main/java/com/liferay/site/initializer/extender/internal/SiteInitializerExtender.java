@@ -44,6 +44,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -139,14 +140,14 @@ public class SiteInitializerExtender
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
+				_objectEntryLocalService, _objectFieldResourceFactory,
 				_objectRelationshipLocalService,
-				_objectRelationshipResourceFactory, _objectEntryLocalService,
-				_organizationLocalService, _organizationResourceFactory,
-				_portal, _resourceActionLocalService,
-				_resourcePermissionLocalService, _roleLocalService,
-				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService, null, _settingsFactory,
-				_siteNavigationMenuItemLocalService,
+				_objectRelationshipResourceFactory, _organizationLocalService,
+				_organizationResourceFactory, _portal,
+				_resourceActionLocalService, _resourcePermissionLocalService,
+				_roleLocalService, _sapEntryLocalService,
+				_segmentsEntryLocalService, _segmentsExperienceLocalService,
+				null, _settingsFactory, _siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
@@ -249,13 +250,13 @@ public class SiteInitializerExtender
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
+				_objectEntryLocalService, _objectFieldResourceFactory,
 				_objectRelationshipLocalService,
-				_objectRelationshipResourceFactory, _objectEntryLocalService,
-				_organizationLocalService, _organizationResourceFactory,
-				_portal, _resourceActionLocalService,
-				_resourcePermissionLocalService, _roleLocalService,
-				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService,
+				_objectRelationshipResourceFactory, _organizationLocalService,
+				_organizationResourceFactory, _portal,
+				_resourceActionLocalService, _resourcePermissionLocalService,
+				_roleLocalService, _sapEntryLocalService,
+				_segmentsEntryLocalService, _segmentsExperienceLocalService,
 				ProxyUtil.newDelegateProxyInstance(
 					ServletContext.class.getClassLoader(), ServletContext.class,
 					new FileBackedServletContextDelegate(
@@ -390,6 +391,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldResource.Factory _objectFieldResourceFactory;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

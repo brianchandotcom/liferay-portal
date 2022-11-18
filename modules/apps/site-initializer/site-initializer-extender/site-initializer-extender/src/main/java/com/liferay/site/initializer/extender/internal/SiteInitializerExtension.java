@@ -44,6 +44,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -124,9 +125,10 @@ public class SiteInitializerExtension {
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectFieldResource.Factory objectFieldResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
-		ObjectEntryLocalService objectEntryLocalService,
 		OrganizationLocalService organizationLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
@@ -172,11 +174,12 @@ public class SiteInitializerExtension {
 			listTypeDefinitionResourceFactory, listTypeEntryResource,
 			listTypeEntryResourceFactory, notificationTemplateResourceFactory,
 			objectActionLocalService, objectDefinitionLocalService,
-			objectDefinitionResourceFactory, objectRelationshipLocalService,
-			objectRelationshipResourceFactory, objectEntryLocalService,
-			organizationLocalService, organizationResourceFactory, portal,
-			resourceActionLocalService, resourcePermissionLocalService,
-			roleLocalService, sapEntryLocalService, segmentsEntryLocalService,
+			objectDefinitionResourceFactory, objectEntryLocalService,
+			objectFieldResourceFactory, objectRelationshipLocalService,
+			objectRelationshipResourceFactory, organizationLocalService,
+			organizationResourceFactory, portal, resourceActionLocalService,
+			resourcePermissionLocalService, roleLocalService,
+			sapEntryLocalService, segmentsEntryLocalService,
 			segmentsExperienceLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,

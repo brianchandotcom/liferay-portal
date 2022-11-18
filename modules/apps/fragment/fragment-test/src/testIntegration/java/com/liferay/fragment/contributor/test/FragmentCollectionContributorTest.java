@@ -151,6 +151,7 @@ public class FragmentCollectionContributorTest {
 
 			Assert.assertEquals(
 				"EDITABLE 1", editable1JSONObject.get("defaultValue"));
+
 			Assert.assertTrue(
 				editableFragmentEntryProcessorJSONObject.has("editable-2"));
 

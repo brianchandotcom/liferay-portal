@@ -216,7 +216,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 							<span aria-hidden="true">...</span>
 
-							<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-key-to-navigate" /></span>
+							<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 						</a>
 
 						<div class="dropdown-menu dropdown-menu-top-center">
@@ -257,7 +257,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 								<span aria-hidden="true">...</span>
 
-								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-key-to-navigate" /></span>
+								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 							</a>
 
 							<div class="dropdown-menu dropdown-menu-top-center">
@@ -303,7 +303,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 								<span aria-hidden="true">...</span>
 
-								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-key-to-navigate" /></span>
+								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 							</a>
 
 							<div class="dropdown-menu dropdown-menu-top-center">

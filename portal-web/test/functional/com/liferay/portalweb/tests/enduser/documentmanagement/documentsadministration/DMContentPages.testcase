@@ -108,9 +108,10 @@ definition {
 	}
 
 	@description = "This test ensures that user can edit document in folder via a content page."
+	@e2etest
 	@priority = "5"
-	@refactorneeded
-	test EditFolderDocument {
+	@refactordone
+	test CanEditDocumentInFolder {
 		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
@@ -136,13 +137,11 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "DM Folder Name",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

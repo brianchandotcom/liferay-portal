@@ -11,7 +11,8 @@
 						"showAccountMenu": true,
 						"showLanguageMenu": true,
 						"showSearch": true,
-						"showSiteName": true
+						"showSiteName": true,
+						"siteNavigationMenuId": 0
 					},
 					"fragmentFields": [
 						{
@@ -389,6 +390,20 @@
 												}
 											}
 										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-spacer"
+									},
+									"fragmentConfig": {
+										"height": "py-1"
+									},
+									"fragmentFields": [
 									],
 									"indexed": true
 								},

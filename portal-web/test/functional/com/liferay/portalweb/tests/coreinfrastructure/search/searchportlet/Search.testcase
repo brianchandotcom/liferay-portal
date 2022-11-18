@@ -312,6 +312,53 @@ definition {
 		Portlet.viewCannotAddPG(portletName = "Search Insights");
 	}
 
+	@description = "This is a use case for LPS-117767."
+	@priority = "3"
+	test AssertPaginationResetsAfterSelectingNewFacet {
+		var categoryId1 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 1",
+			vocabularyName = "Topic");
+		var categoryId2 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 2",
+			vocabularyName = "Topic");
+
+		for (var count : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId1}",
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title 1_${count}",
+				groupName = "Guest",
+				mimeType = "image/jpg",
+				sourceFileName = "Document_${count}.jpg");
+		}
+
+		for (var count : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId2}",
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title 2_${count}",
+				groupName = "Guest",
+				mimeType = "text/plain",
+				sourceFileName = "Document_${count}.txt");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+
+		SearchResultPortlet.configureSearchResults(paginationDelta = "2");
+
+		Refresh();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 2");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 1");
+
+		Pagination.viewResults(results = "Showing 1 to 2 of 5 entries.");
+	}
+
 	@description = "This is a use case for LPS-130227."
 	@priority = "4"
 	test AssertPaginationURLforHTTPS {
@@ -731,52 +778,6 @@ definition {
 			userLoginFullName = "Test Test");
 
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
-	}
-
-	@priority = "3"
-	test CheckIfSelectingNewFacetsRefreshPagination {
-		var categoryId1 = JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Category Name 1",
-			vocabularyName = "Topic");
-		var categoryId2 = JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Category Name 2",
-			vocabularyName = "Topic");
-
-		for (var count : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId1}",
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title 1_${count}",
-				groupName = "Guest",
-				mimeType = "image/jpg",
-				sourceFileName = "Document_${count}.jpg");
-		}
-
-		for (var count : list "1,2,3") {
-			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId2}",
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title 2_${count}",
-				groupName = "Guest",
-				mimeType = "text/plain",
-				sourceFileName = "Document_${count}.txt");
-		}
-
-		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
-
-		SearchResultPortlet.configureSearchResults(paginationDelta = "2");
-
-		Refresh();
-
-		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 2");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 1");
-
-		Pagination.viewResults(results = "Showing 1 to 2 of 5 entries.");
 	}
 
 	@priority = "4"

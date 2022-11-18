@@ -252,6 +252,10 @@ public class DropZoneFragmentEntryLinkListener
 			fragmentDropZoneLayoutStructureItemsMap = new LinkedHashMap<>();
 
 		List<FragmentDropZoneLayoutStructureItem>
+			noExistingIdFragmentDropZoneLayoutStructureItems =
+				new LinkedList<>();
+
+		List<FragmentDropZoneLayoutStructureItem>
 			noIdFragmentDropZoneLayoutStructureItems = new LinkedList<>();
 
 		for (String childrenItemId : childrenItemIds) {
@@ -271,12 +275,16 @@ public class DropZoneFragmentEntryLinkListener
 			String fragmentDropZoneId =
 				fragmentDropZoneLayoutStructureItem.getFragmentDropZoneId();
 
-			if (elementIds.contains(fragmentDropZoneId)) {
+			if (Validator.isNull(fragmentDropZoneId)) {
+				noIdFragmentDropZoneLayoutStructureItems.add(
+					fragmentDropZoneLayoutStructureItem);
+			}
+			else if (elementIds.contains(fragmentDropZoneId)) {
 				fragmentDropZoneLayoutStructureItemsMap.put(
 					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
 			}
 			else {
-				noIdFragmentDropZoneLayoutStructureItems.add(
+				noExistingIdFragmentDropZoneLayoutStructureItems.add(
 					fragmentDropZoneLayoutStructureItem);
 			}
 		}
@@ -321,6 +329,15 @@ public class DropZoneFragmentEntryLinkListener
 						parentLayoutStructureItem.getItemId(), index);
 
 			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
+		}
+
+		for (FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem :
+					noExistingIdFragmentDropZoneLayoutStructureItems) {
+
+			layoutStructure.markLayoutStructureItemForDeletion(
+				fragmentDropZoneLayoutStructureItem.getItemId(),
+				Collections.emptyList());
 		}
 
 		for (FragmentDropZoneLayoutStructureItem

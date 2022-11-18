@@ -26,12 +26,15 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 
 		<%
 		for (PanelCategory childPanelCategory : childPanelCategories) {
+			boolean include = childPanelCategory.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 		%>
 
-			<liferay-application-list:panel-category-content
-				panelCategory="<%= childPanelCategory %>"
-				showOpen="<%= childPanelCategories.size() == 1 %>"
-			/>
+			<c:if test="<%= !include %>">
+				<liferay-application-list:panel-category
+					panelCategory="<%= childPanelCategory %>"
+					showOpen="<%= childPanelCategories.size() == 1 %>"
+				/>
+			</c:if>
 
 		<%
 		}

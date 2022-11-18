@@ -405,16 +405,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoEllipsisMenuItemInItemSelector {
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
-
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-	}
-
 	macro gotoEntry {
 		Click(
 			key_title = "${assetListName}",
@@ -633,11 +623,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
-
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -723,11 +709,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
-
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

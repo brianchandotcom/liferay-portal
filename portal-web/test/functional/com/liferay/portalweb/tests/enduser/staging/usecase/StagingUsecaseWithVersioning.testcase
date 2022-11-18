@@ -1076,8 +1076,6 @@ definition {
 
 	@priority = "4"
 	test ViewPublishedContentAfterStagingUndo {
-		property portal.release = "false";
-
 		Portlet.addPG(portletName = "Calendar");
 
 		Staging.gotoPublishToLive();

@@ -212,8 +212,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test CanDeleteSubFolder {
+	@refactordone
+	test CanDeleteSubFolderInSite {
 		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 

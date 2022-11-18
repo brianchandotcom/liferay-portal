@@ -524,13 +524,13 @@ definition {
 			groupName = "${groupName}",
 			name = "${dmFolderName}");
 
-		if ("${displayStyle}" == "card" ) {
+		if ("${displayStyle}" == "card") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_folder&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}&_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_Rag8ovutcFBP_displayStyle=icon");
 		}
-		else if ("${displayStyle}" == "list" ) {
+		else if ("${displayStyle}" == "list") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_folder&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}&_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_Rag8ovutcFBP_displayStyle=descriptive");
 		}
-		else if ("${displayStyle}" == "table" ) {
+		else if ("${displayStyle}" == "table") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_folder&_com_liferay_document_library_web_portlet_DLAdminPortlet_folderId=${folderId}&_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_Rag8ovutcFBP_displayStyle=list");
 		}
 		else {

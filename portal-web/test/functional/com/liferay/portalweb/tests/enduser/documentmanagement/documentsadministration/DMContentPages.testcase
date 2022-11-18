@@ -161,8 +161,8 @@ definition {
 
 	@description = "This test covers LPS-127683. It ensures that the shortcut cannot be restored before the shortcut target is restored."
 	@priority = "3"
-	@refactorneeded
-	test RestoreShortcutAfterDeletingTarget {
+	@refactordone
+	test CanRestoreShortcutAfterDeletingTarget {
 		property custom.properties = "dl.actions.visible=true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -174,19 +174,11 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addWidget(portletName = "Documents and Media");
-
-		PageEditor.publish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			widgetName = "Documents and Media");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -195,22 +187,15 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		DMDocument.addDMShortcutPG(
-			contentPage = "Test Content Page Name",
+		JSONFileShortcut.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
-			siteName = "Site Name");
+			groupName = "Test Site Name");
+
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
-
-		DMDocument.viewDefault();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 

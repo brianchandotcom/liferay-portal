@@ -99,7 +99,7 @@ definition {
 			key_fieldName = "Name",
 			locator1 = "Button#LOCALIZATION");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -109,7 +109,7 @@ definition {
 			key_fieldName = "Description",
 			locator1 = "Button#LOCALIZATION");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -121,7 +121,7 @@ definition {
 
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -131,7 +131,7 @@ definition {
 
 		Click(locator1 = "Button#LOCALIZATION_GENERIC_2");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -145,7 +145,7 @@ definition {
 
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -155,7 +155,7 @@ definition {
 
 		Click(locator1 = "Button#LOCALIZATION_GENERIC_2");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -226,7 +226,7 @@ definition {
 			key_fieldName = "Name",
 			locator1 = "Button#LOCALIZATION");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",
@@ -236,7 +236,7 @@ definition {
 			key_fieldName = "Description",
 			locator1 = "Button#LOCALIZATION");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",
 			localizationName2 = "es-ES",
 			localizationName3 = "ja-JP",

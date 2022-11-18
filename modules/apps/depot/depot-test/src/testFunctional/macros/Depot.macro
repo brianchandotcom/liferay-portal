@@ -797,24 +797,6 @@ definition {
 		}
 	}
 
-	macro view4LanguagesOrder {
-		AssertTextEquals.assertPartialText(
-			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_1",
-			value1 = "${localizationName1}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_2",
-			value1 = "${localizationName2}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_3",
-			value1 = "${localizationName3}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_4",
-			value1 = "${localizationName4}");
-	}
-
 	macro viewApplication {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -1041,7 +1023,7 @@ definition {
 	macro viewLanguageOrderInWebContent {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "${localizationName1}",
 			localizationName2 = "${localizationName2}",
 			localizationName3 = "${localizationName3}",
@@ -1053,7 +1035,7 @@ definition {
 			key_portletName = "JournalPortlet_description",
 			locator1 = "Button#LANGUAGE_DROPDOWN");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "${localizationName1}",
 			localizationName2 = "${localizationName2}",
 			localizationName3 = "${localizationName3}",
@@ -1065,11 +1047,29 @@ definition {
 			key_portletName = "JournalPortlet_friendlyURLMenu",
 			locator1 = "Button#LANGUAGE_DROPDOWN");
 
-		Depot.view4LanguagesOrder(
+		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "${localizationName1}",
 			localizationName2 = "${localizationName2}",
 			localizationName3 = "${localizationName3}",
 			localizationName4 = "${localizationName4}");
+	}
+
+	macro viewLanguageSelectionOrder {
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_1",
+			value1 = "${localizationName1}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_2",
+			value1 = "${localizationName2}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_3",
+			value1 = "${localizationName3}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_4",
+			value1 = "${localizationName4}");
 	}
 
 	macro viewMember {

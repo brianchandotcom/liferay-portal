@@ -3875,7 +3875,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-09-22 16:39:02</current-version-publish-date>
-				<latest-version-publish-date>2022-09-22 16:39:02</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 15:46:46</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.scheduler.quartz.jar!org.quartz.jar</file-name>
@@ -4907,7 +4907,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-07-08 23:32:47</current-version-publish-date>
-				<latest-version-publish-date>2022-10-06 21:10:10</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 21:52:40</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!commons-codec.jar</file-name>
@@ -5085,7 +5085,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 22:22:38</current-version-publish-date>
-				<latest-version-publish-date>2022-11-07 20:54:59</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-18 01:51:51</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-http-client-apache-v2.jar</file-name>
@@ -5180,7 +5180,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-23 06:27:48</current-version-publish-date>
-				<latest-version-publish-date>2022-10-19 23:40:37</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 22:46:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!guava.jar</file-name>
@@ -5306,7 +5306,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 23:07:49</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 16:35:47</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 22:07:29</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java-util.jar</file-name>
@@ -5362,7 +5362,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 21:30:32</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 21:38:14</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -5376,7 +5376,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 21:31:43</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 21:39:04</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -5390,7 +5390,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 20:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 21:30:29</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 21:39:07</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -6591,7 +6591,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-11-18 23:49:34</current-version-publish-date>
-				<latest-version-publish-date>2022-11-10 16:41:18</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 20:18:13</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.segments.content.targeting.upgrade.jar!commons-lang3.jar</file-name>
@@ -7272,7 +7272,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-07-08 23:32:47</current-version-publish-date>
-				<latest-version-publish-date>2022-10-06 21:10:10</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 21:52:40</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!commons-codec.jar</file-name>
@@ -7450,7 +7450,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 22:22:38</current-version-publish-date>
-				<latest-version-publish-date>2022-11-07 20:54:59</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-18 01:51:51</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!google-http-client-apache-v2.jar</file-name>
@@ -7545,7 +7545,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-23 06:27:48</current-version-publish-date>
-				<latest-version-publish-date>2022-10-19 23:40:37</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-16 22:46:47</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!guava.jar</file-name>
@@ -7685,7 +7685,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 23:07:49</current-version-publish-date>
-				<latest-version-publish-date>2022-11-15 16:35:47</latest-version-publish-date>
+				<latest-version-publish-date>2022-11-17 22:07:29</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!protobuf-java-util.jar</file-name>

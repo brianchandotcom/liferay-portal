@@ -33,6 +33,7 @@ definition {
 	@uitest
 	test AddFragmentIntoDropdownPanel {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Dropdown#AddFragmentIntoDropdownPanel";
 
 		task ("Add a custom master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(

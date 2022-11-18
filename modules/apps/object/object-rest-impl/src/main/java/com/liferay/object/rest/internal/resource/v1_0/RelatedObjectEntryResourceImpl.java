@@ -24,9 +24,9 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.object.util.JaxRsApplicationDescriptorUtil;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
@@ -303,10 +303,11 @@ public class RelatedObjectEntryResourceImpl
 					getSystemObjectDefinitionMetadata(
 						systemObjectDefinition.getName());
 
+			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+				systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 			if (StringUtil.equals(
-					JaxRsApplicationDescriptorUtil.getRESTContextPath(
-						systemObjectDefinitionMetadata.
-							getJaxRsApplicationDescriptor()),
+					jaxRsApplicationDescriptor.getRESTContextPath(),
 					restContextPath)) {
 
 				return systemObjectDefinitionMetadata;

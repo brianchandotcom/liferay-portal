@@ -16,11 +16,17 @@ package com.liferay.notification.internal.type;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.constants.NotificationTermEvaluatorConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateFromException;
@@ -49,29 +55,44 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.templateparser.TemplateNode;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.template.transformer.TemplateNodeFactory;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -133,7 +154,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		NotificationTemplate notificationTemplate =
 			notificationContext.getNotificationTemplate();
 
-		String body = formatLocalizedContent(
+		String body = _formatBody(
 			notificationTemplate.getBodyMap(), notificationContext);
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
@@ -354,6 +375,81 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 	}
 
+	private String _formatBody(
+			Map<Locale, String> bodyMap,
+			NotificationContext notificationContext)
+		throws PortalException {
+
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		if (Objects.equals(
+				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+				notificationTemplate.getEditorType())) {
+
+			return formatLocalizedContent(bodyMap, notificationContext);
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162598"))) {
+			return StringPool.BLANK;
+		}
+
+		String body = notificationTemplate.getBody(userLocale);
+
+		if (Validator.isNull(body)) {
+			body = notificationTemplate.getBody(siteDefaultLocale);
+		}
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL,
+			new StringTemplateResource(
+				NotificationTemplate.class.getName() + StringPool.POUND +
+					notificationTemplate.getNotificationTemplateId(),
+				body),
+			true);
+
+		_setRestClient(template);
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				notificationContext.getClassName());
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				notificationContext.getClassName());
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(
+				persistedModelLocalService.getPersistedModel(
+					notificationContext.getClassPK()));
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField<?> infoField = infoFieldValue.getInfoField();
+
+			if (StringUtil.startsWith(
+					infoField.getName(),
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+				continue;
+			}
+
+			TemplateNode templateNode = _templateNodeFactory.createTemplateNode(
+				infoFieldValue, new ThemeDisplay());
+
+			template.put(infoField.getName(), templateNode);
+			template.put(infoField.getUniqueId(), templateNode);
+		}
+
+		StringWriter stringWriter = new StringWriter();
+
+		template.processTemplate(stringWriter);
+
+		return stringWriter.toString();
+	}
+
 	private String _formatTo(String to, NotificationContext notificationContext)
 		throws PortalException {
 
@@ -447,6 +543,41 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 	}
 
+	private void _setRestClient(Template template) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		List<ServiceContext> serviceContexts = new ArrayList<>();
+
+		while (httpServletRequest == null) {
+			serviceContext = ServiceContextThreadLocal.popServiceContext();
+
+			serviceContexts.add(serviceContext);
+
+			httpServletRequest = serviceContext.getRequest();
+		}
+
+		for (ServiceContext serviceContextItem : serviceContexts) {
+			ServiceContextThreadLocal.pushServiceContext(serviceContextItem);
+		}
+
+		if (httpServletRequest == null) {
+			throw new NullPointerException("HttpServletRequest is null");
+		}
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setResponse(new DummyHttpServletResponse());
+
+		template.put("themeDisplay", themeDisplay);
+
+		_templateContextContributor.prepare(template, httpServletRequest);
+
+		template.remove("themeDisplay");
+	}
+
 	private InternetAddress[] _toInternetAddresses(String string)
 		throws Exception {
 
@@ -473,6 +604,9 @@ public class EmailNotificationType extends BaseNotificationType {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
 	private MailService _mailService;
 
 	@Reference
@@ -487,13 +621,16 @@ public class EmailNotificationType extends BaseNotificationType {
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
-	private TemplateNodeFactory _templateNodeFactory;
-
-	@Reference
 	private PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference(target = "(name=RESTClient)")
+	private TemplateContextContributor _templateContextContributor;
+
+	@Reference
+	private TemplateNodeFactory _templateNodeFactory;
 
 }

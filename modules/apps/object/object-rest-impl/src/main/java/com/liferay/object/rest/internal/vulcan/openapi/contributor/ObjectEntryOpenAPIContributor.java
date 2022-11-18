@@ -16,16 +16,16 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.internal.helper.ObjectHelper;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.models.Components;
@@ -56,11 +56,14 @@ import org.osgi.framework.BundleContext;
 public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	public ObjectEntryOpenAPIContributor(
-		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry, ObjectDefinition objectDefinition,
+		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry,
+		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		OpenAPIResource openAPIResource, SystemObjectDefinitionMetadataRegistry systemObjectDefinitionMetadataRegistry) {
+		OpenAPIResource openAPIResource,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		_bundleContext = bundleContext;
 		_objectDefinition = objectDefinition;
@@ -168,8 +171,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 		if (objectDefinition.isSystem()) {
 			sourceOpenAPI = OpenAPIContributorUtil.getSystemObjectOpenAPI(
-				_bundleContext,
-				getExternalDTOClassName(objectDefinition),
+				_bundleContext, getExternalDTOClassName(objectDefinition),
 				_openAPIResource);
 		}
 		else {

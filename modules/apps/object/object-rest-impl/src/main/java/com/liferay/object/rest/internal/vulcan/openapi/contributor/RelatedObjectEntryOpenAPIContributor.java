@@ -16,7 +16,6 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.internal.helper.ObjectHelper;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -51,6 +51,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.UriInfo;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,18 +61,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OpenAPIContributor.class)
 public class RelatedObjectEntryOpenAPIContributor
 	extends BaseOpenAPIContributor {
-
-	@Activate
-	public void activate() {
-		init(_dtoConverterRegistry, _systemObjectDefinitionMetadataRegistry);
-	}
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private SystemObjectDefinitionMetadataRegistry
-		_systemObjectDefinitionMetadataRegistry;
 
 	@Override
 	public void contribute(OpenAPI openAPI, UriInfo uriInfo) throws Exception {
@@ -125,6 +114,11 @@ public class RelatedObjectEntryOpenAPIContributor
 		}
 	}
 
+	@Activate
+	protected void activate() {
+		init(_dtoConverterRegistry, _systemObjectDefinitionMetadataRegistry);
+	}
+
 	private void _contribute(
 			OpenAPI openAPI, ObjectDefinition systemObjectDefinition,
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
@@ -137,14 +131,13 @@ public class RelatedObjectEntryOpenAPIContributor
 		OpenAPI relatedOpenAPI = OpenAPIContributorUtil.getObjectEntryOpenAPI(
 			relatedObjectDefinition, _objectEntryOpenAPIResource);
 
-		String relatedSchemaName = _objectHelper.getSchemaName(
-			relatedObjectDefinition);
+		String relatedSchemaName = getSchemaName(relatedObjectDefinition);
 
 		OpenAPIContributorUtil.copySchemas(
 			relatedSchemaName, relatedOpenAPI,
 			relatedObjectDefinition.isSystem(), openAPI);
 
-		String schemaName = _objectHelper.getSchemaName(systemObjectDefinition);
+		String schemaName = getSchemaName(systemObjectDefinition);
 
 		String name = StringBundler.concat(
 			StringPool.SLASH, _getJaxRsVersion(uriInfo), StringPool.SLASH,
@@ -390,13 +383,13 @@ public class RelatedObjectEntryOpenAPIContributor
 	}
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
-
-	@Reference
-	private ObjectHelper _objectHelper;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

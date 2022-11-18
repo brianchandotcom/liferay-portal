@@ -22,6 +22,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,9 +30,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -238,7 +241,93 @@ public class DropZoneFragmentEntryLinkListener
 					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 					fragmentEntryLink.getSegmentsExperienceId(),
 					layoutStructure.toString());
+
+			return;
 		}
+
+		Map<String, FragmentDropZoneLayoutStructureItem>
+			fragmentDropZoneLayoutStructureItemsMap = new LinkedHashMap<>();
+
+		List<FragmentDropZoneLayoutStructureItem>
+			noIdFragmentDropZoneLayoutStructureItems = new LinkedList<>();
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		for (String childrenItemId : childrenItemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentDropZoneLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem =
+					(FragmentDropZoneLayoutStructureItem)layoutStructureItem;
+
+			String fragmentDropZoneId =
+				fragmentDropZoneLayoutStructureItem.getFragmentDropZoneId();
+
+			if (elementIds.contains(fragmentDropZoneId)) {
+				fragmentDropZoneLayoutStructureItemsMap.put(
+					fragmentDropZoneId, fragmentDropZoneLayoutStructureItem);
+			}
+			else {
+				noIdFragmentDropZoneLayoutStructureItems.add(
+					fragmentDropZoneLayoutStructureItem);
+			}
+		}
+
+		for (int index = 0; index < elementIds.size(); index++) {
+			String id = elementIds.get(index);
+
+			FragmentDropZoneLayoutStructureItem
+				fragmentDropZoneLayoutStructureItem =
+					fragmentDropZoneLayoutStructureItemsMap.remove(id);
+
+			if (fragmentDropZoneLayoutStructureItem != null) {
+				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
+
+				if (index != childrenItemIds.indexOf(itemId)) {
+					layoutStructure.moveLayoutStructureItem(
+						itemId, parentLayoutStructureItem.getItemId(), index);
+				}
+
+				continue;
+			}
+
+			if (ListUtil.isNotEmpty(noIdFragmentDropZoneLayoutStructureItems)) {
+				fragmentDropZoneLayoutStructureItem =
+					noIdFragmentDropZoneLayoutStructureItems.remove(0);
+
+				fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
+
+				String itemId = fragmentDropZoneLayoutStructureItem.getItemId();
+
+				if (index != childrenItemIds.indexOf(itemId)) {
+					layoutStructure.moveLayoutStructureItem(
+						itemId, parentLayoutStructureItem.getItemId(), index);
+				}
+
+				continue;
+			}
+
+			fragmentDropZoneLayoutStructureItem =
+				(FragmentDropZoneLayoutStructureItem)
+					layoutStructure.addFragmentDropZoneLayoutStructureItem(
+						parentLayoutStructureItem.getItemId(), index);
+
+			fragmentDropZoneLayoutStructureItem.setFragmentDropZoneId(id);
+		}
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
+				fragmentEntryLink.getSegmentsExperienceId(),
+				layoutStructure.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

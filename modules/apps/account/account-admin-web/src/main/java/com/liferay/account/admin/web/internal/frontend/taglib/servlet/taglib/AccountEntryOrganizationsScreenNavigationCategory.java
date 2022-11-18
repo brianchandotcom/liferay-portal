@@ -67,7 +67,7 @@ public class AccountEntryOrganizationsScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry == null) {
+		if (accountEntry.isNew()) {
 			return false;
 		}
 

@@ -69,7 +69,7 @@ public class AccountEntryRolesScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if ((accountEntry == null) ||
+		if (accountEntry.isNew() ||
 			!AllowEditAccountRoleThreadLocal.isAllowEditAccountRole() ||
 			Objects.equals(
 				accountEntry.getType(),

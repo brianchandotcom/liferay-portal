@@ -68,7 +68,7 @@ public class AccountEntryUsersScreenNavigationCategory
 
 	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if ((accountEntry == null) ||
+		if (accountEntry.isNew() ||
 			!Objects.equals(
 				accountEntry.getType(),
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {

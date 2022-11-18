@@ -40,7 +40,6 @@ import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -318,20 +317,6 @@ public class EditAssetListDisplayContext {
 		_assetListEntryType = assetListEntryType;
 
 		return _assetListEntryType;
-	}
-
-	public List<DropdownItem> getAssetListEntryVariationActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					"javascript:" + _portletResponse.getNamespace() +
-						"openSelectSegmentsEntryDialog();");
-				dropdownItem.setLabel(
-					LanguageUtil.format(
-						_httpServletRequest, "new-x",
-						"personalized-variation"));
-			}
-		).build();
 	}
 
 	public JSONArray getAutoFieldRulesJSONArray() {

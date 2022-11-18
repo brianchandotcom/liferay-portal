@@ -246,6 +246,10 @@ public class InputTag extends IncludeTag {
 				return StringPool.BLANK;
 			}
 
+			if (Objects.equals(getClassName(), Layout.class.getName())) {
+				return _getFallbackValue();
+			}
+
 			FriendlyURLEntry mainFriendlyURLEntry =
 				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
 					PortalUtil.getClassNameId(_getActualClassName()),

@@ -14,7 +14,8 @@ definition {
 		RemoteAppsEntry.addEntry(
 			entryName = "${entryName}",
 			entryURL = "${entryURL}",
-			mainURL = "${mainURL}");
+			mainURL = "${mainURL}",
+			entryHTMLElementName = "${entryHTMLElementName}");
 
 		PortletEntry.publish();
 	}

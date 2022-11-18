@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
+import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -29,10 +30,16 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.Closeable;
 import java.io.IOException;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -205,12 +212,24 @@ public class ConfigurationPersistenceManagerTest {
 
 	@Test
 	public void testCreateFactoryConfiguration() throws Exception {
-		_assertConfiguration(true);
+		_assertConfiguration(true, true);
 	}
 
 	@Test
 	public void testGetConfiguration() throws Exception {
-		_assertConfiguration(false);
+		_assertConfiguration(false, true);
+	}
+
+	@Test
+	public void testMemoryOnlyConfiguration() throws Exception {
+		InMemoryOnlyConfigurationThreadLocal.setInMemoryOnly(true);
+
+		try {
+			_assertConfiguration(false, false);
+		}
+		finally {
+			InMemoryOnlyConfigurationThreadLocal.setInMemoryOnly(false);
+		}
 	}
 
 	@Test
@@ -222,7 +241,9 @@ public class ConfigurationPersistenceManagerTest {
 				"=\"file:/whitespace path/file.config\"");
 	}
 
-	private void _assertConfiguration(boolean factory) throws Exception {
+	private void _assertConfiguration(boolean factory, boolean shouldBeStored)
+		throws Exception {
+
 		Configuration configuration = null;
 
 		if (factory) {
@@ -246,6 +267,8 @@ public class ConfigurationPersistenceManagerTest {
 
 		Assert.assertEquals("bar", properties.get("foo"));
 
+		_assertStoredInDatabase(pid, shouldBeStored);
+
 		properties.put("fee", "fum");
 
 		ConfigurationTestUtil.saveConfiguration(configuration, properties);
@@ -258,6 +281,31 @@ public class ConfigurationPersistenceManagerTest {
 		ConfigurationTestUtil.deleteConfiguration(configuration);
 
 		Assert.assertFalse(_persistenceManager.exists(pid));
+
+		_assertStoredInDatabase(pid, false);
+	}
+
+	private void _assertStoredInDatabase(String pid, boolean shouldBeStored)
+		throws Exception {
+
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select configurationId, dictionary from Configuration_ " +
+					"where configurationId = ?")) {
+
+			preparedStatement.setString(1, pid);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				boolean stored = resultSet.next();
+
+				if (!shouldBeStored && stored) {
+					Assert.fail();
+				}
+				else if (shouldBeStored && !stored) {
+					Assert.fail();
+				}
+			}
+		}
 	}
 
 	private void _reload() {
@@ -294,6 +342,9 @@ public class ConfigurationPersistenceManagerTest {
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private static DataSource _dataSource;
 
 	@Inject
 	private static PersistenceManager _persistenceManager;

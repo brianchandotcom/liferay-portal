@@ -603,7 +603,7 @@ definition {
 
 			Button.click(button = "Download");
 
-			ImportExport.assertDownloadedFileName(downloadedFile = "Document_1.docx");
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.docx");
 
 			SearchPortlets.searchEmbedded(searchTerm = "PDF File");
 
@@ -615,7 +615,7 @@ definition {
 
 			Button.click(button = "Download");
 
-			ImportExport.assertDownloadedFileName(downloadedFile = "Document_1.pdf");
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.pdf");
 		}
 	}
 

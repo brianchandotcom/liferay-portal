@@ -107,6 +107,12 @@ definition {
 				locator1 = "ClientExtensionEntry#URL",
 				value1 = "${entryURL}");
 		}
+		if (isSet(entryHTMLElementName)) {
+			Type(
+				key_id = "ClientExtensionAdminPortlet_htmlElementName",
+				locator1 = "RemoteAppsEntry#URL",
+				value1 = "${entryHTMLElementName}");
+		}
 	}
 
 	macro addPortletCategory {

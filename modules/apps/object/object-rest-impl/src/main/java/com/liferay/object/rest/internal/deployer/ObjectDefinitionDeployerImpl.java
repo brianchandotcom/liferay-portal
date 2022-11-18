@@ -81,6 +81,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentFactory;
+import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -178,6 +179,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		if (companyIds.isEmpty()) {
 			_basePathCompanyIds.remove(restContextPath);
+		}
+
+		List<ComponentInstance> componentInstances =
+			_componentInstancesMap.remove(restContextPath);
+
+		if (componentInstances != null) {
+			for (ComponentInstance componentInstance : componentInstances) {
+				componentInstance.dispose();
+			}
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
@@ -437,25 +447,25 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return;
 		}
 
-		_applicationServiceRegistrations.computeIfAbsent(
+		_componentInstancesMap.computeIfAbsent(
 			systemObjectDefinitionMetadata.getRESTContextPath(),
-			key -> _bundleContext.registerService(
-				Application.class,
-				new ObjectEntryApplication(_objectEntryOpenAPIResource),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"api.version", "v1.0"
-				).put(
-					"osgi.jaxrs.application.select",
-					() -> {
-						String jaxRsApplicationName =
-							systemObjectDefinitionMetadata.
-								getJaxRsApplicationName();
+			key -> Arrays.asList(
+				_relatedObjectEntryResourceImplComponentFactory.newInstance(
+					HashMapDictionaryBuilder.<String, Object>put(
+						"api.version", "v1.0"
+					).put(
+						"osgi.jaxrs.application.select",
+						() -> {
+							String jaxRsApplicationName =
+								systemObjectDefinitionMetadata.
+									getJaxRsApplicationName();
 
-						return "(osgi.jaxrs.name=" + jaxRsApplicationName + ")";
-					}
-				).put(
-					"osgi.jaxrs.resource", "true"
-				).build()));
+							return "(osgi.jaxrs.name=" + jaxRsApplicationName +
+								")";
+						}
+					).put(
+						"osgi.jaxrs.resource", "true"
+					).build())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -469,6 +479,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private final Map<String, List<ComponentInstance>> _componentInstancesMap =
+		new HashMap<>();
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

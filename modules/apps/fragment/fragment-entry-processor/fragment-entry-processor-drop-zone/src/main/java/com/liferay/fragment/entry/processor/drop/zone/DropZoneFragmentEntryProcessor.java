@@ -22,6 +22,7 @@ import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -138,6 +139,39 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 					Element element = elements.get(i);
 
 					element.attr("uuid", dropZoneItemIds.get(i));
+				}
+			}
+			else {
+				for (int i = 0; i < elements.size(); i++) {
+					Element element = elements.get(i);
+
+					String id = element.id();
+
+					for (String itemId : dropZoneItemIds) {
+						LayoutStructureItem childrenLayoutStructureItem =
+							layoutStructure.getLayoutStructureItem(itemId);
+
+						if (!(childrenLayoutStructureItem instanceof
+								FragmentDropZoneLayoutStructureItem)) {
+
+							continue;
+						}
+
+						FragmentDropZoneLayoutStructureItem
+							fragmentDropZoneLayoutStructureItem =
+								(FragmentDropZoneLayoutStructureItem)
+									childrenLayoutStructureItem;
+
+						if (Objects.equals(
+								id,
+								fragmentDropZoneLayoutStructureItem.
+									getFragmentDropZoneId())) {
+
+							element.attr("uuid", itemId);
+
+							break;
+						}
+					}
 				}
 			}
 

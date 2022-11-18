@@ -347,20 +347,21 @@ public class RelatedObjectEntryOpenAPIContributor
 
 	private ObjectDefinition _getRelatedObjectDefinition(
 			ObjectDefinition systemObjectDefinition,
-			ObjectRelationship objectRelationship)
+			ObjectRelationship systemObjectRelationship)
 		throws Exception {
 
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+		long objectDefinitionId1 =
+			systemObjectRelationship.getObjectDefinitionId1();
 
 		if (objectDefinitionId1 !=
 				systemObjectDefinition.getObjectDefinitionId()) {
 
 			return _objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
+				systemObjectRelationship.getObjectDefinitionId1());
 		}
 
 		return _objectDefinitionLocalService.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
+			systemObjectRelationship.getObjectDefinitionId2());
 	}
 
 	private String _getSystemObjectBasePath(

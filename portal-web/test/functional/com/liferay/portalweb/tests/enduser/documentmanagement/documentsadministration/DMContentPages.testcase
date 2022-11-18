@@ -43,7 +43,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Test Content Page",
+			layoutName = "Test Content Page Name",
 			widgetName = "Documents and Media");
 
 		ContentPagesNavigator.openViewContentPage(
@@ -80,7 +80,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
-			layoutName = "Test Content Page",
+			layoutName = "Test Content Page Name",
 			widgetName = "Documents and Media");
 
 		JSONDocument.addFileWithUploadedFile(
@@ -119,13 +119,11 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Guest");
-
-		PageEditor.addWidget(portletName = "Documents and Media");
-
-		PageEditor.publish();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			widgetName = "Documents and Media");
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",

@@ -39,6 +39,7 @@ import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -147,6 +148,119 @@ public class EditAssetListDisplayContext {
 			AssetListWebKeys.DDM_INDEXER);
 
 		return ddmIndexer.encodeName(ddmStructureId, fieldReference, locale);
+	}
+
+	public List<DropdownItem> getActionDropdownItems() throws Exception {
+		DropdownItemList dropdownItemList = new DropdownItemList();
+
+		AssetListEntry assetListEntry = getAssetListEntry();
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
+			true
+		).fastLoad(
+			_getTypeSettings()
+		).build();
+
+		long[] classNameIds = GetterUtil.getLongValues(
+			StringUtil.split(
+				unicodeProperties.getProperty("classNameIds", null)));
+
+		if (classNameIds.length == 0) {
+			classNameIds = _getDefaultClassNameIds();
+		}
+
+		for (long classNameId : classNameIds) {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassNameId(classNameId);
+
+			if (!assetRendererFactory.isActive(_themeDisplay.getCompanyId()) ||
+				!assetRendererFactory.isSelectable()) {
+
+				continue;
+			}
+
+			if (!Objects.equals(
+					assetListEntry.getAssetEntryType(),
+					AssetEntry.class.getName()) &&
+				!Objects.equals(
+					assetListEntry.getAssetEntryType(),
+					assetRendererFactory.getClassName())) {
+
+				continue;
+			}
+
+			if (!assetRendererFactory.isSupportsClassTypes()) {
+				dropdownItemList.add(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"href",
+							String.valueOf(
+								_getAssetEntryItemSelectorPortletURL(
+									assetRendererFactory,
+									_DEFAULT_SUBTYPE_SELECTION_ID)));
+						dropdownItem.putData(
+							"title",
+							HtmlUtil.escape(
+								LanguageUtil.format(
+									_httpServletRequest, "select-x",
+									assetRendererFactory.getTypeName(
+										_themeDisplay.getLocale()),
+									false)));
+						dropdownItem.setLabel(
+							assetRendererFactory.getTypeName(
+								_themeDisplay.getLocale()));
+					});
+
+				continue;
+			}
+
+			Class<? extends AssetRendererFactory<?>> clazz =
+				_assetRendererFactoryClassProvider.getClass(
+					assetRendererFactory);
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			long[] classTypeIds = GetterUtil.getLongValues(
+				StringUtil.split(
+					unicodeProperties.getProperty(
+						"classTypeIds" + clazz.getSimpleName(), null)),
+				_getDefaultClassTypeIds(classTypeReader));
+
+			for (long classTypeId : classTypeIds) {
+				ClassType classType = classTypeReader.getClassType(
+					classTypeId, _themeDisplay.getLocale());
+
+				if (Validator.isNotNull(
+						assetListEntry.getAssetEntrySubtype()) &&
+					!Objects.equals(
+						assetListEntry.getAssetEntrySubtype(),
+						String.valueOf(classType.getClassTypeId()))) {
+
+					continue;
+				}
+
+				dropdownItemList.add(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"href",
+							String.valueOf(
+								_getAssetEntryItemSelectorPortletURL(
+									assetRendererFactory,
+									classType.getClassTypeId())));
+						dropdownItem.putData(
+							"title",
+							HtmlUtil.escape(
+								LanguageUtil.format(
+									_httpServletRequest, "select-x",
+									classType.getName(), false)));
+						dropdownItem.setLabel(classType.getName());
+					});
+			}
+		}
+
+		return dropdownItemList;
 	}
 
 	public AssetListEntry getAssetListEntry() {
@@ -695,97 +809,6 @@ public class EditAssetListDisplayContext {
 		).buildString();
 	}
 
-	public Map<String, Map<String, Object>> getManualAddIconDataMap()
-		throws Exception {
-
-		Map<String, Map<String, Object>> manualAddIconDataMap = new HashMap<>();
-
-		AssetListEntry assetListEntry = getAssetListEntry();
-
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
-			true
-		).fastLoad(
-			_getTypeSettings()
-		).build();
-
-		long[] classNameIds = GetterUtil.getLongValues(
-			StringUtil.split(
-				unicodeProperties.getProperty("classNameIds", null)));
-
-		if (classNameIds.length == 0) {
-			classNameIds = _getDefaultClassNameIds();
-		}
-
-		for (long classNameId : classNameIds) {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(classNameId);
-
-			if (!assetRendererFactory.isActive(_themeDisplay.getCompanyId()) ||
-				!assetRendererFactory.isSelectable()) {
-
-				continue;
-			}
-
-			if (!Objects.equals(
-					assetListEntry.getAssetEntryType(),
-					AssetEntry.class.getName()) &&
-				!Objects.equals(
-					assetListEntry.getAssetEntryType(),
-					assetRendererFactory.getClassName())) {
-
-				continue;
-			}
-
-			if (!assetRendererFactory.isSupportsClassTypes()) {
-				manualAddIconDataMap.put(
-					assetRendererFactory.getTypeName(_themeDisplay.getLocale()),
-					_getDataMap(
-						assetRendererFactory,
-						assetRendererFactory.getTypeName(
-							_themeDisplay.getLocale()),
-						_DEFAULT_SUBTYPE_SELECTION_ID));
-
-				continue;
-			}
-
-			Class<? extends AssetRendererFactory<?>> clazz =
-				_assetRendererFactoryClassProvider.getClass(
-					assetRendererFactory);
-
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
-
-			long[] classTypeIds = GetterUtil.getLongValues(
-				StringUtil.split(
-					unicodeProperties.getProperty(
-						"classTypeIds" + clazz.getSimpleName(), null)),
-				_getDefaultClassTypeIds(classTypeReader));
-
-			for (long classTypeId : classTypeIds) {
-				ClassType classType = classTypeReader.getClassType(
-					classTypeId, _themeDisplay.getLocale());
-
-				if (Validator.isNotNull(
-						assetListEntry.getAssetEntrySubtype()) &&
-					!Objects.equals(
-						assetListEntry.getAssetEntrySubtype(),
-						String.valueOf(classType.getClassTypeId()))) {
-
-					continue;
-				}
-
-				manualAddIconDataMap.put(
-					classType.getName(),
-					_getDataMap(
-						assetRendererFactory, classType.getName(),
-						classType.getClassTypeId()));
-			}
-		}
-
-		return manualAddIconDataMap;
-	}
-
 	public String getOrderByColumn1() {
 		if (_orderByColumn1 != null) {
 			return _orderByColumn1;
@@ -1267,29 +1290,6 @@ public class EditAssetListDisplayContext {
 		}
 
 		return availableClassTypeIds;
-	}
-
-	private Map<String, Object> _getDataMap(
-		AssetRendererFactory<?> assetRendererFactory, String type,
-		long subtypeSelectionId) {
-
-		return HashMapBuilder.<String, Object>put(
-			"destroyOnHide", true
-		).put(
-			"groupid", String.valueOf(_themeDisplay.getScopeGroupId())
-		).put(
-			"href",
-			String.valueOf(
-				_getAssetEntryItemSelectorPortletURL(
-					assetRendererFactory, subtypeSelectionId))
-		).put(
-			"title",
-			HtmlUtil.escape(
-				LanguageUtil.format(
-					_httpServletRequest, "select-x", type, false))
-		).put(
-			"type", type
-		).build();
 	}
 
 	private long[] _getDefaultClassNameIds() {

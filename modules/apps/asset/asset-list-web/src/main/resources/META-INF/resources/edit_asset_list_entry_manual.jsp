@@ -119,15 +119,10 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 							<clay:content-col
 								containerElement="span"
 							>
-
-								<%
-								EditAssetListEntryManualActionDropdownItemsProvider editAssetListEntryManualActionDropdownItemsProvider = new EditAssetListEntryManualActionDropdownItemsProvider(editAssetListDisplayContext);
-								%>
-
 								<clay:dropdown-menu
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									cssClass="btn btn-secondary btn-sm"
-									dropdownItems="<%= editAssetListEntryManualActionDropdownItemsProvider.getActionDropdownItems() %>"
+									dropdownItems="<%= editAssetListDisplayContext.getActionDropdownItems() %>"
 									label='<%= LanguageUtil.get(request, "select") %>'
 									propsTransformer="js/EditAssetListEntryManualDefaultPropsTransformer"
 								/>

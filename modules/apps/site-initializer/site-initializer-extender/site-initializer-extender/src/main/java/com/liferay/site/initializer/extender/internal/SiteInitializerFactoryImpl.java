@@ -96,10 +96,14 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Override
-	public SiteInitializer create(File file) throws Exception {
+	public SiteInitializer create(File file, String symbolicName)
+		throws Exception {
+
 		String fileKey = StringUtil.randomString(16);
 
-		String symbolicName = "Liferay Site Initializer - File - " + fileKey;
+		if (symbolicName == null) {
+			symbolicName = "Liferay Site Initializer - File - " + fileKey;
+		}
 
 		Bundle bundle = ProxyUtil.newDelegateProxyInstance(
 			Bundle.class.getClassLoader(), Bundle.class,

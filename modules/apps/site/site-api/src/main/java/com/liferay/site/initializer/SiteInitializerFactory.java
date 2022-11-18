@@ -21,6 +21,7 @@ import java.io.File;
  */
 public interface SiteInitializerFactory {
 
-	public SiteInitializer create(File file) throws Exception;
+	public SiteInitializer create(File file, String symbolicName)
+		throws Exception;
 
 }

@@ -248,7 +248,7 @@ public class BundleSiteInitializerTest {
 		try {
 			_test(
 				_siteInitializerFactory.create(
-					new File(tempFolder, "site-initializer")));
+					new File(tempFolder, "site-initializer"), null));
 		}
 		finally {
 			FileUtil.deltree(tempFolder);

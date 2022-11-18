@@ -115,6 +115,16 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry
+			fetchAccountEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public java.util.List<com.liferay.account.model.AccountEntry>
 			getAccountEntries(
 				long companyId, int status, int start, int end,

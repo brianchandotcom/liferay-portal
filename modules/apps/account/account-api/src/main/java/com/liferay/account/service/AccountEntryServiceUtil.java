@@ -107,6 +107,14 @@ public class AccountEntryServiceUtil {
 		return getService().fetchAccountEntry(accountEntryId);
 	}
 
+	public static AccountEntry fetchAccountEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchAccountEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static List<AccountEntry> getAccountEntries(
 			long companyId, int status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)

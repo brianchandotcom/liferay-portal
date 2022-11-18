@@ -254,6 +254,39 @@ definition {
 			AssertElementPresent(
 				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER",
 				value1 = "Rename View");
+=======
+	@description = "LPS-165672 - Simplify how actions are shown in the custom views section"
+	@priority = "3"
+	test HasActionsOnlyOnEllipsis {
+		task ("And Given created custom view") {
+			FDSCustomView.createNewView(key_nameView = "New View");
+		}
+
+		task ("When open ellipsis next to custom view") {
+			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+		}
+
+		task ("Then actions to save and delete views are available in dropdown menu") {
+			FDSCustomView.assertMenuItem(key_menuItem = "Save View");
+
+			FDSCustomView.assertMenuItem(key_menuItem = "Delete View");
+		}
+
+		task ("When open select custom view button") {
+			FDSCustomView.changeCustomView(key_itemName = "Default View");
+
+			Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
+		}
+
+		task ("Then actions to save and delete views are not available in dropdown menu") {
+			AssertElementNotPresent(
+				key_itemName = "Save View",
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+
+			AssertElementNotPresent(
+				key_itemName = "Delete View",
+				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+>>>>>>> 1800f1b (LPS-165672 SF)
 		}
 	}
 

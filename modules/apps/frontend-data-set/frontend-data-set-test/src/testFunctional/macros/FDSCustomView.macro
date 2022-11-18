@@ -20,7 +20,7 @@ definition {
 
 	macro assertFilterSummaryLabel {
 		AssertElementPresent(
-			locator1 = "Fron	tendDataSet#FILTER_SUMMARY_LABEL",
+			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
 			value1 = "${key_filter}");
 	}
 

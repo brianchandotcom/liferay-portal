@@ -18,10 +18,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.search.experiences.configuration.SemanticSearchConfiguration;
 import com.liferay.search.experiences.ml.sentence.embedding.SentenceEmbeddingRetriever;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -39,6 +41,12 @@ import org.osgi.service.component.annotations.Deactivate;
 )
 public class SentenceEmbeddingRetrieverImpl
 	implements SentenceEmbeddingRetriever {
+
+	@Override
+	public List<String> getAvailableSentenceTransformerNames() {
+		return ListUtil.fromCollection(
+			_sentenceTransformerServiceTrackerMap.keySet());
+	}
 
 	@Override
 	public Double[] getSentenceEmbedding(

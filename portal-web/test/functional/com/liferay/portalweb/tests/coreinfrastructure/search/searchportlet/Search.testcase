@@ -577,7 +577,9 @@ definition {
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 	}
 
-	test CanDownloadDocumentsThroughTheSearchPreview {
+	@description = "This is a use case for LPS-131302."
+	@priority = "3"
+	test CanDownloadDocumentsThroughSearchResultsPreview {
 		task ("Upload a PDF and a DOCX file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "DOCX File",

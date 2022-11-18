@@ -97,26 +97,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that displays the content of a panel category. If the panel category has a custom UI, that UI is rendered. Otherwise, the <![CDATA[<code>lifeary-application-list:panel-category</code>]]> tag is invoked.</description>
-		<name>panel-category-content</name>
-		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryContentTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<description>The panel category to display.</description>
-			<name>panelCategory</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.application.list.PanelCategory</type>
-		</attribute>
-		<attribute>
-			<description>Whether to expand the panel by default; otherwise, the panel is collapsed by default.</description>
-			<name>showOpen</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a component that displays the panel of a panel category. If the panel category has a custom UI, that UI is rendered. Otherwise, the <![CDATA[<code>liferay-application-list:panel</code>]]> tag is invoked.</description>
 		<name>panel-content</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelContentTag</tag-class>

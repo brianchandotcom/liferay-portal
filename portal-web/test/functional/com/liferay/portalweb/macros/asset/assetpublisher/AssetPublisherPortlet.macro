@@ -238,26 +238,7 @@ definition {
 	}
 
 	macro configureCollectionProviderPG {
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		if (isSet(columnNumnber)) {
-			MouseOver.mouseOverNotVisible(
-				key_columnNumber = "${columnNumnber}",
-				key_portletName = "Asset Publisher",
-				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
-
-			Click.waitForMenuToggleJSClick(
-				key_columnNumber = "${columnNumnber}",
-				key_portletName = "Asset Publisher",
-				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Configuration");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-		}
-		else {
-			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
-		}
+		AssetPublisherPortlet.gotoConfigurationPG(portletIndex = "${columnNumnber}");
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
 

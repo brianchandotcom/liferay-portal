@@ -42,11 +42,13 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
@@ -314,21 +316,45 @@ public class SegmentsDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
-			searchContainer.setResultsAndTotal(
-				_segmentsEntryService.searchSegmentsEntries(
-					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), _getKeywords(), true,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					_getSort()));
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-166954"))) {
+
+				searchContainer.setResultsAndTotal(
+					_segmentsEntryService.searchSegmentsEntries(
+						_themeDisplay.getCompanyId(),
+						_themeDisplay.getScopeGroupId(), _getKeywords(), true,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						_getSort()));
+			}
+			else {
+				searchContainer.setResultsAndTotal(
+					_segmentsEntryService.searchSegmentsEntries(
+						_themeDisplay.getCompanyId(), _getKeywords(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						_getSort()));
+			}
 		}
 		else {
-			searchContainer.setResultsAndTotal(
-				() -> _segmentsEntryService.getSegmentsEntries(
-					_themeDisplay.getScopeGroupId(), true,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()),
-				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId(), true));
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-166954"))) {
+
+				searchContainer.setResultsAndTotal(
+					() -> _segmentsEntryService.getSegmentsEntries(
+						_themeDisplay.getScopeGroupId(), true,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
+					_segmentsEntryService.getSegmentsEntriesCount(
+						_themeDisplay.getScopeGroupId(), true));
+			}
+			else {
+				searchContainer.setResultsAndTotal(
+					() -> _segmentsEntryService.getSegmentsEntries(
+						_themeDisplay.getCompanyId(),
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator()),
+					_segmentsEntryService.getSegmentsEntriesCount(
+						_themeDisplay.getCompanyId()));
+			}
 		}
 
 		searchContainer.setRowChecker(

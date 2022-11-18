@@ -1,0 +1,8 @@
+logging:
+    level:
+        com.liferay.service: DEBUG
+        org.springframework.cloud: DEBUG
+        org.springframework.security: DEBUG
+        org.springframework.web: DEBUG
+server:
+    port: 58081

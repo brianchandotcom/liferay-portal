@@ -67,36 +67,6 @@ public class SynchronizeSiteInitializerMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
-		SiteInitializer siteInitializer = null;
-		File file = null;
-
-		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"siteInitializerFile")) {
-
-			if (inputStream != null) {
-
-				// TODO BundleSiteInitializerTest#testInitializeFromFile
-
-				file = FileUtil.createTempFile(inputStream);
-
-				siteInitializer = _siteInitializerFactory.create(file);
-
-				if (siteInitializer != null) {
-					siteInitializer.initialize(themeDisplay.getScopeGroupId());
-				}
-
-				return;
-			}
-		}
-		finally {
-			if (file != null) {
-				FileUtil.delete(file);
-			}
-		}
-
 		Group group = _groupLocalService.getGroup(
 			themeDisplay.getScopeGroupId());
 
@@ -106,6 +76,40 @@ public class SynchronizeSiteInitializerMVCActionCommand
 
 		if (Validator.isNull(siteInitializerKey)) {
 			return;
+		}
+
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
+		SiteInitializer siteInitializer = null;
+
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"siteInitializerFile")) {
+
+			if (inputStream != null) {
+
+				// TODO BundleSiteInitializerTest#testInitializeFromFile
+
+				File tempFile = FileUtil.createTempFile();
+
+				FileUtil.write(tempFile, inputStream);
+
+				File tempFolder = FileUtil.createTempFolder();
+
+				FileUtil.unzip(tempFile, tempFolder);
+
+				tempFile.delete();
+
+				siteInitializer = _siteInitializerFactory.create(
+					new File(tempFolder, "site-initializer"),
+					siteInitializerKey);
+
+				if (siteInitializer != null) {
+					siteInitializer.initialize(themeDisplay.getScopeGroupId());
+				}
+
+				return;
+			}
 		}
 
 		siteInitializer = _siteInitializerRegistry.getSiteInitializer(

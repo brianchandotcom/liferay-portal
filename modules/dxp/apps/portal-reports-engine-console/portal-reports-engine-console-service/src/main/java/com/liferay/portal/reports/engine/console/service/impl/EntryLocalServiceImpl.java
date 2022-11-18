@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -550,7 +550,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 	private void _scheduleEntry(Entry entry, String reportName)
 		throws PortalException {
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
+		Trigger trigger = _triggerFactory.createTrigger(
 			entry.getJobName(), entry.getSchedulerRequestName(),
 			entry.getStartDate(), entry.getEndDate(), entry.getRecurrence());
 
@@ -612,6 +612,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 	@Reference
 	private SourcePersistence _sourcePersistence;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

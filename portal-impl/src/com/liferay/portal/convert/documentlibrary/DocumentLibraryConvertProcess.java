@@ -33,7 +33,6 @@ import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -156,11 +155,7 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 	}
 
 	private Collection<DLStoreConvertProcess> _getDLStoreConvertProcesses() {
-		List<DLStoreConvertProcess> dlStoreConvertProcesses = new ArrayList<>();
-
-		_dlStoreConvertProcesses.forEach(dlStoreConvertProcesses::add);
-
-		return dlStoreConvertProcesses;
+		return _dlStoreConvertProcesses.toList();
 	}
 
 	private static final ServiceTrackerList<DLStoreConvertProcess>

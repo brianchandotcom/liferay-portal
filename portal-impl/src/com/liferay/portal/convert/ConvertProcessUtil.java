@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -29,11 +28,7 @@ import java.util.List;
 public class ConvertProcessUtil {
 
 	public static Collection<ConvertProcess> getConvertProcesses() {
-		List<ConvertProcess> convertProcesses = new ArrayList<>();
-
-		_convertProcesses.forEach(convertProcesses::add);
-
-		return convertProcesses;
+		return _convertProcesses.toList();
 	}
 
 	public static Collection<ConvertProcess> getEnabledConvertProcesses() {

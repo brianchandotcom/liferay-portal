@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessor;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -89,12 +88,7 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 	public List<SegmentsExperienceRequestProcessor>
 		getSegmentsExperienceRequestProcessors() {
 
-		List<SegmentsExperienceRequestProcessor>
-			segmentsExperienceRequestProcessors = new ArrayList<>();
-
-		_serviceTrackerList.forEach(segmentsExperienceRequestProcessors::add);
-
-		return segmentsExperienceRequestProcessors;
+		return _serviceTrackerList.toList();
 	}
 
 	@Activate

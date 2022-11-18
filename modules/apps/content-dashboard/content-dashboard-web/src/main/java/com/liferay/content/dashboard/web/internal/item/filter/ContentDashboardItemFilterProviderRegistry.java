@@ -18,8 +18,6 @@ import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFi
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -36,15 +34,7 @@ public class ContentDashboardItemFilterProviderRegistry {
 	public List<ContentDashboardItemFilterProvider>
 		getContentDashboardItemFilterProviders() {
 
-		Iterator<ContentDashboardItemFilterProvider> iterator =
-			_serviceTrackerList.iterator();
-
-		List<ContentDashboardItemFilterProvider>
-			contentDashboardItemFilterProviders = new ArrayList<>();
-
-		iterator.forEachRemaining(contentDashboardItemFilterProviders::add);
-
-		return contentDashboardItemFilterProviders;
+		return _serviceTrackerList.toList();
 	}
 
 	@Activate

@@ -55,16 +55,7 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 
 	@Override
 	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes() {
-		List<SiteNavigationMenuItemType> siteNavigationMenuItemTypes =
-			new ArrayList<>();
-
-		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
-				_serviceTrackerList) {
-
-			siteNavigationMenuItemTypes.add(siteNavigationMenuItemType);
-		}
-
-		return siteNavigationMenuItemTypes;
+		return _serviceTrackerList.toList();
 	}
 
 	@Override

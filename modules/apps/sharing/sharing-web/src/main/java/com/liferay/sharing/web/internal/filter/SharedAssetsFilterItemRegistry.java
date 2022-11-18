@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,12 +49,7 @@ public class SharedAssetsFilterItemRegistry {
 	}
 
 	public List<SharedAssetsFilterItem> getSharedAssetsFilterItems() {
-		List<SharedAssetsFilterItem> sharedAssetsFilterItems =
-			new ArrayList<>();
-
-		_serviceTrackerList.forEach(sharedAssetsFilterItems::add);
-
-		return sharedAssetsFilterItems;
+		return _serviceTrackerList.toList();
 	}
 
 	@Activate

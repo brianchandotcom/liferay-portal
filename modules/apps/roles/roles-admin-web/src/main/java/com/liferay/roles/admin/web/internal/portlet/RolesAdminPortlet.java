@@ -77,7 +77,6 @@ import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -347,16 +346,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	public List<PersonalMenuEntry> getPersonalMenuEntries() {
-		List<PersonalMenuEntry> personalMenuEntries = new ArrayList<>(
-			_personalMenuEntryServiceTrackerList.size());
-
-		for (PersonalMenuEntry personalMenuEntry :
-				_personalMenuEntryServiceTrackerList) {
-
-			personalMenuEntries.add(personalMenuEntry);
-		}
-
-		return personalMenuEntries;
+		return _personalMenuEntryServiceTrackerList.toList();
 	}
 
 	@Override

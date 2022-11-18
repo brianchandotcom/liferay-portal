@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -54,12 +51,8 @@ public class PermissionCheckerUtil {
 				permissionChecker = (PermissionChecker)clazz.newInstance();
 			}
 
-			List<RoleContributor> roleContributors = new ArrayList<>();
-
-			_roleContributors.forEach(roleContributors::add);
-
 			permissionChecker.init(
-				user, roleContributors.toArray(new RoleContributor[0]));
+				user, _roleContributors.toArray(new RoleContributor[0]));
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}

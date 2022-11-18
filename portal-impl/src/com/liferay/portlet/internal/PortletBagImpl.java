@@ -48,7 +48,6 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
@@ -568,11 +567,7 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	private <T> List<T> _toList(ServiceTrackerList<T> serviceTrackerList) {
-		List<T> list = new ArrayList<>(serviceTrackerList.size());
-
-		serviceTrackerList.forEach(list::add);
-
-		return Collections.unmodifiableList(list);
+		return Collections.unmodifiableList(serviceTrackerList.toList());
 	}
 
 	private static final BundleContext _bundleContext =

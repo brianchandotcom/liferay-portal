@@ -36,7 +36,6 @@ import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.staging.StagingGroupHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -127,16 +126,7 @@ public class ContentPageEditorDisplayContextProvider {
 	private List<ContentPageEditorSidebarPanel>
 		_getContentPageEditorSidebarPanels() {
 
-		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels =
-			new ArrayList<>(_serviceTrackerList.size());
-
-		for (ContentPageEditorSidebarPanel contentPageEditorSidebarPanel :
-				_serviceTrackerList) {
-
-			contentPageEditorSidebarPanels.add(contentPageEditorSidebarPanel);
-		}
-
-		return contentPageEditorSidebarPanels;
+		return _serviceTrackerList.toList();
 	}
 
 	@Reference

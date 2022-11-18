@@ -17,8 +17,8 @@ package com.liferay.exportimport.kernel.xstream;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,11 +27,7 @@ import java.util.Set;
 public class XStreamConverterRegistryUtil {
 
 	public static Set<XStreamConverter> getXStreamConverters() {
-		Set<XStreamConverter> xStreamConverters = new HashSet<>();
-
-		_xStreamConverters.forEach(xStreamConverters::add);
-
-		return xStreamConverters;
+		return SetUtil.fromList(_xStreamConverters.toList());
 	}
 
 	private XStreamConverterRegistryUtil() {

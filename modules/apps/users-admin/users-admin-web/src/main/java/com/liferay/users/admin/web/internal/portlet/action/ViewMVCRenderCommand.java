@@ -23,9 +23,6 @@ import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import com.liferay.users.admin.web.internal.users.admin.management.toolbar.FilterContributorRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -57,17 +54,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			_filterContributorRegistry.getFilterContributors(
 				UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS));
 
-		List<UserActionContributor> userActionContributors = new ArrayList<>();
-
-		for (UserActionContributor userActionContributor :
-				_serviceTrackerList) {
-
-			userActionContributors.add(userActionContributor);
-		}
-
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS,
-			userActionContributors.toArray(new UserActionContributor[0]));
+			_serviceTrackerList.toArray(new UserActionContributor[0]));
 
 		return "/view.jsp";
 	}

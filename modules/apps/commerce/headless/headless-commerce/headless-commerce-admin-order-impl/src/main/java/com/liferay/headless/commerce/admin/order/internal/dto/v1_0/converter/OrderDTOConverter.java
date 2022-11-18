@@ -50,7 +50,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "dto.class.name=com.liferay.commerce.model.CommerceOrder",
+	property = {
+		"application.name=Liferay.Headless.Commerce.Admin.Order",
+		"dto.class.name=com.liferay.commerce.model.CommerceOrder",
+		"version=v1.0"
+	},
 	service = {DTOConverter.class, OrderDTOConverter.class}
 )
 public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {

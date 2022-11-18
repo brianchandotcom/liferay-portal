@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.dto.converter;
+package com.liferay.object.util;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Rubén Pulido
- * @author Víctor Galán
+ * @author Carlos Correa
  */
-public interface DTOConverterRegistry {
+public class JaxRsApplicationDescriptorUtil {
 
-	public default Set<String> getDTOClassNames() {
-		return new HashSet<>();
+	public static String getRESTContextPath(
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor) {
+
+		return StringBundler.concat(
+			jaxRsApplicationDescriptor.getApplicationPath(), StringPool.SLASH,
+			jaxRsApplicationDescriptor.getVersion(), StringPool.SLASH,
+			jaxRsApplicationDescriptor.getPath());
 	}
-
-	public DTOConverter<?, ?> getDTOConverter(String dtoClassName);
-
-	public DTOConverter<?, ?> getDTOConverter(
-		String applicationName, String dtoClassName, String version);
 
 }

@@ -16,6 +16,9 @@ package com.liferay.portal.vulcan.internal.dto.converter;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -43,6 +46,14 @@ public class DTOConverterRegistryImpl implements DTOConverterRegistry {
 		return _serviceTrackerMap.getService(dtoClassName);
 	}
 
+	@Override
+	public DTOConverter<?, ?> getDTOConverter(
+		String applicationName, String dtoClassName, String version) {
+
+		return _serviceTrackerMap.getService(
+			_getKey(applicationName, dtoClassName, version));
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -54,12 +65,32 @@ public class DTOConverterRegistryImpl implements DTOConverterRegistry {
 					"dto.class.name");
 
 				emitter.emit(dtoClassName);
+
+				String applicationName = (String)serviceReference.getProperty(
+					"application.name");
+				String version = (String)serviceReference.getProperty(
+					"version");
+
+				if (!Validator.isBlank(applicationName) &&
+					!Validator.isBlank(version)) {
+
+					emitter.emit(
+						_getKey(applicationName, dtoClassName, version));
+				}
 			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private String _getKey(
+		String applicationName, String dtoClassName, String version) {
+
+		return StringBundler.concat(
+			applicationName, StringPool.POUND, dtoClassName, StringPool.POUND,
+			version);
 	}
 
 	private ServiceTrackerMap<String, DTOConverter<?, ?>> _serviceTrackerMap;

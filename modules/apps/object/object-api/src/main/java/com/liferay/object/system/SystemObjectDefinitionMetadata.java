@@ -40,7 +40,7 @@ public interface SystemObjectDefinitionMetadata {
 	public String getExternalReferenceCode(long primaryKey)
 		throws PortalException;
 
-	public String getJaxRsApplicationName();
+	public JaxRsApplicationDescriptor getJaxRsApplicationDescriptor();
 
 	public Map<Locale, String> getLabelMap();
 
@@ -55,8 +55,6 @@ public interface SystemObjectDefinitionMetadata {
 	public Map<Locale, String> getPluralLabelMap();
 
 	public Column<?, Long> getPrimaryKeyColumn();
-
-	public String getRESTContextPath();
 
 	public String getRESTDTOIdPropertyName();
 

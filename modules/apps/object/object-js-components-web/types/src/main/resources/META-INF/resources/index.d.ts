@@ -19,7 +19,6 @@ export {
 	default as CodeEditor,
 	CodeMirrorEditor,
 	Collapsible,
-	CustomSidebarContentProps,
 	Element,
 	SidebarCategory,
 } from './components/CodeEditor/index';

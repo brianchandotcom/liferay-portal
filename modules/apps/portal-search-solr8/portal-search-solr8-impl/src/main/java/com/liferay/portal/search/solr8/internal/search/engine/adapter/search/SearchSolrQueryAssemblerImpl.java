@@ -286,7 +286,7 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 	@Reference
 	private GroupByTranslator _groupByTranslator;
 
-	@Reference
+	@Reference(target = "(search.engine.impl=Solr)")
 	private SortFieldTranslator<SolrQuery.SortClause> _sortFieldTranslator;
 
 	@Reference

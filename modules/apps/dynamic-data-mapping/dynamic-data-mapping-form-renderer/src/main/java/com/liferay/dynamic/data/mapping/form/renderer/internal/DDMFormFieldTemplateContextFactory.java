@@ -230,6 +230,10 @@ public class DDMFormFieldTemplateContextFactory {
 			DDMFormField ddmFormField = _ddmFormFieldsMap.get(
 				ddmFormFieldValue.getName());
 
+			if (ddmFormField == null) {
+				continue;
+			}
+
 			Map<String, Object> changedProperties = _getChangedProperties(
 				ddmFormField, ddmFormFieldValue);
 

@@ -252,6 +252,19 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyIdArrayable() throws Exception {
+		_persistence.countByCompanyId(
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountBySource() throws Exception {
 		_persistence.countBySource("");
 

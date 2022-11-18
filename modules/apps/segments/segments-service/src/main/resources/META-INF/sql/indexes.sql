@@ -1,4 +1,5 @@
 create index IX_11EC38E2 on SegmentsEntry (active_, type_[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_543DF7AE on SegmentsEntry (companyId, ctCollectionId);
 create index IX_780F47D5 on SegmentsEntry (groupId, active_, ctCollectionId);
 create index IX_5A459E2D on SegmentsEntry (groupId, active_, source[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_575940DC on SegmentsEntry (groupId, active_, type_[$COLUMN_LENGTH:75$], ctCollectionId);

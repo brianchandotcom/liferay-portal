@@ -28,6 +28,32 @@ const SITE_URL = Liferay.ThemeDisplay.getLayoutRelativeURL()
 	.slice(0, 3)
 	.join('/');
 
+const ClaimStatus = {
+	APPROVED: 'Approved',
+	CANCELED: 'Canceled',
+	CLAIM_PAID: 'Claim Paid',
+	DRAFT: 'Draft',
+	EXPIRED: 'Expired',
+	IN_FINANCE_REVIEW: 'In Finance Review',
+	MARKETING_DIRECTOR_REVIEW: 'Marketing Director Review',
+	PENDING: 'Pending Marketing Review',
+	REJECT: 'Reject',
+	REQUEST_MORE_INFO: 'Request More Info',
+};
+
+const statusClassName = {
+	[ClaimStatus.DRAFT]: 'label label-tonal-dark ml-2',
+	[ClaimStatus.PENDING]: 'label label-tonal-warning ml-2',
+	[ClaimStatus.APPROVED]: 'label label-tonal-success ml-2',
+	[ClaimStatus.REQUEST_MORE_INFO]: 'label label-tonal-warning ml-2',
+	[ClaimStatus.REJECT]: 'label label-tonal-danger ml-2',
+	[ClaimStatus.EXPIRED]: 'label label-tonal-danger ml-2',
+	[ClaimStatus.MARKETING_DIRECTOR_REVIEW]: 'label label-tonal-light ml-2',
+	[ClaimStatus.CANCELED]: 'label label-borderless-dark ml-2',
+	[ClaimStatus.CLAIM_PAID]: 'label label-tonal-info ml-2',
+	[ClaimStatus.IN_FINANCE_REVIEW]: 'label label-tonal-light ml-2',
+};
+
 const Panel = ({mdfClaims}) => (
 	<div>
 		<div className="text-neutral-7 text-paragraph-xs">
@@ -38,11 +64,17 @@ const Panel = ({mdfClaims}) => (
 			Claim ({mdfClaims.id})
 		</div>
 
-		<div className="align-items-center d-flex justify-content-between">
-			<p className="font-weight-bold text-neutral-9 text-paragraph-sm">
-				Claimed USD
-				{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
-			</p>
+		<div className="align-items-baseline d-flex justify-content-between">
+			<div className="align-items-baseline d-flex">
+				<p className="font-weight-bold text-neutral-9 text-paragraph-sm">
+					Claimed USD
+					{getIntlNumberFormat().format(mdfClaims.amountClaimed)}
+				</p>
+
+				<div className={statusClassName[mdfClaims.claimStatus]}>
+					{mdfClaims.claimStatus}
+				</div>
+			</div>
 
 			<button
 				className="btn btn-secondary btn-sm"
@@ -119,7 +151,7 @@ export default function () {
 						</div>
 					)}
 
-					<div className="align-items-stretch d-flex justify-content-between">
+					<div className="align-items-start d-flex justify-content-between">
 						<div>
 							<h6 className="font-weight-normal text-neutral-9">
 								Get Reimbursed

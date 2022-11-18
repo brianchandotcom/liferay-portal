@@ -329,15 +329,13 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeReindex();
+		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries.");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 
 		Navigator.openURL();
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Home",
-			siteName = "Guest");
+		ContentPages.gotoPageEditor();
 
 		PageEditor.addWidget(
 			portletName = "Language Selector",
@@ -957,6 +955,7 @@ definition {
 		Refresh();
 
 		PageEditor.addWidget(
+			collectionName = "Search",
 			portletName = "Search Results",
 			targetFragmentName = "Search Bar");
 

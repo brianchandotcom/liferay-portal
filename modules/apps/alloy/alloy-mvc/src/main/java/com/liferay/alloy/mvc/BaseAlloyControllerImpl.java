@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -95,7 +94,6 @@ import java.io.StringWriter;
 
 import java.lang.reflect.Method;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -727,11 +725,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	protected Trigger getSchedulerTrigger() {
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
 		return TriggerFactoryUtil.createTrigger(
-			getSchedulerJobName(), getMessageListenerGroupName(),
-			calendar.getTime(), 1, TimeUnit.DAY);
+			getSchedulerJobName(), getMessageListenerGroupName(), 1,
+			TimeUnit.DAY);
 	}
 
 	protected Map<String, Serializable> getSearchAttributes(

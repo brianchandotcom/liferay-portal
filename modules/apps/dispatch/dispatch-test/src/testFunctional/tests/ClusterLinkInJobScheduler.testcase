@@ -20,7 +20,8 @@ definition {
 		}
 		else {
 			JobScheduler.openJobSchedulerAdmin();
-			if (IsElementPresent(key_name = "Cluster Mode Test",locator1 = "JobScheduler#JOB_ITEM_NAME")) {
+
+			if (IsElementPresent(key_name = "Cluster Mode Test", locator1 = "JobScheduler#JOB_ITEM_NAME")) {
 				JobScheduler.deleteJobItem(jobItemName = "Cluster Mode Test");
 			}
 		}
@@ -30,37 +31,35 @@ definition {
 	test ClusterModeTaskExecutionIsAvailable {
 		property portal.acceptance = "true";
 
-
 		task ("Given cluster.link.enabled") {
 			AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface");
 		}
 
-        task ("And Given Scheduled job definition created") {
+		task ("And Given Scheduled job definition created") {
 			JobScheduler.openJobSchedulerAdmin();
-			
+
 			JobScheduler.addScheduleTrigger(
 				taskExecutorType = "Sample Executor",
-				triggerName = "Cluster Mode Test"); 
+				triggerName = "Cluster Mode Test");
 		}
 
-        task ("When in Dispatch Trigger of the scheduled job") {
+		task ("When in Dispatch Trigger of the scheduled job") {
 			Click(
 				key_name = "Cluster Mode Test",
 				locator1 = "JobScheduler#JOB_ITEM_NAME");
 
 			Click(
 				key_tab = "Job Scheduler Trigger",
-				locator1 = "NavTab#TAB_LINK"
-			);		
+				locator1 = "NavTab#TAB_LINK");
 		}
 
-        task ("Then All Nodes, Single Node (Persisted), and Single Node (Memory clustered) options are available") {
+		task ("Then All Nodes, Single Node (Persisted), and Single Node (Memory clustered) options are available") {
 			for (var option : list "All Nodes,Single Node (Memory Clustered),Single Node (Persisted)") {
-            
-			AssertElementPresent(
-				key_option = "${option}",
-				locator1="JobScheduler#TASK_EXECUTION_CLUSTER_MODE_OPTION");
-			}	
-        }
+				AssertElementPresent(
+					key_option = "${option}",
+					locator1 = "JobScheduler#TASK_EXECUTION_CLUSTER_MODE_OPTION");
+			}
+		}
 	}
+
 }

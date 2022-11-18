@@ -18,7 +18,7 @@
 <tr>
 	<td>JOB_ITEM_KEBAB_MENU</td>
 	<td>//*[contains(text(),'${key_name}')]/ancestor::tr[contains(@data-qa-id,'row')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
-    <td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>KEBAB_MENU_OPTION</td>

@@ -41,23 +41,22 @@ definition {
 
 	macro deleteJobItem {
 		Variables.assertDefined(parameterList = "${jobItemName}");
-		
 
 		Click(
-					key_name = "${jobItemName}",
-					locator1 = "JobScheduler#JOB_ITEM_KEBAB_MENU");
+			key_name = "${jobItemName}",
+			locator1 = "JobScheduler#JOB_ITEM_KEBAB_MENU");
 
-				ClickNoError(
-					key_option = "Delete",
-					locator1 = "JobScheduler#KEBAB_MENU_OPTION");
+		ClickNoError(
+			key_option = "Delete",
+			locator1 = "JobScheduler#KEBAB_MENU_OPTION");
 
-				AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-				Alert.viewSuccessMessage();
+		Alert.viewSuccessMessage();
 
-				AssertElementNotPresent(
-					key_name = "${jobItemName}",
-					locator1 = "JobScheduler#JOB_ITEM_NAME");
+		AssertElementNotPresent(
+			key_name = "${jobItemName}",
+			locator1 = "JobScheduler#JOB_ITEM_NAME");
 	}
 
 	macro openJobSchedulerAdmin {

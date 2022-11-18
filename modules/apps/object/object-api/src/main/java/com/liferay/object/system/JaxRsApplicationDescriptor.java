@@ -14,6 +14,9 @@
 
 package com.liferay.object.system;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Carlos Correa
  */
@@ -39,6 +42,12 @@ public class JaxRsApplicationDescriptor {
 
 	public String getPath() {
 		return _path;
+	}
+
+	public String getRESTContextPath() {
+		return StringBundler.concat(
+			_applicationPath, StringPool.SLASH, _version, StringPool.SLASH,
+			_path);
 	}
 
 	public String getVersion() {

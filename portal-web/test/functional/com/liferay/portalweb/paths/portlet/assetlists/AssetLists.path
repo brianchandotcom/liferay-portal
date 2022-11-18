@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_LIST_ELLIPSIS</td>
-	<td>//div[contains(@class,'dropdown')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_LIST_ENTRY_TITLE</td>
 	<td>//*[contains(@class,'name-column')]//a[contains(.,'${key_title}')] | //*[contains(@class,'list-group-item')]//p[contains(.,'${key_title}')]</td>
 	<td></td>
@@ -98,27 +93,12 @@
 	<td>//tr[contains(@data-qa-id,'row')][contains(.,'${key_assetTitle}')]//td[contains(@class,'lfr-type-column')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>PERSONALIZATION_DROPDOWN_ITEM</td>
-	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'${key_menuItem}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 
 <!--VIEW_USAGES-->
 
 <tr>
 	<td>ASSET_LIST_USAGES</td>
 	<td>//li[contains(@class,'nav-item')][contains(.,'${usageType} (${usageAmount})')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

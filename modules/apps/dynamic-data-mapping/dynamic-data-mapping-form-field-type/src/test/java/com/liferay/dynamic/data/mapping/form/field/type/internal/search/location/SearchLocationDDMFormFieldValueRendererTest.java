@@ -55,6 +55,8 @@ public class SearchLocationDDMFormFieldValueRendererTest {
 		ReflectionTestUtil.setFieldValue(
 			_searchLocationDDMFormFieldValueRenderer, "_jsonFactory",
 			new JSONFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			_searchLocationDDMFormFieldValueRenderer, "_html", new HtmlImpl());
 	}
 
 	@Test

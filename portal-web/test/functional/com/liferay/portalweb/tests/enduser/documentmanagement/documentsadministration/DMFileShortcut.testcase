@@ -168,8 +168,8 @@ definition {
 
 	@description = "This ensures that the user can edit the shortcut."
 	@priority = "4"
-	@refactorneeded
-	test EditShortcutDestination {
+	@refactordone
+	test CanEditShortcutDestination {
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -179,11 +179,11 @@ definition {
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addDMShortcutCP(
+		JSONFileShortcut.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
-			siteName = "Site Name");
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 
@@ -211,8 +211,8 @@ definition {
 
 	@description = "This ensures that the shortcut is deleted after deleting the shortcut target."
 	@priority = "4"
-	@refactorneeded
-	test ViewShortcutAfterDeletingTarget {
+	@refactordone
+	test ShortcutIsDeletedAfterTargetIsDeleted {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -222,19 +222,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.addDMShortcutCP(
+		JSONFileShortcut.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
-			siteName = "Site Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
-
-		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+			groupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -249,8 +239,8 @@ definition {
 
 	@description = "This ensures that the shortcut target is not deleted after deleting the shortcut."
 	@priority = "4"
-	@refactorneeded
-	test ViewTargetAfterDeletingShortcut {
+	@refactordone
+	test TargetIsPreservedAfterDeletingShortcut {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -260,19 +250,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.addDMShortcutCP(
+		JSONFileShortcut.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
-			siteName = "Site Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
-
-		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+			groupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 

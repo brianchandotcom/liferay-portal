@@ -627,9 +627,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "View Items");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -717,9 +715,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "View Items");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

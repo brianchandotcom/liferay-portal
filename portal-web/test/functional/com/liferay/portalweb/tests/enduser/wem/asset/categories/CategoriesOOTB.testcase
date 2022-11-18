@@ -512,7 +512,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the asset is being counted at graph") {
-			AssetListsAdmin.gotoEllipsisMenuItemInItemSelector();
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertTextEquals(
 				key_tableEntry = "Blogs Entry Title",

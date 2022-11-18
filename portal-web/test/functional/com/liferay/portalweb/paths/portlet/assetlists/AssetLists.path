@@ -101,11 +101,6 @@
 	<td>//li[contains(@class,'nav-item')][contains(.,'${usageType} (${usageAmount})')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext;
 import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -27,8 +28,13 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Collections;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -46,12 +52,20 @@ public class RepositoryBrowserTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getActions() {
+		return _actions;
+	}
+
 	public long getFolderId() {
 		return _folderId;
 	}
 
 	public long getRepositoryId() {
 		return _repositoryId;
+	}
+
+	public void setActions(String actions) {
+		_actions = actions;
 	}
 
 	public void setFolderId(long folderId) {
@@ -73,6 +87,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_actions = StringPool.BLANK;
 		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		_repositoryId = 0;
 	}
@@ -105,6 +120,26 @@ public class RepositoryBrowserTag extends IncludeTag {
 				portletRequest, _getRepositoryId(), getFolderId()));
 	}
 
+	private Set<String> _getActions() {
+		if (Validator.isBlank(getActions())) {
+			return _allActions;
+		}
+
+		String actions = getActions();
+
+		Set<String> set = SetUtil.fromArray(actions.split(",\\s*"));
+
+		if (actions.contains("none")) {
+			return Collections.emptySet();
+		}
+
+		if (actions.contains("all")) {
+			return _allActions;
+		}
+
+		return set;
+	}
+
 	private long _getFolderId() {
 		return ParamUtil.getLong(getRequest(), "folderId", _folderId);
 	}
@@ -125,6 +160,8 @@ public class RepositoryBrowserTag extends IncludeTag {
 
 	private static final String _PAGE = "/repository_browser/page.jsp";
 
+	private static final Set<String> _allActions = SetUtil.fromArray(
+		"add-folder", "delete", "rename", "upload");
 	private static volatile ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission =
 			ServiceProxyFactory.newServiceTrackedInstance(
@@ -145,6 +182,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 				"_folderModelResourcePermission",
 				"(model.class.name=" + Folder.class.getName() + ")", false);
 
+	private String _actions = StringPool.BLANK;
 	private long _folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	private long _repositoryId;
 

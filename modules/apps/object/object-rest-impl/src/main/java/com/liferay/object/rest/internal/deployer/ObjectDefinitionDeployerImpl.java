@@ -64,6 +64,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,17 +169,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			}
 		}
 
-		ServiceRegistration<?> serviceRegistration1 =
-			_applicationServiceRegistrations.remove(restContextPath);
-
-		serviceRegistration1.unregister();
-
 		List<String> companyIds = _basePathCompanyIds.get(restContextPath);
 
-		companyIds.remove(String.valueOf(objectDefinition.getCompanyId()));
+		if (companyIds != null) {
+			companyIds.remove(String.valueOf(objectDefinition.getCompanyId()));
 
-		if (companyIds.isEmpty()) {
-			_basePathCompanyIds.remove(restContextPath);
+			if (!companyIds.isEmpty()) {
+				ServiceRegistration<?> serviceRegistration1 =
+					_applicationServiceRegistrations.get(restContextPath);
+
+				serviceRegistration1.setProperties(
+					_applicationProperties.get(restContextPath));
+
+				return;
+			}
 		}
 
 		List<ComponentInstance> componentInstances =
@@ -188,6 +192,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			for (ComponentInstance componentInstance : componentInstances) {
 				componentInstance.dispose();
 			}
+		}
+
+		ServiceRegistration<?> serviceRegistration1 =
+			_applicationServiceRegistrations.remove(restContextPath);
+
+		if (serviceRegistration1 != null) {
+			serviceRegistration1.unregister();
 		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
@@ -293,6 +304,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			).put(
 				"osgi.jaxrs.name", osgiJaxRsName
 			).build();
+
+		_applicationProperties.put(restContextPath, properties);
 
 		ServiceRegistration<Application> applicationServiceRegistration =
 			_applicationServiceRegistrations.get(restContextPath);
@@ -471,6 +484,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionDeployerImpl.class);
 
+	private final Map<String, Dictionary<String, Object>>
+		_applicationProperties = new HashMap<>();
 	private final Map<String, ServiceRegistration<Application>>
 		_applicationServiceRegistrations = new HashMap<>();
 	private final Map<String, List<String>> _basePathCompanyIds =

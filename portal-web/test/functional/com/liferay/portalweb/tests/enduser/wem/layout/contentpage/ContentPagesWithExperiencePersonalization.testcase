@@ -641,7 +641,7 @@ definition {
 		task ("View both web contents shown in collection items when select Anyone personalized variation") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.viewCollectionItems(
+			AssetListsAdmin.viewContent(
 				assetListTitle = "Dynamic Collection",
 				assetTitleList = "Web Content Title 1,Web Content Title 2");
 		}

@@ -318,6 +318,24 @@ public class SegmentsDisplayContextTest {
 	}
 
 	@Test
+	public void testGetScopeName() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
+
+		Assert.assertEquals("Current Site", _getScopeName(segmentsEntry));
+	}
+
+	@Test
+	public void testGetScopeNameWithGlobalSite() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			ServiceContextTestUtil.getServiceContext(
+				_company.getGroupId(), _user.getUserId()));
+
+		Assert.assertEquals("Global", _getScopeName(segmentsEntry));
+	}
+
+	@Test
 	public void testIsRoleSegmentationDisabled() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -680,6 +698,17 @@ public class SegmentsDisplayContextTest {
 			mockLiferayPortletRenderRequest.getAttribute(
 				"SEGMENTS_DISPLAY_CONTEXT"),
 			"getPreviewMembersURL", new Class<?>[] {SegmentsEntry.class},
+			segmentsEntry);
+	}
+
+	private String _getScopeName(SegmentsEntry segmentsEntry) throws Exception {
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			_renderPortlet();
+
+		return ReflectionTestUtil.invoke(
+			mockLiferayPortletRenderRequest.getAttribute(
+				"SEGMENTS_DISPLAY_CONTEXT"),
+			"getScopeName", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
 

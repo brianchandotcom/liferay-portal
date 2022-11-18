@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<td>FRAGMENT_COLLECTION</td>
-		<td>//div[(@class='page-editor__collection__message')] | //div[@class='page-editor__collection-item empty page-editor__topper']</td>
+		<td>//div[contains(@class, 'page-editor__collection')]</td>
 		<td></td>
 	</tr>
 	<tr>

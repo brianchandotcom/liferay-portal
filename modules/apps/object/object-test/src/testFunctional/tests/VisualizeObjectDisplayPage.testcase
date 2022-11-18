@@ -24,8 +24,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
 	@priority = "4"
 	test CanDefineFixedFilterForBooleanType {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
@@ -184,8 +182,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Numeric"
 	@priority = "4"
 	test CanSetPaginationNumeric {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 316",
 			objectName = "CustomObject316",
@@ -253,8 +249,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
 	@priority = "4"
 	test CanSetPaginationSimple {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 317",
 			objectName = "CustomObject317",

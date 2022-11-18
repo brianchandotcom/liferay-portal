@@ -14,6 +14,9 @@
 
 package com.liferay.object.system;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Carlos Correa
  */

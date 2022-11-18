@@ -25,9 +25,9 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinition
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.object.util.JaxRsApplicationDescriptorUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -127,12 +127,13 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				_objectEntry.getPrimaryKey()),
@@ -143,9 +144,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -159,6 +158,9 @@ public class RelatedObjectEntryResourceTest {
 	public void testDeleteManyToManySystemObjectRelatedObject()
 		throws Exception {
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -170,9 +172,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -184,9 +184,7 @@ public class RelatedObjectEntryResourceTest {
 		HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				_objectEntry.getPrimaryKey()),
@@ -195,9 +193,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -213,6 +209,9 @@ public class RelatedObjectEntryResourceTest {
 
 		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -224,9 +223,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				irrelevantPrimaryKey),
@@ -237,9 +234,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -252,6 +247,9 @@ public class RelatedObjectEntryResourceTest {
 	@Test
 	public void testDeleteOneToManySystemObjectNotFoundRelatedObject()
 		throws Exception {
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
 		Long irrelevantUserId = RandomTestUtil.randomLong();
 
@@ -266,9 +264,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				_objectEntry.getPrimaryKey()),
@@ -279,9 +275,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -295,6 +289,9 @@ public class RelatedObjectEntryResourceTest {
 	public void testDeleteOneToManySystemObjectRelatedObject()
 		throws Exception {
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -306,9 +303,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -320,9 +315,7 @@ public class RelatedObjectEntryResourceTest {
 		HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				_objectEntry.getPrimaryKey()),
@@ -331,9 +324,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -346,6 +337,9 @@ public class RelatedObjectEntryResourceTest {
 	@Test
 	public void testDeleteOneToManySystemObjectRelatedObjectNotFound()
 		throws Exception {
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
 		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
@@ -360,9 +354,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				irrelevantPrimaryKey),
@@ -373,9 +365,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -387,6 +377,9 @@ public class RelatedObjectEntryResourceTest {
 
 	@Test
 	public void testGetSystemObjectNotFoundRelatedObjects() throws Exception {
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		Long irrelevantUserId = RandomTestUtil.randomLong();
 
 		String name = StringUtil.randomId();
@@ -400,9 +393,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -412,6 +403,9 @@ public class RelatedObjectEntryResourceTest {
 
 	@Test
 	public void testGetSystemObjectRelatedObjects() throws Exception {
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -423,9 +417,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -442,6 +434,9 @@ public class RelatedObjectEntryResourceTest {
 
 	@Test
 	public void testPutSystemObjectRelatedObject() throws Exception {
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -458,9 +453,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				objectEntry.getPrimaryKey()),
@@ -472,9 +465,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);
@@ -486,6 +477,9 @@ public class RelatedObjectEntryResourceTest {
 
 	@Test
 	public void testPutSystemObjectRelatedObjectNotFound() throws Exception {
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
 		String name = StringUtil.randomId();
@@ -499,9 +493,7 @@ public class RelatedObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName(), StringPool.SLASH,
 				irrelevantPrimaryKey),
@@ -512,9 +504,7 @@ public class RelatedObjectEntryResourceTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					_userSystemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor()),
+				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
 				_objectRelationship.getName()),
 			Http.Method.GET);

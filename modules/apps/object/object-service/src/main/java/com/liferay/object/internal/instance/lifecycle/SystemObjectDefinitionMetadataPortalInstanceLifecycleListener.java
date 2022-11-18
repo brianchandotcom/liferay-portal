@@ -36,9 +36,9 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.object.util.JaxRsApplicationDescriptorUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
@@ -257,15 +257,13 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					_systemObjectDefinitionMetadataRegistry),
 				null);
 
-			String restContextPath =
-				JaxRsApplicationDescriptorUtil.getRESTContextPath(
-					systemObjectDefinitionMetadata.
-						getJaxRsApplicationDescriptor());
+			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+				systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(
-					"/o/" + restContextPath,
+					"/o/" + jaxRsApplicationDescriptor.getRESTContextPath(),
 					_objectScopeProviderRegistry.getObjectScopeProvider(
 						objectDefinition.getScope()),
 					true),

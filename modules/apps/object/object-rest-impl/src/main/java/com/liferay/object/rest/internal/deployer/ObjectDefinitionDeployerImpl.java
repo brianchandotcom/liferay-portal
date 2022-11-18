@@ -40,7 +40,6 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.object.util.JaxRsApplicationDescriptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -475,8 +474,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
 		_componentInstancesMap.computeIfAbsent(
-			JaxRsApplicationDescriptorUtil.getRESTContextPath(
-				jaxRsApplicationDescriptor),
+			jaxRsApplicationDescriptor.getRESTContextPath(),
 			key -> Arrays.asList(
 				_relatedObjectEntryResourceImplComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(

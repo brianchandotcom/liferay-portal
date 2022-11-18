@@ -27,9 +27,9 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestU
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
-import com.liferay.object.util.JaxRsApplicationDescriptorUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -259,9 +259,10 @@ public class SystemObjectRelatedObjectsTest {
 	}
 
 	private String _getLocation() {
-		return JaxRsApplicationDescriptorUtil.getRESTContextPath(
-			_userSystemObjectDefinitionMetadata.
-				getJaxRsApplicationDescriptor());
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
+		return jaxRsApplicationDescriptor.getRESTContextPath();
 	}
 
 	private String _getLocation(String name) {

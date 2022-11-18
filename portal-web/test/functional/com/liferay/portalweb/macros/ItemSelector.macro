@@ -808,8 +808,6 @@ definition {
 	}
 
 	macro viewFilteredResultsViaAssetLists {
-		var key_assetType = "${assetType}";
-
 		if (isSet(assetListName)) {
 			Click(
 				key_title = "${assetListName}",
@@ -822,9 +820,9 @@ definition {
 				itemType = "${itemType}");
 		}
 
-		Click(locator1 = "AssetLists#ASSET_LIST_SELECT_BUTTON");
+		Button.clickSelect();
 
-		Click(locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
+		MenuItem.click(menuItem = "${assetType}");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

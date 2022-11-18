@@ -24,6 +24,12 @@ definition {
 			value1 = "${key_filter}");
 	}
 
+	macro assertMenuItem {
+		AssertElementPresent(
+			key_itemName = "${key_menuItem}",
+			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+	}
+
 	macro changeCustomView {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
@@ -127,9 +133,4 @@ definition {
 			value1 = "${key_itemName}");
 	}
 
-	macro assertMenuItem {
-		AssertElementPresent(
-				key_itemName = "${key_menuItem}",
-				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
-	}
 }

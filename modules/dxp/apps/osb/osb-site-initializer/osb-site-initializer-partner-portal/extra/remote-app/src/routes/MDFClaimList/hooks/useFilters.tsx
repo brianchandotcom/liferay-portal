@@ -13,7 +13,7 @@ import {useEffect, useState} from 'react';
 
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
-import getActivityPeriodFilterTerm from '../utils/getActivityPeriodFilterTerm';
+import getDateCreatedFilterTerm from '../utils/getDateCreatedFilterTerm';
 
 export default function useFilters() {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
@@ -28,13 +28,13 @@ export default function useFilters() {
 		let hasFilter = false;
 
 		if (
-			filters.activityPeriod.dates.endDate ||
-			filters.activityPeriod.dates.startDate
+			filters.dateCreated.dates.endDate ||
+			filters.dateCreated.dates.startDate
 		) {
 			hasFilter = true;
-			initialFilter = getActivityPeriodFilterTerm(
+			initialFilter = getDateCreatedFilterTerm(
 				initialFilter,
-				filters.activityPeriod
+				filters.dateCreated
 			);
 		}
 
@@ -50,7 +50,7 @@ export default function useFilters() {
 		});
 
 		setFilterTerm(initialFilter);
-	}, [filters.activityPeriod, filters.searchTerm, setFilters]);
+	}, [filters.dateCreated, filters.searchTerm, setFilters]);
 
 	return {filters, filtersTerm, onFilter};
 }

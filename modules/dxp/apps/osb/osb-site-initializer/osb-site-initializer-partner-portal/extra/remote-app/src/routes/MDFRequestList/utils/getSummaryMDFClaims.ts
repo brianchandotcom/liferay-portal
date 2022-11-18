@@ -17,13 +17,23 @@ import getTotalAmountPaid from './getTotalAmountPaid';
 
 export default function getSummaryMDFClaims(MdfClaims?: MDFClaimDTO[]) {
 	if (MdfClaims?.length) {
-		return {
-			[MDFColumnKey.AMOUNT_CLAIMED]: getIntlNumberFormat().format(
-				getTotalAmountClaimed(MdfClaims)
-			),
-			[MDFColumnKey.PAID]: getIntlNumberFormat().format(
-				getTotalAmountPaid(MdfClaims)
-			),
-		};
+		const amountClaimed = getIntlNumberFormat().format(
+			getTotalAmountClaimed(MdfClaims)
+		);
+		const amountPaid = getIntlNumberFormat().format(
+			getTotalAmountPaid(MdfClaims)
+		);
+
+		if (amountClaimed) {
+			return {
+				[MDFColumnKey.AMOUNT_CLAIMED]: amountClaimed,
+			};
+		}
+
+		if (amountPaid) {
+			return {
+				[MDFColumnKey.PAID]: amountPaid,
+			};
+		}
 	}
 }

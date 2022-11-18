@@ -19,9 +19,10 @@ import getMDFClaimAmountClaimedInfo from '../utils/getMDFBudgetInfos';
 
 export default function useGetListItemsFromMDFClaims(
 	page: number,
-	pageSize: number
+	pageSize: number,
+	filtersTerm: string
 ) {
-	const swrResponse = useGetMDFClaim(page, pageSize);
+	const swrResponse = useGetMDFClaim(page, pageSize, filtersTerm);
 
 	const listItems = useMemo(
 		() =>

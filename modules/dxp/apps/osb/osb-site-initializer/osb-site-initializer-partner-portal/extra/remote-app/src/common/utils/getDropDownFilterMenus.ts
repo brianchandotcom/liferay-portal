@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import DropDownWithDrillDown from '../../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
+import DropDownWithDrillDown from '../components/TableHeader/Filter/components/DropDownWithDrillDown';
 
 interface FilterItem {
 	component: JSX.Element;

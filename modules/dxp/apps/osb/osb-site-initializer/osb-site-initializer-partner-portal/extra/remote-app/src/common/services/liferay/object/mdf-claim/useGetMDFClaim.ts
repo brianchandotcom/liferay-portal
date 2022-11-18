@@ -17,10 +17,14 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetMDFClaim(page: number, pageSize: number) {
+export default function useGetMDFClaim(
+	page: number,
+	pageSize: number,
+	filtersTerm: string
+) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/mdfclaims?nestedFields=accountEntry&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims?nestedFields=accountEntry${filtersTerm}&page=${page}&pageSize=${pageSize}`,
 			Liferay.authToken,
 		],
 		(url, token) => liferayFetcher<LiferayItems<MDFClaimDTO[]>>(url, token)

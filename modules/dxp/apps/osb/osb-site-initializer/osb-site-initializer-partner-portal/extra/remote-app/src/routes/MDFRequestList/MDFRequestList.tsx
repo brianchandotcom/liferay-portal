@@ -27,10 +27,10 @@ import usePagination from '../../common/hooks/usePagination';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
+import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import useFilters from './hooks/useFilters';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import {INITIAL_FILTER} from './utils/constants/initialFilter';
-import getDropDownFilterMenus from './utils/getDropDownFilterMenus';
 import getMDFListColumns from './utils/getMDFListColumns';
 
 type MDFRequestItem = {
@@ -156,6 +156,7 @@ const MDFRequestList = () => {
 												},
 											});
 										}}
+										filterDescription="Activity Date "
 									/>
 								),
 								name: 'Activity Period',

@@ -10,12 +10,18 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import Dropdown from '../../common/components/Dropdown';
 import StatusBadge from '../../common/components/StatusBadge';
 import Table from '../../common/components/Table';
+import TableHeader from '../../common/components/TableHeader';
+import DropDownWithDrillDown from '../../common/components/TableHeader/Filter/components/DropDownWithDrillDown';
+import DateFilter from '../../common/components/TableHeader/Filter/components/filters/DateFilter';
+import Search from '../../common/components/TableHeader/Search';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
 import {Status} from '../../common/enums/status';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
@@ -23,17 +29,23 @@ import usePagination from '../../common/hooks/usePagination';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
+import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
+import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFClaims from './hooks/useGetListItemsFromMDFClaims';
+import {INITIAL_FILTER} from './utils/constants/initialFilter';
 
 type MDFClaimItem = {
 	[key in MDFClaimColumnKey]?: any;
 };
 
 const MDFClaimList = () => {
+	const {filters, filtersTerm, onFilter} = useFilters();
+
 	const pagination = usePagination();
 	const {data, isValidating} = useGetListItemsFromMDFClaims(
 		pagination.activePage,
-		pagination.activeDelta
+		pagination.activeDelta,
+		filtersTerm
 	);
 
 	const siteURL = useLiferayNavigate();
@@ -133,10 +145,91 @@ const MDFClaimList = () => {
 		<div className="border-0 my-4">
 			<h1>MDF Claim</h1>
 
-			{isValidating && <ClayLoadingIndicator />}
+			<TableHeader>
+				<div className="d-flex">
+					<div>
+						<Search
+							onSearchSubmit={(searchTerm: string) =>
+								onFilter({
+									searchTerm,
+								})
+							}
+						/>
+
+						<div className="bd-highlight flex-shrink-2 mt-1">
+							{!!filters.searchTerm &&
+								!!data.items?.length &&
+								!isValidating && (
+									<div>
+										<p className="font-weight-semi-bold m-0 ml-1 mt-3 text-paragraph-sm">
+											{data.items?.length > 1
+												? `${data.items?.length} results for ${filters.searchTerm}`
+												: `${data.items?.length} result for ${filters.searchTerm}`}
+										</p>
+									</div>
+								)}
+
+							{filters.hasValue && (
+								<ClayButton
+									borderless
+									className="link"
+									onClick={() => {
+										onFilter({
+											...INITIAL_FILTER,
+											searchTerm: filters.searchTerm,
+										});
+									}}
+									small
+								>
+									<ClayIcon
+										className="ml-n2 mr-1"
+										symbol="times-circle"
+									/>
+									Clear All Filters
+								</ClayButton>
+							)}
+						</div>
+					</div>
+
+					<DropDownWithDrillDown
+						className=""
+						initialActiveMenu="x0a0"
+						menus={getDropDownFilterMenus([
+							{
+								component: (
+									<DateFilter
+										dateFilters={(dates: {
+											endDate: string;
+											startDate: string;
+										}) => {
+											onFilter({
+												dateCreated: {
+													dates,
+												},
+											});
+										}}
+										filterDescription="Claim Submitted "
+									/>
+								),
+								name: 'Date Submitted',
+							},
+						])}
+						trigger={
+							<ClayButton borderless className="btn-secondary">
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol="filter" />
+								</span>
+								Filter
+							</ClayButton>
+						}
+					/>
+				</div>
+			</TableHeader>
 
 			{!isValidating &&
 				getTable(data.totalCount || 0, data.items, columns)}
+
+			{isValidating && <ClayLoadingIndicator />}
 		</div>
 	);
 };

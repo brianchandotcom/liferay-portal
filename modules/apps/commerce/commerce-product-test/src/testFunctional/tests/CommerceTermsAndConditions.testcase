@@ -880,7 +880,7 @@ definition {
 	@description = "[Please Update]"
 	@priority = "4"
 	test ViewAvailableDeliveryTerms {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 

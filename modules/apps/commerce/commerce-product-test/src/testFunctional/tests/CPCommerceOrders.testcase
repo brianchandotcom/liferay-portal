@@ -2207,7 +2207,7 @@ definition {
 	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
 	@priority = "3"
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithSellerOrderAcceptanceWorkflowActive";
 
 		// TODO Review

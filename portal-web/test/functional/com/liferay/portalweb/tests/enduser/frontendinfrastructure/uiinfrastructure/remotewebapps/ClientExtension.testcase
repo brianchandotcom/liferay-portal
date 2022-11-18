@@ -669,15 +669,11 @@ definition {
 			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
-		task ("When type 'vanilla counter' in HTML Element field") {
-			Type(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY",
-				value1 = "vanilla counter");
-		}
-
-		task ("When attempt to save the remote app") {
-			Button.clickPublish();
+		task ("When type 'vanilla counter' in HTML Element field and attempt to save the remote app") {
+			RemoteApps.addApp(
+				entryName = "RemoteApp Test Name",
+				entryURL = "$testurl",
+				entryHTMLElementName = "vanilla counter");
 		}
 
 		task ("Then error message 'HTML Element name contains invalid character' with empty/white space appears under HTML Element field") {
@@ -696,15 +692,11 @@ definition {
 			ClientExtensionGeneral.addType(type = "Custom Element");
 		}
 
-		task ("When type 'vanilla.counter' in HTML Element Name field") {
-			Type(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY",
-				value1 = "vanilla.counter");
-		}
-
-		task ("And When attempt to save the remote app") {
-			Button.clickPublish();
+		task ("When type 'vanilla.counter' in HTML Element Name field and attempt to save the remote app") {
+			RemoteApps.addApp(
+				entryName = "RemoteApp Test",
+				entryURL = "$testurl",
+				entryHTMLElementName = "vanilla.counter");
 		}
 
 		task ("Then error message 'HTML element name must contain at least one hyphen' appears under HTML Element field") {

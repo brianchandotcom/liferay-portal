@@ -77,6 +77,15 @@ public class CommerceChannelAccountEntryRelServiceUtil {
 			accountEntryId, commerceChannelId, type);
 	}
 
+	public static CommerceChannelAccountEntryRel
+			getCommerceChannelAccountEntryRel(
+				long commerceChannelAccountEntryRelId)
+		throws PortalException {
+
+		return getService().getCommerceChannelAccountEntryRel(
+			commerceChannelAccountEntryRelId);
+	}
+
 	public static List<CommerceChannelAccountEntryRel>
 			getCommerceChannelAccountEntryRels(
 				long accountEntryId, int type, int start, int end,

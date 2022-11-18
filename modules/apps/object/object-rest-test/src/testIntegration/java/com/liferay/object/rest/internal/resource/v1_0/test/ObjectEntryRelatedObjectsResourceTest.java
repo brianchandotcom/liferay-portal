@@ -132,7 +132,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		ObjectEntry relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_relatedObjectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
 
-		// Many-to-many relationships
+		// Many to many relationships
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _relatedObjectDefinition,
@@ -156,7 +156,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(relatedObjectEntry, jsonObject.getJSONArray("items"));
 
-		// One-to-many relationship
+		// One to many relationship
 
 		objectRelationship = _addObjectRelationship(
 			_objectDefinition, _relatedObjectDefinition,
@@ -191,7 +191,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				_userSystemObjectDefinitionMetadata.getName());
 
-		// Many-to-many relationships
+		// Many to many relationships
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, relatedObjectDefinition,
@@ -215,7 +215,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(_user, jsonObject.getJSONArray("items"));
 
-		// One-to-many relationship
+		// One to many relationship
 
 		objectRelationship = _addObjectRelationship(
 			_objectDefinition, relatedObjectDefinition,
@@ -242,7 +242,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		ObjectEntry relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_relatedObjectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);
 
-		// Many-to-many relationship
+		// Many to many relationship
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _relatedObjectDefinition,
@@ -273,7 +273,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(relatedObjectEntry, jsonArray);
 
-		// One-to-many relationship
+		// One to many relationship
 
 		objectRelationship = _addObjectRelationship(
 			_objectDefinition, _relatedObjectDefinition,
@@ -315,7 +315,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				_userSystemObjectDefinitionMetadata.getName());
 
-		// Many-to-many relationship
+		// Many to many relationship
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, relatedObjectDefinition,
@@ -345,7 +345,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(_user, jsonArray);
 
-		// One-to-many relationship
+		// One to many relationship
 
 		objectRelationship = _addObjectRelationship(
 			_objectDefinition, relatedObjectDefinition,
@@ -432,7 +432,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		options.addHeader(
 			"Authorization",
 			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
-
 		options.setLocation(location);
 		options.setMethod(httpMethod);
 

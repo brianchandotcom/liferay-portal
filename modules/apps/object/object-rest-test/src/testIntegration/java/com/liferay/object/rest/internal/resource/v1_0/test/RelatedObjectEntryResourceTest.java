@@ -117,6 +117,8 @@ public class RelatedObjectEntryResourceTest {
 	public void testDeleteManyToManySystemObjectNotFoundRelatedObject()
 		throws Exception {
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 		Long irrelevantUserId = RandomTestUtil.randomLong();
 
 		String name = StringUtil.randomId();
@@ -126,9 +128,6 @@ public class RelatedObjectEntryResourceTest {
 			_userSystemObjectDefinition.getObjectDefinitionId(),
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -207,8 +206,6 @@ public class RelatedObjectEntryResourceTest {
 	public void testDeleteManyToManySystemObjectRelatedObjectNotFound()
 		throws Exception {
 
-		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
-
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
@@ -219,6 +216,8 @@ public class RelatedObjectEntryResourceTest {
 			_userSystemObjectDefinition.getObjectDefinitionId(),
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -341,8 +340,6 @@ public class RelatedObjectEntryResourceTest {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
-		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
-
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -350,6 +347,8 @@ public class RelatedObjectEntryResourceTest {
 			_objectDefinition.getObjectDefinitionId(), _user.getUserId(),
 			_objectEntry.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -379,7 +378,6 @@ public class RelatedObjectEntryResourceTest {
 	public void testGetSystemObjectNotFoundRelatedObjects() throws Exception {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
-
 		Long irrelevantUserId = RandomTestUtil.randomLong();
 
 		String name = StringUtil.randomId();
@@ -480,8 +478,6 @@ public class RelatedObjectEntryResourceTest {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 
-		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
-
 		String name = StringUtil.randomId();
 
 		_objectRelationship = _addObjectRelationship(
@@ -489,6 +485,8 @@ public class RelatedObjectEntryResourceTest {
 			_userSystemObjectDefinition.getObjectDefinitionId(),
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,

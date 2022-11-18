@@ -13,19 +13,16 @@
  */
 
 import CodeMirror from 'codemirror';
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {ICodeMirrorEditor} from './CodeMirrorEditor';
-import {CustomSidebarContentProps, SidebarCategory} from './Sidebar';
+import {SidebarCategory} from './Sidebar';
 import './index.scss';
 export {default as CodeMirrorEditor} from './CodeMirrorEditor';
 export {Collapsible} from './Collapsible';
 export {Element} from './Element';
-export {CustomSidebarContentProps} from './Sidebar';
 export {SidebarCategory} from './Sidebar';
 interface IProps extends ICodeMirrorEditor {
-	CustomSidebarContent?: (
-		props: CustomSidebarContentProps
-	) => React.ReactNode;
+	CustomSidebarContent?: ReactNode;
 	className?: string;
 	error?: string;
 	sidebarElements?: SidebarCategory[];

@@ -13,7 +13,7 @@
  */
 
 import CodeMirror from 'codemirror';
-import React from 'react';
+import {ReactNode, RefObject} from 'react';
 import './Sidebar.scss';
 interface SidebarElement {
 	content: string;
@@ -24,17 +24,11 @@ export interface SidebarCategory {
 	items: SidebarElement[];
 	label: string;
 }
-declare type elementClickFunction = (item: SidebarElement) => void;
-export interface CustomSidebarContentProps {
-	elements?: SidebarCategory[];
-	handleElementClick: elementClickFunction;
-}
 interface IProps {
-	CustomSidebarContent?: (
-		props: CustomSidebarContentProps
-	) => React.ReactNode;
-	editorRef: React.RefObject<CodeMirror.Editor>;
+	CustomSidebarContent?: ReactNode;
+	editorRef: RefObject<CodeMirror.Editor>;
 	elements?: SidebarCategory[];
+	otherProps?: unknown;
 }
 export declare function Sidebar({
 	CustomSidebarContent,

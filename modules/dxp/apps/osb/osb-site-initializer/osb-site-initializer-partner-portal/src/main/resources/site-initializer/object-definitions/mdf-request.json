@@ -1,4 +1,5 @@
 {
+	"enableComments": true,
 	"label": {
 		"en_US": "MDF Request"
 	},

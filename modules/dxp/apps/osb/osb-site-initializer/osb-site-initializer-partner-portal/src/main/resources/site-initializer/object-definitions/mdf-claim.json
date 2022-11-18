@@ -1,4 +1,5 @@
 {
+	"enableComments": true,
 	"label": {
 		"en_US": "MDF Claim"
 	},
@@ -105,5 +106,6 @@
 	"pluralLabel": {
 		"en_US": "MDF Claims"
 	},
-	"scope": "company"
+	"scope": "company",
+	"titleObjectFieldName": "ID"
 }

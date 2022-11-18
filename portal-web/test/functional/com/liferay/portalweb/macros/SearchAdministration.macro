@@ -17,6 +17,14 @@ definition {
 	}
 
 	macro executeReindex {
+		SearchAdministration.openSearchAdmin();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Search");
+
+		var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
+
 		SearchAdministration.openIndexActions();
 
 		AssertTextEquals(
@@ -42,10 +50,12 @@ definition {
 				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 		}
 
-		var port = Elasticsearch.getServerPort();
-		var portalHostname = PropsUtil.get("portal.hostname");
+		if (contains("${searchEngineVendor}", "Elasticsearch")) {
+			var port = Elasticsearch.getServerPort();
+			var portalHostname = PropsUtil.get("portal.hostname");
 
-		var curl = "http://${portalHostname}:${port}/_tasks";
+			var curl = "http://${portalHostname}:${port}/_tasks";
+		}
 
 		while ((!(isSet(reindexStartTime)) || ("${retryReindex}" == "true")) && (maxIterations = "2")) {
 			if (isSet(action)) {
@@ -59,35 +69,56 @@ definition {
 					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 			}
 
+			var reindexElapsedTime = "0";
 			var reindexStartTime = "0";
 
-			while (!(contains("${elasticsearchTasks}", "indices:data/write/bulk")) && ("${reindexStartTime}" != "60")) {
-				Pause.pauseNoSPARefresh(locator1 = "1000");
+			if (contains("${searchEngineVendor}", "Elasticsearch")) {
+				while (!(contains("${elasticsearchTasks}", "indices:data/write/bulk")) && ("${reindexStartTime}" != "60")) {
+					Pause.pauseNoSPARefresh(locator1 = "1000");
 
-				var reindexStartTime = ${reindexStartTime} + 1;
+					var reindexStartTime = ${reindexStartTime} + 1;
 
-				echo("Current Elasticsearch Tasks:");
+					echo("Current Elasticsearch Tasks:");
 
-				var elasticsearchTasks = JSONCurlUtil.get("${curl}");
+					var elasticsearchTasks = JSONCurlUtil.get("${curl}");
+				}
+
+				if ("${reindexStartTime}" == "60") {
+					echo("Elasticsearch failed to receive reindex request after 60 seconds.");
+				}
+				else {
+					echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
+				}
+
+				while (((contains("${elasticsearchTasks}", "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && ("${reindexElapsedTime}" != "240")) && (maxIterations = "24")) {
+					Pause.pauseNoSPARefresh(locator1 = "10000");
+
+					var reindexElapsedTime = ${reindexElapsedTime} + 10;
+
+					echo("Current Elasticsearch Tasks:");
+
+					var elasticsearchTasks = JSONCurlUtil.get("${curl}");
+				}
 			}
+			else if (contains("${searchEngineVendor}", "Solr")) {
+				while ((IsElementNotPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexStartTime}" != "60")) {
+					Pause.pauseNoSPARefresh(locator1 = "1000");
 
-			if ("${reindexStartTime}" == "60") {
-				echo("Elasticsearch failed to receive reindex request after 60 seconds.");
-			}
-			else {
-				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
-			}
+					var reindexStartTime = ${reindexStartTime} + 1;
+				}
 
-			var reindexElapsedTime = "0";
+				if ("${reindexStartTime}" == "60") {
+					echo("Solr failed to receive reindex request after 60 seconds.");
+				}
+				else {
+					echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
+				}
 
-			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && ("${reindexElapsedTime}" != "240")) && (maxIterations = "24")) {
-				Pause.pauseNoSPARefresh(locator1 = "10000");
+				while ((((IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && ("${reindexElapsedTime}" != "240")) && (maxIterations = "24")) {
+					Pause.pauseNoSPARefresh(locator1 = "10000");
 
-				var reindexElapsedTime = ${reindexElapsedTime} + 10;
-
-				echo("Current Elasticsearch Tasks:");
-
-				var elasticsearchTasks = JSONCurlUtil.get("${curl}");
+					var reindexElapsedTime = ${reindexElapsedTime} + 10;
+				}
 			}
 
 			if ("${reindexElapsedTime}" == "0") {

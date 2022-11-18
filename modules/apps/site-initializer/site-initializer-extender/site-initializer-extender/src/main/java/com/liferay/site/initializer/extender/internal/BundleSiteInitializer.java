@@ -86,6 +86,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -159,10 +160,10 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -178,8 +179,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
-
-import java.io.Serializable;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -2491,6 +2490,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return null;
 		}
 
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, null, null, null, null, LocaleUtil.getSiteDefault(),
+				null, serviceContext.fetchUser());
+
 		Set<String> sortedResourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
@@ -2545,21 +2549,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String externalReferenceCode = objectEntryJSONObject.getString(
 					"externalReferenceCode");
 
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.addOrUpdateObjectEntry(
-						externalReferenceCode, serviceContext.getUserId(),
-						groupId, objectDefinition.getObjectDefinitionId(),
-						ObjectMapperUtil.readValue(
-							Serializable.class,
-							String.valueOf(objectEntryJSONObject)),
-						serviceContext);
+				ObjectEntry objectEntry = ObjectEntry.toDTO(
+					JSONUtil.toString(objectEntryJSONObject));
+
+				objectEntry = _objectEntryManager.addOrUpdateObjectEntry(
+					serviceContext.getCompanyId(), defaultDTOConverterContext,
+					externalReferenceCode, objectDefinition, objectEntry,
+					String.valueOf(groupId));
 
 				if (Validator.isNotNull(externalReferenceCode)) {
 					objectEntryIdsStringUtilReplaceValues.put(
 						StringBundler.concat(
 							objectDefinition.getShortName(), "#",
 							externalReferenceCode),
-						String.valueOf(objectEntry.getObjectEntryId()));
+						String.valueOf(objectEntry.getId()));
 				}
 
 				String objectEntrySiteInitializerKey =
@@ -2570,16 +2573,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 					continue;
 				}
 
+				ObjectEntry objectEntryFinal = objectEntry;
+
+				Class<?> clazz = objectEntry.getClass();
+
 				siteNavigationMenuItemSettingsBuilder.put(
 					objectEntrySiteInitializerKey,
 					new SiteNavigationMenuItemSetting() {
 						{
-							className = objectEntry.getModelClassName();
-							classPK = String.valueOf(
-								objectEntry.getObjectEntryId());
+							className = clazz.getName();
+							classPK = String.valueOf(objectEntryFinal.getId());
 							title =
 								objectDefinition.getName() + StringPool.SPACE +
-									objectEntry.getObjectEntryId();
+									objectEntryFinal.getId();
 						}
 					});
 			}

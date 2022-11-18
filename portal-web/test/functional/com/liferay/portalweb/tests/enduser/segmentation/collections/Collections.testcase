@@ -96,6 +96,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-166893. The site designer could change the display style of Collections."
+	@priority = "5"
+	test ChangeDisplayStyleOfCollections {
+		task ("Given a site designer has collections") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Manual Collection");
+		}
+
+		task ("When the site designer navigates to the Collections admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the site designer see the collections are displayed as table items") {
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconTable.viewTableEntryTitle(tableEntry = "${collectionName}");
+			}
+		}
+
+		task ("When the site designer change the display style to list") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		}
+
+		task ("Then the site designer see the collections are displayed as list items") {
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconList.viewListEntryTitle(listEntry = "${collectionName}");
+			}
+		}
+
+		task ("When the site designer change the display style to cards") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		}
+
+		task ("Then the site designer see the collections are displayed as cards items") {
+			for (var collectionName : list "Dynamic Collection,Manual Collection") {
+				LexiconCard.viewCardTitle(card = "${collectionName}");
+			}
+		}
+	}
+
 	@description = "LPS-108368: Asset Publisher configured with dynamic content set WITHOUT pagination shows assets for the two personalized views the user belongs to when the configuration is enabled"
 	@priority = "5"
 	test CombineContentForMultisegmentDynamicCollectionWithoutPagination {

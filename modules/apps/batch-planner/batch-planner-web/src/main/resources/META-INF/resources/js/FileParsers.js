@@ -20,23 +20,49 @@ import {
 } from './constants';
 
 export function parseCSV(content, separator, enclosingCharacter) {
-	const rows = content.split(/\r?\n/);
+	const formattedRows = [];
+	let quote = false;
+	let row = 0;
+	let col = 0;
+	let c = 0;
 
-	const formattedRows = rows.map((row) => {
-		let sanitizedRow = row;
-
-		if (sanitizedRow.indexOf(enclosingCharacter) === 0) {
-			sanitizedRow = sanitizedRow.substring(1);
+	for (c; c < content.length; c++) {
+		const cc = content[c];
+		const nc = content[c + 1];
+		formattedRows[row] = formattedRows[row] || [];
+		formattedRows[row][col] = formattedRows[row][col] || '';
+		if (cc === enclosingCharacter && quote && nc === enclosingCharacter) {
+			formattedRows[row][col] += cc;
+			++c;
+			continue;
+		}
+		if (cc === enclosingCharacter) {
+			quote = !quote;
+			continue;
+		}
+		if (cc === separator && !quote) {
+			++col;
+			continue;
+		}
+		if (cc === '\r' && nc === '\n' && !quote) {
+			++row;
+			col = 0;
+			++c;
+			continue;
+		}
+		if (cc === '\n' && !quote) {
+			++row;
+			col = 0;
+			continue;
+		}
+		if (cc === '\r' && !quote) {
+			++row;
+			col = 0;
+			continue;
 		}
 
-		if (sanitizedRow.endsWith(enclosingCharacter)) {
-			sanitizedRow = sanitizedRow.substring(0, sanitizedRow.length - 1);
-		}
-
-		const regex = `${enclosingCharacter}${separator}${enclosingCharacter}|${separator}|${separator}${enclosingCharacter}|${enclosingCharacter}${separator}`;
-
-		return sanitizedRow.split(new RegExp(regex));
-	});
+		formattedRows[row][col] += cc;
+	}
 
 	return formattedRows;
 }

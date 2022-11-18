@@ -40,6 +40,7 @@ definition {
 	@uitest
 	test AddElementToEachPanel {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Tabs#AddElementToEachPanel";
 
 		task ("Add a Tabs fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(

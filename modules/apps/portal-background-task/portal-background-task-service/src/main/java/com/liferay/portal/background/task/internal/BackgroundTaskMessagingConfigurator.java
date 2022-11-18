@@ -22,7 +22,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -53,8 +52,7 @@ public class BackgroundTaskMessagingConfigurator {
 
 	@Activate
 	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws PortalException {
+		BundleContext bundleContext, Map<String, Object> properties) {
 
 		BackgroundTaskManagerConfiguration backgroundTaskManagerConfiguration =
 			ConfigurableUtil.createConfigurable(

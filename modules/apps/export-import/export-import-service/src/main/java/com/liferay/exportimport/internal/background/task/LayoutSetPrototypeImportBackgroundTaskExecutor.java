@@ -51,7 +51,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -181,10 +180,7 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 	}
 
 	@Activate
-	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws PortalException {
-
+	protected void activate(Map<String, Object> properties) {
 		setBackgroundTaskStatusMessageTranslator(
 			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
 

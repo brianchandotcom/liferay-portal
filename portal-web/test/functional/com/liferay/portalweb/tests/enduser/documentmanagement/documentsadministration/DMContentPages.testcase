@@ -28,10 +28,10 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-94508 and LPS-129430. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
+	@description = "This test covers LPS-129430. It ensures that documents can be uploaded via Multiple File Uploads in a content page."
 	@priority = "5"
-	@refactorneeded
-	test CreateTagUsingAutocomplete {
+	@refactordone
+	test CanAddMultipleDocuments {
 		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
@@ -40,13 +40,11 @@ definition {
 			layoutName = "Test Content Page Name",
 			type = "content");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Guest");
-
-		PageEditor.addWidget(portletName = "Documents and Media");
-
-		PageEditor.publish();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Test Content Page",
+			widgetName = "Documents and Media");
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
@@ -58,19 +56,43 @@ definition {
 			contentPage = "true",
 			dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
-		for (var tagName : list "tagone,tagtwo,tagthree") {
-			DMDocument.selectDocuments(dmDocumentTitle = "Document_1");
+		DMDocument.viewPG(dmDocumentTitle = "Document_1");
 
-			Click(locator1 = "Icon#EDIT_TAGS");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
 
-			DMDocument.editTags(tagName = "${tagName}");
+		DMDocument.viewPG(dmDocumentTitle = "Document_2");
+	}
 
-			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1");
+	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
+	@priority = "5"
+	@refactordone
+	test CanCreateTagUsingAutocomplete {
+		property custom.properties = "dl.actions.visible=true";
+		property portal.acceptance = "true";
 
-			DMDocument.viewTagInfo(tagName = "${tagName}");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-			Navigator.gotoPage(pageName = "Test Content Page Name");
-		}
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Test Content Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -78,32 +100,7 @@ definition {
 
 		Click(locator1 = "Icon#EDIT_TAGS");
 
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Edit Tags");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "You are editing the tags for the selected item.");
-
-		Click(locator1 = "Modal#BODY");
-
-		Type.sendKeys(
-			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
-			value1 = "ta");
-
-		AssertClick(
-			key_tagName = "tagtwo",
-			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
-			value1 = "tagtwo");
-
-		Button.clickSave();
-
-		SelectFrame(value1 = "relative=top");
-
-		Alert.viewSuccessMessageText(successMessage = "Changes Saved");
+		DMDocument.editTags(autocomplete = "true");
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2");
 

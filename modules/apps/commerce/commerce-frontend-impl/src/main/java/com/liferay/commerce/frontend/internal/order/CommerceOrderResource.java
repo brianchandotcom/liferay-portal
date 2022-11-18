@@ -98,7 +98,7 @@ public class CommerceOrderResource {
 		int end = page * pageSize;
 
 		List<CommerceOrder> userCommerceOrders =
-			_commerceOrderService.getUserPendingCommerceOrders(
+			_commerceOrderService.getUserCommerceOrders(
 				companyId, groupId, keywords, start, end);
 
 		for (CommerceOrder commerceOrder : userCommerceOrders) {

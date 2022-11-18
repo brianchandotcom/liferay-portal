@@ -15,18 +15,13 @@
 package com.liferay.headless.commerce.admin.inventory.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalServiceUtil;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,24 +31,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		for (Long warehouseId : _warehouseIds) {
-			CommerceInventoryWarehouse commerceInventoryWarehouse =
-				CommerceInventoryWarehouseLocalServiceUtil.
-					fetchCommerceInventoryWarehouse(warehouseId);
-
-			if (commerceInventoryWarehouse != null) {
-				CommerceInventoryWarehouseLocalServiceUtil.
-					deleteCommerceInventoryWarehouse(
-						commerceInventoryWarehouse);
-			}
-		}
-	}
 
 	@Ignore
 	@Override
@@ -214,13 +191,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 	}
 
 	private Warehouse _addWarehouse(Warehouse warehouse) throws Exception {
-		Warehouse postWarehouse = warehouseResource.postWarehouse(warehouse);
-
-		_warehouseIds.add(postWarehouse.getId());
-
-		return postWarehouse;
+		return warehouseResource.postWarehouse(warehouse);
 	}
-
-	private final List<Long> _warehouseIds = new ArrayList<>();
 
 }

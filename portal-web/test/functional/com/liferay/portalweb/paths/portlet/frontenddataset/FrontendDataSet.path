@@ -218,7 +218,7 @@
 </tr>
 <tr>
 	<td>SELECT_OPTION_CUSTOM_VIEW</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(text(), '${key_itemName}')]</td>
+	<td>//button[@class='dropdown-item'][normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -232,8 +232,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEADER_ROW</td>
-	<td>xpath=(//div[contains(@class, "dnd-tr")])[1]</td>
+	<td>DELETE_BUTTON</td>
+	<td>//button[@class='btn btn-primary']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -629,7 +629,7 @@ definition {
 		task ("When type testurl in URL field and a valid name is entered") {
 			RemoteApps.addApp(
 				entryName = "Test Name",
-				entryURL = "$testurl");
+				entryURL = "${testURL}");
 		}
 
 		task ("And When attempt to save the remote app") {
@@ -687,7 +687,7 @@ definition {
 			RemoteApps.addApp(
 				entryHTMLElementName = "vanilla counter",
 				entryName = "RemoteApp Test Name",
-				entryURL = "$testurl");
+				entryURL = "${testURL}");
 		}
 
 		task ("Then error message 'HTML Element name contains invalid character' with empty/white space appears under HTML Element field") {
@@ -710,7 +710,7 @@ definition {
 			RemoteApps.addApp(
 				entryHTMLElementName = "vanilla.counter",
 				entryName = "RemoteApp Test",
-				entryURL = "$testurl");
+				entryURL = "${testURL}");
 		}
 
 		task ("Then error message 'HTML element name must contain at least one hyphen' appears under HTML Element field") {

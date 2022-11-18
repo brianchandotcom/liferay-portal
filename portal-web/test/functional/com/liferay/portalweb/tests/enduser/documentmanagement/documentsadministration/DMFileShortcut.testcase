@@ -29,11 +29,11 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-82073."
+	@description = "This tests that a shortcut can be added to a document."
 	@priority = "5"
-	@refactorneeded
-	test AddShortcutToSiteDocument {
-		property testray.component.names = "Training";
+	@refactordone
+	test CanAddShortcutToDocument {
+		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -42,14 +42,14 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "DM Document Title",

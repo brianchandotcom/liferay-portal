@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.helper;
+package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -22,15 +22,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
 /**
  * @author Carlos Correa
  */
-@Component(service = ObjectHelper.class)
-public class ObjectHelper {
+public abstract class BaseOpenAPIContributor implements OpenAPIContributor {
 
 	public String getExternalDTOClassName(
 		ObjectDefinition systemObjectDefinition) {
@@ -60,10 +57,17 @@ public class ObjectHelper {
 		return objectDefinition.getShortName();
 	}
 
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
+	protected void init(
+		DTOConverterRegistry dtoConverterRegistry,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
-	@Reference
+		_dtoConverterRegistry = dtoConverterRegistry;
+		_systemObjectDefinitionMetadataRegistry =
+			systemObjectDefinitionMetadataRegistry;
+	}
+
+	private DTOConverterRegistry _dtoConverterRegistry;
 	private SystemObjectDefinitionMetadataRegistry
 		_systemObjectDefinitionMetadataRegistry;
 

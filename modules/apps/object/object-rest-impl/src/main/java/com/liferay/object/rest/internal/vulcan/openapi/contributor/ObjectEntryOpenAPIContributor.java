@@ -16,16 +16,16 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.internal.helper.ObjectHelper;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.models.Components;
@@ -53,23 +53,26 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Alejandro Tardín
  */
-public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
+public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	public ObjectEntryOpenAPIContributor(
-		BundleContext bundleContext, ObjectDefinition objectDefinition,
+		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry,
+		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource,
-		ObjectHelper objectHelper,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		OpenAPIResource openAPIResource) {
+		OpenAPIResource openAPIResource,
+		SystemObjectDefinitionMetadataRegistry
+			systemObjectDefinitionMetadataRegistry) {
 
 		_bundleContext = bundleContext;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
-		_objectHelper = objectHelper;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_openAPIResource = openAPIResource;
+
+		init(dtoConverterRegistry, systemObjectDefinitionMetadataRegistry);
 	}
 
 	@Override
@@ -95,7 +98,7 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 					GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag.LPS-162966"))) {
 
-					String relatedSchemaName = _objectHelper.getSchemaName(
+					String relatedSchemaName = getSchemaName(
 						relatedObjectDefinition);
 
 					if (uriInfo != null) {
@@ -168,8 +171,7 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 
 		if (objectDefinition.isSystem()) {
 			sourceOpenAPI = OpenAPIContributorUtil.getSystemObjectOpenAPI(
-				_bundleContext,
-				_objectHelper.getExternalDTOClassName(objectDefinition),
+				_bundleContext, getExternalDTOClassName(objectDefinition),
 				_openAPIResource);
 		}
 		else {
@@ -368,7 +370,6 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
-	private final ObjectHelper _objectHelper;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final OpenAPIResource _openAPIResource;

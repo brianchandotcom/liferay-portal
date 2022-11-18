@@ -107,6 +107,7 @@ definition {
 				locator1 = "ClientExtensionEntry#URL",
 				value1 = "${entryURL}");
 		}
+
 		if (isSet(entryHTMLElementName)) {
 			Type(
 				key_id = "ClientExtensionAdminPortlet_htmlElementName",

@@ -569,7 +569,7 @@ definition {
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Manual Asset List",
-			assetType = "Web Content Folder,Basic Web Content,WC Structure Name",
+			assetTypeList = "Web Content Folder,Basic Web Content,WC Structure Name",
 			itemType = "All Types",
 			manualSelection = "true");
 
@@ -584,7 +584,7 @@ definition {
 
 		AssetListsAdmin.viewAssetTypeList(
 			assetListName = "Depot Dynamic Asset List",
-			assetType = "Web Content Folder,Web Content Article",
+			assetTypeList = "Web Content Folder,Web Content Article",
 			dynamicSelection = "true");
 
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");

@@ -23,7 +23,7 @@ const ResumeCard = ({
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => (
 	<div
 		className={classNames(
-			'bg-neutral-1 rounded d-flex justify-content-between p-3 align-items-center',
+			'bg-neutral-1 rounded d-flex justify-content-between p-3 align-items-center overflow-auto',
 			className
 		)}
 	>

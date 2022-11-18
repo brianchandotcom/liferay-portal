@@ -125,11 +125,10 @@ definition {
 		Button.click(button = "Clear");
 
 		DMNavigator.openToFolderInAdmin(
+			displayStyle = "list",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_1.doc");
 

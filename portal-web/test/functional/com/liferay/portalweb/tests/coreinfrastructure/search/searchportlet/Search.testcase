@@ -3911,4 +3911,67 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-}
+	@priority = "3"
+		test CheckIfSelectingNewFacetsRefreshPagination{
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = "Vocabulary Name");
+
+				var categoryId1 = JSONCategory.addCategory(
+					groupName = "Global",
+					title = "cat1",
+					vocabularyName = "Vocabulary Name");
+
+				var categoryId2 = JSONCategory.addCategory(
+					groupName = "Global",
+					title = "cat2",
+					vocabularyName = "Vocabulary Name");
+					
+
+			for (var count : list "1,2,3,4") {
+				JSONDocument.addFileWithUploadedFile(
+					assetCategoryIds = "${categoryId1}",
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "DM Document Title Cat1_${count}",
+					groupName = "Guest",
+					mimeType = "image/jpg",
+					sourceFileName = "Document_${count}.jpg");
+			}
+
+				for (var count : list "1,2,3,4,5") {
+					JSONDocument.addFileWithUploadedFile(
+						assetCategoryIds = "${categoryId2}",
+						dmDocumentDescription = "DM Document Description",
+						dmDocumentTitle = "DM Document Title Cat2_${count}",
+						groupName = "Guest",
+						mimeType = "text/plain",
+						sourceFileName = "Document_${count}.txt");
+				}	
+
+				JSONDocument.addFileWithUploadedFile(
+						assetCategoryIds = "${categoryId2}",
+						dmDocumentDescription = "DM Document Description",
+						dmDocumentTitle = "DM Document Title Cat2_6",
+						groupName = "Guest",
+						mimeType = "image/jpeg",
+						sourceFileName = "Document_1.jpeg");
+
+			Navigator.gotoPage(pageName = "Home");
+
+			SearchPortlets.searchEmbedded(searchTerm = "cat1 cat2");
+
+			SearchResultPortlet.configureSearchResults(paginationDelta = "2");
+
+			Refresh();
+
+			SearchFacetPortlet.checkFacet(facetValueName = "cat2");
+			
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			SearchFacetPortlet.checkFacet(facetValueName = "cat1");
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 10 entries.");
+			
+			}
+
+	}

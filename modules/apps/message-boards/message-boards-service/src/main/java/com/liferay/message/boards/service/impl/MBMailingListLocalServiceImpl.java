@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -246,8 +246,8 @@ public class MBMailingListLocalServiceImpl
 
 		Calendar startDate = CalendarFactoryUtil.getCalendar();
 
-		Trigger trigger = TriggerFactoryUtil.createTrigger(
-			groupName, groupName, startDate.getTime(),
+		Trigger trigger = _triggerFactory.createTrigger(
+			groupName, groupName, startDate.getTime(), null,
 			mailingList.getInReadInterval(), TimeUnit.MINUTE);
 
 		MailingListRequest mailingListRequest = new MailingListRequest();
@@ -322,6 +322,9 @@ public class MBMailingListLocalServiceImpl
 	@Reference
 	private LiferayJSONDeserializationWhitelist
 		_liferayJSONDeserializationWhitelist;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 	private Closeable _unregister;
 

@@ -122,7 +122,6 @@ definition {
 	@priority = "5"
 	test CanViewObjectEntriesAfterAddingAttachment {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151587",

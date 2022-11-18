@@ -28,6 +28,8 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -131,7 +133,10 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				}
 			}
 
-			if (!existIds) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-167932")) ||
+				!existIds) {
+
 				for (int i = 0;
 					 (i < dropZoneItemIds.size()) && (i < elements.size());
 					 i++) {

@@ -160,6 +160,19 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 	}
 
 	@Override
+	public CommerceInventoryWarehouse deleteCommerceInventoryWarehouse(
+			long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			commerceInventoryWarehousePersistence.findByPrimaryKey(
+				commerceInventoryWarehouseId);
+
+		return commerceInventoryWarehouseLocalService.
+			deleteCommerceInventoryWarehouse(commerceInventoryWarehouse);
+	}
+
+	@Override
 	public CommerceInventoryWarehouse
 		fetchCommerceInventoryWarehouseByReferenceCode(
 			String externalReferenceCode, long companyId) {

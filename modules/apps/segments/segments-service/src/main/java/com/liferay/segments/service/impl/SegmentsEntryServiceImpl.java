@@ -146,6 +146,20 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
+		long companyId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getSegmentsEntriesCount(long companyId) {
+		return segmentsEntryPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
 	public int getSegmentsEntriesCount(
 		long groupId, boolean includeAncestorSegmentsEntries) {
 
@@ -184,6 +198,15 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 		return segmentsEntryLocalService.searchSegmentsEntries(
 			companyId, groupId, keywords, includeAncestorSegmentsEntries,
 			new LinkedHashMap<>(), start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		return segmentsEntryLocalService.searchSegmentsEntries(
+			companyId, keywords, new LinkedHashMap<>(), start, end, sort);
 	}
 
 	@Override

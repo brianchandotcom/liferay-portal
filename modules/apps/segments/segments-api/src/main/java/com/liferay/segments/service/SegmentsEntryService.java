@@ -100,6 +100,14 @@ public interface SegmentsEntryService extends BaseService {
 		int end, OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntries(
+		long companyId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSegmentsEntriesCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntriesCount(
 		long groupId, boolean includeAncestorSegmentsEntries);
 
@@ -112,6 +120,11 @@ public interface SegmentsEntryService extends BaseService {
 			long companyId, long groupId, String keywords,
 			boolean includeAncestorSegmentsEntries, int start, int end,
 			Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
+			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public SegmentsEntry updateSegmentsEntry(

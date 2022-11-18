@@ -111,6 +111,18 @@ public class SegmentsEntryServiceUtil {
 			orderByComparator);
 	}
 
+	public static List<SegmentsEntry> getSegmentsEntries(
+		long companyId, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return getService().getSegmentsEntries(
+			companyId, start, end, orderByComparator);
+	}
+
+	public static int getSegmentsEntriesCount(long companyId) {
+		return getService().getSegmentsEntriesCount(companyId);
+	}
+
 	public static int getSegmentsEntriesCount(
 		long groupId, boolean includeAncestorSegmentsEntries) {
 
@@ -134,6 +146,16 @@ public class SegmentsEntryServiceUtil {
 		return getService().searchSegmentsEntries(
 			companyId, groupId, keywords, includeAncestorSegmentsEntries, start,
 			end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<SegmentsEntry> searchSegmentsEntries(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchSegmentsEntries(
+			companyId, keywords, start, end, sort);
 	}
 
 	public static SegmentsEntry updateSegmentsEntry(

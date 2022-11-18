@@ -75,7 +75,7 @@ public class AccountChannelEntryDTOConverter
 				accountId = commerceChannelAccountEntryRel.getAccountEntryId();
 				channelId =
 					commerceChannelAccountEntryRel.getCommerceChannelId();
-				entryId = commerceChannelAccountEntryRel.getClassPK();
+				classPK = commerceChannelAccountEntryRel.getClassPK();
 				id =
 					commerceChannelAccountEntryRel.
 						getCommerceChannelAccountEntryRelId();
@@ -117,7 +117,7 @@ public class AccountChannelEntryDTOConverter
 						return null;
 					});
 
-				setEntryExternalReferenceCode(
+				setClassExternalReferenceCode(
 					() -> {
 						int type = commerceChannelAccountEntryRel.getType();
 

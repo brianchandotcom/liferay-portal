@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
@@ -204,7 +205,7 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutor
 		String importTaskIsolation =
 			layoutSetPrototypeSystemConfiguration.importTaskIsolation();
 
-		if ((importTaskIsolation != null) &&
+		if (Validator.isNotNull(importTaskIsolation) &&
 			importTaskIsolation.equals("company")) {
 
 			setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_COMPANY);

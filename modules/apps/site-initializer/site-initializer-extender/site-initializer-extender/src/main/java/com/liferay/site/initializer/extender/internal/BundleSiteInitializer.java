@@ -2530,13 +2530,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			long groupId = serviceContext.getScopeGroupId();
 
-			if (Objects.equals(
-					objectDefinition.getScope(),
-					ObjectDefinitionConstants.SCOPE_COMPANY)) {
-
-				groupId = 0;
-			}
-
 			JSONArray jsonArray = jsonObject.getJSONArray("object-entries");
 
 			if (JSONUtil.isEmpty(jsonArray)) {

@@ -331,7 +331,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			new KBArticleModifiedDateComparator());
 
 		return _exportToRSS(
-			feedURL, description, displayStyle, kbArticles, name, themeDisplay,
+			description, displayStyle, feedURL, kbArticles, name, themeDisplay,
 			type, version);
 	}
 
@@ -377,7 +377,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			new KBArticleModifiedDateComparator());
 
 		return _exportToRSS(
-			feedURL, description, displayStyle,
+			description, displayStyle, feedURL,
 			ListUtil.subList(kbArticles, 0, max), name, themeDisplay, type,
 			version);
 	}
@@ -892,7 +892,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	private String _exportToRSS(
-		String feedURL, String description, String displayStyle,
+		String description, String displayStyle, String feedURL,
 		List<KBArticle> kbArticles, String name, ThemeDisplay themeDisplay,
 		String type, double version) {
 

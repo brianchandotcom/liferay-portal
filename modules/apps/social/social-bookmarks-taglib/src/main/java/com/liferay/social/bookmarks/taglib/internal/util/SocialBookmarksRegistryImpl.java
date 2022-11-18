@@ -28,7 +28,6 @@ import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,10 +48,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	@Override
 	public SocialBookmark getSocialBookmark(String type) {
 		SocialBookmark socialBookmark = _serviceTrackerMap.getService(type);
-
-		if ((socialBookmark == null) && _isDeprecatedSocialBookmark(type)) {
-			socialBookmark = new DeprecatedSocialBookmark(type);
-		}
 
 		if (socialBookmark == null) {
 			if (_log.isWarnEnabled()) {
@@ -83,12 +78,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 			socialBookmarksTypes.add(type);
 		}
 
-		for (String type : PropsUtil.getArray(_SOCIAL_BOOKMARK_TYPES)) {
-			if (_isValidDeprecatedSocialBookmark(type)) {
-				socialBookmarksTypes.add(type);
-			}
-		}
-
 		return new ArrayList<>(socialBookmarksTypes);
 	}
 
@@ -108,19 +97,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	protected void deactivate() {
 		_serviceTrackerList.close();
 		_serviceTrackerMap.close();
-	}
-
-	private boolean _isDeprecatedSocialBookmark(String type) {
-		List<String> deprecatedSocialBookmarksTypes = Arrays.asList(
-			PropsUtil.getArray(_SOCIAL_BOOKMARK_TYPES));
-
-		if (deprecatedSocialBookmarksTypes.contains(type) &&
-			_isValidDeprecatedSocialBookmark(type)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isValidDeprecatedSocialBookmark(String type) {
@@ -144,9 +120,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	private static final String _SOCIAL_BOOKMARK_POST_URL =
 		"social.bookmark.post.url";
-
-	private static final String _SOCIAL_BOOKMARK_TYPES =
-		"social.bookmark.types";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialBookmarksRegistryImpl.class);

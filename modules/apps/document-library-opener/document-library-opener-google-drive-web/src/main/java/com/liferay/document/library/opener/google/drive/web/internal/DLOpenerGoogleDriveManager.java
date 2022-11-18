@@ -329,6 +329,15 @@ public class DLOpenerGoogleDriveManager
 				return FileUtil.createTempFile(inputStream);
 			}
 		}
+		catch (GoogleJsonResponseException googleJsonResponseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"The Google Drive file does not exist",
+					googleJsonResponseException);
+			}
+
+			return null;
+		}
 		catch (IOException | PortalException exception) {
 			throw new RuntimeException(exception);
 		}

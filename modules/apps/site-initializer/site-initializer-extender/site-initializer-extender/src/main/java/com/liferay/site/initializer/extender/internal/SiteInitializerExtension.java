@@ -46,6 +46,7 @@ import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -127,6 +128,7 @@ public class SiteInitializerExtension {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldResource.Factory objectFieldResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -177,11 +179,12 @@ public class SiteInitializerExtension {
 			listTypeEntryResourceFactory, notificationTemplateResourceFactory,
 			objectActionLocalService, objectDefinitionLocalService,
 			objectDefinitionResourceFactory, objectEntryLocalService,
-			objectFieldLocalService, objectFieldResourceFactory,
-			objectRelationshipLocalService, objectRelationshipResourceFactory,
-			organizationLocalService, organizationResourceFactory, portal,
-			resourceActionLocalService, resourcePermissionLocalService,
-			roleLocalService, sapEntryLocalService, segmentsEntryLocalService,
+			objectEntryManager, objectFieldLocalService,
+			objectFieldResourceFactory, objectRelationshipLocalService,
+			objectRelationshipResourceFactory, organizationLocalService,
+			organizationResourceFactory, portal, resourceActionLocalService,
+			resourcePermissionLocalService, roleLocalService,
+			sapEntryLocalService, segmentsEntryLocalService,
 			segmentsExperienceLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,

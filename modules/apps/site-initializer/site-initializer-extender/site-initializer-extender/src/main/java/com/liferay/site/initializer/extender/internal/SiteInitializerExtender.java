@@ -46,6 +46,7 @@ import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -141,8 +142,9 @@ public class SiteInitializerExtender
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
-				_objectEntryLocalService, _objectFieldLocalService,
-				_objectFieldResourceFactory, _objectRelationshipLocalService,
+				_objectEntryLocalService, _objectEntryManager,
+				_objectFieldLocalService, _objectFieldResourceFactory,
+				_objectRelationshipLocalService,
 				_objectRelationshipResourceFactory, _organizationLocalService,
 				_organizationResourceFactory, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
@@ -251,8 +253,9 @@ public class SiteInitializerExtender
 				_listTypeEntryResource, _listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
-				_objectEntryLocalService, _objectFieldLocalService,
-				_objectFieldResourceFactory, _objectRelationshipLocalService,
+				_objectEntryLocalService, _objectEntryManager,
+				_objectFieldLocalService, _objectFieldResourceFactory,
+				_objectRelationshipLocalService,
 				_objectRelationshipResourceFactory, _organizationLocalService,
 				_organizationResourceFactory, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
@@ -392,6 +395,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

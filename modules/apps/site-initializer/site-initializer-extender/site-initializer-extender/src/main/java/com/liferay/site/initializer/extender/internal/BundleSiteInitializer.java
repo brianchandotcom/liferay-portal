@@ -86,7 +86,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -246,6 +246,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldResource.Factory objectFieldResourceFactory,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -314,6 +315,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManager = objectEntryManager;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFieldResourceFactory = objectFieldResourceFactory;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -4416,6 +4418,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFieldResource.Factory _objectFieldResourceFactory;
 	private final ObjectRelationshipLocalService

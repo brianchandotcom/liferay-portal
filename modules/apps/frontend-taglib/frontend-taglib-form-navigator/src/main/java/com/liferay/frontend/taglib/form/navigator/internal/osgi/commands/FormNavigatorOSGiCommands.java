@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.command.function=getPossibleConfigurations",
 		"osgi.command.scope=formNavigator"
 	},
-	service = FormNavigatorOSGiCommands.class
+	service = {}
 )
 public class FormNavigatorOSGiCommands {
 

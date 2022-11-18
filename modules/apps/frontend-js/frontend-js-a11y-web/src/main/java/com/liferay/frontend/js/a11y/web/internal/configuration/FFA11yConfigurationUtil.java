@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.a11y.web.internal.configuration.FFA11yConfiguration",
-	service = FFA11yConfigurationUtil.class
+	service = {}
 )
 public class FFA11yConfigurationUtil {
 

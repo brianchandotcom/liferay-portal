@@ -42,7 +42,7 @@
 				</div>
 
 				<div>
-					<aui:input label="upload-your-zip-file" name="siteInitializerFile" type="file" />
+					<aui:input label="jar-file" name="siteInitializerFile" type="file" />
 				</div>
 			</div>
 

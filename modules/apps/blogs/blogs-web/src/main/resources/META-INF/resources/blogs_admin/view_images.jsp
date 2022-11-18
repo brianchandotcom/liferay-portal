@@ -24,6 +24,7 @@
 		%>
 
 		<liferay-document-library:repository-browser
+			actions="delete"
 			folderId="<%= blogImagesDisplayContext.getFolderId() %>"
 			repositoryId="<%= blogImagesDisplayContext.getRepositoryId() %>"
 		/>

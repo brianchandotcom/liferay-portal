@@ -53,23 +53,23 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Alejandro Tardín
  */
-public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
+public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	public ObjectEntryOpenAPIContributor(
-		BundleContext bundleContext, ObjectDefinition objectDefinition,
+		BundleContext bundleContext, DTOConverterRegistry dtoConverterRegistry, ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource,
-		ObjectHelper objectHelper,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		OpenAPIResource openAPIResource) {
+		OpenAPIResource openAPIResource, SystemObjectDefinitionMetadataRegistry systemObjectDefinitionMetadataRegistry) {
 
 		_bundleContext = bundleContext;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryOpenAPIResource = objectEntryOpenAPIResource;
-		_objectHelper = objectHelper;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_openAPIResource = openAPIResource;
+
+		init(dtoConverterRegistry, systemObjectDefinitionMetadataRegistry);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 					GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag.LPS-162966"))) {
 
-					String relatedSchemaName = _objectHelper.getSchemaName(
+					String relatedSchemaName = getSchemaName(
 						relatedObjectDefinition);
 
 					if (uriInfo != null) {
@@ -169,7 +169,7 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 		if (objectDefinition.isSystem()) {
 			sourceOpenAPI = OpenAPIContributorUtil.getSystemObjectOpenAPI(
 				_bundleContext,
-				_objectHelper.getExternalDTOClassName(objectDefinition),
+				getExternalDTOClassName(objectDefinition),
 				_openAPIResource);
 		}
 		else {
@@ -368,7 +368,6 @@ public class ObjectEntryOpenAPIContributor implements OpenAPIContributor {
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
-	private final ObjectHelper _objectHelper;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final OpenAPIResource _openAPIResource;

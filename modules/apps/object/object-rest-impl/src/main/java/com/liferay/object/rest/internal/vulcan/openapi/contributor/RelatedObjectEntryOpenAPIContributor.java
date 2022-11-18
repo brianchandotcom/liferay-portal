@@ -59,7 +59,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OpenAPIContributor.class)
 public class RelatedObjectEntryOpenAPIContributor
-	implements OpenAPIContributor {
+	extends BaseOpenAPIContributor {
+
+	@Activate
+	public void activate() {
+		init(_dtoConverterRegistry, _systemObjectDefinitionMetadataRegistry);
+	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private SystemObjectDefinitionMetadataRegistry
+		_systemObjectDefinitionMetadataRegistry;
 
 	@Override
 	public void contribute(OpenAPI openAPI, UriInfo uriInfo) throws Exception {

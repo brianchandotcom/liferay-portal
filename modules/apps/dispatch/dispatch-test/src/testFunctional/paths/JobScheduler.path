@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>JobScheduler</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">JobScheduler</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>JOB_ITEM_NAME</td>
+	<td>//table[contains(@class,'table-list')]//td[contains(@class,'lfr-name-column')]/a[contains(text(),'${key_name}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JOB_ITEM_KEBAB_MENU</td>
+	<td>//*[contains(text(),'${key_name}')]/ancestor::tr[contains(@data-qa-id,'row')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>KEBAB_MENU_OPTION</td>
+	<td>//span[@class = 'taglib-text-icon' and contains(text(), '${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_EXECUTION_CLUSTER_MODE_OPTION</td>
+	<td>//select[contains(@id,'dispatchTaskClusterMode')]/option[contains(text(),'${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_EXECUTION_CLUSTER_MODE_SELECTOR</td>
+	<td>//select[contains(@id,'dispatchTaskClusterMode')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

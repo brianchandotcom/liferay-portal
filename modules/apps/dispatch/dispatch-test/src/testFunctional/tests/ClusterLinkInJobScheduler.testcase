@@ -1,0 +1,66 @@
+@component-name = "portal-dispatch"
+definition {
+
+	property custom.properties = "cluster.link.enabled=true";
+	property osgi.modules.includes = "dispatch-executor-sample";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Job Scheduler";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JobScheduler.openJobSchedulerAdmin();
+			if (IsElementPresent(key_name = "Cluster Mode Test",locator1 = "JobScheduler#JOB_ITEM_NAME")) {
+				JobScheduler.deleteJobItem(jobItemName = "Cluster Mode Test");
+			}
+		}
+	}
+
+	@priority = "4"
+	test ClusterModeTaskExecutionIsAvailable {
+		property portal.acceptance = "true";
+
+
+		task ("Given cluster.link.enabled") {
+			AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface");
+		}
+
+        task ("And Given Scheduled job definition created") {
+			JobScheduler.openJobSchedulerAdmin();
+			
+			JobScheduler.addScheduleTrigger(
+				taskExecutorType = "Sample Executor",
+				triggerName = "Cluster Mode Test"); 
+		}
+
+        task ("When in Dispatch Trigger of the scheduled job") {
+			Click(
+				key_name = "Cluster Mode Test",
+				locator1 = "JobScheduler#JOB_ITEM_NAME");
+
+			Click(
+				key_tab = "Job Scheduler Trigger",
+				locator1 = "NavTab#TAB_LINK"
+			);		
+		}
+
+        task ("Then All Nodes, Single Node (Persisted), and Single Node (Memory clustered) options are available") {
+			for (var option : list "All Nodes,Single Node (Memory Clustered),Single Node (Persisted)") {
+            
+			AssertElementPresent(
+				key_option = "${option}",
+				locator1="JobScheduler#TASK_EXECUTION_CLUSTER_MODE_OPTION");
+			}	
+        }
+	}
+}

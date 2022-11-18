@@ -19,14 +19,10 @@
 <%
 portletDisplay.setShowBackIcon(true);
 
-String className = (String)request.getAttribute("contact_information.jsp-className");
-long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-long addressId = ParamUtil.getLong(request, "addressId");
-
-AddressActionDropdownItemsProvider addressActionDropdownItemsProvider = new AddressActionDropdownItemsProvider(renderRequest, renderResponse);
+AddressActionDropdownItemsProvider addressActionDropdownItemsProvider = new AddressActionDropdownItemsProvider(request, renderResponse);
 %>
 
 <clay:dropdown-actions
 	aria-label='<%= LanguageUtil.get(request, "edit-address") %>'
-	dropdownItems="<%= addressActionDropdownItemsProvider.getActionDropdownItems(className, classPK, addressId) %>"
+	dropdownItems="<%= addressActionDropdownItemsProvider.getActionDropdownItems() %>"
 />

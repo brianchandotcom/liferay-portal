@@ -1806,6 +1806,12 @@ definition {
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 	}
 
+	macro discardDraft {
+		Button.clickNoError(button = "Discard Draft");
+
+		AssertConfirm(value1 = "Are you sure you want to discard the current draft and apply the latest published changes?");
+	}
+
 	macro duplicateExperience {
 		PageEditor.openExperienceMenu();
 

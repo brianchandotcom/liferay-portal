@@ -339,6 +339,10 @@ definition {
 						locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}",
 						value1 = "${permissionNavigationValue}");
 
+					WaitForElementPresent(
+						locator1 = "RolesPermissions#PERMISSION_HEADER",
+						value1 = "${permissionNavigationValue}");
+
 					AssertTextEquals(
 						locator1 = "RolesPermissions#PERMISSION_HEADER",
 						value1 = "${permissionNavigationValue}");

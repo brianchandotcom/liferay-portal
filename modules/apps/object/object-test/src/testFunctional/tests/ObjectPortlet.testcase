@@ -1219,7 +1219,6 @@ definition {
 	@priority = "5"
 	test CannotAddObjectEntryWithoutAddPermission {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPortlet#CannotAddObjectEntryWithoutAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(

@@ -27,6 +27,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
@@ -119,12 +120,25 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getMode(),
 				FragmentEntryLinkConstants.EDIT)) {
 
-			for (int i = 0;
-				 (i < dropZoneItemIds.size()) && (i < elements.size()); i++) {
+			boolean existIds = true;
 
-				Element element = elements.get(i);
+			for (Element element : elements) {
+				if (Validator.isNull(element.id())) {
+					existIds = false;
 
-				element.attr("uuid", dropZoneItemIds.get(i));
+					break;
+				}
+			}
+
+			if (!existIds) {
+				for (int i = 0;
+					 (i < dropZoneItemIds.size()) && (i < elements.size());
+					 i++) {
+
+					Element element = elements.get(i);
+
+					element.attr("uuid", dropZoneItemIds.get(i));
+				}
 			}
 
 			Element bodyElement = document.body();

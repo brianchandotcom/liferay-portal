@@ -42,7 +42,7 @@ public class RedirectEntrySourceURLUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select redirectEntryId, groupId, sourceURL from " +
-					"RedirectEntry order by redirectEntryId ASC");
+					"RedirectEntry order by redirectEntryId asc");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

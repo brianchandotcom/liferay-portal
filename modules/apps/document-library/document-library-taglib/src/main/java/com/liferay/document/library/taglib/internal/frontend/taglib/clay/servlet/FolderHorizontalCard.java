@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
@@ -31,9 +32,10 @@ import java.util.List;
 public class FolderHorizontalCard implements HorizontalCard {
 
 	public FolderHorizontalCard(
-		Folder folder,
+		Set<String> actions, Folder folder,
 		RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext) {
 
+		_actions = actions;
 		_folder = folder;
 		_repositoryBrowserTagDisplayContext =
 			repositoryBrowserTagDisplayContext;
@@ -84,6 +86,16 @@ public class FolderHorizontalCard implements HorizontalCard {
 		return _folder.getName();
 	}
 
+	@Override
+	public boolean isSelectable() {
+		if (_actions.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private final Set<String> _actions;
 	private final Folder _folder;
 	private final RepositoryBrowserTagDisplayContext
 		_repositoryBrowserTagDisplayContext;

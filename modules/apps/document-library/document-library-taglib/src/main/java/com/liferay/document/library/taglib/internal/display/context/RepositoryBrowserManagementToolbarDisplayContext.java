@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +45,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public RepositoryBrowserManagementToolbarDisplayContext(
-		long folderId,
+		Set<String> actions, long folderId,
 		ModelResourcePermission<Folder> folderModelResourcePermission,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
@@ -55,6 +56,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
+		_actions = actions;
 		_folderId = folderId;
 		_folderModelResourcePermission = folderModelResourcePermission;
 		_repositoryId = repositoryId;
@@ -67,6 +69,10 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			() -> {
+				if (!_actions.contains("delete")) {
+					return false;
+				}
+
 				User user = _themeDisplay.getUser();
 
 				if (user.isDefaultUser()) {
@@ -96,12 +102,18 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		if (!_actions.contains("add-folder") && !_actions.contains("upload")) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addDropdownItem(
-			() -> ModelResourcePermissionUtil.contains(
-				_folderModelResourcePermission,
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _folderId,
-				ActionKeys.ADD_DOCUMENT),
+			() ->
+				_actions.contains("upload") &&
+				ModelResourcePermissionUtil.contains(
+					_folderModelResourcePermission,
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(), _folderId,
+					ActionKeys.ADD_DOCUMENT),
 			dropdownItem -> {
 				dropdownItem.putData("action", "uploadFile");
 				dropdownItem.setIcon("upload");
@@ -109,11 +121,13 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "file-upload"));
 			}
 		).addDropdownItem(
-			() -> ModelResourcePermissionUtil.contains(
-				_folderModelResourcePermission,
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _folderId,
-				ActionKeys.ADD_FOLDER),
+			() ->
+				_actions.contains("add-folder") &&
+				ModelResourcePermissionUtil.contains(
+					_folderModelResourcePermission,
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(), _folderId,
+					ActionKeys.ADD_FOLDER),
 			dropdownItem -> {
 				dropdownItem.putData("action", "addFolder");
 				dropdownItem.putData(
@@ -143,6 +157,15 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		if (_actions.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	protected String getDefaultDisplayStyle() {
 		return "icon";
 	}
@@ -152,6 +175,7 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 		return new String[] {"modified-date", "title"};
 	}
 
+	private final Set<String> _actions;
 	private final long _folderId;
 	private final ModelResourcePermission<Folder>
 		_folderModelResourcePermission;

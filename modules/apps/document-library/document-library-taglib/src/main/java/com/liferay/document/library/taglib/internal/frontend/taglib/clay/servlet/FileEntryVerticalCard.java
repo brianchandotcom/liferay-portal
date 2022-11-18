@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,11 +45,13 @@ import javax.servlet.http.HttpServletRequest;
 public class FileEntryVerticalCard implements VerticalCard {
 
 	public FileEntryVerticalCard(
-			FileEntry fileEntry, HttpServletRequest httpServletRequest,
+			Set<String> actions, FileEntry fileEntry,
+			HttpServletRequest httpServletRequest,
 			RepositoryBrowserTagDisplayContext
 				repositoryBrowserTagDisplayContext)
 		throws PortalException {
 
+		_actions = actions;
 		_fileEntry = fileEntry;
 		_httpServletRequest = httpServletRequest;
 		_repositoryBrowserTagDisplayContext =
@@ -141,6 +144,16 @@ public class FileEntryVerticalCard implements VerticalCard {
 		return true;
 	}
 
+	@Override
+	public boolean isSelectable() {
+		if (_actions.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private final Set<String> _actions;
 	private final FileEntry _fileEntry;
 	private final FileVersion _fileVersion;
 	private final HttpServletRequest _httpServletRequest;

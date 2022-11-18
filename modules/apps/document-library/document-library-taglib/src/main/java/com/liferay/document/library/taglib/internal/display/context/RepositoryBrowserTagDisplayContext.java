@@ -74,6 +74,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -85,7 +86,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RepositoryBrowserTagDisplayContext {
 
 	public RepositoryBrowserTagDisplayContext(
-		DLAppService dlAppService,
+		Set<String> actions, DLAppService dlAppService,
 		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
 		ModelResourcePermission<FileShortcut>
 			fileShortcutModelResourcePermission,
@@ -95,6 +96,7 @@ public class RepositoryBrowserTagDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		PortletRequest portletRequest, long repositoryId, long rootFolderId) {
 
+		_actions = actions;
 		_dlAppService = dlAppService;
 		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
 		_fileShortcutModelResourcePermission =
@@ -185,16 +187,17 @@ public class RepositoryBrowserTagDisplayContext {
 				"Invalid repository model " + repositoryEntry);
 		}
 
-		return new FolderHorizontalCard((Folder)repositoryEntry, this);
+		return new FolderHorizontalCard(
+			_actions, (Folder)repositoryEntry, this);
 	}
 
 	public ManagementToolbarDisplayContext getManagementToolbarDisplayContext()
 		throws PortalException {
 
 		return new RepositoryBrowserManagementToolbarDisplayContext(
-			_folderId, _folderModelResourcePermission, _httpServletRequest,
-			_liferayPortletRequest, _liferayPortletResponse, _repositoryId,
-			getSearchContainer());
+			_actions, _folderId, _folderModelResourcePermission,
+			_httpServletRequest, _liferayPortletRequest,
+			_liferayPortletResponse, _repositoryId, getSearchContainer());
 	}
 
 	public Map<String, Object> getRepositoryBrowserComponentContext() {
@@ -339,12 +342,14 @@ public class RepositoryBrowserTagDisplayContext {
 
 		if (repositoryEntry instanceof FileEntry) {
 			return new FileEntryVerticalCard(
-				(FileEntry)repositoryEntry, _httpServletRequest, this);
+				_actions, (FileEntry)repositoryEntry, _httpServletRequest,
+				this);
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
 			return new FileShortcutVerticalCard(
-				(FileShortcut)repositoryEntry, _httpServletRequest, this);
+				_actions, (FileShortcut)repositoryEntry, _httpServletRequest,
+				this);
 		}
 
 		throw new IllegalArgumentException(
@@ -409,9 +414,11 @@ public class RepositoryBrowserTagDisplayContext {
 
 	private List<DropdownItem> _getActionDropdownItems(FileEntry fileEntry) {
 		return DropdownItemListBuilder.add(
-			() -> _fileEntryModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), fileEntry,
-				ActionKeys.UPDATE),
+			() ->
+				_actions.contains("rename") &&
+				_fileEntryModelResourcePermission.contains(
+					_themeDisplay.getPermissionChecker(), fileEntry,
+					ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
 				dropdownItem.putData(
@@ -422,9 +429,11 @@ public class RepositoryBrowserTagDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "rename"));
 			}
 		).add(
-			() -> _fileEntryModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), fileEntry,
-				ActionKeys.DELETE),
+			() ->
+				_actions.contains("delete") &&
+				_fileEntryModelResourcePermission.contains(
+					_themeDisplay.getPermissionChecker(), fileEntry,
+					ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
@@ -440,9 +449,11 @@ public class RepositoryBrowserTagDisplayContext {
 		FileShortcut fileShortcut) {
 
 		return DropdownItemListBuilder.add(
-			() -> _fileShortcutModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), fileShortcut,
-				ActionKeys.DELETE),
+			() ->
+				_actions.contains("delete") &&
+				_fileShortcutModelResourcePermission.contains(
+					_themeDisplay.getPermissionChecker(), fileShortcut,
+					ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
@@ -456,9 +467,11 @@ public class RepositoryBrowserTagDisplayContext {
 
 	private List<DropdownItem> _getActionDropdownItems(Folder folder) {
 		return DropdownItemListBuilder.add(
-			() -> _folderModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.UPDATE),
+			() ->
+				_actions.contains("rename") &&
+				_folderModelResourcePermission.contains(
+					_themeDisplay.getPermissionChecker(), folder,
+					ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
 				dropdownItem.putData("renameURL", _getRenameFolderURL(folder));
@@ -468,9 +481,11 @@ public class RepositoryBrowserTagDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "rename"));
 			}
 		).add(
-			() -> _folderModelResourcePermission.contains(
-				_themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.DELETE),
+			() ->
+				_actions.contains("delete") &&
+				_folderModelResourcePermission.contains(
+					_themeDisplay.getPermissionChecker(), folder,
+					ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData("deleteURL", _getDeleteFolderURL(folder));
@@ -523,8 +538,11 @@ public class RepositoryBrowserTagDisplayContext {
 			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
 				_repositoryId, _folderId, WorkflowConstants.STATUS_APPROVED,
 				null, false, false));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
+
+		if (!_actions.isEmpty()) {
+			searchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_liferayPortletResponse));
+		}
 
 		return searchContainer;
 	}
@@ -676,6 +694,7 @@ public class RepositoryBrowserTagDisplayContext {
 		return searchContainer;
 	}
 
+	private final Set<String> _actions;
 	private String _displayStyle;
 	private final DLAppService _dlAppService;
 	private final ModelResourcePermission<FileEntry>

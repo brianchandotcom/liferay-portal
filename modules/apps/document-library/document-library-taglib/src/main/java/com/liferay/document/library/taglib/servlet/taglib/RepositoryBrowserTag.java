@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -110,7 +111,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
-				DLAppServiceUtil.getService(),
+				_getActionsSet(), DLAppServiceUtil.getService(),
 				_fileEntryModelResourcePermission,
 				_fileShortcutModelResourcePermission,
 				_folderModelResourcePermission, _getFolderId(),
@@ -120,24 +121,24 @@ public class RepositoryBrowserTag extends IncludeTag {
 				portletRequest, _getRepositoryId(), getFolderId()));
 	}
 
-	private Set<String> _getActions() {
+	private Set<String> _getActionsSet() {
 		if (Validator.isBlank(getActions())) {
 			return _allActions;
 		}
 
-		String actions = getActions();
+		String actions = StringUtil.trim(getActions());
 
-		Set<String> set = SetUtil.fromArray(actions.split(",\\s*"));
+		Set<String> actionsSet = SetUtil.fromArray(actions.split("\\s*,\\s*"));
 
-		if (actions.contains("none")) {
+		if (actionsSet.contains("none")) {
 			return Collections.emptySet();
 		}
 
-		if (actions.contains("all")) {
+		if (actionsSet.contains("all")) {
 			return _allActions;
 		}
 
-		return set;
+		return actionsSet;
 	}
 
 	private long _getFolderId() {

@@ -89,9 +89,11 @@ public class RelatedObjectEntryOpenAPIContributor
 
 			String path = uri.getPath();
 
+			JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+				systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 			if (path.contains(
-					_getSystemObjectRESTBasePath(
-						systemObjectDefinitionMetadata))) {
+					jaxRsApplicationDescriptor.getApplicationPath())) {
 
 				systemObjectDefinitionMetadataMap.put(
 					systemObjectDefinition, systemObjectDefinitionMetadata);
@@ -138,13 +140,15 @@ public class RelatedObjectEntryOpenAPIContributor
 			relatedSchemaName, relatedOpenAPI,
 			relatedObjectDefinition.isSystem(), openAPI);
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
 		String schemaName = getSchemaName(systemObjectDefinition);
 
 		String name = StringBundler.concat(
 			StringPool.SLASH, _getJaxRsVersion(uriInfo), StringPool.SLASH,
-			_getSystemObjectBasePath(systemObjectDefinitionMetadata),
-			StringPool.SLASH, _getIdParameterTemplate(schemaName),
-			StringPool.SLASH, systemObjectRelationship.getName());
+			jaxRsApplicationDescriptor.getPath(), StringPool.SLASH,
+			_getIdParameterTemplate(schemaName), StringPool.SLASH,
+			systemObjectRelationship.getName());
 
 		paths.addPathItem(
 			name,
@@ -362,24 +366,6 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			systemObjectRelationship.getObjectDefinitionId2());
-	}
-
-	private String _getSystemObjectBasePath(
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
-
-		return jaxRsApplicationDescriptor.getPath();
-	}
-
-	private String _getSystemObjectRESTBasePath(
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
-
-		return jaxRsApplicationDescriptor.getApplicationPath();
 	}
 
 	@Reference

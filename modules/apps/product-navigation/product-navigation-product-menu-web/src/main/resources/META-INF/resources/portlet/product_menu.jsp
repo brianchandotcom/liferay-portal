@@ -54,9 +54,16 @@
 
 						<div aria-expanded="<%= Objects.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" aria-labelledby="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading" class="collapse panel-collapse <%= Objects.equals(childPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? "show" : StringPool.BLANK %>" data-parent="#<portlet:namespace />Accordion" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Collapse" role="tabpanel">
 							<div class="panel-body">
-								<liferay-application-list:panel-content
-									panelCategory="<%= childPanelCategory %>"
-								/>
+
+								<%
+								boolean include = childPanelCategory.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+								%>
+
+								<c:if test="<%= !include %>">
+									<liferay-application-list:panel
+										panelCategory="<%= childPanelCategory %>"
+									/>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -89,9 +96,16 @@
 					</div>
 
 					<div class="panel-body">
-						<liferay-application-list:panel-content
-							panelCategory="<%= childPanelCategory %>"
-						/>
+
+						<%
+						boolean include = childPanelCategory.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+						%>
+
+						<c:if test="<%= !include %>">
+							<liferay-application-list:panel
+								panelCategory="<%= childPanelCategory %>"
+							/>
+						</c:if>
 					</div>
 				</div>
 			</c:otherwise>

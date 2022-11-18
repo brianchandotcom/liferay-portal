@@ -120,8 +120,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 			PortalUtil.getCompanyId(httpServletRequest),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (localePrependFriendlyURLStyle == 0) {
 			return null;

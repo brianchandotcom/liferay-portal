@@ -1436,8 +1436,7 @@ public class PortalImpl implements Portal {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 			themeDisplay.getCompanyId(),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		groupFriendlyURL = getGroupFriendlyURL(
 			layout.getLayoutSet(), themeDisplay, true,
@@ -3673,8 +3672,7 @@ public class PortalImpl implements Portal {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 			getCompanyId(httpServletRequest),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		boolean appendI18nPath = true;
 
@@ -7953,8 +7951,7 @@ public class PortalImpl implements Portal {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 			themeDisplay.getCompanyId(),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if ((languageIds.contains(locale.toString()) &&
 			 (localePrependFriendlyURLStyle == 1) &&
@@ -8170,8 +8167,7 @@ public class PortalImpl implements Portal {
 		if ((pos <= 0) || (pos >= canonicalURL.length())) {
 			int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 				themeDisplay.getCompanyId(),
-				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-				PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 			for (Locale locale : availableLocales) {
 				if (siteDefaultLocale.equals(locale) &&
@@ -8232,8 +8228,7 @@ public class PortalImpl implements Portal {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 			themeDisplay.getCompanyId(),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		String canonicalURLPrefix = canonicalURL.substring(0, pos);
 

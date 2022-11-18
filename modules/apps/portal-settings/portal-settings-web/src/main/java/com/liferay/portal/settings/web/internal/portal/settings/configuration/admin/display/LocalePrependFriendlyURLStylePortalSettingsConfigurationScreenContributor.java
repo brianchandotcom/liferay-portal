@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,8 +62,7 @@ public class
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 			PrefsPropsUtil.getInteger(
 				themeDisplay.getCompanyId(),
-				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-				PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE));
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE));
 	}
 
 }

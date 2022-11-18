@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.admin.util.AdminUtil;
 
 import java.util.Locale;
@@ -215,8 +214,7 @@ public class UpdateLanguageAction implements Action {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
 			PortalUtil.getCompanyId(httpServletRequest),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (!Validator.isBlank(themeDisplay.getPathMain()) &&
 			layoutURL.startsWith(themeDisplay.getPathMain())) {

@@ -140,6 +140,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163712 - Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
+	@priority = "5"
+	test AdminCanAddBuildWithMultipleOptions {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				caseType = "Automated Functional Test",
+				mainComponent = "Tags",
+				priorityNumber = "3",
+				smartSuite = "true",
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
+
+			Testray.projectTabNavigator(navTabName = "Routines");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.addBuildWithMultipleOptions(
+				addVersion = "1.2",
+				caseName = "Cases_1 Case",
+				categoryName = "Database",
+				description = "Builds_1 Project Description",
+				dropdownItem = "New Build",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				labelStack = "Application Server",
+				labelStack2 = "Browser",
+				optionName = "Option_1",
+				productVersion = "1.2",
+				routine = "Routines_1 Routine",
+				stackName = "TcServer 3.2",
+				stackName2 = "Internet Explorer 7",
+				suiteName = "ATF_Suites_1 Suite");
+		}
+
+		task ("Then the Routine should appear on the list") {
+			Testray.assertItemName(key_name = "Builds_1 Project");
+		}
+	}
+
 	@description = "This is a test for LPS-157540 - Verify if as an Administrator I should be able to archive a build "
 	@ignore = "Test Stub"
 	@priority = "3"

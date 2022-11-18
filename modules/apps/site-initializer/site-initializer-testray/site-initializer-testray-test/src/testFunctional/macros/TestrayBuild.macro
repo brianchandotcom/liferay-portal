@@ -1,5 +1,102 @@
 definition {
 
+	macro addBuildWithMultipleOptions {
+		Click(locator1 = "Button#PLUS");
+
+		if (isSet(dropdownItem)) {
+			Click.javaScriptClick(
+				key_picklistOption = "${dropdownItem}",
+				locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
+		}
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${fieldName}");
+
+		Select(
+			locator1 = "TestrayBuild#ROUTINE_ID",
+			value1 = "${routine}");
+
+		TestrayManage.addProductVersionInBuild(key_name = "${addVersion}");
+
+		Select(
+			locator1 = "TestrayBuild#PRODUCT_VERSION",
+			value1 = "${productVersion}");
+
+		Type(
+			locator1 = "TestrayBuild#GIT_HASH_FIELD",
+			value1 = "${gitHash}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_DESCRIPTION",
+			value1 = "${description}");
+
+		TestrayRequirements.addRequirementCase(
+			buttonText = "Select Cases",
+			caseName = "${caseName}",
+			linkText = "Add Cases");
+
+		TestrayBuild.addNewOptionInBuild(
+			category = "${categoryName}",
+			option = "${optionName}");
+
+		TestrayBuild.addSelectStacksInBuild(
+			parameterLabel = "${labelStack}",
+			parameterLabel2 = "${labelStack2}",
+			stackoptions = "${stackName}",
+			stackoptions2 = "${stackName2}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro addNewOptionInBuild {
+		Button.click(button = "Add Option");
+
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_IN_MODAL",
+			value1 = "${option}");
+
+		Select(
+			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
+			value1 = "${category}");
+
+		Button.clickSave();
+	}
+
+	macro addSelectStacksInBuild {
+		Button.click(button = "Select Stacks");
+
+		Click(
+			locator1 = "TestrayBuild#SELECT_STACKS_PARAMETER_LABEL_FIELD",
+			parameterLabel = "${parameterLabel}",
+			stackoptions = "${stackoptions}");
+
+		Click(
+			locator1 = "TestrayBuild#SELECT_STACKS_PARAMETER_LABEL_FIELD_2",
+			parameterLabel = "${parameterLabel2}",
+			stackoptions = "${stackoptions2}");
+
+		Button.click(button = "Next");
+
+		Button.click(button = "Add");
+	}
+
+	macro addSuitesInBuild {
+		Click(
+			key_text = "${linkText}",
+			locator1 = "Button#ANY");
+
+		Click.clickAtNotVisible(
+			key_checkboxOption = "${caseName}",
+			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+		Click(
+			key_text = "${buttonText}",
+			locator1 = "Button#ANY");
+	}
+
 	macro createBuild {
 		Click(locator1 = "Button#PLUS");
 

@@ -44,6 +44,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="companyId" />
+		</finder>
 		<finder name="Source" return-type="Collection">
 			<finder-column name="source" />
 		</finder>

@@ -35,7 +35,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	emptyResultsMessage="none"
-	headerNames="name,type,null"
+	headerNames="name,type,options"
 	iteratorURL="<%= editAssetListDisplayContext.getPortletURL() %>"
 	total="<%= selectedGroups.size() %>"
 >
@@ -60,8 +60,17 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 		/>
 
 		<c:if test="<%= !editAssetListDisplayContext.isLiveGroup() %>">
-			<liferay-ui:search-container-column-text>
-				<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:void(0);"><%= removeLinkIcon %></a>
+			<liferay-ui:search-container-column-text
+				name="options"
+			>
+				<clay:button
+					cssClass="modify-link"
+					data-rowId="<%= group.getGroupId() %>"
+					displayType="unstyled"
+					icon="times-circle"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</liferay-ui:search-container-row>

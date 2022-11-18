@@ -36,21 +36,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIBE</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HISTORY</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'History')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRINT</td>
-	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIOUS</td>
 	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']/a/span</td>
 	<td></td>

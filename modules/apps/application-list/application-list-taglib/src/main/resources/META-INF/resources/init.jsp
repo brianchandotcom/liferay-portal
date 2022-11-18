@@ -27,8 +27,10 @@ page import="com.liferay.application.list.PanelAppRegistry" %><%@
 page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelAppContentHelper" %><%@
+page import="com.liferay.application.list.taglib.internal.util.PanelAppUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 

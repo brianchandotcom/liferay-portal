@@ -48,9 +48,50 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 		<c:if test="<%= panelApp.isShow(permissionChecker, themeDisplay.getScopeGroup()) %>">
 			<div class="list-group">
 				<div class="list-group-heading panel-app-root panel-header <%= Objects.equals(themeDisplay.getPpid(), panelApp.getPortletId()) ? "active" : StringPool.BLANK %>">
-					<liferay-application-list:panel-app
-						panelApp="<%= panelApp %>"
-					/>
+
+					<%
+					boolean include = panelApp.include(request, response);
+					%>
+
+					<c:if test="<%= !include %>">
+
+						<%
+						String url = PanelAppUtil.getURL(request, panelApp);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(url) %>">
+
+							<%
+							String label = PanelAppUtil.getLabel(request, panelApp);
+							%>
+
+							<li class="<%= PanelAppUtil.isActive(request, panelApp) ? "active" : StringPool.BLANK %> nav-item" role="presentation">
+								<aui:a
+									ariaRole="menuitem"
+									cssClass="nav-link"
+									data='<%=
+										HashMapBuilder.<String, Object>put(
+											"qa-id", "app"
+										).put(
+											"title", label
+										).build()
+									%>'
+									href="<%= url %>"
+									id="portlet_<%= panelApp.getPortletId() %>"
+								>
+									<%= label %>
+
+									<c:if test="<%= panelApp.getNotificationsCount(user) > 0 %>">
+										<clay:badge
+											cssClass="float-right"
+											displayType="danger"
+											label="<%= String.valueOf(panelApp.getNotificationsCount(user)) %>"
+										/>
+									</c:if>
+								</aui:a>
+							</li>
+						</c:if>
+					</c:if>
 				</div>
 			</div>
 		</c:if>

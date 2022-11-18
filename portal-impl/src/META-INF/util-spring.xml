@@ -232,8 +232,9 @@
 	<bean class="com.liferay.portal.kernel.util.FileUtil" id="com.liferay.portal.kernel.util.FileUtil">
 		<property name="file" ref="com.liferay.portal.kernel.util.File" />
 	</bean>
+	<bean class="com.liferay.portal.util.HtmlImpl" id="com.liferay.portal.kernel.util.Html" />
 	<bean class="com.liferay.portal.kernel.util.HtmlUtil" id="com.liferay.portal.kernel.util.HtmlUtil">
-		<property name="html" ref="com.liferay.portal.util.HtmlImpl" />
+		<property name="html" ref="com.liferay.portal.kernel.util.Html" />
 	</bean>
 	<bean class="com.liferay.portal.util.LocalizationImpl" id="com.liferay.portal.kernel.util.Localization" />
 	<bean class="com.liferay.portal.kernel.util.LocalizationUtil" id="com.liferay.portal.kernel.util.LocalizationUtil">
@@ -304,7 +305,6 @@
 	<bean class="com.liferay.portal.template.ClassLoaderResourceParser" id="com.liferay.portal.template.ClassLoaderResourceParser" />
 	<bean class="com.liferay.portal.template.DDMTemplateResourceParser" id="com.liferay.portal.template.DDMTemplateResourceParser" />
 	<bean class="com.liferay.portal.template.ThemeResourceParser" id="com.liferay.portal.template.ThemeResourceParser" />
-	<bean class="com.liferay.portal.util.HtmlImpl" id="com.liferay.portal.util.HtmlImpl" />
 	<bean class="com.liferay.portal.util.PortalImpl" id="com.liferay.portal.util.Portal" />
 
 	<!--

@@ -18,6 +18,7 @@ import FloatingBox from '../../../components/FloatingBox';
 import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
+import {ListViewTypes} from '../../../context/ListViewContext';
 import i18n from '../../../i18n';
 import {TestraySubTaskCaseResult} from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
@@ -126,20 +127,24 @@ const SubtasksCaseResults = () => {
 				filter: searchUtil.eq('subtaskId', subtaskId as string),
 			}}
 		>
-			{(_, {listViewContext: {selectedRows}}) => {
-				return (
-					<FloatingBox
-						isVisible={!!selectedRows.length}
-						primaryButtonProps={{
-							title: i18n.translate('split-tests'),
-						}}
-						selectedCount={selectedRows.length}
-						tooltipText={i18n.translate(
-							'move-selected-tests-to-a-new-subtask'
-						)}
-					/>
-				);
-			}}
+			{(_, {dispatch, listViewContext: {selectedRows}}) => (
+				<FloatingBox
+					clearList={() =>
+						dispatch({
+							payload: [],
+							type: ListViewTypes.SET_CHECKED_ROW,
+						})
+					}
+					isVisible={!!selectedRows.length}
+					primaryButtonProps={{
+						title: i18n.translate('split-tests'),
+					}}
+					selectedCount={selectedRows.length}
+					tooltipText={i18n.translate(
+						'move-selected-tests-to-a-new-subtask'
+					)}
+				/>
+			)}
 		</ListView>
 	);
 };

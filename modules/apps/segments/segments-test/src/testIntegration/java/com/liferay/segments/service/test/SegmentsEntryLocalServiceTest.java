@@ -396,6 +396,143 @@ public class SegmentsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchSegmentsEntriesWithCompanyId()
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+			_segmentsEntryLocalService.searchSegmentsEntries(
+				segmentsEntry.getCompanyId(),
+				segmentsEntry.getNameCurrentValue(), new LinkedHashMap<>(), 0,
+				1, null);
+
+		List<SegmentsEntry> segmentsEntries =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			segmentsEntries.toString(), 1, segmentsEntries.size());
+		Assert.assertEquals(segmentsEntry, segmentsEntries.get(0));
+	}
+
+	@Test
+	public void testSearchSegmentsEntriesWithCompanyIdAndExcludedSegmentsEntryIds()
+		throws PortalException {
+
+		List<SegmentsEntry> initialSegmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntries(0, 100);
+
+		long[] excludedSegmentsEntryIds =
+			new long[initialSegmentsEntries.size() + 1];
+
+		for (int i = 0; i < initialSegmentsEntries.size(); i++) {
+			SegmentsEntry segmentsEntry = initialSegmentsEntries.get(i);
+
+			excludedSegmentsEntryIds[i] = segmentsEntry.getSegmentsEntryId();
+		}
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		excludedSegmentsEntryIds[initialSegmentsEntries.size()] =
+			segmentsEntry1.getSegmentsEntryId();
+
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+			_segmentsEntryLocalService.searchSegmentsEntries(
+				_group.getCompanyId(), null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"excludedSegmentsEntryIds", excludedSegmentsEntryIds
+				).build(),
+				0, 10, null);
+
+		List<SegmentsEntry> segmentsEntries =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			segmentsEntries.toString(), 1, segmentsEntries.size());
+		Assert.assertEquals(segmentsEntry2, segmentsEntries.get(0));
+	}
+
+	@Test
+	public void testSearchSegmentsEntriesWithCompanyIdAndExcludedSources()
+		throws PortalException {
+
+		List<SegmentsEntry> initialSegmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntries(0, 100);
+
+		long[] excludedSegmentsEntryIds =
+			new long[initialSegmentsEntries.size()];
+
+		for (int i = 0; i < initialSegmentsEntries.size(); i++) {
+			SegmentsEntry segmentsEntry = initialSegmentsEntries.get(i);
+
+			excludedSegmentsEntryIds[i] = segmentsEntry.getSegmentsEntryId();
+		}
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsTestUtil.addSegmentsEntry(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			CriteriaSerializer.serialize(new Criteria()),
+			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+			_segmentsEntryLocalService.searchSegmentsEntries(
+				segmentsEntry.getCompanyId(), null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"excludedSegmentsEntryIds", excludedSegmentsEntryIds
+				).put(
+					"excludedSources",
+					new String[] {
+						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND
+					}
+				).build(),
+				0, 1, null);
+
+		List<SegmentsEntry> segmentsEntries =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			segmentsEntries.toString(), 1, segmentsEntries.size());
+		Assert.assertEquals(segmentsEntry, segmentsEntries.get(0));
+	}
+
+	@Test
+	public void testSearchSegmentsEntriesWithCompanyIdAndRoleIds()
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+			segmentsEntry.getSegmentsEntryId(), _role.getRoleId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
+			_segmentsEntryLocalService.searchSegmentsEntries(
+				segmentsEntry.getCompanyId(), null,
+				LinkedHashMapBuilder.<String, Object>put(
+					"roleIds", new long[] {_role.getRoleId()}
+				).build(),
+				0, 1, null);
+
+		List<SegmentsEntry> segmentsEntries =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			segmentsEntries.toString(), 1, segmentsEntries.size());
+		Assert.assertEquals(segmentsEntry, segmentsEntries.get(0));
+	}
+
+	@Test
 	public void testSearchSegmentsEntriesWithExcludedSegmentsEntryIds()
 		throws PortalException {
 

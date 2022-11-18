@@ -296,6 +296,42 @@ public class SegmentsDisplayContext {
 		).buildString();
 	}
 
+	public String getScopeName(SegmentsEntry segmentsEntry) {
+		if (_themeDisplay.getCompanyGroupId() == segmentsEntry.getGroupId()) {
+			return _language.get(_themeDisplay.getLocale(), "global");
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-166954"))) {
+			if (segmentsEntry.getGroupId() == _themeDisplay.getScopeGroupId()) {
+				return _language.get(_themeDisplay.getLocale(), "current-site");
+			}
+
+			return _language.get(_themeDisplay.getLocale(), "parent-site");
+		}
+
+		Group group = _groupLocalService.fetchGroup(segmentsEntry.getGroupId());
+
+		if (group == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			String descriptiveName = group.getDescriptiveName(
+				_themeDisplay.getLocale());
+
+			if (descriptiveName != null) {
+				return descriptiveName;
+			}
+
+			return group.getName(_themeDisplay.getLocale());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return group.getName(_themeDisplay.getLocale());
+		}
+	}
+
 	public String getSearchActionURL() {
 		return String.valueOf(_getPortletURL());
 	}

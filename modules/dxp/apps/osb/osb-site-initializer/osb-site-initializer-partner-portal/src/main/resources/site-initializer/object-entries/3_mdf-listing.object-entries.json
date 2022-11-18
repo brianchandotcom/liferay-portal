@@ -34,14 +34,10 @@
 		},
 		{
 			"externalReferenceCode": "PRMMDFC-009",
-			"label": "Reimbursement Claim(s)"
-		},
-		{
-			"externalReferenceCode": "PRMMDFC-010",
 			"label": "Date Submitted"
 		},
 		{
-			"externalReferenceCode": "PRMMDFC-011",
+			"externalReferenceCode": "PRMMDFC-010",
 			"label": "Last Modified"
 		}
 	],

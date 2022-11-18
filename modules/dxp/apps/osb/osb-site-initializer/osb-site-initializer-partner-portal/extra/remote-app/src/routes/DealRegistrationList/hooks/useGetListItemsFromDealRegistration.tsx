@@ -20,13 +20,19 @@ import getDealDates from '../utils/getDealDates';
 
 export default function useGetListItemsFromDealRegistration(
 	page: number,
-	pageSize: number
+	pageSize: number,
+	filtersTerm: string
 ) {
 	const apiOption = Liferay.FeatureFlags['LPS-164528']
 		? ResourceName.OPPORTUNITIES_SALESFORCE
 		: ResourceName.DEAL_REGISTRATION_DXP;
 
-	const swrResponse = useGetDealRegistration(apiOption, page, pageSize);
+	const swrResponse = useGetDealRegistration(
+		apiOption,
+		page,
+		pageSize,
+		filtersTerm
+	);
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({

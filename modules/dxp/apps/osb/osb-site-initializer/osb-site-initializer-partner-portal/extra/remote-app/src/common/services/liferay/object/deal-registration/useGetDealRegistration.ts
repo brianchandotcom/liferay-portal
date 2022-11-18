@@ -21,11 +21,12 @@ import {ResourceName} from '../enum/resourceName';
 export default function useGetDealRegistration(
 	apiOption: ResourceName,
 	page: number,
-	pageSize: number
+	pageSize: number,
+	filtersTerm: string
 ) {
 	return useSWR(
 		[
-			`/o/${LiferayAPIs.OBJECT}/${apiOption}?&page=${page}&pageSize=${pageSize}`,
+			`/o/${LiferayAPIs.OBJECT}/${apiOption}?${filtersTerm}&page=${page}&pageSize=${pageSize}`,
 			Liferay.authToken,
 		],
 		(url, token) =>

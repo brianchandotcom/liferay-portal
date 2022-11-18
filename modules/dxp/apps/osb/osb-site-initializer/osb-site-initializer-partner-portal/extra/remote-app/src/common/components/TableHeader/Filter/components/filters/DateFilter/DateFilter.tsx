@@ -16,16 +16,18 @@ import {useState} from 'react';
 interface IProps {
 	children?: JSX.Element | JSX.Element[];
 	dateFilters: (dates: {endDate: string; startDate: string}) => void;
+	filterDescription?: string;
 }
 
-const DateFilter = ({children, dateFilters}: IProps) => {
+const DateFilter = ({children, dateFilters, filterDescription}: IProps) => {
 	const [startActivityDate, setStartActivityDate] = useState('');
 	const [endActivityDate, setEndActivityDate] = useState('');
 
 	return (
 		<div className="p-3 w-100">
 			<div className="font-weight-semi-bold pb-3 text-paragraph">
-				Activity Starts On Or After
+				{filterDescription}
+				On Or After
 				<ClayInput
 					id="basicInputText"
 					onChange={(event) => {
@@ -38,7 +40,8 @@ const DateFilter = ({children, dateFilters}: IProps) => {
 			</div>
 
 			<div className="font-weight-semi-bold pb-3 text-paragraph">
-				Activity Ends On Or Before
+				{filterDescription}
+				On Or Before
 				<ClayInput
 					id="basicInputText"
 					onChange={(event) => {

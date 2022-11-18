@@ -126,18 +126,20 @@ const SubtasksCaseResults = () => {
 				filter: searchUtil.eq('subtaskId', subtaskId as string),
 			}}
 		>
-			{() => (
-				<FloatingBox
-					isVisible={true}
-					primaryButtonProps={{
-						title: i18n.translate('split-tests'),
-					}}
-					selectedCount={0}
-					tooltipText={i18n.translate(
-						'move-selected-tests-to-a-new-subtask'
-					)}
-				/>
-			)}
+			{(_, {listViewContext: {selectedRows}}) => {
+				return (
+					<FloatingBox
+						isVisible={!!selectedRows.length}
+						primaryButtonProps={{
+							title: i18n.translate('split-tests'),
+						}}
+						selectedCount={selectedRows.length}
+						tooltipText={i18n.translate(
+							'move-selected-tests-to-a-new-subtask'
+						)}
+					/>
+				);
+			}}
 		</ListView>
 	);
 };

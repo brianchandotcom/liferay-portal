@@ -1912,13 +1912,27 @@ definition {
 				value1 = "You are editing the tags for the selected item.");
 		}
 
-		Type(
-			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
-			value1 = "${tagName}");
+		if (isSet(autocomplete)) {
+			Click(locator1 = "Modal#BODY");
 
-		KeyPress(
-			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
-			value1 = ",");
+			Type.sendKeys(
+				locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+				value1 = "ta");
+
+			AssertClick(
+				key_tagName = "tagtwo",
+				locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+				value1 = "tagtwo");
+		}
+		else {
+			Type(
+				locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+				value1 = "${tagName}");
+
+			KeyPress(
+				locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+				value1 = ",");
+		}
 
 		Button.clickSave();
 

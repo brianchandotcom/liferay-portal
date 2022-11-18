@@ -440,6 +440,22 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
+	macro openViewItems {
+		if (isSet(assetListTitle)) {
+			LexiconEntry.gotoEntry(rowEntry = "${assetListTitle}");
+		}
+
+		if (isSet(personalizedVariation)) {
+			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro prioritizeVariation {
 		if (IsElementNotPresent(key_menuItem = "Prioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			Click(
@@ -616,55 +632,30 @@ definition {
 		}
 	}
 
-	macro viewCollectionItems {
-		if (isSet(assetListTitle)) {
-			AssetListsAdmin.gotoEntry(assetListName = "${assetListTitle}");
+	macro viewContent {
+		AssetListsAdmin.openViewItems(
+			assetListTitle = "${assetListTitle}",
+			personalizedVariation = "${personalizedVariation}");
+
+		if (isSet(assetTitleList)) {
+			for (var assetTitle : list "${assetTitleList}") {
+				AssertTextEquals(
+					key_assetTitle = "${assetTitle}",
+					locator1 = "AssetLists#ASSET_TITLE_ROW",
+					value1 = "${assetTitle}");
+			}
 		}
-
-		if (isSet(personalizedVariation)) {
-			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
-		}
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var assetTitle : list "${assetTitleList}") {
+		else {
 			AssertTextEquals(
 				key_assetTitle = "${assetTitle}",
 				locator1 = "AssetLists#ASSET_TITLE_ROW",
 				value1 = "${assetTitle}");
+
+			AssertTextEquals(
+				key_assetTitle = "${assetTitle}",
+				locator1 = "AssetLists#ASSET_TYPE_ROW",
+				value1 = "${assetType}");
 		}
-
-		IFrame.closeFrame();
-	}
-
-	macro viewContent {
-		Click(
-			key_title = "${assetListTitle}",
-			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
-
-		if (isSet(personalizedVariation)) {
-			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
-		}
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertTextEquals(
-			key_assetTitle = "${assetTitle}",
-			locator1 = "AssetLists#ASSET_TITLE_ROW",
-			value1 = "${assetTitle}");
-
-		AssertTextEquals(
-			key_assetTitle = "${assetTitle}",
-			locator1 = "AssetLists#ASSET_TYPE_ROW",
-			value1 = "${assetType}");
 
 		IFrame.closeFrame();
 	}
@@ -705,19 +696,9 @@ definition {
 	}
 
 	macro viewNoContent {
-		Click(
-			key_title = "${assetListTitle}",
-			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
-
-		if (isSet(personalizedVariation)) {
-			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
-		}
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "View Items");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		AssetListsAdmin.openViewItems(
+			assetListTitle = "${assetListTitle}",
+			personalizedVariation = "${personalizedVariation}");
 
 		var key_assetTitle = "${assetTitle}";
 

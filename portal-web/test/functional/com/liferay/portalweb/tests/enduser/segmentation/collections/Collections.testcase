@@ -3807,7 +3807,7 @@ definition {
 		}
 
 		task ("View content of that variant") {
-			AssetListsAdmin.viewCollectionItems(assetTitleList = "WC_Title_1,WC_Title_2,WC_Title_3");
+			AssetListsAdmin.viewContent(assetTitleList = "WC_Title_1,WC_Title_2,WC_Title_3");
 		}
 	}
 

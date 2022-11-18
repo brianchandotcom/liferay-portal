@@ -158,6 +158,10 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		File file = dlOpenerGoogleDriveFileReference.getContentFile();
 
+		if (file == null) {
+			return;
+		}
+
 		String title = fileEntry.getTitle();
 
 		String mimeTypeExtension = DLOpenerMimeTypes.getMimeTypeExtension(

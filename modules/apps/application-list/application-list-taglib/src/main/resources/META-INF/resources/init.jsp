@@ -35,7 +35,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
 <liferay-theme:defineObjects />

@@ -36,51 +36,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that renders a panel app. If a panel app is not passed to the tag, then a link is created. Most of the attributes only apply to when a panel app is not passed.</description>
-		<name>panel-app</name>
-		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelAppTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<description>Whether to mark the link active if no panel app is passed.</description>
-			<name>active</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description>The data attribute to use in the link if no panel app is passed.</description>
-			<name>data</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
-		</attribute>
-		<attribute>
-			<description>The ID to use in the link if no panel app is passed.</description>
-			<name>id</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The text to use in the link if no panel app is passed.</description>
-			<name>label</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The panel app to be rendered.</description>
-			<name>panelApp</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.application.list.PanelApp</type>
-		</attribute>
-		<attribute>
-			<description>The URL to use in the link if no panel app is passed.</description>
-			<name>url</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a component that displays a collapsable panel with a header and a body that contains the child panel categories and child panel apps of a panel category. It also displays the HTML generated inside the body of this tag. Also, the panel category can have a custom header and a custom body.</description>
 		<name>panel-category</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryTag</tag-class>

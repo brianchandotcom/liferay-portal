@@ -37,6 +37,7 @@ import {Attachments} from './Attachments';
 import {DefinitionOfTerms} from './DefinitionOfTerms';
 
 import './EditNotificationTemplate.scss';
+import FreemarkerEditorSidebarContent from './FreemarkerEditorSidebarContent';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -112,7 +113,7 @@ export type TNotificationTemplate = {
 const EDITOR_TYPES = [
 	{
 		label: Liferay.Language.get('freemarker-template'),
-		value: 'freemarker',
+		value: 'freeMarker',
 	},
 	{
 		label: Liferay.Language.get('rich-text'),
@@ -158,6 +159,10 @@ export default function EditNotificationTemplate({
 	const [searchTerm, setSearchTerm] = useState('');
 
 	const [toTerms, setToTerms] = useState<string>('');
+
+	const [objectDefinitions, setObjectDefinitions] = useState<
+		ObjectDefinition[]
+	>([]);
 
 	const validate = (values: any) => {
 		const errors: {
@@ -266,12 +271,6 @@ export default function EditNotificationTemplate({
 		},
 		description: '',
 		editorType: 'richText' as editorTypeOptions,
-		freemarkerTemplate: {
-			lineCount: 0,
-			template: `<#--${Liferay.Language.get(
-				'add-elements-from-the-sidebar-to-define-your-template'
-			)}-->`,
-		},
 		name: '',
 		objectDefinitionId: 0,
 		recipients: recipientInitialValue,
@@ -347,9 +346,13 @@ export default function EditNotificationTemplate({
 	};
 
 	useEffect(() => {
-		if (notificationTemplateId !== 0) {
-			API.getNotificationTemplate(notificationTemplateId).then(
-				({
+		const makeFetch = async () => {
+			const objectDefinitionsItems = await API.getObjectDefinitions();
+
+			setObjectDefinitions(objectDefinitionsItems);
+
+			if (notificationTemplateId !== 0) {
+				const {
 					attachmentObjectFieldIds,
 					body,
 					description,
@@ -359,37 +362,39 @@ export default function EditNotificationTemplate({
 					recipients,
 					subject,
 					type,
-				}) => {
-					setValues({
-						...values,
-						attachmentObjectFieldIds,
-						body,
-						description,
-						name,
-						objectDefinitionId,
-						recipientType,
-						recipients,
-						subject,
-						type,
-					});
+				} = await API.getNotificationTemplate(notificationTemplateId);
 
-					setTemplateTitle(name);
+				setValues({
+					...values,
+					attachmentObjectFieldIds,
+					body,
+					description,
+					name,
+					objectDefinitionId,
+					recipientType,
+					recipients,
+					subject,
+					type,
+				});
 
-					if (recipientType === 'term') {
-						setToTerms(
-							(recipients as TUserNotificationRecipients[])
-								.map(({term}) => term)
-								.join()
-						);
-					}
+				setTemplateTitle(name);
+
+				if (recipientType === 'term') {
+					setToTerms(
+						(recipients as TUserNotificationRecipients[])
+							.map(({term}) => term)
+							.join()
+					);
 				}
-			);
-		}
-		else {
-			setTemplateTitle(
-				Liferay.Language.get('untitled-notification-template')
-			);
-		}
+			}
+			else {
+				setTemplateTitle(
+					Liferay.Language.get('untitled-notification-template')
+				);
+			}
+		};
+
+		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [notificationTemplateId]);
 
@@ -890,24 +895,30 @@ export default function EditNotificationTemplate({
 										) : (
 											<>
 												<CodeEditor
+													CustomSidebarContent={
+														<FreemarkerEditorSidebarContent
+															objectDefinitions={
+																objectDefinitions
+															}
+														/>
+													}
 													mode="freemarker"
-													onChange={(
-														template,
-														lineCount
-													) =>
+													onChange={(template) =>
 														setValues({
 															...values,
-															freemarkerTemplate: {
-																lineCount,
-																template,
+															body: {
+																[defaultLanguageId]: template,
 															},
 														})
 													}
+													placeholder={`<#--${Liferay.Language.get(
+														'add-elements-from-the-sidebar-to-define-your-template'
+													)}-->`}
 													sidebarElements={[]}
 													value={
-														values
-															.freemarkerTemplate
-															?.template ?? ''
+														values.body[
+															defaultLanguageId
+														] ?? ''
 													}
 												/>
 
@@ -944,7 +955,10 @@ export default function EditNotificationTemplate({
 							</>
 						)}
 
-						<DefinitionOfTerms baseResourceURL={baseResourceURL} />
+						<DefinitionOfTerms
+							baseResourceURL={baseResourceURL}
+							objectDefinitions={objectDefinitions}
+						/>
 
 						{values.type === 'email' && (
 							<Attachments

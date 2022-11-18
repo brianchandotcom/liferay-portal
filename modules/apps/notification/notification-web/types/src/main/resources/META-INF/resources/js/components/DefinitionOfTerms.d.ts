@@ -14,10 +14,12 @@
 
 /// <reference types="react" />
 
+interface DefinitionOfTermsProps {
+	baseResourceURL: string;
+	objectDefinitions: ObjectDefinition[];
+}
 export declare function DefinitionOfTerms({
 	baseResourceURL,
-}: IProps): JSX.Element;
-interface IProps {
-	baseResourceURL: string;
-}
+	objectDefinitions,
+}: DefinitionOfTermsProps): JSX.Element;
 export {};

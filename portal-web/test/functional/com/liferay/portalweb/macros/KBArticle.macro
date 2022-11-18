@@ -1584,11 +1584,13 @@ definition {
 	}
 
 	macro viewDefaultKBDisplaySettingsPG {
-		AssertElementPresent(locator1 = "KnowledgeBaseArticle#SUBSCRIBE");
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
-		AssertElementPresent(locator1 = "KnowledgeBaseArticle#HISTORY");
+		MenuItem.viewVisible(menuItem = "Subscribe");
 
-		AssertElementPresent(locator1 = "KnowledgeBaseArticle#PRINT");
+		MenuItem.viewVisible(menuItem = "History");
+
+		MenuItem.viewVisible(menuItem = "Print");
 	}
 
 	macro viewDefaultViaKBDisplayPG {
@@ -1739,25 +1741,27 @@ definition {
 				locator1 = "Google#PAGE_TITLE");
 		}
 
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
 		if ("${subscribe}" == "true") {
-			AssertElementPresent(locator1 = "KnowledgeBaseArticle#SUBSCRIBE");
+			MenuItem.viewVisible(menuItem = "Subscribe");
 		}
 		else if ("${subscribe}" == "false") {
-			AssertElementNotPresent(locator1 = "KnowledgeBaseArticle#SUBSCRIBE");
+			MenuItem.viewNotPresent(menuItem = "Subscribe");
 		}
 
 		if ("${history}" == "true") {
-			AssertElementPresent(locator1 = "KnowledgeBaseArticle#HISTORY");
+			MenuItem.viewVisible(menuItem = "History");
 		}
 		else if ("${history}" == "false") {
-			AssertElementNotPresent(locator1 = "KnowledgeBaseArticle#HISTORY");
+			MenuItem.viewNotPresent(menuItem = "History");
 		}
 
 		if ("${print}" == "true") {
-			AssertElementPresent(locator1 = "KnowledgeBaseArticle#PRINT");
+			MenuItem.viewVisible(menuItem = "Print");
 		}
 		else if ("${print}" == "false") {
-			AssertElementNotPresent(locator1 = "KnowledgeBaseArticle#PRINT");
+			MenuItem.viewNotPresent(menuItem = "Print");
 		}
 	}
 

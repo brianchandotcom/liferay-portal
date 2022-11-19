@@ -159,7 +159,7 @@ const Goals = ({
 			</PRMForm.Section>
 
 			<PRMForm.Footer>
-				<div className="d-flex mr-auto">
+				<div className="d-flex justify-content-end mr-auto">
 					<Button
 						disabled={isSubmitting}
 						displayType={null}
@@ -169,7 +169,7 @@ const Goals = ({
 					</Button>
 				</div>
 
-				<div>
+				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
 						className="mr-4"
 						displayType="secondary"

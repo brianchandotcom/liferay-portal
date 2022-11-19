@@ -313,7 +313,7 @@ const General = ({
 			</PRMForm.Section>
 
 			<PRMForm.Footer>
-				<div className="d-flex mr-auto">
+				<div className="d-flex justify-content-end mr-auto">
 					<Button
 						disabled={isSubmitting}
 						displayType={null}
@@ -321,7 +321,9 @@ const General = ({
 					>
 						Save as Draft
 					</Button>
+				</div>
 
+				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
 						className="mr-4"
 						displayType="secondary"
@@ -329,13 +331,15 @@ const General = ({
 					>
 						Cancel
 					</Button>
-				</div>
 
-				<Button
-					onClick={() => onContinue?.(formikHelpers, StepType.REVIEW)}
-				>
-					Proceed
-				</Button>
+					<Button
+						onClick={() =>
+							onContinue?.(formikHelpers, StepType.REVIEW)
+						}
+					>
+						Proceed
+					</Button>
+				</div>
 			</PRMForm.Footer>
 		</PRMForm>
 	);

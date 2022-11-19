@@ -21,7 +21,7 @@ const Footer = ({
 }: IProps & React.HTMLAttributes<HTMLDivElement>) => (
 	<div
 		className={classNames(
-			'border-neutral-2 border-top d-flex mt-4 pt-4',
+			'border-neutral-2 border-top d-md-flex mt-4 pt-4',
 			className
 		)}
 	>

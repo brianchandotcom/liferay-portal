@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Body = ({children, name, title}: IProps) => (
-	<div className="bg-neutral-0 mt-4 p-4 pt-4 rounded">
+	<div className="bg-neutral-0 mt-4 p-md-2 pt-4 px-lg-4 py-1 py-4 rounded">
 		{name && (
 			<div className="font-weight-bold mb-1 text-brand-primary-lighten-2 text-small-caps">
 				{name}

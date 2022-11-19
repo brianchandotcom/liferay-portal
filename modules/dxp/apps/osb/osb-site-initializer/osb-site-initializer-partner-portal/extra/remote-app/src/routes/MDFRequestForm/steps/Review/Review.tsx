@@ -100,8 +100,8 @@ const Review = ({
 
 					<div className="border mb-1"></div>
 
-					<div className="d-flex justify-content-between">
-						<div className="mr-auto pl-0 py-3">
+					<div className="border-neutral-2 d-md-flex p-2">
+						<div className="d-flex justify-content-between mr-auto">
 							<Button
 								className="mr-4"
 								displayType={null}
@@ -124,7 +124,7 @@ const Review = ({
 							</Button>
 						</div>
 
-						<div className="p-2">
+						<div className="d-flex justify-content-between px-2 px-md-0">
 							<Button
 								className="mr-4"
 								displayType="secondary"

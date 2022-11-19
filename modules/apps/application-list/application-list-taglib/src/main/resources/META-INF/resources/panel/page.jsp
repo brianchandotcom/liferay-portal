@@ -19,6 +19,11 @@
 <%
 List<PanelCategory> childPanelCategories = (List<PanelCategory>)request.getAttribute("liferay-application-list:panel:childPanelCategories");
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel:panelCategory");
+
+PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 %>
 
 <c:if test="<%= !childPanelCategories.isEmpty() %>">
@@ -30,10 +35,129 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 		%>
 
 			<c:if test="<%= !include %>">
-				<liferay-application-list:panel-category
+
+				<%
+				List<PanelApp> childPanelCategoryPanelApps = PanelCategoryUtil.getPanelApps(request, panelAppRegistry, childPanelCategory);
+
+				boolean active = PanelCategoryUtil.isActive(request, childPanelCategoryPanelApps, childPanelCategory, childPanelCategories, panelCategoryHelper);
+
+				String id = PanelCategoryUtil.getId(childPanelCategory);
+				int notificationsCount = PanelCategoryUtil.getNotificationsCount(request, childPanelCategory, panelCategoryHelper);
+				%>
+
+				<c:if test="<%= !childPanelCategoryPanelApps.isEmpty() %>">
+					<a aria-expanded="<%= active %>" class="<%= PanelCategoryUtil.isHeaderActive(request, childPanelCategory, panelCategoryHelper) ? "active" : "" %> collapse-icon collapse-icon-middle nav-link <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading panel-header" data-qa-id="appGroup" data-toggle="liferay-collapse" href="#<%= id %>">
+						<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
+							<%= childPanelCategory.getLabel(themeDisplay.getLocale()) %>
+
+							<c:if test="<%= notificationsCount > 0 %>">
+								<clay:badge
+									cssClass="float-right panel-notifications-count"
+									data-qa-id="notificationsCount"
+									displayType="danger"
+									label="<%= String.valueOf(notificationsCount) %>"
+								/>
+							</c:if>
+						</c:if>
+
+						<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+						<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+					</a>
+
+					<div class="collapse <%= active ? "show" : StringPool.BLANK %>" id="<%= id %>">
+						<div class="list-group-item">
+				</c:if>
+
+				<c:if test="<%= childPanelCategory.allowScopeLayouts() %>">
+
+					<%
+					Group curSite = themeDisplay.getSiteGroup();
+
+					List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
+					%>
+
+					<c:if test="<%= !scopeLayouts.isEmpty() %>">
+						<c:if test="<%= !childPanelCategoryPanelApps.isEmpty() %>">
+							<div class="scope-selector">
+
+								<%
+								Group curScopeGroup = themeDisplay.getScopeGroup();
+								%>
+
+								<clay:content-row
+									verticalAlign="center"
+								>
+									<clay:content-col
+										expand="<%= true %>"
+									>
+										<span class="scope-name">
+											<c:choose>
+												<c:when test="<%= curScopeGroup.isLayout() %>">
+													<%= curScopeGroup.getDescriptiveName(locale) %> (<liferay-ui:message key="scope" />)
+												</c:when>
+												<c:otherwise>
+													<liferay-ui:message key="default-scope" />
+												</c:otherwise>
+											</c:choose>
+										</span>
+									</clay:content-col>
+
+									<%
+									ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(request);
+									%>
+
+									<clay:content-col>
+										<clay:dropdown-menu
+											borderless="<%= true %>"
+											cssClass="text-light"
+											displayType="secondary"
+											dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
+											icon="cog"
+											monospaced="<%= true %>"
+										/>
+									</clay:content-col>
+								</clay:content-row>
+							</div>
+						</c:if>
+					</c:if>
+				</c:if>
+
+				<liferay-application-list:panel-category-body
+					panelApps="<%= childPanelCategoryPanelApps %>"
 					panelCategory="<%= childPanelCategory %>"
-					showOpen="<%= childPanelCategories.size() == 1 %>"
 				/>
+
+				<c:if test="<%= !childPanelCategoryPanelApps.isEmpty() %>">
+						</div>
+					</div>
+
+					<c:if test="<%= childPanelCategory.isPersistState() %>">
+						<aui:script position="auto">
+							Liferay.on('liferay.collapse.hidden', (event) => {
+								var panelId = event.panel.getAttribute('id');
+
+								if (panelId === '<%= id %>') {
+									Liferay.Util.Session.set(
+										'<%= PanelCategory.class.getName() %><%= id %>',
+										'closed'
+									);
+								}
+							});
+
+							Liferay.on('liferay.collapse.shown', (event) => {
+								var panelId = event.panel.getAttribute('id');
+
+								if (panelId === '<%= id %>') {
+									Liferay.Util.Session.set(
+										'<%= PanelCategory.class.getName() %><%= id %>',
+										'open'
+									);
+								}
+							});
+						</aui:script>
+					</c:if>
+				</c:if>
 			</c:if>
 
 		<%
@@ -43,8 +167,6 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 	</div>
 
 	<%
-	PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
-
 	for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory.getKey())) {
 	%>
 

@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.RootPanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -30,6 +31,17 @@ import javax.servlet.jsp.JspException;
  * @author Adolfo Pérez
  */
 public class PanelTag extends BasePanelTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		if (ListUtil.isEmpty(_getChildPanelCategories(getRequest()))) {
+			doClearTag();
+
+			return EVAL_PAGE;
+		}
+
+		return super.doEndTag();
+	}
 
 	@Override
 	public int doStartTag() throws JspException {

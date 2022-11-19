@@ -93,15 +93,13 @@ public class ObjectEntryResourceTest {
 	public void testGetNestedFieldDetailsInOneToManyRelationship()
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition1, _objectDefinition2,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
 			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
+			_objectRelationship.getObjectRelationshipId(),
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -109,7 +107,7 @@ public class ObjectEntryResourceTest {
 			null,
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), "?nestedFields=r_",
-				objectRelationship.getName(), "_",
+				_objectRelationship.getName(), "_",
 				_objectDefinition1.getPKObjectFieldName()),
 			Http.Method.GET);
 
@@ -125,21 +123,13 @@ public class ObjectEntryResourceTest {
 
 		JSONObject relatedObjectJSONObject = itemJSONObject.getJSONObject(
 			StringBundler.concat(
-				"r_", objectRelationship.getName(), "_",
+				"r_", _objectRelationship.getName(), "_",
 				StringUtil.replaceLast(
 					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
 
 		Assert.assertEquals(
 			_OBJECT_FIELD_VALUE_1,
 			relatedObjectJSONObject.getString(_OBJECT_FIELD_NAME_1));
-
-		_objectRelationshipLocalService.
-			deleteObjectRelationshipMappingTableValues(
-				objectRelationship.getObjectRelationshipId(),
-				_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey());
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
 	}
 
 	@Test
@@ -233,11 +223,9 @@ public class ObjectEntryResourceTest {
 	public void testPutByExternalReferenceCodeManyToManyRelationship()
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition1, _objectDefinition2,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -245,7 +233,7 @@ public class ObjectEntryResourceTest {
 				_objectDefinition1.getRESTContextPath(),
 				"/by-external-reference-code/",
 				_objectEntry1.getExternalReferenceCode(), StringPool.SLASH,
-				objectRelationship.getName(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
 				_objectEntry2.getExternalReferenceCode()),
 			Http.Method.PUT);
 
@@ -261,7 +249,7 @@ public class ObjectEntryResourceTest {
 				_objectDefinition2.getRESTContextPath(),
 				"/by-external-reference-code/",
 				_objectEntry2.getExternalReferenceCode(), StringPool.SLASH,
-				objectRelationship.getName(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
 				_objectEntry1.getExternalReferenceCode()),
 			Http.Method.PUT);
 
@@ -277,16 +265,13 @@ public class ObjectEntryResourceTest {
 				_objectDefinition2.getRESTContextPath(),
 				"/by-external-reference-code/",
 				_objectEntry2.getExternalReferenceCode(), StringPool.SLASH,
-				objectRelationship.getName(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
 				RandomTestUtil.randomString()),
 			Http.Method.PUT);
 
 		Assert.assertThat(
 			jsonObject.getString("title"),
 			CoreMatchers.containsString("No ObjectEntry exists with the key"));
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_1 =

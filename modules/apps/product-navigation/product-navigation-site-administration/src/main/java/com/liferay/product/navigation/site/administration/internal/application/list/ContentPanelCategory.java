@@ -14,14 +14,12 @@
 
 package com.liferay.product.navigation.site.administration.internal.application.list;
 
-import com.liferay.application.list.BaseJSPPanelCategory;
+import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelCategory.class
 )
-public class ContentPanelCategory extends BaseJSPPanelCategory {
+public class ContentPanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getJspPath() {
-		return "/content/content.jsp";
+	public boolean allowScopeLayouts() {
+		return true;
 	}
 
 	@Override
@@ -54,17 +52,7 @@ public class ContentPanelCategory extends BaseJSPPanelCategory {
 		return _language.get(locale, "category.site_administration.content");
 	}
 
-	@Override
-	protected ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.site.administration)"
-	)
-	private ServletContext _servletContext;
 
 }

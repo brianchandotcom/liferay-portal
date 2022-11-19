@@ -6,8 +6,10 @@
 					"fragmentStyle": {
 						"borderWidth": "0",
 						"maxWidth": "1440px",
+						"paddingBottom": "2",
 						"paddingLeft": "80px",
 						"paddingRight": "80px",
+						"paddingTop": "2",
 						"shadow": "boxShadowSm",
 						"textAlign": ""
 					},
@@ -61,6 +63,14 @@
 								"borderWidth": "0",
 								"textAlign": ""
 							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"overflow": ""
+									},
+									"id": "portraitMobile"
+								}
+							],
 							"indexed": true,
 							"layout": {
 								"align": "Center",
@@ -109,13 +119,20 @@
 										"marginRight": "2",
 										"textAlign": ""
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginRight": "0",
+												"width": ""
+											},
+											"id": "portraitMobile"
+										}
+									],
 									"indexed": true,
 									"layout": {
-										"align": "Center",
+										"align": "Start",
 										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"flexWrap": "Wrap",
-										"justify": "End",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,
@@ -156,6 +173,18 @@
 													}
 												}
 											],
+											"fragmentStyle": {
+												"borderRadius": "",
+												"marginRight": "1"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginRight": "9px"
+													},
+													"id": "portraitMobile"
+												}
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -166,7 +195,7 @@
 												"key": "BASIC_COMPONENT-heading"
 											},
 											"fragmentConfig": {
-												"headingLevel": "h3"
+												"headingLevel": "h4"
 											},
 											"fragmentFields": [
 												{
@@ -196,10 +225,16 @@
 											],
 											"fragmentStyle": {
 												"borderColor": "",
-												"borderWidth": "",
-												"textAlign": "",
-												"width": "700"
+												"borderWidth": ""
 											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"width": ""
+													},
+													"id": "portraitMobile"
+												}
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -221,13 +256,20 @@
 										"borderWidth": "0",
 										"textAlign": ""
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginLeft": "0"
+											},
+											"id": "portraitMobile"
+										}
+									],
 									"indexed": true,
 									"layout": {
 										"align": "Center",
 										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"flexWrap": "WrapReverse",
-										"justify": "End",
+										"justify": "SpaceBetween",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,
@@ -252,9 +294,14 @@
 											},
 											"fragmentFields": [
 											],
-											"fragmentStyle": {
-												"paddingRight": "1"
-											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"hidden": true
+													},
+													"id": "tablet"
+												}
+											],
 											"indexed": true,
 											"widgetInstances": [
 												{
@@ -264,6 +311,101 @@
 												}
 											]
 										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-dropdown"
+											},
+											"fragmentConfig": {
+												"buttonSize": "sm",
+												"buttonType": "outline-primary",
+												"displayOnHover": false,
+												"keepOpen": false,
+												"panelType": "regular"
+											},
+											"fragmentFields": [
+												{
+													"id": "dropdown-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Menu"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"borderRadius": "",
+												"hidden": true,
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"hidden": false,
+														"overflow": ""
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-nav"
+															},
+															"fragmentConfig": {
+																"inverted": false,
+																"navType": "nav-primary",
+																"orientation": "nav-vertical"
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"borderRadius": "",
+																"paddingBottom": "3",
+																"paddingRight": "1",
+																"paddingTop": "3",
+																"shadow": "",
+																"textAlign": ""
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"fontFamily": "fontFamilySansSerif",
+																		"fontWeight": "",
+																		"hidden": false,
+																		"paddingRight": "0",
+																		"textAlign": "left"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"widgetInstances": [
+																{
+																	"widgetConfig": {
+																	},
+																	"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+																}
+															]
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
 										"type": "Fragment"
 									},
 									{
@@ -293,16 +435,34 @@
 											},
 											"fragmentStyle": {
 												"borderWidth": "0",
-												"marginLeft": "4",
-												"marginRight": "4",
+												"marginLeft": "3",
+												"marginRight": "3",
 												"textAlign": ""
 											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "2",
+														"marginRight": "2"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "3",
+														"marginRight": "3"
+													},
+													"id": "tablet"
+												}
+											],
 											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"justify": "SpaceBetween",
 												"marginBottom": 0,
-												"marginLeft": 2,
-												"marginRight": 2,
+												"marginLeft": 1,
+												"marginRight": 1,
 												"marginTop": 0,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
@@ -333,51 +493,6 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"description": {
-																"value_i18n": {
-																	"en_US": ""
-																}
-															},
-															"url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/placeholder/user-placeholder.png#]"
-																	}
-																}
-															}
-														},
-														"fragmentLink": {
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"borderRadius": "borderRadiusCircle",
-												"height": "40px",
-												"marginLeft": "2",
-												"overflow": "hidden",
-												"textAlign": "",
-												"width": "40px"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
 												"key": "clay-icon-link"
 											},
 											"fragmentConfig": {
@@ -387,10 +502,27 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
+												"borderRadius": "",
 												"fontSize": "1.125rem",
+												"hidden": true,
 												"marginLeft": "1",
+												"shadow": "",
+												"textAlign": "",
 												"textColor": "colorNeutral7"
 											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "user-personal-bar"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"

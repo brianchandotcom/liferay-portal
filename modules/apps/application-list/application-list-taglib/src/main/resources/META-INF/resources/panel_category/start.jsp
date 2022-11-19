@@ -39,3 +39,57 @@
 	<div class="collapse <%= active ? "show" : StringPool.BLANK %>" id="<%= id %>">
 		<div class="list-group-item">
 </c:if>
+
+<c:if test="<%= panelCategory.allowScopeLayouts() %>">
+
+	<%
+	Group curSite = themeDisplay.getSiteGroup();
+
+	List<Layout> scopeLayouts = LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId());
+	%>
+
+	<c:if test="<%= !scopeLayouts.isEmpty() %>">
+		<c:if test="<%= !panelApps.isEmpty() %>">
+			<div class="scope-selector">
+
+				<%
+				Group curScopeGroup = themeDisplay.getScopeGroup();
+				%>
+
+				<clay:content-row
+					verticalAlign="center"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+							<span class="scope-name">
+								<c:choose>
+									<c:when test="<%= curScopeGroup.isLayout() %>">
+										<%= curScopeGroup.getDescriptiveName(locale) %> (<liferay-ui:message key="scope" />)
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="default-scope" />
+									</c:otherwise>
+								</c:choose>
+							</span>
+					</clay:content-col>
+
+					<%
+					ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new ContentPanelCategoryDisplayContext(request);
+					%>
+
+					<clay:content-col>
+						<clay:dropdown-menu
+							borderless="<%= true %>"
+							cssClass="text-light"
+							displayType="secondary"
+							dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
+							icon="cog"
+							monospaced="<%= true %>"
+						/>
+					</clay:content-col>
+				</clay:content-row>
+			</div>
+		</c:if>
+	</c:if>
+</c:if>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.site.administration.internal.display.context;
+package com.liferay.application.list.taglib.internal.display.context;
 
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
@@ -34,21 +34,26 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Pavel Savinov
  */
 public class ContentPanelCategoryDisplayContext {
 
-	public ContentPanelCategoryDisplayContext(PortletRequest portletRequest) {
-		_portletRequest = portletRequest;
+	public ContentPanelCategoryDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public DropdownItemList getScopesDropdownItemList() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PanelCategoryHelper panelCategoryHelper =
-			(PanelCategoryHelper)_portletRequest.getAttribute(
+			(PanelCategoryHelper)_httpServletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 
 		String portletId = themeDisplay.getPpid();
@@ -66,7 +71,7 @@ public class ContentPanelCategoryDisplayContext {
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			_portletRequest, themeDisplay.getSiteGroup(), portletId, 0, 0,
+			_httpServletRequest, themeDisplay.getSiteGroup(), portletId, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		DropdownItemList dropdownItems = DropdownItemListBuilder.add(
@@ -100,7 +105,7 @@ public class ContentPanelCategoryDisplayContext {
 
 			PortletURL layoutItemPortletURL =
 				PortalUtil.getControlPanelPortletURL(
-					_portletRequest, scopeGroup, portletId, 0, 0,
+					_httpServletRequest, scopeGroup, portletId, 0, 0,
 					PortletRequest.RENDER_PHASE);
 
 			dropdownItems.add(
@@ -118,6 +123,6 @@ public class ContentPanelCategoryDisplayContext {
 		return dropdownItems;
 	}
 
-	private final PortletRequest _portletRequest;
+	private final HttpServletRequest _httpServletRequest;
 
 }

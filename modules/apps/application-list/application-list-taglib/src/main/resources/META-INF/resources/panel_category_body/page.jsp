@@ -21,10 +21,9 @@
 
 		<%
 		for (PanelApp panelApp : panelApps) {
-			boolean include = panelApp.include(request, response);
 		%>
 
-			<c:if test="<%= !include %>">
+			<c:if test="<%= !panelApp.include(request, response) %>">
 
 				<%
 				String url = PanelAppUtil.getURL(request, panelApp);

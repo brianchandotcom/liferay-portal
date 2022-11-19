@@ -40,8 +40,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 
 			<c:choose>
 				<c:when test="<%= childPanelCategoryPanelApps.isEmpty() %>">
-					<liferay-application-list:panel-category-body
-						panelApps="<%= childPanelCategoryPanelApps %>"
+					<liferay-application-list:panel
 						panelCategory="<%= childPanelCategory %>"
 					/>
 				</c:when>
@@ -127,8 +126,59 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 								</c:if>
 							</c:if>
 
-							<liferay-application-list:panel-category-body
-								panelApps="<%= childPanelCategoryPanelApps %>"
+							<ul aria-labelledby="<%= id %>" class="nav nav-equal-height nav-stacked" role="menu">
+
+								<%
+								for (PanelApp panelApp : childPanelCategoryPanelApps) {
+								%>
+
+									<c:if test="<%= !panelApp.include(request, response) %>">
+
+										<%
+										String url = PanelAppUtil.getURL(request, panelApp);
+										%>
+
+										<c:if test="<%= Validator.isNotNull(url) %>">
+
+											<%
+											String label = PanelAppUtil.getLabel(request, panelApp);
+											%>
+
+											<li class="<%= PanelAppUtil.isActive(request, panelApp) ? "active" : StringPool.BLANK %> nav-item" role="presentation">
+												<aui:a
+													ariaRole="menuitem"
+													cssClass="nav-link"
+													data='<%=
+														HashMapBuilder.<String, Object>put(
+															"qa-id", "app"
+														).put(
+															"title", label
+														).build()
+													%>'
+													href="<%= url %>"
+													id="portlet_<%= panelApp.getPortletId() %>"
+												>
+													<%= label %>
+
+													<c:if test="<%= panelApp.getNotificationsCount(user) > 0 %>">
+														<clay:badge
+															cssClass="float-right"
+															displayType="danger"
+															label="<%= String.valueOf(panelApp.getNotificationsCount(user)) %>"
+														/>
+													</c:if>
+												</aui:a>
+											</li>
+										</c:if>
+									</c:if>
+
+								<%
+								}
+								%>
+
+							</ul>
+
+							<liferay-application-list:panel
 								panelCategory="<%= childPanelCategory %>"
 							/>
 						</div>

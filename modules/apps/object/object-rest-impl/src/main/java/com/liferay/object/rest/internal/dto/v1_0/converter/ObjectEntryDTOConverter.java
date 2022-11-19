@@ -540,23 +540,24 @@ public class ObjectEntryDTOConverter
 
 				map.put(objectFieldName, objectEntryId);
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-161364")) &&
-					(map.get(objectRelationship.getName()) == null)) {
-
-					map.put(objectRelationship.getName() + "Id", objectEntryId);
-				}
-
 				String objectRelationshipERCFieldName =
 					ObjectFieldSettingUtil.getValue(
 						ObjectFieldSettingConstants.
 							NAME_OBJECT_RELATIONSHIP_ERC_FIELD_NAME,
 						objectField);
 
-				map.put(
-					objectRelationshipERCFieldName,
-					GetterUtil.getString(
-						values.get(objectRelationshipERCFieldName)));
+				String relatedObjectERC = GetterUtil.getString(
+					values.get(objectRelationshipERCFieldName));
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-161364")) &&
+					(map.get(objectRelationship.getName()) == null)) {
+
+					map.put(
+						objectRelationship.getName() + "ERC", relatedObjectERC);
+				}
+
+				map.put(objectRelationshipERCFieldName, relatedObjectERC);
 			}
 			else {
 				map.put(objectFieldName, serializable);

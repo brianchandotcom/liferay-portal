@@ -299,14 +299,14 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 				group.getTypeSettingsProperties();
 
 			if (remove) {
-				String analyticsChannelId =
-					typeSettingsUnicodeProperties.remove("analyticsChannelId");
+				String analyticsChannelId = typeSettingsUnicodeProperties.get(
+					"analyticsChannelId");
 
-				if ((analyticsChannelId != null) &&
-					!channelId.equals(analyticsChannelId)) {
-
-					throw new IllegalArgumentException("Invalid channel ID");
+				if (!channelId.equals(analyticsChannelId)) {
+					continue;
 				}
+
+				typeSettingsUnicodeProperties.remove("analyticsChannelId");
 			}
 			else {
 				typeSettingsUnicodeProperties.setProperty(

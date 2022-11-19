@@ -106,16 +106,16 @@ public class AnalyticsSettingsManager {
 
 		Set<String> allKeys = settingsDescriptor.getAllKeys();
 
-		for (String multiValuedKey : settingsDescriptor.getMultiValuedKeys()) {
-			configurationProperties.computeIfAbsent(
-				multiValuedKey,
-				key -> _defaults.getOrDefault(key, new String[0]));
-		}
-
 		for (Map.Entry<String, Object> entry : properties.entrySet()) {
 			if (allKeys.contains(entry.getKey())) {
 				configurationProperties.put(entry.getKey(), entry.getValue());
 			}
+		}
+
+		for (String multiValuedKey : settingsDescriptor.getMultiValuedKeys()) {
+			configurationProperties.computeIfAbsent(
+				multiValuedKey,
+				key -> _defaults.getOrDefault(key, new String[0]));
 		}
 
 		_configurationProvider.saveCompanyConfiguration(

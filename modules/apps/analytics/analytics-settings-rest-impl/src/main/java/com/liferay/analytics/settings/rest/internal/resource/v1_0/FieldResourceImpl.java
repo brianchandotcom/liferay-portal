@@ -203,30 +203,20 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		Set<String> selectedFieldNames = new HashSet<>(
 			Arrays.asList(configurationFieldNames));
 
-		Stream.of(
-			fields
-		).filter(
-			field ->
-				Objects.equals(source, field.getSource()) &&
-				!field.getSelected()
-		).map(
-			Field::getName
-		).forEach(
-			selectedFieldNames::remove
-		);
+		for (Field field : fields) {
+			if (Objects.equals(source, field.getSource())) {
+				if (!field.getSelected()) {
+					selectedFieldNames.remove(field.getName());
+				}
+				else {
+					if (ArrayUtil.contains(
+							validateFieldNames, field.getName())) {
 
-		Stream.of(
-			fields
-		).filter(
-			field ->
-				Objects.equals(source, field.getSource()) && field.getSelected()
-		).map(
-			Field::getName
-		).filter(
-			name -> ArrayUtil.contains(validateFieldNames, name)
-		).forEach(
-			selectedFieldNames::add
-		);
+						selectedFieldNames.add(field.getName());
+					}
+				}
+			}
+		}
 
 		Collections.addAll(selectedFieldNames, requiredFieldNames);
 

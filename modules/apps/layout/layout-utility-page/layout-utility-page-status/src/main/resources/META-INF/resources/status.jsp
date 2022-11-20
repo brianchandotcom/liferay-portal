@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-layout:render-layout-utility-page-entry
-	type="<%= LayoutUtilityPageEntryConstants.Type.ERROR_404.getType() %>"
+	type="<%= LayoutUtilityPageEntryTypesConstants.STATUS %>"
 >
 
 	<%

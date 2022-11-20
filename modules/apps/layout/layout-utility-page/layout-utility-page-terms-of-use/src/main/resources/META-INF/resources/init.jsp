@@ -22,7 +22,7 @@ taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.layout.utility.page.constants.LayoutUtilityPageEntryConstants" %><%@
+<%@ page import="com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryTypesConstants" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@

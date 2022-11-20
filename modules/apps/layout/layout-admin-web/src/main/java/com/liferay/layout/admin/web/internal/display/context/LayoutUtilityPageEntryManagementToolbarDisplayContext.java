@@ -18,7 +18,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.utility.page.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -117,16 +118,20 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				for (LayoutUtilityPageEntryConstants.Type type :
-						LayoutUtilityPageEntryConstants.Type.values()) {
+				for (LayoutUtilityPageEntryViewRenderer
+						layoutUtilityPageEntryViewRenderer :
+							LayoutUtilityPageEntryViewRendererRegistryUtil.
+								getLayoutUtilityPageEntryViewRenderers()) {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								_getSelectMasterLayoutURL(type.getType()));
+								_getSelectMasterLayoutURL(
+									layoutUtilityPageEntryViewRenderer.
+										getType()));
 							dropdownItem.setLabel(
-								LanguageUtil.get(
-									httpServletRequest, type.getLabel()));
+								layoutUtilityPageEntryViewRenderer.getLabel(
+									_themeDisplay.getLocale()));
 						});
 				}
 			}
@@ -153,7 +158,7 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 		return exportLayoutUtilityPageEntryURL.toString();
 	}
 
-	private String _getSelectMasterLayoutURL(int type) {
+	private String _getSelectMasterLayoutURL(String type) {
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(

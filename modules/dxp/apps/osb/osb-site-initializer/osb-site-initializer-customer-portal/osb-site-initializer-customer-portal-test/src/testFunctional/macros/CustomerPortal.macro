@@ -283,12 +283,6 @@ definition {
 		}
 	}
 
-	macro clickOnModal {
-		var key_text = "${text}";
-		
-		Click(locator1 = "CustomerPortalSite#MODAL_INFO");
-	}
-
 	macro clickAtButton {
 		var key_text = "${text}";
 
@@ -303,6 +297,12 @@ definition {
 
 	macro clickOnFinishActivationButton {
 		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
+	}
+
+	macro clickOnModal {
+		var key_text = "${text}";
+
+		Click(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}
 
 	macro clickOnSkipForNowButton {

@@ -172,7 +172,7 @@
 </tr>
 <tr>
 	<td>MODAL_SETUP</td>
-	<td>//*[contains(@class, 'modal-content')]</td>
+	<td>//*[contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

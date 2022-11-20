@@ -86,8 +86,12 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146199 | Test Summary: Verify that when clicking on the Deploying Activation Keys article link, the user is redirected to another page."
+	@ignore = "true"
 	@priority = "3"
 	test ConfirmRedirectionFromDxpToAnotherPage {
+
+		// Needs refactor since it depends on example Avangrid Portals account
+
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 

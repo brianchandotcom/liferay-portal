@@ -112,17 +112,11 @@ definition {
 		task ("Then I assert that the 'Owner Email' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "Address",
-				value = "test@liferay.com");
-
-			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
-				label = "Address",
 				value = "");
 
-			KeyPress.keyPressNoError(
-				locator1 = "CustomerPortalSite#MODAL_SETUP",
-				value1 = "\ESCAPE");
+			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
-			Alert.viewErrorMessage(errorMessage = "This field is required.");
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
 		}
 	}
 
@@ -154,17 +148,11 @@ definition {
 		task ("Then I assert that the 'Incident Report Contact' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "email",
-				value = "test@liferay.com");
-
-			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
-				label = "email",
 				value = "");
 
-			KeyPress.keyPressNoError(
-				locator1 = "CustomerPortalSite#MODAL_SETUP",
-				value1 = "\ESCAPE");
+			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
-			Alert.viewErrorMessage(errorMessage = "This field is required.");
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
 		}
 	}
 
@@ -178,17 +166,11 @@ definition {
 		task ("Then I assert that the 'Workspace Name' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "workspaceName",
-				value = "testing1");
-
-			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
-				label = "workspaceName",
 				value = "");
 
-			KeyPress.keyPressNoError(
-				locator1 = "CustomerPortalSite#MODAL_SETUP",
-				value1 = "\ESCAPE");
+			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
-			Alert.viewErrorMessage(errorMessage = "This field is required.");
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
 		}
 	}
 

@@ -283,6 +283,12 @@ definition {
 		}
 	}
 
+	macro clickOnModal {
+		var key_text = "${text}";
+		
+		Click(locator1 = "CustomerPortalSite#MODAL_INFO");
+	}
+
 	macro clickAtButton {
 		var key_text = "${text}";
 

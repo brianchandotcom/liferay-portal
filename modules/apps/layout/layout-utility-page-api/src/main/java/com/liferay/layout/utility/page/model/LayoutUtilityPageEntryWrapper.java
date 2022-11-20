@@ -165,7 +165,7 @@ public class LayoutUtilityPageEntryWrapper
 			setName(name);
 		}
 
-		Integer type = (Integer)attributes.get("type");
+		String type = (String)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
@@ -336,7 +336,7 @@ public class LayoutUtilityPageEntryWrapper
 	 * @return the type of this layout utility page entry
 	 */
 	@Override
-	public int getType() {
+	public String getType() {
 		return model.getType();
 	}
 
@@ -543,7 +543,7 @@ public class LayoutUtilityPageEntryWrapper
 	 * @param type the type of this layout utility page entry
 	 */
 	@Override
-	public void setType(int type) {
+	public void setType(String type) {
 		model.setType(type);
 	}
 

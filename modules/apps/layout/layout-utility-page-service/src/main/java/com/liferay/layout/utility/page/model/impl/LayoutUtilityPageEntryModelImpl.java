@@ -82,7 +82,7 @@ public class LayoutUtilityPageEntryModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
 		{"previewFileEntryId", Types.BIGINT},
 		{"defaultLayoutUtilityPageEntry", Types.BOOLEAN},
-		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -105,12 +105,12 @@ public class LayoutUtilityPageEntryModelImpl
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("defaultLayoutUtilityPageEntry", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutUtilityPageEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,LayoutUtilityPageEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,previewFileEntryId LONG,defaultLayoutUtilityPageEntry BOOLEAN,name VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null,primary key (LayoutUtilityPageEntryId, ctCollectionId))";
+		"create table LayoutUtilityPageEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,LayoutUtilityPageEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,previewFileEntryId LONG,defaultLayoutUtilityPageEntry BOOLEAN,name VARCHAR(75) null,type_ VARCHAR(75) null,lastPublishDate DATE null,primary key (LayoutUtilityPageEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutUtilityPageEntry";
@@ -378,7 +378,7 @@ public class LayoutUtilityPageEntryModelImpl
 		attributeGetterFunctions.put("type", LayoutUtilityPageEntry::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			(BiConsumer<LayoutUtilityPageEntry, Integer>)
+			(BiConsumer<LayoutUtilityPageEntry, String>)
 				LayoutUtilityPageEntry::setType);
 		attributeGetterFunctions.put(
 			"lastPublishDate", LayoutUtilityPageEntry::getLastPublishDate);
@@ -727,12 +727,17 @@ public class LayoutUtilityPageEntryModelImpl
 
 	@JSON
 	@Override
-	public int getType() {
-		return _type;
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
 	}
 
 	@Override
-	public void setType(int type) {
+	public void setType(String type) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -745,9 +750,8 @@ public class LayoutUtilityPageEntryModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public int getOriginalType() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("type_"));
+	public String getOriginalType() {
+		return getColumnOriginalValue("type_");
 	}
 
 	@JSON
@@ -893,7 +897,7 @@ public class LayoutUtilityPageEntryModelImpl
 		layoutUtilityPageEntryImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		layoutUtilityPageEntryImpl.setType(
-			this.<Integer>getColumnOriginalValue("type_"));
+			this.<String>getColumnOriginalValue("type_"));
 		layoutUtilityPageEntryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -1051,6 +1055,12 @@ public class LayoutUtilityPageEntryModelImpl
 
 		layoutUtilityPageEntryCacheModel.type = getType();
 
+		String type = layoutUtilityPageEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			layoutUtilityPageEntryCacheModel.type = null;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1139,7 +1149,7 @@ public class LayoutUtilityPageEntryModelImpl
 	private long _previewFileEntryId;
 	private boolean _defaultLayoutUtilityPageEntry;
 	private String _name;
-	private int _type;
+	private String _type;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {

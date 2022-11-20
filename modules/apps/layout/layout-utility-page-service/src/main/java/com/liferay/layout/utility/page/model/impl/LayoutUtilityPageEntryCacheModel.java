@@ -181,7 +181,12 @@ public class LayoutUtilityPageEntryCacheModel
 			layoutUtilityPageEntryImpl.setName(name);
 		}
 
-		layoutUtilityPageEntryImpl.setType(type);
+		if (type == null) {
+			layoutUtilityPageEntryImpl.setType("");
+		}
+		else {
+			layoutUtilityPageEntryImpl.setType(type);
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutUtilityPageEntryImpl.setLastPublishDate(null);
@@ -221,8 +226,7 @@ public class LayoutUtilityPageEntryCacheModel
 
 		defaultLayoutUtilityPageEntry = objectInput.readBoolean();
 		name = objectInput.readUTF();
-
-		type = objectInput.readInt();
+		type = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -277,7 +281,13 @@ public class LayoutUtilityPageEntryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeInt(type);
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -296,7 +306,7 @@ public class LayoutUtilityPageEntryCacheModel
 	public long previewFileEntryId;
 	public boolean defaultLayoutUtilityPageEntry;
 	public String name;
-	public int type;
+	public String type;
 	public long lastPublishDate;
 
 }

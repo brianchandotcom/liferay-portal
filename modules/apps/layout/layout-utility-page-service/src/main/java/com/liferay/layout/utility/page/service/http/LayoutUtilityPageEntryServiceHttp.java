@@ -53,7 +53,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			addLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, String name, int type, long masterLayoutPlid)
+				long groupId, String name, String type, long masterLayoutPlid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -220,7 +220,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			getDefaultLayoutUtilityPageEntry(
-				HttpPrincipal httpPrincipal, long groupId, int type)
+				HttpPrincipal httpPrincipal, long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -300,8 +300,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static java.util.List
 		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
 			getLayoutUtilityPageEntries(
-				HttpPrincipal httpPrincipal, long groupId, int type, int start,
-				int end,
+				HttpPrincipal httpPrincipal, long groupId, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.layout.utility.page.model.
 						LayoutUtilityPageEntry> orderByComparator) {
@@ -313,7 +312,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_getLayoutUtilityPageEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, type, start, end, orderByComparator);
+				methodKey, groupId, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -341,7 +340,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static java.util.List
 		<com.liferay.layout.utility.page.model.LayoutUtilityPageEntry>
 			getLayoutUtilityPageEntries(
-				HttpPrincipal httpPrincipal, long groupId, int start, int end,
+				HttpPrincipal httpPrincipal, long groupId, String type,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.layout.utility.page.model.
 						LayoutUtilityPageEntry> orderByComparator) {
@@ -353,7 +353,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_getLayoutUtilityPageEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, start, end, orderByComparator);
+				methodKey, groupId, type, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -546,7 +546,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 
 	private static final Class<?>[] _addLayoutUtilityPageEntryParameterTypes0 =
 		new Class[] {
-			String.class, long.class, String.class, int.class, long.class
+			String.class, long.class, String.class, String.class, long.class
 		};
 	private static final Class<?>[] _copyLayoutUtilityPageEntryParameterTypes1 =
 		new Class[] {
@@ -559,18 +559,18 @@ public class LayoutUtilityPageEntryServiceHttp {
 		_fetchLayoutUtilityPageEntryParameterTypes3 = new Class[] {long.class};
 	private static final Class<?>[]
 		_getDefaultLayoutUtilityPageEntryParameterTypes4 = new Class[] {
-			long.class, int.class
+			long.class, String.class
 		};
 	private static final Class<?>[]
 		_getLayoutUtilityPageEntriesParameterTypes5 = new Class[] {long.class};
 	private static final Class<?>[]
 		_getLayoutUtilityPageEntriesParameterTypes6 = new Class[] {
-			long.class, int.class, int.class, int.class,
+			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
 		_getLayoutUtilityPageEntriesParameterTypes7 = new Class[] {
-			long.class, int.class, int.class,
+			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]

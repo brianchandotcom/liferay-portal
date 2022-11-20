@@ -62,7 +62,7 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId,
-			String name, int type, long masterLayoutPlid)
+			String name, String type, long masterLayoutPlid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
@@ -264,7 +264,7 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
-		long groupId, int type) {
+		long groupId, String type) {
 
 		return _layoutUtilityPageEntryLocalService.
 			fetchDefaultLayoutUtilityPageEntry(groupId, type);
@@ -312,7 +312,7 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, int type)
+			long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryLocalService.
@@ -366,22 +366,22 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator) {
-
-		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
-			groupId, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
 			orderByComparator) {
 
 		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
+			orderByComparator) {
+
+		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	/**

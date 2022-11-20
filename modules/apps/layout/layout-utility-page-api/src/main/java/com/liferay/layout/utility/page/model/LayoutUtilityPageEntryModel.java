@@ -324,14 +324,15 @@ public interface LayoutUtilityPageEntryModel
 	 *
 	 * @return the type of this layout utility page entry
 	 */
-	public int getType();
+	@AutoEscape
+	public String getType();
 
 	/**
 	 * Sets the type of this layout utility page entry.
 	 *
 	 * @param type the type of this layout utility page entry
 	 */
-	public void setType(int type);
+	public void setType(String type);
 
 	/**
 	 * Returns the last publish date of this layout utility page entry.

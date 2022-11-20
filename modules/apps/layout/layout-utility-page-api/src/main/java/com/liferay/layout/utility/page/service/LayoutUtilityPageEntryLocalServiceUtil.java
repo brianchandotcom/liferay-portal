@@ -63,7 +63,7 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 
 	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId,
-			String name, int type, long masterLayoutPlid)
+			String name, String type, long masterLayoutPlid)
 		throws PortalException {
 
 		return getService().addLayoutUtilityPageEntry(
@@ -237,7 +237,7 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
-		long groupId, int type) {
+		long groupId, String type) {
 
 		return getService().fetchDefaultLayoutUtilityPageEntry(groupId, type);
 	}
@@ -278,7 +278,7 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, int type)
+			long groupId, String type)
 		throws PortalException {
 
 		return getService().getDefaultLayoutUtilityPageEntry(groupId, type);
@@ -323,19 +323,19 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getService().getLayoutUtilityPageEntries(
-			groupId, type, start, end, orderByComparator);
-	}
-
-	public static List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return getService().getLayoutUtilityPageEntries(
 			groupId, start, end, orderByComparator);
+	}
+
+	public static List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getService().getLayoutUtilityPageEntries(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	/**

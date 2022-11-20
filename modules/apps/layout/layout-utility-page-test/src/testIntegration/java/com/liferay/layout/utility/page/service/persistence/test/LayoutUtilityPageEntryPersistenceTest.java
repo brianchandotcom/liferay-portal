@@ -161,7 +161,7 @@ public class LayoutUtilityPageEntryPersistenceTest {
 
 		newLayoutUtilityPageEntry.setName(RandomTestUtil.randomString());
 
-		newLayoutUtilityPageEntry.setType(RandomTestUtil.nextInt());
+		newLayoutUtilityPageEntry.setType(RandomTestUtil.randomString());
 
 		newLayoutUtilityPageEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -292,29 +292,31 @@ public class LayoutUtilityPageEntryPersistenceTest {
 
 	@Test
 	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_T(0L, 0);
+		_persistence.countByG_T(0L, "null");
+
+		_persistence.countByG_T(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByG_D_T() throws Exception {
 		_persistence.countByG_D_T(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
 
-		_persistence.countByG_D_T(0L, RandomTestUtil.randomBoolean(), 0);
+		_persistence.countByG_D_T(0L, RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByG_D_T(
+			0L, RandomTestUtil.randomBoolean(), (String)null);
 	}
 
 	@Test
 	public void testCountByG_N_T() throws Exception {
-		_persistence.countByG_N_T(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+		_persistence.countByG_N_T(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByG_N_T(0L, "null", 0);
+		_persistence.countByG_N_T(0L, "null", "null");
 
-		_persistence.countByG_N_T(0L, (String)null, 0);
+		_persistence.countByG_N_T(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -684,8 +686,8 @@ public class LayoutUtilityPageEntryPersistenceTest {
 				layoutUtilityPageEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "name"));
 		Assert.assertEquals(
-			Integer.valueOf(layoutUtilityPageEntry.getType()),
-			ReflectionTestUtil.<Integer>invoke(
+			layoutUtilityPageEntry.getType(),
+			ReflectionTestUtil.invoke(
 				layoutUtilityPageEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "type_"));
 
@@ -738,7 +740,7 @@ public class LayoutUtilityPageEntryPersistenceTest {
 
 		layoutUtilityPageEntry.setName(RandomTestUtil.randomString());
 
-		layoutUtilityPageEntry.setType(RandomTestUtil.nextInt());
+		layoutUtilityPageEntry.setType(RandomTestUtil.randomString());
 
 		layoutUtilityPageEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

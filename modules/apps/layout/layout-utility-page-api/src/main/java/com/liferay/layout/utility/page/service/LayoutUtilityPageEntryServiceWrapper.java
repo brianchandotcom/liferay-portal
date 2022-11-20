@@ -40,8 +40,8 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, String name, int type,
-			long masterLayoutPlid)
+			String externalReferenceCode, long groupId, String name,
+			String type, long masterLayoutPlid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
@@ -77,7 +77,7 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, int type)
+			long groupId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryService.getDefaultLayoutUtilityPageEntry(
@@ -94,22 +94,22 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
-			orderByComparator) {
-
-		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
-			groupId, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
 			orderByComparator) {
 
 		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
+			orderByComparator) {
+
+		return _layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
+			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override

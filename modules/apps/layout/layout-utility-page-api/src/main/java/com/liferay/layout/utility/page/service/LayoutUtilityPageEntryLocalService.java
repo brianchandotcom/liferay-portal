@@ -89,7 +89,7 @@ public interface LayoutUtilityPageEntryLocalService
 
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 			String externalReferenceCode, long userId, long groupId,
-			String name, int type, long masterLayoutPlid)
+			String name, String type, long masterLayoutPlid)
 		throws PortalException;
 
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
@@ -227,7 +227,7 @@ public interface LayoutUtilityPageEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry fetchDefaultLayoutUtilityPageEntry(
-		long groupId, int type);
+		long groupId, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
@@ -254,7 +254,7 @@ public interface LayoutUtilityPageEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
-			long groupId, int type)
+			long groupId, String type)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -285,12 +285,12 @@ public interface LayoutUtilityPageEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int type, int start, int end,
+		long groupId, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
-		long groupId, int start, int end,
+		long groupId, String type, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator);
 
 	/**

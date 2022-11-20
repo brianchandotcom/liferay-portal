@@ -18,27 +18,43 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(request.getAttribute(NoSuchLayoutException.class.getName())) %>">
-		<div class="container pb-3 pt-3">
-			<h3 class="alert alert-danger">
-				<liferay-ui:message key="not-found" />
-			</h3>
 
-			<liferay-ui:message key="the-requested-resource-could-not-be-found" />
+		<%
+		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer = LayoutUtilityPageEntryViewRendererRegistryUtil.getLayoutUtilityPageEntryViewRenderer(LayoutUtilityPageEntryTypesConstants.LAYOUT);
+		%>
 
-			<br /><br />
+		<c:choose>
+			<c:when test="<%= layoutUtilityPageEntryViewRenderer != null %>">
 
-			<%
-			String url = ParamUtil.getString(request, "previousURL");
+				<%
+				layoutUtilityPageEntryViewRenderer.renderHTML(request, response);
+				%>
 
-			if (Validator.isNull(url)) {
-				url = PortalUtil.getCurrentURL(request);
-			}
+			</c:when>
+			<c:otherwise>
+				<div class="container pb-3 pt-3">
+					<h3 class="alert alert-danger">
+						<liferay-ui:message key="not-found" />
+					</h3>
 
-			url = HttpComponentsUtil.decodeURL(themeDisplay.getPortalURL() + url);
-			%>
+					<liferay-ui:message key="the-requested-resource-could-not-be-found" />
 
-			<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
-		</div>
+					<br /><br />
+
+					<%
+					String url = ParamUtil.getString(request, "previousURL");
+
+					if (Validator.isNull(url)) {
+						url = PortalUtil.getCurrentURL(request);
+					}
+
+					url = HttpComponentsUtil.decodeURL(themeDisplay.getPortalURL() + url);
+					%>
+
+					<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 

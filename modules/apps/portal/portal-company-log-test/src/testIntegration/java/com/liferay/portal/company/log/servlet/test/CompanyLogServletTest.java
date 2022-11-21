@@ -96,9 +96,6 @@ public class CompanyLogServletTest {
 
 			break;
 		}
-
-		_defaultCompany = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
 	}
 
 	@AfterClass
@@ -272,7 +269,8 @@ public class CompanyLogServletTest {
 				_mockHttpServletResponse.getContentAsString());
 
 			_assertCompanyLogFiles(
-				mockHttpServletRequest, _defaultCompany,
+				mockHttpServletRequest,
+				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 				(JSONObject)jsonArray.get(0));
 			_assertCompanyLogFiles(
 				mockHttpServletRequest, _newCompany,
@@ -506,7 +504,6 @@ public class CompanyLogServletTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	private static Company _defaultCompany;
 	private static File _file;
 	private static Company _newCompany;
 

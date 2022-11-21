@@ -10,8 +10,9 @@
  */
 
 import {useEffect, useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {Navigate, useOutletContext} from 'react-router-dom';
 import {useCustomerPortal} from '../../context';
+import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
 import GenerateNewKeySkeleton from './Skeleton';
 import RequiredInformation from './pages/RequiredInformation';
 import SelectSubscription from './pages/SelectSubscription';
@@ -20,7 +21,7 @@ import {STEP_TYPES} from './utils/constants/stepType';
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
 const GenerateNewKey = ({productGroupName}) => {
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
@@ -29,6 +30,15 @@ const GenerateNewKey = ({productGroupName}) => {
 		setHasQuickLinksPanel(false);
 		setHasSideMenu(false);
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
+
+	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
+		project,
+		userAccount
+	);
+
+	if (!isAdminOrPartnerManager) {
+		return <Navigate replace={true} to={`/${project?.accountKey}`} />;
+	}
 
 	const urlPreviousPage = `/${
 		project?.accountKey

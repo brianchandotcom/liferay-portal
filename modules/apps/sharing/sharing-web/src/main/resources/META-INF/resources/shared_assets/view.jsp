@@ -26,19 +26,8 @@ ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAsset
 />
 
 <clay:management-toolbar
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"selectAssetTypeURL", String.valueOf(viewSharedAssetsDisplayContext.getSelectAssetTypeURL())
-		).put(
-			"viewAssetTypeURL", String.valueOf(viewSharedAssetsDisplayContext.getViewAssetTypePortletURL())
-		).build()
-	%>'
-	filterDropdownItems="<%= viewSharedAssetsDisplayContext.getFilterDropdownItems() %>"
+	managementToolbarDisplayContext="<%= viewSharedAssetsDisplayContext.getManagementToolbarDisplayContext() %>"
 	propsTransformer="shared_assets/js/SharedAssetsManagementToolbarPropsTransformer"
-	selectable="<%= false %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= viewSharedAssetsDisplayContext.getSortingOrder() %>"
-	sortingURL="<%= String.valueOf(viewSharedAssetsDisplayContext.getSortingURL()) %>"
 />
 
 <clay:container-fluid>

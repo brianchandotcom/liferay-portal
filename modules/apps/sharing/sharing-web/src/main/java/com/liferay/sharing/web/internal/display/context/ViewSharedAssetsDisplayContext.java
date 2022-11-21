@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
@@ -132,6 +133,14 @@ public class ViewSharedAssetsDisplayContext {
 		).build();
 	}
 
+	public ManagementToolbarDisplayContext
+		getManagementToolbarDisplayContext() {
+
+		return new ViewSharedAssetsManagementToolbarDisplayContext(
+			_httpServletRequest, _liferayPortletRequest,
+			_liferayPortletResponse, getSearchContainer(), this);
+	}
+
 	public NavigationItemList getNavigationItems() {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
@@ -177,6 +186,10 @@ public class ViewSharedAssetsDisplayContext {
 	}
 
 	public SearchContainer<SharingEntry> getSearchContainer() {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
 		SearchContainer<SharingEntry> searchContainer = new SearchContainer<>(
 			_liferayPortletRequest,
 			PortletURLBuilder.createRenderURL(
@@ -210,7 +223,9 @@ public class ViewSharedAssetsDisplayContext {
 					_themeDisplay.getUserId(), classNameId));
 		}
 
-		return searchContainer;
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
 	}
 
 	public PortletURL getSelectAssetTypeURL() {
@@ -516,6 +531,7 @@ public class ViewSharedAssetsDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
+	private SearchContainer<SharingEntry> _searchContainer;
 	private final SharedAssetsFilterItemRegistry
 		_sharedAssetsFilterItemRegistry;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;

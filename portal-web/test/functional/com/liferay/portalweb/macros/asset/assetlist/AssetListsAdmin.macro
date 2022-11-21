@@ -406,7 +406,7 @@ definition {
 	}
 
 	macro gotoEllipsisMenuItemInItemSelector {
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		Click(
 			key_menuItem = "View Items",
@@ -629,7 +629,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		Click(
 			key_menuItem = "View Items",
@@ -658,7 +658,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		Click(
 			key_menuItem = "View Items",
@@ -725,7 +725,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
+		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		Click(
 			key_menuItem = "View Items",

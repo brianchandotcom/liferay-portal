@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.graphql.servlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -54,13 +55,16 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 			bundleContext.registerService(
 				ServletData.class, testServletData, null);
 
+		String testDTOSimpleClassName = StringUtil.lowerCaseFirstLetter(
+			TestDTO.class.getSimpleName());
+
 		GraphQLField graphQLField = new GraphQLField(
-			TestDTO.class.getSimpleName(), new GraphQLField("field"),
+			testDTOSimpleClassName, new GraphQLField("field"),
 			new GraphQLField("id"));
 
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
 			invoke(graphQLField), "JSONObject/data",
-			"JSONObject/" + TestDTO.class.getSimpleName());
+			"JSONObject/" + testDTOSimpleClassName);
 
 		TestQuery testQuery = testServletData.getQuery();
 

@@ -16,7 +16,10 @@ import classNames from 'classnames';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {useMovementTarget} from '../../contexts/KeyboardMovementContext';
+import {
+	useMovementTarget,
+	useMovementTargetPosition,
+} from '../../contexts/KeyboardMovementContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
@@ -40,10 +43,8 @@ function TopperEmpty({children, className, item}) {
 	const containerRef = useRef(null);
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
-	const {
-		itemId: movementTargetItemId,
-		position: movementTargetPosition,
-	} = useMovementTarget();
+	const {itemId: movementTargetItemId} = useMovementTarget();
+	const movementTargetPosition = useMovementTargetPosition();
 
 	const dropTargetPosition = targetPosition || movementTargetPosition;
 

@@ -14,6 +14,10 @@
 
 import React, {useCallback, useContext, useState} from 'react';
 
+import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
+import isItemContainerFlex from '../utils/isItemContainerFlex';
+import {useSelectorRef} from './StoreContext';
+
 const INITIAL_STATE = {
 	setSource: () => {},
 	setTarget: () => {},
@@ -72,6 +76,22 @@ function useMovementTarget() {
 	return useContext(KeyboardMovementContext).target;
 }
 
+function useMovementTargetPosition() {
+	const {target} = useContext(KeyboardMovementContext);
+	const layoutDataRef = useSelectorRef((state) => state.layoutData);
+
+	const targetItem = layoutDataRef.current.items[target.itemId];
+	const parentItem = layoutDataRef.current.items[targetItem?.parentId];
+
+	if (!parentItem || !isItemContainerFlex(parentItem)) {
+		return target.position;
+	}
+
+	return target.position === TARGET_POSITIONS.BOTTOM
+		? TARGET_POSITIONS.RIGHT
+		: TARGET_POSITIONS.LEFT;
+}
+
 function useMovementText() {
 	return useContext(KeyboardMovementContext).text;
 }
@@ -93,6 +113,7 @@ export {
 	useDisableKeyboardMovement,
 	useMovementSource,
 	useMovementTarget,
+	useMovementTargetPosition,
 	useMovementText,
 	useSetMovementSource,
 	useSetMovementTarget,

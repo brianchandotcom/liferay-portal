@@ -37,6 +37,7 @@ import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorCont
 import {
 	useMovementSource,
 	useMovementTarget,
+	useMovementTargetPosition,
 } from '../../contexts/KeyboardMovementContext';
 import {
 	useDispatch,
@@ -107,10 +108,8 @@ function TopperContent({
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
-	const {
-		itemId: keyboardMovementTargetId,
-		position: keyboardMovementPosition,
-	} = useMovementTarget();
+	const {itemId: keyboardMovementTargetId} = useMovementTarget();
+	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
 	const topperLabelId = useId();
 

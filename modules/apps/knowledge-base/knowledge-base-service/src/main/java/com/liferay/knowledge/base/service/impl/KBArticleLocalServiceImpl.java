@@ -1159,7 +1159,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		KBArticle kbArticle = null;
 
-		if (oldKBArticle.isApproved()) {
+		if (oldKBArticle.isApproved() || oldKBArticle.isExpired()) {
 			long kbArticleId = counterLocalService.increment();
 
 			kbArticle = kbArticlePersistence.create(kbArticleId);
@@ -1214,7 +1214,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		kbArticle = kbArticlePersistence.update(kbArticle);
 
-		if (oldKBArticle.isApproved()) {
+		if (oldKBArticle.isApproved() || oldKBArticle.isExpired()) {
 			oldKBArticle.setModifiedDate(oldKBArticle.getModifiedDate());
 			oldKBArticle.setLatest(false);
 

@@ -82,7 +82,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 					onClick={() => handleOnClick(index)}
 					symbolRight={item.active && 'check'}
 				>
-					{i18n.translate(item.label)}
+					{item.label}
 				</DropDown.Item>
 			))}
 

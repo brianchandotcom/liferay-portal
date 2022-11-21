@@ -150,9 +150,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 					_portalCacheManagerConfiguration.
 						getPortalCacheConfiguration(portalCacheName);
 
-				value = createPortalCache(portalCacheConfiguration, sharded);
+				value = _createPortalCache(portalCacheConfiguration, sharded);
 
-				initPortalCacheListeners(value, portalCacheConfiguration);
+				_initPortalCacheListeners(value, portalCacheConfiguration);
 
 				if (mvcc) {
 					value = (PortalCache<K, V>)new MVCCPortalCache<>(
@@ -191,7 +191,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 						_portalCacheManagerName, configurationURL, classLoader,
 						_usingDefault);
 
-		reconfigEhcache(configurationObjectValuePair.getKey());
+		_reconfigEhcache(configurationObjectValuePair.getKey());
 
 		_reconfigPortalCache(configurationObjectValuePair.getValue());
 	}
@@ -239,7 +239,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		doRemoveShardedPortalCache(companyId, shardedPortalCaches);
+		_doRemoveShardedPortalCache(companyId, shardedPortalCaches);
 	}
 
 	public void setConfigFile(String configFile) {
@@ -267,32 +267,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_aggregatedPortalCacheManagerListener.clearAll();
 	}
 
-	protected PortalCache<K, V> createPortalCache(
-		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
-
-		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
-			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
-
-		if (sharded) {
-			return new ShardedEhcachePortalCache<>(
-				this, ehcachePortalCacheConfiguration);
-		}
-
-		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
-	}
-
-	protected void doRemoveShardedPortalCache(
-		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
-
-		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
-			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
-				(ShardedEhcachePortalCache<K, V>)
-					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
-
-			shardedEhcachePortalCache.removeEhcache(companyId);
-		}
-	}
-
 	protected void initialize() {
 		if (_portalCacheManagerConfiguration != null) {
 			return;
@@ -303,7 +277,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				"Portal cache manager name is not specified");
 		}
 
-		initPortalCacheManager();
+		_initPortalCacheManager();
 
 		for (Properties properties :
 				_portalCacheManagerConfiguration.
@@ -318,7 +292,41 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected void initPortalCacheListeners(
+	protected BaseEhcachePortalCacheManagerConfigurator
+		baseEhcachePortalCacheManagerConfigurator;
+	protected BundleContext bundleContext;
+	protected PortalCacheListenerFactory portalCacheListenerFactory;
+	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		portalCacheManagerListenerFactory;
+	protected volatile Props props;
+
+	private PortalCache<K, V> _createPortalCache(
+		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
+
+		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
+			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
+
+		if (sharded) {
+			return new ShardedEhcachePortalCache<>(
+				this, ehcachePortalCacheConfiguration);
+		}
+
+		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
+	}
+
+	private void _doRemoveShardedPortalCache(
+		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
+
+		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
+			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
+				(ShardedEhcachePortalCache<K, V>)
+					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
+
+			shardedEhcachePortalCache.removeEhcache(companyId);
+		}
+	}
+
+	private void _initPortalCacheListeners(
 		PortalCache<K, V> portalCache,
 		PortalCacheConfiguration portalCacheConfiguration) {
 
@@ -351,7 +359,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected void initPortalCacheManager() {
+	private void _initPortalCacheManager() {
 		_transactionalPortalCacheEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));
 
@@ -435,7 +443,20 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_mBeanServerServiceTracker.open();
 	}
 
-	protected void reconfigEhcache(Configuration configuration) {
+	private boolean _isTransactionalPortalCache(String portalCacheName) {
+		for (String namePattern : _transactionalPortalCacheNames) {
+			if (StringUtil.wildcardMatches(
+					portalCacheName, namePattern, CharPool.QUESTION,
+					CharPool.STAR, CharPool.PERCENT, true)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void _reconfigEhcache(Configuration configuration) {
 		Map<String, CacheConfiguration> cacheConfigurations =
 			configuration.getCacheConfigurations();
 
@@ -477,48 +498,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected void removeConfigurableEhcachePortalCacheListeners(
-		PortalCache<K, V> portalCache) {
-
-		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
-			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
-
-		Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
-			portalCacheListeners =
-				baseEhcachePortalCache.getPortalCacheListeners();
-
-		for (PortalCacheListener<K, V> portalCacheListener :
-				portalCacheListeners.keySet()) {
-
-			if (portalCacheListener instanceof
-					ConfigurableEhcachePortalCacheListener) {
-
-				portalCache.unregisterPortalCacheListener(portalCacheListener);
-			}
-		}
-	}
-
-	protected BaseEhcachePortalCacheManagerConfigurator
-		baseEhcachePortalCacheManagerConfigurator;
-	protected BundleContext bundleContext;
-	protected PortalCacheListenerFactory portalCacheListenerFactory;
-	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-		portalCacheManagerListenerFactory;
-	protected volatile Props props;
-
-	private boolean _isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : _transactionalPortalCacheNames) {
-			if (StringUtil.wildcardMatches(
-					portalCacheName, namePattern, CharPool.QUESTION,
-					CharPool.STAR, CharPool.PERCENT, true)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _reconfigPortalCache(
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
@@ -538,9 +517,30 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				continue;
 			}
 
-			removeConfigurableEhcachePortalCacheListeners(portalCache);
+			_removeConfigurableEhcachePortalCacheListeners(portalCache);
 
-			initPortalCacheListeners(portalCache, portalCacheConfiguration);
+			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
+		}
+	}
+
+	private void _removeConfigurableEhcachePortalCacheListeners(
+		PortalCache<K, V> portalCache) {
+
+		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
+			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+		Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
+			portalCacheListeners =
+				baseEhcachePortalCache.getPortalCacheListeners();
+
+		for (PortalCacheListener<K, V> portalCacheListener :
+				portalCacheListeners.keySet()) {
+
+			if (portalCacheListener instanceof
+					ConfigurableEhcachePortalCacheListener) {
+
+				portalCache.unregisterPortalCacheListener(portalCacheListener);
+			}
 		}
 	}
 

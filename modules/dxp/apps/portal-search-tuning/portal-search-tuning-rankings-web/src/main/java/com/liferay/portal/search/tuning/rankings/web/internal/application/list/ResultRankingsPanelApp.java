@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Filipe Oshiro
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=400",
 		"panel.category.key=" + SearchTuningPanelCategoryKeys.CONTROL_PANEL_SEARCH_TUNING

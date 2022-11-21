@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Kevin Tan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + ResultRankingsPortletKeys.RESULT_RANKINGS,
 		"mvc.command.name=/result_rankings/add_results_rankings"

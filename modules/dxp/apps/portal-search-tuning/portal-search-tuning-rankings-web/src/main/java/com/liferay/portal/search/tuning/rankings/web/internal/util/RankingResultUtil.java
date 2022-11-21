@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Wade Cao
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class RankingResultUtil {
 
 	public static AssetRenderer<?> getAssetRenderer(

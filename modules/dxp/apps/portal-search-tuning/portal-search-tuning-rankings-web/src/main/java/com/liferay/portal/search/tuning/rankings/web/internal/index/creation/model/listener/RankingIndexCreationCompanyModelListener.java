@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class RankingIndexCreationCompanyModelListener
 	extends BaseModelListener<Company> {
 

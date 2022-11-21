@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Filipe Oshiro
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-result-rankings",
 		"com.liferay.portlet.display-category=category.hidden",

@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Alejandro Tardín
@@ -43,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"osgi.command.function=getPossibleConfigurations",
 		"osgi.command.scope=formNavigator"
 	},
-	service = {}
+	service = FormNavigatorOSGiCommands.class
 )
 public class FormNavigatorOSGiCommands {
 
@@ -94,6 +95,12 @@ public class FormNavigatorOSGiCommands {
 
 				bundleContext.ungetService(serviceReference);
 			});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_formNavigatorEntries.close();
+		_serviceTrackerMap.close();
 	}
 
 	private Set<String> _getAllFormNavigatorIds() {

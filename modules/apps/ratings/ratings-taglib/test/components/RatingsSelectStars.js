@@ -59,7 +59,9 @@ describe('RatingsSelectStars', () => {
 		});
 
 		it('has delete option disabled', () => {
-			const starsOptions = renderComponent().getAllByRole('option');
+			const starsOptions = renderComponent().getAllByRole('option', {
+				hidden: true,
+			});
 
 			expect(starsOptions[5]).toHaveProperty('disabled', true);
 		});
@@ -104,7 +106,7 @@ describe('RatingsSelectStars', () => {
 					userScore: 0.2,
 				});
 
-				starsButtons = result.getAllByRole('option');
+				starsButtons = result.getAllByRole('option', {hidden: true});
 				starsDropdownToggle = result.getAllByRole('button')[0];
 
 				act(() => {
@@ -171,7 +173,7 @@ describe('RatingsSelectStars', () => {
 					userScore: 1,
 				});
 
-				starsButtons = result.getAllByRole('option');
+				starsButtons = result.getAllByRole('option', {hidden: true});
 				starsDropdownToggle = result.getAllByRole('button')[0];
 			});
 
@@ -217,7 +219,7 @@ describe('RatingsSelectStars', () => {
 				result = renderComponent({
 					userScore: 0.4,
 				});
-				starsButtons = result.getAllByRole('option');
+				starsButtons = result.getAllByRole('option', {hidden: true});
 				starsDropdownToggle = result.getAllByRole('button')[0];
 
 				await act(async () => {

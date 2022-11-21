@@ -113,7 +113,7 @@ describe('TargetCollectionsField', () => {
 			enableCompatibleCollections: true,
 		});
 
-		expect(getByRole('alert')).toHaveTextContent(
+		expect(getByRole('alert', {hidden: true})).toHaveTextContent(
 			'multiple-selection-must-have-at-least-one-filter-in-common'
 		);
 	});

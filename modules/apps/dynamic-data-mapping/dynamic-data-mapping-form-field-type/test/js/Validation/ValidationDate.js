@@ -309,7 +309,7 @@ describe('ValidationDate', () => {
 			/>
 		);
 
-		const lastOption = [...getAllByRole('menuitem')].pop();
+		const lastOption = [...getAllByRole('menuitem', {hidden: true})].pop();
 
 		expect(lastOption).toHaveValue('Date12345678');
 	});
@@ -372,7 +372,7 @@ describe('ValidationDate', () => {
 			/>
 		);
 
-		const lastOption = [...getAllByRole('menuitem')].pop();
+		const lastOption = [...getAllByRole('menuitem', {hidden: true})].pop();
 
 		expect(lastOption).not.toHaveValue('Date12345678');
 	});
@@ -438,7 +438,7 @@ describe('ValidationDate', () => {
 			/>
 		);
 
-		const lastOption = [...getAllByRole('menuitem')].pop();
+		const lastOption = [...getAllByRole('menuitem', {hidden: true})].pop();
 
 		expect(lastOption).toHaveValue('childDate');
 	});
@@ -505,7 +505,7 @@ describe('ValidationDate', () => {
 			/>
 		);
 
-		const lastOption = [...getAllByRole('menuitem')].pop();
+		const lastOption = [...getAllByRole('menuitem', {hidden: true})].pop();
 
 		expect(lastOption).not.toHaveValue('childDate');
 	});
@@ -573,7 +573,7 @@ describe('ValidationDate', () => {
 			getByText('unit'),
 		].map((element) => element.querySelector('input'));
 
-		const availableDates = [...getAllByRole('menuitem')];
+		const availableDates = [...getAllByRole('menuitem', {hidden: true})];
 
 		expect(availableDates[7]).toHaveValue('Date12345678');
 		expect(acceptedDate).toHaveValue('pastDates');

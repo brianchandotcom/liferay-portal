@@ -113,7 +113,7 @@ describe('PageContent', () => {
 
 	it('filters content according to a type value', () => {
 		renderPageContents();
-		const dropdown = screen.getByRole('listbox');
+		const dropdown = screen.getByRole('listbox', {hidden: true});
 
 		userEvent.click(dropdown);
 

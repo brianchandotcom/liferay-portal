@@ -42,7 +42,7 @@ describe('DropDown', () => {
 		expect(dropDownMenu.classList.contains('show')).toBe(false);
 
 		const [trigger] = getAllByRole('button');
-		const [action] = getAllByRole('menuitem');
+		const [action] = getAllByRole('menuitem', {hidden: true});
 		fireEvent.click(trigger);
 
 		expect(dropDownMenu.classList.contains('show')).toBe(true);

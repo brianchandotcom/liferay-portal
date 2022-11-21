@@ -61,6 +61,7 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -770,6 +771,7 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -1479,6 +1481,7 @@ exports[`Field LocalizableText fills with the default language value when the se
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -2188,6 +2191,7 @@ exports[`Field LocalizableText fills with the selected language value when the s
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -2902,6 +2906,7 @@ exports[`Field LocalizableText has a label 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -3616,6 +3621,7 @@ exports[`Field LocalizableText has a placeholder 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -4325,6 +4331,7 @@ exports[`Field LocalizableText is not readOnly 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -5034,6 +5041,7 @@ exports[`Field LocalizableText is not required 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -5743,6 +5751,7 @@ exports[`Field LocalizableText removes the translation of an item already transl
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -6452,6 +6461,7 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -7161,6 +7171,7 @@ exports[`Field LocalizableText renders values 1`] = `
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"
@@ -7870,6 +7881,7 @@ exports[`Field LocalizableText shows default language value when no other langua
           </button>
           <div>
             <div
+              aria-hidden="true"
               class="dropdown-menu"
               role="presentation"
               style="left: -999px; top: -995px;"

@@ -17,6 +17,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -64,6 +65,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -111,6 +113,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -221,6 +224,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -268,6 +272,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -330,6 +335,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -377,6 +383,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -429,6 +436,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
         class="dropdown-item"
         data-testid="translation-modal-trigger"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -459,6 +467,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
 
 exports[`TranslationAdminSelector renders an open dropdown with updated active locales when added from the Manage Translations Modal 1`] = `
 <div
+  aria-hidden="true"
   class="dropdown-menu"
   id="clay-dropdown-menu-5"
   role="presentation"
@@ -474,6 +483,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -521,6 +531,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -568,6 +579,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
       <button
         class="dropdown-item"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"
@@ -620,6 +632,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
         class="dropdown-item"
         data-testid="translation-modal-trigger"
         role="menuitem"
+        tabindex="-1"
       >
         <span
           class="autofit-row"

@@ -162,7 +162,9 @@ describe('Languages', () => {
 		const dropdownMenuSecond = result.baseElement.querySelectorAll(
 			'.dropdown-menu'
 		)[1];
-		const Buttons = queryAllByRole(dropdownMenuSecond, 'menuitem');
+		const Buttons = queryAllByRole(dropdownMenuSecond, 'menuitem', {
+			hidden: true,
+		});
 
 		expect(Buttons[0].textContent).toBe('make-default');
 		expect(Buttons[1].textContent).toBe('move-up');

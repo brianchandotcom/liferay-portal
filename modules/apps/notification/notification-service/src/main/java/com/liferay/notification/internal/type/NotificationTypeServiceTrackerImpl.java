@@ -16,6 +16,7 @@ package com.liferay.notification.internal.type;
 
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -39,7 +40,9 @@ public class NotificationTypeServiceTrackerImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, NotificationType.class, "notification.type.key");
+			bundleContext, NotificationType.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, NotificationType::getType));
 	}
 
 	@Deactivate

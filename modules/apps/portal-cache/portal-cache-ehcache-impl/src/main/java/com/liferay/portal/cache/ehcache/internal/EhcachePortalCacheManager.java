@@ -16,6 +16,7 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
 import com.liferay.portal.cache.TransactionalPortalCache;
@@ -113,7 +114,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 						(LowLevelCache<K, MVCCModel>)value);
 				}
 
-				if (transactionalPortalCacheEnabled &&
+				if (_transactionalPortalCacheEnabled &&
 					_isTransactionalPortalCache(portalCacheName)) {
 
 					value = new TransactionalPortalCache<>(value, mvcc);
@@ -233,10 +234,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
-		transactionalPortalCacheEnabled = GetterUtil.getBoolean(
+		_transactionalPortalCacheEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));
 
-		transactionalPortalCacheNames = GetterUtil.getStringValues(
+		_transactionalPortalCacheNames = GetterUtil.getStringValues(
 			props.getArray(PropsKeys.TRANSACTIONAL_CACHE_NAMES));
 
 		if (Validator.isNull(_configFile)) {
@@ -385,7 +386,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected volatile Props props;
 
 	private boolean _isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : transactionalPortalCacheNames) {
+		for (String namePattern : _transactionalPortalCacheNames) {
 			if (StringUtil.wildcardMatches(
 					portalCacheName, namePattern, CharPool.QUESTION,
 					CharPool.STAR, CharPool.PERCENT, true)) {
@@ -504,6 +505,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ServiceTracker<MBeanServer, ManagementService>
 		_mBeanServerServiceTracker;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
+	private boolean _transactionalPortalCacheEnabled;
+	private String[] _transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 	private boolean _usingDefault;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
@@ -188,7 +187,5 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected String portalCacheManagerName;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
-	protected boolean transactionalPortalCacheEnabled;
-	protected String[] transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 
 }

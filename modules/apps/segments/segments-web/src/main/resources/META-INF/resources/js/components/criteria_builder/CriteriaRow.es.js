@@ -503,6 +503,9 @@ class CriteriaRow extends Component {
 				) : (
 					<>
 						<ClayButton
+							aria-label={Liferay.Language.get(
+								'duplicate-segment-property'
+							)}
 							className="btn-outline-borderless btn-sm mr-1"
 							displayType="secondary"
 							monospaced
@@ -515,6 +518,9 @@ class CriteriaRow extends Component {
 						</ClayButton>
 
 						<ClayButton
+							aria-label={Liferay.Language.get(
+								'delete-segment-property'
+							)}
 							className="btn-outline-borderless btn-sm"
 							displayType="secondary"
 							monospaced

@@ -106,8 +106,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				}
 
 				PortalCacheConfiguration portalCacheConfiguration =
-					portalCacheManagerConfiguration.getPortalCacheConfiguration(
-						portalCacheName);
+					_portalCacheManagerConfiguration.
+						getPortalCacheConfiguration(portalCacheName);
 
 				value = createPortalCache(portalCacheConfiguration, sharded);
 
@@ -231,14 +231,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected PortalCacheManagerConfiguration
-		getPortalCacheManagerConfiguration() {
-
-		return _portalCacheManagerConfiguration;
-	}
-
 	protected void initialize() {
-		if (portalCacheManagerConfiguration != null) {
+		if (_portalCacheManagerConfiguration != null) {
 			return;
 		}
 
@@ -249,10 +243,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		initPortalCacheManager();
 
-		portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
-
 		for (Properties properties :
-				portalCacheManagerConfiguration.
+				_portalCacheManagerConfiguration.
 					getPortalCacheManagerListenerPropertiesSet()) {
 
 			PortalCacheManagerListener portalCacheManagerListener =
@@ -442,7 +434,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				portalCacheManagerConfiguration.getPortalCacheConfiguration(
 					portalCacheName);
 
-			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
+			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
 				portalCacheName, portalCacheConfiguration);
 
 			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);

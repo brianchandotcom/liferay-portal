@@ -17,7 +17,6 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
-import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
@@ -142,7 +141,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
-	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
 	protected String portalCacheManagerName;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();

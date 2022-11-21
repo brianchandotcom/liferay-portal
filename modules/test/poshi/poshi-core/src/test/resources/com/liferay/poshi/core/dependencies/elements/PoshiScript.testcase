@@ -6,6 +6,9 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
 
+	property testray.main.component.name = '''
+	Order Management''';
+
 	// This is a comment
 
 	/*This is a multiline

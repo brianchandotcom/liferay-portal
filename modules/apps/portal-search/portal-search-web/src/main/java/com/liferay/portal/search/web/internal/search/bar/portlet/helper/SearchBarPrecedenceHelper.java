@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = SearchBarPrecedenceHelper.class)
+@Component(service = SearchBarPrecedenceHelper.class)
 public class SearchBarPrecedenceHelper {
 
 	public Portlet findHeaderSearchBarPortlet(ThemeDisplay themeDisplay) {

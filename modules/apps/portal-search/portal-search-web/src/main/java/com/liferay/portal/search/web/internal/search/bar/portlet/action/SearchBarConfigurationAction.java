@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR,
 	service = ConfigurationAction.class
 )

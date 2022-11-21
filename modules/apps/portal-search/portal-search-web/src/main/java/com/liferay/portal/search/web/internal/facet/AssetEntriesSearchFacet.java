@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = SearchFacet.class)
+@Component(service = SearchFacet.class)
 public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	public static String[] getEntryClassNames(String configuration) {

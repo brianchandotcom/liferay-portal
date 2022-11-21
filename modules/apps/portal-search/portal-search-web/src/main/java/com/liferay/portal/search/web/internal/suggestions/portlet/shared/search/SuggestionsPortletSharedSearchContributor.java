@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + SuggestionsPortletKeys.SUGGESTIONS,
 	service = PortletSharedSearchContributor.class
 )

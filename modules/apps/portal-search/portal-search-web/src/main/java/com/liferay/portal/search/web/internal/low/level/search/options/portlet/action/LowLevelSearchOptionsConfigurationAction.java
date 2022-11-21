@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wade Cao
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + LowLevelSearchOptionsPortletKeys.LOW_LEVEL_SEARCH_OPTIONS,
 	service = ConfigurationAction.class
 )

@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.fragment.entry.processor.portlet.alias=search-bar",
 		"com.liferay.portlet.add-default-resource=true",

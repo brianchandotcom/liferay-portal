@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  * @author Lino Alves
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class AddLayoutPrototypePortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class SearchHttpUtil {
 
 	public static String getCompleteOriginalURL(

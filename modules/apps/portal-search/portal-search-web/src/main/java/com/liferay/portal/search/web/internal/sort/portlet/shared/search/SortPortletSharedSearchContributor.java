@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wade Cao
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + SortPortletKeys.SORT,
+	property = "javax.portlet.name=" + SortPortletKeys.SORT,
 	service = PortletSharedSearchContributor.class
 )
 public class SortPortletSharedSearchContributor

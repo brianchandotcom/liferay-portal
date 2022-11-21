@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Wade Cao
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CustomFacetPortletKeys.CUSTOM_FACET,
 	service = ConfigurationAction.class
 )

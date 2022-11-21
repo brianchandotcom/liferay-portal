@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + SearchResultsPortletKeys.SEARCH_RESULTS,
 	service = PortletSharedSearchContributor.class
 )

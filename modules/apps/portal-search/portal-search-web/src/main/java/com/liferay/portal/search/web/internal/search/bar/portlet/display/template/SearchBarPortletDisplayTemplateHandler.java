@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivia Yu
  */
 @Component(
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = "javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR,
 	service = TemplateHandler.class
 )

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration",
 		"com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration"
 	},
-	immediate = true, service = ConfigurationFormRenderer.class
+	service = ConfigurationFormRenderer.class
 )
 public class SearchBarPortletInstanceConfigurationRenderer
 	implements ConfigurationFormRenderer {

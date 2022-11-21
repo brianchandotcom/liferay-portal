@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wade Cao
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + SortPortletKeys.SORT,
+	property = "javax.portlet.name=" + SortPortletKeys.SORT,
 	service = ConfigurationAction.class
 )
 public class SortConfigurationAction extends DefaultConfigurationAction {

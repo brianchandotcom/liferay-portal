@@ -45,9 +45,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Wade Cao
  */
-@Component(
-	immediate = true, service = AssetRendererSearchResultInterpreter.class
-)
+@Component(service = AssetRendererSearchResultInterpreter.class)
 public class AssetRendererSearchResultInterpreter
 	implements SearchResultInterpreter {
 

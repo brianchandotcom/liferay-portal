@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Luan Maoski
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + CustomFilterPortletKeys.CUSTOM_FILTER,
 	service = ConfigurationAction.class
 )

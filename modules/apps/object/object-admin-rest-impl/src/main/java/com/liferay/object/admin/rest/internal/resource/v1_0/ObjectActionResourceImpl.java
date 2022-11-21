@@ -20,6 +20,7 @@ import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.service.ObjectActionService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -195,10 +196,14 @@ public class ObjectActionResourceImpl
 					ActionKeys.UPDATE, "putObjectAction", permissionName,
 					objectAction.getObjectDefinitionId())
 			).build(),
-			contextAcceptLanguage.getPreferredLocale(), objectAction);
+			contextAcceptLanguage.getPreferredLocale(),
+			_objectDefinitionLocalService, objectAction);
 	}
 
 	@Reference
 	private ObjectActionService _objectActionService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

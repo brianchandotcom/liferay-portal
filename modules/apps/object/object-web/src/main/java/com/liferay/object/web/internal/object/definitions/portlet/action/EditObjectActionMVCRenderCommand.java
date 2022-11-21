@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
@@ -72,7 +73,8 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 				new ObjectDefinitionsActionsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_objectActionExecutorRegistry, _objectActionTriggerRegistry,
-					_objectDefinitionModelResourcePermission, _jsonFactory));
+					_objectDefinitionModelResourcePermission, _jsonFactory,
+					_objectDefinitionLocalService));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -92,6 +94,9 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectActionTriggerRegistry _objectActionTriggerRegistry;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

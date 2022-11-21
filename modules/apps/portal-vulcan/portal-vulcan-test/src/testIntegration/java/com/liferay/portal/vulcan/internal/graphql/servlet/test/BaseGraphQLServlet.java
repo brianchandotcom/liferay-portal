@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -52,14 +53,9 @@ public class BaseGraphQLServlet {
 
 	public class TestQuery {
 
-		public TestQuery(String field, long id) {
-			_field = field;
-			_id = id;
-		}
-
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
-			return new TestDTO(_id);
+			return new TestDTO(_ID);
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)
@@ -71,22 +67,19 @@ public class BaseGraphQLServlet {
 
 			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 			public String field() {
-				return _field;
+				return _FIELD;
 			}
 
 			private final TestDTO _testDTO;
 
 		}
 
-		private final String _field;
-		private final long _id;
-
 	}
 
 	public class TestServletData implements ServletData {
 
 		public TestServletData(String field, long id) {
-			_testQuery = new TestQuery(field, id);
+			_testQuery = new TestQuery();
 		}
 
 		@Override
@@ -190,5 +183,9 @@ public class BaseGraphQLServlet {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	private static final String _FIELD = RandomTestUtil.randomString();
+
+	private static final long _ID = RandomTestUtil.randomLong();
 
 }

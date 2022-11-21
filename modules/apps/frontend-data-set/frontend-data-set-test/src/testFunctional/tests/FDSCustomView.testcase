@@ -239,24 +239,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
-	@priority = "4"
-	test HasOptionToEditName {
-		task ("And Given created custom view") {
-			FDSCustomView.createNewView(key_nameView = "TEST");
-		}
-
-		task ("When open ellisis next to custom view") {
-			Click(locator1 = "FrontendDataSet#ELLIPSIS");
-		}
-
-		task ("Then actions to edit custom view name is available") {
-			AssertElementPresent(
-				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER",
-				value1 = "Rename View");
-		}
-	}
-
 	@description = "LPS-165672 - Simplify how actions are shown in the custom views section"
 	@priority = "3"
 	test HasActionsOnlyOnEllipsis {
@@ -288,6 +270,24 @@ definition {
 			AssertElementNotPresent(
 				key_itemName = "Delete View",
 				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
+		}
+	}
+
+	@description = "LPS-164616. Assert that it's possible to create A new custom view and selected as current view"
+	@priority = "4"
+	test HasOptionToEditName {
+		task ("And Given created custom view") {
+			FDSCustomView.createNewView(key_nameView = "TEST");
+		}
+
+		task ("When open ellisis next to custom view") {
+			Click(locator1 = "FrontendDataSet#ELLIPSIS");
+		}
+
+		task ("Then actions to edit custom view name is available") {
+			AssertElementPresent(
+				locator1 = "FrontendDataSet#SELECT_OPTION_HEADER",
+				value1 = "Rename View");
 		}
 	}
 

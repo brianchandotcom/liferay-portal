@@ -122,6 +122,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			const {
 				defaultObjectLayout,
 				name,
+				objectDefinitionExternalReferenceCode,
 				objectDefinitionId,
 				objectLayoutTabs,
 			} = await API.fetchJSON<TObjectLayout>(
@@ -129,7 +130,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			);
 
 			const objectDefinition = await API.getObjectDefinition(
-				objectDefinitionId
+				objectDefinitionExternalReferenceCode
 			);
 
 			const objectFields = await API.getObjectFields(objectDefinitionId);
@@ -141,6 +142,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			const objectLayout = {
 				defaultObjectLayout,
 				name,
+				objectDefinitionExternalReferenceCode,
 				objectDefinitionId,
 				objectLayoutTabs,
 			};

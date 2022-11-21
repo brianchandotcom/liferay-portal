@@ -28,7 +28,6 @@ import React, {useState} from 'react';
 
 export function ModalEditExternalReferenceCode({
 	externalReferenceCode,
-	objectDefinitionId,
 	observer,
 	onClose,
 	setExternalReferenceCode,
@@ -41,11 +40,11 @@ export function ModalEditExternalReferenceCode({
 	const onSubmit = async ({externalReferenceCode}: TInitialValues) => {
 		try {
 			const objectDefinition = await API.getObjectDefinition(
-				objectDefinitionId
+				externalReferenceCode
 			);
 
 			await API.save(
-				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`,
+				`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}`,
 				{
 					...objectDefinition,
 					externalReferenceCode,
@@ -133,7 +132,6 @@ export function ModalEditExternalReferenceCode({
 
 interface IProps {
 	externalReferenceCode: string;
-	objectDefinitionId: number;
 	observer: Observer;
 	onClose: () => void;
 	setExternalReferenceCode: (value: string) => void;

@@ -162,7 +162,6 @@ export default function ManagementToolbar({
 			{visibleModal && (
 				<ModalEditExternalReferenceCode
 					externalReferenceCode={externalReferenceCode}
-					objectDefinitionId={objectDefinitionId}
 					observer={observer}
 					onClose={onClose}
 					setExternalReferenceCode={setExternalReferenceCode}

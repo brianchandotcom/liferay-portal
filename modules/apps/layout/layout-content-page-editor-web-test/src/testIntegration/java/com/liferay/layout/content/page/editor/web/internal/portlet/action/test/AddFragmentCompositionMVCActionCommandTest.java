@@ -296,6 +296,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		).put(
 			"MAPPED_TEXT_DEFAULT_VALUE",
 			StringUtil.quote(journalArticle2.getTitle(), StringPool.QUOTE)
+		).put(
+			"SITE_KEY", _group.getGroupKey()
 		).build();
 
 		String editableValues = StringUtil.replace(

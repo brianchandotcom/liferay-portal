@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "test-image-fragment"
+						"key": "test-image-fragment",
+						"siteKey": "£{SITE_KEY}"
 					},
 					"fragmentConfig": {
 					},

@@ -265,7 +265,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	@Override
 	protected void initPortalCacheManager() {
 		_transactionalPortalCacheEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));

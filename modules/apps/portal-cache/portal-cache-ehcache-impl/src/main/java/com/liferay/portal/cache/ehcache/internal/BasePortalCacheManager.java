@@ -126,8 +126,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected abstract void initPortalCacheManager();
-
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();

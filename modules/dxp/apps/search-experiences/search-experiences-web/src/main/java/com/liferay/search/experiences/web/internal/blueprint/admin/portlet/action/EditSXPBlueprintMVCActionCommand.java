@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivia Yu
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
 		"mvc.command.name=/sxp_blueprint_admin/edit_sxp_blueprint"

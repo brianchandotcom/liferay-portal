@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-sxp-power-toys",
 		"com.liferay.portlet.display-category=category.hidden",

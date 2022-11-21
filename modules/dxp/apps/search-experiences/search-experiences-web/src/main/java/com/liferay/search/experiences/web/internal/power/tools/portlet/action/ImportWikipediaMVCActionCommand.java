@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOOLS,
 		"mvc.command.name=/sxp_power_tools/import_wikipedia"

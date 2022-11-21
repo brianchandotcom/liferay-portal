@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
-	enabled = false, immediate = true, service = ConfigurationFormRenderer.class
+	enabled = false, service = ConfigurationFormRenderer.class
 )
 public class SemanticSearchConfigurationFormRenderer
 	implements ConfigurationFormRenderer {

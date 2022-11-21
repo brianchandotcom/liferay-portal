@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false, immediate = true, service = SXPBlueprintPermission.class
-)
+@Component(enabled = false, service = SXPBlueprintPermission.class)
 public class SXPBlueprintPermission {
 
 	public static boolean contains(

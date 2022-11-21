@@ -154,7 +154,7 @@ public class ObjectFieldResourceImpl
 
 			throw new UnsupportedOperationException();
 		}
-		
+
 		_createListTypeDefinition(objectField);
 
 		return _toObjectField(

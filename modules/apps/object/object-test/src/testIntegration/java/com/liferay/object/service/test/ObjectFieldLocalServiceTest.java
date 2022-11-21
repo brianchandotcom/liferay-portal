@@ -105,8 +105,6 @@ public class ObjectFieldLocalServiceTest {
 	public void setUp() throws Exception {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164278", "true"
-			).setProperty(
 				"feature.flag.LPS-158776", "true"
 			).build());
 
@@ -128,8 +126,6 @@ public class ObjectFieldLocalServiceTest {
 	public void tearDown() throws Exception {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-164278", "false"
-			).setProperty(
 				"feature.flag.LPS-158776", "false"
 			).build());
 	}

@@ -142,7 +142,23 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removePortalCache(String portalCacheName) {
-		doRemovePortalCache(portalCaches.remove(portalCacheName));
+		PortalCache<K, V> portalCache = portalCaches.remove(portalCacheName);
+
+		if (portalCache == null) {
+			return;
+		}
+
+		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
+			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+		if (baseEhcachePortalCache != null) {
+			baseEhcachePortalCache.dispose();
+		}
+		else {
+			_log.error(
+				"Unable to dispose cache with name " +
+					portalCache.getPortalCacheName());
+		}
 	}
 
 	@Override
@@ -196,24 +212,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		if (_mBeanServerServiceTracker != null) {
 			_mBeanServerServiceTracker.close();
-		}
-	}
-
-	protected void doRemovePortalCache(PortalCache<K, V> portalCache) {
-		if (portalCache == null) {
-			return;
-		}
-
-		BaseEhcachePortalCache<K, V> baseEhcachePortalCache =
-			EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
-
-		if (baseEhcachePortalCache != null) {
-			baseEhcachePortalCache.dispose();
-		}
-		else {
-			_log.error(
-				"Unable to dispose cache with name " +
-					portalCache.getPortalCacheName());
 		}
 	}
 

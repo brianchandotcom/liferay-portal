@@ -145,9 +145,11 @@ export async function getNotificationTemplates() {
 	);
 }
 
-export async function getObjectDefinition(objectDefinitionId: number) {
+export async function getObjectDefinition(
+	objectDefinitionExternalReferenceCode: string
+) {
 	return await fetchJSON<ObjectDefinition>(
-		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}`
 	);
 }
 

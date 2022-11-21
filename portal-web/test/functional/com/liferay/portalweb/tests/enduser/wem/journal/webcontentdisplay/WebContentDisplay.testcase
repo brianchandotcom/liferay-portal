@@ -200,6 +200,13 @@ definition {
 	test AddWebContentWithPortletURL {
 		property portal.acceptance = "true";
 
+		task ("Add a Language Selector to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Language Selector");
+		}
+
 		task ("Add a web content with a portlet URL") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -209,7 +216,7 @@ definition {
 
 			var portalURL = PropsUtil.get("portal.url");
 
-			CKEditor.addSourceContent(content = '''<p><span><a href="${portalURL}/web/test-site-name/test-page-name/-/testportlet">text</a></span></p>''');
+			CKEditor.addSourceContent(content = '''<p><span><a href="${portalURL}/web/test-site-name/test-page-name/-/com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet">text</a></span></p>''');
 
 			PortletEntry.publish();
 		}
@@ -231,10 +238,10 @@ definition {
 		task ("View test portlet is shown after click in the link") {
 			WebContentDisplayPortlet.viewContent(
 				displayText = "text",
-				url = "/web/test-site-name/test-page-name/-/testportlet",
+				url = "/web/test-site-name/test-page-name/-/com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet",
 				webContentTitle = "Web Content Title");
 
-			Portlet.viewTitle(portletName = "testportlet");
+			Portlet.viewTitle(portletName = "Language Selector");
 		}
 	}
 

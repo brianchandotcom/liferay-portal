@@ -1562,9 +1562,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		_assetEntryLocalService.deleteEntry(
 			KBArticle.class.getName(), kbArticle.getClassPK());
 
-		if (!kbArticle.isApproved() && !kbArticle.isFirstVersion()) {
-			_assetEntryLocalService.deleteEntry(
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+		if (!kbArticle.isApproved()) {
+			int kbArticleVersionsCount =
+				kbArticleLocalService.getKBArticleVersionsCount(
+					kbArticle.getResourcePrimKey(),
+					WorkflowConstants.STATUS_ANY);
+
+			if ((kbArticleVersionsCount == 0) || !kbArticle.isFirstVersion()) {
+				_assetEntryLocalService.deleteEntry(
+					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+			}
 		}
 	}
 

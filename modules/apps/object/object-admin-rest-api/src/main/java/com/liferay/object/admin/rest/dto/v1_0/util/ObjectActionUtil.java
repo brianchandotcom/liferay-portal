@@ -17,9 +17,14 @@ package com.liferay.object.admin.rest.dto.v1_0.util;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.constants.ObjectActionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -37,6 +42,7 @@ public class ObjectActionUtil {
 
 	public static ObjectAction toObjectAction(
 		Map<String, Map<String, String>> actions, Locale locale,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		com.liferay.object.model.ObjectAction serviceBuilderObjectAction) {
 
 		if (serviceBuilderObjectAction == null) {
@@ -62,6 +68,7 @@ public class ObjectActionUtil {
 				objectActionTriggerKey =
 					serviceBuilderObjectAction.getObjectActionTriggerKey();
 				parameters = toParameters(
+					objectDefinitionLocalService,
 					serviceBuilderObjectAction.
 						getParametersUnicodeProperties());
 				status = new Status() {
@@ -84,6 +91,7 @@ public class ObjectActionUtil {
 	}
 
 	public static Map<String, Object> toParameters(
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		UnicodeProperties parametersUnicodeProperties) {
 
 		Map<String, Object> parameters = new HashMap<>();
@@ -93,8 +101,22 @@ public class ObjectActionUtil {
 
 			Object value = entry.getValue();
 
-			if (Objects.equals(entry.getKey(), "notificationTemplateId") ||
-				Objects.equals(entry.getKey(), "objectDefinitionId")) {
+			if (Objects.equals(entry.getKey(), "notificationTemplateId")) {
+				value = GetterUtil.getLong(value);
+			}
+			else if (Objects.equals(entry.getKey(), "objectDefinitionId")) {
+				try {
+					ObjectDefinition objectDefinition =
+						objectDefinitionLocalService.getObjectDefinition(
+							GetterUtil.getLong(value));
+
+					parameters.put(
+						"objectDefinitionExternalReferenceCode",
+						objectDefinition.getExternalReferenceCode());
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
 
 				value = GetterUtil.getLong(value);
 			}
@@ -130,5 +152,8 @@ public class ObjectActionUtil {
 			map, true
 		).build();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectActionUtil.class);
 
 }

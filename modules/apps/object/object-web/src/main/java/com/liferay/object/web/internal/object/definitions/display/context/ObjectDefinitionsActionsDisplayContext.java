@@ -23,6 +23,7 @@ import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -55,13 +56,15 @@ public class ObjectDefinitionsActionsDisplayContext
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		JSONFactory jsonFactory) {
+		JSONFactory jsonFactory,
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_jsonFactory = jsonFactory;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -170,6 +173,7 @@ public class ObjectDefinitionsActionsDisplayContext
 		).put(
 			"parameters",
 			ObjectActionUtil.toParameters(
+				_objectDefinitionLocalService,
 				objectAction.getParametersUnicodeProperties())
 		);
 	}
@@ -259,5 +263,6 @@ public class ObjectDefinitionsActionsDisplayContext
 	private final JSONFactory _jsonFactory;
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

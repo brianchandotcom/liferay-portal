@@ -658,7 +658,7 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getObjectDefinitionId()),
 					objectAction -> ObjectActionUtil.toObjectAction(
 						null, contextAcceptLanguage.getPreferredLocale(),
-						objectAction),
+						_objectDefinitionLocalService, objectAction),
 					ObjectAction.class);
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(

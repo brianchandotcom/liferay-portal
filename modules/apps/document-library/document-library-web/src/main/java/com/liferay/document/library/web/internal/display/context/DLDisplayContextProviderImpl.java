@@ -38,11 +38,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -115,18 +110,11 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), getClass());
-
 		DLViewFileEntryHistoryDisplayContext
 			dlViewFileEntryHistoryDisplayContext =
 				new DefaultDLViewFileEntryHistoryDisplayContext(
 					_dlTrashHelper, _dlURLHelper, fileVersion,
-					httpServletRequest, resourceBundle, _versioningStrategy);
+					httpServletRequest, _versioningStrategy);
 
 		if (fileVersion == null) {
 			return dlViewFileEntryHistoryDisplayContext;
@@ -150,13 +138,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(), getClass());
-
 			FileVersion fileVersion = fileShortcut.getFileVersion();
 
 			DLPreviewRendererProvider dlPreviewRendererProvider =
@@ -166,8 +147,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 				new DefaultDLViewFileVersionDisplayContext(
 					_dlMimeTypeDisplayContext, dlPreviewRendererProvider,
 					_dlTrashHelper, _dlURLHelper, fileShortcut,
-					httpServletRequest, httpServletResponse, resourceBundle,
-					_storageEngine, _versioningStrategy);
+					httpServletRequest, _storageEngine, _versioningStrategy);
 
 			for (DLDisplayContextFactory dlDisplayContextFactory :
 					_dlDisplayContextFactories) {
@@ -190,13 +170,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			themeDisplay.getLocale(), getClass());
-
 		DLPreviewRendererProvider dlPreviewRendererProvider =
 			_serviceTrackerMap.getService(fileVersion.getMimeType());
 
@@ -204,8 +177,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			new DefaultDLViewFileVersionDisplayContext(
 				_dlMimeTypeDisplayContext, dlPreviewRendererProvider,
 				_dlTrashHelper, _dlURLHelper, fileVersion, httpServletRequest,
-				httpServletResponse, resourceBundle, _storageEngine,
-				_versioningStrategy);
+				_storageEngine, _versioningStrategy);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {

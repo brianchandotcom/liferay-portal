@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Html;
@@ -48,7 +47,6 @@ import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.text.Format;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -259,17 +257,6 @@ public class DLViewFileEntryDisplayContext {
 		).buildString();
 
 		return _redirect;
-	}
-
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
-			return Collections.emptyList();
-		}
-
-		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
-			_getDLViewFileVersionDisplayContext();
-
-		return dlViewFileVersionDisplayContext.getToolbarItems();
 	}
 
 	public boolean isDownloadLinkVisible() throws PortalException {

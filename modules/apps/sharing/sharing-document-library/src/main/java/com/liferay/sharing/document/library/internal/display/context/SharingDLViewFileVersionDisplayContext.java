@@ -61,8 +61,6 @@ public class SharingDLViewFileVersionDisplayContext
 		FileVersion fileVersion,
 		SharingEntryLocalService sharingEntryLocalService,
 		SharingDropdownItemFactory sharingDropdownItemFactory,
-		SharingMenuItemFactory sharingMenuItemFactory,
-		SharingToolbarItemFactory sharingToolbarItemFactory,
 		SharingPermission sharingPermission,
 		SharingConfiguration sharingConfiguration) {
 
@@ -74,8 +72,6 @@ public class SharingDLViewFileVersionDisplayContext
 		_fileEntry = fileEntry;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingDropdownItemFactory = sharingDropdownItemFactory;
-		_sharingMenuItemFactory = sharingMenuItemFactory;
-		_sharingToolbarItemFactory = sharingToolbarItemFactory;
 		_sharingPermission = sharingPermission;
 		_sharingConfiguration = sharingConfiguration;
 
@@ -96,23 +92,6 @@ public class SharingDLViewFileVersionDisplayContext
 			_sharingDropdownItemFactory.createShareDropdownItem(
 				DLFileEntryConstants.getClassName(),
 				_fileEntry.getFileEntryId(), _httpServletRequest));
-	}
-
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		List<ToolbarItem> toolbarItems = super.getToolbarItems();
-
-		if (!_isShowShareAction() || !_sharingConfiguration.isEnabled()) {
-			return toolbarItems;
-		}
-
-		_addSharingUIItem(
-			toolbarItems,
-			_sharingToolbarItemFactory.createShareToolbarItem(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest));
-
-		return toolbarItems;
 	}
 
 	@Override
@@ -217,33 +196,6 @@ public class SharingDLViewFileVersionDisplayContext
 		return false;
 	}
 
-	/**
-	 * @see com.liferay.document.library.opener.onedrive.web.internal.display.context.DLOpenerOneDriveDLViewFileVersionDisplayContext#_addEditInOffice365UIItem(
-	 *      List, BaseUIItem)
-	 */
-	private <T extends BaseUIItem> List<T> _addSharingUIItem(
-		List<T> uiItems, T sharingUIItem) {
-
-		int i = 1;
-
-		for (T uiItem : uiItems) {
-			if (DLUIItemKeys.DOWNLOAD.equals(uiItem.getKey())) {
-				break;
-			}
-
-			i++;
-		}
-
-		if (i >= uiItems.size()) {
-			uiItems.add(sharingUIItem);
-		}
-		else {
-			uiItems.add(i, sharingUIItem);
-		}
-
-		return uiItems;
-	}
-
 	private boolean _isShowActions() throws PortalException {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
@@ -289,9 +241,7 @@ public class SharingDLViewFileVersionDisplayContext
 	private final SharingConfiguration _sharingConfiguration;
 	private final SharingDropdownItemFactory _sharingDropdownItemFactory;
 	private final SharingEntryLocalService _sharingEntryLocalService;
-	private final SharingMenuItemFactory _sharingMenuItemFactory;
 	private final SharingPermission _sharingPermission;
-	private final SharingToolbarItemFactory _sharingToolbarItemFactory;
 	private Boolean _showShareAction;
 	private final ThemeDisplay _themeDisplay;
 

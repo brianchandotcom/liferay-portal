@@ -51,17 +51,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -79,16 +76,13 @@ public class DefaultDLViewFileVersionDisplayContext
 			DLPreviewRendererProvider dlPreviewRendererProvider,
 			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 			FileShortcut fileShortcut, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ResourceBundle resourceBundle, StorageEngine storageEngine,
-			VersioningStrategy versioningStrategy)
+			StorageEngine storageEngine, VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		this(
 			httpServletRequest, fileShortcut.getFileVersion(), fileShortcut,
-			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
-			dlTrashHelper, dlPreviewRendererProvider, versioningStrategy,
-			dlURLHelper);
+			dlMimeTypeDisplayContext, storageEngine, dlTrashHelper,
+			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
@@ -96,13 +90,12 @@ public class DefaultDLViewFileVersionDisplayContext
 		DLPreviewRendererProvider dlPreviewRendererProvider,
 		DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 		FileVersion fileVersion, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, ResourceBundle resourceBundle,
 		StorageEngine storageEngine, VersioningStrategy versioningStrategy) {
 
 		this(
 			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
-			resourceBundle, storageEngine, dlTrashHelper,
-			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
+			storageEngine, dlTrashHelper, dlPreviewRendererProvider,
+			versioningStrategy, dlURLHelper);
 	}
 
 	@Override
@@ -228,7 +221,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public String getDiscussionLabel(Locale locale) {
-		return LanguageUtil.get(_resourceBundle, "comments");
+		return LanguageUtil.get(_httpServletRequest, "comments");
 	}
 
 	@Override
@@ -239,33 +232,6 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		return _dlMimeTypeDisplayContext.getIconFileMimeType(
 			_fileVersion.getMimeType());
-	}
-
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		List<ToolbarItem> toolbarItems = new ArrayList<>();
-
-		_uiItemsBuilder.addCollectDigitalSignatureToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addEditToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addCheckoutToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addCancelCheckoutToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addCheckinToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addMoveToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addPermissionsToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addMoveToTheRecycleBinToolbarItem(toolbarItems);
-
-		_uiItemsBuilder.addDeleteToolbarItem(toolbarItems);
-
-		return toolbarItems;
 	}
 
 	@Override
@@ -381,8 +347,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		HttpServletRequest httpServletRequest, FileVersion fileVersion,
 		FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		ResourceBundle resourceBundle, StorageEngine storageEngine,
-		DLTrashHelper dlTrashHelper,
+		StorageEngine storageEngine, DLTrashHelper dlTrashHelper,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
 		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
@@ -390,7 +355,6 @@ public class DefaultDLViewFileVersionDisplayContext
 			_httpServletRequest = httpServletRequest;
 			_fileVersion = fileVersion;
 			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-			_resourceBundle = resourceBundle;
 			_storageEngine = storageEngine;
 			_dlPreviewRendererProvider = dlPreviewRendererProvider;
 
@@ -410,13 +374,13 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
-					httpServletRequest, fileEntry, fileVersion, _resourceBundle,
-					dlTrashHelper, versioningStrategy, dlURLHelper);
+					httpServletRequest, fileEntry, fileVersion, dlTrashHelper,
+					versioningStrategy, dlURLHelper);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
-					httpServletRequest, fileShortcut, _resourceBundle,
-					dlTrashHelper, versioningStrategy, dlURLHelper);
+					httpServletRequest, fileShortcut, dlTrashHelper,
+					versioningStrategy, dlURLHelper);
 			}
 		}
 		catch (PortalException portalException) {
@@ -567,8 +531,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
-	private HttpServletRequest _httpServletRequest;
-	private final ResourceBundle _resourceBundle;
+	private final HttpServletRequest _httpServletRequest;
 	private final StorageEngine _storageEngine;
 	private final UIItemsBuilder _uiItemsBuilder;
 

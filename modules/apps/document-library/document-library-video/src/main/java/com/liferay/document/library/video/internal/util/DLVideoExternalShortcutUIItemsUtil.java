@@ -39,15 +39,6 @@ public class DLVideoExternalShortcutUIItemsUtil {
 				DLUIItemKeys.OPEN_IN_MS_OFFICE));
 	}
 
-	public static void processUIItems(List<? extends UIItem> uiItems) {
-		_removeUIItems(
-			uiItems, UIItem::getKey,
-			SetUtil.fromArray(
-				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
-				DLUIItemKeys.CHECKOUT, DLUIItemKeys.DOWNLOAD,
-				DLUIItemKeys.OPEN_IN_MS_OFFICE));
-	}
-
 	private static <T> void _removeUIItems(
 		List<T> items, Function<T, String> function, Set<String> keys) {
 

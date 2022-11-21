@@ -28,11 +28,9 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -44,8 +42,6 @@ public class DefaultIGViewFileVersionDisplayContext
 			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 			FileShortcut fileShortcut, FileVersion fileVersion,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ResourceBundle resourceBundle,
 			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
@@ -56,12 +52,12 @@ public class DefaultIGViewFileVersionDisplayContext
 
 		if (fileShortcut == null) {
 			_uiItemsBuilder = new UIItemsBuilder(
-				httpServletRequest, fileVersion, resourceBundle, dlTrashHelper,
+				httpServletRequest, fileVersion, dlTrashHelper,
 				versioningStrategy, dlURLHelper);
 		}
 		else {
 			_uiItemsBuilder = new UIItemsBuilder(
-				httpServletRequest, fileShortcut, resourceBundle, dlTrashHelper,
+				httpServletRequest, fileShortcut, dlTrashHelper,
 				versioningStrategy, dlURLHelper);
 		}
 	}
@@ -69,27 +65,24 @@ public class DefaultIGViewFileVersionDisplayContext
 	public DefaultIGViewFileVersionDisplayContext(
 			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 			FileShortcut fileShortcut, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ResourceBundle resourceBundle,
 			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		this(
 			dlTrashHelper, dlURLHelper, fileShortcut,
 			fileShortcut.getFileVersion(), httpServletRequest,
-			httpServletResponse, resourceBundle, versioningStrategy);
+			versioningStrategy);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, FileVersion fileVersion,
-			ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
-			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
+			HttpServletRequest httpServletRequest, FileVersion fileVersion,
+			DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
+			DLURLHelper dlURLHelper)
 		throws PortalException {
 
 		this(
 			dlTrashHelper, dlURLHelper, null, fileVersion, httpServletRequest,
-			httpServletResponse, resourceBundle, versioningStrategy);
+			versioningStrategy);
 	}
 
 	@Override

@@ -98,7 +98,6 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileEntry, fileVersion,
 				_sharingEntryLocalService, _sharingDropdownItemFactory,
-				_sharingMenuItemFactory, _sharingToolbarItemFactory,
 				_sharingPermission, sharingConfiguration);
 		}
 		catch (PortalException portalException) {
@@ -144,12 +143,6 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
-	private SharingMenuItemFactory _sharingMenuItemFactory;
-
-	@Reference
 	private SharingPermission _sharingPermission;
-
-	@Reference
-	private SharingToolbarItemFactory _sharingToolbarItemFactory;
 
 }

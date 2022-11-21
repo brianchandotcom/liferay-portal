@@ -58,8 +58,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 		return "document-default";
 	}
 
-	public List<ToolbarItem> getToolbarItems() throws PortalException;
-
 	public default boolean hasCustomThumbnail() {
 		return false;
 	}

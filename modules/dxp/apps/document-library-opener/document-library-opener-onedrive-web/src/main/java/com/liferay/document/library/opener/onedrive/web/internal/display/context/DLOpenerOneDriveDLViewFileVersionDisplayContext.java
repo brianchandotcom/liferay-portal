@@ -26,7 +26,6 @@ import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpe
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -37,31 +36,23 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.UUID;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 /**
  * @author Cristina González
@@ -132,33 +123,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			_createEditInOffice365DropdownItem(Constants.CHECKOUT));
 
 		return dropdownItems;
-	}
-
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		if (!isActionsVisible() ||
-			!DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				fileVersion.getMimeType()) ||
-			!_dlOpenerOneDriveManager.isConfigured(
-				fileVersion.getCompanyId()) ||
-			!_fileEntryModelResourcePermission.contains(
-				_permissionChecker, fileVersion.getFileEntry(),
-				ActionKeys.UPDATE)) {
-
-			return super.getToolbarItems();
-		}
-
-		List<ToolbarItem> toolbarItems = super.getToolbarItems();
-
-		if (_isCheckedOutInOneDrive()) {
-			FileEntry fileEntry = fileVersion.getFileEntry();
-
-			if (fileEntry.hasLock()) {
-				_updateCancelCheckoutAndCheckinToolbarItems(toolbarItems);
-			}
-		}
-
-		return toolbarItems;
 	}
 
 	private List<DropdownItem> _addEditInOffice365DropdownItem(
@@ -312,13 +276,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
-	private String _getNamespace() {
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
-
-		return liferayPortletResponse.getNamespace();
-	}
-
 	private boolean _isCheckedOutInOneDrive() throws PortalException {
 		FileEntry fileEntry = fileVersion.getFileEntry();
 
@@ -373,54 +330,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 						dropdownItem.get("key"))) {
 
 				dropdownItem.setHref(_getCancelCheckOutURL());
-			}
-		}
-	}
-
-	private void _updateCancelCheckoutAndCheckinToolbarItems(
-			List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		ListIterator<ToolbarItem> listIterator = toolbarItems.listIterator();
-
-		while (listIterator.hasNext()) {
-			ToolbarItem toolbarItem = listIterator.next();
-
-			if (DLUIItemKeys.CHECKIN.equals(toolbarItem.getKey())) {
-				if (toolbarItem instanceof JavaScriptUIItem) {
-					JavaScriptUIItem javaScriptUIItem =
-						(JavaScriptUIItem)toolbarItem;
-
-					if (_isCheckingInNewFile()) {
-						javaScriptUIItem.setOnClick(
-							StringBundler.concat(
-								"window.location.href = '",
-								HtmlUtil.escapeJS(_getCheckInURL()), "'"));
-					}
-					else {
-						javaScriptUIItem.setOnClick(
-							StringBundler.concat(
-								_getNamespace(), "showVersionDetailsDialog('",
-								HtmlUtil.escapeJS(_getCheckInURL()), "');"));
-					}
-				}
-			}
-			else if (DLUIItemKeys.CANCEL_CHECKOUT.equals(
-						toolbarItem.getKey())) {
-
-				listIterator.remove();
-
-				URLToolbarItem urlToolbarItem = new URLToolbarItem();
-
-				urlToolbarItem.setData(
-					Collections.singletonMap("senna-off", "true"));
-				urlToolbarItem.setKey(DLUIItemKeys.CANCEL_CHECKOUT);
-				urlToolbarItem.setLabel(
-					LanguageUtil.get(
-						_resourceBundle, "cancel-checkout[document]"));
-				urlToolbarItem.setURL(_getCancelCheckOutURL());
-
-				listIterator.add(urlToolbarItem);
 			}
 		}
 	}

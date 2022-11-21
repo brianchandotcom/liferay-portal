@@ -105,11 +105,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		return parentDisplayContext.getToolbarItems();
-	}
-
-	@Override
 	public boolean hasCustomThumbnail() {
 		return parentDisplayContext.hasCustomThumbnail();
 	}

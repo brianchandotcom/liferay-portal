@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,9 +40,7 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 	public DefaultDLViewFileEntryHistoryDisplayContext(
 		DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
 		FileVersion fileVersion, HttpServletRequest httpServletRequest,
-		ResourceBundle resourceBundle, VersioningStrategy versioningStrategy) {
-
-		_resourceBundle = resourceBundle;
+		VersioningStrategy versioningStrategy) {
 
 		DLRequestHelper dlRequestHelper = new DLRequestHelper(
 			httpServletRequest);
@@ -52,8 +49,8 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 			dlRequestHelper);
 
 		_uiItemsBuilder = new UIItemsBuilder(
-			httpServletRequest, fileVersion, _resourceBundle, dlTrashHelper,
-			versioningStrategy, dlURLHelper);
+			httpServletRequest, fileVersion, dlTrashHelper, versioningStrategy,
+			dlURLHelper);
 	}
 
 	@Override
@@ -102,7 +99,6 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
-	private final ResourceBundle _resourceBundle;
 	private final UIItemsBuilder _uiItemsBuilder;
 
 }

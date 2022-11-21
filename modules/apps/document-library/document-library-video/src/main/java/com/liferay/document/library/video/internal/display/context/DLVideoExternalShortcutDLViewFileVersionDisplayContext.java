@@ -55,15 +55,6 @@ public class DLVideoExternalShortcutDLViewFileVersionDisplayContext
 		return actionDropdownItems;
 	}
 
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		List<ToolbarItem> toolbarItems = super.getToolbarItems();
-
-		DLVideoExternalShortcutUIItemsUtil.processUIItems(toolbarItems);
-
-		return toolbarItems;
-	}
-
 	private static final UUID _UUID = UUID.fromString(
 		"7deb426a-96b9-4db6-88ac-9afbc7fc2151");
 

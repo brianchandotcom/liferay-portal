@@ -24,24 +24,20 @@ import com.liferay.document.library.kernel.document.conversion.DocumentConversio
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileShortcutDisplayContextHelper;
-import com.liferay.document.library.web.internal.display.context.helper.FileVersionDisplayContextHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -55,15 +51,6 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -83,9 +70,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -101,288 +86,34 @@ public class UIItemsBuilder {
 
 	public UIItemsBuilder(
 		HttpServletRequest httpServletRequest, FileEntry fileEntry,
-		FileVersion fileVersion, ResourceBundle resourceBundle,
-		DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
-		DLURLHelper dlURLHelper) {
+		FileVersion fileVersion, DLTrashHelper dlTrashHelper,
+		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
 
 		this(
-			httpServletRequest, fileEntry, null, fileVersion, resourceBundle,
-			dlTrashHelper, versioningStrategy, dlURLHelper);
-	}
-
-	public UIItemsBuilder(
-			HttpServletRequest httpServletRequest, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
-			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
-		throws PortalException {
-
-		this(
-			httpServletRequest, null, fileShortcut,
-			fileShortcut.getFileVersion(), resourceBundle, dlTrashHelper,
+			httpServletRequest, fileEntry, null, fileVersion, dlTrashHelper,
 			versioningStrategy, dlURLHelper);
 	}
 
 	public UIItemsBuilder(
-		HttpServletRequest httpServletRequest, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
-		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
+			HttpServletRequest httpServletRequest, FileShortcut fileShortcut,
+			DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
+			DLURLHelper dlURLHelper)
+		throws PortalException {
 
 		this(
-			httpServletRequest, null, null, fileVersion, resourceBundle,
-			dlTrashHelper, versioningStrategy, dlURLHelper);
+			httpServletRequest, null, fileShortcut,
+			fileShortcut.getFileVersion(), dlTrashHelper, versioningStrategy,
+			dlURLHelper);
 	}
 
-	public void addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
+	public UIItemsBuilder(
+		HttpServletRequest httpServletRequest, FileVersion fileVersion,
+		DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
+		DLURLHelper dlURLHelper) {
 
-		if (!_fileEntryDisplayContextHelper.
-				isCancelCheckoutDocumentActionAvailable()) {
-
-			return;
-		}
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
-			DLUIItemKeys.CANCEL_CHECKOUT,
-			LanguageUtil.get(_resourceBundle, "cancel-checkout[document]"),
-			_getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
-	}
-
-	public void addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
-			return;
-		}
-
-		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
-			LanguageUtil.get(_resourceBundle, "checkin"),
-			StringBundler.concat(
-				_getNamespace(), "showVersionDetailsDialog('",
-				HtmlUtil.escapeJS(
-					PortletURLBuilder.create(
-						_getActionURL(
-							"/document_library/edit_file_entry",
-							Constants.CHECKIN)
-					).setParameter(
-						"fileEntryId", _fileEntry.getFileEntryId()
-					).buildString()),
-				"');"));
-
-		String javaScript =
-			"/com/liferay/document/library/web/display/context/dependencies" +
-				"/checkin_js.ftl";
-
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put("namespace", _getNamespace());
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-
-		javaScriptToolbarItem.setJavaScript(unsyncStringWriter.toString());
-	}
-
-	public void addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_fileEntryDisplayContextHelper.
-				isCheckoutDocumentActionAvailable()) {
-
-			return;
-		}
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKOUT,
-			LanguageUtil.get(_resourceBundle, "checkout[document]"),
-			_getSubmitFormJavaScript(Constants.CHECKOUT, null));
-	}
-
-	public void addCollectDigitalSignatureToolbarItem(
-			List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
-			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
-			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
-			null);
-	}
-
-	public void addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_isDeleteActionAvailable()) {
-			return;
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("Liferay.Util.openConfirmModal({message: '");
-		sb.append(
-			UnicodeLanguageUtil.get(
-				_resourceBundle, "are-you-sure-you-want-to-delete-this"));
-		sb.append("', onConfirm: (isConfirmed) => {if (isConfirmed) {");
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		long folderId = _fileEntry.getFolderId();
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
-		}
-		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view_folder");
-		}
-
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-
-		sb.append(
-			_getSubmitFormJavaScript(Constants.DELETE, portletURL.toString()));
-
-		sb.append("}}});");
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.DELETE,
-			LanguageUtil.get(_resourceBundle, "delete"), sb.toString());
-	}
-
-	public void addDownloadToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_fileEntryDisplayContextHelper.isDownloadActionAvailable()) {
-			return;
-		}
-
-		String label = LanguageUtil.formatStorageSize(
-			_fileVersion.getSize(), _themeDisplay.getLocale());
-
-		URLToolbarItem urlToolbarItem = new URLToolbarItem();
-
-		urlToolbarItem.setData(
-			HashMapBuilder.<String, Object>put(
-				"analytics-file-entry-id", _fileEntry.getFileEntryId()
-			).put(
-				"analytics-file-entry-title", _fileEntry.getTitle()
-			).put(
-				"analytics-file-entry-version", _fileEntry.getVersion()
-			).build());
-
-		_addURLUIItem(
-			urlToolbarItem, toolbarItems, DLUIItemKeys.DOWNLOAD,
-			StringBundler.concat(
-				LanguageUtil.get(_resourceBundle, "download"), " (", label,
-				")"),
-			_dlURLHelper.getDownloadURL(
-				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
-	}
-
-	public void addEditToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_fileEntryDisplayContextHelper.isEditActionAvailable()) {
-			return;
-		}
-
-		PortletURL portletURL = _getControlPanelRenderURL(
-			"/document_library/edit_file_entry");
-
-		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.EDIT,
-			LanguageUtil.get(_resourceBundle, "edit"), portletURL.toString());
-	}
-
-	public void addMoveToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_fileEntryDisplayContextHelper.isMoveActionAvailable()) {
-			return;
-		}
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.MOVE,
-			LanguageUtil.get(_resourceBundle, "move"),
-			_getMoveEntryOnClickJavaScript());
-	}
-
-	public void addMoveToTheRecycleBinToolbarItem(
-			List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_isMoveToTheRecycleBinActionAvailable()) {
-			return;
-		}
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		long folderId = _fileEntry.getFolderId();
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view");
-		}
-		else {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/view_folder");
-		}
-
-		portletURL.setParameter("folderId", String.valueOf(folderId));
-		portletURL.setParameter(
-			"folderId", String.valueOf(_fileEntry.getFolderId()));
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
-			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
-			LanguageUtil.get(_resourceBundle, "delete"),
-			_getSubmitFormJavaScript(
-				Constants.MOVE_TO_TRASH, portletURL.toString()));
-	}
-
-	public void addPermissionsToolbarItem(List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		if (!_fileEntryDisplayContextHelper.isPermissionsButtonVisible()) {
-			return;
-		}
-
-		String permissionsURL = null;
-
-		try {
-			permissionsURL = PermissionsURLTag.doTag(
-				null, DLFileEntryConstants.getClassName(),
-				HtmlUtil.unescape(_fileEntry.getTitle()), null,
-				String.valueOf(_fileEntry.getFileEntryId()),
-				LiferayWindowState.POP_UP.toString(), null,
-				_httpServletRequest);
-		}
-		catch (Exception exception) {
-			throw new SystemException(
-				"Unable to create permissions URL", exception);
-		}
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.PERMISSIONS,
-			LanguageUtil.get(_resourceBundle, "permissions"),
-			StringBundler.concat(
-				"Liferay.Util.openModal({title: '",
-				UnicodeLanguageUtil.get(_resourceBundle, "permissions"),
-				"', url: '", HtmlUtil.escapeJS(permissionsURL), "'});"));
+		this(
+			httpServletRequest, null, null, fileVersion, dlTrashHelper,
+			versioningStrategy, dlURLHelper);
 	}
 
 	public DropdownItem createCancelCheckoutDropdownItem() {
@@ -1016,8 +747,8 @@ public class UIItemsBuilder {
 	private UIItemsBuilder(
 		HttpServletRequest httpServletRequest, FileEntry fileEntry,
 		FileShortcut fileShortcut, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
-		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
+		DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
+		DLURLHelper dlURLHelper) {
 
 		try {
 			_httpServletRequest = httpServletRequest;
@@ -1030,7 +761,6 @@ public class UIItemsBuilder {
 
 			_fileShortcut = fileShortcut;
 			_fileVersion = fileVersion;
-			_resourceBundle = resourceBundle;
 			_dlTrashHelper = dlTrashHelper;
 			_versioningStrategy = versioningStrategy;
 			_dlURLHelper = dlURLHelper;
@@ -1044,41 +774,12 @@ public class UIItemsBuilder {
 			_fileShortcutDisplayContextHelper =
 				new FileShortcutDisplayContextHelper(
 					_themeDisplay.getPermissionChecker(), _fileShortcut);
-
-			_fileVersionDisplayContextHelper =
-				new FileVersionDisplayContextHelper(fileVersion);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to build UIItemsBuilder for " + fileVersion,
 				portalException);
 		}
-	}
-
-	private <T extends JavaScriptUIItem> T _addJavaScriptUIItem(
-		T javascriptUIItem, List<? super T> javascriptUIItems, String key,
-		String label, String onClick) {
-
-		javascriptUIItem.setKey(key);
-		javascriptUIItem.setLabel(label);
-		javascriptUIItem.setOnClick(onClick);
-
-		javascriptUIItems.add(javascriptUIItem);
-
-		return javascriptUIItem;
-	}
-
-	private <T extends URLUIItem> T _addURLUIItem(
-		T urlUIItem, List<? super T> urlUIItems, String key, String label,
-		String url) {
-
-		urlUIItem.setKey(key);
-		urlUIItem.setLabel(label);
-		urlUIItem.setURL(url);
-
-		urlUIItems.add(urlUIItem);
-
-		return urlUIItem;
 	}
 
 	private PortletURL _getActionURL(String mvcActionCommandName) {
@@ -1210,26 +911,6 @@ public class UIItemsBuilder {
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
-	private String _getMoveEntryOnClickJavaScript() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_getNamespace());
-		sb.append("move(1, ");
-
-		if (_fileShortcut != null) {
-			sb.append("'rowIdsDLFileShortcut', ");
-			sb.append(_fileShortcut.getFileShortcutId());
-		}
-		else {
-			sb.append("'rowIdsFileEntry', ");
-			sb.append(_fileEntry.getFileEntryId());
-		}
-
-		sb.append(");");
-
-		return sb.toString();
-	}
-
 	private String _getNamespace() {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
@@ -1277,35 +958,6 @@ public class UIItemsBuilder {
 		}
 
 		return portletURL;
-	}
-
-	private String _getSubmitFormJavaScript(String cmd, String redirect) {
-		StringBundler sb = new StringBundler(18);
-
-		sb.append("document.");
-		sb.append(_getNamespace());
-		sb.append("fm.");
-		sb.append(_getNamespace());
-		sb.append(Constants.CMD);
-		sb.append(".value = '");
-		sb.append(cmd);
-		sb.append("';");
-
-		if (redirect != null) {
-			sb.append("document.");
-			sb.append(_getNamespace());
-			sb.append("fm.");
-			sb.append(_getNamespace());
-			sb.append("redirect.value = '");
-			sb.append(HtmlUtil.escapeJS(redirect));
-			sb.append("';");
-		}
-
-		sb.append("submitForm(document.");
-		sb.append(_getNamespace());
-		sb.append("fm);");
-
-		return sb.toString();
 	}
 
 	private boolean _isDeleteActionAvailable() throws PortalException {
@@ -1436,11 +1088,8 @@ public class UIItemsBuilder {
 	private final FileShortcutDisplayContextHelper
 		_fileShortcutDisplayContextHelper;
 	private final FileVersion _fileVersion;
-	private final FileVersionDisplayContextHelper
-		_fileVersionDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private String _redirect;
-	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 	private final VersioningStrategy _versioningStrategy;

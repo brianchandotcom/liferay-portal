@@ -58,12 +58,6 @@ public class GoogleDocsUIItemsProcessor {
 		_insertEditInGoogleDropdownItem(dropdownItems);
 	}
 
-	public void processToolbarItems(List<ToolbarItem> toolbarItems) {
-		_removeUnsupportedUIItems(toolbarItems);
-
-		_insertEditInGoogleURLUIItem(new URLToolbarItem(), toolbarItems);
-	}
-
 	private <T> int _getIndex(List<T> items, Predicate<T> predicate) {
 		for (int i = 0; i < items.size(); i++) {
 			if (predicate.test(items.get(i))) {
@@ -113,49 +107,6 @@ public class GoogleDocsUIItemsProcessor {
 			).build());
 	}
 
-	private <T extends URLUIItem> T _insertEditInGoogleURLUIItem(
-		T urlUIItem, List<? super T> urlUIItems) {
-
-		if (!_googleDocsMetadataHelper.containsField(
-				GoogleDocsConstants.DDM_FIELD_NAME_URL)) {
-
-			return urlUIItem;
-		}
-
-		int index = _getIndex(
-			(List<? extends UIItem>)urlUIItems,
-			uiItem -> Objects.equals(uiItem.getKey(), DLUIItemKeys.EDIT));
-
-		if (index == -1) {
-			index = 0;
-		}
-
-		urlUIItem.setKey(GoogleDocsUIItemKeys.EDIT_IN_GOOGLE);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
-		String message = LanguageUtil.get(
-			resourceBundle, "edit-in-google-drive");
-
-		urlUIItem.setLabel(message);
-
-		urlUIItem.setTarget("_blank");
-
-		String editURL = _googleDocsMetadataHelper.getFieldValue(
-			GoogleDocsConstants.DDM_FIELD_NAME_URL);
-
-		urlUIItem.setURL(editURL);
-
-		urlUIItems.add(index, urlUIItem);
-
-		return urlUIItem;
-	}
-
 	private <T> void _removeUIItems(
 		List<T> items, Function<T, String> function, Set<String> keys) {
 
@@ -175,15 +126,6 @@ public class GoogleDocsUIItemsProcessor {
 
 		_removeUIItems(
 			dropdownItems, dropdownItem -> (String)dropdownItem.get("key"),
-			SetUtil.fromArray(
-				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
-				DLUIItemKeys.CHECKOUT, DLUIItemKeys.DOWNLOAD,
-				DLUIItemKeys.OPEN_IN_MS_OFFICE, "#edit-in-google-drive"));
-	}
-
-	private void _removeUnsupportedUIItems(List<? extends UIItem> uiItems) {
-		_removeUIItems(
-			uiItems, UIItem::getKey,
 			SetUtil.fromArray(
 				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
 				DLUIItemKeys.CHECKOUT, DLUIItemKeys.DOWNLOAD,

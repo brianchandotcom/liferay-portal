@@ -199,9 +199,9 @@ const main = async () => {
 
 		setValueToElement(
 			fragmentElement.querySelector('#congrats-price'),
-			`$${Number(
-				quoteDataJSON.price - discountInPrice || 0
-			).toLocaleString('en-US')}`
+			`$${Number(quoteDataJSON.price - discountInPrice || 0)
+				.toFixed(2)
+				.toLocaleString('en-US')}`
 		);
 
 		setValueToElement(

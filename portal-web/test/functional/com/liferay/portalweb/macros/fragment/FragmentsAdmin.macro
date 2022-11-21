@@ -63,8 +63,6 @@ definition {
 
 		IFrame.selectConfigurationFrame();
 
-		AssertVisible(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
-
 		WaitForEditable(locator1 = "TextInput#FILE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(

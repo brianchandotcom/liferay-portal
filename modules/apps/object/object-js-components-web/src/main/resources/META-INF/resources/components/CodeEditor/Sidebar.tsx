@@ -22,8 +22,9 @@ import './Sidebar.scss';
 
 interface SidebarElement {
 	content: string;
-	helpText: string;
+	helpText?: string;
 	label: string;
+	tooltip?: string;
 }
 
 export interface SidebarCategory {
@@ -33,7 +34,7 @@ export interface SidebarCategory {
 interface IProps {
 	CustomSidebarContent?: ReactNode;
 	editorRef: RefObject<CodeMirror.Editor>;
-	elements?: SidebarCategory[];
+	elements: SidebarCategory[];
 	otherProps?: unknown;
 }
 
@@ -52,7 +53,9 @@ export function Sidebar({CustomSidebarContent, editorRef, elements}: IProps) {
 					<Collapsible key={label} label={label}>
 						{items.map((item) => (
 							<Element
-								helpText={item.helpText}
+								helpText={
+									(item.helpText ?? item.tooltip) as string
+								}
 								key={item.label}
 								label={item.label}
 								onClick={() => handleClick(item)}

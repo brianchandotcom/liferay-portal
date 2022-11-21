@@ -21,13 +21,13 @@ export {default as CodeMirrorEditor} from './CodeMirrorEditor';
 export {Collapsible} from './Collapsible';
 export {Element} from './Element';
 export {SidebarCategory} from './Sidebar';
-interface IProps extends ICodeMirrorEditor {
+interface CodeEditorProps extends ICodeMirrorEditor {
 	CustomSidebarContent?: ReactNode;
 	className?: string;
 	error?: string;
 	sidebarElements?: SidebarCategory[];
 }
 declare const CodeEditor: React.ForwardRefExoticComponent<
-	IProps & React.RefAttributes<CodeMirror.Editor>
+	CodeEditorProps & React.RefAttributes<CodeMirror.Editor>
 >;
 export default CodeEditor;

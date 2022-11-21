@@ -210,8 +210,8 @@ public class MentionsPortlet extends MVCPortlet {
 				List<User> filteredUsers = new ArrayList<>();
 
 				List<User> users = mentionsStrategy.getUsers(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					query, jsonObject);
+					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+					themeDisplay.getUserId(), query, jsonObject);
 
 				for (User user : users) {
 					PermissionChecker permissionChecker =

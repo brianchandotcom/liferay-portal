@@ -46,7 +46,6 @@ $normal-transition: opacity 1s ease;
 	.testray-sidebar-item {
 		color: #8b8db2;
 		display: block;
-		padding: 10px 22px;
 		position: relative;
 		white-space: nowrap;
 
@@ -71,6 +70,16 @@ $normal-transition: opacity 1s ease;
 				color: white;
 			}
 		}
+	}
+
+	.testray-sidebar-item-normal {
+		padding: 10px 22px;
+		transition: $hover-transition;
+	}
+
+	.testray-sidebar-item-expand {
+		padding: 10px 10px;
+		transition: $hover-transition;
 	}
 }
 

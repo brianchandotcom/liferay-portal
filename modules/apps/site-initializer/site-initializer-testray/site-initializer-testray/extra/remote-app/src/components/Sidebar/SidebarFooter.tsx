@@ -67,7 +67,12 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 								expanded ? undefined : i18n.translate('manage')
 							}
 						>
-							<div className="testray-sidebar-item">
+							<div
+								className={classNames('testray-sidebar-item', {
+									'testray-sidebar-item-expand': expanded,
+									'testray-sidebar-item-normal': !expanded,
+								})}
+							>
 								<TestrayIcons
 									className="testray-icon"
 									fill="#8b8db2"

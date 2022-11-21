@@ -26,6 +26,7 @@ import Tooltip from '../Tooltip';
 import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
+import TaskSidebar from './TasksSidebar';
 
 const Sidebar = () => {
 	const {pathname} = useLocation();
@@ -67,7 +68,12 @@ const Sidebar = () => {
 		{
 			className: 'mt-3',
 			element: (
-				<div className="pt-3">
+				<div
+					className={classNames('pt-3', {
+						'testray-sidebar-item-expand': expanded,
+						'testray-sidebar-item-normal': !expanded,
+					})}
+				>
 					<ClayPopover
 						alignPosition="right"
 						className="compare-runs-popover"
@@ -100,68 +106,92 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={classNames('testray-sidebar', {
-				'testray-sidebar-expanded': expanded,
-			})}
+			className={classNames(
+				'testray-sidebar d-flex flex-column justify-content-between',
+				{
+					'testray-sidebar-expanded': expanded,
+				}
+			)}
 		>
 			<TooltipProviderWrapper>
 				<>
 					<div className="testray-sidebar-content">
-						<Link className="d-flex flex-center mb-5 w-100" to="/">
-							<TestrayIcon className="testray-logo" />
+						<div>
+							<Link
+								className="d-flex flex-center mb-5 mt-5 w-100"
+								to="/"
+							>
+								<TestrayIcon className="testray-logo" />
 
-							<TestrayIconBrand
-								className={classNames('testray-brand-logo', {
-									'testray-brand-logo-expand': expanded,
-								})}
-							/>
-						</Link>
+								<TestrayIconBrand
+									className={classNames(
+										'testray-brand-logo',
+										{
+											'testray-brand-logo-expand': expanded,
+										}
+									)}
+								/>
+							</Link>
 
-						{sidebarItems.map(
-							(
-								{className, element, icon, label, path},
-								index
-							) => {
-								const [, ...items] = sidebarItems;
+							{sidebarItems.map(
+								(
+									{className, element, icon, label, path},
+									index
+								) => {
+									const [, ...items] = sidebarItems;
 
-								if (path) {
-									const someItemIsActive = items.some(
-										(item) =>
-											item.path
-												? pathname.includes(item.path)
-												: false
-									);
+									if (path) {
+										const someItemIsActive = items.some(
+											(item) =>
+												item.path
+													? pathname.includes(
+															item.path
+													  )
+													: false
+										);
+
+										return (
+											<SidebarItem
+												active={
+													index === 0
+														? !someItemIsActive
+														: pathname.includes(
+																path
+														  )
+												}
+												className={className}
+												expanded={expanded}
+												icon={icon}
+												key={index}
+												label={label}
+												path={path}
+											/>
+										);
+									}
 
 									return (
-										<SidebarItem
-											active={
-												index === 0
-													? !someItemIsActive
-													: pathname.includes(path)
-											}
-											className={className}
-											expanded={expanded}
-											icon={icon}
-											key={index}
-											label={label}
-											path={path}
-										/>
+										<div className={className} key={index}>
+											{element}
+										</div>
 									);
 								}
+							)}
 
-								return (
-									<div className={className} key={index}>
-										{element}
-									</div>
-								);
-							}
-						)}
+							<div className="py-3">
+								<div className="divider divider-full" />
+
+								{/* <Form.Divider className="pb-3 task-sidebar-divider" /> */}
+							</div>
+						</div>
+
+						<TaskSidebar expanded={expanded} />
 					</div>
-
-					<SidebarFooter
-						expanded={expanded}
-						onClick={() => setExpanded(!expanded)}
-					/>
+					<div className="pb-1">
+						<SidebarFooter
+							expanded={expanded}
+							onClick={() => setExpanded(!expanded)}
+						/>
+					</div>
 				</>
 			</TooltipProviderWrapper>
 		</div>

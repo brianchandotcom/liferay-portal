@@ -190,6 +190,21 @@ public class ViewSharedAssetsDisplayContext {
 		return _orderByCol;
 	}
 
+	public SearchContainer<SharingEntry> getSearchContainer() {
+		SearchContainer<SharingEntry> searchContainer = new SearchContainer<>(
+			_liferayPortletRequest,
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/blogs/view"
+			).buildPortletURL(),
+			null, "no-entries-were-found");
+
+		populateResults(searchContainer);
+
+		return searchContainer;
+	}
+
 	public PortletURL getSelectAssetTypeURL() {
 		return _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
@@ -258,6 +273,24 @@ public class ViewSharedAssetsDisplayContext {
 		return menu;
 	}
 
+	public PortletURL getSharingEntryRowPortletURL(SharingEntry sharingEntry)
+		throws PortalException {
+
+		if (!isVisible(sharingEntry)) {
+			return null;
+		}
+
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/sharing/view_sharing_entry"
+		).setRedirect(
+			_currentURLObj
+		).setParameter(
+			"sharingEntryId", sharingEntry.getSharingEntryId()
+		).buildRenderURL();
+	}
+
 	public String getSortingOrder() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -293,6 +326,14 @@ public class ViewSharedAssetsDisplayContext {
 		}
 
 		return HtmlUtil.escape(sharingEntryInterpreter.getTitle(sharingEntry));
+	}
+
+	public PortletURL getViewAssetTypePortletURL() throws PortletException {
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
+		).setParameter(
+			"className", (String)null
+		).buildPortletURL();
 	}
 
 	public boolean isVisible(SharingEntry sharingEntry) throws PortalException {

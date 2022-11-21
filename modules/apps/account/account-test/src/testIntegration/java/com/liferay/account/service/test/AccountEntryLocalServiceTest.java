@@ -110,7 +110,7 @@ public class AccountEntryLocalServiceTest {
 		String[] assetTagNames = {"tag1", "tag2"};
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.withAssetTagNames(assetTagNames));
+			accountEntryArgs -> accountEntryArgs.assetTagNames = assetTagNames);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
@@ -211,12 +211,9 @@ public class AccountEntryLocalServiceTest {
 					ObjectValidationRuleEngineException);
 		}
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
-
-		accountEntry.setName("Invalid Name");
-
 		try {
-			_accountEntryLocalService.updateAccountEntry(accountEntry);
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withName("Invalid Name"));
 
 			Assert.fail();
 		}
@@ -373,13 +370,8 @@ public class AccountEntryLocalServiceTest {
 
 		User user = UserTestUtil.addUser();
 
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null, null,
-			RandomTestUtil.randomString(50),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOwner(user));
 
 		_assertStatus(accountEntry, WorkflowConstants.STATUS_PENDING, user);
 		Assert.assertTrue(_hasWorkflowInstance(accountEntry));
@@ -496,24 +488,12 @@ public class AccountEntryLocalServiceTest {
 	public void testGetUserAccountEntriesByAccountEntryMembership()
 		throws Exception {
 
-		User accountEntryOwner = UserTestUtil.addUser();
+		User user = UserTestUtil.addUser();
 
-		List<User> users = new ArrayList<>();
-
-		List<AccountEntry> accountEntries =
-			AccountEntryTestUtil.addAccountEntries(
-				2, AccountEntryArgs.withOwner(accountEntryOwner),
-				accountEntryInfo -> {
-					User user = UserTestUtil.addUser();
-
-					users.add(user);
-
-					accountEntryInfo.users = new User[] {user};
-				});
-
-		for (int i = 0; i < accountEntries.size(); i++) {
-			_testGetUserAccountEntries(users.get(i), accountEntries.get(i));
-		}
+		_testGetUserAccountEntries(
+			user,
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withUsers(user)));
 	}
 
 	@Test
@@ -649,7 +629,7 @@ public class AccountEntryLocalServiceTest {
 				AccountEntryTestUtil.addAccountEntry(
 					AccountEntryArgs.withOwner(accountEntryOwner),
 					AccountEntryArgs.withUsers(accountEntryMember),
-					AccountEntryArgs.withType(type)));
+					accountEntryArgs -> accountEntryArgs.type = type));
 		}
 	}
 
@@ -838,7 +818,8 @@ public class AccountEntryLocalServiceTest {
 			_getLinkedHashMap(
 				"parentAccountEntryId", parentAccountEntry.getAccountEntryId()),
 			AccountEntryTestUtil.addAccountEntry(
-				AccountEntryArgs.withParentAccount(parentAccountEntry)));
+				accountEntryArgs ->
+					accountEntryArgs.parentAccountEntry = parentAccountEntry));
 	}
 
 	@Test

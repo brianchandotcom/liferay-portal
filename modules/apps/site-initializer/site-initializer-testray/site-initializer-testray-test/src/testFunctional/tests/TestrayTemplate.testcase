@@ -118,9 +118,9 @@ definition {
 	@description = "This is a test for LPS-163906 - Verify that can filter out deactivated models"
 	@ignore = "Test Stub"
 	@priority = "5"
-	test CanFilterDeactiveTemplate {
+	test CanFilterActiveTemplate {
 
-		// TODO LPS-163906 CanFilterDeactiveTemplate pending implementation
+		// TODO LPS-163906 CanFilterActiveTemplate pending implementation
 
 	}
 
@@ -256,9 +256,9 @@ definition {
 	@description = "This is a test for LPS-163907 - Verify that can see the deactivated templates in the filter when deactivate a template"
 	@ignore = "Test Stub"
 	@priority = "5"
-	test CanViewDeactiveInFilter {
+	test CanViewActiveInFilter {
 
-		// TODO LPS-163907 CanViewDeactiveInFilter pending implementation
+		// TODO LPS-163907 CanViewActiveInFilter pending implementation
 
 	}
 

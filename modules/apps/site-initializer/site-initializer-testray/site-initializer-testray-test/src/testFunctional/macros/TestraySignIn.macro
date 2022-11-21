@@ -29,21 +29,9 @@ definition {
 	}
 
 	macro enableChangePassword {
-		var passwordPolicyName = "Default Password Policy";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
-
-		var key_passwordPolicyName = "${passwordPolicyName}";
-
-		LexiconEntry.openEntryMenu(rowEntry = "${passwordPolicyName}");
-
-		MenuItem.click(menuItem = "Edit");
+		PasswordPolicies.openPasswordPoliciesAdmin();
 
 		PasswordPolicies.enableChangeable(
-			minimumAge = "None",
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");
 

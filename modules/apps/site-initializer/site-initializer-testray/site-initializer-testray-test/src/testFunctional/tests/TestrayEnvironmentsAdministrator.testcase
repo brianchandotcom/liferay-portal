@@ -369,11 +369,11 @@ definition {
 		task ("Assert a required field message is displayed") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
-				warningMessage = "This field is Required.");
+				warningMessage = "This field is required.");
 
 			Testray.viewErrorMessage(
 				fieldLabel = "Type",
-				warningMessage = "This field is Required.");
+				warningMessage = "This field is required.");
 		}
 	}
 

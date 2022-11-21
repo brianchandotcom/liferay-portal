@@ -158,12 +158,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162815 - Verify that as an Administrator I can edit and update a smart suite"
-	@ignore = "true"
 	@priority = "4"
 	test AdminCanEditSmartSuite {
-
-		// This test is blocked by LPS-163214
-
 		task ("Given that the user goes to add a new component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
@@ -192,15 +188,51 @@ definition {
 
 			TestraySuites.addSuite(
 				caseType = "Automated Functional Test",
-				mainComponent = "Tags",
-				priorityNumber = "3",
+				mainComponent = "Analytics Cloud",
+				priorityNumber = "1",
+				requirementName = "ATF_Requirements Summary",
 				smartSuite = "true",
+				subComponent = "Analytics Cloud",
 				suiteDescription = "ATF_Suites_1 Suite Description",
 				suiteName = "ATF_Suites_1 Suite");
 		}
 
-		// Missing the edit steps
+		task ("Then the case parameters are presented in the details of the suite") {
+			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
 
+			TestraySuites.verifyCaseParametersInSuite(
+				caseType = "Automated Functional Test",
+				components = "Analytics Cloud",
+				priority = "1",
+				requirements = "ATF_Requirements Summary",
+				subComponents = "Analytics Cloud");
+		}
+
+		task ("When the user edits the created smart suite") {
+			TestrayDropdown.selectProjectDirectory(project = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.editSmartSuite(
+				caseType = "Cucumber",
+				mainComponent = "Calendar",
+				priorityNumber = "5",
+				smartSuite = "true",
+				subComponent = "Wiki",
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
+		}
+
+		task ("Then the case parameters are presented with details edited") {
+			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
+
+			TestraySuites.verifyCaseParametersInSuite(
+				caseType = "Cucumber",
+				components = "Calendar",
+				priority = "5",
+				requirements = "ATF_Requirements Summary",
+				subComponents = "Wiki");
+		}
 	}
 
 	@description = "This is a test for LPS-160627 - Verify if as an Administrator I am able to edit suites"

@@ -17,12 +17,12 @@
 </tr>
 <tr>
 	<td>INPUT_COMMENT</td>
-	<td>//textarea[@id='commentMBMessage']</td>
+	<td>//textarea[@id='comment']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INPUT_ISSUES</td>
-	<td>//input[@id='issue']</td>
+	<td>//input[@id='issues']</td>
 	<td></td>
 </tr>
 <tr>

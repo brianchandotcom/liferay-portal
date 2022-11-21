@@ -116,6 +116,110 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editSmartSuite {
+		TestrayContextMenu.clickContextMenuProjects(name = "${suiteName}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+		if (isSet(smartSuite)) {
+			Click.clickAtNotVisible(
+				checkboxName = "Smart Suite",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "Select Case Parameters");
+
+			if (isSet(teamName)) {
+				Click(
+					key_parameterType = "Available Teams",
+					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					value1 = "${teamName}");
+
+				Click(
+					key_arrowDirection = "Right",
+					key_parameterType = "Available Teams",
+					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+			if (isSet(caseType)) {
+				Click(
+					key_parameterType = "Available Case Types",
+					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					value1 = "${caseType}");
+
+				Click(
+					key_arrowDirection = "Right",
+					key_parameterType = "Available Case Types",
+					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+			if (isSet(mainComponent)) {
+				Click(
+					key_parameterType = "Available Main Components",
+					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					value1 = "${mainComponent}");
+
+				Click(
+					key_arrowDirection = "Right",
+					key_parameterType = "Available Main Components",
+					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+			if (isSet(subComponent)) {
+				Click(
+					key_parameterType = "Available Sub Components",
+					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					value1 = "${subComponent}");
+
+				Click(
+					key_arrowDirection = "Right",
+					key_parameterType = "Available Sub Components",
+					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+			if (isSet(priorityNumber)) {
+				Click(
+					key_parameterType = "Available Priorities",
+					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					value1 = "${priorityNumber}");
+
+				Click(
+					key_arrowDirection = "Right",
+					key_parameterType = "Available Priorities",
+					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+			if (isSet(requirementName)) {
+				Click(
+					key_parameterType = "Available Requirements",
+					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					value1 = "${requirementName}");
+
+				Click(
+					key_arrowDirection = "Right",
+					key_parameterType = "Available Requirements",
+					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+			}
+
+			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+		}
+
+		if (isSet(caseName)) {
+			Click(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "Select Case");
+
+			Click.clickAtNotVisible(
+				key_caseName = "${caseName}",
+				locator1 = "TestraySuites#CASE_CHECKBOX");
+
+			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+		}
+
+		Button.clickSave();
+	}
+
 	macro editSuite {
 		TestrayContextMenu.clickContextMenuProjects(name = "${suiteName}");
 
@@ -143,6 +247,16 @@ definition {
 			key_text = "description",
 			locator1 = "TextArea#ANY",
 			value1 = "${suiteDescription}");
+	}
+
+	macro verifyCaseParametersInSuite {
+		AssertElementPresent(
+			key_caseType = "${caseType}",
+			key_components = "${components}",
+			key_priority = "${priority}",
+			key_requirements = "${requirements}",
+			key_subComponents = "${subComponents}",
+			locator1 = "TestraySuites#VIEW_CASE_PARAMETERS");
 	}
 
 	macro verifySuite {

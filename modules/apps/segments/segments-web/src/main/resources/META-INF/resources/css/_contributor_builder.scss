@@ -35,12 +35,13 @@
 				transition: all 0.5s ease;
 
 				.content-wrapper {
-					padding: 18px 24px;
-
-					.panel-header {
-						border-bottom: 1px solid;
-						border-bottom-color: #e7e7ed;
-						border-radius: 0;
+					.panel-header-link {
+						border-bottom: 1px solid $mainLighten74;
+						border-bottom-left-radius: 0;
+						border-bottom-right-radius: 0;
+						padding-bottom: 16px;
+						padding-left: 24px;
+						padding-top: 16px;
 					}
 
 					.panel-header-link {

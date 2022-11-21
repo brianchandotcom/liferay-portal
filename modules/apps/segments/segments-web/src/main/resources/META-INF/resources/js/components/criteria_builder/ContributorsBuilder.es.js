@@ -167,23 +167,26 @@ class ContributorBuilder extends React.Component {
 							)}
 
 							<ClayLayout.ContainerFluid>
-								<div className="content-wrapper">
+								<div className="content-wrapper p-4">
 									{Liferay.FeatureFlags['LPS-166954'] && (
 										<ClayPanel
+											className="mb-4"
 											collapsable
 											defaultExpanded={true}
 											displayTitle={
-												<h2 className="mb-0 size- text-dark">
-													{Liferay.Language.get(
-														'scope'
-													)}
-												</h2>
+												<ClayPanel.Title>
+													<h2 className="m-0 text-dark">
+														{Liferay.Language.get(
+															'scope'
+														)}
+													</h2>
+												</ClayPanel.Title>
 											}
 											displayType="secondary"
 											showCollapseIcon
 										>
-											<ClayPanel.Body className="align-items-center center d-flex justify-content-between">
-												<p className="mb-2 mr-6 mt-2 text-dark">
+											<ClayPanel.Body className="align-items-center d-flex justify-content-between p-4">
+												<p className="mb-0 mr-6">
 													{Liferay.Language.get(
 														'select-the-scope-of-your-segment-to-specify-where-it-can-be-used'
 													)}
@@ -191,8 +194,7 @@ class ContributorBuilder extends React.Component {
 
 												<ClayButton
 													displayType="secondary"
-													small
-													type="button"
+													size="sm"
 												>
 													{Liferay.Language.get(
 														'select'

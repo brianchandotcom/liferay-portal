@@ -17,7 +17,6 @@ package com.liferay.portal.vulcan.internal.graphql.servlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -49,12 +48,11 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		String field = RandomTestUtil.randomString();
-		long id = RandomTestUtil.randomLong();
+		TestServletData testServletData = new TestServletData();
 
 		ServiceRegistration<ServletData> serviceRegistration =
 			bundleContext.registerService(
-				ServletData.class, new TestServletData(), null);
+				ServletData.class, testServletData, null);
 
 		GraphQLField graphQLField = new GraphQLField(
 			TestDTO.class.getSimpleName(), new GraphQLField("field"),
@@ -64,8 +62,10 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 			invoke(graphQLField), "JSONObject/data",
 			"JSONObject/" + TestDTO.class.getSimpleName());
 
-		Assert.assertEquals(jsonObject.get("field"), field);
-		Assert.assertEquals(jsonObject.get("id"), id);
+		TestQuery testQuery = testServletData.getQuery();
+
+		Assert.assertEquals(jsonObject.get("field"), testQuery.getField());
+		Assert.assertEquals(jsonObject.get("id"), testQuery.getId());
 
 		serviceRegistration.unregister();
 	}

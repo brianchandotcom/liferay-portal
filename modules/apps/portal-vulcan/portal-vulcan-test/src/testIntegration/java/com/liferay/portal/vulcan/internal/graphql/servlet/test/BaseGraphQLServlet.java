@@ -97,7 +97,7 @@ public class BaseGraphQLServlet {
 		}
 
 		@Override
-		public Object getQuery() {
+		public TestQuery getQuery() {
 			return _testQuery;
 		}
 

@@ -141,18 +141,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		this.portalCacheManagerName = portalCacheManagerName;
 	}
 
-	public void setTransactionalPortalCacheEnabled(
-		boolean transactionalPortalCacheEnabled) {
-
-		this.transactionalPortalCacheEnabled = transactionalPortalCacheEnabled;
-	}
-
-	public void setTransactionalPortalCacheNames(
-		String[] transactionalPortalCacheNames) {
-
-		this.transactionalPortalCacheNames = transactionalPortalCacheNames;
-	}
-
 	@Override
 	public boolean unregisterPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener) {

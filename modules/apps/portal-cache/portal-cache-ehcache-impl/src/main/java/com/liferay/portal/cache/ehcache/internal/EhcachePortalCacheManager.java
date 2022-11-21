@@ -189,12 +189,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
-		setTransactionalPortalCacheEnabled(
-			GetterUtil.getBoolean(
-				props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED)));
-		setTransactionalPortalCacheNames(
-			GetterUtil.getStringValues(
-				props.getArray(PropsKeys.TRANSACTIONAL_CACHE_NAMES)));
+		transactionalPortalCacheEnabled = GetterUtil.getBoolean(
+			props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));
+
+		transactionalPortalCacheNames = GetterUtil.getStringValues(
+			props.getArray(PropsKeys.TRANSACTIONAL_CACHE_NAMES));
 
 		if (Validator.isNull(_configFile)) {
 			_configFile = _defaultConfigFile;

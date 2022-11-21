@@ -88,11 +88,11 @@ function refresh_sample_minimal_workspace {
 
 	npx @liferay/cli new delta-remote-app --batch true --options refresh-files/delta-remote-app-options.json
 
-	#sed -i'.bak' '/^.*react-scripts test.*$/d' delta-remote-app/package.json
-
 	rm -fr sample-minimal-workspace/client-extensions/delta-remote-app
 
 	mv delta-remote-app sample-minimal-workspace/client-extensions
+
+	cp -R refresh-files/sample-minimal-workspace/* sample-minimal-workspace/
 
 	rm -fr sample-default-workspace/client-extensions
 

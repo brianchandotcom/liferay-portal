@@ -1,0 +1,19 @@
+
+assemble:
+    - from: build/
+      include:
+      - "css/*"
+      - "index.js"
+      into: static/
+delta-remote-app:
+    cssURLs:
+        - css/styles.css
+    friendlyURLMapping: delta-remote-app
+    htmlElementName: delta-remote-app-element
+    instanceable: false
+    name: Delta Remote App
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - index.js
+    useESM: true

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -46,7 +47,8 @@ public class PageEditorCommentMentionsStrategy implements MentionsStrategy {
 
 	@Override
 	public List<User> getUsers(
-			long companyId, long userId, String query, JSONObject jsonObject)
+			long companyId, long groupId, long userId, String query,
+			JSONObject jsonObject)
 		throws PortalException {
 
 		SocialInteractionsConfiguration socialInteractionsConfiguration =
@@ -55,7 +57,7 @@ public class PageEditorCommentMentionsStrategy implements MentionsStrategy {
 					companyId, MentionsPortletKeys.MENTIONS);
 
 		List<User> users = _mentionsUserFinder.getUsers(
-			companyId, userId, query, socialInteractionsConfiguration);
+			companyId, groupId, userId, query, socialInteractionsConfiguration);
 
 		long plid = jsonObject.getLong("plid");
 
@@ -79,6 +81,16 @@ public class PageEditorCommentMentionsStrategy implements MentionsStrategy {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	@Override
+	public List<User> getUsers(
+			long companyId, long userId, String query, JSONObject jsonObject)
+		throws PortalException {
+
+		return getUsers(
+			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, userId, query,
+			jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

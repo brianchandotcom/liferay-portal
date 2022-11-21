@@ -14,6 +14,11 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.cache.LowLevelCache;
+import com.liferay.portal.cache.MVCCPortalCache;
+import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
@@ -26,11 +31,13 @@ import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -79,6 +86,44 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public PortalCache<K, V> getPortalCache(
+			String portalCacheName, boolean mvcc, boolean sharded)
+		throws PortalCacheException {
+
+		return portalCaches.compute(
+			portalCacheName,
+			(key, value) -> {
+				if (value != null) {
+					_verifyMVCCPortalCache(value, mvcc);
+					_verifyShardedPortalCache(value, sharded);
+
+					return value;
+				}
+
+				PortalCacheConfiguration portalCacheConfiguration =
+					portalCacheManagerConfiguration.getPortalCacheConfiguration(
+						portalCacheName);
+
+				value = createPortalCache(portalCacheConfiguration, sharded);
+
+				initPortalCacheListeners(value, portalCacheConfiguration);
+
+				if (mvcc) {
+					value = (PortalCache<K, V>)new MVCCPortalCache<>(
+						(LowLevelCache<K, MVCCModel>)value);
+				}
+
+				if (transactionalPortalCacheEnabled &&
+					_isTransactionalPortalCache(portalCacheName)) {
+
+					value = new TransactionalPortalCache<>(value, mvcc);
+				}
+
+				return value;
+			});
+	}
+
+	@Override
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader) {
 
@@ -119,7 +164,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_defaultConfigFile = defaultConfigFile;
 	}
 
-	@Override
 	protected PortalCache<K, V> createPortalCache(
 		PortalCacheConfiguration portalCacheConfiguration, boolean sharded) {
 
@@ -340,6 +384,19 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected BundleContext bundleContext;
 	protected volatile Props props;
 
+	private boolean _isTransactionalPortalCache(String portalCacheName) {
+		for (String namePattern : transactionalPortalCacheNames) {
+			if (StringUtil.wildcardMatches(
+					portalCacheName, namePattern, CharPool.QUESTION,
+					CharPool.STAR, CharPool.PERCENT, true)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _reconfigPortalCache(
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
@@ -363,6 +420,78 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 			initPortalCacheListeners(portalCache, portalCacheConfiguration);
 		}
+	}
+
+	private void _verifyMVCCPortalCache(
+		PortalCache<K, V> portalCache, boolean mvcc) {
+
+		if (mvcc == portalCache.isMVCC()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("Unable to get portal cache ");
+		sb.append(portalCache.getPortalCacheName());
+		sb.append(" from portal cache manager ");
+		sb.append(portalCacheManagerName);
+		sb.append(" as a ");
+
+		if (mvcc) {
+			sb.append("MVCC ");
+		}
+		else {
+			sb.append("non-MVCC ");
+		}
+
+		sb.append("portal cache, cause a ");
+
+		if (portalCache.isMVCC()) {
+			sb.append("MVCC ");
+		}
+		else {
+			sb.append("non-MVCC ");
+		}
+
+		sb.append("portal cache with same name exists.");
+
+		throw new IllegalStateException(sb.toString());
+	}
+
+	private void _verifyShardedPortalCache(
+		PortalCache<K, V> portalCache, boolean sharded) {
+
+		if (sharded == portalCache.isSharded()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("Unable to get portal cache ");
+		sb.append(portalCache.getPortalCacheName());
+		sb.append(" from portal cache manager ");
+		sb.append(portalCacheManagerName);
+		sb.append(" as a ");
+
+		if (sharded) {
+			sb.append("sharded ");
+		}
+		else {
+			sb.append("nonsharded ");
+		}
+
+		sb.append("portal cache, cause a ");
+
+		if (portalCache.isSharded()) {
+			sb.append("sharded ");
+		}
+		else {
+			sb.append("nonsharded ");
+		}
+
+		sb.append("portal cache with same name exists.");
+
+		throw new IllegalStateException(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

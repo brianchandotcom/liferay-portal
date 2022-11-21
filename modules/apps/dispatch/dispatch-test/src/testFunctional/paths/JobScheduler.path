@@ -26,13 +26,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TASK_EXECUTION_CLUSTER_MODE_OPTION</td>
+	<td>DISPATCH_CLUSTER_MODE_OPTION</td>
 	<td>//select[contains(@id,'dispatchTaskClusterMode')]/option[contains(text(),'${key_option}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TASK_EXECUTION_CLUSTER_MODE_SELECTOR</td>
+	<td>DISPATCH_CLUSTER_MODE_SELECTOR</td>
 	<td>//select[contains(@id,'dispatchTaskClusterMode')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RUN_NOW_BUTTON</td>
+	<td>//*[contains(text(),'${key_name}')]/ancestor::tr[contains(@data-qa-id,'row')]//*[contains(@class, 'lfr-btn-label') and text()='Run Now']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS</td>
+	<td>//*[contains(text(),'${key_name}')]/ancestor::tr[contains(@data-qa-id,'row')]//*[contains(@class, 'lfr-status-column')]/*[contains(@class, 'background-task-status-row') and contains(text(), '${status}')]</td>
 	<td></td>
 </tr>
 </tbody>

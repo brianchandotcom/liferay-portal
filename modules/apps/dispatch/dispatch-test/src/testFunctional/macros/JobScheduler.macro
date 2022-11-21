@@ -65,4 +65,24 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_dispatch_web_internal_portlet_DispatchPortlet");
 	}
 
+	macro setJobSchedulerTrigger {
+		Variables.assertDefined(parameterList = "${key_name},${selectFieldLabel},${selectFieldValue}");
+
+		Click(
+			key_name = "${key_name}",
+			locator1 = "JobScheduler#JOB_ITEM_NAME");
+
+		Click(
+			key_tab = "Job Scheduler Trigger",
+			locator1 = "NavTab#TAB_LINK");
+
+		SelectField.select(
+			selectFieldLabel = "${selectFieldLabel}",
+			selectFieldValue = "${selectFieldValue}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 }

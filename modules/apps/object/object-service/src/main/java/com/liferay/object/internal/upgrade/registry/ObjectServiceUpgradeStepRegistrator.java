@@ -238,7 +238,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"3.26.0", "3.26.1",
 			UpgradeProcessFactory.alterColumnType(
-				"ObjectField", "className", "VARCHAR(255) null"));
+				"ObjectDefinition", "className", "VARCHAR(255) null"));
 	}
 
 	@Reference

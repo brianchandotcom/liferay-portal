@@ -485,7 +485,7 @@
 </tr>
 <tr>
 	<td>STAGING_BAR_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(@class,'control-menu-nav-item')]//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td>//li[contains(@class,'control-menu-nav-item')]//*[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -65,6 +65,116 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9998 We can see all order results on the Global Search by email"
+	@priority = "3"
+	test CanSeeAllOrdersOnTheGlobalSearchByEmail {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an order is placed by the buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("And an empty order created from Pending Orders by the buyer user") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When buyer user goes to the Catalog page and enters buyer@liferay.com on the global search") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+			Type(
+				key_text = "Search",
+				locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+				value1 = "buyer@liferay.com");
+		}
+
+		task ("Then the buyer can see the active order in Pending Orders page") {
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			AssertElementPresent(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			Click(
+				key_value = "${activeOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/pending-orders");
+		}
+
+		task ("And when buyer user goes to the Catalog page and enters buyer@liferay.com on the global search") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+			Type(
+				key_text = "Search",
+				locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+				value1 = "buyer@liferay.com");
+		}
+
+		task ("Then the buyer can see the other order in Placed Orders page with status Pending") {
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "2");
+
+			var placedOrderId = StringUtil.extractFirst("${orderIds}", ",");
+			var activeOrderId = StringUtil.extractLast("${orderIds}", ",");
+
+			AssertElementPresent(
+				key_value = "${placedOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			Click(
+				key_value = "${placedOrderId}",
+				locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/placed-orders");
+
+			AssertElementPresent(
+				key_status = "Pending",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+		}
+	}
+
 	@description = "COMMERCE-6664. I want to be able to disable Search Results widget pagination"
 	@priority = "3"
 	test DisableSearchResultsWidgetPagination {

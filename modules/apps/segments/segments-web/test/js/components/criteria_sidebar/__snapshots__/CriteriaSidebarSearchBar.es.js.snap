@@ -20,6 +20,7 @@ exports[`CriteriaSidebarSearchBar renders 1`] = `
         class="input-group-inset-item input-group-inset-item-after"
       >
         <button
+          aria-label="search-properties"
           class="btn btn-unstyled"
           data-testid="search-button"
           title="search-properties"
@@ -42,6 +43,7 @@ exports[`CriteriaSidebarSearchBar renders 1`] = `
 
 exports[`CriteriaSidebarSearchBar renders a button with a times icon when an input is entered 1`] = `
 <button
+  aria-label="clear-search"
   class="btn btn-unstyled"
   data-testid="search-button"
   title="clear-search"

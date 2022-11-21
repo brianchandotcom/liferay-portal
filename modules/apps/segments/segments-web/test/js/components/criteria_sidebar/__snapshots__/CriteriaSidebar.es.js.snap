@@ -31,6 +31,7 @@ exports[`CriteriaSidebar renders 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
+              aria-label="search-properties"
               class="btn btn-unstyled"
               data-testid="search-button"
               title="search-properties"

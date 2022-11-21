@@ -239,7 +239,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		_doRemoveShardedPortalCache(companyId, shardedPortalCaches);
+		_removeShardedPortalCache(companyId, shardedPortalCaches);
 	}
 
 	public void setConfigFile(String configFile) {
@@ -312,18 +312,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 
 		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
-	}
-
-	private void _doRemoveShardedPortalCache(
-		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
-
-		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
-			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
-				(ShardedEhcachePortalCache<K, V>)
-					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
-
-			shardedEhcachePortalCache.removeEhcache(companyId);
-		}
 	}
 
 	private void _initPortalCacheListeners(
@@ -541,6 +529,18 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 				portalCache.unregisterPortalCacheListener(portalCacheListener);
 			}
+		}
+	}
+
+	private void _removeShardedPortalCache(
+		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
+
+		for (PortalCache<K, V> shardedPortalCache : shardedPortalCaches) {
+			ShardedEhcachePortalCache<K, V> shardedEhcachePortalCache =
+				(ShardedEhcachePortalCache<K, V>)
+					EhcacheUnwrapUtil.getWrappedPortalCache(shardedPortalCache);
+
+			shardedEhcachePortalCache.removeEhcache(companyId);
 		}
 	}
 

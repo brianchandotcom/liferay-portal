@@ -497,9 +497,9 @@ definition {
 			optionValue = "Switch 1",
 			rowNumber = "1");
 
-		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
-			optionValue = "Switch 1");
+		AssertElementPresent(
+			key_toggleSwitchLabel = "Switch 1",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Form.gotoAdvancedTab();
 
@@ -515,9 +515,9 @@ definition {
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Multiple Selection");
 
-		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
-			optionValue = "Switch 1");
+		AssertElementPresent(
+			key_toggleSwitchLabel = "Switch 1",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
 	@description = "Verify that options can be added"
@@ -634,9 +634,9 @@ definition {
 			optionValue = "Switch 1",
 			rowNumber = "1");
 
-		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
-			optionValue = "Switch 1");
+		AssertElementPresent(
+			key_toggleSwitchLabel = "Switch 1",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Form.save();
 
@@ -644,9 +644,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.viewSwitchOption(
-			fieldName = "MultipleSelection",
-			optionValue = "Switch 1");
+		AssertElementPresent(
+			key_toggleSwitchLabel = "Switch 1",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"

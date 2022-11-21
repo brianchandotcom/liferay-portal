@@ -51,7 +51,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Adam Brandizzi
  */
 @Component(
-	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-search-admin",
 		"com.liferay.portlet.display-category=category.hidden",

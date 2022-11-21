@@ -161,14 +161,12 @@ const InviteTeamMembersPage = ({
 				isSelectdAdministratorOrRequestorRole
 			) {
 				setBaseButtonDisabled(true);
-			}
-			else {
+			} else {
 				setInitialError(false);
 				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -187,7 +185,6 @@ const InviteTeamMembersPage = ({
 			setIsLoadingUserInvitation(true);
 			const newMembersData = await addTeamMemberInvitation({
 				context: {
-					displaySuccess: false,
 					type: 'liferay-rest',
 				},
 				variables: {
@@ -204,6 +201,9 @@ const InviteTeamMembersPage = ({
 
 			filledEmails.map(async ({email, role}) => {
 				await associateUserAccount({
+					context: {
+						displaySuccess: false,
+					},
 					variables: {
 						accountKey: project.accountKey,
 						accountRoleId: role.id,
@@ -232,8 +232,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

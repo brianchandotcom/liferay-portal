@@ -11,7 +11,7 @@
 
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {Navigate, useOutletContext} from 'react-router-dom';
 import i18n from '../../../../common/I18n';
 import Table from '../../../../common/components/Table';
 import {useCustomerPortal} from '../../context';
@@ -25,6 +25,7 @@ import {
 	StatusColumn,
 } from '../ActivationKeysTable/utils/constants/columns-definitions';
 import {getTooltipContentRenderer} from '../ActivationKeysTable/utils/getTooltipContentRenderer';
+import {hasAdminOrPartnerManager} from '../ActivationKeysTable/utils/hasAdminOrPartnerManager';
 import DeactivateKeysSkeleton from './Skeleton';
 import DeactivateKeysTableFooter from './components/Footer';
 import DeactivationKeysTableHeader from './components/Header';
@@ -32,7 +33,7 @@ import useFilters from './components/Header/hooks/useFilters';
 import {DEACTIVATE_COLUMNS} from './utils/constants';
 
 const DeactivateKeysTable = ({productName}) => {
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
@@ -90,6 +91,15 @@ const DeactivateKeysTable = ({productName}) => {
 		}),
 		[]
 	);
+
+	const isAdminOrPartnerManager = hasAdminOrPartnerManager(
+		project,
+		userAccount
+	);
+
+	if (!isAdminOrPartnerManager) {
+		return <Navigate replace={true} to={`/${project?.accountKey}`} />;
+	}
 
 	return (
 		<div className="h-100 ml-auto mr-auto w-75">

@@ -70,7 +70,8 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 		Map<String, List<String>> pathsMap = new TreeMap<>();
 
 		String serverURL =
-			_portal.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE;
+			_portal.getPortalURL(_httpServletRequest) + _portal.getPathProxy() +
+				Portal.PATH_MODULE;
 
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 

@@ -1560,6 +1560,12 @@ components:
                     description:
                         The fragment's name.
                     type: string
+                siteKey:
+                    # @review
+                    description:
+                        The key of the site to which this fragment is scoped.
+                    readOnly: true
+                    type: string
             type: object
         FragmentField:
             # @review

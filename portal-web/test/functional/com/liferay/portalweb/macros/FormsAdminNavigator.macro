@@ -71,7 +71,7 @@ definition {
 
 		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
 
-		Click(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD");
+		DropdownMenuItem.click(menuItem = "Delete");
 	}
 
 	macro gotoEditField {

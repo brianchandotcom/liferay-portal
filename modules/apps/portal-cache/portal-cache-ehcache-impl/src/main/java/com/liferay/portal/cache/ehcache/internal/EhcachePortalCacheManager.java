@@ -130,7 +130,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public String getPortalCacheManagerName() {
-		return portalCacheManagerName;
+		return _portalCacheManagerName;
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	public void setPortalCacheManagerName(String portalCacheManagerName) {
-		this.portalCacheManagerName = portalCacheManagerName;
+		_portalCacheManagerName = portalCacheManagerName;
 	}
 
 	protected PortalCache<K, V> createPortalCache(
@@ -245,7 +245,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		if (Validator.isNull(portalCacheManagerName)) {
+		if (Validator.isNull(_portalCacheManagerName)) {
 			throw new IllegalArgumentException(
 				"Portal cache manager name is not specified");
 		}
@@ -418,7 +418,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected BundleContext bundleContext;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
-	protected String portalCacheManagerName;
 	protected volatile Props props;
 
 	private boolean _isTransactionalPortalCache(String portalCacheName) {
@@ -471,7 +470,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(portalCacheManagerName);
+		sb.append(_portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (mvcc) {
@@ -507,7 +506,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(portalCacheManagerName);
+		sb.append(_portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (sharded) {
@@ -541,6 +540,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ServiceTracker<MBeanServer, ManagementService>
 		_mBeanServerServiceTracker;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
+	private String _portalCacheManagerName;
 	private boolean _transactionalPortalCacheEnabled;
 	private String[] _transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 	private boolean _usingDefault;

@@ -103,6 +103,7 @@ export default function PagesTree({
 			>
 				{(item, selection, expand, load) => (
 					<TreeItem
+						config={config}
 						expand={expand}
 						item={item}
 						load={load}
@@ -122,13 +123,14 @@ PagesTree.propTypes = {
 	selectedLayoutId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
+function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 	const stackAnchorRef = useRef(null);
 	const itemAnchorRef = useRef(null);
 
 	return (
 		<ClayTreeView.Item
 			actions={
+				!config.stagingEnabled &&
 				item.actions && (
 					<ClayDropDownWithItems
 						items={normalizeActions(item.actions, namespace)}
@@ -179,21 +181,23 @@ function TreeItem({expand, item, load, namespace, selectedLayoutId}) {
 				{(item) => (
 					<ClayTreeView.Item
 						actions={
-							<ClayDropDownWithItems
-								items={normalizeActions(
-									item.actions,
-									namespace
-								)}
-								renderMenuOnClick
-								trigger={
-									<ClayButtonWithIcon
-										className="component-action quick-action-item"
-										displayType={null}
-										small
-										symbol="ellipsis-v"
-									/>
-								}
-							/>
+							!config.stagingEnabled && (
+								<ClayDropDownWithItems
+									items={normalizeActions(
+										item.actions,
+										namespace
+									)}
+									renderMenuOnClick
+									trigger={
+										<ClayButtonWithIcon
+											className="component-action quick-action-item"
+											displayType={null}
+											small
+											symbol="ellipsis-v"
+										/>
+									}
+								/>
+							)
 						}
 						active={selectedLayoutId === item.id ? 'true' : null}
 						expandable={item.hasChildren}

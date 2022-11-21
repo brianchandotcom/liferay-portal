@@ -28,8 +28,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -46,7 +46,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -198,59 +197,62 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 	}
 
 	private String _getCancelCheckOutURL() throws PortalException {
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, _portal.getPortletId(request),
-			PortletRequest.ACTION_PHASE);
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				request, _portal.getPortletId(request),
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/document_library/cancel_check_out_in_one_drive"
+		).setParameter(
+			"fileEntryId", fileVersion.getFileEntryId()
+		).setParameter(
+			"folderId",
+			() -> {
+				FileEntry fileEntry = fileVersion.getFileEntry();
 
-		liferayPortletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/document_library/cancel_check_out_in_one_drive");
-		liferayPortletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		liferayPortletURL.setParameter(
-			"folderId", String.valueOf(fileEntry.getFolderId()));
-
-		return liferayPortletURL.toString();
+				return fileEntry.getFolderId();
+			}
+		).buildString();
 	}
 
 	private String _getCheckInURL() throws PortalException {
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, _portal.getPortletId(request),
-			PortletRequest.ACTION_PHASE);
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				request, _portal.getPortletId(request),
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/document_library/check_in_in_one_drive"
+		).setParameter(
+			"fileEntryId", fileVersion.getFileEntryId()
+		).setParameter(
+			"folderId",
+			() -> {
+				FileEntry fileEntry = fileVersion.getFileEntry();
 
-		liferayPortletURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/document_library/check_in_in_one_drive");
-		liferayPortletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		liferayPortletURL.setParameter(
-			"folderId", String.valueOf(fileEntry.getFolderId()));
-
-		return liferayPortletURL.toString();
+				return fileEntry.getFolderId();
+			}
+		).buildString();
 	}
 
 	private String _getEditURL(String cmd, String url) throws PortalException {
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, _portal.getPortletId(request),
-			PortletRequest.ACTION_PHASE);
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				request, _portal.getPortletId(request),
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			url
+		).setCMD(
+			cmd
+		).setParameter(
+			"fileEntryId", fileVersion.getFileEntryId()
+		).setParameter(
+			"folderId",
+			() -> {
+				FileEntry fileEntry = fileVersion.getFileEntry();
 
-		liferayPortletURL.setParameter(ActionRequest.ACTION_NAME, url);
-		liferayPortletURL.setParameter(Constants.CMD, cmd);
-		liferayPortletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		liferayPortletURL.setParameter(
-			"folderId", String.valueOf(fileEntry.getFolderId()));
-
-		return liferayPortletURL.toString();
+				return fileEntry.getFolderId();
+			}
+		).buildString();
 	}
 
 	private String _getLabelKey() {

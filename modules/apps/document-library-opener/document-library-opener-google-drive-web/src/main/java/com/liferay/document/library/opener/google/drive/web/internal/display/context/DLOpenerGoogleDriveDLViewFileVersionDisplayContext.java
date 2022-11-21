@@ -28,8 +28,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -47,7 +47,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -187,25 +186,26 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	}
 
 	private String _getActionURL(String cmd) throws PortalException {
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, _portal.getPortletId(request),
-			PortletRequest.ACTION_PHASE);
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				request, _portal.getPortletId(request),
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/document_library/edit_in_google_docs"
+		).setCMD(
+			cmd
+		).setParameter(
+			"fileEntryId", fileVersion.getFileEntryId()
+		).setParameter(
+			"folderId",
+			() -> {
+				FileEntry fileEntry = fileVersion.getFileEntry();
 
-		liferayPortletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/document_library/edit_in_google_docs");
-		liferayPortletURL.setParameter(Constants.CMD, cmd);
-		liferayPortletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		liferayPortletURL.setParameter(
-			"folderId", String.valueOf(fileEntry.getFolderId()));
-
-		liferayPortletURL.setParameter(
-			"googleDocsRedirect", _portal.getCurrentURL(request));
-
-		return liferayPortletURL.toString();
+				return fileEntry.getFolderId();
+			}
+		).setParameter(
+			"googleDocsRedirect", _portal.getCurrentURL(request)
+		).buildString();
 	}
 
 	private String _getLabelKey() {
@@ -277,7 +277,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 			}
 			else if (DLUIItemKeys.CHECKIN.equals(dropdownItem.get("key"))) {
 				if (_isCheckingInNewFile()) {
-					dropdownItem.setData(new HashMap<String, Object>());
+					dropdownItem.setData(new HashMap<>());
 					dropdownItem.setHref(_getActionURL(Constants.CHECKIN));
 				}
 				else {

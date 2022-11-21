@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false, immediate = true, service = SXPElementSearchRegistrar.class
-)
+@Component(enabled = false, service = SXPElementSearchRegistrar.class)
 public class SXPElementSearchRegistrar {
 
 	@Activate

@@ -88,10 +88,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false, immediate = true,
-	service = SXPBlueprintSearchRequestEnhancer.class
-)
+@Component(enabled = false, service = SXPBlueprintSearchRequestEnhancer.class)
 public class SXPBlueprintSearchRequestEnhancerImpl
 	implements SXPBlueprintSearchRequestEnhancer {
 

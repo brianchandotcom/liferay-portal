@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "indexer.class.name=com.liferay.search.experiences.model.SXPBlueprint",
 	service = ModelDocumentContributor.class
 )

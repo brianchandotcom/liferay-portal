@@ -26,9 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false, immediate = true, service = SXPElementValidator.class
-)
+@Component(enabled = false, service = SXPElementValidator.class)
 public class SXPElementValidatorImpl implements SXPElementValidator {
 
 	@Override

@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
-	enabled = false, immediate = true,
-	service = SentenceEmbeddingRetriever.class
+	enabled = false, service = SentenceEmbeddingRetriever.class
 )
 public class SentenceEmbeddingRetrieverImpl
 	implements SentenceEmbeddingRetriever {

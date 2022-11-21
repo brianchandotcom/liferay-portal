@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.search.experiences.internal.configuration.AsahSearchKeywordsConfiguration",
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "search.suggestions.contributor.name=asahTopSearchKeywords",
 	service = SuggestionsContributor.class
 )

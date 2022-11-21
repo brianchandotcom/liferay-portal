@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration",
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "indexer.class.name=com.liferay.message.boards.model.MBMessage",
 	service = ModelDocumentContributor.class
 )

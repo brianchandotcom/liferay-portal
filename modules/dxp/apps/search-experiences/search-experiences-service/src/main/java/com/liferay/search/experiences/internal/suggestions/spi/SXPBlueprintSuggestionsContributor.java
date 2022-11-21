@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "search.suggestions.contributor.name=sxpBlueprint",
 	service = SuggestionsContributor.class
 )

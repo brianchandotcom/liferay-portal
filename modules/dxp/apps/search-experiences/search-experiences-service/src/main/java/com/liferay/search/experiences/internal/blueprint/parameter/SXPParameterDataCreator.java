@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	service = {
 		SXPParameterContributorDefinitionProvider.class,
 		SXPParameterDataCreator.class

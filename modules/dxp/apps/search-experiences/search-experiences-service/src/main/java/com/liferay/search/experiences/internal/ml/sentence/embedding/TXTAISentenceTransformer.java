@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "search.experiences.sentence.transformer.name=txtai",
 	service = SentenceTransformer.class
 )

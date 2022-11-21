@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = true, immediate = true, service = UpgradeStepRegistrator.class
-)
+@Component(enabled = true, service = UpgradeStepRegistrator.class)
 public class SXPServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 

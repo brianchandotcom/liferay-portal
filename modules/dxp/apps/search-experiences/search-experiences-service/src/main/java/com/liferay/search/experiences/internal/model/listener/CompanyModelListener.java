@@ -56,8 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	enabled = false, immediate = true,
-	service = {CompanyModelListener.class, ModelListener.class}
+	enabled = false, service = {CompanyModelListener.class, ModelListener.class}
 )
 public class CompanyModelListener extends BaseModelListener<Company> {
 

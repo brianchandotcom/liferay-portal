@@ -97,25 +97,153 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-163909 - Verify if that can Activate Disabled Template"
+	@priority = "5"
+	test CanActivateDisabledTemplate {
+		task ("Given that the user adds a Template with status active") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			TestrayTemplate.viewTemplateDetails(
+				nameTemplate = "Build_Template",
+				statusTemplate = "Active");
+		}
+
+		task ("When changed the status of deactivate for Active") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
+
+			Refresh();
+
+			TestrayTemplate.viewTemplateDetails(
+				nameTemplate = "Build_Template",
+				statusTemplate = "Deactive");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Deactive");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Active");
+
+			Refresh();
+		}
+
+		task ("Then the Active status should appear in the list") {
+			Testray.assertItemName(key_name = "Active");
+		}
+	}
+
 	@description = "This is a test for LPS-163905 - Verify that when creating a build with template, it comes with 'Active' status by default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateTemplateWithActiveDefault {
+		task ("Given that the user adds a Template") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-163905 CanCreateTemplateWithActiveDefault pending implementation
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then the status active should appear") {
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			TestrayTemplate.viewTemplateDetails(
+				nameTemplate = "Build_Template",
+				statusTemplate = "Active");
+		}
 	}
 
 	@description = "This is a test for LPS-163908 - Verify if can delete an deactived template"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteDeactiveTemplate {
+		task ("Given that the user adds a Template with status deactive") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-163908 CanDeleteDeactiveTemplate pending implementation
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				label = "Application Server",
+				label1 = "Browser",
+				listCategory = "Application Server,Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayTemplate.addTemplate(
+				description = "Template Description",
+				dropdownItem = "New Template",
+				fieldName = "Build_Template",
+				gitHash = "12345",
+				routine = "Routines_1 Routine");
+
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			TestrayTemplate.viewTemplateDetails(
+				nameTemplate = "Build_Template",
+				statusTemplate = "Active");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Build_Template");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Deactivate");
+
+			Refresh();
+
+			TestrayTemplate.viewTemplateDetails(
+				nameTemplate = "Build_Template",
+				statusTemplate = "Deactive");
+		}
+
+		task ("When the deactive status is deleted") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Deactive");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+		}
+
+		task ("Then the deactive status should not appear in the list") {
+			Testray.assertItemNotPresent(key_name = "Deactive");
+		}
 	}
 
-	@description = "This is a test for LPS-163906 - Verify that can filter out deactivated models"
+	@description = "This is a test for LPS-163906 - Verify that can filter out activated models"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanFilterActiveTemplate {
@@ -140,15 +268,6 @@ definition {
 		task ("Then the error message should appear") {
 			Alert.viewErrorMessage(errorMessage = "At least one environment stack is required.");
 		}
-	}
-
-	@description = "This is a test for LPS-163909 - Verify that can not delete an activated template"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanNotDeleteActiveTemplate {
-
-		// TODO LPS-163909 CanNotDeleteActiveTemplate pending implementation
-
 	}
 
 	@description = "This is a test for LPS-166569 - Verify if As an administrator can search for the new template created"
@@ -253,7 +372,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-163907 - Verify that can see the deactivated templates in the filter when deactivate a template"
+	@description = "This is a test for LPS-163907 - Verify that can see the activated templates in the filter"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewActiveInFilter {

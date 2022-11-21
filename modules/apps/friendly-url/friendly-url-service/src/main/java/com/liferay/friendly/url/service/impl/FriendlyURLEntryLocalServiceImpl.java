@@ -673,7 +673,8 @@ public class FriendlyURLEntryLocalServiceImpl
 				groupId, classNameId, languageId, urlTitle, null);
 
 		if ((friendlyURLEntryLocalizationNotLanguageId != null) &&
-			(friendlyURLEntryLocalizationNotLanguageId.getClassPK() != notClassPK)) {
+			(friendlyURLEntryLocalizationNotLanguageId.getClassPK() !=
+				notClassPK)) {
 
 			return true;
 		}

@@ -84,12 +84,12 @@ public class CompanyLogServletTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_newCompany = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
-		_adminUser = UserTestUtil.addCompanyAdminUser(_newCompany);
+		_companyAdminUser = UserTestUtil.addCompanyAdminUser(_company);
 
 		File companyLogDirectory = Log4JUtil.getCompanyLogDirectory(
-			_newCompany.getCompanyId());
+			_company.getCompanyId());
 
 		for (File file : companyLogDirectory.listFiles()) {
 			_file = file;
@@ -101,7 +101,7 @@ public class CompanyLogServletTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		try {
-			_companyLocalService.deleteCompany(_newCompany);
+			_companyLocalService.deleteCompany(_company);
 		}
 		finally {
 			File parentDirectory = _file.getParentFile();
@@ -118,7 +118,7 @@ public class CompanyLogServletTest {
 
 		String message = StringBundler.concat(
 			"Unable to get file ", fileName, " for company ",
-			_newCompany.getCompanyId());
+			_company.getCompanyId());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				PortalImpl.class.getName(), LoggerTestUtil.WARN)) {
@@ -126,9 +126,9 @@ public class CompanyLogServletTest {
 			_assertHttpServletResponseStatusAndLogInfo(
 				_createMockHttpServletRequest(
 					StringBundler.concat(
-						StringPool.SLASH, _newCompany.getCompanyId(),
+						StringPool.SLASH, _company.getCompanyId(),
 						StringPool.SLASH, fileName),
-					_adminUser),
+					_companyAdminUser),
 				FileNotFoundException.class, message,
 				HttpServletResponse.SC_NOT_FOUND);
 
@@ -149,15 +149,15 @@ public class CompanyLogServletTest {
 	@Test
 	public void testDownloadWithInvalidPath() throws Exception {
 		File companyLogDirectory = Log4JUtil.getCompanyLogDirectory(
-			_newCompany.getCompanyId());
+			_company.getCompanyId());
 
 		File parentCompanyLogDirectory = companyLogDirectory.getParentFile();
 
 		_assertHttpServletResponseStatusAndLogInfo(
 			_createMockHttpServletRequest(
 				StringBundler.concat(
-					StringPool.SLASH, _newCompany.getCompanyId(), "/../"),
-				_adminUser),
+					StringPool.SLASH, _company.getCompanyId(), "/../"),
+				_companyAdminUser),
 			PrincipalException.class,
 			"Invalid path " + parentCompanyLogDirectory.getPath(),
 			HttpServletResponse.SC_FORBIDDEN);
@@ -172,7 +172,7 @@ public class CompanyLogServletTest {
 				StringBundler.concat(
 					StringPool.SLASH, companyId, StringPool.SLASH,
 					_file.getName()),
-				_adminUser),
+				_companyAdminUser),
 			NoSuchCompanyException.class,
 			"No Company exists with the primary key " + companyId,
 			HttpServletResponse.SC_NOT_FOUND);
@@ -183,9 +183,9 @@ public class CompanyLogServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			_createMockHttpServletRequest(
 				StringBundler.concat(
-					StringPool.SLASH, _newCompany.getCompanyId(),
-					StringPool.SLASH, _file.getName()),
-				_adminUser);
+					StringPool.SLASH, _company.getCompanyId(), StringPool.SLASH,
+					_file.getName()),
+				_companyAdminUser);
 
 		_servlet.service(mockHttpServletRequest, _mockHttpServletResponse);
 
@@ -229,7 +229,7 @@ public class CompanyLogServletTest {
 	@Test
 	public void testListWithCompanyAdminUser() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest("/", _adminUser);
+			_createMockHttpServletRequest("/", _companyAdminUser);
 
 		_servlet.service(mockHttpServletRequest, _mockHttpServletResponse);
 
@@ -237,12 +237,12 @@ public class CompanyLogServletTest {
 			_mockHttpServletResponse.getContentAsString());
 
 		_assertCompanyLogFiles(
-			mockHttpServletRequest, _newCompany, (JSONObject)jsonArray.get(0));
+			mockHttpServletRequest, _company, (JSONObject)jsonArray.get(0));
 	}
 
 	@Test
 	public void testListWithCompanyUser() throws Exception {
-		User user = UserTestUtil.addUser(_newCompany);
+		User user = UserTestUtil.addUser(_company);
 
 		_assertHttpServletResponseStatusAndLogInfo(
 			_createMockHttpServletRequest("/", user),
@@ -273,8 +273,7 @@ public class CompanyLogServletTest {
 				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 				(JSONObject)jsonArray.get(0));
 			_assertCompanyLogFiles(
-				mockHttpServletRequest, _newCompany,
-				(JSONObject)jsonArray.get(1));
+				mockHttpServletRequest, _company, (JSONObject)jsonArray.get(1));
 		}
 		finally {
 			if (omniAdminUser != null) {
@@ -476,9 +475,9 @@ public class CompanyLogServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			_createMockHttpServletRequest(
 				StringBundler.concat(
-					StringPool.SLASH, _newCompany.getCompanyId(),
-					StringPool.SLASH, _file.getName()),
-				_adminUser);
+					StringPool.SLASH, _company.getCompanyId(), StringPool.SLASH,
+					_file.getName()),
+				_companyAdminUser);
 
 		mockHttpServletRequest.setParameter("start", startString);
 		mockHttpServletRequest.setParameter("end", endString);
@@ -499,13 +498,13 @@ public class CompanyLogServletTest {
 		return mockHttpServletRequest;
 	}
 
-	private static User _adminUser;
+	private static Company _company;
+	private static User _companyAdminUser;
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
 	private static File _file;
-	private static Company _newCompany;
 
 	@Inject
 	private JSONFactory _jsonFactory;

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.access.control.AccessControlAdvisor;
 import com.liferay.portal.security.access.control.AccessControlAdvisorImpl;
@@ -68,6 +70,12 @@ public class OAuth2GraphQLRequestContextValidator
 
 		if (OAuth2ProviderScopeLiferayAccessControlContext.
 				isOAuth2AuthVerified()) {
+
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-158259"))) {
+
+				throw new ForbiddenException();
+			}
 
 			ServiceReference<?> serviceReference = _getServiceReference(
 				graphQLRequestContext.getApplicationName());

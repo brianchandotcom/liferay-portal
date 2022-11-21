@@ -18,12 +18,9 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
@@ -33,7 +30,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -134,7 +130,6 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -182,7 +177,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -993,26 +987,6 @@ public class JournalArticleLocalServiceImpl
 		checkArticlesByDisplayDate(date);
 
 		_previousCheckDate = date;
-	}
-
-	/**
-	 * Checks the web content article matching the group, article ID, and
-	 * version for an associated structure. If no structure is associated,
-	 * return; otherwise check that the article and structure match.
-	 *
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  articleId the primary key of the web content article
-	 * @param  version the web content article's version
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void checkStructure(long groupId, String articleId, double version)
-		throws PortalException {
-
-		JournalArticle article = journalArticlePersistence.findByG_A_V(
-			groupId, articleId, version);
-
-		checkStructure(article);
 	}
 
 	/**
@@ -7378,63 +7352,6 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
-	protected void checkStructure(Document contentDocument, DDMForm ddmForm)
-		throws PortalException {
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			checkStructureField(ddmFormField, contentDocument.getRootElement());
-		}
-	}
-
-	protected void checkStructure(JournalArticle article)
-		throws PortalException {
-
-		checkStructure(article, article.getDDMStructure());
-	}
-
-	protected void checkStructure(
-			JournalArticle article, DDMStructure ddmStructure)
-		throws PortalException {
-
-		checkStructure(article.getDocument(), ddmStructure.getDDMForm());
-	}
-
-	protected void checkStructureField(
-			DDMFormField ddmFormField, Element contentElement)
-		throws PortalException {
-
-		String fieldName = ddmFormField.getName();
-
-		boolean hasField = false;
-
-		for (Element childElement : contentElement.elements()) {
-			if (fieldName.equals(
-					childElement.attributeValue("name", StringPool.BLANK))) {
-
-				hasField = true;
-
-				for (DDMFormField childDDMFormField :
-						ddmFormField.getNestedDDMFormFields()) {
-
-					checkStructureField(childDDMFormField, childElement);
-				}
-
-				break;
-			}
-		}
-
-		if (!hasField) {
-			String contentElementType = contentElement.attributeValue(
-				"type", StringPool.BLANK);
-
-			if (!contentElementType.equals("list") &&
-				!contentElementType.equals("multi-list")) {
-
-				throw new StructureDefinitionException(fieldName);
-			}
-		}
-	}
-
 	protected String copyArticleImages(
 		JournalArticle oldArticle, JournalArticle newArticle) {
 
@@ -7497,59 +7414,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return oldArticle.getContent();
-	}
-
-	protected Map<String, LocalizedValue> createFieldsValuesMap(
-		Element parentElement, Locale defaultLocale) {
-
-		Map<String, LocalizedValue> fieldsValuesMap = new HashMap<>();
-
-		List<Element> dynamicElementElements = parentElement.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			String fieldName = dynamicElementElement.attributeValue(
-				"name", StringPool.BLANK);
-			LocalizedValue fieldLocalizedValue = new LocalizedValue(
-				defaultLocale);
-
-			List<Element> dynamicContentElements =
-				dynamicElementElement.elements("dynamic-content");
-
-			for (Element dynamicContentElement : dynamicContentElements) {
-				String languageId = dynamicContentElement.attributeValue(
-					"language-id");
-				String value = dynamicContentElement.getText();
-
-				fieldLocalizedValue.addString(
-					LocaleUtil.fromLanguageId(languageId), value);
-			}
-
-			fieldsValuesMap.put(fieldName, fieldLocalizedValue);
-
-			fieldsValuesMap.putAll(
-				createFieldsValuesMap(dynamicElementElement, defaultLocale));
-		}
-
-		return fieldsValuesMap;
-	}
-
-	protected Map<String, LocalizedValue> createFieldsValuesMap(
-		String content) {
-
-		try {
-			Document document = SAXReaderUtil.read(content);
-
-			Element rootElement = document.getRootElement();
-
-			Locale defaultLocale = LocaleUtil.fromLanguageId(
-				rootElement.attributeValue("default-locale"));
-
-			return createFieldsValuesMap(rootElement, defaultLocale);
-		}
-		catch (DocumentException documentException) {
-			throw new SystemException(documentException);
-		}
 	}
 
 	@Deactivate
@@ -8006,46 +7870,6 @@ public class JournalArticleLocalServiceImpl
 		return urlTitle;
 	}
 
-	protected String getURLViewInContext(
-		JournalArticle article, String portletId,
-		ServiceContext serviceContext) {
-
-		String defaultArticleURL = StringPool.BLANK;
-
-		try {
-			defaultArticleURL = _portal.getControlPanelFullURL(
-				article.getGroupId(), portletId, null);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		LiferayPortletRequest liferayPortletRequest =
-			serviceContext.getLiferayPortletRequest();
-
-		if (liferayPortletRequest == null) {
-			return defaultArticleURL;
-		}
-
-		try {
-			AssetRendererFactory<JournalArticle> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-					JournalArticle.class);
-
-			AssetRenderer<JournalArticle> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					article, AssetRendererFactory.TYPE_LATEST_APPROVED);
-
-			return assetRenderer.getURLViewInContext(
-				liferayPortletRequest, null, defaultArticleURL);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected boolean hasModifiedLatestApprovedVersion(
 		long groupId, String articleId, double version) {
 
@@ -8466,46 +8290,6 @@ public class JournalArticleLocalServiceImpl
 		catch (DocumentException documentException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(documentException);
-			}
-		}
-	}
-
-	protected void updateDDMFormFieldPredefinedValue(
-		DDMFormField ddmFormField, LocalizedValue ddmFormFieldValue) {
-
-		DDMForm ddmForm = ddmFormField.getDDMForm();
-
-		Set<Locale> ddmFormAvailableLocales = ddmForm.getAvailableLocales();
-
-		ddmFormField.setPredefinedValue(ddmFormFieldValue);
-
-		ddmFormAvailableLocales.addAll(ddmFormFieldValue.getAvailableLocales());
-
-		for (Locale locale : ddmFormAvailableLocales) {
-			LocalizedValue label = ddmFormField.getLabel();
-
-			Map<Locale, String> labelValues = label.getValues();
-
-			if (!labelValues.containsKey(locale)) {
-				label.addString(
-					locale, label.getString(label.getDefaultLocale()));
-			}
-
-			LocalizedValue style = ddmFormField.getStyle();
-
-			Map<Locale, String> styleValues = style.getValues();
-
-			if (!styleValues.containsKey(locale)) {
-				style.addString(
-					locale, style.getString(style.getDefaultLocale()));
-			}
-
-			LocalizedValue tip = ddmFormField.getTip();
-
-			Map<Locale, String> tipValues = tip.getValues();
-
-			if (!tipValues.containsKey(locale)) {
-				tip.addString(locale, tip.getString(tip.getDefaultLocale()));
 			}
 		}
 	}
@@ -9446,9 +9230,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

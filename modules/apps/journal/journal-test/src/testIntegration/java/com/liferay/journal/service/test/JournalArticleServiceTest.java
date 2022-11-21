@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
-import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -32,7 +31,6 @@ import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
@@ -44,7 +42,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -63,7 +60,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -221,51 +217,6 @@ public class JournalArticleServiceTest {
 
 		Assert.assertNotNull(_latestArticle);
 		Assert.assertEquals(_article, _latestArticle);
-	}
-
-	@Test(expected = StructureDefinitionException.class)
-	public void testCheckArticleWithInvalidStructure() throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			JournalArticle.class.getName());
-
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class));
-
-		String content = "<?xml version=\"1.0\"?><root></root>";
-
-		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
-			content, ddmStructure.getStructureKey(),
-			ddmTemplate.getTemplateKey());
-
-		article.setDocument(SAXReaderUtil.read(content));
-
-		ReflectionTestUtil.invoke(
-			_journalArticleLocalServiceImplInstance, "checkStructure",
-			new Class<?>[] {JournalArticle.class}, article);
-	}
-
-	@Test
-	public void testCheckArticleWithValidStructure() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		try {
-			JournalFolder parentFolder = JournalTestUtil.addFolder(
-				group.getGroupId(), RandomTestUtil.randomString());
-
-			JournalArticle article = JournalTestUtil.addArticle(
-				group.getGroupId(), parentFolder.getFolderId(), "title",
-				"content");
-
-			ReflectionTestUtil.invoke(
-				_journalArticleLocalServiceImplInstance, "checkStructure",
-				new Class<?>[] {Long.TYPE, String.class, Double.TYPE},
-				article.getGroupId(), article.getArticleId(),
-				article.getVersion());
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group);
-		}
 	}
 
 	@Test

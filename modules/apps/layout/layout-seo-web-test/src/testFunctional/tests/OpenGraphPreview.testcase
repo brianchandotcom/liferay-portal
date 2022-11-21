@@ -87,6 +87,24 @@ definition {
 		OpenGraph.viewNoPreviewImage(imageName = "Document_1.png");
 	}
 
+	@description = "This test covers LPS-153646. It ensures pages with accented names show their names from their canonical URL"
+	@priority = "3"
+	test CanPreviewCanonicalURLWithAccentedNames {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Heló");
+
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Guest",
+			layoutName = "Heló",
+			portlet = "SEO",
+			siteURLKey = "guest");
+
+		AssertTextEquals(
+			locator1 = "PagesAdmin#PREVIEW_URL",
+			value1 = "http://localhost:8080/hel%C3%B3");
+	}
+
 	@description = "This ensures that the OG preview is inherited from the SEO."
 	@priority = "5"
 	@refactordone

@@ -403,7 +403,7 @@
 
 <tr>
 	<td>FIELD_BODY</td>
-	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@class,'form-group')]//legend[contains(text(),'${key_fieldName}')] |//div[contains(@data-field-name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')] | //div[contains(@class,'form-group')]//legend[contains(text(),'${key_fieldName}')] |//div[contains(@data-field-name,'${key_fieldName}')] | //div[contains(@class,'form-group')]//input[contains(@name,'${key_fieldName}')]/parent::div/parent::div | //div[contains(@class,'custom-checkbox')]//span[text()='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -526,7 +526,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ELLIPSIS</td>
-	<td>//div[contains(@class,'ddm-field-actions-container')]//button[contains(@class,'dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
+	<td>//div[contains(@class,'form-builder-layout')]//label[text()='${key_fieldName}']/../../../..//button[@aria-label='Actions'] | //div[contains(@class,'ddm-field-actions-container')]//span[text()='${key_fieldName}']/..//button[@aria-label='Actions']</td>
 	<td></td>
 </tr>
 <tr>

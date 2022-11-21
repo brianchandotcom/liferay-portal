@@ -192,10 +192,10 @@
 	<@liferay_social_bookmarks["bookmarks"]
 		className=entry.getClassName()
 		classPK=entry.getClassPK()
-		displayStyle="${socialBookmarksDisplayStyle}"
+		displayStyle="${socialBookmarksDisplayStyle!}"
 		target="_blank"
 		title=entry.getTitle(locale)
-		types="${socialBookmarksTypes}"
+		types="${socialBookmarksTypes!}"
 		url=assetPublisherHelper.getAssetSocialURL(renderRequest, renderResponse, entry)
 	/>
 </#macro>

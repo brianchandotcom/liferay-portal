@@ -60,7 +60,7 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 		GraphQLField graphQLField = new GraphQLField(
 			testDTOSimpleClassName, new GraphQLField("field"),
-			new GraphQLField("id"));
+			new GraphQLField("_id"));
 
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
 			invoke(graphQLField), "JSONObject/data",
@@ -69,7 +69,7 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 		TestQuery testQuery = testServletData.getQuery();
 
 		Assert.assertEquals(jsonObject.get("field"), testQuery.getField());
-		Assert.assertEquals(jsonObject.get("id"), testQuery.getId());
+		Assert.assertEquals(jsonObject.get("_id"), testQuery.getId());
 
 		serviceRegistration.unregister();
 	}

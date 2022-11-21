@@ -15,6 +15,7 @@
 package com.liferay.fragment.entry.processor.drop.zone;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -27,7 +28,12 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -154,7 +160,33 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration) {
+	public void validateFragmentEntryHTML(String html, String configuration)
+		throws PortalException {
+
+		Document document = _getDocument(html);
+
+		Elements elements = document.select("lfr-drop-zone");
+
+		if (elements.isEmpty()) {
+			return;
+		}
+
+		List<String> elementIds = new ArrayList<>();
+
+		for (Element element : elements) {
+			String id = element.id();
+
+			if (Validator.isNotNull(id)) {
+				elementIds.add(id);
+			}
+		}
+
+		if (!elementIds.isEmpty() && (elementIds.size() != elements.size())) {
+			throw new FragmentEntryContentException(
+				_language.get(
+					_portal.getResourceBundle(LocaleUtil.getDefault()),
+					"you-must-define-a-unique-id-for-each-drop-zone"));
+		}
 	}
 
 	private Document _getDocument(String html) {
@@ -173,7 +205,13 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	private FragmentDropZoneRenderer _fragmentDropZoneRenderer;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

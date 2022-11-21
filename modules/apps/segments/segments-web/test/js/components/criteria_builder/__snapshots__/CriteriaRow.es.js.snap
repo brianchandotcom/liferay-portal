@@ -39,6 +39,7 @@ exports[`CriteriaRow renders 1`] = `
         value="test_val"
       />
       <button
+        aria-label="duplicate-segment-property"
         class="btn-outline-borderless btn-sm mr-1 btn btn-monospaced btn-secondary"
         title="duplicate-segment-property"
         type="button"
@@ -53,6 +54,7 @@ exports[`CriteriaRow renders 1`] = `
         </svg>
       </button>
       <button
+        aria-label="delete-segment-property"
         class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
         title="delete-segment-property"
         type="button"

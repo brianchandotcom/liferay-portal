@@ -45,7 +45,7 @@ const QuantityTaskBadge: React.FC<QuantityTaskBadgeProps> = ({
 	return (
 		<div
 			className={classNames(
-				`align-items-center d-flex justify-content-center quantity-task-badge `,
+				'align-items-center d-flex justify-content-center quantity-task-badge',
 				classStyle
 			)}
 		>
@@ -78,7 +78,7 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({expanded}) => {
 				<div className="task-sidebar">
 					<div
 						className={classNames(
-							'align-items-center d-flex  task-sidebar-title',
+							'align-items-center d-flex task-sidebar-title',
 							{
 								'justify-content-between': expanded,
 								'justify-content-center': !expanded,

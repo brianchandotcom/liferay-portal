@@ -47,7 +47,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 		>
 			<LinkComponent
 				className={classNames(
-					'cursor-pointer  testray-sidebar-item',
+					'cursor-pointer testray-sidebar-item',
 					{
 						active,
 						'testray-sidebar-item-expand': expanded,

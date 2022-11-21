@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = SynonymSetFilterWriter.class)
+@Component(service = SynonymSetFilterWriter.class)
 public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 
 	@Override

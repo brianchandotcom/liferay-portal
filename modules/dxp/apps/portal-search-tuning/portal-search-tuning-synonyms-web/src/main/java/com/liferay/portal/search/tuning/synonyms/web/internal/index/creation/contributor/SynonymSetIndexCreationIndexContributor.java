@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = IndexContributor.class)
+@Component(service = IndexContributor.class)
 public class SynonymSetIndexCreationIndexContributor
 	implements IndexContributor {
 

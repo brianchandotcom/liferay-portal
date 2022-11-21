@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = SynonymSetFilterReader.class)
+@Component(service = SynonymSetFilterReader.class)
 public class SynonymSetFilterReaderImpl implements SynonymSetFilterReader {
 
 	@Override

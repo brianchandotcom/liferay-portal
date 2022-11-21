@@ -21,6 +21,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
 	useMovementSource,
 	useMovementTarget,
+	useMovementTargetPosition,
 } from '../contexts/KeyboardMovementContext';
 import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
 import getLayoutDataItemTopperUniqueClassName from '../utils/getLayoutDataItemTopperUniqueClassName';
@@ -65,8 +66,18 @@ const getKeyboardMovementPosition = (targetId, targetPosition, previewRef) => {
 
 	const previewRect = previewRef.current.getBoundingClientRect();
 
-	const x =
-		topperRect.left + topperRect.width * 0.5 - previewRect.width * 0.5;
+	let x;
+
+	if (targetPosition === TARGET_POSITIONS.LEFT) {
+		x = topperRect.left - previewRect.width * 0.5;
+	}
+	else if (targetPosition === TARGET_POSITIONS.RIGHT) {
+		x = topperRect.right - previewRect.width * 0.5;
+	}
+	else {
+		x = topperRect.left + topperRect.width * 0.5 - previewRect.width * 0.5;
+	}
+
 	let y;
 
 	if (targetPosition === TARGET_POSITIONS.MIDDLE) {
@@ -87,12 +98,20 @@ const getKeyboardMovementPosition = (targetId, targetPosition, previewRef) => {
 			previewRect.height * 0.5 +
 			DRAG_FEEDBACK_HEIGHT * 0.5;
 	}
+	else {
+		y =
+			topperRect.top +
+			topperRect.height * 0.5 -
+			DRAG_FEEDBACK_HEIGHT * 0.5;
+	}
 
 	return {x, y};
 };
 
 export default function KeyboardMovementPreview() {
-	const {itemId, position} = useMovementTarget();
+	const {itemId} = useMovementTarget();
+	const position = useMovementTargetPosition();
+
 	const source = useMovementSource();
 
 	const [style, setStyle] = useState(INITIAL_STYLE);

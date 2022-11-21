@@ -236,6 +236,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                objectDefinitionExternalReferenceCode:
+                    type: string
                 objectDefinitionId:
                     format: int64
                     type: integer

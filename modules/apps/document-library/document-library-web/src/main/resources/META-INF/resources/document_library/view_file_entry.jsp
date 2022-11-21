@@ -99,24 +99,21 @@ if (portletTitleBasedNavigation) {
 			<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
 
 			<c:if test="<%= !portletTitleBasedNavigation %>">
-				<div class="file-entry-actions">
-					<liferay-frontend:sidebar-toggler-button
-						label="info"
-						sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId_" + fileEntry.getFileEntryId() %>'
-					/>
-
-					<%
-					for (ToolbarItem toolbarItem : dlViewFileEntryDisplayContext.getToolbarItems()) {
-					%>
-
-						<liferay-ui:toolbar-item
-							toolbarItem="<%= toolbarItem %>"
-						/>
-
-					<%
-					}
-					%>
-
+				<div class="file-entry-actions management-bar management-bar-light navbar navbar-expand-md">
+					<ul class="navbar-nav navbar-nav-expand">
+						<li class="nav-item">
+							<liferay-frontend:sidebar-toggler-button
+								cssClass="btn btn-monospaced btn-sm btn-unstyled"
+								icon="info-circle-open"
+								sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId_" + fileEntry.getFileEntryId() %>'
+							/>
+						</li>
+						<li class="nav-item">
+							<clay:dropdown-actions
+								dropdownItems="<%= dlViewFileEntryDisplayContext.getActionDropdownItems() %>"
+							/>
+						</li>
+					</ul>
 				</div>
 			</c:if>
 

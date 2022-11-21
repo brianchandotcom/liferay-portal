@@ -41,27 +41,26 @@ import java.util.List;
 public class AccountEntryTestUtil {
 
 	public static List<AccountEntry> addAccountEntries(
-			int number, AccountEntryArgs.Mod... mods)
+			int number, AccountEntryArgs.Consumer... consumers)
 		throws Exception {
 
 		List<AccountEntry> accountEntries = new ArrayList<>();
 
 		for (int i = 0; i < number; i++) {
-			accountEntries.add(addAccountEntry(mods));
+			accountEntries.add(addAccountEntry(consumers));
 		}
 
 		return accountEntries;
 	}
 
-	public static AccountEntry addAccountEntry(AccountEntryArgs.Mod... mods)
+	public static AccountEntry addAccountEntry(
+			AccountEntryArgs.Consumer... consumers)
 		throws Exception {
 
 		AccountEntryArgs accountEntryArgs = new AccountEntryArgs();
 
-		if (ArrayUtil.isNotEmpty(mods)) {
-			for (AccountEntryArgs.Mod mod : mods) {
-				mod.modify(accountEntryArgs);
-			}
+		for (AccountEntryArgs.Consumer consumer : consumers) {
+			consumer.accept(accountEntryArgs);
 		}
 
 		return _addAccountEntry(accountEntryArgs);
@@ -87,9 +86,17 @@ public class AccountEntryTestUtil {
 			serviceContext.setAssetTagNames(accountEntryArgs.assetTagNames);
 		}
 
+		long parentAccountEntryId = 0;
+
+		AccountEntry parentAccountEntry = accountEntryArgs.parentAccountEntry;
+
+		if (parentAccountEntry != null) {
+			parentAccountEntryId = parentAccountEntry.getAccountEntryId();
+		}
+
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.addAccountEntry(
-				accountEntryArgs.userId, accountEntryArgs.parentAccountEntryId,
+				accountEntryArgs.userId, parentAccountEntryId,
 				accountEntryArgs.name, accountEntryArgs.description,
 				accountEntryArgs.domains, accountEntryArgs.emailAddress,
 				accountEntryArgs.logoBytes, accountEntryArgs.taxIdNumber,
@@ -119,6 +126,15 @@ public class AccountEntryTestUtil {
 				ListUtil.toLongArray(
 					Arrays.asList(accountEntryArgs.users),
 					User.USER_ID_ACCESSOR));
+		}
+
+		if (accountEntryArgs.restrictMembership !=
+				accountEntry.isRestrictMembership()) {
+
+			accountEntry =
+				AccountEntryLocalServiceUtil.updateRestrictMembership(
+					accountEntry.getAccountEntryId(),
+					accountEntryArgs.restrictMembership);
 		}
 
 		return accountEntry;

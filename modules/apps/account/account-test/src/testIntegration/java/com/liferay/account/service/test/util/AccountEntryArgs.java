@@ -30,58 +30,39 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
  */
 public class AccountEntryArgs {
 
-	public static final Mod STATUS_INACTIVE = withStatus(
-		WorkflowConstants.STATUS_INACTIVE);
+	public static final Consumer STATUS_INACTIVE = accountEntryArgs ->
+		accountEntryArgs.status = WorkflowConstants.STATUS_INACTIVE;
 
-	public static final Mod TYPE_PERSON = withType(
-		AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON);
+	public static final Consumer TYPE_PERSON = accountEntryArgs ->
+		accountEntryArgs.type = AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
 
-	public static Mod withAccountGroups(AccountGroup... accountGroups) {
+	public static Consumer withAccountGroups(AccountGroup... accountGroups) {
 		return accountEntryArgs ->
 			accountEntryArgs.accountGroups = accountGroups;
 	}
 
-	public static Mod withAssetTagNames(String... assetTagNames) {
-		return accountEntryArgs ->
-			accountEntryArgs.assetTagNames = assetTagNames;
-	}
-
-	public static Mod withDescription(String description) {
+	public static Consumer withDescription(String description) {
 		return accountEntryArgs -> accountEntryArgs.description = description;
 	}
 
-	public static Mod withDomains(String... domains) {
+	public static Consumer withDomains(String... domains) {
 		return accountEntryArgs -> accountEntryArgs.domains = domains;
 	}
 
-	public static Mod withName(String name) {
+	public static Consumer withName(String name) {
 		return accountEntryArgs -> accountEntryArgs.name = name;
 	}
 
-	public static Mod withOrganizations(Organization... organizations) {
+	public static Consumer withOrganizations(Organization... organizations) {
 		return accountEntryArgs ->
 			accountEntryArgs.organizations = organizations;
 	}
 
-	public static Mod withOwner(User user) {
+	public static Consumer withOwner(User user) {
 		return accountEntryArgs -> accountEntryArgs.userId = user.getUserId();
 	}
 
-	public static Mod withParentAccount(AccountEntry parentAccountEntry) {
-		return accountEntryArgs ->
-			accountEntryArgs.parentAccountEntryId =
-				parentAccountEntry.getAccountEntryId();
-	}
-
-	public static Mod withStatus(int status) {
-		return accountEntryArgs -> accountEntryArgs.status = status;
-	}
-
-	public static Mod withType(String type) {
-		return accountEntryArgs -> accountEntryArgs.type = type;
-	}
-
-	public static Mod withUsers(User... users) {
+	public static Consumer withUsers(User... users) {
 		return accountEntryArgs -> accountEntryArgs.users = users;
 	}
 
@@ -96,7 +77,8 @@ public class AccountEntryArgs {
 	public byte[] logoBytes = null;
 	public String name = RandomTestUtil.randomString(50);
 	public Organization[] organizations = null;
-	public long parentAccountEntryId = 0L;
+	public AccountEntry parentAccountEntry = null;
+	public boolean restrictMembership = true;
 	public ServiceContext serviceContext = null;
 	public int status = WorkflowConstants.STATUS_APPROVED;
 	public String taxIdNumber = RandomTestUtil.randomString(50);
@@ -105,10 +87,8 @@ public class AccountEntryArgs {
 	public User[] users = null;
 
 	@FunctionalInterface
-	public interface Mod {
-
-		public void modify(AccountEntryArgs accountEntryArgs) throws Exception;
-
+	public interface Consumer
+		extends java.util.function.Consumer<AccountEntryArgs> {
 	}
 
 }

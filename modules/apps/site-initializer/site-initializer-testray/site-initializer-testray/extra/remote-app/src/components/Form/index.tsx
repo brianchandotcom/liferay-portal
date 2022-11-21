@@ -32,7 +32,9 @@ Form.BaseRow = BaseRow;
 Form.BaseWarning = BaseWarning;
 Form.BaseWrapper = BaseWrapper;
 Form.Checkbox = Checkbox;
-Form.Divider = () => <hr />;
+Form.Divider = (props: React.HTMLAttributes<HTMLHRElement>) => (
+	<hr {...props} />
+);
 Form.DualListBox = DualListBox;
 Form.Footer = Footer;
 Form.Input = Input;

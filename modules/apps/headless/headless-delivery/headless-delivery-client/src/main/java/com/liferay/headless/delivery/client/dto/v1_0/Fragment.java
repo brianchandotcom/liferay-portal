@@ -93,6 +93,27 @@ public class Fragment implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getSiteKey() {
+		return siteKey;
+	}
+
+	public void setSiteKey(String siteKey) {
+		this.siteKey = siteKey;
+	}
+
+	public void setSiteKey(
+		UnsafeSupplier<String, Exception> siteKeyUnsafeSupplier) {
+
+		try {
+			siteKey = siteKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String siteKey;
+
 	@Override
 	public Fragment clone() throws CloneNotSupportedException {
 		return (Fragment)super.clone();

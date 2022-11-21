@@ -139,6 +139,38 @@ public class Fragment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema(
+		description = "The key of the site to which this fragment is scoped."
+	)
+	public String getSiteKey() {
+		return siteKey;
+	}
+
+	public void setSiteKey(String siteKey) {
+		this.siteKey = siteKey;
+	}
+
+	@JsonIgnore
+	public void setSiteKey(
+		UnsafeSupplier<String, Exception> siteKeyUnsafeSupplier) {
+
+		try {
+			siteKey = siteKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The key of the site to which this fragment is scoped."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String siteKey;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -204,6 +236,20 @@ public class Fragment implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (siteKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(siteKey));
 
 			sb.append("\"");
 		}

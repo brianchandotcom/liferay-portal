@@ -168,33 +168,39 @@ class ContributorBuilder extends React.Component {
 
 							<ClayLayout.ContainerFluid>
 								<div className="content-wrapper">
-									<ClayPanel
-										collapsable
-										defaultExpanded={true}
-										displayTitle={
-											<h2 className="mb-0 size- text-dark">
-												{Liferay.Language.get('scope')}
-											</h2>
-										}
-										displayType="secondary"
-										showCollapseIcon
-									>
-										<ClayPanel.Body className="align-items-center center d-flex justify-content-between">
-											<p className="mb-2 mr-6 mt-2 text-dark">
-												{Liferay.Language.get(
-													'select-the-scope-of-your-segment-to-specify-where-it-can-be-used'
-												)}
-											</p>
+									{Liferay.FeatureFlags['LPS-166954'] && (
+										<ClayPanel
+											collapsable
+											defaultExpanded={true}
+											displayTitle={
+												<h2 className="mb-0 size- text-dark">
+													{Liferay.Language.get(
+														'scope'
+													)}
+												</h2>
+											}
+											displayType="secondary"
+											showCollapseIcon
+										>
+											<ClayPanel.Body className="align-items-center center d-flex justify-content-between">
+												<p className="mb-2 mr-6 mt-2 text-dark">
+													{Liferay.Language.get(
+														'select-the-scope-of-your-segment-to-specify-where-it-can-be-used'
+													)}
+												</p>
 
-											<ClayButton
-												displayType="secondary"
-												small
-												type="button"
-											>
-												{Liferay.Language.get('select')}
-											</ClayButton>
-										</ClayPanel.Body>
-									</ClayPanel>
+												<ClayButton
+													displayType="secondary"
+													small
+													type="button"
+												>
+													{Liferay.Language.get(
+														'select'
+													)}
+												</ClayButton>
+											</ClayPanel.Body>
+										</ClayPanel>
+									)}
 
 									{Liferay.FeatureFlags['LPS-166954'] && (
 										<ClayPanel

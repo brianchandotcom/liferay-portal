@@ -17,6 +17,7 @@ import {TColumn} from './Table';
 interface IManagementToolbarProps {
 	columns: TColumn[];
 	disabled: boolean;
+	lazyRequest: () => void;
 }
 declare const ManagementToolbar: React.FC<IManagementToolbarProps>;
 export default ManagementToolbar;

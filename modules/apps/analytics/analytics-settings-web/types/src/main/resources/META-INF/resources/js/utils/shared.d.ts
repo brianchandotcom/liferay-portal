@@ -12,15 +12,8 @@
  * details.
  */
 
-export declare type TUseFecthDataResult = {
-	data?: any;
-	error: boolean;
-	loading: boolean;
-	refetch: () => void;
-	refetching: boolean;
-};
-declare function useFetchData(
-	fetchFn: (queryString?: string) => Promise<any>,
-	queryString?: string
-): TUseFecthDataResult;
-export default useFetchData;
+import {TFormattedItems} from '../components/table/Table';
+export declare function getIds(
+	items: TFormattedItems,
+	initialIds: number[]
+): number[];

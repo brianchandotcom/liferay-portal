@@ -12,12 +12,24 @@
  * details.
  */
 
-import React from 'react';
-interface IPanelProps {
-	onSyncAllAccountsChange: () => void;
-	onSyncAllContactsChange: () => void;
-	syncAllAccounts: boolean;
-	syncAllContacts: boolean;
-}
-declare const SelectPanels: React.FC<IPanelProps>;
-export default SelectPanels;
+declare type TRequestFn = (params?: any) => Promise<any>;
+declare type TResult<TData> = {
+	data: TData | null;
+	error: boolean;
+	loading: boolean;
+	refetch: () => void;
+};
+export declare type TUseLazyRequest<TData> = {
+	data: TData | null;
+	error: boolean;
+	loading: boolean;
+};
+export declare function useLazyRequest<TData, TParams = any>(
+	requestFn: TRequestFn,
+	params?: TParams
+): [() => void, TUseLazyRequest<TData>];
+export declare function useRequest<TData, TParams = any>(
+	requestFn: TRequestFn,
+	params?: TParams
+): TResult<TData>;
+export {};

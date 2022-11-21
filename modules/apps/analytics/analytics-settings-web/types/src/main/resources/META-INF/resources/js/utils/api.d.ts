@@ -12,20 +12,19 @@
  * details.
  */
 
+import {TQueries} from './request';
 export declare function createProperty(name: string): Promise<any>;
 export declare function deleteConnection(): Promise<any>;
-export declare function fetchAccountGroups(queryString?: string): Promise<any>;
-export declare function fetchChannels(queryString?: string): Promise<any>;
+export declare function fetchAccountGroups(params: TQueries): Promise<any>;
+export declare function fetchChannels(params: TQueries): Promise<any>;
 export declare function fetchConnection(token: string): Promise<any>;
 export declare function fetchContactsOrganization(
-	queryString?: string
+	params: TQueries
 ): Promise<any>;
-export declare function fetchContactsUsersGroup(
-	queryString?: string
-): Promise<any>;
+export declare function fetchContactsUsersGroup(params: TQueries): Promise<any>;
 export declare function fetchAttributesConfiguration(): Promise<any>;
 export declare function fetchProperties(): Promise<any>;
-export declare function fetchSites(queryString?: string): Promise<any>;
+export declare function fetchSites(params: TQueries): Promise<any>;
 export declare function updateProperty({
 	channelId,
 	commerceChannelIds,
@@ -52,3 +51,15 @@ export declare function updateAttributesConfiguration({
 	syncedOrganizationIds?: string[];
 	syncedUserGroupIds?: string[];
 }): Promise<any>;
+export declare function fetchSelectedFields(): Promise<any>;
+export declare function fetchPeopleFields(params: TQueries): Promise<any>;
+declare type TField = {
+	example: string;
+	name: string;
+	required: boolean;
+	selected: boolean;
+	source: string;
+	type: string;
+};
+export declare function updatePeopleFields(fields: TField[]): Promise<any>;
+export {};

@@ -13,9 +13,10 @@
  */
 
 import React from 'react';
-import {TColumn, TItem} from '../table/Table';
+import {TQueries} from '../../utils/request';
+import {TColumn, TFormattedItems} from '../table/Table';
 import {TProperty} from './Properties';
-declare type TRawItem = {
+export declare type TRawItem = {
 	channelName?: string;
 	friendlyURL?: string;
 	id: string;
@@ -27,11 +28,11 @@ interface ITabProps {
 	description?: string;
 	emptyStateTitle: string;
 	enableCheckboxs?: boolean;
-	fetchFn: (queryString?: string) => Promise<any>;
 	header: TColumn[];
 	noResultsTitle: string;
-	onItemsChange: (items: TItem[]) => void;
+	onItemsChange: (items: TFormattedItems) => void;
 	property: TProperty;
+	requestFn: (params: TQueries) => Promise<any>;
 }
 declare const Tab: React.FC<ITabProps>;
 export default Tab;

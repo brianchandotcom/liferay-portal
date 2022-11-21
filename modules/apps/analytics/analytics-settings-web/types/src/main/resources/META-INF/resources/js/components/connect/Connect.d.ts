@@ -12,17 +12,10 @@
  * details.
  */
 
-import {TItem} from '../table/Table';
-interface IUseAddItemsProps {
-	name: string;
-	onCloseModal: () => void;
-	syncAllAccounts: boolean;
-	syncAllContacts: boolean;
+import React from 'react';
+interface IConnectProps {
+	onConnect?: () => void;
+	title: string;
 }
-export declare function useAddItems({
-	name,
-	onCloseModal,
-	syncAllAccounts,
-	syncAllContacts,
-}: IUseAddItemsProps): (items: TItem[]) => Promise<void>;
-export {};
+declare const Connect: React.FC<IConnectProps>;
+export default Connect;

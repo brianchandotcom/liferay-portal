@@ -17,6 +17,7 @@ interface IStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	empty: boolean;
 	error: boolean;
 	loading: boolean;
+	loadingProps?: any;
 }
 declare const StateRenderer: React.FC<IStateRendererProps> & {
 	Empty: typeof EmptyState;

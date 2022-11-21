@@ -14,6 +14,7 @@
 
 import React from 'react';
 interface ILoadingProps {
+	absolute?: boolean;
 	inline?: boolean;
 }
 declare const Loading: React.FC<ILoadingProps>;

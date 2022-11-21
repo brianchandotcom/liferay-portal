@@ -15,7 +15,7 @@
 import React from 'react';
 import {TProperty} from './Properties';
 interface IPropertiesTable {
-	onAssignModalButtonClick: (index: number) => void;
+	onAssign: (index: number) => void;
 	onCommerceSwitchChange: (index: number) => void;
 	properties: TProperty[];
 }

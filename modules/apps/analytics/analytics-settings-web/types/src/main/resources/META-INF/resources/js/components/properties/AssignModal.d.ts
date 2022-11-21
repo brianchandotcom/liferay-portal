@@ -16,7 +16,8 @@ import React from 'react';
 import {TProperty} from './Properties';
 interface IAssignModalProps {
 	observer: any;
-	onCloseModal: () => void;
+	onCancel: () => void;
+	onSubmit: () => void;
 	property: TProperty;
 }
 export declare enum ETabs {

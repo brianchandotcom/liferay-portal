@@ -13,10 +13,10 @@
  */
 
 import React from 'react';
-import {ESteps} from '../pages/wizard/WizardPage';
-interface IConnectProps {
-	onChangeStep?: (step: ESteps) => void;
-	title: string;
+import {TColumn} from './Table';
+interface IContentProps {
+	columns: TColumn[];
+	disabled: boolean;
 }
-declare const Connect: React.FC<IConnectProps>;
-export default Connect;
+declare const Content: React.FC<IContentProps>;
+export default Content;

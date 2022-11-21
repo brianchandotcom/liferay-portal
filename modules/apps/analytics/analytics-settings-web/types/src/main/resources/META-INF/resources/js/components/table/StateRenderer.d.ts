@@ -13,16 +13,13 @@
  */
 
 import React from 'react';
-import {TUseFecthDataResult} from '../../utils/useFecthData';
-import {TColumn} from './Table';
-interface ITableStateRendererProps
-	extends TUseFecthDataResult,
-		React.HTMLAttributes<HTMLElement> {
-	columns: TColumn[];
-	disabled: boolean;
+interface ITableStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	empty: boolean;
 	emptyStateTitle: string;
+	error: boolean;
+	loading: boolean;
 	noResultsTitle: string;
+	refetch: () => void;
 }
 declare const TableStateRenderer: React.FC<ITableStateRendererProps>;
 export default TableStateRenderer;

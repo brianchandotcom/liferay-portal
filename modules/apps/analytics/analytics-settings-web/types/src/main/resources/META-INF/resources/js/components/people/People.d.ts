@@ -12,7 +12,11 @@
  * details.
  */
 
-/// <reference types="react" />
-
-declare const PeopleWrapper: () => JSX.Element;
-export default PeopleWrapper;
+import React from 'react';
+export declare enum EPeople {
+	AccountGroupIds = 'syncedAccountGroupIds',
+	OrganizationIds = 'syncedOrganizationIds',
+	UserGroupIds = 'syncedUserGroupIds',
+}
+declare const People: React.FC;
+export default People;

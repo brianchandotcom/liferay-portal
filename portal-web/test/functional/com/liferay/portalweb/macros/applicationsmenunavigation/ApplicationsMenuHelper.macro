@@ -28,10 +28,10 @@ definition {
 	}
 
 	macro openWorkspace {
-		if (IsElementNotPresent(locator1 = "Portlet#MODAL_TITLE")) {
+		if (IsElementNotPresent(locator1 = "Sites#SELECT_SITE_MODAL_HEADER")) {
 			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
 
-			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
+			AssertVisible(locator1 = "Sites#SELECT_SITE_MODAL_HEADER");
 		}
 	}
 

@@ -17,27 +17,11 @@
 <%@ include file="/shared_assets/init.jsp" %>
 
 <%
-AssetRenderer<?> assetRenderer = (AssetRenderer<?>)renderRequest.getAttribute(AssetRenderer.class.getName());
+ViewSharingEntryAssetEntryDisplayContext viewSharingEntryAssetEntryDisplayContext = (ViewSharingEntryAssetEntryDisplayContext)request.getAttribute(ViewSharingEntryAssetEntryDisplayContext.class.getName());
 
-AssetRendererFactory<?> assetRendererFactory = assetRenderer.getAssetRendererFactory();
-
-AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
-
-SharingEntry sharingEntry = (SharingEntry)renderRequest.getAttribute(SharingEntry.class.getName());
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
-
-Group scopeGroup = themeDisplay.getScopeGroup();
-
-if (scopeGroup.equals(themeDisplay.getControlPanelGroup())) {
+if (viewSharingEntryAssetEntryDisplayContext.isControlPanelGroup()) {
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
+	portletDisplay.setURLBack(viewSharingEntryAssetEntryDisplayContext.getRedirect());
 }
 else {
 	portletDisplay.setPortletDecorate(false);
@@ -48,12 +32,12 @@ else {
 <div class="tbar upper-tbar">
 	<clay:container-fluid>
 		<ul class="tbar-nav">
-			<c:if test="<%= !scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
+			<c:if test="<%= !viewSharingEntryAssetEntryDisplayContext.isControlPanelGroup() %>">
 				<li class="d-none d-sm-flex tbar-item">
 					<clay:link
 						borderless="<%= true %>"
 						displayType="secondary"
-						href="<%= redirect %>"
+						href="<%= viewSharingEntryAssetEntryDisplayContext.getRedirect() %>"
 						icon="angle-left"
 						monospaced="<%= true %>"
 						outline="<%= true %>"
@@ -65,19 +49,14 @@ else {
 
 			<li class="tbar-item tbar-item-expand">
 				<div class="tbar-section text-left">
-					<h2 class="my-4 text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>">
-						<span class="text-truncate"><%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %></span>
+					<h2 class="my-4 text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(viewSharingEntryAssetEntryDisplayContext.getAssetTitle()) %>">
+						<span class="text-truncate"><%= HtmlUtil.escape(viewSharingEntryAssetEntryDisplayContext.getAssetTitle()) %></span>
 					</h2>
 				</div>
 			</li>
 			<li class="tbar-item">
-
-				<%
-				ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAssetsDisplayContext)renderRequest.getAttribute(ViewSharedAssetsDisplayContext.class.getName());
-				%>
-
 				<liferay-ui:menu
-					menu="<%= viewSharedAssetsDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+					menu="<%= viewSharingEntryAssetEntryDisplayContext.getSharingEntryMenu() %>"
 				/>
 			</li>
 		</ul>
@@ -88,25 +67,25 @@ else {
 	var="assetContent"
 >
 	<liferay-asset:asset-display
-		renderer="<%= assetRenderer %>"
+		renderer="<%= viewSharingEntryAssetEntryDisplayContext.getAssetRenderer() %>"
 		showComments="<%= false %>"
 	/>
 
-	<c:if test="<%= assetRenderer.isCommentable() %>">
+	<c:if test="<%= viewSharingEntryAssetEntryDisplayContext.isCommentable() %>">
 		<liferay-comment:discussion
-			className="<%= assetEntry.getClassName() %>"
-			classPK="<%= assetEntry.getClassPK() %>"
-			formName='<%= "fm" + assetEntry.getClassPK() %>'
+			className="<%= viewSharingEntryAssetEntryDisplayContext.getAssetEntryClassName() %>"
+			classPK="<%= viewSharingEntryAssetEntryDisplayContext.getAssetEntryClassPK() %>"
+			formName='<%= "fm" + viewSharingEntryAssetEntryDisplayContext.getAssetEntryClassPK() %>'
 			ratingsEnabled="<%= false %>"
 			redirect="<%= currentURL %>"
-			userId="<%= assetRenderer.getUserId() %>"
+			userId="<%= viewSharingEntryAssetEntryDisplayContext.getAssetEntryUserId() %>"
 		/>
 	</c:if>
 </liferay-util:buffer>
 
 <clay:container-fluid>
 	<c:choose>
-		<c:when test="<%= scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
+		<c:when test="<%= viewSharingEntryAssetEntryDisplayContext.isControlPanelGroup() %>">
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
 					<%= assetContent %>

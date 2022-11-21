@@ -14,15 +14,21 @@
 
 package com.liferay.sharing.web.internal.renderer;
 
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
+import com.liferay.sharing.web.internal.display.context.ViewSharedAssetsDisplayContext;
+import com.liferay.sharing.web.internal.display.context.ViewSharingEntryAssetEntryDisplayContext;
 import com.liferay.sharing.web.internal.util.AssetRendererSharingUtil;
 
 import java.io.IOException;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -49,15 +55,23 @@ public class AssetRendererSharingEntryViewRenderer
 		throws IOException, PortalException {
 
 		try {
+			httpServletRequest.setAttribute(
+				ViewSharingEntryAssetEntryDisplayContext.class.getName(),
+				new ViewSharingEntryAssetEntryDisplayContext(
+					AssetRendererSharingUtil.getAssetRenderer(sharingEntry),
+					PortalUtil.getLiferayPortletRequest(
+						(PortletRequest)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_REQUEST)),
+					PortalUtil.getLiferayPortletResponse(
+						(PortletResponse)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE)),
+					sharingEntry,
+					(ViewSharedAssetsDisplayContext)
+						httpServletRequest.getAttribute(
+							ViewSharedAssetsDisplayContext.class.getName())));
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(_JSP_PATH);
-
-			httpServletRequest.setAttribute(
-				AssetRenderer.class.getName(),
-				AssetRendererSharingUtil.getAssetRenderer(sharingEntry));
-
-			httpServletRequest.setAttribute(
-				SharingEntry.class.getName(), sharingEntry);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

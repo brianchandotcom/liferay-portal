@@ -298,7 +298,31 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	@Override
+	protected void reconfigPortalCache(
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		for (String portalCacheName :
+				portalCacheManagerConfiguration.getPortalCacheNames()) {
+
+			PortalCacheConfiguration portalCacheConfiguration =
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName);
+
+			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				portalCacheName, portalCacheConfiguration);
+
+			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
+
+			if (portalCache == null) {
+				continue;
+			}
+
+			removeConfigurableEhcachePortalCacheListeners(portalCache);
+
+			initPortalCacheListeners(portalCache, portalCacheConfiguration);
+		}
+	}
+
 	protected void removeConfigurableEhcachePortalCacheListeners(
 		PortalCache<K, V> portalCache) {
 

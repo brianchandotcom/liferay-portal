@@ -259,34 +259,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract void initPortalCacheManager();
 
-	protected void reconfigPortalCache(
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
-
-		for (String portalCacheName :
-				portalCacheManagerConfiguration.getPortalCacheNames()) {
-
-			PortalCacheConfiguration portalCacheConfiguration =
-				portalCacheManagerConfiguration.getPortalCacheConfiguration(
-					portalCacheName);
-
-			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
-				portalCacheName, portalCacheConfiguration);
-
-			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
-
-			if (portalCache == null) {
-				continue;
-			}
-
-			removeConfigurableEhcachePortalCacheListeners(portalCache);
-
-			initPortalCacheListeners(portalCache, portalCacheConfiguration);
-		}
-	}
-
-	protected abstract void removeConfigurableEhcachePortalCacheListeners(
-		PortalCache<K, V> portalCache);
-
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();

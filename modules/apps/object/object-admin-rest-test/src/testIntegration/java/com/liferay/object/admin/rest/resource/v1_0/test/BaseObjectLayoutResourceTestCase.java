@@ -182,11 +182,16 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		ObjectLayout objectLayout = randomObjectLayout();
 
+		objectLayout.setObjectDefinitionExternalReferenceCode(regex);
+
 		String json = ObjectLayoutSerDes.toJSON(objectLayout);
 
 		Assert.assertFalse(json.contains(regex));
 
 		objectLayout = ObjectLayoutSerDes.toDTO(json);
+
+		Assert.assertEquals(
+			regex, objectLayout.getObjectDefinitionExternalReferenceCode());
 	}
 
 	@Test
@@ -614,6 +619,19 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectLayout.getObjectDefinitionExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionId", additionalAssertFieldName)) {
 
 				if (objectLayout.getObjectDefinitionId() == null) {
@@ -784,6 +802,22 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				if (!equals(
 						(Map)objectLayout1.getName(),
 						(Map)objectLayout2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectLayout1.
+							getObjectDefinitionExternalReferenceCode(),
+						objectLayout2.
+							getObjectDefinitionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -998,6 +1032,16 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectDefinitionExternalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					objectLayout.getObjectDefinitionExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectDefinitionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1056,6 +1100,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				defaultObjectLayout = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
+				objectDefinitionExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				objectDefinitionId = RandomTestUtil.randomLong();
 			}
 		};

@@ -20,51 +20,24 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {Events, useData, useDispatch} from '../App';
-import {ESteps} from '../pages/wizard/WizardPage';
-import {fetchConnection} from '../utils/api';
-import BasePage from './BasePage';
-import Loading from './Loading';
-import DisconnectModal from './connect/DisconnectModal';
+import {Events, useData, useDispatch} from '../../App';
+import {fetchConnection} from '../../utils/api';
+import BasePage from '../BasePage';
+import Loading from '../Loading';
+import DisconnectModal from './DisconnectModal';
 
 interface IConnectProps {
-	onChangeStep?: (step: ESteps) => void;
+	onConnect?: () => void;
 	title: string;
 }
 
-const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
+const Connect: React.FC<IConnectProps> = ({onConnect, title}) => {
 	const {connected, liferayAnalyticsURL, token: initialToken} = useData();
 	const dispatch = useDispatch();
 
 	const [token, setToken] = useState(initialToken);
 	const {observer, onOpenChange, open} = useModal();
 	const [submitting, setSubmitting] = useState(false);
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
-		const request = async () => {
-			setSubmitting(true);
-
-			const {ok} = await fetchConnection(token);
-
-			setSubmitting(false);
-
-			if (ok) {
-				dispatch({
-					payload: {
-						connected: true,
-						token,
-					},
-					type: Events.Connect,
-				});
-
-				onChangeStep && onChangeStep(ESteps.Property);
-			}
-		};
-
-		request();
-	};
 
 	useEffect(() => {
 		setToken(initialToken);
@@ -84,7 +57,7 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 				/>
 			)}
 
-			<ClayForm onSubmit={handleSubmit}>
+			<ClayForm>
 				<ClayForm.Group>
 					<label
 						className={classNames({
@@ -142,7 +115,25 @@ const Connect: React.FC<IConnectProps> = ({onChangeStep, title}) => {
 					) : (
 						<ClayButton
 							disabled={!token || submitting}
-							type="submit"
+							onClick={async () => {
+								setSubmitting(true);
+
+								const {ok} = await fetchConnection(token);
+
+								setSubmitting(false);
+
+								if (ok) {
+									dispatch({
+										payload: {
+											connected: true,
+											token,
+										},
+										type: Events.Connect,
+									});
+
+									onConnect && onConnect();
+								}
+							}}
 						>
 							{submitting && <Loading inline />}
 

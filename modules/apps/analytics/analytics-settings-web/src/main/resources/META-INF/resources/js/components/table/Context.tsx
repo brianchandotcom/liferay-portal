@@ -16,7 +16,7 @@ import React, {createContext, useContext, useReducer} from 'react';
 
 import {DEFAULT_FILTER, TFilter} from '../../utils/filter';
 import {DEFAULT_PAGINATION, TPagination} from '../../utils/pagination';
-import {TItem} from './Table';
+import {TFormattedItems, TItem} from './Table';
 
 export enum Events {
 	ChangeFilter = 'CHANGE_FILTER',
@@ -24,25 +24,27 @@ export enum Events {
 	ChangeKeywords = 'CHANGE_KEYWORDS',
 	ChangePagination = 'CHANGE_PAGINATION',
 	FormatData = 'FORMAT_DATA',
-	ToggleCheckbox = 'TOGGLE_CHECKBOX',
+	ToggleGlobalCheckbox = 'TOGGLE_CHECKBOX',
 }
 
 const initialState = {
-	checked: false,
 	filter: DEFAULT_FILTER,
+	formattedItems: {},
+	globalChecked: false,
 	internalKeywords: '',
-	items: [],
 	keywords: '',
 	pagination: DEFAULT_PAGINATION,
+	rows: [],
 };
 
 type TState = {
-	checked: boolean;
 	filter: TFilter;
+	formattedItems: TFormattedItems;
+	globalChecked: boolean;
 	internalKeywords: string;
-	items: TItem[];
 	keywords: string;
 	pagination: TPagination;
+	rows: string[];
 };
 
 const TableContextData = createContext<TState>(initialState);
@@ -51,59 +53,119 @@ const TableContextDispatch = createContext<any>(null);
 const useData = () => useContext(TableContextData);
 const useDispatch = () => useContext(TableContextDispatch);
 
+const getGlobalChecked = (formattedItems: TFormattedItems): boolean =>
+	!!Object.values(formattedItems).length &&
+	Object.values(formattedItems).every(({checked}) => checked);
+
+const updateFormattedItems = (
+	formattedItems: TFormattedItems,
+	checked: boolean
+): TFormattedItems =>
+	Object.values(formattedItems).reduce(
+		(accumulator: TFormattedItems, item) => {
+			if (item.disabled) {
+				return {
+					...accumulator,
+					[item.id]: item,
+				};
+			}
+
+			return {
+				...accumulator,
+				[item.id]: {
+					...item,
+					checked,
+				},
+			};
+		},
+		{}
+	);
+
+const getFormattedItems = (items: TItem[]): TFormattedItems => {
+	return items.reduce((accumulator: TFormattedItems, item) => {
+		return {
+			...accumulator,
+			[item.id]: item,
+		};
+	}, {});
+};
+
 function reducer(state: TState, action: {payload: any; type: Events}) {
 	switch (action.type) {
-		case Events.ChangeFilter:
+		case Events.ChangeFilter: {
 			return {
 				...state,
-				checked: false,
 				filter: {
 					...state.filter,
 					...action.payload,
 				},
 			};
-		case Events.ChangeItems:
-			return {
-				...state,
-				checked: state.items.every(({checked}) => checked),
-				items: action.payload,
+		}
+		case Events.ChangeItems: {
+			const formattedItems = {
+				...state.formattedItems,
+				[action.payload]: {
+					...state.formattedItems[action.payload],
+					checked: !state.formattedItems[action.payload].checked,
+				},
 			};
-		case Events.ChangeKeywords:
+
 			return {
 				...state,
-				checked: false,
-				keywords: action.payload,
-			};
-		case Events.FormatData: {
-			return {
-				...state,
-				...action.payload,
+				formattedItems,
+				globalChecked: getGlobalChecked(formattedItems),
 			};
 		}
-		case Events.ChangePagination:
+		case Events.ChangeKeywords: {
 			return {
 				...state,
-				checked: false,
+				keywords: action.payload,
+			};
+		}
+		case Events.FormatData: {
+			const {
+				items,
+				pagination = state.pagination,
+				rows = state.rows,
+			} = action.payload;
+
+			const formattedItems = {
+				...getFormattedItems(items),
+				...state.formattedItems,
+			};
+
+			return {
+				...state,
+				formattedItems,
+				globalChecked: getGlobalChecked(formattedItems),
+				pagination,
+				rows,
+			};
+		}
+		case Events.ChangePagination: {
+			return {
+				...state,
 				pagination: {
 					...state.pagination,
 					...action.payload,
 				},
 			};
-		case Events.ToggleCheckbox:
+		}
+		case Events.ToggleGlobalCheckbox: {
+			const {globalChecked, items} = action.payload;
+
 			return {
 				...state,
-				checked: action.payload,
-				items: state.items.map((item) => {
-					if (!item.disabled) {
-						return {
-							...item,
-							checked: action.payload,
-						};
-					}
-
-					return item;
-				}),
+				formattedItems: updateFormattedItems(
+					{
+						...getFormattedItems(items),
+						...state.formattedItems,
+					},
+					globalChecked
+				),
+				globalChecked,
 			};
+		}
 		default:
 			throw new Error();
 	}

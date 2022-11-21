@@ -18,7 +18,8 @@ import Modal, {ICommonModalProps} from './Modal';
 
 const OrderAttributesModal: React.FC<ICommonModalProps> = ({
 	observer,
-	onCloseModal,
+	onCancel,
+	onSubmit,
 }) => (
 	<Modal
 		columns={[
@@ -39,10 +40,10 @@ const OrderAttributesModal: React.FC<ICommonModalProps> = ({
 				value: 'sampleData',
 			},
 		]}
-		fetchFn={() => Promise.resolve()}
 		observer={observer}
-		onAddItems={() => {}}
-		onCloseModal={onCloseModal}
+		onCancel={onCancel}
+		onSubmit={onSubmit}
+		requestFn={() => Promise.resolve()}
 		title={Liferay.Language.get('sync-order-attributes')}
 	/>
 );

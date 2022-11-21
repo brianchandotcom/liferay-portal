@@ -18,7 +18,8 @@ import Modal, {ICommonModalProps} from './Modal';
 
 const ProductsAttributesModal: React.FC<ICommonModalProps> = ({
 	observer,
-	onCloseModal,
+	onCancel,
+	onSubmit,
 }) => (
 	<Modal
 		columns={[
@@ -39,10 +40,10 @@ const ProductsAttributesModal: React.FC<ICommonModalProps> = ({
 				value: 'sampleData',
 			},
 		]}
-		fetchFn={() => Promise.resolve()}
 		observer={observer}
-		onAddItems={() => {}}
-		onCloseModal={onCloseModal}
+		onCancel={onCancel}
+		onSubmit={onSubmit}
+		requestFn={() => Promise.resolve()}
 		title={Liferay.Language.get('sync-product-attributes')}
 	/>
 );

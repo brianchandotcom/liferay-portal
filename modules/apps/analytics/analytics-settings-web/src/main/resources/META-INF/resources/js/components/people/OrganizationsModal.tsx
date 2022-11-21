@@ -16,39 +16,34 @@ import React from 'react';
 
 import {fetchContactsOrganization} from '../../utils/api';
 import Modal, {ICommonModalProps} from './Modal';
-import {useAddItems} from './utils';
+import {EPeople} from './People';
 
 const ModalOrganizations: React.FC<ICommonModalProps> = ({
 	observer,
 	onCloseModal,
 	syncAllAccounts,
 	syncAllContacts,
-}) => {
-	const addItems = useAddItems({
-		name: 'syncedOrganizationIds',
-		onCloseModal,
-		syncAllAccounts,
-		syncAllContacts,
-	});
-
-	return (
-		<Modal
-			columns={[
-				{
-					expanded: false,
-					label: Liferay.Language.get('organizations'),
-					value: 'name',
-				},
-			]}
-			emptyStateTitle={Liferay.Language.get('there-are-no-organizations')}
-			fetchFn={fetchContactsOrganization}
-			noResultsTitle={Liferay.Language.get('no-organizations-were-found')}
-			observer={observer}
-			onAddItems={addItems}
-			onCloseModal={onCloseModal}
-			title={Liferay.Language.get('add-organizations')}
-		/>
-	);
-};
+	syncedIds,
+}) => (
+	<Modal
+		columns={[
+			{
+				expanded: false,
+				label: Liferay.Language.get('organizations'),
+				value: 'name',
+			},
+		]}
+		emptyStateTitle={Liferay.Language.get('there-are-no-organizations')}
+		name={EPeople.OrganizationIds}
+		noResultsTitle={Liferay.Language.get('no-organizations-were-found')}
+		observer={observer}
+		onCloseModal={onCloseModal}
+		requestFn={fetchContactsOrganization}
+		syncAllAccounts={syncAllAccounts}
+		syncAllContacts={syncAllContacts}
+		syncedIds={syncedIds}
+		title={Liferay.Language.get('add-organizations')}
+	/>
+);
 
 export default ModalOrganizations;

@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import Connect from '../../components/Connect';
+import Connect from '../../components/connect/Connect';
 import {IGenericPageProps} from './DefaultPage';
 
 const ConnectPage: React.FC<IGenericPageProps> = ({title}) => (

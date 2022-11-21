@@ -17,8 +17,8 @@ import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import {fetchProperties, updateProperty} from '../../utils/api';
-import {NOT_FOUND_GIF} from '../../utils/constants';
-import useFetchData from '../../utils/useFecthData';
+import {NOT_FOUND_GIF, SUCCESS_MESSAGE} from '../../utils/constants';
+import {useRequest} from '../../utils/useRequest';
 import StateRenderer, {
 	EmptyStateComponent,
 	ErrorStateComponent,
@@ -30,14 +30,14 @@ import PropertiesTable from './PropertiesTable';
 export type TProperty = {
 	channelId: string;
 	commerceSyncEnabled: boolean;
-	dataSources: Array<TDataSource>;
+	dataSources: TDataSource[] | [];
 	name: string;
 };
 
 type TDataSource = {
-	commerceChannelIds: Array<number>;
+	commerceChannelIds: number[];
 	dataSourceId: string;
-	siteIds: Array<number>;
+	siteIds: number[];
 };
 
 const Properties: React.FC = () => {
@@ -48,23 +48,35 @@ const Properties: React.FC = () => {
 		open: assignModalOpen,
 	} = useModal();
 	const {
-		observer: propertyModalObserver,
-		onOpenChange: onPropertyModalOpenChange,
-		open: propertyModalOpen,
+		observer: createPropertyModalObserver,
+		onOpenChange: onCreatePropertyModalOpenChange,
+		open: createPropertyModalOpen,
 	} = useModal();
 	const [selectedProperty, setSelectedProperty] = useState<TProperty>(
 		properties[0]
 	);
 
-	const {data, error, loading, refetch, refetching} = useFetchData(
-		fetchProperties
-	);
+	const {data, error, loading, refetch} = useRequest<{
+		items: TProperty[];
+	}>(fetchProperties);
 
 	useEffect(() => {
 		if (data?.items) {
 			setProperties(data.items);
 		}
 	}, [data]);
+
+	const handleCloseModal = async (closeFn: (value: boolean) => void) => {
+		const {items} = await fetchProperties();
+
+		setProperties(items);
+
+		Liferay.Util.openToast({
+			message: SUCCESS_MESSAGE,
+		});
+
+		closeFn(false);
+	};
 
 	return (
 		<>
@@ -76,7 +88,6 @@ const Properties: React.FC = () => {
 				<StateRenderer.Error>
 					<ErrorStateComponent
 						className="empty-state-border mb-0 pb-5"
-						disabled={refetching}
 						onClickRefetch={refetch}
 					/>
 				</StateRenderer.Error>
@@ -92,7 +103,9 @@ const Properties: React.FC = () => {
 					>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => onPropertyModalOpenChange(true)}
+							onClick={() =>
+								onCreatePropertyModalOpenChange(true)
+							}
 							type="button"
 						>
 							{Liferay.Language.get('new-property')}
@@ -104,7 +117,9 @@ const Properties: React.FC = () => {
 					<div className="text-right">
 						<ClayButton
 							displayType="secondary"
-							onClick={() => onPropertyModalOpenChange(true)}
+							onClick={() =>
+								onCreatePropertyModalOpenChange(true)
+							}
 							type="button"
 						>
 							{Liferay.Language.get('new-property')}
@@ -112,7 +127,7 @@ const Properties: React.FC = () => {
 					</div>
 
 					<PropertiesTable
-						onAssignModalButtonClick={(index: number) => {
+						onAssign={(index: number) => {
 							setSelectedProperty(properties[index]);
 							onAssignModalOpenChange(true);
 						}}
@@ -144,27 +159,19 @@ const Properties: React.FC = () => {
 			{assignModalOpen && (
 				<AssignModal
 					observer={assignModalObserver}
-					onCloseModal={() => onAssignModalOpenChange(false)}
+					onCancel={() => onAssignModalOpenChange(false)}
+					onSubmit={() => handleCloseModal(onAssignModalOpenChange)}
 					property={selectedProperty}
 				/>
 			)}
 
-			{propertyModalOpen && (
+			{createPropertyModalOpen && (
 				<CreatePropertyModal
-					observer={propertyModalObserver}
-					onCloseModal={(updateProperty) => {
-						if (updateProperty) {
-							const request = async () => {
-								const response = await fetchProperties();
-
-								setProperties(response.items);
-							};
-
-							request();
-						}
-
-						onPropertyModalOpenChange(false);
-					}}
+					observer={createPropertyModalObserver}
+					onCancel={() => onCreatePropertyModalOpenChange(false)}
+					onSubmit={() =>
+						handleCloseModal(onCreatePropertyModalOpenChange)
+					}
 				/>
 			)}
 		</>

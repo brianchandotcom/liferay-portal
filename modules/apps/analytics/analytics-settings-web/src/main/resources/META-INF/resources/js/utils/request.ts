@@ -15,6 +15,8 @@
 import {fetch} from 'frontend-js-web';
 
 import {ERROR_MESSAGE} from './constants';
+import {TFilter} from './filter';
+import {TPagination} from './pagination';
 
 enum Status {
 	BadRequest = 400,
@@ -78,6 +80,32 @@ async function request(path: string, config: RequestInit) {
 	}
 
 	return response;
+}
+
+export type TQueries = {
+	filter: TFilter;
+	keywords: string;
+	pagination: TPagination;
+};
+
+export function serializeQueries({
+	filter: {type, value},
+	keywords,
+	pagination: {page, pageSize},
+}: TQueries): string {
+	const params = {
+		keywords,
+		page,
+		pageSize,
+		sort: `${value}:${type}`,
+	};
+
+	// @ts-ignore
+
+	const arrs = Object.keys(params).map((key) => [key, String(params[key])]);
+	const path = new URLSearchParams(arrs);
+
+	return decodeURIComponent(path.toString());
 }
 
 export default request;

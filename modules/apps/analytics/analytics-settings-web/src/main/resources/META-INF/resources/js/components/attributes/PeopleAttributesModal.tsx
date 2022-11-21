@@ -14,35 +14,51 @@
 
 import React from 'react';
 
-import Modal, {ICommonModalProps} from './Modal';
+import {fetchPeopleFields, updatePeopleFields} from '../../utils/api';
+import Modal, {ICommonModalProps, getFields} from './Modal';
+
+const columns = [
+	{
+		expanded: true,
+		label: Liferay.Language.get('attribute'),
+		value: 'name',
+	},
+	{
+		expanded: true,
+		label: Liferay.Language.get('data-type'),
+		sortable: false,
+		value: 'type',
+	},
+	{
+		expanded: true,
+		label: Liferay.Language.get('sample-data'),
+		sortable: false,
+		value: 'example',
+	},
+	{
+		expanded: false,
+		label: Liferay.Language.get('source'),
+		show: false,
+		sortable: false,
+		value: 'source',
+	},
+];
 
 const PeopleAttributesModal: React.FC<ICommonModalProps> = ({
 	observer,
-	onCloseModal,
+	onCancel,
+	onSubmit,
 }) => (
 	<Modal
-		columns={[
-			{
-				expanded: true,
-				label: Liferay.Language.get('attribute'),
-				value: 'attribute',
-			},
-
-			{
-				expanded: true,
-				label: Liferay.Language.get('data-type'),
-				value: 'dataType',
-			},
-			{
-				expanded: true,
-				label: Liferay.Language.get('sample-data'),
-				value: 'sampleData',
-			},
-		]}
-		fetchFn={() => Promise.resolve()}
+		columns={columns}
 		observer={observer}
-		onAddItems={() => {}}
-		onCloseModal={onCloseModal}
+		onCancel={onCancel}
+		onSubmit={async (items) => {
+			const {ok} = await updatePeopleFields(getFields(items));
+
+			ok && onSubmit();
+		}}
+		requestFn={fetchPeopleFields}
 		title={Liferay.Language.get('sync-people-attributes')}
 	/>
 );

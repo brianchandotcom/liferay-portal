@@ -12,15 +12,12 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import ClayTable from '@clayui/table';
-import classNames from 'classnames';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {OrderBy, TFilter} from '../../utils/filter';
 import {TPagination} from '../../utils/pagination';
-import useFetchData from '../../utils/useFecthData';
+import {TQueries} from '../../utils/request';
+import {useLazyRequest, useRequest} from '../../utils/useRequest';
+import Content from './Content';
 import TableContext, {Events, useData, useDispatch} from './Context';
 import ManagementToolbar from './ManagementToolbar';
 import PaginationBar from './PaginationBar';
@@ -29,212 +26,179 @@ import StateRenderer from './StateRenderer';
 export type TColumn = {
 	expanded: boolean;
 	label: string;
+	show?: boolean;
 	sortable?: boolean;
 	value: string;
 };
 
 export type TItem = {
 	checked: boolean;
-	columns: string[];
+	columns: {label: string; show?: boolean}[];
 	disabled: boolean;
 	id: string;
 };
 
-function serializeQueries({
-	filter: {type, value},
-	keywords,
-	pagination: {page, pageSize},
-}: {
-	filter: TFilter;
-	keywords: string;
-	pagination: TPagination;
-}): string {
-	const params = {
-		keywords,
-		page,
-		pageSize,
-		sort: `${value}:${type}`,
-	};
+export type TFormattedItems = {[key: string]: TItem};
 
-	// @ts-ignore
-
-	const arrs = Object.keys(params).map((key) => [key, String(params[key])]);
-	const path = new URLSearchParams(arrs);
-
-	return decodeURIComponent(path.toString());
-}
-
-interface ITableContentProps {
-	columns: TColumn[];
-	disabled: boolean;
-}
-
-const TableContent: React.FC<ITableContentProps> = ({columns, disabled}) => {
-	const {filter, items} = useData();
-	const dispatch = useDispatch();
-
-	return (
-		<ClayTable hover={!disabled}>
-			<ClayTable.Head>
-				<ClayTable.Row>
-					<ClayTable.Cell></ClayTable.Cell>
-
-					{columns.map(({expanded = false, label, value}) => (
-						<ClayTable.Cell
-							expanded={expanded}
-							headingCell
-							key={label}
-						>
-							<span>{label}</span>
-
-							{filter.value === value && (
-								<span>
-									<ClayIcon
-										symbol={
-											filter.type === OrderBy.Asc
-												? 'order-arrow-up'
-												: 'order-arrow-down'
-										}
-									/>
-								</span>
-							)}
-						</ClayTable.Cell>
-					))}
-				</ClayTable.Row>
-			</ClayTable.Head>
-
-			<ClayTable.Body>
-				{items.map(
-					(
-						{checked, columns, disabled: disabledItem = false, id},
-						index
-					) => (
-						<ClayTable.Row
-							className={classNames({
-								'table-active': checked,
-								'text-muted': disabled,
-							})}
-							key={id}
-						>
-							<ClayTable.Cell>
-								<ClayCheckbox
-									checked={checked}
-									disabled={disabled || disabledItem}
-									id={id}
-									onChange={() => {
-										const newItems = [...items];
-
-										if (!disabled && !disabledItem) {
-											newItems[index].checked = !newItems[
-												index
-											].checked;
-										}
-
-										dispatch({
-											payload: newItems,
-											type: Events.ChangeItems,
-										});
-									}}
-								/>
-							</ClayTable.Cell>
-
-							{columns.map((label, index: number) => (
-								<ClayTable.Cell key={index}>
-									{label}
-								</ClayTable.Cell>
-							))}
-						</ClayTable.Row>
-					)
-				)}
-			</ClayTable.Body>
-		</ClayTable>
-	);
-};
-
-interface ITableProps {
+interface ITableProps<TRawItem> {
 	columns: TColumn[];
 	disabled?: boolean;
 	emptyStateTitle: string;
-	fetchFn: (queryString?: string) => Promise<any>;
-	mapperItems: (items: any) => TItem[];
+	mapperItems: (items: TRawItem[]) => TItem[];
 	noResultsTitle: string;
-	onItemsChange?: (items: TItem[]) => void;
+	onItemsChange?: (items: TFormattedItems) => void;
+	requestFn: (params: TQueries) => Promise<any>;
 }
 
-const Table: React.FC<ITableProps> = ({
+interface TData<TRawItem> extends TPagination {
+	items: TRawItem[];
+}
+
+function Table<TRawItem>({
 	columns,
 	disabled = false,
 	emptyStateTitle,
-	fetchFn,
 	mapperItems,
 	noResultsTitle,
 	onItemsChange,
-}) => {
-	const {filter, items, keywords, pagination} = useData();
+	requestFn,
+}: ITableProps<TRawItem>) {
+	const _contentRef = useRef<HTMLDivElement>(null);
+
+	const {
+		filter,
+		formattedItems,
+		globalChecked,
+		keywords,
+		pagination,
+	} = useData();
 	const dispatch = useDispatch();
 
-	const {data, error, loading, refetch, refetching} = useFetchData(
-		fetchFn,
-		serializeQueries({filter, keywords, pagination})
+	const {data, error, loading, refetch} = useRequest<TData<TRawItem>>(
+		requestFn,
+		{
+			filter,
+			keywords,
+			pagination,
+		}
 	);
+
+	const [lazyRequest, lazyResult] = useLazyRequest<TData<TRawItem>>(
+		requestFn,
+		{
+			filter,
+			keywords,
+			pagination: {
+				...pagination,
+				pageSize: pagination.totalCount,
+			},
+		}
+	);
+
+	const height = useHeightHack(loading || lazyResult.loading, _contentRef);
 
 	const empty = !data?.items.length;
 
 	useEffect(() => {
+		if (lazyResult.data) {
+			dispatch({
+				payload: {
+					globalChecked: !globalChecked,
+					items: mapperItems(lazyResult.data.items),
+				},
+				type: Events.ToggleGlobalCheckbox,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [lazyResult.data]);
+
+	useEffect(() => {
 		if (data) {
 			const {items, page, pageSize, totalCount} = data;
+			const mappedItems = mapperItems(items);
 
 			dispatch({
 				payload: {
-					items: mapperItems(items),
+					items: mappedItems,
 					pagination: {
 						page,
 						pageSize,
 						totalCount,
 					},
+					rows: mappedItems.map(({id}: TItem) => id),
 				},
 				type: Events.FormatData,
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, dispatch]);
+	}, [data]);
 
 	useEffect(() => {
-		onItemsChange && onItemsChange(items);
+		onItemsChange && onItemsChange(formattedItems);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [items]);
+	}, [formattedItems]);
 
 	return (
 		<>
 			<ManagementToolbar
 				columns={columns}
-				disabled={disabled || (empty && !keywords)}
+				disabled={
+					disabled || (empty && !keywords) || lazyResult.loading
+				}
+				lazyRequest={lazyRequest}
 			/>
 
-			<StateRenderer
-				columns={columns}
-				data={data}
-				disabled={disabled}
-				empty={empty}
-				emptyStateTitle={emptyStateTitle}
-				error={error}
-				loading={loading}
-				noResultsTitle={noResultsTitle}
-				refetch={refetch}
-				refetching={refetching}
-			>
-				<TableContent columns={columns} disabled={disabled} />
-			</StateRenderer>
+			<div ref={_contentRef} style={{height, position: 'relative'}}>
+				<StateRenderer
+					empty={empty}
+					emptyStateTitle={emptyStateTitle}
+					error={error || lazyResult.error}
+					loading={loading || lazyResult.loading}
+					noResultsTitle={noResultsTitle}
+					refetch={refetch}
+				>
+					<Content columns={columns} disabled={disabled} />
+				</StateRenderer>
+			</div>
 
 			<PaginationBar disabled={empty} />
 		</>
 	);
-};
+}
 
-const TableWrapper: React.FC<ITableProps> = ({columns, ...otherProps}) => (
-	<TableContext>
-		<Table {...otherProps} columns={columns} />
-	</TableContext>
-);
+function useHeightHack(
+	loading: boolean,
+	containerRef: React.RefObject<HTMLDivElement>
+) {
+	const [height, setHeight] = useState<number | undefined>(undefined);
+
+	useEffect(() => {
+		if (loading) {
+			return;
+		}
+
+		const tableNode = containerRef.current?.querySelector(
+			'.table-responsive'
+		);
+
+		if (
+			tableNode &&
+			tableNode.getBoundingClientRect().height &&
+			tableNode.getBoundingClientRect().height !== height
+		) {
+			setHeight(tableNode.getBoundingClientRect().height + 24);
+		}
+	}, [containerRef, height, loading]);
+
+	return height;
+}
+
+function TableWrapper<TRawItem>(props: ITableProps<TRawItem>) {
+	return (
+		<TableContext>
+			<Table {...props} />
+		</TableContext>
+	);
+}
 
 export default TableWrapper;

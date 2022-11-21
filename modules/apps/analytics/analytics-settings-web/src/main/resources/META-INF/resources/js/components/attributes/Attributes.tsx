@@ -16,12 +16,22 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {useModal} from '@clayui/modal';
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
+import {fetchSelectedFields} from '../../utils/api';
+import {SUCCESS_MESSAGE} from '../../utils/constants';
+import Loading from '../Loading';
 import AccountsAttributesModal from './AccountsAttributesModal';
 import OrderAttributsModal from './OrderAttributsModal';
 import PeopleAttributesModal from './PeopleAttributesModal';
 import ProductsAttributesModal from './ProductsAttributesModal';
+
+enum EFields {
+	Account = 'account',
+	Order = 'order',
+	People = 'people',
+	Product = 'product',
+}
 
 const Attributes: React.FC = () => {
 	const {
@@ -45,43 +55,78 @@ const Attributes: React.FC = () => {
 		open: openOrderAttributes,
 	} = useModal();
 
-	const attributesList = useMemo(
-		() => [
+	const [selectedFields, setSelectedFields] = useState<
+		{[key in EFields]: number | React.ReactNode}
+	>({
+		[EFields.Account]: <Loading inline />,
+		[EFields.Order]: <Loading inline />,
+		[EFields.People]: <Loading inline />,
+		[EFields.Product]: <Loading inline />,
+	});
 
-			// TODO: Remove mocked data on "count" property
+	const syncData = async () => {
+		const selectedFields = await fetchSelectedFields();
 
+		setSelectedFields(selectedFields);
+	};
+
+	const handleCloseModal = (
+		key: EFields,
+		closeFn: (value: boolean) => void
+	) => {
+		closeFn(false);
+		setSelectedFields({
+			...selectedFields,
+			[key]: <Loading inline />,
+		});
+
+		setTimeout(syncData, 1000);
+
+		Liferay.Util.openToast({
+			message: SUCCESS_MESSAGE,
+		});
+	};
+
+	useEffect(() => {
+		syncData();
+	}, []);
+
+	const attributesList = useMemo(() => {
+		const {account, order, people, product} = selectedFields;
+
+		return [
 			{
-				count: 15,
+				count: people,
 				icon: 'users',
 				onOpenModal: () => onOpenChangePeopleAttributes(true),
 				title: Liferay.Language.get('people'),
 			},
 			{
-				count: 3,
+				count: account,
 				icon: 'briefcase',
 				onOpenModal: () => onOpenChangeAccountsAttributes(true),
 				title: Liferay.Language.get('account'),
 			},
 			{
-				count: 7,
+				count: product,
 				icon: 'categories',
 				onOpenModal: () => onOpenChangeProductsAttributes(true),
 				title: Liferay.Language.get('products'),
 			},
 			{
-				count: 13,
+				count: order,
 				icon: 'shopping-cart',
 				onOpenModal: () => onOpenChangeOrderAttributes(true),
 				title: Liferay.Language.get('order'),
 			},
-		],
-		[
-			onOpenChangeAccountsAttributes,
-			onOpenChangeOrderAttributes,
-			onOpenChangePeopleAttributes,
-			onOpenChangeProductsAttributes,
-		]
-	);
+		];
+	}, [
+		onOpenChangeAccountsAttributes,
+		onOpenChangeOrderAttributes,
+		onOpenChangePeopleAttributes,
+		onOpenChangeProductsAttributes,
+		selectedFields,
+	]);
 
 	return (
 		<>
@@ -99,8 +144,10 @@ const Attributes: React.FC = () => {
 						<ClayList.ItemField expand>
 							<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
 
-							<ClayList.ItemText>
-								{`${count} ${Liferay.Language.get('selected')}`}
+							<ClayList.ItemText className="text-secondary">
+								<span className="mr-1">{count}</span>
+
+								<span>{Liferay.Language.get('selected')}</span>
 							</ClayList.ItemText>
 						</ClayList.ItemField>
 
@@ -119,28 +166,52 @@ const Attributes: React.FC = () => {
 			{openAccountsAttributes && (
 				<AccountsAttributesModal
 					observer={observerAccountsAttributes}
-					onCloseModal={() => onOpenChangeAccountsAttributes(false)}
-				/>
-			)}
-
-			{openPeopleAttributes && (
-				<PeopleAttributesModal
-					observer={observerPeopleAttributes}
-					onCloseModal={() => onOpenChangePeopleAttributes(false)}
-				/>
-			)}
-
-			{openProductsAttributes && (
-				<ProductsAttributesModal
-					observer={observerProductsAttributes}
-					onCloseModal={() => onOpenChangeProductsAttributes(false)}
+					onCancel={() => onOpenChangeAccountsAttributes(false)}
+					onSubmit={() =>
+						handleCloseModal(
+							EFields.Account,
+							onOpenChangeAccountsAttributes
+						)
+					}
 				/>
 			)}
 
 			{openOrderAttributes && (
 				<OrderAttributsModal
 					observer={observerOrderAttributes}
-					onCloseModal={() => onOpenChangeOrderAttributes(false)}
+					onCancel={() => onOpenChangeOrderAttributes(false)}
+					onSubmit={() =>
+						handleCloseModal(
+							EFields.Order,
+							onOpenChangeOrderAttributes
+						)
+					}
+				/>
+			)}
+
+			{openPeopleAttributes && (
+				<PeopleAttributesModal
+					observer={observerPeopleAttributes}
+					onCancel={() => onOpenChangePeopleAttributes(false)}
+					onSubmit={() =>
+						handleCloseModal(
+							EFields.People,
+							onOpenChangePeopleAttributes
+						)
+					}
+				/>
+			)}
+
+			{openProductsAttributes && (
+				<ProductsAttributesModal
+					observer={observerProductsAttributes}
+					onCancel={() => onOpenChangeProductsAttributes(false)}
+					onSubmit={() =>
+						handleCloseModal(
+							EFields.Product,
+							onOpenChangeProductsAttributes
+						)
+					}
 				/>
 			)}
 		</>

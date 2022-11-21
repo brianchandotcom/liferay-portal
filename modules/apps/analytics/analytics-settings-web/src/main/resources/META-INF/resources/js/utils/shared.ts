@@ -12,30 +12,26 @@
  * details.
  */
 
-import classNames from 'classnames';
-import React from 'react';
+import {TFormattedItems} from '../components/table/Table';
 
-interface ILoadingProps {
-	absolute?: boolean;
-	inline?: boolean;
+export function getIds(items: TFormattedItems, initialIds: number[]): number[] {
+	const ids = [...initialIds];
+
+	Object.values(items).forEach((item) => {
+		if (ids.length) {
+			ids.forEach((id, index) => {
+				if (id === Number(item.id) && !item.checked) {
+					ids.splice(index, 1);
+				}
+				else if (id !== Number(item.id) && item.checked) {
+					ids.push(Number(item.id));
+				}
+			});
+		}
+		else if (item.checked) {
+			ids.push(Number(item.id));
+		}
+	});
+
+	return [...new Set(ids)];
 }
-
-const Loading: React.FC<ILoadingProps> = ({
-	absolute = false,
-	inline = false,
-}) => {
-	return (
-		<span
-			className={classNames({'inline-item inline-item-before': inline})}
-		>
-			<span
-				aria-hidden="true"
-				className={classNames('loading-animation', {
-					'loading-absolute': absolute,
-				})}
-			/>
-		</span>
-	);
-};
-
-export default Loading;

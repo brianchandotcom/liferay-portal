@@ -16,43 +16,34 @@ import React from 'react';
 
 import {fetchAccountGroups} from '../../utils/api';
 import Modal, {ICommonModalProps} from './Modal';
-import {useAddItems} from './utils';
+import {EPeople} from './People';
 
 const ModalAccountGroups: React.FC<ICommonModalProps> = ({
 	observer,
 	onCloseModal,
 	syncAllAccounts,
 	syncAllContacts,
-}) => {
-	const addItems = useAddItems({
-		name: 'syncedAccountGroupIds',
-		onCloseModal,
-		syncAllAccounts,
-		syncAllContacts,
-	});
-
-	return (
-		<Modal
-			columns={[
-				{
-					expanded: true,
-					label: Liferay.Language.get('account-group'),
-					value: 'name',
-				},
-			]}
-			emptyStateTitle={Liferay.Language.get(
-				'there-are-no-account-groups'
-			)}
-			fetchFn={fetchAccountGroups}
-			noResultsTitle={Liferay.Language.get(
-				'no-account-groups-were-found'
-			)}
-			observer={observer}
-			onAddItems={addItems}
-			onCloseModal={onCloseModal}
-			title={Liferay.Language.get('add-account-groups')}
-		/>
-	);
-};
+	syncedIds,
+}) => (
+	<Modal
+		columns={[
+			{
+				expanded: true,
+				label: Liferay.Language.get('account-group'),
+				value: 'name',
+			},
+		]}
+		emptyStateTitle={Liferay.Language.get('there-are-no-account-groups')}
+		name={EPeople.AccountGroupIds}
+		noResultsTitle={Liferay.Language.get('no-account-groups-were-found')}
+		observer={observer}
+		onCloseModal={onCloseModal}
+		requestFn={fetchAccountGroups}
+		syncAllAccounts={syncAllAccounts}
+		syncAllContacts={syncAllContacts}
+		syncedIds={syncedIds}
+		title={Liferay.Language.get('add-account-groups')}
+	/>
+);
 
 export default ModalAccountGroups;

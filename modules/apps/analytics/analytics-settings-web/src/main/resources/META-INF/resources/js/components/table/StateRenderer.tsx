@@ -15,22 +15,19 @@
 import React from 'react';
 
 import {EMPTY_STATE_GIF, NOT_FOUND_GIF} from '../../utils/constants';
-import {TUseFecthDataResult} from '../../utils/useFecthData';
 import StateRenderer, {
 	EmptyStateComponent,
 	ErrorStateComponent,
 } from '../StateRenderer';
 import {useData} from './Context';
-import {TColumn} from './Table';
 
-interface ITableStateRendererProps
-	extends TUseFecthDataResult,
-		React.HTMLAttributes<HTMLElement> {
-	columns: TColumn[];
-	disabled: boolean;
+interface ITableStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	empty: boolean;
 	emptyStateTitle: string;
+	error: boolean;
+	loading: boolean;
 	noResultsTitle: string;
+	refetch: () => void;
 }
 
 const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
@@ -41,12 +38,16 @@ const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
 	loading,
 	noResultsTitle,
 	refetch,
-	refetching,
 }) => {
 	const {keywords} = useData();
 
 	return (
-		<StateRenderer empty={empty} error={error} loading={loading}>
+		<StateRenderer
+			empty={empty}
+			error={error}
+			loading={loading}
+			loadingProps={{absolute: true}}
+		>
 			{!keywords && (
 				<StateRenderer.Empty>
 					<EmptyStateComponent
@@ -72,7 +73,6 @@ const TableStateRenderer: React.FC<ITableStateRendererProps> = ({
 			<StateRenderer.Error>
 				<ErrorStateComponent
 					className="empty-state-border mb-0 pb-5"
-					disabled={refetching}
 					onClickRefetch={refetch}
 				/>
 			</StateRenderer.Error>

@@ -19,7 +19,10 @@ import Attributes from '../../components/attributes/Attributes';
 import {IGenericPageProps} from './DefaultPage';
 
 const AttributesPage: React.FC<IGenericPageProps> = ({title}) => (
-	<BasePage title={title}>
+	<BasePage
+		description={Liferay.Language.get('attributes-step-description')}
+		title={title}
+	>
 		<Attributes />
 	</BasePage>
 );

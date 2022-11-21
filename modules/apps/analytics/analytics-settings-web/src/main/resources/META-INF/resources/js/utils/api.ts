@@ -12,7 +12,7 @@
  * details.
  */
 
-import request from './request';
+import request, {TQueries, serializeQueries} from './request';
 
 export function createProperty(name: string) {
 	return request('/channels', {
@@ -27,13 +27,17 @@ export function deleteConnection() {
 	return request('/data-sources', {method: 'DELETE'});
 }
 
-export function fetchAccountGroups(queryString?: string) {
+export function fetchAccountGroups(params: TQueries) {
+	const queryString = serializeQueries(params);
+
 	return request(`/contacts/account-groups?${queryString}`, {
 		method: 'GET',
 	});
 }
 
-export function fetchChannels(queryString?: string) {
+export function fetchChannels(params: TQueries) {
+	const queryString = serializeQueries(params);
+
 	return request(`/commerce-channels?${queryString}`, {
 		method: 'GET',
 	});
@@ -48,13 +52,17 @@ export function fetchConnection(token: string) {
 	});
 }
 
-export function fetchContactsOrganization(queryString?: string) {
+export function fetchContactsOrganization(params: TQueries) {
+	const queryString = serializeQueries(params);
+
 	return request(`/contacts/organizations?${queryString}`, {
 		method: 'GET',
 	});
 }
 
-export function fetchContactsUsersGroup(queryString?: string) {
+export function fetchContactsUsersGroup(params: TQueries) {
+	const queryString = serializeQueries(params);
+
 	return request(`/contacts/user-groups?${queryString}`, {
 		method: 'GET',
 	});
@@ -70,7 +78,9 @@ export function fetchProperties() {
 	return request('/channels?sort=createDate:desc', {method: 'GET'});
 }
 
-export function fetchSites(queryString?: string) {
+export function fetchSites(params: TQueries) {
+	const queryString = serializeQueries(params);
+
 	return request(`/sites?${queryString}`, {
 		method: 'GET',
 	});
@@ -129,5 +139,34 @@ export function updateAttributesConfiguration({
 			syncedUserGroupIds,
 		}),
 		method: 'PUT',
+	});
+}
+
+export function fetchSelectedFields() {
+	return request('/fields', {method: 'GET'});
+}
+
+export function fetchPeopleFields(params: TQueries) {
+	const queryString = serializeQueries(params);
+
+	return request(
+		`/fields/people?${queryString.replace('keywords', 'keyword')}`,
+		{method: 'GET'}
+	);
+}
+
+type TField = {
+	example: string;
+	name: string;
+	required: boolean;
+	selected: boolean;
+	source: string;
+	type: string;
+};
+
+export function updatePeopleFields(fields: TField[]) {
+	return request('/fields/people', {
+		body: JSON.stringify(fields),
+		method: 'PATCH',
 	});
 }

@@ -15,44 +15,44 @@
 import React from 'react';
 
 import {fetchSites} from '../../utils/api';
-import {TItem} from '../table/Table';
+import {TFormattedItems} from '../table/Table';
 import {TProperty} from './Properties';
-import Tab from './Tab';
+import Tab, {TRawItem} from './Tab';
+
+const columns = [
+	{
+		expanded: true,
+		label: Liferay.Language.get('site-name'),
+		value: 'name',
+	},
+	{
+		expanded: true,
+		label: Liferay.Language.get('friendly-url'),
+		value: 'friendlyURL',
+	},
+	{
+		expanded: true,
+		label: Liferay.Language.get('assigned-property'),
+		sortable: false,
+		value: 'channelName',
+	},
+];
 
 interface ISiteTabProps {
-	onSitesChange: (items: TItem[]) => void;
+	onSitesChange: (items: TFormattedItems) => void;
 	property: TProperty;
 }
 
-const SitesTab: React.FC<ISiteTabProps> = ({onSitesChange, property}) => {
-	return (
-		<Tab
-			columns={['name', 'friendlyURL', 'channelName']}
-			emptyStateTitle={Liferay.Language.get('there-are-no-sites')}
-			fetchFn={fetchSites}
-			header={[
-				{
-					expanded: true,
-					label: Liferay.Language.get('site-name'),
-					value: 'name',
-				},
-				{
-					expanded: true,
-					label: Liferay.Language.get('friendly-url'),
-					value: 'friendlyURL',
-				},
-				{
-					expanded: true,
-					label: Liferay.Language.get('assigned-property'),
-					sortable: false,
-					value: 'channelName',
-				},
-			]}
-			noResultsTitle={Liferay.Language.get('no-sites-were-found')}
-			onItemsChange={onSitesChange}
-			property={property}
-		/>
-	);
-};
+const SitesTab: React.FC<ISiteTabProps> = ({onSitesChange, property}) => (
+	<Tab
+		columns={columns.map(({value}) => value) as Array<keyof TRawItem>}
+		emptyStateTitle={Liferay.Language.get('there-are-no-sites')}
+		header={columns}
+		noResultsTitle={Liferay.Language.get('no-sites-were-found')}
+		onItemsChange={onSitesChange}
+		property={property}
+		requestFn={fetchSites}
+	/>
+);
 
 export default SitesTab;

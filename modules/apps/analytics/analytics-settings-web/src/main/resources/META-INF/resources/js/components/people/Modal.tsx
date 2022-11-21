@@ -16,7 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
-import Table, {TColumn, TItem} from '../table/Table';
+import {updateAttributesConfiguration} from '../../utils/api';
+import {SUCCESS_MESSAGE} from '../../utils/constants';
+import {TQueries} from '../../utils/request';
+import {getIds} from '../../utils/shared';
+import Table, {TColumn, TFormattedItems} from '../table/Table';
+import {EPeople} from './People';
 
 type TRawItem = {
 	id: number;
@@ -29,50 +34,61 @@ export interface ICommonModalProps {
 	onCloseModal: () => void;
 	syncAllAccounts: boolean;
 	syncAllContacts: boolean;
+	syncedIds: {
+		[key in EPeople]: string[];
+	};
 }
 
 interface IModalProps {
 	columns: TColumn[];
 	emptyStateTitle: string;
-	fetchFn: () => Promise<any>;
+	name: EPeople;
 	noResultsTitle: string;
 	observer: any;
-	onAddItems: (items: TItem[]) => void;
 	onCloseModal: () => void;
+	requestFn: (params: TQueries) => Promise<any>;
+	syncAllAccounts: boolean;
+	syncAllContacts: boolean;
+	syncedIds: {
+		[key in EPeople]: string[];
+	};
 	title: string;
 }
 
 const Modal: React.FC<IModalProps> = ({
 	columns,
 	emptyStateTitle,
-	fetchFn,
+	name,
 	noResultsTitle,
 	observer,
-	onAddItems,
 	onCloseModal,
+	requestFn,
+	syncAllAccounts,
+	syncAllContacts,
+	syncedIds,
 	title,
 }) => {
-	const [items, setItems] = useState<TItem[]>([]);
+	const [items, setItems] = useState<TFormattedItems>({});
 
 	return (
 		<ClayModal center observer={observer} size="lg">
 			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>
-				<Table
+				<Table<TRawItem>
 					columns={columns}
 					emptyStateTitle={emptyStateTitle}
-					fetchFn={fetchFn}
 					mapperItems={(items: TRawItem[]) => {
 						return items.map(({id, name, selected}) => ({
 							checked: selected,
-							columns: [name],
+							columns: [{label: name}],
 							disabled: false,
 							id: String(id),
 						}));
 					}}
 					noResultsTitle={noResultsTitle}
 					onItemsChange={setItems}
+					requestFn={requestFn}
 				/>
 			</ClayModal.Body>
 
@@ -86,7 +102,29 @@ const Modal: React.FC<IModalProps> = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton onClick={() => onAddItems(items)}>
+						<ClayButton
+							onClick={async () => {
+								const {
+									ok,
+								} = await updateAttributesConfiguration({
+									...syncedIds,
+									[name]: getIds(
+										items,
+										syncedIds[name].map((id) => Number(id))
+									),
+									syncAllAccounts,
+									syncAllContacts,
+								});
+
+								if (ok) {
+									Liferay.Util.openToast({
+										message: SUCCESS_MESSAGE,
+									});
+
+									onCloseModal();
+								}
+							}}
+						>
 							{Liferay.Language.get('add')}
 						</ClayButton>
 					</ClayButton.Group>

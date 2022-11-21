@@ -29,15 +29,16 @@ interface IStateRendererProps extends React.HTMLAttributes<HTMLElement> {
 	empty: boolean;
 	error: boolean;
 	loading: boolean;
+	loadingProps?: any;
 }
 
 const StateRenderer: React.FC<IStateRendererProps> & {
 	Empty: typeof EmptyState;
 	Error: typeof ErrorState;
 	Success: typeof SuccessState;
-} = ({children, empty, error, loading}) => {
+} = ({children, empty, error, loading, loadingProps}) => {
 	if (loading) {
-		return <Loading />;
+		return <Loading {...loadingProps} />;
 	}
 
 	return (

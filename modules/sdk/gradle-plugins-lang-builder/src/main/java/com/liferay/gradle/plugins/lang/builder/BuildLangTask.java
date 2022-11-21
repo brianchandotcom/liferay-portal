@@ -29,8 +29,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
@@ -138,35 +136,17 @@ public class BuildLangTask extends JavaExec {
 				StringUtil.merge(getExcludedLanguageIds(), ","));
 		args.add("lang.file=" + getLangFileName());
 		args.add("lang.title.capitalization=" + isTitleCapitalization());
+		args.add("lang.translate=" + isTranslate());
 
-		boolean translate = isTranslate();
+		String translateSubscriptionKey = getTranslateSubscriptionKey();
 
-		if (translate) {
-			String translateSubscriptionKey = getTranslateSubscriptionKey();
-
-			if (Validator.isNull(translateSubscriptionKey)) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn(
-						"Translation is disabled because credentials are not " +
-							"specified");
-				}
-
-				translate = false;
-			}
-			else {
-				args.add(
-					"lang.translate.subscription.key=" +
-						translateSubscriptionKey);
-			}
+		if (Validator.isNotNull(translateSubscriptionKey)) {
+			args.add(
+				"lang.translate.subscription.key=" + translateSubscriptionKey);
 		}
-
-		args.add("lang.translate=" + translate);
 
 		return args;
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		BuildLangTask.class);
 
 	private final Set<Object> _excludedLanguageIds = new LinkedHashSet<>();
 	private Object _langDir;

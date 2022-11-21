@@ -1546,9 +1546,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
-	private void _checkKBArticles(Date expirationDate)
-		throws PortalException {
-
+	private void _checkKBArticles(Date expirationDate) throws PortalException {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Expiring file entries with expiration date previous to " +
@@ -1605,6 +1603,25 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			updateStatus(
 				userId, kbArticle.getResourcePrimKey(),
 				WorkflowConstants.STATUS_EXPIRED, serviceContext);
+
+			// Asset
+
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				KBArticle.class.getName(), kbArticle.getResourcePrimKey());
+
+			_assetEntryLocalService.updateEntry(
+				userId, kbArticle.getGroupId(), kbArticle.getCreateDate(),
+				kbArticle.getModifiedDate(), KBArticle.class.getName(),
+				kbArticle.getResourcePrimKey(), kbArticle.getUuid(), 0,
+				assetEntry.getCategoryIds(), assetEntry.getTagNames(), true,
+				false, null, null, null, kbArticle.getExpirationDate(),
+				ContentTypes.TEXT_HTML, kbArticle.getTitle(),
+				kbArticle.getDescription(), assetEntry.getSummary(), null, null,
+				0, 0, null);
+
+			// Index
+
+			_indexKBArticle(kbArticle);
 		}
 	}
 

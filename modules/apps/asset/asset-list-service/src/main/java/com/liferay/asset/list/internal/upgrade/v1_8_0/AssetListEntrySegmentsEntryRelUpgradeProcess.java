@@ -29,7 +29,7 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			"select assetListEntrySegmentsEntryRelId, assetListEntryId from " +
+			"select alEntrySegmentsEntryRelId, assetListEntryId from " +
 			"AssetListEntrySegmentsEntryRel order by assetListEntryId asc, " +
 			"priority desc, createDate desc");
 
@@ -37,7 +37,7 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					 connection,
 					 "update AssetListEntrySegmentsEntryRel set priority = ? " +
-					 "where assetListEntrySegmentsEntryRelId = ?");
+					 "where alEntrySegmentsEntryRelId = ?");
 
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
@@ -53,7 +53,7 @@ public class AssetListEntrySegmentsEntryRelUpgradeProcess
 
 				preparedStatement2.setLong(1, priority);
 				preparedStatement2.setLong(
-					2, resultSet.getLong("assetListEntrySegmentsEntryRelId"));
+					2, resultSet.getLong("alEntrySegmentsEntryRelId"));
 
 				preparedStatement2.addBatch();
 

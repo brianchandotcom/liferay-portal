@@ -408,9 +408,7 @@ definition {
 	macro gotoEllipsisMenuItemInItemSelector {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		MenuItem.click(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
@@ -631,9 +629,7 @@ definition {
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		MenuItem.click(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -660,9 +656,7 @@ definition {
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		MenuItem.click(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -727,9 +721,7 @@ definition {
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
-		Click(
-			key_menuItem = "View Items",
-			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
+		MenuItem.click(menuItem = "View Items");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import java.util.Arrays;
@@ -35,54 +33,6 @@ import java.util.Map;
  * @author Luis Miguel Barcos
  */
 public class BaseGraphQLServlet {
-
-	public static class TestDTO {
-
-		public TestDTO(long id) {
-			_id = id;
-		}
-
-		public long getId() {
-			return _id;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		private long _id;
-
-	}
-
-	public static class TestQuery {
-
-		public String getField() {
-			return _FIELD;
-		}
-
-		public long getId() {
-			return _ID;
-		}
-
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
-			return new TestDTO(_ID);
-		}
-
-		@GraphQLTypeExtension(TestDTO.class)
-		public class TestGraphQLTypeExtension {
-
-			public TestGraphQLTypeExtension(TestDTO testDTO) {
-				_testDTO = testDTO;
-			}
-
-			@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-			public String field() {
-				return _FIELD;
-			}
-
-			private final TestDTO _testDTO;
-
-		}
-
-	}
 
 	public class TestServletData implements ServletData {
 
@@ -187,9 +137,5 @@ public class BaseGraphQLServlet {
 		private final Map<String, Object> _parameterMap;
 
 	}
-
-	private static final String _FIELD = RandomTestUtil.randomString();
-
-	private static final long _ID = RandomTestUtil.randomLong();
 
 }

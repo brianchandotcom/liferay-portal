@@ -56,7 +56,7 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 				ServletData.class, testServletData, null);
 
 		String testDTOSimpleClassName = StringUtil.lowerCaseFirstLetter(
-			TestDTO.class.getSimpleName());
+			TestQuery.TestDTO.class.getSimpleName());
 
 		GraphQLField graphQLField = new GraphQLField(
 			testDTOSimpleClassName, new GraphQLField("field"),

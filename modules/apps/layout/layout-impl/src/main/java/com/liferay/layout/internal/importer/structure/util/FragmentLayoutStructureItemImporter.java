@@ -51,12 +51,14 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -245,15 +247,28 @@ public class FragmentLayoutStructureItemImporter
 			return null;
 		}
 
+		Group layoutGroup = layout.getGroup();
+
+		long groupId = layoutGroup.getGroupId();
+
+		String groupKey = GetterUtil.getString(
+			fragmentDefinitionMap.get("siteKey"));
+
+		Group fragmentEntryGroup = _groupLocalService.fetchGroup(
+			layout.getCompanyId(), groupKey);
+
+		if (fragmentEntryGroup != null) {
+			groupId = fragmentEntryGroup.getGroupId();
+		}
+
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			layout.getCompanyId(), layout.getGroupId(), fragmentKey);
+			layout.getCompanyId(), groupId, fragmentKey);
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererRegistry.getFragmentRenderer(fragmentKey);
 
 		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
-			warningMessages.add(
-				_getWarningMessage(layout.getGroupId(), fragmentKey));
+			warningMessages.add(_getWarningMessage(groupId, fragmentKey));
 
 			return null;
 		}
@@ -1135,6 +1150,9 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private FragmentRendererRegistry _fragmentRendererRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

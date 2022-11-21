@@ -37,6 +37,7 @@ import java.io.Serializable;
 
 import java.net.URL;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -91,6 +92,23 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
 		_reconfigPortalCache(configurationObjectValuePair.getValue());
+	}
+
+	@Override
+	public void removePortalCaches(long companyId) {
+		Set<PortalCache<K, V>> shardedPortalCaches = new HashSet<>();
+
+		for (PortalCache<K, V> portalCache : portalCaches.values()) {
+			if (portalCache.isSharded()) {
+				shardedPortalCaches.add(portalCache);
+			}
+		}
+
+		if (shardedPortalCaches.isEmpty()) {
+			return;
+		}
+
+		doRemoveShardedPortalCache(companyId, shardedPortalCaches);
 	}
 
 	public void setConfigFile(String configFile) {
@@ -150,7 +168,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	@Override
 	protected void doRemoveShardedPortalCache(
 		long companyId, Set<PortalCache<K, V>> shardedPortalCaches) {
 

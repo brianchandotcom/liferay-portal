@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -138,23 +137,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		doRemovePortalCache(portalCaches.remove(portalCacheName));
 	}
 
-	@Override
-	public void removePortalCaches(long companyId) {
-		Set<PortalCache<K, V>> shardedPortalCaches = new HashSet<>();
-
-		for (PortalCache<K, V> portalCache : portalCaches.values()) {
-			if (portalCache.isSharded()) {
-				shardedPortalCaches.add(portalCache);
-			}
-		}
-
-		if (shardedPortalCaches.isEmpty()) {
-			return;
-		}
-
-		doRemoveShardedPortalCache(companyId, shardedPortalCaches);
-	}
-
 	public void setPortalCacheManagerName(String portalCacheManagerName) {
 		_portalCacheManagerName = portalCacheManagerName;
 	}
@@ -190,9 +172,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected abstract void doDestroy();
 
 	protected abstract void doRemovePortalCache(PortalCache<K, V> portalCache);
-
-	protected abstract void doRemoveShardedPortalCache(
-		long companyId, Set<PortalCache<K, V>> shardedPortalCaches);
 
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();

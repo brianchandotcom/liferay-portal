@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration",
-	enabled = false, immediate = true,
+	enabled = false,
 	property = {
 		"osgi.http.whiteboard.context.select=portal-search-elasticsearch-monitoring",
 		"osgi.http.whiteboard.servlet.name=com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.MonitoringProxyServlet",

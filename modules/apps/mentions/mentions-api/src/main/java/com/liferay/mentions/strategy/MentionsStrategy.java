@@ -26,6 +26,11 @@ import java.util.List;
 public interface MentionsStrategy {
 
 	public List<User> getUsers(
+			long companyId, long groupId, long user, String query,
+			JSONObject jsonObject)
+		throws PortalException;
+
+	public List<User> getUsers(
 			long companyId, long user, String query, JSONObject jsonObject)
 		throws PortalException;
 

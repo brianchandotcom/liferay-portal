@@ -26,6 +26,11 @@ import java.util.List;
 public interface MentionsUserFinder {
 
 	public List<User> getUsers(
+			long companyId, long groupId, long userId, String query,
+			SocialInteractionsConfiguration socialInteractionsConfiguration)
+		throws PortalException;
+
+	public List<User> getUsers(
 			long companyId, long userId, String query,
 			SocialInteractionsConfiguration socialInteractionsConfiguration)
 		throws PortalException;

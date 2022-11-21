@@ -86,10 +86,6 @@ public class BaseGraphQLServlet {
 
 	public class TestServletData implements ServletData {
 
-		public TestServletData(String field, long id) {
-			_testQuery = new TestQuery();
-		}
-
 		@Override
 		public Object getMutation() {
 			return null;
@@ -105,7 +101,7 @@ public class BaseGraphQLServlet {
 			return _testQuery;
 		}
 
-		private final TestQuery _testQuery;
+		private final TestQuery _testQuery = new TestQuery();
 
 	}
 

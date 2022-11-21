@@ -3006,7 +3006,7 @@ public class ObjectEntryLocalServiceImpl
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
 				objectFieldId);
 
-		ObjectState objectState =
+		ObjectState sourceObjectState =
 			_objectStateLocalService.getObjectStateFlowObjectState(
 				originalListTypeEntry.getListTypeEntryId(),
 				objectStateFlow.getObjectStateFlowId());
@@ -3019,7 +3019,7 @@ public class ObjectEntryLocalServiceImpl
 
 		for (ObjectState nextObjectState :
 				_objectStateLocalService.getNextObjectStates(
-					objectState.getObjectStateId())) {
+					sourceObjectState.getObjectStateId())) {
 
 			if (nextObjectState.getListTypeEntryId() ==
 					listTypeEntry.getListTypeEntryId()) {
@@ -3029,8 +3029,13 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (invalidObjectStateTransition) {
+			ObjectState targetObjectState =
+				_objectStateLocalService.getObjectStateFlowObjectState(
+					listTypeEntry.getListTypeEntryId(),
+					objectStateFlow.getObjectStateFlowId());
+
 			throw new ObjectEntryValuesException.InvalidObjectStateTransition(
-				originalListTypeEntry.getKey(), listTypeEntry.getKey());
+				sourceObjectState, targetObjectState);
 		}
 	}
 

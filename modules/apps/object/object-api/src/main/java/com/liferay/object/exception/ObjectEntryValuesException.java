@@ -14,6 +14,7 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.object.model.ObjectState;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -196,28 +197,29 @@ public class ObjectEntryValuesException extends PortalException {
 		extends ObjectEntryValuesException {
 
 		public InvalidObjectStateTransition(
-			String sourceObjectState, String targetObjectState) {
+			ObjectState sourceObjectState, ObjectState targetObjectState) {
 
 			super(
 				String.format(
-					"Object state '%s' cannot be transited to object state " +
-						"'%s'",
-					sourceObjectState, targetObjectState));
+					"Object state ID %d cannot be transitioned to object " +
+						"state ID %d",
+					sourceObjectState.getObjectStateId(),
+					targetObjectState.getObjectStateId()));
 
 			_sourceObjectState = sourceObjectState;
 			_targetObjectState = targetObjectState;
 		}
 
-		public String getSourceObjectState() {
+		public ObjectState getSourceObjectState() {
 			return _sourceObjectState;
 		}
 
-		public String getTargetObjectState() {
+		public ObjectState getTargetObjectState() {
 			return _targetObjectState;
 		}
 
-		private final String _sourceObjectState;
-		private final String _targetObjectState;
+		private final ObjectState _sourceObjectState;
+		private final ObjectState _targetObjectState;
 
 	}
 

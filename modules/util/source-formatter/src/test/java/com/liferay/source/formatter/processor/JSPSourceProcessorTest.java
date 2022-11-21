@@ -116,6 +116,15 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testNecessaryAttribute() throws Exception {
+		test(
+			"NecessaryAttribute.testjsp",
+			"Should always specify some 'aria-label', 'aria-labelledby' or " +
+				"'title' attribute when using 'clay:dropdown-actions' taglib",
+			19);
+	}
+
+	@Test
 	public void testSortTagAttributes() throws Exception {
 		test("SortTagAttributes.testjsp");
 	}

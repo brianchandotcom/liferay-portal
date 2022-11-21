@@ -90,7 +90,17 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void destroy() {
 		portalCaches.clear();
 
-		doDestroy();
+		_cacheManager.shutdown();
+
+		if (_configuratorSettingsServiceTracker != null) {
+			_configuratorSettingsServiceTracker.close();
+
+			_configuratorSettingsServiceTracker = null;
+		}
+
+		if (_mBeanServerServiceTracker != null) {
+			_mBeanServerServiceTracker.close();
+		}
 	}
 
 	public CacheManager getEhcacheManager() {
@@ -218,20 +228,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 
 		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
-	}
-
-	protected void doDestroy() {
-		_cacheManager.shutdown();
-
-		if (_configuratorSettingsServiceTracker != null) {
-			_configuratorSettingsServiceTracker.close();
-
-			_configuratorSettingsServiceTracker = null;
-		}
-
-		if (_mBeanServerServiceTracker != null) {
-			_mBeanServerServiceTracker.close();
-		}
 	}
 
 	protected void doRemoveShardedPortalCache(

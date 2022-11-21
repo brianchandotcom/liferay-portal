@@ -1,0 +1,8 @@
+{
+	"customElementName": "delta-remote-app-element",
+	"name": "delta-remote-app",
+	"platform":"dxp-7.4",
+	"projectType":"React",
+  "target": "Liferay Remote App Project",
+	"useShadowDOM":"false"
+}

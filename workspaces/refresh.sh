@@ -64,6 +64,7 @@ function refresh_sample_default_workspace {
 	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-env.properties
 
 	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13-u51-d5.0.2-20221117052608" >> gradle.properties
+	echo -e "\nliferay.workspace.node.package.manager=yarn" >> gradle.properties
 
 	sort -o gradle.properties gradle.properties
 
@@ -84,6 +85,14 @@ function refresh_sample_minimal_workspace {
 	copy_template iframe sample-minimal-workspace/client-extensions/able-iframe "Able IFrame"
 	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
 	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
+
+	npx @liferay/cli new delta-remote-app --batch true --options refresh-files/delta-remote-app-options.json
+
+	#sed -i'.bak' '/^.*react-scripts test.*$/d' delta-remote-app/package.json
+
+	rm -fr sample-minimal-workspace/client-extensions/delta-remote-app
+
+	mv delta-remote-app sample-minimal-workspace/client-extensions
 
 	rm -fr sample-default-workspace/client-extensions
 

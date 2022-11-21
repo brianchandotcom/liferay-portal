@@ -457,23 +457,6 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
-	 * Checks the web content article matching the group, article ID, and
-	 * version for an associated structure. If no structure is associated,
-	 * return; otherwise check that the article and structure match.
-	 *
-	 * @param groupId the primary key of the web content article's group
-	 * @param articleId the primary key of the web content article
-	 * @param version the web content article's version
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void checkStructure(long groupId, String articleId, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_journalArticleLocalService.checkStructure(groupId, articleId, version);
-	}
-
-	/**
 	 * Copies the web content article matching the group, article ID, and
 	 * version. This method creates a new article, extracting all the values
 	 * from the old one and updating its article ID.

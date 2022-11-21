@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class SuggestionsSAPEntryActivator {
 
 	@Activate

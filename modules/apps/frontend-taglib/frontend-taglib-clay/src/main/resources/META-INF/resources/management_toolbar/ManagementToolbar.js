@@ -189,6 +189,9 @@ function ManagementToolbar({
 										trigger={
 											showDesignImprovementsFF ? (
 												<ClayButton
+													aria-label={Liferay.Language.get(
+														'show-view-options'
+													)}
 													className="nav-link"
 													displayType="unstyled"
 													title={Liferay.Language.get(
@@ -210,6 +213,9 @@ function ManagementToolbar({
 												</ClayButton>
 											) : (
 												<ClayButtonWithIcon
+													aria-label={Liferay.Language.get(
+														'show-view-options'
+													)}
 													className="nav-link nav-link-monospaced"
 													displayType="unstyled"
 													symbol={viewTypeIcon}

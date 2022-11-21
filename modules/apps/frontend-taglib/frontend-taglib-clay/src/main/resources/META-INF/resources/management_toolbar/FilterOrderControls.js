@@ -195,6 +195,13 @@ const FilterOrderControls = ({
 				(showDesignImprovements && sortingURL && showOrderToggle)) && (
 				<ManagementToolbar.Item>
 					<LinkOrButton
+						aria-label={
+							showDesignImprovements
+								? Liferay.Language.get(
+										'reverse-order-direction'
+								  )
+								: Liferay.Language.get('reverse-sort-direction')
+						}
 						className="nav-link nav-link-monospaced"
 						disabled={disabled}
 						displayType="unstyled"

@@ -110,20 +110,6 @@ public class ViewSharedAssetsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getSharingEntryAssetTypeTitle(SharingEntry sharingEntry)
-		throws PortalException {
-
-		SharingEntryInterpreter sharingEntryInterpreter =
-			_sharingEntryInterpreterFunction.apply(sharingEntry);
-
-		if (sharingEntryInterpreter == null) {
-			return StringPool.BLANK;
-		}
-
-		return sharingEntryInterpreter.getAssetTypeTitle(
-			sharingEntry, _themeDisplay.getLocale());
-	}
-
 	public String getClassName() {
 		return ParamUtil.getString(_httpServletRequest, "className");
 	}
@@ -234,6 +220,20 @@ public class ViewSharedAssetsDisplayContext {
 			new SharedAssetsFilterItemItemSelectorCriterion());
 	}
 
+	public String getSharingEntryAssetTypeTitle(SharingEntry sharingEntry)
+		throws PortalException {
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
+
+		if (sharingEntryInterpreter == null) {
+			return StringPool.BLANK;
+		}
+
+		return sharingEntryInterpreter.getAssetTypeTitle(
+			sharingEntry, _themeDisplay.getLocale());
+	}
+
 	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
 		throws PortalException {
 
@@ -313,6 +313,17 @@ public class ViewSharedAssetsDisplayContext {
 		).buildRenderURL();
 	}
 
+	public String getSharingEntryTitle(SharingEntry sharingEntry) {
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
+
+		if (sharingEntryInterpreter == null) {
+			return StringPool.BLANK;
+		}
+
+		return HtmlUtil.escape(sharingEntryInterpreter.getTitle(sharingEntry));
+	}
+
 	public String getSortingOrder() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -339,17 +350,6 @@ public class ViewSharedAssetsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getSharingEntryTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter sharingEntryInterpreter =
-			_sharingEntryInterpreterFunction.apply(sharingEntry);
-
-		if (sharingEntryInterpreter == null) {
-			return StringPool.BLANK;
-		}
-
-		return HtmlUtil.escape(sharingEntryInterpreter.getTitle(sharingEntry));
-	}
-
 	public PortletURL getViewAssetTypePortletURL() throws PortletException {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
@@ -358,7 +358,9 @@ public class ViewSharedAssetsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public boolean isSharingEntryVisible(SharingEntry sharingEntry) throws PortalException {
+	public boolean isSharingEntryVisible(SharingEntry sharingEntry)
+		throws PortalException {
+
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 

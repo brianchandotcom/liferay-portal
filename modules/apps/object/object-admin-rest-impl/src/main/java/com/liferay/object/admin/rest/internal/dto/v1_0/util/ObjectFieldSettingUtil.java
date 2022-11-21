@@ -24,8 +24,9 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -46,7 +47,7 @@ public class ObjectFieldSettingUtil {
 				ObjectFieldSetting objectFieldSetting,
 				ObjectFieldSettingLocalService objectFieldSettingLocalService,
 				ObjectFilterLocalService objectFilterLocalService)
-		throws PortalException {
+		throws Exception {
 
 		com.liferay.object.model.ObjectFieldSetting
 			serviceBuilderObjectFieldSetting =
@@ -83,6 +84,11 @@ public class ObjectFieldSettingUtil {
 			if (objectFieldSetting.getValue() instanceof Object[]) {
 				values = ListUtil.fromArray(
 					(Object[])objectFieldSetting.getValue());
+			}
+			else if (objectFieldSetting.getValue() instanceof JSONArray) {
+				values = JSONUtil.toList(
+					(JSONArray)objectFieldSetting.getValue(),
+					jsonObject -> jsonObject.toMap());
 			}
 			else {
 				values = (List<Object>)objectFieldSetting.getValue();

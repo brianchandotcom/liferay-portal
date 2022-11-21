@@ -1308,7 +1308,8 @@ public class PortalImpl implements Portal {
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+			PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
 
 			groups.add(
 				0, GroupLocalServiceUtil.getUserGroup(companyId, userId));

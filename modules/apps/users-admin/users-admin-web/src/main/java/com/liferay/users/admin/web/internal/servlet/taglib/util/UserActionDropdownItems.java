@@ -100,7 +100,9 @@ public class UserActionDropdownItems {
 						(PrefsPropsUtil.getBoolean(
 							_themeDisplay.getCompanyId(),
 							PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-						 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) &&
+						 PrefsPropsUtil.getBoolean(
+							 _themeDisplay.getCompanyId(),
+							 PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) &&
 						hasUpdatePermission,
 					_getManagePagesActionUnsafeConsumer()
 				).add(

@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	enabled = false, immediate = true,
-	service = CrossClusterReplicationConfigurationHelper.class
+	enabled = false, service = CrossClusterReplicationConfigurationHelper.class
 )
 public class CrossClusterReplicationConfigurationHelperImpl
 	implements CrossClusterReplicationConfigurationHelper {

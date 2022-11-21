@@ -15,6 +15,7 @@
 package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.nimbusds.oauth2.sdk.id.State;
+import com.nimbusds.oauth2.sdk.pkce.CodeVerifier;
 import com.nimbusds.openid.connect.sdk.Nonce;
 
 import java.io.Serializable;
@@ -25,11 +26,17 @@ import java.io.Serializable;
 public class OpenIdConnectAuthenticationSession implements Serializable {
 
 	public OpenIdConnectAuthenticationSession(
-		Nonce nonce, long oAuthClientEntryId, State state) {
+		CodeVerifier codeVerifier, Nonce nonce, long oAuthClientEntryId,
+		State state) {
 
+		_codeVerifier = codeVerifier;
 		_nonce = nonce;
 		_oAuthClientEntryId = oAuthClientEntryId;
 		_state = state;
+	}
+
+	public CodeVerifier getCodeVerifier() {
+		return _codeVerifier;
 	}
 
 	public Nonce getNonce() {
@@ -44,6 +51,7 @@ public class OpenIdConnectAuthenticationSession implements Serializable {
 		return _state;
 	}
 
+	private final CodeVerifier _codeVerifier;
 	private final Nonce _nonce;
 	private final long _oAuthClientEntryId;
 	private final State _state;

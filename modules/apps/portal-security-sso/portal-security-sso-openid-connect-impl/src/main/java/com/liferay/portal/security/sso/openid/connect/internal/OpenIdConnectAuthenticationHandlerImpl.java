@@ -45,6 +45,9 @@ import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
 import com.nimbusds.oauth2.sdk.id.State;
+import com.nimbusds.oauth2.sdk.pkce.CodeChallenge;
+import com.nimbusds.oauth2.sdk.pkce.CodeChallengeMethod;
+import com.nimbusds.oauth2.sdk.pkce.CodeVerifier;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
@@ -137,6 +140,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 			authenticationSuccessResponse,
+			openIdConnectAuthenticationSession.getCodeVerifier(),
 			openIdConnectAuthenticationSession.getNonce(),
 			oidcClientInformation, oidcProviderMetadata,
 			_getLoginRedirectURI(httpServletRequest),
@@ -193,8 +197,13 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			_oAuthClientEntryLocalService.getOAuthClientEntry(
 				oAuthClientEntryId);
 
+		CodeVerifier codeVerifier = new CodeVerifier();
+
 		Map<String, Object> runtimeRequestParameters =
 			HashMapBuilder.<String, Object>put(
+				"code_challenge",
+				CodeChallenge.compute(CodeChallengeMethod.S256, codeVerifier)
+			).put(
 				"nonce", new Nonce()
 			).put(
 				"redirect_uri", _getLoginRedirectURI(httpServletRequest)
@@ -227,7 +236,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			httpSession.setAttribute(
 				_OPEN_ID_CONNECT_AUTHENTICATION_SESSION,
 				new OpenIdConnectAuthenticationSession(
-					(Nonce)runtimeRequestParameters.get("nonce"),
+					codeVerifier, (Nonce)runtimeRequestParameters.get("nonce"),
 					oAuthClientEntryId,
 					(State)runtimeRequestParameters.get("state")));
 		}
@@ -270,6 +279,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		builder = builder.endpointURI(
 			authenticationEndpointURI
+		).codeChallenge(
+			(CodeChallenge)runtimeRequestParameters.get("code_challenge"),
+			CodeChallengeMethod.S256
 		).nonce(
 			(Nonce)runtimeRequestParameters.get("nonce")
 		).resources(

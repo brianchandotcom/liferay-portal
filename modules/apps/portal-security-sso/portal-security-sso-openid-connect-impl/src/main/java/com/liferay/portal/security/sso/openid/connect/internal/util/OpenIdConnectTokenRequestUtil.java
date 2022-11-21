@@ -36,6 +36,7 @@ import com.nimbusds.oauth2.sdk.auth.Secret;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
+import com.nimbusds.oauth2.sdk.pkce.CodeVerifier;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.AuthenticationSuccessResponse;
@@ -70,13 +71,15 @@ public class OpenIdConnectTokenRequestUtil {
 
 	public static OIDCTokens request(
 			AuthenticationSuccessResponse authenticationSuccessResponse,
-			Nonce nonce, OIDCClientInformation oidcClientInformation,
+			CodeVerifier codeVerifier, Nonce nonce,
+			OIDCClientInformation oidcClientInformation,
 			OIDCProviderMetadata oidcProviderMetadata, URI redirectURI,
 			String tokenRequestParametersJSON)
 		throws Exception {
 
 		AuthorizationGrant authorizationCodeGrant = new AuthorizationCodeGrant(
-			authenticationSuccessResponse.getAuthorizationCode(), redirectURI);
+			authenticationSuccessResponse.getAuthorizationCode(), redirectURI,
+			codeVerifier);
 
 		return _requestOIDCTokens(
 			authorizationCodeGrant, nonce, oidcClientInformation,

@@ -30,7 +30,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 	<c:choose>
 		<c:when test="<%= dropdownItems.size() > 1 %>">
 			<clay:dropdown-actions
-				aria-label='<%= LanguageUtil.format(locale, "dropdown-actions-for-x", assetEntry.getTitle(locale)) %>'
+				aria-label='<%= LanguageUtil.format(locale, "actions-for-x", assetEntry.getTitle(locale)) %>'
 				borderless="<%= true %>"
 				cssClass="text-primary visible-interaction"
 				displayType="unstyled"
@@ -38,7 +38,7 @@ List<DropdownItem> dropdownItems = assetEntryActionDropdownItemsProvider.getActi
 				monospaced="<%= true %>"
 				propsTransformer="js/AssetEntryActionDropdownPropsTransformer"
 				small="<%= true %>"
-				title='<%= LanguageUtil.format(locale, "dropdown-actions-for-x", assetEntry.getTitle(locale)) %>'
+				title='<%= LanguageUtil.format(locale, "actions-for-x", assetEntry.getTitle(locale)) %>'
 			/>
 		</c:when>
 		<c:otherwise>

@@ -94,7 +94,7 @@ definition {
 		}
 
 		task ("When with curl I request getSiteStructuredContentsPage with aggregationTerms=id") {
-			var response = API.getStructuredContentsWithDifferentParameters(
+			var response = HeadlessWebcontentAPI.getStructuredContentsWithDifferentParameters(
 				groupName = "Test Site Name",
 				parameter = "aggregationTerms",
 				parameterValue = "id");

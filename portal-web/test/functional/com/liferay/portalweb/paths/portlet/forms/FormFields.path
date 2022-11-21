@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>FIELD_REPEATABLE_BUTTON_BY_INDEX</td>
-	<td>//div[${key_duplicatedIndex}][contains(@class,'ddm-field')]//div[contains(@data-field-name,'${key_fieldName}')]//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
+	<td>//div[${key_duplicatedIndex}][contains(@class,'ddm-field')]//div[contains(@data-field-name,'${key_fieldName}')]//button[contains(@class,'ddm-form-field-repeatable-add-button')] | //div[${key_duplicatedIndex}][@class="ddm-field"]//label[text()='${key_fieldName}']/..//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>FIELD_ADD_SPECIFIC</td>
-	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
+	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')] | //div[@class="ddm-field"]//label[text()='Upload'][${key_repeatableFieldNumber}]/..//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -866,7 +866,7 @@
 </tr>
 <tr>
 	<td>SELECT_SELECT_LIST_INDEX</td>
-	<td>xpath=//label[contains(text(),'${key_fieldLabel}')]/../../..//div[contains(@class,'ddm-field') and contains(@data-field-name,'SelectFromList')][${key_index}]</td>
+	<td>xpath=//label[contains(text(),'${key_fieldLabel}')]/../../..//div[contains(@class,'ddm-field') and contains(@data-field-name,'SelectFromList')][${key_index}] | //div[@class="ddm-field"][${key_index}]//label[contains(text(),'${key_fieldLabel}')]/..//div[contains(@class,'option-selected')]</td>
 	<td></td>
 </tr>
 <tr>

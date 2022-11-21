@@ -103,7 +103,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 						(LowLevelCache<K, MVCCModel>)value);
 				}
 
-				if (_transactionalPortalCacheEnabled &&
+				if (transactionalPortalCacheEnabled &&
 					_isTransactionalPortalCache(portalCacheName)) {
 
 					value = new TransactionalPortalCache<>(value, mvcc);
@@ -121,7 +121,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public String getPortalCacheManagerName() {
-		return _portalCacheManagerName;
+		return portalCacheManagerName;
 	}
 
 	@Override
@@ -138,19 +138,19 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	public void setPortalCacheManagerName(String portalCacheManagerName) {
-		_portalCacheManagerName = portalCacheManagerName;
+		this.portalCacheManagerName = portalCacheManagerName;
 	}
 
 	public void setTransactionalPortalCacheEnabled(
 		boolean transactionalPortalCacheEnabled) {
 
-		_transactionalPortalCacheEnabled = transactionalPortalCacheEnabled;
+		this.transactionalPortalCacheEnabled = transactionalPortalCacheEnabled;
 	}
 
 	public void setTransactionalPortalCacheNames(
 		String[] transactionalPortalCacheNames) {
 
-		_transactionalPortalCacheNames = transactionalPortalCacheNames;
+		this.transactionalPortalCacheNames = transactionalPortalCacheNames;
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		if (Validator.isNull(_portalCacheManagerName)) {
+		if (Validator.isNull(portalCacheManagerName)) {
 			throw new IllegalArgumentException(
 				"Portal cache manager name is not specified");
 		}
@@ -245,11 +245,14 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
+	protected String portalCacheManagerName;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
+	protected boolean transactionalPortalCacheEnabled;
+	protected String[] transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 
 	private boolean _isTransactionalPortalCache(String portalCacheName) {
-		for (String namePattern : _transactionalPortalCacheNames) {
+		for (String namePattern : transactionalPortalCacheNames) {
 			if (StringUtil.wildcardMatches(
 					portalCacheName, namePattern, CharPool.QUESTION,
 					CharPool.STAR, CharPool.PERCENT, true)) {
@@ -273,7 +276,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(_portalCacheManagerName);
+		sb.append(portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (mvcc) {
@@ -309,7 +312,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		sb.append("Unable to get portal cache ");
 		sb.append(portalCache.getPortalCacheName());
 		sb.append(" from portal cache manager ");
-		sb.append(_portalCacheManagerName);
+		sb.append(portalCacheManagerName);
 		sb.append(" as a ");
 
 		if (sharded) {
@@ -332,9 +335,5 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 		throw new IllegalStateException(sb.toString());
 	}
-
-	private String _portalCacheManagerName;
-	private boolean _transactionalPortalCacheEnabled;
-	private String[] _transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 
 }

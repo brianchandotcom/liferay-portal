@@ -200,7 +200,29 @@ public class ViewSharedAssetsDisplayContext {
 			).buildPortletURL(),
 			null, "no-entries-were-found");
 
-		populateResults(searchContainer);
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+			ParamUtil.getString(_httpServletRequest, "className"));
+
+		if (_isIncoming()) {
+			searchContainer.setResultsAndTotal(
+				() -> _sharingEntryLocalService.getToUserSharingEntries(
+					_themeDisplay.getUserId(), classNameId,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					new SharingEntryModifiedDateComparator(
+						Objects.equals(getSortingOrder(), "asc"))),
+				_sharingEntryLocalService.getToUserSharingEntriesCount(
+					_themeDisplay.getUserId(), classNameId));
+		}
+		else {
+			searchContainer.setResultsAndTotal(
+				() -> _sharingEntryLocalService.getFromUserSharingEntries(
+					_themeDisplay.getUserId(), classNameId,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					new SharingEntryModifiedDateComparator(
+						Objects.equals(getSortingOrder(), "asc"))),
+				_sharingEntryLocalService.getFromUserSharingEntriesCount(
+					_themeDisplay.getUserId(), classNameId));
+		}
 
 		return searchContainer;
 	}
@@ -355,32 +377,6 @@ public class ViewSharedAssetsDisplayContext {
 		}
 
 		return true;
-	}
-
-	public void populateResults(SearchContainer<SharingEntry> searchContainer) {
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			ParamUtil.getString(_httpServletRequest, "className"));
-
-		if (_isIncoming()) {
-			searchContainer.setResultsAndTotal(
-				() -> _sharingEntryLocalService.getToUserSharingEntries(
-					_themeDisplay.getUserId(), classNameId,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					new SharingEntryModifiedDateComparator(
-						Objects.equals(getSortingOrder(), "asc"))),
-				_sharingEntryLocalService.getToUserSharingEntriesCount(
-					_themeDisplay.getUserId(), classNameId));
-		}
-		else {
-			searchContainer.setResultsAndTotal(
-				() -> _sharingEntryLocalService.getFromUserSharingEntries(
-					_themeDisplay.getUserId(), classNameId,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					new SharingEntryModifiedDateComparator(
-						Objects.equals(getSortingOrder(), "asc"))),
-				_sharingEntryLocalService.getFromUserSharingEntriesCount(
-					_themeDisplay.getUserId(), classNameId));
-		}
 	}
 
 	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)

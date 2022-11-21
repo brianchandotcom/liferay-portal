@@ -60,6 +60,19 @@ exports[`Options shows the options 1`] = `
               />
               
             </div>
+            <button
+              class="close close-modal"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-times"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#times"
+                />
+              </svg>
+            </button>
             <div
               class="active form-text key-value-editor"
             >
@@ -99,19 +112,6 @@ exports[`Options shows the options 1`] = `
             />
             
           </div>
-          <button
-            class="close close-modal"
-            type="button"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-times"
-              role="presentation"
-            >
-              <use
-                xlink:href="#times"
-              />
-            </svg>
-          </button>
         </div>
       </div>
       <div
@@ -163,6 +163,19 @@ exports[`Options shows the options 1`] = `
               />
               
             </div>
+            <button
+              class="close close-modal"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-times"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#times"
+                />
+              </svg>
+            </button>
             <div
               class="active form-text key-value-editor"
             >
@@ -202,19 +215,6 @@ exports[`Options shows the options 1`] = `
             />
             
           </div>
-          <button
-            class="close close-modal"
-            type="button"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-times"
-              role="presentation"
-            >
-              <use
-                xlink:href="#times"
-              />
-            </svg>
-          </button>
         </div>
       </div>
       <div

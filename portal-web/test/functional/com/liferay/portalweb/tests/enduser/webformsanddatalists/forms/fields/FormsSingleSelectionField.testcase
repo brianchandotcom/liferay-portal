@@ -308,24 +308,9 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		AssertElementPresent(
-			key_rowNumber = "1",
-			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW");
-
-		AssertElementPresent(
+		ClickNoError(
 			key_optionValue = "Option 1",
-			key_rowNumber = "1",
-			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW_OPTION");
-
-		AssertElementPresent(
-			key_optionValue = "Option 2",
-			key_rowNumber = "1",
-			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW_OPTION");
-
-		Click(
-			key_optionValue = "Option 1",
-			key_rowNumber = "1",
-			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW_OPTION");
+			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_OPTION");
 
 		Button.clickSubmitButton();
 

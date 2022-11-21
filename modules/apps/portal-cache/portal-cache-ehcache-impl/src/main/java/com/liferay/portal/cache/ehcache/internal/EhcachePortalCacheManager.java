@@ -141,8 +141,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			configurationObjectValuePair =
 				baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
-						getPortalCacheManagerName(), configurationURL,
-						classLoader, _usingDefault);
+						_portalCacheManagerName, configurationURL, classLoader,
+						_usingDefault);
 
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
@@ -294,7 +294,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			configurationObjectValuePair =
 				baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
-						getPortalCacheManagerName(), configFileURL, classLoader,
+						_portalCacheManagerName, configFileURL, classLoader,
 						_usingDefault);
 
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());

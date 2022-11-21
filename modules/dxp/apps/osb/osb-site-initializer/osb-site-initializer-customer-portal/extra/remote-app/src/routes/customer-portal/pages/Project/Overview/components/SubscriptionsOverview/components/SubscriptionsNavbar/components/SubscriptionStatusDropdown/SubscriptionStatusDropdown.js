@@ -25,15 +25,15 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 	const [items, setItems] = useState([
 		{
 			active: true,
-			label: i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.active)),
+			label: SUBSCRIPTIONS_STATUS.active,
 		},
 		{
 			active: false,
-			label: i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.expired)),
+			label: SUBSCRIPTIONS_STATUS.expired,
 		},
 		{
 			active: false,
-			label: i18n.translate(getKebabCase(SUBSCRIPTIONS_STATUS.future)),
+			label: SUBSCRIPTIONS_STATUS.future,
 		},
 	]);
 
@@ -46,7 +46,9 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 			return i18n.translate('all');
 		}
 
-		return activeItems.map((item) => item.label).join(', ');
+		return activeItems
+			.map((item) => i18n.translate(getKebabCase(item.label)))
+			.join(', ');
 	}, [activeItems]);
 
 	const handleOnClick = (index) => {
@@ -55,8 +57,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		if (currentActiveItems.length !== MAX_SUBSCRIPTION_STATUS) {
 			onClick(currentActiveItems.map((item) => item.label));
-		}
-		else {
+		} else {
 			onClick();
 		}
 
@@ -83,7 +84,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 					onClick={() => handleOnClick(index)}
 					symbolRight={item.active && 'check'}
 				>
-					{item.label}
+					{i18n.translate(getKebabCase(item.label))}
 				</DropDown.Item>
 			))}
 

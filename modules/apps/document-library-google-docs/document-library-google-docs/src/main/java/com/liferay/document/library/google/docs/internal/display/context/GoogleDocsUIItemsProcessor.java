@@ -20,19 +20,13 @@ import com.liferay.document.library.google.docs.internal.util.constants.GoogleDo
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.UIItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;

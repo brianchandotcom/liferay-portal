@@ -16,7 +16,6 @@ package com.liferay.document.library.video.internal.util;
 
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.UIItem;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Iterator;

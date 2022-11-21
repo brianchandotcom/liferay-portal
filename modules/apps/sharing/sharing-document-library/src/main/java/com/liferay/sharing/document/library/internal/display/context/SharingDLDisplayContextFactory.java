@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
-import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
-import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.document.library.internal.constants.SharingDLWebKeys;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;

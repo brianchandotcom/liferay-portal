@@ -20,7 +20,6 @@ import com.liferay.document.library.video.internal.util.DLVideoExternalShortcutU
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
 import java.util.List;
 import java.util.UUID;

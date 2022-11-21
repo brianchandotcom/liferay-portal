@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -155,6 +154,8 @@ public class ObjectFieldResourceImpl
 
 			throw new UnsupportedOperationException();
 		}
+		
+		_createListTypeDefinition(objectField);
 
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
@@ -244,6 +245,28 @@ public class ObjectFieldResourceImpl
 							objectField.getListTypeDefinitionId(),
 							objectFieldSetting, _objectFieldSettingLocalService,
 							_objectFilterLocalService))));
+	}
+
+	private void _createListTypeDefinition(ObjectField objectField)
+		throws Exception {
+
+		if (Validator.isNull(
+				objectField.getListTypeDefinitionExternalReferenceCode())) {
+
+			return;
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					contextUser.getCompanyId(),
+					objectField.getListTypeDefinitionExternalReferenceCode());
+
+		if (listTypeDefinition == null) {
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				objectField.getListTypeDefinitionExternalReferenceCode(),
+				contextUser.getUserId());
+		}
 	}
 
 	private ObjectField _toObjectField(

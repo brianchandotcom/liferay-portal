@@ -22,8 +22,6 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUt
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -69,14 +67,6 @@ public class ObjectFieldDTOConverter
 				indexedLanguageId = objectField.getIndexedLanguageId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectField.getLabelMap());
-
-				if (!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-164278"))) {
-
-					listTypeDefinitionId =
-						objectField.getListTypeDefinitionId();
-				}
-
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
@@ -91,24 +81,19 @@ public class ObjectFieldDTOConverter
 				system = objectField.getSystem();
 				type = ObjectField.Type.create(objectField.getDBType());
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-164278"))) {
+				setListTypeDefinitionExternalReferenceCode(
+					() -> {
+						if (objectField.getListTypeDefinitionId() == 0) {
+							return StringPool.BLANK;
+						}
 
-					setListTypeDefinitionExternalReferenceCode(
-						() -> {
-							if (objectField.getListTypeDefinitionId() == 0) {
-								return StringPool.BLANK;
-							}
+						ListTypeDefinition listTypeDefinition =
+							_listTypeDefinitionLocalService.
+								fetchListTypeDefinition(
+									objectField.getListTypeDefinitionId());
 
-							ListTypeDefinition listTypeDefinition =
-								_listTypeDefinitionLocalService.
-									fetchListTypeDefinition(
-										objectField.getListTypeDefinitionId());
-
-							return listTypeDefinition.
-								getExternalReferenceCode();
-						});
-				}
+						return listTypeDefinition.getExternalReferenceCode();
+					});
 			}
 		};
 	}

@@ -114,8 +114,7 @@ public class ObjectFieldUtil {
 		long listTypeDefinitionId = GetterUtil.getLong(
 			objectField.getListTypeDefinitionId());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-164278")) ||
-			(listTypeDefinitionId != 0) ||
+		if ((listTypeDefinitionId != 0) ||
 			Validator.isNull(
 				objectField.getListTypeDefinitionExternalReferenceCode())) {
 

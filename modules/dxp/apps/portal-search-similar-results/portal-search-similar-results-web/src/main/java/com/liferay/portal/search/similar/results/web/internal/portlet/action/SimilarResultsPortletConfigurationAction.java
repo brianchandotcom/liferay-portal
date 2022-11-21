@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Kevin Tan
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + SimilarResultsPortletKeys.SIMILAR_RESULTS,
 	service = ConfigurationAction.class
 )

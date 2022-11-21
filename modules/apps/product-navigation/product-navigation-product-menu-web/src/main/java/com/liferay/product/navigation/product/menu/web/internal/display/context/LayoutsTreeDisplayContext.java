@@ -319,11 +319,18 @@ public class LayoutsTreeDisplayContext {
 			"config",
 			HashMapBuilder.<String, Object>put(
 				"loadMoreItemsURL",
-				() -> ResourceURLBuilder.createResourceURL(
-					_renderResponse
-				).setResourceID(
-					"/product_navigation_product_menu/get_layouts"
-				).buildString()
+				() -> {
+					LiferayPortletURL liferayPortletURL =
+						(LiferayPortletURL)ResourceURLBuilder.createResourceURL(
+							_renderResponse
+						).setResourceID(
+							"/product_navigation_product_menu/get_layouts"
+						).buildResourceURL();
+
+					liferayPortletURL.setCopyCurrentRenderParameters(false);
+
+					return liferayPortletURL.toString();
+				}
 			).put(
 				"maxPageSize",
 				GetterUtil.getInteger(

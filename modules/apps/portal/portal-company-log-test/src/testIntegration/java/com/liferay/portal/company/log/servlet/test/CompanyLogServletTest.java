@@ -291,9 +291,8 @@ public class CompanyLogServletTest {
 	}
 
 	private void _assertCompanyLogFiles(
-			MockHttpServletRequest mockHttpServletRequest, Company company,
-			JSONObject jsonObject)
-		throws Exception {
+		MockHttpServletRequest mockHttpServletRequest, Company company,
+		JSONObject jsonObject) {
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, _mockHttpServletResponse.getStatus());

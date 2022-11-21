@@ -363,8 +363,8 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		_selectedSiteNavigationMenuItemId = ParamUtil.getLong(
-			_liferayPortletRequest.getHttpServletRequest(),
-			_SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME);
+			_httpServletRequest,
+			_namespace + _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME);
 
 		return _selectedSiteNavigationMenuItemId;
 	}
@@ -389,8 +389,6 @@ public class LayoutsTreeDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"selectedSiteNavigationMenuItemId",
 			String.valueOf(getSelectedSiteNavigationMenuItemId())
-		).put(
-			"siteNavigationMenuId", _getSiteNavigationMenuId()
 		).put(
 			"siteNavigationMenuItems", _getSiteNavigationMenuItemsJSONArray()
 		).build();

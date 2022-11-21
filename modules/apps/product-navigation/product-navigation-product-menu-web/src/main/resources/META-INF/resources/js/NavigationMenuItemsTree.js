@@ -22,12 +22,15 @@ const ENTER_KEYCODE = 13;
 
 export default function NavigationMenuItemsTree({
 	portletNamespace,
+	selectedSiteNavigationMenuItemId,
 	siteNavigationMenuItems,
 }) {
-	const [expandedKeys, setExpandedKeys] = useSessionState(
-		`${portletNamespace}_navigationMenusExpandedKeys`,
-		[]
-	);
+	const [
+		expandedKeys,
+		setExpandedKeys,
+	] = useSessionState(`${portletNamespace}_navigationMenusExpandedKeys`, [
+		selectedSiteNavigationMenuItemId,
+	]);
 
 	return (
 		<ClayTreeView
@@ -40,17 +43,23 @@ export default function NavigationMenuItemsTree({
 			}}
 			showExpanderOnHover={false}
 		>
-			{(item) => <TreeItem item={item} />}
+			{(item) => (
+				<TreeItem
+					item={item}
+					selectedItemId={selectedSiteNavigationMenuItemId}
+				/>
+			)}
 		</ClayTreeView>
 	);
 }
 
 NavigationMenuItemsTree.propTypes = {
 	portletNamespace: PropTypes.string.isRequired,
+	selectedSiteNavigationMenuItemId: PropTypes.string.isRequired,
 	siteNavigationMenuItems: PropTypes.array.isRequired,
 };
 
-function TreeItem({item}) {
+function TreeItem({item, selectedItemId}) {
 	const hasUrl = item.url && item.url !== '#';
 
 	const stackAnchorRef = useRef(null);
@@ -59,6 +68,7 @@ function TreeItem({item}) {
 	return (
 		<ClayTreeView.Item>
 			<ClayTreeView.ItemStack
+				active={selectedItemId === item.id ? 'true' : null}
 				onKeyDown={(event) => {
 					if (event.keyCode === ENTER_KEYCODE && hasUrl) {
 						stackAnchorRef.current.click();
@@ -89,12 +99,12 @@ function TreeItem({item}) {
 			<ClayTreeView.Group items={item.children}>
 				{(item) => (
 					<ClayTreeView.Item
+						active={selectedItemId === item.id ? 'true' : null}
 						onKeyDown={(event) => {
 							if (event.keyCode === ENTER_KEYCODE && hasUrl) {
 								stackAnchorRef.current.click();
 							}
 						}}
-						s
 					>
 						<ClayIcon symbol={item.url ? 'page' : 'folder'} />
 

@@ -100,6 +100,8 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 		objectLayout.setDefaultObjectLayout(false);
 		objectLayout.setName(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		objectLayout.setObjectDefinitionExternalReferenceCode(
+			_objectDefinition.getExternalReferenceCode());
 		objectLayout.setObjectDefinitionId(
 			_objectDefinition.getObjectDefinitionId());
 		objectLayout.setObjectLayoutTabs(

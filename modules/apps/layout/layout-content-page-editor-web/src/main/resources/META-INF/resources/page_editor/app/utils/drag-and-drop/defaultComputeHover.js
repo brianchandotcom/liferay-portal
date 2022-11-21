@@ -12,10 +12,10 @@
  * details.
  */
 
-import {CONTENT_DISPLAY_OPTIONS} from '../../config/constants/contentDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {collectionIsMapped} from '../collectionIsMapped';
 import {formIsMapped} from '../formIsMapped';
+import isItemContainerFlex from '../isItemContainerFlex';
 import isItemEmpty from '../isItemEmpty';
 import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
@@ -78,7 +78,7 @@ export default function defaultComputeHover({
 		const targetIsCollectionNotMapped =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 			!collectionIsMapped(targetItem);
-		const targetIsContainerFlex = itemIsContainerFlex(targetItem);
+		const targetIsContainerFlex = isItemContainerFlex(targetItem);
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsFormNotMapped =
@@ -225,7 +225,7 @@ export default function defaultComputeHover({
 function getOrientation(item, monitor, targetRefs, layoutDataRef) {
 	if (
 		!item.parentId ||
-		!itemIsContainerFlex(layoutDataRef.current.items[item.parentId])
+		!isItemContainerFlex(layoutDataRef.current.items[item.parentId])
 	) {
 		return ORIENTATIONS.vertical;
 	}
@@ -320,17 +320,10 @@ function shouldBeIgnoredInElevation(item) {
 	);
 }
 
-function itemIsContainerFlex(item) {
-	return (
-		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
-		item.config.contentDisplay === CONTENT_DISPLAY_OPTIONS.flexRow
-	);
-}
-
 function validElevation(siblingItem, orientation, layoutDataRef) {
 	const targetItemParent = layoutDataRef.current.items[siblingItem.parentId];
 
 	return orientation === ORIENTATIONS.horizontal
-		? itemIsContainerFlex(targetItemParent)
-		: !itemIsContainerFlex(targetItemParent);
+		? isItemContainerFlex(targetItemParent)
+		: !isItemContainerFlex(targetItemParent);
 }

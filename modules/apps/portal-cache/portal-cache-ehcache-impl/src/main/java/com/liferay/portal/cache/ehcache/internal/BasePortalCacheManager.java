@@ -16,7 +16,6 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
-import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -105,36 +103,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 	protected abstract void doDestroy();
 
-	protected abstract PortalCacheManagerConfiguration
-		getPortalCacheManagerConfiguration();
-
-	protected void initialize() {
-		if (portalCacheManagerConfiguration != null) {
-			return;
-		}
-
-		if (Validator.isNull(portalCacheManagerName)) {
-			throw new IllegalArgumentException(
-				"Portal cache manager name is not specified");
-		}
-
-		initPortalCacheManager();
-
-		portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
-
-		for (Properties properties :
-				portalCacheManagerConfiguration.
-					getPortalCacheManagerListenerPropertiesSet()) {
-
-			PortalCacheManagerListener portalCacheManagerListener =
-				portalCacheManagerListenerFactory.create(this, properties);
-
-			if (portalCacheManagerListener != null) {
-				registerPortalCacheManagerListener(portalCacheManagerListener);
-			}
-		}
-	}
-
 	protected void initPortalCacheListeners(
 		PortalCache<K, V> portalCache,
 		PortalCacheConfiguration portalCacheConfiguration) {
@@ -175,8 +143,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 			new AggregatedPortalCacheManagerListener();
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerConfiguration portalCacheManagerConfiguration;
-	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
-		portalCacheManagerListenerFactory;
 	protected String portalCacheManagerName;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();

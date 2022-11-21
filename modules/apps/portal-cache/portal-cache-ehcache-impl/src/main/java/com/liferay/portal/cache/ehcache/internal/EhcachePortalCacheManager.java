@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
+import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -47,6 +50,7 @@ import java.net.URL;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.management.MBeanServer;
@@ -227,11 +231,37 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	@Override
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
 		return _portalCacheManagerConfiguration;
+	}
+
+	protected void initialize() {
+		if (portalCacheManagerConfiguration != null) {
+			return;
+		}
+
+		if (Validator.isNull(portalCacheManagerName)) {
+			throw new IllegalArgumentException(
+				"Portal cache manager name is not specified");
+		}
+
+		initPortalCacheManager();
+
+		portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
+
+		for (Properties properties :
+				portalCacheManagerConfiguration.
+					getPortalCacheManagerListenerPropertiesSet()) {
+
+			PortalCacheManagerListener portalCacheManagerListener =
+				portalCacheManagerListenerFactory.create(this, properties);
+
+			if (portalCacheManagerListener != null) {
+				registerPortalCacheManagerListener(portalCacheManagerListener);
+			}
+		}
 	}
 
 	@Override
@@ -385,6 +415,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected BaseEhcachePortalCacheManagerConfigurator
 		baseEhcachePortalCacheManagerConfigurator;
 	protected BundleContext bundleContext;
+	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		portalCacheManagerListenerFactory;
 	protected volatile Props props;
 
 	private boolean _isTransactionalPortalCache(String portalCacheName) {

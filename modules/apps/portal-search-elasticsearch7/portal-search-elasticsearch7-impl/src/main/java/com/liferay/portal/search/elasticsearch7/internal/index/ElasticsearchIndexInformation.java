@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = IndexInformation.class)
+@Component(service = IndexInformation.class)
 public class ElasticsearchIndexInformation implements IndexInformation {
 
 	@Override

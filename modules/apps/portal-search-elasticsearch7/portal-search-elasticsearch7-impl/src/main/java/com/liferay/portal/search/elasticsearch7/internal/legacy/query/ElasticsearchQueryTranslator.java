@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Angelo Caldas Gallindo
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
+	property = "search.engine.impl=Elasticsearch",
 	service = {QueryToQueryBuilderTranslator.class, QueryTranslator.class}
 )
 public class ElasticsearchQueryTranslator

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MissingFilterTranslator.class)
+@Component(service = MissingFilterTranslator.class)
 public class MissingFilterTranslatorImpl implements MissingFilterTranslator {
 
 	@Override

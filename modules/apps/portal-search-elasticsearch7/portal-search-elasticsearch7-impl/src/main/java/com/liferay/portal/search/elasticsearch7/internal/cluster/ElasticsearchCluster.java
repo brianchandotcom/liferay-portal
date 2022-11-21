@@ -36,9 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(
-	enabled = false, immediate = true, service = ElasticsearchCluster.class
-)
+@Component(enabled = false, service = ElasticsearchCluster.class)
 public class ElasticsearchCluster {
 
 	@Activate

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	immediate = true, service = ElasticsearchConfigurationWrapper.class
+	service = ElasticsearchConfigurationWrapper.class
 )
 public class ElasticsearchConfigurationWrapper
 	implements Comparator<ElasticsearchConfigurationObserver> {

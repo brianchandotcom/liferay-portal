@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = NestedQueryTranslator.class)
+@Component(service = NestedQueryTranslator.class)
 public class NestedQueryTranslatorImpl implements NestedQueryTranslator {
 
 	@Override

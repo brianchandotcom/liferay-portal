@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BooleanFilterTranslator.class)
+@Component(service = BooleanFilterTranslator.class)
 public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 
 	@Override

@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Díaz
  */
 @Component(
-	immediate = true,
 	property = "class.name=com.liferay.portal.search.internal.facet.NestedFacetImpl",
 	service = FacetProcessor.class
 )

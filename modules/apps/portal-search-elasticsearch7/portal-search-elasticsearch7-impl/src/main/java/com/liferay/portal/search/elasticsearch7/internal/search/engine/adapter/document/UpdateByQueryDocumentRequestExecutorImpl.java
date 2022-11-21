@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	immediate = true, service = UpdateByQueryDocumentRequestExecutor.class
-)
+@Component(service = UpdateByQueryDocumentRequestExecutor.class)
 public class UpdateByQueryDocumentRequestExecutorImpl
 	implements UpdateByQueryDocumentRequestExecutor {
 

@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	immediate = true, service = DeleteByQueryDocumentRequestExecutor.class
-)
+@Component(service = DeleteByQueryDocumentRequestExecutor.class)
 public class DeleteByQueryDocumentRequestExecutorImpl
 	implements DeleteByQueryDocumentRequestExecutor {
 

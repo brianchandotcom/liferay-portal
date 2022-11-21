@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class IndexSynchronizationPortalInitializedListener {
 
 	@Activate

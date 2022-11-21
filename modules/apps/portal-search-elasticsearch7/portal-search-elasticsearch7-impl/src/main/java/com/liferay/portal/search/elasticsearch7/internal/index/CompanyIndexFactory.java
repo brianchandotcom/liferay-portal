@@ -64,10 +64,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true,
-	service = {IndexContributorReceiver.class, IndexFactory.class}
-)
+@Component(service = {IndexContributorReceiver.class, IndexFactory.class})
 public class CompanyIndexFactory
 	implements ElasticsearchConfigurationObserver, IndexContributorReceiver,
 			   IndexFactory {

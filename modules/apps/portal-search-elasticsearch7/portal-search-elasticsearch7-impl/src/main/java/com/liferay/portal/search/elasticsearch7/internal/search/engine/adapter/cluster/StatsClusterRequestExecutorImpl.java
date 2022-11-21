@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = StatsClusterRequestExecutor.class)
+@Component(service = StatsClusterRequestExecutor.class)
 public class StatsClusterRequestExecutorImpl
 	implements StatsClusterRequestExecutor {
 

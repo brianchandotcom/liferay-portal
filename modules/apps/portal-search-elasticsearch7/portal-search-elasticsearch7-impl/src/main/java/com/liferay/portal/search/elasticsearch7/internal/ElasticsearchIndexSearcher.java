@@ -64,8 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Milen Dyankov
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
-	service = IndexSearcher.class
+	property = "search.engine.impl=Elasticsearch", service = IndexSearcher.class
 )
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = GeoPolygonFilterTranslator.class)
+@Component(service = GeoPolygonFilterTranslator.class)
 public class GeoPolygonFilterTranslatorImpl
 	implements GeoPolygonFilterTranslator {
 

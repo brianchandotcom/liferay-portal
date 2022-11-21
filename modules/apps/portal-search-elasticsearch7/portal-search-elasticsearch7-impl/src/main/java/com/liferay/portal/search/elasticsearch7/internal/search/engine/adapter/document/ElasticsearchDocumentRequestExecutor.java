@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dylan Rebelak
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
+	property = "search.engine.impl=Elasticsearch",
 	service = DocumentRequestExecutor.class
 )
 public class ElasticsearchDocumentRequestExecutor

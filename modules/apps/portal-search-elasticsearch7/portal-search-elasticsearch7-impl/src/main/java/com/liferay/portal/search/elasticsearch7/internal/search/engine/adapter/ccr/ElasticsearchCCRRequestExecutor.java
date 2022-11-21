@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	immediate = true, property = "search.engine.impl=Elasticsearch",
+	property = "search.engine.impl=Elasticsearch",
 	service = CCRRequestExecutor.class
 )
 public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {

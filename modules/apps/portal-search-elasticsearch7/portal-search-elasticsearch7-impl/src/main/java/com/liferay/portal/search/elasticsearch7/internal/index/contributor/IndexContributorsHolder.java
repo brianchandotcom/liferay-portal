@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = IndexContributorsHolder.class)
+@Component(service = IndexContributorsHolder.class)
 public class IndexContributorsHolder {
 
 	@Reference(

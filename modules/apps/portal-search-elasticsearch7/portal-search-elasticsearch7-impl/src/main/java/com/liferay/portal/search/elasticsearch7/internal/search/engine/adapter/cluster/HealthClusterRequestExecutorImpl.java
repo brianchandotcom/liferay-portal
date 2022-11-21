@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = HealthClusterRequestExecutor.class)
+@Component(service = HealthClusterRequestExecutor.class)
 public class HealthClusterRequestExecutorImpl
 	implements HealthClusterRequestExecutor {
 

@@ -33,10 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(
-	immediate = true, property = "class.name=DEFAULT",
-	service = FacetProcessor.class
-)
+@Component(property = "class.name=DEFAULT", service = FacetProcessor.class)
 public class DefaultFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 

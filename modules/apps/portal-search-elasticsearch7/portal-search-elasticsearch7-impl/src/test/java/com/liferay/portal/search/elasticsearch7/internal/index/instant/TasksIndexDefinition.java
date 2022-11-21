@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true,
 	property = {
 		IndexDefinition.PROPERTY_KEY_INDEX_NAME + "=" + TasksIndexDefinition.INDEX_NAME_WORKFLOW_TASKS,
 		IndexDefinition.PROPERTY_KEY_INDEX_SETTINGS_RESOURCE_NAME + "=" + TasksIndexDefinition.TYPE_MAPPING_FILE_NAME_WORKFLOW_TASKS

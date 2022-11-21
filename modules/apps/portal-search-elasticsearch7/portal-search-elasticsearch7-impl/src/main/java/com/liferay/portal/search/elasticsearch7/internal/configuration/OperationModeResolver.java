@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = OperationModeResolver.class)
+@Component(service = OperationModeResolver.class)
 public class OperationModeResolver {
 
 	public boolean isDevelopmentModeEnabled() {

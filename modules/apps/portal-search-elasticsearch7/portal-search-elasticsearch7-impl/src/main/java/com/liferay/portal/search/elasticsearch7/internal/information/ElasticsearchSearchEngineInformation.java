@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = SearchEngineInformation.class)
+@Component(service = SearchEngineInformation.class)
 public class ElasticsearchSearchEngineInformation
 	implements SearchEngineInformation {
 

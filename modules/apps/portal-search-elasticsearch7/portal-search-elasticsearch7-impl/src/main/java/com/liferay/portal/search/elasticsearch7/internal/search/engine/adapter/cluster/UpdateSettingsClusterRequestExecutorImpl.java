@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(
-	immediate = true, service = UpdateSettingsClusterRequestExecutor.class
-)
+@Component(service = UpdateSettingsClusterRequestExecutor.class)
 public class UpdateSettingsClusterRequestExecutorImpl
 	implements UpdateSettingsClusterRequestExecutor {
 

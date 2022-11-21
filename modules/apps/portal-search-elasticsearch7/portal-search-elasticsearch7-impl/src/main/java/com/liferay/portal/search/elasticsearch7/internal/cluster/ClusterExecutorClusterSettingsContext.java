@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(
-	enabled = false, immediate = true, service = ClusterSettingsContext.class
-)
+@Component(enabled = false, service = ClusterSettingsContext.class)
 public class ClusterExecutorClusterSettingsContext
 	implements ClusterSettingsContext {
 

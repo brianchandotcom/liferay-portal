@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MatchAllQueryTranslator.class)
+@Component(service = MatchAllQueryTranslator.class)
 public class MatchAllQueryTranslatorImpl implements MatchAllQueryTranslator {
 
 	@Override

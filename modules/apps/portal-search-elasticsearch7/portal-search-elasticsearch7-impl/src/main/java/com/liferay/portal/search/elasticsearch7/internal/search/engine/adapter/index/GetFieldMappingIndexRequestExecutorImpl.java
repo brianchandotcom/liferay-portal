@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	immediate = true, service = GetFieldMappingIndexRequestExecutor.class
-)
+@Component(service = GetFieldMappingIndexRequestExecutor.class)
 public class GetFieldMappingIndexRequestExecutorImpl
 	implements GetFieldMappingIndexRequestExecutor {
 

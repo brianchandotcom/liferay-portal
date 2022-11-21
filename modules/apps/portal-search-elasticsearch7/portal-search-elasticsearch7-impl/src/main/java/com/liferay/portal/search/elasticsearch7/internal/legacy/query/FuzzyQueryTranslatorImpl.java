@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = FuzzyQueryTranslator.class)
+@Component(service = FuzzyQueryTranslator.class)
 public class FuzzyQueryTranslatorImpl implements FuzzyQueryTranslator {
 
 	@Override

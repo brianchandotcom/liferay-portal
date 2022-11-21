@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(immediate = true, service = StateClusterRequestExecutor.class)
+@Component(service = StateClusterRequestExecutor.class)
 public class StateClusterRequestExecutorImpl
 	implements StateClusterRequestExecutor {
 

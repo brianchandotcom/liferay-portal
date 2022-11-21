@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MatchQueryTranslator.class)
+@Component(service = MatchQueryTranslator.class)
 public class MatchQueryTranslatorImpl
 	extends BaseMatchQueryTranslatorImpl implements MatchQueryTranslator {
 

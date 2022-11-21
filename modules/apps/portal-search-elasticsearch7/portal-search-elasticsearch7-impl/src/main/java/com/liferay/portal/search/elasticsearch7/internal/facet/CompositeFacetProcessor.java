@@ -33,10 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true,
-	service = {CompositeFacetProcessor.class, FacetProcessor.class}
-)
+@Component(service = {CompositeFacetProcessor.class, FacetProcessor.class})
 public class CompositeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 

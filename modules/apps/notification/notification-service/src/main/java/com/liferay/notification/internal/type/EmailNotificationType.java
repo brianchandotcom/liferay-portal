@@ -76,11 +76,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	immediate = true,
-	property = "notification.type.key=" + NotificationConstants.TYPE_EMAIL,
-	service = NotificationType.class
-)
+@Component(immediate = true, service = NotificationType.class)
 public class EmailNotificationType extends BaseNotificationType {
 
 	@Override

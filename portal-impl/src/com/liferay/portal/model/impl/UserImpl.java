@@ -733,7 +733,9 @@ public class UserImpl extends UserBaseImpl {
 			return false;
 		}
 
-		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
+		if ((PrefsPropsUtil.getBoolean(
+				getCompanyId(),
+				PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
 			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) &&
 			(getUserId() == PrincipalThreadLocal.getUserId())) {
 

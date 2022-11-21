@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.security.DoAsURLTag;
@@ -95,7 +97,9 @@ public class UserActionDropdownItems {
 					_getPermissionsActionUnsafeConsumer()
 				).add(
 					() ->
-						(PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED ||
+						(PrefsPropsUtil.getBoolean(
+							_themeDisplay.getCompanyId(),
+							PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
 						 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) &&
 						hasUpdatePermission,
 					_getManagePagesActionUnsafeConsumer()

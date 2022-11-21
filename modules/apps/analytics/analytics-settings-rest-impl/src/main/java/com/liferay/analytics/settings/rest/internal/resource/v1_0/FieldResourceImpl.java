@@ -16,6 +16,7 @@ package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.dto.v1_0.Field;
+import com.liferay.analytics.settings.rest.internal.constants.FieldAccountConstants;
 import com.liferay.analytics.settings.rest.internal.constants.FieldPeopleConstants;
 import com.liferay.analytics.settings.rest.internal.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.FieldResource;
@@ -53,17 +54,82 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 	@Override
-	public Page<Field> getFieldsPeoplePage(
-			String keywords, Pagination pagination, Sort[] sorts)
+	public Page<Field> getFieldsAccountsPage(
+			String keyword, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		List<Field> fields = _getFieldsPeople(keywords, sorts);
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		List<Field> fields = _getFields(
+			FieldAccountConstants.FIELD_ACCOUNT_EXAMPLES,
+			FieldAccountConstants.FIELD_ACCOUNT_NAMES,
+			FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES, "account",
+			analyticsConfiguration.syncedAccountFieldNames(),
+			FieldAccountConstants.FIELD_ACCOUNT_TYPES);
+
+		fields = _filter(fields, keyword);
+
+		fields = _sort(fields, sorts);
 
 		return Page.of(
 			ListUtil.subList(
 				fields, pagination.getStartPosition(),
 				pagination.getEndPosition()),
 			pagination, fields.size());
+	}
+
+	@Override
+	public Page<Field> getFieldsPeoplePage(
+			String keyword, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		List<Field> fields = _getFields(
+			FieldPeopleConstants.FIELD_CONTACT_EXAMPLES,
+			FieldPeopleConstants.FIELD_CONTACT_NAMES,
+			FieldPeopleConstants.FIELD_CONTACT_REQUIRED_NAMES, "contact",
+			analyticsConfiguration.syncedContactFieldNames(),
+			FieldPeopleConstants.FIELD_CONTACT_TYPES);
+
+		fields.addAll(
+			_getFields(
+				FieldPeopleConstants.FIELD_USER_EXAMPLES,
+				FieldPeopleConstants.FIELD_USER_NAMES,
+				FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES, "user",
+				analyticsConfiguration.syncedUserFieldNames(),
+				FieldPeopleConstants.FIELD_USER_TYPES));
+
+		fields = _filter(fields, keyword);
+
+		fields = _sort(fields, sorts);
+
+		return Page.of(
+			ListUtil.subList(
+				fields, pagination.getStartPosition(),
+				pagination.getEndPosition()),
+			pagination, fields.size());
+	}
+
+	@Override
+	public void patchFieldAccount(Field[] fields) throws Exception {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId());
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			contextCompany.getCompanyId(),
+			HashMapBuilder.<String, Object>put(
+				"syncedAccountFieldNames",
+				_updateSelectedFields(
+					analyticsConfiguration.syncedAccountFieldNames(), fields,
+					FieldAccountConstants.FIELD_ACCOUNT_REQUIRED_NAMES,
+					"contact", FieldAccountConstants.FIELD_ACCOUNT_NAMES)
+			).build());
 	}
 
 	@Override
@@ -107,60 +173,28 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		);
 	}
 
-	private List<Field> _getFieldsPeople(String keyword, Sort[] sorts)
-		throws Exception {
+	private List<Field> _getFields(
+		String[] examples, String[] names, String[] requiredNames,
+		String source, String[] syncedNames, String[] types) {
 
 		List<Field> fields = new ArrayList<>();
 
-		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsSettingsManager.getAnalyticsConfiguration(
-				contextCompany.getCompanyId());
-
-		for (int i = 0; i < FieldPeopleConstants.FIELD_CONTACT_NAMES.length;
-			 i++) {
-
+		for (int i = 0; i < names.length; i++) {
 			Field field = new Field();
 
-			field.setExample(FieldPeopleConstants.FIELD_CONTACT_EXAMPLES[i]);
-			field.setName(FieldPeopleConstants.FIELD_CONTACT_NAMES[i]);
-			field.setRequired(
-				ArrayUtil.contains(
-					FieldPeopleConstants.FIELD_CONTACT_REQUIRED_NAMES,
-					FieldPeopleConstants.FIELD_CONTACT_NAMES[i]));
+			field.setExample(examples[i]);
+			field.setName(names[i]);
+			field.setRequired(ArrayUtil.contains(requiredNames, names[i]));
 			field.setSelected(
-				ArrayUtil.contains(
-					analyticsConfiguration.syncedContactFieldNames(),
-					FieldPeopleConstants.FIELD_CONTACT_NAMES[i]) ||
+				ArrayUtil.contains(syncedNames, names[i]) ||
 				field.getRequired());
-			field.setSource("contact");
-			field.setType(FieldPeopleConstants.FIELD_CONTACT_TYPES[i]);
+			field.setSource(source);
+			field.setType(types[i]);
 
 			fields.add(field);
 		}
 
-		for (int i = 0; i < FieldPeopleConstants.FIELD_USER_NAMES.length; i++) {
-			Field field = new Field();
-
-			field.setExample(FieldPeopleConstants.FIELD_USER_EXAMPLES[i]);
-			field.setName(FieldPeopleConstants.FIELD_USER_NAMES[i]);
-			field.setRequired(
-				ArrayUtil.contains(
-					FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES,
-					FieldPeopleConstants.FIELD_USER_NAMES[i]));
-			field.setSelected(
-				ArrayUtil.contains(
-					analyticsConfiguration.syncedUserFieldNames(),
-					FieldPeopleConstants.FIELD_USER_NAMES[i]) ||
-				field.getRequired());
-			field.setSource("user");
-			field.setType(FieldPeopleConstants.FIELD_USER_TYPES[i]);
-
-			fields.add(field);
-		}
-
-		fields = _filter(fields, keyword);
-
-		return _sort(fields, sorts);
+		return fields;
 	}
 
 	private List<Field> _sort(List<Field> fields, Sort[] sorts) {

@@ -17,6 +17,7 @@ package com.liferay.analytics.settings.rest.internal.manager;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.internal.constants.FieldAccountConstants;
 import com.liferay.analytics.settings.rest.internal.constants.FieldPeopleConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -180,10 +181,11 @@ public class AnalyticsSettingsManager {
 		AnalyticsSettingsManager.class);
 
 	private static final Map<String, String[]> _defaults = HashMapBuilder.put(
-		"syncedContactFieldNames",
-		FieldPeopleConstants.FIELD_CONTACT_REQUIRED_NAMES
+		"syncedAccountFieldNames", FieldAccountConstants.FIELD_ACCOUNT_NAMES
 	).put(
-		"syncedUserFieldNames", FieldPeopleConstants.FIELD_USER_REQUIRED_NAMES
+		"syncedContactFieldNames", FieldPeopleConstants.FIELD_CONTACT_NAMES
+	).put(
+		"syncedUserFieldNames", FieldPeopleConstants.FIELD_USER_NAMES
 	).build();
 
 	@Reference

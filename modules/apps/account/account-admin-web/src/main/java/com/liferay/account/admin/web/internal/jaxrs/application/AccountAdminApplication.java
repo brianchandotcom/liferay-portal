@@ -88,19 +88,16 @@ public class AccountAdminApplication extends Application {
 				_portal.getCompanyId(httpServletRequest), accountDomains);
 
 		String errorMessage = null;
-		boolean valid = true;
 
 		if (!accountEntryEmailAddressValidator.isValidEmailAddressFormat(
 				emailAddress)) {
 
 			errorMessage = "x-is-not-a-valid-email-address";
-			valid = false;
 		}
 		else if (!accountEntryEmailAddressValidator.isValidDomain(
 					emailAddress)) {
 
 			errorMessage = "x-has-an-invalid-email-domain";
-			valid = false;
 		}
 
 		if (Validator.isNotNull(errorMessage)) {
@@ -111,8 +108,6 @@ public class AccountAdminApplication extends Application {
 		return Response.ok(
 			JSONUtil.put(
 				"errorMessage", errorMessage
-			).put(
-				"isValid", valid
 			).toString(),
 			MediaType.APPLICATION_JSON_TYPE
 		).build();

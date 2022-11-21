@@ -220,6 +220,10 @@
 				"name": {
 					"title": "The name Schema",
 					"type": "string"
+				},
+				"siteKey": {
+					"title": "The siteKey Schema",
+					"type": "string"
 				}
 			},
 			"required": [

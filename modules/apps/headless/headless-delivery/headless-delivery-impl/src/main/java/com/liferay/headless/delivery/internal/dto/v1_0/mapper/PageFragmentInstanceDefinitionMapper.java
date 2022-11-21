@@ -60,7 +60,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -120,6 +122,22 @@ public class PageFragmentInstanceDefinitionMapper {
 				fragment = new Fragment() {
 					{
 						key = _getFragmentKey(fragmentEntry, rendererKey);
+
+						setSiteKey(
+							() -> {
+								if (fragmentEntry.getGroupId() == 0) {
+									return null;
+								}
+
+								Group group = _groupLocalService.fetchGroup(
+									fragmentEntry.getGroupId());
+
+								if (group == null) {
+									return null;
+								}
+
+								return group.getGroupKey();
+							});
 					}
 				};
 				fragmentConfig = _getFragmentConfig(fragmentEntryLink);
@@ -968,6 +986,9 @@ public class PageFragmentInstanceDefinitionMapper {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

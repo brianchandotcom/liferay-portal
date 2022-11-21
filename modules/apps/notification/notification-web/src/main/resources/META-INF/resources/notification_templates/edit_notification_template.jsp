@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
 		).put(
-			"editorConfig", viewNotificationTemplatesDisplayContext.getEditorConfig("rich_text")
+			"editorConfig", viewNotificationTemplatesDisplayContext.getEditorConfig()
 		).put(
 			"notificationTemplateId", notificationTemplateId
 		).put(

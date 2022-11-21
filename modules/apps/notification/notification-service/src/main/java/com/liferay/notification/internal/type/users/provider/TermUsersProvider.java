@@ -19,8 +19,8 @@ import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.notification.term.contributor.NotificationTermContributor;
-import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluatorRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -83,21 +83,21 @@ public class TermUsersProvider implements UsersProvider {
 					notificationRecipient.getCompanyId(), screenName));
 		}
 
-		List<NotificationTermContributor> notificationTermContributors =
-			_notificationTermContributorRegistry.
-				getNotificationTermContributorsByNotificationTypeKey(
+		List<NotificationTermEvaluator> notificationTermEvaluators =
+			_notificationTermEvaluatorRegistry.
+				getNotificationTermEvaluatorsByNotificationTypeKey(
 					notificationContext.getClassName());
 
-		for (NotificationTermContributor notificationTermContributor :
-				notificationTermContributors) {
+		for (NotificationTermEvaluator notificationTermEvaluator :
+				notificationTermEvaluators) {
 
 			for (String term : terms) {
 				users.add(
 					_userLocalService.getUser(
 						GetterUtil.getLong(
-							notificationTermContributor.getTermValue(
-								null, notificationContext.getTermValues(),
-								term))));
+							notificationTermEvaluator.evaluate(
+								NotificationTermEvaluator.Context.RECIPIENT,
+								notificationContext.getTermValues(), term))));
 			}
 		}
 
@@ -108,8 +108,8 @@ public class TermUsersProvider implements UsersProvider {
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	@Reference
-	private NotificationTermContributorRegistry
-		_notificationTermContributorRegistry;
+	private NotificationTermEvaluatorRegistry
+		_notificationTermEvaluatorRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

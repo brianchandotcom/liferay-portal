@@ -19,14 +19,14 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
-import com.liferay.notification.constants.NotificationTermContributorConstants;
+import com.liferay.notification.constants.NotificationTermEvaluatorConstants;
 import com.liferay.notification.handler.NotificationHandler;
-import com.liferay.notification.term.contributor.NotificationTermContributor;
+import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
-import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermContributor;
+import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
 import com.liferay.object.internal.persistence.ObjectDefinitionTableArgumentsResolver;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
@@ -230,13 +230,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				NotificationTermContributor.class,
-				new ObjectDefinitionNotificationTermContributor(
+				NotificationTermEvaluator.class,
+				new ObjectDefinitionNotificationTermEvaluator(
 					objectDefinition, _objectFieldLocalService,
 					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"notification.term.contributor.key",
-					NotificationTermContributorConstants.BODY_AND_SUBJECT
+					NotificationTermEvaluatorConstants.BODY_AND_SUBJECT
 				).put(
 					"notification.type.key", objectDefinition.getClassName()
 				).build()),

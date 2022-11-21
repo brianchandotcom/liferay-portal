@@ -12,15 +12,22 @@
  * details.
  */
 
-package com.liferay.notification.constants;
+package com.liferay.notification.term.evaluator;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Gustavo Lima
  */
-public class NotificationTermContributorConstants {
+public interface NotificationTermEvaluator {
 
-	public static final String BODY_AND_SUBJECT = "bodyAndSubject";
+	public String evaluate(Context context, Object object, String termName)
+		throws PortalException;
 
-	public static final String RECIPIENT = "recipient";
+	public enum Context {
+
+		CONTENT, RECIPIENT
+
+	}
 
 }

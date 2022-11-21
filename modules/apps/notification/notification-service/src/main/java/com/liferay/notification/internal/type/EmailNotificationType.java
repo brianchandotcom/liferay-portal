@@ -21,7 +21,7 @@ import com.liferay.mail.kernel.service.MailService;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
-import com.liferay.notification.constants.NotificationTermContributorConstants;
+import com.liferay.notification.constants.NotificationTermEvaluatorConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.model.NotificationQueueEntry;
@@ -63,7 +63,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -222,7 +221,7 @@ public class EmailNotificationType extends BaseNotificationType {
 
 					String to = _formatTo(
 						notificationRecipientSetting.getValue(user.getLocale()),
-						user.getLocale(), notificationContext);
+						notificationContext);
 
 					if (Validator.isNotNull(to)) {
 						return to;
@@ -231,8 +230,7 @@ public class EmailNotificationType extends BaseNotificationType {
 					return formatLocalizedContent(
 						notificationRecipientSetting.getValue(
 							siteDefaultLocale),
-						siteDefaultLocale,
-						NotificationTermContributorConstants.RECIPIENT,
+						NotificationTermEvaluatorConstants.RECIPIENT,
 						notificationContext);
 				}
 			).build();
@@ -395,8 +393,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 	}
 
-	private String _formatTo(
-			String to, Locale locale, NotificationContext notificationContext)
+	private String _formatTo(String to, NotificationContext notificationContext)
 		throws PortalException {
 
 		if (Validator.isNull(to)) {
@@ -412,9 +409,8 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 
 		return formatLocalizedContent(
-			StringUtil.merge(emailAddresses), locale,
-			NotificationTermContributorConstants.RECIPIENT,
-			notificationContext);
+			StringUtil.merge(emailAddresses),
+			NotificationTermEvaluatorConstants.RECIPIENT, notificationContext);
 	}
 
 	private List<Long> _getFileEntryIds(

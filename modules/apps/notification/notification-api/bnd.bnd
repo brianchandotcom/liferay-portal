@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Notification API
 Bundle-SymbolicName: com.liferay.notification.api
-Bundle-Version: 7.1.1
+Bundle-Version: 8.0.0
 Export-Package:\
 	com.liferay.notification.constants,\
 	com.liferay.notification.context,\
@@ -9,6 +9,6 @@ Export-Package:\
 	com.liferay.notification.model,\
 	com.liferay.notification.service,\
 	com.liferay.notification.service.persistence,\
-	com.liferay.notification.term.contributor,\
+	com.liferay.notification.term.evaluator,\
 	com.liferay.notification.type,\
 	com.liferay.notification.util

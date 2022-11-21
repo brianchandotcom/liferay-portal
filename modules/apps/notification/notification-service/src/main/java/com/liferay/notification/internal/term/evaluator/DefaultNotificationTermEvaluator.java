@@ -12,37 +12,33 @@
  * details.
  */
 
-package com.liferay.notification.term.contributor;
+package com.liferay.notification.internal.term.evaluator;
 
+import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Gustavo Lima
+ * @author Feliphe Marinho
  */
-public interface NotificationTermContributor {
+@Component(service = DefaultNotificationTermEvaluator.class)
+public class DefaultNotificationTermEvaluator
+	implements NotificationTermEvaluator {
 
-	public List<String> getTermNames();
+	@Override
+	public String evaluate(Context context, Object object, String termName)
+		throws PortalException {
 
-	public String getTermValue(Locale locale, Object object, String termName)
-		throws PortalException;
-
-	public String getTermValue(String termName, Locale locale);
-
-	public default Map<String, String> getTermValues(Locale locale) {
-		Map<String, String> termValues = new HashMap<>();
-
-		List<String> termNames = getTermNames();
-
-		for (String termName : termNames) {
-			termValues.put(termName, getTermValue(termName, locale));
+		if (!(object instanceof Map)) {
+			return termName;
 		}
 
-		return termValues;
+		Map<String, String> termValues = (Map<String, String>)object;
+
+		return termValues.get(termName);
 	}
 
 }

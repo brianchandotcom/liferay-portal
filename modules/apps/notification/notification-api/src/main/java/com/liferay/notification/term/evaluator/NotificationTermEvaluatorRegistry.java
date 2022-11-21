@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.notification.constants;
+package com.liferay.notification.term.evaluator;
+
+import java.util.List;
 
 /**
- * @author Feliphe Marinho
+ * @author Gustavo Lima
  */
-public class NotificationRecipientConstants {
+public interface NotificationTermEvaluatorRegistry {
 
-	public static final String TYPE_EMAIL = "email";
+	public List<NotificationTermEvaluator>
+		getNotificationTermEvaluatorsByNotificationTermEvaluatorKey(String key);
 
-	public static final String TYPE_ROLE = "role";
-
-	public static final String TYPE_TERM = "term";
-
-	public static final String TYPE_USER = "user";
+	public List<NotificationTermEvaluator>
+		getNotificationTermEvaluatorsByNotificationTypeKey(String key);
 
 }

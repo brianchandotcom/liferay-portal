@@ -550,7 +550,7 @@ export default function EditNotificationTemplate({
 														Liferay.Language.get(
 															'use-terms-to-configure-recipients-for-this-notification-x'
 														),
-														'[%ENTRY_CREATOR%], [%BUYER_NAME%]',
+														'[%ENTRY_CREATOR%]',
 														'.'
 													)}
 													type="text"

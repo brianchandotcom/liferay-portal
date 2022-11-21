@@ -12,20 +12,15 @@
  * details.
  */
 
-package com.liferay.notification.term.contributor;
-
-import java.util.List;
+package com.liferay.notification.constants;
 
 /**
  * @author Gustavo Lima
  */
-public interface NotificationTermContributorRegistry {
+public class NotificationTermEvaluatorConstants {
 
-	public List<NotificationTermContributor>
-		getNotificationTermContributorsByNotificationTermContributorKey(
-			String key);
+	public static final String BODY_AND_SUBJECT = "bodyAndSubject";
 
-	public List<NotificationTermContributor>
-		getNotificationTermContributorsByNotificationTypeKey(String key);
+	public static final String RECIPIENT = "recipient";
 
 }

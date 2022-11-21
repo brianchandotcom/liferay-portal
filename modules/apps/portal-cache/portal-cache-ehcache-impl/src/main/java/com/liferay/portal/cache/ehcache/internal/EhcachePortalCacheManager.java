@@ -90,7 +90,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
-		reconfigPortalCache(configurationObjectValuePair.getValue());
+		_reconfigPortalCache(configurationObjectValuePair.getValue());
 	}
 
 	public void setConfigFile(String configFile) {
@@ -298,31 +298,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	protected void reconfigPortalCache(
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
-
-		for (String portalCacheName :
-				portalCacheManagerConfiguration.getPortalCacheNames()) {
-
-			PortalCacheConfiguration portalCacheConfiguration =
-				portalCacheManagerConfiguration.getPortalCacheConfiguration(
-					portalCacheName);
-
-			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
-				portalCacheName, portalCacheConfiguration);
-
-			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
-
-			if (portalCache == null) {
-				continue;
-			}
-
-			removeConfigurableEhcachePortalCacheListeners(portalCache);
-
-			initPortalCacheListeners(portalCache, portalCacheConfiguration);
-		}
-	}
-
 	protected void removeConfigurableEhcachePortalCacheListeners(
 		PortalCache<K, V> portalCache) {
 
@@ -348,6 +323,31 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		baseEhcachePortalCacheManagerConfigurator;
 	protected BundleContext bundleContext;
 	protected volatile Props props;
+
+	private void _reconfigPortalCache(
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		for (String portalCacheName :
+				portalCacheManagerConfiguration.getPortalCacheNames()) {
+
+			PortalCacheConfiguration portalCacheConfiguration =
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName);
+
+			this.portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				portalCacheName, portalCacheConfiguration);
+
+			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
+
+			if (portalCache == null) {
+				continue;
+			}
+
+			removeConfigurableEhcachePortalCacheListeners(portalCache);
+
+			initPortalCacheListeners(portalCache, portalCacheConfiguration);
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);

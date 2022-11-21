@@ -1,4 +1,9 @@
 {
+	"dependencies": {
+		"@liferay/frontend-js-react-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
+	},
 	"name": "staging-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

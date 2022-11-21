@@ -15,7 +15,7 @@
 module.exports = {
 	build: {
 		bundler: {
-			ignore: ['**/*'],
+			ignore: ['**/config.js'],
 		},
 	},
 };

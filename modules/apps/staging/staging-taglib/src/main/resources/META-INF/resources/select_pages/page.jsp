@@ -129,21 +129,32 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<div class="pages-selector">
-								<liferay-layout:layouts-tree
-									defaultStateChecked="<%= true %>"
-									draggableTree="<%= false %>"
-									groupId="<%= selectPagesGroupId %>"
-									incomplete="<%= false %>"
-									portletURL="<%= renderResponse.createRenderURL() %>"
-									privateLayout="<%= selectPagesPrivateLayout %>"
-									rootNodeName="<%= selectPagesGroup.getLayoutRootNodeName(selectPagesPrivateLayout, locale) %>"
-									selectableTree="<%= true %>"
-									selectedLayoutIds="<%= selectedLayoutIds %>"
-									selPlid='<%= ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID) %>'
-									treeId="<%= treeId %>"
-								/>
-							</div>
+							<c:choose>
+								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-169001")) %>'>
+									<div>
+										<react:component
+											module="js/PagesTree"
+										/>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="pages-selector">
+										<liferay-layout:layouts-tree
+											defaultStateChecked="<%= true %>"
+											draggableTree="<%= false %>"
+											groupId="<%= selectPagesGroupId %>"
+											incomplete="<%= false %>"
+											portletURL="<%= renderResponse.createRenderURL() %>"
+											privateLayout="<%= selectPagesPrivateLayout %>"
+											rootNodeName="<%= selectPagesGroup.getLayoutRootNodeName(selectPagesPrivateLayout, locale) %>"
+											selectableTree="<%= true %>"
+											selectedLayoutIds="<%= selectedLayoutIds %>"
+											selPlid='<%= ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID) %>'
+											treeId="<%= treeId %>"
+										/>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</aui:fieldset>

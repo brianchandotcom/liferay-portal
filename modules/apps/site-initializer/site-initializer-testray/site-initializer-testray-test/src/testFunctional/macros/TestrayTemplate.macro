@@ -52,4 +52,11 @@ definition {
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU_OPTION");
 	}
 
+	macro viewTemplateDetails {
+		AssertElementPresent(
+			locator1 = "TestrayTemplate#TEMPLATE_DETAILS",
+			nameTemplate = "${nameTemplate}",
+			statusTemplate = "${statusTemplate}");
+	}
+
 }

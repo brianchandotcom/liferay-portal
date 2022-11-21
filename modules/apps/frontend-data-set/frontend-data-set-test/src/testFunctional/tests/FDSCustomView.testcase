@@ -332,7 +332,7 @@ definition {
 			Click(locator1 = "FrontendDataSet#ELLIPSIS");
 
 			AssertElementPresent(
-				key_itemName = "Guardar vista como",
+				key_itemName = "Guardar vista como…",
 				locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 		}
 

@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.util.BaseUpgradeResourceBlock;
 
@@ -241,7 +243,11 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 		DBAssertionUtil.assertColumns(
 			getTableName(), "id_", "userId", "resourceBlockId");
 
-		doUpgrade();
+		for (UpgradeStep upgradeStep : getUpgradeSteps()) {
+			UpgradeProcess upgradeProcess = (UpgradeProcess)upgradeStep;
+
+			upgradeProcess.upgrade();
+		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from ResourcePermission where name = '" +

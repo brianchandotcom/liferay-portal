@@ -523,7 +523,7 @@ for (String analyticsType : analyticsTypes) {
 						Liferay.on(
 							'endNavigate',
 							function(event) {
-								ga('set', 'page', event.path);
+								ga('set', 'page', Liferay.ThemeDisplay.getLayoutRelativeURL());
 								ga('send', 'pageview');
 							}
 						);

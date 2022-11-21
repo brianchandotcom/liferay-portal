@@ -53,6 +53,14 @@ public class BaseGraphQLServlet {
 
 	public class TestQuery {
 
+		public String getField() {
+			return _FIELD;
+		}
+
+		public long getId() {
+			return _ID;
+		}
+
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
 			return new TestDTO(_ID);

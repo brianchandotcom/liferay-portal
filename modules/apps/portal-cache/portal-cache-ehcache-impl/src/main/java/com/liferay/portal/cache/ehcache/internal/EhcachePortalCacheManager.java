@@ -141,6 +141,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public void removePortalCache(String portalCacheName) {
+		doRemovePortalCache(portalCaches.remove(portalCacheName));
+	}
+
+	@Override
 	public void removePortalCaches(long companyId) {
 		Set<PortalCache<K, V>> shardedPortalCaches = new HashSet<>();
 
@@ -194,7 +199,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
-	@Override
 	protected void doRemovePortalCache(PortalCache<K, V> portalCache) {
 		if (portalCache == null) {
 			return;

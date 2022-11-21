@@ -46,8 +46,11 @@ import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
+import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.item.selector.criterion.InfoCollectionProviderItemSelectorCriterion;
@@ -66,8 +69,10 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -117,6 +122,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -846,6 +852,131 @@ public class AssetPublisherDisplayContext {
 
 	public String[] getDisplayStyles() {
 		return _assetPublisherPortletInstanceConfiguration.displayStyles();
+	}
+
+	public List<DropdownItem> getDropdownItems(Group group) throws Exception {
+		return new DropdownItemList() {
+			{
+				List<AssetRendererFactory<?>> assetRendererFactories =
+					ListUtil.sort(
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactories(
+								_themeDisplay.getCompanyId()),
+						new AssetRendererFactoryTypeNameComparator(
+							_themeDisplay.getLocale()));
+
+				for (AssetRendererFactory<?> assetRendererFactory :
+						assetRendererFactories) {
+
+					if (!assetRendererFactory.isSelectable()) {
+						continue;
+					}
+
+					PortletURL assetBrowserURL =
+						PortletProviderUtil.getPortletURL(
+							_httpServletRequest,
+							assetRendererFactory.getClassName(),
+							PortletProvider.Action.BROWSE);
+
+					if (assetBrowserURL == null) {
+						continue;
+					}
+
+					long curGroupId = group.getGroupId();
+
+					if (group.isStagingGroup() &&
+						!group.isStagedPortlet(
+							assetRendererFactory.getPortletId())) {
+
+						curGroupId = group.getLiveGroupId();
+					}
+
+					assetBrowserURL.setParameter(
+						"groupId", String.valueOf(curGroupId));
+					assetBrowserURL.setParameter(
+						"multipleSelection", String.valueOf(Boolean.TRUE));
+					assetBrowserURL.setParameter(
+						"selectedGroupIds", String.valueOf(curGroupId));
+					assetBrowserURL.setParameter(
+						"typeSelection", assetRendererFactory.getClassName());
+					assetBrowserURL.setParameter(
+						"showNonindexable", String.valueOf(Boolean.TRUE));
+					assetBrowserURL.setParameter(
+						"showScheduled", String.valueOf(Boolean.TRUE));
+
+					String eventName =
+						StringPool.UNDERLINE +
+							HtmlUtil.escapeJS(getPortletResource()) +
+								"_selectAsset";
+
+					assetBrowserURL.setParameter("eventName", eventName);
+
+					assetBrowserURL.setPortletMode(PortletMode.VIEW);
+					assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+
+					long finalCurGroupId = curGroupId;
+
+					add(
+						dropdownItem -> {
+							if (!assetRendererFactory.isSupportsClassTypes()) {
+								dropdownItem.putData(
+									"href", assetBrowserURL.toString());
+
+								String type = assetRendererFactory.getTypeName(
+									_themeDisplay.getLocale());
+
+								dropdownItem.putData(
+									"title",
+									LanguageUtil.format(
+										_httpServletRequest, "select-x", type,
+										false));
+
+								dropdownItem.setLabel(type);
+							}
+							else {
+								ClassTypeReader classTypeReader =
+									assetRendererFactory.getClassTypeReader();
+
+								List<ClassType> assetAvailableClassTypes =
+									classTypeReader.getAvailableClassTypes(
+										PortalUtil.
+											getCurrentAndAncestorSiteGroupIds(
+												finalCurGroupId),
+										_themeDisplay.getLocale());
+
+								for (ClassType assetAvailableClassType :
+										assetAvailableClassTypes) {
+
+									assetBrowserURL.setParameter(
+										"subtypeSelectionId",
+										String.valueOf(
+											assetAvailableClassType.
+												getClassTypeId()));
+									assetBrowserURL.setParameter(
+										"showNonindexable",
+										String.valueOf(Boolean.TRUE));
+									assetBrowserURL.setParameter(
+										"showScheduled",
+										String.valueOf(Boolean.TRUE));
+
+									dropdownItem.putData(
+										"href", assetBrowserURL.toString());
+
+									String type =
+										assetAvailableClassType.getName();
+
+									dropdownItem.putData(
+										"title",
+										LanguageUtil.format(
+											_httpServletRequest, "select-x",
+											type, false));
+									dropdownItem.setLabel(type);
+								}
+							}
+						});
+				}
+			}
+		};
 	}
 
 	public LocalizedValuesMap getEmailAssetEntryAddedBody() {

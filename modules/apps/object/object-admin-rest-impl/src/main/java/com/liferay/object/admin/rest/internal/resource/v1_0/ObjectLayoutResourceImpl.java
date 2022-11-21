@@ -23,16 +23,19 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutService;
 import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -141,6 +144,19 @@ public class ObjectLayoutResourceImpl
 			Long objectLayoutId, ObjectLayout objectLayout)
 		throws Exception {
 
+		if (Validator.isNotNull(
+				objectLayout.getObjectDefinitionExternalReferenceCode())) {
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					getObjectDefinitionByExternalReferenceCode(
+						objectLayout.getObjectDefinitionExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+			objectLayout.setObjectDefinitionId(
+				objectDefinition.getObjectDefinitionId());
+		}
+
 		return _toObjectLayout(
 			_objectLayoutService.updateObjectLayout(
 				objectLayoutId, objectLayout.getDefaultObjectLayout(),
@@ -153,7 +169,8 @@ public class ObjectLayoutResourceImpl
 	}
 
 	private ObjectLayout _toObjectLayout(
-		com.liferay.object.model.ObjectLayout serviceBuilderObjectLayout) {
+			com.liferay.object.model.ObjectLayout serviceBuilderObjectLayout)
+		throws PortalException {
 
 		return ObjectLayoutUtil.toObjectLayout(
 			HashMapBuilder.put(
@@ -175,7 +192,8 @@ public class ObjectLayoutResourceImpl
 					ObjectDefinition.class.getName(),
 					serviceBuilderObjectLayout.getObjectDefinitionId())
 			).build(),
-			_objectFieldLocalService, serviceBuilderObjectLayout);
+			_objectDefinitionLocalService, _objectFieldLocalService,
+			serviceBuilderObjectLayout);
 	}
 
 	private com.liferay.object.model.ObjectLayoutBox _toObjectLayoutBox(
@@ -259,6 +277,9 @@ public class ObjectLayoutResourceImpl
 
 		return serviceBuilderObjectLayoutTab;
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

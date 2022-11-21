@@ -170,12 +170,8 @@ public class PortalInstancesTest {
 
 		_testGetI18NLanguageId("es_ES", hostname, null);
 
-		// ...
+		// Company available locale is still usable
 
-		_updateLayoutSetVirtualHostname(
-			StringPool.BLANK, group.getPublicLayoutSet(), hostname);
-
-		_testGetI18NLanguageId(null, hostname, null);
 		_testGetI18NLanguageId(
 			LanguageUtil.getLanguageId(_company.getLocale()), hostname,
 			_company.getLocale());

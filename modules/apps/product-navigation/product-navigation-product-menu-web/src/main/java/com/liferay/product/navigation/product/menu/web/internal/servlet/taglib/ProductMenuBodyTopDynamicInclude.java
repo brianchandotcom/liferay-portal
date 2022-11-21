@@ -20,6 +20,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -97,7 +98,9 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write("<div class=\"");
+			jspWriter.write("<div aria-label=\"");
+			jspWriter.write(_language.get(httpServletRequest, "product-menu"));
+			jspWriter.write("\" class=\"");
 
 			String productMenuState = SessionClicks.get(
 				httpServletRequest,
@@ -117,7 +120,8 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 				_portal.getPortletNamespace(
 					ProductNavigationProductMenuPortletKeys.
 						PRODUCT_NAVIGATION_PRODUCT_MENU));
-			jspWriter.write("sidenavSliderId\">");
+			jspWriter.write(
+				"sidenavSliderId\" role=\"tabpanel\" tabindex=\"-1\" >");
 			jspWriter.write(
 				"<div class=\"product-menu sidebar sidenav-menu\">");
 
@@ -227,6 +231,9 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

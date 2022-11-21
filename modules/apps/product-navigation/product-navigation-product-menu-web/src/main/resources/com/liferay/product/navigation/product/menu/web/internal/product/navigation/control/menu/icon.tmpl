@@ -1,5 +1,5 @@
 <li class="control-menu-nav-item ${cssClass}">
-	<button aria-label="${title}" class="control-menu-icon lfr-portal-tooltip product-menu-toast-toggle product-menu-toggle sidenav-toggler" data-content="body" data-open-class="open product-menu-open" data-qa-id="productMenu" data-skip-link-label="${skipLinkLabel}" data-target="#${portletNamespace}sidenavSliderId" data-title="${title}" data-toggle="liferay-sidenav" data-type="fixed-push" data-type-mobile="fixed" ${dataURL} id="${portletNamespace}sidenavToggleId">
+	<button aria-controls="${portletNamespace}sidenavSliderId" aria-label="${title}" aria-selected="${isOpen}" class="control-menu-icon lfr-portal-tooltip product-menu-toast-toggle product-menu-toggle sidenav-toggler" data-content="body" data-open-class="open product-menu-open" data-qa-id="productMenu" data-skip-link-label="${skipLinkLabel}" data-target="#${portletNamespace}sidenavSliderId" data-title="${title}" data-toggle="liferay-sidenav" data-type="fixed-push" data-type-mobile="fixed" ${dataURL} id="${portletNamespace}sidenavToggleId" role="tab">
 		${closedIcon}
 
 		${openIcon}
@@ -9,6 +9,10 @@
 <script type="text/javascript">
 	var sidenavToggle = document.getElementById(
 		'${portletNamespace}sidenavToggleId'
+	);
+
+	var sidenavSlider = document.getElementById(
+		'${portletNamespace}sidenavSliderId'
 	);
 
 	var sidenavInstance = Liferay.SideNavigation.initialize(sidenavToggle);
@@ -22,6 +26,9 @@
 			'com.liferay.product.navigation.product.menu.web_productMenuState',
 			'closed'
 		);
+		sidenavToggle.setAttribute('aria-selected', false);
+		sidenavToggle.setAttribute('aria-label', '${openProductMenuTitle}');
+		sidenavToggle.setAttribute('data-title', '${openProductMenuTitle}');
 	});
 
 	sidenavInstance.on('open.lexicon.sidenav', function(event) {
@@ -29,6 +36,12 @@
 			'com.liferay.product.navigation.product.menu.web_productMenuState',
 			'open'
 		);
+
+		sidenavToggle.setAttribute('aria-selected', true);
+		sidenavToggle.setAttribute('aria-label', '${closeProductMenuTitle}');
+		sidenavToggle.setAttribute('data-title', '${closeProductMenuTitle}');
+
+		sidenavSlider.focus();
 	});
 
 	if (Liferay.Util.isPhone() && document.body.classList.contains('open')) {

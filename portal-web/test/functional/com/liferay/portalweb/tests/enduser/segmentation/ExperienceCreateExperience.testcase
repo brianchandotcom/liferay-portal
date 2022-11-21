@@ -66,7 +66,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Create 2 more users") {
-			for (var userNumb : list "1,2") {
+			for (var userNumb : list "2,3") {
 				JSONUser.addUser(
 					userEmailAddress = "userea${userNumb}@liferay.com",
 					userFirstName = "userfn${userNumb}",
@@ -375,7 +375,7 @@ definition {
 				fieldName = "Country",
 				groupName = "Test Site Name",
 				operator = "equals",
-				segmentName = "Name Segment Country",
+				segmentName = "Org with Country",
 				text = "china");
 		}
 
@@ -3271,12 +3271,16 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Danger",
 				panel = "Styles");
+
+			PageEditor.publish();
 		}
 
 		task ("Create an experience") {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
+
+			PageEditor.publish();
 		}
 
 		task ("Change the background color of the default experience") {
@@ -3774,9 +3778,17 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
+
+			PageEditor.publish();
 		}
 
 		task ("Edit the fragment recently added without publishing the changes") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.changeExperience(newExperience = "New Experience");
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
@@ -3897,9 +3909,15 @@ definition {
 
 		task ("Duplicate the first experience") {
 			PageEditor.duplicateExperience(experienceName = "NewExp1");
+
+			Button.clickPublish();
 		}
 
 		task ("Modify the second experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
 			PageEditor.changeExperience(newExperience = "Copy of NewExp1");
 
 			AssertTextEquals(
@@ -3923,8 +3941,6 @@ definition {
 		}
 
 		task ("Check that the duplicated experience is bellow default experience") {
-			ContentPages.gotoPageEditor();
-
 			PageEditor.openExperienceMenu();
 
 			AssertTextEquals(

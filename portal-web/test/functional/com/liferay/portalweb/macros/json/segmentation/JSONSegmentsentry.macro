@@ -10,6 +10,7 @@ definition {
 		if (isSet(selectedOption)) {
 			var text = JSONSegmentsentrySetter.setSelectedOptionId(
 				fieldName = "${field}",
+				groupName = "${groupName}",
 				selectedOption = "${selectedOption}");
 		}
 

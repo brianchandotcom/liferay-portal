@@ -64,6 +64,9 @@ definition {
 		else if ("${fieldName}" == "Cookies") {
 			var field = "cookies";
 		}
+		else if ("${fieldName}" == "Country") {
+			var field = "country";
+		}
 		else if ("${fieldName}" == "Date Modified") {
 			var field = "dateModified";
 		}

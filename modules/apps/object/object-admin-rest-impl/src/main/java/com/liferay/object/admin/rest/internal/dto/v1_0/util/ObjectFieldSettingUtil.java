@@ -81,14 +81,14 @@ public class ObjectFieldSettingUtil {
 
 			List<Object> values = null;
 
-			if (objectFieldSetting.getValue() instanceof Object[]) {
-				values = ListUtil.fromArray(
-					(Object[])objectFieldSetting.getValue());
-			}
-			else if (objectFieldSetting.getValue() instanceof JSONArray) {
+			if (objectFieldSetting.getValue() instanceof JSONArray) {
 				values = JSONUtil.toList(
 					(JSONArray)objectFieldSetting.getValue(),
 					jsonObject -> jsonObject.toMap());
+			}
+			else if (objectFieldSetting.getValue() instanceof Object[]) {
+				values = ListUtil.fromArray(
+					(Object[])objectFieldSetting.getValue());
 			}
 			else {
 				values = (List<Object>)objectFieldSetting.getValue();

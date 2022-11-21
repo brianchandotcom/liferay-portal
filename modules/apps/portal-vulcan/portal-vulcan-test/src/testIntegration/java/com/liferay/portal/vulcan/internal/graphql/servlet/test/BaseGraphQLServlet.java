@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public class BaseGraphQLServlet {
 
-	public class TestDTO {
+	public static class TestDTO {
 
 		public TestDTO(long id) {
 			_id = id;
@@ -51,7 +51,7 @@ public class BaseGraphQLServlet {
 
 	}
 
-	public class TestQuery {
+	public static class TestQuery {
 
 		public String getField() {
 			return _FIELD;

@@ -27,7 +27,7 @@ import React, {useEffect, useRef} from 'react';
 import './CodeMirrorEditor.scss';
 
 const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
-	({onChange, ...options}, ref) => {
+	({mode, onChange, ...options}, ref) => {
 		const editorWrapperRef = useRef<HTMLDivElement>(null);
 		const codeMirrorRef = useRef<CodeMirror.Editor>();
 
@@ -43,6 +43,7 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 					],
 					inputStyle: 'contenteditable',
 					lineNumbers: true,
+					mode: mode ?? 'freemarker',
 					...options,
 				}
 			);

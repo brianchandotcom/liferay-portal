@@ -22,6 +22,7 @@ export {
 	Element,
 	SidebarCategory,
 } from './components/CodeEditor/index';
+export {CodeEditorLocalized} from './components/CodeEditor/CodeEditorLocalized';
 export {DatePicker} from './components/DatePicker';
 export * from './components/ExpressionBuilder';
 export {FieldBase} from './components/FieldBase';

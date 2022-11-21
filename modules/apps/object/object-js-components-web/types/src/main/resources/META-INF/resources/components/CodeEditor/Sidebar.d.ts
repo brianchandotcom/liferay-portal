@@ -17,8 +17,9 @@ import {ReactNode, RefObject} from 'react';
 import './Sidebar.scss';
 interface SidebarElement {
 	content: string;
-	helpText: string;
+	helpText?: string;
 	label: string;
+	tooltip?: string;
 }
 export interface SidebarCategory {
 	items: SidebarElement[];
@@ -27,7 +28,7 @@ export interface SidebarCategory {
 interface IProps {
 	CustomSidebarContent?: ReactNode;
 	editorRef: RefObject<CodeMirror.Editor>;
-	elements?: SidebarCategory[];
+	elements: SidebarCategory[];
 	otherProps?: unknown;
 }
 export declare function Sidebar({

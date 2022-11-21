@@ -119,8 +119,8 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							int titleMaxLength = ModelHintsUtil.getMaxLength(BlogsEntry.class.getName(), "title");
 							%>
 
-							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" maxlength="<%= String.valueOf(titleMaxLength) %>" name="title" placeholder='<%= LanguageUtil.get(request, "title") + " *" %>' required="<%= true %>" showRequiredLabel="<%= true %>" type="textarea" value="<%= HtmlUtil.escape(blogsEditEntryDisplayContext.getTitle()) %>">
-
+							<aui:input autoSize="<%= true %>" cssClass="form-control-edit form-control-edit-title form-control-unstyled" label="" maxlength="<%= String.valueOf(titleMaxLength) %>" name="title" placeholder='<%= LanguageUtil.get(request, "title") + " *" %>' type="textarea" value="<%= HtmlUtil.escape(blogsEditEntryDisplayContext.getTitle()) %>">
+								<aui:validator errorMessage='<%= LanguageUtil.format(resourceBundle, "the-x-field-is-required", "title", true) %>' name="required" />
 							</aui:input>
 						</div>
 

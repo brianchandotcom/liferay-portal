@@ -1959,7 +1959,7 @@ definition {
 	@description = "This test changes pagination and assert export processes display properly."
 	@priority = "2"
 	test PaginationWorksInExportPersonalData {
-		task ("Given create data across several different applications as new user export user data order them by Name and descending") {
+		task ("Given there are data across several different applications") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -2028,13 +2028,15 @@ definition {
 			GDPR.addExportProcessCP(
 				userFirstName = "userfn",
 				userLastName = "userln");
+		}
 
+		task ("and entries in Export Personal Data are ordered by name in descending order") {
 			ManagementBar.setFilterAndOrder(orderBy = "Name");
 
 			ManagementBar.toggleViewOrder(order = "list-down");
 		}
 
-		task ("When change the pagination assert correct number of entries are listed") {
+		task ("When pagination is changed, assert the correct number of entries are listed") {
 			for (var listEntries : list "4,8,20,40,60") {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
@@ -2073,7 +2075,7 @@ definition {
 	test PaginationWorksInNewDataExport {
 		property portal.release = "false";
 
-		task ("Given export new user data as Test Test") {
+		task ("Given a user is exporting new user data") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
@@ -2094,7 +2096,7 @@ definition {
 
 		// Assert the application com.liferay.portal.tools.service.builder.test.uad specific for upstream bundle,there isn't the app in release bundle.
 
-		task ("When change the pagination the correct number of entries are listed") {
+		task ("When pagination is changed, the correct number of entries are listed") {
 			for (var listEntries : list "4,8,20,40,60") {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 

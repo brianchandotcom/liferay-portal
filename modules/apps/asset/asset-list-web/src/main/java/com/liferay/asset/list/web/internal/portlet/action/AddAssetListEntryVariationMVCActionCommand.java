@@ -92,17 +92,21 @@ public class AddAssetListEntryVariationMVCActionCommand
 
 		sendRedirect(
 			actionRequest, actionResponse,
-			getRedirectURL(actionResponse, assetListEntryId, segmentsEntryId));
+			getRedirectURL(
+				actionRequest, actionResponse, assetListEntryId,
+				segmentsEntryId));
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse, long assetListEntryId,
-		long segmentsEntryId) {
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		long assetListEntryId, long segmentsEntryId) {
 
 		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCPath(
 			"/edit_asset_list_entry.jsp"
+		).setBackURL(
+			ParamUtil.getString(actionRequest, "backURL")
 		).setParameter(
 			"assetListEntryId", assetListEntryId
 		).setParameter(

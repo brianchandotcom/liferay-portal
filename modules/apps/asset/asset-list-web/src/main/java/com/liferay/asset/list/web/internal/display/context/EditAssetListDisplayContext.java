@@ -1230,6 +1230,8 @@ public class EditAssetListDisplayContext {
 						liferayPortletResponse
 					).setMVCPath(
 						"/edit_asset_list_entry.jsp"
+					).setBackURL(
+						getBackURL()
 					).setParameter(
 						"assetListEntryId",
 						assetListEntrySegmentsEntryRel.getAssetListEntryId()
@@ -1316,6 +1318,8 @@ public class EditAssetListDisplayContext {
 			liferayPortletResponse
 		).setActionName(
 			"/asset_list/delete_asset_list_entry_variation"
+		).setBackURL(
+			getBackURL()
 		).setParameter(
 			"assetListEntryId",
 			assetListEntrySegmentsEntryRel.getAssetListEntryId()

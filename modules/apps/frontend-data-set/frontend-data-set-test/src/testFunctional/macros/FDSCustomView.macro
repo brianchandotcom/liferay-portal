@@ -81,8 +81,6 @@ definition {
 		Click(
 			key_text = "Delete",
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro getValueByPosition {

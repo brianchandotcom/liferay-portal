@@ -3295,16 +3295,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>toolbar-item</name>
-		<tag-class>com.liferay.taglib.ui.ToolbarItemTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>toolbarItem</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Creates a progress bar for items being uploaded.</description>
 		<name>upload-progress</name>
 		<tag-class>com.liferay.taglib.ui.UploadProgressTag</tag-class>

@@ -71,20 +71,11 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public String getPortalCacheManagerName() {
-		return portalCacheManagerName;
-	}
-
-	@Override
 	public boolean registerPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener) {
 
 		return aggregatedPortalCacheManagerListener.addPortalCacheListener(
 			portalCacheManagerListener);
-	}
-
-	public void setPortalCacheManagerName(String portalCacheManagerName) {
-		this.portalCacheManagerName = portalCacheManagerName;
 	}
 
 	@Override
@@ -141,7 +132,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
-	protected String portalCacheManagerName;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
 

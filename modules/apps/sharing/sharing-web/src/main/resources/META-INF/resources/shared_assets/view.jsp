@@ -57,13 +57,13 @@ ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAsset
 				href="<%= viewSharedAssetsDisplayContext.getSharingEntryRowPortletURL(sharingEntry) %>"
 				name="title"
 				orderable="<%= false %>"
-				value="<%= viewSharedAssetsDisplayContext.getTitle(sharingEntry) %>"
+				value="<%= viewSharedAssetsDisplayContext.getSharingEntryTitle(sharingEntry) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="asset-type"
 				orderable="<%= false %>"
-				value="<%= viewSharedAssetsDisplayContext.getAssetTypeTitle(sharingEntry) %>"
+				value="<%= viewSharedAssetsDisplayContext.getSharingEntryAssetTypeTitle(sharingEntry) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -71,7 +71,7 @@ ViewSharedAssetsDisplayContext viewSharedAssetsDisplayContext = (ViewSharedAsset
 				name="status"
 				orderable="<%= false %>"
 			>
-				<c:if test="<%= !viewSharedAssetsDisplayContext.isVisible(sharingEntry) %>">
+				<c:if test="<%= !viewSharedAssetsDisplayContext.isSharingEntryVisible(sharingEntry) %>">
 					<clay:label
 						displayType="info"
 						label="not-visible"

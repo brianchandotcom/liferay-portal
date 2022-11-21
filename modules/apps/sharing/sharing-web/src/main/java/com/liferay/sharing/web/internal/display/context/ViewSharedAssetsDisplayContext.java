@@ -110,7 +110,7 @@ public class ViewSharedAssetsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAssetTypeTitle(SharingEntry sharingEntry)
+	public String getSharingEntryAssetTypeTitle(SharingEntry sharingEntry)
 		throws PortalException {
 
 		SharingEntryInterpreter sharingEntryInterpreter =
@@ -223,7 +223,7 @@ public class ViewSharedAssetsDisplayContext {
 		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
 
-		if (!isVisible(sharingEntry)) {
+		if (!isSharingEntryVisible(sharingEntry)) {
 			menu.setMenuItems(Collections.emptyList());
 
 			return menu;
@@ -276,7 +276,7 @@ public class ViewSharedAssetsDisplayContext {
 	public PortletURL getSharingEntryRowPortletURL(SharingEntry sharingEntry)
 		throws PortalException {
 
-		if (!isVisible(sharingEntry)) {
+		if (!isSharingEntryVisible(sharingEntry)) {
 			return null;
 		}
 
@@ -317,7 +317,7 @@ public class ViewSharedAssetsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getTitle(SharingEntry sharingEntry) {
+	public String getSharingEntryTitle(SharingEntry sharingEntry) {
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
@@ -336,7 +336,7 @@ public class ViewSharedAssetsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public boolean isVisible(SharingEntry sharingEntry) throws PortalException {
+	public boolean isSharingEntryVisible(SharingEntry sharingEntry) throws PortalException {
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 

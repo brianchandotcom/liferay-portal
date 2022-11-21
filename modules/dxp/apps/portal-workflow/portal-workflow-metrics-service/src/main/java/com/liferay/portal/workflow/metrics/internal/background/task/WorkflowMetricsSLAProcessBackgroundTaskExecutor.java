@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -99,6 +100,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
+
+		if (!_searchCapabilities.isWorkflowMetricsSupported()) {
+			return BackgroundTaskResult.SUCCESS;
+		}
 
 		long workflowMetricsSLADefinitionId = MapUtil.getLong(
 			backgroundTask.getTaskContextMap(),
@@ -748,8 +753,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private Scripts _scripts;
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private volatile SearchEngineAdapter _searchEngineAdapter;
+	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

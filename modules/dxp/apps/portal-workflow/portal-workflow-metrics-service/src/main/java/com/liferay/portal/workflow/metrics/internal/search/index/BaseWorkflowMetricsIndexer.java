@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
@@ -59,6 +60,10 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseWorkflowMetricsIndexer {
 
 	public void addDocuments(List<Document> documents) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		documents.forEach(
@@ -98,6 +103,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 	}
 
 	protected void addDocument(Document document) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(document.getLong("companyId")), document);
 
@@ -156,6 +165,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	protected void updateDocuments(
 		long companyId, Map<String, Object> fieldsMap, Query filterQuery) {
+
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -229,13 +242,20 @@ public abstract class BaseWorkflowMetricsIndexer {
 	@Reference
 	protected Scripts scripts;
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	protected volatile SearchEngineAdapter searchEngineAdapter;
+	@Reference
+	protected SearchCapabilities searchCapabilities;
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
 
 	@Reference
 	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
 
 	private void _updateDocument(Document document) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(document.getLong("companyId")),
 			document.getString("uid"), document);

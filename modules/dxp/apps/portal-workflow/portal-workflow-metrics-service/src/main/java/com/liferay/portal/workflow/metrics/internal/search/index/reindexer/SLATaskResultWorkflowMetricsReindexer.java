@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -54,11 +55,12 @@ public class SLATaskResultWorkflowMetricsReindexer
 		_creatDefaultDocuments(companyId);
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	protected volatile SearchEngineAdapter searchEngineAdapter;
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
 
 	private void _creatDefaultDocuments(long companyId) {
-		if (!_hasIndex(
+		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
+			!_hasIndex(
 				_nodeWorkflowMetricsIndexNameBuilder.getIndexName(companyId))) {
 
 			return;
@@ -151,6 +153,9 @@ public class SLATaskResultWorkflowMetricsReindexer
 
 	@Reference
 	private Queries _queries;
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

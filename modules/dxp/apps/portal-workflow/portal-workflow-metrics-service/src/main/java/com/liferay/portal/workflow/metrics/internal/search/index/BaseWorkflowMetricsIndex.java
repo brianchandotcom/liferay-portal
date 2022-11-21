@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
@@ -37,7 +38,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public boolean createIndex(long companyId) throws PortalException {
-		if (_hasIndex(getIndexName(companyId))) {
+		if (!searchCapabilities.isWorkflowMetricsSupported() ||
+			_hasIndex(getIndexName(companyId))) {
+
 			return false;
 		}
 
@@ -48,7 +51,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public boolean removeIndex(long companyId) throws PortalException {
-		if (!_hasIndex(getIndexName(companyId))) {
+		if (!searchCapabilities.isWorkflowMetricsSupported() ||
+			!_hasIndex(getIndexName(companyId))) {
+
 			return false;
 		}
 
@@ -58,8 +63,11 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		return true;
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	protected volatile SearchEngineAdapter searchEngineAdapter;
+	@Reference
+	protected SearchCapabilities searchCapabilities;
+
+	@Reference
+	protected SearchEngineAdapter searchEngineAdapter;
 
 	private String _createIndex(String indexName) {
 		IndicesExistsIndexResponse indicesExistsIndexResponse =

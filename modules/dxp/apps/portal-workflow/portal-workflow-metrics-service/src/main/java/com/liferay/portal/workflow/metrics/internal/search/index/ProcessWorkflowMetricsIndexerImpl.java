@@ -43,6 +43,10 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 	@Override
 	public void addDocument(Document document) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
@@ -166,6 +170,10 @@ public class ProcessWorkflowMetricsIndexerImpl
 	@Override
 	public Document updateProcess(UpdateProcessRequest updateProcessRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return documentBuilder.build();
+		}
 
 		if (updateProcessRequest.getActive() != null) {
 			documentBuilder.setValue(

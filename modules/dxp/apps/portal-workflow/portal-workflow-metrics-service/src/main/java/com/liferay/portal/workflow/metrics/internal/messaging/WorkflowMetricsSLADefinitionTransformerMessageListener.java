@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
@@ -113,6 +114,10 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 	}
 
 	private boolean _hasIndex(long companyId) {
+		if (!_searchCapabilities.isWorkflowMetricsSupported()) {
+			return false;
+		}
+
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(
 				_processWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -185,8 +190,11 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private volatile SearchEngineAdapter _searchEngineAdapter;
+	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

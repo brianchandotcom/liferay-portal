@@ -155,6 +155,10 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	public void deleteDocuments(
 		long companyId, long processId, long slaDefinitionId) {
 
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		super.deleteDocuments(companyId, processId, slaDefinitionId);
 
 		BooleanQuery booleanQuery = queries.booleanQuery();

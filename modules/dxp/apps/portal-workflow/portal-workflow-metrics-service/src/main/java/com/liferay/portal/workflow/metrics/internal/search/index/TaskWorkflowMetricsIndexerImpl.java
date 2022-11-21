@@ -59,6 +59,10 @@ public class TaskWorkflowMetricsIndexerImpl
 	public Document addTask(AddTaskRequest addTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return documentBuilder.build();
+		}
+
 		documentBuilder.setValue("active", Boolean.TRUE);
 
 		List<Long> assignmentGroupIds = new ArrayList<>();
@@ -300,6 +304,10 @@ public class TaskWorkflowMetricsIndexerImpl
 	public Document updateTask(UpdateTaskRequest updateTaskRequest) {
 		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
 
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return documentBuilder.build();
+		}
+
 		List<Long> assignmentGroupIds = new ArrayList<>();
 		List<Long> assignmentIds = new ArrayList<>();
 
@@ -407,6 +415,10 @@ public class TaskWorkflowMetricsIndexerImpl
 	}
 
 	private void _deleteTask(long companyId, long taskId) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		ScriptBuilder scriptBuilder = scripts.builder();
 
 		searchEngineAdapter.execute(

@@ -107,6 +107,10 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	protected void addDocument(Document document) {
+		if (!searchCapabilities.isWorkflowMetricsSupported()) {
+			return;
+		}
+
 		super.addDocument(document);
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();

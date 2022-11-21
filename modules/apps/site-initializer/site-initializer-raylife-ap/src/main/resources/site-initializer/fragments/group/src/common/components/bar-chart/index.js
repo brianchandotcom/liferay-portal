@@ -25,6 +25,7 @@ const BarChart = ({
 	format = false,
 	height = 200,
 	labelColumns,
+	labelRef,
 	showLegend = false,
 	showTooltip = false,
 	titleTotal = true,
@@ -70,6 +71,8 @@ const BarChart = ({
 								if (format) {
 									return new Intl.NumberFormat('en-us', {
 										currency: 'USD',
+										maximumFractionDigits: 0,
+										minimumFractionDigits: 0,
 										style: 'currency',
 									}).format(value);
 								}
@@ -95,6 +98,7 @@ const BarChart = ({
 				legend={{
 					show: showLegend,
 				}}
+				ref={labelRef}
 				size={{
 					height,
 					width,

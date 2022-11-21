@@ -67,6 +67,14 @@ export const nextThreeMonthsDate = convertDateToString(
 	new Date(new Date().setMonth(nextThreeMonths))
 ).split('-');
 
+export const lastDateCurrentMonth = convertDateToString(
+	new Date(new Date(new Date().setMonth(nextMonth)).setDate(0))
+).split('-');
+
+export const lastDateNextThreeMonth = convertDateToString(
+	new Date(new Date(new Date().setMonth(nextThreeMonths)).setDate(0))
+).split('-');
+
 export const getDayOfYear = Math.floor(
 	(new Date() - new Date(new Date().getFullYear(), 0, 0)) /
 		1000 /

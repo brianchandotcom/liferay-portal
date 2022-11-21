@@ -12,6 +12,12 @@
  * details.
  */
 export const CONSTANTS = {
+	DEVICES: {
+		DESKTOP: 'DESKTOP',
+		PHONE: 'PHONE',
+		TABLET: 'TABLET',
+	},
+
 	MONTHS_ABREVIATIONS: [
 		'Jan',
 		'Feb',
@@ -26,6 +32,7 @@ export const CONSTANTS = {
 		'Nov',
 		'Dec',
 	],
+
 	STATUS: {
 		APPROVED: 'approved',
 		BOUND: 'bound',

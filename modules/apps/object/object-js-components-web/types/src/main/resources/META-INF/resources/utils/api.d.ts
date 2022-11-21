@@ -90,7 +90,7 @@ export declare function getNotificationTemplates(): Promise<
 	NotificationTemplate[]
 >;
 export declare function getObjectDefinition(
-	objectDefinitionId: number
+	objectDefinitionExternalReferenceCode: string
 ): Promise<ObjectDefinition>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getObjectDefinitions(

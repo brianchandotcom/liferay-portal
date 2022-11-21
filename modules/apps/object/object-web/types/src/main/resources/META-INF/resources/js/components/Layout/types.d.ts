@@ -16,6 +16,7 @@ export declare type BoxType = 'regular' | 'categorization';
 export declare type TObjectLayout = {
 	defaultObjectLayout: boolean;
 	name: LocalizedValue<string>;
+	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectLayoutTabs: TObjectLayoutTab[];
 };

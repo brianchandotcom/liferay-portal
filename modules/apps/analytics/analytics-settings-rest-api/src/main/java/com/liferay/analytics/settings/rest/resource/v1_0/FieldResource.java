@@ -54,6 +54,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FieldResource {
 
+	public Page<Field> getFieldsAccountsPage(
+			String keyword, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public void patchFieldAccount(Field[] fields) throws Exception;
+
 	public Page<Field> getFieldsPeoplePage(
 			String keyword, Pagination pagination, Sort[] sorts)
 		throws Exception;

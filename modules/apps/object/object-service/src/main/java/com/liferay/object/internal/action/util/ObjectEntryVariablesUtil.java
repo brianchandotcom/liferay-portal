@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -152,15 +153,19 @@ public class ObjectEntryVariablesUtil {
 		SystemObjectDefinitionMetadataRegistry
 			systemObjectDefinitionMetadataRegistry) {
 
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+			systemObjectDefinitionMetadataRegistry.
+				getSystemObjectDefinitionMetadata(objectDefinition.getName());
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionMetadata.getJaxRsApplicationDescriptor();
+
 		DTOConverter<?, ?> dtoConverter = dtoConverterRegistry.getDTOConverter(
-			objectDefinition.getClassName());
+			jaxRsApplicationDescriptor.getApplicationName(),
+			objectDefinition.getClassName(),
+			jaxRsApplicationDescriptor.getVersion());
 
 		if (dtoConverter == null) {
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				systemObjectDefinitionMetadataRegistry.
-					getSystemObjectDefinitionMetadata(
-						objectDefinition.getName());
-
 			Class<?> modelClass =
 				systemObjectDefinitionMetadata.getModelClass();
 

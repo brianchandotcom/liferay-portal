@@ -97,7 +97,7 @@ if (portletTitleBasedNavigation) {
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<div class="autofit-row">
 				<div class="autofit-col autofit-col-expand">
-					<h1><%= kbArticle.getTitle() %></h1>
+					<h1><%= HtmlUtil.escape(kbArticle.getTitle()) %></h1>
 				</div>
 
 				<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">

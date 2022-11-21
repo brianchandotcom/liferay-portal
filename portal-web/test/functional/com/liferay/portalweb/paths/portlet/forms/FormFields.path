@@ -677,7 +677,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD_LABEL_REPORT_CARD</td>
-	<td>//div[@class='report-cards-shortcut']//div[@class='field-label'][contains(text(),'${key_fieldName}')]</td>
+	<td>//div[@class='report-cards-shortcut']//div[@class='field-label'][contains(text(),'${key_fieldName}')] | //div[contains(@class,"form-report--cards-shortcut")]//div[text()='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

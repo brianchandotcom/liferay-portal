@@ -75,12 +75,12 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(renderRequest));
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
 
 		String layoutMode = ParamUtil.getString(
-			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
+			_portal.getOriginalServletRequest(httpServletRequest), "p_l_mode",
+			Constants.VIEW);
 
 		if (layoutMode.equals(Constants.PREVIEW)) {
 			return;
@@ -103,7 +103,7 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 			_panelCategoryRegistry);
 
 		_setLayoutsTreeDisplayContextRequestAttribute(
-			originalHttpServletRequest, renderRequest, renderResponse);
+			httpServletRequest, renderRequest, renderResponse);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

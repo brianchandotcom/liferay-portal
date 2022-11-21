@@ -27,6 +27,23 @@ import {searchUtil} from '../../../util/search';
 const SubtasksCaseResults = () => {
 	const {subtaskId} = useParams();
 
+	const getFloatingBoxAlerts = (
+		subtasksCaseResults: TestraySubTaskCaseResult[],
+		selectRows: number[]
+	) => {
+		const alerts = [];
+
+		if (subtasksCaseResults.length === selectRows.length) {
+			alerts.push({
+				text: i18n.translate(
+					'you-cannot-split-all-case-results-from-a-subtask'
+				),
+			});
+		}
+
+		return [...alerts];
+	};
+
 	return (
 		<ListView
 			managementToolbarProps={{
@@ -79,7 +96,6 @@ const SubtasksCaseResults = () => {
 
 						value: i18n.translate('component'),
 					},
-
 					{
 						clickable: true,
 						key: 'case',
@@ -92,7 +108,6 @@ const SubtasksCaseResults = () => {
 						value: i18n.translate('case'),
 					},
 					{key: 'issues', value: i18n.translate('issues')},
-
 					{
 						key: 'dueStatus',
 						render: (
@@ -127,24 +142,30 @@ const SubtasksCaseResults = () => {
 				filter: searchUtil.eq('subtaskId', subtaskId as string),
 			}}
 		>
-			{(_, {dispatch, listViewContext: {selectedRows}}) => (
-				<FloatingBox
-					clearList={() =>
-						dispatch({
-							payload: [],
-							type: ListViewTypes.SET_CHECKED_ROW,
-						})
-					}
-					isVisible={!!selectedRows.length}
-					primaryButtonProps={{
-						title: i18n.translate('split-tests'),
-					}}
-					selectedCount={selectedRows.length}
-					tooltipText={i18n.translate(
-						'move-selected-tests-to-a-new-subtask'
-					)}
-				/>
-			)}
+			{({items}, {dispatch, listViewContext: {selectedRows}}) => {
+				const alerts = getFloatingBoxAlerts(items, selectedRows);
+
+				return (
+					<FloatingBox
+						alerts={alerts}
+						clearList={() =>
+							dispatch({
+								payload: [],
+								type: ListViewTypes.SET_CHECKED_ROW,
+							})
+						}
+						isVisible={!!selectedRows.length}
+						primaryButtonProps={{
+							disabled: !!alerts.length,
+							title: i18n.translate('split-tests'),
+						}}
+						selectedCount={selectedRows.length}
+						tooltipText={i18n.translate(
+							'move-selected-tests-to-a-new-subtask'
+						)}
+					/>
+				);
+			}}
 		</ListView>
 	);
 };

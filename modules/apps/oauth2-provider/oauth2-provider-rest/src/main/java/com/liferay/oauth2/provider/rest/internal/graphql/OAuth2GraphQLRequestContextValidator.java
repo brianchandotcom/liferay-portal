@@ -135,7 +135,9 @@ public class OAuth2GraphQLRequestContextValidator
 			}
 		}
 		finally {
-			_scopeContext.clear();
+			_scopeContext.setApplicationName(null);
+			_scopeContext.setBundle(null);
+			_scopeContext.setCompanyId(0L);
 		}
 	}
 

@@ -17,8 +17,10 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.AggregatedPortalCacheManagerListener;
 import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
+import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
@@ -52,6 +54,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.management.MBeanServer;
 
@@ -73,7 +77,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Edward Han
  */
 public class EhcachePortalCacheManager<K extends Serializable, V>
-	extends BasePortalCacheManager<K, V> {
+	implements PortalCacheManager<K, V> {
 
 	@Override
 	public void clearAll() throws PortalCacheException {
@@ -88,7 +92,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void destroy() {
-		portalCaches.clear();
+		_portalCaches.clear();
 
 		_cacheManager.shutdown();
 
@@ -103,8 +107,28 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	@Override
+	public PortalCache<K, V> fetchPortalCache(String portalCacheName) {
+		return _portalCaches.get(portalCacheName);
+	}
+
 	public CacheManager getEhcacheManager() {
 		return _cacheManager;
+	}
+
+	@Override
+	public PortalCache<K, V> getPortalCache(String portalCacheName)
+		throws PortalCacheException {
+
+		return getPortalCache(portalCacheName, false);
+	}
+
+	@Override
+	public PortalCache<K, V> getPortalCache(
+			String portalCacheName, boolean mvcc)
+		throws PortalCacheException {
+
+		return getPortalCache(portalCacheName, mvcc, false);
 	}
 
 	@Override
@@ -112,7 +136,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			String portalCacheName, boolean mvcc, boolean sharded)
 		throws PortalCacheException {
 
-		return portalCaches.compute(
+		return _portalCaches.compute(
 			portalCacheName,
 			(key, value) -> {
 				if (value != null) {
@@ -146,6 +170,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners() {
+		return _aggregatedPortalCacheManagerListener.
+			getPortalCacheManagerListeners();
+	}
+
+	@Override
 	public String getPortalCacheManagerName() {
 		return _portalCacheManagerName;
 	}
@@ -167,8 +197,16 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public boolean registerPortalCacheManagerListener(
+		PortalCacheManagerListener portalCacheManagerListener) {
+
+		return _aggregatedPortalCacheManagerListener.addPortalCacheListener(
+			portalCacheManagerListener);
+	}
+
+	@Override
 	public void removePortalCache(String portalCacheName) {
-		PortalCache<K, V> portalCache = portalCaches.remove(portalCacheName);
+		PortalCache<K, V> portalCache = _portalCaches.remove(portalCacheName);
 
 		if (portalCache == null) {
 			return;
@@ -191,7 +229,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void removePortalCaches(long companyId) {
 		Set<PortalCache<K, V>> shardedPortalCaches = new HashSet<>();
 
-		for (PortalCache<K, V> portalCache : portalCaches.values()) {
+		for (PortalCache<K, V> portalCache : _portalCaches.values()) {
 			if (portalCache.isSharded()) {
 				shardedPortalCaches.add(portalCache);
 			}
@@ -214,6 +252,19 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	public void setPortalCacheManagerName(String portalCacheManagerName) {
 		_portalCacheManagerName = portalCacheManagerName;
+	}
+
+	@Override
+	public boolean unregisterPortalCacheManagerListener(
+		PortalCacheManagerListener portalCacheManagerListener) {
+
+		return _aggregatedPortalCacheManagerListener.removePortalCacheListener(
+			portalCacheManagerListener);
+	}
+
+	@Override
+	public void unregisterPortalCacheManagerListeners() {
+		_aggregatedPortalCacheManagerListener.clearAll();
 	}
 
 	protected PortalCache<K, V> createPortalCache(
@@ -267,6 +318,39 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	protected void initPortalCacheListeners(
+		PortalCache<K, V> portalCache,
+		PortalCacheConfiguration portalCacheConfiguration) {
+
+		if (portalCacheConfiguration == null) {
+			return;
+		}
+
+		for (Properties properties :
+				portalCacheConfiguration.
+					getPortalCacheListenerPropertiesSet()) {
+
+			PortalCacheListener<K, V> portalCacheListener =
+				portalCacheListenerFactory.create(properties);
+
+			if (portalCacheListener == null) {
+				continue;
+			}
+
+			PortalCacheListenerScope portalCacheListenerScope =
+				(PortalCacheListenerScope)properties.remove(
+					PortalCacheConfiguration.
+						PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE);
+
+			if (portalCacheListenerScope == null) {
+				portalCacheListenerScope = PortalCacheListenerScope.ALL;
+			}
+
+			portalCache.registerPortalCacheListener(
+				portalCacheListener, portalCacheListenerScope);
+		}
+	}
+
 	protected void initPortalCacheManager() {
 		_transactionalPortalCacheEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));
@@ -308,7 +392,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		cacheManagerEventListenerRegistry.registerListener(
 			new PortalCacheManagerEventListener(
-				aggregatedPortalCacheManagerListener));
+				_aggregatedPortalCacheManagerListener));
 
 		if (!GetterUtil.getBoolean(
 				props.get(
@@ -417,6 +501,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected BaseEhcachePortalCacheManagerConfigurator
 		baseEhcachePortalCacheManagerConfigurator;
 	protected BundleContext bundleContext;
+	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;
 	protected volatile Props props;
@@ -447,7 +532,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
 				portalCacheName, portalCacheConfiguration);
 
-			PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
+			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
 
 			if (portalCache == null) {
 				continue;
@@ -534,6 +619,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
+	private final AggregatedPortalCacheManagerListener
+		_aggregatedPortalCacheManagerListener =
+			new AggregatedPortalCacheManagerListener();
 	private CacheManager _cacheManager;
 	private String _configFile;
 	private ServiceTracker<?, ?> _configuratorSettingsServiceTracker;
@@ -542,6 +630,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_mBeanServerServiceTracker;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _portalCacheManagerName;
+	private final ConcurrentMap<String, PortalCache<K, V>> _portalCaches =
+		new ConcurrentHashMap<>();
 	private boolean _transactionalPortalCacheEnabled;
 	private String[] _transactionalPortalCacheNames = StringPool.EMPTY_ARRAY;
 	private boolean _usingDefault;

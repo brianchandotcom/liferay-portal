@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SuggestionsRetriever.class)
+@Component(service = SuggestionsRetriever.class)
 public class SuggestionsRetrieverImpl implements SuggestionsRetriever {
 
 	@Override

@@ -33,7 +33,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gustavo Lima
  */
 @Component(
-	immediate = true,
 	property = {
 		"indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 		"indexer.class.name=com.liferay.journal.model.JournalArticle",

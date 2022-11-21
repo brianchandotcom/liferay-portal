@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Díaz
  */
-@Component(
-	immediate = true, service = {FacetFactory.class, NestedFacetFactory.class}
-)
+@Component(service = {FacetFactory.class, NestedFacetFactory.class})
 public class NestedFacetFactoryImpl implements NestedFacetFactory {
 
 	@Override

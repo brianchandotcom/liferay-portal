@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = ExpandoBridgeIndexer.class)
+@Component(service = ExpandoBridgeIndexer.class)
 public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 	@Override

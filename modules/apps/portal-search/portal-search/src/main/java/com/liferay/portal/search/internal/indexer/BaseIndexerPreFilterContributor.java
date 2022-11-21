@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = PreFilterContributor.class)
+@Component(service = PreFilterContributor.class)
 public class BaseIndexerPreFilterContributor implements PreFilterContributor {
 
 	@Override

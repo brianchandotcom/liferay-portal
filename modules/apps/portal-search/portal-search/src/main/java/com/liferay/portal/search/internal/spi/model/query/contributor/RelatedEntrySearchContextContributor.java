@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SearchContextContributor.class)
+@Component(service = SearchContextContributor.class)
 public class RelatedEntrySearchContextContributor
 	implements SearchContextContributor {
 

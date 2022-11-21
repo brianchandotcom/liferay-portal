@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SortFieldBuilder.class)
+@Component(service = SortFieldBuilder.class)
 public class SortFieldBuilderImpl implements SortFieldBuilder {
 
 	@Override

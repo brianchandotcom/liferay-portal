@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(
-	immediate = true, service = DynamicQueryBatchIndexingActionableFactory.class
-)
+@Component(service = DynamicQueryBatchIndexingActionableFactory.class)
 public class DynamicQueryBatchIndexingActionableFactoryImpl
 	implements DynamicQueryBatchIndexingActionableFactory {
 

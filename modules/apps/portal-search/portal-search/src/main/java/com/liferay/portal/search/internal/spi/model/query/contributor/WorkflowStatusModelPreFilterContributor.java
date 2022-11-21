@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = "model.pre.filter.contributor.id=WorkflowStatus",
 	service = ModelPreFilterContributor.class
 )

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SuggestionBuilderFactory.class)
+@Component(service = SuggestionBuilderFactory.class)
 public class SuggestionBuilderFactoryImpl implements SuggestionBuilderFactory {
 
 	@Override

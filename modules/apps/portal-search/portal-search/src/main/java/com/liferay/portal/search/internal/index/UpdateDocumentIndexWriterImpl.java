@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.IndexWriterHelperConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	service = UpdateDocumentIndexWriter.class
 )
 public class UpdateDocumentIndexWriterImpl

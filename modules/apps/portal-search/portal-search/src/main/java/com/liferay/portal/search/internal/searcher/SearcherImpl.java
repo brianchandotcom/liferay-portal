@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = Searcher.class)
+@Component(service = Searcher.class)
 public class SearcherImpl implements Searcher {
 
 	@Override

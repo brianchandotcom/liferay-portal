@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(
-	immediate = true, service = PostProcessSearchQueryContributorHelper.class
-)
+@Component(service = PostProcessSearchQueryContributorHelper.class)
 public class PostProcessSearchQueryContributorHelperImpl
 	implements PostProcessSearchQueryContributorHelper {
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true, property = "indexer.class.name=ALL",
+	property = "indexer.class.name=ALL",
 	service = ModelPreFilterContributor.class
 )
 public class StagingModelPreFilterContributor

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  * @author Rodrigo Paulino
  */
-@Component(immediate = true, service = SubstringFieldQueryBuilder.class)
+@Component(service = SubstringFieldQueryBuilder.class)
 public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override

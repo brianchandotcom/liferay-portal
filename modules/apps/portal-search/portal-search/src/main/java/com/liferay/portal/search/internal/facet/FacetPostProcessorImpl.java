@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Bryan Engler
  * @author André de Oliveira
  */
-@Component(immediate = true, service = FacetPostProcessor.class)
+@Component(service = FacetPostProcessor.class)
 public class FacetPostProcessorImpl implements FacetPostProcessor {
 
 	@Override

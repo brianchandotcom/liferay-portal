@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = KeywordQueryContributor.class)
+@Component(service = KeywordQueryContributor.class)
 public class AssetCategoryTitlesKeywordQueryContributor
 	implements KeywordQueryContributor {
 

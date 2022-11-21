@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.QueryPreProcessConfiguration",
-	immediate = true, service = QueryPreProcessConfiguration.class
+	service = QueryPreProcessConfiguration.class
 )
 public class QueryPreProcessConfigurationImpl
 	implements QueryPreProcessConfiguration {

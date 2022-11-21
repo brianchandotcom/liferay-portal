@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Wade Cao
  */
-@Component(
-	immediate = true, service = {CustomFacetFactory.class, FacetFactory.class}
-)
+@Component(service = {CustomFacetFactory.class, FacetFactory.class})
 public class CustomFacetFactoryImpl implements CustomFacetFactory {
 
 	@Override

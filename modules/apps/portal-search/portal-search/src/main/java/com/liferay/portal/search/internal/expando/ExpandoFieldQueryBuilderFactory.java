@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = FieldQueryBuilderFactory.class)
+@Component(service = FieldQueryBuilderFactory.class)
 public class ExpandoFieldQueryBuilderFactory
 	implements FieldQueryBuilderFactory {
 

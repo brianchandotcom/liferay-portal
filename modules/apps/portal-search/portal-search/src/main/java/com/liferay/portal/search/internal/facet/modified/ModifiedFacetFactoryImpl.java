@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(
-	immediate = true, service = {FacetFactory.class, ModifiedFacetFactory.class}
-)
+@Component(service = {FacetFactory.class, ModifiedFacetFactory.class})
 public class ModifiedFacetFactoryImpl implements ModifiedFacetFactory {
 
 	@Override

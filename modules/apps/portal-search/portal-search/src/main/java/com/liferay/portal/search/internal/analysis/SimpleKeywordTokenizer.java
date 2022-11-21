@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = KeywordTokenizer.class)
+@Component(service = KeywordTokenizer.class)
 public class SimpleKeywordTokenizer implements KeywordTokenizer {
 
 	@Override

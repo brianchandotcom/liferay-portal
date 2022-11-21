@@ -26,9 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(
-	immediate = true, service = {FacetFactory.class, FolderFacetFactory.class}
-)
+@Component(service = {FacetFactory.class, FolderFacetFactory.class})
 public class FolderFacetFactoryImpl implements FolderFacetFactory {
 
 	@Override

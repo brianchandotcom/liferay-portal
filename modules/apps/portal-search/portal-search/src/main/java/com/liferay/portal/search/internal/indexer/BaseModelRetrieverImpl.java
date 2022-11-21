@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BaseModelRetriever.class)
+@Component(service = BaseModelRetriever.class)
 public class BaseModelRetrieverImpl implements BaseModelRetriever {
 
 	@Override

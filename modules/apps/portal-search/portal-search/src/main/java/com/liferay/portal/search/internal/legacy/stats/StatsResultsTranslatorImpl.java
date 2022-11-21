@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = StatsResultsTranslator.class)
+@Component(service = StatsResultsTranslator.class)
 public class StatsResultsTranslatorImpl implements StatsResultsTranslator {
 
 	@Override

@@ -61,7 +61,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.IndexerRegistryConfiguration",
-	immediate = true, service = IndexerRegistry.class
+	service = IndexerRegistry.class
 )
 public class IndexerRegistryImpl implements IndexerRegistry {
 

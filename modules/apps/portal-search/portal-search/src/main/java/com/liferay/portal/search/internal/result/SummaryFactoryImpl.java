@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SummaryFactory.class)
+@Component(service = SummaryFactory.class)
 public class SummaryFactoryImpl implements SummaryFactory {
 
 	public static final int SUMMARY_MAX_CONTENT_LENGTH = 200;

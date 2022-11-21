@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = FieldQueryFactory.class)
+@Component(service = FieldQueryFactory.class)
 public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 	@Override

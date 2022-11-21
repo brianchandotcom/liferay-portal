@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = PostProcessSearchQueryContributor.class)
+@Component(service = PostProcessSearchQueryContributor.class)
 public class BaseIndexerPostProcessSearchQueryContributor
 	implements PostProcessSearchQueryContributor {
 

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.TitleFieldQueryBuilderConfiguration",
-	immediate = true, service = TitleFieldQueryBuilder.class
+	service = TitleFieldQueryBuilder.class
 )
 public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 

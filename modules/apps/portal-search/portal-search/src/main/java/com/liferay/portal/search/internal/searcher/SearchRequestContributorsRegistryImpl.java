@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchRequestContributorsRegistry.class)
+@Component(service = SearchRequestContributorsRegistry.class)
 public class SearchRequestContributorsRegistryImpl
 	implements SearchRequestContributorsRegistry {
 

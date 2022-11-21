@@ -77,10 +77,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true,
-	service = ModelSearchConfiguratorServiceTrackerCustomizer.class
-)
+@Component(service = ModelSearchConfiguratorServiceTrackerCustomizer.class)
 public class ModelSearchConfiguratorServiceTrackerCustomizer
 	<T extends BaseModel<?>>
 		implements ServiceTrackerCustomizer

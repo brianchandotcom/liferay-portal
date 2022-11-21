@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = BaseModelDocumentFactory.class)
+@Component(service = BaseModelDocumentFactory.class)
 public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 
 	@Override

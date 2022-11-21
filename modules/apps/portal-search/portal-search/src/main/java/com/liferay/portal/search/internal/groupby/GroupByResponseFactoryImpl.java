@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = GroupByResponseFactory.class)
+@Component(service = GroupByResponseFactory.class)
 public class GroupByResponseFactoryImpl implements GroupByResponseFactory {
 
 	@Override

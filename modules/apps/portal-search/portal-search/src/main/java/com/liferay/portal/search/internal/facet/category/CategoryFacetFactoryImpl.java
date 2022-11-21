@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration",
-	immediate = true, service = {CategoryFacetFactory.class, FacetFactory.class}
+	service = {CategoryFacetFactory.class, FacetFactory.class}
 )
 public class CategoryFacetFactoryImpl implements CategoryFacetFactory {
 

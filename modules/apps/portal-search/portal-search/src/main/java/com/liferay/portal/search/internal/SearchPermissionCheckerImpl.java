@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration",
-	immediate = true, service = SearchPermissionChecker.class
+	service = SearchPermissionChecker.class
 )
 public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 

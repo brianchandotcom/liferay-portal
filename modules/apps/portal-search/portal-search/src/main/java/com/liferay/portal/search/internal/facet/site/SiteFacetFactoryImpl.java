@@ -26,9 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(
-	immediate = true, service = {FacetFactory.class, SiteFacetFactory.class}
-)
+@Component(service = {FacetFactory.class, SiteFacetFactory.class})
 public class SiteFacetFactoryImpl implements SiteFacetFactory {
 
 	@Override

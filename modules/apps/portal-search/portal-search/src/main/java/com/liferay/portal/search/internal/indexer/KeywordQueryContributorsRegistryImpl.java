@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = KeywordQueryContributorsRegistry.class)
+@Component(service = KeywordQueryContributorsRegistry.class)
 public class KeywordQueryContributorsRegistryImpl
 	implements KeywordQueryContributorsRegistry {
 

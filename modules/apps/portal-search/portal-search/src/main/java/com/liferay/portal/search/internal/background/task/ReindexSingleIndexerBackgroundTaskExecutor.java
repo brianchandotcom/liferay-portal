@@ -47,7 +47,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrew Betts
  */
 @Component(
-	immediate = true,
 	property = "background.task.executor.class.name=com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor",
 	service = {
 		BackgroundTaskExecutor.class,

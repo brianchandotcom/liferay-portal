@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchResultTranslator.class)
+@Component(service = SearchResultTranslator.class)
 public class SearchResultTranslatorImpl implements SearchResultTranslator {
 
 	@Override

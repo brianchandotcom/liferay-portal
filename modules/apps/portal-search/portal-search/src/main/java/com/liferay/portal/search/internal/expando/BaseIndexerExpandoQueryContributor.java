@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = ExpandoQueryContributor.class)
+@Component(service = ExpandoQueryContributor.class)
 public class BaseIndexerExpandoQueryContributor
 	implements ExpandoQueryContributor {
 

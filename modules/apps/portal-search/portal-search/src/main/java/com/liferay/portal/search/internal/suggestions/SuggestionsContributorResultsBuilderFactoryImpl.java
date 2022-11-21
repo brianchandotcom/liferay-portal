@@ -22,10 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	immediate = true,
-	service = SuggestionsContributorResultsBuilderFactory.class
-)
+@Component(service = SuggestionsContributorResultsBuilderFactory.class)
 public class SuggestionsContributorResultsBuilderFactoryImpl
 	implements SuggestionsContributorResultsBuilderFactory {
 

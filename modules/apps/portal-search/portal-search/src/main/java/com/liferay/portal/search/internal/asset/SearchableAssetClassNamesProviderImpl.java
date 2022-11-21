@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = SearchableAssetClassNamesProvider.class)
+@Component(service = SearchableAssetClassNamesProvider.class)
 public class SearchableAssetClassNamesProviderImpl
 	implements SearchableAssetClassNamesProvider {
 

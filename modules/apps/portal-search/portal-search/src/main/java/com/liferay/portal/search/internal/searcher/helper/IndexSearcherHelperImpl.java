@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = IndexSearcherHelper.class)
+@Component(service = IndexSearcherHelper.class)
 public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 
 	@Override

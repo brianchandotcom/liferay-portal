@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryan Engler
  */
-@Component(immediate = true, service = SummaryBuilderFactory.class)
+@Component(service = SummaryBuilderFactory.class)
 public class SummaryBuilderFactoryImpl implements SummaryBuilderFactory {
 
 	@Override

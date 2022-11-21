@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = QueryPreFilterContributor.class)
+@Component(service = QueryPreFilterContributor.class)
 public class AssetTagNamesQueryPreFilterContributor
 	implements QueryPreFilterContributor {
 

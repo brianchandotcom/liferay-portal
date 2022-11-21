@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchResponseBuilderFactory.class)
+@Component(service = SearchResponseBuilderFactory.class)
 public class SearchResponseBuilderFactoryImpl
 	implements SearchResponseBuilderFactory {
 

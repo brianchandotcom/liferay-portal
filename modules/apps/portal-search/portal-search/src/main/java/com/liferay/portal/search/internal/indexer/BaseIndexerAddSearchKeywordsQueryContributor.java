@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = AddSearchKeywordsQueryContributor.class)
+@Component(service = AddSearchKeywordsQueryContributor.class)
 public class BaseIndexerAddSearchKeywordsQueryContributor
 	implements AddSearchKeywordsQueryContributor {
 

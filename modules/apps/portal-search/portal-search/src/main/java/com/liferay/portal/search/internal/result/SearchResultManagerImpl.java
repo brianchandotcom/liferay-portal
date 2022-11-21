@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SearchResultManager.class)
+@Component(service = SearchResultManager.class)
 public class SearchResultManagerImpl implements SearchResultManager {
 
 	@Override

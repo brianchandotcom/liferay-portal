@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration",
-	immediate = true, service = SearchResultPermissionFilterFactory.class
+	service = SearchResultPermissionFilterFactory.class
 )
 public class SearchResultPermissionFilterFactoryImpl
 	implements SearchResultPermissionFilterFactory {

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Wade Cao
  */
-@Component(immediate = true, service = SearchHitsBuilderFactory.class)
+@Component(service = SearchHitsBuilderFactory.class)
 public class SearchHitsBuilderFactoryImpl implements SearchHitsBuilderFactory {
 
 	@Override

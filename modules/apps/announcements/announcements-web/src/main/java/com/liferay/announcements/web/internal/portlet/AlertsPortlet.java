@@ -78,7 +78,7 @@ public class AlertsPortlet extends MVCPortlet {
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new DefaultAnnouncementsDisplayContext(
 				new AnnouncementsRequestHelper(httpServletRequest),
-				httpServletRequest, AnnouncementsPortletKeys.ANNOUNCEMENTS,
+				httpServletRequest, AnnouncementsPortletKeys.ALERTS,
 				renderRequest, renderResponse, _requestContextMapper,
 				_segmentsEntryRetriever, _segmentsConfigurationProvider));
 

@@ -33,9 +33,11 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,8 +58,46 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseNotificationType implements NotificationType {
 
 	@Override
+	public List<NotificationRecipientSetting>
+		createNotificationRecipientSettings(
+			long notificationRecipientId, Object[] recipients, User user) {
+
+		List<NotificationRecipientSetting> notificationRecipientSettings =
+			new ArrayList<>();
+
+		for (Object recipient : recipients) {
+			Map<String, Object> recipientMap = (Map<String, Object>)recipient;
+
+			for (Map.Entry<String, Object> entry : recipientMap.entrySet()) {
+				NotificationRecipientSetting notificationRecipientSetting =
+					notificationRecipientSettingLocalService.
+						createNotificationRecipientSetting(0L);
+
+				notificationRecipientSetting.setCompanyId(user.getCompanyId());
+				notificationRecipientSetting.setUserId(user.getUserId());
+				notificationRecipientSetting.setUserName(user.getFullName());
+
+				notificationRecipientSetting.setNotificationRecipientId(
+					notificationRecipientId);
+				notificationRecipientSetting.setName(entry.getKey());
+				notificationRecipientSetting.setValue(
+					String.valueOf(entry.getValue()));
+
+				notificationRecipientSettings.add(notificationRecipientSetting);
+			}
+		}
+
+		return notificationRecipientSettings;
+	}
+
+	@Override
 	public String getType() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getTypeLanguageKey() {
+		return getType();
 	}
 
 	@Override
@@ -65,6 +105,19 @@ public abstract class BaseNotificationType implements NotificationType {
 		throws PortalException {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Object[] toRecipients(
+		List<NotificationRecipientSetting> notificationRecipientSettings) {
+
+		return TransformUtil.transformToArray(
+			notificationRecipientSettings,
+			notificationRecipientSetting -> HashMapBuilder.put(
+				notificationRecipientSetting.getName(),
+				notificationRecipientSetting.getValue()
+			).build(),
+			Object.class);
 	}
 
 	@Override

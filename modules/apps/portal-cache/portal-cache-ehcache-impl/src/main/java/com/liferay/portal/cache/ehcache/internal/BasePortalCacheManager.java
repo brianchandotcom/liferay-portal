@@ -38,13 +38,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	@Override
-	public void destroy() {
-		portalCaches.clear();
-
-		doDestroy();
-	}
-
-	@Override
 	public PortalCache<K, V> fetchPortalCache(String portalCacheName) {
 		return portalCaches.get(portalCacheName);
 	}
@@ -90,8 +83,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	public void unregisterPortalCacheManagerListeners() {
 		aggregatedPortalCacheManagerListener.clearAll();
 	}
-
-	protected abstract void doDestroy();
 
 	protected void initPortalCacheListeners(
 		PortalCache<K, V> portalCache,

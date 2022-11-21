@@ -86,6 +86,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	@Override
+	public void destroy() {
+		portalCaches.clear();
+
+		doDestroy();
+	}
+
 	public CacheManager getEhcacheManager() {
 		return _cacheManager;
 	}
@@ -213,7 +220,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return new EhcachePortalCache<>(this, ehcachePortalCacheConfiguration);
 	}
 
-	@Override
 	protected void doDestroy() {
 		_cacheManager.shutdown();
 

@@ -194,6 +194,15 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 
 	const validate = (values: Partial<ObjectAction>) => {
 		const errors: ActionError = {};
+
+		if (
+			invalidateRequired(
+				values.label?.[Liferay.ThemeDisplay.getDefaultLanguageId()]
+			)
+		) {
+			errors.label = REQUIRED_MSG;
+		}
+
 		if (invalidateRequired(values.name)) {
 			errors.name = REQUIRED_MSG;
 		}

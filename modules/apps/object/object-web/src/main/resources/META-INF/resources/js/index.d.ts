@@ -35,6 +35,7 @@ interface ObjectAction {
 	conditionExpression?: string;
 	description?: string;
 	id?: number;
+	label: LocalizedValue<string>;
 	name: string;
 	objectActionExecutorKey: string;
 	objectActionTriggerKey: string;

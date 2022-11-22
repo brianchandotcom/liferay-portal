@@ -32,8 +32,21 @@ public @interface CETProperty {
 
 	String name() default "";
 
-	String type() default "";
+	/**
+	 * Configure the language label to use as the name of the property in the
+	 * view client extension page.
+	 *
+	 * When left blank, the kebab case version of the field name is used.
+	 *
+	 * @review
+	 */
+	String label() default "";
 
-	boolean url() default false;
+	/**
+	 * Describe the property data type.
+	 *
+	 * @review
+	 */
+	CETPropertyType type();
 
 }

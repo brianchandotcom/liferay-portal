@@ -15,6 +15,7 @@
 package com.liferay.client.extension.type;
 
 import com.liferay.client.extension.type.annotation.CETProperty;
+import com.liferay.client.extension.type.annotation.CETPropertyType;
 
 import java.util.Locale;
 import java.util.Properties;
@@ -31,27 +32,27 @@ public interface CET {
 
 	public long getCompanyId();
 
-	@CETProperty(name = "description", type = "string")
+	@CETProperty(name = "description", type = CETPropertyType.String)
 	public String getDescription();
 
 	public String getEditJSP();
 
 	public String getExternalReferenceCode();
 
-	@CETProperty(name = "name", type = "string")
+	@CETProperty(name = "name", type = CETPropertyType.String)
 	public String getName(Locale locale);
 
 	public Properties getProperties();
 
 	@CETProperty(
 		defaultValue = "https://www.liferay.com", name = "sourceCodeURL",
-		type = "string"
+		type = CETPropertyType.String
 	)
 	public String getSourceCodeURL();
 
 	public int getStatus();
 
-	@CETProperty(name = "type", type = "string")
+	@CETProperty(name = "type", type = CETPropertyType.String)
 	public String getType();
 
 	public String getTypeSettings();

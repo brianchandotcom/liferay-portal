@@ -78,7 +78,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shinn Lok
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.jaxrs.name=liferay-json-web-services-analytics",
 		"sap.scope.finder=true", "sap.system.entry=OAUTH2_analytics.read",

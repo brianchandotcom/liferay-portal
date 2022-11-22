@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  */
 @Component(
-	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration",
 	service = {
 		ManagedServiceFactory.class,

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class OAuth2RESTSAPEntryActivator {
 
 	public void addSAPEntries(long companyId) throws PortalException {

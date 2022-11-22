@@ -57,7 +57,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = ScopeLocator.class)
+@Component(service = ScopeLocator.class)
 public class ScopeLocatorImpl implements ScopeLocator {
 
 	@Override

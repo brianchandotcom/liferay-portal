@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.command.function=listScopes", "osgi.command.scope=oauth2"
 	},

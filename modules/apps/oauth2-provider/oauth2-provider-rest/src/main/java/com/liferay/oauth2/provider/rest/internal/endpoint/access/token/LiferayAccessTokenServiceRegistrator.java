@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Tomas Polesovsky
  */
 @Component(
-	immediate = true,
 	property = {
 		"block.unsecure.requests=true", "can.support.public.clients=true",
 		"enabled=true"

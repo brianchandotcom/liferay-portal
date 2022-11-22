@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Arthur Chan
  * @author Raymond Augé
  */
-@Component(immediate = true, service = LocalOAuthClient.class)
+@Component(service = LocalOAuthClient.class)
 public class LocalOAuthClientImpl implements LocalOAuthClient {
 
 	@Override

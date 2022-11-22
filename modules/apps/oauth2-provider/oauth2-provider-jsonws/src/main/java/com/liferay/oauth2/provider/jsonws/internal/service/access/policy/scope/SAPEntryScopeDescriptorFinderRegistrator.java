@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.provider.jsonws.internal.configuration.OAuth2JSONWSConfiguration",
-	immediate = true, service = SAPEntryScopeDescriptorFinderRegistrator.class
+	service = SAPEntryScopeDescriptorFinderRegistrator.class
 )
 public class SAPEntryScopeDescriptorFinderRegistrator {
 

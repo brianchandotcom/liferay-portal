@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
-	immediate = true, service = {}
+	service = {}
 )
 public class AuthorizationCodeGrantServiceRegistrator {
 

@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class OAuth2ApplicationLocalServiceImplEnabler {
 
 	@Activate

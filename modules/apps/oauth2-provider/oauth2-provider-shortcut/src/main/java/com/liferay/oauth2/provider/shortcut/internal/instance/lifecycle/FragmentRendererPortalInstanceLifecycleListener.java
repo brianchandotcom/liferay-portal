@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true,
 	property = {
 		"applicationName=Fragment Renderer", "clientId=FragmentRenderer"
 	},

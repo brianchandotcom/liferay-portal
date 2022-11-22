@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
 	property = {
 		"liferay.auth.verifier=false", "liferay.cors.annotation=true",
 		"liferay.jackson=false", "liferay.oauth2=false",

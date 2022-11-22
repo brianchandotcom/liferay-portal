@@ -17,13 +17,10 @@ package com.liferay.users.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -36,15 +33,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Gislayne Vitorino
  */
-public class AddressActionDropdownItemsProvider {
+public class ContactInformationActionDropdownItemsProvider {
 
-	public AddressActionDropdownItemsProvider(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+	public ContactInformationActionDropdownItemsProvider(
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
+		String listType, String mvcPath, long primaryKey) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
+		_listType = listType;
+		_mvcPath = mvcPath;
+		_primaryKey = primaryKey;
 
-		_addressId = ParamUtil.getLong(httpServletRequest, "addressId");
 		_className = (String)httpServletRequest.getAttribute(
 			"contact_information.jsp-className");
 		_classPK = (long)httpServletRequest.getAttribute(
@@ -60,7 +60,7 @@ public class AddressActionDropdownItemsProvider {
 					PortletURLBuilder.createRenderURL(
 						_renderResponse
 					).setMVCPath(
-						"/common/edit_address.jsp"
+						_mvcPath
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
@@ -68,7 +68,7 @@ public class AddressActionDropdownItemsProvider {
 					).setParameter(
 						"classPK", _classPK
 					).setParameter(
-						"primaryKey", _addressId
+						"primaryKey", _primaryKey
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -79,8 +79,7 @@ public class AddressActionDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							_getEditAddressActionURL(), _renderResponse)
+						_getActionURL()
 					).setCMD(
 						"makePrimary"
 					).buildString());
@@ -91,8 +90,7 @@ public class AddressActionDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							_getEditAddressActionURL(), _renderResponse)
+						_getActionURL()
 					).setCMD(
 						Constants.DELETE
 					).buildString());
@@ -102,13 +100,11 @@ public class AddressActionDropdownItemsProvider {
 		).build();
 	}
 
-	private PortletURL _getEditAddressActionURL() {
+	private PortletURL _getActionURL() {
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
 			"/users_admin/update_contact_information"
-		).setMVCPath(
-			"/common/edit_address.jsp"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
@@ -116,18 +112,20 @@ public class AddressActionDropdownItemsProvider {
 		).setParameter(
 			"classPK", _classPK
 		).setParameter(
-			"listType", ListTypeConstants.ADDRESS
+			"listType", _listType
 		).setParameter(
-			"primaryKey", _addressId
+			"primaryKey", _primaryKey
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildPortletURL();
 	}
 
-	private final long _addressId;
 	private final String _className;
 	private final long _classPK;
 	private final HttpServletRequest _httpServletRequest;
+	private final String _listType;
+	private final String _mvcPath;
+	private final long _primaryKey;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 

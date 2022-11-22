@@ -17,12 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-portletDisplay.setShowBackIcon(true);
-
-AddressActionDropdownItemsProvider addressActionDropdownItemsProvider = new AddressActionDropdownItemsProvider(request, renderResponse);
+ContactInformationActionDropdownItemsProvider contactInformationActionDropdownItemsProvider = new ContactInformationActionDropdownItemsProvider(request, renderResponse, ListTypeConstants.ADDRESS, "/common/edit_address.jsp", ParamUtil.getLong(request, "addressId"));
 %>
 
 <clay:dropdown-actions
 	aria-label='<%= LanguageUtil.get(request, "edit-address") %>'
-	dropdownItems="<%= addressActionDropdownItemsProvider.getActionDropdownItems() %>"
+	dropdownItems="<%= contactInformationActionDropdownItemsProvider.getActionDropdownItems() %>"
 />

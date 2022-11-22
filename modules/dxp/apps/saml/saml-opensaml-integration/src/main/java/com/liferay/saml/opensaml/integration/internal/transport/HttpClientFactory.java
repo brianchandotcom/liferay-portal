@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	configurationPid = "com.liferay.saml.opensaml.integration.internal.transport.configuration.HttpClientFactoryConfiguration",
-	immediate = true, service = HttpClientFactory.class
+	service = {}
 )
 public class HttpClientFactory {
 

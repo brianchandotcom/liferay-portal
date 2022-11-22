@@ -15,7 +15,7 @@
 package com.liferay.notification.internal.type;
 
 import com.liferay.notification.context.NotificationContext;
-import com.liferay.notification.internal.configuration.ClientExtensionNotificationTypeConfiguration;
+import com.liferay.notification.internal.configuration.FunctionNotificationTypeConfiguration;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.type.BaseNotificationType;
@@ -37,11 +37,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Feliphe Marinho
  */
 @Component(
-	configurationPid = "com.liferay.notification.internal.configuration.ClientExtensionNotificationTypeConfiguration",
-	factory = "com.liferay.notification.internal.type.ClientExtensionNotificationType",
+	configurationPid = "com.liferay.notification.internal.configuration.FunctionNotificationTypeConfiguration",
+	factory = "com.liferay.notification.internal.type.FunctionNotificationType",
 	service = NotificationType.class
 )
-public class ClientExtensionNotificationType extends BaseNotificationType {
+public class FunctionNotificationType extends BaseNotificationType {
 
 	@Override
 	public String getType() {
@@ -64,32 +64,33 @@ public class ClientExtensionNotificationType extends BaseNotificationType {
 
 		_portalCatapult.launch(
 			_companyId,
-			_clientExtensionNotificationTypeConfiguration.
+			_functionNotificationTypeConfiguration.
 				oAuth2ApplicationExternalReferenceCode(),
 			_jsonFactory.createJSONObject(
 				_jsonFactory.looseSerialize(
 					notificationContext, "notificationRecipientSettings",
 					"termValues")),
-			_clientExtensionNotificationTypeConfiguration.resourcePath(),
+			_functionNotificationTypeConfiguration.resourcePath(),
 			notificationContext.getUserId());
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
-		_clientExtensionNotificationTypeConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ClientExtensionNotificationTypeConfiguration.class, properties);
 		_companyId = ConfigurableUtil.getCompanyId(
 			_companyLocalService, properties);
+		_functionNotificationTypeConfiguration =
+			ConfigurableUtil.createConfigurable(
+				FunctionNotificationTypeConfiguration.class, properties);
 		_type = GetterUtil.getString(properties.get("notification.type"));
 	}
 
-	private ClientExtensionNotificationTypeConfiguration
-		_clientExtensionNotificationTypeConfiguration;
 	private long _companyId;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private FunctionNotificationTypeConfiguration
+		_functionNotificationTypeConfiguration;
 
 	@Reference
 	private JSONFactory _jsonFactory;

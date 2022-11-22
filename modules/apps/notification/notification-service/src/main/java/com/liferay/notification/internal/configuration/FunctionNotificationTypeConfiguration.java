@@ -21,9 +21,9 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.notification.internal.configuration.ClientExtensionNotificationTypeConfiguration"
+	id = "com.liferay.notification.internal.configuration.FunctionNotificationTypeConfiguration"
 )
-public interface ClientExtensionNotificationTypeConfiguration {
+public interface FunctionNotificationTypeConfiguration {
 
 	@Meta.AD
 	public String oAuth2ApplicationExternalReferenceCode();

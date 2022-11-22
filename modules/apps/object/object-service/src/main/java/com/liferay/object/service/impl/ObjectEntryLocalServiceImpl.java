@@ -215,9 +215,8 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
-			user.isDefaultUser(), objectDefinitionId,
-			objectDefinition.getPortletId(), serviceContext, userId, values,
-			null);
+			user.isDefaultUser(), objectDefinitionId, null,
+			objectDefinition.getPortletId(), serviceContext, userId, values);
 
 		_fillBusinessTypePicklistDefaultValue(
 			_objectFieldLocalService.getObjectFields(objectDefinitionId),
@@ -303,8 +302,8 @@ public class ObjectEntryLocalServiceImpl
 
 		_validateValues(
 			user.isDefaultUser(), objectDefinition.getObjectDefinitionId(),
-			objectDefinition.getClassName(), serviceContext, userId, values,
-			null);
+			null, objectDefinition.getClassName(), serviceContext, userId,
+			values);
 
 		insertIntoOrUpdateExtensionTable(
 			objectDefinition.getObjectDefinitionId(), primaryKey, values);
@@ -1157,8 +1156,8 @@ public class ObjectEntryLocalServiceImpl
 
 		_validateValues(
 			user.isDefaultUser(), objectEntry.getObjectDefinitionId(),
-			objectDefinition.getPortletId(), serviceContext, userId, values,
-			objectEntry);
+			objectEntry, objectDefinition.getPortletId(), serviceContext,
+			userId, values);
 
 		Map<String, Serializable> transientValues = objectEntry.getValues();
 
@@ -3136,23 +3135,24 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateValues(
-			boolean defaultUser, long objectDefinitionId, String portletId,
+			boolean defaultUser, long objectDefinitionId,
+			ObjectEntry objectEntry, String portletId,
 			ServiceContext serviceContext, long userId,
-			Map<String, Serializable> values, ObjectEntry objectEntry)
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			_validateValues(
-				defaultUser, entry, objectDefinitionId, portletId,
-				serviceContext, userId, values, objectEntry);
+				defaultUser, entry, objectDefinitionId, objectEntry, portletId,
+				serviceContext, userId, values);
 		}
 	}
 
 	private void _validateValues(
 			boolean defaultUser, Map.Entry<String, Serializable> entry,
-			long objectDefinitionId, String portletId,
+			long objectDefinitionId, ObjectEntry objectEntry, String portletId,
 			ServiceContext serviceContext, long userId,
-			Map<String, Serializable> values, ObjectEntry objectEntry)
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		ObjectField objectField = null;

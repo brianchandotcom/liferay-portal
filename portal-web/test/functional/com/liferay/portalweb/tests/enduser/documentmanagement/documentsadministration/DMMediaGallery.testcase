@@ -86,27 +86,35 @@ definition {
 		DMFolder.viewPGViaMG(mgFolderName = "DM Folder2 Name");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddSubfolderDocument {
-		Navigator.gotoPage(pageName = "Media Gallery Page");
+	@priority = "5"
+	@refactordone
+	test CanEditSubfolder {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder Description",
-			mgFolderName = "DM Folder Name");
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Subfolder Description",
+			dmFolderName = "DM Subfolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
 
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
 
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Subfolder Description",
-			mgFolderName = "DM Subfolder Name");
-
 		DMFolder.gotoPGViaMG(mgFolderName = "DM Subfolder Name");
 
-		DMDocument.addPGViaMG(
-			mgDocumentDescription = "DM Document Description",
-			mgDocumentFile = "Document_1.jpg",
-			mgDocumentTitle = "DM Document Title");
+		DMFolder.editPGViaMG(
+			mgFolderDescription = "DM Folder Description Edit",
+			mgFolderDescriptionEdit = "DM Folder Description Edit",
+			mgFolderName = "DM Folder Name",
+			mgFolderNameEdit = "DM Folder Name Edit");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMFolder.viewPGViaMG(mgFolderName = "DM Folder Name Edit");
 	}
 
 	@priority = "3"
@@ -266,28 +274,6 @@ definition {
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
 		DMDocument.deletePGViaMG(mgDocumentTitle = "DM Document Title");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test EditFolder {
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder Description",
-			mgFolderName = "DM Folder Name");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.editPGViaMG(
-			mgFolderDescription = "DM Folder Description Edit",
-			mgFolderDescriptionEdit = "DM Folder Description Edit",
-			mgFolderName = "DM Folder Name",
-			mgFolderNameEdit = "DM Folder Name Edit");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Folder Name Edit");
 	}
 
 	@priority = "5"

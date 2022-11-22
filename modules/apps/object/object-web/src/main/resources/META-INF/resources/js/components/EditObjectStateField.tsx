@@ -65,10 +65,7 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 	};
 
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
-		if (Liferay.FeatureFlags['LPS-164278']) {
-			delete objectField.listTypeDefinitionId;
-		}
-
+		delete objectField.listTypeDefinitionId;
 		delete objectField.system;
 
 		try {

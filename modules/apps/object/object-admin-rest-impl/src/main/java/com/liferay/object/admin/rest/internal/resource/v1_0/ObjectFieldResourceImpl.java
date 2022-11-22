@@ -14,6 +14,7 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -156,6 +157,8 @@ public class ObjectFieldResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		_createListTypeDefinition(objectField);
+
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
 				objectField.getExternalReferenceCode(),
@@ -244,6 +247,28 @@ public class ObjectFieldResourceImpl
 							objectField.getListTypeDefinitionId(),
 							objectFieldSetting, _objectFieldSettingLocalService,
 							_objectFilterLocalService))));
+	}
+
+	private void _createListTypeDefinition(ObjectField objectField)
+		throws Exception {
+
+		if (Validator.isNull(
+				objectField.getListTypeDefinitionExternalReferenceCode())) {
+
+			return;
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					contextUser.getCompanyId(),
+					objectField.getListTypeDefinitionExternalReferenceCode());
+
+		if (listTypeDefinition == null) {
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				objectField.getListTypeDefinitionExternalReferenceCode(),
+				contextUser.getUserId());
+		}
 	}
 
 	private ObjectField _toObjectField(

@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	immediate = true,
 	property = "verify.process.name=com.liferay.blogs.service",
 	service = VerifyProcess.class
 )

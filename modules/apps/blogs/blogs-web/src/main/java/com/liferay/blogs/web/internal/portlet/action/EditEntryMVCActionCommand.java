@@ -102,7 +102,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,

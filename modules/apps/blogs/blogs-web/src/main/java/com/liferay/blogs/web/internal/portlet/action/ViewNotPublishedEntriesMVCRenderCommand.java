@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"mvc.command.name=/blogs/view_not_published_entries"

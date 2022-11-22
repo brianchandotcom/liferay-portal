@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = ModelResourcePermissionDefinition.class)
+@Component(service = ModelResourcePermissionDefinition.class)
 public class BlogsEntryModelResourcePermissionDefinition
 	implements ModelResourcePermissionDefinition<BlogsEntry> {
 

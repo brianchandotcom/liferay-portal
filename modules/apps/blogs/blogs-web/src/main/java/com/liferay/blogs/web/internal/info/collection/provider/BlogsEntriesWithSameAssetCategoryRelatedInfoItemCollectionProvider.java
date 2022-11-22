@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = RelatedInfoItemCollectionProvider.class)
+@Component(service = RelatedInfoItemCollectionProvider.class)
 public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	implements RelatedInfoItemCollectionProvider<AssetCategory, BlogsEntry> {
 

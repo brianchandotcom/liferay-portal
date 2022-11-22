@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = KeywordQueryContributor.class
 )

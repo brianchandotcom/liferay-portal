@@ -107,7 +107,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	immediate = true,
 	property = {
 		"/common/referer_jsp.jsp=/common/referer_jsp.jsp",
 		"path=/portal/facebook_connect_oauth"

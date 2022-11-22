@@ -98,7 +98,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
 	property = {
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,

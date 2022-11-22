@@ -43,7 +43,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
 	property = {
 		"login.web.navigation.position=pre", "service.ranking:Integer=100"
 	},

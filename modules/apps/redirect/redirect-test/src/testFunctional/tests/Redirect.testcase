@@ -1399,7 +1399,7 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
-	@description = "This test covers LPS-152732. It ensures that the default redirect can not override localized redirect."
+	@description = "This test covers LPS-152732 and LPS-152154. It ensures that the default redirect can not override localized redirect and the redirect will occur when there is a locale in the URL"
 	@priority = "4"
 	test DefaultRedirectCanNotOverrideLocalizedRedirect {
 		var portalURL = PropsUtil.get("portal.url");
@@ -1410,10 +1410,16 @@ definition {
 			permanent = "true",
 			sourceURL = "hu/google");
 
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/hu/google");
+
+		AssertLocation(value1 = "https://www.google.hu/");
+
 		JSONRedirect.addRedirect(
 			destinationURL = "https://google.com",
 			groupName = "Test Site Name",
 			sourceURL = "google");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/hu/google");
 

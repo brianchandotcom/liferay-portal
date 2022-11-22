@@ -166,6 +166,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_BACK_BUTTON</td>
+	<td>//li[contains(@class,'control-menu-nav-item')]//span[a//*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_PORTLET_HEADER</td>
+	<td>//h1[contains(@data-qa-id, 'headerTitle') and contains(text(), '${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -710,8 +720,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEVER_EXPIRE</td>
-	<td>//input[contains(@type, 'checkbox')]//..//span[contains(text(), 'Never Expire')]</td>
+	<td>CHECKBOX_SUBMISSIONS</td>
+	<td>//input[contains(@type, 'checkbox')]//..//span[contains(text(), '${key_checkboxOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -722,6 +732,34 @@
 <tr>
 	<td>FEEDBACK_MESSAGE</td>
 	<td>//div[contains(@class, 'form-feedback-group')]//div[contains(@class, 'form-feedback-item') and contains(text(), '${key_feedbackMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_ICON</td>
+	<td>//div[contains(@class, 'ddm-field')]//label[contains(., '${key_fieldLabel}')]/..//../button[contains(@data-testid, 'triggerButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_ICON_SELECTED</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//button[contains(@class, 'dropdown-item') and contains(text(), '${key_language}')]</td>
+	<td></td>
+</tr>
+
+<!--LANGUAGE-->
+
+<tr>
+	<td>LANGUAGE_ADD_BUTTON</td>
+	<td>//div[contains(@class, 'ddm-translation-manager')]//button[contains(@class, 'btn-outline-borderless')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_FORM_SELECT</td>
+	<td>//li/button[contains(@class, 'dropdown-item') and contains(text(), '${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_FORM_SELECTED</td>
+	<td>//button//span[contains(text(),'${key_language}')]</td>
 	<td></td>
 </tr>
 </tbody>

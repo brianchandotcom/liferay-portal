@@ -404,7 +404,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Form#EXPIRATION_DATE_DISABLED");
 
-		Click(locator1 = "Form#NEVER_EXPIRE");
+		Click(
+			key_checkboxOption = "Never Expire",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
 
 		FormViewBuilder.editDate(
 			fieldName = "Date",
@@ -1007,6 +1009,20 @@ definition {
 		FormsAdmin.viewFormTableEntryNotPresent(
 			fieldLabel = "Date Field",
 			fieldValue = "1/1/16");
+	}
+
+	@description = "LPS-167481 - Verify that the back button on the forms view entries page works correctly without creating new forms."
+	@priority = "4"
+	test CheckBackButtonFormsViewEntries {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Click(locator1 = "Form#FORM_BACK_BUTTON");
+
+		AssertElementPresent(
+			key_fieldLabel = "Form",
+			locator1 = "Form#FORM_PORTLET_HEADER");
 	}
 
 	@description = "Verify that the back button on the forms view entries page works correctly without creating new forms."

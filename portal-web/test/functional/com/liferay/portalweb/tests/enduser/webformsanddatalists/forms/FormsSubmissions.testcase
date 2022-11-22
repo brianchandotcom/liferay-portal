@@ -780,6 +780,48 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
+	@description = "LPS-167481. Verify if with 'Limit to one submission per user' enabled, visiting users must log in before viewing the form"
+	@priority = "4"
+	test CanTranslateOneSubmissionPerUserMessage {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Click(
+			key_checkboxOption = "Limit to One Submission per User",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+
+		Button.clickDone();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = "${publishedFormPublicURL}");
+
+		Navigator.openURL();
+
+		UserBar.signOut();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+
+		User.firstLoginPG();
+	}
+
 	@description = "Verify that with the option Limit to one submission per user activated, the user cannot send more than one submission."
 	@priority = "4"
 	test CheckCantSendMoreThanOneSubmitPerUser {
@@ -822,6 +864,48 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "You can fill out this form only once. Contact the owner of the form if you think this is a mistake.",
 			successPageTitle = "You have already responded.");
+	}
+
+	@description = "Verify if with 'Limit to one submit per user' enabled, the translation options are the same as those present in the Form Builder"
+	@priority = "3"
+	test CheckTranslationOptionsOneSubmissionPerUserMessage {
+		property portal.acceptance = "true";
+
+		FormsAdmin.addForm();
+
+		Click(locator1 = "Form#LANGUAGE_ADD_BUTTON");
+
+		Click(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_FORM_SELECT");
+
+		AssertElementPresent(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_FORM_SELECTED");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.gotoSubmissionsTab();
+
+		Click(
+			key_checkboxOption = "Limit to One Submission per User",
+			locator1 = "Form#CHECKBOX_SUBMISSIONS");
+
+		Click(
+			key_fieldLabel = "Header",
+			locator1 = "Form#LANGUAGE_ICON");
+
+		AssertElementPresent(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_ICON_SELECTED");
+
+		Click(
+			key_fieldLabel = "Body",
+			locator1 = "Form#LANGUAGE_ICON");
+
+		AssertElementPresent(
+			key_language = "Catalan (Spain)",
+			locator1 = "Form#LANGUAGE_ICON_SELECTED");
 	}
 
 	@description = "Verify that a Form's Success Page can be restored"

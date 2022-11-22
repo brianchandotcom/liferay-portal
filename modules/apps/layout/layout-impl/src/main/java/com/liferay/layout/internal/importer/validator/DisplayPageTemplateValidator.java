@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.validator;
+package com.liferay.layout.internal.importer.validator;
 
 import com.liferay.portal.json.validator.JSONValidator;
 import com.liferay.portal.json.validator.JSONValidatorException;
@@ -21,20 +21,21 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Rubén Pulido
  */
-public class MasterPageValidator {
+public class DisplayPageTemplateValidator {
 
-	public static void validateMasterPage(String masterPageJSON)
+	public static void validateDisplayPageTemplate(
+			String displayPageTemplateJSON)
 		throws JSONValidatorException {
 
-		if (Validator.isNull(masterPageJSON)) {
+		if (Validator.isNull(displayPageTemplateJSON)) {
 			return;
 		}
 
-		_jsonValidator.validate(masterPageJSON);
+		_jsonValidator.validate(displayPageTemplateJSON);
 	}
 
 	private static final JSONValidator _jsonValidator = new JSONValidator(
-		MasterPageValidator.class.getResourceAsStream(
-			"dependencies/master_page_json_schema.json"));
+		DisplayPageTemplateValidator.class.getResourceAsStream(
+			"dependencies/display_page_template_json_schema.json"));
 
 }

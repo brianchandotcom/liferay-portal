@@ -83,14 +83,6 @@ definition {
 			mgFolderName = "DM Folder2 Name");
 
 		DMFolder.viewPGViaMG(mgFolderName = "DM Folder2 Name");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder3 Description",
-			mgFolderName = "DM Folder3 Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Folder3 Name");
 	}
 
 	@priority = "4"

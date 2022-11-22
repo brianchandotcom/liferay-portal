@@ -60,14 +60,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="rowIdsFolder" type="hidden" />
 	</aui:form>
 
-	<c:if test="<%= !portletTitleBasedNavigation && dlViewFileEntryDisplayContext.isShowHeader() %>">
-		<liferay-ui:header
-			backURL="<%= dlViewFileEntryDisplayContext.getRedirect() %>"
-			localizeTitle="<%= false %>"
-			title="<%= dlViewFileEntryDisplayContext.getDocumentTitle() %>"
-		/>
-	</c:if>
-
 	<c:choose>
 		<c:when test="<%= portletTitleBasedNavigation %>">
 			<div class="contextual-sidebar sidebar-light sidebar-preview" id="<portlet:namespace />ContextualSidebar">
@@ -101,15 +93,30 @@ if (portletTitleBasedNavigation) {
 			<c:if test="<%= !portletTitleBasedNavigation %>">
 				<div class="file-entry-actions management-bar management-bar-light navbar navbar-expand-md">
 					<ul class="navbar-nav navbar-nav-expand">
+						<li class="nav-item nav-item-expand">
+							<clay:link
+								aria-label='<%= LanguageUtil.get(request, "back") %>'
+								borderless="<%= true %>"
+								displayType="secondary"
+								href="<%= dlViewFileEntryDisplayContext.getRedirect() %>"
+								icon="angle-left"
+								monospaced="<%= true %>"
+								type="button"
+							/>
+
+							<h3 class="mb-1 text-secondary"><%= dlViewFileEntryDisplayContext.getDocumentTitle() %></h3>
+						</li>
 						<li class="nav-item">
 							<liferay-frontend:sidebar-toggler-button
-								cssClass="btn btn-monospaced btn-sm btn-unstyled"
+								aria-label='<%= LanguageUtil.get(request, "info") %>'
+								cssClass="btn btn-monospaced btn-secondary btn-sm btn-unstyled"
 								icon="info-circle-open"
 								sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId_" + fileEntry.getFileEntryId() %>'
 							/>
 						</li>
 						<li class="nav-item">
 							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= dlViewFileEntryDisplayContext.getActionDropdownItems() %>"
 							/>
 						</li>

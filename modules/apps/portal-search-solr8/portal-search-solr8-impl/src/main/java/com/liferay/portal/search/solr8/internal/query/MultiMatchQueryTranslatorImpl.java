@@ -14,7 +14,9 @@
 
 package com.liferay.portal.search.solr8.internal.query;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
@@ -50,8 +52,8 @@ public class MultiMatchQueryTranslatorImpl
 
 	protected Query translate(String field, MultiMatchQuery multiMatchQuery) {
 		Query query = translate(
-			field, multiMatchQuery.getType(), multiMatchQuery.getValue(),
-			multiMatchQuery.getSlop());
+			field, multiMatchQuery.getType(),
+			_escape(multiMatchQuery.getValue()), multiMatchQuery.getSlop());
 
 		Map<String, Float> boostMap = multiMatchQuery.getFieldsBoosts();
 
@@ -79,6 +81,16 @@ public class MultiMatchQueryTranslatorImpl
 		}
 
 		return new TermQuery(new Term(field, value));
+	}
+
+	private String _escape(String value) {
+		if (value.startsWith(StringPool.QUOTE) &&
+			value.endsWith(StringPool.QUOTE)) {
+
+			value = StringUtil.unquote(value);
+		}
+
+		return value;
 	}
 
 }

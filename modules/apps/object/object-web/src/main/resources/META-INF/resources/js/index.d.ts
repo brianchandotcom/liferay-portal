@@ -49,6 +49,7 @@ interface ObjectAction {
 interface ObjectActionParameters {
 	lineCount?: number;
 	notificationTemplateId?: number;
+	objectDefinitionExternalReferenceCode?: string;
 	objectDefinitionId?: number;
 	predefinedValues?: PredefinedValue[];
 	relatedObjectEntries?: boolean;

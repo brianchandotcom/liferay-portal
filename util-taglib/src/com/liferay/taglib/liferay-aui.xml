@@ -514,17 +514,6 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component bodyContent="true" name="FieldsetGroup">
-		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group fieldset elements and offer additional styling.</description>
-		<attributes>
-			<attribute>
-				<name>markupView</name>
-				<description>Deprecated as of 7.4.0, with no direct replacement.</description>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-		</attributes>
-	</component>
 	<component bodyContent="true" name="Form">
 		<description>Creates a form that offers additional styling and custom namespacing.</description>
 		<attributes>

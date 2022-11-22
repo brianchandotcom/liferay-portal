@@ -1307,7 +1307,13 @@ definition {
    				}'
 			''';
 
-			com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+			var responseBody = JSONCurlUtil.post("${curl}");
+
+			var productName = JSONUtil.getWithJSONPath("${responseBody}", "$..['name'].['en_US']");
+
+			if ("${productName}" != "Simple Product") { 
+				fail("Something went wrong with the API call");
+			}
 		}
 
 		task ("Then there is no error in the logs") {

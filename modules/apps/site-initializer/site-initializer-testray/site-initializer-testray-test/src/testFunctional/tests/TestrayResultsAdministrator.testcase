@@ -395,6 +395,22 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160691 - Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
+	@priority = "5"
+	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
+		task ("Given that the user add a new case results") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+		}
+
+		task ("Then can view test total in metrics of case results") {
+			TestrayResults.caseResultsMetrics(totalTestCases = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-160683 - Verify if as an Administrator I am able to view Results grouped by Component"
 	@priority = "3"
 	test AdminCanViewResultsGroupedByComponent {

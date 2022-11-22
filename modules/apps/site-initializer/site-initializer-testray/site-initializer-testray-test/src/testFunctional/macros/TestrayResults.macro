@@ -22,6 +22,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro caseResultsMetrics {
+		AssertTextEquals(
+			locator1 = "TestrayResults#TOTAL_TEST_CASE_RESULTS",
+			value1 = "${totalTestCases}");
+	}
+
 	macro disableIconAssign {
 		AssertElementNotPresent(
 			key_iconUser = "${assignIcon}",

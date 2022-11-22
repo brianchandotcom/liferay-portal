@@ -1,5 +1,28 @@
 definition {
 
+	macro assertElasticsearchIsReady {
+		var port = Elasticsearch.getServerPort();
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		while ((IsElementPresent(locator1 = "Message#ERROR")) && (maxIterations = "15")) {
+			Refresh();
+
+			echo("Elasticsearch is not available");
+		}
+
+		Navigator.openSpecificURL(url = "http://${portalHostname}:${port}");
+
+		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster\"");
+
+		Navigator.openSpecificURL(url = "http://${portalHostname}:9201/_cluster/health?pretty");
+
+		while (((IsTextNotEqual(locator1 = "//pre", value1 = "\"status\" : \"green\"")) || (IsTextNotEqual(locator1 = "//pre", value1 = "\"status\" : \"yellow\"")) || (IsElementNotPresent(locator1 = "//pre"))) && (maxIterations = "10")) {
+			Refresh();
+
+			echo("## Elasticsearch cluster not stable");
+		}
+	}
+
 	macro getClientVersion {
 		var projectDir = PropsUtil.get("project.dir");
 

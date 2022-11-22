@@ -326,6 +326,18 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
+	}
+
+	@priority = "3"
+	@refactordone
+	test DocumentWillNotAppearIfSearchQueryIsIrrelevant {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 

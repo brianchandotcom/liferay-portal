@@ -177,8 +177,8 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		fetchCommerceInventoryWarehouseByReferenceCode(
 			String externalReferenceCode, long companyId) {
 
-		return commerceInventoryWarehousePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceInventoryWarehousePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -530,8 +530,8 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 		}
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			commerceInventoryWarehousePersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commerceInventoryWarehousePersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commerceInventoryWarehouse == null) {
 			return;

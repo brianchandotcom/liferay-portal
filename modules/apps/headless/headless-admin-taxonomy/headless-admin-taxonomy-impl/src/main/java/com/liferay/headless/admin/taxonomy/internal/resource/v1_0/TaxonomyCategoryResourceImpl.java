@@ -115,7 +115,7 @@ public class TaxonomyCategoryResourceImpl
 
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
-				assetVocabulary.getGroupId(), externalReferenceCode);
+				externalReferenceCode, assetVocabulary.getGroupId());
 
 		_assetCategoryService.deleteCategory(assetCategory.getCategoryId());
 	}
@@ -391,7 +391,7 @@ public class TaxonomyCategoryResourceImpl
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
-					assetVocabulary.getGroupId(), externalReferenceCode);
+					externalReferenceCode, assetVocabulary.getGroupId());
 
 		if (assetCategory != null) {
 			return _toTaxonomyCategory(

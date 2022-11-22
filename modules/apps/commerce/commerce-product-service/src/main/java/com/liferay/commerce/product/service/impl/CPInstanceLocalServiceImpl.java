@@ -303,8 +303,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			externalReferenceCode = null;
 		}
 		else {
-			CPInstance cpInstance = cpInstancePersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			CPInstance cpInstance = cpInstancePersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 
 			if (cpInstance != null) {
 				return cpInstanceLocalService.updateCPInstance(
@@ -552,8 +552,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return null;
 		}
 
-		return cpInstancePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return cpInstancePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -618,8 +618,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			throw new NoSuchCPInstanceException();
 		}
 
-		return cpInstancePersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return cpInstancePersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -1620,8 +1620,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return;
 		}
 
-		CPInstance cpInstance = cpInstancePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		CPInstance cpInstance = cpInstancePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (cpInstance == null) {
 			return;

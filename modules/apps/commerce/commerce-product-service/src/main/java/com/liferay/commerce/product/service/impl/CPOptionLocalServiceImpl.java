@@ -134,8 +134,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			externalReferenceCode = null;
 		}
 		else {
-			CPOption cpOption = cpOptionPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			CPOption cpOption = cpOptionPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 
 			if (cpOption != null) {
 				return updateCPOption(
@@ -202,8 +202,8 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			return null;
 		}
 
-		return cpOptionPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return cpOptionPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

@@ -87,8 +87,8 @@ public class OrganizationResourceDTOConverter
 		throws Exception {
 
 		com.liferay.portal.kernel.model.Organization organization =
-			_organizationLocalService.fetchOrganizationByReferenceCode(
-				CompanyThreadLocal.getCompanyId(), externalReferenceCode);
+			_organizationLocalService.fetchOrganizationByExternalReferenceCode(
+				externalReferenceCode, CompanyThreadLocal.getCompanyId());
 
 		if (organization == null) {
 			organization = _organizationService.getOrganization(

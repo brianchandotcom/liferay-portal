@@ -179,8 +179,8 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			return;
 		}
 
-		CProduct cProduct = cProductPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		CProduct cProduct = cProductPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 
 		if (cProduct != null) {
 			throw new DuplicateCProductException(

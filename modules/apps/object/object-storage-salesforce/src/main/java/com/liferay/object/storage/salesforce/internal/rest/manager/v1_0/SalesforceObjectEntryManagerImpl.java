@@ -505,7 +505,7 @@ public class SalesforceObjectEntryManagerImpl
 				creator = CreatorUtil.toCreator(
 					_portal, Optional.empty(),
 					_userLocalService.fetchUserByExternalReferenceCode(
-						companyId, jsonObject.getString("OwnerId")));
+						jsonObject.getString("OwnerId"), companyId));
 				dateCreated = dateFormat.parse(
 					jsonObject.getString("CreatedDate"));
 				dateModified = dateFormat.parse(

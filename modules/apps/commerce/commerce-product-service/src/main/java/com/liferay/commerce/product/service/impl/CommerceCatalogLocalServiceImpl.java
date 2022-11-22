@@ -207,8 +207,8 @@ public class CommerceCatalogLocalServiceImpl
 			return null;
 		}
 
-		return commerceCatalogPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceCatalogPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

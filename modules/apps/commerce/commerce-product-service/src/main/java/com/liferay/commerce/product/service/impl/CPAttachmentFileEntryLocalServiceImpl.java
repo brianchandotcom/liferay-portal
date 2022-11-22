@@ -398,8 +398,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	public CPAttachmentFileEntry fetchByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 
-		return cpAttachmentFileEntryPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return cpAttachmentFileEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

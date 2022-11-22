@@ -195,8 +195,8 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 			CPAttachmentFileEntry companyCPAttachmentFileEntry =
 				_cpAttachmentFileEntryLocalService.
 					fetchCPAttachmentFileEntryByExternalReferenceCode(
-						cpAttachmentFileEntry.getCompanyId(),
-						cpAttachmentFileEntry.getExternalReferenceCode());
+						cpAttachmentFileEntry.getExternalReferenceCode(),
+						cpAttachmentFileEntry.getCompanyId());
 
 			if (companyCPAttachmentFileEntry != null) {
 				externalReferenceCode = null;

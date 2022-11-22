@@ -446,7 +446,7 @@ public class CPDefinitionLocalServiceImpl
 		else {
 			CProduct cProduct =
 				_cProductLocalService.fetchCProductByExternalReferenceCode(
-					serviceContext.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, serviceContext.getCompanyId());
 
 			if (cProduct != null) {
 				CPDefinition cpDefinition =
@@ -1484,7 +1484,7 @@ public class CPDefinitionLocalServiceImpl
 
 		CProduct cProduct =
 			_cProductLocalService.fetchCProductByExternalReferenceCode(
-				companyId, externalReferenceCode);
+				externalReferenceCode, companyId);
 
 		if (cProduct == null) {
 			return null;

@@ -139,8 +139,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		}
 		else {
 			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-				commerceInventoryWarehouseItemPersistence.fetchByC_ERC(
-					companyId, externalReferenceCode);
+				commerceInventoryWarehouseItemPersistence.fetchByERC_C(
+					externalReferenceCode, companyId);
 
 			if (commerceInventoryWarehouseItem != null) {
 				return commerceInventoryWarehouseItemLocalService.
@@ -215,8 +215,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			throw new NoSuchInventoryWarehouseItemException();
 		}
 
-		return commerceInventoryWarehouseItemPersistence.findByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceInventoryWarehouseItemPersistence.findByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

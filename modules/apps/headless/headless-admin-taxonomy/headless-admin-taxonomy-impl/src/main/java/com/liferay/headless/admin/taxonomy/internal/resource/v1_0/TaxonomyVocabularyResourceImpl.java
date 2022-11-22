@@ -96,7 +96,7 @@ public class TaxonomyVocabularyResourceImpl
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.
 				getAssetVocabularyByExternalReferenceCode(
-					assetLibraryId, externalReferenceCode);
+					externalReferenceCode, assetLibraryId);
 
 		_assetVocabularyService.deleteVocabulary(
 			assetVocabulary.getVocabularyId());
@@ -110,7 +110,7 @@ public class TaxonomyVocabularyResourceImpl
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.
 				getAssetVocabularyByExternalReferenceCode(
-					siteId, externalReferenceCode);
+					externalReferenceCode, siteId);
 
 		_assetVocabularyService.deleteVocabulary(
 			assetVocabulary.getVocabularyId());
@@ -317,7 +317,7 @@ public class TaxonomyVocabularyResourceImpl
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.
 				fetchAssetVocabularyByExternalReferenceCode(
-					assetLibraryId, externalReferenceCode);
+					externalReferenceCode, assetLibraryId);
 
 		if (assetVocabulary != null) {
 			return _toTaxonomyVocabulary(
@@ -338,7 +338,7 @@ public class TaxonomyVocabularyResourceImpl
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.
 				fetchAssetVocabularyByExternalReferenceCode(
-					siteId, externalReferenceCode);
+					externalReferenceCode, siteId);
 
 		if (assetVocabulary != null) {
 			return _toTaxonomyVocabulary(

@@ -55,7 +55,7 @@ public class AddressSystemObjectDefinitionMetadata
 		throws PortalException {
 
 		return _addressLocalService.getAddressByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override

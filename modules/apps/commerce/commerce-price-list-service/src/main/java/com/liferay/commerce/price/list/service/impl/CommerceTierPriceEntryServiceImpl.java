@@ -132,9 +132,9 @@ public class CommerceTierPriceEntryServiceImpl
 
 			commercePriceEntry =
 				_commercePriceEntryLocalService.
-					fetchCommercePriceEntryByReferenceCode(
-						serviceContext.getCompanyId(),
-						priceEntryExternalReferenceCode);
+					fetchCommercePriceEntryByExternalReferenceCode(
+						priceEntryExternalReferenceCode,
+						serviceContext.getCompanyId());
 		}
 
 		if (commercePriceEntry != null) {
@@ -174,9 +174,9 @@ public class CommerceTierPriceEntryServiceImpl
 
 			commercePriceEntry =
 				_commercePriceEntryLocalService.
-					fetchCommercePriceEntryByReferenceCode(
-						serviceContext.getCompanyId(),
-						priceEntryExternalReferenceCode);
+					fetchCommercePriceEntryByExternalReferenceCode(
+						priceEntryExternalReferenceCode,
+						serviceContext.getCompanyId());
 		}
 
 		if (commercePriceEntry != null) {

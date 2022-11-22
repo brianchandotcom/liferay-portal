@@ -163,8 +163,8 @@ public class CPTaxCategoryLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 			if ((cpTaxCategory != null) &&
 				(cpTaxCategory.getCPTaxCategoryId() != cpTaxCategoryId)) {

@@ -58,7 +58,7 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 		throws PortalException {
 
 		return _cProductLocalService.getCProductByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override

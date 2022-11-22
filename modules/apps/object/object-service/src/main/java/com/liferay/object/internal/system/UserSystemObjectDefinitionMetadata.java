@@ -56,7 +56,7 @@ public class UserSystemObjectDefinitionMetadata
 		throws PortalException {
 
 		return _userLocalService.getUserByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	@Override

@@ -404,8 +404,8 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		if (!Validator.isBlank(externalReferenceCode)) {
-			commercePriceEntry = commercePriceEntryPersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			commercePriceEntry = commercePriceEntryPersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 		}
 
 		if (commercePriceEntry != null) {
@@ -631,8 +631,8 @@ public class CommercePriceEntryLocalServiceImpl
 			return null;
 		}
 
-		return commercePriceEntryPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commercePriceEntryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -1479,8 +1479,8 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commercePriceEntryPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commercePriceEntry != null) {
 			throw new DuplicateCommercePriceEntryException(

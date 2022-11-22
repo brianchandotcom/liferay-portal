@@ -250,8 +250,8 @@ public class CommerceChannelLocalServiceImpl
 			return null;
 		}
 
-		return commerceChannelPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return commerceChannelPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

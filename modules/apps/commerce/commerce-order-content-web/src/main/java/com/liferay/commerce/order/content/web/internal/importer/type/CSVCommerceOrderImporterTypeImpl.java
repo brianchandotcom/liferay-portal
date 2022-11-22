@@ -255,7 +255,7 @@ public class CSVCommerceOrderImporterTypeImpl
 		if (cpInstance == null) {
 			cpInstance =
 				_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
-					companyId, sku);
+					sku, companyId);
 		}
 
 		CommerceOrderImporterItemImpl commerceOrderImporterItemImpl =

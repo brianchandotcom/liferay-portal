@@ -133,8 +133,8 @@ public class CPOptionValueLocalServiceImpl
 			externalReferenceCode = null;
 		}
 		else {
-			CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_ERC(
-				serviceContext.getCompanyId(), externalReferenceCode);
+			CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByERC_C(
+				externalReferenceCode, serviceContext.getCompanyId());
 
 			if (cpOptionValue != null) {
 				return cpOptionValueLocalService.updateCPOptionValue(
@@ -196,8 +196,8 @@ public class CPOptionValueLocalServiceImpl
 			return null;
 		}
 
-		return cpOptionValuePersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return cpOptionValuePersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

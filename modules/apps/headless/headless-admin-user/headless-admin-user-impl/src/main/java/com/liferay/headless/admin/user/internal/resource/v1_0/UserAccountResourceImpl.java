@@ -140,7 +140,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		User user = _userLocalService.getUserByExternalReferenceCode(
-			contextCompany.getCompanyId(), userAccountExternalReferenceCode);
+			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
 		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(
@@ -200,7 +200,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		User user = _userLocalService.getUserByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		deleteUserAccount(user.getUserId());
 	}
@@ -396,7 +396,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		User user = _userLocalService.getUserByExternalReferenceCode(
-			contextCompany.getCompanyId(), userAccountExternalReferenceCode);
+			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
 		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
 			_accountResourceDTOConverter.getAccountEntryId(
@@ -765,7 +765,7 @@ public class UserAccountResourceImpl
 
 			_checkCurrentPassword(
 				_userLocalService.fetchUserByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode),
+					externalReferenceCode, contextCompany.getCompanyId()),
 				userAccount.getCurrentPassword());
 		}
 

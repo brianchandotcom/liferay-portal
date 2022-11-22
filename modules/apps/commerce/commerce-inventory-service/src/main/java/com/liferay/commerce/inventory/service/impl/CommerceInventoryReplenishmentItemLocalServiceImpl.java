@@ -225,8 +225,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 		}
 
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			commerceInventoryReplenishmentItemPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			commerceInventoryReplenishmentItemPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (commerceInventoryReplenishmentItem == null) {
 			return;

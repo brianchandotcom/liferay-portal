@@ -436,8 +436,9 @@ public class OrganizationResourceImpl
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
-				_organizationLocalService.fetchOrganizationByReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+				_organizationLocalService.
+					fetchOrganizationByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId());
 
 		String type = OrganizationConstants.TYPE_ORGANIZATION;
 

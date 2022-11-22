@@ -202,7 +202,7 @@ public class CommerceAddressLocalServiceImpl
 
 		return CommerceAddressImpl.fromAddress(
 			_addressLocalService.fetchAddressByExternalReferenceCode(
-				companyId, externalReferenceCode));
+				externalReferenceCode, companyId));
 	}
 
 	@Override

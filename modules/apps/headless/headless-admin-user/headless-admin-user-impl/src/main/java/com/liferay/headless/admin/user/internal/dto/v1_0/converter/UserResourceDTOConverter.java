@@ -87,7 +87,7 @@ public class UserResourceDTOConverter
 	@Override
 	public User getObject(String externalReferenceCode) throws Exception {
 		User user = _userLocalService.fetchUserByExternalReferenceCode(
-			CompanyThreadLocal.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, CompanyThreadLocal.getCompanyId());
 
 		if (user == null) {
 			user = _userLocalService.getUser(

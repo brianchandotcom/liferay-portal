@@ -121,8 +121,8 @@ public class CPMeasurementUnitLocalServiceImpl
 	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
-		return cpMeasurementUnitPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
+		return cpMeasurementUnitPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -362,8 +362,8 @@ public class CPMeasurementUnitLocalServiceImpl
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			CPMeasurementUnit cpMeasurementUnit =
-				cpMeasurementUnitPersistence.fetchByC_ERC(
-					companyId, externalReferenceCode);
+				cpMeasurementUnitPersistence.fetchByERC_C(
+					externalReferenceCode, companyId);
 
 			if ((cpMeasurementUnit != null) &&
 				(cpMeasurementUnit.getCPMeasurementUnitId() !=

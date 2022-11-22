@@ -110,7 +110,7 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
 			commerceInventoryReplenishmentItemLocalService.
 				fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
-					companyId, externalReferenceCode);
+					externalReferenceCode, companyId);
 
 		if (commerceInventoryReplenishmentItem != null) {
 			_commerceInventoryWarehouseModelResourcePermission.check(

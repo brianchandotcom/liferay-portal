@@ -24,12 +24,14 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.ResourceRequest;
@@ -79,6 +81,11 @@ public class GetCollectionVariationsMVCResourceCommand
 		if (assetListEntrySegmentsEntryRels.size() < 2) {
 			return _jsonFactory.createJSONArray();
 		}
+
+		assetListEntrySegmentsEntryRels = ListUtil.sort(
+			assetListEntrySegmentsEntryRels,
+			Comparator.comparingInt(
+				AssetListEntrySegmentsEntryRel::getPriority));
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 

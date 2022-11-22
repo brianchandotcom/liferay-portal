@@ -27,6 +27,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -190,10 +192,14 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		MockObjectLayoutDisplayPageObjectProvider
+			mockObjectLayoutDisplayPageObjectProvider =
+				new MockObjectLayoutDisplayPageObjectProvider(
+					className.getClassNameId());
+
 		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-			new MockObjectLayoutDisplayPageObjectProvider(
-				className.getClassNameId()));
+			mockObjectLayoutDisplayPageObjectProvider);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -203,7 +209,18 @@ public class AnalyticsRenderFragmentLayoutPostDynamicIncludeTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			StringPool.BLANK, mockHttpServletResponse.getContentAsString());
+			StringBundler.concat(
+				"<script type=\"text/javascript\">\n", "Analytics.track(\"",
+				"model.resource.", MockObject.class.getCanonicalName(),
+				" Viewed\",{'classPK': ",
+				mockObjectLayoutDisplayPageObjectProvider.getClassPK(),
+				", 'title': '",
+				mockObjectLayoutDisplayPageObjectProvider.getTitle(
+					LocaleUtil.getSiteDefault()),
+				"', 'type': 'model.resource.",
+				MockObject.class.getCanonicalName(),
+				"'});\n\n</script><script>\n\n</script>"),
+			mockHttpServletResponse.getContentAsString());
 	}
 
 	@Inject

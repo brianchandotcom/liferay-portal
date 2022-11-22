@@ -479,12 +479,20 @@ definition {
 
 		task ("Then the admin can delete all the products one by one") {
 			for (var status : list "Approved,Incomplete,Draft") {
+				WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+
 				Click(
 					key_productName = "Simple T-Shirt",
 					key_status = "${status}",
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
 
 				CommerceEntry.clickNoError(menuItem = "Delete");
+
+				Alert.viewSuccessMessageText(successMessage = "Action Completed");
+
+				if (("${status}" == "Approved") || ("${status}" == "Incomplete")) {
+					AssertElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+				}
 
 				WaitForElementNotPresent(
 					key_productName = "Simple T-Shirt",
@@ -532,12 +540,20 @@ definition {
 
 		task ("Then the admin can delete all the duplicated products one by one") {
 			for (var productName : list "Simple T-Shirt,Copy of Simple T-Shirt,Copy of Copy of Simple T-Shirt") {
+				WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+
 				Click(
 					key_productName = "${productName}",
 					key_status = "Approved",
 					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
 
 				CommerceEntry.clickNoError(menuItem = "Delete");
+
+				Alert.viewSuccessMessageText(successMessage = "Action Completed");
+
+				if (("${productName}" == "Simple T-Shirt") || ("${productName}" == "Copy of Simple T-Shirt")) {
+					AssertElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+				}
 
 				WaitForElementNotPresent(
 					key_productName = "${productName}",

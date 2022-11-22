@@ -889,7 +889,9 @@ definition {
    				}'
 			''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.patch("${curl}");
+		var responseBody = JSONCurlUtil.patch("${curl}");
+
+		return "${responseBody}";
 	}
 
 	macro _updateCommerceProduct {

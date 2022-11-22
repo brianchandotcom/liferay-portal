@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -46,6 +47,31 @@ import javax.ws.rs.core.UriInfo;
  * @author Carlos Correa
  */
 public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
+
+	@DELETE
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(in = ParameterIn.PATH, name = "relatedObjectEntryId")
+		}
+	)
+	@Path(
+		"/{currentObjectEntryId}/{objectRelationshipName}/{relatedObjectEntryId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract void deleteCurrentObjectEntry(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("currentObjectEntryId")
+			Long currentObjectEntryId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipName")
+			String objectRelationshipName,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("relatedObjectEntryId")
+			Long relatedObjectEntryId)
+		throws Exception;
 
 	@GET
 	@Parameters(

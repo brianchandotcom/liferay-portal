@@ -120,7 +120,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 								containerElement="span"
 							>
 								<clay:dropdown-menu
-									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+									aria-label='<%= LanguageUtil.get(request, "select-items") %>'
 									cssClass="btn btn-secondary btn-sm"
 									dropdownItems="<%= editAssetListDisplayContext.getActionDropdownItems() %>"
 									label='<%= LanguageUtil.get(request, "select") %>'

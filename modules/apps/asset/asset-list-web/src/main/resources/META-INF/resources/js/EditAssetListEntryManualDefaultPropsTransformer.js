@@ -24,46 +24,37 @@ export default function propsTransformer({
 		const newItem = {
 			...item,
 			onClick(event) {
-				if (item.data.title && item.data.href) {
-					event.preventDefault();
+				event.preventDefault();
 
-					openSelectionModal({
-						customSelectEvent: true,
-						multiple: true,
-						onSelect(data) {
-							if (data.value && data.value.length) {
-								const selectedItems = data.value;
-								const assetEntryIds = [];
+				openSelectionModal({
+					customSelectEvent: true,
+					multiple: true,
+					onSelect(data) {
+						if (data.value && data.value.length) {
+							const selectedItems = data.value;
 
-								Array.prototype.forEach.call(
-									selectedItems,
-									(selectedItem) => {
-										const assetEntry = JSON.parse(
-											selectedItem
-										);
-										assetEntryIds.push(
-											assetEntry.assetEntryId
-										);
-									}
-								);
+							Liferay.Util.postForm(
+								document[`${portletNamespace}fm`],
+								{
+									data: {
+										assetEntryIds: Array.from(selectedItems)
+											.map((selectedItem) => {
+												const assetEntry = JSON.parse(
+													selectedItem
+												);
 
-								Liferay.Util.postForm(
-									document[`${portletNamespace}fm`],
-									{
-										data: {
-											assetEntryIds: assetEntryIds.join(
-												','
-											),
-										},
-									}
-								);
-							}
-						},
-						selectEventName: `${portletNamespace}selectAsset`,
-						title: item.data.title,
-						url: item.data.href,
-					});
-				}
+												return assetEntry.assetEntryId;
+											})
+											.join(','),
+									},
+								}
+							);
+						}
+					},
+					selectEventName: `${portletNamespace}selectAsset`,
+					title: item.data.title,
+					url: item.data.href,
+				});
 			},
 		};
 

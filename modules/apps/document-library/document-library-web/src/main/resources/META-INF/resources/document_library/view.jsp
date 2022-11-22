@@ -157,6 +157,19 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
 						<liferay-ui:error key="externalServiceFailed" message="you-cannot-access-external-service-because-you-are-not-allowed-to-or-it-is-unavailable" />
 
+						<c:if test='<%= SessionErrors.contains(renderRequest, "GoogleDriveFileNotFound") %>'>
+							<aui:script>
+								Liferay.Util.openToast({
+									message: '<liferay-ui:message key="the-google-drive-file-was-deleted" />',
+									title: Liferay.Language.get('warning'),
+									toastProps: {
+										autoClose: 5000,
+									},
+									type: 'warning',
+								});
+							</aui:script>
+						</c:if>
+
 						<c:choose>
 							<c:when test="<%= dlViewDisplayContext.isSearch() %>">
 								<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />

@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
@@ -76,7 +78,7 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 				long fileEntryId = ParamUtil.getLong(
 					actionRequest, "fileEntryId");
 
-				_executeCommand(actionRequest, fileEntryId);
+				_executeCommand(actionRequest, actionResponse, fileEntryId);
 			}
 			else {
 				_googleDrivePortletRequestAuthorizationHelper.
@@ -123,8 +125,10 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.getFileEntry(fileEntryId));
 	}
 
-	private void _executeCommand(ActionRequest actionRequest, long fileEntryId)
-		throws PortalException {
+	private void _executeCommand(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long fileEntryId)
+		throws IOException, PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -171,9 +175,27 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
+			boolean googleDriveFileExisting =
+				_dlOpenerGoogleDriveManager.isGoogleDriveFileExisting(
+					serviceContext.getUserId(),
+					_dlAppService.getFileEntry(fileEntryId));
+
 			_dlAppService.checkInFileEntry(
 				fileEntryId, dlVersionNumberIncrease, changeLog,
 				serviceContext);
+
+			if (!googleDriveFileExisting) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, "GoogleDriveFileNotFound");
+
+				hideDefaultErrorMessage(actionRequest);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
 		else if (cmd.equals(Constants.CHECKOUT)) {
 			try {

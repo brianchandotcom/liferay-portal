@@ -147,7 +147,7 @@
 		<tag-class>com.liferay.taglib.aui.ButtonTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class for styling the component. These styles override the ones set by the <![CDATA[<code>primary</code> attribute]]>.</description>
+			<description>A CSS class for styling the component. These styles override the ones set by the <![CDATA[<code>primary</code>]]> attribute.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

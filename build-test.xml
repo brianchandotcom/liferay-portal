@@ -11112,8 +11112,6 @@ setup.wizard.enabled=false
 
 passwords.default.policy.change.required=false
 
-dependency.manager.sync.timeout=1800
-
 initial.system.check.enabled=true
 
 mail.send.blacklist=

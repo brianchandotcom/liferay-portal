@@ -43,6 +43,7 @@ import com.liferay.layout.internal.importer.validator.MasterPageValidator;
 import com.liferay.layout.internal.importer.validator.PageDefinitionValidator;
 import com.liferay.layout.internal.importer.validator.PageTemplateCollectionValidator;
 import com.liferay.layout.internal.importer.validator.PageTemplateValidator;
+import com.liferay.layout.internal.importer.validator.UtilityPageTemplateValidator;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -62,7 +63,6 @@ import com.liferay.layout.utility.page.constants.LayoutUtilityPageExportImportCo
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
-import com.liferay.layout.utility.page.validator.UtilityPageTemplateValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;

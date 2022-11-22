@@ -431,7 +431,7 @@ definition {
 			SetElementAttribute(
 				attribute1 = "data-option-value",
 				locator1 = "//li[contains(@class,'dropdown')][normalize-space(text())='Reserved']",
-				value = "invalid");
+				value1 = "invalid");
 
 			Click(
 				index = "1",

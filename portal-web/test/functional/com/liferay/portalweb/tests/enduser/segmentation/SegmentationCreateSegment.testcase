@@ -2878,6 +2878,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-153509 Bug: Segment name is not localizable but it works as if it were"
+	@priority = "4"
+	@uitest
+	test SegmentAvailableInAnyLocale {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Navigate to Segment Admin using not default language") {
+			Navigator.openSpecificURL(url = "${portalURL}/es/group/test-site-name/~/control_panel/manage/-/segments/entries");
+		}
+
+		task ("Create a Segment") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Apellido");
+
+			Segmentation.fillProperty(criterionValue = "Test");
+
+			Segmentation.fillTitle(titleField = "Segmento Espanol");
+
+			Click.mouseDownMouseUp(
+				key_text = "Guardar",
+				locator1 = "Button#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Navigate to Segment Admin using another language") {
+			Navigator.openSpecificURL(url = "${portalURL}/pt/group/test-site-name/~/control_panel/manage/-/segments/entries");
+		}
+
+		task ("Check that the segment still present") {
+			AssertTextEquals(
+				key_tableEntry = "Segmento Espanol",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+				value1 = "Segmento Espanol");
+		}
+	}
+
 	@description = "LPS-136086 Validate if, in the segments page, the default segment doesn't appear, with the page without records."
 	@priority = "4"
 	test ValidateDefaultSegmentNotDisplayed {

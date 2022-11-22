@@ -17,79 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("contact_information.jsp-className");
-long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 EmailAddress emailAddress = (EmailAddress)row.getObject();
 
-long emailAddressId = emailAddress.getEmailAddressId();
+ContactInformationActionDropdownItemsProvider contactInformationActionDropdownItemsProvider = new ContactInformationActionDropdownItemsProvider(request, renderResponse, ListTypeConstants.EMAIL_ADDRESS, "/common/edit_email_address.jsp", emailAddress.getEmailAddressId());
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
->
-	<liferay-ui:icon
-		message="edit"
-		url='<%=
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/common/edit_email_address.jsp"
-			).setRedirect(
-				currentURL
-			).setParameter(
-				"className", className
-			).setParameter(
-				"classPK", classPK
-			).setParameter(
-				"primaryKey", emailAddressId
-			).buildString()
-		%>'
-	/>
-
-	<%
-	PortletURL portletURL = PortletURLBuilder.createActionURL(
-		renderResponse
-	).setActionName(
-		"/users_admin/update_contact_information"
-	).setRedirect(
-		currentURL
-	).setParameter(
-		"className", className
-	).setParameter(
-		"classPK", classPK
-	).setParameter(
-		"listType", ListTypeConstants.EMAIL_ADDRESS
-	).setParameter(
-		"primaryKey", emailAddressId
-	).buildPortletURL();
-	%>
-
-	<liferay-ui:icon
-		message="make-primary"
-		url='<%=
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(portletURL, renderResponse)
-			).setCMD(
-				"makePrimary"
-			).buildString()
-		%>'
-	/>
-
-	<liferay-ui:icon
-		message="remove"
-		url="<%=
-			PortletURLBuilder.create(
-				PortletURLUtil.clone(portletURL, renderResponse)
-			).setCMD(
-				Constants.DELETE
-			).buildString()
-		%>"
-	/>
-</liferay-ui:icon-menu>
+<clay:dropdown-actions
+	aria-label='<%= LanguageUtil.get(request, "edit-email-address") %>'
+	dropdownItems="<%= contactInformationActionDropdownItemsProvider.getActionDropdownItems() %>"
+/>

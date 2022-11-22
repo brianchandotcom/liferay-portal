@@ -62,7 +62,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ListTypeConstants.EMAIL_ADDRESS %>" message="please-select-a-type" />
 
-				<aui:select inlineField="<%= true %>" label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.EMAIL_ADDRESS %>" listTypeFieldName="listTypeId" name="emailAddressTypeId" />
 
 				<liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 

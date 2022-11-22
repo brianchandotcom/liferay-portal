@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -95,8 +96,17 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 	public List<Team> getUserTeams(long userId, long groupId)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_TEAMS);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!GroupPermissionUtil.contains(
+				permissionChecker, groupId, ActionKeys.MANAGE_TEAMS) &&
+			!UserPermissionUtil.contains(
+				permissionChecker, userId, ActionKeys.UPDATE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Group.class.getName(), groupId,
+				ActionKeys.MANAGE_TEAMS, ActionKeys.UPDATE);
+		}
 
 		return teamLocalService.getUserTeams(userId, groupId);
 	}

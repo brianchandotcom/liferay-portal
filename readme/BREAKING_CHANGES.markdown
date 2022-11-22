@@ -1209,3 +1209,26 @@ Delete implementations of `ConfigurationBeanDeclaration` and remove references t
 ### Why was this change made?
 
 `ConfigurationBeanDeclaration` was used to register configuration classes with the `ConfigurationProvider` framework, to be tracked by OSGi managed services. Liferay now analyzes a bundle's metatype information and registers configuration classes automatically at container registration. Now developers don't have to register configuration classes manually, because it happens in the background.
+
+---------------------------------------
+
+## Removed FieldSetGroupTag
+
+- **Date:** 2022-Nov-22
+- **JIRA Ticket:** [LPS-168309](https://issues.liferay.com/browse/LPS-168309)
+
+### What changed?
+
+Because <aui:fieldset-group> and <liferay-frontend:fieldset-group> are no longer needed.
+
+### Who is affected?
+
+Anyone who has using <aui:fieldset-group> and <liferay-frontend:fieldset-group>.
+
+### How should I update my code?
+
+Delete usages of <liferay-frontend:fieldset-group> and replace usages <aui:fieldset-group> with <div class="sheet"><div class="panel-group panel-group-flush">.
+
+### Why was this change made?
+
+<aui:fieldset-group> and <liferay-frontend:fieldset-group> were adding unnecessary markup to the page and those were causing accessibility issues.

@@ -28,9 +28,9 @@ CommerceChannelAccountEntryRel commerceChannelAccountEntryRel = commerceChannelA
 	submitButtonLabel='<%= LanguageUtil.get(request, "save") %>'
 	title="<%= commerceChannelAccountEntryRelDisplayContext.getModalTitle() %>"
 >
-	<portlet:actionURL name="/commerce_pricing/edit_account_entry_default_commerce_discount" var="editAccountEntryDefaultCommerceDiscountActionURL" />
+	<portlet:actionURL name="/commerce_pricing/edit_account_entry_default_commerce_price_list" var="editAccountEntryDefaultCommercePriceListActionURL" />
 
-	<aui:form action="<%= editAccountEntryDefaultCommerceDiscountActionURL %>" method="post" name="fm">
+	<aui:form action="<%= editAccountEntryDefaultCommercePriceListActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="accountEntryId" type="hidden" value="<%= accountEntry.getAccountEntryId() %>" />

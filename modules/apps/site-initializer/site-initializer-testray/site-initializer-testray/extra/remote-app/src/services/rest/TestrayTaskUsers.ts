@@ -32,10 +32,17 @@ class TestrayTaskUsersImpl extends Rest<TaskToUser, TestrayTaskUser> {
 				r_taskToTasksUsers_c_taskId,
 				r_userToTasksUsers_userId,
 			}),
-			nestedFields: '',
+			nestedFields: 'task.build',
 			transformData: (taskUser) => ({
 				...taskUser,
-				task: taskUser.r_taskToTasksUsers_c_task,
+				task: taskUser.r_taskToTasksUsers_c_task
+					? {
+							...taskUser.r_taskToTasksUsers_c_task,
+							build:
+								taskUser?.r_taskToTasksUsers_c_task
+									?.r_buildToTasks_c_build,
+					  }
+					: undefined,
 				user: taskUser.r_userToTasksUsers_user,
 			}),
 			uri: 'tasksuserses',

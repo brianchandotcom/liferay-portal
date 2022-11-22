@@ -177,15 +177,14 @@ const Sidebar = () => {
 								}
 							)}
 
-							<div className="py-3">
+							<div className="py-5">
 								<div className="divider divider-full" />
-
-								{/* <Form.Divider className="pb-3 task-sidebar-divider" /> */}
 							</div>
 						</div>
 
 						<TaskSidebar expanded={expanded} />
 					</div>
+
 					<div className="pb-1">
 						<SidebarFooter
 							expanded={expanded}

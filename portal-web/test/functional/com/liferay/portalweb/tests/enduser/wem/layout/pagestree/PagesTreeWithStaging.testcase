@@ -180,8 +180,19 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			for (var pageName : list "Test Widget Page,Test Content Page") {
-				AssertElementPresent(locator1 = "//a[contains(@class,'layout-tree') and contains(@class,'locked')][contains(.,'${pageName}')]");
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Widget Page']",
+				locator2 = "//ul[contains(@class,'treeview-group')]//div[contains(@role,'treeitem')][normalize-space()='Test Content Page*']");
+
+			var n = "1";
+
+			for (var pageName : list "Test Widget Page,Test Content Page*") {
+				AssertVisible(
+					key_index = "${n}",
+					key_pageName = "${pageName}",
+					locator1 = "PagesFinder#TREE_NODE_ITEM");
+
+				var n = ${n} + 1;
 			}
 		}
 	}

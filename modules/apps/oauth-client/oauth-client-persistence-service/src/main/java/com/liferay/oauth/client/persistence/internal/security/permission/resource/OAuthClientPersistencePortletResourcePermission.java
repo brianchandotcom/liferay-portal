@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  */
 @Component(
-	immediate = true,
 	property = "resource.name=com.liferay.oauth.client.persistence",
 	service = PortletResourcePermission.class
 )

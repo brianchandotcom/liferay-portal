@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Arthur Chan
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata",
 	service = ModelResourcePermission.class
 )

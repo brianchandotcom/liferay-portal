@@ -490,7 +490,7 @@
 </tr>
 <tr>
 	<td>TABLE_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//tr[contains(.,'${key_rowEntry}')]//*[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -28,7 +28,6 @@ const TeamMembersTableHeader = ({
 	koroneikiAccount,
 	loading,
 	onSearch,
-	project,
 	searching,
 	sessionId,
 }) => {
@@ -49,7 +48,8 @@ const TeamMembersTableHeader = ({
 						leftButton={i18n.translate('cancel')}
 						project={{
 							...koroneikiAccount,
-							id: project?.id,
+							id:
+								koroneikiAccount.r_accountEntryToKoroneikiAccount_accountEntryId,
 						}}
 						sessionId={sessionId}
 					/>

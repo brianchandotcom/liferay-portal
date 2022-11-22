@@ -38,7 +38,7 @@ const TeamMembersTable = ({
 		importDate,
 	} = useAppPropertiesContext();
 
-	const [{project, sessionId}] = useCustomerPortal();
+	const [{sessionId}] = useCustomerPortal();
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -158,7 +158,6 @@ const TeamMembersTable = ({
 				koroneikiAccount={koroneikiAccount}
 				loading={loading}
 				onSearch={(term) => search(term)}
-				project={project}
 				searching={searching}
 				sessionId={sessionId}
 			/>

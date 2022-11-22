@@ -876,7 +876,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A name for the component. If the name contains <![CDATA[<code>--</code>]]>, the generated name will be the substring following the <![CDATA[<code>--</code>]]>, excluding the last two characters and any prefixes. For example, the pattern <![CDATA[<code>prefix--customName--</code>]]> would result in the name <![CDATA[<code>customName</code>. If the <![CDATA[<code>id</code>]]> is not provided and the <![CDATA[<code>type</code>]]> is given, the name is used as the <![CDATA[<code>id</code>]]>.</description>
+			<description>A name for the component. If the name contains <![CDATA[<code>--</code>]]>, the generated name will be the substring following the <![CDATA[<code>--</code>]]>, excluding the last two characters and any prefixes. For example, the pattern <![CDATA[<code>prefix--customName--</code>]]> would result in the name <![CDATA[<code>customName</code>]]>. If the <![CDATA[<code>id</code>]]> is not provided and the <![CDATA[<code>type</code>]]> is given, the name is used as the <![CDATA[<code>id</code>]]>.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -913,7 +913,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to make the input's field resizeable, if the input is of type <![CDATA[<code>textarea</code>.]]></description>
+			<description>Whether to make the input's field resizeable, if the input is of type <![CDATA[<code>textarea</code>]]>.</description>
 			<name>resizable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -972,7 +972,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the <![CDATA[<code>div</code> that wraps the input component]]>.</description>
+			<description>A CSS class for styling the <![CDATA[<code>div</code>]]> that wraps the input component.</description>
 			<name>wrapperCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1094,7 +1094,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code> component]]>.</description>
+		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
 		<name>nav-bar-search</name>
 		<tag-class>com.liferay.taglib.aui.NavBarSearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1663,7 +1663,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The type of validation for the input field. Possible values are <![CDATA[<code>acceptFiles</code>]]>, <![CDATA[<code>alpha</code>]]>, <![CDATA[<code>alphanum</code>, <![CDATA[<code>date</code>]]>, <![CDATA[<code>digits</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>equalTo</code>]]>, <![CDATA[<code>iri</code>]]>, <![CDATA[<code>max</code>]]>, <![CDATA[<code>maxLength</code>]]>, <![CDATA[<code>min</code>]]>, <![CDATA[<code>minLength</code>]]>, <![CDATA[<code>number</code>]]>, <![CDATA[<code>required</code>]]>, and <![CDATA[<code>url</code>]]>.</description>
+			<description>The type of validation for the input field. Possible values are <![CDATA[<code>acceptFiles</code>]]>, <![CDATA[<code>alpha</code>]]>, <![CDATA[<code>alphanum</code>]]>, <![CDATA[<code>date</code>]]>, <![CDATA[<code>digits</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>equalTo</code>]]>, <![CDATA[<code>iri</code>]]>, <![CDATA[<code>max</code>]]>, <![CDATA[<code>maxLength</code>]]>, <![CDATA[<code>min</code>]]>, <![CDATA[<code>minLength</code>]]>, <![CDATA[<code>number</code>]]>, <![CDATA[<code>required</code>]]>, and <![CDATA[<code>url</code>]]>.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

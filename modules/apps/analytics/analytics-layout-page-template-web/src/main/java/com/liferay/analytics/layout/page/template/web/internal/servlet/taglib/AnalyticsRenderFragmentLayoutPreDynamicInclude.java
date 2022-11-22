@@ -55,7 +55,8 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-		if (!AnalyticsRenderFragmentLayoutUtil.isTrackeable(
+		if ((layoutDisplayPageObjectProvider == null) ||
+			!AnalyticsRenderFragmentLayoutUtil.isTrackeable(
 				layoutDisplayPageObjectProvider)) {
 
 			return;

@@ -48,6 +48,10 @@ public class CETTableFDSView extends BaseTableFDSView {
 		).add(
 			"type", "type"
 		).add(
+			"configuredFrom", "configured-from",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"configuredFromContentRenderer")
+		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"status")

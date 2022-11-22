@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the AUI component tags, prefixed with <![CDATA[<code>aui:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>aui</short-name>
+	<uri>http://liferay.com/tld/aui</uri>
+	<tag>
+		<description><![CDATA[Creates a container<code>&lt;div&gt;</code> tag to wrap <code>&lt;aui:row&gt;</code>]]> components and offer additional styling.</description>
+		<name>container</name>
+		<tag-class>com.liferay.taglib.aui.ContainerTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description><![CDATA[Whether to enable the container to span the entire width of the viewport. Deprecated as of Athanasius (7.3.x), replaced by newtag]]>.</description>
+			<name>fluid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+</taglib>

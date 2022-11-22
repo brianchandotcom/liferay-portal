@@ -193,6 +193,31 @@ public class JournalArticleFriendlyURLTest {
 	}
 
 	@Test
+	public void testUniqueFriendlyURLForSameTitlesInNotDefaultLocaleWithExistingArticle()
+		throws Exception {
+
+		String frTitle = RandomTestUtil.randomString();
+
+		_addJournalArticleWithTitleMap(
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, frTitle
+			).put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build());
+
+		JournalArticle article = _addJournalArticleWithTitleMap(
+			HashMapBuilder.put(
+				LocaleUtil.US, frTitle
+			).build());
+
+		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
+
+		Assert.assertEquals(
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(frTitle + "-1"),
+			friendlyURLMap.get(LocaleUtil.US));
+	}
+
+	@Test
 	public void testUniqueFriendlyURLForSameTitlesWithExistingArticle()
 		throws Exception {
 

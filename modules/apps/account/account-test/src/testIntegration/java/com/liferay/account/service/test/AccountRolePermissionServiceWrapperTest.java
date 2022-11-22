@@ -16,7 +16,6 @@ package com.liferay.account.service.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.UserRoleTestUtil;
@@ -52,8 +51,7 @@ public class AccountRolePermissionServiceWrapperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		_accountEntry = AccountEntryTestUtil.addAccountEntry();
 
 		_accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
@@ -90,10 +88,6 @@ public class AccountRolePermissionServiceWrapperTest {
 	}
 
 	private AccountEntry _accountEntry;
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
-
 	private AccountRole _accountRole;
 
 	@Inject

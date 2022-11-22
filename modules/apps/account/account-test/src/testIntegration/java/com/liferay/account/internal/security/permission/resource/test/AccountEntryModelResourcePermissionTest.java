@@ -15,10 +15,9 @@
 package com.liferay.account.internal.security.permission.resource.test;
 
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -38,10 +37,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -64,8 +61,7 @@ public class AccountEntryModelResourcePermissionTest {
 
 	@Test
 	public void testManageAvailableAccountsPermissions() throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 		User user = UserTestUtil.addUser();
 
@@ -133,12 +129,7 @@ public class AccountEntryModelResourcePermissionTest {
 	public void testManageSuborganizationsAccountsPermissions()
 		throws Exception {
 
-		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
-		User user = UserTestUtil.addUser();
 
 		for (String actionId : _ACTION_IDS) {
 			RoleTestUtil.addResourcePermission(
@@ -148,12 +139,13 @@ public class AccountEntryModelResourcePermissionTest {
 				actionId);
 		}
 
+		User user = UserTestUtil.addUser();
+
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry1.getAccountEntryId(),
-			parentOrganization.getOrganizationId());
+		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOrganizations(parentOrganization));
 
 		_assertDoesNotContain(user, accountEntry1, _ACTION_IDS);
 
@@ -170,9 +162,8 @@ public class AccountEntryModelResourcePermissionTest {
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
 
-		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
-			accountEntry2.getAccountEntryId(),
-			childOrganization.getOrganizationId());
+		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOrganizations(childOrganization));
 
 		_assertDoesNotContain(user, accountEntry2, _ACTION_IDS);
 
@@ -194,12 +185,8 @@ public class AccountEntryModelResourcePermissionTest {
 	public void testOwnerPermissions() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext());
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withOwner(user));
 
 		_assertContains(user, accountEntry, _ACTION_IDS);
 	}
@@ -258,9 +245,6 @@ public class AccountEntryModelResourcePermissionTest {
 		AccountActionKeys.VIEW_USERS, ActionKeys.DELETE, ActionKeys.VIEW,
 		ActionKeys.UPDATE
 	};
-
-	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject(filter = "model.class.name=com.liferay.account.model.AccountEntry")
 	private volatile ModelResourcePermission<AccountEntry>

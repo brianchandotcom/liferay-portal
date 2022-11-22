@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Jonathan McCann
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.password.policies.admin.web.internal.configuration.PasswordPoliciesConfiguration",
 	service = ConfigurationModelListener.class
 )

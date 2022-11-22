@@ -25,7 +25,6 @@ import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -45,45 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Feliphe Marinho
  */
-@Component(
-	immediate = true,
-	property = "notification.type.key=" + NotificationConstants.TYPE_USER_NOTIFICATION,
-	service = NotificationType.class
-)
+@Component(immediate = true, service = NotificationType.class)
 public class UserNotificationType extends BaseNotificationType {
-
-	@Override
-	public List<NotificationRecipientSetting>
-		createNotificationRecipientSettings(
-			long notificationRecipientId, Object[] recipients, User user) {
-
-		List<NotificationRecipientSetting> notificationRecipientSettings =
-			new ArrayList<>();
-
-		for (Object recipient : recipients) {
-			Map<String, Object> recipientMap = (Map<String, Object>)recipient;
-
-			for (Map.Entry<String, Object> entry : recipientMap.entrySet()) {
-				NotificationRecipientSetting notificationRecipientSetting =
-					notificationRecipientSettingLocalService.
-						createNotificationRecipientSetting(0L);
-
-				notificationRecipientSetting.setCompanyId(user.getCompanyId());
-				notificationRecipientSetting.setUserId(user.getUserId());
-				notificationRecipientSetting.setUserName(user.getFullName());
-
-				notificationRecipientSetting.setNotificationRecipientId(
-					notificationRecipientId);
-				notificationRecipientSetting.setName(entry.getKey());
-				notificationRecipientSetting.setValue(
-					String.valueOf(entry.getValue()));
-
-				notificationRecipientSettings.add(notificationRecipientSetting);
-			}
-		}
-
-		return notificationRecipientSettings;
-	}
 
 	@Override
 	public String getRecipientSummary(
@@ -169,19 +131,6 @@ public class UserNotificationType extends BaseNotificationType {
 
 		notificationQueueEntryLocalService.addNotificationQueueEntry(
 			notificationContext);
-	}
-
-	@Override
-	public Object[] toRecipients(
-		List<NotificationRecipientSetting> notificationRecipientSettings) {
-
-		return TransformUtil.transformToArray(
-			notificationRecipientSettings,
-			notificationRecipientSetting -> HashMapBuilder.put(
-				notificationRecipientSetting.getName(),
-				notificationRecipientSetting.getValue()
-			).build(),
-			Object.class);
 	}
 
 	@Override

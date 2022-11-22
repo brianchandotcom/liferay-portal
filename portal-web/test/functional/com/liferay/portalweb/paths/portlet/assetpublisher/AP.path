@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>ASSET_ELLIPSIS_ICON</td>
-	<td>//div[contains(@class,'asset')]//div[contains(.,'${key_assetTitle}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'asset')]//div[contains(.,'${key_assetTitle}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

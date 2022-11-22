@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class UpgradeMVCCVersionTest extends MVCCVersionUpgradeProcess {
+public class MVCCVersionUpgradeProcessTest extends MVCCVersionUpgradeProcess {
 
 	@Before
 	public void setUp() throws Exception {
@@ -50,7 +50,7 @@ public class UpgradeMVCCVersionTest extends MVCCVersionUpgradeProcess {
 	}
 
 	@Test
-	public void testUpgradePortalMVCCVersionByTableName() throws Exception {
+	public void testUpgradeMVCCVersion() throws Exception {
 		_tableNames = new String[] {_TABLE_NAME};
 
 		doUpgrade();

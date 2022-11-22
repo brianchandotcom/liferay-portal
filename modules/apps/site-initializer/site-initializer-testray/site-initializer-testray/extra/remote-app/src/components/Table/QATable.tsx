@@ -25,6 +25,7 @@ type QAItem = {
 	flexHeading?: boolean;
 	title: string;
 	value: string | ReactNode;
+	visible?: boolean;
 };
 
 type QATableProps = {
@@ -38,39 +39,41 @@ const QATable: React.FC<QATableProps> = ({
 }) => (
 	<table className="qa w-100">
 		<tbody>
-			{items.map((item, index) => (
-				<React.Fragment key={index}>
-					<tr
-						className={classNames({
-							'd-flex flex-column':
-								orientation === Orientation.VERTICAL,
-						})}
-						key={index}
-					>
-						<th
-							className={classNames('small-heading', {
-								'd-flex': item.flexHeading,
+			{items
+				.filter(({visible = true}) => visible)
+				.map((item, index) => (
+					<React.Fragment key={index}>
+						<tr
+							className={classNames({
+								'd-flex flex-column':
+									orientation === Orientation.VERTICAL,
 							})}
+							key={index}
 						>
-							{item.title}
-						</th>
+							<th
+								className={classNames('small-heading', {
+									'd-flex': item.flexHeading,
+								})}
+							>
+								{item.title}
+							</th>
 
-						<td>{item.value}</td>
-					</tr>
-
-					{item.divider && (
-						<tr>
-							<td>
-								<hr />
-							</td>
-
-							<td>
-								<hr />
-							</td>
+							<td>{item.value}</td>
 						</tr>
-					)}
-				</React.Fragment>
-			))}
+
+						{item.divider && (
+							<tr>
+								<td>
+									<hr />
+								</td>
+
+								<td>
+									<hr />
+								</td>
+							</tr>
+						)}
+					</React.Fragment>
+				))}
 		</tbody>
 	</table>
 );

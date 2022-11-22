@@ -233,11 +233,14 @@ export type TestrayRun = {
 };
 
 export type TestraySubTask = {
+	dateCreated: string;
 	dateModified: string;
 	dueStatus: PickList;
 	errors: string;
 	id: number;
+	mergedToSubtaskId: TestraySubTask;
 	name: string;
+	r_mergedToTestraySubtask_c_subtaskId: TestraySubTask;
 	r_taskToSubtasks_c_task: TestrayTask;
 	r_userToSubtasks_user: UserAccount;
 	score: number;

@@ -13,7 +13,8 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {Link, useOutletContext} from 'react-router-dom';
+import {Dispatch} from 'react';
+import {Link, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
 import Avatar from '../../components/Avatar';
@@ -48,7 +49,8 @@ import {
 import {testraySubTaskImpl} from '../../services/rest/TestraySubtask';
 import {StatusesProgressScore, chartClassNames} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder} from '../../util/search';
+import {SubTaskStatuses} from '../../util/statuses';
 import SubtaskCompleteModal from './Subtask/SubtaskCompleteModal';
 import useSubtasksActions from './Subtask/useSubtasksActions';
 
@@ -64,6 +66,7 @@ const ShortcutIcon = () => (
 const TestFlowTasks = () => {
 	const {mutateTask, testrayTask} = useOutletContext<OutletContext>();
 	const {updateItemFromList} = useMutate();
+	const {taskId} = useParams();
 	const {actions, completeModal} = useSubtasksActions();
 
 	const {data: taskUserResponse} = useFetch<APIResponse<TestrayTaskUser>>(
@@ -119,6 +122,36 @@ const TestFlowTasks = () => {
 
 		return [...alerts, ...subtasksWithDifferentAssignedUsers];
 	};
+
+	const onMergeSubtasks = async (
+		subtasks: TestraySubTask[],
+		mutate: KeyedMutator<any>,
+		dispatch: Dispatch<any>
+	) => {
+		await testraySubTaskImpl.mergedToSubtask(subtasks);
+
+		updateItemFromList(
+			mutate,
+			0,
+			{},
+			{
+				revalidate: true,
+			}
+		);
+
+		dispatch({
+			payload: [],
+			type: ListViewTypes.SET_CHECKED_ROW,
+		});
+	};
+
+	const searchBuilder = new SearchBuilder({useURIEncode: false});
+
+	const subTaskFilter = searchBuilder
+		.eq('taskId', taskId as string)
+		.and()
+		.ne('dueStatus', SubTaskStatuses.MERGED)
+		.build();
 
 	return (
 		<>
@@ -347,15 +380,18 @@ const TestFlowTasks = () => {
 						testraySubTaskImpl.transformDataFromList(response)
 					}
 					variables={{
-						filter: searchUtil.eq('taskId', testrayTask.id),
+						filter: subTaskFilter,
 					}}
 				>
-					{({items}, {dispatch, listViewContext: {selectedRows}}) => {
-						const alerts = getFloatingBoxAlerts(
-							selectedRows.map((rowId) =>
-								items.find(({id}) => rowId === id)
-							)
+					{(
+						{items},
+						{dispatch, listViewContext: {selectedRows}, mutate}
+					) => {
+						const selectedSubtasks: TestraySubTask[] = selectedRows.map(
+							(rowId) => items.find(({id}) => rowId === id)
 						);
+
+						const alerts = getFloatingBoxAlerts(selectedSubtasks);
 
 						return (
 							<FloatingBox
@@ -367,6 +403,13 @@ const TestFlowTasks = () => {
 									})
 								}
 								isVisible={!!selectedRows.length}
+								onSubmit={() =>
+									onMergeSubtasks(
+										selectedSubtasks,
+										mutate,
+										dispatch
+									)
+								}
 								primaryButtonProps={{
 									disabled: !!alerts.length,
 									title: i18n.translate('merge-subtasks'),

@@ -211,6 +211,7 @@ const yupSchema = {
 		errors: yup.string(),
 		id: yup.number().required(),
 		issue: yup.string(),
+		mergedToSubtaskId: yup.number(),
 		name: yup.string(),
 		score: yup.number(),
 		taskId: yup.number(),

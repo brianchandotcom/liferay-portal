@@ -65,9 +65,10 @@ definition {
 		DMDocument.viewPGViaMG(mgDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddFolders {
+	@e2etest
+	@priority = "5"
+	@refactordone
+	test CanAddMultipleFolders {
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
 		DMFolder.addPGViaMG(
@@ -251,8 +252,8 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test DeleteFolderDocument {
+	@refactordone
+	test CanDeleteDocument {
 		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");

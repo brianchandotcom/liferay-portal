@@ -50,7 +50,9 @@ const TestFlow = () => {
 							key: 'dueStatus',
 							render: (dueStatus: PickList) => (
 								<StatusBadge
-									type={dueStatus.key as StatusBadgeType}
+									type={
+										dueStatus.key.toLowerCase() as StatusBadgeType
+									}
 								>
 									{dueStatus.name}
 								</StatusBadge>

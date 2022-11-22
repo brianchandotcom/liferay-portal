@@ -314,7 +314,7 @@ export default {
 	'subtask-details': 'Subtask Details',
 	'subtask-name': 'Subtask Name',
 	'subtask-x-must-be-assigned-to-you-to-be-user-id-a-merge':
-		'Subtask {0} must be assigned to you to be used in a merge.',
+		'Subtask {0} must be assigned to you to be used id a merge.',
 	'subtasks': 'Subtasks',
 	'suite': 'Suite',
 	'suite-name': 'Suite Name',

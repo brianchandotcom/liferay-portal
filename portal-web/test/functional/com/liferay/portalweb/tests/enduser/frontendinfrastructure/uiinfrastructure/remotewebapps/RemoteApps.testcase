@@ -600,9 +600,10 @@ definition {
 		}
 
 		task ("Then error message 'HTML element name is empty'") {
-			AssertElementPresent(
-				locator1 = "RemoteAppsEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
-				text = "HTML element name is empty.");
+			AssertTextEquals(
+				key_alertMessage = "The HTML Element Name field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "The HTML Element Name field is required.");
 		}
 
 		task ("And Then Remote App is not added") {
@@ -729,17 +730,11 @@ definition {
 			RemoteApps.addType(type = "Custom Element");
 		}
 
-		task ("When type 'Vanilla counter' in HTML Element Name field") {
-			Type(
-				key_text = "HTML Element Name",
-				locator1 = "TextInput#ANY",
-				value1 = "Vanilla counter");
-
-			Button.clickPublish();
-		}
-
-		task ("And When attempt to save the remote app") {
-			Button.clickPublish();
+		task ("When type 'Vanilla counter' in HTML Element Name field And attempt to save the remote app") {
+			RemoteApps.addApp(
+				entryHTMLElementName = "Vanilla counter",
+				entryName = "RemoteApp Test",
+				entryURL = "${testURL}");
 		}
 
 		task ("Then error message 'HTML element name must start with a lowercase letter' appears under HTML Element field") {

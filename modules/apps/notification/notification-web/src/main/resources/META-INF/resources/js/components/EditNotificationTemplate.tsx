@@ -21,7 +21,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {
 	API,
 	Card,
-	CodeEditor,
+	CodeEditorLocalized,
 	Input,
 	InputLocalized,
 	RichTextLocalized,
@@ -894,7 +894,7 @@ export default function EditNotificationTemplate({
 											/>
 										) : (
 											<>
-												<CodeEditor
+												<CodeEditorLocalized
 													CustomSidebarContent={
 														<FreemarkerEditorSidebarContent
 															objectDefinitions={
@@ -903,23 +903,29 @@ export default function EditNotificationTemplate({
 														/>
 													}
 													mode="freemarker"
-													onChange={(template) =>
+													onSelectedLocaleChange={({
+														label,
+													}) => {
+														setSelectedLocale(
+															label
+														);
+													}}
+													onTranslationsChange={(
+														translations
+													) => {
 														setValues({
 															...values,
-															body: {
-																[defaultLanguageId]: template,
-															},
-														})
-													}
+															body: translations,
+														});
+													}}
 													placeholder={`<#--${Liferay.Language.get(
 														'add-elements-from-the-sidebar-to-define-your-template'
 													)}-->`}
-													sidebarElements={[]}
-													value={
-														values.body[
-															defaultLanguageId
-														] ?? ''
+													selectedLocale={
+														selectedLocale
 													}
+													sidebarElements={[]}
+													translations={values.body}
 												/>
 
 												<Text

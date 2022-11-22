@@ -1682,7 +1682,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2260,7 +2260,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2500,7 +2500,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "20000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

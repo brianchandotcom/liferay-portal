@@ -966,7 +966,7 @@ definition {
 	macro checkDocumentCheckboxCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		Check(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+		Check.checkNotVisible(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
 	}
 
 	macro checkDocumentCheckboxPG {

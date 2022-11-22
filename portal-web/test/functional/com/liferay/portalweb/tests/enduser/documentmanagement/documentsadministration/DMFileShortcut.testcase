@@ -29,37 +29,6 @@ definition {
 		}
 	}
 
-	@description = "This tests that a shortcut can be added to a document."
-	@priority = "5"
-	@refactordone
-	test CanAddShortcutToDocument {
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		DMDocument.addDMShortcutCP(
-			dmDocumentTitle = "DM Document Title",
-			siteName = "Site Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-	}
-
 	@description = "This is a test for LPS-136839. It checks that a shortcut can still be accessed after the target is moved."
 	@priority = "4"
 	test CanAccessAfterMovingTarget {
@@ -95,6 +64,37 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_4.jpg");
 	}
 
+	@description = "This tests that a shortcut can be added to a document."
+	@priority = "5"
+	@refactordone
+	test CanAddShortcutToDocument {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
 	@description = "This test covers LPS-155147. It ensures that a user downloading a shortcut will download the related document."
 	@priority = "4"
 	test CanDownloadFileThroughShortcut {
@@ -119,6 +119,50 @@ definition {
 		DMDocument.assertDownloadedFileContent(
 			downloadedContent = "This is a *.txt document.",
 			fileName = "Document_1.txt");
+	}
+
+	@description = "This ensures that the user can edit the shortcut."
+	@priority = "4"
+	@refactordone
+	test CanEditShortcutDestination {
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		JSONDocument.addShortcut(
+			dmDocumentTitle = "Document_1.jpg",
+			sourceGroupName = "Site Name",
+			targetGroupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			dmNewDocumentTitle = "Document_2.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_2.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
 	}
 
 	@description = "This validates LPS-68795. It ensures that a shortcut can be moved into a folder."
@@ -166,49 +210,6 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that the user can edit the shortcut."
-	@priority = "4"
-	@refactordone
-	test CanEditShortcutDestination {
-		for (var entryCount : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${entryCount}.jpg",
-				groupName = "Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${entryCount}.jpg");
-		}
-
-		JSONFileShortcut.addShortcut(
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Guest");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
-
-		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.editDMShortcutCP(
-			dmDocumentTitle = "Document_1.jpg",
-			dmNewDocumentTitle = "Document_2.jpg",
-			siteName = "Site Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
-
-		AssertVisible(
-			key_dmDocumentFileName = "Document_2.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
-	}
-
 	@description = "This ensures that the shortcut is deleted after deleting the shortcut target."
 	@priority = "4"
 	@refactordone
@@ -222,9 +223,10 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		JSONFileShortcut.addShortcut(
+		JSONDocument.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Test Site Name");
+			sourceGroupName = "Site Name",
+			targetGroupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -250,9 +252,10 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		JSONFileShortcut.addShortcut(
+		JSONDocument.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Test Site Name");
+			sourceGroupName = "Site Name",
+			targetGroupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 

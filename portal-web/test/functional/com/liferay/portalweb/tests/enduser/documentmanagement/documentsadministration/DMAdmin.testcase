@@ -130,6 +130,8 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
+		WaitForPageLoad();
+
 		DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_1.doc");
 
 		AssertTextEquals(

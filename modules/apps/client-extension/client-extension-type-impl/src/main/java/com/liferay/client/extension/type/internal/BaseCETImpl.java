@@ -153,6 +153,11 @@ public abstract class BaseCETImpl implements CET {
 	}
 
 	@Override
+	public String getViewJSP() {
+		return "/admin/view_cet.jsp";
+	}
+
+	@Override
 	public boolean isReadOnly() {
 		return _readOnly;
 	}

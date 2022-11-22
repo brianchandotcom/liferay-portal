@@ -16,6 +16,7 @@ package com.liferay.object.web.internal.object.entries.portlet;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
@@ -40,6 +41,7 @@ import javax.portlet.RenderResponse;
 public class ObjectEntriesPortlet extends MVCPortlet {
 
 	public ObjectEntriesPortlet(
+		ObjectActionLocalService objectActionLocalService,
 		long objectDefinitionId,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldFDSFilterFactoryRegistry objectFieldFDSFilterFactoryRegistry,
@@ -48,6 +50,7 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		ObjectViewLocalService objectViewLocalService, Portal portal,
 		PortletResourcePermission portletResourcePermission) {
 
+		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionId = objectDefinitionId;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldFDSFilterFactoryRegistry =
@@ -75,7 +78,8 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewObjectEntriesDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
-				_objectFieldFDSFilterFactoryRegistry, _objectFieldLocalService,
+				_objectActionLocalService, _objectFieldFDSFilterFactoryRegistry,
+				_objectFieldLocalService,
 				_objectScopeProviderRegistry.getObjectScopeProvider(
 					objectDefinition.getScope()),
 				_objectViewLocalService, _portletResourcePermission,
@@ -84,6 +88,7 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	private final ObjectActionLocalService _objectActionLocalService;
 	private final long _objectDefinitionId;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldFDSFilterFactoryRegistry

@@ -18,12 +18,14 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -38,6 +40,7 @@ import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -689,6 +692,19 @@ public class DefaultObjectEntryManagerImpl
 		return serviceContext;
 	}
 
+	private Map<String, String> _getAction(
+			String actionName, String methodName,
+			com.liferay.object.model.ObjectEntry objectEntry, UriInfo uriInfo)
+		throws Exception {
+
+		return ActionUtil.addAction(
+			actionName, ObjectEntryResourceImpl.class,
+			objectEntry.getObjectEntryId(), methodName, null,
+			objectEntry.getUserId(),
+			_getObjectEntryPermissionName(objectEntry.getObjectDefinitionId()),
+			objectEntry.getGroupId(), uriInfo);
+	}
+
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
@@ -941,53 +957,45 @@ public class DefaultObjectEntryManagerImpl
 						return null;
 					}
 
-					return ActionUtil.addAction(
-						ActionKeys.DELETE, ObjectEntryResourceImpl.class,
-						objectEntry.getObjectEntryId(), "deleteObjectEntry",
-						null, objectEntry.getUserId(),
-						_getObjectEntryPermissionName(
-							objectEntry.getObjectDefinitionId()),
-						objectEntry.getGroupId(),
+					return _getAction(
+						ActionKeys.DELETE, "deleteObjectEntry", objectEntry,
 						dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"get",
-				ActionUtil.addAction(
-					ActionKeys.VIEW, ObjectEntryResourceImpl.class,
-					objectEntry.getObjectEntryId(), "getObjectEntry", null,
-					objectEntry.getUserId(),
-					_getObjectEntryPermissionName(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+				_getAction(
+					ActionKeys.VIEW, "getObjectEntry", objectEntry,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"permissions",
-				ActionUtil.addAction(
-					ActionKeys.PERMISSIONS, ObjectEntryResourceImpl.class,
-					objectEntry.getObjectEntryId(),
-					"getObjectEntryPermissionsPage", null,
-					objectEntry.getUserId(),
-					_getObjectEntryPermissionName(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+				_getAction(
+					ActionKeys.PERMISSIONS, "getObjectEntryPermissionsPage",
+					objectEntry, dtoConverterContext.getUriInfo())
 			).put(
 				"replace",
-				ActionUtil.addAction(
-					ActionKeys.UPDATE, ObjectEntryResourceImpl.class,
-					objectEntry.getObjectEntryId(), "putObjectEntry", null,
-					objectEntry.getUserId(),
-					_getObjectEntryPermissionName(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+				_getAction(
+					ActionKeys.UPDATE, "putObjectEntry", objectEntry,
+					dtoConverterContext.getUriInfo())
 			).put(
 				"update",
-				ActionUtil.addAction(
-					ActionKeys.UPDATE, ObjectEntryResourceImpl.class,
-					objectEntry.getObjectEntryId(), "patchObjectEntry", null,
-					objectEntry.getUserId(),
-					_getObjectEntryPermissionName(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+				_getAction(
+					ActionKeys.UPDATE, "patchObjectEntry", objectEntry,
+					dtoConverterContext.getUriInfo())
 			).build();
+
+			for (ObjectAction objectAction :
+					_objectActionLocalService.getObjectActions(
+						objectDefinition.getObjectDefinitionId(),
+						ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+				actions.put(
+					objectAction.getName(),
+					_getAction(
+						ActionKeys.VIEW,
+						"putByExternalReferenceCodeObjectEntryExternal" +
+							"ReferenceCodeObjectActionObjectActionName",
+						objectEntry, dtoConverterContext.getUriInfo()));
+			}
 		}
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
@@ -1093,6 +1101,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;
+
+	@Reference
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

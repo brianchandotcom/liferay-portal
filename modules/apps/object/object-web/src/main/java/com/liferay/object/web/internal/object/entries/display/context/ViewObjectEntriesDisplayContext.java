@@ -20,12 +20,15 @@ import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewSortColumn;
 import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
@@ -49,7 +52,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -69,6 +71,7 @@ public class ViewObjectEntriesDisplayContext {
 
 	public ViewObjectEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
+		ObjectActionLocalService objectActionLocalService,
 		ObjectFieldFDSFilterFactoryRegistry objectFieldFDSFilterFactoryRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProvider objectScopeProvider,
@@ -77,6 +80,7 @@ public class ViewObjectEntriesDisplayContext {
 		String restContextPath) {
 
 		_httpServletRequest = httpServletRequest;
+		_objectActionLocalService = objectActionLocalService;
 		_objectFieldFDSFilterFactoryRegistry =
 			objectFieldFDSFilterFactoryRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -127,7 +131,7 @@ public class ViewObjectEntriesDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		return Arrays.asList(
+		List<FDSActionDropdownItem> fdsActionDropdownItems = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					getPortletURL()
@@ -152,6 +156,26 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
 				"get", "permissions", "modal-permissions"));
+
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		for (ObjectAction objectAction :
+				_objectActionLocalService.getObjectActions(
+					objectDefinition.getObjectDefinitionId(),
+					ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+			fdsActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					StringBundler.concat(
+						_apiURL,
+						"/by-external-reference-code/{externalReferenceCode}",
+						"/object-actions/", objectAction.getName()),
+					null, objectAction.getName(),
+					objectAction.getLabel(_objectRequestHelper.getLocale()),
+					"put", objectAction.getName(), "async"));
+		}
+
+		return fdsActionDropdownItems;
 	}
 
 	public List<FDSFilter> getFDSFilters() {
@@ -355,6 +379,7 @@ public class ViewObjectEntriesDisplayContext {
 
 	private final String _apiURL;
 	private final HttpServletRequest _httpServletRequest;
+	private final ObjectActionLocalService _objectActionLocalService;
 	private ObjectDefinition _objectDefinition;
 	private final ObjectFieldFDSFilterFactoryRegistry
 		_objectFieldFDSFilterFactoryRegistry;

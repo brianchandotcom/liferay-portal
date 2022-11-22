@@ -30,6 +30,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 import ActionBuilder from './tabs/ActionBuilder';
 import BasicInfo from './tabs/BasicInfo';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 const REQUIRED_MSG = Liferay.Language.get('required');
 
 const TABS = [
@@ -195,11 +197,7 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 	const validate = (values: Partial<ObjectAction>) => {
 		const errors: ActionError = {};
 
-		if (
-			invalidateRequired(
-				values.label?.[Liferay.ThemeDisplay.getDefaultLanguageId()]
-			)
-		) {
+		if (invalidateRequired(values.label?.[defaultLanguageId])) {
 			errors.label = REQUIRED_MSG;
 		}
 
@@ -254,6 +252,12 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 					}
 				});
 			}
+		}
+		else if (
+			values.objectActionTriggerKey === 'standAloneAction' &&
+			invalidateRequired(values.errorMessage?.[defaultLanguageId])
+		) {
+			errors.errorMessage = REQUIRED_MSG;
 		}
 
 		if (

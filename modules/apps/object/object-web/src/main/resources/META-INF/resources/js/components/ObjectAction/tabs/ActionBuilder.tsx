@@ -24,6 +24,7 @@ import {
 	CustomItem,
 	ExpressionBuilder,
 	Input,
+	InputLocalized,
 	SelectWithOption,
 	SidebarCategory,
 	SingleSelect,
@@ -35,6 +36,8 @@ import PredefinedValuesTable from '../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
 import {ActionError} from '../index';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 type ObjectsOptionsList = Array<
 	(
@@ -730,6 +733,25 @@ export default function ActionBuilder({
 					/>
 				)}
 			</Card>
+
+			{values.objectActionTriggerKey === 'standAloneAction' && (
+				<Card title={Liferay.Language.get('error-message')}>
+					<InputLocalized
+						error={errors.errorMessage}
+						label={Liferay.Language.get('message')}
+						name="label"
+						onChange={(value) =>
+							setValues({
+								errorMessage: value,
+							})
+						}
+						required
+						translations={
+							values.errorMessage ?? {[defaultLanguageId]: ''}
+						}
+					/>
+				</Card>
+			)}
 		</>
 	);
 }

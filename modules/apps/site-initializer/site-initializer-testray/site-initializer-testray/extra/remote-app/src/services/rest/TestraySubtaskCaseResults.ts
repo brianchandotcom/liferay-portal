@@ -34,7 +34,7 @@ class TestraySubtaskCaseResultImpl extends Rest<
 				r_subtaskToSubtasksCasesResults_c_subtaskId,
 			}),
 			nestedFields:
-				'caseResult.case,caseResult.component.team,caseResult.build.routine,caseResult.build.project,caseResult.run,subtask',
+				'caseResult.case,caseResult.component.team,caseResult.build.routine,caseResult.build.project,caseResult.run,subtask.user',
 			transformData: (subtaskCaseResult) => ({
 				caseResult: subtaskCaseResult?.r_caseResultToSubtasksCasesResults_c_caseResult
 					? {
@@ -85,8 +85,16 @@ class TestraySubtaskCaseResultImpl extends Rest<
 					: undefined,
 				id: subtaskCaseResult.id,
 				name: '',
-				subTask:
-					subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask,
+				subTask: subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask
+					? {
+							...subtaskCaseResult?.r_subtaskToSubtasksCasesResults_c_subtask,
+
+							user:
+								subtaskCaseResult
+									.r_subtaskToSubtasksCasesResults_c_subtask
+									?.r_userToSubtasks_user,
+					  }
+					: undefined,
 			}),
 			uri: 'subtaskscasesresultses',
 		});

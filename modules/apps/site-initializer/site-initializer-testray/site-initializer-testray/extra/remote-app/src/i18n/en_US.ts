@@ -313,8 +313,10 @@ export default {
 	'subtask': 'Subtask',
 	'subtask-details': 'Subtask Details',
 	'subtask-name': 'Subtask Name',
-	'subtask-x-must-be-assigned-to-you-to-be-user-id-a-merge':
-		'Subtask {0} must be assigned to you to be used id a merge.',
+	'subtask-x-must-be-assigned-to-you-to-be-user-in-a-merge':
+		'Subtask {0} must be assigned to you to be used in a merge.',
+	'subtask-x-must-be-assigned-to-you-to-be-user-in-a-split':
+		'Subtask {0} must be assigned to you to be used in a split.',
 	'subtasks': 'Subtasks',
 	'suite': 'Suite',
 	'suite-name': 'Suite Name',

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wade Cao
  * @author Adam Brandizzi
  */
-@Component(service = RankingIndexCreationBundleActivator.class)
+@Component(service = {})
 public class RankingIndexCreationBundleActivator {
 
 	@Activate

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(enabled = false, service = SXPBlueprintSearchRegistrar.class)
+@Component(enabled = false, service = {})
 public class SXPBlueprintSearchRegistrar {
 
 	@Activate

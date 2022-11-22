@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = BackgroundTaskExecutorConfigurator.class)
+@Component(service = {})
 public class BackgroundTaskExecutorConfigurator {
 
 	@Activate

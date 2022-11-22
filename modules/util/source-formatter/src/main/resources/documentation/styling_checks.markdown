@@ -149,6 +149,7 @@ SoyEmptyLinesCheck | .soy | Finds missing and unnecessary empty lines. |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |
 TFBlockOrderCheck | .tf | Checks the order of blocks in `.tf` file. |
 TLDElementOrderCheck | .tld | Checks the order of attributes in `.tld` file. |
+TLDStylingCheck | .tld | Applies rules to enforce consistency in code style. |
 TXTEmptyLinesCheck | .txt | Finds missing and unnecessary empty lines. |
 TXTStylingCheck | .txt | Applies rules to enforce consistency in code style. |
 TernaryOperatorCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds use of ternary operator in `java` files (use if statement instead). |

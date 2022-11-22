@@ -404,6 +404,7 @@ SubstringCheck | [Performance](performance_checks.markdown#performance-checks) |
 SystemEventCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds missing or redundant usage of @SystemEvent for delete events. |
 TFBlockOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .tf | Checks the order of blocks in `.tf` file. |
 TLDElementOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .tld | Checks the order of attributes in `.tld` file. |
+TLDStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .tld | Applies rules to enforce consistency in code style. |
 TLDTypeCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
 TXTEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | Finds missing and unnecessary empty lines. |
 TXTStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .txt | Applies rules to enforce consistency in code style. |

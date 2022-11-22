@@ -90,8 +90,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  */
 @Component(
 	configurationPid = "com.liferay.multi.factor.authentication.fido2.web.internal.configuration.MFAFIDO2Configuration.scoped",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class FIDO2BrowserSetupMFAChecker
 	implements BrowserMFAChecker, SetupMFAChecker {

@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marta Medio
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 	service = UserNotificationHandler.class
 )

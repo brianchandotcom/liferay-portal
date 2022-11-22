@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marta Medio
  */
 @Component(
-	immediate = true,
 	property = {
 		"configuration.pid=com.liferay.multi.factor.authentication.fido2.web.internal.configuration.MFAFIDO2Configuration",
 		"configuration.pid=com.liferay.multi.factor.authentication.ip.address.internal.configuration.MFAIPAddressConfiguration",

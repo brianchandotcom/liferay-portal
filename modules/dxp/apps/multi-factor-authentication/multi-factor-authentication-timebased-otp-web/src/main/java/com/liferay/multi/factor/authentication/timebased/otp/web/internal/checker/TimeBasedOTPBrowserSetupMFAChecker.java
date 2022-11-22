@@ -68,8 +68,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  */
 @Component(
 	configurationPid = "com.liferay.multi.factor.authentication.timebased.otp.web.internal.configuration.MFATimeBasedOTPConfiguration.scoped",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class TimeBasedOTPBrowserSetupMFAChecker
 	implements BrowserMFAChecker, SetupMFAChecker {

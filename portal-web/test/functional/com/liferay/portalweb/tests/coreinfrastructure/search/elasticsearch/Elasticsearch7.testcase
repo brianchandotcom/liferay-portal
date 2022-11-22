@@ -560,6 +560,7 @@ definition {
 	@description = "Assert search is functional after Elasticsearch connector is redeployed from GogoShell"
 	@priority = "3"
 	test SearchAfterRedeployingElasticsearchConnector {
+		property remote.elasticsearch.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#SearchAfterRedeployingElasticsearchConnector";
 

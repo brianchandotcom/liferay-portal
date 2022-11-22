@@ -116,13 +116,20 @@ definition {
 
 		Role.openRolesAdmin();
 
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Remove Permission Scope");
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		// The define permission via json macro is not able to change the permission scope
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
+		Role.editPermissionCmdCPUI(
+			define = "true",
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "Documents",
+			permissionValues = "View",
 			roleTitle = "Remove Permission Scope",
 			siteNameScope = "${siteName}");
 
@@ -133,11 +140,17 @@ definition {
 
 		Role.openRolesAdmin();
 
+		RoleNavigator.gotoRoleType();
+
+		LexiconEntry.gotoEntry(rowEntry = "Remove Permission Scope");
+
 		// The define permission via json macro is not able to change the permission scope
 
-		Role.definePermissionCmdCP(
-			permissionDefinitionKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_VIEW_CHECKBOX",
-			permissionDefinitionValue = "View",
+		Role.editPermissionCmdCPUI(
+			permissionNavHeader = "Content & Data",
+			permissionNavItem = "Documents and Media",
+			permissionSheetSubtitle = "Documents",
+			permissionValues = "View",
 			removeSiteScope = "${siteName}",
 			roleTitle = "Remove Permission Scope");
 

@@ -20,6 +20,7 @@ import StatusBadge from '../../../components/StatusBadge';
 import {StatusBadgeType} from '../../../components/StatusBadge/StatusBadge';
 import {ListViewTypes} from '../../../context/ListViewContext';
 import i18n from '../../../i18n';
+import {Liferay} from '../../../services/liferay';
 import {TestraySubTaskCaseResult} from '../../../services/rest';
 import {testraySubtaskCaseResultImpl} from '../../../services/rest/TestraySubtaskCaseResults';
 import {searchUtil} from '../../../util/search';
@@ -41,7 +42,34 @@ const SubtasksCaseResults = () => {
 			});
 		}
 
-		return [...alerts];
+		const subtaskUserCheck = () => {
+			const selectedRows = selectRows.map((rowId) =>
+				subtasksCaseResults.find(({id}) => rowId === id)
+			) as TestraySubTaskCaseResult[];
+
+			const subtasksWithDifferentAssignedUsers = selectedRows.filter(
+				({subTask}) =>
+					subTask?.user?.id &&
+					subTask?.user.id.toString() !==
+						Liferay.ThemeDisplay.getUserId()
+			);
+
+			if (subtasksWithDifferentAssignedUsers.length) {
+				return [
+					{
+						text: i18n.sub(
+							'subtask-x-must-be-assigned-to-you-to-be-user-in-a-split',
+							subtasksWithDifferentAssignedUsers[0].subTask
+								?.name as string
+						),
+					},
+				];
+			}
+		};
+
+		const alreadyAssigned = subtaskUserCheck() || [];
+
+		return [...alerts, ...alreadyAssigned];
 	};
 
 	return (

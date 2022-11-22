@@ -45,6 +45,11 @@ export type Role = {
 	name: string;
 };
 
+export type UserGroup = {
+	id: number;
+	name: string;
+};
+
 export type UserAccount = {
 	additionalName: string;
 	alternateName: string;
@@ -54,6 +59,7 @@ export type UserAccount = {
 	id: number;
 	image: string;
 	roleBriefs: Role[];
+	userGroupBriefs: UserGroup[];
 	uuid: number;
 };
 

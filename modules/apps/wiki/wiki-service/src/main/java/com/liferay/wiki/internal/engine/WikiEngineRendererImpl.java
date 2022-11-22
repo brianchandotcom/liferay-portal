@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = WikiEngineRenderer.class)
+@Component(service = WikiEngineRenderer.class)
 public class WikiEngineRendererImpl implements WikiEngineRenderer {
 
 	@Override

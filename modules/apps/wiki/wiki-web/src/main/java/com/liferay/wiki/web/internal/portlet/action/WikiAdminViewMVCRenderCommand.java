@@ -23,7 +23,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 		"mvc.command.name=/", "mvc.command.name=/wiki_admin/view"

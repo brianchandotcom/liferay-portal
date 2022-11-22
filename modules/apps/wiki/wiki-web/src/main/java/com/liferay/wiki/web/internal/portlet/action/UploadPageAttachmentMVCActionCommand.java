@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"mvc.command.name=/wiki/image_editor",

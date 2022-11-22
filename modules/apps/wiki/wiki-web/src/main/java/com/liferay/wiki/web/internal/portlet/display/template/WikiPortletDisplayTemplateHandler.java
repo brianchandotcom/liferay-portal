@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
+	property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
 	service = TemplateHandler.class
 )
 public class WikiPortletDisplayTemplateHandler

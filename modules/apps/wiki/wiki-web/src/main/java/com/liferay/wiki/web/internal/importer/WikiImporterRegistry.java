@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = WikiImporterRegistry.class)
+@Component(service = WikiImporterRegistry.class)
 public class WikiImporterRegistry {
 
 	@Reference(

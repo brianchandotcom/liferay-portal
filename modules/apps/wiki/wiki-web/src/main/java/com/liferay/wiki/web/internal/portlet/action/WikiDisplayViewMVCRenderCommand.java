@@ -49,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 		"mvc.command.name=/", "mvc.command.name=/wiki_display/view"

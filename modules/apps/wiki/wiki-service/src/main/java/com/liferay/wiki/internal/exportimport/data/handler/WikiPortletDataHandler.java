@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
+	property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
 	service = PortletDataHandler.class
 )
 public class WikiPortletDataHandler extends BasePortletDataHandler {

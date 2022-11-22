@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Sanz
  */
 @Component(
-	immediate = true, property = "wiki.format.name=html",
+	property = "wiki.format.name=html",
 	service = WikiPageRenameContentProcessor.class
 )
 public class WikiPageRenameHTMLContentProcessor

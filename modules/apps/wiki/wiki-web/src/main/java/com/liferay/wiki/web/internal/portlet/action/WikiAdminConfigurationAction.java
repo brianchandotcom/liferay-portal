@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
 	service = ConfigurationAction.class
 )

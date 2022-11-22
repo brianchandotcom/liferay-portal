@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true, property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
+	property = "javax.portlet.name=" + WikiPortletKeys.WIKI,
 	service = AssetRendererFactory.class
 )
 public class WikiPageAssetRendererFactory

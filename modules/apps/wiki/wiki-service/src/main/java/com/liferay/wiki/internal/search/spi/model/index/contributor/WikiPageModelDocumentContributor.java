@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tibor Lipusz
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.wiki.model.WikiPage",
 	service = ModelDocumentContributor.class
 )

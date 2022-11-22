@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true,
 	property = {
 		"model.class.name=com.liferay.wiki.model.WikiPage",
 		"service.ranking:Integer=100"

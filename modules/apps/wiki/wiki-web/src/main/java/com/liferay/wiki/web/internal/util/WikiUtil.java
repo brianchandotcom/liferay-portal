@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class WikiUtil {
 
 	public static String getAttachmentURLPrefix(

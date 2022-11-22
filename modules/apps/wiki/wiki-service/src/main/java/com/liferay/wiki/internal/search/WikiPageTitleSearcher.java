@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = BaseSearcher.class
 )

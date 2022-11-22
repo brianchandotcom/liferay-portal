@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + WikiNavigationPortletKeys.TREE_MENU,
 	service = ConfigurationAction.class
 )

@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
 	service = PortletDataHandler.class
 )

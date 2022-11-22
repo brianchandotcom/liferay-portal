@@ -80,7 +80,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true,
 	property = "related.entry.indexer.class.name=com.liferay.wiki.model.WikiPage",
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )

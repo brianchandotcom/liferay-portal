@@ -20,7 +20,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	immediate = true,
 	property = {
 		"auth.public.path=/wiki/edit_page",
 		"auth.public.path=/wiki/edit_page_attachment",

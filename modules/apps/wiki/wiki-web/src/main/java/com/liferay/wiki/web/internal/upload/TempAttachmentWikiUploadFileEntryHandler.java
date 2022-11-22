@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	immediate = true, service = TempAttachmentWikiUploadFileEntryHandler.class
-)
+@Component(service = TempAttachmentWikiUploadFileEntryHandler.class)
 public class TempAttachmentWikiUploadFileEntryHandler
 	implements UploadFileEntryHandler {
 

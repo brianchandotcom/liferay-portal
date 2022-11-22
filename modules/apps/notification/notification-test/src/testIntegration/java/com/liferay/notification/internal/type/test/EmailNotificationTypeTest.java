@@ -127,13 +127,16 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					"bcc", "[%emailAddressTerm%],bcc@liferay.com"),
 				createNotificationRecipientSetting(
 					"cc", "[%emailAddressTerm%],cc@liferay.com"),
-				createNotificationRecipientSetting("from", "[%emailAddressTerm%]"),
+				createNotificationRecipientSetting(
+					"from", "[%emailAddressTerm%]"),
 				createNotificationRecipientSetting(
 					"fromName",
-					Collections.singletonMap(LocaleUtil.US, "[%emailAddressTerm%]")),
+					Collections.singletonMap(
+						LocaleUtil.US, "[%emailAddressTerm%]")),
 				createNotificationRecipientSetting(
 					"to",
-					Collections.singletonMap(LocaleUtil.US, "[%emailAddressTerm%]"))));
+					Collections.singletonMap(
+						LocaleUtil.US, "[%emailAddressTerm%]"))));
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplateLocalService.createNotificationTemplate(0L);

@@ -97,22 +97,32 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 </c:if>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
+	const searchContainer = Liferay.SearchContainer.get(
 		'<portlet:namespace />groupsSearchContainer'
 	);
 
 	searchContainer.get('contentBox').delegate(
 		'click',
 		(event) => {
-			var link = event.currentTarget;
+			const link = event.currentTarget;
 
-			var tr = link.ancestor('tr');
+			const tr = link.ancestor('tr');
 
 			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
 			searchContainer.updateDataStore();
 
-			updateGroupIds();
+			const groupIds = document.getElementById(
+				'<portlet:namespace />groupIds'
+			);
+
+			if (groupIds) {
+				const searchContainerData = searchContainer.getData();
+
+				groupIds.setAttribute('value', searchContainerData.split(','));
+
+				submitForm(document.<portlet:namespace />fm);
+			}
 		},
 		'.modify-link'
 	);

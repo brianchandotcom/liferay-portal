@@ -1311,7 +1311,7 @@ definition {
 
 			var productName = JSONUtil.getWithJSONPath("${responseBody}", "$..['name'].['en_US']");
 
-			if ("${productName}" != "Simple Product") { 
+			if ("${productName}" != "Simple Product") {
 				fail("Something went wrong with the API call");
 			}
 		}
@@ -1367,15 +1367,17 @@ definition {
 		}
 
 		task ("When for the product ABS Sensor is uploaded an image using the CDN with API") {
-			CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
+			var responseBody = CommerceJSONProductsAPI._patchCommerceProductImageUsingERC(
 				cdnEnabled = "true",
 				cdnURL = "http://mirrors.lax.liferay.com/github.com/liferay/liferay-portal/portal-web/test/functional/com/liferay/portalweb/dependencies/Commerce_Black.jpg",
 				imageTitle = "title2",
 				productERC = "MIN93015minium-initializer");
-		}
 
-		task ("Then there is no error in the logs") {
-			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+			var status = JSONUtil.getWithJSONPath("${responseBody}", "$..['status']");
+
+			if ("${status}" != "") {
+				fail("Something went wrong with the API call");
+			}
 		}
 
 		task ("And the image is uploaded successfully") {

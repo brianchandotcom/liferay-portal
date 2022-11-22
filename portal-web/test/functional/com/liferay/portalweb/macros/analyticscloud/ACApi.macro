@@ -36,7 +36,7 @@ definition {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		var curl = '''
-			${analyticsCloudURL}/api/reports/export/${type}?fromDate=${startDate}T${startTime}Z&toDate=${endDate}T${endTime}Z
+			${analyticsCloudURL}/api/reports/export/${type}\?fromDate=${startDate}T${startTime}Z\&toDate=${endDate}T${endTime}Z
 			-H "Authorization: Bearer ${token}"
 			''';
 

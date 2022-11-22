@@ -100,39 +100,6 @@ public class WorkflowTaskUserNotificationHandler
 	}
 
 	@Override
-	public boolean isApplicable(
-		UserNotificationEvent userNotificationEvent,
-		ServiceContext serviceContext) {
-
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				userNotificationEvent.getPayload());
-
-			long ctCollectionId = jsonObject.getLong(
-				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctCollectionId)) {
-
-				for (User user :
-						WorkflowTaskManagerUtil.getNotifiableUsers(
-							jsonObject.getLong("workflowTaskId"))) {
-
-					if (user.getUserId() == serviceContext.getUserId()) {
-						return true;
-					}
-				}
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return false;
-	}
-
-	@Override
 	protected String getBody(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
@@ -177,6 +144,10 @@ public class WorkflowTaskUserNotificationHandler
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws Exception {
+
+		if (!_isNotifiable(userNotificationEvent, serviceContext)) {
+			return StringPool.BLANK;
+		}
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
@@ -272,6 +243,38 @@ public class WorkflowTaskUserNotificationHandler
 
 		return _workflowTaskPermission.contains(
 			themeDisplay.getPermissionChecker(), workflowTask, groupId);
+	}
+
+	private boolean _isNotifiable(
+		UserNotificationEvent userNotificationEvent,
+		ServiceContext serviceContext) {
+
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			long ctCollectionId = jsonObject.getLong(
+				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
+
+				for (User user :
+						WorkflowTaskManagerUtil.getNotifiableUsers(
+							jsonObject.getLong("workflowTaskId"))) {
+
+					if (user.getUserId() == serviceContext.getUserId()) {
+						return true;
+					}
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
 	}
 
 	private static final String _BODY_TEMPLATE_DEFAULT =

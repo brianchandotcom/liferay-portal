@@ -355,6 +355,43 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = "3"
+	test BulkExecutionFailuresAreLoggedCorrectly {
+		property test.name.skip.portal.instance = "Elasticsearch7#BulkExecutionFailuresAreLoggedCorrectly";
+
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration");
+
+		FormFields.editTextMultiline(
+			fieldName = "additionalIndexConfigurations",
+			fieldValue = "index.mapping.total_fields.limit: 100");
+
+		SystemSettings.saveConfiguration();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		Elasticsearch.assertElasticsearchIsReady();
+
+		SearchAdministration.executeReindex();
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "Guest",
+			title = "WC Title");
+
+		AssertConsoleTextPresent(value1 = "Limit of total fields \[100\] has been exceeded");
+
+		AssertConsoleTextPresent(value1 = "failure in bulk execution:&#10;\[0\]\: index \[liferay\-${companyId}\]\, type \[LiferayDocumentType\]\, id \[com.liferay.journal.model.JournalArticle_PORTLET_${articleId}\]");
+	}
+
 	@priority = "4"
 	test CanReindexSelectedInstance {
 		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexSelectedInstance";

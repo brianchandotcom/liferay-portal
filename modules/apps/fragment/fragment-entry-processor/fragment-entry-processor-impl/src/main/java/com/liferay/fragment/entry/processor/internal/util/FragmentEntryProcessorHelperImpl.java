@@ -80,7 +80,7 @@ public class FragmentEntryProcessorHelperImpl
 		value = jsonObject.getString(
 			_language.getLanguageId(LocaleUtil.getSiteDefault()));
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			value = jsonObject.getString("defaultValue");
 		}
 

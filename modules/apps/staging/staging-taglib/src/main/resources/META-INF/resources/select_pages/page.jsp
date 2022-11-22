@@ -24,9 +24,9 @@
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
 
-		<ul class="d-flex flex-wrap layout-selector" id="<portlet:namespace />pages">
+		<div class="d-flex flex-wrap layout-selector" id="<portlet:namespace />pages">
 			<c:if test="<%= (!disableInputs && selectPagesGroup.isPrivateLayoutsEnabled()) || LayoutStagingUtil.isBranchingLayoutSet(selectPagesGroup, selectPagesPrivateLayout) %>">
-				<li class="layout-selector-options">
+				<div class="layout-selector-options">
 					<aui:fieldset label="pages-options">
 						<c:if test="<%= !disableInputs && selectPagesGroup.isPrivateLayoutsEnabled() %>">
 							<c:choose>
@@ -78,10 +78,10 @@
 							</aui:select>
 						</c:if>
 					</aui:fieldset>
-				</li>
+				</div>
 			</c:if>
 
-			<li class="layout-selector-options">
+			<div class="layout-selector-options">
 
 				<%
 				String childPageHelpMessage = "child-page-export-process-warning";
@@ -160,8 +160,9 @@
 						</c:otherwise>
 					</c:choose>
 				</aui:fieldset>
-			</li>
-			<li class="layout-selector-options">
+			</div>
+
+			<div class="layout-selector-options">
 				<aui:fieldset label="look-and-feel">
 					<liferay-staging:checkbox
 						checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, ParamUtil.getBoolean(request, PortletDataHandlerKeys.THEME_REFERENCE, true)) %>"
@@ -202,12 +203,12 @@
 						/>
 					</c:if>
 				</aui:fieldset>
-			</li>
-		</ul>
+			</div>
+		</div>
 
 		<c:if test="<%= action.equals(Constants.PUBLISH) %>">
-			<ul class="d-flex deletions flex-wrap layout-selector" id="<portlet:namespace />pagedeletions">
-				<li class="layout-selector-options">
+			<div class="d-flex deletions flex-wrap layout-selector" id="<portlet:namespace />pagedeletions">
+				<div class="layout-selector-options">
 					<aui:fieldset label="page-deletions">
 
 						<%
@@ -234,8 +235,8 @@
 							/>
 						</span>
 					</aui:fieldset>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</c:if>
 	</clay:sheet-section>
 </aui:fieldset>

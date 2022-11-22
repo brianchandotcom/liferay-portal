@@ -15,7 +15,6 @@
 package com.liferay.batch.engine.internal.auto.deploy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
@@ -46,7 +45,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -75,6 +73,14 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		return AutoDeployer.CODE_DEFAULT;
 	}
 
+	public boolean isBatchEngineTechnical(String zipEntryName) {
+		if (zipEntryName.endsWith("jsont")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public boolean isDeployable(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
@@ -88,15 +94,15 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		}
 
 		try (ZipFile zipFile = new ZipFile(file)) {
-			for (BatchEngineZipEntryPair batchEngineZipEntryPair :
-					_getBatchEngineZipEntryPairs(zipFile)) {
+			for (BatchEngineZipUnit batchEngineZipUnit :
+					_getBatchEngineZipUnits(zipFile)) {
 
-				if (!batchEngineZipEntryPair.isValid()) {
+				if (!batchEngineZipUnit.isValid()) {
 					continue;
 				}
 
 				BatchEngineImportConfiguration batchEngineImportConfiguration =
-					_getBatchEngineImportConfiguration(batchEngineZipEntryPair);
+					_getBatchEngineImportConfiguration(batchEngineZipUnit);
 
 				if ((batchEngineImportConfiguration != null) &&
 					(batchEngineImportConfiguration.companyId > 0) &&
@@ -150,41 +156,26 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 			_log.info("Deploying batch engine file " + zipFile.getName());
 		}
 
-		for (BatchEngineZipEntryPair batchEngineZipEntryPair :
-				_getBatchEngineZipEntryPairs(zipFile)) {
+		for (BatchEngineZipUnit batchEngineZipUnit :
+				_getBatchEngineZipUnits(zipFile)) {
 
-			_processBatchEngineZipEntryPair(batchEngineZipEntryPair);
+			_processBatchEngineZipUnit(batchEngineZipUnit);
 		}
 	}
 
 	private BatchEngineImportConfiguration _getBatchEngineImportConfiguration(
-			BatchEngineZipEntryPair batchEngineZipEntryPair)
+			BatchEngineZipUnit<BatchEngineImportConfiguration>
+				batchEngineZipUnit)
 		throws IOException {
 
-		if (batchEngineZipEntryPair._dataZipEntry != null) {
-			try (InputStream inputStream =
-					batchEngineZipEntryPair.getConfigurationInputStream()) {
-
-				return _objectMapper.readValue(
-					inputStream, BatchEngineImportConfiguration.class);
-			}
-		}
-
-		try (InputStream inputStream =
-				batchEngineZipEntryPair.getConfigurationInputStream()) {
-
-			BatchEngineTechnicalJsonParser batchEngineTechnicalJsonParser =
-				new BatchEngineTechnicalJsonParser(inputStream);
-
-			return batchEngineTechnicalJsonParser.
-				getBatchEngineImportConfiguration(_objectMapper);
-		}
+		return batchEngineZipUnit.getBatchEngineConfiguration(
+			BatchEngineImportConfiguration.class);
 	}
 
 	private String _getBatchEngineZipEntryKey(ZipEntry zipEntry) {
 		String zipEntryName = zipEntry.getName();
 
-		if (_isBatchEngineTechnical(zipEntryName)) {
+		if (isBatchEngineTechnical(zipEntryName)) {
 			return zipEntryName;
 		}
 
@@ -196,24 +187,24 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 			0, zipEntryName.lastIndexOf(StringPool.SLASH));
 	}
 
-	private Iterable<BatchEngineZipEntryPair> _getBatchEngineZipEntryPairs(
+	private Iterable<BatchEngineZipUnit> _getBatchEngineZipUnits(
 		ZipFile zipFile) {
 
-		return new Iterable<BatchEngineZipEntryPair>() {
+		return new Iterable<BatchEngineZipUnit>() {
 
 			@Override
-			public Iterator<BatchEngineZipEntryPair> iterator() {
-				return new BatchEngineZipEntryPairIterator(zipFile);
+			public Iterator<BatchEngineZipUnit> iterator() {
+				return new BatchEngineZipUnitIterator(zipFile);
 			}
 
 		};
 	}
 
-	private Collection<BatchEngineZipEntryPair>
-		_getBatchEngineZipEntryPairsCollection(ZipFile zipFile) {
+	private Collection<BatchEngineZipUnit> _getBatchEngineZipUnitsCollection(
+		ZipFile zipFile) {
 
-		Map<String, BatchEngineZipEntryPair> batchEngineZipEntryPairs =
-			new HashMap<>();
+		Map<String, BatchEngineZipUnit> batchEngineZipUnits = new HashMap<>();
+		Map<String, ZipEntry> batchEngineZipEntries = new HashMap<>();
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 		while (enumeration.hasMoreElements()) {
@@ -225,66 +216,52 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 
 			String key = _getBatchEngineZipEntryKey(zipEntry);
 
-			BatchEngineZipEntryPair batchEngineZipEntryPair =
-				batchEngineZipEntryPairs.get(key);
+			ZipEntry complementZipEntry = batchEngineZipEntries.get(key);
 
-			if (batchEngineZipEntryPair == null) {
-				batchEngineZipEntryPair = new BatchEngineZipEntryPair(zipFile);
+			if (complementZipEntry == null) {
+				batchEngineZipEntries.put(key, zipEntry);
 
-				batchEngineZipEntryPairs.put(key, batchEngineZipEntryPair);
+				batchEngineZipUnits.put(
+					key, new AdvancedBatchEngineZipUnitImpl(zipFile, zipEntry));
+
+				continue;
 			}
 
-			if (_isBatchEngineConfiguration(zipEntry.getName())) {
-				batchEngineZipEntryPair.setConfigurationZipEntry(zipEntry);
-			}
-			else {
-				batchEngineZipEntryPair.setDataZipEntry(zipEntry);
-			}
+			batchEngineZipUnits.put(
+				key,
+				new ClassicBatchEngineZipUnitImpl(
+					zipFile, zipEntry, complementZipEntry));
+
+			batchEngineZipEntries.remove(key);
 		}
 
-		return batchEngineZipEntryPairs.values();
+		return batchEngineZipUnits.values();
 	}
 
-	private boolean _isBatchEngineConfiguration(String zipEntryName) {
-		if (Objects.equals(zipEntryName, "batch-engine.json") ||
-			zipEntryName.endsWith("/batch-engine.json") ||
-			_isBatchEngineTechnical(zipEntryName)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith("jsont")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _processBatchEngineZipEntryPair(
-			BatchEngineZipEntryPair batchEngineZipEntryPair)
+	private void _processBatchEngineZipUnit(
+			BatchEngineZipUnit<BatchEngineImportConfiguration>
+				batchEngineZipUnit)
 		throws Exception {
 
 		BatchEngineImportConfiguration batchEngineImportConfiguration = null;
 		byte[] content = null;
 		String contentType = null;
 
-		if (batchEngineZipEntryPair.isValid()) {
-			batchEngineImportConfiguration = _getBatchEngineImportConfiguration(
-				batchEngineZipEntryPair);
+		if (batchEngineZipUnit.isValid()) {
+			batchEngineImportConfiguration =
+				batchEngineZipUnit.getBatchEngineConfiguration(
+					BatchEngineImportConfiguration.class);
+
 			UnsyncByteArrayOutputStream compressedUnsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 
 			try (InputStream inputStream =
-					batchEngineZipEntryPair.getDataInputStream();
+					batchEngineZipUnit.getDataInputStream();
 				ZipOutputStream zipOutputStream = new ZipOutputStream(
 					compressedUnsyncByteArrayOutputStream)) {
 
 				zipOutputStream.putNextEntry(
-					new ZipEntry(batchEngineZipEntryPair.getDataFileName()));
+					new ZipEntry(batchEngineZipUnit.getDataFileName()));
 
 				StreamUtil.transfer(inputStream, zipOutputStream, false);
 			}
@@ -292,7 +269,7 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 			content = compressedUnsyncByteArrayOutputStream.toByteArray();
 
 			contentType = _file.getExtension(
-				batchEngineZipEntryPair.getDataFileName());
+				batchEngineZipUnit.getDataFileName());
 		}
 
 		if ((batchEngineImportConfiguration == null) || (content == null) ||
@@ -300,7 +277,7 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 
 			throw new IllegalStateException(
 				"Invalid batch engine file " +
-					batchEngineZipEntryPair.getZipFileName());
+					batchEngineZipUnit.getZipFileName());
 		}
 
 		ExecutorService executorService =
@@ -328,15 +305,13 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Successfully deployed batch engine file " +
-							batchEngineZipEntryPair.getZipFileName());
+							batchEngineZipUnit.getZipFileName());
 				}
 			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineAutoDeployListener.class);
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
@@ -351,96 +326,14 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
 
-	private class BatchEngineZipEntryPair {
+	private class BatchEngineZipUnitIterator
+		implements Iterator<BatchEngineZipUnit> {
 
-		public BatchEngineZipEntryPair(ZipFile zipFile) {
-			_zipFile = zipFile;
-		}
+		public BatchEngineZipUnitIterator(ZipFile zipFile) {
+			Collection<BatchEngineZipUnit> batchEngineZipUnits =
+				_getBatchEngineZipUnitsCollection(zipFile);
 
-		public InputStream getConfigurationInputStream() throws IOException {
-			return _zipFile.getInputStream(_configurationZipEntry);
-		}
-
-		public String getDataFileName() {
-			return _dataZipEntry.getName();
-		}
-
-		public InputStream getDataInputStream() throws IOException {
-			return _zipFile.getInputStream(_dataZipEntry);
-		}
-
-		public String getZipFileName() {
-			return _zipFile.getName();
-		}
-
-		protected boolean isValid() {
-			if ((_configurationZipEntry == null) ||
-				((_dataZipEntry == null) &&
-				 !_isBatchEngineTechnical(_configurationZipEntry.getName()))) {
-
-				return false;
-			}
-
-			return true;
-		}
-
-		protected void setConfigurationZipEntry(ZipEntry zipEntry) {
-			if ((_dataZipEntry != null) &&
-				!_parentDirectoryMatches(zipEntry, _dataZipEntry)) {
-
-				return;
-			}
-
-			_configurationZipEntry = zipEntry;
-		}
-
-		protected void setDataZipEntry(ZipEntry zipEntry) {
-			if ((_configurationZipEntry != null) &&
-				!_parentDirectoryMatches(zipEntry, _configurationZipEntry)) {
-
-				return;
-			}
-
-			_dataZipEntry = zipEntry;
-		}
-
-		private boolean _parentDirectoryMatches(
-			ZipEntry zipEntry1, ZipEntry zipEntry2) {
-
-			String name1 = zipEntry1.getName();
-			String name2 = zipEntry2.getName();
-
-			if (!name1.contains(StringPool.SLASH) &&
-				!name2.contains(StringPool.SLASH)) {
-
-				return true;
-			}
-
-			if (name1.startsWith(
-					name2.substring(0, name2.lastIndexOf(StringPool.SLASH))) &&
-				name2.startsWith(
-					name1.substring(0, name1.lastIndexOf(StringPool.SLASH)))) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		private ZipEntry _configurationZipEntry;
-		private ZipEntry _dataZipEntry;
-		private final ZipFile _zipFile;
-
-	}
-
-	private class BatchEngineZipEntryPairIterator
-		implements Iterator<BatchEngineZipEntryPair> {
-
-		public BatchEngineZipEntryPairIterator(ZipFile zipFile) {
-			Collection<BatchEngineZipEntryPair> batchEngineZipEntryPairs =
-				_getBatchEngineZipEntryPairsCollection(zipFile);
-
-			_iterator = batchEngineZipEntryPairs.iterator();
+			_iterator = batchEngineZipUnits.iterator();
 		}
 
 		@Override
@@ -449,11 +342,11 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 		}
 
 		@Override
-		public BatchEngineZipEntryPair next() {
+		public BatchEngineZipUnit next() {
 			return _iterator.next();
 		}
 
-		private final Iterator<BatchEngineZipEntryPair> _iterator;
+		private final Iterator<BatchEngineZipUnit> _iterator;
 
 	}
 

@@ -14,18 +14,18 @@
 
 package com.liferay.sharing.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.model.SharingEntry;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
 public interface SharingEntryMenuItemContributor {
 
-	public Collection<MenuItem> getSharingEntryMenuItems(
+	public List<DropdownItem> getSharingEntryMenuItems(
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay);
 
 }

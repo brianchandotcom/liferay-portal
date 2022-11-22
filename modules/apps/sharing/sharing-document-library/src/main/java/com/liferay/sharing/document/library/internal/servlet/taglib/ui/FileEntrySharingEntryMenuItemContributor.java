@@ -19,18 +19,15 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,39 +47,23 @@ public class FileEntrySharingEntryMenuItemContributor
 	implements SharingEntryMenuItemContributor {
 
 	@Override
-	public Collection<MenuItem> getSharingEntryMenuItems(
+	public List<DropdownItem> getSharingEntryMenuItems(
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
-		try {
-			if (!_isVisible(sharingEntry)) {
-				return Collections.emptyList();
+		return DropdownItemListBuilder.add(
+			() -> _isVisible(sharingEntry),
+			dropdownItem -> {
+				dropdownItem.setIcon("download");
+				dropdownItem.setLabel(
+					_language.get(themeDisplay.getLocale(), "download"));
+
+				AssetRenderer<?> assetRenderer = _getAssetEntryRenderer(
+					sharingEntry);
+
+				dropdownItem.setHref(
+					assetRenderer.getURLDownload(themeDisplay));
 			}
-
-			return Collections.singleton(
-				_createDownloadMenuItem(sharingEntry, themeDisplay));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return Collections.emptyList();
-		}
-	}
-
-	private URLMenuItem _createDownloadMenuItem(
-			SharingEntry sharingEntry, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setIcon("download");
-		urlMenuItem.setLabel(
-			_language.get(themeDisplay.getLocale(), "download"));
-
-		AssetRenderer<?> assetRenderer = _getAssetEntryRenderer(sharingEntry);
-
-		urlMenuItem.setURL(assetRenderer.getURLDownload(themeDisplay));
-
-		return urlMenuItem;
+		).build();
 	}
 
 	private AssetRenderer<?> _getAssetEntryRenderer(SharingEntry sharingEntry)
@@ -106,9 +87,6 @@ public class FileEntrySharingEntryMenuItemContributor
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FileEntrySharingEntryMenuItemContributor.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

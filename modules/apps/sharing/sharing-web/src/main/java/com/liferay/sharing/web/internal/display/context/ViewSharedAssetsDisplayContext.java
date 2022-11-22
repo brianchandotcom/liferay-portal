@@ -16,7 +16,6 @@ package com.liferay.sharing.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
@@ -32,8 +31,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,8 +52,6 @@ import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -258,9 +253,8 @@ public class ViewSharedAssetsDisplayContext {
 				sharingEntry.getClassName(), sharingEntry.getClassPK(),
 				_httpServletRequest)
 		).addAll(
-			_toDropdownItems(
-				sharingEntryMenuItemContributor.getSharingEntryMenuItems(
-					sharingEntry, _themeDisplay))
+			sharingEntryMenuItemContributor.getSharingEntryMenuItems(
+				sharingEntry, _themeDisplay)
 		).build();
 	}
 
@@ -371,40 +365,6 @@ public class ViewSharedAssetsDisplayContext {
 
 	private boolean _isIncoming() {
 		return ParamUtil.getBoolean(_httpServletRequest, "incoming", true);
-	}
-
-	private DropdownItem _toDropdownItem(MenuItem menuItem) {
-		return DropdownItemBuilder.setHref(
-			() -> {
-				if (!(menuItem instanceof URLMenuItem)) {
-					return null;
-				}
-
-				URLMenuItem urlMenuItem = (URLMenuItem)menuItem;
-
-				return urlMenuItem.getURL();
-			}
-		).setIcon(
-			menuItem.getIcon()
-		).setKey(
-			menuItem.getKey()
-		).setLabel(
-			menuItem.getLabel()
-		).setSeparator(
-			menuItem.hasSeparator()
-		).build();
-	}
-
-	private List<DropdownItem> _toDropdownItems(
-		Collection<MenuItem> menuItems) {
-
-		List<DropdownItem> dropdownItems = new ArrayList<>();
-
-		for (MenuItem menuItem : menuItems) {
-			dropdownItems.add(_toDropdownItem(menuItem));
-		}
-
-		return dropdownItems;
 	}
 
 	private final PortletURL _currentURLObj;

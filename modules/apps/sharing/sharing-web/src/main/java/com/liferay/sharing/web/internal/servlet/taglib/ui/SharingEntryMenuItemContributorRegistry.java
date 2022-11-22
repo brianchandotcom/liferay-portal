@@ -14,19 +14,18 @@
 
 package com.liferay.sharing.web.internal.servlet.taglib.ui;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.servlet.taglib.ui.SharingEntryMenuItemContributor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -84,25 +83,25 @@ public class SharingEntryMenuItemContributorRegistry {
 		}
 
 		@Override
-		public Collection<MenuItem> getSharingEntryMenuItems(
+		public List<DropdownItem> getSharingEntryMenuItems(
 			SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
 			if (ListUtil.isEmpty(_sharingEntryMenuItemContributors)) {
 				return Collections.emptyList();
 			}
 
-			List<MenuItem> menuItems = new ArrayList<>();
+			List<DropdownItem> dropdownItems = new ArrayList<>();
 
 			for (SharingEntryMenuItemContributor
 					sharingEntryMenuItemContributor :
 						_sharingEntryMenuItemContributors) {
 
-				menuItems.addAll(
+				dropdownItems.addAll(
 					sharingEntryMenuItemContributor.getSharingEntryMenuItems(
 						sharingEntry, themeDisplay));
 			}
 
-			return menuItems;
+			return dropdownItems;
 		}
 
 		private final List<SharingEntryMenuItemContributor>

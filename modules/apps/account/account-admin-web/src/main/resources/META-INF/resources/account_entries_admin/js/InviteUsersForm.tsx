@@ -103,7 +103,7 @@ function InviteUsersForm({
 						};
 
 						Liferay.Util.fetch(
-							`/o/account-admin/validate-email-address/`,
+							`/o/com-liferay-account-admin-web/validate-email-address/`,
 							{
 								body: Liferay.Util.objectToFormData({
 									accountEntryId,

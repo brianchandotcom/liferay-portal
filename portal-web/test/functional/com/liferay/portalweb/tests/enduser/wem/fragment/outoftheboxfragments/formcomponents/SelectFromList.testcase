@@ -290,7 +290,7 @@ definition {
 	@priority = "5"
 	test MapRelationshipWithSystemObject {
 		property portal.acceptance = "true";
-		
+
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on system object") {
 			task ("Add relationship with Account object") {
 				ObjectAdmin.addObjectRelationshipViaAPI(

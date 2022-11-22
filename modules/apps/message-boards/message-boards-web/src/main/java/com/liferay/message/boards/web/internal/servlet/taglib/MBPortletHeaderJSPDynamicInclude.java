@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(service = DynamicInclude.class)
 public class MBPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

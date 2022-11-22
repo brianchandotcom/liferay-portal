@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ambrín Chaudhary
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,

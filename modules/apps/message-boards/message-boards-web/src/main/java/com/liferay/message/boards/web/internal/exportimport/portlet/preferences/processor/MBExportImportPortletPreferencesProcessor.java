@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = ExportImportPortletPreferencesProcessor.class
 )

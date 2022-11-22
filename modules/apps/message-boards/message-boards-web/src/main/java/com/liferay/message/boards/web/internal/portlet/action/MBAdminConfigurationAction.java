@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 	service = ConfigurationAction.class
 )

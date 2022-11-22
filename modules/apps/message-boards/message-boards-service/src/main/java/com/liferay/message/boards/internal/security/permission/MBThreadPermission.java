@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.message.boards.model.MBThread",
 	service = BaseModelPermissionChecker.class
 )

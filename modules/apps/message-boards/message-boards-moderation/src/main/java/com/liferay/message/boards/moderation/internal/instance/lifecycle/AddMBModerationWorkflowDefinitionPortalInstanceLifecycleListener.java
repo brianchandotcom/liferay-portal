@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=100",
 	service = PortalInstanceLifecycleListener.class
 )
 public class AddMBModerationWorkflowDefinitionPortalInstanceLifecycleListener

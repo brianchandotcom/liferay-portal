@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class MBPortletPermissionRegistrar {
 
 	@Activate

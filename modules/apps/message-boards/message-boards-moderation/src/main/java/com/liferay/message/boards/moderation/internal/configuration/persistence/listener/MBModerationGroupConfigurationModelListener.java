@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration",
 	service = ConfigurationModelListener.class
 )

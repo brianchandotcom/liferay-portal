@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Felipe Veloso
  */
-@Component(immediate = true, service = ViewCountEntryModelListener.class)
+@Component(service = ViewCountEntryModelListener.class)
 public class MBThreadViewCountEntryModelListener
 	implements ViewCountEntryModelListener {
 

@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	immediate = true, property = "scripting.language=java",
-	service = ConditionEvaluator.class
+	property = "scripting.language=java", service = ConditionEvaluator.class
 )
 public class MBModerationConditionEvaluator implements ConditionEvaluator {
 

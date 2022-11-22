@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true, service = {MBMessageUADDisplay.class, UADDisplay.class}
-)
+@Component(service = {MBMessageUADDisplay.class, UADDisplay.class})
 public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 
 	@Override

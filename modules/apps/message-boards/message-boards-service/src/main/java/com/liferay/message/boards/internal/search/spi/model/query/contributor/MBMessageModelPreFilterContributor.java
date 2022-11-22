@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luan Maoski
  */
 @Component(
-	immediate = true,
 	property = "indexer.class.name=com.liferay.message.boards.model.MBMessage",
 	service = ModelPreFilterContributor.class
 )

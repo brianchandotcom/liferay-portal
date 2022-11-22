@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jonathan Lee
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = AssetRendererFactory.class
 )

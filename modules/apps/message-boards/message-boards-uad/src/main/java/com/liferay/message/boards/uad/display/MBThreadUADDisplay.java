@@ -36,9 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(
-	immediate = true, service = {MBThreadUADDisplay.class, UADDisplay.class}
-)
+@Component(service = {MBThreadUADDisplay.class, UADDisplay.class})
 public class MBThreadUADDisplay extends BaseMBThreadUADDisplay {
 
 	@Override

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Samuel Trong Tran
  */
-@Component(immediate = true, service = UADHierarchyDeclaration.class)
+@Component(service = UADHierarchyDeclaration.class)
 public class MBUADHierarchyDeclaration implements UADHierarchyDeclaration {
 
 	@Override

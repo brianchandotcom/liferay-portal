@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
 	property = "model.class.name=com.liferay.message.boards.model.MBCategory",
 	service = StagedModelRepository.class
 )

@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true,
 	property = "javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 	service = UserNotificationHandler.class
 )

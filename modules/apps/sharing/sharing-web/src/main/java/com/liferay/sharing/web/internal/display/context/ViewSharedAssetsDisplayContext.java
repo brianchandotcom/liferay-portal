@@ -71,12 +71,12 @@ public class ViewSharedAssetsDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		SharedAssetsFilterItemRegistry sharedAssetsFilterItemRegistry,
 		SharingConfigurationFactory sharingConfigurationFactory,
+		SharingDropdownItemFactory sharingDropdownItemFactory,
+		SharingEntryDropdownItemContributorRegistry
+			sharingEntryDropdownItemContributorRegistry,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		SharingEntryLocalService sharingEntryLocalService,
-		SharingEntryDropdownItemContributorRegistry
-			sharingEntryDropdownItemContributorRegistry,
-		SharingDropdownItemFactory sharingDropdownItemFactory,
 		SharingPermission sharingPermission) {
 
 		_groupLocalService = groupLocalService;
@@ -85,11 +85,11 @@ public class ViewSharedAssetsDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_sharedAssetsFilterItemRegistry = sharedAssetsFilterItemRegistry;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
-		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
-		_sharingEntryLocalService = sharingEntryLocalService;
+		_sharingDropdownItemFactory = sharingDropdownItemFactory;
 		_sharingEntryDropdownItemContributorRegistry =
 			sharingEntryDropdownItemContributorRegistry;
-		_sharingDropdownItemFactory = sharingDropdownItemFactory;
+		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
+		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingPermission = sharingPermission;
 
 		_currentURLObj = PortletURLUtil.getCurrent(

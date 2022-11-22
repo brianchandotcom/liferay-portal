@@ -45,10 +45,10 @@ public class ViewSharedAssetsDisplayContextFactory {
 			_portal.getLiferayPortletRequest(renderRequest),
 			_portal.getLiferayPortletResponse(renderResponse),
 			_sharedAssetsFilterItemRegistry, _sharingConfigurationFactory,
-			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
-			_sharingEntryLocalService,
+			_sharingDropdownItemFactory,
 			_sharingEntryDropdownItemContributorRegistry,
-			_sharingDropdownItemFactory, _sharingPermission);
+			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
+			_sharingEntryLocalService, _sharingPermission);
 	}
 
 	@Reference

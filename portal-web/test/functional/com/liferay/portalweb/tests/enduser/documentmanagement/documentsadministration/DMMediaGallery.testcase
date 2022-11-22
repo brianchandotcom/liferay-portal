@@ -129,44 +129,6 @@ definition {
 			mgDocumentTitle = "DM Document Title");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddSubfolders {
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Folder Description",
-			mgFolderName = "DM Folder Name");
-
-		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Subfolder1 Description",
-			mgFolderName = "DM Subfolder1 Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder1 Name");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Subfolder2 Description",
-			mgFolderName = "DM Subfolder2 Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder2 Name");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		DMFolder.gotoPGViaMG(mgFolderName = "DM Folder Name");
-
-		DMFolder.addPGViaMG(
-			mgFolderDescription = "DM Subfolder3 Description",
-			mgFolderName = "DM Subfolder3 Name");
-
-		DMFolder.viewPGViaMG(mgFolderName = "DM Subfolder3 Name");
-	}
-
 	@priority = "3"
 	@refactorneeded
 	test ADTDMMediaGallery {

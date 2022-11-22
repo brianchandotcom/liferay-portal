@@ -428,15 +428,15 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			SetElementAttribute(
-				attribute1 = "data-option-value",
-				locator1 = "//li[contains(@class,'dropdown')][normalize-space(text())='Reserved']",
-				value1 = "invalid");
-
 			Click(
 				index = "1",
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
+
+			SetElementAttribute(
+				attribute1 = "data-option-value",
+				locator1 = "//li[contains(@class,'dropdown')][normalize-space(text())='Reserved']",
+				value1 = "invalid");
 
 			MenuItem.click(menuItem = "Reserved");
 

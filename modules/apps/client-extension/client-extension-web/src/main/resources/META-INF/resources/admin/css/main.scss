@@ -48,4 +48,16 @@
 			}
 		}
 	}
+
+	.configured-from-ui {
+		border-color: rgb(90, 202, 117);
+		color: rgb(40, 125, 60);
+		font-weight: bold;
+	}
+
+	.configured-from-workspace {
+		border-color: rgb(39, 40, 51);
+		color: rgb(153, 153, 153);
+		font-weight: bold;
+	}
 }

@@ -17,17 +17,18 @@ package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +42,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class ImportPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
+
+	@Override
+	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		return HashMapBuilder.<String, Object>put(
+			"action", getNamespace(portletRequest) + "import"
+		).put(
+			"globalAction", true
+		).build();
+	}
 
 	@Override
 	public String getIconCssClass() {
@@ -49,23 +59,13 @@ public class ImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(getLocale(portletRequest), "import");
+	public String getJspPath() {
+		return "/configuration/icon/import.jsp";
 	}
 
 	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		return PortletURLBuilder.create(
-			_portal.getControlPanelPortletURL(
-				portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/view_import.jsp"
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
+	public String getMessage(PortletRequest portletRequest) {
+		return _language.get(getLocale(portletRequest), "import");
 	}
 
 	@Override
@@ -88,13 +88,18 @@ public class ImportPortletConfigurationIcon
 		return false;
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	@Reference
 	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;
 
-	@Reference
-	private Portal _portal;
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
+	private ServletContext _servletContext;
 
 }

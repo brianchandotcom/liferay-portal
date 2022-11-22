@@ -55,8 +55,8 @@ else {
 				</div>
 			</li>
 			<li class="tbar-item">
-				<liferay-ui:menu
-					menu="<%= viewSharingEntryAssetEntryDisplayContext.getSharingEntryMenu() %>"
+				<clay:dropdown-actions
+					dropdownItems="<%= viewSharingEntryAssetEntryDisplayContext.getSharingEntryMenu() %>"
 				/>
 			</li>
 		</ul>

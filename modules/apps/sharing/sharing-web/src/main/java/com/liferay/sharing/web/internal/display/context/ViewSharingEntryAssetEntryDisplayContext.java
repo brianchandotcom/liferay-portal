@@ -17,16 +17,18 @@ package com.liferay.sharing.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
+
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -84,7 +86,7 @@ public class ViewSharingEntryAssetEntryDisplayContext {
 		return redirect;
 	}
 
-	public Menu getSharingEntryMenu() throws PortalException {
+	public List<DropdownItem> getSharingEntryMenu() throws PortalException {
 		return _viewSharedAssetsDisplayContext.getSharingEntryMenu(
 			_sharingEntry);
 	}

@@ -18,7 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -47,7 +47,7 @@ public class ViewSharedAssetsDisplayContextFactory {
 			_sharedAssetsFilterItemRegistry, _sharingConfigurationFactory,
 			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			_sharingEntryLocalService, _sharingEntryMenuItemContributorRegistry,
-			_sharingMenuItemFactory, _sharingPermission);
+			_sharingDropdownItemFactory, _sharingPermission);
 	}
 
 	@Reference
@@ -66,6 +66,9 @@ public class ViewSharedAssetsDisplayContextFactory {
 	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
+	private SharingDropdownItemFactory _sharingDropdownItemFactory;
+
+	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
 
 	@Reference
@@ -74,9 +77,6 @@ public class ViewSharedAssetsDisplayContextFactory {
 	@Reference
 	private SharingEntryMenuItemContributorRegistry
 		_sharingEntryMenuItemContributorRegistry;
-
-	@Reference
-	private SharingMenuItemFactory _sharingMenuItemFactory;
 
 	@Reference
 	private SharingPermission _sharingPermission;

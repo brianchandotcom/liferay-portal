@@ -15,6 +15,9 @@
 package com.liferay.sharing.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -29,7 +32,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,7 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
@@ -54,7 +56,7 @@ import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemContributorRegistry;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -79,7 +81,7 @@ public class ViewSharedAssetsDisplayContext {
 		SharingEntryLocalService sharingEntryLocalService,
 		SharingEntryMenuItemContributorRegistry
 			sharingEntryMenuItemContributorRegistry,
-		SharingMenuItemFactory sharingMenuItemFactory,
+		SharingDropdownItemFactory sharingDropdownItemFactory,
 		SharingPermission sharingPermission) {
 
 		_groupLocalService = groupLocalService;
@@ -92,7 +94,7 @@ public class ViewSharedAssetsDisplayContext {
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingEntryMenuItemContributorRegistry =
 			sharingEntryMenuItemContributorRegistry;
-		_sharingMenuItemFactory = sharingMenuItemFactory;
+		_sharingDropdownItemFactory = sharingDropdownItemFactory;
 		_sharingPermission = sharingPermission;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
@@ -219,51 +221,11 @@ public class ViewSharedAssetsDisplayContext {
 			sharingEntry, _themeDisplay.getLocale());
 	}
 
-	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
+	public List<DropdownItem> getSharingEntryMenu(SharingEntry sharingEntry)
 		throws PortalException {
 
-		Menu menu = new Menu();
-
-		menu.setDirection("left-side");
-		menu.setMarkupView("lexicon");
-		menu.setMessage(LanguageUtil.get(_httpServletRequest, "actions"));
-		menu.setScroll(false);
-		menu.setShowWhenSingleIcon(true);
-
 		if (!isSharingEntryVisible(sharingEntry)) {
-			menu.setMenuItems(Collections.emptyList());
-
-			return menu;
-		}
-
-		List<MenuItem> menuItems = new ArrayList<>();
-
-		if (_hasEditPermission(
-				sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {
-
-			MenuItem menuItem = _createEditMenuItem(sharingEntry);
-
-			if (menuItem != null) {
-				menuItems.add(menuItem);
-			}
-		}
-
-		if (sharingEntry.isShareable()) {
-			menuItems.add(
-				_sharingMenuItemFactory.createShareMenuItem(
-					sharingEntry.getClassName(), sharingEntry.getClassPK(),
-					_httpServletRequest));
-		}
-
-		if (_sharingPermission.containsManageCollaboratorsPermission(
-				_themeDisplay.getPermissionChecker(),
-				sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
-				_themeDisplay.getScopeGroupId())) {
-
-			menuItems.add(
-				_sharingMenuItemFactory.createManageCollaboratorsMenuItem(
-					sharingEntry.getClassName(), sharingEntry.getClassPK(),
-					_httpServletRequest));
+			return null;
 		}
 
 		SharingEntryMenuItemContributor sharingEntryMenuItemContributor =
@@ -271,13 +233,35 @@ public class ViewSharedAssetsDisplayContext {
 				getSharingEntryMenuItemContributor(
 					sharingEntry.getClassNameId());
 
-		menuItems.addAll(
-			sharingEntryMenuItemContributor.getSharingEntryMenuItems(
-				sharingEntry, _themeDisplay));
-
-		menu.setMenuItems(menuItems);
-
-		return menu;
+		return DropdownItemListBuilder.add(
+			() -> _hasEditPermission(
+				sharingEntry.getClassNameId(), sharingEntry.getClassPK()),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getURLEdit(
+						sharingEntry, _liferayPortletRequest,
+						_liferayPortletResponse));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
+		).add(
+			sharingEntry::isShareable,
+			_sharingDropdownItemFactory.createShareDropdownItem(
+				sharingEntry.getClassName(), sharingEntry.getClassPK(),
+				_httpServletRequest)
+		).add(
+			() -> _sharingPermission.containsManageCollaboratorsPermission(
+				_themeDisplay.getPermissionChecker(),
+				sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
+				_themeDisplay.getScopeGroupId()),
+			_sharingDropdownItemFactory.createManageCollaboratorsDropdownItem(
+				sharingEntry.getClassName(), sharingEntry.getClassPK(),
+				_httpServletRequest)
+		).addAll(
+			_toDropdownItems(
+				sharingEntryMenuItemContributor.getSharingEntryMenuItems(
+					sharingEntry, _themeDisplay))
+		).build();
 	}
 
 	public PortletURL getSharingEntryRowPortletURL(SharingEntry sharingEntry)
@@ -343,26 +327,6 @@ public class ViewSharedAssetsDisplayContext {
 		return true;
 	}
 
-	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)
-		throws PortalException {
-
-		PortletURL editPortletURL = _getURLEdit(
-			sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
-
-		if (editPortletURL == null) {
-			return null;
-		}
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(LanguageUtil.get(_httpServletRequest, "edit"));
-		urlMenuItem.setMethod("get");
-
-		urlMenuItem.setURL(editPortletURL.toString());
-
-		return urlMenuItem;
-	}
-
 	private PortletURL _getURLEdit(
 			SharingEntry sharingEntry,
 			LiferayPortletRequest liferayPortletRequest,
@@ -409,6 +373,40 @@ public class ViewSharedAssetsDisplayContext {
 		return ParamUtil.getBoolean(_httpServletRequest, "incoming", true);
 	}
 
+	private DropdownItem _toDropdownItem(MenuItem menuItem) {
+		return DropdownItemBuilder.setHref(
+			() -> {
+				if (!(menuItem instanceof URLMenuItem)) {
+					return null;
+				}
+
+				URLMenuItem urlMenuItem = (URLMenuItem)menuItem;
+
+				return urlMenuItem.getURL();
+			}
+		).setIcon(
+			menuItem.getIcon()
+		).setKey(
+			menuItem.getKey()
+		).setLabel(
+			menuItem.getLabel()
+		).setSeparator(
+			menuItem.hasSeparator()
+		).build();
+	}
+
+	private List<DropdownItem> _toDropdownItems(
+		Collection<MenuItem> menuItems) {
+
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
+		for (MenuItem menuItem : menuItems) {
+			dropdownItems.add(_toDropdownItem(menuItem));
+		}
+
+		return dropdownItems;
+	}
+
 	private final PortletURL _currentURLObj;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
@@ -421,12 +419,12 @@ public class ViewSharedAssetsDisplayContext {
 	private final SharedAssetsFilterItemRegistry
 		_sharedAssetsFilterItemRegistry;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
+	private final SharingDropdownItemFactory _sharingDropdownItemFactory;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final SharingEntryMenuItemContributorRegistry
 		_sharingEntryMenuItemContributorRegistry;
-	private final SharingMenuItemFactory _sharingMenuItemFactory;
 	private final SharingPermission _sharingPermission;
 	private final ThemeDisplay _themeDisplay;
 
